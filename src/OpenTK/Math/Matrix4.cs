@@ -56,7 +56,7 @@ namespace OpenTK
         /// Bottom row of the matrix.
         /// </summary>
         public Vector4 Row3;
- 
+
         /// <summary>
         /// The identity matrix.
         /// </summary>
@@ -284,7 +284,7 @@ namespace OpenTK
         /// Gets or sets the value at row 4, column 4 of this instance.
         /// </summary>
         public float M44 { get { return Row3.W; } set { Row3.W = value; } }
-        
+
         /// <summary>
         /// Gets or sets the values along the main diagonal of the matrix.
         /// </summary>
@@ -525,9 +525,9 @@ namespace OpenTK
         #endregion
 
         #region Static
-        
+
         #region CreateFromAxisAngle
-        
+
         /// <summary>
         /// Build a rotation matrix from the specified axis/angle rotation.
         /// </summary>
@@ -571,7 +571,7 @@ namespace OpenTK
             result.Row2.W = 0;
             result.Row3 = Vector4.UnitW;
         }
-        
+
         /// <summary>
         /// Build a rotation matrix from the specified axis/angle rotation.
         /// </summary>
@@ -584,7 +584,7 @@ namespace OpenTK
             CreateFromAxisAngle(axis, angle, out result);
             return result;
         }
-        
+
         #endregion
 
         #region CreateFromQuaternion
@@ -927,9 +927,9 @@ namespace OpenTK
         }
 
         #endregion
-        
+
         #region CreatePerspectiveFieldOfView
-        
+
         /// <summary>
         /// Creates a perspective projection matrix.
         /// </summary>
@@ -958,7 +958,7 @@ namespace OpenTK
                 throw new ArgumentOutOfRangeException("zNear");
             if (zFar <= 0)
                 throw new ArgumentOutOfRangeException("zFar");
-            
+
             float yMax = zNear * (float)System.Math.Tan(0.5f * fovy);
             float yMin = -yMax;
             float xMin = yMin * aspect;
@@ -966,7 +966,7 @@ namespace OpenTK
 
             CreatePerspectiveOffCenter(xMin, xMax, yMin, yMax, zNear, zFar, out result);
         }
-        
+
         /// <summary>
         /// Creates a perspective projection matrix.
         /// </summary>
@@ -991,11 +991,11 @@ namespace OpenTK
             CreatePerspectiveFieldOfView(fovy, aspect, zNear, zFar, out result);
             return result;
         }
-        
+
         #endregion
-        
+
         #region CreatePerspectiveOffCenter
-        
+
         /// <summary>
         /// Creates an perspective projection matrix.
         /// </summary>
@@ -1022,7 +1022,7 @@ namespace OpenTK
                 throw new ArgumentOutOfRangeException("zFar");
             if (zNear >= zFar)
                 throw new ArgumentOutOfRangeException("zNear");
-            
+
             float x = (2.0f * zNear) / (right - left);
             float y = (2.0f * zNear) / (top - bottom);
             float a = (right + left) / (right - left);
@@ -1047,7 +1047,7 @@ namespace OpenTK
             result.Row3.Z = d;
             result.Row3.W = 0;
         }
-        
+
         /// <summary>
         /// Creates an perspective projection matrix.
         /// </summary>
@@ -1072,187 +1072,6 @@ namespace OpenTK
             CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar, out result);
             return result;
         }
-
-        #endregion
-
-        #region Obsolete Functions
-
-        #region Translation Functions
-
-        /// <summary>
-        /// Builds a translation matrix.
-        /// </summary>
-        /// <param name="trans">The translation vector.</param>
-        /// <returns>A new Matrix4 instance.</returns>
-        [Obsolete("Use CreateTranslation instead.")]
-        public static Matrix4 Translation(Vector3 trans)
-        {
-            return CreateTranslation(trans);
-        }
-
-        /// <summary>
-        /// Build a translation matrix with the given translation
-        /// </summary>
-        /// <param name="x">X translation</param>
-        /// <param name="y">Y translation</param>
-        /// <param name="z">Z translation</param>
-        /// <returns>A Translation matrix</returns>
-        [Obsolete("Use CreateTranslation instead.")]
-        public static Matrix4 Translation(float x, float y, float z)
-        {
-            return CreateTranslation(x, y, z);
-        }
-
-        #endregion
-
-        #region Rotation Functions
-
-        /// <summary>
-        /// Build a rotation matrix that rotates about the x-axis
-        /// </summary>
-        /// <param name="angle">angle in radians to rotate counter-clockwise around the x-axis</param>
-        /// <returns>A rotation matrix</returns>
-        [Obsolete("Use CreateRotationX instead.")]
-        public static Matrix4 RotateX(float angle)
-        {
-            return CreateRotationX(angle);
-        }
-
-        /// <summary>
-        /// Build a rotation matrix that rotates about the y-axis
-        /// </summary>
-        /// <param name="angle">angle in radians to rotate counter-clockwise around the y-axis</param>
-        /// <returns>A rotation matrix</returns>
-        [Obsolete("Use CreateRotationY instead.")]
-        public static Matrix4 RotateY(float angle)
-        {
-            return CreateRotationY(angle);
-        }
-
-        /// <summary>
-        /// Build a rotation matrix that rotates about the z-axis
-        /// </summary>
-        /// <param name="angle">angle in radians to rotate counter-clockwise around the z-axis</param>
-        /// <returns>A rotation matrix</returns>
-        [Obsolete("Use CreateRotationZ instead.")]
-        public static Matrix4 RotateZ(float angle)
-        {
-            return CreateRotationZ(angle);
-        }
-
-        /// <summary>
-        /// Build a rotation matrix to rotate about the given axis
-        /// </summary>
-        /// <param name="axis">the axis to rotate about</param>
-        /// <param name="angle">angle in radians to rotate counter-clockwise (looking in the direction of the given axis)</param>
-        /// <returns>A rotation matrix</returns>
-        [Obsolete("Use CreateFromAxisAngle instead.")]
-        public static Matrix4 Rotate(Vector3 axis, float angle)
-        {
-            return CreateFromAxisAngle(axis, angle);
-        }
-
-        /// <summary>
-        /// Build a rotation matrix from a quaternion
-        /// </summary>
-        /// <param name="q">the quaternion</param>
-        /// <returns>A rotation matrix</returns>
-        [Obsolete("Use CreateFromQuaternion instead.")]
-        public static Matrix4 Rotate(Quaternion q)
-        {
-            return CreateFromQuaternion(q);
-        }
-
-        #endregion
-
-        #region Scale Functions
-
-        /// <summary>
-        /// Build a scaling matrix
-        /// </summary>
-        /// <param name="scale">Single scale factor for x,y and z axes</param>
-        /// <returns>A scaling matrix</returns>
-        [Obsolete("Use CreateScale instead.")]
-        public static Matrix4 Scale(float scale)
-        {
-            return Scale(scale, scale, scale);
-        }
-
-        /// <summary>
-        /// Build a scaling matrix
-        /// </summary>
-        /// <param name="scale">Scale factors for x,y and z axes</param>
-        /// <returns>A scaling matrix</returns>
-        [Obsolete("Use CreateScale instead.")]
-        public static Matrix4 Scale(Vector3 scale)
-        {
-            return Scale(scale.X, scale.Y, scale.Z);
-        }
-
-        /// <summary>
-        /// Build a scaling matrix
-        /// </summary>
-        /// <param name="x">Scale factor for x-axis</param>
-        /// <param name="y">Scale factor for y-axis</param>
-        /// <param name="z">Scale factor for z-axis</param>
-        /// <returns>A scaling matrix</returns>
-        [Obsolete("Use CreateScale instead.")]
-        public static Matrix4 Scale(float x, float y, float z)
-        {
-            Matrix4 result;
-            result.Row0 = Vector4.UnitX * x;
-            result.Row1 = Vector4.UnitY * y;
-            result.Row2 = Vector4.UnitZ * z;
-            result.Row3 = Vector4.UnitW;
-            return result;
-        }
-
-        #endregion
-
-        #region Camera Helper Functions
-
-        /// <summary>
-        /// Build a projection matrix
-        /// </summary>
-        /// <param name="left">Left edge of the view frustum</param>
-        /// <param name="right">Right edge of the view frustum</param>
-        /// <param name="bottom">Bottom edge of the view frustum</param>
-        /// <param name="top">Top edge of the view frustum</param>
-        /// <param name="near">Distance to the near clip plane</param>
-        /// <param name="far">Distance to the far clip plane</param>
-        /// <returns>A projection matrix that transforms camera space to raster space</returns>
-        [Obsolete("Use CreatePerspectiveOffCenter instead.")]
-        public static Matrix4 Frustum(float left, float right, float bottom, float top, float near, float far)
-        {
-            float invRL = 1.0f / (right - left);
-            float invTB = 1.0f / (top - bottom);
-            float invFN = 1.0f / (far - near);
-            return new Matrix4(new Vector4(2.0f * near * invRL, 0.0f, 0.0f, 0.0f),
-                               new Vector4(0.0f, 2.0f * near * invTB, 0.0f, 0.0f),
-                               new Vector4((right + left) * invRL, (top + bottom) * invTB, -(far + near) * invFN, -1.0f),
-                               new Vector4(0.0f, 0.0f, -2.0f * far * near * invFN, 0.0f));
-        }
-
-        /// <summary>
-        /// Build a projection matrix
-        /// </summary>
-        /// <param name="fovy">Angle of the field of view in the y direction (in radians)</param>
-        /// <param name="aspect">Aspect ratio of the view (width / height)</param>
-        /// <param name="near">Distance to the near clip plane</param>
-        /// <param name="far">Distance to the far clip plane</param>
-        /// <returns>A projection matrix that transforms camera space to raster space</returns>
-        [Obsolete("Use CreatePerspectiveFieldOfView instead.")]
-        public static Matrix4 Perspective(float fovy, float aspect, float near, float far)
-        {
-            float yMax = near * (float)System.Math.Tan(0.5f * fovy);
-            float yMin = -yMax;
-            float xMin = yMin * aspect;
-            float xMax = yMax * aspect;
-
-            return Frustum(xMin, xMax, yMin, yMax, near, far);
-        }
-
-        #endregion
 
         #endregion
 
@@ -1469,9 +1288,9 @@ namespace OpenTK
             int[] pivotIdx = { -1, -1, -1, -1 };
 
             // convert the matrix to an array for easy looping
-            float[,] inverse = {{mat.Row0.X, mat.Row0.Y, mat.Row0.Z, mat.Row0.W}, 
-                                {mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W}, 
-                                {mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W}, 
+            float[,] inverse = {{mat.Row0.X, mat.Row0.Y, mat.Row0.Z, mat.Row0.W},
+                                {mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W},
+                                {mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W},
                                 {mat.Row3.X, mat.Row3.Y, mat.Row3.Z, mat.Row3.W} };
             int icol = 0;
             int irow = 0;
