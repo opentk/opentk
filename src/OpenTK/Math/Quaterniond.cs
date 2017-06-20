@@ -45,7 +45,7 @@ namespace OpenTK
 
         /// <summary>
         /// The W component of this instance.
-        /// </summary>        
+        /// </summary>
         public double W;
 
         #endregion
@@ -113,19 +113,6 @@ namespace OpenTK
 
         #region Properties
 
-        #pragma warning disable 3005 // Identifier differing only in case is not CLS-compliant, compiler bug in Mono 3.4.0
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the X, Y and Z components of this instance.
-        /// </summary>
-        [Obsolete("Use Xyz property instead.")]
-        [CLSCompliant(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [XmlIgnore]
-        public Vector3d XYZ { get { return Xyz; } set { Xyz = value; } }
-
-        #pragma warning restore 3005
-
         /// <summary>
         /// Gets or sets the X component of this instance.
         /// </summary>
@@ -143,7 +130,7 @@ namespace OpenTK
         /// </summary>
         [XmlIgnore]
         public double Z { get { return Xyz.Z; } set { Xyz.Z = value; } }
-        
+
         #endregion
 
         #region Instance
@@ -182,7 +169,7 @@ namespace OpenTK
             }
             else
             {
-                // This occurs when the angle is zero. 
+                // This occurs when the angle is zero.
                 // Not a problem: just set an arbitrary normalized axis.
                 result.Xyz = Vector3d.UnitX;
             }
@@ -662,7 +649,7 @@ namespace OpenTK
         #region Slerp
 
         /// <summary>
-        /// Do Spherical linear interpolation between two quaternions 
+        /// Do Spherical linear interpolation between two quaternions
         /// </summary>
         /// <param name="q1">The first Quaterniond</param>
         /// <param name="q2">The second Quaterniond</param>
@@ -727,7 +714,7 @@ namespace OpenTK
         #endregion
 
         #endregion
-                
+
         #region Operators
 
         /// <summary>
@@ -833,7 +820,7 @@ namespace OpenTK
         #region public override bool Equals (object o)
 
         /// <summary>
-        /// Compares this object instance to another object for equality. 
+        /// Compares this object instance to another object for equality.
         /// </summary>
         /// <param name="other">The other object to be used in the comparison.</param>
         /// <returns>True if both objects are Quaternions of equal value. Otherwise it returns false.</returns>
@@ -848,7 +835,7 @@ namespace OpenTK
         #region public override int GetHashCode ()
 
         /// <summary>
-        /// Provides the hash code for this object. 
+        /// Provides the hash code for this object.
         /// </summary>
         /// <returns>A hash code formed from the bitwise XOR of this objects members.</returns>
 
@@ -883,7 +870,7 @@ namespace OpenTK
         public double Z;
 
         #endregion
-        
+
         #region Constructors
 
         /// <summary>Constructs left Quaterniond that is left copy of the given Quaterniond.</summary>
@@ -942,11 +929,11 @@ namespace OpenTK
         public Quaterniond(ref Matrix4d matrix)
         {
             double scale = System.Math.Pow(matrix.Determinant, 1.0d/3.0d);
- 
+
             W = System.Math.Sqrt(System.Math.Max(0, scale + matrix[0, 0] + matrix[1, 1] + matrix[2, 2])) / 2;
             X = System.Math.Sqrt(System.Math.Max(0, scale + matrix[0, 0] - matrix[1, 1] - matrix[2, 2])) / 2;
             Y = System.Math.Sqrt(System.Math.Max(0, scale - matrix[0, 0] + matrix[1, 1] - matrix[2, 2])) / 2;
-            Z = System.Math.Sqrt(System.Math.Max(0, scale - matrix[0, 0] - matrix[1, 1] + matrix[2, 2])) / 2; 
+            Z = System.Math.Sqrt(System.Math.Max(0, scale - matrix[0, 0] - matrix[1, 1] + matrix[2, 2])) / 2;
             if( matrix[2,1] - matrix[1,2] < 0 ) X = -X;
             if( matrix[0,2] - matrix[2,0] < 0 ) Y = -Y;
             if( matrix[1,0] - matrix[0,1] < 0 ) Z = -Z;
@@ -1086,7 +1073,7 @@ namespace OpenTK
         }
 
         #endregion
-        
+
         #region Functions
 
         public double Modulus
@@ -1429,7 +1416,7 @@ namespace OpenTK
         }
 
         #endregion
-        
+
         #region HashCode
 
         /// <summary>Returns the hash code for this instance.</summary>
@@ -1441,7 +1428,7 @@ namespace OpenTK
         }
 
         #endregion
-        
+
         #region String and Parse
 
         /// <summary>Returns the fully qualified type name of this instance.</summary>
@@ -1466,7 +1453,7 @@ namespace OpenTK
         }
 
         #endregion
-        
+
         #region Constants
 
         /// <summary>A quaterion with all zero components.</summary>
@@ -1494,7 +1481,7 @@ namespace OpenTK
         #region IEquatable<Quaterniond> Members
 
         /// <summary>
-        /// Compares this Quaterniond instance to another Quaterniond for equality. 
+        /// Compares this Quaterniond instance to another Quaterniond for equality.
         /// </summary>
         /// <param name="other">The other Quaterniond to be used in the comparison.</param>
         /// <returns>True if both instances are equal; false otherwise.</returns>
