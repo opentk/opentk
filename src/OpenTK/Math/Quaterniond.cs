@@ -337,35 +337,7 @@ namespace OpenTK
 
         #endregion
 
-        #region Mult
-
-        /// <summary>
-        /// Multiplies two instances.
-        /// </summary>
-        /// <param name="left">The first instance.</param>
-        /// <param name="right">The second instance.</param>
-        /// <returns>A new instance containing the result of the calculation.</returns>
-        [Obsolete("Use Multiply instead.")]
-        public static Quaterniond Mult(Quaterniond left, Quaterniond right)
-        {
-            return new Quaterniond(
-                right.W * left.Xyz + left.W * right.Xyz + Vector3d.Cross(left.Xyz, right.Xyz),
-                left.W * right.W - Vector3d.Dot(left.Xyz, right.Xyz));
-        }
-
-        /// <summary>
-        /// Multiplies two instances.
-        /// </summary>
-        /// <param name="left">The first instance.</param>
-        /// <param name="right">The second instance.</param>
-        /// <param name="result">A new instance containing the result of the calculation.</param>
-        [Obsolete("Use Multiply instead.")]
-        public static void Mult(ref Quaterniond left, ref Quaterniond right, out Quaterniond result)
-        {
-            result = new Quaterniond(
-                right.W * left.Xyz + left.W * right.Xyz + Vector3d.Cross(left.Xyz, right.Xyz),
-                left.W * right.W - Vector3d.Dot(left.Xyz, right.Xyz));
-        }
+        #region Multiply
 
         /// <summary>
         /// Multiplies two instances.
