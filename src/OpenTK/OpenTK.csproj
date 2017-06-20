@@ -440,9 +440,6 @@
     <Compile Include="Input\IJoystickDriver.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Input\IMouseDriver.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Input\IInputDriver.cs">
       <SubType>Code</SubType>
     </Compile>
