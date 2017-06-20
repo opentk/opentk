@@ -222,28 +222,6 @@ namespace OpenTK.Platform
 
         #region --- Creating a Graphics Context ---
 
-        /// <summary>
-        /// Creates an IGraphicsContext instance for the specified window.
-        /// </summary>
-        /// <param name="mode">The GraphicsMode for the GraphicsContext.</param>
-        /// <param name="window">An IWindowInfo instance describing the parent window for this IGraphicsContext.</param>
-        /// <param name="major">The major OpenGL version number for this IGraphicsContext.</param>
-        /// <param name="minor">The minor OpenGL version number for this IGraphicsContext.</param>
-        /// <param name="flags">A bitwise collection of GraphicsContextFlags with specific options for this IGraphicsContext.</param>
-        /// <returns>A new IGraphicsContext instance.</returns>
-        [Obsolete("Call new OpenTK.Graphics.GraphicsContext() directly, instead.")]
-        public static IGraphicsContext CreateGraphicsContext(
-            GraphicsMode mode, IWindowInfo window,
-            int major, int minor, GraphicsContextFlags flags)
-        {
-            GraphicsContext context = new GraphicsContext(mode, window, major, minor, flags);
-            context.MakeCurrent(window);
-
-            (context as IGraphicsContextInternal).LoadAll();
-
-            return context;
-        }
-
         #region CreateX11WindowInfo
 
         /// <summary>
@@ -318,7 +296,7 @@ namespace OpenTK.Platform
         /// <param name="xOffset">The X offset for the GL viewport</param>
         /// <param name="yOffset">The Y offset for the GL viewport</param>
         /// <returns>A new IWindowInfo instance.</returns>
-        public static IWindowInfo CreateMacOSCarbonWindowInfo(IntPtr windowHandle, bool ownHandle, bool isControl, 
+        public static IWindowInfo CreateMacOSCarbonWindowInfo(IntPtr windowHandle, bool ownHandle, bool isControl,
             OpenTK.Platform.MacOS.GetInt xOffset, OpenTK.Platform.MacOS.GetInt yOffset)
         {
             return new OpenTK.Platform.MacOS.CarbonWindowInfo(windowHandle, false, isControl, xOffset, yOffset);
@@ -397,8 +375,8 @@ namespace OpenTK.Platform
 
         #if !__MOBILE__
         /// <summary>
-        /// Creates an IWindowInfo instance for Angle rendering, based on 
-        /// supplied platform window (e.g. a window created with 
+        /// Creates an IWindowInfo instance for Angle rendering, based on
+        /// supplied platform window (e.g. a window created with
         /// CreateWindowsWindowInfo, or CreateDummyWindowInfo).
         /// </summary>
         /// <param name="platformWindow"></param>
