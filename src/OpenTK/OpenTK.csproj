@@ -452,9 +452,6 @@
     <Compile Include="Input\JoystickDevice.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Input\IKeyboardDriver.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Input\KeyboardKeyEventArgs.cs">
       <SubType>Code</SubType>
     </Compile>

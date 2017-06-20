@@ -14,7 +14,7 @@ namespace OpenTK.Input
     /// Defines the interface for an input driver.
     /// </summary>
     [Obsolete("This interface has been replaced by OpenTK.Input.Keyboard, Mouse, Joystick and GamePad.")]
-    public interface IInputDriver : IKeyboardDriver, IDisposable
+    public interface IInputDriver : IDisposable
     {
         /// <summary>
         /// Updates the state of the driver.
