@@ -494,9 +494,6 @@
     <Compile Include="Math\Vector3.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Math\Functions.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Math\Matrix4d.cs">
       <SubType>Code</SubType>
     </Compile>
