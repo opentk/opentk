@@ -136,8 +136,6 @@ namespace OpenTK.Platform.Windows
     {
         #region Window functions
 
-        #region Drag functions
-
         [DllImport("shell32.dll")]
         internal static extern bool DragAcceptFiles(
             IntPtr handle,
@@ -156,8 +154,6 @@ namespace OpenTK.Platform.Windows
         internal static extern void DragFinish(
             HDROP hDrop
         );
-
-        #endregion
 
         #region SetWindowPos
 

@@ -7,13 +7,7 @@ namespace OpenTK.Input
     /// </summary>
     public class FileDropEventArgs : EventArgs
     {
-        #region Fields
-
         string fileName;
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Gets the name of the file.
@@ -24,7 +18,5 @@ namespace OpenTK.Input
             get;
             internal set;
         }
-
-        #endregion
     }
 }

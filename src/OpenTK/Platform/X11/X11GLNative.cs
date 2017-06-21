@@ -331,8 +331,6 @@ namespace OpenTK.Platform.X11
 
         #region Private Members
 
-        #region Utils
-
         private void ReadProperty(IntPtr window, IntPtr property, IntPtr type, ref IntPtr data, ref IntPtr itemsCount)
         {
             int format;
@@ -359,8 +357,6 @@ namespace OpenTK.Platform.X11
 
             return fileNames;
         }
-
-        #endregion
 
         #region private void RegisterAtoms()
 

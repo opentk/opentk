@@ -1159,11 +1159,7 @@ namespace OpenTK
         private void OnMouseMoveInternal(object sender, MouseMoveEventArgs e) { OnMouseMove(e); }
         private void OnMouseWheelInternal(object sender, MouseWheelEventArgs e) { OnMouseWheel(e); }
 
-        #region OnFileDropInternal
-
         private void OnFileDropInternal(object sender, FileDropEventArgs e) { OnFileDrop(e); }
-
-        #endregion
 
         #region OnMoveInternal
 
