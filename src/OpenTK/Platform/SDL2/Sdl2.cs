@@ -141,7 +141,7 @@ namespace OpenTK.Platform.SDL2
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport (lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_free", ExactSpelling = true)]
-        public static extern void Free (IntPtr memblock);
+        public static extern void Free(IntPtr memblock);
 
         #region GameContoller
 

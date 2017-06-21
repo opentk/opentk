@@ -689,7 +689,6 @@ namespace OpenTK.Platform.Windows
             {
                 // Don't forget about \0 at the end
                 uint fileNameSize = Functions.DragQueryFile(hDrop, i, IntPtr.Zero, 0) + 1;
-                byte [] byteArray = new byte [fileNameSize];
                 IntPtr str = Marshal.AllocHGlobal((int)fileNameSize);
 
                 Functions.DragQueryFile(hDrop, i, str, fileNameSize);
