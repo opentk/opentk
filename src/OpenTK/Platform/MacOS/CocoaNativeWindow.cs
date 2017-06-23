@@ -137,6 +137,7 @@ namespace OpenTK.Platform.MacOS
         }
 
         private CocoaWindowInfo windowInfo;
+        private IntPtr autoreleasePool;
         private IntPtr windowClass;
         private IntPtr trackingArea;
         private IntPtr current_icon_handle;
@@ -157,6 +158,10 @@ namespace OpenTK.Platform.MacOS
 
         public CocoaNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
+            // Create a new autorelease pool for allocations in this window (mach ports, etc)
+            autoreleasePool = Cocoa.SendIntPtr(Class.NSAutoreleasePool, Selector.Get("alloc"));
+            autoreleasePool = Cocoa.SendIntPtr(autoreleasePool, Selector.Get("init"));
+
             // Create callback methods. We need to store those,
             // otherwise the GC may collect them while they are
             // still active.
@@ -1283,6 +1288,9 @@ namespace OpenTK.Platform.MacOS
 
                 Debug.Print("[Mac] Disposing {0}", windowInfo);
                 windowInfo.Dispose();
+
+                // Drain the autorelease pool for the application, closing mach ports
+                Cocoa.SendVoid(autoreleasePool, Selector.Get("drain"));
             }
             else
             {
