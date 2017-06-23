@@ -1,8 +1,6 @@
-﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+﻿/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -16,8 +14,6 @@ namespace Bind.Structures
     {
         string current_qualifier = String.Empty;
         string previous_qualifier = String.Empty;
-
-        #region --- Constructors ---
 
         public Type()
         {
@@ -39,10 +35,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region Private Members
-
         string CurrentQualifier
         {
             get { return current_qualifier; }
@@ -54,10 +46,6 @@ namespace Bind.Structures
             get { return previous_qualifier; }
             set { previous_qualifier = value; }
         }
-
-        #endregion
-
-        #region Public Members
 
         public string QualifiedType
         {
@@ -87,8 +75,6 @@ namespace Bind.Structures
             }
         }
 
-        #region public string CurrentType
-
         string type;
         /// <summary>
         /// Gets the type of the parameter.
@@ -117,10 +103,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public string PreviousType
-
         private string _previous_type;
 
         public string PreviousType
@@ -128,10 +110,6 @@ namespace Bind.Structures
             get { return _previous_type; }
             private set { _previous_type = value; }
         }
-
-        #endregion
-
-        #region public bool Reference
 
         bool reference;
 
@@ -141,10 +119,6 @@ namespace Bind.Structures
             set { reference = value; }
         }
 
-        #endregion
-
-        #region public int Array
-
         int array;
 
         public int Array
@@ -152,10 +126,6 @@ namespace Bind.Structures
             get { return array; }
             set { array = value > 0 ? value : 0; }
         }
-
-        #endregion
-
-        #region public int ElementCount
 
         int element_count;
 
@@ -166,10 +136,6 @@ namespace Bind.Structures
             set { element_count = value > 0 ? value : 0; }
         }
 
-        #endregion
-
-        #region public int Pointer
-
         int pointer;
 
         public int Pointer
@@ -178,12 +144,9 @@ namespace Bind.Structures
             set { pointer = value > 0 ? value : 0; }
         }
 
-        #endregion
-
         // Set to true if parameter is an enum.
         public bool IsEnum { get; set; }
-        
-        #region public bool CLSCompliant
+
 
         public bool CLSCompliant
         {
@@ -238,10 +201,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public bool Unsigned
-
         public bool Unsigned
         {
             get
@@ -250,10 +209,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public WrapperTypes WrapperType
-
         private WrapperTypes _wrapper_type = WrapperTypes.None;
 
         public WrapperTypes WrapperType
@@ -261,10 +216,6 @@ namespace Bind.Structures
             get { return _wrapper_type; }
             set { _wrapper_type = value; }
         }
-
-        #endregion
-
-        #region public override string ToString()
 
         static readonly string[] PointerLevels =
         {
@@ -292,12 +243,6 @@ namespace Bind.Structures
                 ArrayLevels[Array]);
         }
 
-        #endregion
-
-        #endregion
-
-        #region IComparable<Type> Members
-
         public int CompareTo(Type other)
         {
             // Make sure that Pointer parameters are sorted last to avoid bug [#1098].
@@ -322,10 +267,6 @@ namespace Bind.Structures
             return result;
         }
 
-        #endregion
-
-        #region IEquatable<Type> Members
-
         public bool Equals(Type other)
         {
             bool result =
@@ -341,7 +282,5 @@ namespace Bind.Structures
             // redefinition errors in the generated bindings.
             return result;
         }
-
-        #endregion
     }
 }

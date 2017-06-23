@@ -1,4 +1,3 @@
-#region License
 //
 // GamePadCapabilities.cs
 //
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 
@@ -42,8 +40,6 @@ namespace OpenTK.Input
         bool is_connected;
         bool is_mapped;
 
-        #region Constructors
-
         internal GamePadCapabilities(GamePadType type, GamePadAxes axes, Buttons buttons, bool is_connected, bool is_mapped)
             : this()
         {
@@ -53,10 +49,6 @@ namespace OpenTK.Input
             this.is_connected = is_connected;
             this.is_mapped = is_mapped;
         }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Gets a <see cref="GamePadType"/>  value describing the type of a <see cref="GamePad"/> input device.
@@ -384,10 +376,6 @@ namespace OpenTK.Input
                 Equals((GamePadCapabilities)obj);
         }
 
-        #endregion
-
-        #region IEquatable<GamePadCapabilities> Members
-
         /// <summary>
         /// Determines whether the specified <see cref="OpenTK.Input.GamePadCapabilities"/> is equal to the current <see cref="OpenTK.Input.GamePadCapabilities"/>.
         /// </summary>
@@ -402,8 +390,6 @@ namespace OpenTK.Input
                 is_mapped == other.is_mapped &&
                 gamepad_type == other.gamepad_type;
         }
-
-        #endregion
     }
 }
 

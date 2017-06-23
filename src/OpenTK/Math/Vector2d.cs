@@ -1,4 +1,3 @@
-#region --- License ---
 /*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
 
@@ -20,7 +19,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-#endregion
 
 using System;
 using System.Runtime.InteropServices;
@@ -33,8 +31,6 @@ namespace OpenTK
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector2d : IEquatable<Vector2d>
     {
-        #region Fields
-
         /// <summary>The X coordinate of this instance.</summary>
         public double X;
 
@@ -66,10 +62,6 @@ namespace OpenTK
         /// </summary>
         public static readonly int SizeInBytes = Marshal.SizeOf(new Vector2d());
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
@@ -89,10 +81,6 @@ namespace OpenTK
             this.Y = y;
         }
 
-        #endregion
-
-        #region Public Members
-
         /// <summary>
         /// Gets or sets the value at the index of the Vector.
         /// </summary>
@@ -108,10 +96,6 @@ namespace OpenTK
             }
         }
 
-        #region Instance
-
-        #region public double Length
-
         /// <summary>
         /// Gets the length (magnitude) of the vector.
         /// </summary>
@@ -123,10 +107,6 @@ namespace OpenTK
                 return System.Math.Sqrt(X * X + Y * Y);
             }
         }
-
-        #endregion
-
-        #region public double LengthSquared
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -144,10 +124,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region public Vector2d PerpendicularRight
-
         /// <summary>
         /// Gets the perpendicular vector on the right side of this vector.
         /// </summary>
@@ -158,10 +134,6 @@ namespace OpenTK
                 return new Vector2d(Y, -X);
             }
         }
-
-        #endregion
-
-        #region public Vector2d PerpendicularLeft
 
         /// <summary>
         /// Gets the perpendicular vector on the left side of this vector.
@@ -174,8 +146,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
         /// <summary>
         /// Returns a copy of the Vector2d scaled to unit length.
         /// </summary>
@@ -187,8 +157,6 @@ namespace OpenTK
             return v;
         }
 
-        #region public void Normalize()
-
         /// <summary>
         /// Scales the Vector2 to unit length.
         /// </summary>
@@ -198,10 +166,6 @@ namespace OpenTK
             X *= scale;
             Y *= scale;
         }
-
-        #endregion
-
-        #region Add
 
         /// <summary>
         /// Adds two vectors.
@@ -226,10 +190,6 @@ namespace OpenTK
             result = new Vector2d(a.X + b.X, a.Y + b.Y);
         }
 
-        #endregion
-
-        #region Subtract
-
         /// <summary>
         /// Subtract one Vector from another
         /// </summary>
@@ -252,10 +212,6 @@ namespace OpenTK
         {
             result = new Vector2d(a.X - b.X, a.Y - b.Y);
         }
-
-        #endregion
-
-        #region Multiply
 
         /// <summary>
         /// Multiplies a vector by a scalar.
@@ -302,10 +258,6 @@ namespace OpenTK
         {
             result = new Vector2d(vector.X * scale.X, vector.Y * scale.Y);
         }
-
-        #endregion
-
-        #region Divide
 
         /// <summary>
         /// Divides a vector by a scalar.
@@ -354,10 +306,6 @@ namespace OpenTK
             result = new Vector2d(vector.X / scale.X, vector.Y / scale.Y);
         }
 
-        #endregion
-
-        #region Min
-
         /// <summary>
         /// Calculate the component-wise minimum of two vectors
         /// </summary>
@@ -384,10 +332,6 @@ namespace OpenTK
             result.X = a.X < b.X ? a.X : b.X;
             result.Y = a.Y < b.Y ? a.Y : b.Y;
         }
-
-        #endregion
-
-        #region Max
 
         /// <summary>
         /// Calculate the component-wise maximum of two vectors
@@ -416,10 +360,6 @@ namespace OpenTK
             result.Y = a.Y > b.Y ? a.Y : b.Y;
         }
 
-        #endregion
-
-        #region ComponentMin
-
         /// <summary>
         /// Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
@@ -444,10 +384,6 @@ namespace OpenTK
             result.X = a.X < b.X ? a.X : b.X;
             result.Y = a.Y < b.Y ? a.Y : b.Y;
         }
-
-        #endregion
-
-        #region ComponentMax
 
         /// <summary>
         /// Returns a vector created from the largest of the corresponding components of the given vectors.
@@ -474,10 +410,6 @@ namespace OpenTK
             result.Y = a.Y > b.Y ? a.Y : b.Y;
         }
 
-        #endregion
-
-        #region MagnitudeMin
-
         /// <summary>
         /// Returns the Vector2d with the minimum magnitude. If the magnitudes are equal, the second vector
         /// is selected.
@@ -503,10 +435,6 @@ namespace OpenTK
             result = left.LengthSquared < right.LengthSquared ? left : right;
         }
 
-        #endregion
-
-        #region MagnitudeMax
-
         /// <summary>
         /// Returns the Vector2d with the minimum magnitude. If the magnitudes are equal, the first vector
         /// is selected.
@@ -531,10 +459,6 @@ namespace OpenTK
         {
             result = left.LengthSquared >= right.LengthSquared ? left : right;
         }
-
-        #endregion
-
-        #region Clamp
 
         /// <summary>
         /// Clamp a vector to the given minimum and maximum vectors
@@ -563,10 +487,6 @@ namespace OpenTK
             result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
         }
 
-        #endregion
-
-        #region Normalize
-
         /// <summary>
         /// Scale a vector to unit length
         /// </summary>
@@ -591,10 +511,6 @@ namespace OpenTK
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }
-
-        #endregion
-
-        #region NormalizeFast
 
         /// <summary>
         /// Scale a vector to approximately unit length
@@ -621,10 +537,6 @@ namespace OpenTK
             result.Y = vec.Y * scale;
         }
 
-        #endregion
-
-        #region Dot
-
         /// <summary>
         /// Calculate the dot (scalar) product of two vectors
         /// </summary>
@@ -646,10 +558,6 @@ namespace OpenTK
         {
             result = left.X * right.X + left.Y * right.Y;
         }
-
-        #endregion
-
-        #region Lerp
 
         /// <summary>
         /// Returns a new Vector that is the linear blend of the 2 given Vectors
@@ -677,10 +585,6 @@ namespace OpenTK
             result.X = blend * (b.X - a.X) + a.X;
             result.Y = blend * (b.Y - a.Y) + a.Y;
         }
-
-        #endregion
-
-        #region Barycentric
 
         /// <summary>
         /// Interpolate 3 Vectors using Barycentric coordinates
@@ -718,10 +622,6 @@ namespace OpenTK
             Add(ref result, ref temp, out result);
         }
 
-        #endregion
-
-        #region Transform
-
         /// <summary>
         /// Transforms a vector by a quaternion rotation.
         /// </summary>
@@ -751,21 +651,11 @@ namespace OpenTK
             result = new Vector2d(v.X, v.Y);
         }
 
-        #endregion
-
-        #endregion
-
-        #region Swizzle
-
         /// <summary>
         /// Gets or sets an OpenTK.Vector2d with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Yx { get { return new Vector2d(Y, X); } set { Y = value.X; X = value.Y; } }
-
-        #endregion
-
-        #region Operators
 
         /// <summary>
         /// Adds two instances.
@@ -895,12 +785,6 @@ namespace OpenTK
             return new Vector2((float)v2d.X, (float)v2d.Y);
         }
 
-        #endregion
-
-        #region Overrides
-
-        #region public override string ToString()
-
         private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
         /// <summary>
         /// Returns a System.String that represents the current instance.
@@ -910,10 +794,6 @@ namespace OpenTK
         {
             return String.Format("({0}{2} {1})", X, Y, listSeparator);
         }
-
-        #endregion
-
-        #region public override int GetHashCode()
 
         /// <summary>
         /// Returns the hashcode for this instance.
@@ -926,10 +806,6 @@ namespace OpenTK
                 return (this.X.GetHashCode() * 397) ^ this.Y.GetHashCode();
             }
         }
-
-        #endregion
-
-        #region public override bool Equals(object obj)
 
         /// <summary>
         /// Indicates whether this instance and a specified object are equal.
@@ -944,14 +820,6 @@ namespace OpenTK
             return this.Equals((Vector2d)obj);
         }
 
-        #endregion
-
-        #endregion
-
-        #endregion
-
-        #region IEquatable<Vector2d> Members
-
         /// <summary>Indicates whether the current vector is equal to another vector.</summary>
         /// <param name="other">A vector to compare with this vector.</param>
         /// <returns>true if the current vector is equal to the vector parameter; otherwise, false.</returns>
@@ -961,7 +829,5 @@ namespace OpenTK
                 X == other.X &&
                 Y == other.Y;
         }
-
-        #endregion
     }
 }

@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2013 Stefanos Apostolopoulos for the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -141,8 +139,6 @@ namespace Bind
             return wrappers;
         }
 
-        #region Private Members
-
         void GenerateDocumentation(FunctionCollection wrappers,
             EnumProcessor enum_processor, DocProcessor doc_processor)
         {
@@ -163,7 +159,7 @@ namespace Bind
             // - Core functions get a slot, unless UseDllImports is enabled
             // - On Windows, core functions with version > 1.1 must be treated as extensions.
             //   This is controlled via the UseWindowsCompatibleGL setting.
-            // Entry points without a slot are assigned the magic slot index -1. 
+            // Entry points without a slot are assigned the magic slot index -1.
             // Generator.Rewrite detects this and generates a static DllImport call
             // instead of a calli instruction for these functions.
 
@@ -189,7 +185,7 @@ namespace Bind
                 }
             }
         }
-        
+
         // When we have a list of overloaded delegates, make sure that
         // all generated wrappers use the first (original) delegate, not
         // the overloaded ones. This allows us to reduce the amount
@@ -816,7 +812,7 @@ namespace Bind
             //    (from list in collection
             //    from w1 in list.Value
             //    from w2 in list.Value
-            //    where 
+            //    where
             //        w1.TrimmedName == w2.TrimmedName &&
             //        w1.Parameters.Count == w2.Parameters.Count &&
             //        ParametersDifferOnlyInReference(w1.Parameters, w2.Parameters)
@@ -1203,7 +1199,7 @@ namespace Bind
                         }
                         else
                         {
-                            p.QualifiedType = "String"; 
+                            p.QualifiedType = "String";
                         }
                     }
 
@@ -1248,7 +1244,5 @@ namespace Bind
                 func.ReturnType.QualifiedType = "bool";
             }
         }
-
-        #endregion
     }
 }

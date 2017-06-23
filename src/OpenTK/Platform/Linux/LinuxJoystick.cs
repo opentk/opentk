@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -66,8 +64,6 @@ namespace OpenTK.Platform.Linux
 
     sealed class LinuxJoystick : IJoystickDriver2
     {
-        #region Fields
-
         static readonly HatPosition[,] HatPositions = new HatPosition[,]
         {
             { HatPosition.UpLeft, HatPosition.Up, HatPosition.UpRight },
@@ -83,10 +79,6 @@ namespace OpenTK.Platform.Linux
             new DeviceCollection<LinuxJoystickDetails>();
 
         bool disposed;
-
-        #endregion
-
-        #region Constructors
 
         public LinuxJoystick()
         {
@@ -106,10 +98,6 @@ namespace OpenTK.Platform.Linux
                 OpenJoysticks(path);
             }
         }
-
-        #endregion
-
-        #region Private Members
 
         void OpenJoysticks(string path)
         {
@@ -164,10 +152,6 @@ namespace OpenTK.Platform.Linux
                 }
             }
         }
-
-        #endregion
-
-        #region Private Members
 
         Guid CreateGuid(EvdevInputId id, string name)
         {
@@ -463,10 +447,6 @@ namespace OpenTK.Platform.Linux
         static readonly string JoystickPath = "/dev/input";
         static readonly string JoystickPathLegacy = "/dev";
 
-        #endregion
-
-        #region IDisposable Members
-
         public void Dispose()
         {
             Dispose(true);
@@ -495,10 +475,6 @@ namespace OpenTK.Platform.Linux
         {
             Dispose(false);
         }
-
-        #endregion
-
-        #region IJoystickDriver2 Members
 
         JoystickState IJoystickDriver2.GetState(int index)
         {
@@ -530,7 +506,5 @@ namespace OpenTK.Platform.Linux
             }
             return Guid.Empty;
         }
-
-        #endregion
     }
 }

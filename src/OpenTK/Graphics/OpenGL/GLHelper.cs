@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -23,10 +22,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
-
-#region --- Using Directives ---
 
 using System;
 using System.Collections.Generic;
@@ -39,8 +35,6 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Reflection.Emit;
 
-
-#endregion
 
 namespace OpenTK.Graphics.OpenGL
 {
@@ -71,8 +65,6 @@ namespace OpenTK.Graphics.OpenGL
     /// <see href="http://opengl.org/registry/"/>
     public sealed partial class GL : GraphicsBindingsBase
     {
-        #region --- Fields ---
-
         internal const string Library = "opengl32.dll";
 
         static readonly object sync_root = new object();
@@ -80,10 +72,6 @@ namespace OpenTK.Graphics.OpenGL
         static IntPtr[] EntryPoints;
         static byte[] EntryPointNames;
         static int[] EntryPointNameOffsets;
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Constructs a new instance.
@@ -95,10 +83,6 @@ namespace OpenTK.Graphics.OpenGL
             _EntryPointNameOffsetsInstance = EntryPointNameOffsets;
         }
 
-        #endregion
-
-        #region --- Protected Members ---
-
         /// <summary>
         /// Returns a synchronization token unique for the GL class.
         /// </summary>
@@ -107,14 +91,8 @@ namespace OpenTK.Graphics.OpenGL
             get { return sync_root; }
         }
 
-        #endregion
-
-        #region --- GL Overloads ---
-
         // Note: Mono 1.9.1 truncates StringBuilder results (for 'out string' parameters).
         // We work around this issue by doubling the StringBuilder capacity.
-
-        #region public static void Color[34]() overloads
 
         public static void Color3(Color color)
         {
@@ -141,10 +119,6 @@ namespace OpenTK.Graphics.OpenGL
             GL.Color4(color.R, color.G, color.B, color.A);
         }
 
-        #endregion
-
-        #region public static void ClearColor() overloads
-
         public static void ClearColor(Color color)
         {
             GL.ClearColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
@@ -154,10 +128,6 @@ namespace OpenTK.Graphics.OpenGL
         {
             GL.ClearColor(color.R, color.G, color.B, color.A);
         }
-
-        #endregion
-
-        #region public static void BlendColor() overloads
 
         public static void BlendColor(Color color)
         {
@@ -169,10 +139,6 @@ namespace OpenTK.Graphics.OpenGL
             GL.BlendColor(color.R, color.G, color.B, color.A);
         }
 
-        #endregion
-
-        #region public static void Material() overloads
-
         public static void Material(MaterialFace face, MaterialParameter pname, Vector4 @params)
         {
             unsafe { Material(face, pname, (float*)&@params.X); }
@@ -183,10 +149,6 @@ namespace OpenTK.Graphics.OpenGL
             unsafe { GL.Material(face, pname, (float*)&@params); }
         }
 
-        #endregion
-
-        #region public static void Light() overloads
-
         public static void Light(LightName name, LightParameter pname, Vector4 @params)
         {
             unsafe { GL.Light(name, pname, (float*)&@params.X); }
@@ -196,10 +158,6 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe { GL.Light(name, pname, (float*)&@params); }
         }
-
-        #endregion
-
-        #region Normal|RasterPos|Vertex|TexCoord|Rotate|Scale|Translate|*Matrix
 
         public static void Normal3(Vector3 normal)
         {
@@ -418,10 +376,6 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
         }
-
-        #endregion
-
-        #region Uniform
 
         [CLSCompliant(false)]
         public static void Uniform2(int location, ref Vector2 vector)
@@ -664,10 +618,6 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
 
-        #endregion
-
-        #region ProgramUniform
-
         [CLSCompliant(false)]
         public static void ProgramUniform2(int program, int location, ref Vector2 vector)
         {
@@ -909,12 +859,6 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
 
-        #endregion
-
-        #region Shaders
-
-        #region GetActiveAttrib
-
         public static string GetActiveAttrib(int program, int index, out int size, out ActiveAttribType type)
         {
             int length;
@@ -924,10 +868,6 @@ namespace OpenTK.Graphics.OpenGL
             GetActiveAttrib(program, index, sb.Capacity, out length, out size, out type, sb);
             return sb.ToString();
         }
-
-        #endregion
-
-        #region GetActiveUniform
 
         public static string GetActiveUniform(int program, int uniformIndex, out int size, out ActiveUniformType type)
         {
@@ -939,10 +879,6 @@ namespace OpenTK.Graphics.OpenGL
             return sb.ToString();
         }
 
-        #endregion
-
-        #region GetActiveUniformName
-
         public static string GetActiveUniformName(int program, int uniformIndex)
         {
             int length;
@@ -952,10 +888,6 @@ namespace OpenTK.Graphics.OpenGL
             GetActiveUniformName(program, uniformIndex, sb.Capacity, out length, sb);
             return sb.ToString();
         }
-
-        #endregion
-
-        #region GetActiveUniformBlockName
 
         public static string GetActiveUniformBlockName(int program, int uniformIndex)
         {
@@ -967,10 +899,6 @@ namespace OpenTK.Graphics.OpenGL
             return sb.ToString();
         }
 
-        #endregion
-
-        #region public static void ShaderSource(Int32 shader, System.String @string)
-
         public static void ShaderSource(Int32 shader, System.String @string)
         {
             unsafe
@@ -980,20 +908,12 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
 
-        #endregion
-
-        #region public static string GetShaderInfoLog(Int32 shader)
-
         public static string GetShaderInfoLog(Int32 shader)
         {
             string info;
             GetShaderInfoLog(shader, out info);
             return info;
         }
-
-        #endregion
-
-        #region public static void GetShaderInfoLog(Int32 shader, out string info)
 
         public static void GetShaderInfoLog(Int32 shader, out string info)
         {
@@ -1012,20 +932,12 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
 
-        #endregion
-
-        #region public static string GetProgramInfoLog(Int32 program)
-
         public static string GetProgramInfoLog(Int32 program)
         {
             string info;
             GetProgramInfoLog(program, out info);
             return info;
         }
-
-        #endregion
-
-        #region public static void GetProgramInfoLog(Int32 program, out string info)
 
         public static void GetProgramInfoLog(Int32 program, out string info)
         {
@@ -1043,12 +955,6 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
 
-        #endregion
-
-        #endregion
-
-        #region public static void PointParameter(PointSpriteCoordOriginParameter param)
-
         /// <summary>
         /// Helper function that defines the coordinate origin of the Point Sprite.
         /// </summary>
@@ -1060,10 +966,6 @@ namespace OpenTK.Graphics.OpenGL
         {
             GL.PointParameter(PointParameterName.PointSpriteCoordOrigin, (int)param);
         }
-
-        #endregion
-
-        #region VertexAttrib|MultiTexCoord
 
         [CLSCompliant(false)]
         public static void VertexAttrib2(Int32 index, ref Vector2 v)
@@ -1161,10 +1063,6 @@ namespace OpenTK.Graphics.OpenGL
             GL.MultiTexCoord4(target, v.X, v.Y, v.Z, v.W);
         }
 
-        #endregion
-
-        #region Rect
-
         [CLSCompliant(false)]
         public static void Rect(RectangleF rect)
         {
@@ -1188,10 +1086,6 @@ namespace OpenTK.Graphics.OpenGL
         {
             GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
         }
-
-        #endregion
-
-        #region [Vertex|Normal|Index|Color|FogCoord|VertexAttrib]Pointer
 
         public static void VertexPointer(int size, VertexPointerType type, int stride, int offset)
         {
@@ -1232,10 +1126,6 @@ namespace OpenTK.Graphics.OpenGL
         {
             VertexAttribPointer(index, size, type, normalized, stride, (IntPtr)offset);
         }
-
-        #endregion
-
-        #region Get[Float|Double]
 
         public static void GetFloat(GetPName pname, out Vector2 vector)
         {
@@ -1309,10 +1199,6 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
 
-        #endregion
-
-        #region Viewport
-
         public static void Viewport(Size size)
         {
             GL.Viewport(0, 0, size.Width, size.Height);
@@ -1338,9 +1224,6 @@ namespace OpenTK.Graphics.OpenGL
             GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
 #endif
-        #endregion
-
-        #region TexEnv
 
         public static void TexEnv(TextureEnvTarget target, TextureEnvParameter pname, Color color)
         {
@@ -1358,10 +1241,6 @@ namespace OpenTK.Graphics.OpenGL
                 TexEnv(target, pname, &color.R);
             }
         }
-
-        #endregion
-
-        #endregion
     }
 
     #pragma warning disable 1574 // XML comment cref attribute could not be resolved, compiler bug in Mono 3.4.0

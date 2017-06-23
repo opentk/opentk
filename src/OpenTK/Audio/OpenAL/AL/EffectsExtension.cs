@@ -1,11 +1,9 @@
-﻿#region --- OpenTK.OpenAL License ---
-/* EfxFunctions.cs
+﻿/* EfxFunctions.cs
  * C headers: \OpenAL 1.1 SDK\include\ "efx.h", "efx-creative.h", "Efx-Util.h"
  * Spec: Effects Extension Guide.pdf (bundled with OpenAL SDK)
  * Copyright (c) 2008 Christoph Brandtner and Stefanos Apostolopoulos
  * See license.txt for license details
  * http://www.OpenTK.net */
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -19,10 +17,6 @@ namespace OpenTK.Audio.OpenAL
     /// </summary>
     public partial class EffectsExtension
     {
-        #region Helpers
-
-        #region BindEffect
-
         /// <summary>(Helper) Selects the Effect type used by this Effect handle.</summary>
         /// <param name="eid">Effect id returned from a successful call to GenEffects.</param>
         /// <param name="type">Effect type.</param>
@@ -40,10 +34,6 @@ namespace OpenTK.Audio.OpenAL
         {
             Imported_alEffecti((uint)eid, EfxEffecti.EffectType, (int)type);
         }
-
-        #endregion BindEffect
-
-        #region BindFilterToSource
 
         /// <summary>(Helper) reroutes the output of a Source through a Filter.</summary>
         /// <param name="source">A valid Source handle.</param>
@@ -63,10 +53,6 @@ namespace OpenTK.Audio.OpenAL
             AL.Source((uint)source, ALSourcei.EfxDirectFilter, (int)filter);
         }
 
-        #endregion BindFilterToSource
-
-        #region BindEffectToAuxiliarySlot
-
         /// <summary>(Helper) Attaches an Effect to an Auxiliary Effect Slot.</summary>
         /// <param name="auxiliaryeffectslot">The slot handle to attach the Effect to.</param>
         /// <param name="effect">The Effect handle that is being attached.</param>
@@ -84,10 +70,6 @@ namespace OpenTK.Audio.OpenAL
         {
             AuxiliaryEffectSlot((uint)auxiliaryeffectslot, EfxAuxiliaryi.EffectslotEffect, (int)effect);
         }
-
-        #endregion BindEffectToAuxiliarySlot
-
-        #region BindSourceToAuxiliarySlot
 
         /// <summary>(Helper) Reroutes a Source's output into an Auxiliary Effect Slot.</summary>
         /// <param name="source">The Source handle who's output is forwarded.</param>
@@ -110,14 +92,6 @@ namespace OpenTK.Audio.OpenAL
         {
             AL.Source((uint)source, ALSource3i.EfxAuxiliarySendFilter, (int)slot, (int)slotnumber, (int)filter);
         }
-
-        #endregion BindSourceToAuxiliarySlot
-
-        #endregion Helpers
-
-        #region Effect Object
-
-        #region alGenEffects
 
         //[CLSCompliant(false)]
         unsafe private delegate void Delegate_alGenEffects(int n, [Out] uint* effects);
@@ -202,10 +176,6 @@ namespace OpenTK.Audio.OpenAL
 
         }
 
-        #endregion alGenEffects
-
-        #region alDeleteEffects
-
         //[CLSCompliant(false)]
         unsafe private delegate void Delegate_alDeleteEffects(int n, [In] uint* effects);
         // typedef void (__cdecl *LPALDELETEEFFECTS)( ALsizei n, ALuint* effects );
@@ -280,10 +250,6 @@ namespace OpenTK.Audio.OpenAL
             }
         }
 
-        #endregion alDeleteEffects
-
-        #region alIsEffect
-
         //[CLSCompliant(false)]
         private delegate bool Delegate_alIsEffect(uint eid);
         // typedef ALboolean (__cdecl *LPALISEFFECT)( ALuint eid );
@@ -309,13 +275,9 @@ namespace OpenTK.Audio.OpenAL
             return Imported_alIsEffect((uint)eid);
         }
 
-        #endregion alIsEffect
-
-        #region alEffecti
-
         //[CLSCompliant(false)]
         private delegate void Delegate_alEffecti(uint eid, EfxEffecti param, int value);
-        // typedef void (__cdecl *LPALEFFECTI)( ALuint eid, ALenum param, ALint value); 
+        // typedef void (__cdecl *LPALEFFECTI)( ALuint eid, ALenum param, ALint value);
 
         //[CLSCompliant(false)]
         private Delegate_alEffecti Imported_alEffecti;
@@ -339,10 +301,6 @@ namespace OpenTK.Audio.OpenAL
         {
             Imported_alEffecti((uint)eid, param, value);
         }
-
-        #endregion alEffecti
-
-        #region alEffectf
 
         //[CLSCompliant(false)]
         private delegate void Delegate_alEffectf(uint eid, EfxEffectf param, float value);
@@ -371,13 +329,9 @@ namespace OpenTK.Audio.OpenAL
             Imported_alEffectf((uint)eid, param, value);
         }
 
-        #endregion alEffectf
-
-        #region alEffectfv
-
         //[CLSCompliant(false)]
         unsafe private delegate void Delegate_alEffectfv(uint eid, EfxEffect3f param, [In] float* values);
-        // typedef void (__cdecl *LPALEFFECTFV)( ALuint eid, ALenum param, ALfloat* values ); 
+        // typedef void (__cdecl *LPALEFFECTFV)( ALuint eid, ALenum param, ALfloat* values );
 
         //[CLSCompliant(false)]
         private Delegate_alEffectfv Imported_alEffectfv;
@@ -407,10 +361,6 @@ namespace OpenTK.Audio.OpenAL
         {
             Effect((uint)eid, param, ref values);
         }
-
-        #endregion alEffectfv
-
-        #region alGetEffecti
 
         //[CLSCompliant(false)]
         unsafe private delegate void Delegate_alGetEffecti(uint eid, EfxEffecti pname, [Out] int* value);
@@ -445,10 +395,6 @@ namespace OpenTK.Audio.OpenAL
             GetEffect((uint)eid, pname, out value);
         }
 
-        #endregion alGetEffecti
-
-        #region alGetEffectf
-
         //[CLSCompliant(false)]
         unsafe private delegate void Delegate_alGetEffectf(uint eid, EfxEffectf pname, [Out]float* value);
         // typedef void (__cdecl *LPALGETEFFECTF)( ALuint eid, ALenum pname, ALfloat* value );
@@ -481,10 +427,6 @@ namespace OpenTK.Audio.OpenAL
         {
             GetEffect((uint)eid, pname, out value);
         }
-
-        #endregion alGetEffectf
-
-        #region alGetEffectfv
 
         //[CLSCompliant(false)]
         unsafe private delegate void Delegate_alGetEffectfv(uint eid, EfxEffect3f param, [Out] float* values);
@@ -522,21 +464,13 @@ namespace OpenTK.Audio.OpenAL
             GetEffect((uint)eid, param, out values);
         }
 
-        #endregion alGetEffectfv
-
         // Not used:
-        // typedef void (__cdecl *LPALEFFECTIV)( ALuint eid, ALenum param, ALint* values ); 
+        // typedef void (__cdecl *LPALEFFECTIV)( ALuint eid, ALenum param, ALint* values );
         // typedef void (__cdecl *LPALGETEFFECTIV)( ALuint eid, ALenum pname, ALint* values );
-
-        #endregion Effect Object
-
-        #region Filter Object
-
-        #region alGenFilters
 
         //[CLSCompliant(false)]
         unsafe private delegate void Delegate_alGenFilters(int n, [Out] uint* filters);
-        // typedef void (__cdecl *LPALGENFILTERS)( ALsizei n, ALuint* filters ); 
+        // typedef void (__cdecl *LPALGENFILTERS)( ALsizei n, ALuint* filters );
 
         //[CLSCompliant(false)]
         private Delegate_alGenFilters Imported_alGenFilters;
@@ -612,10 +546,6 @@ namespace OpenTK.Audio.OpenAL
             }
         }
 
-        #endregion alGenFilters
-
-        #region alDeleteFilters
-
         //[CLSCompliant(false)]
         unsafe private delegate void Delegate_alDeleteFilters(int n, [In] uint* filters);
         // typedef void (__cdecl *LPALDELETEFILTERS)( ALsizei n, ALuint* filters );
@@ -690,10 +620,6 @@ namespace OpenTK.Audio.OpenAL
             }
         }
 
-        #endregion alDeleteFilters
-
-        #region alIsFilter
-
         //[CLSCompliant(false)]
         private delegate bool Delegate_alIsFilter(uint fid);
         // typedef ALboolean (__cdecl *LPALISFILTER)( ALuint fid );
@@ -718,10 +644,6 @@ namespace OpenTK.Audio.OpenAL
         {
             return Imported_alIsFilter((uint)fid);
         }
-
-        #endregion alIsFilter
-
-        #region alFilteri
 
         //[CLSCompliant(false)]
         private delegate void Delegate_alFilteri(uint fid, EfxFilteri param, int value);
@@ -750,10 +672,6 @@ namespace OpenTK.Audio.OpenAL
             Imported_alFilteri((uint)fid, param, value);
         }
 
-        #endregion alFilteri
-
-        #region alFilterf
-
         //[CLSCompliant(false)]
         private delegate void Delegate_alFilterf(uint fid, EfxFilterf param, float value);
         // typedef void (__cdecl *LPALFILTERF)( ALuint fid, ALenum param, ALfloat value);
@@ -780,10 +698,6 @@ namespace OpenTK.Audio.OpenAL
         {
             Imported_alFilterf((uint)fid, param, value);
         }
-
-        #endregion alFilterf
-
-        #region alGetFilteri
 
         //[CLSCompliant(false)]
         unsafe private delegate void Delegate_alGetFilteri(uint fid, EfxFilteri pname, [Out] int* value);
@@ -818,10 +732,6 @@ namespace OpenTK.Audio.OpenAL
             GetFilter((uint)fid, pname, out value);
         }
 
-        #endregion alGetFilteri
-
-        #region alGetFilterf
-
         //[CLSCompliant(false)]
         unsafe private delegate void Delegate_alGetFilterf(uint fid, EfxFilterf pname, [Out] float* value);
         // typedef void (__cdecl *LPALGETFILTERF)( ALuint fid, ALenum pname, ALfloat* value );
@@ -855,19 +765,11 @@ namespace OpenTK.Audio.OpenAL
             GetFilter((uint)fid, pname, out value);
         }
 
-        #endregion alGetFilterf
-
         // Not used:
-        // typedef void (__cdecl *LPALFILTERIV)( ALuint fid, ALenum param, ALint* values ); 
-        // typedef void (__cdecl *LPALFILTERFV)( ALuint fid, ALenum param, ALfloat* values ); 
+        // typedef void (__cdecl *LPALFILTERIV)( ALuint fid, ALenum param, ALint* values );
+        // typedef void (__cdecl *LPALFILTERFV)( ALuint fid, ALenum param, ALfloat* values );
         // typedef void (__cdecl *LPALGETFILTERIV)( ALuint fid, ALenum pname, ALint* values );
         // typedef void (__cdecl *LPALGETFILTERFV)( ALuint fid, ALenum pname, ALfloat* values );
-
-        #endregion Filter Object
-
-        #region Auxiliary Effect Slot Object
-
-        #region alGenAuxiliaryEffectSlots
 
         //[CLSCompliant(false)]
         unsafe private delegate void Delegate_alGenAuxiliaryEffectSlots(int n, [Out] uint* slots);
@@ -945,10 +847,6 @@ namespace OpenTK.Audio.OpenAL
             }
         }
 
-        #endregion alGenAuxiliaryEffectSlots
-
-        #region DeleteAuxiliaryEffectSlots
-
         unsafe private delegate void Delegate_alDeleteAuxiliaryEffectSlots(int n, [In] uint* slots);
         // typedef void (__cdecl *LPALDELETEAUXILIARYEFFECTSLOTS)( ALsizei n, ALuint* slots );
 
@@ -1021,10 +919,6 @@ namespace OpenTK.Audio.OpenAL
             }
         }
 
-        #endregion alDeleteAuxiliaryEffectSlots
-
-        #region alIsAuxiliaryEffectSlot
-
         //[CLSCompliant(false)]
         private delegate bool Delegate_alIsAuxiliaryEffectSlot(uint slot);
         // typedef ALboolean (__cdecl *LPALISAUXILIARYEFFECTSLOT)( ALuint slot );
@@ -1050,13 +944,9 @@ namespace OpenTK.Audio.OpenAL
             return Imported_alIsAuxiliaryEffectSlot((uint)slot);
         }
 
-        #endregion alIsAuxiliaryEffectSlot
-
-        #region alAuxiliaryEffectSloti
-
         //[CLSCompliant(false)]
         private delegate void Delegate_alAuxiliaryEffectSloti(uint asid, EfxAuxiliaryi param, int value);
-        // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTI)( ALuint asid, ALenum param, ALint value ); 
+        // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTI)( ALuint asid, ALenum param, ALint value );
 
         //[CLSCompliant(false)]
         private Delegate_alAuxiliaryEffectSloti Imported_alAuxiliaryEffectSloti;
@@ -1080,10 +970,6 @@ namespace OpenTK.Audio.OpenAL
         {
             Imported_alAuxiliaryEffectSloti((uint)asid, param, value);
         }
-
-        #endregion alAuxiliaryEffectSloti
-
-        #region alAuxiliaryEffectSlotf
 
         //[CLSCompliant(false)]
         private delegate void Delegate_alAuxiliaryEffectSlotf(uint asid, EfxAuxiliaryf param, float value);
@@ -1111,10 +997,6 @@ namespace OpenTK.Audio.OpenAL
         {
             Imported_alAuxiliaryEffectSlotf((uint)asid, param, value);
         }
-
-        #endregion alAuxiliaryEffectSlotf
-
-        #region alGetAuxiliaryEffectSloti
 
         //[CLSCompliant(false)]
         unsafe private delegate void Delegate_alGetAuxiliaryEffectSloti(uint asid, EfxAuxiliaryi pname, [Out] int* value);
@@ -1149,10 +1031,6 @@ namespace OpenTK.Audio.OpenAL
             GetAuxiliaryEffectSlot((uint)asid, pname, out value);
         }
 
-        #endregion alGetAuxiliaryEffectSloti
-
-        #region alGetAuxiliaryEffectSlotf
-
         //[CLSCompliant(false)]
         unsafe private delegate void Delegate_alGetAuxiliaryEffectSlotf(uint asid, EfxAuxiliaryf pname, [Out] float* value);
         // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTF)( ALuint asid, ALenum pname, ALfloat* value );
@@ -1186,17 +1064,11 @@ namespace OpenTK.Audio.OpenAL
             GetAuxiliaryEffectSlot((uint)asid, pname, out value);
         }
 
-        #endregion alGetAuxiliaryEffectSlotf
-
         // Not used:
-        // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTIV)( ALuint asid, ALenum param, ALint* values ); 
-        // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTFV)( ALuint asid, ALenum param, ALfloat* values ); 
+        // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTIV)( ALuint asid, ALenum param, ALint* values );
+        // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTFV)( ALuint asid, ALenum param, ALfloat* values );
         // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTIV)( ALuint asid, ALenum pname, ALint* values );
         // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTFV)( ALuint asid, ALenum pname, ALfloat* values );
-
-        #endregion Auxiliary Effect Slot Object
-
-        #region Constructor / Extension Loading
 
         private bool _valid;
 
@@ -1282,7 +1154,5 @@ namespace OpenTK.Audio.OpenAL
             // didn't return so far, everything went fine.
             _valid = true;
         }
-
-        #endregion Constructor / Extension Loading
     }
 }

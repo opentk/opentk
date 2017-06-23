@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2010 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -44,17 +42,11 @@ namespace Bind
         IBind Generator { get; set; }
         Settings Settings { get { return Generator.Settings; } }
 
-        #region ISpecWriter Members
-
         public void WriteBindings(IBind generator)
         {
             Generator = generator;
             WriteBindings(generator.Delegates, generator.Wrappers, generator.Enums);
         }
-
-        #endregion
-
-        #region Private Members
 
         private static void ConsoleRewrite(string text)
         {
@@ -66,8 +58,6 @@ namespace Bind
             Console.WriteLine();
             Console.SetCursorPosition(left, top);
         }
-
-        #region WriteBindings
 
         void WriteBindings(DelegateCollection delegates, FunctionCollection wrappers, EnumCollection enums)
         {
@@ -143,10 +133,6 @@ namespace Bind
             File.Move(temp_wrappers_file, output_wrappers);
         }
 
-        #endregion
-
-        #region WriteWrappers
-
         void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers,
             DelegateCollection delegates, EnumCollection enums,
             IDictionary<string, string> CSTypes)
@@ -163,7 +149,7 @@ namespace Bind
             sw.WriteLine("partial class {0}", Settings.OutputClass);
             sw.WriteLine("{");
             sw.Indent();
-            
+
             // Write constructor
             sw.WriteLine("static {0}()", Settings.OutputClass);
             sw.WriteLine("{");
@@ -395,12 +381,8 @@ namespace Bind
             catch (Exception e)
             {
                 Console.WriteLine("[Warning] Error documenting function {0}: {1}", f.WrappedDelegate.Name, e.ToString());
-            }   
+            }
         }
-
-        #endregion
-
-        #region WriteTypes
 
         public void WriteTypes(BindStreamWriter sw, Dictionary<string, string> CSTypes)
         {
@@ -410,10 +392,6 @@ namespace Bind
                 sw.WriteLine("using {0} = System.{1};", s, CSTypes[s]);
             }
         }
-
-        #endregion
-
-        #region WriteConstants
 
         void WriteConstants(BindStreamWriter sw, IEnumerable<Constant> constants)
         {
@@ -438,10 +416,6 @@ namespace Bind
                     sw.WriteLine(",");
             }
         }
-
-        #endregion
-
-        #region WriteEnums
 
         void WriteEnums(BindStreamWriter sw, EnumCollection enums, FunctionCollection wrappers)
         {
@@ -548,17 +522,11 @@ namespace Bind
             }
         }
 
-        #endregion
-
-        #region WriteLicense
-
         public void WriteLicense(BindStreamWriter sw)
         {
             sw.WriteLine(File.ReadAllText(Path.Combine(Settings.InputPath, Settings.LicenseFile)));
             sw.WriteLine();
         }
-
-        #endregion
 
         // For example, if parameter foo has indirection level = 1, then it
         // is consumed as 'foo*' in the fixed_statements and the call string.
@@ -757,7 +725,5 @@ namespace Bind
                 pointer_levels[type.Pointer],
                 array_levels[type.Array]);
         }
-
-        #endregion
     }
 }

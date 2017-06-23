@@ -23,8 +23,6 @@ namespace OpenTK.Graphics.ES11
         static byte[] EntryPointNames;
         static int[] EntryPointNameOffsets;
 
-        #region Constructors
-
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
@@ -35,10 +33,6 @@ namespace OpenTK.Graphics.ES11
             _EntryPointNameOffsetsInstance = EntryPointNameOffsets;
         }
 
-        #endregion
-
-        #region --- Protected Members ---
-
         /// <summary>
         /// Returns a synchronization token unique for the GL class.
         /// </summary>
@@ -46,8 +40,6 @@ namespace OpenTK.Graphics.ES11
         {
             get { return sync_root; }
         }
-
-        #endregion
 
     }
 }

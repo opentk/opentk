@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -52,8 +50,6 @@ namespace OpenTK.Graphics
         /// <returns>The current OpenGL context, or <c>IntPtr.Zero</c> if no context is on the calling thread.</returns>
         public delegate ContextHandle GetCurrentContextDelegate();
 
-        #region --- Fields ---
-
         IGraphicsContext implementation;  // The actual render context implementation for the underlying platform.
         bool disposed;
         bool check_errors = true;
@@ -71,10 +67,6 @@ namespace OpenTK.Graphics
         // Maps OS-specific context handles to GraphicsContext instances.
         readonly static Dictionary<ContextHandle, IGraphicsContext> available_contexts =
             new Dictionary<ContextHandle, IGraphicsContext>();
-
-        #endregion
-
-        #region --- Constructors ---
 
         /// <summary>
         /// Constructs a new GraphicsContext with the specified GraphicsMode and attaches it to the specified window.
@@ -275,10 +267,6 @@ namespace OpenTK.Graphics
             : this(handle, Platform.Utilities.CreateGetAddress(), Factory.Default.CreateGetCurrentGraphicsContext())
         { }
 
-        #endregion
-
-        #region Public Members
-
         /// <summary>
         /// Returns a <see cref="System.String"/> representing this instance.
         /// </summary>
@@ -307,10 +295,6 @@ namespace OpenTK.Graphics
             return (obj is GraphicsContext) &&
                 (this as IGraphicsContextInternal).Context == (obj as IGraphicsContextInternal).Context;
         }
-
-        #endregion
-
-        #region Private Members
 
         static void AddContext(IGraphicsContextInternal context)
         {
@@ -358,12 +342,6 @@ namespace OpenTK.Graphics
             return null;
         }
 
-        #endregion
-
-        #region --- Static Members ---
-
-        #region public static void Assert()
-
         /// <summary>
         /// Checks if a GraphicsContext exists in the calling thread and throws a GraphicsContextMissingException if it doesn't.
         /// </summary>
@@ -373,10 +351,6 @@ namespace OpenTK.Graphics
             if (GraphicsContext.CurrentContext == null)
                 throw new GraphicsContextMissingException();
         }
-
-        #endregion
-
-        #region public static IGraphicsContext CurrentContext
 
         internal static GetCurrentContextDelegate GetCurrentContext;
 
@@ -412,10 +386,6 @@ namespace OpenTK.Graphics
             }
         }
 
-        #endregion
-
-        #region public static bool ShareContexts
-
         /// <summary>Gets or sets a System.Boolean, indicating whether GraphicsContext resources are shared</summary>
         /// <remarks>
         /// <para>If ShareContexts is true, new GLContexts will share resources. If this value is
@@ -423,10 +393,6 @@ namespace OpenTK.Graphics
         /// <para>Changing this value will not affect already created GLContexts.</para>
         /// </remarks>
         public static bool ShareContexts { get { return share_contexts; } set { share_contexts = value; } }
-
-        #endregion
-
-        #region public static bool DirectRendering
 
         /// <summary>Gets or sets a System.Boolean, indicating whether GraphicsContexts will perform direct rendering.</summary>
         /// <remarks>
@@ -444,12 +410,6 @@ namespace OpenTK.Graphics
             get { return direct_rendering; }
             set { direct_rendering = value; }
         }
-
-        #endregion
-
-        #endregion
-
-        #region --- IGraphicsContext Members ---
 
         /// <summary>
         /// Gets or sets a System.Boolean, indicating whether automatic error checking should be performed.
@@ -538,10 +498,6 @@ namespace OpenTK.Graphics
             implementation.LoadAll();
         }
 
-        #endregion
-
-        #region --- IGraphicsContextInternal Members ---
-
         /// <summary>
         /// Gets the platform-specific implementation of this IGraphicsContext.
         /// </summary>
@@ -607,10 +563,6 @@ namespace OpenTK.Graphics
             return (implementation as IGraphicsContextInternal).GetAddress(function);
         }
 
-        #endregion
-
-        #region --- IDisposable Members ---
-
         /// <summary>
         /// Disposes of the GraphicsContext.
         /// </summary>
@@ -655,7 +607,5 @@ namespace OpenTK.Graphics
         {
             Dispose(false);
         }
-
-        #endregion
     }
 }

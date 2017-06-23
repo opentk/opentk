@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // Cocoa.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System.Runtime.InteropServices;
 using System;
@@ -216,7 +214,7 @@ namespace OpenTK.Platform.MacOS
             if (str == null)
                 return IntPtr.Zero;
 
-            unsafe 
+            unsafe
             {
                 fixed (char* ptrFirstChar = str)
                 {
@@ -244,7 +242,7 @@ namespace OpenTK.Platform.MacOS
                     IntPtr nsData = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSData"), Selector.Alloc),
                         Selector.Get("initWithBytes:length:"), (IntPtr)pBytes, b.Length);
 
-                    IntPtr nsImage = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSImage"), Selector.Alloc), 
+                    IntPtr nsImage = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSImage"), Selector.Alloc),
                         Selector.Get("initWithData:"), nsData);
 
                     Cocoa.SendVoid(nsData, Selector.Release);

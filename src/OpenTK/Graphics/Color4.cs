@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2008 the Open Toolkit library, except where noted.
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -41,8 +39,6 @@ namespace OpenTK.Graphics
     [Serializable]
     public struct Color4 : IEquatable<Color4>
     {
-        #region Fields
-
         /// <summary>
         /// The red component of this Color4 structure.
         /// </summary>
@@ -62,10 +58,6 @@ namespace OpenTK.Graphics
         /// The alpha component of this Color4 structure.
         /// </summary>
         public float A;
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Constructs a new Color4 structure from the specified components.
@@ -96,10 +88,6 @@ namespace OpenTK.Graphics
             B = b / (float)Byte.MaxValue;
             A = a / (float)Byte.MaxValue;
         }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Converts this color to an integer representation with 8 bits per channel.
@@ -193,8 +181,6 @@ namespace OpenTK.Graphics
         {
             return String.Format("{{(R, G, B, A) = ({0}, {1}, {2}, {3})}}", R.ToString(), G.ToString(), B.ToString(), A.ToString());
         }
-
-        #region System colors
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 255, 255, 0).
@@ -901,14 +887,6 @@ namespace OpenTK.Graphics
         /// </summary>
         public static Color4 YellowGreen { get { return new Color4(154, 205, 50, 255); } }
 
-        #endregion
-
-        #endregion
-
-        #region Color conversions
-
-        #region sRGB
-
         /// <summary>
         /// Converts sRGB color values to RGB color values.
         /// </summary>
@@ -992,10 +970,6 @@ namespace OpenTK.Graphics
 
             return new Color4(r, g, b, rgb.A);
         }
-
-        #endregion
-
-        #region HSL
 
         /// <summary>
         /// Converts HSL color values to RGB color values.
@@ -1113,10 +1087,6 @@ namespace OpenTK.Graphics
             return new Vector4(hue, saturation, lightness, rgb.A);
         }
 
-        #endregion
-
-        #region HSV
-
         /// <summary>
         /// Converts HSV color values to RGB color values.
         /// </summary>
@@ -1227,10 +1197,6 @@ namespace OpenTK.Graphics
             return new Vector4(hue, saturation, M, rgb.A);
         }
 
-        #endregion
-
-        #region XYZ
-
         /// <summary>
         /// Converts XYZ color values to RGB color values.
         /// </summary>
@@ -1266,10 +1232,6 @@ namespace OpenTK.Graphics
             var z = (0.00f * rgb.R + 0.01f * rgb.G + 0.99f * rgb.B) / 0.17697f;
             return new Vector4(x, y, z, rgb.A);
         }
-
-        #endregion
-
-        #region YUV
 
         /// <summary>
         /// Converts YCbCr color values to RGB color values.
@@ -1307,10 +1269,6 @@ namespace OpenTK.Graphics
             var v = 0.5f * rgb.R + -0.418688f * rgb.G + -0.081312f * rgb.B;
             return new Vector4(y, u, v, rgb.A);
         }
-
-        #endregion
-
-        #region HCY
 
         /// <summary>
         /// Converts HCY color values to RGB color values.
@@ -1416,12 +1374,6 @@ namespace OpenTK.Graphics
             return new Vector4(hue, C, luminance, rgb.A);
         }
 
-        #endregion
-
-        #endregion
-
-        #region IEquatable<Color4> Members
-
         /// <summary>
         /// Compares whether this Color4 structure is equal to the specified Color4.
         /// </summary>
@@ -1435,7 +1387,5 @@ namespace OpenTK.Graphics
                 this.B == other.B &&
                 this.A == other.A;
         }
-
-        #endregion
     }
 }

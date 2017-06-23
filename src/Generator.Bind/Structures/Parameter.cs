@@ -1,8 +1,6 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -18,8 +16,6 @@ namespace Bind.Structures
     class Parameter : Type, IComparable<Parameter>, IEquatable<Parameter>
     {
         string cache;
-
-        #region Constructors
 
         /// <summary>
         /// Creates a new Parameter without type and name.
@@ -49,10 +45,6 @@ namespace Bind.Structures
             //this.rebuild = false;
         }
 
-        #endregion
-
-        #region RawName
-
         /// <summary>
         /// Gets or sets the raw name of the parameter.
         /// </summary>
@@ -61,10 +53,6 @@ namespace Bind.Structures
             get;
             private set;
         }
-
-        #endregion
-
-        #region Name
 
         /// <summary>
         /// Gets the name of the parameter. If the name matches a keyword of the current language,
@@ -90,10 +78,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region UnmanagedType
-
         UnmanagedType _unmanaged_type;
         /// <summary>
         /// Gets or sets the name of the parameter.
@@ -109,10 +93,6 @@ namespace Bind.Structures
                 }
             }
         }
-
-        #endregion
-
-        #region public FlowDirection Flow
 
         FlowDirection _flow;
 
@@ -131,10 +111,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public bool NeedsPin
-
         public bool NeedsPin
         {
             get
@@ -143,10 +119,6 @@ namespace Bind.Structures
                         !CurrentType.ToLower().Contains("string");
             }
         }
-
-        #endregion
-
-        #region public bool Unchecked
 
         private bool _unchecked;
 
@@ -162,20 +134,12 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public bool Generic
-        
         bool generic;
         public bool Generic
         {
             get { return generic; }
             set { generic = value; }
         }
-
-        #endregion
-
-        #region public bool DiffersOnlyOnReference
 
         // Returns true if this parameter differs only on reference compared to another parameter, i.e:
         // returns true for 'int' & 'ref int'
@@ -191,10 +155,6 @@ namespace Bind.Structures
                 other.Reference && !(Reference || Array > 0 || Pointer != 0));
         }
 
-        #endregion
-
-        #region public string ComputeSize
-
         string computeSize;
         public string ComputeSize
         {
@@ -202,20 +162,13 @@ namespace Bind.Structures
             set { computeSize = value; }
         }
 
-        #endregion
-
-        #region Static Members
-
         // Returns the FlowDirection that matches the specified string
         // ("out" or "in", otherwise undefined).
         public static FlowDirection GetFlowDirection(string direction)
         {
             return direction == "out" ? FlowDirection.Out : direction == "in" ? FlowDirection.In : FlowDirection.Undefined;
         }
-        
-        #endregion
 
-        #region IComparable<Parameter> Members
 
         public int CompareTo(Parameter other)
         {
@@ -225,23 +178,15 @@ namespace Bind.Structures
             return result;
         }
 
-        #endregion
-
-        #region ToString
-
         public override string ToString()
         {
             return String.Format("{2}{0} {1}",
                 base.ToString(),
                 Name,
-                Reference ? 
+                Reference ?
                     Flow == FlowDirection.Out ? "out " : "ref " :
                     String.Empty);
         }
-
-        #endregion
-
-        #region IEquatable<Parameter> Members
 
         public bool Equals(Parameter other)
         {
@@ -251,8 +196,6 @@ namespace Bind.Structures
 
             return result;
         }
-
-        #endregion
     }
 
     /// <summary>
@@ -269,8 +212,6 @@ namespace Bind.Structures
 
         public bool Rebuild { get; set; }
         Settings Settings { get; set; }
-
-        #region Constructors
 
         public ParameterCollection()
         {
@@ -290,19 +231,11 @@ namespace Bind.Structures
                 Add(new Parameter(p));
         }
 
-        #endregion
-
-        #region BuildCache
-
         void BuildCache()
         {
             BuildReferenceAndPointerParametersCache();
             Rebuild = false;
         }
-
-        #endregion
-
-        #region public bool HasPointerParameters
 
         public bool HasPointerParameters
         {
@@ -317,10 +250,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public bool HasReferenceParameters
-
         public bool HasReferenceParameters
         {
             get
@@ -333,10 +262,6 @@ namespace Bind.Structures
                 return hasReferenceParameters;
             }
         }
-
-        #endregion
-
-        #region public bool HasUnsignedParameters
 
         public bool HasUnsignedParameters
         {
@@ -351,10 +276,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public bool HasGenericParameters
-
         public bool HasGenericParameters
         {
             get
@@ -367,10 +288,7 @@ namespace Bind.Structures
                 return hasGenericParameters;
             }
         }
-        
-        #endregion
 
-        #region void BuildReferenceAndPointerParametersCache()
 
         void BuildReferenceAndPointerParametersCache()
         {
@@ -389,10 +307,6 @@ namespace Bind.Structures
                     hasGenericParameters = true;
             }
         }
-
-        #endregion
-
-        #region ToString
 
         // Only use for debugging, not for code generation!
         public override string ToString()
@@ -414,10 +328,6 @@ namespace Bind.Structures
             return sb.ToString();
         }
 
-        #endregion
-
-        #region ContainsType
-
         public bool ContainsType(string type)
         {
             foreach (Parameter p in this)
@@ -426,10 +336,6 @@ namespace Bind.Structures
             return false;
         }
 
-        #endregion
-
-        #region IList<Parameter> Members
-        
         public void Add(Parameter p)
         {
             Parameters.Add(p);
@@ -511,10 +417,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region IComparable<ParameterCollection> Members
-
         public int CompareTo(ParameterCollection other)
         {
             if (Count < other.Count)
@@ -537,10 +439,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region IEquatable<ParameterCollection> Members
-
         public bool Equals(ParameterCollection other)
         {
             if (Count != other.Count)
@@ -553,7 +451,5 @@ namespace Bind.Structures
             }
             return result;
         }
-
-        #endregion
     }
 }

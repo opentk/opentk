@@ -1,4 +1,3 @@
-#region --- License ---
 /*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
 
@@ -20,7 +19,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-#endregion
 
 using System;
 using System.Runtime.InteropServices;
@@ -36,8 +34,6 @@ namespace OpenTK
     [StructLayout(LayoutKind.Sequential)]
     public struct Quaternion : IEquatable<Quaternion>
     {
-        #region Fields
-
         /// <summary>
         /// The X, Y and Z components of this instance.
         /// </summary>
@@ -47,10 +43,6 @@ namespace OpenTK
         /// The W component of this instance.
         /// </summary>
         public float W;
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Construct a new Quaternion from vector and w components
@@ -107,12 +99,6 @@ namespace OpenTK
             :this(eulerAngles.X, eulerAngles.Y, eulerAngles.Z)
         { }
 
-        #endregion
-
-        #region Public Members
-
-        #region Properties
-
         /// <summary>
         /// Gets or sets the X component of this instance.
         /// </summary>
@@ -130,12 +116,6 @@ namespace OpenTK
         /// </summary>
         [XmlIgnore]
         public float Z { get { return Xyz.Z; } set { Xyz.Z = value; } }
-
-        #endregion
-
-        #region Instance
-
-        #region ToAxisAngle
 
         /// <summary>
         /// Convert the current quaternion to axis angle representation
@@ -177,10 +157,6 @@ namespace OpenTK
             return result;
         }
 
-        #endregion
-
-        #region public float Length
-
         /// <summary>
         /// Gets the length (magnitude) of the quaternion.
         /// </summary>
@@ -193,10 +169,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region public float LengthSquared
-
         /// <summary>
         /// Gets the square of the quaternion length (magnitude).
         /// </summary>
@@ -207,8 +179,6 @@ namespace OpenTK
                 return W * W + Xyz.LengthSquared;
             }
         }
-
-        #endregion
 
         /// <summary>
         /// Returns a copy of the Quaternion scaled to unit length.
@@ -238,8 +208,6 @@ namespace OpenTK
             return q;
         }
 
-        #region public void Normalize()
-
         /// <summary>
         /// Scales the Quaternion to unit length.
         /// </summary>
@@ -250,10 +218,6 @@ namespace OpenTK
             W *= scale;
         }
 
-        #endregion
-
-        #region public void Conjugate()
-
         /// <summary>
         /// Inverts the Vector3 component of this Quaternion.
         /// </summary>
@@ -262,22 +226,10 @@ namespace OpenTK
             Xyz = -Xyz;
         }
 
-        #endregion
-
-        #endregion
-
-        #region Static
-
-        #region Fields
-
         /// <summary>
         /// Defines the identity quaternion.
         /// </summary>
         public static readonly Quaternion Identity = new Quaternion(0, 0, 0, 1);
-
-        #endregion
-
-        #region Add
 
         /// <summary>
         /// Add two quaternions
@@ -305,10 +257,6 @@ namespace OpenTK
                 left.W + right.W);
         }
 
-        #endregion
-
-        #region Sub
-
         /// <summary>
         /// Subtracts two instances.
         /// </summary>
@@ -334,10 +282,6 @@ namespace OpenTK
                 left.Xyz - right.Xyz,
                 left.W - right.W);
         }
-
-        #endregion
-
-        #region Multiply
 
         /// <summary>
         /// Multiplies two instances.
@@ -387,10 +331,6 @@ namespace OpenTK
             return new Quaternion(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale, quaternion.W * scale);
         }
 
-        #endregion
-
-        #region Conjugate
-
         /// <summary>
         /// Get the conjugate of the given quaternion
         /// </summary>
@@ -410,10 +350,6 @@ namespace OpenTK
         {
             result = new Quaternion(-q.Xyz, q.W);
         }
-
-        #endregion
-
-        #region Invert
 
         /// <summary>
         /// Get the inverse of the given quaternion
@@ -446,10 +382,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region Normalize
-
         /// <summary>
         /// Scale the given quaternion to unit length
         /// </summary>
@@ -473,10 +405,6 @@ namespace OpenTK
             result = new Quaternion(q.Xyz * scale, q.W * scale);
         }
 
-        #endregion
-
-        #region FromAxisAngle
-
         /// <summary>
         /// Build a quaternion from the given axis and angle
         /// </summary>
@@ -497,10 +425,6 @@ namespace OpenTK
 
             return Normalize(result);
         }
-
-        #endregion
-
-        #region FromEulerAngles
 
         /// <summary>
         /// Builds a Quaternion from the given euler angles
@@ -543,10 +467,6 @@ namespace OpenTK
             result.Xyz.Y = s1 * c2 * c3 + c1 * s2 * s3;
             result.Xyz.Z = c1 * s2 * c3 - s1 * c2 * s3;
         }
-
-        #endregion
-
-        #region FromMatrix
 
         /// <summary>
         /// Builds a quaternion from the given rotation matrix
@@ -616,10 +536,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region Slerp
-
         /// <summary>
         /// Do Spherical linear interpolation between two quaternions
         /// </summary>
@@ -682,12 +598,6 @@ namespace OpenTK
             else
                 return Identity;
         }
-
-        #endregion
-
-        #endregion
-
-        #region Operators
 
         /// <summary>
         /// Adds two instances.
@@ -772,12 +682,6 @@ namespace OpenTK
             return !left.Equals(right);
         }
 
-        #endregion
-
-        #region Overrides
-
-        #region public override string ToString()
-
         /// <summary>
         /// Returns a System.String that represents the current Quaternion.
         /// </summary>
@@ -786,10 +690,6 @@ namespace OpenTK
         {
             return String.Format("V: {0}, W: {1}", Xyz, W);
         }
-
-        #endregion
-
-        #region public override bool Equals (object o)
 
         /// <summary>
         /// Compares this object instance to another object for equality.
@@ -801,10 +701,6 @@ namespace OpenTK
             if (other is Quaternion == false) return false;
                return this == (Quaternion)other;
         }
-
-        #endregion
-
-        #region public override int GetHashCode ()
 
         /// <summary>
         /// Provides the hash code for this object.
@@ -818,14 +714,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #endregion
-
-        #endregion
-
-        #region IEquatable<Quaternion> Members
-
         /// <summary>
         /// Compares this Quaternion instance to another Quaternion for equality.
         /// </summary>
@@ -835,7 +723,5 @@ namespace OpenTK
         {
             return Xyz == other.Xyz && W == other.W;
         }
-
-        #endregion
     }
 }

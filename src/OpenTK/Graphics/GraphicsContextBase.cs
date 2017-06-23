@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // GraphicsContextBase.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -38,16 +36,10 @@ namespace OpenTK.Graphics
     // Provides the foundation for all IGraphicsContext implementations.
     abstract class GraphicsContextBase : IGraphicsContext, IGraphicsContextInternal, IEquatable<IGraphicsContextInternal>
     {
-        #region Fields
-
         bool disposed;
 
         protected ContextHandle Handle;
         protected GraphicsMode Mode;
-
-        #endregion
-
-        #region IGraphicsContext Members
 
         public abstract void SwapBuffers();
 
@@ -85,10 +77,6 @@ namespace OpenTK.Graphics
             set { throw new NotImplementedException(); }
         }
 
-        #endregion
-
-        #region IGraphicsContextInternal Members
-
         public IGraphicsContext Implementation { get { return this; } }
 
         public abstract void LoadAll();
@@ -104,10 +92,6 @@ namespace OpenTK.Graphics
         }
 
         public abstract IntPtr GetAddress(IntPtr function);
-
-        #endregion
-
-        #region IDisposable Members
 
         public void Dispose()
         {
@@ -126,18 +110,10 @@ namespace OpenTK.Graphics
         }
         #endif
 
-        #endregion
-
-        #region IEquatable<IGraphicsContextInternal> Members
-
         public bool Equals(IGraphicsContextInternal other)
         {
             return Context.Equals(other.Context);
         }
-
-        #endregion
-
-        #region Public Members
 
         public override string ToString()
         {
@@ -152,11 +128,9 @@ namespace OpenTK.Graphics
 
         public override bool Equals(object obj)
         {
-            return 
+            return
                 obj is IGraphicsContextInternal &&
                 Equals((IGraphicsContextInternal)obj);
         }
-
-        #endregion
     }
 }

@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -76,8 +74,6 @@ namespace OpenTK.Platform.SDL2
         public Sdl2JoystickDriver()
         {
         }
-
-        #region Private Members
 
         JoystickDevice<Sdl2JoystickDetails> OpenJoystick(int id)
         {
@@ -219,7 +215,7 @@ namespace OpenTK.Platform.SDL2
             {
                 case GameControllerAxis.LeftX:
                     return GamePadAxes.LeftX;
-                
+
                 case GameControllerAxis.LeftY:
                     return GamePadAxes.LeftY;
 
@@ -297,10 +293,6 @@ namespace OpenTK.Platform.SDL2
         }
 #endif
 
-        #endregion
-
-        #region Public Members
-
         public void ProcessJoystickEvent(JoyDeviceEvent ev)
         {
             int id = ev.Which;
@@ -316,7 +308,7 @@ namespace OpenTK.Platform.SDL2
                     {
                         IntPtr handle = SDL.JoystickOpen(id);
                         if (handle != IntPtr.Zero)
-                        {                                                        
+                        {
                             JoystickDevice<Sdl2JoystickDetails> joystick = OpenJoystick(id);
 
                             int instance_id = joystick.Details.InstanceId;
@@ -544,10 +536,6 @@ namespace OpenTK.Platform.SDL2
         }
 #endif
 
-        #endregion
-
-        #region IGamePadDriver Members
-
 #if USE_SDL2_GAMECONTOLLER
         public GamePadCapabilities GetCapabilities(int index)
         {
@@ -592,10 +580,6 @@ namespace OpenTK.Platform.SDL2
             return false;
         }
 #endif
-
-        #endregion
-
-        #region IJoystickDriver2 Members
 
         JoystickState IJoystickDriver2.GetState(int index)
         {
@@ -656,10 +640,6 @@ namespace OpenTK.Platform.SDL2
             return guid;
         }
 
-        #endregion
-
-        #region IDisposable Members
-
         void Dispose(bool manual)
         {
             if (!disposed)
@@ -695,8 +675,6 @@ namespace OpenTK.Platform.SDL2
         {
             Dispose(false);
         }
-
-        #endregion
     }
 }
 

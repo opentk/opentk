@@ -1,6 +1,4 @@
 ﻿#define COMPAT_REV1519 // Keeps compatibility with revision 1519
-
- #region License
  //
  // The Open Toolkit Library License
  //
@@ -25,7 +23,6 @@
  // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  // OTHER DEALINGS IN THE SOFTWARE.
  //
- #endregion
 
 using System;
 using System.Collections.Generic;
@@ -43,8 +40,6 @@ namespace OpenTK.Input
     /// </summary>
     public sealed class MouseDevice : IInputDevice
     {
-        #region --- Fields ---
-
         string description;
         IntPtr id;
         int numButtons, numWheels;
@@ -55,12 +50,6 @@ namespace OpenTK.Input
         Point pos_last_accessed = new Point();
 #endif
 
-        #endregion
-
-        #region --- IInputDevice Members ---
-
-        #region public string Description
-
         /// <summary>
         /// Gets a string describing this MouseDevice.
         /// </summary>
@@ -70,10 +59,6 @@ namespace OpenTK.Input
             internal set { description = value; }
         }
 
-        #endregion
-
-        #region public InputDeviceType DeviceType
-
         /// <summary>
         /// Gets a value indicating the InputDeviceType of this InputDevice.
         /// </summary>
@@ -81,12 +66,6 @@ namespace OpenTK.Input
         {
             get { return InputDeviceType.Mouse; }
         }
-
-        #endregion
-
-        #endregion
-
-        #region --- Public Members ---
 
         /// <summary>
         /// Retrieves the combined hardware <see cref="OpenTK.Input.MouseState"/> for all specified mouse devices.
@@ -122,8 +101,6 @@ namespace OpenTK.Input
             return Mouse.GetCursorState();
         }
 
-        #region public int NumberOfButtons
-
         /// <summary>
         /// Gets an integer representing the number of buttons on this MouseDevice.
         /// </summary>
@@ -132,10 +109,6 @@ namespace OpenTK.Input
             get { return numButtons; }
             internal set { numButtons = value; }
         }
-
-        #endregion
-
-        #region public int NumberOfWheels
 
         /// <summary>
         /// Gets an integer representing the number of wheels on this MouseDevice.
@@ -146,10 +119,6 @@ namespace OpenTK.Input
             internal set { numWheels = value; }
         }
 
-        #endregion
-
-        #region public IntPtr DeviceID
-
         /// <summary>
         /// Gets an IntPtr representing a device dependent ID.
         /// </summary>
@@ -158,10 +127,6 @@ namespace OpenTK.Input
             get { return id; }
             internal set { id = value; }
         }
-
-        #endregion
-
-        #region public int Wheel
 
         /// <summary>
         /// Gets the absolute wheel position in integer units.
@@ -180,10 +145,6 @@ namespace OpenTK.Input
             get { return state.WheelPrecise; }
         }
 
-        #endregion
-
-        #region public int X
-
         /// <summary>
         /// Gets an integer representing the absolute x position of the pointer, in window pixel coordinates.
         /// </summary>
@@ -192,10 +153,6 @@ namespace OpenTK.Input
             get { return state.X; }
         }
 
-        #endregion
-
-        #region public int Y
-
         /// <summary>
         /// Gets an integer representing the absolute y position of the pointer, in window pixel coordinates.
         /// </summary>
@@ -203,10 +160,6 @@ namespace OpenTK.Input
         {
             get { return state.Y; }
         }
-
-        #endregion
-
-        #region public bool this[MouseButton b]
 
         /// <summary>
         /// Gets a System.Boolean indicating the state of the specified MouseButton.
@@ -224,12 +177,6 @@ namespace OpenTK.Input
                 state[button] = value;
             }
         }
-
-        #endregion
-
-        #endregion
-
-        #region --- Internal Members ---
 
         internal void HandleMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -255,10 +202,6 @@ namespace OpenTK.Input
             WheelChanged(this, e);
         }
 
-        #endregion
-
-        #region --- Events ---
-
         /// <summary>
         /// Occurs when the mouse's position is moved.
         /// </summary>
@@ -279,8 +222,6 @@ namespace OpenTK.Input
         /// </summary>
         public event EventHandler<MouseWheelEventArgs> WheelChanged = delegate { };
 
-        #region --- Overrides ---
-
         /// <summary>
         /// Calculates the hash code for this instance.
         /// </summary>
@@ -299,9 +240,5 @@ namespace OpenTK.Input
             return String.Format("ID: {0} ({1}). Buttons: {2}, Wheels: {3}",
                 DeviceID, Description, NumberOfButtons, NumberOfWheels);
         }
-
-        #endregion
-
-        #endregion
     }
 }

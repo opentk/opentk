@@ -1,4 +1,3 @@
-#region --- License ---
 /*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
 
@@ -20,7 +19,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-#endregion
 
 using System;
 using System.IO;
@@ -36,8 +34,6 @@ namespace OpenTK
     [Serializable, StructLayout(LayoutKind.Sequential)]
     public struct Vector3h : ISerializable, IEquatable<Vector3h>
     {
-        #region Public Fields
-
         /// <summary>The X component of the Half3.</summary>
         public Half X;
 
@@ -46,10 +42,6 @@ namespace OpenTK
 
         /// <summary>The Z component of the Half3.</summary>
         public Half Z;
-
-        #endregion Public Fields
-
-        #region Constructors
 
         /// <summary>
         /// Constructs a new instance.
@@ -214,12 +206,6 @@ namespace OpenTK
             Z = new Half(v.Z, throwOnError);
         }
 
-        #endregion Constructors
-
-        #region Swizzle
-
-        #region 2-component
-
         /// <summary>
         /// Gets or sets an OpenTK.Vector2h with the X and Y components of this instance.
         /// </summary>
@@ -256,10 +242,6 @@ namespace OpenTK
         [XmlIgnore]
         public Vector2h Zy { get { return new Vector2h(Z, Y); } set { Z = value.X; Y = value.Y; } }
 
-        #endregion
-
-        #region 3-component
-
         /// <summary>
         /// Gets or sets an OpenTK.Vector3h with the X, Z, and Y components of this instance.
         /// </summary>
@@ -290,12 +272,6 @@ namespace OpenTK
         [XmlIgnore]
         public Vector3h Zyx { get { return new Vector3h(Z, Y, X); } set { Z = value.X; Y = value.Y; X = value.Z; } }
 
-        #endregion
-
-        #endregion
-
-        #region Half -> Single
-
         /// <summary>
         /// Returns this Half3 instance's contents as Vector3.
         /// </summary>
@@ -312,10 +288,6 @@ namespace OpenTK
         {
             return new Vector3d(X, Y, Z);
         }
-
-        #endregion Half -> Single
-
-        #region Conversions
 
         /// <summary>Converts OpenTK.Vector3 to OpenTK.Half3.</summary>
         /// <param name="v3f">The Vector3 to convert.</param>
@@ -357,16 +329,8 @@ namespace OpenTK
             return result;
         }
 
-        #endregion Conversions
-
-        #region Constants
-
         /// <summary>The size in bytes for an instance of the Half3 struct is 6.</summary>
         public static readonly int SizeInBytes = 6;
-
-        #endregion Constants
-
-        #region ISerializable
 
         /// <summary>Constructor used by ISerializable to deserialize the object.</summary>
         /// <param name="info"></param>
@@ -388,10 +352,6 @@ namespace OpenTK
             info.AddValue("Z", this.Z);
         }
 
-        #endregion ISerializable
-
-        #region Binary dump
-
         /// <summary>Updates the X,Y and Z components of this instance by reading from a Stream.</summary>
         /// <param name="bin">A BinaryReader instance associated with an open Stream.</param>
         public void FromBinaryStream(BinaryReader bin)
@@ -410,10 +370,6 @@ namespace OpenTK
             Z.ToBinaryStream(bin);
         }
 
-        #endregion Binary dump
-
-        #region IEquatable<Half3> Members
-
         /// <summary>Returns a value indicating whether this instance is equal to a specified OpenTK.Half3 vector.</summary>
         /// <param name="other">OpenTK.Half3 to compare to this instance..</param>
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
@@ -422,20 +378,12 @@ namespace OpenTK
             return (this.X.Equals(other.X) && this.Y.Equals(other.Y) && this.Z.Equals(other.Z));
         }
 
-        #endregion
-
-        #region ToString()
-
         private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
         /// <summary>Returns a string that contains this Half3's numbers in human-legible form.</summary>
         public override string ToString()
         {
             return String.Format("({0}{3} {1}{3} {2})", X.ToString(), Y.ToString(), Z.ToString(), listSeparator);
         }
-
-        #endregion ToString()
-
-        #region BitConverter
 
         /// <summary>Returns the Half3 as an array of bytes.</summary>
         /// <param name="h">The Half3 to convert.</param>
@@ -469,7 +417,5 @@ namespace OpenTK
             h3.Z = Half.FromBytes(value, startIndex + 4);
             return h3;
         }
-
-        #endregion BitConverter
     }
 }

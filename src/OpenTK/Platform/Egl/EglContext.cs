@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -34,8 +32,6 @@ namespace OpenTK.Platform.Egl
 {
     abstract class EglContext : EmbeddedGraphicsContext
     {
-        #region Fields
-
         protected readonly RenderableFlags Renderable;
         internal EglWindowInfo WindowInfo;
 
@@ -43,10 +39,6 @@ namespace OpenTK.Platform.Egl
 
         internal IntPtr HandleAsEGLContext { get { return Handle.Handle; } set { Handle = new ContextHandle(value); } }
         int swap_interval = 1; // Default interval is defined as 1 in EGL.
-
-        #endregion
-
-        #region Constructors
 
         public EglContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
@@ -90,8 +82,8 @@ namespace OpenTK.Platform.Egl
 
             bool offscreen = (flags & GraphicsContextFlags.Offscreen) != 0;
 
-            SurfaceType surfaceType = offscreen 
-                ? SurfaceType.PBUFFER_BIT 
+            SurfaceType surfaceType = offscreen
+                ? SurfaceType.PBUFFER_BIT
                 : SurfaceType.WINDOW_BIT;
 
             Mode = new EglGraphicsMode().SelectGraphicsMode(surfaceType,
@@ -132,10 +124,6 @@ namespace OpenTK.Platform.Egl
 
             Handle = handle;
         }
-
-        #endregion
-
-        #region IGraphicsContext Members
 
         public override void SwapBuffers()
         {
@@ -204,7 +192,7 @@ namespace OpenTK.Platform.Egl
         {
             MakeCurrent(window);
             // ANGLE updates the width and height of the back buffer surfaces in the WaitClient function.
-            // So without this calling this function, the surface won't match the size of the window after it 
+            // So without this calling this function, the surface won't match the size of the window after it
             // was resized.
             // https://bugs.chromium.org/p/angleproject/issues/detail?id=1438
             if (!Egl.WaitClient())
@@ -212,10 +200,6 @@ namespace OpenTK.Platform.Egl
                 Debug.Print("[Warning] Egl.WaitClient() failed. Error: {0}", Egl.GetError());
             }
         }
-
-        #endregion
-
-        #region IGraphicsContextInternal Members
 
         public override IntPtr GetAddress(IntPtr function)
         {
@@ -232,15 +216,7 @@ namespace OpenTK.Platform.Egl
             return address;
         }
 
-        #endregion
-
-        #region Abstract Members
-
         protected abstract IntPtr GetStaticAddress(IntPtr function, RenderableFlags renderable);
-
-        #endregion
-
-        #region IDisposable Members
 
         // Todo: cross-reference the specs. What should happen if the context is destroyed from a different
         // thread?
@@ -272,7 +248,5 @@ namespace OpenTK.Platform.Egl
             }
             return (EglContext) sharedContext;
         }
-
-        #endregion
     }
 }

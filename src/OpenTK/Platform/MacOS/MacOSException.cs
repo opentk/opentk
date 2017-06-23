@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 //  Created by Erik Ylvisaker on 3/17/08.
 
@@ -62,7 +60,7 @@ namespace OpenTK.Platform.MacOS
     internal enum OSStatus
     {
         NoError = 0,
-        
+
         ParameterError               = -50,                          /*error in user parameter list*/
         NoHardwareError             = -200,                         /*Sound Manager Error Returns*/
         NotEnoughHardwareError      = -201,                         /*Sound Manager Error Returns*/

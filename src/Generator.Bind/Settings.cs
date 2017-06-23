@@ -1,8 +1,6 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -74,8 +72,8 @@ namespace Bind
                         normalEnumsClassOverride;
             }
         }
- 
-        public string AuxEnumsClass 
+
+        public string AuxEnumsClass
         {
             get { return GLClass + NamespaceSeparator + NestedEnumsClass; }
         }
@@ -198,11 +196,11 @@ namespace Bind
 
         /// <summary>True if multiple tokens should be dropped (e.g. FooARB, FooEXT and FooSGI).</summary>
         public bool DropMultipleTokens
-        { 
-            get { return (Compatibility & Legacy.NoDropMultipleTokens) == Legacy.None; } 
+        {
+            get { return (Compatibility & Legacy.NoDropMultipleTokens) == Legacy.None; }
             set { if (value) Compatibility |= Legacy.NoDropMultipleTokens; else Compatibility &= ~Legacy.NoDropMultipleTokens; }
         }
-        
+
         public string WindowsGDI = "OpenTK.Platform.Windows.API";
 
         public Settings Clone()

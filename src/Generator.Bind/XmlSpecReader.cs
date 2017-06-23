@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2013 Stefanos Apostolopoulos for the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -43,18 +41,12 @@ namespace Bind
     {
         Settings Settings { get; set; }
 
-        #region Constructors
-
         public XmlSpecReader(Settings settings)
         {
             if (settings == null)
                 throw new ArgumentNullException("settings");
             Settings = settings;
         }
-
-        #endregion
-
-        #region ISpecReader Members
 
         public void ReadDelegates(string file, DelegateCollection delegates, string apiname, string apiversions)
         {
@@ -214,10 +206,6 @@ namespace Bind
             }
         }
 
-        #endregion
-
-        #region Private Members
-
         static void GetSignaturePaths(string apiname, string apiversion, out string xpath_add, out string xpath_delete)
         {
             xpath_add = "/signatures/add";
@@ -230,7 +218,7 @@ namespace Bind
                     "(contains(concat('|', @version, '|'), '|{1}|') or not(boolean(@version)))]",
                     apiname,
                     apiversion);
-                xpath_add += match; 
+                xpath_add += match;
                 xpath_delete += match;
             }
             else if (!String.IsNullOrEmpty(apiname))
@@ -312,7 +300,7 @@ namespace Bind
                                     }
                                 }
                             }
-                            
+
                             p.ComputeSize = param.GetAttribute("count", String.Empty).Trim();
                             if (p.ComputeSize.StartsWith("COMPSIZE"))
                             {
@@ -466,7 +454,5 @@ restart:
             Utilities.Merge(enums, all);
             return enums;
         }
-
-        #endregion
     }
 }

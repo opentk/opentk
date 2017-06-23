@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -36,8 +34,6 @@ namespace OpenTK.Audio
 {
     internal static class AudioDeviceEnumerator
     {
-        #region All device strings
-
         private static readonly List<string> available_playback_devices = new List<string>();
         private static readonly List<string> available_recording_devices = new List<string>();
 
@@ -55,10 +51,6 @@ namespace OpenTK.Audio
                 return available_recording_devices.AsReadOnly();
             }
         }
-
-        #endregion All device strings
-
-        #region Default device strings
 
         private static string default_playback_device;
         internal static string DefaultPlaybackDevice
@@ -78,10 +70,6 @@ namespace OpenTK.Audio
             }
         }
 
-        #endregion Default device strings
-
-        #region Is OpenAL supported?
-
         private static bool openal_supported = true;
         internal static bool IsOpenALSupported
         {
@@ -90,10 +78,6 @@ namespace OpenTK.Audio
                 return openal_supported;
             }
         }
-
-        #endregion Is OpenAL supported?
-
-        #region Alc Version number
 
         internal enum AlcVersion
         {
@@ -109,10 +93,6 @@ namespace OpenTK.Audio
                 return version;
             }
         }
-
-        #endregion Alc Version number
-
-        #region Constructors
 
         // Loads all available audio devices into the available_*_devices lists.
         static AudioDeviceEnumerator()
@@ -222,7 +202,5 @@ namespace OpenTK.Audio
                 }
             }
         }
-
-        #endregion
     }
 }

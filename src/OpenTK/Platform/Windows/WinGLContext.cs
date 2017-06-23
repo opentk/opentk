@@ -1,11 +1,7 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * Contributions from Erik Ylvisaker
  * See license.txt for license info
  */
-#endregion
-
-#region --- Using Directives ---
 
 using System;
 using System.Collections.Generic;
@@ -15,8 +11,6 @@ using System.Diagnostics;
 
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-
-#endregion
 
 namespace OpenTK.Platform.Windows
 {
@@ -99,8 +93,6 @@ namespace OpenTK.Platform.Windows
                 }
             }
         }
-
-        #region --- Contructors ---
 
         public WinGLContext(GraphicsMode format, WinWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
@@ -250,22 +242,12 @@ namespace OpenTK.Platform.Windows
             Handle = handle;
         }
 
-        #endregion
-
-        #region IGraphicsContext Members
-
-        #region SwapBuffers
-
         public override void SwapBuffers()
         {
             if (!Functions.SwapBuffers(DeviceContext))
                 throw new GraphicsContextException(String.Format(
                     "Failed to swap buffers for context {0} current. Error: {1}", this, Marshal.GetLastWin32Error()));
         }
-
-        #endregion
-
-        #region MakeCurrent
 
         public override void MakeCurrent(IWindowInfo window)
         {
@@ -296,18 +278,10 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #region IsCurrent
-
         public override bool IsCurrent
         {
             get { return Wgl.GetCurrentContext() == Handle.Handle; }
         }
-
-        #endregion
-
-        #region SwapInterval
 
         public override int SwapInterval
         {
@@ -340,10 +314,6 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #region void LoadAll()
-
         public override void LoadAll()
         {
             lock (LoadLock)
@@ -359,23 +329,12 @@ namespace OpenTK.Platform.Windows
 
             base.LoadAll();
         }
-
-        #endregion
-
-        #endregion
-
-        #region IGLContextInternal Members
-
-        #region IWindowInfo IGLContextInternal.Info
         /*
         IWindowInfo IGraphicsContextInternal.Info
         {
             get { return (IWindowInfo)windowInfo; }
         }
         */
-        #endregion
-
-        #region GetAddress
 
         public override IntPtr GetAddress(IntPtr function_string)
         {
@@ -394,14 +353,6 @@ namespace OpenTK.Platform.Windows
             bool is_valid = (a < -1) || (a > 3);
             return is_valid;
         }
-
-        #endregion
-
-        #endregion
-
-        #region Internal Methods
-
-        #region SetGraphicsModePFD
 
         // Note: there is no relevant ARB function.
         internal static GraphicsMode SetGraphicsModePFD(WinGraphicsMode mode_selector,
@@ -436,10 +387,6 @@ namespace OpenTK.Platform.Windows
             return mode;
         }
 
-        #endregion
-
-        #region internal IntPtr DeviceContext
-
         internal IntPtr DeviceContext
         {
             get
@@ -448,22 +395,12 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #endregion
-
-        #region Overrides
-
         /// <summary>Returns a System.String describing this OpenGL context.</summary>
         /// <returns>A System.String describing this OpenGL context.</returns>
         public override string ToString()
         {
             return (this as IGraphicsContextInternal).Context.ToString();
         }
-
-        #endregion
-
-        #region IDisposable Members
 
         protected override void Dispose(bool calledManually)
         {
@@ -476,8 +413,6 @@ namespace OpenTK.Platform.Windows
                 IsDisposed = true;
             }
         }
-
-        #region private void DestroyContext()
 
         private void DestroyContext()
         {
@@ -501,9 +436,5 @@ namespace OpenTK.Platform.Windows
                 Handle = ContextHandle.Zero;
             }
         }
-
-        #endregion
-
-        #endregion
     }
 }

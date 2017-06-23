@@ -1,10 +1,8 @@
-#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -28,8 +26,6 @@ namespace OpenTK.Platform.Dummy
         static int handle_count;
         Thread current_thread;
 
-        #region --- Constructors ---
-
         public DummyGLContext()
         {
             Handle = new ContextHandle(
@@ -47,10 +43,6 @@ namespace OpenTK.Platform.Dummy
             Loader = loader;
             Mode = new GraphicsMode(new IntPtr(2), 32, 16, 0, 0, 0, 2, false);
         }
-
-        #endregion
-
-        #region --- IGraphicsContext Members ---
 
         public override void SwapBuffers() { }
 
@@ -113,12 +105,6 @@ namespace OpenTK.Platform.Dummy
             #endif
         }
 
-        #endregion
-
-        #region --- IDisposable Members ---
-
         protected override void Dispose(bool disposing) { IsDisposed = true; }
-
-        #endregion
     }
 }

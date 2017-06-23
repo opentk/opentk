@@ -1,11 +1,10 @@
-﻿#region License
-//
+﻿//
 // DeviceCollection.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
 //
-// Copyright (c) 2006-2014 
+// Copyright (c) 2006-2014
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -44,25 +42,15 @@ namespace OpenTK.Platform
         readonly Dictionary<long, int> Map = new Dictionary<long, int>();
         readonly List<T> Devices = new List<T>();
 
-        #region IEnumerable<T> Members
-
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
             return Devices.GetEnumerator();
         }
 
-        #endregion
-
-        #region IEnumerable implementation
-
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
-
-        #endregion
-
-        #region Public Members
 
         // This avoids boxing when using foreach loops
         public List<T>.Enumerator GetEnumerator()
@@ -171,10 +159,6 @@ namespace OpenTK.Platform
             get { return Map.Count; }
         }
 
-        #endregion
-
-        #region Private Members
-
         // Return the index of the first empty slot in Devices.
         // If no empty slot exists, append a new one and return
         // that index.
@@ -191,8 +175,6 @@ namespace OpenTK.Platform
             Devices.Add(default(T));
             return Devices.Count - 1;
         }
-
-        #endregion
     }
 }
 

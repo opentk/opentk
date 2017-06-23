@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // NSFloat.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 #if !MINIMAL
@@ -189,11 +187,11 @@ namespace OpenTK.Platform.MacOS
         public static implicit operator RectangleF(NSRect s)
         {
             return new RectangleF(s.Location, s.Size);
-        } 
+        }
     }
 
     // Using IntPtr in NSFloat cause that if imported function
-    // return struct that consist of them you will get wrong data 
+    // return struct that consist of them you will get wrong data
     // This types are used for such function.
     [StructLayout(LayoutKind.Sequential)]
     struct NSPointF

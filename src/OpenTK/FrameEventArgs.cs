@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 
@@ -39,13 +37,13 @@ namespace OpenTK
         double elapsed;
 
         /// <summary>
-        /// Constructs a new FrameEventArgs instance. 
+        /// Constructs a new FrameEventArgs instance.
         /// </summary>
         public FrameEventArgs()
         { }
-        
+
         /// <summary>
-        /// Constructs a new FrameEventArgs instance. 
+        /// Constructs a new FrameEventArgs instance.
         /// </summary>
         /// <param name="elapsed">The amount of time that has elapsed since the previous event, in seconds.</param>
         public FrameEventArgs(double elapsed)
@@ -56,7 +54,7 @@ namespace OpenTK
         /// <summary>
         /// Gets a <see cref="System.Double"/> that indicates how many seconds of time elapsed since the previous event.
         /// </summary>
-        public double Time 
+        public double Time
         {
             get { return elapsed; }
             internal set

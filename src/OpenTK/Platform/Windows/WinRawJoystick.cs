@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // WinRawJoystick.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -60,8 +58,6 @@ namespace OpenTK.Platform.Windows
             readonly Dictionary<int, JoystickHat> hats =
                 new Dictionary<int, JoystickHat>();
 
-            #region Constructors
-
             public Device(IntPtr handle, Guid guid, bool is_xinput, int xinput_index)
             {
                 Handle = handle;
@@ -69,10 +65,6 @@ namespace OpenTK.Platform.Windows
                 IsXInput = is_xinput;
                 XInputIndex = xinput_index;
             }
-
-            #endregion
-
-            #region Public Members
 
             public void ClearButtons()
             {
@@ -84,7 +76,7 @@ namespace OpenTK.Platform.Windows
                 if (page == HIDPage.GenericDesktop || page == HIDPage.Simulation) // set axis only when HIDPage is known by HidHelper.TranslateJoystickAxis() to avoid axis0 to be overwritten by unknown HIDPage
                 {
                     //Certain joysticks (Speedlink Black Widow, PS3 pad connected via USB)
-                    //return an invalid HID page of 1, so 
+                    //return an invalid HID page of 1, so
                     if ((int)usage != 1)
                     {
                         JoystickAxis axis = GetAxis(collection, page, usage);
@@ -134,10 +126,6 @@ namespace OpenTK.Platform.Windows
                 return State;
             }
 
-            #endregion
-
-            #region Private Members
-
             static int MakeKey(short collection, HIDPage page, short usage)
             {
                 byte coll_byte = unchecked((byte)collection);
@@ -175,8 +163,6 @@ namespace OpenTK.Platform.Windows
                 }
                 return hats[key];
             }
-
-            #endregion
         }
 
         static readonly string TypeName = typeof(WinRawJoystick).Name;
@@ -221,8 +207,6 @@ namespace OpenTK.Platform.Windows
 
             Debug.Unindent();
         }
-
-        #region Public Members
 
         public void RefreshDevices()
         {
@@ -459,10 +443,6 @@ namespace OpenTK.Platform.Windows
                 }
             }
         }
-
-        #endregion
-
-        #region Private Members
 
         static bool GetPreparsedData(IntPtr handle, ref byte[] prepared_data)
         {
@@ -783,10 +763,6 @@ namespace OpenTK.Platform.Windows
             return Devices.FromIndex(index) != null;
         }
 
-        #endregion
-
-        #region IJoystickDriver2 Members
-
         public JoystickState GetState(int index)
         {
             lock (UpdateLock)
@@ -846,7 +822,5 @@ namespace OpenTK.Platform.Windows
                 return new Guid();
             }
         }
-
-        #endregion
     }
 }

@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2010 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -45,8 +43,6 @@ namespace OpenTK.Platform.Windows
         readonly IntPtr window;
         readonly object UpdateLock = new object();
 
-        #region Constructors
-
         public WinRawKeyboard(IntPtr windowHandle)
         {
             Debug.WriteLine("Using WinRawKeyboard.");
@@ -57,10 +53,6 @@ namespace OpenTK.Platform.Windows
 
             Debug.Unindent();
         }
-
-        #endregion
-
-        #region Public Members
 
         public void RefreshDevices()
         {
@@ -206,10 +198,6 @@ namespace OpenTK.Platform.Windows
             return processed;
         }
 
-        #endregion
-
-        #region Private Members
-
         static RegistryKey GetRegistryKey(string name)
         {
             if (name.Length < 4)
@@ -264,10 +252,6 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #region IKeyboardDriver2 Members
-
         public KeyboardState GetState()
         {
             lock (UpdateLock)
@@ -302,7 +286,5 @@ namespace OpenTK.Platform.Windows
                     return String.Empty;
             }
         }
-
-        #endregion
     }
 }

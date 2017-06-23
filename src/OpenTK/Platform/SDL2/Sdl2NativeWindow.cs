@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -64,7 +62,7 @@ namespace OpenTK.Platform.SDL2
         IntPtr sdl_cursor = IntPtr.Zero;
 
         // Used in KeyPress event to decode SDL UTF8 text strings
-        // to .Net UTF16 strings 
+        // to .Net UTF16 strings
         char[] DecodeTextBuffer = new char[32];
 
         static readonly Dictionary<uint, Sdl2NativeWindow> windows =
@@ -105,8 +103,6 @@ namespace OpenTK.Platform.SDL2
                 windows.Add(window_id, this);
             }
         }
-
-        #region Private Members
 
         static WindowFlags TranslateFlags(GameWindowFlags flags)
         {
@@ -466,10 +462,6 @@ namespace OpenTK.Platform.SDL2
 
             window_state = WindowState.Normal;
         }
-
-        #endregion
-
-        #region INativeWindow Members
 
         public override MouseCursor Cursor
         {
@@ -935,10 +927,6 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        #endregion
-
-        #region IDisposable implementation
-
         protected override void Dispose(bool manual)
         {
             if (!disposed)
@@ -977,8 +965,6 @@ namespace OpenTK.Platform.SDL2
                 }
             }
         }
-
-        #endregion
     }
 }
 

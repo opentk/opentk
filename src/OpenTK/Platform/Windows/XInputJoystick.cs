@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // XInputJoystick.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -45,8 +43,6 @@ namespace OpenTK.Platform.Windows
             new Guid("78696e70757400000000000000000000"); // equiv. to "xinput"
 
         XInput xinput = new XInput();
-
-        #region IJoystickDriver2 Members
 
         public JoystickState GetState(int index)
         {
@@ -156,10 +152,6 @@ namespace OpenTK.Platform.Windows
 
             return xinput.SetState((XInputUserIndex)index, ref vibration) == XInputErrorCode.Success;
         }
-
-        #endregion
-
-        #region Private Members
 
         int TranslateAxes(ref XInputGamePad pad)
         {
@@ -378,8 +370,6 @@ namespace OpenTK.Platform.Windows
                 SetState = (XInputSetState)Load("XInputSetState", typeof(XInputSetState));
             }
 
-            #region Private Members
-
             Delegate Load(ushort ordinal, Type type)
             {
                 IntPtr pfunc = Functions.GetProcAddress(dll, (IntPtr)ordinal);
@@ -395,10 +385,6 @@ namespace OpenTK.Platform.Windows
                     return Marshal.GetDelegateForFunctionPointer(pfunc, type);
                 return null;
             }
-
-            #endregion
-
-            #region Internal Members
 
             internal XInputGetCapabilities GetCapabilities;
             internal XInputGetState GetState;
@@ -424,10 +410,6 @@ namespace OpenTK.Platform.Windows
                 ref XInputVibration pVibration
             );
 
-            #endregion
-
-            #region IDisposable Members
-
             public void Dispose()
             {
                 Dispose(true);
@@ -445,13 +427,7 @@ namespace OpenTK.Platform.Windows
                     }
                 }
             }
-
-            #endregion
         }
-
-        #endregion
-
-        #region IDisposable Members
 
         public void Dispose()
         {
@@ -477,7 +453,5 @@ namespace OpenTK.Platform.Windows
             Dispose(false);
         }
 #endif
-
-        #endregion
     }
 }

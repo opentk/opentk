@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -35,16 +33,10 @@ namespace OpenTK.Platform
 
     sealed class Factory : IPlatformFactory
     {
-        #region Fields
-
         private bool disposed;
         private static IPlatformFactory defaultImplementation;
         private static IPlatformFactory embeddedImplementation;
         private static IPlatformFactory angleImplementation;
-
-        #endregion
-
-        #region Constructors
 
         static Factory()
         {
@@ -120,10 +112,6 @@ namespace OpenTK.Platform
                 Default = Embedded;
         }
 
-        #endregion
-
-        #region Public Members
-
         public static IPlatformFactory Default
         {
             get { return defaultImplementation; }
@@ -141,10 +129,6 @@ namespace OpenTK.Platform
             get { return angleImplementation; }
             private set { angleImplementation = value; }
         }
-
-        #endregion
-
-        #region IPlatformFactory Members
 
         public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title,
             GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
@@ -199,13 +183,7 @@ namespace OpenTK.Platform
 
         class UnsupportedPlatform : PlatformFactoryBase
         {
-            #region Fields
-
             static readonly string error_string = "Please, refer to http://www.opentk.com for more information.";
-
-            #endregion
-
-            #region IPlatformFactory Members
 
             public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
             {
@@ -246,13 +224,7 @@ namespace OpenTK.Platform
             {
                 throw new PlatformNotSupportedException(error_string);
             }
-
-            #endregion
         }
-
-        #endregion
-
-        #region IDisposable Members
 
         void Dispose(bool manual)
         {
@@ -284,7 +256,5 @@ namespace OpenTK.Platform
         {
             Dispose(false);
         }
-
-        #endregion
     }
 }

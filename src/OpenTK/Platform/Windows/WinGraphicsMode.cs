@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -49,8 +47,6 @@ namespace OpenTK.Platform.Windows
 
         readonly IntPtr Device;
 
-        #region Constructors
-
         public WinGraphicsMode(IntPtr device)
         {
             if (device == IntPtr.Zero)
@@ -58,10 +54,6 @@ namespace OpenTK.Platform.Windows
 
             Device = device;
         }
-
-        #endregion
-
-        #region IGraphicsMode Members
 
         public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples,
             ColorFormat accum, int buffers, bool stereo)
@@ -82,12 +74,6 @@ namespace OpenTK.Platform.Windows
 
             return created_mode;
         }
-
-        #endregion
-
-        #region Private Methods
-
-        #region ChoosePixelFormatARB
 
         // Queries pixel formats through the WGL_ARB_pixel_format extension
         // This method only returns accelerated formats. If no format offers
@@ -220,10 +206,6 @@ namespace OpenTK.Platform.Windows
             return created_mode;
         }
 
-        #endregion
-
-        #region ChoosePixelFormatPFD
-
         static bool Compare(int got, int requested, ref int distance)
         {
             bool valid = true;
@@ -333,10 +315,6 @@ namespace OpenTK.Platform.Windows
             return DescribePixelFormatPFD(device, ref pfd, best);
         }
 
-        #endregion
-
-        #region DescribePixelFormatPFD
-
         static GraphicsMode DescribePixelFormatPFD(IntPtr device, ref PixelFormatDescriptor pfd,
             int pixelformat)
         {
@@ -356,10 +334,6 @@ namespace OpenTK.Platform.Windows
             return created_mode;
         }
 
-        #endregion
-
-        #region DescribePixelFormatARB
-
         GraphicsMode DescribePixelFormatARB(IntPtr device, int pixelformat)
         {
             GraphicsMode created_mode = null;
@@ -377,10 +351,10 @@ namespace OpenTK.Platform.Windows
                     (int)WGL_ARB_pixel_format.BlueBitsArb,
                     (int)WGL_ARB_pixel_format.AlphaBitsArb,
                     (int)WGL_ARB_pixel_format.ColorBitsArb,
-                    
+
                     (int)WGL_ARB_pixel_format.DepthBitsArb,
                     (int)WGL_ARB_pixel_format.StencilBitsArb,
-                    
+
                     (int)WGL_ARB_multisample.SampleBuffersArb,
                     (int)WGL_ARB_multisample.SamplesArb,
 
@@ -421,9 +395,5 @@ namespace OpenTK.Platform.Windows
             }
             return created_mode;
         }
-
-        #endregion
-
-        #endregion
     }
 }

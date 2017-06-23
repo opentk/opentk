@@ -1,8 +1,6 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -52,7 +50,7 @@ namespace Bind
                 Assembly.GetExecutingAssembly().GetName().Version.ToString());
             Console.WriteLine("For comments, bugs and suggestions visit http://github.com/opentk/opentk");
             Console.WriteLine();
-            
+
             try
             {
                 var split = new Regex(@"-\w+", RegexOptions.Compiled);
@@ -172,11 +170,11 @@ namespace Bind
                     case GeneratorMode.ES10:
                         Generators.Add(new ESGenerator(Settings));
                         break;
-                    
+
                     case GeneratorMode.ES11:
                         Generators.Add(new ESGenerator(Settings));
                         break;
-                    
+
                     case GeneratorMode.ES20:
                         Generators.Add(new ES2Generator(Settings));
                         break;
@@ -192,7 +190,7 @@ namespace Bind
                     case GeneratorMode.CL10:
                         Generators.Add(new CLGenerator(Settings));
                         break;
-                    
+
                     default:
                         Console.WriteLine("Please specify a generator mode (use '-mode:gl2/gl4/es10/es11/es20/es30')");
                         return;
@@ -212,7 +210,7 @@ namespace Bind
                     Console.WriteLine();
                     Console.WriteLine("Bindings generated in {0} seconds.", ticks / (double)10000000.0);
                 }
-                
+
                 Console.WriteLine();
                 if (Debugger.IsAttached)
                 {

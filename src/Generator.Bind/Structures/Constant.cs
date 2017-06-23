@@ -1,8 +1,6 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -15,12 +13,10 @@ namespace Bind.Structures
     /// <summary>
     /// Represents an opengl constant in C# format. Both the constant name and value
     /// can be retrieved or set. The value can be either a number, another constant
-    /// or an alias to a constant 
+    /// or an alias to a constant
     /// </summary>
     class Constant : IComparable<Constant>
     {
-        #region PreviousName
-
         string original_name;
 
         // Gets the name prior to translation.
@@ -29,10 +25,6 @@ namespace Bind.Structures
             get { return original_name; }
             private set { original_name = value; }
         }
-
-        #endregion
-
-        #region public string Name
 
         string _name;
 
@@ -43,7 +35,7 @@ namespace Bind.Structures
         public string Name
         {
             get { return _name; }
-            set 
+            set
             {
                 if (String.IsNullOrEmpty(value))
                     throw new ArgumentNullException("value");
@@ -54,10 +46,6 @@ namespace Bind.Structures
                 _name = value;
             }
         }
-
-        #endregion
-
-        #region public string Value
 
         string _value;
 
@@ -79,10 +67,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public string Reference
-
         string _reference;
 
         /// <summary>
@@ -98,10 +82,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public bool Unchecked
-
         public bool Unchecked
         {
             get
@@ -111,13 +91,9 @@ namespace Bind.Structures
                 string test = Value;
                 return UInt64.TryParse(test.ToLower().Replace("0x", String.Empty),
                     NumberStyles.AllowHexSpecifier, null, out number) &&
-                    number > Int32.MaxValue; 
+                    number > Int32.MaxValue;
             }
         }
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Creates an empty Constant.
@@ -136,8 +112,6 @@ namespace Bind.Structures
             Name = name;
             Value = value;
         }
-
-        #endregion
 
         /// <summary>
         /// Replces the Value of the given constant with the value referenced by the [c.Reference, c.Value] pair.
@@ -192,8 +166,6 @@ namespace Bind.Structures
             return true;
         }
 
-        #region ToString
-
         public override string ToString()
         {
             return
@@ -204,10 +176,6 @@ namespace Bind.Structures
                 Value);
         }
 
-        #endregion
-
-        #region IComparable <Constant>Members
-
         public int CompareTo(Constant other)
         {
             int ret = Value.CompareTo(other.Value);
@@ -215,7 +183,5 @@ namespace Bind.Structures
                 return Name.CompareTo(other.Name);
             return ret;
         }
-
-        #endregion
     }
 }

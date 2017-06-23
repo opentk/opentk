@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -38,20 +36,12 @@ namespace OpenTK.Platform.Windows
     {
         readonly object display_lock = new object();
 
-        #region Constructors
-
         public WinDisplayDeviceDriver()
         {
             RefreshDisplayDevices();
             SystemEvents.DisplaySettingsChanged +=
                 HandleDisplaySettingsChanged;
         }
-
-        #endregion
-
-        #region IDisplayDeviceDriver Members
-
-        #region TryChangeResolution
 
         public sealed override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
         {
@@ -70,27 +60,15 @@ namespace OpenTK.Platform.Windows
                     | Constants.DM_DISPLAYFREQUENCY;
             }
 
-            return Constants.DISP_CHANGE_SUCCESSFUL == 
+            return Constants.DISP_CHANGE_SUCCESSFUL ==
                 Functions.ChangeDisplaySettingsEx((string)device.Id, mode, IntPtr.Zero,
                     ChangeDisplaySettingsEnum.Fullscreen, IntPtr.Zero);
         }
-
-        #endregion
-
-        #region TryRestoreResolution
 
         public sealed override bool TryRestoreResolution(DisplayDevice device)
         {
             return TryChangeResolution(device, null);
         }
-
-        #endregion
-
-        #endregion
-
-        #region Private Members
-
-        #region RefreshDisplayDevices
 
         public void RefreshDisplayDevices()
         {
@@ -201,23 +179,15 @@ namespace OpenTK.Platform.Windows
                 mode.BitsPerPel = 32;
             }
         }
-        #endregion
-
-        #region HandleDisplaySettingsChanged
-
         void HandleDisplaySettingsChanged(object sender, EventArgs e)
         {
             RefreshDisplayDevices();
         }
-
-        #endregion
 
         ~WinDisplayDeviceDriver()
         {
             SystemEvents.DisplaySettingsChanged -=
                 HandleDisplaySettingsChanged;
         }
-
-        #endregion
     }
 }

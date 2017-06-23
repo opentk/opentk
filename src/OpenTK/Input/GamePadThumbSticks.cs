@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // GamePadThumbSticks.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 
@@ -49,8 +47,6 @@ namespace OpenTK.Input
             this.right_x = right_x;
             this.right_y = right_y;
         }
-
-        #region Public Members
 
         /// <summary>
         /// Gets a <see cref="Vector2"/> describing the state of the left thumb stick.
@@ -118,10 +114,6 @@ namespace OpenTK.Input
                 Equals((GamePadThumbSticks)obj);
         }
 
-        #endregion
-
-        #region IEquatable<GamePadThumbSticks> Members
-
         /// <summary>
         /// Determines whether the specified <see cref="OpenTK.Input.GamePadThumbSticks"/> is equal to the current <see cref="OpenTK.Input.GamePadThumbSticks"/>.
         /// </summary>
@@ -136,7 +128,5 @@ namespace OpenTK.Input
                 right_x == other.right_x &&
                 right_y == other.right_y;
         }
-
-        #endregion
     }
 }

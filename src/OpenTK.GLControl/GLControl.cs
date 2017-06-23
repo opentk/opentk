@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library, except where noted.
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -63,8 +61,6 @@ namespace OpenTK
         // wiith the DesignMode property and nested controls,we need to
         // evaluate this in the constructor.
         readonly bool design_mode;
-
-        #region --- Constructors ---
 
         /// <summary>
         /// Constructs a new instance.
@@ -125,10 +121,6 @@ namespace OpenTK
             InitializeComponent();
         }
 
-        #endregion
-
-        #region --- Private  Methods ---
-
         IGLControl Implementation
         {
             get
@@ -159,10 +151,6 @@ namespace OpenTK
             if (implementation == null || context == null || context.IsDisposed)
                 RecreateHandle();
         }
-
-        #endregion
-
-        #region --- Protected Methods ---
 
         /// <summary>
         /// Gets the <c>CreateParams</c> instance for this <c>GLControl</c>
@@ -309,12 +297,6 @@ namespace OpenTK
             base.OnParentChanged(e);
         }
 
-        #endregion
-
-        #region --- Public Methods ---
-
-        #region public void SwapBuffers()
-
         /// <summary>
         /// Swaps the front and back buffers, presenting the rendered scene to the screen.
         /// This method will have no effect on a single-buffered <c>GraphicsMode</c>.
@@ -324,10 +306,6 @@ namespace OpenTK
             ValidateState();
             Context.SwapBuffers();
         }
-
-        #endregion
-
-        #region public void MakeCurrent()
 
         /// <summary>
         /// <para>
@@ -350,10 +328,6 @@ namespace OpenTK
             Context.MakeCurrent(Implementation.WindowInfo);
         }
 
-        #endregion
-
-        #region public bool IsIdle
-
         /// <summary>
         /// Gets a value indicating whether the current thread contains pending system messages.
         /// </summary>
@@ -366,10 +340,6 @@ namespace OpenTK
                 return Implementation.IsIdle;
             }
         }
-
-        #endregion
-
-        #region public IGraphicsContext Context
 
         /// <summary>
         /// Gets the <c>IGraphicsContext</c> instance that is associated with the <c>GLControl</c>.
@@ -390,10 +360,6 @@ namespace OpenTK
             private set { context = value; }
         }
 
-        #endregion
-
-        #region public float AspectRatio
-
         /// <summary>
         /// Gets the aspect ratio of this GLControl.
         /// </summary>
@@ -406,10 +372,6 @@ namespace OpenTK
                 return ClientSize.Width / (float)ClientSize.Height;
             }
         }
-
-        #endregion
-
-        #region public bool VSync
 
         /// <summary>
         /// Gets or sets a value indicating whether vsync is active for this <c>GLControl</c>.
@@ -451,10 +413,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region public GraphicsMode GraphicsMode
-
         /// <summary>
         /// Gets the <c>GraphicsMode</c> of the <c>IGraphicsContext</c> associated with
         /// this <c>GLControl</c>. If you wish to change <c>GraphicsMode</c>, you must
@@ -469,10 +427,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region WindowInfo
-
         /// <summary>
         /// Gets the <see cref="OpenTK.Platform.IWindowInfo"/> for this instance.
         /// </summary>
@@ -480,9 +434,5 @@ namespace OpenTK
         {
             get { return implementation.WindowInfo; }
         }
-
-        #endregion
-
-        #endregion
     }
 }

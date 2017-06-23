@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // CocoaWindowInfo.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -46,8 +44,6 @@ namespace OpenTK.Platform.MacOS
         IntPtr nsViewRef;
 
         bool disposed = false;
-
-        #region Constructors
 
         /// <summary>
         /// Constructs a new instance with the specified parameters.
@@ -71,10 +67,6 @@ namespace OpenTK.Platform.MacOS
             Cocoa.SendVoid(nsWindowRef, Selector.Retain);
         }
 
-        #endregion
-
-        #region Public Members
-
         /// <summary>
         /// Gets the window reference for this instance.
         /// </summary>
@@ -91,10 +83,6 @@ namespace OpenTK.Platform.MacOS
         {
             return String.Format("MacOS.CocoaWindowInfo: NSWindow {0}, NSView {1}", nsWindowRef, nsViewRef);
         }
-
-        #endregion
-
-        #region IDisposable Members
 
         public void Dispose()
         {
@@ -124,7 +112,5 @@ namespace OpenTK.Platform.MacOS
             Dispose(false);
         }
         #endif
-
-        #endregion
     }
 }

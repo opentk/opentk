@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // EglWinContext.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using OpenTK.Graphics;
@@ -48,8 +46,6 @@ namespace OpenTK.Platform.Egl
             : base(handle, window, sharedContext, major, minor, flags)
         {
         }
-
-        #region Protected Members
 
         protected override IntPtr GetStaticAddress(IntPtr function, RenderableFlags renderable)
         {
@@ -79,7 +75,5 @@ namespace OpenTK.Platform.Egl
 
             base.Dispose(manual);
         }
-
-        #endregion
     }
 }

@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -53,8 +51,6 @@ namespace OpenTK.Platform.SDL2
         {
             UseFullscreenDesktop = true;
         }
-
-        #region IPlatformFactory implementation
 
         public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
@@ -99,10 +95,6 @@ namespace OpenTK.Platform.SDL2
             return GetInputDriver().JoystickDriver;
         }
 
-        #endregion
-
-        #region IDisposable Members
-
         protected override void Dispose(bool manual)
         {
             if (!IsDisposed)
@@ -119,8 +111,6 @@ namespace OpenTK.Platform.SDL2
                 base.Dispose(manual);
             }
         }
-
-        #endregion
 
         private Sdl2InputDriver GetInputDriver()
         {

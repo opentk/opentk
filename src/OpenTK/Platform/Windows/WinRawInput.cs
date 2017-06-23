@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2010 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -35,8 +33,6 @@ namespace OpenTK.Platform.Windows
 {
     sealed class WinRawInput : WinInputBase
     {
-        #region Fields
-
         // Input event data.
 
         WinRawKeyboard keyboard_driver;
@@ -46,19 +42,11 @@ namespace OpenTK.Platform.Windows
         IntPtr DevNotifyHandle;
         static readonly Guid DeviceInterfaceHid = new Guid("4D1E55B2-F16F-11CF-88CB-001111000030");
 
-        #endregion
-
-        #region Constructors
-
         public WinRawInput()
             : base()
         {
             Debug.WriteLine("Using WinRawInput.");
         }
-
-        #endregion
-
-        #region Private Members
 
         static IntPtr RegisterForDeviceNotifications(WinWindowInfo parent)
         {
@@ -78,12 +66,6 @@ namespace OpenTK.Platform.Windows
             return dev_notify_handle;
         }
 
-
-        #endregion
-
-        #region Protected Members
-
-        #region WindowProcedure
 
         // Processes the input Windows Message, routing the buffer to the correct Keyboard, Mouse or HID.
         protected unsafe override IntPtr WindowProcedure(
@@ -135,10 +117,6 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #region CreateDrivers
-
         protected override void CreateDrivers()
         {
             keyboard_driver = new WinRawKeyboard(Parent.Handle);
@@ -146,8 +124,6 @@ namespace OpenTK.Platform.Windows
             joystick_driver = new WinRawJoystick(Parent.Handle);
             DevNotifyHandle = RegisterForDeviceNotifications(Parent);
         }
-
-        #endregion
 
         protected override void Dispose(bool manual)
         {
@@ -157,12 +133,6 @@ namespace OpenTK.Platform.Windows
                 base.Dispose(manual);
             }
         }
-
-        #endregion
-
-        #region Public Members
-
-        #region DeviceCount
 
         public static int DeviceCount
         {
@@ -174,10 +144,6 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #region GetDeviceList
-
         public static RawInputDeviceList[] GetDeviceList()
         {
             int count = WinRawInput.DeviceCount;
@@ -187,8 +153,6 @@ namespace OpenTK.Platform.Windows
             Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
             return ridl;
         }
-
-        #endregion
 
         public override IKeyboardDriver2 KeyboardDriver
         {
@@ -204,7 +168,5 @@ namespace OpenTK.Platform.Windows
         {
             get { return joystick_driver; }
         }
-
-        #endregion
     }
 }

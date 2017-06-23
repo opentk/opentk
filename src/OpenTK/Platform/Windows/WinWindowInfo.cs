@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -40,8 +38,6 @@ namespace OpenTK.Platform.Windows
         IntPtr handle, dc;
         WinWindowInfo parent;
         bool disposed;
-
-        #region --- Constructors ---
 
         /// <summary>
         /// Constructs a new instance.
@@ -60,10 +56,6 @@ namespace OpenTK.Platform.Windows
             this.handle = handle;
             this.parent = parent;
         }
-
-        #endregion
-
-        #region --- Public Methods ---
 
         /// <summary>
         /// Gets or sets the handle of the window.
@@ -94,8 +86,6 @@ namespace OpenTK.Platform.Windows
         // (e.g. MonoGame)
         public IntPtr WindowHandle { get { return Handle; } set { Handle = value; } }
 
-        #region public override string ToString()
-
         /// <summary>Returns a System.String that represents the current window.</summary>
         /// <returns>A System.String that represents the current window.</returns>
         public override string ToString()
@@ -111,7 +101,7 @@ namespace OpenTK.Platform.Windows
         {
             if (obj == null) return false;
             if (this.GetType() != obj.GetType()) return false;
-            WinWindowInfo info = (WinWindowInfo)obj; 
+            WinWindowInfo info = (WinWindowInfo)obj;
 
             if (info == null) return false;
             // TODO: Assumes windows will always have unique handles.
@@ -125,24 +115,12 @@ namespace OpenTK.Platform.Windows
             return handle.GetHashCode();
         }
 
-        #endregion
-
-        #endregion
-
-        #region --- IDisposable ---
-
-        #region public void Dispose()
-
         /// <summary>Releases the unmanaged resources consumed by this instance.</summary>
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-        #endregion
-
-        #region void Dispose(bool manual)
 
         void Dispose(bool manual)
         {
@@ -162,17 +140,9 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #region ~WinWindowInfo()
-
         ~WinWindowInfo()
         {
             this.Dispose(false);
         }
-
-        #endregion
-
-        #endregion
     }
 }

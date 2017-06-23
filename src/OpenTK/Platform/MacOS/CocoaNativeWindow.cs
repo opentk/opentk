@@ -1,4 +1,3 @@
-#region License
 //
 // CocoaNativeWindow.cs
 //
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.ComponentModel;
@@ -256,7 +254,7 @@ namespace OpenTK.Platform.MacOS
             windowInfo = new CocoaWindowInfo(windowPtr);
 
             // Set up behavior
-            Cocoa.SendIntPtr(windowPtr, Selector.Get("setDelegate:"), windowPtr); // The window class acts as its own delegate 
+            Cocoa.SendIntPtr(windowPtr, Selector.Get("setDelegate:"), windowPtr); // The window class acts as its own delegate
             Cocoa.SendVoid(windowPtr, Selector.Get("makeKeyWindow"));
             SetTitle(title, false);
 
@@ -444,7 +442,7 @@ namespace OpenTK.Platform.MacOS
         {
             try
             {
-                // Can get stuck in weird states if we maximize, then minimize; 
+                // Can get stuck in weird states if we maximize, then minimize;
                 // restoring to the old state would override the normalBounds.
                 // To avoid this without adding complexity, just restore state here.
                 RestoreWindowState(); // Avoid getting in weird states
@@ -531,18 +529,18 @@ namespace OpenTK.Platform.MacOS
             return false;
         }
 
-        private bool AcceptsFirstResponder(IntPtr self, IntPtr cmd) 
-        { 
-            return true; 
-        }
-
-        private bool CanBecomeKeyWindow(IntPtr self, IntPtr cmd) 
-        { 
+        private bool AcceptsFirstResponder(IntPtr self, IntPtr cmd)
+        {
             return true;
         }
 
-        private bool CanBecomeMainWindow(IntPtr self, IntPtr cmd) 
-        { 
+        private bool CanBecomeKeyWindow(IntPtr self, IntPtr cmd)
+        {
+            return true;
+        }
+
+        private bool CanBecomeMainWindow(IntPtr self, IntPtr cmd)
+        {
             return true;
         }
 
@@ -990,8 +988,8 @@ namespace OpenTK.Platform.MacOS
 
         public override WindowBorder WindowBorder
         {
-            get 
-            { 
+            get
+            {
                 return windowBorder;
             }
             set
@@ -1066,11 +1064,11 @@ namespace OpenTK.Platform.MacOS
 
         public override Size ClientSize
         {
-            get 
+            get
             {
                 var contentViewBounds = Cocoa.SendRect(windowInfo.ViewHandle, selBounds);
                 var bounds = Cocoa.SendRect(windowInfo.Handle, selConvertRectToBacking, contentViewBounds);
-                return new Size((int)bounds.Width, (int)bounds.Height); 
+                return new Size((int)bounds.Width, (int)bounds.Height);
             }
             set
             {
@@ -1144,7 +1142,7 @@ namespace OpenTK.Platform.MacOS
             }
 
             // Construct the actual NSImage
-            IntPtr img = 
+            IntPtr img =
                 Cocoa.SendIntPtr(
                     Cocoa.SendIntPtr(NSImage, Selector.Alloc),
                     selInitWithSize,

@@ -1,11 +1,10 @@
-#region License
 //
 // X11Input.cs
 //
 // Author:
 //       thefiddler <stapostol@gmail.com>
 //
-// Copyright (c) 2006-2014 
+// Copyright (c) 2006-2014
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -46,8 +44,6 @@ namespace OpenTK.Platform.X11
             Debug.WriteLine("[Warning] Mouse functionality will be significantly reduced.");
             Debug.WriteLine("[Warning] Copy OpenTK.dll.config to use the XI2 input driver instead.");
         }
-
-        #region IInputDriver2 Members
 
         public IMouseDriver2 MouseDriver
         {
@@ -81,16 +77,10 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        #endregion
-
-        #region IDisposable Members
-
         public void Dispose()
         {
             joystick.Dispose();
         }
-
-        #endregion
 
     }
 }

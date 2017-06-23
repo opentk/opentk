@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 
 using System;
@@ -41,8 +39,6 @@ namespace OpenTK.Audio
     /// </summary>
     public sealed class AudioContext : IDisposable
     {
-        #region --- Fields ---
-
         bool disposed;
         bool is_processing, is_synchronized;
         IntPtr device_handle;
@@ -52,12 +48,6 @@ namespace OpenTK.Audio
         string device_name;
         static object audio_context_lock = new object();
         static Dictionary<ContextHandle, AudioContext> available_contexts = new Dictionary<ContextHandle, AudioContext>();
-
-        #endregion
-
-        #region --- Constructors ---
-
-        #region static AudioContext()
 
         /// \internal
         /// <summary>
@@ -69,27 +59,15 @@ namespace OpenTK.Audio
             { }
         }
 
-        #endregion static AudioContext()
-
-        #region public AudioContext()
-
         /// <summary>Constructs a new AudioContext, using the default audio device.</summary>
         public AudioContext()
             : this(null, 0, 0, false, true, MaxAuxiliarySends.UseDriverDefault) { }
-
-        #endregion
-
-        #region public AudioContext(string device)
 
         /// <summary>
         /// Constructs a new AudioContext instance.
         /// </summary>
         /// <param name="device">The device name that will host this instance.</param>
         public AudioContext(string device) : this(device, 0, 0, false, true, MaxAuxiliarySends.UseDriverDefault) { }
-
-        #endregion
-
-        #region public AudioContext(string device, int freq)
 
         /// <summary>Constructs a new AudioContext, using the specified audio device and device parameters.</summary>
         /// <param name="device">The name of the audio device to use.</param>
@@ -99,10 +77,6 @@ namespace OpenTK.Audio
         /// devices.
         /// </remarks>
         public AudioContext(string device, int freq) : this(device, freq, 0, false, true, MaxAuxiliarySends.UseDriverDefault) { }
-
-        #endregion
-
-        #region public AudioContext(string device, int freq, int refresh)
 
         /// <summary>Constructs a new AudioContext, using the specified audio device and device parameters.</summary>
         /// <param name="device">The name of the audio device to use.</param>
@@ -115,10 +89,6 @@ namespace OpenTK.Audio
         public AudioContext(string device, int freq, int refresh)
             : this(device, freq, refresh, false, true, MaxAuxiliarySends.UseDriverDefault) { }
 
-        #endregion
-
-        #region public AudioContext(string device, int freq, int refresh, bool sync)
-
         /// <summary>Constructs a new AudioContext, using the specified audio device and device parameters.</summary>
         /// <param name="device">The name of the audio device to use.</param>
         /// <param name="freq">Frequency for mixing output buffer, in units of Hz. Pass 0 for driver default.</param>
@@ -130,10 +100,6 @@ namespace OpenTK.Audio
         /// </remarks>
         public AudioContext(string device, int freq, int refresh, bool sync)
             : this(AudioDeviceEnumerator.AvailablePlaybackDevices[0], freq, refresh, sync, true) { }
-
-        #endregion
-
-        #region public AudioContext(string device, int freq, int refresh, bool sync, bool enableEfx)
 
         /// <summary>Creates the audio context using the specified device and device parameters.</summary>
         /// <param name="device">The device descriptor obtained through AudioContext.AvailableDevices.</param>
@@ -165,10 +131,6 @@ namespace OpenTK.Audio
             CreateContext(device, freq, refresh, sync, enableEfx, MaxAuxiliarySends.UseDriverDefault);
         }
 
-        #endregion
-
-        #region public AudioContext(string device, int freq, int refresh, bool sync, bool enableEfx, MaxAuxiliarySends efxMaxAuxSends)
-
         /// <summary>Creates the audio context using the specified device and device parameters.</summary>
         /// <param name="device">The device descriptor obtained through AudioContext.AvailableDevices.</param>
         /// <param name="freq">Frequency for mixing output buffer, in units of Hz. Pass 0 for driver default.</param>
@@ -199,14 +161,6 @@ namespace OpenTK.Audio
         {
             CreateContext(device, freq, refresh, sync, enableEfx, efxMaxAuxSends);
         }
-
-        #endregion
-
-        #endregion --- Constructors ---
-
-        #region --- Private Methods ---
-
-        #region CreateContext
 
         /// <summary>May be passed at context construction time to indicate the number of desired auxiliary effect slot sends per source.</summary>
         public enum MaxAuxiliarySends:int
@@ -319,7 +273,7 @@ namespace OpenTK.Audio
                         Alc.GetInteger(device_handle, AlcGetInteger.EfxMaxAuxiliarySends, 1, out num_slots);
                         break;
                 }
-              
+
                 attributes.Add((int)AlcContextAttributes.EfxMaxAuxiliarySends);
                 attributes.Add(num_slots);
             }
@@ -344,7 +298,7 @@ namespace OpenTK.Audio
             CheckErrors();
 
             device_name = Alc.GetString(device_handle, AlcGetString.DeviceSpecifier);
- 
+
 
             lock (audio_context_lock)
             {
@@ -352,10 +306,6 @@ namespace OpenTK.Audio
                 context_exists = true;
             }
         }
-
-        #endregion --- Private Methods ---
-
-        #region static void MakeCurrent(AudioContext context)
 
         /// \internal
         /// <summary>Makes the specified AudioContext current in the calling thread.</summary>
@@ -376,10 +326,6 @@ namespace OpenTK.Audio
                         context != null ? context.ToString() : "null"));
             }
         }
-
-        #endregion
-
-        #region internal bool IsCurrent
 
         /// <summary>
         /// Gets or sets a System.Boolean indicating whether the AudioContext
@@ -410,19 +356,7 @@ namespace OpenTK.Audio
             }
         }
 
-        #endregion
-
-        #region IntPtr Device
-
         IntPtr Device { get { return device_handle; } }
-
-        #endregion
-
-        #endregion
-
-        #region --- Public Members ---
-
-        #region CheckErrors
 
         /// <summary>
         /// Checks for ALC error conditions.
@@ -439,10 +373,6 @@ namespace OpenTK.Audio
             new AudioDeviceErrorChecker(device_handle).Dispose();
         }
 
-        #endregion
-
-        #region CurrentError
-
         /// <summary>
         /// Returns the ALC error code for this instance.
         /// </summary>
@@ -456,10 +386,6 @@ namespace OpenTK.Audio
                 return Alc.GetError(device_handle);
             }
         }
-
-        #endregion
-
-        #region MakeCurrent
 
         /// <summary>Makes the AudioContext current in the calling thread.</summary>
         /// <exception cref="ObjectDisposedException">
@@ -480,10 +406,6 @@ namespace OpenTK.Audio
             AudioContext.MakeCurrent(this);
         }
 
-        #endregion
-
-        #region IsProcessing
-
         /// <summary>
         /// Gets a System.Boolean indicating whether the AudioContext is
         /// currently processing audio events.
@@ -502,10 +424,6 @@ namespace OpenTK.Audio
             private set { is_processing = value; }
         }
 
-        #endregion
-
-        #region IsSynchronized
-
         /// <summary>
         /// Gets a System.Boolean indicating whether the AudioContext is
         /// synchronized.
@@ -522,10 +440,6 @@ namespace OpenTK.Audio
             }
             private set { is_synchronized = value; }
         }
-
-        #endregion
-
-        #region public void Process
 
         /// <summary>
         /// Processes queued audio events.
@@ -553,10 +467,6 @@ namespace OpenTK.Audio
             Alc.ProcessContext(this.context_handle);
             IsProcessing = true;
         }
-
-        #endregion
-
-        #region public void Suspend
 
         /// <summary>
         /// Suspends processing of audio events.
@@ -587,10 +497,6 @@ namespace OpenTK.Audio
             IsProcessing = false;
         }
 
-        #endregion
-
-        #region public bool SupportsExtension(string extension)
-
         /// <summary>
         /// Checks whether the specified OpenAL extension is supported.
         /// </summary>
@@ -603,10 +509,6 @@ namespace OpenTK.Audio
 
             return Alc.IsExtensionPresent(this.Device, extension);
         }
-
-        #endregion
-
-        #region CurrentDevice
 
         /// <summary>
         /// Gets a System.String with the name of the device used in this context.
@@ -621,14 +523,6 @@ namespace OpenTK.Audio
                 return device_name;
             }
         }
-
-        #endregion
-
-        #endregion --- Public Members ---
-
-        #region --- Static Members ---
-
-        #region public static AudioContext CurrentContext
 
         /// <summary>
         /// Gets the OpenTK.Audio.AudioContext which is current in the application.
@@ -657,10 +551,6 @@ namespace OpenTK.Audio
             }
         }
 
-        #endregion
-
-        #region AvailableDevices
-
         /// <summary>
         /// Returns a list of strings containing all known playback devices.
         /// </summary>
@@ -671,10 +561,6 @@ namespace OpenTK.Audio
                 return AudioDeviceEnumerator.AvailablePlaybackDevices;
             }
         }
-        #endregion public static IList<string> AvailablePlaybackDevices
-
-        #region DefaultDevice
-
         /// <summary>
         /// Returns the name of the device that will be used as playback default.
         /// </summary>
@@ -685,12 +571,6 @@ namespace OpenTK.Audio
                 return AudioDeviceEnumerator.DefaultPlaybackDevice;
             }
         }
-
-        #endregion
-
-        #endregion
-
-        #region --- IDisposable Members ---
 
         /// <summary>
         /// Disposes of the AudioContext, cleaning up all resources consumed by it.
@@ -732,10 +612,6 @@ namespace OpenTK.Audio
             this.Dispose(false);
         }
 
-        #endregion
-
-        #region --- Overrides ---
-
         /// <summary>
         /// Calculates the hash code for this instance.
         /// </summary>
@@ -764,7 +640,5 @@ namespace OpenTK.Audio
             return String.Format("{0} (handle: {1}, device: {2})",
                                  this.device_name, this.context_handle, this.device_handle);
         }
-
-        #endregion
     }
 }

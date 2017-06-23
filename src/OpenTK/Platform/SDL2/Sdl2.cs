@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,8 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -71,8 +68,6 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        #region Functions
-
         static string IntPtrToString(IntPtr ptr)
         {
             return Marshal.PtrToStringAnsi(ptr);
@@ -80,8 +75,6 @@ namespace OpenTK.Platform.SDL2
             //while (Marshal.ReadByte(ptr) != 0)
             //    strlen++;
         }
-
-        #region Cursor
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateColorCursor", ExactSpelling = true)]
@@ -98,8 +91,6 @@ namespace OpenTK.Platform.SDL2
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetCursor", ExactSpelling = true)]
         public static extern void SetCursor(Cursor cursor);
-
-        #endregion
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_AddEventWatch", ExactSpelling = true)]
@@ -142,8 +133,6 @@ namespace OpenTK.Platform.SDL2
         [SuppressUnmanagedCodeSecurity]
         [DllImport (lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_free", ExactSpelling = true)]
         public static extern void Free(IntPtr memblock);
-
-        #region GameContoller
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerEventState", ExactSpelling = true)]
@@ -225,8 +214,6 @@ namespace OpenTK.Platform.SDL2
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerOpen", ExactSpelling = true)]
         public static extern IntPtr GameControllerOpen(int joystick_index);
-
-        #endregion
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetDisplayBounds", ExactSpelling = true)]
@@ -428,7 +415,7 @@ namespace OpenTK.Platform.SDL2
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_PixelFormatEnumToMasks", ExactSpelling = true)]
-        public static extern bool PixelFormatEnumToMasks(uint format, out int bpp, 
+        public static extern bool PixelFormatEnumToMasks(uint format, out int bpp,
             out uint rmask, out uint gmask, out uint bmask, out uint amask);
 
         [SuppressUnmanagedCodeSecurity]
@@ -499,8 +486,6 @@ namespace OpenTK.Platform.SDL2
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_WarpMouseInWindow", ExactSpelling = true)]
         public static extern void WarpMouseInWindow(IntPtr window, int x, int y);
 
-        #region SysWM
-
         /// <summary>
         /// Retrieves driver-dependent window information.
         /// </summary>
@@ -524,8 +509,6 @@ namespace OpenTK.Platform.SDL2
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetWindowWMInfo", ExactSpelling = true)]
         static extern bool GetWindowWMInfoInternal(IntPtr window, ref SysWMInfo info);
-
-        #endregion
 
         public partial class GL
         {
@@ -593,18 +576,10 @@ namespace OpenTK.Platform.SDL2
             [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_SwapWindow", ExactSpelling = true)]
             public static extern void SwapWindow(IntPtr window);
         }
-
-        #endregion
     }
-
-    #region Delegates
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int EventFilter(IntPtr userdata, IntPtr @event);
-
-    #endregion
-
-    #region Enums
 
     enum Button : byte
     {
@@ -1363,10 +1338,6 @@ namespace OpenTK.Platform.SDL2
         ALLOW_HIGHDPI = 0x00002000,
     }
 
-    #endregion
-
-    #region Structs
-
     struct ControllerAxisEvent
     {
         public EventType Type;
@@ -1554,7 +1525,7 @@ namespace OpenTK.Platform.SDL2
             {
                 fixed (JoystickGuid* pdata = &this)
                 {
-                    Marshal.Copy(new IntPtr(pdata), data, 0, data.Length); 
+                    Marshal.Copy(new IntPtr(pdata), data, 0, data.Length);
                 }
             }
 
@@ -1769,7 +1740,5 @@ namespace OpenTK.Platform.SDL2
         public IntPtr File;
         public UInt32 WindowID;
     }
-
-    #endregion
 }
 

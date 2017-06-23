@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -47,8 +45,6 @@ namespace OpenTK.Platform.Windows
     /// </summary>
     internal sealed class WinGLNative : NativeWindowBase
     {
-        #region Fields
-
         const ExtendedWindowStyle ParentStyleEx = ExtendedWindowStyle.WindowEdge | ExtendedWindowStyle.ApplicationWindow;
         const ExtendedWindowStyle ChildStyleEx = 0;
 
@@ -74,7 +70,7 @@ namespace OpenTK.Platform.Windows
         int mouse_last_timestamp = 0;
         bool invisible_since_creation; // Set by WindowsMessage.CREATE and consumed by Visible = true (calls BringWindowToFront).
         int suppress_resize; // Used in WindowBorder and WindowState in order to avoid rapid, consecutive resize events.
-        bool is_in_modal_loop; // set to true whenever we enter the modal resize/move event loop 
+        bool is_in_modal_loop; // set to true whenever we enter the modal resize/move event loop
 
         Rectangle
             bounds = new Rectangle(),
@@ -98,10 +94,6 @@ namespace OpenTK.Platform.Windows
         int cursor_visible_count = 0;
 
         static readonly object SyncRoot = new object();
-
-        #endregion
-
-        #region Contructors
 
         public WinGLNative(int x, int y, int width, int height, string title, GameWindowFlags options, DisplayDevice device)
         {
@@ -156,12 +148,6 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #region Private Members
-
-        #region Scale
-
         enum ScaleDirection { X, Y }
 
         // Scales a value according according
@@ -187,7 +173,7 @@ namespace OpenTK.Platform.Windows
         {
             return Scale(x, ScaleDirection.X);
         }
-        
+
         static int ScaleY(int y)
         {
             return Scale(y, ScaleDirection.Y);
@@ -219,10 +205,6 @@ namespace OpenTK.Platform.Windows
         {
             return Unscale(y, ScaleDirection.Y);
         }
-
-        #endregion
-
-        #region Message Handlers
 
         void HandleActivate(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
@@ -422,11 +404,11 @@ namespace OpenTK.Platform.Windows
                 if (mouse_outside_window && !mouse_was_outside_window)
                 {
                     // Mouse leaving
-                    // If we have mouse capture we ignore WM_MOUSELEAVE events, so 
+                    // If we have mouse capture we ignore WM_MOUSELEAVE events, so
                     // have to manually call OnMouseLeave here.
                     // Mouse tracking is disabled automatically by the OS
                     OnMouseLeave(EventArgs.Empty);
-                } 
+                }
                 else if (!mouse_outside_window && mouse_was_outside_window)
                 {
                     // Mouse entring
@@ -449,7 +431,7 @@ namespace OpenTK.Platform.Windows
                 Functions.ClientToScreen(handle, ref screenPoint);
                 int timestamp = Functions.GetMessageTime();
 
-                // & 0xFFFF to handle multiple monitors http://support.microsoft.com/kb/269743 
+                // & 0xFFFF to handle multiple monitors http://support.microsoft.com/kb/269743
                 MouseMovePoint movePoint = new MouseMovePoint()
                 {
                     X = screenPoint.X & 0xFFFF,
@@ -461,7 +443,7 @@ namespace OpenTK.Platform.Windows
                 const int numPoints = 64;
                 MouseMovePoint* movePoints = stackalloc MouseMovePoint[numPoints];
 
-                // GetMouseMovePointsEx fills in movePoints so that the most 
+                // GetMouseMovePointsEx fills in movePoints so that the most
                 // recent events are at low indices in the array.
                 int points = Functions.GetMouseMovePointsEx(
                     (uint)MouseMovePoint.SizeInBytes,
@@ -482,7 +464,7 @@ namespace OpenTK.Platform.Windows
                 }
                 else
                 {
-                    // Exclude the current position. 
+                    // Exclude the current position.
                     Point currentScreenPosition = new Point(MouseState.X, MouseState.Y);
                     Functions.ClientToScreen(handle, ref currentScreenPosition);
 
@@ -502,7 +484,7 @@ namespace OpenTK.Platform.Windows
                     while (--i >= 0)
                     {
                         Point position = new Point(movePoints[i].X, movePoints[i].Y);
-                        // Handle multiple monitors http://support.microsoft.com/kb/269743 
+                        // Handle multiple monitors http://support.microsoft.com/kb/269743
                         if (position.X > 32767)
                         {
                             position.X -= 65536;
@@ -702,18 +684,12 @@ namespace OpenTK.Platform.Windows
             Functions.DragFinish(hDrop);
         }
 
-        #endregion
-
-        #region WindowProcedure
-
         IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             IntPtr? result = null;
 
             switch (message)
             {
-                #region Size / Move / Style events
-
                 case WindowMessage.ACTIVATE:
                     HandleActivate(handle, message, wParam, lParam);
                     break;
@@ -750,10 +726,6 @@ namespace OpenTK.Platform.Windows
                 case WindowMessage.CAPTURECHANGED:
                     HandleCaptureChanged(handle, message, wParam, lParam);
                     break;
-
-                #endregion
-
-                #region Input events
 
                 case WindowMessage.CHAR:
                     HandleChar(handle, message, wParam, lParam);
@@ -826,10 +798,6 @@ namespace OpenTK.Platform.Windows
                     HandleDropFiles(handle, message, wParam, lParam);
                     break;
 
-                #endregion
-
-                #region Creation / Destruction events
-
                 case WindowMessage.CREATE:
                     HandleCreate(handle, message, wParam, lParam);
                     break;
@@ -841,8 +809,6 @@ namespace OpenTK.Platform.Windows
                 case WindowMessage.DESTROY:
                     HandleDestroy(handle, message, wParam, lParam);
                     break;
-
-                #endregion
             }
 
             if (result.HasValue)
@@ -909,10 +875,6 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #region CreateWindow
-
         IntPtr CreateWindow(int x, int y, int width, int height, string title, GameWindowFlags options, DisplayDevice device, IntPtr parentHandle)
         {
             // Use win32 to create the native window.
@@ -972,10 +934,6 @@ namespace OpenTK.Platform.Windows
             return handle;
         }
 
-        #endregion
-
-        #region DestroyWindow
-
         /// <summary>
         /// Starts the teardown sequence for the current window.
         /// </summary>
@@ -988,8 +946,6 @@ namespace OpenTK.Platform.Windows
                 exists = false;
             }
         }
-
-        #endregion
 
         void HideBorder()
         {
@@ -1036,12 +992,6 @@ namespace OpenTK.Platform.Windows
                     Marshal.GetLastWin32Error()));
         }
 
-        #endregion
-
-        #region INativeWindow Members
-
-        #region Bounds
-
         public override Rectangle Bounds
         {
             get { return bounds; }
@@ -1051,10 +1001,6 @@ namespace OpenTK.Platform.Windows
                 Functions.SetWindowPos(window.Handle, IntPtr.Zero, value.X, value.Y, value.Width, value.Height, 0);
             }
         }
-
-        #endregion
-
-        #region Location
 
         public override Point Location
         {
@@ -1066,10 +1012,6 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #region Size
-
         public override Size Size
         {
             get { return Bounds.Size; }
@@ -1079,10 +1021,6 @@ namespace OpenTK.Platform.Windows
                 Functions.SetWindowPos(window.Handle, IntPtr.Zero, 0, 0, value.Width, value.Height, SetWindowPosFlags.NOMOVE);
             }
         }
-
-        #endregion
-
-        #region ClientSize
 
         public override Size ClientSize
         {
@@ -1098,10 +1036,6 @@ namespace OpenTK.Platform.Windows
                 Size = new Size(rect.Width, rect.Height);
             }
         }
-
-        #endregion
-
-        #region Icon
 
         public override Icon Icon
         {
@@ -1124,18 +1058,10 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #region Focused
-
         public override bool Focused
         {
             get { return focused; }
         }
-
-        #endregion
-
-        #region Title
 
         StringBuilder sb_title = new StringBuilder(256);
         public override string Title
@@ -1157,10 +1083,6 @@ namespace OpenTK.Platform.Windows
                 }
             }
         }
-
-        #endregion
-
-        #region Visible
 
         public override bool Visible
         {
@@ -1191,15 +1113,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #region Exists
-
         public override  bool Exists { get { return exists; } }
-
-        #endregion
-
-        #region Cursor
 
         public override MouseCursor Cursor
         {
@@ -1272,7 +1186,7 @@ namespace OpenTK.Platform.Windows
                             {
                                 if (success)
                                 {
-                                    // GetIconInfo creates bitmaps for the hbmMask and hbmColor members of ICONINFO. 
+                                    // GetIconInfo creates bitmaps for the hbmMask and hbmColor members of ICONINFO.
                                     // The calling application must manage these bitmaps and delete them when they are no longer necessary.
                                     Functions.DeleteObject(iconInfo.hbmColor);
                                     Functions.DeleteObject(iconInfo.hbmMask);
@@ -1282,7 +1196,7 @@ namespace OpenTK.Platform.Windows
                             }
                         }
                     }
-                    
+
                     Debug.Assert(oldCursorHandle != IntPtr.Zero);
                     Debug.Assert(oldCursorHandle != cursor_handle);
                     Debug.Assert(oldCursor != cursor);
@@ -1295,10 +1209,6 @@ namespace OpenTK.Platform.Windows
                 }
             }
         }
-
-        #endregion
-
-        #region CursorVisible
 
         public override bool CursorVisible
         {
@@ -1327,19 +1237,12 @@ namespace OpenTK.Platform.Windows
                 }
             }
         }
-        
-        #endregion
 
-        #region Close
 
         public override void Close()
         {
             Functions.PostMessage(window.Handle, WindowMessage.CLOSE, IntPtr.Zero, IntPtr.Zero);
         }
-
-        #endregion
-
-        #region public WindowState WindowState
 
         public override WindowState WindowState
         {
@@ -1432,10 +1335,6 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #region public WindowBorder WindowBorder
-
         public override WindowBorder WindowBorder
         {
             get
@@ -1526,10 +1425,6 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #region PointToClient
-
         public override Point PointToClient(Point point)
         {
             if (!Functions.ScreenToClient(window.Handle, ref point))
@@ -1540,10 +1435,6 @@ namespace OpenTK.Platform.Windows
             return point;
         }
 
-        #endregion
-
-        #region PointToScreen
-
         public override Point PointToScreen(Point point)
         {
             if (!Functions.ClientToScreen(window.Handle, ref point))
@@ -1553,14 +1444,6 @@ namespace OpenTK.Platform.Windows
 
             return point;
         }
-
-        #endregion
-
-        #endregion
-
-        #region INativeGLWindow Members
-
-        #region public void ProcessEvents()
 
         MSG msg;
         public override void ProcessEvents()
@@ -1573,20 +1456,10 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #region public IWindowInfo WindowInfo
-
         public override IWindowInfo WindowInfo
         {
             get { return child_window; }
         }
-
-        #endregion
-
-        #endregion
-
-        #region IDisposable Members
 
         protected override void Dispose(bool calledManually)
         {
@@ -1614,7 +1487,5 @@ namespace OpenTK.Platform.Windows
                 disposed = true;
             }
         }
-
-        #endregion
     }
 }

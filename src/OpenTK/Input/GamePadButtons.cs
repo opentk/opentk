@@ -1,4 +1,3 @@
-#region License
 //
 // GamePadButtons.cs
 //
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 
@@ -46,8 +44,6 @@ namespace OpenTK.Input
         {
             buttons = state;
         }
-
-        #region Public Members
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the A button.
@@ -225,10 +221,6 @@ namespace OpenTK.Input
                 Equals((GamePadButtons)obj);
         }
 
-        #endregion
-
-        #region IEquatable<GamePadButtons> Members
-
         /// <summary>
         /// Determines whether the specified <see cref="OpenTK.Input.GamePadButtons"/> is equal to the current <see cref="OpenTK.Input.GamePadButtons"/>.
         /// </summary>
@@ -240,16 +232,10 @@ namespace OpenTK.Input
             return buttons == other.buttons;
         }
 
-        #endregion
-
-        #region Private Members
-
         ButtonState GetButton(Buttons b)
         {
             return (buttons & b) != 0 ? ButtonState.Pressed : ButtonState.Released;
         }
-
-        #endregion
     }
 }
 

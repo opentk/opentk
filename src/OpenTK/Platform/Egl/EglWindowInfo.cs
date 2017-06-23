@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -36,16 +34,10 @@ namespace OpenTK.Platform.Egl
     // Holds information about an EGL window.
     class EglWindowInfo : IWindowInfo
     {
-        #region Fields
-
         IntPtr handle;
         IntPtr display;
         IntPtr surface;
         bool disposed;
-
-        #endregion
-
-        #region Constructors
 
         public EglWindowInfo(IntPtr handle, IntPtr display)
             : this(handle, display, IntPtr.Zero)
@@ -70,10 +62,6 @@ namespace OpenTK.Platform.Egl
                 throw new GraphicsContextException(String.Format("Failed to initialize EGL, error {0}.", Egl.GetError()));
             }
         }
-
-        #endregion
-
-        #region Public Members
 
         public IntPtr Handle { get { return handle; } set { handle = value; } }
 
@@ -113,7 +101,7 @@ namespace OpenTK.Platform.Egl
             {
                 DestroySurface();
             }
-            CreatePbufferSurface(config, width, height, out surface); 
+            CreatePbufferSurface(config, width, height, out surface);
         }
 
         public void CreatePbufferSurface(IntPtr config, int width, int height, out IntPtr bufferSurface)
@@ -155,7 +143,7 @@ namespace OpenTK.Platform.Egl
                 bufferSurface = IntPtr.Zero;
                 return;
             }
-            
+
             Debug.Print("[Warning] Failed to destroy {0}:{1}.", Surface.GetType().Name, Surface);
             Surface = IntPtr.Zero;
         }
@@ -169,10 +157,6 @@ namespace OpenTK.Platform.Egl
                 Display = IntPtr.Zero;
             }
         }
-
-        #endregion
-
-        #region IDisposable Members
 
         public void Dispose()
         {
@@ -200,7 +184,5 @@ namespace OpenTK.Platform.Egl
         {
             Dispose(false);
         }
-
-        #endregion
     }
 }

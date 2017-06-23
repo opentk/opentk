@@ -1,4 +1,3 @@
-#region License
 //
 // PlatformFactoryBase.cs
 //
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -51,8 +49,6 @@ namespace OpenTK.Platform
         public PlatformFactoryBase()
         {
         }
-
-        #region IPlatformFactory Members
 
         public abstract INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device);
 
@@ -85,10 +81,6 @@ namespace OpenTK.Platform
                 Resources.Add(resource);
             }
         }
-
-        #endregion
-
-        #region IDisposable implementation
 
         public void Dispose()
         {
@@ -124,8 +116,6 @@ namespace OpenTK.Platform
         {
             Dispose(false);
         }
-
-        #endregion
     }
 }
 

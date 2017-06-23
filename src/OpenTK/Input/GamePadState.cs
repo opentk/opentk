@@ -1,4 +1,3 @@
- #region License
  //
  // The Open Toolkit Library License
  //
@@ -6,7 +5,7 @@
  //
  // Permission is hereby granted, free of charge, to any person obtaining a copy
  // of this software and associated documentation files (the "Software"), to deal
- // in the Software without restriction, including without limitation the rights to 
+ // in the Software without restriction, including without limitation the rights to
  // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
  // the Software, and to permit persons to whom the Software is furnished to do
  // so, subject to the following conditions:
@@ -23,7 +22,6 @@
  // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  // OTHER DEALINGS IN THE SOFTWARE.
  //
- #endregion
 
 using System;
 
@@ -45,8 +43,6 @@ namespace OpenTK.Input
         byte left_trigger;
         byte right_trigger;
         bool is_connected;
-
-        #region Public Members
 
         /// <summary>
         /// Gets a <see cref="GamePadThumbSticks"/> structure describing the
@@ -139,10 +135,6 @@ namespace OpenTK.Input
                 Equals((GamePadState)obj);
         }
 
-        #endregion
-
-        #region IEquatable<GamePadState> Members
-
         /// <summary>
         /// Determines whether the specified <see cref="OpenTK.Input.GamePadState"/> is equal to the current <see cref="OpenTK.Input.GamePadState"/>.
         /// </summary>
@@ -157,10 +149,6 @@ namespace OpenTK.Input
                 DPad == other.DPad &&
                 IsConnected == other.IsConnected;
         }
-
-        #endregion
-
-        #region Internal Members
 
         internal void SetAxis(GamePadAxes axis, short value)
         {
@@ -225,10 +213,6 @@ namespace OpenTK.Input
             packet_number = number;
         }
 
-        #endregion
-
-        #region Private Members
-
         bool IsAxisValid(GamePadAxes axis)
         {
             int index = (int)axis;
@@ -239,7 +223,5 @@ namespace OpenTK.Input
         {
             return index >= 0 && index < GamePad.MaxDPadCount;
         }
-
-        #endregion
     }
 }
