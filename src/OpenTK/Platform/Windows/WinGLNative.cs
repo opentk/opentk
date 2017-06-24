@@ -96,6 +96,7 @@ namespace OpenTK.Platform.Windows
         MouseCursor cursor = MouseCursor.Default;
         IntPtr cursor_handle = Functions.LoadCursor(CursorName.Arrow);
         int cursor_visible_count = 0;
+        bool is_cursor_confined = false;
 
         static readonly object SyncRoot = new object();
 
@@ -245,8 +246,8 @@ namespace OpenTK.Platform.Windows
             is_in_modal_loop = true;
             StartTimer(handle);
 
-            if (!CursorVisible)
-                UngrabCursor();
+            if (!CursorVisible && !is_cursor_confined)
+                GrabCursor(false);
         }
 
         void HandleExitModalLoop(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -258,7 +259,7 @@ namespace OpenTK.Platform.Windows
 
             // Ensure cursor remains grabbed
             if (!CursorVisible)
-                GrabCursor();
+                GrabCursor(true);
         }
 
         void HandleWindowPositionChanged(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -299,7 +300,7 @@ namespace OpenTK.Platform.Windows
                         // handled inside [ENTER|EXIT]SIZEMOVE case above.
                         // If not, then we have to handle cursor grabbing here.
                         if (!CursorVisible)
-                            GrabCursor();
+                            GrabCursor(true);
                     }
                 }
             }
@@ -329,7 +330,7 @@ namespace OpenTK.Platform.Windows
             {
                 // Ensure cursor remains grabbed
                 if (!CursorVisible)
-                    GrabCursor();
+                    GrabCursor(true);
 
                 windowBorder = new_border;
                 OnWindowBorderChanged(EventArgs.Empty);
@@ -364,7 +365,7 @@ namespace OpenTK.Platform.Windows
 
                 // Ensure cursor remains grabbed
                 if (!CursorVisible)
-                    GrabCursor();
+                    GrabCursor(true);
             }
         }
 
@@ -990,24 +991,26 @@ namespace OpenTK.Platform.Windows
             suppress_resize--;
         }
 
-        void GrabCursor()
+        void GrabCursor(bool grab)
         {
-            Point pos = PointToScreen(new Point(ClientRectangle.X, ClientRectangle.Y));
-            Win32Rectangle rect = new Win32Rectangle();
-            rect.left = pos.X;
-            rect.right = pos.X + ClientRectangle.Width;
-            rect.top = pos.Y;
-            rect.bottom = pos.Y + ClientRectangle.Height;
-            if (!Functions.ClipCursor(ref rect))
-                Debug.WriteLine(String.Format("Failed to grab cursor. Error: {0}",
-                    Marshal.GetLastWin32Error()));
-        }
-
-        void UngrabCursor()
-        {
-            if (!Functions.ClipCursor(IntPtr.Zero))
-                Debug.WriteLine(String.Format("Failed to ungrab cursor. Error: {0}",
-                    Marshal.GetLastWin32Error()));
+            if (grab)
+            {
+                Point pos = PointToScreen(new Point(ClientRectangle.X, ClientRectangle.Y));
+                Win32Rectangle rect = new Win32Rectangle();
+                rect.left = pos.X;
+                rect.right = pos.X + ClientRectangle.Width;
+                rect.top = pos.Y;
+                rect.bottom = pos.Y + ClientRectangle.Height;
+                if (!Functions.ClipCursor(ref rect))
+                    Debug.WriteLine(String.Format("Failed to grab cursor. Error: {0}",
+                                                  Marshal.GetLastWin32Error()));
+            }
+            else
+            {
+                if (!Functions.ClipCursor(IntPtr.Zero))
+                    Debug.WriteLine(String.Format("Failed to ungrab cursor. Error: {0}",
+                                                  Marshal.GetLastWin32Error()));
+            }
         }
 
         #endregion
@@ -1287,7 +1290,8 @@ namespace OpenTK.Platform.Windows
                     }
                     while (cursor_visible_count < 0);
 
-                    UngrabCursor();
+                    if (!is_cursor_confined)
+                        GrabCursor(false);
                 }
                 else if (!value && cursor_visible_count >= 0)
                 {
@@ -1297,7 +1301,7 @@ namespace OpenTK.Platform.Windows
                     }
                     while (cursor_visible_count >= 0);
 
-                    GrabCursor();
+                    GrabCursor(true);
                 }
             }
         }
@@ -1534,7 +1538,8 @@ namespace OpenTK.Platform.Windows
 
         public override void ConfineCursor(bool confine)
         {
-            throw new NotImplementedException();
+            is_cursor_confined = true;
+            GrabCursor(confine);
         }
 
         #region INativeGLWindow Members
