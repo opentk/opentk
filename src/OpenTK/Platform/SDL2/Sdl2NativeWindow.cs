@@ -52,6 +52,7 @@ namespace OpenTK.Platform.SDL2
         bool is_visible;
         bool is_focused;
         bool is_cursor_visible = true;
+        bool is_cursor_confined = false;
         bool exists;
         bool must_destroy;
         bool disposed;
@@ -216,7 +217,7 @@ namespace OpenTK.Platform.SDL2
 
             // We need MouseUp events to be reported even if they occur
             // outside the window. SetWindowGrab ensures we get them.
-            if (window.CursorVisible)
+            if (window.CursorVisible && !window.is_cursor_confined)
             {
                 SDL.SetWindowGrab(window.window.Handle,
                     button_pressed ? true : false);
@@ -402,18 +403,25 @@ namespace OpenTK.Platform.SDL2
 
         void GrabCursor(bool grab)
         {
-            SDL.ShowCursor(!grab);
             SDL.SetWindowGrab(window.Handle, grab);
-            SDL.SetRelativeMouseMode(grab);
-            if (!grab)
+        }
+
+        void HideCursor(bool hide)
+        {
+            SDL.ShowCursor(!hide);
+            SDL.SetRelativeMouseMode(hide);
+            if (hide)
             {
                 // Move the cursor to the current position
                 // in order to avoid a sudden jump when it
                 // becomes visible again
+                int x, y;
+                SDL.GetMouseState(out x, out y);
+                Console.WriteLine(x + " " + y);
                 float scale = Width / (float)Size.Width;
                 SDL.WarpMouseInWindow(window.Handle,
-                    (int)Math.Round(MouseState.X / scale),
-                    (int)Math.Round(MouseState.Y / scale));
+                                      (int)Math.Round(MouseState.X / scale),
+                                      (int)Math.Round(MouseState.Y / scale));
             }
         }
 
@@ -590,6 +598,12 @@ namespace OpenTK.Platform.SDL2
             return new Point(point.X + client.X, point.Y + client.Y);
         }
 
+        public override void ConfineCursor(bool confine)
+        {
+            is_cursor_confined = confine;
+            GrabCursor(confine);
+        }
+
         public override Icon Icon
         {
             get
@@ -760,8 +774,10 @@ namespace OpenTK.Platform.SDL2
                                     break;
                             }
 
-                            if (!CursorVisible)
+                            if (!CursorVisible) {
                                 GrabCursor(true);
+                                HideCursor(true);
+                            }
                         }
                     }
                 }
@@ -914,6 +930,7 @@ namespace OpenTK.Platform.SDL2
                     if (Exists)
                     {
                         GrabCursor(!value);
+                        HideCursor(!value);
                         is_cursor_visible = value;
                     }
                 }

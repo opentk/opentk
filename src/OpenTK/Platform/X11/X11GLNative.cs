@@ -1723,6 +1723,11 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        public override void ConfineCursor (bool confine)
+        {
+            throw new NotImplementedException ();
+        }
+
         #region IDisposable Members
 
         protected override void Dispose(bool manuallyCalled)

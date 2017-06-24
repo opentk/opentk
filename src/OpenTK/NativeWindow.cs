@@ -196,6 +196,11 @@ namespace OpenTK
 
         #endregion
 
+        public void ConfineCursor(bool confine)
+        {
+            implementation.ConfineCursor(confine);
+        }
+
         #region Properties
 
         #region Bounds

@@ -747,6 +747,11 @@ namespace OpenTK.Platform.MacOS
             return new Point((int)r.X, (int)(GetCurrentScreenFrame().Height - r.Y));
         }
 
+        public override void ConfineCursor (bool confine)
+        {
+            throw new NotImplementedException ();
+        }
+
         public override Icon Icon
         {
             get { return icon; }

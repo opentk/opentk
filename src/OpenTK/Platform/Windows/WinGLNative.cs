@@ -1532,6 +1532,11 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        public override void ConfineCursor(bool confine)
+        {
+            throw new NotImplementedException();
+        }
+
         #region INativeGLWindow Members
 
         #region public void ProcessEvents()

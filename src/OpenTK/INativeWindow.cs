@@ -183,6 +183,12 @@ namespace OpenTK
         Point PointToScreen(Point point);
 
         /// <summary>
+        /// Confines the cursor to window.
+        /// </summary>
+        /// <param name="confine">If set to <c>true</c> confine.</param>
+        void ConfineCursor(bool confine);
+
+        /// <summary>
         /// Occurs whenever the window is moved. 
         /// </summary>
         event EventHandler<EventArgs> Move;
