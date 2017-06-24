@@ -121,6 +121,7 @@ namespace OpenTK.Platform.X11
         MouseCursor cursor = MouseCursor.Default;
         IntPtr cursorHandle;
         bool cursor_visible = true;
+        bool is_cursor_confined = false;
 
          // Keyboard input
         readonly byte[] ascii = new byte[16];
@@ -953,7 +954,7 @@ namespace OpenTK.Platform.X11
 
                             if (Focused && !CursorVisible)
                             {
-                                GrabMouse();
+                                GrabMouse(true, true);
                             }
                         }
                         break;
@@ -1487,7 +1488,8 @@ namespace OpenTK.Platform.X11
                 {
                     using (new XLock(window.Display))
                     {
-                        UngrabMouse();
+                        if (!is_cursor_confined)
+                            GrabMouse(false, false);
 
                         Point p = PointToScreen(new Point(MouseState.X, MouseState.Y));
                         Mouse.SetPosition(p.X, p.Y);
@@ -1502,25 +1504,27 @@ namespace OpenTK.Platform.X11
                 {
                     using (new XLock(window.Display))
                     {
-                        GrabMouse();
+                        GrabMouse(true, true);
                         cursor_visible = false;
                     }
                 }
             }
         }
 
-        void GrabMouse()
+        void GrabMouse(bool grab, bool hide)
         {
-            Functions.XGrabPointer(window.Display, window.Handle, false,
-                EventMask.PointerMotionMask | EventMask.ButtonPressMask |
-                EventMask.ButtonReleaseMask,
-                GrabMode.GrabModeAsync, GrabMode.GrabModeAsync,
-                window.Handle, EmptyCursor, IntPtr.Zero);
-        }
-
-        void UngrabMouse()
-        {
-            Functions.XUngrabPointer(window.Display, IntPtr.Zero);
+            if (grab)
+            {
+                Functions.XGrabPointer(window.Display, window.Handle, false,
+                                       EventMask.PointerMotionMask | EventMask.ButtonPressMask |
+                                       EventMask.ButtonReleaseMask,
+                                       GrabMode.GrabModeAsync, GrabMode.GrabModeAsync,
+                                       window.Handle, hide ? EmptyCursor : IntPtr.Zero, IntPtr.Zero);
+            }
+            else
+            {
+                Functions.XUngrabPointer(window.Display, IntPtr.Zero);
+            }
         }
 
         #endregion
@@ -1723,9 +1727,10 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        public override void ConfineCursor (bool confine)
+        public override void ConfineCursor(bool confine)
         {
-            throw new NotImplementedException ();
+            is_cursor_confined = confine;
+            GrabMouse(confine, false);
         }
 
         #region IDisposable Members
