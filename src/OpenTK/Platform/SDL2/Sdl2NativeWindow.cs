@@ -410,7 +410,7 @@ namespace OpenTK.Platform.SDL2
         {
             SDL.ShowCursor(!hide);
             SDL.SetRelativeMouseMode(hide);
-            if (hide)
+            if (!hide)
             {
                 // Move the cursor to the current position
                 // in order to avoid a sudden jump when it
@@ -776,7 +776,6 @@ namespace OpenTK.Platform.SDL2
 
                             if (!CursorVisible) {
                                 GrabCursor(true);
-                                HideCursor(true);
                             }
                         }
                     }
@@ -929,7 +928,8 @@ namespace OpenTK.Platform.SDL2
                 {
                     if (Exists)
                     {
-                        GrabCursor(!value);
+                        if (!is_cursor_confined)
+                            GrabCursor(!value);
                         HideCursor(!value);
                         is_cursor_visible = value;
                     }
