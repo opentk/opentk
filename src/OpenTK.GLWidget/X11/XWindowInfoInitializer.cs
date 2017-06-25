@@ -95,48 +95,48 @@ namespace OpenTK.X11
 
 			if (mode.Buffers > 1)
 			{
-				attributeList.Add((int)GLXAttribute.DoubleBuffer);
+				attributeList.Add((int)GLXAttribute.DOUBLEBUFFER);
 			}
 
 			if (mode.Stereo)
 			{
-				attributeList.Add((int)GLXAttribute.Stereo);
+				attributeList.Add((int)GLXAttribute.STEREO);
 			}
 
-			attributeList.Add((int)GLXAttribute.RedSize);
+			attributeList.Add((int)GLXAttribute.RED_SIZE);
 			attributeList.Add(mode.ColorFormat.Red / 4); // TODO support 16-bit
 
-			attributeList.Add((int)GLXAttribute.GreenSize);
+			attributeList.Add((int)GLXAttribute.GREEN_SIZE);
 			attributeList.Add(mode.ColorFormat.Green / 4); // TODO support 16-bit
 
-			attributeList.Add((int)GLXAttribute.BlueSize);
+			attributeList.Add((int)GLXAttribute.BLUE_SIZE);
 			attributeList.Add(mode.ColorFormat.Blue / 4); // TODO support 16-bit
 
-			attributeList.Add((int)GLXAttribute.AlphaSize);
+			attributeList.Add((int)GLXAttribute.ALPHA_SIZE);
 			attributeList.Add(mode.ColorFormat.Alpha / 4); // TODO support 16-bit
 
-			attributeList.Add((int)GLXAttribute.DepthSize);
+			attributeList.Add((int)GLXAttribute.DEPTH_SIZE);
 			attributeList.Add(mode.Depth);
 
-			attributeList.Add((int)GLXAttribute.StencilSize);
+			attributeList.Add((int)GLXAttribute.STENCIL_SIZE);
 			attributeList.Add(mode.Stencil);
 
 			//attributeList.Add(GLX_AUX_BUFFERS);
 			//attributeList.Add(Buffers);
 
-			attributeList.Add((int)GLXAttribute.AccumRedSize);
+			attributeList.Add((int)GLXAttribute.ACCUM_RED_SIZE);
 			attributeList.Add(mode.AccumulatorFormat.Red / 4);// TODO support 16-bit
 
-			attributeList.Add((int)GLXAttribute.AccumGreenSize);
+			attributeList.Add((int)GLXAttribute.ACCUM_GREEN_SIZE);
 			attributeList.Add(mode.AccumulatorFormat.Green / 4);// TODO support 16-bit
 
-			attributeList.Add((int)GLXAttribute.AccumBlueSize);
+			attributeList.Add((int)GLXAttribute.ACCUM_BLUE_SIZE);
 			attributeList.Add(mode.AccumulatorFormat.Blue / 4);// TODO support 16-bit
 
-			attributeList.Add((int)GLXAttribute.AccumAlphaSize);
+			attributeList.Add((int)GLXAttribute.ACCUM_ALPHA_SIZE);
 			attributeList.Add(mode.AccumulatorFormat.Alpha / 4);// TODO support 16-bit
 
-			attributeList.Add((int)GLXAttribute.None);
+			attributeList.Add((int)GLXAttribute.NONE);
 
 			return attributeList;
 		}

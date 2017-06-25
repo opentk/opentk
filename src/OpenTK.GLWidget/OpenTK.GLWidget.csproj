@@ -143,7 +143,6 @@
     </Compile>
     <Compile Include="GLWidget.cs" />
     <Compile Include="Win\WinWindowsInfoInitializer.cs" />
-    <Compile Include="X11\GLXAttribute.cs" />
     <Compile Include="X11\XWindowInfoInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
