@@ -273,7 +273,7 @@ namespace OpenTK.Platform.MacOS
                     case CGEventType.RightMouseDragged:
                     case CGEventType.OtherMouseDragged:
                         {
-                            Carbon.HIPoint p = CG.EventGetLocation(@event);
+                            NSPoint p = CG.EventGetLocation(@event);
                             CursorState.X = (int)Math.Round(p.X);
                             CursorState.Y = (int)Math.Round(p.Y);
                         }
@@ -1045,7 +1045,15 @@ namespace OpenTK.Platform.MacOS
         void IMouseDriver2.SetPosition(double x, double y)
         {
             CG.SetLocalEventsSuppressionInterval(0.0);
-            CG.WarpMouseCursorPosition(new Carbon.HIPoint(x, y));
+
+            NSPoint p = new NSPoint();
+            unsafe
+            {
+                p.X.Value = *(IntPtr *)&x;
+                p.Y.Value = *(IntPtr *)&y;
+            }
+
+            CG.WarpMouseCursorPosition(p);
         }
 
         #endregion
