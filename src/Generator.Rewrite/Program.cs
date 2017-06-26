@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
+using CommandLine;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
@@ -29,14 +29,12 @@ namespace OpenTK.Rewrite
     // with the s IL instructions.
     internal class Program
     {
+        private static readonly Options Options = new Options();
+
         private static void Main(string[] args)
         {
-            if (args.Length == 0)
+            if (!Parser.Default.ParseArguments(args, Options))
             {
-                Console.WriteLine("Usage: rewrite [file.dll] [file.snk] [options]");
-                Console.WriteLine("[options] is:");
-                Console.WriteLine("    -debug (enable calls to GL.GetError())");
-                Console.WriteLine("    -dllimport (force calls to use DllImport instead of GetProcAddress)");
                 return;
             }
 
