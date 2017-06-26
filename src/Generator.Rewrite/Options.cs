@@ -1,9 +1,18 @@
 ﻿using CommandLine;
+using CommandLine.Text;
 
 namespace OpenTK.Rewrite
 {
     public class Options
     {
+        [Option('i', "assembly", Required = true,
+            HelpText = "The path to the target assembly that should be rewritten.")]
+        public string TargetAssembly { get; set; }
+
+        [Option('k', "signing-key",
+            HelpText = "The path to the strong name key which should be used to sign or resign the assembly.")]
+        public string StrongNameKey { get; set; }
+
         [Option('d', "debug", DefaultValue = false,
             HelpText = "Enable calls to GL.GetError(), wrapped around each native call.")]
         public bool EnableDebugCalls { get; set; }
@@ -12,12 +21,10 @@ namespace OpenTK.Rewrite
             HelpText = "Force native calls to use DllImport instead of GetProcAddress.")]
         public bool UseDLLImport { get; set; }
 
-        [Option('i', "assembly", Required = true,
-            HelpText = "The path to the target assembly that should be rewritten.")]
-        public string TargetAssembly { get; set; }
-
-        [Option('k', "signing-key",
-            HelpText = "The path to the strong name key which should be used to sign or resign the assembly.")]
-        public string StrongNameKey { get; set; }
+        [HelpOption]
+        public string GetUsage()
+        {
+            return HelpText.AutoBuild(this, current => HelpText.DefaultParsingErrorsHandler(this, current));
+        }
     }
 }
