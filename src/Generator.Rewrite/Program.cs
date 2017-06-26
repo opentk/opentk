@@ -302,18 +302,18 @@ namespace OpenTK.Rewrite
                 generatedVariables = EmitConvenienceWrapper(wrapper, native, difference, body, il);
             }
 
-            if (slot != -1)
+            if (Options.UseDLLImport)
+            {
+                // issue DllImport call
+                EmitCall(il, native);
+            }
+            else
             {
                 // push the entry point address on the stack
                 EmitEntryPoint(entry_points, il, slot);
 
                 // issue calli
                 EmitCalli(il, native);
-            }
-            else
-            {
-                // issue DllImport call
-                EmitCall(il, native);
             }
 
             if (wrapper.ReturnType.Name != "Void")
