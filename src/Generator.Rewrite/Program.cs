@@ -38,6 +38,19 @@ namespace OpenTK.Rewrite
                 return;
             }
 
+            // Argument error checking
+            if (!File.Exists(Options.TargetAssembly))
+            {
+                Console.Error.WriteLine($"Target assembly not found. \n" +
+                                        $"Please check the given path ({Options.TargetAssembly}).");
+            }
+
+            if (!File.Exists(Path.ChangeExtension(Options.TargetAssembly, "pdb")))
+            {
+                Console.Error.WriteLine("Debugging symbols for target assembly not found. \n" +
+                                        "Please make sure that debugging symbols are being generated.");
+            }
+
             var program = new Program();
             var file = args[0];
             var key = args[1];
