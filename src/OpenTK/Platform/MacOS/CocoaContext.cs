@@ -54,6 +54,8 @@ namespace OpenTK
             "/System/Library/Frameworks/OpenGL.framework/OpenGLES",
             AddImageFlags.ReturnOnError);
 
+        private IntPtr autoreleasePool;
+
         static CocoaContext()
         {
             Cocoa.Initialize();
@@ -117,6 +119,10 @@ namespace OpenTK
 
         private void CreateContext(GraphicsMode mode, CocoaWindowInfo cocoaWindow, IntPtr shareContextRef, int majorVersion, int minorVersion, bool fullscreen)
         {
+            // Create a new autorelease pool for allocations in this context (mach ports, etc)
+            autoreleasePool = Cocoa.SendIntPtr(Class.NSAutoreleasePool, Selector.Get("alloc"));
+            autoreleasePool = Cocoa.SendIntPtr(autoreleasePool, Selector.Get("init"));
+
             // Prepare attributes
             IntPtr pixelFormat = SelectPixelFormat(mode, majorVersion, minorVersion);
             if (pixelFormat == IntPtr.Zero)
@@ -351,6 +357,12 @@ namespace OpenTK
             }
             Cocoa.SendVoid(Handle.Handle, Selector.Get("clearDrawable"));
             Cocoa.SendVoid(Handle.Handle, Selector.Get("release"));
+
+            // Drain the autorelease pool for the context, closing mach ports (if there is one)
+            if (autoreleasePool != IntPtr.Zero)
+            {
+                Cocoa.SendVoid(autoreleasePool, Selector.Get("drain"));
+            }
 
             Handle = ContextHandle.Zero;
 
