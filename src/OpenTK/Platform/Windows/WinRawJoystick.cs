@@ -732,13 +732,8 @@ namespace OpenTK.Platform.Windows
                 (byte)'V', (byte)'I', (byte)'D');
         }
 
-        // Checks whether this is an XInput device.
-        // XInput devices should be handled through
-        // the XInput API.
-        private bool IsXInput(IntPtr handle)
+        private static string GetDeviceName(IntPtr handle)
         {
-            bool is_xinput = false;
-
             unsafe
             {
                 // Find out how much memory we need to allocate
@@ -748,7 +743,7 @@ namespace OpenTK.Platform.Windows
                 {
                     Debug.Print("[WinRawJoystick] Functions.GetRawInputDeviceInfo(DEVICENAME) failed with error {0}",
                         Marshal.GetLastWin32Error());
-                    return is_xinput;
+                    return null;
                 }
 
                 // Allocate memory and retrieve the DEVICENAME string
@@ -757,21 +752,32 @@ namespace OpenTK.Platform.Windows
                 {
                     Debug.Print("[WinRawJoystick] Functions.GetRawInputDeviceInfo(DEVICENAME) failed with error {0}",
                         Marshal.GetLastWin32Error());
-                    return is_xinput;
+                    return null;
                 }
 
-                // Convert the buffer to a .Net string, and split it into parts
+                // Convert the buffer to a .Net string
                 string name = new string(pname);
-                if (String.IsNullOrEmpty(name))
+                if (name == String.Empty)
                 {
                     Debug.Print("[WinRawJoystick] Failed to construct device name");
-                    return is_xinput;
+                    return null;
                 }
 
-                is_xinput = name.Contains("IG_");
+                return name;
             }
+        }
 
-            return is_xinput;
+        // Checks whether this is an XInput device.
+        // XInput devices should be handled through
+        // the XInput API.
+        private bool IsXInput(IntPtr handle)
+        {
+            string name = GetDeviceName(handle);
+            if (name == null)
+            {
+                return false;
+            }
+            return name.Contains("IG_");
         }
 
         private Device GetDevice(IntPtr handle)
@@ -857,6 +863,19 @@ namespace OpenTK.Platform.Windows
                     }
                 }
                 return new Guid();
+            }
+        }
+
+        public string GetName(int index)
+        {
+            lock (UpdateLock)
+            {
+                if (IsValid(index))
+                {
+                    Device dev = Devices.FromIndex(index);
+                    return GetDeviceName(dev.Handle);
+                }
+                return string.Empty;
             }
         }
     }

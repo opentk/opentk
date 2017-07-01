@@ -1097,6 +1097,16 @@ namespace OpenTK.Platform.MacOS
             return new Guid();
         }
 
+        string IJoystickDriver2.GetName(int index)
+        {
+            JoystickData joystick = GetJoystick(index);
+            if (joystick != null)
+            {
+                return joystick.Name;
+            }
+            return String.Empty;
+        }
+
         private class NativeMethods
         {
             private const string hid = "/System/Library/Frameworks/IOKit.framework/Versions/Current/IOKit";

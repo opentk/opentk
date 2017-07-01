@@ -147,7 +147,7 @@ namespace OpenTK.Platform.Windows
 
         public string GetName(int index)
         {
-            return String.Empty;
+            throw new NotSupportedException("XInput does not support getting names, use raw input instead.");
         }
 
         public Guid GetGuid(int index)
