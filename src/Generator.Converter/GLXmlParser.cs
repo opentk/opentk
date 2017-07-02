@@ -47,8 +47,6 @@ namespace OpenTK.Convert
         static readonly Regex ExtensionRegex = new Regex(
             @"3DFX|(?!(?<=[1-4])D)[A-Z]{2,}$",
             RegexOptions.Compiled);
-        string EnumPrefix { get { return Prefix.ToUpper() + "_"; } }
-        string FuncPrefix { get { return Prefix; } }
 
         public GLXmlParser()
         {
@@ -446,16 +444,6 @@ namespace OpenTK.Convert
             }
 
             return ret;
-        }
-
-        string TrimName(string name)
-        {
-            if (name.StartsWith(EnumPrefix))
-                return name.Remove(0, EnumPrefix.Length);
-            else if (name.StartsWith(FuncPrefix))
-                return name.Remove(0, FuncPrefix.Length);
-            else
-                return name;
         }
 
         static string Join(string left, string right)
