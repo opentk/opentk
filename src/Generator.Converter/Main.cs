@@ -68,15 +68,12 @@ namespace OpenTK.Convert
             {
                 bool showHelp = false;
                 string prefix = "gl";
-                string version = null;
                 string path = null;
                 OptionSet opts = new OptionSet
                 {
                     { "p=", "The {PREFIX} to remove from parsed functions and constants.  " +
                         "Defaults to \"" + prefix + "\".",
                         v => prefix = v },
-                    { "v:", "The {VERSION} of the specification being parsed.",
-                        v => version = v },
                     { "o:", "The {PATH} to the output file.",
                         v => path = v },
                     { "?|h|help", "Show this message and exit.",
@@ -86,7 +83,7 @@ namespace OpenTK.Convert
                 var app = Path.GetFileName(Environment.GetCommandLineArgs()[0]);
                 if (showHelp)
                 {
-                    Console.WriteLine("usage: {0} -p:PREFIX -v:VERSION SPECIFICATIONS", app);
+                    Console.WriteLine("usage: {0} -p:PREFIX SPECIFICATIONS", app);
                     Console.WriteLine();
                     Console.WriteLine("Options:");
                     opts.WriteOptionDescriptions(Console.Out);
@@ -101,7 +98,7 @@ namespace OpenTK.Convert
                     return;
                 }
 
-                Parser parser = new GLXmlParser { Prefix = prefix, Version = version };
+                Parser parser = new GLXmlParser { Prefix = prefix };
 
                 var sigs = headers.Select(h => parser.Parse(h)).ToList();
 
