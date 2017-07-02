@@ -122,7 +122,7 @@ namespace OpenTK.Platform.Linux
 
         #region Private Members
 
-        static BufferObject CreateCursor(IntPtr gbm, MouseCursor cursor)
+        static BufferObject CreateCursor(IntPtr gbm, MouseCursorFrame cursor)
         {
             if (cursor.Width > 64 || cursor.Height > 64)
             {
@@ -180,7 +180,7 @@ namespace OpenTK.Platform.Linux
             {
                 if (cursor_custom != BufferObject.Zero)
                     cursor_custom.Dispose();
-                cursor_custom = CreateCursor(window.BufferManager, cursor);
+                cursor_custom = CreateCursor(window.BufferManager, cursor.DefaultFrame);
                 bo = cursor_custom;
             }
 
@@ -194,7 +194,7 @@ namespace OpenTK.Platform.Linux
             if (bo != BufferObject.Zero)
             {
                 Drm.SetCursor(window.FD, window.DisplayDevice.Id,
-                    bo.Handle, bo.Width, bo.Height, cursor.X, cursor.Y);
+                    bo.Handle, bo.Width, bo.Height, cursor.DefaultFrame.X, cursor.DefaultFrame.Y);
             }
         }
 

@@ -1449,11 +1449,12 @@ namespace OpenTK.Platform.X11
                         }
                         else
                         {
-                            fixed(byte* pixels = value.Data)
+                            var frame = value.DefaultFrame;
+                            fixed(byte* pixels = frame.Data)
                             {
-                                var xcursorimage = Functions.XcursorImageCreate(value.Width, value.Height);
-                                xcursorimage->xhot = (uint)value.X;
-                                xcursorimage->yhot = (uint)value.Y;
+                                var xcursorimage = Functions.XcursorImageCreate(frame.Width, frame.Height);
+                                xcursorimage->xhot = (uint)frame.X;
+                                xcursorimage->yhot = (uint)frame.Y;
                                 xcursorimage->pixels = (uint*)pixels;
                                 xcursorimage->delay = 0;
                                 cursorHandle = Functions.XcursorImageLoadCursor(window.Display, xcursorimage);
