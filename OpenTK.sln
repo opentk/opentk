@@ -92,7 +92,4 @@ Global
 		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99} = {1857BB8E-1A35-4EBF-9F6D-685F11DC025B}
 		{6801C263-ADDA-4A7B-979D-649BCB5A1DF7} = {1857BB8E-1A35-4EBF-9F6D-685F11DC025B}
 	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Source\Examples\OpenTK.Examples.csproj
-	EndGlobalSection
 EndGlobal
