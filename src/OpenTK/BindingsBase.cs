@@ -6,7 +6,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -40,24 +40,6 @@ namespace OpenTK
     public abstract class BindingsBase
     {
         #region Fields
-
-        /// <summary>
-        /// A reflection handle to the nested type that contains the function delegates.
-        /// </summary>
-        [Obsolete("Not used")]
-        readonly protected Type DelegatesClass;
-
-        /// <summary>
-        /// A refection handle to the nested type that contains core functions (i.e. not extensions).
-        /// </summary>
-        [Obsolete("Not used")]
-        readonly protected Type CoreClass;
-
-        /// <summary>
-        /// A mapping of core function names to MethodInfo handles.
-        /// </summary>
-        [Obsolete("Not used")]
-        readonly protected SortedList<string, MethodInfo> CoreFunctionMap;
 
         bool rebuildExtensionList = true;
 
@@ -106,7 +88,7 @@ namespace OpenTK
         /// Gets an object that can be used to synchronize access to the bindings implementation.
         /// </summary>
         /// <remarks>This object should be unique across bindings but consistent between bindings
-        /// of the same type. For example, ES10.GL, OpenGL.GL and CL10.CL should all return 
+        /// of the same type. For example, ES10.GL, OpenGL.GL and CL10.CL should all return
         /// unique objects, but all instances of ES10.GL should return the same object.</remarks>
         protected abstract object SyncRoot { get; }
 

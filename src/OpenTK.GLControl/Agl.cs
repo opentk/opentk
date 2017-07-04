@@ -35,7 +35,7 @@ using System.Runtime.InteropServices;
 namespace OpenTK.Platform.MacOS
 {
     #pragma warning disable 0169
-    
+
     /*
     ** Macintosh device type.
     */
@@ -58,16 +58,16 @@ namespace OpenTK.Platform.MacOS
 
     unsafe static partial class Agl
     {
-        
+
         const string agl = "/System/Library/Frameworks/AGL.framework/Versions/Current/AGL";
-        
+
         /*
          ** AGL API version.
          */
         const int AGL_VERSION_2_0 =  1;
-        
+
         /************************************************************************/
-        
+
         /*
          ** Attribute names for aglChoosePixelFormat and aglDescribePixelFormat.
          */
@@ -196,7 +196,7 @@ namespace OpenTK.Platform.MacOS
             AGL_SURFACE_BACKING_SIZE = 304,  /* 2 params.   Width/height of surface backing size     */
             AGL_ENABLE_SURFACE_BACKING_SIZE = 305,  /* Enable or disable surface backing size override */
             AGL_SURFACE_VOLATILE = 306,  /* Flag surface to candidate for deletion */
-        } 
+        }
         /*
          ** Option names for aglConfigure.
          */
@@ -278,7 +278,7 @@ namespace OpenTK.Platform.MacOS
         internal enum AglError
         {
             NoError =                 0, /* no error                        */
-            
+
             BadAttribute =        10000, /* invalid pixel format attribute  */
             BadProperty =         10001, /* invalid renderer property       */
             BadPixelFormat =      10002, /* invalid pixel format            */
@@ -299,7 +299,7 @@ namespace OpenTK.Platform.MacOS
             BadConnection =       10017, /* invalid CoreGraphics connection */
         }
         /************************************************************************/
-        
+
         /*
          ** Pixel format functions
          */
@@ -319,9 +319,7 @@ namespace OpenTK.Platform.MacOS
         [DllImport(agl)] internal static extern void aglDestroyPixelFormat(AGLPixelFormat pix);
         [DllImport(agl)] internal static extern AGLPixelFormat aglNextPixelFormat(AGLPixelFormat pix);
         [DllImport(agl)] internal static extern bool aglDescribePixelFormat(AGLPixelFormat pix, PixelFormatAttribute attrib, out int value);
-        [Obsolete("Use aglDisplaysOfPixelFormat instead.")]
-        [DllImport(agl)] static extern AGLDevice *aglDevicesOfPixelFormat(AGLPixelFormat pix, int *ndevs);
-        
+
         /*
          ** Renderer information functions
          */
@@ -329,7 +327,7 @@ namespace OpenTK.Platform.MacOS
         [DllImport(agl)] static extern void aglDestroyRendererInfo(AGLRendererInfo rend);
         [DllImport(agl)] static extern AGLRendererInfo aglNextRendererInfo(AGLRendererInfo rend);
         [DllImport(agl)] static extern byte aglDescribeRenderer(AGLRendererInfo rend, int prop, out int value);
-        
+
         /*
          ** Context functions
          */
@@ -362,12 +360,12 @@ namespace OpenTK.Platform.MacOS
         #endregion
 
         [DllImport(agl)] internal static extern AGLContext aglGetCurrentContext();
-        
-        
+
+
         /*
          ** Drawable Functions
          */
-        [DllImport(agl,EntryPoint="aglSetDrawable")] 
+        [DllImport(agl,EntryPoint="aglSetDrawable")]
         static extern byte _aglSetDrawable(AGLContext ctx, AGLDrawable draw);
 
         internal static void aglSetDrawable(AGLContext ctx, AGLDrawable draw)
@@ -405,22 +403,22 @@ namespace OpenTK.Platform.MacOS
          */
         [DllImport(agl)] static extern byte aglSetVirtualScreen(AGLContext ctx, int screen);
         [DllImport(agl)] static extern int aglGetVirtualScreen(AGLContext ctx);
-        
+
         /*
          ** Obtain version numbers
          */
         [DllImport(agl)] static extern void aglGetVersion(int *major, int *minor);
-        
+
         /*
          ** Global library options
          */
         [DllImport(agl)] static extern byte aglConfigure(GLenum pname, uint param);
-        
+
         /*
          ** Swap functions
          */
         [DllImport(agl)] internal static extern void aglSwapBuffers(AGLContext ctx);
-        
+
         /*
          ** Per context options
          */
@@ -454,31 +452,31 @@ namespace OpenTK.Platform.MacOS
         {
             return Marshal.PtrToStringAnsi(_aglErrorString(code));
         }
-        
+
         /*
          ** Soft reset function
          */
         [DllImport(agl)] static extern void aglResetLibrary();
-        
+
         /*
          ** Surface texture function
          */
         [DllImport(agl)] static extern void aglSurfaceTexture (AGLContext context, GLenum target, GLenum internalformat, AGLContext surfacecontext) ;
-        
+
         /*
          ** PBuffer functions
          */
-        [DllImport(agl)] static extern byte aglCreatePBuffer (int width, int height, GLenum target, GLenum internalFormat, long max_level, AGLPbuffer *pbuffer); 
+        [DllImport(agl)] static extern byte aglCreatePBuffer (int width, int height, GLenum target, GLenum internalFormat, long max_level, AGLPbuffer *pbuffer);
         [DllImport(agl)] static extern byte aglDestroyPBuffer (AGLPbuffer pbuffer);
         [DllImport(agl)] static extern byte aglDescribePBuffer (AGLPbuffer pbuffer, int *width, int *height, GLenum *target, GLenum *internalFormat, int *max_level);
         [DllImport(agl)] static extern byte aglTexImagePBuffer (AGLContext ctx, AGLPbuffer pbuffer, int source);
-        
+
         /*
          ** Pbuffer Drawable Functions
          */
         [DllImport(agl)] static extern byte aglSetPBuffer (AGLContext ctx, AGLPbuffer pbuffer, int face, int level, int screen)    ;
         [DllImport(agl)] static extern byte aglGetPBuffer (AGLContext ctx, AGLPbuffer *pbuffer, int *face, int *level, int *screen)  ;
-        
+
         /*
          ** CGL functions
          */

@@ -6,7 +6,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -51,7 +51,7 @@ namespace OpenTK
         DisplayResolution original_resolution;
         List<DisplayResolution> available_resolutions = new List<DisplayResolution>();
         IList<DisplayResolution> available_resolutions_readonly;
-        
+
         internal object Id; // A platform-specific id for this monitor
 
         static readonly object display_lock = new object();
@@ -282,31 +282,6 @@ namespace OpenTK
                 else throw new Graphics.GraphicsModeException(String.Format("Device {0}: Failed to restore resolution.", this));
 
                 //effect.FadeIn();
-            }
-        }
-
-        #endregion
-
-        #region public static IList<DisplayDevice> AvailableDisplays
-
-        /// <summary>
-        /// Gets the list of available <see cref="DisplayDevice"/> objects.
-        /// This function allocates memory.
-        /// </summary>
-        [Obsolete("Use GetDisplay(DisplayIndex) instead.")]
-        public static IList<DisplayDevice> AvailableDisplays
-        {
-            get
-            {
-                List<DisplayDevice> displays = new List<DisplayDevice>();
-                for (int i = 0; i < 6; i++)
-                {
-                    DisplayDevice dev = GetDisplay(DisplayIndex.First + i);
-                    if (dev != null)
-                        displays.Add(dev);
-                }
-
-                return displays.AsReadOnly();
             }
         }
 

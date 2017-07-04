@@ -6,7 +6,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -97,20 +97,6 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region --- Public Members ---
-
-        /// <summary>
-        /// Loads all OpenGL entry points (core and extension).
-        /// This method is provided for compatibility purposes with older OpenTK versions.
-        /// </summary>
-        [Obsolete("If you are using a context constructed outside of OpenTK, create a new GraphicsContext and pass your context handle to it. Otherwise, there is no need to call this method.")]
-        public static void LoadAll()
-        {
-            new GL().LoadEntryPoints();
-        }
-
-        #endregion
-
         #region --- Protected Members ---
 
         /// <summary>
@@ -124,11 +110,6 @@ namespace OpenTK.Graphics.OpenGL
         #endregion
 
         #region --- GL Overloads ---
-
-#pragma warning disable 3019
-#pragma warning disable 1591
-#pragma warning disable 1572
-#pragma warning disable 1573
 
         // Note: Mono 1.9.1 truncates StringBuilder results (for 'out string' parameters).
         // We work around this issue by doubling the StringBuilder capacity.
@@ -1380,230 +1361,13 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region Obsolete
-
-        [Obsolete("Use DisableClientState(ArrayCap) instead")]
-        public static void DisableClientState(OpenTK.Graphics.OpenGL.EnableCap array)
-        {
-            DisableClientState((ArrayCap)array);
-        }
-
-        [Obsolete("Use EnableClientState(ArrayCap) instead.")]
-        public static void EnableClientState(OpenTK.Graphics.OpenGL.EnableCap array)
-        {
-            EnableClientState((ArrayCap)array);
-        }
-
-        [Obsolete("Use GetActiveUniforms(..., ActiveUniformParameter, ...) instead.")]
-        public static void GetActiveUniforms(Int32 program, Int32 uniformCount, Int32[] uniformIndices, ArbUniformBufferObject pname, [OutAttribute] Int32[] @params)
-        {
-            GetActiveUniforms(program, uniformCount, uniformIndices, (ActiveUniformParameter)pname, @params);
-        }
-
-        [Obsolete("Use GetActiveUniforms(..., ActiveUniformParameter, ...) instead.")]
-        public static void GetActiveUniforms(Int32 program, Int32 uniformCount, ref Int32 uniformIndices, ArbUniformBufferObject pname, [OutAttribute] out Int32 @params)
-        {
-            GetActiveUniforms(program, uniformCount, ref uniformIndices, (ActiveUniformParameter)pname, out @params);
-        }
-
-        [System.CLSCompliant(false)]
-        [Obsolete("Use GetActiveUniforms(..., ActiveUniformParameter, ...) instead.")]
-        public static unsafe void GetActiveUniforms(Int32 program, Int32 uniformCount, Int32* uniformIndices, ArbUniformBufferObject pname, [OutAttribute] Int32* @params)
-        {
-            GetActiveUniforms(program, uniformCount, uniformIndices, (ActiveUniformParameter)pname, @params);
-        }
-
-        [System.CLSCompliant(false)]
-        [Obsolete("Use GetActiveUniforms(..., ActiveUniformParameter, ...) instead.")]
-        public static void GetActiveUniforms(UInt32 program, Int32 uniformCount, UInt32[] uniformIndices, ArbUniformBufferObject pname, [OutAttribute] Int32[] @params)
-        {
-            GetActiveUniforms(program, uniformCount, uniformIndices, (ActiveUniformParameter)pname, @params);
-        }
-
-        [System.CLSCompliant(false)]
-        [Obsolete("Use GetActiveUniforms(..., ActiveUniformParameter, ...) instead.")]
-        public static void GetActiveUniforms(UInt32 program, Int32 uniformCount, ref UInt32 uniformIndices, ArbUniformBufferObject pname, [OutAttribute] out Int32 @params)
-        {
-            GetActiveUniforms(program, uniformCount, ref uniformIndices, (ActiveUniformParameter)pname, out @params);
-        }
-
-        [System.CLSCompliant(false)]
-        [Obsolete("Use GetActiveUniforms(..., ActiveUniformParameter, ...) instead.")]
-        public static unsafe void GetActiveUniforms(UInt32 program, Int32 uniformCount, UInt32* uniformIndices, ArbUniformBufferObject pname, [OutAttribute] Int32* @params)
-        {
-            GetActiveUniforms(program, uniformCount, uniformIndices, (ActiveUniformParameter)pname, @params);
-        }
-
-        [Obsolete("Use strongly-typed overload instead")]
-		public static void GetBufferParameteri64(Version32 target, Version32 pname, [OutAttribute] Int64[] @params)
-        {
-            GL.GetBufferParameter((BufferTarget)target, (BufferParameterName)pname, @params);
-        }
-
-        [Obsolete("Use strongly-typed overload instead")]
-		public static void GetBufferParameteri64(Version32 target, Version32 pname, out Int64 @params)
-        {
-            GL.GetBufferParameter((BufferTarget)target, (BufferParameterName)pname, out @params);
-        }
-
-        [Obsolete("Use strongly-typed overload instead")]
-		[CLSCompliant(false)]
-		public static unsafe void GetBufferParameteri64(Version32 target, Version32 pname, [OutAttribute] Int64* @params)
-        {
-            GL.GetBufferParameter((BufferTarget)target, (BufferParameterName)pname, @params);
-        }
-
-        [Obsolete("Use GL.Arb.FramebufferTextureFace instead (OpenGL spec bug)")]
-		public static void FramebufferTextureFace(Version32 target, Version32 attachment,
-            int texture, int level, Version32 face)
-        {
-            Arb.FramebufferTextureFace((FramebufferTarget)target,
-                (FramebufferAttachment)attachment, texture, level, (TextureTarget)face);
-        }
-
-        [Obsolete("Use GL.Arb.FramebufferTextureFace instead (OpenGL spec bug)")]
-		[CLSCompliant(false)]
-		public static void FramebufferTextureFace(Version32 target, Version32 attachment,
-			uint texture, int level, Version32 face)
-        {
-            Arb.FramebufferTextureFace((FramebufferTarget)target,
-                (FramebufferAttachment)attachment, texture, level, (TextureTarget)face);
-        }
-
-
-        public static partial class Arb
-        {
-            [Obsolete("Use ProgramParameter(..., AssemblyProgramParameterArb, ...) instead.")]
-            public static void ProgramParameter(Int32 program, ArbGeometryShader4 pname, Int32 value)
-            {
-                ProgramParameter(program, (AssemblyProgramParameterArb)pname, value);
-            }
-
-            [Obsolete("Use ProgramParameter(..., AssemblyProgramParameterArb, ...) instead.")]
-            [CLSCompliant(false)]
-            public static void ProgramParameter(UInt32 program, ArbGeometryShader4 pname, Int32 value)
-            {
-                ProgramParameter(program, (AssemblyProgramParameterArb)pname, value);
-            }
-        }
-
-        public static partial class Ext
-        {
-            /// <summary>[requires: EXT_direct_state_access]</summary>
-            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
-            public static void ClearNamedBufferSubData(Int32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, IntPtr data)
-            {
-                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
-            }
-
-            /// <summary>[requires: EXT_direct_state_access]</summary>
-            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
-            [CLSCompliant(false)]
-            public static void ClearNamedBufferSubData<T6>(Int32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, [InAttribute, OutAttribute] T6[] data)
-                where T6 : struct
-            {
-                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
-            }
-
-            /// <summary>[requires: EXT_direct_state_access]</summary>
-            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
-            [CLSCompliant(false)]
-            public static void ClearNamedBufferSubData<T6>(Int32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, [InAttribute, OutAttribute] T6[,] data)
-                where T6 : struct
-            {
-                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
-            }
-
-            /// <summary>[requires: EXT_direct_state_access]</summary>
-            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
-            [CLSCompliant(false)]
-            public static void ClearNamedBufferSubData<T6>(Int32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, [InAttribute, OutAttribute] T6[,,] data)
-                where T6 : struct
-            {
-                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
-            }
-
-            /// <summary>[requires: EXT_direct_state_access]</summary>
-            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
-            [CLSCompliant(false)]
-            public static void ClearNamedBufferSubData<T6>(Int32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, [InAttribute, OutAttribute] ref T6 data)
-                where T6 : struct
-            {
-                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, ref data);
-            }
-
-            /// <summary>[requires: EXT_direct_state_access]</summary>
-            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
-            [CLSCompliant(false)]
-            public static void ClearNamedBufferSubData(UInt32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, IntPtr data)
-            {
-                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
-            }
-
-            /// <summary>[requires: EXT_direct_state_access]</summary>
-            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
-            [CLSCompliant(false)]
-            public static void ClearNamedBufferSubData<T6>(UInt32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, [InAttribute, OutAttribute] T6[] data)
-                where T6 : struct
-            {
-                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
-            }
-
-            /// <summary>[requires: EXT_direct_state_access]</summary>
-            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
-            [CLSCompliant(false)]
-            public static void ClearNamedBufferSubData<T6>(UInt32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, [InAttribute, OutAttribute] T6[,] data)
-                where T6 : struct
-            {
-                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
-            }
-
-            /// <summary>[requires: EXT_direct_state_access]</summary>
-            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
-            [CLSCompliant(false)]
-            public static void ClearNamedBufferSubData<T6>(UInt32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, [InAttribute, OutAttribute] T6[,,] data)
-                where T6 : struct
-            {
-                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, data);
-            }
-
-            /// <summary>[requires: EXT_direct_state_access]</summary>
-            [Obsolete("Use ClearNamedBufferSubData(..., format, type, data) instead.")]
-            [CLSCompliant(false)]
-            public static void ClearNamedBufferSubData<T6>(UInt32 buffer, OpenTK.Graphics.OpenGL.ExtDirectStateAccess internalformat, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr offset, IntPtr size, [InAttribute, OutAttribute] ref T6 data)
-                where T6 : struct
-            {
-                ClearNamedBufferSubData(buffer, internalformat, offset, size, format, type, ref data);
-            }
-
-            [Obsolete("Use ProgramParameter(..., AssemblyProgramParameterArb, ...) instead.")]
-            public static void ProgramParameter(Int32 program, ExtGeometryShader4 pname, Int32 value)
-            {
-                ProgramParameter(program, (AssemblyProgramParameterArb)pname, value);
-            }
-
-            [Obsolete("Use ProgramParameter(..., AssemblyProgramParameterArb, ...) instead.")]
-            [CLSCompliant(false)]
-            public static void ProgramParameter(UInt32 program, ExtGeometryShader4 pname, Int32 value)
-            {
-                ProgramParameter(program, (AssemblyProgramParameterArb)pname, value);
-            }
-        }
-
-        #endregion
-
-#pragma warning restore 3019
-#pragma warning restore 1591
-#pragma warning restore 1572
-#pragma warning restore 1573
-
         #endregion
     }
 
     #pragma warning disable 1574 // XML comment cref attribute could not be resolved, compiler bug in Mono 3.4.0
 
     /// <summary>
-    /// Defines the signature of a debug callback for 
+    /// Defines the signature of a debug callback for
     /// <see cref="GL.Amd.DebugMessageCallback"/>.
     /// </summary>
     /// <param name="id">The id of this debug message.</param>
@@ -1618,7 +1382,7 @@ namespace OpenTK.Graphics.OpenGL
         int length, IntPtr message, IntPtr userParam);
 
     /// <summary>
-    /// Defines the signature of a debug callback for 
+    /// Defines the signature of a debug callback for
     /// <see cref="GL.Arb.DebugMessageCallback"/>.
     /// </summary>
     /// <param name="source">The <see cref="DebugSource"/> for this debug message.</param>
@@ -1635,7 +1399,7 @@ namespace OpenTK.Graphics.OpenGL
         IntPtr userParam);
 
     /// <summary>
-    /// Defines the signature of a debug callback for 
+    /// Defines the signature of a debug callback for
     /// <see cref="GL.DebugMessageCallback"/>.
     /// </summary>
     /// <param name="source">The <see cref="DebugSource"/> for this debug message.</param>
@@ -1652,7 +1416,7 @@ namespace OpenTK.Graphics.OpenGL
         IntPtr userParam);
 
     /// <summary>
-    /// Defines the signature of a debug callback for 
+    /// Defines the signature of a debug callback for
     /// <see cref="GL.Khr.DebugMessageCallback"/>.
     /// </summary>
     /// <param name="source">The <see cref="DebugSource"/> for this debug message.</param>

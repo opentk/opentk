@@ -6,7 +6,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -149,7 +149,7 @@ namespace OpenTK
         #region PointToClient
 
         /// <summary>
-        /// Transforms the specified point from screen to client coordinates. 
+        /// Transforms the specified point from screen to client coordinates.
         /// </summary>
         /// <param name="point">
         /// A <see cref="System.Drawing.Point"/> to transform.
@@ -362,23 +362,6 @@ namespace OpenTK
             {
                 EnsureUndisposed();
                 implementation.Icon = value;
-            }
-        }
-
-        #endregion
-
-        #region InputDriver
-
-        /// <summary>
-        /// This property is deprecated.
-        /// </summary>
-        [Obsolete]
-        public IInputDriver InputDriver
-        {
-            get
-            {
-                EnsureUndisposed();
-                return implementation.InputDriver;
             }
         }
 
@@ -630,7 +613,7 @@ namespace OpenTK
         public event EventHandler<EventArgs> FocusedChanged = delegate { };
 
         /// <summary>
-        /// Occurs when the <see cref="Icon"/> property of the window changes. 
+        /// Occurs when the <see cref="Icon"/> property of the window changes.
         /// </summary>
         public event EventHandler<EventArgs> IconChanged = delegate { };
 
@@ -658,7 +641,7 @@ namespace OpenTK
         /// Occurs whenever the mouse cursor enters the window <see cref="Bounds"/>.
         /// </summary>
         public event EventHandler<EventArgs> MouseEnter = delegate { };
-        
+
         /// <summary>
         /// Occurs whenever the mouse cursor leaves the window <see cref="Bounds"/>.
         /// </summary>

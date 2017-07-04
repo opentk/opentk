@@ -6,7 +6,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -47,17 +47,17 @@ namespace OpenTK.Graphics
         /// The red component of this Color4 structure.
         /// </summary>
         public float R;
-        
+
         /// <summary>
         /// The green component of this Color4 structure.
         /// </summary>
         public float G;
-        
+
         /// <summary>
         /// The blue component of this Color4 structure.
         /// </summary>
         public float B;
-        
+
         /// <summary>
         /// The alpha component of this Color4 structure.
         /// </summary>
@@ -96,15 +96,6 @@ namespace OpenTK.Graphics
             B = b / (float)Byte.MaxValue;
             A = a / (float)Byte.MaxValue;
         }
-
-        /// <summary>
-        /// Constructs a new Color4 structure from the specified System.Drawing.Color.
-        /// </summary>
-        /// <param name="color">The System.Drawing.Color containing the component values.</param>
-        [Obsolete("Use new Color4(r, g, b, a) instead.")]
-        public Color4(Color color)
-            : this(color.R, color.G, color.B, color.A)
-        { }
 
         #endregion
 
@@ -1276,7 +1267,7 @@ namespace OpenTK.Graphics
             return new Vector4(x, y, z, rgb.A);
         }
 
-        #endregion        
+        #endregion
 
         #region YUV
 

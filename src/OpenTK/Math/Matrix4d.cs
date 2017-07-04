@@ -53,7 +53,7 @@ namespace OpenTK
         /// Bottom row of the matrix
         /// </summary>
         public Vector4d  Row3;
- 
+
         /// <summary>
         /// The identity matrix
         /// </summary>
@@ -958,114 +958,6 @@ namespace OpenTK
             CreateFromQuaternion(ref q, out result);
             return result;
         }
-        
-
-        /// <summary>
-        /// Build a rotation matrix from the specified quaternion.
-        /// </summary>
-        /// <param name="q">Quaternion to translate.</param>
-        /// <param name="m">Matrix result.</param>
-        [Obsolete("Use double-precision overload instead")]
-        public static void CreateFromQuaternion(ref Quaternion q,ref Matrix4 m)
-        {
-            m = Matrix4.Identity;
-            
-            float X = q.X;
-            float Y = q.Y;
-            float Z = q.Z;
-            float W = q.W;
-            
-            float xx = X * X;
-            float xy = X * Y;
-            float xz = X * Z;
-            float xw = X * W;
-            float yy = Y * Y;
-            float yz = Y * Z;
-            float yw = Y * W;
-            float zz = Z * Z;
-            float zw = Z * W;
-            
-            m.M11 = 1 - 2 * (yy + zz);
-            m.M21 = 2 * (xy - zw);
-            m.M31 = 2 * (xz + yw);
-            m.M12 = 2 * (xy + zw);
-            m.M22 = 1 - 2 * (xx + zz);
-            m.M32 = 2 * (yz - xw);
-            m.M13 = 2 * (xz - yw);
-            m.M23 = 2 * (yz + xw);
-            m.M33 = 1 - 2 * (xx + yy);
-        }
-        
-        /// <summary>
-        /// Build a rotation matrix from the specified quaternion.
-        /// </summary>
-        /// <param name="q">Quaternion to translate.</param>
-        /// <returns>A matrix instance.</returns>
-        [Obsolete("Use double-precision overload instead")]
-        public static Matrix4 CreateFromQuaternion(ref Quaternion q)
-        {
-            Matrix4 result = Matrix4.Identity;
-            
-            float X = q.X;
-            float Y = q.Y;
-            float Z = q.Z;
-            float W = q.W;
-            
-            float xx = X * X;
-            float xy = X * Y;
-            float xz = X * Z;
-            float xw = X * W;
-            float yy = Y * Y;
-            float yz = Y * Z;
-            float yw = Y * W;
-            float zz = Z * Z;
-            float zw = Z * W;
-            
-            result.M11 = 1 - 2 * (yy + zz);
-            result.M21 = 2 * (xy - zw);
-            result.M31 = 2 * (xz + yw);
-            result.M12 = 2 * (xy + zw);
-            result.M22 = 1 - 2 * (xx + zz);
-            result.M32 = 2 * (yz - xw);
-            result.M13 = 2 * (xz - yw);
-            result.M23 = 2 * (yz + xw);
-            result.M33 = 1 - 2 * (xx + yy);
-            return result;
-        }
-        
-        #endregion
-
-        #region Obsolete Functions
-
-        #region Translation Functions
-
-        /// <summary>
-        /// Build a translation matrix with the given translation
-        /// </summary>
-        /// <param name="trans">The vector to translate along</param>
-        /// <returns>A Translation matrix</returns>
-        [Obsolete("Use CreateTranslation instead.")]
-        public static Matrix4d Translation(Vector3d trans)
-        {
-            return Translation(trans.X, trans.Y, trans.Z);
-        }
-
-        /// <summary>
-        /// Build a translation matrix with the given translation
-        /// </summary>
-        /// <param name="x">X translation</param>
-        /// <param name="y">Y translation</param>
-        /// <param name="z">Z translation</param>
-        /// <returns>A Translation matrix</returns>
-        [Obsolete("Use CreateTranslation instead.")]
-        public static Matrix4d Translation(double x, double y, double z)
-        {
-            Matrix4d result = Identity;
-            result.Row3 = new Vector4d(x, y, z, 1.0);
-            return result;
-        }
-
-        #endregion
 
         #endregion
 
@@ -1443,9 +1335,9 @@ namespace OpenTK
             int[] pivotIdx = { -1, -1, -1, -1 };
 
             // convert the matrix to an array for easy looping
-            double[,] inverse = {{mat.Row0.X, mat.Row0.Y, mat.Row0.Z, mat.Row0.W}, 
-                                {mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W}, 
-                                {mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W}, 
+            double[,] inverse = {{mat.Row0.X, mat.Row0.Y, mat.Row0.Z, mat.Row0.W},
+                                {mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W},
+                                {mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W},
                                 {mat.Row3.X, mat.Row3.Y, mat.Row3.Z, mat.Row3.W} };
             int icol = 0;
             int irow = 0;
