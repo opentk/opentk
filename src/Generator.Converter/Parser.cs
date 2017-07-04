@@ -33,9 +33,8 @@ namespace OpenTK.Convert
     {
         // Defines a prefix that should be removed from methods and tokens in the XML files, e.g. "gl", "cl", etc.
         public string Prefix { get; set; }
-        
-        // Defines the version of the spec files (optional).
-        public string Version { get; set; }
+        public string EnumPrefix { get { return Prefix.ToUpper() + "_"; } }
+        public string FuncPrefix { get { return Prefix; } }
 
         // Implements the parsing logic for a specific input file.
         public abstract IEnumerable<XElement> Parse(string[] lines);
@@ -81,6 +80,16 @@ namespace OpenTK.Convert
             }
 
             return Parse(contents);
+        }
+
+        public string TrimName(string name)
+        {
+            if (name.StartsWith(EnumPrefix))
+                return name.Remove(0, EnumPrefix.Length);
+            else if (name.StartsWith(FuncPrefix))
+                return name.Remove(0, FuncPrefix.Length);
+            else
+                return name;
         }
     }
 }
