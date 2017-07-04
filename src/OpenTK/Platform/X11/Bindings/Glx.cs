@@ -17,7 +17,7 @@ namespace OpenTK.Platform.X11
 {
     #region Enums
 
-    enum GLXAttribute : int
+    public enum GLXAttribute : int
     {
         TRANSPARENT_BLUE_VALUE_EXT = 0x27,
         GRAY_SCALE = 0x8006,
@@ -364,7 +364,7 @@ namespace OpenTK.Platform.X11
 
         [DllImport(Library, EntryPoint = "glXCreateContext")]
         public static extern IntPtr CreateContext(IntPtr dpy, ref XVisualInfo vis, IntPtr shareList, bool direct);
-    
+
         [DllImport(Library, EntryPoint = "glXDestroyContext")]
         public static extern void DestroyContext(IntPtr dpy, IntPtr context);
 
