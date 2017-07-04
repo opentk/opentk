@@ -692,6 +692,11 @@ namespace OpenTK
         /// </summary>
         public event EventHandler<MouseWheelEventArgs> MouseWheel = delegate { };
 
+		/// <summary>
+		/// Occurs whenever a file dropped on window;
+		/// </summary>
+        public event EventHandler<FileDropEventArgs> FileDrop = delegate { };
+
         #endregion
 
         #endregion
@@ -964,6 +969,18 @@ namespace OpenTK
             MouseWheel(this, e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="FileDrop"/> event.
+        /// </summary>
+        /// <param name="e">
+        /// A <see cref="FileDropEventArgs"/> instance carrying file name.
+        /// The information carried by this instance is only valid within this method body.
+        /// </param>
+        protected virtual void OnFileDrop(FileDropEventArgs e)
+        {
+            FileDrop(this, e);
+        }
+
         #region OnResize
 
         /// <summary>
@@ -1125,6 +1142,8 @@ namespace OpenTK
         private void OnMouseMoveInternal(object sender, MouseMoveEventArgs e) { OnMouseMove(e); }
         private void OnMouseWheelInternal(object sender, MouseWheelEventArgs e) { OnMouseWheel(e); }
 
+        private void OnFileDropInternal(object sender, FileDropEventArgs e) { OnFileDrop(e); }
+
         #region OnMoveInternal
 
         private void OnMoveInternal(object sender, EventArgs e) { OnMove(e); }
@@ -1197,6 +1216,7 @@ namespace OpenTK
                     implementation.VisibleChanged += OnVisibleChangedInternal;
                     implementation.WindowBorderChanged += OnWindowBorderChangedInternal;
                     implementation.WindowStateChanged += OnWindowStateChangedInternal;
+                    implementation.FileDrop += OnFileDropInternal;
                     events = true;
                 }
                 else if (events)
@@ -1221,6 +1241,7 @@ namespace OpenTK
                     implementation.VisibleChanged -= OnVisibleChangedInternal;
                     implementation.WindowBorderChanged -= OnWindowBorderChangedInternal;
                     implementation.WindowStateChanged -= OnWindowStateChangedInternal;
+                    implementation.FileDrop -= OnFileDropInternal;
                     events = false;
                 }
                 else

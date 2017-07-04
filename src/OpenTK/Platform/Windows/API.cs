@@ -57,6 +57,8 @@ namespace OpenTK.Platform.Windows
     using HKEY = System.IntPtr;
     using PHKEY = System.IntPtr;
 
+    using HDROP = System.IntPtr;
+
     using LRESULT = System.IntPtr;
     using LPVOID = System.IntPtr;
     using LPCTSTR = System.String;
@@ -133,6 +135,25 @@ namespace OpenTK.Platform.Windows
     internal static class Functions
     {
         #region Window functions
+
+        [DllImport("shell32.dll")]
+        internal static extern bool DragAcceptFiles(
+            IntPtr handle,
+            [MarshalAs(UnmanagedType.Bool)] bool fAccept
+        );
+
+        [DllImport("shell32.dll")]
+        internal static extern uint DragQueryFile(
+            HDROP hDrop,
+            uint iFile,
+            IntPtr lpszFile,
+            uint cch
+        );
+
+        [DllImport("shell32.dll")]
+        internal static extern void DragFinish(
+            HDROP hDrop
+        );
 
         #region SetWindowPos
 

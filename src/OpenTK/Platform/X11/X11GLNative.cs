@@ -68,13 +68,31 @@ namespace OpenTK.Platform.X11
         const string ICON_NET_ATOM = "_NET_WM_ICON";
 
         // The Atom class from Mono might be useful to avoid calling XInternAtom by hand (somewhat error prone). 
-        IntPtr _atom_wm_destroy;        
+        IntPtr _atom_wm_destroy;
         
         IntPtr _atom_net_wm_state;
         IntPtr _atom_net_wm_state_minimized;
         IntPtr _atom_net_wm_state_fullscreen;
         IntPtr _atom_net_wm_state_maximized_horizontal;
         IntPtr _atom_net_wm_state_maximized_vertical;
+
+
+        IntPtr xdndFormat;
+        long sourceXdndVersion;
+        IntPtr sourceHandler;
+
+        // Xdnd atoms
+        IntPtr _atom_xdnd_enter;
+        IntPtr _atom_xdnd_position;
+        IntPtr _atom_xdnd_status;
+        IntPtr _atom_xdnd_type_list;
+        IntPtr _atom_xdnd_action_copy;
+        IntPtr _atom_xdnd_drop;
+        IntPtr _atom_xdnd_finished;
+        IntPtr _atom_xdnd_selection;
+        IntPtr _atom_xdnd_leave;
+
+        IntPtr _atom_xdnd_primary;
 
         #pragma warning disable 414 // assigned but never used
         IntPtr _atom_net_wm_allowed_actions;
@@ -264,6 +282,13 @@ namespace OpenTK.Platform.X11
                 xi2_version = XI2MouseKeyboard.XIVersion;
             }
 
+            // Alow window recive Xdnd Events
+            IntPtr xdndAware = Functions.XInternAtom(window.Display, "XdndAware", false);
+            IntPtr xdndProtocol = new IntPtr(5);
+            using (new XLock (window.Display)) {
+                Functions.XChangeProperty(this.window.Display, this.Handle, xdndAware, (IntPtr)AtomName.XA_ATOM, 32, PropertyMode.Replace, ref xdndProtocol, 1);
+            }
+
             exists = true;
         }
 
@@ -306,6 +331,33 @@ namespace OpenTK.Platform.X11
 
         #region Private Members
 
+        private void ReadProperty(IntPtr window, IntPtr property, IntPtr type, ref IntPtr data, ref IntPtr itemsCount)
+        {
+            int format;
+            IntPtr length = new IntPtr(int.MaxValue);
+            IntPtr actualType;
+            IntPtr bytesLeft;
+
+            Functions.XGetWindowProperty(this.window.Display, window, property, IntPtr.Zero,
+                                         length, false, type,
+                                         out actualType, out format, out itemsCount, out bytesLeft, ref data);
+        }
+
+        private string[] parseUriList(string rawString)
+        {
+            string[] separator = new string[] {"\r", "\n"};
+            string[] splitted = rawString.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+
+            string[] fileNames = new string[splitted.Length];
+            for (int i = 0; i < splitted.Length; i++)
+            {
+                // Delete start of name - file://
+                fileNames[i] = splitted[i].Substring(7);
+            }
+
+            return fileNames;
+        }
+
         #region private void RegisterAtoms()
 
         /// <summary>
@@ -342,6 +394,19 @@ namespace OpenTK.Platform.X11
                 _atom_net_frame_extents =
                     Functions.XInternAtom(window.Display, "_NET_FRAME_EXTENTS", false);
 
+                // Some Xdnd atoms
+                _atom_xdnd_enter = Functions.XInternAtom(window.Display, "XdndEnter", false);
+                _atom_xdnd_position = Functions.XInternAtom(window.Display, "XdndPosition", false);
+                _atom_xdnd_status = Functions.XInternAtom(window.Display, "XdndStatus", false);
+                _atom_xdnd_type_list = Functions.XInternAtom(window.Display, "XdndTypeList", false);
+                _atom_xdnd_action_copy = Functions.XInternAtom(window.Display, "XdndActionCopy", false);
+                _atom_xdnd_drop = Functions.XInternAtom(window.Display, "XdndDrop", false);
+                _atom_xdnd_finished = Functions.XInternAtom(window.Display, "XdndFinished", false);
+                _atom_xdnd_selection = Functions.XInternAtom(window.Display, "XdndSelection", false);
+                _atom_xdnd_leave = Functions.XInternAtom(window.Display, "XdndLeave", false);
+
+                // Selection atoms
+                _atom_xdnd_primary = Functions.XInternAtom(window.Display, "PRIMARY", false);
 //            string[] atom_names = new string[]
 //            {
 //                //"WM_TITLE",
@@ -795,10 +860,11 @@ namespace OpenTK.Platform.X11
                 using (new XLock(window.Display))
                 {
                     if (!Functions.XCheckWindowEvent(window.Display, window.Handle, window.EventMask, ref e) &&
-                        !Functions.XCheckTypedWindowEvent(window.Display, window.Handle, XEventName.ClientMessage, ref e))
+                        !Functions.XCheckTypedWindowEvent(window.Display, window.Handle, XEventName.ClientMessage, ref e) &&
+                        !Functions.XCheckTypedWindowEvent(window.Display, window.Handle, XEventName.SelectionNotify, ref e))
                         break;
                 }
-                
+
                 // Respond to the event e
                 switch (e.type)
                 {
@@ -839,7 +905,117 @@ namespace OpenTK.Platform.X11
                                 break;
                             }
                         }
-                        
+                        // For X11 drag and drop handling use https://freedesktop.org/wiki/Specifications/XDND/#index9h2
+                        else if (e.ClientMessageEvent.message_type == _atom_xdnd_enter)
+                        {
+                            // Xdnd started
+                            // ptr1 -> source window handler
+                            // ptr2 bit 0 -> set to 1 if source support more than three data formats
+                            // ptr2 third byte contains Xdnd version that source supports
+                            bool useList = ((e.ClientMessageEvent.ptr2.ToInt64() & 1) == 1);
+                            sourceHandler = e.ClientMessageEvent.ptr1;
+                            sourceXdndVersion = e.ClientMessageEvent.ptr2.ToInt64() >> 24;
+
+                            IntPtr formats = IntPtr.Zero;
+                            int formatCount;
+                            if (useList)
+                            {
+                                IntPtr count = IntPtr.Zero;
+                                ReadProperty(sourceHandler, _atom_xdnd_type_list, (IntPtr)AtomName.XA_ATOM, ref formats, ref count);
+                                formatCount = count.ToInt32();
+                            }
+                            else
+                            {
+                                formats = Marshal.AllocHGlobal(3 * IntPtr.Size);
+                                Marshal.WriteIntPtr(formats, e.ClientMessageEvent.ptr3);
+                                Marshal.WriteIntPtr(formats, IntPtr.Size * 2, e.ClientMessageEvent.ptr4);
+                                Marshal.WriteIntPtr(formats, IntPtr.Size * 3, e.ClientMessageEvent.ptr5);
+                                formatCount = 3;
+                            }
+
+                            xdndFormat = Consts.None;
+                            for (int i = 0; i < formatCount && xdndFormat == Consts.None; ++i)
+                            {
+                                IntPtr tempAtom = Marshal.ReadIntPtr(formats, IntPtr.Size * i);
+                                IntPtr atomName = Functions.XGetAtomName(this.window.Display, tempAtom);
+
+                                string str = Marshal.PtrToStringAnsi(atomName);
+                                if (str == "text/uri-list")
+                                {
+                                    xdndFormat = tempAtom;
+                                }
+
+                                Functions.XFree(atomName);
+                            }
+
+                            if (useList && formats != IntPtr.Zero)
+                            {
+                                Functions.XFree(formats);
+                            }
+                            else
+                            {
+                                Marshal.FreeHGlobal(formats);
+                            }
+                        }
+                        else if (e.ClientMessageEvent.message_type == _atom_xdnd_position)
+                        {
+                            XEvent reply = new XEvent ();
+
+                            reply.ClientMessageEvent.type = XEventName.ClientMessage;
+                            reply.ClientMessageEvent.display = this.window.Display;
+                            reply.ClientMessageEvent.window = sourceHandler;
+                            reply.ClientMessageEvent.message_type = _atom_xdnd_status;
+                            reply.ClientMessageEvent.format = 32;
+                            reply.ClientMessageEvent.ptr1 = this.window.Handle;
+                            if (xdndFormat != Consts.None)
+                            {
+                                reply.ClientMessageEvent.ptr2 = (IntPtr)1;
+                            }
+                            else
+                            {
+                                reply.ClientMessageEvent.ptr2 = (IntPtr)0;
+                            }
+                            reply.ClientMessageEvent.ptr3 = (IntPtr)0;
+                            reply.ClientMessageEvent.ptr4 = (IntPtr)0;
+                            reply.ClientMessageEvent.ptr5 = _atom_xdnd_action_copy;
+
+                            Functions.XSendEvent(this.window.Display, sourceHandler, false, (IntPtr)EventMask.NoEventMask, ref reply);
+                            Functions.XFlush(this.window.Display);
+                        }
+                        else if (e.ClientMessageEvent.message_type == _atom_xdnd_drop)
+                        {
+                            if (xdndFormat == Consts.None)
+                            {
+                                XEvent reply = new XEvent ();
+
+                                reply.ClientMessageEvent.type = XEventName.ClientMessage;
+                                reply.ClientMessageEvent.display = this.window.Display;
+                                reply.ClientMessageEvent.window = sourceHandler;
+                                reply.ClientMessageEvent.message_type = _atom_xdnd_finished;
+                                reply.ClientMessageEvent.format = 32;
+                                reply.ClientMessageEvent.ptr1 = this.window.Handle;
+                                reply.ClientMessageEvent.ptr2 = (IntPtr)0;
+                                reply.ClientMessageEvent.ptr3 = Consts.None;
+
+                                Functions.XSendEvent(this.window.Display, sourceHandler, false, (IntPtr)EventMask.NoEventMask, ref reply);
+                                Functions.XFlush(this.window.Display);
+                            }
+                            else
+                            {
+                                if (sourceXdndVersion >= 1)
+                                {
+                                    Functions.XConvertSelection(this.window.Display, _atom_xdnd_selection, xdndFormat, _atom_xdnd_primary, this.window.Handle, e.ClientMessageEvent.ptr3);
+                                }
+                                else
+                                {
+                                    Functions.XConvertSelection(this.window.Display, _atom_xdnd_selection, xdndFormat, _atom_xdnd_primary, this.window.Handle, Consts.CurrentTime);
+                                }
+                            }
+                        }
+                        else if (e.ClientMessageEvent.message_type == _atom_xdnd_leave)
+                        {
+                            break;
+                        }
                         break;
 
                     case XEventName.DestroyNotify:
@@ -1004,6 +1180,37 @@ namespace OpenTK.Platform.X11
                         //{
                         //    RefreshWindowBorders();
                         //}
+                        break;
+
+                    case XEventName.SelectionNotify:
+                        if (e.SelectionEvent.property == _atom_xdnd_primary)
+                        {
+                            IntPtr data = IntPtr.Zero;
+                            IntPtr count = IntPtr.Zero;
+                            ReadProperty(e.SelectionEvent.requestor, e.SelectionEvent.property, e.SelectionEvent.target, ref data, ref count);
+
+                            string rawString = Marshal.PtrToStringAnsi(data);
+                            Functions.XFree(data);
+                            string[] fileNames = parseUriList(rawString);
+
+                            for (int i = 0; i < fileNames.Length; i++)
+                            {
+                                OnFileDrop(fileNames[i]);
+                            }
+
+                            XEvent reply = new XEvent ();
+
+                            reply.ClientMessageEvent.type = XEventName.ClientMessage;
+                            reply.ClientMessageEvent.display = this.window.Display;
+                            reply.ClientMessageEvent.window = sourceHandler;
+                            reply.ClientMessageEvent.message_type = _atom_xdnd_finished;
+                            reply.ClientMessageEvent.format = 32;
+                            reply.ClientMessageEvent.ptr1 = this.window.Handle;
+                            reply.ClientMessageEvent.ptr2 = (IntPtr)1;
+                            reply.ClientMessageEvent.ptr3 = _atom_xdnd_action_copy;
+
+                            Functions.XSendEvent(this.window.Display, e.ClientMessageEvent.ptr1, false, (IntPtr)EventMask.NoEventMask, ref reply);
+                        }
                         break;
 
                     default:

@@ -52,6 +52,22 @@ namespace OpenTK.Platform.X11
 
     #endregion
 
+    /// <summary>
+    /// X11 has some defined values they are defined with c's #define in X.h
+    /// </summary>
+    internal static class Consts
+    {
+        /// <summary>
+        /// Universal null resource or null atom. From header: #define None 0L
+        /// </summary>
+        public static readonly IntPtr None = IntPtr.Zero;
+        // 
+        /// <summary>
+        /// Special time value. From header: #define CurrentTime 0L
+        /// </summary>
+        public static readonly IntPtr CurrentTime = IntPtr.Zero; // 
+    }
+
     #region internal static class API
 
     internal static class API

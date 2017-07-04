@@ -197,6 +197,15 @@ namespace OpenTK.Platform.SDL2
                         }
                         break;
 
+                    case EventType.DROPFILE:
+                        if (windows.TryGetValue(ev.Drop.WindowID, out window))
+                        {
+                            ProcessDropEvent(window, ev.Drop);
+                            SDL.Free(ev.Drop.File);
+                            processed = true;
+                        }
+                        break;
+
                     case EventType.QUIT:
                         Debug.WriteLine("Sdl2 application quit");
                         break;
@@ -291,6 +300,12 @@ namespace OpenTK.Platform.SDL2
         static void ProcessMouseWheelEvent(Sdl2NativeWindow window, MouseWheelEvent ev)
         {
             window.OnMouseWheel(ev.X, ev.Y);
+        }
+
+        static unsafe void ProcessDropEvent(Sdl2NativeWindow window, DropEvent ev)
+        {
+            string dropString = Marshal.PtrToStringAuto(ev.File);
+            window.OnFileDrop(dropString);
         }
 
         static void ProcessWindowEvent(Sdl2NativeWindow window, WindowEvent e)

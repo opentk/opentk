@@ -139,6 +139,10 @@ namespace OpenTK.Platform.SDL2
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_FreeSurface", ExactSpelling = true)]
         public static extern void FreeSurface(IntPtr surface);
 
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport (lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_free", ExactSpelling = true)]
+        public static extern void Free(IntPtr memblock);
+
         #region GameContoller
 
         [SuppressUnmanagedCodeSecurity]
@@ -1442,6 +1446,8 @@ namespace OpenTK.Platform.SDL2
         public ControllerButtonEvent ControllerButton;
         [FieldOffset(0)]
         public ControllerDeviceEvent ControllerDevice;
+        [FieldOffset(0)]
+        public DropEvent Drop;
 #if false
         [FieldOffset(0)]
         public QuitEvent quit;
@@ -1455,8 +1461,6 @@ namespace OpenTK.Platform.SDL2
         public MultiGestureEvent mgesture;
         [FieldOffset(0)]
         public DollarGestureEvent dgesture;
-        [FieldOffset(0)]
-        public DropEvent drop;
 #endif
 
         // Ensure the structure is big enough
@@ -1753,6 +1757,17 @@ namespace OpenTK.Platform.SDL2
         byte padding3;
         public Int32 Data1;
         public Int32 Data2;
+    }
+
+    /// <summary>
+    /// Drop event for SDL2 interop. For detailed info look: https://wiki.libsdl.org/SDL_DropEvent
+    /// </summary>
+    struct DropEvent
+    {
+        public UInt32 Type;
+        public UInt32 Timestamp;
+        public IntPtr File;
+        public UInt32 WindowID;
     }
 
     #endregion
