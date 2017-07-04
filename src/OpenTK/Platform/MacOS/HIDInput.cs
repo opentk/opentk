@@ -1049,8 +1049,18 @@ namespace OpenTK.Platform.MacOS
             NSPoint p = new NSPoint();
             unsafe
             {
-                p.X.Value = *(IntPtr *)&x;
-                p.Y.Value = *(IntPtr *)&y;
+                if (IntPtr.Size == 8)
+                {
+                    p.X.Value = *(IntPtr *)&x;
+                    p.Y.Value = *(IntPtr *)&y;
+                }
+                else
+                {
+                    float f1 = (float)x; 
+                    float f2 = (float)y;
+                    p.X.Value = *(IntPtr *)&f1;
+                    p.Y.Value = *(IntPtr *)&f2;
+                }
             }
 
             CG.WarpMouseCursorPosition(p);
