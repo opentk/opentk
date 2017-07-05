@@ -40,7 +40,7 @@ namespace OpenTK.Platform.MacOS
         public static readonly IntPtr Release = Selector.Get("release");
         public static readonly IntPtr Autorelease = Selector.Get("autorelease");
 
-		[DllImport ("/usr/lib/libobjc.dylib", EntryPoint="sel_registerName")]
-		public extern static IntPtr Get(string name);
-	}
+        [DllImport ("/usr/lib/libobjc.dylib", EntryPoint="sel_registerName")]
+        public extern static IntPtr Get(string name);
+    }
 }

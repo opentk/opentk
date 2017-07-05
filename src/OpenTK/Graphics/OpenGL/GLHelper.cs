@@ -96,7 +96,7 @@ namespace OpenTK.Graphics.OpenGL
 
         public static void Color3(Color color)
         {
-			GL.Color3(color.R, color.G, color.B);
+            GL.Color3(color.R, color.G, color.B);
         }
 
         public static void Color4(Color color)
