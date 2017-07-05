@@ -479,15 +479,11 @@ namespace OpenTK
 
         // TODO: Disabled because it is not reliable enough. Use vsync as a workaround.
 
-        //#region public bool AllowSleep
-
         //public bool AllowSleep
         //{
         //    get { return allow_sleep; }
         //    set { allow_sleep = value; }
         //}
-
-        //#endregion
 
         /// <summary>
         /// Gets a double representing the actual frequency of RenderFrame events, in hertz (i.e. fps or frames per second).
