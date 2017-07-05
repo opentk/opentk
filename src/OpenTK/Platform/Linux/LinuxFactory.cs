@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // LinuxFactory.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -55,8 +53,6 @@ namespace OpenTK.Platform.Linux
         {
             Debug.Print("[KMS] Using Linux/KMS backend.");
         }
-
-        #region Private Members
 
         int gpu_fd
         {
@@ -127,7 +123,7 @@ namespace OpenTK.Platform.Linux
 
             gbm_device = IntPtr.Zero;
             egl_display = IntPtr.Zero;
-            
+
             int fd = Libc.open(gpu, OpenFlags.ReadWrite | OpenFlags.CloseOnExec);
             if (fd < 0)
             {
@@ -161,10 +157,6 @@ namespace OpenTK.Platform.Linux
             return fd;
         }
 
-        #endregion
-
-        #region Protected Members
-
         protected override void Dispose(bool manual)
         {
             if (egl_display != IntPtr.Zero)
@@ -187,10 +179,6 @@ namespace OpenTK.Platform.Linux
 
             base.Dispose(manual);
         }
-
-        #endregion
-
-        #region IPlatformFactory Members
 
         public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice display_device)
         {
@@ -246,8 +234,6 @@ namespace OpenTK.Platform.Linux
         {
             return new MappedGamePadDriver();
         }
-
-        #endregion
     }
 }
 

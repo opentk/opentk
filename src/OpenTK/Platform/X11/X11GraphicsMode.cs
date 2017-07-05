@@ -1,10 +1,8 @@
-#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -21,16 +19,11 @@ namespace OpenTK.Platform.X11
         // Todo: Add custom visual selection algorithm, instead of ChooseFBConfig/ChooseVisual.
         // It seems the Choose* methods do not take multisampling into account (at least on some
         // drivers).
-        
-        #region Constructors
+
 
         public X11GraphicsMode()
         {
         }
-
-        #endregion
-
-        #region IGraphicsMode Members
 
         public GraphicsMode SelectGraphicsMode(GraphicsMode desired_mode, out IntPtr visual, out IntPtr fbconfig)
         {
@@ -47,10 +40,10 @@ namespace OpenTK.Platform.X11
                 fbconfig = SelectFBConfig(mode);
                 if (fbconfig != IntPtr.Zero)
                     visual = Glx.GetVisualFromFBConfig(display, fbconfig);
-                
+
                 if (visual == IntPtr.Zero)
                     visual = SelectVisual(mode);
-                
+
                 if (visual == IntPtr.Zero)
                 {
                     // Relax parameters and retry
@@ -64,10 +57,6 @@ namespace OpenTK.Platform.X11
             gfx = CreateGraphicsMode(display, ref info);
             return gfx;
         }
-
-        #endregion
-
-        #region Private Members
 
         static GraphicsMode CreateGraphicsMode(IntPtr display, ref XVisualInfo info)
         {
@@ -273,7 +262,5 @@ namespace OpenTK.Platform.X11
                 return Glx.ChooseVisual(display, Functions.XDefaultScreen(display), visualAttributes.ToArray());
             }
         }
-
-        #endregion
     }
 }

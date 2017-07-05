@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // LinuxNativeWindow.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -119,8 +117,6 @@ namespace OpenTK.Platform.Linux
             Cursor = MouseCursor.Default;
             exists = true;
         }
-
-        #region Private Members
 
         static BufferObject CreateCursor(IntPtr gbm, MouseCursor cursor)
         {
@@ -330,10 +326,6 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        #endregion
-
-        #region INativeWindow Members
-
         public override void ProcessEvents()
         {
             // Note: there is no event-based keyboard/mouse input available.
@@ -530,8 +522,6 @@ namespace OpenTK.Platform.Linux
                 }
             }
         }
-
-        #endregion
     }
 }
 

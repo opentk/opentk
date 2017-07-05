@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 // Created by Erik Ylvisaker on 3/17/08.
 
@@ -201,8 +199,6 @@ namespace OpenTK.Platform.MacOS
                     function, err, Agl.ErrorString(err)));
         }
 
-        #region IGraphicsContext Members
-
         bool firstSwap = true;
         public void SwapBuffers()
         {
@@ -311,10 +307,6 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        #endregion
-
-        #region IDisposable Members
-
         ~AglContext()
         {
             Dispose(false);
@@ -363,10 +355,6 @@ namespace OpenTK.Platform.MacOS
             disposed = true;
         }
 
-        #endregion
-
-        #region IGraphicsContextInternal Members
-
         public IntPtr GetAddress(string function)
         {
             return NS.GetAddress(function);
@@ -392,7 +380,5 @@ namespace OpenTK.Platform.MacOS
                 return Handle;
             }
         }
-
-        #endregion
     }
 }

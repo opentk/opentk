@@ -1,4 +1,3 @@
-#region License
 //
 // CocoaContext.cs
 //
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using OpenTK.Platform;
@@ -63,9 +61,9 @@ namespace OpenTK
         {
             Debug.Print("Context Type: {0}", shareContext);
             Debug.Print("Window info: {0}", window);
-            
+
             cocoaWindow = (CocoaWindowInfo)window;
-            
+
             if (shareContext is CocoaContext)
                 shareContextRef = ((CocoaContext)shareContext).Handle.Handle;
 
@@ -79,17 +77,17 @@ namespace OpenTK
             {
                 Debug.Print("No context sharing will take place.");
             }
-            
+
             CreateContext(mode, cocoaWindow, shareContextRef, majorVersion, minorVersion, true);
         }
-        
+
         public CocoaContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, int majorVersion, int minorVersion)
         {
             if (handle == ContextHandle.Zero)
                 throw new ArgumentException("handle");
             if (window == null)
                 throw new ArgumentNullException("window");
-            
+
             Handle = handle;
             cocoaWindow = (CocoaWindowInfo)window;
         }
@@ -97,14 +95,14 @@ namespace OpenTK
         private void AddPixelAttrib(List<NSOpenGLPixelFormatAttribute> attributes, NSOpenGLPixelFormatAttribute attribute)
         {
             Debug.Print(attribute.ToString());
-            
+
             attributes.Add(attribute);
         }
 
         private void AddPixelAttrib(List<NSOpenGLPixelFormatAttribute> attributes, NSOpenGLPixelFormatAttribute attribute, int value)
         {
             Debug.Print("{0} : {1}", attribute, value);
-            
+
             attributes.Add(attribute);
             attributes.Add((NSOpenGLPixelFormatAttribute)value);
         }
@@ -216,7 +214,7 @@ namespace OpenTK
             // Create pixel format
             var pixelFormat = Cocoa.SendIntPtr(Class.Get("NSOpenGLPixelFormat"), Selector.Alloc);
 
-            unsafe 
+            unsafe
             {
                 fixed (NSOpenGLPixelFormatAttribute* ptr = attributes.ToArray())
                 {
@@ -272,7 +270,7 @@ namespace OpenTK
         }
 
         public override bool IsCurrent
-        { 
+        {
             get
             {
                 return Handle.Handle == CurrentContext;
@@ -302,7 +300,7 @@ namespace OpenTK
         }
 
         public override int SwapInterval
-        { 
+        {
             get
             {
                 return GetContextValue(NSOpenGLContextParameter.SwapInterval);
@@ -323,8 +321,6 @@ namespace OpenTK
             Cocoa.SendVoid(Handle.Handle, selUpdate);
         }
 
-        #region IDisposable Members
-
         protected override void Dispose(bool disposing)
         {
             if (IsDisposed || Handle.Handle == IntPtr.Zero)
@@ -344,10 +340,6 @@ namespace OpenTK
 
             IsDisposed = true;
         }
-
-        #endregion
-
-        #region IGraphicsContextInternal Members
 
         public override IntPtr GetAddress(IntPtr function)
         {
@@ -393,8 +385,6 @@ namespace OpenTK
                 return address;
             }
         }
-
-        #endregion
     }
 }
 

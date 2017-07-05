@@ -19,23 +19,13 @@ namespace OpenTK
     public class GLWidget: DrawingArea
     {
 
-        #region Static attrs.
-
         private static int _GraphicsContextCount;
         private static bool _SharedContextInitialized = false;
-
-        #endregion
-
-        #region Attributes
 
         private IGraphicsContext _GraphicsContext;
         private IWindowInfo _WindowInfo;
         private GraphicsContextFlags _GraphicsContextFlags;
         private bool _Initialized = false;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Use a single buffer versus a double buffer.
@@ -97,10 +87,6 @@ namespace OpenTK
                 _GraphicsContextFlags = value;
             }
         }
-
-        #endregion
-
-        #region Construction/Destruction
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GLWidget"/> class.
@@ -204,10 +190,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region New Events
-
         /// <summary>
         /// Called when the first <see cref="GraphicsContext"/> is created in the case where
         /// GraphicsContext.ShareContexts == true;
@@ -280,8 +262,6 @@ namespace OpenTK
             if (ShuttingDown != null)
                 ShuttingDown(this, EventArgs.Empty);
         }
-
-        #endregion
 
 #if GTK3
         /// <summary>

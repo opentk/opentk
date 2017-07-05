@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // JoystickState.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -54,8 +52,6 @@ namespace OpenTK.Input
         JoystickHatState hat2;
         JoystickHatState hat3;
         bool is_connected;
-
-        #region Public Members
 
         /// <summary>
         /// Gets a value between -1.0 and 1.0 representing the current offset of the specified  <see cref="JoystickAxis"/>.
@@ -193,10 +189,6 @@ namespace OpenTK.Input
                 Equals((JoystickState)obj);
         }
 
-        #endregion
-
-        #region Internal Members
-
         internal int PacketNumber
         {
             get { return packet_number; }
@@ -287,10 +279,6 @@ namespace OpenTK.Input
             packet_number = number;
         }
 
-        #endregion
-
-        #region Private Members
-
         short GetAxisUnsafe(int index)
         {
             unsafe
@@ -301,10 +289,6 @@ namespace OpenTK.Input
                 }
             }
         }
-
-        #endregion
-
-        #region IEquatable<JoystickState> Members
 
         /// <summary>
         /// Determines whether the specified <see cref="OpenTK.Input.JoystickState"/> is equal to the current <see cref="OpenTK.Input.JoystickState"/>.
@@ -328,7 +312,5 @@ namespace OpenTK.Input
             }
             return equals;
         }
-
-        #endregion
     }
 }

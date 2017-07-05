@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // GamePadMapping.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -64,8 +62,6 @@ namespace OpenTK.Input
         {
             return configuration_items.GetEnumerator();
         }
-
-        #region Private Members
 
         // Parses a GamePad configuration string. The string
         // follows the rules for SDL2 GameController, outlined here:
@@ -225,7 +221,5 @@ namespace OpenTK.Input
 
             return hat + id;
         }
-
-        #endregion
     }
 }

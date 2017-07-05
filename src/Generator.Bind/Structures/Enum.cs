@@ -1,8 +1,6 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -13,8 +11,6 @@ using System.Xml.XPath;
 
 namespace Bind.Structures
 {
-    #region class Enum
-
     class Enum
     {
         string _name, _type;
@@ -52,7 +48,7 @@ namespace Bind.Structures
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
-                
+
                 _constant_collection.Clear();
                 foreach (var item in value)
                 {
@@ -81,10 +77,6 @@ namespace Bind.Structures
         public bool CLSCompliant { get; set; }
     }
 
-    #endregion
-
-    #region class EnumCollection
-
     class EnumCollection : IDictionary<string, Enum>
     {
         SortedDictionary<string, Enum> Enumerations = new SortedDictionary<string, Enum>();
@@ -98,12 +90,12 @@ namespace Bind.Structures
             int ret = PreferEmpty(ext1, ext2);
             if (ret != 0)
                 return ret;
-            
+
             ext1 = ext1.Replace("Arb", ""); ext2 = ext2.Replace("Arb", "");
             ret = PreferEmpty(ext1, ext2);
             if (ret != 0)
                 return ret;
-            
+
             ext1 = ext1.Replace("Ext", ""); ext2 = ext2.Replace("Ext", "");
             return PreferEmpty(ext1, ext2);
         }
@@ -119,8 +111,6 @@ namespace Bind.Structures
                 return 0;
         }
 
-        #region Public Members
-
         public void Add(Enum e)
         {
             Add(e.Name, e);
@@ -133,10 +123,6 @@ namespace Bind.Structures
                 Add(e);
             }
         }
-
-        #endregion
-
-        #region IDictionary<string, Enum> Members
 
         public void Add(string key, Enum value)
         {
@@ -235,9 +221,5 @@ namespace Bind.Structures
         {
             return Enumerations.GetEnumerator();
         }
-
-        #endregion
     }
-
-    #endregion
 }

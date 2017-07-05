@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -73,8 +71,6 @@ namespace OpenTK
     /// </remarks>
     public class GameWindow : NativeWindow, IGameWindow, IDisposable
     {
-        #region --- Fields ---
-
         const double MaxFrequency = 500.0; // Frequency cap for Update/RenderFrame events
 
         readonly Stopwatch watch = new Stopwatch();
@@ -99,19 +95,9 @@ namespace OpenTK
         FrameEventArgs update_args = new FrameEventArgs();
         FrameEventArgs render_args = new FrameEventArgs();
 
-        #endregion
-
-        #region --- Contructors ---
-
-        #region public GameWindow()
-
         /// <summary>Constructs a new GameWindow with sensible default attributes.</summary>
         public GameWindow()
             : this(640, 480, GraphicsMode.Default, "OpenTK Game Window", 0, DisplayDevice.Default) { }
-
-        #endregion
-
-        #region public GameWindow(int width, int height)
 
         /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
@@ -119,20 +105,12 @@ namespace OpenTK
         public GameWindow(int width, int height)
             : this(width, height, GraphicsMode.Default, "OpenTK Game Window", 0, DisplayDevice.Default) { }
 
-        #endregion
-
-        #region public GameWindow(int width, int height, GraphicsMode mode)
-
         /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
         /// <param name="height">The height of the GameWindow in pixels.</param>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GameWindow.</param>
         public GameWindow(int width, int height, GraphicsMode mode)
             : this(width, height, mode, "OpenTK Game Window", 0, DisplayDevice.Default) { }
-
-        #endregion
-
-        #region public GameWindow(int width, int height, GraphicsMode mode, string title)
 
         /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
@@ -142,10 +120,6 @@ namespace OpenTK
         public GameWindow(int width, int height, GraphicsMode mode, string title)
             : this(width, height, mode, title, 0, DisplayDevice.Default) { }
 
-        #endregion
-
-        #region public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options)
-
         /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
         /// <param name="height">The height of the GameWindow in pixels.</param>
@@ -154,10 +128,6 @@ namespace OpenTK
         /// <param name="options">GameWindow options regarding window appearance and behavior.</param>
         public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options)
             : this(width, height, mode, title, options, DisplayDevice.Default) { }
-
-        #endregion
-
-        #region public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device)
 
         /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
@@ -169,10 +139,6 @@ namespace OpenTK
         public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device)
             : this(width, height, mode, title, options, device, 1, 0, GraphicsContextFlags.Default)
         { }
-
-        #endregion
-
-        #region public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device, int major, int minor, GraphicsContextFlags flags)
 
         /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
@@ -188,10 +154,6 @@ namespace OpenTK
             int major, int minor, GraphicsContextFlags flags)
             : this(width, height, mode, title, options, device, major, minor, flags, null)
         { }
-
-        #endregion
-
-        #region public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device, int major, int minor, GraphicsContextFlags flags, IGraphicsContext sharedContext)
 
         /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
@@ -228,16 +190,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #endregion
-
-        #region --- Public Members ---
-
-        #region Methods
-
-        #region Dispose
-
         /// <summary>
         /// Disposes of the GameWindow, releasing all resources consumed by it.
         /// </summary>
@@ -265,10 +217,6 @@ namespace OpenTK
             GC.SuppressFinalize(this);
         }
 
-        #endregion
-
-        #region Exit
-
         /// <summary>
         /// Closes the GameWindow. Equivalent to <see cref="NativeWindow.Close"/> method.
         /// </summary>
@@ -281,10 +229,6 @@ namespace OpenTK
             Close();
         }
 
-        #endregion
-
-        #region MakeCurrent
-
         /// <summary>
         /// Makes the GraphicsContext current on the calling thread.
         /// </summary>
@@ -293,10 +237,6 @@ namespace OpenTK
             EnsureUndisposed();
             Context.MakeCurrent(WindowInfo);
         }
-
-        #endregion
-
-        #region OnClose
 
         /// <summary>
         /// Called when the NativeWindow is about to close.
@@ -315,10 +255,6 @@ namespace OpenTK
         }
 
 
-        #endregion
-
-        #region OnLoad
-
         /// <summary>
         /// Called after an OpenGL context has been established, but before entering the main loop.
         /// </summary>
@@ -327,10 +263,6 @@ namespace OpenTK
         {
             Load(this, e);
         }
-
-        #endregion
-
-        #region OnUnload
 
         /// <summary>
         /// Called after GameWindow.Exit was called, but before destroying the OpenGL context.
@@ -341,10 +273,6 @@ namespace OpenTK
             Unload(this, e);
         }
 
-        #endregion
-
-        #region public void Run()
-
         /// <summary>
         /// Enters the game loop of the GameWindow using the maximum update rate.
         /// </summary>
@@ -354,10 +282,6 @@ namespace OpenTK
             Run(0.0, 0.0);
         }
 
-        #endregion
-
-        #region public void Run(double updateFrequency)
-
         /// <summary>
         /// Enters the game loop of the GameWindow using the specified update rate.
         /// maximum possible render frequency.
@@ -366,10 +290,6 @@ namespace OpenTK
         {
             Run(updateRate, 0.0);
         }
-
-        #endregion
-
-        #region public void Run(double updates_per_second, double frames_per_second)
 
         /// <summary>
         /// Enters the game loop of the GameWindow updating and rendering at the specified frequency.
@@ -521,10 +441,6 @@ namespace OpenTK
             render_time = timestamp - render_timestamp;
         }
 
-        #endregion
-
-        #region SwapBuffers
-
         /// <summary>
         /// Swaps the front and back buffer, presenting the rendered scene to the user.
         /// </summary>
@@ -533,14 +449,6 @@ namespace OpenTK
             EnsureUndisposed();
             this.Context.SwapBuffers();
         }
-
-        #endregion
-
-        #endregion
-
-        #region Properties
-
-        #region Context
 
         /// <summary>
         /// Returns the opengl IGraphicsContext associated with the current GameWindow.
@@ -553,10 +461,6 @@ namespace OpenTK
                 return glContext;
             }
         }
-
-        #endregion
-
-        #region IsExiting
 
         /// <summary>
         /// Gets a value indicating whether the shutdown sequence has been initiated
@@ -573,23 +477,13 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region --- GameWindow Timing ---
-
         // TODO: Disabled because it is not reliable enough. Use vsync as a workaround.
-
-        //#region public bool AllowSleep
 
         //public bool AllowSleep
         //{
         //    get { return allow_sleep; }
         //    set { allow_sleep = value; }
         //}
-
-        //#endregion
-
-        #region RenderFrequency
 
         /// <summary>
         /// Gets a double representing the actual frequency of RenderFrame events, in hertz (i.e. fps or frames per second).
@@ -605,10 +499,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region RenderPeriod
-
         /// <summary>
         /// Gets a double representing the period of RenderFrame events, in seconds.
         /// </summary>
@@ -620,10 +510,6 @@ namespace OpenTK
                 return render_period;
             }
         }
-
-        #endregion
-
-        #region RenderTime
 
         /// <summary>
         /// Gets a double representing the time spent in the RenderFrame function, in seconds.
@@ -641,10 +527,6 @@ namespace OpenTK
                 render_time = value;
             }
         }
-
-        #endregion
-
-        #region TargetRenderFrequency
 
         /// <summary>
         /// Gets or sets a double representing the target render frequency, in hertz.
@@ -677,10 +559,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region TargetRenderPeriod
-
         /// <summary>
         /// Gets or sets a double representing the target render period, in seconds.
         /// </summary>
@@ -709,10 +587,6 @@ namespace OpenTK
                 else Debug.Print("Target render period clamped to 1.0 seconds.");
             }
         }
-
-        #endregion
-
-        #region TargetUpdateFrequency
 
         /// <summary>
         /// Gets or sets a double representing the target update frequency, in hertz.
@@ -745,10 +619,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region TargetUpdatePeriod
-
         /// <summary>
         /// Gets or sets a double representing the target update period, in seconds.
         /// </summary>
@@ -778,10 +648,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region UpdateFrequency
-
         /// <summary>
         /// Gets a double representing the frequency of UpdateFrame events, in hertz.
         /// </summary>
@@ -796,10 +662,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region UpdatePeriod
-
         /// <summary>
         /// Gets a double representing the period of UpdateFrame events, in seconds.
         /// </summary>
@@ -812,10 +674,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region UpdateTime
-
         /// <summary>
         /// Gets a double representing the time spent in the UpdateFrame function, in seconds.
         /// </summary>
@@ -827,12 +685,6 @@ namespace OpenTK
                 return update_time;
             }
         }
-
-        #endregion
-
-        #endregion
-
-        #region VSync
 
         /// <summary>
         /// Gets or sets the VSyncMode.
@@ -877,10 +729,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region WindowState
-
         /// <summary>
         /// Gets or states the state of the NativeWindow.
         /// </summary>
@@ -899,12 +747,6 @@ namespace OpenTK
                     Context.Update(WindowInfo);
             }
         }
-        #endregion
-
-        #endregion
-
-        #region Events
-
         /// <summary>
         /// Occurs before the window is displayed for the first time.
         /// </summary>
@@ -925,23 +767,11 @@ namespace OpenTK
         /// </summary>
         public event EventHandler<FrameEventArgs> UpdateFrame = delegate { };
 
-        #endregion
-
-        #endregion
-
-        #region --- Protected Members ---
-
-        #region Dispose
-
         /// <summary>
         /// Override to add custom cleanup logic.
         /// </summary>
         /// <param name="manual">True, if this method was called by the application; false if this was called by the finalizer thread.</param>
         protected virtual void Dispose(bool manual) { }
-
-        #endregion
-
-        #region OnRenderFrame
 
         /// <summary>
         /// Called when the frame is rendered.
@@ -955,10 +785,6 @@ namespace OpenTK
             RenderFrame(this, e);
         }
 
-        #endregion
-
-        #region OnUpdateFrame
-
         /// <summary>
         /// Called when the frame is updated.
         /// </summary>
@@ -971,19 +797,11 @@ namespace OpenTK
             UpdateFrame(this, e);
         }
 
-        #endregion
-
-        #region OnWindowInfoChanged
-
         /// <summary>
         /// Called when the WindowInfo for this GameWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnWindowInfoChanged(EventArgs e) { }
-
-        #endregion
-
-        #region OnResize
 
         /// <summary>
         /// Called when this window is resized.
@@ -1000,40 +818,16 @@ namespace OpenTK
             glContext.Update(base.WindowInfo);
         }
 
-        #endregion
-
-        #endregion
-
-        #region --- Private Members ---
-
-        #region OnLoadInternal
-
         private void OnLoadInternal(EventArgs e)
         {
             OnLoad(e);
         }
 
-        #endregion
-
-        #region OnRenderFrameInternal
-
         private void OnRenderFrameInternal(FrameEventArgs e) { if (Exists && !isExiting) OnRenderFrame(e); }
-
-        #endregion
-
-        #region OnUnloadInternal
 
         private void OnUnloadInternal(EventArgs e) { OnUnload(e); }
 
-        #endregion
-
-        #region OnUpdateFrameInternal
-
         private void OnUpdateFrameInternal(FrameEventArgs e) { if (Exists && !isExiting) OnUpdateFrame(e); }
-
-        #endregion
-
-        #region OnWindowInfoChangedInternal
 
         private void OnWindowInfoChangedInternal(EventArgs e)
         {
@@ -1041,13 +835,7 @@ namespace OpenTK
 
             OnWindowInfoChanged(e);
         }
-
-        #endregion
-
-        #endregion
     }
-
-    #region public enum VSyncMode
 
     /// <summary>
     /// Enumerates available VSync modes.
@@ -1068,6 +856,4 @@ namespace OpenTK
         /// </summary>
         Adaptive,
     }
-
-    #endregion
 }

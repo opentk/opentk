@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // NativeWindowBase.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.ComponentModel;
@@ -64,8 +62,6 @@ namespace OpenTK.Platform
             KeyboardState.SetIsConnected(true);
             PreviousMouseState.SetIsConnected(true);
         }
-
-        #region Protected Members
 
         protected void OnMove(EventArgs e)
         {
@@ -296,10 +292,6 @@ namespace OpenTK.Platform
             MouseWheel(this, e);
         }
 
-        #endregion
-
-        #region INativeWindow Members
-
         public event EventHandler<EventArgs> Move = delegate { };
         public event EventHandler<EventArgs> Resize = delegate { };
         public event EventHandler<System.ComponentModel.CancelEventArgs> Closing = delegate { };
@@ -455,10 +447,6 @@ namespace OpenTK.Platform
 
         public abstract MouseCursor Cursor { get; set; }
 
-        #endregion
-
-        #region IDisposable Members
-
         public void Dispose()
         {
             Dispose(true);
@@ -472,8 +460,6 @@ namespace OpenTK.Platform
             Debug.Print("NativeWindowBase leaked, did you forget to call Dispose()?");
             Dispose(false);
         }
-
-        #endregion
     }
 }
 

@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // MappedGamePadDriver.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -231,8 +229,6 @@ namespace OpenTK.Platform
             return false;
         }
 
-        #region Private Members
-
         GamePadConfiguration GetConfiguration(Guid guid)
         {
             if (!configurations.ContainsKey(guid))
@@ -248,7 +244,5 @@ namespace OpenTK.Platform
         {
             return item.Type != ConfigurationType.Unmapped;
         }
-
-        #endregion
     }
 }

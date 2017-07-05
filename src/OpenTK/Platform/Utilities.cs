@@ -1,10 +1,6 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
-
-#region --- Using Directives ---
 
 using System;
 using System.Collections.Generic;
@@ -13,8 +9,6 @@ using System.Runtime.InteropServices;
 using System.Reflection;
 using System.Diagnostics;
 using OpenTK.Graphics;
-
-#endregion
 
 namespace OpenTK.Platform
 {
@@ -33,8 +27,6 @@ namespace OpenTK.Platform
     /// </summary>
     public static class Utilities
     {
-        #region internal static bool ThrowOnX11Error
-
         static bool throw_on_error;
         internal static bool ThrowOnX11Error
         {
@@ -59,10 +51,6 @@ namespace OpenTK.Platform
                 }
             }
         }
-
-        #endregion
-
-        #region internal static void LoadExtensions(Type type)
 
         delegate Delegate LoadDelegateFunction(string name, Type signature);
 
@@ -124,10 +112,6 @@ namespace OpenTK.Platform
             time.Reset();
         }
 
-        #endregion
-
-        #region internal static bool TryLoadExtension(Type type, string extension)
-
         /// <internal />
         /// <summary>Loads the specified extension for the specified class. This function is intended
         /// for OpenGL, Wgl, Glx, OpenAL etc.</summary>
@@ -178,10 +162,6 @@ namespace OpenTK.Platform
             return @new != null;
         }
 
-        #endregion
-
-        #region CreateGetAddress
-
         internal static GraphicsContext.GetAddressDelegate CreateGetAddress()
         {
             #if SDL2
@@ -218,12 +198,6 @@ namespace OpenTK.Platform
             return IntPtr.Zero;
         }
 
-        #endregion
-
-        #region --- Creating a Graphics Context ---
-
-        #region CreateX11WindowInfo
-
         /// <summary>
         /// Constructs a new IWindowInfo instance for the X11 platform.
         /// </summary>
@@ -248,10 +222,6 @@ namespace OpenTK.Platform
             #endif
         }
 
-        #endregion
-
-        #region CreateWindowsWindowInfo
-
         /// <summary>
         /// Creates an IWindowInfo instance for the windows platform.
         /// </summary>
@@ -265,10 +235,6 @@ namespace OpenTK.Platform
             return new Dummy.DummyWindowInfo();
             #endif
         }
-
-        #endregion
-
-        #region CreateMacOSCarbonWindowInfo
 
         /// <summary>
         /// Creates an IWindowInfo instance for the Mac OS X platform.
@@ -303,10 +269,6 @@ namespace OpenTK.Platform
         }
         #endif
 
-        #endregion
-
-        #region CreateMacOSWindowInfo
-
         /// <summary>
         /// Creates an IWindowInfo instance for the Mac OS X platform.
         /// </summary>
@@ -337,10 +299,6 @@ namespace OpenTK.Platform
             #endif
         }
 
-        #endregion
-
-        #region CreateDummyWindowInfo
-
         /// <summary>
         /// Creates an IWindowInfo instance for the dummy platform.
         /// </summary>
@@ -349,10 +307,6 @@ namespace OpenTK.Platform
         {
             return new Dummy.DummyWindowInfo();
         }
-
-        #endregion
-
-        #region CreateSdl2WindowInfo
 
         /// <summary>
         /// Creates an IWindowInfo instance for the windows platform.
@@ -369,10 +323,6 @@ namespace OpenTK.Platform
             #endif
         }
 
-        #endregion
-
-        #region
-
         #if !__MOBILE__
         /// <summary>
         /// Creates an IWindowInfo instance for Angle rendering, based on
@@ -386,12 +336,6 @@ namespace OpenTK.Platform
             return new Egl.AngleWindowInfo(platformWindow);
         }
         #endif
-
-        #endregion
-
-        #endregion
-
-        #region RelaxGraphicsMode
 
         internal static bool RelaxGraphicsMode(ref GraphicsMode mode)
         {
@@ -496,7 +440,5 @@ namespace OpenTK.Platform
             // no parameters left to relax, fail
             return false;
         }
-
-        #endregion
     }
 }

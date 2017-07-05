@@ -1,11 +1,9 @@
-﻿#region --- OpenTK.OpenAL License ---
-/* EfxPresets.cs
+﻿/* EfxPresets.cs
  * C headers: \OpenAL 1.1 SDK\include\ "efx.h", "efx-creative.h", "Efx-Util.h"
  * Spec: Effects Extension Guide.pdf (bundled with OpenAL SDK)
  * Copyright (c) 2008 Christoph Brandtner and Stefanos Apostolopoulos
  * See license.txt for license details
  * http://www.OpenTK.net */
-#endregion
 
 using System;
 
@@ -199,7 +197,7 @@ namespace OpenTK.Audio.OpenAL
                      }
                      _EFXLOWPASSFILTER EFXLOWPASSFILTER;//, *LPEFXLOWPASSFILTER;
 
-       
+
                      void ConvertReverbParameters(EAXREVERBPROPERTIES *pEAXProp, EFXEAXREVERBPROPERTIES *pEFXEAXReverb);
                      void ConvertObstructionParameters(EAXOBSTRUCTIONPROPERTIES *pObProp, EFXLOWPASSFILTER *pDirectLowPassFilter);
                      void ConvertExclusionParameters(EAXEXCLUSIONPROPERTIES *pExProp, EFXLOWPASSFILTER *pSendLowPassFilter);

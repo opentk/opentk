@@ -1,10 +1,8 @@
-﻿#region --- License ---
-/* Licensed under the MIT/X11 license.
+﻿/* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -17,8 +15,6 @@ namespace OpenTK
     /// </summary>
     public struct ContextHandle : IComparable<ContextHandle>, IEquatable<ContextHandle>
     {
-        #region Fields
-
         IntPtr handle;
 
         /// <summary>
@@ -29,21 +25,11 @@ namespace OpenTK
         /// <summary>A read-only field that represents a handle that has been initialized to zero.</summary>
         public static readonly ContextHandle Zero = new ContextHandle(IntPtr.Zero);
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Constructs a new instance with the specified handle.
         /// </summary>
         /// <param name="h">A System.IntPtr containing the value for this instance.</param>
         public ContextHandle(IntPtr h) { handle = h; }
-
-        #endregion
-
-        #region Public Members
-
-        #region ToString
 
         /// <summary>
         /// Converts this instance to its equivalent string representation.
@@ -53,10 +39,6 @@ namespace OpenTK
         {
             return Handle.ToString();
         }
-
-        #endregion
-
-        #region Equals
 
         /// <summary>
         /// Compares this instance to the specified object.
@@ -70,10 +52,6 @@ namespace OpenTK
             return false;
         }
 
-        #endregion
-
-        #region GetHashCode
-
         /// <summary>
         /// Returns the hash code for this instance.
         /// </summary>
@@ -82,10 +60,6 @@ namespace OpenTK
         {
             return Handle.GetHashCode();
         }
-
-        #endregion
-
-        #region public static explicit operator IntPtr(ContextHandle c)
 
         /// <summary>
         /// Converts the specified ContextHandle to the equivalent IntPtr.
@@ -97,10 +71,6 @@ namespace OpenTK
             return c != ContextHandle.Zero ? c.handle : IntPtr.Zero;
         }
 
-        #endregion
-
-        #region public static explicit operator ContextHandle(IntPtr p)
-
         /// <summary>
         /// Converts the specified IntPtr to the equivalent ContextHandle.
         /// </summary>
@@ -110,10 +80,6 @@ namespace OpenTK
         {
             return new ContextHandle(p);
         }
-
-        #endregion
-
-        #region public static bool operator ==(ContextHandle left, ContextHandle right)
 
         /// <summary>
         /// Compares two ContextHandles for equality.
@@ -126,10 +92,6 @@ namespace OpenTK
             return left.Equals(right);
         }
 
-        #endregion
-
-        #region public static bool operator !=(ContextHandle left, ContextHandle right)
-
         /// <summary>
         /// Compares two ContextHandles for inequality.
         /// </summary>
@@ -140,12 +102,6 @@ namespace OpenTK
         {
             return !left.Equals(right);
         }
-
-        #endregion
-
-        #endregion
-
-        #region IComparable<ContextHandle> Members
 
         /// <summary>
         /// Compares the numerical value of this instance to the specified ContextHandle and
@@ -158,10 +114,6 @@ namespace OpenTK
             unsafe { return (int)((int*)other.handle.ToPointer() - (int*)this.handle.ToPointer()); }
         }
 
-        #endregion
-
-        #region IEquatable<ContextHandle> Members
-
         /// <summary>
         /// Compares this instance to the specified ContextHandle for equality.
         /// </summary>
@@ -171,7 +123,5 @@ namespace OpenTK
         {
             return Handle == other.Handle;
         }
-
-        #endregion
     }
 }

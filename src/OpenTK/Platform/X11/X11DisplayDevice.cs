@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -51,17 +49,12 @@ namespace OpenTK.Platform.X11
         readonly List<IntPtr> lastConfigUpdate = new List<IntPtr>();
 
         bool xinerama_supported, xrandr_supported, xf86_supported;
-        
-        #region Constructors
+
 
         public X11DisplayDevice()
         {
             RefreshDisplayDevices();
         }
-
-        #endregion
-
-        #region Private Methods
 
         void RefreshDisplayDevices()
         {
@@ -225,7 +218,7 @@ namespace OpenTK.Platform.X11
                     // We have added depths.Length copies of each resolution
                     // Adjust the return value of XRRGetScreenInfo to retrieve the correct resolution
                     int index = current_resolution_index * depths.Length;
-                    
+
                     // Make sure we are within the bounds of the available_res array
                     if (index >= available_res.Count)
                     {
@@ -259,7 +252,7 @@ namespace OpenTK.Platform.X11
             {
                 return false;
             }
-            
+
             int currentScreen = 0;
             Debug.Print("Using XF86 v" + major.ToString() + "." + minor.ToString());
 
@@ -296,16 +289,10 @@ namespace OpenTK.Platform.X11
             return true;
         }
 
-        #region static int[] FindAvailableDepths(int screen)
-
         static int[] FindAvailableDepths(int screen)
         {
             return Functions.XListDepths(API.DefaultDisplay, screen);
         }
-
-        #endregion
-
-        #region static XRRScreenSize[] FindAvailableResolutions(int screen)
 
         static XRRScreenSize[] FindAvailableResolutions(int screen)
         {
@@ -316,10 +303,6 @@ namespace OpenTK.Platform.X11
             return resolutions;
         }
 
-        #endregion
-
-        #region static float FindCurrentRefreshRate(int screen)
-
         static float FindCurrentRefreshRate(int screen)
         {
             short rate = 0;
@@ -329,16 +312,10 @@ namespace OpenTK.Platform.X11
             return (float)rate;
         }
 
-        #endregion
-
-        #region private static int FindCurrentDepth(int screen)
-
         static int FindCurrentDepth(int screen)
         {
             return (int)Functions.XDefaultDepth(API.DefaultDisplay, screen);
         }
-
-        #endregion
 
         bool ChangeResolutionXRandR(DisplayDevice device, DisplayResolution resolution)
         {
@@ -390,10 +367,6 @@ namespace OpenTK.Platform.X11
             return false;
         }
 
-        #endregion
-
-        #region IDisplayDeviceDriver Members
-
         public sealed override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
         {
             // If resolution is null, restore the default resolution (new_resolution_index = 0).
@@ -416,10 +389,6 @@ namespace OpenTK.Platform.X11
         {
             return TryChangeResolution(device, null);
         }
-
-        #endregion
-
-        #region NativeMethods
 
         static class NativeMethods
         {
@@ -466,7 +435,5 @@ namespace OpenTK.Platform.X11
             public short Width;
             public short Height;
         }
-
-        #endregion
     }
 }

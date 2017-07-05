@@ -1,4 +1,3 @@
-// #region License
 //
 // GamePadDPad.cs
 //
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-// #endregion
 
 using System;
 
@@ -47,18 +45,12 @@ namespace OpenTK.Input
 
         DPadButtons buttons;
 
-        #region Internal Members
-
         internal GamePadDPad(Buttons state)
         {
             // DPad butons are stored in the lower 4bits
             // of the Buttons enumeration.
             buttons = (DPadButtons)((int)state & 0x0f);
         }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the up button.
@@ -187,10 +179,6 @@ namespace OpenTK.Input
                 Equals((GamePadDPad)obj);
         }
 
-        #endregion
-
-        #region Private Members
-
         void SetButton(DPadButtons button, bool value)
         {
             if (value)
@@ -203,10 +191,6 @@ namespace OpenTK.Input
             }
         }
 
-        #endregion
-
-        #region IEquatable<GamePadDPad> Members
-
         /// <summary>
         /// Determines whether the specified <see cref="OpenTK.Input.GamePadDPad"/> is equal to the current <see cref="OpenTK.Input.GamePadDPad"/>.
         /// </summary>
@@ -217,7 +201,5 @@ namespace OpenTK.Input
         {
             return buttons == other.buttons;
         }
-
-        #endregion
     }
 }

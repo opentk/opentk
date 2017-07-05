@@ -1,8 +1,6 @@
-#region --- License ---
 /* Copyright (c) 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -21,8 +19,6 @@ namespace OpenTK.Platform.X11
     /// </summary>
     internal sealed class X11GLContext : DesktopGraphicsContext
     {
-        #region Fields
-
         // We assume that we cannot move a GL context to a different display connection.
         // For this reason, we'll "lock" onto the display of the window used in the context
         // constructor and we'll throw an exception if the user ever tries to make the context
@@ -36,10 +32,6 @@ namespace OpenTK.Platform.X11
         int sgi_swap_interval = 1; // As defined in GLX_SGI_swap_control
         readonly X11GraphicsMode ModeSelector = new X11GraphicsMode();
         string extensions = null;
-
-        #endregion
-
-        #region --- Constructors ---
 
         static X11GLContext()
         {
@@ -100,12 +92,12 @@ namespace OpenTK.Platform.X11
 
             ContextHandle shareHandle = shared != null ?
                 (shared as IGraphicsContextInternal).Context : (ContextHandle)IntPtr.Zero;
-            
+
             Debug.Write("Creating X11GLContext context: ");
             Debug.Write(direct ? "direct, " : "indirect, ");
             Debug.WriteLine(shareHandle.Handle == IntPtr.Zero ? "not shared... " :
                 String.Format("shared with ({0})... ", shareHandle));
-            
+
             // Try using the new context creation method. If it fails, fall back to the old one.
             // For each of these methods, we try two times to create a context:
             // one with the "direct" flag intact, the other with the flag inversed.
@@ -117,12 +109,12 @@ namespace OpenTK.Platform.X11
                 Handle = CreateContextAttribs(Display, currentWindow.Screen,
                     fbconfig, direct, major, minor, flags, shareHandle);
             }
-            
+
             if (Handle == ContextHandle.Zero)
             {
                 Handle = CreateContextLegacy(Display, visual, direct, shareHandle);
             }
-            
+
             if (Handle != ContextHandle.Zero)
                 Debug.Print("Context created (id: {0}).", Handle);
             else
@@ -147,10 +139,6 @@ namespace OpenTK.Platform.X11
             currentWindow = (X11WindowInfo)window;
             Display = currentWindow.Display;
         }
-
-        #endregion
-
-        #region --- Private Methods ---
 
         static ContextHandle CreateContextAttribs(
             IntPtr display, int screen, IntPtr fbconfig,
@@ -273,12 +261,6 @@ namespace OpenTK.Platform.X11
                 SupportsExtension(display, window, "GLX_ARB_create_context_profile");
         }
 
-        #endregion
-
-        #region --- IGraphicsContext Members ---
-
-        #region SwapBuffers()
-
         public override void SwapBuffers()
         {
             if (Display == IntPtr.Zero || currentWindow.Handle == IntPtr.Zero)
@@ -289,10 +271,6 @@ namespace OpenTK.Platform.X11
                 Glx.SwapBuffers(Display, currentWindow.Handle);
             }
         }
-
-        #endregion
-
-        #region MakeCurrent
 
         public override void MakeCurrent(IWindowInfo window)
         {
@@ -347,10 +325,6 @@ namespace OpenTK.Platform.X11
             currentWindow = (X11WindowInfo)window;
         }
 
-        #endregion
-
-        #region IsCurrent
-
         public override bool IsCurrent
         {
             get
@@ -361,10 +335,6 @@ namespace OpenTK.Platform.X11
                 }
             }
         }
-
-        #endregion
-
-        #region SwapInterval
 
         public override int SwapInterval
         {
@@ -433,10 +403,6 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        #endregion
-
-        #region LoadAll
-
         public override void LoadAll()
         {
             // Note: GLX entry points are always available, even
@@ -461,14 +427,6 @@ namespace OpenTK.Platform.X11
             base.LoadAll();
         }
 
-        #endregion
-
-        #endregion
-
-        #region --- IGraphicsContextInternal Members ---
-
-        #region GetAddress
-
         public override IntPtr GetAddress(IntPtr function)
         {
             using (new XLock(Display))
@@ -476,12 +434,6 @@ namespace OpenTK.Platform.X11
                 return Glx.GetProcAddress(function);
             }
         }
-
-        #endregion
-
-        #endregion
-
-        #region --- IDisposable Members ---
 
         protected override void Dispose(bool manuallyCalled)
         {
@@ -510,7 +462,5 @@ namespace OpenTK.Platform.X11
             }
             IsDisposed = true;
         }
-
-        #endregion
     }
 }

@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.ComponentModel;
@@ -42,8 +40,6 @@ namespace OpenTK
     /// </summary>
     public class NativeWindow : INativeWindow
     {
-        #region --- Fields ---
-
         private readonly GameWindowFlags options;
 
         private readonly DisplayDevice device;
@@ -58,10 +54,6 @@ namespace OpenTK
         /// System.Threading.Thread.CurrentThread.ManagedThreadId of the thread that created this <see cref="OpenTK.NativeWindow"/>.
         /// </summary>
         private int thread_id;
-        #endregion
-
-        #region --- Contructors ---
-
         /// <summary>Constructs a new NativeWindow with default attributes without enabling events.</summary>
         public NativeWindow()
             : this(640, 480, "OpenTK Native Window", GameWindowFlags.Default, GraphicsMode.Default, DisplayDevice.Default) { }
@@ -127,14 +119,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region --- INativeWindow Members ---
-
-        #region Methods
-
-        #region Close
-
         /// <summary>
         /// Closes the NativeWindow.
         /// </summary>
@@ -143,10 +127,6 @@ namespace OpenTK
             EnsureUndisposed();
             implementation.Close();
         }
-
-        #endregion
-
-        #region PointToClient
 
         /// <summary>
         /// Transforms the specified point from screen to client coordinates.
@@ -162,10 +142,6 @@ namespace OpenTK
             return implementation.PointToClient(point);
         }
 
-        #endregion
-
-        #region PointToScreen
-
         /// <summary>
         /// Transforms the specified point from client to screen coordinates.
         /// </summary>
@@ -180,10 +156,6 @@ namespace OpenTK
             return implementation.PointToScreen(point);
         }
 
-        #endregion
-
-        #region ProcessEvents
-
         /// <summary>
         /// Processes operating system events until the NativeWindow becomes idle.
         /// </summary>
@@ -191,14 +163,6 @@ namespace OpenTK
         {
             ProcessEvents(false);
         }
-
-        #endregion
-
-        #endregion
-
-        #region Properties
-
-        #region Bounds
 
         /// <summary>
         /// Gets or sets a <see cref="System.Drawing.Rectangle"/> structure
@@ -220,10 +184,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region ClientRectangle
-
         /// <summary>
         /// Gets or sets a <see cref="System.Drawing.Rectangle"/> structure
         /// that defines the bounds of the OpenGL surface, in window coordinates.
@@ -243,10 +203,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region ClientSize
-
         /// <summary>
         /// Gets or sets a <see cref="System.Drawing.Size"/> structure
         /// that defines the size of the OpenGL surface in window coordinates.
@@ -265,10 +221,6 @@ namespace OpenTK
                 implementation.ClientSize = value;
             }
         }
-
-        #endregion
-
-        #region Cursor
 
         /// <summary>
         /// Gets or sets the <see cref="OpenTK.MouseCursor"/> for this window.
@@ -291,10 +243,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region Exists
-
         /// <summary>
         /// Gets a value indicating whether a render window exists.
         /// </summary>
@@ -305,10 +253,6 @@ namespace OpenTK
                 return IsDisposed ? false : implementation.Exists; // TODO: Should disposed be ignored instead?
             }
         }
-
-        #endregion
-
-        #region Focused
 
         /// <summary>
         /// Gets a System.Boolean that indicates whether this NativeWindow has input focus.
@@ -321,10 +265,6 @@ namespace OpenTK
                 return implementation.Focused;
             }
         }
-
-        #endregion
-
-        #region Height
 
         /// <summary>
         /// Gets or sets the height of the OpenGL surface in window coordinates.
@@ -344,10 +284,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region Icon
-
         /// <summary>
         /// Gets or sets the System.Drawing.Icon for this GameWindow.
         /// </summary>
@@ -364,10 +300,6 @@ namespace OpenTK
                 implementation.Icon = value;
             }
         }
-
-        #endregion
-
-        #region Location
 
         /// <summary>
         /// Gets or sets a <see cref="System.Drawing.Point"/> structure that contains the location of this window on the desktop.
@@ -386,10 +318,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region Size
-
         /// <summary>
         /// Gets or sets a <see cref="System.Drawing.Size"/> structure that contains the external size of this window.
         /// </summary>
@@ -406,10 +334,6 @@ namespace OpenTK
                 implementation.Size = value;
             }
         }
-
-        #endregion
-
-        #region Title
 
         /// <summary>
         /// Gets or sets the NativeWindow title.
@@ -428,10 +352,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region Visible
-
         /// <summary>
         /// Gets or sets a System.Boolean that indicates whether this NativeWindow is visible.
         /// </summary>
@@ -448,10 +368,6 @@ namespace OpenTK
                 implementation.Visible = value;
             }
         }
-
-        #endregion
-
-        #region Width
 
         /// <summary>
         /// Gets or sets the width of the OpenGL surface in window coordinates.
@@ -471,10 +387,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region WindowBorder
-
         /// <summary>
         /// Gets or sets the border of the NativeWindow.
         /// </summary>
@@ -490,10 +402,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region WindowInfo
-
         /// <summary>
         /// Gets the <see cref="OpenTK.Platform.IWindowInfo"/> of this window.
         /// </summary>
@@ -505,10 +413,6 @@ namespace OpenTK
                 return implementation.WindowInfo;
             }
         }
-
-        #endregion
-
-        #region WindowState
 
         /// <summary>
         /// Gets or sets the state of the NativeWindow.
@@ -524,10 +428,6 @@ namespace OpenTK
                 implementation.WindowState = value;
             }
         }
-
-        #endregion
-
-        #region X
 
         /// <summary>
         /// Gets or sets the horizontal location of this window in screen coordinates.
@@ -547,10 +447,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region Y
-
         /// <summary>
         /// Gets or sets the vertical location of this window in screen coordinates.
         /// The coordinates are specified in device-independent points.
@@ -569,10 +465,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region CursorVisible
-
         /// <summary>
         /// Gets or sets a value indicating whether the mouse cursor is visible.
         /// </summary>
@@ -585,12 +477,6 @@ namespace OpenTK
                 implementation.CursorVisible = value;
             }
         }
-
-        #endregion
-
-        #endregion
-
-        #region Events
 
         /// <summary>
         /// Occurs after the window has closed.
@@ -692,18 +578,10 @@ namespace OpenTK
         /// </summary>
         public event EventHandler<MouseWheelEventArgs> MouseWheel = delegate { };
 
-		/// <summary>
-		/// Occurs whenever a file dropped on window;
-		/// </summary>
+        /// <summary>
+        /// Occurs whenever a file dropped on window;
+        /// </summary>
         public event EventHandler<FileDropEventArgs> FileDrop = delegate { };
-
-        #endregion
-
-        #endregion
-
-        #region --- IDisposable Members ---
-
-        #region Dispose
 
         /// <summary>
         /// Releases all non-managed resources belonging to this NativeWindow.
@@ -726,16 +604,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #endregion
-
-        #region --- Protected Members ---
-
-        #region Methods
-
-        #region EnsureUndisposed
-
         /// <summary>
         /// Ensures that this NativeWindow has not been disposed.
         /// </summary>
@@ -747,10 +615,6 @@ namespace OpenTK
             if (IsDisposed) throw new ObjectDisposedException(GetType().Name);
         }
 
-        #endregion
-
-        #region IsDisposed
-
         /// <summary>
         /// Gets or sets a <see cref="System.Boolean"/>, which indicates whether
         /// this instance has been disposed.
@@ -761,10 +625,6 @@ namespace OpenTK
             set { disposed = value; }
         }
 
-        #endregion
-
-        #region OnClosed
-
         /// <summary>
         /// Called when the NativeWindow has closed.
         /// </summary>
@@ -773,10 +633,6 @@ namespace OpenTK
         {
             Closed(this, e);
         }
-
-        #endregion
-
-        #region OnClosing
 
         /// <summary>
         /// Called when the NativeWindow is about to close.
@@ -789,10 +645,6 @@ namespace OpenTK
             Closing(this, e);
         }
 
-        #endregion
-
-        #region OnDisposed
-
         /// <summary>
         /// Called when the NativeWindow is disposed.
         /// </summary>
@@ -801,10 +653,6 @@ namespace OpenTK
         {
             Disposed(this, e);
         }
-
-        #endregion
-
-        #region OnFocusedChanged
 
         /// <summary>
         /// Called when the <see cref="OpenTK.INativeWindow.Focused"/> property of the NativeWindow has changed.
@@ -829,10 +677,6 @@ namespace OpenTK
             FocusedChanged(this, e);
         }
 
-        #endregion
-
-        #region OnIconChanged
-
         /// <summary>
         /// Called when the <see cref="OpenTK.INativeWindow.Icon"/> property of the NativeWindow has changed.
         /// </summary>
@@ -842,10 +686,6 @@ namespace OpenTK
             IconChanged(this, e);
         }
 
-        #endregion
-
-        #region OnKeyDown
-
         /// <summary>
         /// Occurs whenever a keyboard key is pressed.
         /// </summary>
@@ -853,10 +693,6 @@ namespace OpenTK
         {
             KeyDown(this, e);
         }
-
-        #endregion
-
-        #region OnKeyPress
 
         /// <summary>
         /// Called when a character is typed.
@@ -867,10 +703,6 @@ namespace OpenTK
             KeyPress(this, e);
         }
 
-        #endregion
-
-        #region OnKeyUp
-
         /// <summary>
         /// Called when a keyboard key is released.
         /// </summary>
@@ -879,10 +711,6 @@ namespace OpenTK
         {
             KeyUp(this, e);
         }
-
-        #endregion
-
-        #region OnMove
 
         /// <summary>
         /// Called when the NativeWindow is moved.
@@ -893,10 +721,6 @@ namespace OpenTK
             Move(this, e);
         }
 
-        #endregion
-
-        #region OnMouseEnter
-
         /// <summary>
         /// Called whenever the mouse cursor reenters the window <see cref="Bounds"/>.
         /// </summary>
@@ -906,10 +730,6 @@ namespace OpenTK
             MouseEnter(this, e);
         }
 
-        #endregion
-
-        #region OnMouseLeave
-
         /// <summary>
         /// Called whenever the mouse cursor leaves the window <see cref="Bounds"/>.
         /// </summary>
@@ -918,8 +738,6 @@ namespace OpenTK
         {
             MouseLeave(this, e);
         }
-
-        #endregion
 
         /// <summary>
         /// Raises the <see cref="MouseDown"/> event.
@@ -981,8 +799,6 @@ namespace OpenTK
             FileDrop(this, e);
         }
 
-        #region OnResize
-
         /// <summary>
         /// Called when the NativeWindow is resized.
         /// </summary>
@@ -991,10 +807,6 @@ namespace OpenTK
         {
             Resize(this, e);
         }
-
-        #endregion
-
-        #region OnTitleChanged
 
         /// <summary>
         /// Called when the <see cref="OpenTK.INativeWindow.Title"/> property of the NativeWindow has changed.
@@ -1005,10 +817,6 @@ namespace OpenTK
             TitleChanged(this, e);
         }
 
-        #endregion
-
-        #region OnVisibleChanged
-
         /// <summary>
         /// Called when the <see cref="OpenTK.INativeWindow.Visible"/> property of the NativeWindow has changed.
         /// </summary>
@@ -1017,10 +825,6 @@ namespace OpenTK
         {
             VisibleChanged(this, e);
         }
-
-        #endregion
-
-        #region OnWindowBorderChanged
 
         /// <summary>
         /// Called when the WindowBorder of this NativeWindow has changed.
@@ -1031,10 +835,6 @@ namespace OpenTK
             WindowBorderChanged(this, e);
         }
 
-        #endregion
-
-        #region OnWindowStateChanged
-
         /// <summary>
         /// Called when the WindowState of this NativeWindow has changed.
         /// </summary>
@@ -1043,10 +843,6 @@ namespace OpenTK
         {
             WindowStateChanged(this, e);
         }
-
-        #endregion
-
-        #region ProcessEvents
 
         /// <summary>
         /// Processes operating system events until the NativeWindow becomes idle.
@@ -1063,79 +859,29 @@ namespace OpenTK
             implementation.ProcessEvents();
         }
 
-        #endregion
-
-        #endregion
-
-        #endregion
-
-        #region --- Private Members ---
-
-        #region Methods
-
-        #region OnClosedInternal
-
         private void OnClosedInternal(object sender, EventArgs e)
         {
             OnClosed(e);
             Events = false;
         }
 
-        #endregion
-
-        #region OnClosingInternal
-
         private void OnClosingInternal(object sender, CancelEventArgs e) { OnClosing(e); }
-
-        #endregion
-
-        #region OnDisposedInternal
 
         private void OnDisposedInternal(object sender, EventArgs e) { OnDisposed(e); }
 
-        #endregion
-
-        #region OnFocusedChangedInternal
-
         private void OnFocusedChangedInternal(object sender, EventArgs e) { OnFocusedChanged(e); }
-
-        #endregion
-
-        #region OnIconChangedInternal
 
         private void OnIconChangedInternal(object sender, EventArgs e) { OnIconChanged(e); }
 
-        #endregion
-
-        #region OnKeyDownInternal
-
         private void OnKeyDownInternal(object sender, KeyboardKeyEventArgs e) { OnKeyDown(e); }
-
-        #endregion
-
-        #region OnKeyPressInternal
 
         private void OnKeyPressInternal(object sender, KeyPressEventArgs e) { OnKeyPress(e); }
 
-        #endregion
-
-        #region OnKeyUpInternal
-
         private void OnKeyUpInternal(object sender, KeyboardKeyEventArgs e) { OnKeyUp(e); }
-
-        #endregion
-
-        #region OnMouseEnterInternal
 
         private void OnMouseEnterInternal(object sender, EventArgs e) { OnMouseEnter(e); }
 
-        #endregion
-
-        #region OnMouseLeaveInternal
-
         private void OnMouseLeaveInternal(object sender, EventArgs e) { OnMouseLeave(e); }
-
-        #endregion
 
         private void OnMouseDownInternal(object sender, MouseButtonEventArgs e) { OnMouseDown(e); }
         private void OnMouseUpInternal(object sender, MouseButtonEventArgs e) { OnMouseUp(e); }
@@ -1144,47 +890,17 @@ namespace OpenTK
 
         private void OnFileDropInternal(object sender, FileDropEventArgs e) { OnFileDrop(e); }
 
-        #region OnMoveInternal
-
         private void OnMoveInternal(object sender, EventArgs e) { OnMove(e); }
-
-        #endregion
-
-        #region OnResizeInternal
 
         private void OnResizeInternal(object sender, EventArgs e) { OnResize(e); }
 
-        #endregion
-
-        #region OnTitleChangedInternal
-
         private void OnTitleChangedInternal(object sender, EventArgs e) { OnTitleChanged(e); }
-
-        #endregion
-
-        #region OnVisibleChangedInternal
 
         private void OnVisibleChangedInternal(object sender, EventArgs e) { OnVisibleChanged(e); }
 
-        #endregion
-
-        #region OnWindowBorderChangedInternal
-
         private void OnWindowBorderChangedInternal(object sender, EventArgs e) { OnWindowBorderChanged(e); }
 
-        #endregion
-
-        #region OnWindowStateChangedInternal
-
         private void OnWindowStateChangedInternal(object sender, EventArgs e) { OnWindowStateChanged(e); }
-
-        #endregion
-
-        #endregion
-
-        #region Properties
-
-        #region Events
 
         private bool Events
         {
@@ -1250,12 +966,6 @@ namespace OpenTK
                 }
             }
         }
-
-        #endregion
-
-        #endregion
-
-        #endregion
     }
 
 }

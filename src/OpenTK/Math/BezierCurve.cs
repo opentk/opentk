@@ -1,12 +1,10 @@
-#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
- * 
+ *
  * Contributions by Georg W�chter.
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -20,8 +18,6 @@ namespace OpenTK
     [Serializable]
     public struct BezierCurve
     {
-        #region Fields
-
         private List<Vector2> points;
 
         /// <summary>
@@ -32,10 +28,6 @@ namespace OpenTK
         /// the original curve, 5.0f i.e. stands for a curve that has always a distance
         /// of 5.0f to the orignal curve at any point.</remarks>
         public float Parallel;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Gets the points of this curve.
@@ -48,10 +40,6 @@ namespace OpenTK
                 return points;
             }
         }
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Constructs a new <see cref="BezierCurve"/>.
@@ -107,10 +95,6 @@ namespace OpenTK
             this.points = new List<Vector2>(points);
         }
 
-        #endregion
-
-        #region Functions
-
 
         /// <summary>
         /// Calculates the point with the specified t.
@@ -133,8 +117,6 @@ namespace OpenTK
         {
             return BezierCurve.CalculateLength(points, precision, Parallel);
         }
-
-        #region Static methods
 
         /// <summary>
         /// Calculates the length of the specified bezier curve.
@@ -253,9 +235,5 @@ namespace OpenTK
 
             return r;
         }
-
-        #endregion
-
-        #endregion
     }
 }

@@ -1,11 +1,10 @@
-#region License
 //
 // Xkb.cs
 //
 // Author:
 //       Stefanos Apostolopoulos <stapostol@gmail.com>
 //
-// Copyright (c) 2006-2014 
+// Copyright (c) 2006-2014
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -65,10 +63,10 @@ namespace OpenTK.Platform.X11
         internal extern static IntPtr GetKeyboard(IntPtr display, XkbKeyboardMask which, int device_id);
 
         [DllImport(lib, EntryPoint = "XkbGetMap")]
-        internal extern static IntPtr GetMap(IntPtr display, XkbKeyboardMask which, int device_spec); 
+        internal extern static IntPtr GetMap(IntPtr display, XkbKeyboardMask which, int device_spec);
 
         [DllImport(lib, EntryPoint = "XkbGetNames")]
-        unsafe internal extern static IntPtr GetNames(IntPtr display, XkbNamesMask which, XkbDesc* xkb); 
+        unsafe internal extern static IntPtr GetNames(IntPtr display, XkbNamesMask which, XkbDesc* xkb);
 
         [DllImport(lib, EntryPoint = "XkbKeycodeToKeysym")]
         internal extern static XKey KeycodeToKeysym(IntPtr display, int keycode, int group, int level);
@@ -165,8 +163,6 @@ namespace OpenTK.Platform.X11
     [StructLayout(LayoutKind.Sequential)]
     unsafe struct XkbNames
     {
-        #region Structs
-
         [StructLayout(LayoutKind.Sequential)]
         internal struct Groups
         {
@@ -280,8 +276,6 @@ namespace OpenTK.Platform.X11
                 }
             }
         }
-
-        #endregion
 
         internal Atom keycodes;
         internal Atom geometry;

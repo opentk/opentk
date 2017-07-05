@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -39,13 +37,7 @@ namespace OpenTK
     /// </summary>
     public abstract class BindingsBase
     {
-        #region Fields
-
         bool rebuildExtensionList = true;
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Constructs a new BindingsBase instance.
@@ -53,10 +45,6 @@ namespace OpenTK
         public BindingsBase()
         {
         }
-
-        #endregion
-
-        #region Protected Members
 
         /// <summary>
         /// Gets or sets a <see cref="System.Boolean"/> that indicates whether the list of supported extensions may have changed.
@@ -222,12 +210,6 @@ namespace OpenTK
             Marshal.FreeHGlobal(ptr);
         }
 
-        #endregion
-
-        #region Internal Members
-
         internal abstract void LoadEntryPoints();
-
-        #endregion
     }
 }

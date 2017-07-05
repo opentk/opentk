@@ -1,8 +1,6 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -20,8 +18,6 @@ namespace Bind.GL2
 {
     abstract class Generator : IBind
     {
-        #region Fields
-
         protected string glTypemap = "GL2/gl.tm";
         protected string csTypemap = "csharp.tm";
         protected string enumSpec = "GL2/enum.spec";
@@ -56,10 +52,6 @@ namespace Bind.GL2
 
         public Settings Settings { get; protected set; }
 
-        #endregion
-
-        #region Constructors
-
         public Generator(Settings settings)
         {
             if (settings == null)
@@ -86,10 +78,6 @@ namespace Bind.GL2
             SpecReader = new XmlSpecReader(Settings);
         }
 
-        #endregion
-
-        #region Private Members
-
         IEnumerable<string> GetFiles(string path)
         {
             path = Path.Combine(Settings.InputPath, path);
@@ -106,10 +94,6 @@ namespace Bind.GL2
                 yield return path;
             }
         }
-
-        #endregion
-
-        #region IBind Members
 
         public DelegateCollection Delegates { get; private set; }
         public EnumCollection Enums { get; private set; }
@@ -146,7 +130,5 @@ namespace Bind.GL2
             Wrappers = func_processor.Process(enum_processor, doc_processor,
                 Delegates, Enums, Profile, Version);
         }
-
-        #endregion
     }
 }

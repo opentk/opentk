@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // NSApplication.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.ComponentModel;
@@ -80,7 +78,7 @@ namespace OpenTK.Platform.MacOS
                 Cocoa.SendIntPtr(appMenu, Selector.Get("addItem:"), quitMenuItem);
                 Cocoa.SendIntPtr(menuItem, Selector.Get("setSubmenu:"), appMenu);
 
-                // Tell cocoa we're ready to run the application (usually called by [NSApp run]). 
+                // Tell cocoa we're ready to run the application (usually called by [NSApp run]).
                 // Note: if a main menu exists, then this method has already been called and
                 // calling it again will result in a crash. For this reason, we only call it
                 // when we create our own main menu.
@@ -93,7 +91,7 @@ namespace OpenTK.Platform.MacOS
             IntPtr press_and_hold = Cocoa.SendIntPtr(Class.NSNumber, Selector.Get("numberWithBool:"), false);
 
             // Initialize and register the settings dictionary
-            settings = 
+            settings =
                 Cocoa.SendIntPtr(settings, Selector.Get("initWithObjectsAndKeys:"),
                     //momentum_scrolling, Cocoa.ToNSString("AppleMomentumScrollSupported"),
                     press_and_hold, Cocoa.ToNSString("ApplePressAndHoldEnabled"),

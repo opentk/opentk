@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -57,8 +55,6 @@ namespace OpenTK.Platform.MacOS
 
             return GetGraphicsModeFromPixelFormat(pixelformat);
         }
-
-        #region Internal Members
 
         static bool RelaxGraphicsMode(ref ColorFormat color, ref int depth, ref int stencil, ref int samples, ref ColorFormat accum, ref int buffers, ref bool stereo)
         {
@@ -157,7 +153,7 @@ namespace OpenTK.Platform.MacOS
             List<int> attribs = new List<int>();
 
             Debug.Print("Bits per pixel: {0}", color.BitsPerPixel);
-            
+
             if (color.BitsPerPixel > 0)
             {
                 if (!color.IsIndexed)
@@ -224,7 +220,5 @@ namespace OpenTK.Platform.MacOS
             IntPtr pixelformat = Agl.aglChoosePixelFormat(IntPtr.Zero, 0, attribs.ToArray());
             return pixelformat;
         }
-
-        #endregion
     }
 }

@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -41,8 +39,6 @@ namespace OpenTK.Audio
     /// </summary>
     public sealed class AudioCapture : IDisposable
     {
-        #region Fields
-
         // This must stay private info so the end-user cannot call any Alc commands for the recording device.
         IntPtr Handle;
 
@@ -51,10 +47,7 @@ namespace OpenTK.Audio
 
         ALFormat sample_format;
         int sample_frequency;
-        
-        #endregion 
 
-        #region Constructors
 
         static AudioCapture()
         {
@@ -120,12 +113,6 @@ namespace OpenTK.Audio
             SampleFrequency = frequency;
         }
 
-        #endregion Constructor
-
-        #region Public Members
-
-        #region CurrentDevice
-
         private string device_name;
 
         /// <summary>
@@ -139,10 +126,6 @@ namespace OpenTK.Audio
             }
         }
 
-        #endregion
-
-        #region AvailableDevices
-
         /// <summary>
         /// Returns a list of strings containing all known recording devices.
         /// </summary>
@@ -154,10 +137,6 @@ namespace OpenTK.Audio
             }
         }
 
-        #endregion
-
-        #region DefaultDevice
-
         /// <summary>
         /// Returns the name of the device that will be used as recording default.
         /// </summary>
@@ -168,10 +147,6 @@ namespace OpenTK.Audio
                 return AudioDeviceEnumerator.DefaultRecordingDevice;
             }
         }
-
-        #endregion
-
-        #region CheckErrors
 
         /// <summary>
         /// Checks for ALC error conditions.
@@ -185,10 +160,6 @@ namespace OpenTK.Audio
             new AudioDeviceErrorChecker(Handle).Dispose();
         }
 
-        #endregion
-
-        #region CurrentError
-
         /// <summary>Returns the ALC error code for this device.</summary>
         public AlcError CurrentError
         {
@@ -197,10 +168,6 @@ namespace OpenTK.Audio
                 return Alc.GetError(Handle);
             }
         }
-
-        #endregion
-
-        #region Start & Stop
 
         /// <summary>
         /// Start recording samples.
@@ -220,10 +187,6 @@ namespace OpenTK.Audio
             _isrecording = false;
         }
 
-        #endregion Start & Stop Capture
-
-        #region AvailableSamples
-
         /// <summary>Returns the number of available samples for capture.</summary>
         public int AvailableSamples
         {
@@ -236,10 +199,6 @@ namespace OpenTK.Audio
                 return result;
             }
         }
-
-        #endregion Available samples property
-
-        #region ReadSamples
 
         /// <summary>Fills the specified buffer with samples from the internal capture ring-buffer. This method does not block: it is an error to specify a sampleCount larger than AvailableSamples.</summary>
         /// <param name="buffer">A pointer to a previously initialized and pinned array.</param>
@@ -274,10 +233,6 @@ namespace OpenTK.Audio
             finally { buffer_ptr.Free(); }
         }
 
-        #endregion
-
-        #region SampleFormat & SampleFrequency
-
         /// <summary>
         /// Gets the OpenTK.Audio.ALFormat for this instance.
         /// </summary>
@@ -296,10 +251,6 @@ namespace OpenTK.Audio
             private set { sample_frequency = value; }
         }
 
-        #endregion
-
-        #region IsRunning
-
         /// <summary>
         /// Gets a value indicating whether this instance is currently capturing samples.
         /// </summary>
@@ -307,12 +258,6 @@ namespace OpenTK.Audio
         {
             get { return _isrecording; }
         }
-
-        #endregion
-
-        #endregion
-
-        #region Private Members
 
         // Retrieves the sample size in bytes for various ALFormats.
         // Compressed formats always return 1.
@@ -374,10 +319,6 @@ namespace OpenTK.Audio
                    "\nBuffer Size: " + buffersize;
         }
 
-        #endregion
-
-        #region IDisposable Members
-
         /// <summary>
         /// Finalizes this instance.
         /// </summary>
@@ -409,7 +350,5 @@ namespace OpenTK.Audio
                 this.IsDisposed = true;
             }
         }
-
-        #endregion Destructor
     }
 }

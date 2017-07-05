@@ -1,10 +1,8 @@
-#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK team.
  * This notice may not be removed.
  * See license.txt for licensing detailed licensing details.
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -23,11 +21,7 @@ namespace OpenTK
         int bits_per_pixel;
         float refresh_rate;
 
-        #region --- Constructors ---
-
         internal DisplayResolution() { }
-
-        #region public DisplayResolution(int width, int height, int bitsPerPixel, float refreshRate)
 
         // Creates a new DisplayResolution object for the primary DisplayDevice.
         internal DisplayResolution(int x, int y, int width, int height, int bitsPerPixel, float refreshRate)
@@ -43,10 +37,6 @@ namespace OpenTK
             this.refresh_rate = refreshRate;
         }
 
-        #endregion
-
-        #region public DisplayResolution(int width, int height, int bitsPerPixel, float refreshRate, DisplayDevice device)
-
 #if false
 
         /// <summary>
@@ -57,7 +47,7 @@ namespace OpenTK
         /// <param name="bitsPerPixel">The requested bits per pixel in bits.</param>
         /// <param name="refreshRate">The requested refresh rate in hertz.</param>
         /// <remarks>OpenTK will select the closest match between all available resolutions on the specified DisplayDevice.</remarks>
-        /// 
+        ///
         public DisplayResolution(int width, int height, int bitsPerPixel, float refreshRate, DisplayDevice device)
         {
             // Refresh rate may be zero, since this information may not be available on some platforms.
@@ -75,13 +65,6 @@ namespace OpenTK
             this.refresh_rate = res.refresh_rate;
         }
 #endif
-        #endregion
-
-        #endregion
-
-        #region --- Public Methods ---
-
-        #region Bounds
 
         /// <summary>
         /// Gets a System.Drawing.Rectangle that contains the bounds of this display device.
@@ -93,20 +76,12 @@ namespace OpenTK
             get { return bounds; }
         }
 
-        #endregion
-
-        #region public int Width
-
         /// <summary>Gets a System.Int32 that contains the width of this display in pixels.</summary>
         public int Width
         {
             get { return bounds.Width; }
             internal set { bounds.Width = value; }
         }
-
-        #endregion
-
-        #region public int Height
 
         /// <summary>Gets a System.Int32 that contains the height of this display in pixels.</summary>
         public int Height
@@ -115,20 +90,12 @@ namespace OpenTK
             internal set { bounds.Height = value; }
         }
 
-        #endregion
-
-        #region public int BitsPerPixel
-
         /// <summary>Gets a System.Int32 that contains number of bits per pixel of this display. Typical values include 8, 16, 24 and 32.</summary>
         public int BitsPerPixel
         {
             get { return bits_per_pixel; }
             internal set { bits_per_pixel = value; }
         }
-
-        #endregion
-
-        #region public float RefreshRate
 
         /// <summary>
         /// Gets a System.Single representing the vertical refresh rate of this display.
@@ -138,14 +105,6 @@ namespace OpenTK
             get { return refresh_rate; }
             internal set { refresh_rate = value; }
         }
-
-        #endregion
-
-        #endregion
-
-        #region --- Overrides ---
-
-        #region public override string ToString()
 
         /// <summary>
         /// Returns a System.String representing this DisplayResolution.
@@ -157,10 +116,6 @@ namespace OpenTK
             return String.Format("{0}x{1}@{2}Hz", Bounds, bits_per_pixel, refresh_rate);
             #pragma warning restore 612,618
         }
-
-        #endregion
-
-        #region public override bool Equals(object obj)
 
         /// <summary>Determines whether the specified resolutions are equal.</summary>
         /// <param name="obj">The System.Object to check against.</param>
@@ -181,10 +136,6 @@ namespace OpenTK
             return false;
         }
 
-        #endregion
-
-        #region public override int GetHashCode()
-
         /// <summary>Returns a unique hash representing this resolution.</summary>
         /// <returns>A System.Int32 that may serve as a hash code for this resolution.</returns>
         public override int GetHashCode()
@@ -193,12 +144,6 @@ namespace OpenTK
             return Bounds.GetHashCode() ^ bits_per_pixel ^ refresh_rate.GetHashCode();
             #pragma warning restore 612,618
         }
-
-        #endregion
-
-        #endregion
-
-        #region --- Operator Overloads ---
 
         /// <summary>
         /// Compares two instances for equality.
@@ -226,7 +171,5 @@ namespace OpenTK
         {
             return !(left == right);
         }
-
-        #endregion
     }
 }

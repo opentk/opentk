@@ -1,4 +1,3 @@
- #region License
  //
  // The Open Toolkit Library License
  //
@@ -6,7 +5,7 @@
  //
  // Permission is hereby granted, free of charge, to any person obtaining a copy
  // of this software and associated documentation files (the "Software"), to deal
- // in the Software without restriction, including without limitation the rights to 
+ // in the Software without restriction, including without limitation the rights to
  // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
  // the Software, and to permit persons to whom the Software is furnished to do
  // so, subject to the following conditions:
@@ -23,7 +22,6 @@
  // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  // OTHER DEALINGS IN THE SOFTWARE.
  //
- #endregion
 
 using System;
 using System.Collections.Generic;
@@ -167,8 +165,6 @@ namespace OpenTK.Platform.X11
             return false;
         }
 
-        #region IKeyboardDriver2 Members
-
         KeyboardState IKeyboardDriver2.GetState()
         {
             lock (Sync)
@@ -203,12 +199,8 @@ namespace OpenTK.Platform.X11
                     return keyboards[index].Name;
                 }
                 return String.Empty;
-            } 
+            }
         }
-
-        #endregion
-
-        #region IMouseDriver2 Members
 
         MouseState IMouseDriver2.GetState()
         {
@@ -261,10 +253,6 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        #endregion
-
-        #region Private Members
-
         void UpdateDevices()
         {
             lock (Sync)
@@ -308,7 +296,7 @@ namespace OpenTK.Platform.X11
                                 {
                                     XIMouse d = new XIMouse();
                                     d.DeviceInfo = *(list + i);
-                       
+
                                     d.State.SetIsConnected(d.DeviceInfo.enabled);
                                     d.Name = Marshal.PtrToStringAnsi(d.DeviceInfo.name);
                                     Debug.Print("Device {0} \"{1}\" is {2} and has:",
@@ -642,10 +630,6 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        #endregion
-
-        #region IDisposable Members
-
         public void Dispose()
         {
             Dispose(true);
@@ -665,8 +649,6 @@ namespace OpenTK.Platform.X11
         {
             Dispose(false);
         }
-
-        #endregion
     }
 }
 

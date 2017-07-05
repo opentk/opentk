@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -47,22 +45,10 @@ namespace OpenTK
         volatile static bool initialized;
         readonly static object InitLock = new object();
 
-        #region Constructors
-
         Configuration() { }
-
-        #endregion
-
-        #region Public Methods
-
-        #region public static bool RunningOnWindows
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on a Windows platform.</summary>
         public static bool RunningOnWindows { get { return runningOnWindows; } }
-
-        #endregion
-
-        #region public static bool RunningOnX11
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on an X11 platform.</summary>
         public static bool RunningOnX11
@@ -78,10 +64,6 @@ namespace OpenTK
             get { return runningOnUnix; }
         }
 
-        #endregion
-
-        #region RunningOnSDL2
-
         /// <summary>
         /// Gets a System.Boolean indicating whether OpenTK is running on the SDL2 backend.
         /// </summary>
@@ -91,32 +73,16 @@ namespace OpenTK
             private set;
         }
 
-        #endregion
-
-        #region public static bool RunningOnLinux
-
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on the Linux kernel.</summary>
         public static bool RunningOnLinux { get { return runningOnLinux; } }
 
-        #endregion
-
-        #region public static bool RunningOnMacOS
-
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on a MacOS platform.</summary>
         public static bool RunningOnMacOS { get { return runningOnMacOS; } }
-
-        #endregion
-
-        #region public static bool RunningOnMono
 
         /// <summary>
         /// Gets a System.Boolean indicating whether OpenTK is running on the Mono runtime.
         /// </summary>
         public static bool RunningOnMono { get { return runningOnMono; } }
-
-        #endregion
-
-        #region public static bool RunningOnAndroid
 
         /// <summary>
         /// Gets a <c>System.Boolean</c> indicating whether
@@ -134,10 +100,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region public static bool RunningOnIOS
-
         /// <summary>
         /// Gets a <c>System.Boolean</c> indicating whether
         /// OpenTK is running on an Android device.
@@ -153,12 +115,6 @@ namespace OpenTK
 #endif
             }
         }
-
-        #endregion
-
-        #region --- Private Methods ---
-
-        #region private static string DetectUnixKernel()
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
         struct utsname
@@ -321,14 +277,6 @@ namespace OpenTK
             #endif
         }
 
-        #endregion
-
-        #endregion
-
-        #endregion
-
-        #region Internal Methods
-
         // Detects the underlying OS and runtime.
         internal static void Init(ToolkitOptions options)
         {
@@ -350,7 +298,7 @@ namespace OpenTK
                     {
                         RunningOnSdl2 = DetectSdl2();
                     }
-                    
+
                     if ((runningOnLinux && !RunningOnSdl2) || options.Backend == PlatformBackend.PreferX11)
                     {
                         runningOnX11 = DetectX11();
@@ -365,7 +313,5 @@ namespace OpenTK
                 }
             }
         }
-
-        #endregion
     }
 }

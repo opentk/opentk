@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // LinuxKeyboardLibInput.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -197,8 +195,6 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        #region Private Members
-
         static CloseRestrictedCallback CloseRestricted = CloseRestrictedHandler;
         static void CloseRestrictedHandler(int fd, IntPtr data)
         {
@@ -216,7 +212,7 @@ namespace OpenTK.Platform.Linux
         }
 
         static OpenRestrictedCallback OpenRestricted = OpenRestrictedHandler;
-        static int OpenRestrictedHandler(IntPtr path, int flags, IntPtr data) 
+        static int OpenRestrictedHandler(IntPtr path, int flags, IntPtr data)
         {
             int fd = Libc.open(path, (OpenFlags)flags);
             Debug.Print("[Input] Opening '{0}' with flags {1}. fd:{2}",
@@ -572,10 +568,6 @@ namespace OpenTK.Platform.Linux
             return mouse;
         }
 
-        #endregion
-
-        #region IKeyboardDriver2 implementation
-
         KeyboardState IKeyboardDriver2.GetState()
         {
             lock (Sync)
@@ -620,10 +612,6 @@ namespace OpenTK.Platform.Linux
                 }
             }
         }
-
-        #endregion
-
-        #region IMouseDriver2 implementation
 
         MouseState IMouseDriver2.GetState()
         {
@@ -671,10 +659,6 @@ namespace OpenTK.Platform.Linux
             return state;
         }
 
-        #endregion
-
-        #region IDisposable implementation
-
         public void Dispose()
         {
             Dispose(true);
@@ -714,8 +698,6 @@ namespace OpenTK.Platform.Linux
         {
             Dispose(false);
         }
-
-        #endregion
     }
 }
 

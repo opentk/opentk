@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -43,8 +41,6 @@ namespace OpenTK.Platform.SDL2
         {
             state.IsConnected = true;
         }
-
-        #region Private Members
 
         static internal MouseButton TranslateButton(Button button)
         {
@@ -85,10 +81,6 @@ namespace OpenTK.Platform.SDL2
 
         internal static float Scale = 1.0f;
 
-        #endregion
-
-        #region Public Members
-
         public void ProcessWheelEvent(MouseWheelEvent wheel)
         {
             state.SetScrollRelative(wheel.X, wheel.Y);
@@ -105,10 +97,6 @@ namespace OpenTK.Platform.SDL2
             bool pressed = button.State == State.Pressed;
             SetButtonState(TranslateButton(button.Button), pressed);
         }
-
-        #endregion
-
-        #region IMouseDriver2 Members
 
         public MouseState GetState()
         {
@@ -158,8 +146,6 @@ namespace OpenTK.Platform.SDL2
         {
             SDL.WarpMouseInWindow(IntPtr.Zero, (int)x, (int)y);
         }
-
-    #endregion
     }
 }
 

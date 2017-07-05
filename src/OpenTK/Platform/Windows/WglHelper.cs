@@ -1,11 +1,9 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  *
  * Date: 12/8/2007
  * Time: 6:43 ��
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -30,8 +28,6 @@ namespace OpenTK.Platform.Windows
         public Wgl()
         {
         }
-
-        #region Public Members
 
         public static bool SupportsExtension(string name)
         {
@@ -96,10 +92,6 @@ namespace OpenTK.Platform.Windows
             return false;
         }
 
-        #endregion
-
-        #region Protected Members
-
         object SyncRoot
         {
             get { return sync; }
@@ -115,10 +107,6 @@ namespace OpenTK.Platform.Windows
             return address;
         }
 
-        #endregion
-
-        #region Private Members
-
         static bool IsValid(IntPtr address)
         {
             // See https://www.opengl.org/wiki/Load_OpenGL_Functions
@@ -126,10 +114,6 @@ namespace OpenTK.Platform.Windows
             bool is_valid = (a < -1) || (a > 3);
             return is_valid;
         }
-
-        #endregion
-
-        #region Internal Members
 
         internal void LoadEntryPoints()
         {
@@ -145,7 +129,5 @@ namespace OpenTK.Platform.Windows
                 }
             }
         }
-
-        #endregion
     }
 }

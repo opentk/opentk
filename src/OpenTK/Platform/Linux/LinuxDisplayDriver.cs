@@ -1,4 +1,3 @@
-#region License
 //
 // LinuxDisplayDriver.cs
 //
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -380,8 +378,6 @@ namespace OpenTK.Platform.Linux
             return null;
         }
 
-        #region IDisplayDeviceDriver
-
         public override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
         {
             unsafe
@@ -409,8 +405,6 @@ namespace OpenTK.Platform.Linux
                     &connector_id, 1, &mode) == 0;
             }
         }
-
-        #endregion
     }
 }
 

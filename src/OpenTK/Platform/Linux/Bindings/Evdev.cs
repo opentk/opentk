@@ -1,11 +1,10 @@
-﻿#region License
-//
+﻿//
 // Evdev.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
 //
-// Copyright (c) 2006-2014 
+// Copyright (c) 2006-2014
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -40,8 +38,6 @@ namespace OpenTK.Platform.Linux
         public const int KeyCount = 0x300;
         public const int AxisCount = 0x40;
         public const int EventCount = (int)EvdevType.CNT;
-
-        #region KeyMap
 
         public static readonly Key[] KeyMap = new Key[]
         {
@@ -334,8 +330,6 @@ namespace OpenTK.Platform.Linux
             Key.Unknown,
             Key.Unknown, // reserved
         };
-
-        #endregion
 
         public static MouseButton GetMouseButton(EvdevButton button)
         {

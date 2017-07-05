@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -55,8 +53,6 @@ namespace OpenTK.Platform.MacOS
     // Todo: create a driver for older installations. Maybe use CGGetLastMouseDelta for that?
     class HIDInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2, IJoystickDriver2
     {
-        #region Fields
-
         class MouseData
         {
             public IntPtr Id;
@@ -142,23 +138,15 @@ namespace OpenTK.Platform.MacOS
                 MaxReported = max;
             }
 
-            #region IComparable implementation
-
             public int CompareTo(JoystickElement other)
             {
                 return Usage.CompareTo(other.Usage);
             }
 
-            #endregion
-
-            #region IEquatable implementation
-
             public bool Equals(JoystickElement other)
             {
                 return Cookie.Equals(other.Cookie);
             }
-
-            #endregion
         }
 
         IOHIDManagerRef hidmanager;
@@ -192,10 +180,6 @@ namespace OpenTK.Platform.MacOS
 
         bool disposed;
 
-        #endregion
-
-        #region Constructors
-
         public HIDInput()
         {
             Debug.Print("Using HIDInput.");
@@ -227,10 +211,6 @@ namespace OpenTK.Platform.MacOS
             // For retrieving the global cursor position
             RegisterMouseMonitor();
         }
-
-        #endregion
-
-        #region Private Members
 
         void RegisterMouseMonitor()
         {
@@ -478,8 +458,6 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        #region Mouse
-
         void AddMouse(CFAllocatorRef sender, CFAllocatorRef device)
         {
             Debug.Print("Mouse device {0:x} discovered, sender is {1:x}", device, sender);
@@ -542,10 +520,6 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        #endregion
-
-        #region Keyboard
-
         void AddKeyboard(CFAllocatorRef sender, CFAllocatorRef device)
         {
             Debug.Print("Keyboard device {0:x} discovered, sender is {1:x}", device, sender);
@@ -566,8 +540,8 @@ namespace OpenTK.Platform.MacOS
             int v_int = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
             HIDPage page = NativeMethods.IOHIDElementGetUsagePage(elem);
             int usage = NativeMethods.IOHIDElementGetUsage(elem);
- 
-            // This will supress the debug printing below. Seems like it generates a lot of -1s. 
+
+            // This will supress the debug printing below. Seems like it generates a lot of -1s.
             // Couldn't find any details in USB spec or Apple docs for this behavior.
             if (usage >= 0)
             {
@@ -586,10 +560,6 @@ namespace OpenTK.Platform.MacOS
                 }
             }
         }
-
-        #endregion
-
-        #region Joystick
 
         Guid CreateJoystickGuid(IntPtr device, string name)
         {
@@ -1000,20 +970,10 @@ namespace OpenTK.Platform.MacOS
             return position;
         }
 
-        #endregion
-
-        #endregion
-
-        #region IInputDriver2 Members
-
         public IMouseDriver2 MouseDriver { get { return this; } }
         public IKeyboardDriver2 KeyboardDriver { get { return this; } }
         public IGamePadDriver GamePadDriver { get { return mapped_gamepad; } }
         public IJoystickDriver2 JoystickDriver { get { return this; } }
-
-        #endregion
-
-        #region IMouseDriver2 Members
 
         MouseState IMouseDriver2.GetState()
         {
@@ -1066,10 +1026,6 @@ namespace OpenTK.Platform.MacOS
             CG.WarpMouseCursorPosition(p);
         }
 
-        #endregion
-
-        #region IKeyboardDriver2
-
         KeyboardState IKeyboardDriver2.GetState()
         {
             KeyboardState master = new KeyboardState();
@@ -1105,10 +1061,6 @@ namespace OpenTK.Platform.MacOS
             return String.Empty;
         }
 
-        #endregion
-
-        #region IJoystickDriver2 Members
-
         JoystickState IJoystickDriver2.GetState(int index)
         {
             JoystickData joystick = GetJoystick(index);
@@ -1138,10 +1090,6 @@ namespace OpenTK.Platform.MacOS
             }
             return new Guid();
         }
-
-        #endregion
-
-        #region NativeMethods
 
         class NativeMethods
         {
@@ -1695,10 +1643,6 @@ namespace OpenTK.Platform.MacOS
             /* 0xE8-0xFFFF Reserved */
         };
 
-        #endregion
-
-        #region IDisposable Members
-
 
         void Dispose(bool manual)
         {
@@ -1775,8 +1719,6 @@ namespace OpenTK.Platform.MacOS
         {
             Dispose(false);
         }
-
-        #endregion
     }
 }
 

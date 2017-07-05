@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -84,8 +82,6 @@ namespace OpenTK.Platform.Windows
             Debug.WriteLine(String.Format("Loaded opengl32.dll: {0}", OpenGLHandle));
         }
 
-        #region IPlatformFactory Members
-
         public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
             return new WinGLNative(x, y, width, height, title, options, device);
@@ -134,10 +130,6 @@ namespace OpenTK.Platform.Windows
             return RawInputDriver.JoystickDriver;
         }
 
-        #endregion
-
-        #region Private Members
-
         WinRawInput RawInputDriver
         {
             get
@@ -152,10 +144,6 @@ namespace OpenTK.Platform.Windows
                 }
             }
         }
-
-        #endregion
-
-        #region IDisposable Members
 
         protected override void Dispose(bool manual)
         {
@@ -174,7 +162,5 @@ namespace OpenTK.Platform.Windows
                 base.Dispose(manual);
             }
         }
-
-        #endregion
     }
 }

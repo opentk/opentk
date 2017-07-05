@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -34,8 +32,6 @@ using System.Reflection;
 
 namespace OpenTK
 {
-    #region BlittableValueType<T>
-
     /// <summary>
     /// Checks whether the specified type parameter is a blittable value type.
     /// </summary>
@@ -45,14 +41,8 @@ namespace OpenTK
     /// </remarks>
     public static class BlittableValueType<T>
     {
-        #region Fields
-
         static readonly Type Type;
         static readonly int stride;
-
-        #endregion
-
-        #region Constructors
 
         static BlittableValueType()
         {
@@ -66,10 +56,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region Public Members
-
         /// <summary>
         /// Gets the size of the type in bytes or 0 for non-blittable types.
         /// </summary>
@@ -77,8 +63,6 @@ namespace OpenTK
         /// This property returns 0 for non-blittable types.
         /// </remarks>
         public static int Stride { get { return stride; } }
-
-        #region Check
 
         /// <summary>
         /// Checks whether the current typename T is blittable.
@@ -101,12 +85,6 @@ namespace OpenTK
 
             return CheckType(type);
         }
-
-        #endregion
-
-        #endregion
-
-        #region Private Members
 
         // Checks whether the parameter is a primitive type or consists of primitive types recursively.
         // Throws a NotSupportedException if it is not.
@@ -144,13 +122,7 @@ namespace OpenTK
 
             return true;
         }
-
-        #endregion
     }
-
-    #endregion
-
-    #region BlittableValueType
 
     /// <summary>
     /// Checks whether the specified type parameter is a blittable value type.
@@ -161,8 +133,6 @@ namespace OpenTK
     /// </remarks>
     public static class BlittableValueType
     {
-        #region Check
-
         /// <summary>
         /// Checks whether type is a blittable value type.
         /// </summary>
@@ -216,10 +186,6 @@ namespace OpenTK
         {
             return BlittableValueType<T>.Check();
         }
-
-        #endregion
-
-        #region StrideOf
 
         /// <summary>
         /// Returns the size of the specified value type in bytes or 0 if the type is not blittable.
@@ -283,9 +249,5 @@ namespace OpenTK
 
             return BlittableValueType<T>.Stride;
         }
-
-        #endregion
     }
-
-    #endregion
 }

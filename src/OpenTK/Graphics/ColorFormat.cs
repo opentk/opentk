@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2010 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -41,8 +39,6 @@ namespace OpenTK.Graphics
         byte red, green, blue, alpha;
         bool isIndexed;
         int bitsPerPixel;
-
-        #region Constructors
 
         /// <summary>
         /// Constructs a new ColorFormat with the specified aggregate bits per pixel.
@@ -92,7 +88,7 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Constructs a new ColorFormat with the specified bits per pixel for 
+        /// Constructs a new ColorFormat with the specified bits per pixel for
         /// the Red, Green, Blue and Alpha color channels.
         /// </summary>
         /// <param name="red">Bits per pixel for the Red color channel.</param>
@@ -113,10 +109,6 @@ namespace OpenTK.Graphics
                 this.isIndexed = true;
         }
 
-        #endregion
-
-        #region Public Members
-
         /// <summary>Gets the bits per pixel for the Red channel.</summary>
         public int Red { get { return red; } private set { red = (byte)value; } }
         /// <summary>Gets the bits per pixel for the Green channel.</summary>
@@ -135,10 +127,6 @@ namespace OpenTK.Graphics
         /// </summary>
         public static readonly ColorFormat Empty = new ColorFormat(0);
 
-        #endregion
-
-        #region Operator Overloads
-
         /// <summary>
         /// Converts the specified bpp into a new ColorFormat.
         /// </summary>
@@ -153,10 +141,6 @@ namespace OpenTK.Graphics
         //{
         //    return mode.BitsPerPixel;
         //}
-
-        #endregion
-
-        #region IComparable<ColorFormat> Members
 
         /// <summary>
         /// Compares two instances.
@@ -179,10 +163,6 @@ namespace OpenTK.Graphics
             return result;
         }
 
-        #endregion
-
-        #region IEquatable<ColorFormat> Members
-
         /// <summary>
         /// Compares whether this ColorFormat structure is equal to the specified ColorFormat.
         /// </summary>
@@ -196,10 +176,6 @@ namespace OpenTK.Graphics
                 Blue == other.Blue &&
                 Alpha == other.Alpha;
         }
-
-        #endregion
-
-        #region Overrides
 
         /// <summary>
         /// Indicates whether this instance and a specified object are equal.
@@ -294,7 +270,5 @@ namespace OpenTK.Graphics
         {
             return string.Format("{0} ({1})", BitsPerPixel, (IsIndexed ? " indexed" : Red.ToString() + Green.ToString() + Blue.ToString() + Alpha.ToString()));
         }
-
-        #endregion
     }
 }

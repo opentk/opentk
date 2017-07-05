@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -42,16 +40,8 @@ namespace OpenTK.Platform.X11
         XVisualInfo visualInfo;
         EventMask eventMask;
 
-        #region --- Constructors ---
-
-        #region X11WindowInfo()
-
         /// <summary>Constructs a new X11WindowInfo class.</summary>
         public X11WindowInfo() { }
-
-        #endregion
-
-        #region X11WindowInfo(IntPtr handle, X11WindowInfo parent)
 
         /// <summary>
         /// Constructs a new X11WindowInfo class from the specified window handle and parent.
@@ -70,12 +60,6 @@ namespace OpenTK.Platform.X11
                 this.visualInfo = parent.visualInfo;
             }
         }
-
-        #endregion
-
-        #endregion
-
-        #region --- Public Methods ---
 
         /// <summary>Gets or sets the handle of the window.</summary>
         public IntPtr Handle { get { return handle; } set { handle = value; } }
@@ -111,22 +95,12 @@ namespace OpenTK.Platform.X11
         public IntPtr FBConfig { get; set; }
         public Graphics.GraphicsMode GraphicsMode { get; set; }
 
-        #endregion
-
-        #region --- IDisposable Members ---
-
         /// <summary>
         /// Disposes of this X11WindowInfo instance.
         /// </summary>
         public void Dispose()
         {
         }
-
-        #endregion
-
-        #region --- Overrides ---
-
-        #region public override string ToString()
 
         /// <summary>Returns a System.String that represents the current window.</summary>
         /// <returns>A System.String that represents the current window.</returns>
@@ -135,8 +109,6 @@ namespace OpenTK.Platform.X11
             return String.Format("X11.WindowInfo: Display {0}, Screen {1}, Handle {2}, Parent: ({3})",
                 this.Display, this.Screen, this.Handle, this.Parent != null ? this.Parent.ToString() : "null");
         }
-
-        #endregion
 
         /// <summary>Checks if <c>this</c> and <c>obj</c> reference the same win32 window.</summary>
         /// <param name="obj">The object to check against.</param>
@@ -159,7 +131,5 @@ namespace OpenTK.Platform.X11
         {
             return handle.GetHashCode() ^ display.GetHashCode();
         }
-
-        #endregion
     }
 }

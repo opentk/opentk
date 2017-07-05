@@ -1,8 +1,6 @@
-﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+﻿/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -14,13 +12,7 @@ namespace Bind.Structures
 {
     class Function : Delegate, IEquatable<Function>, IComparable<Function>
     {
-        #region Fields
-
         Delegate wrapped_delegate;
-
-        #endregion
-
-        #region --- Constructors ---
 
         public Function(Delegate d)
             : base(d)
@@ -42,19 +34,11 @@ namespace Bind.Structures
             Body.AddRange(f.Body);
         }
 
-        #endregion
-
-        #region public Delegate WrappedDelegate
-
         public Delegate WrappedDelegate
         {
             get { return wrapped_delegate; }
             set { wrapped_delegate = value; }
         }
-
-        #endregion
-
-        #region public void TurnVoidPointersToIntPtr()
 
         public void TurnVoidPointersToIntPtr()
         {
@@ -68,10 +52,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public override bool Unsafe
-
         public override bool Unsafe
         {
             get
@@ -79,10 +59,6 @@ namespace Bind.Structures
                 return base.Unsafe;
             }
         }
-
-        #endregion
-
-        #region public FunctionBody Body
 
         FunctionBody _body;
 
@@ -92,21 +68,9 @@ namespace Bind.Structures
             set { _body = value; }
         }
 
-        #endregion
-
-        #region public string TrimmedName
-
         public string TrimmedName { get; set; }
 
-        #endregion
-
-        #region Documentation
-
         public Documentation Documentation { get; set; }
-
-        #endregion
-
-        #region ToString
 
         public override string ToString()
         {
@@ -115,10 +79,6 @@ namespace Bind.Structures
                 TrimmedName,
                 Parameters);
         }
-
-        #endregion
-
-        #region IEquatable<Function> Members
 
         public bool Equals(Function other)
         {
@@ -129,10 +89,6 @@ namespace Bind.Structures
             return result;
         }
 
-        #endregion
-
-        #region IComparable<Function> Members
-
         public int CompareTo(Function other)
         {
             int ret = Name.CompareTo(other.Name);
@@ -142,11 +98,7 @@ namespace Bind.Structures
                 ret = ReturnType.CompareTo(other.ReturnType);
             return ret;
         }
-
-        #endregion
     }
-
-    #region class FunctionBody : List<string>
 
     public class FunctionBody : List<string>
     {
@@ -207,10 +159,6 @@ namespace Bind.Structures
             return sb.ToString();
         }
     }
-
-    #endregion
-
-    #region class FunctionCollection : SortedDictionary<string, List<Function>>
 
     class FunctionCollection : SortedDictionary<string, List<Function>>
     {
@@ -276,6 +224,4 @@ namespace Bind.Structures
             }
         }
     }
-
-    #endregion
 }

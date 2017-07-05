@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // Gbm.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Runtime.InteropServices;
@@ -265,14 +263,10 @@ namespace OpenTK.Platform.Linux
             return string.Format("[BufferObject: {0}]", buffer);
         }
 
-        #region IEquatable implementation
-
         public bool Equals(BufferObject other)
         {
             return buffer == other.buffer;
         }
-
-        #endregion
     }
 }
 

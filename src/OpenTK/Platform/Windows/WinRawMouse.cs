@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2010 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -42,12 +40,10 @@ namespace OpenTK.Platform.Windows
     sealed class WinRawMouse : IMouseDriver2
     {
         readonly List<MouseState> mice = new List<MouseState>();
-        readonly List<string> names = new List<string>(); 
+        readonly List<string> names = new List<string>();
         readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
         readonly IntPtr Window;
         readonly object UpdateLock = new object();
-
-        #region Constructors
 
         public WinRawMouse(IntPtr window)
         {
@@ -62,10 +58,6 @@ namespace OpenTK.Platform.Windows
 
             Debug.Unindent();
         }
-
-        #endregion
-
-        #region Public Members
 
         public void RefreshDevices()
         {
@@ -254,10 +246,6 @@ namespace OpenTK.Platform.Windows
             return processed;
         }
 
-        #endregion
-
-        #region Private Members
-
         static string GetDeviceName(RawInputDeviceList dev)
         {
             // get name size
@@ -316,10 +304,6 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #region IMouseDriver2 Members
-
         public MouseState GetState()
         {
             lock (UpdateLock)
@@ -361,7 +345,5 @@ namespace OpenTK.Platform.Windows
             state.Y = p.Y;
             return state;
         }
-
-        #endregion
     }
 }

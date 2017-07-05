@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // JoystickCapabilities.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -43,8 +41,6 @@ namespace OpenTK.Input
         byte button_count;
         byte hat_count;
         bool is_connected;
-
-        #region Constructors
 
         internal JoystickCapabilities(int axis_count, int button_count, int hat_count, bool is_connected)
         {
@@ -68,18 +64,10 @@ namespace OpenTK.Input
             this.is_connected = is_connected;
         }
 
-        #endregion
-
-        #region Internal Members
-
         internal void SetIsConnected(bool value)
         {
             is_connected = value;
         }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Gets the number of axes supported by this <see cref="JoystickDevice"/>.
@@ -153,10 +141,6 @@ namespace OpenTK.Input
                 Equals((JoystickCapabilities)obj);
         }
 
-        #endregion
-
-        #region IEquatable<JoystickCapabilities> Members
-
         /// <summary>
         /// Determines whether the specified <see cref="OpenTK.Input.JoystickCapabilities"/> is equal to the current <see cref="OpenTK.Input.JoystickCapabilities"/>.
         /// </summary>
@@ -171,7 +155,5 @@ namespace OpenTK.Input
                 HatCount == other.HatCount &&
                 IsConnected == other.IsConnected;
         }
-
-        #endregion
     }
 }

@@ -1,11 +1,10 @@
-﻿﻿#region License
-//
+﻿﻿//
 // X11KeyMap.cs
 //
 // Author:
 //       Stefanos Apostolopoulos <stapostol@gmail.com>
 //
-// Copyright (c) 2006-2014 
+// Copyright (c) 2006-2014
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -55,7 +53,7 @@ namespace OpenTK.Platform.X11
         internal void RefreshKeycodes(IntPtr display)
         {
             // Approach inspired by GLFW: http://www.glfw.org/
-            // Huge props to the GLFW team! 
+            // Huge props to the GLFW team!
             if (xkb_supported)
             {
                 unsafe

@@ -1,5 +1,4 @@
-﻿#region --- License ---
-/*
+﻿/*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -20,7 +19,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -32,8 +30,6 @@ namespace OpenTK
     /// </summary>
     public struct Matrix2x3 : IEquatable<Matrix2x3>
     {
-        #region Fields
-
         /// <summary>
         /// Top row of the matrix.
         /// </summary>
@@ -48,10 +44,6 @@ namespace OpenTK
         /// The zero matrix.
         /// </summary>
         public static readonly Matrix2x3 Zero = new Matrix2x3(Vector3.Zero, Vector3.Zero);
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Constructs a new instance.
@@ -80,12 +72,6 @@ namespace OpenTK
             Row0 = new Vector3(m00, m01, m02);
             Row1 = new Vector3(m10, m11, m12);
         }
-
-        #endregion
-
-        #region Public Members
-
-        #region Properties
 
         /// <summary>
         /// Gets or sets the first column of this matrix.
@@ -165,10 +151,6 @@ namespace OpenTK
         /// </summary>
         public float Trace { get { return Row0.X + Row1.Y; } }
 
-        #endregion
-
-        #region Indexers
-
         /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
@@ -187,15 +169,6 @@ namespace OpenTK
                 else throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
             }
         }
-
-        #endregion
-
-        #region Instance
-        #endregion
-
-        #region Static
-
-        #region CreateRotation
 
         /// <summary>
         /// Builds a rotation matrix.
@@ -226,10 +199,6 @@ namespace OpenTK
             CreateRotation(angle, out result);
             return result;
         }
-
-        #endregion
-
-        #region CreateScale
 
         /// <summary>
         /// Creates a scale matrix.
@@ -313,10 +282,6 @@ namespace OpenTK
             CreateScale(x, y, out result);
             return result;
         }
-
-        #endregion
-
-        #region Multiply Functions
 
         /// <summary>
         /// Multiplies and instance by a scalar.
@@ -452,10 +417,6 @@ namespace OpenTK
             return result;
         }
 
-        #endregion
-
-        #region Add
-
         /// <summary>
         /// Adds two instances.
         /// </summary>
@@ -484,10 +445,6 @@ namespace OpenTK
             Add(ref left, ref right, out result);
             return result;
         }
-
-        #endregion
-
-        #region Subtract
 
         /// <summary>
         /// Subtracts two instances.
@@ -518,10 +475,6 @@ namespace OpenTK
             return result;
         }
 
-        #endregion
-
-        #region Transpose
-
         /// <summary>
         /// Calculate the transpose of the given matrix.
         /// </summary>
@@ -548,12 +501,6 @@ namespace OpenTK
             Transpose(ref mat, out result);
             return result;
         }
-
-        #endregion
-
-        #endregion
-
-        #region Operators
 
         /// <summary>
         /// Scalar multiplication.
@@ -654,12 +601,6 @@ namespace OpenTK
             return !left.Equals(right);
         }
 
-        #endregion
-
-        #region Overrides
-
-        #region public override string ToString()
-
         /// <summary>
         /// Returns a System.String that represents the current Matrix2x3.
         /// </summary>
@@ -668,10 +609,6 @@ namespace OpenTK
         {
             return String.Format("{0}\n{1}", Row0, Row1);
         }
-
-        #endregion
-
-        #region public override int GetHashCode()
 
         /// <summary>
         /// Returns the hashcode for this instance.
@@ -684,10 +621,6 @@ namespace OpenTK
                 return (this.Row0.GetHashCode() * 397) ^ this.Row1.GetHashCode();
             }
         }
-
-        #endregion
-
-        #region public override bool Equals(object obj)
 
         /// <summary>
         /// Indicates whether this instance and a specified object are equal.
@@ -702,14 +635,6 @@ namespace OpenTK
             return this.Equals((Matrix2x3)obj);
         }
 
-        #endregion
-
-        #endregion
-
-        #endregion
-
-        #region IEquatable<Matrix2x3> Members
-
         /// <summary>
         /// Indicates whether the current matrix is equal to another matrix.
         /// </summary>
@@ -721,7 +646,5 @@ namespace OpenTK
                 Row0 == other.Row0 &&
                 Row1 == other.Row1;
         }
-
-        #endregion
     }
 }

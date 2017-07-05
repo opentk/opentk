@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -37,13 +35,7 @@ namespace OpenTK
     /// </summary>
     public struct Size : IEquatable<Size>
     {
-        #region Fields
-
         int width, height;
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Constructs a new Size instance.
@@ -56,10 +48,6 @@ namespace OpenTK
             Width = width;
             Height = height;
         }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Gets or sets the width of this instance.
@@ -138,7 +126,7 @@ namespace OpenTK
         {
             if (obj is Size)
                 return Equals((Size)obj);
-            
+
             return false;
         }
 
@@ -160,10 +148,6 @@ namespace OpenTK
             return String.Format("{{{0}, {1}}}", Width, Height);
         }
 
-        #endregion
-
-        #region IEquatable<Size> Members
-
         /// <summary>
         /// Indicates whether this instance is equal to the specified Size.
         /// </summary>
@@ -173,8 +157,7 @@ namespace OpenTK
         {
             return Width == other.Width && Height == other.Height;
         }
-        
-        #endregion
+
     }
 #endif
 }

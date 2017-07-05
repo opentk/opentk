@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2008 the Open Toolkit library, except where noted.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -36,14 +34,8 @@ namespace OpenTK.Graphics
     /// </summary>
     public sealed class GraphicsContextVersion
     {
-        #region Fields
-
         int minor, major;
         string vendor = String.Empty, renderer = String.Empty;
-
-        #endregion
-
-        #region Constructors
 
         internal GraphicsContextVersion(int minor, int major, string vendor, string renderer)
         {
@@ -52,10 +44,6 @@ namespace OpenTK.Graphics
             Vendor = vendor;
             Renderer = renderer;
         }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Gets a System.Int32 indicating the minor version of a GraphicsContext instance.
@@ -76,7 +64,5 @@ namespace OpenTK.Graphics
         /// Gets a System.String indicating the renderer of a GraphicsContext instance.
         /// </summary>
         public string Renderer { get { return renderer; } private set { renderer = value; } }
-
-        #endregion
     }
 }

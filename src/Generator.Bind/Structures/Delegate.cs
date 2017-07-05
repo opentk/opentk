@@ -1,8 +1,6 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -30,10 +28,8 @@ namespace Bind.Structures
 
         // Add a trailing v to functions matching this regex. Used to differntiate between overloads taking both
         // a 'type' and a 'ref type' (such overloads are not CLS Compliant).
-        // The default Regex matches no functions. Create a new Regex in Bind.Generator classes to override the default behavior. 
+        // The default Regex matches no functions. Create a new Regex in Bind.Generator classes to override the default behavior.
         internal static Regex endingsAddV = new Regex("^0", RegexOptions.Compiled);
-
-        #region --- Constructors ---
 
         public Delegate()
         {
@@ -56,12 +52,6 @@ namespace Bind.Structures
             cls_compliance_overriden = d.cls_compliance_overriden;
             Slot = d.Slot;
         }
-
-        #endregion
-
-        #region --- Properties ---
-
-        #region public bool CLSCompliant
 
         /// <summary>
         ///  Gets the CLSCompliant property. True if the delegate is not CLSCompliant.
@@ -92,10 +82,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public string Category
-
         private string _category;
 
         public string Category
@@ -103,10 +89,6 @@ namespace Bind.Structures
             get { return _category; }
             set { _category = value; }
         }
-
-        #endregion
-
-        #region public bool NeedsWrapper
 
         /// <summary>
         /// Gets a value that indicates whether this function needs to be wrapped with a Marshaling function.
@@ -131,10 +113,6 @@ namespace Bind.Structures
                 return false;
             }
         }
-
-        #endregion
-
-        #region public virtual bool Unsafe
 
         /// <summary>
         /// True if the delegate must be declared as 'unsafe'.
@@ -163,10 +141,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public Parameter ReturnType
-
         Type _return_type = new Type();
         /// <summary>
         /// Gets or sets the return value of the opengl function.
@@ -179,10 +153,6 @@ namespace Bind.Structures
                 _return_type = value;
             }
         }
-
-        #endregion
-
-        #region public virtual string Name
 
         string _name;
         /// <summary>
@@ -200,10 +170,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public ParameterCollection Parameters
-
         ParameterCollection _parameters;
 
         public ParameterCollection Parameters
@@ -211,10 +177,6 @@ namespace Bind.Structures
             get { return _parameters; }
             set { _parameters = value; }
         }
-
-        #endregion
-
-        #region public string Version
 
         string _version;
 
@@ -227,17 +189,11 @@ namespace Bind.Structures
             set { _version = value; }
         }
 
-        #endregion
-
-        #region public bool Extension
-
         public string Extension
         {
             get;
             set;
         }
-
-        #endregion
 
         public bool Deprecated { get; set; }
         public string DeprecatedVersion { get; set; }
@@ -246,8 +202,6 @@ namespace Bind.Structures
 
         // Slot index in the address table
         public int Slot { get; set; }
-
-        #endregion
 
         // This method should only be used for debugging purposes, not for code generation!
         // Returns a string representing the full delegate declaration without decorations.
@@ -266,8 +220,6 @@ namespace Bind.Structures
             return sb.ToString();
         }
 
-        #region IComparable<Delegate> Members
-
         public int CompareTo(Delegate other)
         {
             int ret = Name.CompareTo(other.Name);
@@ -278,10 +230,6 @@ namespace Bind.Structures
             return ret;
         }
 
-        #endregion
-
-        #region IEquatable<Delegate> Members
-
         public bool Equals(Delegate other)
         {
             return
@@ -289,11 +237,7 @@ namespace Bind.Structures
                 Parameters.Equals(other.Parameters) &&
                 ReturnType.Equals(other.ReturnType);
         }
-
-        #endregion
     }
-
-    #region DelegateCollection
 
     class DelegateCollection : IDictionary<string, List<Delegate>>
     {
@@ -348,8 +292,6 @@ namespace Bind.Structures
             }
         }
 
-        #region IDictionary Members
-
         public void Add(string key, List<Delegate> value)
         {
             Delegates.Add(key, value.ToList());
@@ -398,10 +340,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region ICollection implementation
-
         public void Add(KeyValuePair<string, List<Delegate>> item)
         {
             Delegates.Add(item.Key, item.Value.ToList());
@@ -443,26 +381,14 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region IEnumerable implementation
-
         public IEnumerator<KeyValuePair<string, List<Delegate>>> GetEnumerator()
         {
             return Delegates.GetEnumerator();
         }
 
-        #endregion
-
-        #region IEnumerable implementation
-
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return Delegates.GetEnumerator();
         }
-
-        #endregion
     }
-
-    #endregion
 }

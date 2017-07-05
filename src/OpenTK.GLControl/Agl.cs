@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 //  Created by Erik Ylvisaker on 3/17/08.
 
@@ -344,7 +342,6 @@ namespace OpenTK.Platform.MacOS
         /*
          ** Current state functions
          */
-        #region --- aglSetCurrentContext ---
 
         [DllImport(agl,EntryPoint="aglSetCurrentContext")] static extern byte _aglSetCurrentContext(AGLContext ctx);
         internal static bool aglSetCurrentContext(IntPtr context)
@@ -356,8 +353,6 @@ namespace OpenTK.Platform.MacOS
             else
                 return false;
         }
-
-        #endregion
 
         [DllImport(agl)] internal static extern AGLContext aglGetCurrentContext();
 

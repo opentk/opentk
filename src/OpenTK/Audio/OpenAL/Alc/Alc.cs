@@ -1,11 +1,9 @@
-﻿#region --- OpenTK.OpenAL License ---
-/* AlcFunctions.cs
+﻿/* AlcFunctions.cs
  * C header: \OpenAL 1.1 SDK\include\Alc.h
  * Spec: http://www.openal.org/openal_webstf/specs/OpenAL11Specification.pdf
  * Copyright (c) 2008 Christoph Brandtner and Stefanos Apostolopoulos
  * See license.txt for license details
  * http://www.OpenTK.net */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -14,33 +12,33 @@ using System.Runtime.InteropServices;
 using System.Security;
 
 /* Type Mapping
-// 8-bit boolean 
+// 8-bit boolean
 typedef char ALCboolean;
  * byte
-// character 
+// character
 typedef char ALCchar;
  * byte
-// signed 8-bit 2's complement integer 
+// signed 8-bit 2's complement integer
 typedef char ALCbyte;
  * byte
 
-// unsigned 8-bit integer 
+// unsigned 8-bit integer
 typedef unsigned char ALCubyte;
  * ubyte
 
-// signed 16-bit 2's complement integer 
+// signed 16-bit 2's complement integer
 typedef short ALCshort;
  * short
 
-// unsigned 16-bit integer 
+// unsigned 16-bit integer
 typedef unsigned short ALCushort;
  * ushort
 
-// unsigned 32-bit integer 
+// unsigned 32-bit integer
 typedef unsigned int ALCuint;
  * uint
-  
-// signed 32-bit 2's complement integer 
+
+// signed 32-bit 2's complement integer
 typedef int ALCint;
  * int
 // non-negative 32-bit binary integer size
@@ -57,11 +55,11 @@ typedef float ALCfloat;
 // 64-bit IEEE754 floating-point
 typedef double ALCdouble;
  * double
- 
+
 // void type (for opaque pointers only)
 typedef void ALCvoid;
  * void
- 
+
  * ALCdevice
  * ALCcontext *context
  * IntPtr
@@ -73,16 +71,8 @@ namespace OpenTK.Audio.OpenAL
     /// <summary>Alc = Audio Library Context</summary>
     public static class Alc
     {
-        #region Constants
-
         private const string Lib = AL.Lib;
         private const CallingConvention Style = CallingConvention.Cdecl;
-
-        #endregion Constants
-
-        #region Context Management
-
-        #region CreateContext
 
         [DllImport(Alc.Lib, EntryPoint = "alcCreateContext", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity]
         unsafe static extern IntPtr sys_CreateContext([In] IntPtr device, [In] int* attrlist);
@@ -114,8 +104,6 @@ namespace OpenTK.Audio.OpenAL
                 }
             }
         }
-
-        #endregion
 
         [DllImport(Alc.Lib, EntryPoint = "alcMakeContextCurrent", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
         static extern bool MakeContextCurrent(IntPtr context);
@@ -185,10 +173,6 @@ namespace OpenTK.Audio.OpenAL
         }
         // ALC_API ALCdevice*      ALC_APIENTRY alcGetContextsDevice( ALCcontext *context );
 
-        #endregion Context Management
-
-        #region Device Management
-
         /// <summary>This function opens a device by name.</summary>
         /// <param name="devicename">a null-terminated string describing a device.</param>
         /// <returns>Returns a pointer to the opened device. The return value will be NULL if there is an error.</returns>
@@ -203,20 +187,12 @@ namespace OpenTK.Audio.OpenAL
         public static extern bool CloseDevice([In] IntPtr device);
         // ALC_API ALCboolean      ALC_APIENTRY alcCloseDevice( ALCdevice *device );
 
-        #endregion Device Management
-
-        #region Error support.
-
         /// <summary>This function retrieves the current context error state.</summary>
         /// <param name="device">a pointer to the device to retrieve the error state from</param>
         /// <returns>Errorcode Int32.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcGetError", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
         public static extern AlcError GetError([In] IntPtr device);
         // ALC_API ALCenum         ALC_APIENTRY alcGetError( ALCdevice *device );
-
-        #endregion Error support.
-
-        #region Extension support.
 
         /// <summary>This function queries if a specified context extension is available.</summary>
         /// <param name="device">a pointer to the device to be queried for an extension.</param>
@@ -241,10 +217,6 @@ namespace OpenTK.Audio.OpenAL
         [DllImport(Alc.Lib, EntryPoint = "alcGetEnumValue", ExactSpelling = true, CallingConvention = Alc.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
         public static extern int GetEnumValue([In] IntPtr device, [In] string enumname);
         // ALC_API ALCenum         ALC_APIENTRY alcGetEnumValue( ALCdevice *device, const ALCchar *enumname );
-
-        #endregion Extension support.
-
-        #region Query functions
 
         [DllImport(Alc.Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = Alc.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
         private static extern IntPtr GetStringPrivate([In] IntPtr device, AlcGetString param);
@@ -370,10 +342,6 @@ namespace OpenTK.Audio.OpenAL
             }
         }
 
-        #endregion Query functions
-
-        #region Capture functions
-
         /// <summary>This function opens a capture device by name. </summary>
         /// <param name="devicename">a pointer to a device name string.</param>
         /// <param name="frequency">the frequency that the buffer should be captured at.</param>
@@ -472,8 +440,6 @@ namespace OpenTK.Audio.OpenAL
         {
             CaptureSamples(device, ref buffer[0, 0, 0], samples);
         }
-
-        #endregion Capture functions
 
     }
 

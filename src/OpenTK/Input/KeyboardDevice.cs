@@ -1,22 +1,16 @@
-﻿#region --- License ---
-/* Copyright (c) 2007 Stefanos Apostolopoulos
+﻿/* Copyright (c) 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
-
-#region --- Using directives ---
 
 using System;
 
 using OpenTK.Input;
 using System.Diagnostics;
 
-#endregion
-
 namespace OpenTK.Input
 {
     /// <summary>
-    /// Represents a keyboard device and provides methods to query its status. 
+    /// Represents a keyboard device and provides methods to query its status.
     /// </summary>
     public sealed class KeyboardDevice : IInputDevice
     {
@@ -27,13 +21,7 @@ namespace OpenTK.Input
         private bool repeat;
         private KeyboardState state;
 
-        #region --- Constructors ---
-
         internal KeyboardDevice() { }
-
-        #endregion
-
-        #region --- IKeyboard members ---
 
         /// <summary>
         /// Gets a value indicating the status of the specified Key.
@@ -92,8 +80,6 @@ namespace OpenTK.Input
             internal set { devID = value; }
         }
 
-        #region public bool KeyRepeat
-
         /// <summary>
         /// Gets or sets a System.Boolean indicating key repeat status.
         /// </summary>
@@ -116,29 +102,15 @@ namespace OpenTK.Input
             set { repeat = value; }
         }
 
-        #endregion
-
-        #region KeyDown
-
         /// <summary>
         /// Occurs when a key is pressed.
         /// </summary>
         public event EventHandler<KeyboardKeyEventArgs> KeyDown = delegate { };
 
-        #endregion
-
-        #region KeyUp
-
         /// <summary>
         /// Occurs when a key is released.
         /// </summary>
         public event EventHandler<KeyboardKeyEventArgs> KeyUp = delegate { };
-
-        #endregion
-
-        #endregion
-
-        #region --- IInputDevice Members ---
 
         /// <summary>
         /// Gets a <see cref="System.String"/> which describes this instance.
@@ -156,10 +128,6 @@ namespace OpenTK.Input
         {
             get { return InputDeviceType.Keyboard; }
         }
-
-        #endregion
-
-        #region --- Public Methods ---
 
         /// <summary>
         /// Retrieves the combined <see cref="OpenTK.Input.KeyboardState"/> for all keyboard devices.
@@ -203,10 +171,6 @@ namespace OpenTK.Input
                 DeviceID, Description, NumberOfKeys, NumberOfFunctionKeys, NumberOfLeds);
         }
 
-        #endregion
-
-        #region --- Internal Methods ---
-
         internal void HandleKeyDown(object sender, KeyboardKeyEventArgs e)
         {
             state = e.Keyboard;
@@ -226,7 +190,5 @@ namespace OpenTK.Input
             state = e.Keyboard;
             KeyUp(this, e);
         }
-
-        #endregion
     }
 }

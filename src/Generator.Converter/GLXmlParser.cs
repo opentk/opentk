@@ -1,4 +1,3 @@
-    #region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -67,7 +65,7 @@ namespace OpenTK.Convert
                 else
                     elements[key].Add(e.Elements());
             }
-            
+
             return elements.Values;
         }
 
@@ -254,7 +252,7 @@ namespace OpenTK.Convert
             {
                 var category = TrimName(feature.Attribute("name").Value);
                 var apinames = GetApiNames(feature);
-                
+
                 var version =
                     (feature.Attribute("number") != null ? feature.Attribute("number").Value : "")
                     .Split('|');
@@ -418,7 +416,7 @@ namespace OpenTK.Convert
             // - <proto>void <name>glGetSharpenTexFuncSGIS</name></proto>
             //   -> <returns>void</returns>
             // - <proto group="String">const <ptype>GLubyte</ptype> *<name>glGetString</name></proto>
-            //   -> <returns>String</returns> 
+            //   -> <returns>String</returns>
             // Note: group attribute takes precedence if it exists. This matches the old .spec file format.
             // Parameter types:
             // - <param><ptype>GLenum</ptype> <name>shadertype</name></param>
