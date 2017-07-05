@@ -159,11 +159,11 @@ namespace Mono.Options
 			this.c = c;
 		}
 
-				void ICollection.CopyTo (Array array, int index)  {(values as ICollection).CopyTo (array, index);}
-		bool ICollection.IsSynchronized                   {get {return (values as ICollection).IsSynchronized;}}
-		object ICollection.SyncRoot                       {get {return (values as ICollection).SyncRoot;}}
+        void ICollection.CopyTo (Array array, int index)    {(values as ICollection).CopyTo (array, index);}
+		bool ICollection.IsSynchronized                     {get {return (values as ICollection).IsSynchronized;}}
+		object ICollection.SyncRoot                         {get {return (values as ICollection).SyncRoot;}}
 
-				public void Add (string item)                       {values.Add (item);}
+        public void Add (string item)                       {values.Add (item);}
 		public void Clear ()                                {values.Clear ();}
 		public bool Contains (string item)                  {return values.Contains (item);}
 		public void CopyTo (string[] array, int arrayIndex) {values.CopyTo (array, arrayIndex);}
@@ -171,22 +171,22 @@ namespace Mono.Options
 		public int Count                                    {get {return values.Count;}}
 		public bool IsReadOnly                              {get {return false;}}
 
-				IEnumerator IEnumerable.GetEnumerator () {return values.GetEnumerator ();}
+        IEnumerator IEnumerable.GetEnumerator ()            {return values.GetEnumerator ();}
 
-				public IEnumerator<string> GetEnumerator () {return values.GetEnumerator ();}
+        public IEnumerator<string> GetEnumerator ()         {return values.GetEnumerator ();}
 
-				int IList.Add (object value)                {return (values as IList).Add (value);}
-		bool IList.Contains (object value)          {return (values as IList).Contains (value);}
-		int IList.IndexOf (object value)            {return (values as IList).IndexOf (value);}
-		void IList.Insert (int index, object value) {(values as IList).Insert (index, value);}
-		void IList.Remove (object value)            {(values as IList).Remove (value);}
-		void IList.RemoveAt (int index)             {(values as IList).RemoveAt (index);}
-		bool IList.IsFixedSize                      {get {return false;}}
-		object IList.this [int index]               {get {return this [index];} set {(values as IList)[index] = value;}}
+        int IList.Add (object value)                        {return (values as IList).Add (value);}
+		bool IList.Contains (object value)                  {return (values as IList).Contains (value);}
+		int IList.IndexOf (object value)                    {return (values as IList).IndexOf (value);}
+		void IList.Insert (int index, object value)         {(values as IList).Insert (index, value);}
+		void IList.Remove (object value)                    {(values as IList).Remove (value);}
+		void IList.RemoveAt (int index)                     {(values as IList).RemoveAt (index);}
+		bool IList.IsFixedSize                              {get {return false;}}
+		object IList.this [int index]                       {get {return this [index];} set {(values as IList)[index] = value;}}
 
-				public int IndexOf (string item)            {return values.IndexOf (item);}
-		public void Insert (int index, string item) {values.Insert (index, item);}
-		public void RemoveAt (int index)            {values.RemoveAt (index);}
+        public int IndexOf (string item)                    {return values.IndexOf (item);}
+		public void Insert (int index, string item)         {values.Insert (index, item);}
+		public void RemoveAt (int index)                    {values.RemoveAt (index);}
 
 		private void AssertValid (int index)
 		{
