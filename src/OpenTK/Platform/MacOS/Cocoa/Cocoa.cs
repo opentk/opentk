@@ -138,13 +138,17 @@ namespace OpenTK.Platform.MacOS
         [DllImport(LibObjC, EntryPoint="objc_msgSend_fpret")]
         extern static float SendFloat_i386(IntPtr receiver, IntPtr selector);
 
+        // On x64 using selector that return CGFloat give you 64 bit == double
         [DllImport(LibObjC, EntryPoint="objc_msgSend")]
-        extern static float SendFloat_normal(IntPtr receiver, IntPtr selector);
+        extern static double SendFloat_x64(IntPtr receiver, IntPtr selector);
+
+        [DllImport(LibObjC, EntryPoint="objc_msgSend")]
+        extern static float SendFloat_ios(IntPtr receiver, IntPtr selector);
 
         public static float SendFloat(IntPtr receiver, IntPtr selector)
         {
             #if IOS
-            return SendFloat_normal(receiver, selector);
+            return SendFloat_ios(receiver, selector);
             #else
             if (IntPtr.Size == 4)
             {
@@ -152,7 +156,7 @@ namespace OpenTK.Platform.MacOS
             }
             else
             {
-                return SendFloat_normal(receiver, selector);
+                return (float)SendFloat_x64(receiver, selector);
             }
             #endif
         }
