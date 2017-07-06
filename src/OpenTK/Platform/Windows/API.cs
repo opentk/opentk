@@ -128,13 +128,13 @@ namespace OpenTK.Platform.Windows
 
     internal static class Functions
     {
-        [DllImport("shell32.dll")]
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
         internal static extern bool DragAcceptFiles(
             IntPtr handle,
             [MarshalAs(UnmanagedType.Bool)] bool fAccept
         );
 
-        [DllImport("shell32.dll")]
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
         internal static extern uint DragQueryFile(
             HDROP hDrop,
             uint iFile,
