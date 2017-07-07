@@ -34,9 +34,6 @@ namespace OpenTK.Platform
     sealed class Factory : IPlatformFactory
     {
         private bool disposed;
-        private static IPlatformFactory defaultImplementation;
-        private static IPlatformFactory embeddedImplementation;
-        private static IPlatformFactory angleImplementation;
 
         static Factory()
         {
@@ -112,73 +109,61 @@ namespace OpenTK.Platform
                 Default = Embedded;
         }
 
-        public static IPlatformFactory Default
-        {
-            get { return defaultImplementation; }
-            private set { defaultImplementation = value; }
-        }
+        public static IPlatformFactory Default { get; private set; }
 
-        public static IPlatformFactory Embedded
-        {
-            get { return embeddedImplementation; }
-            private set { embeddedImplementation = value; }
-        }
+        public static IPlatformFactory Embedded { get; private set; }
 
-        public static IPlatformFactory Angle
-        {
-            get { return angleImplementation; }
-            private set { angleImplementation = value; }
-        }
+        public static IPlatformFactory Angle { get; private set; }
 
         public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title,
             GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
-            return defaultImplementation.CreateNativeWindow(x, y, width, height, title, mode, options, device);
+            return Default.CreateNativeWindow(x, y, width, height, title, mode, options, device);
         }
 
         public IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
-            return defaultImplementation.CreateDisplayDeviceDriver();
+            return Default.CreateDisplayDeviceDriver();
         }
 
         public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            return defaultImplementation.CreateGLContext(mode, window, shareContext, directRendering, major, minor, flags);
+            return Default.CreateGLContext(mode, window, shareContext, directRendering, major, minor, flags);
         }
 
         public IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            return defaultImplementation.CreateGLContext(handle, window, shareContext, directRendering, major, minor, flags);
+            return Default.CreateGLContext(handle, window, shareContext, directRendering, major, minor, flags);
         }
 
         public GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
-            return defaultImplementation.CreateGetCurrentGraphicsContext();
+            return Default.CreateGetCurrentGraphicsContext();
         }
 
         public IKeyboardDriver2 CreateKeyboardDriver()
         {
-            return defaultImplementation.CreateKeyboardDriver();
+            return Default.CreateKeyboardDriver();
         }
 
         public IMouseDriver2 CreateMouseDriver()
         {
-            return defaultImplementation.CreateMouseDriver();
+            return Default.CreateMouseDriver();
         }
 
         public IGamePadDriver CreateGamePadDriver()
         {
-            return defaultImplementation.CreateGamePadDriver();
+            return Default.CreateGamePadDriver();
         }
 
         public IJoystickDriver2 CreateJoystickDriver()
         {
-            return defaultImplementation.CreateJoystickDriver();
+            return Default.CreateJoystickDriver();
         }
 
         public void RegisterResource(IDisposable resource)
         {
-            defaultImplementation.RegisterResource(resource);
+            Default.RegisterResource(resource);
         }
 
         class UnsupportedPlatform : PlatformFactoryBase

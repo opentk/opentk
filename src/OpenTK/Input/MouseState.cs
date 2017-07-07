@@ -38,7 +38,6 @@ namespace OpenTK.Input
         Vector2 position;
         MouseScroll scroll;
         ushort buttons;
-        bool is_connected;
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the specified
@@ -191,11 +190,7 @@ namespace OpenTK.Input
         /// Gets a value indicating whether this instance is connected.
         /// </summary>
         /// <value><c>true</c> if this instance is connected; otherwise, <c>false</c>.</value>
-        public bool IsConnected
-        {
-            get { return is_connected; }
-            internal set { is_connected = value; }
-        }
+        public bool IsConnected { get; internal set; }
 
         /// <summary>
         /// Checks whether two <see cref="MouseState" /> instances are equal.

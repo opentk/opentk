@@ -22,7 +22,6 @@ namespace OpenTK.Platform.Dummy
     {
         readonly GraphicsContext.GetAddressDelegate Loader;
 
-        int swap_interval;
         static int handle_count;
         Thread current_thread;
 
@@ -77,17 +76,7 @@ namespace OpenTK.Platform.Dummy
             return Loader(str);
         }
 
-        public override int SwapInterval
-        {
-            get
-            {
-                return swap_interval;
-            }
-            set
-            {
-                swap_interval = value;
-            }
-        }
+        public override int SwapInterval { get; set; }
 
         public override void Update(IWindowInfo window)
         { }

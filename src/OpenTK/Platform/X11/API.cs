@@ -67,15 +67,14 @@ namespace OpenTK.Platform.X11
         private const string _dll_name = "libX11";
         private const string _dll_name_vid = "libXxf86vm";
 
-        static Display defaultDisplay;
-        static int defaultScreen;
         static Window rootWindow;
-        static int screenCount;
 
-        internal static Display DefaultDisplay { get { return defaultDisplay; } }
-        static int DefaultScreen { get { return defaultScreen; } }
+        internal static Display DefaultDisplay { get; private set; }
+
+        private static int DefaultScreen { get; set; }
+
         //internal static Window RootWindow { get { return rootWindow; } }
-        internal static int ScreenCount { get { return screenCount; } }
+        internal static int ScreenCount { get; }
 
         internal static object Lock = new object();
 
@@ -84,14 +83,14 @@ namespace OpenTK.Platform.X11
             int has_threaded_x = Functions.XInitThreads();
             Debug.Print("Initializing threaded X11: {0}.", has_threaded_x.ToString());
 
-            defaultDisplay = Functions.XOpenDisplay(IntPtr.Zero);
+            DefaultDisplay = Functions.XOpenDisplay(IntPtr.Zero);
 
-            if (defaultDisplay == IntPtr.Zero)
+            if (DefaultDisplay == IntPtr.Zero)
                 throw new PlatformException("Could not establish connection to the X-Server.");
 
-            using (new XLock(defaultDisplay))
+            using (new XLock(DefaultDisplay))
             {
-                screenCount = Functions.XScreenCount(DefaultDisplay);
+                ScreenCount = Functions.XScreenCount(DefaultDisplay);
             }
             Debug.Print("Display connection: {0}, Screen count: {1}", DefaultDisplay, ScreenCount);
 
@@ -100,11 +99,11 @@ namespace OpenTK.Platform.X11
 
         static void CurrentDomain_ProcessExit(object sender, EventArgs e)
         {
-            if (defaultDisplay != IntPtr.Zero)
+            if (DefaultDisplay != IntPtr.Zero)
             {
-                Functions.XCloseDisplay(defaultDisplay);
-                defaultDisplay = IntPtr.Zero;
-                defaultScreen = 0;
+                Functions.XCloseDisplay(DefaultDisplay);
+                DefaultDisplay = IntPtr.Zero;
+                DefaultScreen = 0;
                 rootWindow = IntPtr.Zero;
             }
         }

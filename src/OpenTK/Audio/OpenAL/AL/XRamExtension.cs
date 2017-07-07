@@ -19,13 +19,8 @@ namespace OpenTK.Audio.OpenAL
     [CLSCompliant(true)]
     public sealed class XRamExtension
     {
-        private bool _valid = false;
-
         /// <summary>Returns True if the X-Ram Extension has been found and could be initialized.</summary>
-        public bool IsInitialized
-        {
-            get { return _valid; }
-        }
+        public bool IsInitialized { get; } = false;
 
         // [CLSCompliant(false)]
         private delegate bool Delegate_SetBufferMode(int n, ref uint buffers, int value);
@@ -48,7 +43,7 @@ namespace OpenTK.Audio.OpenAL
         /// </summary>
         public XRamExtension()
         { // Query if Extension supported and retrieve Tokens/Pointers if it is.
-            _valid = false;
+            IsInitialized = false;
             if (AL.IsExtensionPresent("EAX-RAM") == false)
                 return;
 
@@ -83,7 +78,7 @@ namespace OpenTK.Audio.OpenAL
                 return;
             }
 
-            _valid = true;
+            IsInitialized = true;
         }
 
         /// <summary>Query total amount of X-RAM in bytes.</summary>

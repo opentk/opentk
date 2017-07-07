@@ -50,12 +50,7 @@ namespace OpenTK
         {
             static int instance_count;
 
-            readonly ContextHandle handle = new ContextHandle(new IntPtr(
-                System.Threading.Interlocked.Increment(ref instance_count)));
-
             IWindowInfo current_window;
-            bool is_disposed;
-            int swap_interval;
 
             public void SwapBuffers()
             {
@@ -71,10 +66,7 @@ namespace OpenTK
                 get { return current_window != null; }
             }
 
-            public bool IsDisposed
-            {
-                get { return is_disposed; }
-            }
+            public bool IsDisposed { get; private set; }
 
             public bool VSync
             {
@@ -88,17 +80,7 @@ namespace OpenTK
                 }
             }
 
-            public int SwapInterval
-            {
-                get
-                {
-                    return swap_interval;
-                }
-                set
-                {
-                    swap_interval = value;
-                }
-            }
+            public int SwapInterval { get; set; }
 
             public void Update(IWindowInfo window)
             {
@@ -126,13 +108,11 @@ namespace OpenTK
 
             public void Dispose()
             {
-                is_disposed = true;
+                IsDisposed = true;
             }
 
-            public ContextHandle Context
-            {
-                get { return handle; }
-            }
+            public ContextHandle Context { get; } = new ContextHandle(new IntPtr(
+                System.Threading.Interlocked.Increment(ref instance_count)));
 
             public IntPtr GetAddress(IntPtr function)
             {

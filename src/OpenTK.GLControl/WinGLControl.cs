@@ -78,19 +78,18 @@ namespace OpenTK
         static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, int flags);
 
         MSG msg = new MSG();
-        IWindowInfo window_info;
         GraphicsMode mode;
 
         public WinGLControl(GraphicsMode mode, Control control)
         {
             this.mode = mode;
 
-            window_info = Utilities.CreateWindowsWindowInfo(control.Handle);
+            WindowInfo = Utilities.CreateWindowsWindowInfo(control.Handle);
         }
 
         public IGraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
         {
-            return new GraphicsContext(mode, window_info, major, minor, flags);
+            return new GraphicsContext(mode, WindowInfo, major, minor, flags);
         }
 
         public bool IsIdle
@@ -98,13 +97,6 @@ namespace OpenTK
             get { return !PeekMessage(ref msg, IntPtr.Zero, 0, 0, 0); }
         }
 
-        public IWindowInfo WindowInfo
-        {
-            get
-            {
-                // This method forces the creation of the control. Beware of this side-effect!
-                return window_info;
-            }
-        }
+        public IWindowInfo WindowInfo { get; }
     }
 }

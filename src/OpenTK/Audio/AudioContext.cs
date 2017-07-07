@@ -41,7 +41,6 @@ namespace OpenTK.Audio
     {
         bool disposed;
         bool is_processing, is_synchronized;
-        IntPtr device_handle;
         ContextHandle context_handle;
         bool context_exists;
 
@@ -218,19 +217,19 @@ namespace OpenTK.Audio
             if (!String.IsNullOrEmpty(device))
             {
                 device_name = device;
-                device_handle = Alc.OpenDevice(device); // try to open device by name
+                Device = Alc.OpenDevice(device); // try to open device by name
             }
-            if (device_handle == IntPtr.Zero)
+            if (Device == IntPtr.Zero)
             {
                 device_name = "IntPtr.Zero (null string)";
-                device_handle = Alc.OpenDevice(null); // try to open unnamed default device
+                Device = Alc.OpenDevice(null); // try to open unnamed default device
             }
-            if (device_handle == IntPtr.Zero)
+            if (Device == IntPtr.Zero)
             {
                 device_name = AudioContext.DefaultDevice;
-                device_handle = Alc.OpenDevice(AudioContext.DefaultDevice); // try to open named default device
+                Device = Alc.OpenDevice(AudioContext.DefaultDevice); // try to open named default device
             }
-            if (device_handle == IntPtr.Zero)
+            if (Device == IntPtr.Zero)
             {
                 device_name = "None";
                 throw new AudioDeviceException(String.Format("Audio device '{0}' does not exist or is tied up by another application.",
@@ -257,7 +256,7 @@ namespace OpenTK.Audio
             attributes.Add((int)AlcContextAttributes.Sync);
             attributes.Add(sync ? 1 : 0);
 
-            if (enableEfx && Alc.IsExtensionPresent(device_handle, "ALC_EXT_EFX"))
+            if (enableEfx && Alc.IsExtensionPresent(Device, "ALC_EXT_EFX"))
             {
                 int num_slots;
                 switch (efxAuxiliarySends)
@@ -270,7 +269,7 @@ namespace OpenTK.Audio
                         break;
                     default:
                     case MaxAuxiliarySends.UseDriverDefault:
-                        Alc.GetInteger(device_handle, AlcGetInteger.EfxMaxAuxiliarySends, 1, out num_slots);
+                        Alc.GetInteger(Device, AlcGetInteger.EfxMaxAuxiliarySends, 1, out num_slots);
                         break;
                 }
 
@@ -279,11 +278,11 @@ namespace OpenTK.Audio
             }
             attributes.Add(0);
 
-            context_handle = Alc.CreateContext(device_handle, attributes.ToArray());
+            context_handle = Alc.CreateContext(Device, attributes.ToArray());
 
             if (context_handle == ContextHandle.Zero)
             {
-                Alc.CloseDevice(device_handle);
+                Alc.CloseDevice(Device);
                 throw new AudioContextException("The audio context could not be created with the specified parameters.");
             }
 
@@ -297,7 +296,7 @@ namespace OpenTK.Audio
 
             CheckErrors();
 
-            device_name = Alc.GetString(device_handle, AlcGetString.DeviceSpecifier);
+            device_name = Alc.GetString(Device, AlcGetString.DeviceSpecifier);
 
 
             lock (audio_context_lock)
@@ -356,7 +355,7 @@ namespace OpenTK.Audio
             }
         }
 
-        IntPtr Device { get { return device_handle; } }
+        private IntPtr Device { get; set; }
 
         /// <summary>
         /// Checks for ALC error conditions.
@@ -370,7 +369,7 @@ namespace OpenTK.Audio
             if (disposed)
                 throw new ObjectDisposedException(this.GetType().FullName);
 
-            new AudioDeviceErrorChecker(device_handle).Dispose();
+            new AudioDeviceErrorChecker(Device).Dispose();
         }
 
         /// <summary>
@@ -383,7 +382,7 @@ namespace OpenTK.Audio
                 if (disposed)
                     throw new ObjectDisposedException(this.GetType().FullName);
 
-                return Alc.GetError(device_handle);
+                return Alc.GetError(Device);
             }
         }
 
@@ -594,8 +593,8 @@ namespace OpenTK.Audio
                     Alc.DestroyContext(context_handle);
                 }
 
-                if (device_handle != IntPtr.Zero)
-                    Alc.CloseDevice(device_handle);
+                if (Device != IntPtr.Zero)
+                    Alc.CloseDevice(Device);
 
                 if (manual)
                 {
@@ -638,7 +637,7 @@ namespace OpenTK.Audio
         public override string ToString()
         {
             return String.Format("{0} (handle: {1}, device: {2})",
-                                 this.device_name, this.context_handle, this.device_handle);
+                                 this.device_name, this.context_handle, this.Device);
         }
     }
 }

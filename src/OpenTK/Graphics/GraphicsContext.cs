@@ -52,7 +52,7 @@ namespace OpenTK.Graphics
 
         IGraphicsContext implementation;  // The actual render context implementation for the underlying platform.
         bool disposed;
-        bool check_errors = true;
+
         // Cache for the context handle. We need this for RemoveContext()
         // in case the user does not call Dispose(). When this happens,
         // RemoveContext() is called by the finalizer, in which case
@@ -61,8 +61,6 @@ namespace OpenTK.Graphics
         // the handle.)
         ContextHandle handle_cached;
 
-        static bool share_contexts = true;
-        static bool direct_rendering = true;
         readonly static object SyncRoot = new object();
         // Maps OS-specific context handles to GraphicsContext instances.
         readonly static Dictionary<ContextHandle, IGraphicsContext> available_contexts =
@@ -172,7 +170,7 @@ namespace OpenTK.Graphics
                             GetCurrentContext = factory.CreateGetCurrentGraphicsContext();
                         }
 
-                        implementation = factory.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags);
+                        implementation = factory.CreateGLContext(mode, window, shareContext, DirectRendering, major, minor, flags);
                         handle_cached = ((IGraphicsContextInternal)implementation).Context;
                         factory.RegisterResource(this);
                     }
@@ -392,7 +390,7 @@ namespace OpenTK.Graphics
         /// false, new GLContexts will not share resources.</para>
         /// <para>Changing this value will not affect already created GLContexts.</para>
         /// </remarks>
-        public static bool ShareContexts { get { return share_contexts; } set { share_contexts = value; } }
+        public static bool ShareContexts { get; set; } = true;
 
         /// <summary>Gets or sets a System.Boolean, indicating whether GraphicsContexts will perform direct rendering.</summary>
         /// <remarks>
@@ -405,11 +403,7 @@ namespace OpenTK.Graphics
         /// This property is ignored on Operating Systems without support for indirect rendering, like Windows and OS X.
         /// </para>
         /// </remarks>
-        public static bool DirectRendering
-        {
-            get { return direct_rendering; }
-            set { direct_rendering = value; }
-        }
+        public static bool DirectRendering { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a System.Boolean, indicating whether automatic error checking should be performed.
@@ -417,11 +411,7 @@ namespace OpenTK.Graphics
         /// </summary>
         /// <remarks>Automatic error checking will clear the OpenGL error state. Set CheckErrors to false if you use
         /// the OpenGL error state in your code flow (e.g. for checking supported texture formats).</remarks>
-        public bool ErrorChecking
-        {
-            get { return check_errors; }
-            set { check_errors = value; }
-        }
+        public bool ErrorChecking { get; set; } = true;
 
         /// <summary>
         /// Swaps buffers on a context. This presents the rendered scene to the user.

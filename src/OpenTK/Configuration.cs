@@ -40,21 +40,17 @@ namespace OpenTK
     /// </summary>
     public sealed class Configuration
     {
-        static bool runningOnWindows, runningOnUnix, runningOnX11, runningOnMacOS, runningOnLinux;
-        static bool runningOnMono;
+        static bool runningOnUnix, runningOnMacOS, runningOnLinux;
         volatile static bool initialized;
         readonly static object InitLock = new object();
 
         Configuration() { }
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on a Windows platform.</summary>
-        public static bool RunningOnWindows { get { return runningOnWindows; } }
+        public static bool RunningOnWindows { get; private set; }
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on an X11 platform.</summary>
-        public static bool RunningOnX11
-        {
-            get { return runningOnX11; }
-        }
+        public static bool RunningOnX11 { get; private set; }
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether OpenTK is running on a Unix platform.
@@ -82,7 +78,7 @@ namespace OpenTK
         /// <summary>
         /// Gets a System.Boolean indicating whether OpenTK is running on the Mono runtime.
         /// </summary>
-        public static bool RunningOnMono { get { return runningOnMono; } }
+        public static bool RunningOnMono { get; private set; }
 
         /// <summary>
         /// Gets a <c>System.Boolean</c> indicating whether
@@ -287,9 +283,9 @@ namespace OpenTK
 #if ANDROID || IPHONE
                     runningOnMono = true;
 #else
-                    runningOnMono = DetectMono();
-                    runningOnWindows = DetectWindows();
-                    if (!runningOnWindows)
+                    RunningOnMono = DetectMono();
+                    RunningOnWindows = DetectWindows();
+                    if (!RunningOnWindows)
                     {
                         DetectUnix(out runningOnUnix, out runningOnLinux, out runningOnMacOS);
                     }
@@ -301,7 +297,7 @@ namespace OpenTK
 
                     if ((runningOnLinux && !RunningOnSdl2) || options.Backend == PlatformBackend.PreferX11)
                     {
-                        runningOnX11 = DetectX11();
+                        RunningOnX11 = DetectX11();
                     }
 
                     initialized = true;

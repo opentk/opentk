@@ -35,13 +35,12 @@ namespace OpenTK
 {
     class Sdl2GLControl : IGLControl
     {
-        IWindowInfo window_info;
         GraphicsMode mode;
 
         public Sdl2GLControl(GraphicsMode mode, Control control)
         {
             this.mode = mode;
-            window_info = Utilities.CreateSdl2WindowInfo(control.Handle);
+            WindowInfo = Utilities.CreateSdl2WindowInfo(control.Handle);
             // Fixme: SDL2 will refuse to create an OpenGL context on
             // a window with the SDL_WINDOW_FOREIGN flag (i.e. windows
             // that are passed to SDL2 through SDL_CreateWindowFrom).
@@ -50,7 +49,7 @@ namespace OpenTK
 
         public Graphics.IGraphicsContext CreateContext(int major, int minor, Graphics.GraphicsContextFlags flags)
         {
-            return new GraphicsContext(mode, window_info, major, minor, flags);
+            return new GraphicsContext(mode, WindowInfo, major, minor, flags);
         }
 
         public bool IsIdle
@@ -58,10 +57,7 @@ namespace OpenTK
             get { return NativeMethods.SDL_HasEvents(0, 0xffff); }
         }
 
-        public Platform.IWindowInfo WindowInfo
-        {
-            get { return window_info; }
-        }
+        public Platform.IWindowInfo WindowInfo { get; }
 
         static class NativeMethods
         {

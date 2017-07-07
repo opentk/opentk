@@ -40,7 +40,6 @@ namespace OpenTK.Input
         byte axis_count;
         byte button_count;
         byte hat_count;
-        bool is_connected;
 
         internal JoystickCapabilities(int axis_count, int button_count, int hat_count, bool is_connected)
         {
@@ -61,12 +60,12 @@ namespace OpenTK.Input
             this.axis_count = (byte)axis_count;
             this.button_count = (byte)button_count;
             this.hat_count = (byte)hat_count;
-            this.is_connected = is_connected;
+            this.IsConnected = is_connected;
         }
 
         internal void SetIsConnected(bool value)
         {
-            is_connected = value;
+            IsConnected = value;
         }
 
         /// <summary>
@@ -97,11 +96,7 @@ namespace OpenTK.Input
         /// Gets a value indicating whether this <see cref="JoystickDevice"/> is connected.
         /// </summary>
         /// <value><c>true</c> if this instance is connected; otherwise, <c>false</c>.</value>
-        public bool IsConnected
-        {
-            get { return is_connected; }
-            private set { is_connected = value; }
-        }
+        public bool IsConnected { get; private set; }
 
         /// <summary>
         /// Returns a <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.JoystickCapabilities"/>.

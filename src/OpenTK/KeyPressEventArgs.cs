@@ -33,8 +33,6 @@ namespace OpenTK
     /// </summary>
     public class KeyPressEventArgs : EventArgs
     {
-        char key_char;
-
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
@@ -47,10 +45,6 @@ namespace OpenTK
         /// <summary>
         /// Gets a <see cref="System.Char"/> that defines the ASCII character that was typed.
         /// </summary>
-        public char KeyChar
-        {
-            get { return key_char; }
-            internal set { key_char = value; }
-        }
+        public char KeyChar { get; internal set; }
     }
 }

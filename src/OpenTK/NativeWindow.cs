@@ -46,7 +46,7 @@ namespace OpenTK
 
         private readonly INativeWindow implementation;
 
-        private bool disposed, events;
+        private bool events;
         private bool cursor_visible = true;
         private bool previous_cursor_visible = true;
 
@@ -619,11 +619,7 @@ namespace OpenTK
         /// Gets or sets a <see cref="System.Boolean"/>, which indicates whether
         /// this instance has been disposed.
         /// </summary>
-        protected bool IsDisposed
-        {
-            get { return disposed; }
-            set { disposed = value; }
-        }
+        protected bool IsDisposed { get; set; }
 
         /// <summary>
         /// Called when the NativeWindow has closed.

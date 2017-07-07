@@ -39,7 +39,6 @@ namespace OpenTK.Input
         const int NumInts = ((int)Key.LastKey + IntSize - 1) / IntSize;
         // The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
         unsafe fixed int Keys[NumInts];
-        bool is_connected;
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the specified
@@ -131,11 +130,7 @@ namespace OpenTK.Input
         /// Gets a <see cref="System.Boolean"/> indicating whether this keyboard
         /// is connected.
         /// </summary>
-        public bool IsConnected
-        {
-            get { return is_connected; }
-            internal set { is_connected = value; }
-        }
+        public bool IsConnected { get; internal set; }
 
 #if false
         // Disabled until the correct cross-platform API can be determined.

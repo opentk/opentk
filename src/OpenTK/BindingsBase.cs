@@ -37,8 +37,6 @@ namespace OpenTK
     /// </summary>
     public abstract class BindingsBase
     {
-        bool rebuildExtensionList = true;
-
         /// <summary>
         /// Constructs a new BindingsBase instance.
         /// </summary>
@@ -49,11 +47,7 @@ namespace OpenTK
         /// <summary>
         /// Gets or sets a <see cref="System.Boolean"/> that indicates whether the list of supported extensions may have changed.
         /// </summary>
-        protected bool RebuildExtensionList
-        {
-            get { return rebuildExtensionList; }
-            set { rebuildExtensionList = value; }
-        }
+        protected bool RebuildExtensionList { get; set; } = true;
 
         /// <summary>
         /// Retrieves an unmanaged function pointer to the specified function.

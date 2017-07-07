@@ -40,9 +40,6 @@ namespace OpenTK.Platform.MacOS
     {
         static readonly IntPtr selContentView = Selector.Get("contentView");
 
-        IntPtr nsWindowRef;
-        IntPtr nsViewRef;
-
         bool disposed = false;
 
         /// <summary>
@@ -62,26 +59,26 @@ namespace OpenTK.Platform.MacOS
         /// <param name="nsViewRef">A valid NSView reference.</param>
         public CocoaWindowInfo(IntPtr nsWindowRef, IntPtr nsViewRef)
         {
-            this.nsWindowRef = nsWindowRef;
-            this.nsViewRef = nsViewRef;
+            this.Handle = nsWindowRef;
+            this.ViewHandle = nsViewRef;
             Cocoa.SendVoid(nsWindowRef, Selector.Retain);
         }
 
         /// <summary>
         /// Gets the window reference for this instance.
         /// </summary>
-        public IntPtr Handle { get { return nsWindowRef; } }
+        public IntPtr Handle { get; }
 
         /// <summary>
         /// Gets the view reference for this instance.
         /// </summary>
-        public IntPtr ViewHandle { get { return nsViewRef; } }
+        public IntPtr ViewHandle { get; }
 
         /// <summary>Returns a System.String that represents the current window.</summary>
         /// <returns>A System.String that represents the current window.</returns>
         public override string ToString()
         {
-            return String.Format("MacOS.CocoaWindowInfo: NSWindow {0}, NSView {1}", nsWindowRef, nsViewRef);
+            return String.Format("MacOS.CocoaWindowInfo: NSWindow {0}, NSView {1}", Handle, ViewHandle);
         }
 
         public void Dispose()
@@ -96,11 +93,11 @@ namespace OpenTK.Platform.MacOS
 
             if (disposing)
             {
-                Cocoa.SendVoid(nsWindowRef, Selector.Release);
+                Cocoa.SendVoid(Handle, Selector.Release);
             }
             else
             {
-                Debug.Print("CocoaWindowInfo:{0} leaked, did you forget to call Dispose()?", nsWindowRef);
+                Debug.Print("CocoaWindowInfo:{0} leaked, did you forget to call Dispose()?", Handle);
             }
 
             disposed = true;

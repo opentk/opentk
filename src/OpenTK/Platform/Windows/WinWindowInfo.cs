@@ -36,7 +36,6 @@ namespace OpenTK.Platform.Windows
     sealed class WinWindowInfo : IWindowInfo
     {
         IntPtr handle, dc;
-        WinWindowInfo parent;
         bool disposed;
 
         /// <summary>
@@ -54,7 +53,7 @@ namespace OpenTK.Platform.Windows
         public WinWindowInfo(IntPtr handle, WinWindowInfo parent)
         {
             this.handle = handle;
-            this.parent = parent;
+            this.Parent = parent;
         }
 
         /// <summary>
@@ -65,7 +64,7 @@ namespace OpenTK.Platform.Windows
         /// <summary>
         /// Gets or sets the Parent of the window (may be null).
         /// </summary>
-        public WinWindowInfo Parent { get { return parent; } set { parent = value; } }
+        public WinWindowInfo Parent { get; set; }
 
         /// <summary>
         /// Gets the device context for this window instance.
@@ -132,8 +131,8 @@ namespace OpenTK.Platform.Windows
 
                 if (manual)
                 {
-                    if (parent != null)
-                        parent.Dispose();
+                    if (Parent != null)
+                        Parent.Dispose();
                 }
 
                 disposed = true;

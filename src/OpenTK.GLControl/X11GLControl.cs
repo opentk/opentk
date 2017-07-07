@@ -53,7 +53,6 @@ namespace OpenTK
         }
 
         GraphicsMode mode;
-        IWindowInfo window_info;
         IntPtr display;
         IntPtr rootWindow;
 
@@ -92,7 +91,7 @@ namespace OpenTK
             rootWindow = (IntPtr)GetStaticFieldValue(xplatui, "RootWindow");
             int screen = (int)GetStaticFieldValue(xplatui, "ScreenNo");
 
-            window_info = Utilities.CreateX11WindowInfo(display, screen, control.Handle, rootWindow, IntPtr.Zero);
+            WindowInfo = Utilities.CreateX11WindowInfo(display, screen, control.Handle, rootWindow, IntPtr.Zero);
         }
 
         public IGraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
@@ -121,13 +120,7 @@ namespace OpenTK
             get { return XPending(display) == 0; }
         }
 
-        public IWindowInfo WindowInfo
-        {
-            get
-            {
-                return window_info;
-            }
-        }
+        public IWindowInfo WindowInfo { get; }
 
         static object GetStaticFieldValue(Type type, string fieldName)
         {

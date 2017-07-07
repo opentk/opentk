@@ -38,14 +38,13 @@ namespace OpenTK
     {
         GraphicsMode mode;
         Control control;
-        IWindowInfo window_info;
 
         internal CarbonGLControl(GraphicsMode mode, Control owner)
         {
             this.mode = mode;
             this.control = owner;
 
-            window_info = Utilities.CreateMacOSCarbonWindowInfo(control.Handle, false, true);
+            WindowInfo = Utilities.CreateMacOSCarbonWindowInfo(control.Handle, false, true);
         }
 
         private int GetXOffset()
@@ -82,12 +81,6 @@ namespace OpenTK
             }
         }
 
-        public IWindowInfo WindowInfo
-        {
-            get
-            {
-                return window_info;
-            }
-        }
+        public IWindowInfo WindowInfo { get; }
     }
 }

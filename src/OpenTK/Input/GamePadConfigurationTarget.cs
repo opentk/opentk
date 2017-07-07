@@ -31,7 +31,6 @@ namespace OpenTK.Input
 {
     struct GamePadConfigurationTarget
     {
-        ConfigurationType map_type;
         Nullable<Buttons> map_button;
         Nullable<GamePadAxes> map_axis;
 
@@ -49,11 +48,7 @@ namespace OpenTK.Input
             map_axis = axis;
         }
 
-        public ConfigurationType Type
-        {
-            get { return map_type; }
-            private set { map_type = value; }
-        }
+        public ConfigurationType Type { get; private set; }
 
         public GamePadAxes Axis
         {

@@ -33,10 +33,6 @@ namespace OpenTK.Input
     /// </summary>
     public abstract class JoystickDevice : IInputDevice
     {
-        int id;
-        string description;
-        JoystickAxisCollection axis_collection;
-        JoystickButtonCollection button_collection;
         JoystickMoveEventArgs move_args = new JoystickMoveEventArgs(0, 0, 0);
         JoystickButtonEventArgs button_args = new JoystickButtonEventArgs(0, false);
 
@@ -49,28 +45,24 @@ namespace OpenTK.Input
                 throw new ArgumentOutOfRangeException("buttons");
 
             Id = id;
-            axis_collection = new JoystickAxisCollection(axes);
-            button_collection = new JoystickButtonCollection(buttons);
+            Axis = new JoystickAxisCollection(axes);
+            Button = new JoystickButtonCollection(buttons);
         }
 
         /// <summary>
         /// Gets a JoystickAxisCollection containing the state of each axis on this instance. Values are normalized in the [-1, 1] range.
         /// </summary>
-        public JoystickAxisCollection Axis { get { return axis_collection; } }
+        public JoystickAxisCollection Axis { get; }
 
         /// <summary>
         /// Gets JoystickButtonCollection containing the state of each button on this instance. True indicates that the button is pressed.
         /// </summary>
-        public JoystickButtonCollection Button { get { return button_collection; } }
+        public JoystickButtonCollection Button { get; }
 
         /// <summary>
         /// Gets a System.String containing a unique description for this instance.
         /// </summary>
-        public string Description
-        {
-            get { return description; }
-            internal set { description = value; }
-        }
+        public string Description { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating the InputDeviceType of this InputDevice.
@@ -98,31 +90,27 @@ namespace OpenTK.Input
         public EventHandler<JoystickButtonEventArgs> ButtonUp =
             delegate(object sender, JoystickButtonEventArgs e) { };
 
-        internal int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
+        internal int Id { get; set; }
 
         internal void SetAxis(JoystickAxis axis, float @value)
         {
-            if ((int)axis < axis_collection.Count)
+            if ((int)axis < Axis.Count)
             {
                 move_args.Axis = axis;
                 move_args.Delta = move_args.Value - @value;
-                axis_collection[axis] = move_args.Value = @value;
+                Axis[axis] = move_args.Value = @value;
                 Move(this, move_args);
             }
         }
 
         internal void SetButton(int button, bool @value)
         {
-            if (button < button_collection.Count)
+            if (button < Button.Count)
             {
-                if (button_collection[button] != @value)
+                if (Button[button] != @value)
                 {
                     button_args.Button = button;
-                    button_collection[button] = button_args.Pressed = @value;
+                    Button[button] = button_args.Pressed = @value;
                     if (@value)
                         ButtonDown(this, button_args);
                     else
@@ -156,9 +144,6 @@ namespace OpenTK.Input
     /// </summary>
     public class JoystickButtonEventArgs : EventArgs
     {
-        int button;
-        bool pressed;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="JoystickButtonEventArgs"/> class.
         /// </summary>
@@ -166,19 +151,19 @@ namespace OpenTK.Input
         /// <param name="pressed">The current state of the button.</param>
         internal JoystickButtonEventArgs(int button, bool pressed)
         {
-            this.button = button;
-            this.pressed = pressed;
+            this.Button = button;
+            this.Pressed = pressed;
         }
 
         /// <summary>
         /// The index of the joystick button for the event.
         /// </summary>
-        public int Button { get { return this.button; } internal set { this.button = value; } }
+        public int Button { get; internal set; }
 
         /// <summary>
         /// Gets a System.Boolean representing the state of the button for the event.
         /// </summary>
-        public bool Pressed { get { return pressed; } internal set { this.pressed = value; } }
+        public bool Pressed { get; internal set; }
     }
 
     /// <summary>
@@ -187,10 +172,6 @@ namespace OpenTK.Input
     /// </summary>
     public class JoystickMoveEventArgs : JoystickEventArgs
     {
-        JoystickAxis axis;
-        float value;
-        float delta;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="JoystickMoveEventArgs"/> class.
         /// </summary>
@@ -199,25 +180,25 @@ namespace OpenTK.Input
         /// <param name="delta">The relative change in value of the joystick axis.</param>
         public JoystickMoveEventArgs(JoystickAxis axis, float value, float delta)
         {
-            this.axis = axis;
-            this.value = value;
-            this.delta = delta;
+            this.Axis = axis;
+            this.Value = value;
+            this.Delta = delta;
         }
 
         /// <summary>
         /// Gets a System.Int32 representing the index of the axis that was moved.
         /// </summary>
-        public JoystickAxis Axis { get { return axis; } internal set { this.axis = value; } }
+        public JoystickAxis Axis { get; internal set; }
 
         /// <summary>
         /// Gets a System.Single representing the absolute position of the axis.
         /// </summary>
-        public float Value { get { return value; } internal set { this.value = value; } }
+        public float Value { get; internal set; }
 
         /// <summary>
         /// Gets a System.Single representing the relative change in the position of the axis.
         /// </summary>
-        public float Delta { get { return delta; } internal set { this.delta = value; } }
+        public float Delta { get; internal set; }
     }
 
     /// <summary>

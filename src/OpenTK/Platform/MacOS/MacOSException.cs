@@ -31,30 +31,25 @@ namespace OpenTK.Platform.MacOS
 {
     internal class MacOSException : Exception
     {
-        OSStatus errorCode;
-
         public MacOSException()
         {}
         public MacOSException(OSStatus errorCode)
             : base("Error Code " + ((int)errorCode).ToString() + ": " + errorCode.ToString())
         {
-            this.errorCode = errorCode;
+            this.ErrorCode = errorCode;
         }
         public MacOSException(OSStatus errorCode, string message)
             : base(message)
         {
-            this.errorCode = errorCode;
+            this.ErrorCode = errorCode;
         }
         internal MacOSException(int errorCode, string message)
             : base(message)
         {
-            this.errorCode = (OSStatus)errorCode;
+            this.ErrorCode = (OSStatus)errorCode;
         }
 
-        public OSStatus ErrorCode
-        {
-            get { return errorCode; }
-        }
+        public OSStatus ErrorCode { get; }
     }
 
     internal enum OSStatus

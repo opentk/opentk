@@ -12,8 +12,6 @@ namespace Bind.Structures
 {
     class Function : Delegate, IEquatable<Function>, IComparable<Function>
     {
-        Delegate wrapped_delegate;
-
         public Function(Delegate d)
             : base(d)
         {
@@ -34,11 +32,7 @@ namespace Bind.Structures
             Body.AddRange(f.Body);
         }
 
-        public Delegate WrappedDelegate
-        {
-            get { return wrapped_delegate; }
-            set { wrapped_delegate = value; }
-        }
+        public Delegate WrappedDelegate { get; set; }
 
         public void TurnVoidPointersToIntPtr()
         {
@@ -60,13 +54,7 @@ namespace Bind.Structures
             }
         }
 
-        FunctionBody _body;
-
-        public FunctionBody Body
-        {
-            get { return _body; }
-            set { _body = value; }
-        }
+        public FunctionBody Body { get; set; }
 
         public string TrimmedName { get; set; }
 

@@ -41,33 +41,27 @@ namespace OpenTK.Platform.MacOS
     // However, NSFloat is used internally in places where this precision loss does not matter.
     struct NSFloat
     {
-        IntPtr value;
+        private IntPtr _value;
 
         public IntPtr Value
         {
-            get
-            {
-                return value;
-            }
-            set
-            {
-                this.value = value;
-            }
+            get { return _value; }
+            set { _value = value; }
         }
 
         public static implicit operator NSFloat(float v)
         {
-            NSFloat f;
+            NSFloat f = new NSFloat();
             unsafe
             {
                 if (IntPtr.Size == 4)
                 {
-                    f.value = *(IntPtr*)&v;
+                    f.Value = *(IntPtr*)&v;
                 }
                 else
                 {
                     double d = v;
-                    f.value = *(IntPtr*)&d;
+                    f.Value = *(IntPtr*)&d;
                 }
             }
             return f;
@@ -75,17 +69,17 @@ namespace OpenTK.Platform.MacOS
 
         public static implicit operator NSFloat(double v)
         {
-            NSFloat f;
+            NSFloat f = new NSFloat();
             unsafe
             {
                 if (IntPtr.Size == 4)
                 {
                     float fv = (float)v;
-                    f.value = *(IntPtr*)&fv;
+                    f.Value = *(IntPtr*)&fv;
                 }
                 else
                 {
-                    f.value = *(IntPtr*)&v;
+                    f.Value = *(IntPtr*)&v;
                 }
             }
             return f;
@@ -97,11 +91,11 @@ namespace OpenTK.Platform.MacOS
             {
                 if (IntPtr.Size == 4)
                 {
-                    return *(float*)&f.value;
+                    return *(float*)f._value;
                 }
                 else
                 {
-                    return (float)*(double*)&f.value;
+                    return (float)*(double*)&f._value;
                 }
             }
         }
@@ -112,11 +106,11 @@ namespace OpenTK.Platform.MacOS
             {
                 if (IntPtr.Size == 4)
                 {
-                    return (double)*(float*)&f.value;
+                    return (double)*(float*)&f._value;
                 }
                 else
                 {
-                    return *(double*)&f.value;
+                    return *(double*)&f._value;
                 }
             }
         }

@@ -14,10 +14,7 @@ namespace OpenTK.Graphics
     /// <summary>Defines the format for graphics operations.</summary>
     public class GraphicsMode : IEquatable<GraphicsMode>
     {
-        ColorFormat color_format, accumulator_format;
-        int depth, stencil, buffers, samples;
-        bool stereo;
-        IntPtr? index = null;  // The id of the pixel format or visual.
+        int samples;
 
         static GraphicsMode defaultMode;
         static readonly object SyncRoot = new object();
@@ -116,64 +113,29 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets a nullable <see cref="System.IntPtr"/> value, indicating the platform-specific index for this GraphicsMode.
         /// </summary>
-        public IntPtr? Index
-        {
-            get
-            {
-                return index;
-            }
-            set { index = value; }
-        }
+        public IntPtr? Index { get; set; } = null;
 
         /// <summary>
         /// Gets an OpenTK.Graphics.ColorFormat that describes the color format for this GraphicsFormat.
         /// </summary>
-        public ColorFormat ColorFormat
-        {
-            get
-            {
-                return color_format;
-            }
-            private set { color_format = value; }
-        }
+        public ColorFormat ColorFormat { get; private set; }
 
         /// <summary>
         /// Gets an OpenTK.Graphics.ColorFormat that describes the accumulator format for this GraphicsFormat.
         /// </summary>
-        public ColorFormat AccumulatorFormat
-        {
-            get
-            {
-                return accumulator_format;
-            }
-            private set { accumulator_format = value; }
-        }
+        public ColorFormat AccumulatorFormat { get; private set; }
 
         /// <summary>
         /// Gets a System.Int32 that contains the bits per pixel for the depth buffer
         /// for this GraphicsFormat.
         /// </summary>
-        public int Depth
-        {
-            get
-            {
-                return depth;
-            }
-            private set { depth = value; }
-        }
+        public int Depth { get; private set; }
 
         /// <summary>
         /// Gets a System.Int32 that contains the bits per pixel for the stencil buffer
         /// of this GraphicsFormat.
         /// </summary>
-        public int Stencil
-        {
-            get
-            {
-                return stencil;
-            }
-            private set { stencil = value; }
-        }
+        public int Stencil { get; private set; }
 
         /// <summary>
         /// Gets a System.Int32 that contains the number of FSAA samples per pixel for this GraphicsFormat.
@@ -197,27 +159,13 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets a System.Boolean indicating whether this DisplayMode is stereoscopic.
         /// </summary>
-        public bool Stereo
-        {
-            get
-            {
-                return stereo;
-            }
-            private set { stereo = value; }
-        }
+        public bool Stereo { get; private set; }
 
         /// <summary>
         /// Gets a System.Int32 containing the number of buffers associated with this
         /// DisplayMode.
         /// </summary>
-        public int Buffers
-        {
-            get
-            {
-                return buffers;
-            }
-            private set { buffers = value; }
-        }
+        public int Buffers { get; private set; }
 
         /// <summary>Returns an OpenTK.GraphicsFormat compatible with the underlying platform.</summary>
         public static GraphicsMode Default

@@ -45,12 +45,8 @@ namespace OpenTK.Platform.MacOS
     /// </summary>
     class AglContext : IGraphicsContext, IGraphicsContextInternal
     {
-        ContextHandle Handle;
-        GraphicsMode mode;
         IWindowInfo carbonWindow;
         IGraphicsContext dummyContext; // for extension loading
-        bool disposed;
-        bool error_checking;
 
         readonly GetInt XOffset;
         readonly GetInt YOffset;
@@ -69,7 +65,7 @@ namespace OpenTK.Platform.MacOS
 
             if (shareContext is AglContext)
             {
-                shareContextRef = ((AglContext)shareContext).Handle.Handle;
+                shareContextRef = ((AglContext)shareContext).Context.Handle;
             }
             else if (shareContext is GraphicsContext)
             {
@@ -116,7 +112,7 @@ namespace OpenTK.Platform.MacOS
 
             Debug.Print("Creating AGL context.  Sharing with {0}", shareContextRef);
             // create the context and share it with the share reference.
-            Handle = new ContextHandle(Agl.aglCreateContext(pixelformat, shareContextRef));
+            Context = new ContextHandle(Agl.aglCreateContext(pixelformat, shareContextRef));
             MyAGLReportError("aglCreateContext");
 
             // Free the pixel format from memory.
@@ -128,9 +124,9 @@ namespace OpenTK.Platform.MacOS
             Update(carbonWindow);
 
             MakeCurrent(carbonWindow);
-            Debug.Print("context: {0}", Handle.Handle);
+            Debug.Print("context: {0}", Context.Handle);
 
-            dummyContext = new GraphicsContext(Handle,
+            dummyContext = new GraphicsContext(Context,
                 GetAddress,
                 delegate()
                 {
@@ -157,10 +153,10 @@ namespace OpenTK.Platform.MacOS
             glrect[2] = rect.Width;
             glrect[3] = rect.Height;
 
-            Agl.aglSetInteger(Handle.Handle, Agl.ParameterNames.AGL_BUFFER_RECT, glrect);
+            Agl.aglSetInteger(Context.Handle, Agl.ParameterNames.AGL_BUFFER_RECT, glrect);
             MyAGLReportError("aglSetInteger");
 
-            Agl.aglEnable(Handle.Handle, Agl.ParameterNames.AGL_BUFFER_RECT);
+            Agl.aglEnable(Context.Handle, Agl.ParameterNames.AGL_BUFFER_RECT);
             MyAGLReportError("aglEnable");
         }
 
@@ -168,7 +164,7 @@ namespace OpenTK.Platform.MacOS
         {
             IntPtr windowPort = GetWindowPortForWindowInfo(carbonWindow);
             //Debug.Print("Setting drawable for context {0} to window port: {1}", Handle.Handle, windowPort);
-            Agl.aglSetDrawable(Handle.Handle, windowPort);
+            Agl.aglSetDrawable(Context.Handle, windowPort);
             MyAGLReportError("aglSetDrawable");
         }
 
@@ -186,7 +182,7 @@ namespace OpenTK.Platform.MacOS
             SetDrawable(window);
             SetBufferRect(window);
 
-            Agl.aglUpdateContext(Handle.Handle);
+            Agl.aglUpdateContext(Context.Handle);
         }
 
         void MyAGLReportError(string function)
@@ -212,19 +208,19 @@ namespace OpenTK.Platform.MacOS
                 Update(carbonWindow);
             }
 
-            Agl.aglSwapBuffers(Handle.Handle);
+            Agl.aglSwapBuffers(Context.Handle);
             MyAGLReportError("aglSwapBuffers");
         }
 
         public void MakeCurrent(IWindowInfo window)
         {
-            if (Agl.aglSetCurrentContext(Handle.Handle) == false)
+            if (Agl.aglSetCurrentContext(Context.Handle) == false)
                 MyAGLReportError("aglSetCurrentContext");
         }
 
         public bool IsCurrent
         {
-            get { return (Handle.Handle == Agl.aglGetCurrentContext()); }
+            get { return (Context.Handle == Agl.aglGetCurrentContext()); }
         }
 
         public int SwapInterval
@@ -232,7 +228,7 @@ namespace OpenTK.Platform.MacOS
             get
             {
                 int swap_interval = 0;
-                if (Agl.aglGetInteger(Handle.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, out swap_interval))
+                if (Agl.aglGetInteger(Context.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, out swap_interval))
                 {
                     return swap_interval;
                 }
@@ -244,36 +240,19 @@ namespace OpenTK.Platform.MacOS
             }
             set
             {
-                if (!Agl.aglSetInteger(Handle.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, ref value))
+                if (!Agl.aglSetInteger(Context.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, ref value))
                     MyAGLReportError("aglSetInteger");
             }
         }
 
-        public GraphicsMode Mode
-        {
-            get
-            {
-                return mode;
-            }
-            set
-            {
-                mode = value;
-            }
-
-        }
+        public GraphicsMode Mode { get; set; }
 
         public void LoadAll()
         {
             dummyContext.LoadAll();
         }
 
-        public bool IsDisposed
-        {
-            get
-            {
-                return disposed;
-            }
-        }
+        public bool IsDisposed { get; private set; }
 
         public bool VSync
         {
@@ -291,21 +270,11 @@ namespace OpenTK.Platform.MacOS
         {
             get
             {
-                return mode;
+                return Mode;
             }
         }
 
-        public bool ErrorChecking
-        {
-            get
-            {
-                return error_checking;
-            }
-            set
-            {
-                error_checking = value;
-            }
-        }
+        public bool ErrorChecking { get; set; }
 
         ~AglContext()
         {
@@ -319,7 +288,7 @@ namespace OpenTK.Platform.MacOS
 
         void Dispose(bool disposing)
         {
-            if (IsDisposed || Handle.Handle == IntPtr.Zero)
+            if (IsDisposed || Context.Handle == IntPtr.Zero)
                 return;
 
             Debug.Print("Disposing of AGL context.");
@@ -335,10 +304,10 @@ namespace OpenTK.Platform.MacOS
             // Actually, it seems to crash the mono runtime. -AMK 2013
 
             Debug.Print("Destroying context");
-            if (Agl.aglDestroyContext(Handle.Handle) == true)
+            if (Agl.aglDestroyContext(Context.Handle) == true)
             {
                 Debug.Print("Context destruction completed successfully.");
-                Handle = ContextHandle.Zero;
+                Context = ContextHandle.Zero;
                 return;
             }
 
@@ -352,7 +321,7 @@ namespace OpenTK.Platform.MacOS
                 throw new Exception(Agl.ErrorString(Agl.GetError()));
             }
 
-            disposed = true;
+            IsDisposed = true;
         }
 
         public IntPtr GetAddress(string function)
@@ -373,12 +342,6 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public ContextHandle Context
-        {
-            get
-            {
-                return Handle;
-            }
-        }
+        public ContextHandle Context { get; private set; }
     }
 }
