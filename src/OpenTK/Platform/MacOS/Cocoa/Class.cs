@@ -31,7 +31,7 @@ using System.Collections.Generic;
 
 namespace OpenTK.Platform.MacOS
 {
-    static class Class
+    internal static class Class
     {
         public static readonly IntPtr NSAutoreleasePool = Get("NSAutoreleasePool");
         public static readonly IntPtr NSDictionary = Get("NSDictionary");
@@ -39,22 +39,22 @@ namespace OpenTK.Platform.MacOS
         public static readonly IntPtr NSUserDefaults = Get("NSUserDefaults");
 
         [DllImport (Cocoa.LibObjC)]
-        extern static IntPtr class_getName(IntPtr handle);
+        private extern static IntPtr class_getName(IntPtr handle);
 
         [DllImport (Cocoa.LibObjC)]
-        extern static bool class_addMethod(IntPtr classHandle, IntPtr selector, IntPtr method, string types);
+        private extern static bool class_addMethod(IntPtr classHandle, IntPtr selector, IntPtr method, string types);
 
         [DllImport (Cocoa.LibObjC)]
-        extern static IntPtr objc_getClass(string name);
+        private extern static IntPtr objc_getClass(string name);
 
         [DllImport (Cocoa.LibObjC)]
-        extern static IntPtr objc_allocateClassPair(IntPtr parentClass, string name, int extraBytes);
+        private extern static IntPtr objc_allocateClassPair(IntPtr parentClass, string name, int extraBytes);
 
         [DllImport (Cocoa.LibObjC)]
-        extern static void objc_registerClassPair(IntPtr classToRegister);
+        private extern static void objc_registerClassPair(IntPtr classToRegister);
 
         [DllImport (Cocoa.LibObjC)]
-        extern static void objc_disposeClassPair(IntPtr cls);
+        private extern static void objc_disposeClassPair(IntPtr cls);
 
         public static IntPtr Get(string name)
         {

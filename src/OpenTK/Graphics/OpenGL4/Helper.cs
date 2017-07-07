@@ -38,12 +38,12 @@ namespace OpenTK.Graphics.OpenGL4
     /// </summary>
     public sealed partial class GL : GraphicsBindingsBase
     {
-        const string Library = "opengl32.dll";
-        static readonly object sync_root = new object();
+        private const string Library = "opengl32.dll";
+        private static readonly object sync_root = new object();
 
-        static IntPtr[] EntryPoints;
-        static byte[] EntryPointNames;
-        static int[] EntryPointNameOffsets;
+        private static IntPtr[] EntryPoints;
+        private static byte[] EntryPointNames;
+        private static int[] EntryPointNameOffsets;
 
         /// <summary>
         /// Constructs a new instance.

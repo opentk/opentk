@@ -33,13 +33,13 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Linux
 {
-    struct AxisInfo
+    internal struct AxisInfo
     {
         public int Axis;
         public InputAbsInfo Info;
     }
 
-    class LinuxJoystickDetails
+    internal class LinuxJoystickDetails
     {
         public Guid Guid;
         public string Name;
@@ -62,23 +62,23 @@ namespace OpenTK.Platform.Linux
         };
     }
 
-    sealed class LinuxJoystick : IJoystickDriver2
+    internal sealed class LinuxJoystick : IJoystickDriver2
     {
-        static readonly HatPosition[,] HatPositions = new HatPosition[,]
+        private static readonly HatPosition[,] HatPositions = new HatPosition[,]
         {
             { HatPosition.UpLeft, HatPosition.Up, HatPosition.UpRight },
             { HatPosition.Left, HatPosition.Centered, HatPosition.Right },
             { HatPosition.DownLeft, HatPosition.Down, HatPosition.DownRight }
         };
 
-        readonly object sync = new object();
+        private readonly object sync = new object();
 
-        readonly FileSystemWatcher watcher = new FileSystemWatcher();
+        private readonly FileSystemWatcher watcher = new FileSystemWatcher();
 
-        readonly DeviceCollection<LinuxJoystickDetails> Sticks =
+        private readonly DeviceCollection<LinuxJoystickDetails> Sticks =
             new DeviceCollection<LinuxJoystickDetails>();
 
-        bool disposed;
+        private bool disposed;
 
         public LinuxJoystick()
         {
@@ -99,7 +99,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void OpenJoysticks(string path)
+        private void OpenJoysticks(string path)
         {
             lock (sync)
             {
@@ -114,7 +114,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        int GetJoystickNumber(string path)
+        private int GetJoystickNumber(string path)
         {
             const string evdev = "event";
             if (path.StartsWith(evdev))
@@ -128,7 +128,7 @@ namespace OpenTK.Platform.Linux
             return -1;
         }
 
-        void JoystickAdded(object sender, FileSystemEventArgs e)
+        private void JoystickAdded(object sender, FileSystemEventArgs e)
         {
             lock (sync)
             {
@@ -136,7 +136,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void JoystickRemoved(object sender, FileSystemEventArgs e)
+        private void JoystickRemoved(object sender, FileSystemEventArgs e)
         {
             lock (sync)
             {
@@ -153,7 +153,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        Guid CreateGuid(EvdevInputId id, string name)
+        private Guid CreateGuid(EvdevInputId id, string name)
         {
             // Note: the first 8bytes of the Guid are byteswapped
             // in three parts when using `new Guid(byte[])`:
@@ -199,14 +199,14 @@ namespace OpenTK.Platform.Linux
             return new Guid(bytes);
         }
 
-        unsafe static bool TestBit(byte* ptr, int bit)
+        private unsafe static bool TestBit(byte* ptr, int bit)
         {
             int byte_offset = bit / 8;
             int bit_offset = bit % 8;
             return (*(ptr + byte_offset) & (1 << bit_offset)) != 0;
         }
 
-        unsafe static void QueryCapabilities(LinuxJoystickDetails stick,
+        private unsafe static void QueryCapabilities(LinuxJoystickDetails stick,
             byte* axisbit, int axisbytes,
             byte* keybit, int keybytes,
             out int axes, out int buttons, out int hats)
@@ -255,7 +255,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        LinuxJoystickDetails OpenJoystick(string path)
+        private LinuxJoystickDetails OpenJoystick(string path)
         {
             LinuxJoystickDetails stick = null;
 
@@ -337,7 +337,7 @@ namespace OpenTK.Platform.Linux
             return stick;
         }
 
-        void CloseJoystick(LinuxJoystickDetails js)
+        private void CloseJoystick(LinuxJoystickDetails js)
         {
             Sticks.Remove(js.FileDescriptor);
 
@@ -347,12 +347,12 @@ namespace OpenTK.Platform.Linux
             js.Caps = new JoystickCapabilities();
         }
 
-        JoystickHatState TranslateHat(int x, int y)
+        private JoystickHatState TranslateHat(int x, int y)
         {
             return new JoystickHatState(HatPositions[x, y]);
         }
 
-        void PollJoystick(LinuxJoystickDetails js)
+        private void PollJoystick(LinuxJoystickDetails js)
         {
             unsafe
             {
@@ -444,8 +444,8 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        static readonly string JoystickPath = "/dev/input";
-        static readonly string JoystickPathLegacy = "/dev";
+        private static readonly string JoystickPath = "/dev/input";
+        private static readonly string JoystickPathLegacy = "/dev";
 
         public void Dispose()
         {
@@ -453,7 +453,7 @@ namespace OpenTK.Platform.Linux
             GC.SuppressFinalize(this);
         }
 
-        void Dispose(bool manual)
+        private void Dispose(bool manual)
         {
             if (!disposed)
             {

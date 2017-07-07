@@ -15,7 +15,7 @@ namespace OpenTK
     /// </summary>
     public struct ContextHandle : IComparable<ContextHandle>, IEquatable<ContextHandle>
     {
-        IntPtr handle;
+        private IntPtr handle;
 
         /// <summary>
         /// Gets a System.IntPtr that represents the handle of this ContextHandle.

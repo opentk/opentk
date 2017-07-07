@@ -31,7 +31,7 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.MacOS
 {
-    class AglGraphicsMode
+    internal class AglGraphicsMode
     {
         public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil,
             int samples, ColorFormat accum, int buffers, bool stereo, out IntPtr pixelformat)
@@ -56,7 +56,7 @@ namespace OpenTK.Platform.MacOS
             return GetGraphicsModeFromPixelFormat(pixelformat);
         }
 
-        static bool RelaxGraphicsMode(ref ColorFormat color, ref int depth, ref int stencil, ref int samples, ref ColorFormat accum, ref int buffers, ref bool stereo)
+        private static bool RelaxGraphicsMode(ref ColorFormat color, ref int depth, ref int stencil, ref int samples, ref ColorFormat accum, ref int buffers, ref bool stereo)
         {
             // Parameters are relaxed in order of importance.
             // - Accumulator buffers are way outdated as a concept,
@@ -124,7 +124,7 @@ namespace OpenTK.Platform.MacOS
             return false;
         }
 
-        GraphicsMode GetGraphicsModeFromPixelFormat(IntPtr pixelformat)
+        private GraphicsMode GetGraphicsModeFromPixelFormat(IntPtr pixelformat)
         {
             int r, g, b, a;
             Agl.aglDescribePixelFormat(pixelformat, Agl.PixelFormatAttribute.AGL_RED_SIZE, out r);
@@ -147,7 +147,7 @@ namespace OpenTK.Platform.MacOS
                 depth, stencil, samples, new ColorFormat(ar, ag, ab, aa), buffers + 1, stereo != 0);
         }
 
-        IntPtr SelectPixelFormat(ColorFormat color, int depth, int stencil, int samples,
+        private IntPtr SelectPixelFormat(ColorFormat color, int depth, int stencil, int samples,
             ColorFormat accum, int buffers, bool stereo)
         {
             List<int> attribs = new List<int>();

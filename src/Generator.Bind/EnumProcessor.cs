@@ -35,12 +35,12 @@ using Enum = Bind.Structures.Enum;
 
 namespace Bind
 {
-    class EnumProcessor
+    internal class EnumProcessor
     {
-        readonly IEnumerable<string> Overrides;
+        private readonly IEnumerable<string> Overrides;
 
-        IBind Generator { get; set; }
-        Settings Settings { get { return Generator.Settings; } }
+        private IBind Generator { get; set; }
+        private Settings Settings { get { return Generator.Settings; } }
 
         public EnumProcessor(IBind generator, IEnumerable<string> overrides)
         {
@@ -85,7 +85,7 @@ namespace Bind
             return path.ToString();
         }
 
-        EnumCollection ProcessNames(EnumCollection enums, XPathNavigator nav, string apiname)
+        private EnumCollection ProcessNames(EnumCollection enums, XPathNavigator nav, string apiname)
         {
             EnumCollection processed_enums = new EnumCollection();
             foreach (var e in enums.Values)
@@ -121,7 +121,7 @@ namespace Bind
             return processed_enums;
         }
 
-        static string ReplaceName(XPathNavigator nav, string apiname, string name)
+        private static string ReplaceName(XPathNavigator nav, string apiname, string name)
         {
             var enum_override = nav.SelectSingleNode(GetOverridesPath(apiname, name));
             if (enum_override != null)
@@ -135,7 +135,7 @@ namespace Bind
             return name;
         }
 
-        static bool IsAlreadyProcessed(string name)
+        private static bool IsAlreadyProcessed(string name)
         {
             string extension = Utilities.GetExtension(name, true);
             bool unprocessed = false;
@@ -225,7 +225,7 @@ namespace Bind
             return name;
         }
 
-        EnumCollection ProcessConstants(EnumCollection enums, XPathNavigator nav, string apiname)
+        private EnumCollection ProcessConstants(EnumCollection enums, XPathNavigator nav, string apiname)
         {
             foreach (var e in enums.Values)
             {
@@ -258,7 +258,7 @@ namespace Bind
             return enums;
         }
 
-        static void ReplaceConstant(XPathNavigator enum_override, Constant c)
+        private static void ReplaceConstant(XPathNavigator enum_override, Constant c)
         {
             if (enum_override != null)
             {
@@ -362,7 +362,7 @@ namespace Bind
         // (e.g. FOG_COORD_ARRAY_TYPE = GL_FOG_COORDINATE_ARRAY_TYPE)
         // In this case try searching all enums for the correct constant to alias (stupid opengl specs).
         // This turns every bare alias into a normal alias that is processed afterwards.
-        static void ResolveBareAlias(Constant c, EnumCollection enums)
+        private static void ResolveBareAlias(Constant c, EnumCollection enums)
         {
             // Constants are considered bare aliases when they don't have a reference and
             // their values are non-numeric.
@@ -383,7 +383,7 @@ namespace Bind
         // Resolve 'use' tokens by searching and replacing the correct
         // value from the enum collection.
         // Tokens that can't be resolved are removed.
-        static void ResolveAliases(Enum e, EnumCollection enums)
+        private static void ResolveAliases(Enum e, EnumCollection enums)
         {
             // Note that we have the removal must be a separate step, since
             // we cannot modify a collection while iterating with foreach.
@@ -397,7 +397,7 @@ namespace Bind
             }
         }
 
-        static bool IsValue(string test)
+        private static bool IsValue(string test)
         {
             // Check if the result is a number.
             long number;

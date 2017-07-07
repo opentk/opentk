@@ -33,9 +33,9 @@ using OpenTK.Platform;
 
 namespace OpenTK
 {
-    class WinGLControl : IGLControl
+    internal class WinGLControl : IGLControl
     {
-        struct MSG
+        private struct MSG
         {
             public IntPtr HWnd;
             public uint Message;
@@ -51,7 +51,7 @@ namespace OpenTK
             }
         }
 
-        struct POINT
+        private struct POINT
         {
             public int X;
             public int Y;
@@ -75,10 +75,10 @@ namespace OpenTK
 
         [System.Security.SuppressUnmanagedCodeSecurity]
         [System.Runtime.InteropServices.DllImport("User32.dll")]
-        static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, int flags);
+        private static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, int flags);
 
-        MSG msg = new MSG();
-        GraphicsMode mode;
+        private MSG msg = new MSG();
+        private GraphicsMode mode;
 
         public WinGLControl(GraphicsMode mode, Control control)
         {

@@ -33,7 +33,7 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Common
 {
-    class HidHelper
+    internal class HidHelper
     {
         /// <summary>
         /// Scales the specified value linearly between min and max.
@@ -100,7 +100,7 @@ namespace OpenTK.Platform.Common
         }
     }
 
-    enum HIDPage : ushort
+    internal enum HIDPage : ushort
     {
         Undefined = 0x00,
         GenericDesktop = 0x01,
@@ -140,13 +140,13 @@ namespace OpenTK.Platform.Common
     }
 
     // Consumer electronic devices
-    enum HIDUsageCD
+    internal enum HIDUsageCD
     {
         ACPan = 0x0238
     }
 
     // Generic desktop usage
-    enum HIDUsageGD : ushort
+    internal enum HIDUsageGD : ushort
     {
         Pointer = 0x01, // Physical Collection
         Mouse = 0x02, // Application Collection
@@ -204,7 +204,7 @@ namespace OpenTK.Platform.Common
         Reserved = 0xFFFF
     }
 
-    enum HIDUsageSim : ushort
+    internal enum HIDUsageSim : ushort
     {
         FlightSimulationDevice = 0x01, // Application Collection
         AutomobileSimulationDevice = 0x02, //             Application Collection

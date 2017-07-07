@@ -15,15 +15,15 @@ namespace OpenTK.Platform.Windows
 {
     internal partial class Wgl
     {
-        static IntPtr[] EntryPoints;
-        static string[] EntryPointNames;
+        private static IntPtr[] EntryPoints;
+        private static string[] EntryPointNames;
 
         internal const string Library = "OPENGL32.DLL";
 
-        readonly static Dictionary<string, bool> extensions =
+        private readonly static Dictionary<string, bool> extensions =
             new Dictionary<string, bool>();
 
-        static readonly object sync = new object();
+        private static readonly object sync = new object();
 
         public Wgl()
         {
@@ -92,12 +92,12 @@ namespace OpenTK.Platform.Windows
             return false;
         }
 
-        object SyncRoot
+        private object SyncRoot
         {
             get { return sync; }
         }
 
-        IntPtr GetAddress(string function_string)
+        private IntPtr GetAddress(string function_string)
         {
             IntPtr address = Wgl.GetProcAddress(function_string);
             if (!IsValid(address))
@@ -107,7 +107,7 @@ namespace OpenTK.Platform.Windows
             return address;
         }
 
-        static bool IsValid(IntPtr address)
+        private static bool IsValid(IntPtr address)
         {
             // See https://www.opengl.org/wiki/Load_OpenGL_Functions
             long a = address.ToInt64();

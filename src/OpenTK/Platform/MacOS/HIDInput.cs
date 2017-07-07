@@ -51,9 +51,9 @@ namespace OpenTK.Platform.MacOS
 
     // Requires Mac OS X 10.5 or higher.
     // Todo: create a driver for older installations. Maybe use CGGetLastMouseDelta for that?
-    class HIDInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2, IJoystickDriver2
+    internal class HIDInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2, IJoystickDriver2
     {
-        class MouseData
+        private class MouseData
         {
             public IntPtr Id;
             public MouseState State;
@@ -64,7 +64,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        class KeyboardData
+        private class KeyboardData
         {
             public IntPtr Id;
             public KeyboardState State;
@@ -75,7 +75,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        class JoystickData
+        private class JoystickData
         {
             public IntPtr Id;
             public string Name;
@@ -107,7 +107,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        class JoystickElement : IComparable<JoystickElement>, IEquatable<JoystickElement>
+        private class JoystickElement : IComparable<JoystickElement>, IEquatable<JoystickElement>
         {
             public IntPtr Element;
             public IntPtr Cookie;
@@ -149,36 +149,39 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        IOHIDManagerRef hidmanager;
+        private IOHIDManagerRef hidmanager;
 
-        readonly DeviceCollection<MouseData> MouseDevices =
+        private readonly DeviceCollection<MouseData> MouseDevices =
             new DeviceCollection<MouseData>();
-        readonly DeviceCollection<KeyboardData> KeyboardDevices =
+
+        private readonly DeviceCollection<KeyboardData> KeyboardDevices =
             new DeviceCollection<KeyboardData>();
-        readonly DeviceCollection<JoystickData> JoystickDevices =
+
+        private readonly DeviceCollection<JoystickData> JoystickDevices =
             new DeviceCollection<JoystickData>();
 
-        readonly CFRunLoop RunLoop;
-        readonly CFString InputLoopMode = CF.RunLoopModeDefault;
-        readonly CFDictionary DeviceTypes = new CFDictionary();
+        private readonly CFRunLoop RunLoop;
+        private readonly CFString InputLoopMode = CF.RunLoopModeDefault;
+        private readonly CFDictionary DeviceTypes = new CFDictionary();
 
-        readonly MappedGamePadDriver mapped_gamepad = new MappedGamePadDriver();
+        private readonly MappedGamePadDriver mapped_gamepad = new MappedGamePadDriver();
 
         // Used for device discovery
-        readonly List<JoystickElement> axis_elements = new List<JoystickElement>();
-        readonly List<JoystickElement> button_elements = new List<JoystickElement>();
-        readonly List<JoystickElement> hat_elements = new List<JoystickElement>();
-        readonly List<JoystickElement> vendor_elements = new List<JoystickElement>();
+        private readonly List<JoystickElement> axis_elements = new List<JoystickElement>();
 
-        IntPtr MouseEventTap;
-        IntPtr MouseEventTapSource;
-        MouseState CursorState;
+        private readonly List<JoystickElement> button_elements = new List<JoystickElement>();
+        private readonly List<JoystickElement> hat_elements = new List<JoystickElement>();
+        private readonly List<JoystickElement> vendor_elements = new List<JoystickElement>();
 
-        NativeMethods.IOHIDDeviceCallback HandleDeviceAdded;
-        NativeMethods.IOHIDDeviceCallback HandleDeviceRemoved;
-        NativeMethods.IOHIDValueCallback HandleDeviceValueReceived;
+        private IntPtr MouseEventTap;
+        private IntPtr MouseEventTapSource;
+        private MouseState CursorState;
 
-        bool disposed;
+        private NativeMethods.IOHIDDeviceCallback HandleDeviceAdded;
+        private NativeMethods.IOHIDDeviceCallback HandleDeviceRemoved;
+        private NativeMethods.IOHIDValueCallback HandleDeviceValueReceived;
+
+        private bool disposed;
 
         public HIDInput()
         {
@@ -212,7 +215,7 @@ namespace OpenTK.Platform.MacOS
             RegisterMouseMonitor();
         }
 
-        void RegisterMouseMonitor()
+        private void RegisterMouseMonitor()
         {
             Debug.Write("Creating mouse event monitor... ");
             MouseEventTapDelegate = MouseEventTapCallback;
@@ -235,8 +238,9 @@ namespace OpenTK.Platform.MacOS
                 "success!" : "failed.");
         }
 
-        CG.EventTapCallBack MouseEventTapDelegate;
-        IntPtr MouseEventTapCallback(
+        private CG.EventTapCallBack MouseEventTapDelegate;
+
+        private IntPtr MouseEventTapCallback(
             IntPtr proxy,
             CGEventType type,
             IntPtr @event,
@@ -302,14 +306,14 @@ namespace OpenTK.Platform.MacOS
             return @event;
         }
 
-        IOHIDManagerRef CreateHIDManager()
+        private IOHIDManagerRef CreateHIDManager()
         {
             return NativeMethods.IOHIDManagerCreate(IntPtr.Zero, IntPtr.Zero);
         }
 
         // Registers callbacks for device addition and removal. These callbacks
         // are called when we run the loop in CheckDevicesMode
-        void RegisterHIDCallbacks(IOHIDManagerRef hidmanager)
+        private void RegisterHIDCallbacks(IOHIDManagerRef hidmanager)
         {
             NativeMethods.IOHIDManagerRegisterDeviceMatchingCallback(
                 hidmanager, HandleDeviceAdded, IntPtr.Zero);
@@ -322,7 +326,7 @@ namespace OpenTK.Platform.MacOS
             NativeMethods.IOHIDManagerOpen(hidmanager, IOOptionBits.Zero);
         }
 
-        void DeviceAdded(IntPtr context, IOReturn res, IntPtr sender, IOHIDDeviceRef device)
+        private void DeviceAdded(IntPtr context, IOReturn res, IntPtr sender, IOHIDDeviceRef device)
         {
             try
             {
@@ -378,7 +382,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        void DeviceRemoved(IntPtr context, IOReturn res, IntPtr sender, IOHIDDeviceRef device)
+        private void DeviceRemoved(IntPtr context, IOReturn res, IntPtr sender, IOHIDDeviceRef device)
         {
             try
             {
@@ -420,7 +424,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        void DeviceValueReceived(IntPtr context, IOReturn res, IntPtr sender, IOHIDValueRef val)
+        private void DeviceValueReceived(IntPtr context, IOReturn res, IntPtr sender, IOHIDValueRef val)
         {
             try
             {
@@ -458,7 +462,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        void AddMouse(CFAllocatorRef sender, CFAllocatorRef device)
+        private void AddMouse(CFAllocatorRef sender, CFAllocatorRef device)
         {
             Debug.Print("Mouse device {0:x} discovered, sender is {1:x}", device, sender);
             MouseData mouse = new MouseData(device);
@@ -466,13 +470,13 @@ namespace OpenTK.Platform.MacOS
             MouseDevices.Add(device.ToInt64(), mouse);
         }
 
-        void RemoveMouse(CFAllocatorRef sender, long id)
+        private void RemoveMouse(CFAllocatorRef sender, long id)
         {
             Debug.Print("Mouse device {0:x} disconnected, sender is {1:x}", id, sender);
             MouseDevices.Remove(id);
         }
 
-        static void UpdateMouse(MouseData mouse, IOHIDValueRef val)
+        private static void UpdateMouse(MouseData mouse, IOHIDValueRef val)
         {
             IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
             int v_int = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
@@ -520,7 +524,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        void AddKeyboard(CFAllocatorRef sender, CFAllocatorRef device)
+        private void AddKeyboard(CFAllocatorRef sender, CFAllocatorRef device)
         {
             Debug.Print("Keyboard device {0:x} discovered, sender is {1:x}", device, sender);
             KeyboardData keyboard = new KeyboardData(device);
@@ -528,13 +532,13 @@ namespace OpenTK.Platform.MacOS
             KeyboardDevices.Add(device.ToInt64(), keyboard);
         }
 
-        void RemoveKeyboard(CFAllocatorRef sender, long id)
+        private void RemoveKeyboard(CFAllocatorRef sender, long id)
         {
             Debug.Print("Keyboard device {0:x} disconnected, sender is {1:x}", id, sender);
             KeyboardDevices.Remove(id);
         }
 
-        static void UpdateKeyboard(KeyboardData keyboard, IOHIDValueRef val)
+        private static void UpdateKeyboard(KeyboardData keyboard, IOHIDValueRef val)
         {
             IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
             int v_int = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
@@ -561,7 +565,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        Guid CreateJoystickGuid(IntPtr device, string name)
+        private Guid CreateJoystickGuid(IntPtr device, string name)
         {
             // Create a device guid from the product and vendor id keys
             List<byte> guid_bytes = new List<byte>();
@@ -613,7 +617,7 @@ namespace OpenTK.Platform.MacOS
             return new Guid(guid_array);
         }
 
-        JoystickData CreateJoystick(IntPtr sender, IntPtr device)
+        private JoystickData CreateJoystick(IntPtr sender, IntPtr device)
         {
             JoystickData joy = null;
 
@@ -697,7 +701,7 @@ namespace OpenTK.Platform.MacOS
             return joy;
         }
 
-        void AddElements(JoystickData joy, CFArrayRef element_array_ref)
+        private void AddElements(JoystickData joy, CFArrayRef element_array_ref)
         {
             CFArray element_array = new CFArray(element_array_ref);
             for (int i = 0; i < element_array.Count; i++)
@@ -791,12 +795,12 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        JoystickData GetJoystick(int index)
+        private JoystickData GetJoystick(int index)
         {
             return JoystickDevices.FromIndex(index);
         }
 
-        void AddJoystick(CFAllocatorRef sender, CFAllocatorRef device)
+        private void AddJoystick(CFAllocatorRef sender, CFAllocatorRef device)
         {
             Debug.Print("Joystick device {0:x} discovered, sender is {1:x}", device, sender);
             Debug.Indent();
@@ -815,13 +819,13 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        void RemoveJoystick(CFAllocatorRef sender, long id)
+        private void RemoveJoystick(CFAllocatorRef sender, long id)
         {
             Debug.Print("Joystick device {0:x} disconnected, sender is {1:x}", id, sender);
             JoystickDevices.Remove(id);
         }
 
-        static void UpdateJoystick(JoystickData joy, IOHIDValueRef val)
+        private static void UpdateJoystick(JoystickData joy, IOHIDValueRef val)
         {
             IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
             IOHIDElementCookie cookie = NativeMethods.IOHIDElementGetCookie(elem);
@@ -896,7 +900,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        static short GetJoystickAxis(IOHIDValueRef val, IOHIDElementRef element)
+        private static short GetJoystickAxis(IOHIDValueRef val, IOHIDElementRef element)
         {
             int max = NativeMethods.IOHIDElementGetLogicalMax(element).ToInt32();
             int min = NativeMethods.IOHIDElementGetLogicalMin(element).ToInt32();
@@ -904,14 +908,14 @@ namespace OpenTK.Platform.MacOS
             return (short)HidHelper.ScaleValue(offset, min, max, short.MinValue, short.MaxValue);
         }
 
-        static bool GetJoystickButton(IOHIDValueRef val, IOHIDElementRef element)
+        private static bool GetJoystickButton(IOHIDValueRef val, IOHIDElementRef element)
         {
             // Todo: analogue buttons are transformed to digital
             int value = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
             return value >= 1;
         }
 
-        static HatPosition GetJoystickHat(IOHIDValueRef val, IOHIDElementRef element)
+        private static HatPosition GetJoystickHat(IOHIDValueRef val, IOHIDElementRef element)
         {
             HatPosition position = HatPosition.Centered;
             int max = NativeMethods.IOHIDElementGetLogicalMax(element).ToInt32();
@@ -1091,9 +1095,9 @@ namespace OpenTK.Platform.MacOS
             return new Guid();
         }
 
-        class NativeMethods
+        private class NativeMethods
         {
-            const string hid = "/System/Library/Frameworks/IOKit.framework/Versions/Current/IOKit";
+            private const string hid = "/System/Library/Frameworks/IOKit.framework/Versions/Current/IOKit";
 
             public static readonly CFString IOHIDVendorIDKey = CF.CFSTR("VendorID");
             public static readonly CFString IOHIDVendorIDSourceKey = CF.CFSTR("VendorIDSource");
@@ -1253,7 +1257,7 @@ namespace OpenTK.Platform.MacOS
             public delegate void IOHIDValueCallback(IntPtr ctx, IOReturn res, IntPtr sender, IOHIDValueRef val);
         }
 
-        enum IOHIDElementType
+        private enum IOHIDElementType
         {
             Input_Misc = 1,
             Input_Button = 2,
@@ -1264,13 +1268,13 @@ namespace OpenTK.Platform.MacOS
             Collection = 513
         }
 
-        enum IOHIDValueScaleType
+        private enum IOHIDValueScaleType
         {
             Physical, // [device min, device max]
             Calibrated // [-1, +1]
         }
 
-        enum HIDButton
+        private enum HIDButton
         {
             Button_1  = 0x01, /* (primary/trigger) */
             Button_2  = 0x02, /* (secondary) */
@@ -1280,7 +1284,7 @@ namespace OpenTK.Platform.MacOS
             Button_65535  = 0xFFFF
         }
 
-        enum HIDKey
+        private enum HIDKey
         {
             ErrorRollOver = 0x01, /* ErrorRollOver */
             POSTFail  = 0x02, /* POSTFail */
@@ -1460,7 +1464,7 @@ namespace OpenTK.Platform.MacOS
         }
 
         // Maps HIDKey to OpenTK.Input.Key.
-        static readonly Key[] RawKeyMap = new Key[]
+        private static readonly Key[] RawKeyMap = new Key[]
         {
             Key.Unknown,
             Key.Unknown, /* ErrorRollOver */
@@ -1644,7 +1648,7 @@ namespace OpenTK.Platform.MacOS
         };
 
 
-        void Dispose(bool manual)
+        private void Dispose(bool manual)
         {
             if (!disposed)
             {

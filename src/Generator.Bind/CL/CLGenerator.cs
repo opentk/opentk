@@ -9,7 +9,7 @@ using Enum=Bind.Structures.Enum;
 
 namespace Bind.CL
 {
-    class CLGenerator : ES.ESGenerator
+    internal class CLGenerator : ES.ESGenerator
     {
         public CLGenerator(Settings settings)
             : base(settings)

@@ -40,7 +40,7 @@ namespace OpenTK.Platform.Egl
     using EGLSurface = IntPtr;
     using EGLClientBuffer = IntPtr;
 
-    enum RenderApi
+    internal enum RenderApi
     {
         ES = Egl.OPENGL_ES_API,
         GL = Egl.OPENGL_API,
@@ -48,7 +48,7 @@ namespace OpenTK.Platform.Egl
     }
 
     [Flags]
-    enum RenderableFlags
+    internal enum RenderableFlags
     {
         ES = Egl.OPENGL_ES_BIT,
         ES2 = Egl.OPENGL_ES2_BIT,
@@ -76,7 +76,7 @@ namespace OpenTK.Platform.Egl
         CONTEXT_LOST = 12302,
     }
 
-    enum SurfaceType
+    internal enum SurfaceType
     {
         PBUFFER_BIT = 0x0001,
         PIXMAP_BIT = 0x0002,
@@ -87,7 +87,7 @@ namespace OpenTK.Platform.Egl
         SWAP_BEHAVIOR_PRESERVED_BIT = 0x0400,
     }
 
-    static partial class Egl
+    internal static partial class Egl
     {
         public const int VERSION_1_0 = 1;
         public const int VERSION_1_1 = 1;
@@ -321,7 +321,7 @@ namespace OpenTK.Platform.Egl
         public static extern bool SwapInterval(EGLDisplay dpy, int interval);
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglCreateContext")]
-        static extern IntPtr eglCreateContext(EGLDisplay dpy, EGLConfig config, EGLContext share_context, int[] attrib_list);
+        private static extern IntPtr eglCreateContext(EGLDisplay dpy, EGLConfig config, EGLContext share_context, int[] attrib_list);
 
         public static EGLContext CreateContext(EGLDisplay dpy, EGLConfig config, EGLContext share_context, int[] attrib_list)
         {

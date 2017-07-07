@@ -32,7 +32,7 @@ using OpenTK.Graphics;
 namespace OpenTK
 {
     // Constructs GLControls.
-    class GLControlFactory
+    internal class GLControlFactory
     {
         public IGLControl CreateGLControl(GraphicsMode mode, Control control)
         {

@@ -45,7 +45,7 @@ namespace OpenTK.Input
         internal const int MaxAxisCount = 10;
         internal const int MaxDPadCount = 2;
 
-        static readonly IGamePadDriver driver =
+        private static readonly IGamePadDriver driver =
             Platform.Factory.Default.CreateGamePadDriver();
 
         private GamePad() { }

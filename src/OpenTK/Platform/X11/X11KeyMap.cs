@@ -33,11 +33,12 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
-    class X11KeyMap
+    internal class X11KeyMap
     {
         // Keycode lookup table for current layout
-        readonly Key[] keycodes = new Key[256];
-        readonly bool xkb_supported;
+        private readonly Key[] keycodes = new Key[256];
+
+        private readonly bool xkb_supported;
 
         internal X11KeyMap(IntPtr display)
         {
@@ -256,7 +257,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        static Key TranslateXKey(XKey key)
+        private static Key TranslateXKey(XKey key)
         {
             switch (key)
             {
@@ -611,7 +612,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        bool TranslateKeyEvent(ref XKeyEvent e, out Key key)
+        private bool TranslateKeyEvent(ref XKeyEvent e, out Key key)
         {
             if (xkb_supported)
             {
@@ -623,7 +624,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        bool TranslateKeyX11(ref XKeyEvent e, out Key key)
+        private bool TranslateKeyX11(ref XKeyEvent e, out Key key)
         {
             XKey keysym = (XKey)API.LookupKeysym(ref e, 0);
             XKey keysym2 = (XKey)API.LookupKeysym(ref e, 1);
@@ -640,7 +641,7 @@ namespace OpenTK.Platform.X11
             return key != Key.Unknown;
         }
 
-        bool TranslateKeyXkb(IntPtr display, int keycode, out Key key)
+        private bool TranslateKeyXkb(IntPtr display, int keycode, out Key key)
         {
             if (keycode < 8 || keycode > 255)
             {

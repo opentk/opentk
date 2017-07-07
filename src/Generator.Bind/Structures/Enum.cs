@@ -11,9 +11,9 @@ using System.Xml.XPath;
 
 namespace Bind.Structures
 {
-    class Enum
+    internal class Enum
     {
-        string _name, _type;
+        private string _name, _type;
 
         public Enum()
         {
@@ -39,7 +39,7 @@ namespace Bind.Structures
             set { _type = value; }
         }
 
-        SortedDictionary<string, Constant> _constant_collection = new SortedDictionary<string, Constant>();
+        private SortedDictionary<string, Constant> _constant_collection = new SortedDictionary<string, Constant>();
 
         public IDictionary<string, Constant> ConstantCollection
         {
@@ -77,12 +77,12 @@ namespace Bind.Structures
         public bool CLSCompliant { get; set; }
     }
 
-    class EnumCollection : IDictionary<string, Enum>
+    internal class EnumCollection : IDictionary<string, Enum>
     {
-        SortedDictionary<string, Enum> Enumerations = new SortedDictionary<string, Enum>();
+        private SortedDictionary<string, Enum> Enumerations = new SortedDictionary<string, Enum>();
 
         // Return -1 for ext1, 1 for ext2 or 0 if no preference.
-        int OrderOfPreference(string ext1, string ext2)
+        private int OrderOfPreference(string ext1, string ext2)
         {
             // If one is empty and the other not, prefer the empty one (empty == core)
             // Otherwise check for Arb and Ext. To reuse the logic for the
@@ -101,7 +101,7 @@ namespace Bind.Structures
         }
 
         // Prefer the empty string over the non-empty.
-        int PreferEmpty(string ext1, string ext2)
+        private int PreferEmpty(string ext1, string ext2)
         {
             if (String.IsNullOrEmpty(ext1) && !String.IsNullOrEmpty(ext2))
                 return -1;

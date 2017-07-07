@@ -34,7 +34,7 @@ namespace OpenTK
     /// </summary>
     public class FrameEventArgs : EventArgs
     {
-        double elapsed;
+        private double elapsed;
 
         /// <summary>
         /// Constructs a new FrameEventArgs instance.

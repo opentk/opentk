@@ -28,7 +28,7 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Egl
 {
-    class EglGraphicsMode
+    internal class EglGraphicsMode
     {
         public GraphicsMode SelectGraphicsMode(EglWindowInfo window,
             GraphicsMode mode, RenderableFlags flags)

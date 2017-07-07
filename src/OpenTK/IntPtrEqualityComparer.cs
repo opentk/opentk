@@ -31,7 +31,7 @@ namespace OpenTK
     // Simple equality comparer to allow IntPtrs as keys in dictionaries
     // without causing boxing/garbage generation.
     // Seriously, Microsoft, shouldn't this have been in the BCL out of the box?
-    class IntPtrEqualityComparer : IEqualityComparer<IntPtr>
+    internal class IntPtrEqualityComparer : IEqualityComparer<IntPtr>
     {
         public bool Equals(IntPtr x, IntPtr y)
         {

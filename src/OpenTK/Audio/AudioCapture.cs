@@ -40,7 +40,7 @@ namespace OpenTK.Audio
     public sealed class AudioCapture : IDisposable
     {
         // This must stay private info so the end-user cannot call any Alc commands for the recording device.
-        IntPtr Handle;
+        private IntPtr Handle;
 
         // Alc.CaptureStop should be called prior to device shutdown, this keeps track of Alc.CaptureStart/Stop calls.
 
@@ -238,7 +238,7 @@ namespace OpenTK.Audio
 
         // Retrieves the sample size in bytes for various ALFormats.
         // Compressed formats always return 1.
-        static int GetSampleSize(ALFormat format)
+        private static int GetSampleSize(ALFormat format)
         {
             switch (format)
             {
@@ -272,7 +272,7 @@ namespace OpenTK.Audio
         }
 
         // Converts an error code to an error string with additional information.
-        string ErrorMessage(string devicename, int frequency, ALFormat bufferformat, int buffersize)
+        private string ErrorMessage(string devicename, int frequency, ALFormat bufferformat, int buffersize)
         {
             string alcerrmsg;
             AlcError alcerrcode = CurrentError;

@@ -27,7 +27,7 @@
 
 namespace OpenTK.Platform.MacOS
 {
-    enum NSBackingStore
+    internal enum NSBackingStore
     {
         Retained,
         Nonretained,

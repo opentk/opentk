@@ -46,21 +46,22 @@ namespace OpenTK
     /// </summary>
     public partial class GLControl : UserControl
     {
-        IGraphicsContext context;
-        IGLControl implementation;
-        GraphicsMode format;
-        int major, minor;
-        GraphicsContextFlags flags;
-        bool? initial_vsync_value;
+        private IGraphicsContext context;
+        private IGLControl implementation;
+        private GraphicsMode format;
+        private int major, minor;
+        private GraphicsContextFlags flags;
+
+        private bool? initial_vsync_value;
         // Indicates that OnResize was called before OnHandleCreated.
         // To avoid issues with missing OpenGL contexts, we suppress
         // the premature Resize event and raise it as soon as the handle
         // is ready.
-        bool resize_event_suppressed;
+        private bool resize_event_suppressed;
         // Indicates whether the control is in design mode. Due to issues
         // wiith the DesignMode property and nested controls,we need to
         // evaluate this in the constructor.
-        readonly bool design_mode;
+        private readonly bool design_mode;
 
         /// <summary>
         /// Constructs a new instance.
@@ -121,7 +122,7 @@ namespace OpenTK
             InitializeComponent();
         }
 
-        IGLControl Implementation
+        private IGLControl Implementation
         {
             get
             {
@@ -132,7 +133,7 @@ namespace OpenTK
         }
 
         [Conditional("DEBUG")]
-        void ValidateContext(string message)
+        private void ValidateContext(string message)
         {
             if (!Context.IsCurrent)
             {
@@ -140,7 +141,7 @@ namespace OpenTK
             }
         }
 
-        void ValidateState()
+        private void ValidateState()
         {
             if (IsDisposed)
                 throw new ObjectDisposedException(GetType().Name);

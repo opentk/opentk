@@ -41,7 +41,7 @@ namespace OpenTK
     /// </remarks>
     public static class BlittableValueType<T>
     {
-        static readonly Type Type;
+        private static readonly Type Type;
 
         static BlittableValueType()
         {
@@ -87,7 +87,7 @@ namespace OpenTK
 
         // Checks whether the parameter is a primitive type or consists of primitive types recursively.
         // Throws a NotSupportedException if it is not.
-        static bool CheckType(Type type)
+        private static bool CheckType(Type type)
         {
             //Debug.Print("Checking type {0} (size: {1} bytes).", type.Name, Marshal.SizeOf(type));
             if (type.IsPrimitive)
@@ -110,7 +110,7 @@ namespace OpenTK
 
         // Checks whether the specified struct defines [StructLayout(LayoutKind.Sequential, Pack=1)]
         // or [StructLayout(LayoutKind.Explicit)]
-        static bool CheckStructLayoutAttribute(Type type)
+        private static bool CheckStructLayoutAttribute(Type type)
         {
             StructLayoutAttribute[] attr = (StructLayoutAttribute[])
                 type.GetCustomAttributes(typeof(StructLayoutAttribute), true);

@@ -35,13 +35,13 @@ using OpenTK.Platform.Common;
 
 namespace OpenTK.Platform.Windows
 {
-    sealed class WinRawKeyboard : IKeyboardDriver2
+    internal sealed class WinRawKeyboard : IKeyboardDriver2
     {
-        readonly List<KeyboardState> keyboards = new List<KeyboardState>();
-        readonly List<string> names = new List<string>();
-        readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
-        readonly IntPtr window;
-        readonly object UpdateLock = new object();
+        private readonly List<KeyboardState> keyboards = new List<KeyboardState>();
+        private readonly List<string> names = new List<string>();
+        private readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
+        private readonly IntPtr window;
+        private readonly object UpdateLock = new object();
 
         public WinRawKeyboard(IntPtr windowHandle)
         {
@@ -198,7 +198,7 @@ namespace OpenTK.Platform.Windows
             return processed;
         }
 
-        static RegistryKey GetRegistryKey(string name)
+        private static RegistryKey GetRegistryKey(string name)
         {
             if (name.Length < 4)
                 return null;
@@ -223,7 +223,7 @@ namespace OpenTK.Platform.Windows
             return regkey;
         }
 
-        static string GetDeviceName(RawInputDeviceList dev)
+        private static string GetDeviceName(RawInputDeviceList dev)
         {
             int size = 0;
             Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size);
@@ -234,7 +234,7 @@ namespace OpenTK.Platform.Windows
             return name;
         }
 
-        static void RegisterKeyboardDevice(IntPtr window, string name)
+        private static void RegisterKeyboardDevice(IntPtr window, string name)
         {
             RawInputDevice[] rid = new RawInputDevice[]
             {

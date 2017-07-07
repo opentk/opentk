@@ -35,9 +35,9 @@ namespace OpenTK.Input
     public struct MouseState : IEquatable<MouseState>
     {
         internal const int MaxButtons = 16; // we are storing in an ushort
-        Vector2 position;
-        MouseScroll scroll;
-        ushort buttons;
+        private Vector2 position;
+        private MouseScroll scroll;
+        private ushort buttons;
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the specified
@@ -319,7 +319,7 @@ namespace OpenTK.Input
             scroll.Y += y;
         }
 
-        static void ValidateOffset(int offset)
+        private static void ValidateOffset(int offset)
         {
             if (offset < 0 || offset >= 16)
                 throw new ArgumentOutOfRangeException("offset");

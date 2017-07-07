@@ -36,13 +36,13 @@ namespace OpenTK
     /// </summary>
     public sealed class Toolkit : IDisposable
     {
-        Factory platform_factory;
-        static Toolkit toolkit;
+        private Factory platform_factory;
+        private static Toolkit toolkit;
 
-        volatile static bool initialized;
-        static readonly object InitLock = new object();
+        private volatile static bool initialized;
+        private static readonly object InitLock = new object();
 
-        Toolkit(Factory factory)
+        private Toolkit(Factory factory)
         {
             if (factory == null)
                 throw new ArgumentNullException("factory");
@@ -147,7 +147,7 @@ namespace OpenTK
             GC.SuppressFinalize(this);
         }
 
-        void Dispose(bool manual)
+        private void Dispose(bool manual)
         {
             if (manual)
             {

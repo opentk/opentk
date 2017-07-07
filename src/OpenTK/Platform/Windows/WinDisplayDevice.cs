@@ -32,9 +32,9 @@ using Microsoft.Win32;
 
 namespace OpenTK.Platform.Windows
 {
-    sealed class WinDisplayDeviceDriver : DisplayDeviceBase
+    internal sealed class WinDisplayDeviceDriver : DisplayDeviceBase
     {
-        readonly object display_lock = new object();
+        private readonly object display_lock = new object();
 
         public WinDisplayDeviceDriver()
         {
@@ -169,7 +169,7 @@ namespace OpenTK.Platform.Windows
             return scale;
         }
 
-        static void VerifyMode(WindowsDisplayDevice device, DeviceMode mode)
+        private static void VerifyMode(WindowsDisplayDevice device, DeviceMode mode)
         {
             if (mode.BitsPerPel == 0)
             {
@@ -179,7 +179,8 @@ namespace OpenTK.Platform.Windows
                 mode.BitsPerPel = 32;
             }
         }
-        void HandleDisplaySettingsChanged(object sender, EventArgs e)
+
+        private void HandleDisplaySettingsChanged(object sender, EventArgs e)
         {
             RefreshDisplayDevices();
         }

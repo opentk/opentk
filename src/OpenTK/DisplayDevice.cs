@@ -41,18 +41,18 @@ namespace OpenTK
         // TODO: Add properties that describe the 'usable' size of the Display, i.e. the maximized size without the taskbar etc.
         // TODO: Does not detect changes to primary device.
 
-        bool primary;
-        Rectangle bounds;
-        DisplayResolution current_resolution = new DisplayResolution();
-        List<DisplayResolution> available_resolutions = new List<DisplayResolution>();
-        IList<DisplayResolution> available_resolutions_readonly;
+        private bool primary;
+        private Rectangle bounds;
+        private DisplayResolution current_resolution = new DisplayResolution();
+        private List<DisplayResolution> available_resolutions = new List<DisplayResolution>();
+        private IList<DisplayResolution> available_resolutions_readonly;
 
         internal object Id; // A platform-specific id for this monitor
 
-        static readonly object display_lock = new object();
-        static DisplayDevice primary_display;
+        private static readonly object display_lock = new object();
+        private static DisplayDevice primary_display;
 
-        static Platform.IDisplayDeviceDriver implementation;
+        private static Platform.IDisplayDeviceDriver implementation;
 
         static DisplayDevice()
         {
@@ -267,7 +267,7 @@ namespace OpenTK
             return null;
         }
 
-        DisplayResolution FindResolution(int width, int height, int bitsPerPixel, float refreshRate)
+        private DisplayResolution FindResolution(int width, int height, int bitsPerPixel, float refreshRate)
         {
             return available_resolutions.Find(delegate(DisplayResolution test)
             {

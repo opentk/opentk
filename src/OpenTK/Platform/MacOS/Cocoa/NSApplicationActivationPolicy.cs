@@ -27,7 +27,7 @@
 
 namespace OpenTK.Platform.MacOS
 {
-    enum NSApplicationActivationPolicy
+    internal enum NSApplicationActivationPolicy
     {
         Regular,
         Accessory,

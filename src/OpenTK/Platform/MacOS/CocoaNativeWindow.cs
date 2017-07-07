@@ -38,83 +38,92 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.MacOS
 {
-    class CocoaNativeWindow : NativeWindowBase
+    internal class CocoaNativeWindow : NativeWindowBase
     {
-        static int UniqueId;
+        private static int UniqueId;
 
-        static readonly IntPtr selNextEventMatchingMask = Selector.Get("nextEventMatchingMask:untilDate:inMode:dequeue:");
-        static readonly IntPtr selSendEvent = Selector.Get("sendEvent:");
+        private static readonly IntPtr selNextEventMatchingMask = Selector.Get("nextEventMatchingMask:untilDate:inMode:dequeue:");
+
+        private static readonly IntPtr selSendEvent = Selector.Get("sendEvent:");
         //static readonly IntPtr selUpdateWindows = Selector.Get("updateWindows");
-        static readonly IntPtr selContentView = Selector.Get("contentView");
-        static readonly IntPtr selConvertRectFromScreen = Selector.Get("convertRectFromScreen:");
-        static readonly IntPtr selConvertRectToScreen = Selector.Get("convertRectToScreen:");
-        static readonly IntPtr selPerformClose = Selector.Get("performClose:");
-        static readonly IntPtr selClose = Selector.Get("close");
-        static readonly IntPtr selTitle = Selector.Get("title");
-        static readonly IntPtr selSetTitle = Selector.Get("setTitle:");
-        static readonly IntPtr selSetApplicationIconImage = Selector.Get("setApplicationIconImage:");
-        static readonly IntPtr selIsKeyWindow = Selector.Get("isKeyWindow");
-        static readonly IntPtr selIsVisible = Selector.Get("isVisible");
-        static readonly IntPtr selSetIsVisible = Selector.Get("setIsVisible:");
-        static readonly IntPtr selFrame = Selector.Get("frame");
-        static readonly IntPtr selVisibleFrame = Selector.Get("visibleFrame");
-        static readonly IntPtr selBounds = Selector.Get("bounds");
-        static readonly IntPtr selScreen = Selector.Get("screen");
-        static readonly IntPtr selSetFrame = Selector.Get("setFrame:display:");
-        static readonly IntPtr selConvertRectToBacking = Selector.Get("convertRectToBacking:");
-        static readonly IntPtr selConvertRectFromBacking = Selector.Get("convertRectFromBacking:");
-        static readonly IntPtr selFrameRectForContentRect = Selector.Get("frameRectForContentRect:");
-        static readonly IntPtr selType = Selector.Get("type");
-        static readonly IntPtr selKeyCode = Selector.Get("keyCode");
-        static readonly IntPtr selModifierFlags = Selector.Get("modifierFlags");
-        static readonly IntPtr selIsARepeat = Selector.Get("isARepeat");
-        static readonly IntPtr selCharactersIgnoringModifiers = Selector.Get("charactersIgnoringModifiers");
-        static readonly IntPtr selAddTrackingArea = Selector.Get("addTrackingArea:");
-        static readonly IntPtr selRemoveTrackingArea = Selector.Get("removeTrackingArea:");
-        static readonly IntPtr selTrackingArea = Selector.Get("trackingArea");
-        static readonly IntPtr selInitWithSize = Selector.Get("initWithSize:");
-        static readonly IntPtr selInitWithRect = Selector.Get("initWithRect:options:owner:userInfo:");
-        static readonly IntPtr selOwner = Selector.Get("owner");
-        static readonly IntPtr selLocationInWindowOwner = Selector.Get("locationInWindow");
-        static readonly IntPtr selHide = Selector.Get("hide");
-        static readonly IntPtr selUnhide = Selector.Get("unhide");
-        static readonly IntPtr selScrollingDeltaX = Selector.Get("scrollingDeltaX");
-        static readonly IntPtr selScrollingDeltaY = Selector.Get("scrollingDeltaY");
-        static readonly IntPtr selDeltaX = Selector.Get("deltaX");
-        static readonly IntPtr selDeltaY = Selector.Get("deltaY");
-        static readonly IntPtr selButtonNumber = Selector.Get("buttonNumber");
-        static readonly IntPtr selSetStyleMask = Selector.Get("setStyleMask:");
-        static readonly IntPtr selStyleMask = Selector.Get("styleMask");
-        static readonly IntPtr selHasPreciseScrollingDeltas = Selector.Get("hasPreciseScrollingDeltas");
+        private static readonly IntPtr selContentView = Selector.Get("contentView");
+
+        private static readonly IntPtr selConvertRectFromScreen = Selector.Get("convertRectFromScreen:");
+        private static readonly IntPtr selConvertRectToScreen = Selector.Get("convertRectToScreen:");
+        private static readonly IntPtr selPerformClose = Selector.Get("performClose:");
+        private static readonly IntPtr selClose = Selector.Get("close");
+        private static readonly IntPtr selTitle = Selector.Get("title");
+        private static readonly IntPtr selSetTitle = Selector.Get("setTitle:");
+        private static readonly IntPtr selSetApplicationIconImage = Selector.Get("setApplicationIconImage:");
+        private static readonly IntPtr selIsKeyWindow = Selector.Get("isKeyWindow");
+        private static readonly IntPtr selIsVisible = Selector.Get("isVisible");
+        private static readonly IntPtr selSetIsVisible = Selector.Get("setIsVisible:");
+        private static readonly IntPtr selFrame = Selector.Get("frame");
+        private static readonly IntPtr selVisibleFrame = Selector.Get("visibleFrame");
+        private static readonly IntPtr selBounds = Selector.Get("bounds");
+        private static readonly IntPtr selScreen = Selector.Get("screen");
+        private static readonly IntPtr selSetFrame = Selector.Get("setFrame:display:");
+        private static readonly IntPtr selConvertRectToBacking = Selector.Get("convertRectToBacking:");
+        private static readonly IntPtr selConvertRectFromBacking = Selector.Get("convertRectFromBacking:");
+        private static readonly IntPtr selFrameRectForContentRect = Selector.Get("frameRectForContentRect:");
+        private static readonly IntPtr selType = Selector.Get("type");
+        private static readonly IntPtr selKeyCode = Selector.Get("keyCode");
+        private static readonly IntPtr selModifierFlags = Selector.Get("modifierFlags");
+        private static readonly IntPtr selIsARepeat = Selector.Get("isARepeat");
+        private static readonly IntPtr selCharactersIgnoringModifiers = Selector.Get("charactersIgnoringModifiers");
+        private static readonly IntPtr selAddTrackingArea = Selector.Get("addTrackingArea:");
+        private static readonly IntPtr selRemoveTrackingArea = Selector.Get("removeTrackingArea:");
+        private static readonly IntPtr selTrackingArea = Selector.Get("trackingArea");
+        private static readonly IntPtr selInitWithSize = Selector.Get("initWithSize:");
+        private static readonly IntPtr selInitWithRect = Selector.Get("initWithRect:options:owner:userInfo:");
+        private static readonly IntPtr selOwner = Selector.Get("owner");
+        private static readonly IntPtr selLocationInWindowOwner = Selector.Get("locationInWindow");
+        private static readonly IntPtr selHide = Selector.Get("hide");
+        private static readonly IntPtr selUnhide = Selector.Get("unhide");
+        private static readonly IntPtr selScrollingDeltaX = Selector.Get("scrollingDeltaX");
+        private static readonly IntPtr selScrollingDeltaY = Selector.Get("scrollingDeltaY");
+        private static readonly IntPtr selDeltaX = Selector.Get("deltaX");
+        private static readonly IntPtr selDeltaY = Selector.Get("deltaY");
+        private static readonly IntPtr selButtonNumber = Selector.Get("buttonNumber");
+        private static readonly IntPtr selSetStyleMask = Selector.Get("setStyleMask:");
+        private static readonly IntPtr selStyleMask = Selector.Get("styleMask");
+
+        private static readonly IntPtr selHasPreciseScrollingDeltas = Selector.Get("hasPreciseScrollingDeltas");
         //static readonly IntPtr selIsMiniaturized = Selector.Get("isMiniaturized");
         //static readonly IntPtr selIsZoomed = Selector.Get("isZoomed");
         //static readonly IntPtr selPerformMiniaturize = Selector.Get("performMiniaturize:");
-        static readonly IntPtr selMiniaturize = Selector.Get("miniaturize:");
-        static readonly IntPtr selDeminiaturize = Selector.Get("deminiaturize:");
+        private static readonly IntPtr selMiniaturize = Selector.Get("miniaturize:");
+
+        private static readonly IntPtr selDeminiaturize = Selector.Get("deminiaturize:");
         //static readonly IntPtr selPerformZoom = Selector.Get("performZoom:");
         //static readonly IntPtr selZoom = Selector.Get("zoom:");
-        static readonly IntPtr selLevel = Selector.Get("level");
-        static readonly IntPtr selSetLevel = Selector.Get("setLevel:");
-        static readonly IntPtr selPresentationOptions = Selector.Get("presentationOptions");
-        static readonly IntPtr selSetPresentationOptions = Selector.Get("setPresentationOptions:");
+        private static readonly IntPtr selLevel = Selector.Get("level");
+
+        private static readonly IntPtr selSetLevel = Selector.Get("setLevel:");
+        private static readonly IntPtr selPresentationOptions = Selector.Get("presentationOptions");
+
+        private static readonly IntPtr selSetPresentationOptions = Selector.Get("setPresentationOptions:");
         //static readonly IntPtr selIsInFullScreenMode = Selector.Get("isInFullScreenMode");
         //static readonly IntPtr selExitFullScreenModeWithOptions = Selector.Get("exitFullScreenModeWithOptions:");
         //static readonly IntPtr selEnterFullScreenModeWithOptions = Selector.Get("enterFullScreenMode:withOptions:");
-        static readonly IntPtr selArrowCursor = Selector.Get("arrowCursor");
-        static readonly IntPtr selAddCursorRect = Selector.Get("addCursorRect:cursor:");
-        static readonly IntPtr selInvalidateCursorRectsForView = Selector.Get("invalidateCursorRectsForView:");
-        static readonly IntPtr selInitWithBitmapDataPlanes =
-            Selector.Get("initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bitmapFormat:bytesPerRow:bitsPerPixel:");
-        static readonly IntPtr selBitmapData = Selector.Get("bitmapData");
-        static readonly IntPtr selAddRepresentation = Selector.Get("addRepresentation:");
-        static readonly IntPtr selInitWithImageHotSpot = Selector.Get("initWithImage:hotSpot:");
+        private static readonly IntPtr selArrowCursor = Selector.Get("arrowCursor");
 
-        static readonly IntPtr NSDefaultRunLoopMode;
-        static readonly IntPtr NSCursor;
-        static readonly IntPtr NSImage;
-        static readonly IntPtr NSBitmapImageRep;
-        static readonly IntPtr NSDeviceRGBColorSpace = Cocoa.ToNSString("NSDeviceRGBColorSpace");
-        static readonly IntPtr NSFilenamesPboardType;
+        private static readonly IntPtr selAddCursorRect = Selector.Get("addCursorRect:cursor:");
+        private static readonly IntPtr selInvalidateCursorRectsForView = Selector.Get("invalidateCursorRectsForView:");
+
+        private static readonly IntPtr selInitWithBitmapDataPlanes =
+            Selector.Get("initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bitmapFormat:bytesPerRow:bitsPerPixel:");
+
+        private static readonly IntPtr selBitmapData = Selector.Get("bitmapData");
+        private static readonly IntPtr selAddRepresentation = Selector.Get("addRepresentation:");
+        private static readonly IntPtr selInitWithImageHotSpot = Selector.Get("initWithImage:hotSpot:");
+
+        private static readonly IntPtr NSDefaultRunLoopMode;
+        private static readonly IntPtr NSCursor;
+        private static readonly IntPtr NSImage;
+        private static readonly IntPtr NSBitmapImageRep;
+        private static readonly IntPtr NSDeviceRGBColorSpace = Cocoa.ToNSString("NSDeviceRGBColorSpace");
+        private static readonly IntPtr NSFilenamesPboardType;
 
         static CocoaNativeWindow()
         {
@@ -275,54 +284,54 @@ namespace OpenTK.Platform.MacOS
         }
 
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate void WindowKeyDownDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        private delegate void WindowKeyDownDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate void WindowDidResizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        private delegate void WindowDidResizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate void WindowDidMoveDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        private delegate void WindowDidMoveDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate void WindowDidBecomeKeyDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        private delegate void WindowDidBecomeKeyDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate void WindowDidResignKeyDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        private delegate void WindowDidResignKeyDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate void WindowWillMiniaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        private delegate void WindowWillMiniaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate void WindowDidMiniaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        private delegate void WindowDidMiniaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate void WindowDidDeminiaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+        private delegate void WindowDidDeminiaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate bool WindowShouldZoomToFrameDelegate(IntPtr self, IntPtr cmd, IntPtr nsWindow, RectangleF toFrame);
+        private delegate bool WindowShouldZoomToFrameDelegate(IntPtr self, IntPtr cmd, IntPtr nsWindow, RectangleF toFrame);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate bool WindowShouldCloseDelegate(IntPtr self, IntPtr cmd, IntPtr sender);
+        private delegate bool WindowShouldCloseDelegate(IntPtr self, IntPtr cmd, IntPtr sender);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate bool AcceptsFirstResponderDelegate(IntPtr self, IntPtr cmd);
+        private delegate bool AcceptsFirstResponderDelegate(IntPtr self, IntPtr cmd);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate bool CanBecomeKeyWindowDelegate(IntPtr self, IntPtr cmd);
+        private delegate bool CanBecomeKeyWindowDelegate(IntPtr self, IntPtr cmd);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate bool CanBecomeMainWindowDelegate(IntPtr self, IntPtr cmd);
+        private delegate bool CanBecomeMainWindowDelegate(IntPtr self, IntPtr cmd);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate void ResetCursorRectsDelegate(IntPtr self, IntPtr cmd);
+        private delegate void ResetCursorRectsDelegate(IntPtr self, IntPtr cmd);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate IntPtr DraggingEnteredDelegate(IntPtr self, IntPtr cmd, IntPtr sender);
+        private delegate IntPtr DraggingEnteredDelegate(IntPtr self, IntPtr cmd, IntPtr sender);
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate bool PerformDragOperationDelegate(IntPtr self, IntPtr cmd, IntPtr sender);
+        private delegate bool PerformDragOperationDelegate(IntPtr self, IntPtr cmd, IntPtr sender);
 
-        WindowKeyDownDelegate WindowKeyDownHandler;
-        WindowDidResizeDelegate WindowDidResizeHandler;
-        WindowDidMoveDelegate WindowDidMoveHandler;
-        WindowDidBecomeKeyDelegate WindowDidBecomeKeyHandler;
-        WindowDidResignKeyDelegate WindowDidResignKeyHandler;
-        WindowWillMiniaturizeDelegate WindowWillMiniaturizeHandler;
-        WindowDidMiniaturizeDelegate WindowDidMiniaturizeHandler;
-        WindowDidDeminiaturizeDelegate WindowDidDeminiaturizeHandler;
-        WindowShouldZoomToFrameDelegate WindowShouldZoomToFrameHandler;
-        WindowShouldCloseDelegate WindowShouldCloseHandler;
-        AcceptsFirstResponderDelegate AcceptsFirstResponderHandler;
-        CanBecomeKeyWindowDelegate CanBecomeKeyWindowHandler;
-        CanBecomeMainWindowDelegate CanBecomeMainWindowHandler;
-        ResetCursorRectsDelegate ResetCursorRectsHandler;
-        DraggingEnteredDelegate DraggingEnteredHandler;
-        PerformDragOperationDelegate PerformDragOperationHandler;
+        private WindowKeyDownDelegate WindowKeyDownHandler;
+        private WindowDidResizeDelegate WindowDidResizeHandler;
+        private WindowDidMoveDelegate WindowDidMoveHandler;
+        private WindowDidBecomeKeyDelegate WindowDidBecomeKeyHandler;
+        private WindowDidResignKeyDelegate WindowDidResignKeyHandler;
+        private WindowWillMiniaturizeDelegate WindowWillMiniaturizeHandler;
+        private WindowDidMiniaturizeDelegate WindowDidMiniaturizeHandler;
+        private WindowDidDeminiaturizeDelegate WindowDidDeminiaturizeHandler;
+        private WindowShouldZoomToFrameDelegate WindowShouldZoomToFrameHandler;
+        private WindowShouldCloseDelegate WindowShouldCloseHandler;
+        private AcceptsFirstResponderDelegate AcceptsFirstResponderHandler;
+        private CanBecomeKeyWindowDelegate CanBecomeKeyWindowHandler;
+        private CanBecomeMainWindowDelegate CanBecomeMainWindowHandler;
+        private ResetCursorRectsDelegate ResetCursorRectsHandler;
+        private DraggingEnteredDelegate DraggingEnteredHandler;
+        private PerformDragOperationDelegate PerformDragOperationHandler;
 
         private IntPtr DraggingEntered(IntPtr self, IntPtr cmd, IntPtr sender)
         {
@@ -1091,7 +1100,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        static IntPtr ToNSCursor(MouseCursor cursor)
+        private static IntPtr ToNSCursor(MouseCursor cursor)
         {
             // We need to allocate a NSBitmapImageRep, fill it with pixels
             // and then convert it to a NSImage.
@@ -1168,7 +1177,7 @@ namespace OpenTK.Platform.MacOS
             return nscursor;
         }
 
-        void ResetCursorRects(IntPtr sender, IntPtr cmd)
+        private void ResetCursorRects(IntPtr sender, IntPtr cmd)
         {
             // We will add a new cursor rectangle that covers the complete view
             var rect = Cocoa.SendRect(windowInfo.ViewHandle, selBounds);
@@ -1191,7 +1200,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        void InvalidateCursorRects()
+        private void InvalidateCursorRects()
         {
             Cocoa.SendVoid(windowInfo.Handle, selInvalidateCursorRectsForView, windowInfo.ViewHandle);
         }
@@ -1339,7 +1348,7 @@ namespace OpenTK.Platform.MacOS
             return (NSWindowStyle)Cocoa.SendUint(windowInfo.Handle, selStyleMask);
         }
 
-        void CloseWindow(bool shutdown)
+        private void CloseWindow(bool shutdown)
         {
             if (!Exists)
                 return;

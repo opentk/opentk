@@ -67,7 +67,7 @@ namespace OpenTK.Platform.X11
         private const string _dll_name = "libX11";
         private const string _dll_name_vid = "libXxf86vm";
 
-        static Window rootWindow;
+        private static Window rootWindow;
 
         internal static Display DefaultDisplay { get; private set; }
 
@@ -97,7 +97,7 @@ namespace OpenTK.Platform.X11
             //AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
         }
 
-        static void CurrentDomain_ProcessExit(object sender, EventArgs e)
+        private static void CurrentDomain_ProcessExit(object sender, EventArgs e)
         {
             if (DefaultDisplay != IntPtr.Zero)
             {
@@ -362,55 +362,56 @@ namespace OpenTK.Platform.X11
             /// </summary>
             public int flags;
 
-            int privsize;   /* Size of private */
-            IntPtr _private;   /* Server privates */
+            private int privsize;   /* Size of private */
+            private IntPtr _private;   /* Server privates */
         }
 
         //Monitor information:
         [StructLayout(LayoutKind.Sequential)]
         internal struct XF86VidModeMonitor
         {
-            [MarshalAs(UnmanagedType.LPStr)]
-            string vendor;     /* Name of manufacturer */
-            [MarshalAs(UnmanagedType.LPStr)]
-            string model;      /* Model name */
-            float EMPTY;      /* unused, for backward compatibility */
-            byte nhsync;     /* Number of horiz sync ranges */
+            [MarshalAs(UnmanagedType.LPStr)] private string vendor;     /* Name of manufacturer */
+            [MarshalAs(UnmanagedType.LPStr)] private string model;      /* Model name */
+            private float EMPTY;      /* unused, for backward compatibility */
+
+            private byte nhsync;     /* Number of horiz sync ranges */
             /*XF86VidModeSyncRange* */
-            IntPtr hsync;/* Horizontal sync ranges */
-            byte nvsync;     /* Number of vert sync ranges */
+            private IntPtr hsync;/* Horizontal sync ranges */
+
+            private byte nvsync;     /* Number of vert sync ranges */
             /*XF86VidModeSyncRange* */
-            IntPtr vsync;/* Vertical sync ranges */
+            private IntPtr vsync;/* Vertical sync ranges */
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct XF86VidModeSyncRange
         {
-            float hi;         /* Top of range */
-            float lo;         /* Bottom of range */
+            private float hi;         /* Top of range */
+            private float lo;         /* Bottom of range */
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct XF86VidModeNotifyEvent
         {
-            int type;                      /* of event */
-            ulong serial;          /* # of last request processed by server */
-            bool send_event;               /* true if this came from a SendEvent req */
-            Display display;              /* Display the event was read from */
-            IntPtr root;                   /* root window of event screen */
-            int state;                     /* What happened */
-            int kind;                      /* What happened */
-            bool forced;                   /* extents of new region */
+            private int type;                      /* of event */
+            private ulong serial;          /* # of last request processed by server */
+            private bool send_event;               /* true if this came from a SendEvent req */
+            private Display display;              /* Display the event was read from */
+            private IntPtr root;                   /* root window of event screen */
+            private int state;                     /* What happened */
+            private int kind;                      /* What happened */
+
+            private bool forced;                   /* extents of new region */
             /* Time */
-            IntPtr time;                     /* event timestamp */
+            private IntPtr time;                     /* event timestamp */
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct XF86VidModeGamma
         {
-            float red;                     /* Red Gamma value */
-            float green;                   /* Green Gamma value */
-            float blue;                    /* Blue Gamma value */
+            private float red;                     /* Red Gamma value */
+            private float green;                   /* Green Gamma value */
+            private float blue;                    /* Blue Gamma value */
         }
         [DllImport(_dll_name_vid)]
         extern public static bool XF86VidModeQueryExtension(
@@ -542,7 +543,7 @@ XF86VidModeGetGammaRampSize(
 
     }
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct XcursorImage
+    internal unsafe struct XcursorImage
     {
         public XcursorUInt version;
         public XcursorDim size;
@@ -555,7 +556,7 @@ XF86VidModeGetGammaRampSize(
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct XcursorImages
+    internal unsafe struct XcursorImages
     {
         public int nimage;
         public XcursorImage **images;
@@ -563,7 +564,7 @@ XF86VidModeGetGammaRampSize(
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct XcursorCursors
+    internal unsafe struct XcursorCursors
     {
         public Display dpy;
         public int refcount;
@@ -572,7 +573,7 @@ XF86VidModeGetGammaRampSize(
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct XcursorAnimate
+    internal unsafe struct XcursorAnimate
     {
         public XcursorCursors *cursors;
         public int sequence;
@@ -628,32 +629,38 @@ XF86VidModeGetGammaRampSize(
 
     unsafe internal struct Screen
     {
-        XExtData ext_data;    /* hook for extension to hang buffer */
-        IntPtr display;     /* back pointer to display structure */ /* _XDisplay */
-        Window root;        /* Root window id. */
-        int width, height;    /* width and height of screen */
-        int mwidth, mheight;    /* width and height of  in millimeters */
-        int ndepths;        /* number of depths possible */
+        private XExtData ext_data;    /* hook for extension to hang buffer */
+        private IntPtr display;     /* back pointer to display structure */ /* _XDisplay */
+        private Window root;        /* Root window id. */
+
+        private int width, height;    /* width and height of screen */
+        private int mwidth, mheight;    /* width and height of  in millimeters */
+
+        private int ndepths;        /* number of depths possible */
         //Depth *depths;        /* list of allowable depths on the screen */
-        int root_depth;        /* bits per pixel */
+        private int root_depth;        /* bits per pixel */
         //Visual* root_visual;    /* root visual */
-        IntPtr default_gc;        /* GC for the root root visual */   // GC
-        Colormap cmap;        /* default color map */
-        UIntPtr white_pixel;    // unsigned long
-        UIntPtr black_pixel;    /* White and Black pixel values */  // unsigned long
-        int max_maps, min_maps;    /* max and min color maps */
-        int backing_store;    /* Never, WhenMapped, Always */
-        Bool save_unders;
-        long root_input_mask;    /* initial root input mask */
+        private IntPtr default_gc;        /* GC for the root root visual */   // GC
+
+        private Colormap cmap;        /* default color map */
+        private UIntPtr white_pixel;    // unsigned long
+        private UIntPtr black_pixel;    /* White and Black pixel values */  // unsigned long
+        private int max_maps, min_maps;    /* max and min color maps */
+
+        private int backing_store;    /* Never, WhenMapped, Always */
+        private Bool save_unders;
+        private long root_input_mask;    /* initial root input mask */
     }
 
     unsafe internal class XExtData
     {
-        int number;        /* number returned by XRegisterExtension */
-        XExtData next;    /* next item on list of buffer for structure */
-        delegate int FreePrivateDelegate(XExtData extension);
-        FreePrivateDelegate FreePrivate;    /* called to free private storage */
-        XPointer private_data;    /* buffer private to this extension. */
+        private int number;        /* number returned by XRegisterExtension */
+        private XExtData next;    /* next item on list of buffer for structure */
+
+        private delegate int FreePrivateDelegate(XExtData extension);
+
+        private FreePrivateDelegate FreePrivate;    /* called to free private storage */
+        private XPointer private_data;    /* buffer private to this extension. */
     };
 
     [StructLayout(LayoutKind.Sequential)]
@@ -1381,7 +1388,7 @@ XF86VidModeGetGammaRampSize(
         [DllImport(X11Library, EntryPoint = "XPutBackEvent")]
         public static extern void XPutBackEvent(IntPtr display, ref XEvent @event);
 
-        const string XrandrLibrary = "libXrandr.so.2";
+        private const string XrandrLibrary = "libXrandr.so.2";
 
         [DllImport(XrandrLibrary)]
         public static extern Bool XRRQueryExtension(Display dpy, ref int event_basep, ref int error_basep);
@@ -1450,7 +1457,7 @@ XF86VidModeGetGammaRampSize(
         public static extern Rotation XRRRotations(Display dpy, int screen, ref Rotation current_rotation);
 
         [DllImport(XrandrLibrary)]
-        unsafe static extern IntPtr XRRSizes(Display dpy, int screen, int* nsizes);
+        private unsafe static extern IntPtr XRRSizes(Display dpy, int screen, int* nsizes);
 
         public static XRRScreenSize[] XRRSizes(Display dpy, int screen)
         {
@@ -1477,7 +1484,7 @@ XF86VidModeGetGammaRampSize(
         }
 
         [DllImport(XrandrLibrary)]
-        unsafe static extern short* XRRRates(Display dpy, int screen, int size_index, int* nrates);
+        private unsafe static extern short* XRRRates(Display dpy, int screen, int size_index, int* nrates);
 
         public static short[] XRRRates(Display dpy, int screen, int size_index)
         {
@@ -1502,7 +1509,7 @@ XF86VidModeGetGammaRampSize(
         public static extern int XScreenCount(Display display);
 
         [DllImport(X11Library)]
-        unsafe static extern int *XListDepths(Display display, int screen_number, int* count_return);
+        private unsafe static extern int *XListDepths(Display display, int screen_number, int* count_return);
 
         public static int[] XListDepths(Display display, int screen_number)
         {
@@ -1563,9 +1570,9 @@ XF86VidModeGetGammaRampSize(
     */
 
     // Helper structure for calling XLock/UnlockDisplay
-    struct XLock : IDisposable
+    internal struct XLock : IDisposable
     {
-        IntPtr _display;
+        private IntPtr _display;
 
         public IntPtr Display
         {
@@ -1597,7 +1604,7 @@ XF86VidModeGetGammaRampSize(
     }
 
     // XAllowEvent modes
-    enum EventMode
+    internal enum EventMode
     {
         AsyncPointer = 0,
         SyncPointer,

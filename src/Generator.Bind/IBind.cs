@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Bind
 {
-    interface IBind
+    internal interface IBind
     {
         DelegateCollection Delegates { get; }
         EnumCollection Enums { get; }

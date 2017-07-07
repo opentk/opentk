@@ -31,7 +31,7 @@ namespace OpenTK.Platform.SDL2
 {
     using Code = Scancode;
 
-    class Sdl2KeyMap
+    internal class Sdl2KeyMap
     {
         public static Key GetKey(Code code)
         {

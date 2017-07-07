@@ -15,24 +15,24 @@ using OpenTK.Platform;
 
 namespace OpenTK
 {
-    class X11GLControl : IGLControl
+    internal class X11GLControl : IGLControl
     {
         [DllImport("libX11")]
-        static extern IntPtr XCreateColormap(IntPtr display, IntPtr window, IntPtr visual, int alloc);
+        private static extern IntPtr XCreateColormap(IntPtr display, IntPtr window, IntPtr visual, int alloc);
 
         [DllImport("libX11", EntryPoint = "XGetVisualInfo")]
-        static extern IntPtr XGetVisualInfoInternal(IntPtr display, IntPtr vinfo_mask, ref XVisualInfo template, out int nitems);
+        private static extern IntPtr XGetVisualInfoInternal(IntPtr display, IntPtr vinfo_mask, ref XVisualInfo template, out int nitems);
 
-        static IntPtr XGetVisualInfo(IntPtr display, int vinfo_mask, ref XVisualInfo template, out int nitems)
+        private static IntPtr XGetVisualInfo(IntPtr display, int vinfo_mask, ref XVisualInfo template, out int nitems)
         {
             return XGetVisualInfoInternal(display, (IntPtr)vinfo_mask, ref template, out nitems);
         }
 
         [DllImport("libX11")]
-        extern static int XPending(IntPtr diplay);
+        private extern static int XPending(IntPtr diplay);
 
         [StructLayout(LayoutKind.Sequential)]
-        struct XVisualInfo
+        private struct XVisualInfo
         {
             public IntPtr Visual;
             public IntPtr VisualID;
@@ -52,12 +52,12 @@ namespace OpenTK
             }
         }
 
-        GraphicsMode mode;
-        IntPtr display;
-        IntPtr rootWindow;
+        private GraphicsMode mode;
+        private IntPtr display;
+        private IntPtr rootWindow;
 
         // Use reflection to retrieve the necessary values from Mono's Windows.Forms implementation.
-        Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
+        private Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
 
         internal X11GLControl(GraphicsMode mode, Control control)
         {
@@ -122,13 +122,13 @@ namespace OpenTK
 
         public IWindowInfo WindowInfo { get; }
 
-        static object GetStaticFieldValue(Type type, string fieldName)
+        private static object GetStaticFieldValue(Type type, string fieldName)
         {
             return type.GetField(fieldName,
                 System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
         }
 
-        static void SetStaticFieldValue(Type type, string fieldName, object value)
+        private static void SetStaticFieldValue(Type type, string fieldName, object value)
         {
             type.GetField(fieldName,
                 System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).SetValue(null, value);

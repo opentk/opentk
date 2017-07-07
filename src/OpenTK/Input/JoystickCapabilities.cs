@@ -37,9 +37,9 @@ namespace OpenTK.Input
     /// </summary>
     public struct JoystickCapabilities : IEquatable<JoystickCapabilities>
     {
-        byte axis_count;
-        byte button_count;
-        byte hat_count;
+        private byte axis_count;
+        private byte button_count;
+        private byte hat_count;
 
         internal JoystickCapabilities(int axis_count, int button_count, int hat_count, bool is_connected)
         {

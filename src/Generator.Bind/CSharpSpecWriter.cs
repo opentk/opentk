@@ -37,10 +37,10 @@ namespace Bind
     using Enum = Bind.Structures.Enum;
     using Type = Bind.Structures.Type;
 
-    sealed class CSharpSpecWriter
+    internal sealed class CSharpSpecWriter
     {
-        IBind Generator { get; set; }
-        Settings Settings { get { return Generator.Settings; } }
+        private IBind Generator { get; set; }
+        private Settings Settings { get { return Generator.Settings; } }
 
         public void WriteBindings(IBind generator)
         {
@@ -59,7 +59,7 @@ namespace Bind
             Console.SetCursorPosition(left, top);
         }
 
-        void WriteBindings(DelegateCollection delegates, FunctionCollection wrappers, EnumCollection enums)
+        private void WriteBindings(DelegateCollection delegates, FunctionCollection wrappers, EnumCollection enums)
         {
             Console.WriteLine("Writing bindings to {0}", Settings.OutputPath);
             if (!Directory.Exists(Settings.OutputPath))
@@ -133,7 +133,7 @@ namespace Bind
             File.Move(temp_wrappers_file, output_wrappers);
         }
 
-        void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers,
+        private void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers,
             DelegateCollection delegates, EnumCollection enums,
             IDictionary<string, string> CSTypes)
         {
@@ -244,7 +244,7 @@ namespace Bind
             Console.WriteLine("Wrote {0} wrappers for {1} signatures", current_wrapper, current_signature);
         }
 
-        void WriteWrapper(BindStreamWriter sw, Function f, EnumCollection enums)
+        private void WriteWrapper(BindStreamWriter sw, Function f, EnumCollection enums)
         {
             if ((Settings.Compatibility & Settings.Legacy.NoDocumentation) == 0)
             {
@@ -276,7 +276,7 @@ namespace Bind
             sw.WriteLine("public static {0} {{ throw new NotImplementedException(); }}", GetDeclarationString(f, Settings.Compatibility));
         }
 
-        void WriteDocumentation(BindStreamWriter sw, Function f)
+        private void WriteDocumentation(BindStreamWriter sw, Function f)
         {
             var docs = f.Documentation;
 
@@ -393,7 +393,7 @@ namespace Bind
             }
         }
 
-        void WriteConstants(BindStreamWriter sw, IEnumerable<Constant> constants)
+        private void WriteConstants(BindStreamWriter sw, IEnumerable<Constant> constants)
         {
              // Make sure everything is sorted. This will avoid random changes between
             // consecutive runs of the program.
@@ -417,7 +417,7 @@ namespace Bind
             }
         }
 
-        void WriteEnums(BindStreamWriter sw, EnumCollection enums, FunctionCollection wrappers)
+        private void WriteEnums(BindStreamWriter sw, EnumCollection enums, FunctionCollection wrappers)
         {
             //sw.WriteLine("#pragma warning disable 3019");   // CLSCompliant attribute
             //sw.WriteLine("#pragma warning disable 1591");   // Missing doc comments
@@ -530,15 +530,16 @@ namespace Bind
 
         // For example, if parameter foo has indirection level = 1, then it
         // is consumed as 'foo*' in the fixed_statements and the call string.
-        readonly static string[] pointer_levels = new string[] { "", "*", "**", "***", "****" };
-        readonly static string[] array_levels = new string[] { "", "[]", "[,]", "[,,]", "[,,,]" };
+        private readonly static string[] pointer_levels = new string[] { "", "*", "**", "***", "****" };
 
-        static bool IsEnum(string s, EnumCollection enums)
+        private readonly static string[] array_levels = new string[] { "", "[]", "[,]", "[,,]", "[,,,]" };
+
+        private static bool IsEnum(string s, EnumCollection enums)
         {
             return enums.ContainsKey(s);
         }
 
-        string GetDeclarationString(Constant c)
+        private string GetDeclarationString(Constant c)
         {
             if (String.IsNullOrEmpty(c.Name))
             {
@@ -554,7 +555,7 @@ namespace Bind
                 c.Value);
         }
 
-        string GetDeclarationString(Delegate d, bool is_delegate)
+        private string GetDeclarationString(Delegate d, bool is_delegate)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -570,7 +571,7 @@ namespace Bind
             return sb.ToString();
         }
 
-        string GetDeclarationString(Enum e)
+        private string GetDeclarationString(Enum e)
         {
             StringBuilder sb = new StringBuilder();
             List<Constant> constants = new List<Constant>(e.ConstantCollection.Values);
@@ -603,7 +604,7 @@ namespace Bind
             return sb.ToString();
         }
 
-        string GetDeclarationString(Function f, Settings.Legacy settings)
+        private string GetDeclarationString(Function f, Settings.Legacy settings)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -646,7 +647,7 @@ namespace Bind
             return sb.ToString();
         }
 
-        string GetDeclarationString(Parameter p, bool override_unsafe_setting, Settings.Legacy settings)
+        private string GetDeclarationString(Parameter p, bool override_unsafe_setting, Settings.Legacy settings)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -687,7 +688,7 @@ namespace Bind
             return sb.ToString();
         }
 
-        string GetDeclarationString(ParameterCollection parameters, Settings.Legacy settings)
+        private string GetDeclarationString(ParameterCollection parameters, Settings.Legacy settings)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -709,7 +710,7 @@ namespace Bind
             return sb.ToString();
         }
 
-        string GetDeclarationString(Type type, Settings.Legacy settings)
+        private string GetDeclarationString(Type type, Settings.Legacy settings)
         {
             var t = type.QualifiedType;
             if ((settings & Settings.Legacy.ConstIntEnums) != 0)

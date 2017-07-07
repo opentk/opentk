@@ -35,11 +35,11 @@ namespace OpenTK.Platform.Linux
     using BufferObjectHandle = IntPtr;
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate void DestroyUserDataCallback(BufferObject bo, IntPtr data);
+    internal delegate void DestroyUserDataCallback(BufferObject bo, IntPtr data);
 
-    class Gbm
+    internal class Gbm
     {
-        const string lib = "gbm";
+        private const string lib = "gbm";
 
         [DllImport(lib, EntryPoint = "gbm_bo_create", CallingConvention = CallingConvention.Cdecl)]
         public static extern BufferObject CreateBuffer(Device gbm, int width, int height, SurfaceFormat format, SurfaceFlags flags);
@@ -94,7 +94,7 @@ namespace OpenTK.Platform.Linux
         public static extern void ReleaseBuffer(Surface surface, BufferObject buffer);
     }
 
-    enum SurfaceFormat
+    internal enum SurfaceFormat
     {
         BigEndian = 1 << 31,
         C8 = ((int)('C') | ((int)('8') << 8) | ((int)(' ') << 16) | ((int)(' ') << 24)),
@@ -173,7 +173,7 @@ namespace OpenTK.Platform.Linux
     }
 
     [Flags]
-    enum SurfaceFlags
+    internal enum SurfaceFlags
     {
         Scanout = (1 << 0),
         Cursor64x64 = (1 << 1),
@@ -182,9 +182,9 @@ namespace OpenTK.Platform.Linux
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct BufferObject : IEquatable<BufferObject>
+    internal struct BufferObject : IEquatable<BufferObject>
     {
-        IntPtr buffer;
+        private IntPtr buffer;
 
         public static readonly BufferObject Zero =
             default(BufferObject);

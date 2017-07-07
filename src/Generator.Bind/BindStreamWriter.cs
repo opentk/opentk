@@ -31,20 +31,20 @@ using Enum=Bind.Structures.Enum;
 
 namespace Bind
 {
-    enum WriteOptions
+    internal enum WriteOptions
     {
         Default = 0,
         NoIndent = 1
     }
 
-    class BindStreamWriter : IDisposable
+    internal class BindStreamWriter : IDisposable
     {
-        static readonly string[] SplitStrings = new string[] { System.Environment.NewLine };
-        readonly StreamWriter sw;
+        private static readonly string[] SplitStrings = new string[] { System.Environment.NewLine };
+        private readonly StreamWriter sw;
         public readonly string File;
 
-        bool newline = true;
-        int indent_level = 0;
+        private bool newline = true;
+        private int indent_level = 0;
 
         public BindStreamWriter(string file)
         {
@@ -139,7 +139,7 @@ namespace Bind
             sw.Close();
         }
 
-        void WriteIndentations(WriteOptions options)
+        private void WriteIndentations(WriteOptions options)
         {
             if (options != WriteOptions.NoIndent)
             {

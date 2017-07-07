@@ -30,10 +30,11 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
-    class X11Factory : PlatformFactoryBase
+    internal class X11Factory : PlatformFactoryBase
     {
-        IInputDriver2 input_driver;
-        IInputDriver2 InputDriver
+        private IInputDriver2 input_driver;
+
+        private IInputDriver2 InputDriver
         {
             get
             {

@@ -33,9 +33,9 @@ using OpenTK.Platform;
 
 namespace OpenTK
 {
-    class Sdl2GLControl : IGLControl
+    internal class Sdl2GLControl : IGLControl
     {
-        GraphicsMode mode;
+        private GraphicsMode mode;
 
         public Sdl2GLControl(GraphicsMode mode, Control control)
         {
@@ -59,7 +59,7 @@ namespace OpenTK
 
         public Platform.IWindowInfo WindowInfo { get; }
 
-        static class NativeMethods
+        private static class NativeMethods
         {
             [DllImport("SDL2.dll", CallingConvention = CallingConvention.Cdecl)]
             public static extern bool SDL_HasEvents(int minType, int maxType);

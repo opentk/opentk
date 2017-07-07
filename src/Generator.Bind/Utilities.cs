@@ -92,7 +92,7 @@ namespace Bind
         SizeParameter = 1 << 14,
     }
 
-    static class Utilities
+    internal static class Utilities
     {
         public static readonly char[] Separators = { ' ', '\n', ',', '(', ')', ';', '#' };
         public static Regex Extensions { get; private set; }
@@ -103,7 +103,7 @@ namespace Bind
         // Note: REMOVING THESE WILL BREAK BINARY-COMPATIBILITY WITH OPENTK 1.0,
         // WRT THE ES 1.1 API.
         // You have been warned.
-        static List<string> extension_names = new List<string>
+        private static List<string> extension_names = new List<string>
         {
             "SGI", "SGIS", "SGIX", "IBM", "AMD", "INTEL",
         };

@@ -33,7 +33,7 @@ namespace OpenTK.Platform.MacOS
 {
     using Graphics;
 
-    class MacOSFactory : PlatformFactoryBase
+    internal class MacOSFactory : PlatformFactoryBase
     {
         // Todo: we can query the exact amount via
         // CGEventSourceGetPixelsPerLine. This is
@@ -41,7 +41,7 @@ namespace OpenTK.Platform.MacOS
         internal const float ScrollFactor = 0.1f;
         internal static bool ExclusiveFullscreen = false;
 
-        readonly IInputDriver2 InputDriver;
+        private readonly IInputDriver2 InputDriver;
 
         public MacOSFactory()
         {

@@ -27,9 +27,9 @@ namespace OpenTK.Rewrite
 {
     // Replaces OpenTK.InteropHelper method instances
     // with the s IL instructions.
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             if (args.Length == 0)
             {
@@ -48,19 +48,20 @@ namespace OpenTK.Rewrite
         }
 
         // mscorlib types
-        static AssemblyDefinition mscorlib;
-        static TypeDefinition TypeMarshal;
-        static TypeDefinition TypeStringBuilder;
-        static TypeDefinition TypeVoid;
-        static TypeDefinition TypeIntPtr;
-        static TypeDefinition TypeInt32;
+        private static AssemblyDefinition mscorlib;
+
+        private static TypeDefinition TypeMarshal;
+        private static TypeDefinition TypeStringBuilder;
+        private static TypeDefinition TypeVoid;
+        private static TypeDefinition TypeIntPtr;
+        private static TypeDefinition TypeInt32;
 
         // OpenTK.BindingsBase
-        static TypeDefinition TypeBindingsBase;
+        private static TypeDefinition TypeBindingsBase;
 
-        static bool dllimport;
+        private static bool dllimport;
 
-        void Rewrite(string file, string keyfile, IEnumerable<string> options)
+        private void Rewrite(string file, string keyfile, IEnumerable<string> options)
         {
             IEnumerable<string> optionsEnumerated = options as IList<string> ?? options.ToList();
             dllimport = optionsEnumerated.Contains("-dllimport");
@@ -152,7 +153,7 @@ namespace OpenTK.Rewrite
             }
         }
 
-        void Rewrite(TypeDefinition type, IEnumerable<string> options)
+        private void Rewrite(TypeDefinition type, IEnumerable<string> options)
         {
             var entry_points = type.Fields.FirstOrDefault(f => f.Name == "EntryPoints");
             if (entry_points != null)
@@ -177,7 +178,7 @@ namespace OpenTK.Rewrite
             }
         }
 
-        static int GetSlot(MethodDefinition signature)
+        private static int GetSlot(MethodDefinition signature)
         {
             // Pretend there is no slots if we want to force everything to work through DllImport (Android & iOS)
             if (dllimport)
@@ -193,7 +194,7 @@ namespace OpenTK.Rewrite
             return slot;
         }
 
-        void Rewrite(TypeDefinition type, FieldDefinition entry_points,
+        private void Rewrite(TypeDefinition type, FieldDefinition entry_points,
             List<MethodDefinition> entry_signatures, IEnumerable<string> options)
         {
             // Rewrite all wrapper methods
@@ -228,7 +229,7 @@ namespace OpenTK.Rewrite
             }
         }
 
-        static void RemoveNativeSignatures(TypeDefinition type, IEnumerable<MethodDefinition> methods)
+        private static void RemoveNativeSignatures(TypeDefinition type, IEnumerable<MethodDefinition> methods)
         {
             // Remove all DllImports for functions called through calli, since
             // their signatures are embedded directly into the calli callsite.
@@ -239,7 +240,7 @@ namespace OpenTK.Rewrite
             }
         }
 
-        static void RemoveSupportingAttributes(TypeDefinition type)
+        private static void RemoveSupportingAttributes(TypeDefinition type)
         {
             foreach (var method in type.Methods)
             {
@@ -256,7 +257,7 @@ namespace OpenTK.Rewrite
         }
 
         // Create body for method
-        static void ProcessMethod(MethodDefinition wrapper, MethodDefinition native, int slot,
+        private static void ProcessMethod(MethodDefinition wrapper, MethodDefinition native, int slot,
                                   FieldDefinition entry_points, IEnumerable<string> options)
         {
             var body = wrapper.Body;
@@ -324,7 +325,7 @@ namespace OpenTK.Rewrite
             body.OptimizeMacros();
         }
 
-        class DebugVariables
+        private class DebugVariables
         {
             public TypeDefinition ErrorHelperType;
             public VariableDefinition ErrorHelperLocal;
@@ -333,7 +334,7 @@ namespace OpenTK.Rewrite
             public Instruction BeginTry;
         }
 
-        static DebugVariables EmitDebugPrologue(MethodDefinition wrapper, ILProcessor il)
+        private static DebugVariables EmitDebugPrologue(MethodDefinition wrapper, ILProcessor il)
         {
 
             DebugVariables vars = null;
@@ -417,7 +418,7 @@ namespace OpenTK.Rewrite
             return vars;
         }
 
-        static void EmitDebugEpilogue(MethodDefinition wrapper, ILProcessor il, DebugVariables vars)
+        private static void EmitDebugEpilogue(MethodDefinition wrapper, ILProcessor il, DebugVariables vars)
         {
             if (vars != null)
             {
@@ -525,7 +526,7 @@ namespace OpenTK.Rewrite
             }
         }
 
-        static void EmitParameterEpilogues(MethodDefinition wrapper, MethodDefinition native, MethodBody body, ILProcessor il,
+        private static void EmitParameterEpilogues(MethodDefinition wrapper, MethodDefinition native, MethodBody body, ILProcessor il,
             List<GeneratedVariableIdentifier> generatedVariables)
         {
             foreach (var p in wrapper.Parameters)
@@ -554,13 +555,13 @@ namespace OpenTK.Rewrite
         /// <param name="name"></param>
         /// <param name="body"></param>
         /// <returns></returns>
-        static GeneratedVariableIdentifier GetGeneratedVariable(IEnumerable<GeneratedVariableIdentifier> variableIdentifiers, string name, MethodBody body)
+        private static GeneratedVariableIdentifier GetGeneratedVariable(IEnumerable<GeneratedVariableIdentifier> variableIdentifiers, string name, MethodBody body)
         {
             return variableIdentifiers.FirstOrDefault(v => v.Name == name && v.Body == body &&
                                                            body.Variables.Contains(v.Definition));
         }
 
-        static GeneratedVariableIdentifier EmitStringBuilderParameter(MethodDefinition method, ParameterDefinition parameter, MethodBody body, ILProcessor il)
+        private static GeneratedVariableIdentifier EmitStringBuilderParameter(MethodDefinition method, ParameterDefinition parameter, MethodBody body, ILProcessor il)
         {
             var p = parameter.ParameterType;
 
@@ -597,7 +598,7 @@ namespace OpenTK.Rewrite
             return stringBuilderPtrVar;
         }
 
-        static void EmitStringBuilderEpilogue(MethodDefinition wrapper, MethodDefinition native,
+        private static void EmitStringBuilderEpilogue(MethodDefinition wrapper, MethodDefinition native,
             ParameterDefinition parameter, MethodBody body, ILProcessor il, GeneratedVariableIdentifier generatedPtrVar)
         {
             if (generatedPtrVar == null)
@@ -639,7 +640,7 @@ namespace OpenTK.Rewrite
             }
         }
 
-        static GeneratedVariableIdentifier EmitStringParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body,
+        private static GeneratedVariableIdentifier EmitStringParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body,
             ILProcessor il)
         {
             var p = parameter.ParameterType;
@@ -666,7 +667,7 @@ namespace OpenTK.Rewrite
             return stringPtrVar;
         }
 
-        static void EmitStringEpilogue(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body,
+        private static void EmitStringEpilogue(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body,
             ILProcessor il, GeneratedVariableIdentifier generatedPtrVar)
         {
             var p = parameter.ParameterType;
@@ -677,7 +678,7 @@ namespace OpenTK.Rewrite
             il.Emit(OpCodes.Call, free);
         }
 
-        static GeneratedVariableIdentifier EmitStringArrayParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body,
+        private static GeneratedVariableIdentifier EmitStringArrayParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body,
             ILProcessor il)
         {
             var p = parameter.ParameterType;
@@ -705,7 +706,7 @@ namespace OpenTK.Rewrite
             return stringArrayPtrVar;
         }
 
-        static void EmitStringArrayEpilogue(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body,
+        private static void EmitStringArrayEpilogue(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body,
             ILProcessor il, GeneratedVariableIdentifier generatedPtrVar)
         {
             if (generatedPtrVar == null)
@@ -732,7 +733,7 @@ namespace OpenTK.Rewrite
             il.Emit(OpCodes.Call, free);
         }
 
-        static List<GeneratedVariableIdentifier> EmitConvenienceWrapper(MethodDefinition wrapper,
+        private static List<GeneratedVariableIdentifier> EmitConvenienceWrapper(MethodDefinition wrapper,
             MethodDefinition native, int difference, MethodBody body, ILProcessor il)
         {
             if (wrapper.Parameters.Count > 2)
@@ -800,7 +801,7 @@ namespace OpenTK.Rewrite
             return generatedVariables;
         }
 
-        static List<GeneratedVariableIdentifier> EmitParameters(MethodDefinition method, MethodDefinition native, MethodBody body, ILProcessor il)
+        private static List<GeneratedVariableIdentifier> EmitParameters(MethodDefinition method, MethodDefinition native, MethodBody body, ILProcessor il)
         {
             List<GeneratedVariableIdentifier> generatedVariables = new List<GeneratedVariableIdentifier>();
             for (int i = 0; i < method.Parameters.Count; i++)
@@ -931,14 +932,14 @@ namespace OpenTK.Rewrite
             return generatedVariables;
         }
 
-        static void EmitEntryPoint(FieldDefinition entry_points, ILProcessor il, int slot)
+        private static void EmitEntryPoint(FieldDefinition entry_points, ILProcessor il, int slot)
         {
             il.Emit(OpCodes.Ldsfld, entry_points);
             il.Emit(OpCodes.Ldc_I4, slot);
             il.Emit(OpCodes.Ldelem_I);
         }
 
-        static void EmitCalli(ILProcessor il, MethodReference reference)
+        private static void EmitCalli(ILProcessor il, MethodReference reference)
         {
             var signature = new CallSite(reference.ReturnType)
             {
@@ -955,7 +956,7 @@ namespace OpenTK.Rewrite
             il.Emit(OpCodes.Calli, signature);
         }
 
-        static void EmitCall(ILProcessor il, MethodReference reference)
+        private static void EmitCall(ILProcessor il, MethodReference reference)
         {
             il.Emit(OpCodes.Call, reference);
         }

@@ -21,18 +21,18 @@ namespace OpenTK.Platform.Windows
     /// </summary>
     internal sealed class WinGLContext : DesktopGraphicsContext
     {
-        static readonly object LoadLock = new object();
+        private static readonly object LoadLock = new object();
 
-        bool vsync_supported;
-        bool vsync_tear_supported;
+        private bool vsync_supported;
+        private bool vsync_tear_supported;
 
-        readonly WinGraphicsMode ModeSelector;
+        private readonly WinGraphicsMode ModeSelector;
 
         // We need to create a temp context in order to load
         // wgl extensions (e.g. for multisampling or GL3).
         // We cannot rely on any WGL extensions before
         // we load them with the temporary context.
-        class TemporaryContext : IDisposable
+        private class TemporaryContext : IDisposable
         {
             public ContextHandle Context;
 
@@ -215,7 +215,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        static ArbCreateContext GetARBContextFlags(GraphicsContextFlags flags)
+        private static ArbCreateContext GetARBContextFlags(GraphicsContextFlags flags)
         {
             ArbCreateContext result = 0;
             result |= (flags & GraphicsContextFlags.ForwardCompatible) != 0 ?
@@ -223,7 +223,7 @@ namespace OpenTK.Platform.Windows
             return result;
         }
 
-        static ArbCreateContext GetARBContextProfile(GraphicsContextFlags flags)
+        private static ArbCreateContext GetARBContextProfile(GraphicsContextFlags flags)
         {
             ArbCreateContext result = 0;
             result |= (flags & GraphicsContextFlags.Debug) != 0 ? ArbCreateContext.DebugBit : 0;
@@ -345,7 +345,7 @@ namespace OpenTK.Platform.Windows
             return address;
         }
 
-        static bool IsValid(IntPtr address)
+        private static bool IsValid(IntPtr address)
         {
             // See https://www.opengl.org/wiki/Load_OpenGL_Functions
             long a = address.ToInt64();

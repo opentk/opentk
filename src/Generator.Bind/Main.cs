@@ -16,7 +16,7 @@ using Bind.GL2;
 
 namespace Bind
 {
-    enum GeneratorMode
+    internal enum GeneratorMode
     {
         All = 0,
         Default = All,
@@ -31,13 +31,13 @@ namespace Bind
         CL10,
     }
 
-    static class MainClass
+    internal static class MainClass
     {
-        static GeneratorMode mode = GeneratorMode.Default;
+        private static GeneratorMode mode = GeneratorMode.Default;
         static internal List<IBind> Generators = new List<IBind>();
-        static Settings Settings = new Settings();
+        private static Settings Settings = new Settings();
 
-        static void Main(string[] arguments)
+        private static void Main(string[] arguments)
         {
             Debug.Listeners.Clear();
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));

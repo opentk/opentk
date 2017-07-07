@@ -30,7 +30,7 @@ using System;
 namespace OpenTK.Platform.MacOS
 {
     [Flags]
-    enum NSWindowStyle
+    internal enum NSWindowStyle
     {
         Borderless = 0,
         Titled = 1,

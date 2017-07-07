@@ -34,7 +34,7 @@ namespace OpenTK
     /// </summary>
     public sealed class MouseCursor : WindowIcon
     {
-        MouseCursor()
+        private MouseCursor()
         {
         }
 

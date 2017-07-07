@@ -17,11 +17,11 @@ namespace Bind.Structures
     /// Represents an opengl function.
     /// The return value, function name, function parameters and opengl version can be retrieved or set.
     /// </summary>
-    class Delegate : IComparable<Delegate>, IEquatable<Delegate>
+    internal class Delegate : IComparable<Delegate>, IEquatable<Delegate>
     {
         //internal static DelegateCollection Delegates;
 
-        bool? cls_compliance_overriden;
+        private bool? cls_compliance_overriden;
 
         protected static Regex endings = new Regex(@"((((d|f|fi)|u?[isb])_?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
         protected static Regex endingsNotToTrim = new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flag|Tess|Status|Pixels|Instanced|Indexed|Varyings|Boolean|IDs)", RegexOptions.Compiled | RegexOptions.RightToLeft);
@@ -140,7 +140,7 @@ namespace Bind.Structures
         /// </summary>
         public Type ReturnType { get; set; } = new Type();
 
-        string _name;
+        private string _name;
         /// <summary>
         /// Gets or sets the name of the opengl function.
         /// </summary>
@@ -213,9 +213,9 @@ namespace Bind.Structures
         }
     }
 
-    class DelegateCollection : IDictionary<string, List<Delegate>>
+    internal class DelegateCollection : IDictionary<string, List<Delegate>>
     {
-        readonly SortedDictionary<string, List<Delegate>> Delegates =
+        private readonly SortedDictionary<string, List<Delegate>> Delegates =
             new SortedDictionary<string, List<Delegate>>();
 
         public void Add(Delegate d)

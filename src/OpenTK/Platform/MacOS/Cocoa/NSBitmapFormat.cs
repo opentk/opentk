@@ -30,7 +30,7 @@ using System;
 namespace OpenTK.Platform.MacOS
 {
     [Flags]
-    enum NSBitmapFormat
+    internal enum NSBitmapFormat
     {
         AlphaFirst = 1 << 0,
         AlphaNonpremultiplied = 1 << 1,

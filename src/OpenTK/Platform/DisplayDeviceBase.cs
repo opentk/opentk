@@ -29,7 +29,7 @@ using System.Text;
 
 namespace OpenTK.Platform
 {
-    abstract class DisplayDeviceBase : IDisplayDeviceDriver
+    internal abstract class DisplayDeviceBase : IDisplayDeviceDriver
     {
         protected readonly List<DisplayDevice> AvailableDevices = new List<DisplayDevice>();
         protected DisplayDevice Primary;

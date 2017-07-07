@@ -31,7 +31,7 @@ namespace OpenTK.Platform
     using Graphics;
     using Input;
 
-    sealed class Factory : IPlatformFactory
+    internal sealed class Factory : IPlatformFactory
     {
         private bool disposed;
 
@@ -166,9 +166,9 @@ namespace OpenTK.Platform
             Default.RegisterResource(resource);
         }
 
-        class UnsupportedPlatform : PlatformFactoryBase
+        private class UnsupportedPlatform : PlatformFactoryBase
         {
-            static readonly string error_string = "Please, refer to http://www.opentk.com for more information.";
+            private static readonly string error_string = "Please, refer to http://www.opentk.com for more information.";
 
             public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
             {
@@ -211,7 +211,7 @@ namespace OpenTK.Platform
             }
         }
 
-        void Dispose(bool manual)
+        private void Dispose(bool manual)
         {
             if (!disposed)
             {

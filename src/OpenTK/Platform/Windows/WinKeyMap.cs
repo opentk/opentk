@@ -30,7 +30,7 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
 {
-    static class WinKeyMap
+    internal static class WinKeyMap
     {
         public static Key GetKey(int code)
         {

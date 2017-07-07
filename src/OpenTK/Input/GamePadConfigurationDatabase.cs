@@ -30,11 +30,11 @@ using System.Collections.Generic;
 
 namespace OpenTK.Input
 {
-    class GamePadConfigurationDatabase
+    internal class GamePadConfigurationDatabase
     {
         internal const string UnmappedName = "Unmapped Controller";
 
-        readonly Dictionary<Guid, string> Configurations = new Dictionary<Guid, string>();
+        private readonly Dictionary<Guid, string> Configurations = new Dictionary<Guid, string>();
 
         internal GamePadConfigurationDatabase()
         {

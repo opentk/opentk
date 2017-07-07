@@ -41,13 +41,13 @@ namespace OpenTK.Graphics.ES20
 #if IPHONE
         const string Library = "/System/Library/Frameworks/OpenGLES.framework/OpenGLES";
 #else
-        const string Library = "libGLESv2.dll";
+        private const string Library = "libGLESv2.dll";
 #endif
-        static readonly object sync_root = new object();
+        private static readonly object sync_root = new object();
 
-        static IntPtr[] EntryPoints;
-        static byte[] EntryPointNames;
-        static int[] EntryPointNameOffsets;
+        private static IntPtr[] EntryPoints;
+        private static byte[] EntryPointNames;
+        private static int[] EntryPointNameOffsets;
 
         /// <summary>
         /// Constructs a new instance.

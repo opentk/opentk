@@ -20,10 +20,10 @@ namespace OpenTK.Platform.Dummy
     /// </summary>
     internal sealed class DummyGLContext : GraphicsContextBase
     {
-        readonly GraphicsContext.GetAddressDelegate Loader;
+        private readonly GraphicsContext.GetAddressDelegate Loader;
 
-        static int handle_count;
-        Thread current_thread;
+        private static int handle_count;
+        private Thread current_thread;
 
         public DummyGLContext()
         {

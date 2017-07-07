@@ -34,9 +34,10 @@ namespace OpenTK.Input
     /// </summary>
     public static class Mouse
     {
-        static readonly IMouseDriver2 driver =
+        private static readonly IMouseDriver2 driver =
             Platform.Factory.Default.CreateMouseDriver();
-        static readonly object SyncRoot = new object();
+
+        private static readonly object SyncRoot = new object();
 
         /// <summary>
         /// Retrieves the combined <see cref="OpenTK.Input.MouseState"/> for all specified mouse devices.

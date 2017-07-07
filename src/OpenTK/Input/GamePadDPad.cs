@@ -35,7 +35,7 @@ namespace OpenTK.Input
     public struct GamePadDPad : IEquatable<GamePadDPad>
     {
         [Flags]
-        enum DPadButtons : byte
+        private enum DPadButtons : byte
         {
             Up = Buttons.DPadUp,
             Down = Buttons.DPadDown,
@@ -43,7 +43,7 @@ namespace OpenTK.Input
             Right = Buttons.DPadRight
         }
 
-        DPadButtons buttons;
+        private DPadButtons buttons;
 
         internal GamePadDPad(Buttons state)
         {
@@ -179,7 +179,7 @@ namespace OpenTK.Input
                 Equals((GamePadDPad)obj);
         }
 
-        void SetButton(DPadButtons button, bool value)
+        private void SetButton(DPadButtons button, bool value)
         {
             if (value)
             {

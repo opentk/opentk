@@ -39,14 +39,14 @@ namespace OpenTK.Audio
     /// </summary>
     public sealed class AudioContext : IDisposable
     {
-        bool disposed;
-        bool is_processing, is_synchronized;
-        ContextHandle context_handle;
-        bool context_exists;
+        private bool disposed;
+        private bool is_processing, is_synchronized;
+        private ContextHandle context_handle;
+        private bool context_exists;
 
-        string device_name;
-        static object audio_context_lock = new object();
-        static Dictionary<ContextHandle, AudioContext> available_contexts = new Dictionary<ContextHandle, AudioContext>();
+        private string device_name;
+        private static object audio_context_lock = new object();
+        private static Dictionary<ContextHandle, AudioContext> available_contexts = new Dictionary<ContextHandle, AudioContext>();
 
         /// \internal
         /// <summary>
@@ -202,7 +202,7 @@ namespace OpenTK.Audio
         /// Values higher than supported will be clamped by the driver.
         /// </para>
         /// </remarks>
-        void CreateContext(string device, int freq, int refresh, bool sync, bool enableEfx, MaxAuxiliarySends efxAuxiliarySends)
+        private void CreateContext(string device, int freq, int refresh, bool sync, bool enableEfx, MaxAuxiliarySends efxAuxiliarySends)
         {
             if (!AudioDeviceEnumerator.IsOpenALSupported)
                 throw new DllNotFoundException("openal32.dll");
@@ -315,7 +315,7 @@ namespace OpenTK.Audio
         /// <exception cref="AudioContextException">
         /// Occurs when the AudioContext could not be made current.
         /// </exception>
-        static void MakeCurrent(AudioContext context)
+        private static void MakeCurrent(AudioContext context)
         {
             lock (audio_context_lock)
             {
@@ -580,7 +580,7 @@ namespace OpenTK.Audio
             GC.SuppressFinalize(this);
         }
 
-        void Dispose(bool manual)
+        private void Dispose(bool manual)
         {
             if (!disposed)
             {

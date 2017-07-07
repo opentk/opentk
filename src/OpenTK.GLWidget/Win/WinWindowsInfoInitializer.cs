@@ -33,7 +33,7 @@ namespace OpenTK.Win
 
 #if GTK3
         [SuppressUnmanagedCodeSecurity, DllImport(WinLibGDKName, CallingConvention = CallingConvention.Cdecl)]
-        static extern IntPtr gdk_win32_window_get_handle(IntPtr w);
+        private static extern IntPtr gdk_win32_window_get_handle(IntPtr w);
 #else
         [SuppressUnmanagedCodeSecurity, DllImport(WinLibGDKName, CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr gdk_win32_drawable_get_handle(IntPtr d);

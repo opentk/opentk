@@ -32,7 +32,7 @@ namespace OpenTK.Platform.MacOS
     using CGLPixelFormat = IntPtr;
     using CGLContext = IntPtr;
 
-    static class Cgl
+    internal static class Cgl
     {
         internal enum PixelFormatBool
         {
@@ -91,8 +91,8 @@ namespace OpenTK.Platform.MacOS
             None = 0x000,
         }
 
-        const string cgl = "/System/Library/Frameworks/OpenGL.framework/Versions/Current/OpenGL";
-        const string cgs = "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon";
+        private const string cgl = "/System/Library/Frameworks/OpenGL.framework/Versions/Current/OpenGL";
+        private const string cgs = "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon";
 
         [DllImport(cgl, EntryPoint = "CGLGetError")]
         internal static extern Error GetError();

@@ -29,7 +29,7 @@ using System;
 
 namespace OpenTK.Input
 {
-    enum ConfigurationType
+    internal enum ConfigurationType
     {
         Unmapped = 0,
         Axis,

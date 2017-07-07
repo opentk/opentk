@@ -29,7 +29,7 @@ using System.Xml.Linq;
 namespace OpenTK.Convert
 {
     // The base class for a parser.
-    abstract class XmlParser
+    internal abstract class XmlParser
     {
         // Defines a prefix that should be removed from methods and tokens in the XML files, e.g. "gl", "cl", etc.
         public string Prefix { get; set; }

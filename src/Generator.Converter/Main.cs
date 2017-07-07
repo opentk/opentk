@@ -32,7 +32,7 @@ using CommandLine;
 
 namespace OpenTK.Convert
 {
-    class EnumTokenComparer : IEqualityComparer<XNode>
+    internal class EnumTokenComparer : IEqualityComparer<XNode>
     {
         public bool Equals(XNode a, XNode b)
         {
@@ -60,11 +60,11 @@ namespace OpenTK.Convert
         }
     }
 
-    class EntryPoint
+    internal class EntryPoint
     {
-        static Options CLIOptions;
+        private static Options CLIOptions;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(result => CLIOptions = result)

@@ -34,9 +34,9 @@ namespace OpenTK.Input
     /// </summary>
     public struct GamePadThumbSticks : IEquatable<GamePadThumbSticks>
     {
-        const float ConversionFactor = 1.0f / short.MaxValue;
-        short left_x, left_y;
-        short right_x, right_y;
+        private const float ConversionFactor = 1.0f / short.MaxValue;
+        private short left_x, left_y;
+        private short right_x, right_y;
 
         internal GamePadThumbSticks(
             short left_x, short left_y,

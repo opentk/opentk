@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace Bind.Structures
 {
-    class Function : Delegate, IEquatable<Function>, IComparable<Function>
+    internal class Function : Delegate, IEquatable<Function>, IComparable<Function>
     {
         public Function(Delegate d)
             : base(d)
@@ -148,11 +148,11 @@ namespace Bind.Structures
         }
     }
 
-    class FunctionCollection : SortedDictionary<string, List<Function>>
+    internal class FunctionCollection : SortedDictionary<string, List<Function>>
     {
-        Regex unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
+        private Regex unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
 
-        void Add(Function f)
+        private void Add(Function f)
         {
             if (!ContainsKey(f.Extension))
             {

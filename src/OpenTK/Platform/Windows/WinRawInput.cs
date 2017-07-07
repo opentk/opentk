@@ -31,16 +31,16 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
 {
-    sealed class WinRawInput : WinInputBase
+    internal sealed class WinRawInput : WinInputBase
     {
         // Input event data.
 
-        WinRawKeyboard keyboard_driver;
-        WinRawMouse mouse_driver;
-        WinRawJoystick joystick_driver;
+        private WinRawKeyboard keyboard_driver;
+        private WinRawMouse mouse_driver;
+        private WinRawJoystick joystick_driver;
 
-        IntPtr DevNotifyHandle;
-        static readonly Guid DeviceInterfaceHid = new Guid("4D1E55B2-F16F-11CF-88CB-001111000030");
+        private IntPtr DevNotifyHandle;
+        private static readonly Guid DeviceInterfaceHid = new Guid("4D1E55B2-F16F-11CF-88CB-001111000030");
 
         public WinRawInput()
             : base()
@@ -48,7 +48,7 @@ namespace OpenTK.Platform.Windows
             Debug.WriteLine("Using WinRawInput.");
         }
 
-        static IntPtr RegisterForDeviceNotifications(WinWindowInfo parent)
+        private static IntPtr RegisterForDeviceNotifications(WinWindowInfo parent)
         {
             IntPtr dev_notify_handle;
             BroadcastDeviceInterface bdi = new BroadcastDeviceInterface();

@@ -35,20 +35,22 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK
 {
-    class CocoaContext : DesktopGraphicsContext
+    internal class CocoaContext : DesktopGraphicsContext
     {
         private CocoaWindowInfo cocoaWindow;
         private IntPtr shareContextRef;
 
-        static readonly IntPtr NSOpenGLContext = Class.Get("NSOpenGLContext");
-        static readonly IntPtr selCurrentContext = Selector.Get("currentContext");
-        static readonly IntPtr selFlushBuffer = Selector.Get("flushBuffer");
-        static readonly IntPtr selMakeCurrentContext = Selector.Get("makeCurrentContext");
-        static readonly IntPtr selUpdate = Selector.Get("update");
-        static readonly IntPtr opengl = NS.AddImage(
+        private static readonly IntPtr NSOpenGLContext = Class.Get("NSOpenGLContext");
+        private static readonly IntPtr selCurrentContext = Selector.Get("currentContext");
+        private static readonly IntPtr selFlushBuffer = Selector.Get("flushBuffer");
+        private static readonly IntPtr selMakeCurrentContext = Selector.Get("makeCurrentContext");
+        private static readonly IntPtr selUpdate = Selector.Get("update");
+
+        private static readonly IntPtr opengl = NS.AddImage(
             "/System/Library/Frameworks/OpenGL.framework/OpenGL",
             AddImageFlags.ReturnOnError);
-        static readonly IntPtr opengles = NS.AddImage(
+
+        private static readonly IntPtr opengles = NS.AddImage(
             "/System/Library/Frameworks/OpenGL.framework/OpenGLES",
             AddImageFlags.ReturnOnError);
 
@@ -225,7 +227,7 @@ namespace OpenTK
             return pixelFormat;
         }
 
-        bool IsAccelerationSupported()
+        private bool IsAccelerationSupported()
         {
             IntPtr pf = IntPtr.Zero;
             int count = 0;

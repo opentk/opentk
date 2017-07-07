@@ -29,7 +29,7 @@ using System;
 
 namespace OpenTK.Platform.MacOS
 {
-    enum NSOpenGLContextParameter
+    internal enum NSOpenGLContextParameter
     {
         [Obsolete] SwapRectangle = 200,
         [Obsolete] SwapRectangleEnable = 201,

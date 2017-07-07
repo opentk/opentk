@@ -29,7 +29,7 @@ using System.Text;
 
 namespace OpenTK.Input
 {
-    interface IMouseDriver2
+    internal interface IMouseDriver2
     {
         MouseState GetState();
         MouseState GetState(int index);

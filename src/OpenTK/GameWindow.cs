@@ -71,29 +71,29 @@ namespace OpenTK
     /// </remarks>
     public class GameWindow : NativeWindow, IGameWindow, IDisposable
     {
-        const double MaxFrequency = 500.0; // Frequency cap for Update/RenderFrame events
+        private const double MaxFrequency = 500.0; // Frequency cap for Update/RenderFrame events
 
-        readonly Stopwatch watch = new Stopwatch();
+        private readonly Stopwatch watch = new Stopwatch();
 
-        IGraphicsContext glContext;
+        private IGraphicsContext glContext;
 
-        bool isExiting = false;
+        private bool isExiting = false;
 
-        double update_period, render_period;
-        double target_update_period, target_render_period;
+        private double update_period, render_period;
+        private double target_update_period, target_render_period;
 
-        double update_time; // length of last UpdateFrame event
-        double render_time; // length of last RenderFrame event
+        private double update_time; // length of last UpdateFrame event
+        private double render_time; // length of last RenderFrame event
 
-        double update_timestamp; // timestamp of last UpdateFrame event
-        double render_timestamp; // timestamp of last RenderFrame event
+        private double update_timestamp; // timestamp of last UpdateFrame event
+        private double render_timestamp; // timestamp of last RenderFrame event
 
-        double update_epsilon; // quantization error for UpdateFrame events
+        private double update_epsilon; // quantization error for UpdateFrame events
 
-        bool is_running_slowly; // true, when UpdatePeriod cannot reach TargetUpdatePeriod
+        private bool is_running_slowly; // true, when UpdatePeriod cannot reach TargetUpdatePeriod
 
-        FrameEventArgs update_args = new FrameEventArgs();
-        FrameEventArgs render_args = new FrameEventArgs();
+        private FrameEventArgs update_args = new FrameEventArgs();
+        private FrameEventArgs render_args = new FrameEventArgs();
 
         /// <summary>Constructs a new GameWindow with sensible default attributes.</summary>
         public GameWindow()
@@ -361,12 +361,12 @@ namespace OpenTK
             }
         }
 
-        double ClampElapsed(double elapsed)
+        private double ClampElapsed(double elapsed)
         {
             return MathHelper.Clamp(elapsed, 0.0, 1.0);
         }
 
-        void DispatchUpdateAndRenderFrame(object sender, EventArgs e)
+        private void DispatchUpdateAndRenderFrame(object sender, EventArgs e)
         {
             int is_running_slowly_retries = 4;
             double timestamp = watch.Elapsed.TotalSeconds;
@@ -410,7 +410,7 @@ namespace OpenTK
             }
         }
 
-        void RaiseUpdateFrame(double elapsed, ref double timestamp)
+        private void RaiseUpdateFrame(double elapsed, ref double timestamp)
         {
             // Raise UpdateFrame event
             update_args.Time = elapsed;
@@ -426,7 +426,7 @@ namespace OpenTK
         }
 
 
-        void RaiseRenderFrame(double elapsed, ref double timestamp)
+        private void RaiseRenderFrame(double elapsed, ref double timestamp)
         {
             // Raise RenderFrame event
             render_args.Time = elapsed;

@@ -9,6 +9,6 @@ namespace OpenTK.Graphics.ES10
     /// </summary>
     public sealed partial class GL
     {
-        const string Library = "libGLES.dll";
+        private const string Library = "libGLES.dll";
     }
 }

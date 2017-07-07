@@ -37,13 +37,13 @@ namespace OpenTK.Platform.Windows
     /// <summary>
     /// Contains methods to register for and process mouse WM_INPUT messages.
     /// </summary>
-    sealed class WinRawMouse : IMouseDriver2
+    internal sealed class WinRawMouse : IMouseDriver2
     {
-        readonly List<MouseState> mice = new List<MouseState>();
-        readonly List<string> names = new List<string>();
-        readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
-        readonly IntPtr Window;
-        readonly object UpdateLock = new object();
+        private readonly List<MouseState> mice = new List<MouseState>();
+        private readonly List<string> names = new List<string>();
+        private readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
+        private readonly IntPtr Window;
+        private readonly object UpdateLock = new object();
 
         public WinRawMouse(IntPtr window)
         {
@@ -246,7 +246,7 @@ namespace OpenTK.Platform.Windows
             return processed;
         }
 
-        static string GetDeviceName(RawInputDeviceList dev)
+        private static string GetDeviceName(RawInputDeviceList dev)
         {
             // get name size
             int size = 0;
@@ -261,7 +261,7 @@ namespace OpenTK.Platform.Windows
             return name;
         }
 
-        static RegistryKey FindRegistryKey(string name)
+        private static RegistryKey FindRegistryKey(string name)
         {
             if (name.Length < 4)
                 return null;
@@ -286,7 +286,7 @@ namespace OpenTK.Platform.Windows
             return regkey;
         }
 
-        static void RegisterRawDevice(IntPtr window, string device)
+        private static void RegisterRawDevice(IntPtr window, string device)
         {
             RawInputDevice[] rid = new RawInputDevice[]
             {

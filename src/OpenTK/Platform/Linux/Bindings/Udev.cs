@@ -30,9 +30,9 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Linux
 {
-    class Udev
+    internal class Udev
     {
-        const string lib = "libudev";
+        private const string lib = "libudev";
 
         [DllImport(lib, EntryPoint = "udev_new", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr New();

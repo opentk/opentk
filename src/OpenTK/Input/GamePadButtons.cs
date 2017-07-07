@@ -34,7 +34,7 @@ namespace OpenTK.Input
     /// </summary>
     public struct GamePadButtons : IEquatable<GamePadButtons>
     {
-        Buttons buttons;
+        private Buttons buttons;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenTK.Input.GamePadButtons"/> structure.
@@ -232,7 +232,7 @@ namespace OpenTK.Input
             return buttons == other.buttons;
         }
 
-        ButtonState GetButton(Buttons b)
+        private ButtonState GetButton(Buttons b)
         {
             return (buttons & b) != 0 ? ButtonState.Pressed : ButtonState.Released;
         }

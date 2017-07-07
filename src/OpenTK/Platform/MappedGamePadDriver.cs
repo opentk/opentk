@@ -48,11 +48,12 @@ namespace OpenTK.Platform
     /// class implements this mapping scheme.
     /// </para>
     /// </remarks>
-    class MappedGamePadDriver : IGamePadDriver
+    internal class MappedGamePadDriver : IGamePadDriver
     {
-        readonly GamePadConfigurationDatabase database =
+        private readonly GamePadConfigurationDatabase database =
             new GamePadConfigurationDatabase();
-        readonly Dictionary<Guid, GamePadConfiguration> configurations =
+
+        private readonly Dictionary<Guid, GamePadConfiguration> configurations =
             new Dictionary<Guid, GamePadConfiguration>();
 
         public GamePadState GetState(int index)
@@ -229,7 +230,7 @@ namespace OpenTK.Platform
             return false;
         }
 
-        GamePadConfiguration GetConfiguration(Guid guid)
+        private GamePadConfiguration GetConfiguration(Guid guid)
         {
             if (!configurations.ContainsKey(guid))
             {
@@ -240,7 +241,7 @@ namespace OpenTK.Platform
             return configurations[guid];
         }
 
-        bool IsMapped(GamePadConfigurationSource item)
+        private bool IsMapped(GamePadConfigurationSource item)
         {
             return item.Type != ConfigurationType.Unmapped;
         }

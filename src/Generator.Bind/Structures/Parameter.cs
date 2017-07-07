@@ -13,9 +13,9 @@ namespace Bind.Structures
     /// <summary>
     /// Represents a single parameter of an opengl function.
     /// </summary>
-    class Parameter : Type, IComparable<Parameter>, IEquatable<Parameter>
+    internal class Parameter : Type, IComparable<Parameter>, IEquatable<Parameter>
     {
-        string cache;
+        private string cache;
 
         /// <summary>
         /// Creates a new Parameter without type and name.
@@ -78,7 +78,7 @@ namespace Bind.Structures
             }
         }
 
-        UnmanagedType _unmanaged_type;
+        private UnmanagedType _unmanaged_type;
         /// <summary>
         /// Gets or sets the name of the parameter.
         /// </summary>
@@ -94,7 +94,7 @@ namespace Bind.Structures
             }
         }
 
-        FlowDirection _flow;
+        private FlowDirection _flow;
 
         /// <summary>
         /// Gets or sets the flow of the parameter.
@@ -191,17 +191,17 @@ namespace Bind.Structures
     /// <summary>
     /// Holds the parameter list of an opengl function.
     /// </summary>
-    class ParameterCollection : IList<Parameter>, IComparable<ParameterCollection>, IEquatable<ParameterCollection>
+    internal class ParameterCollection : IList<Parameter>, IComparable<ParameterCollection>, IEquatable<ParameterCollection>
     {
-        readonly List<Parameter> Parameters = new List<Parameter>();
+        private readonly List<Parameter> Parameters = new List<Parameter>();
 
-        bool hasPointerParameters;
-        bool hasReferenceParameters;
-        bool hasUnsignedParameters;
-        bool hasGenericParameters;
+        private bool hasPointerParameters;
+        private bool hasReferenceParameters;
+        private bool hasUnsignedParameters;
+        private bool hasGenericParameters;
 
         public bool Rebuild { get; set; }
-        Settings Settings { get; set; }
+        private Settings Settings { get; set; }
 
         public ParameterCollection()
         {
@@ -221,7 +221,7 @@ namespace Bind.Structures
                 Add(new Parameter(p));
         }
 
-        void BuildCache()
+        private void BuildCache()
         {
             BuildReferenceAndPointerParametersCache();
             Rebuild = false;
@@ -280,7 +280,7 @@ namespace Bind.Structures
         }
 
 
-        void BuildReferenceAndPointerParametersCache()
+        private void BuildReferenceAndPointerParametersCache()
         {
             foreach (Parameter p in this)
             {

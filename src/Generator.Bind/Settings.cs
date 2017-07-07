@@ -11,7 +11,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace Bind
 {
     [Serializable]
-    class Settings
+    internal class Settings
     {
         public Settings()
         {
@@ -32,10 +32,11 @@ namespace Bind
         public string DefaultWrappersFile = "GL.cs";
         public Legacy DefaultCompatibility = Legacy.NoDropMultipleTokens;
 
-        string inputPath, outputPath, outputNamespace, docPath, fallbackDocPath, licenseFile,
+        private string inputPath, outputPath, outputNamespace, docPath, fallbackDocPath, licenseFile,
             languageTypeMapFile, keywordEscapeCharacter, importsFile, delegatesFile, enumsFile,
             wrappersFile;
-        Nullable<Legacy> compatibility;
+
+        private Nullable<Legacy> compatibility;
         public string InputPath { get { return inputPath ?? DefaultInputPath; } set { inputPath = value; } }
         public string OutputPath { get { return outputPath ?? DefaultOutputPath; } set { outputPath = value; } }
         public string OutputNamespace { get { return outputNamespace ?? DefaultOutputNamespace; } set { outputNamespace = value; } }

@@ -23,15 +23,16 @@ namespace OpenTK.Platform.X11
         // For this reason, we'll "lock" onto the display of the window used in the context
         // constructor and we'll throw an exception if the user ever tries to make the context
         // current on window originating from a different display.
-        IntPtr display;
-        X11WindowInfo currentWindow;
-        bool vsync_ext_supported;
-        bool vsync_mesa_supported;
-        bool vsync_sgi_supported;
-        bool vsync_tear_supported;
-        int sgi_swap_interval = 1; // As defined in GLX_SGI_swap_control
-        readonly X11GraphicsMode ModeSelector = new X11GraphicsMode();
-        string extensions = null;
+        private IntPtr display;
+
+        private X11WindowInfo currentWindow;
+        private bool vsync_ext_supported;
+        private bool vsync_mesa_supported;
+        private bool vsync_sgi_supported;
+        private bool vsync_tear_supported;
+        private int sgi_swap_interval = 1; // As defined in GLX_SGI_swap_control
+        private readonly X11GraphicsMode ModeSelector = new X11GraphicsMode();
+        private string extensions = null;
 
         static X11GLContext()
         {
@@ -140,7 +141,7 @@ namespace OpenTK.Platform.X11
             Display = currentWindow.Display;
         }
 
-        static ContextHandle CreateContextAttribs(
+        private static ContextHandle CreateContextAttribs(
             IntPtr display, int screen, IntPtr fbconfig,
             bool direct, int major, int minor,
             GraphicsContextFlags flags, ContextHandle shareContext)
@@ -188,7 +189,7 @@ namespace OpenTK.Platform.X11
             return new ContextHandle(context);
         }
 
-        static ContextHandle CreateContextLegacy(IntPtr display,
+        private static ContextHandle CreateContextLegacy(IntPtr display,
             IntPtr info, bool direct, ContextHandle shareContext)
         {
             Debug.Write("Using legacy context creation... ");
@@ -207,7 +208,7 @@ namespace OpenTK.Platform.X11
             return new ContextHandle(context);
         }
 
-        IntPtr Display
+        private IntPtr Display
         {
             get { return display; }
             set
@@ -220,14 +221,14 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        static ArbCreateContext GetARBContextFlags(GraphicsContextFlags flags)
+        private static ArbCreateContext GetARBContextFlags(GraphicsContextFlags flags)
         {
             ArbCreateContext result = 0;
             result |= (flags & GraphicsContextFlags.Debug) != 0 ? ArbCreateContext.DebugBit : 0;
             return result;
         }
 
-        static ArbCreateContext GetARBProfileFlags(GraphicsContextFlags flags)
+        private static ArbCreateContext GetARBProfileFlags(GraphicsContextFlags flags)
         {
             ArbCreateContext result = 0;
             result |= (flags & GraphicsContextFlags.ForwardCompatible) != 0 ?
@@ -235,7 +236,7 @@ namespace OpenTK.Platform.X11
             return result;
         }
 
-        bool SupportsExtension(IntPtr display, X11WindowInfo window, string e)
+        private bool SupportsExtension(IntPtr display, X11WindowInfo window, string e)
         {
             if (window == null)
                 throw new ArgumentNullException("window");
@@ -254,7 +255,7 @@ namespace OpenTK.Platform.X11
             return !String.IsNullOrEmpty(extensions) && extensions.Contains(e);
         }
 
-        bool SupportsCreateContextAttribs(IntPtr display, X11WindowInfo window)
+        private bool SupportsCreateContextAttribs(IntPtr display, X11WindowInfo window)
         {
             return
                 SupportsExtension(display, window, "GLX_ARB_create_context") &&

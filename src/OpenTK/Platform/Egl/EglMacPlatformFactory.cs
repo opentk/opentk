@@ -31,7 +31,7 @@ using OpenTK.Platform.MacOS;
 
 namespace OpenTK.Platform.Egl
 {
-    class EglMacPlatformFactory : MacOSFactory
+    internal class EglMacPlatformFactory : MacOSFactory
     {
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {

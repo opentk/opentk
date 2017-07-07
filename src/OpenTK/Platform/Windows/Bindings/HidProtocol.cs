@@ -34,9 +34,9 @@ using OpenTK.Platform.Common;
 
 namespace OpenTK.Platform.Windows
 {
-    class HidProtocol
+    internal class HidProtocol
     {
-        const string lib = "hid.dll";
+        private const string lib = "hid.dll";
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetButtonCaps")]
@@ -111,19 +111,19 @@ namespace OpenTK.Platform.Windows
         public static extern int MaxDataListLength(HidProtocolReportType type, [In] byte[] preparsed_data);
     }
 
-    enum HidProtocolCollectionType : byte
+    internal enum HidProtocolCollectionType : byte
     {
 
     }
 
-    enum HidProtocolReportType : ushort
+    internal enum HidProtocolReportType : ushort
     {
         Input,
         Output,
         Feature
     }
 
-    enum HidProtocolStatus : uint
+    internal enum HidProtocolStatus : uint
     {
         Success = 0x00110000,
         Null = 0x80110001,
@@ -147,7 +147,7 @@ namespace OpenTK.Platform.Windows
     }
 
     [StructLayout(LayoutKind.Explicit)]
-    struct HidProtocolButtonCaps
+    internal struct HidProtocolButtonCaps
     {
         [FieldOffset(0)] public HIDPage UsagePage;
         [FieldOffset(2)] public byte ReportID;
@@ -166,14 +166,14 @@ namespace OpenTK.Platform.Windows
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct HidProtocolCaps
+    internal struct HidProtocolCaps
     {
         public short Usage;
         public short UsagePage;
         public ushort InputReportByteLength;
         public ushort OutputReportByteLength;
         public ushort FeatureReportByteLength;
-        unsafe fixed ushort Reserved[17];
+        private unsafe fixed ushort Reserved[17];
         public ushort NumberLinkCollectionNodes;
         public ushort NumberInputButtonCaps;
         public ushort NumberInputValueCaps;
@@ -187,7 +187,7 @@ namespace OpenTK.Platform.Windows
     }
 
     [StructLayout(LayoutKind.Explicit)]
-    struct HidProtocolData
+    internal struct HidProtocolData
     {
         [FieldOffset(0)] public short DataIndex;
         //[FieldOffset(2)] public short Reserved;
@@ -196,22 +196,22 @@ namespace OpenTK.Platform.Windows
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct HidProtocolNotRange
+    internal struct HidProtocolNotRange
     {
         #pragma warning disable 169 // private field is never used
         public short Usage;
-        short Reserved1;
+        private short Reserved1;
         public short StringIndex;
-        short Reserved2;
+        private short Reserved2;
         public short DesignatorIndex;
-        short Reserved3;
+        private short Reserved3;
         public short DataIndex;
-        short Reserved4;
+        private short Reserved4;
         #pragma warning restore 169
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct HidProtocolLinkCollectionNode
+    internal struct HidProtocolLinkCollectionNode
     {
         public ushort LinkUsage;
         public HIDPage LinkUsagePage;
@@ -219,7 +219,7 @@ namespace OpenTK.Platform.Windows
         public ushort NumberOfChildren;
         public ushort NextSibling;
         public ushort FirstChild;
-        int bitfield;
+        private int bitfield;
         public IntPtr   UserContext;
 
         public HidProtocolCollectionType CollectionType
@@ -239,7 +239,7 @@ namespace OpenTK.Platform.Windows
         }
     }
 
-    struct HidProtocolRange
+    internal struct HidProtocolRange
     {
 #pragma warning disable 0649
         public short UsageMin;
@@ -254,7 +254,7 @@ namespace OpenTK.Platform.Windows
     }
 
     [StructLayout(LayoutKind.Explicit)]
-    struct HidProtocolValueCaps
+    internal struct HidProtocolValueCaps
     {
         #pragma warning disable 169 // private field is never used
         [FieldOffset(0)] public HIDPage UsagePage;
@@ -269,7 +269,7 @@ namespace OpenTK.Platform.Windows
         [FieldOffset(14), MarshalAs(UnmanagedType.U1)] public bool IsDesignatorRange;
         [FieldOffset(15), MarshalAs(UnmanagedType.U1)] public bool IsAbsolute;
         [FieldOffset(16), MarshalAs(UnmanagedType.U1)] public bool HasNull;
-        [FieldOffset(17)] byte Reserved;
+        [FieldOffset(17)] private byte Reserved;
         [FieldOffset(18)] public short BitSize;
         [FieldOffset(20)] public short ReportCount;
         //[FieldOffset(22)] ushort Reserved2a;

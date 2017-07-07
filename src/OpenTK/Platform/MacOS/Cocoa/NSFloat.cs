@@ -39,7 +39,7 @@ namespace OpenTK.Platform.MacOS
     // We do this by adding implicit conversions between IntPtr and float/double.
     // Note that this conversion is against C# best practices, as it can lose information.
     // However, NSFloat is used internally in places where this precision loss does not matter.
-    struct NSFloat
+    internal struct NSFloat
     {
         private IntPtr _value;
 
@@ -117,7 +117,7 @@ namespace OpenTK.Platform.MacOS
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct NSPoint
+    internal struct NSPoint
     {
         public NSFloat X;
         public NSFloat Y;
@@ -138,7 +138,7 @@ namespace OpenTK.Platform.MacOS
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct NSSize
+    internal struct NSSize
     {
         public NSFloat Width;
         public NSFloat Height;
@@ -159,7 +159,7 @@ namespace OpenTK.Platform.MacOS
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct NSRect
+    internal struct NSRect
     {
         public NSPoint Location;
         public NSSize Size;
@@ -188,14 +188,14 @@ namespace OpenTK.Platform.MacOS
     // return struct that consist of them you will get wrong data
     // This types are used for such function.
     [StructLayout(LayoutKind.Sequential)]
-    struct NSPointF
+    internal struct NSPointF
     {
         public float X;
         public float Y;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct NSPointD
+    internal struct NSPointD
     {
         public double X;
         public double Y;

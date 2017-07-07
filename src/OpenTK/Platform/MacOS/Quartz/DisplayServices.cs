@@ -34,12 +34,12 @@ namespace OpenTK.Platform.MacOS
 
     // Quartz Display services used here are available in MacOS X 10.3 and later.
 
-    enum CGDisplayErr
+    internal enum CGDisplayErr
     {
 
     }
 
-    enum CGError
+    internal enum CGError
     {
         Success = 0,
         Failure = 1000,
@@ -54,9 +54,9 @@ namespace OpenTK.Platform.MacOS
         NoneAvailable = 1011,
     }
 
-    partial class CG
+    internal partial class CG
     {
-        const string lib = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
+        private const string lib = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
 
         // CGPoint -> NSPoint
         // CGSize -> NSSize
@@ -81,7 +81,7 @@ namespace OpenTK.Platform.MacOS
         }
 
         [DllImport(lib, EntryPoint = "CGDisplayBounds")]
-        unsafe static extern void DisplayBounds(out NSRect rect, IntPtr display);
+        private unsafe static extern void DisplayBounds(out NSRect rect, IntPtr display);
 
         [DllImport(lib,EntryPoint="CGDisplayPixelsWide")]
         internal static extern int DisplayPixelsWide(IntPtr display);

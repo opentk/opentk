@@ -28,7 +28,7 @@ using System;
 namespace OpenTK
 {
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false, Inherited = false)]
-    class RewrittenAttribute : Attribute
+    internal class RewrittenAttribute : Attribute
     {
         internal bool Rewritten;
 

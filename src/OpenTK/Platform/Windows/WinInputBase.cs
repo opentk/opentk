@@ -31,19 +31,19 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
 {
-    abstract class WinInputBase
+    internal abstract class WinInputBase
     {
-        readonly WindowProcedure WndProc;
-        readonly Thread InputThread;
-        readonly AutoResetEvent InputReady = new AutoResetEvent(false);
+        private readonly WindowProcedure WndProc;
+        private readonly Thread InputThread;
+        private readonly AutoResetEvent InputReady = new AutoResetEvent(false);
 
-        IntPtr OldWndProc;
+        private IntPtr OldWndProc;
 
         protected INativeWindow Native { get; private set; }
 
         protected WinWindowInfo Parent { get { return (WinWindowInfo)Native.WindowInfo; } }
 
-        static readonly IntPtr Unhandled = new IntPtr(-1);
+        private static readonly IntPtr Unhandled = new IntPtr(-1);
 
         public WinInputBase()
         {
@@ -57,7 +57,7 @@ namespace OpenTK.Platform.Windows
             InputReady.WaitOne();
         }
 
-        INativeWindow ConstructMessageWindow()
+        private INativeWindow ConstructMessageWindow()
         {
             Debug.WriteLine("Initializing input driver.");
             Debug.Indent();
@@ -74,7 +74,7 @@ namespace OpenTK.Platform.Windows
         }
 
 
-        void ProcessEvents()
+        private void ProcessEvents()
         {
             Native = ConstructMessageWindow();
             CreateDrivers();
@@ -101,7 +101,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        IntPtr WndProcHandler(
+        private IntPtr WndProcHandler(
             IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             IntPtr ret =  WindowProcedure(handle, message, wParam, lParam);

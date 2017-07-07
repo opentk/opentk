@@ -16,7 +16,7 @@ using Type=Bind.Structures.Type;
 
 namespace Bind.GL2
 {
-    abstract class Generator : IBind
+    internal abstract class Generator : IBind
     {
         protected string glTypemap = "GL2/gl.tm";
         protected string csTypemap = "csharp.tm";
@@ -78,7 +78,7 @@ namespace Bind.GL2
             SpecReader = new XmlSpecReader(Settings);
         }
 
-        IEnumerable<string> GetFiles(string path)
+        private IEnumerable<string> GetFiles(string path)
         {
             path = Path.Combine(Settings.InputPath, path);
             if ((File.GetAttributes(path) & FileAttributes.Directory) != 0)

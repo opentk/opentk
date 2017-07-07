@@ -286,20 +286,20 @@ namespace OpenTK.Platform.Windows
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLong")]
-        static extern LONG SetWindowLongInternal(HWND hWnd, GetWindowLongOffsets nIndex, LONG dwNewLong);
+        private static extern LONG SetWindowLongInternal(HWND hWnd, GetWindowLongOffsets nIndex, LONG dwNewLong);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtr")]
-        static extern LONG_PTR SetWindowLongPtrInternal(HWND hWnd, GetWindowLongOffsets nIndex, LONG_PTR dwNewLong);
+        private static extern LONG_PTR SetWindowLongPtrInternal(HWND hWnd, GetWindowLongOffsets nIndex, LONG_PTR dwNewLong);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLong")]
-        static extern LONG SetWindowLongInternal(HWND hWnd, GetWindowLongOffsets nIndex,
+        private static extern LONG SetWindowLongInternal(HWND hWnd, GetWindowLongOffsets nIndex,
             [MarshalAs(UnmanagedType.FunctionPtr)]WindowProcedure dwNewLong);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtr")]
-        static extern LONG_PTR SetWindowLongPtrInternal(HWND hWnd, GetWindowLongOffsets nIndex,
+        private static extern LONG_PTR SetWindowLongPtrInternal(HWND hWnd, GetWindowLongOffsets nIndex,
             [MarshalAs(UnmanagedType.FunctionPtr)]WindowProcedure dwNewLong);
 
         internal static UIntPtr GetWindowLong(IntPtr handle, GetWindowLongOffsets index)
@@ -312,11 +312,11 @@ namespace OpenTK.Platform.Windows
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true, EntryPoint="GetWindowLong")]
-        static extern ULONG GetWindowLongInternal(HWND hWnd, GetWindowLongOffsets nIndex);
+        private static extern ULONG GetWindowLongInternal(HWND hWnd, GetWindowLongOffsets nIndex);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true, EntryPoint = "GetWindowLongPtr")]
-        static extern UIntPtr GetWindowLongPtrInternal(HWND hWnd, GetWindowLongOffsets nIndex);
+        private static extern UIntPtr GetWindowLongPtrInternal(HWND hWnd, GetWindowLongOffsets nIndex);
 
         /// <summary>
         /// Low-level WINAPI function that checks the next message in the queue.
@@ -1455,7 +1455,7 @@ namespace OpenTK.Platform.Windows
             ref DWORD pcbData);
     }
 
-        static class Constants
+    internal static class Constants
         {
             // Found in winuser.h
             internal const int KEYBOARD_OVERRUN_MAKE_CODE = 0xFF;
@@ -1656,13 +1656,13 @@ namespace OpenTK.Platform.Windows
         internal DWORD dwExStyle;
     }
 
-    struct StyleStruct
+    internal struct StyleStruct
     {
         public WindowStyle Old;
         public WindowStyle New;
     }
 
-    struct ExtendedStyleStruct
+    internal struct ExtendedStyleStruct
     {
         public ExtendedWindowStyle Old;
         public ExtendedWindowStyle New;
@@ -1735,7 +1735,7 @@ namespace OpenTK.Platform.Windows
         internal BYTE  StencilBits;
         internal BYTE  AuxBuffers;
         internal BYTE  LayerPlane;
-        BYTE  Reserved;
+        private BYTE  Reserved;
         internal COLORREF crTransparent;
     }
 
@@ -1904,7 +1904,8 @@ namespace OpenTK.Platform.Windows
         {
             size = (short)Marshal.SizeOf(this);
         }
-        readonly DWORD size;
+
+        private readonly DWORD size;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         internal string DeviceName;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
@@ -1937,7 +1938,7 @@ namespace OpenTK.Platform.Windows
         internal static int SizeInBytes = Marshal.SizeOf(default(WindowClass));
     }
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-    struct ExtendedWindowClass
+    internal struct ExtendedWindowClass
     {
         public UINT Size;
         public ClassStyle Style;
@@ -1964,7 +1965,7 @@ namespace OpenTK.Platform.Windows
     [StructLayout(LayoutKind.Sequential)]
     internal struct MINMAXINFO
     {
-        Point Reserved;
+        private Point Reserved;
         public Size MaxSize;
         public Point MaxPosition;
         public Size MinTrackSize;
@@ -2167,7 +2168,7 @@ namespace OpenTK.Platform.Windows
     /// <para>Raw input is available only when the application calls RegisterRawInputDevices with valid device specifications.</para>
     /// </remarks>
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    struct RawInput
+    internal struct RawInput
     {
         public RawInputHeader Header;
         public RawInputData Data;
@@ -2246,7 +2247,7 @@ namespace OpenTK.Platform.Windows
         /// <summary>
         /// Reserved; must be zero.
         /// </summary>
-        USHORT Reserved;
+        private USHORT Reserved;
         /// <summary>
         /// Microsoft Windows message compatible virtual-key code. For more information, see Virtual-Key Codes.
         /// </summary>
@@ -2601,7 +2602,7 @@ namespace OpenTK.Platform.Windows
     /// Contains window information.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    struct WindowInfo
+    internal struct WindowInfo
     {
         /// <summary>
         /// The size of the structure, in bytes.
@@ -2645,7 +2646,7 @@ namespace OpenTK.Platform.Windows
         public WORD CreatorVersion;
     }
 
-    struct MonitorInfo
+    internal struct MonitorInfo
     {
         public DWORD Size;
         public RECT Monitor;
@@ -2665,7 +2666,7 @@ namespace OpenTK.Platform.Windows
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-    struct SHFILEINFO
+    internal struct SHFILEINFO
     {
         public IntPtr hIcon;
         public int iIcon;
@@ -2676,7 +2677,7 @@ namespace OpenTK.Platform.Windows
         public string szTypeName;
     };
 
-    struct TrackMouseEventStructure
+    internal struct TrackMouseEventStructure
     {
         public DWORD Size;
         public TrackMouseEventFlags Flags;
@@ -2686,18 +2687,18 @@ namespace OpenTK.Platform.Windows
         public static readonly int SizeInBytes = Marshal.SizeOf(typeof(TrackMouseEventStructure));
     }
 
-    struct BroadcastHeader
+    internal struct BroadcastHeader
     {
         public DWORD Size;
         public DeviceBroadcastType DeviceType;
-        DWORD dbch_reserved;
+        private DWORD dbch_reserved;
     }
 
-    struct BroadcastDeviceInterface
+    internal struct BroadcastDeviceInterface
     {
         public DWORD Size;
         public DeviceBroadcastType DeviceType;
-        DWORD dbcc_reserved;
+        private DWORD dbcc_reserved;
         public Guid ClassGuid;
         public char dbcc_name;
     }
@@ -2772,7 +2773,7 @@ namespace OpenTK.Platform.Windows
     /// Contains information about an icon or a cursor.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    struct IconInfo
+    internal struct IconInfo
     {
         /// <summary>
         /// Specifies whether this structure defines an icon or a cursor. A
@@ -2817,7 +2818,7 @@ namespace OpenTK.Platform.Windows
     /// <summary>
     /// Window field offsets for GetWindowLong() and GetWindowLongPtr().
     /// </summary>
-    enum GWL
+    internal enum GWL
     {
         WNDPROC = (-4),
         HINSTANCE = (-6),
@@ -2849,7 +2850,7 @@ namespace OpenTK.Platform.Windows
         VALIDRECTS = 0x400
     }
 
-    enum DeviceCaps
+    internal enum DeviceCaps
     {
         LogPixelsX = 88,
         LogPixelsY = 90
@@ -3440,7 +3441,7 @@ namespace OpenTK.Platform.Windows
     /// <summary>
     /// Enumerates available mouse keys (suitable for use in WM_MOUSEMOVE messages).
     /// </summary>
-    enum MouseKeys
+    internal enum MouseKeys
     {
         // Summary:
         //     No mouse button was pressed.
@@ -3817,7 +3818,7 @@ namespace OpenTK.Platform.Windows
     }
 
     [Flags]
-    enum PeekMessageFlags : uint
+    internal enum PeekMessageFlags : uint
     {
         NoRemove = 0,
         Remove = 1,
@@ -3941,7 +3942,7 @@ namespace OpenTK.Platform.Windows
         VirtualKeyToScanCodeExtended = 4,
     }
 
-    enum DwmWindowAttribute
+    internal enum DwmWindowAttribute
     {
         NCRENDERING_ENABLED = 1,
         NCRENDERING_POLICY,
@@ -3959,7 +3960,7 @@ namespace OpenTK.Platform.Windows
     }
 
     [Flags]
-    enum ShGetFileIconFlags : int
+    internal enum ShGetFileIconFlags : int
     {
         /// <summary>get icon</summary>
         Icon = 0x000000100,
@@ -3999,20 +4000,20 @@ namespace OpenTK.Platform.Windows
         OverlayIndex = 0x000000040,
     }
 
-    enum MonitorFrom
+    internal enum MonitorFrom
     {
         Null = 0,
         Primary = 1,
         Nearest = 2,
     }
 
-    enum CursorName : int
+    internal enum CursorName : int
     {
         Arrow = 32512
     }
 
     [Flags]
-    enum TrackMouseEventFlags : uint
+    internal enum TrackMouseEventFlags : uint
     {
         HOVER = 0x00000001,
         LEAVE = 0x00000002,
@@ -4021,7 +4022,7 @@ namespace OpenTK.Platform.Windows
         CANCEL = 0x80000000,
     }
 
-    enum MouseActivate
+    internal enum MouseActivate
     {
         ACTIVATE = 1,
         ACTIVATEANDEAT = 2,
@@ -4029,14 +4030,14 @@ namespace OpenTK.Platform.Windows
         NOACTIVATEANDEAT = 4,
     }
 
-    enum DeviceNotification
+    internal enum DeviceNotification
     {
         WINDOW_HANDLE = 0x00000000,
         SERVICE_HANDLE = 0x00000001,
         ALL_INTERFACE_CLASSES = 0x00000004,
     }
 
-    enum DeviceBroadcastType
+    internal enum DeviceBroadcastType
     {
         OEM = 0,
         VOLUME = 2,

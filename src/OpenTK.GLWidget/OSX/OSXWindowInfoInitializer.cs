@@ -12,7 +12,7 @@ namespace OpenTK.OSX
     public static class OSXWindowInfoInitializer
     {
 #if GTK3
-        const string OSXLibGdkName = "libgdk-3.dylib";
+        private const string OSXLibGdkName = "libgdk-3.dylib";
 #else
         const string OSXLibGdkName = "libgdk-quartz-2.0.0.dylib";
 #endif
