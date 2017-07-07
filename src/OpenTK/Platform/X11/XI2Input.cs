@@ -35,7 +35,6 @@ namespace OpenTK.Platform.X11
     {
         readonly XI2MouseKeyboard mouse_keyboard = new XI2MouseKeyboard();
         readonly Linux.LinuxJoystick joystick = new Linux.LinuxJoystick();
-        readonly IGamePadDriver gamepad = new MappedGamePadDriver();
 
         internal XI2Input()
         {
@@ -58,13 +57,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        public IGamePadDriver GamePadDriver
-        {
-            get
-            {
-                return gamepad;
-            }
-        }
+        public IGamePadDriver GamePadDriver { get; } = new MappedGamePadDriver();
 
         public IJoystickDriver2 JoystickDriver
         {

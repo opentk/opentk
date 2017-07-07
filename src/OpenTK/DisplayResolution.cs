@@ -18,8 +18,6 @@ namespace OpenTK
     public class DisplayResolution
     {
         Rectangle bounds;
-        int bits_per_pixel;
-        float refresh_rate;
 
         internal DisplayResolution() { }
 
@@ -33,8 +31,8 @@ namespace OpenTK
             if (refreshRate < 0) throw new ArgumentOutOfRangeException("refreshRate", "Must be greater than, or equal to zero.");
 
             this.bounds = new Rectangle(x, y, width, height);
-            this.bits_per_pixel = bitsPerPixel;
-            this.refresh_rate = refreshRate;
+            this.BitsPerPixel = bitsPerPixel;
+            this.RefreshRate = refreshRate;
         }
 
 #if false
@@ -91,20 +89,12 @@ namespace OpenTK
         }
 
         /// <summary>Gets a System.Int32 that contains number of bits per pixel of this display. Typical values include 8, 16, 24 and 32.</summary>
-        public int BitsPerPixel
-        {
-            get { return bits_per_pixel; }
-            internal set { bits_per_pixel = value; }
-        }
+        public int BitsPerPixel { get; internal set; }
 
         /// <summary>
         /// Gets a System.Single representing the vertical refresh rate of this display.
         /// </summary>
-        public float RefreshRate
-        {
-            get { return refresh_rate; }
-            internal set { refresh_rate = value; }
-        }
+        public float RefreshRate { get; internal set; }
 
         /// <summary>
         /// Returns a System.String representing this DisplayResolution.
@@ -113,7 +103,7 @@ namespace OpenTK
         public override string ToString()
         {
             #pragma warning disable 612,618
-            return String.Format("{0}x{1}@{2}Hz", Bounds, bits_per_pixel, refresh_rate);
+            return String.Format("{0}x{1}@{2}Hz", Bounds, BitsPerPixel, RefreshRate);
             #pragma warning restore 612,618
         }
 
@@ -141,7 +131,7 @@ namespace OpenTK
         public override int GetHashCode()
         {
             #pragma warning disable 612,618
-            return Bounds.GetHashCode() ^ bits_per_pixel ^ refresh_rate.GetHashCode();
+            return Bounds.GetHashCode() ^ BitsPerPixel ^ RefreshRate.GetHashCode();
             #pragma warning restore 612,618
         }
 

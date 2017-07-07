@@ -82,13 +82,7 @@ namespace Bind.Structures
             }
         }
 
-        private string _category;
-
-        public string Category
-        {
-            get { return _category; }
-            set { _category = value; }
-        }
+        public string Category { get; set; }
 
         /// <summary>
         /// Gets a value that indicates whether this function needs to be wrapped with a Marshaling function.
@@ -141,18 +135,10 @@ namespace Bind.Structures
             }
         }
 
-        Type _return_type = new Type();
         /// <summary>
         /// Gets or sets the return value of the opengl function.
         /// </summary>
-        public Type ReturnType
-        {
-            get { return _return_type; }
-            set
-            {
-                _return_type = value;
-            }
-        }
+        public Type ReturnType { get; set; } = new Type();
 
         string _name;
         /// <summary>
@@ -170,24 +156,12 @@ namespace Bind.Structures
             }
         }
 
-        ParameterCollection _parameters;
-
-        public ParameterCollection Parameters
-        {
-            get { return _parameters; }
-            set { _parameters = value; }
-        }
-
-        string _version;
+        public ParameterCollection Parameters { get; set; }
 
         /// <summary>
         /// Defines the opengl version that introduced this function.
         /// </summary>
-        public string Version
-        {
-            get { return _version; }
-            set { _version = value; }
-        }
+        public string Version { get; set; }
 
         public string Extension
         {

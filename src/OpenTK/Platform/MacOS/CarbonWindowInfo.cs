@@ -36,15 +36,8 @@ namespace OpenTK.Platform.MacOS
     /// </summary>
     sealed class CarbonWindowInfo : IWindowInfo
     {
-        IntPtr windowRef;
         bool ownHandle = false;
         bool disposed = false;
-        bool isControl = true;
-        bool goFullScreenHack = false;
-        bool goWindowedHack = false;
-
-        GetInt xOffset;
-        GetInt yOffset;
 
         /// <summary>
         /// Constructs a new instance with the specified parameters.
@@ -54,44 +47,30 @@ namespace OpenTK.Platform.MacOS
         /// <param name="isControl"></param>
         public CarbonWindowInfo(IntPtr windowRef, bool ownHandle, bool isControl)
         {
-            this.windowRef = windowRef;
+            this.Handle = windowRef;
             this.ownHandle = ownHandle;
-            this.isControl = isControl;
+            this.IsControl = isControl;
         }
 
         public CarbonWindowInfo(IntPtr windowRef, bool ownHandle, bool isControl, GetInt getX, GetInt getY) : this(windowRef, ownHandle, isControl)
         {
-            this.xOffset = getX;
-            this.yOffset = getY;
+            this.XOffset = getX;
+            this.YOffset = getY;
         }
 
         /// <summary>
         /// Gets the window reference for this instance.
         /// </summary>
-        public IntPtr Handle
-        {
-            get { return this.windowRef; }
-            set { this.windowRef = value; }
-        }
+        public IntPtr Handle { get; set; }
 
-        internal bool GoFullScreenHack
-        {
-            get { return goFullScreenHack; }
-            set { goFullScreenHack = value; }
-        }
-        internal bool GoWindowedHack
-        {
-            get { return goWindowedHack; }
-            set { goWindowedHack = value; }
-        }
+        internal bool GoFullScreenHack { get; set; } = false;
+
+        internal bool GoWindowedHack { get; set; } = false;
 
         /// <summary>
         /// Gets a value indicating whether this instance refers to a System.Windows.Forms.Control.
         /// </summary>
-        public bool IsControl
-        {
-            get { return isControl; }
-        }
+        public bool IsControl { get; } = true;
 
         /// <summary>Returns a System.String that represents the current window.</summary>
         /// <returns>A System.String that represents the current window.</returns>
@@ -105,16 +84,10 @@ namespace OpenTK.Platform.MacOS
         // (e.g. MonoGame)
         public IntPtr WindowHandle { get { return Handle; } set { Handle = value; } }
 
-        public GetInt XOffset
-        {
-            get { return xOffset; }
-            set { xOffset = value; }
-        }
-        public GetInt YOffset
-        {
-            get { return yOffset; }
-            set { yOffset = value; }
-        }
+        public GetInt XOffset { get; set; }
+
+        public GetInt YOffset { get; set; }
+
         public void Dispose()
         {
             Dispose(true);
@@ -132,7 +105,7 @@ namespace OpenTK.Platform.MacOS
 
             if (ownHandle)
             {
-                windowRef = IntPtr.Zero;
+                Handle = IntPtr.Zero;
             }
 
             disposed = true;

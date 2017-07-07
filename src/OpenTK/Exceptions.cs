@@ -33,26 +33,18 @@ namespace OpenTK
     /// </summary>
     public class ContextExistsException : ApplicationException
     {
-        string msg;
-
         /// <summary>
         /// Constructs a new ContextExistsException instance.
         /// </summary>
         /// <param name="message">A System.String explaining the cause of this exception.</param>
         public ContextExistsException(string message)
         {
-            msg = message;
+            Message = message;
         }
 
         /// <summary>
         /// Gets a System.String explaining the cause of this exception.
         /// </summary>
-        public override string Message
-        {
-            get
-            {
-                return msg;
-            }
-        }
+        public override string Message { get; }
     }
 }

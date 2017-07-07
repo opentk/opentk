@@ -214,14 +214,12 @@ namespace OpenTK.Platform.Linux
     [StructLayout(LayoutKind.Sequential)]
     struct KeyboardEvent
     {
-        IntPtr @event;
-
-        public IntPtr BaseEvent { get { return GetBaseEvent(@event); } }
-        public IntPtr Event { get { return @event; } }
-        public uint Time { get { return GetTime(@event); } }
-        public uint Key { get { return GetKey(@event); } }
-        public uint KeyCount { get { return GetSeatKeyCount(@event); } }
-        public KeyState KeyState { get { return GetKeyState(@event); } }
+        public IntPtr BaseEvent { get { return GetBaseEvent(Event); } }
+        public IntPtr Event { get; }
+        public uint Time { get { return GetTime(Event); } }
+        public uint Key { get { return GetKey(Event); } }
+        public uint KeyCount { get { return GetSeatKeyCount(Event); } }
+        public KeyState KeyState { get { return GetKeyState(Event); } }
 
         [DllImport(LibInput.lib, EntryPoint = "libinput_event_keyboard_get_time", CallingConvention = CallingConvention.Cdecl)]
         static extern uint GetTime(IntPtr @event);
@@ -243,22 +241,20 @@ namespace OpenTK.Platform.Linux
     [StructLayout(LayoutKind.Sequential)]
     struct PointerEvent
     {
-        IntPtr @event;
-
-        public IntPtr BaseEvent { get { return GetBaseEvent(@event); } }
-        public IntPtr Event { get { return @event; } }
-        public uint Time { get { return GetTime(@event); } }
-        public EvdevButton Button { get { return (EvdevButton)GetButton(@event); } }
-        public uint ButtonCount { get { return GetButtonCount(@event); } }
-        public ButtonState ButtonState { get { return GetButtonState(@event); } }
-        public bool HasAxis(PointerAxis axis) { return HasAxis(@event, axis) != 0; }
-        public double AxisValue(PointerAxis axis) { return GetAxisValue(@event, axis); }
-        public double DeltaX { get { return GetDX(@event); } }
-        public double DeltaY { get { return GetDY(@event); } }
-        public double X { get { return GetAbsX(@event); } }
-        public double Y { get { return GetAbsY(@event); } }
-        public double TransformedX(int width) { return GetAbsXTransformed(@event, width); }
-        public double TransformedY(int height) { return GetAbsYTransformed(@event, height); }
+        public IntPtr BaseEvent { get { return GetBaseEvent(Event); } }
+        public IntPtr Event { get; }
+        public uint Time { get { return GetTime(Event); } }
+        public EvdevButton Button { get { return (EvdevButton)GetButton(Event); } }
+        public uint ButtonCount { get { return GetButtonCount(Event); } }
+        public ButtonState ButtonState { get { return GetButtonState(Event); } }
+        public bool HasAxis(PointerAxis axis) { return HasAxis(Event, axis) != 0; }
+        public double AxisValue(PointerAxis axis) { return GetAxisValue(Event, axis); }
+        public double DeltaX { get { return GetDX(Event); } }
+        public double DeltaY { get { return GetDY(Event); } }
+        public double X { get { return GetAbsX(Event); } }
+        public double Y { get { return GetAbsY(Event); } }
+        public double TransformedX(int width) { return GetAbsXTransformed(Event, width); }
+        public double TransformedY(int height) { return GetAbsYTransformed(Event, height); }
 
         [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_time", CallingConvention = CallingConvention.Cdecl)]
         static extern uint GetTime(IntPtr @event);

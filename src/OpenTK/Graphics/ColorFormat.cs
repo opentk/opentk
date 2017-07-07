@@ -37,8 +37,6 @@ namespace OpenTK.Graphics
     public struct ColorFormat : IComparable<ColorFormat>, IEquatable<ColorFormat>
     {
         byte red, green, blue, alpha;
-        bool isIndexed;
-        int bitsPerPixel;
 
         /// <summary>
         /// Constructs a new ColorFormat with the specified aggregate bits per pixel.
@@ -49,8 +47,8 @@ namespace OpenTK.Graphics
             if (bpp < 0)
                 throw new ArgumentOutOfRangeException("bpp", "Must be greater or equal to zero.");
             red = green = blue = alpha = 0;
-            bitsPerPixel = bpp;
-            isIndexed = false;
+            BitsPerPixel = bpp;
+            IsIndexed = false;
 
             switch (bpp)
             {
@@ -103,10 +101,10 @@ namespace OpenTK.Graphics
             this.green = (byte)green;
             this.blue = (byte)blue;
             this.alpha = (byte)alpha;
-            this.bitsPerPixel = red + green + blue + alpha;
-            this.isIndexed = false;
-            if (this.bitsPerPixel < 15 && this.bitsPerPixel != 0)
-                this.isIndexed = true;
+            this.BitsPerPixel = red + green + blue + alpha;
+            this.IsIndexed = false;
+            if (this.BitsPerPixel < 15 && this.BitsPerPixel != 0)
+                this.IsIndexed = true;
         }
 
         /// <summary>Gets the bits per pixel for the Red channel.</summary>
@@ -118,9 +116,10 @@ namespace OpenTK.Graphics
         /// <summary>Gets the bits per pixel for the Alpha channel.</summary>
         public int Alpha { get { return alpha; } private set { alpha = (byte)value; } }
         /// <summary>Gets a System.Boolean indicating whether this ColorFormat is indexed.</summary>
-        public bool IsIndexed { get { return isIndexed; } private set { isIndexed = value; } }
+        public bool IsIndexed { get; private set; }
+
         /// <summary>Gets the sum of Red, Green, Blue and Alpha bits per pixel.</summary>
-        public int BitsPerPixel { get { return bitsPerPixel; } private set { bitsPerPixel = value; } }
+        public int BitsPerPixel { get; private set; }
 
         /// <summary>
         /// Defines an empty ColorFormat, where all properties are set to zero.

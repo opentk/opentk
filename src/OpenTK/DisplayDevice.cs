@@ -44,7 +44,6 @@ namespace OpenTK
         bool primary;
         Rectangle bounds;
         DisplayResolution current_resolution = new DisplayResolution();
-        DisplayResolution original_resolution;
         List<DisplayResolution> available_resolutions = new List<DisplayResolution>();
         IList<DisplayResolution> available_resolutions_readonly;
 
@@ -191,8 +190,8 @@ namespace OpenTK
 
             if (implementation.TryChangeResolution(this, resolution))
             {
-                if (original_resolution == null)
-                    original_resolution = current_resolution;
+                if (OriginalResolution == null)
+                    OriginalResolution = current_resolution;
                 current_resolution = resolution;
             }
             else throw new Graphics.GraphicsModeException(String.Format("Device {0}: Failed to change resolution to {1}.",
@@ -216,14 +215,14 @@ namespace OpenTK
         /// <exception cref="Graphics.GraphicsModeException">Thrown if the original resolution could not be restored.</exception>
         public void RestoreResolution()
         {
-            if (original_resolution != null)
+            if (OriginalResolution != null)
             {
                 //effect.FadeOut();
 
                 if (implementation.TryRestoreResolution(this))
                 {
-                    current_resolution = original_resolution;
-                    original_resolution = null;
+                    current_resolution = OriginalResolution;
+                    OriginalResolution = null;
                 }
                 else throw new Graphics.GraphicsModeException(String.Format("Device {0}: Failed to restore resolution.", this));
 
@@ -250,11 +249,7 @@ namespace OpenTK
         /// <summary>
         /// Gets the original resolution of this instance.
         /// </summary>
-        internal DisplayResolution OriginalResolution
-        {
-            get { return original_resolution; }
-            set { original_resolution = value; }
-        }
+        internal DisplayResolution OriginalResolution { get; set; }
 
         internal static DisplayDevice FromPoint(int x, int y)
         {

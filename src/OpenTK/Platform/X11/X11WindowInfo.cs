@@ -34,11 +34,8 @@ namespace OpenTK.Platform.X11
     /// <summary>Describes an X11 window.</summary>
     sealed class X11WindowInfo : IWindowInfo
     {
-        IntPtr handle, rootWindow, display;
-        X11WindowInfo parent;
-        int screen;
+        IntPtr handle, display;
         XVisualInfo visualInfo;
-        EventMask eventMask;
 
         /// <summary>Constructs a new X11WindowInfo class.</summary>
         public X11WindowInfo() { }
@@ -51,12 +48,12 @@ namespace OpenTK.Platform.X11
         public X11WindowInfo(IntPtr handle, X11WindowInfo parent)
         {
             this.handle = handle;
-            this.parent = parent;
+            this.Parent = parent;
             if (parent != null)
             {
-                this.rootWindow = parent.rootWindow;
+                this.RootWindow = parent.RootWindow;
                 this.display = parent.display;
-                this.screen = parent.screen;
+                this.Screen = parent.Screen;
                 this.visualInfo = parent.visualInfo;
             }
         }
@@ -64,13 +61,16 @@ namespace OpenTK.Platform.X11
         /// <summary>Gets or sets the handle of the window.</summary>
         public IntPtr Handle { get { return handle; } set { handle = value; } }
         /// <summary>Gets or sets the parent of the window.</summary>
-        public X11WindowInfo Parent { get { return parent; } set { parent = value; } }
+        public X11WindowInfo Parent { get; set; }
+
         /// <summary>Gets or sets the X11 root window.</summary>
-        public IntPtr RootWindow { get { return rootWindow; } set { rootWindow = value; } }
+        public IntPtr RootWindow { get; set; }
+
         /// <summary>Gets or sets the connection to the X11 display.</summary>
         public IntPtr Display { get { return display; } set { display = value; } }
         /// <summary>Gets or sets the X11 screen.</summary>
-        public int Screen { get { return screen; } set { screen = value; } }
+        public int Screen { get; set; }
+
         /// <summary>Gets or sets the X11 VisualInfo.</summary>
         public XVisualInfo VisualInfo
         {
@@ -84,7 +84,7 @@ namespace OpenTK.Platform.X11
             }
         }
         /// <summary>Gets or sets the X11 EventMask.</summary>
-        public EventMask EventMask { get { return eventMask; } set { eventMask = value; } }
+        public EventMask EventMask { get; set; }
 
         // For compatibility with whoever thought it would be
         // a good idea to access internal APIs through reflection

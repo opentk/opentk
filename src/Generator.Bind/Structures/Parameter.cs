@@ -134,12 +134,7 @@ namespace Bind.Structures
             }
         }
 
-        bool generic;
-        public bool Generic
-        {
-            get { return generic; }
-            set { generic = value; }
-        }
+        public bool Generic { get; set; }
 
         // Returns true if this parameter differs only on reference compared to another parameter, i.e:
         // returns true for 'int' & 'ref int'
@@ -155,12 +150,7 @@ namespace Bind.Structures
                 other.Reference && !(Reference || Array > 0 || Pointer != 0));
         }
 
-        string computeSize;
-        public string ComputeSize
-        {
-            get { return computeSize; }
-            set { computeSize = value; }
-        }
+        public string ComputeSize { get; set; }
 
         // Returns the FlowDirection that matches the specified string
         // ("out" or "in", otherwise undefined).

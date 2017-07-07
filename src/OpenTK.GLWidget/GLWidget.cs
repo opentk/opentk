@@ -24,7 +24,6 @@ namespace OpenTK
 
         private IGraphicsContext _GraphicsContext;
         private IWindowInfo _WindowInfo;
-        private GraphicsContextFlags _GraphicsContextFlags;
         private bool _Initialized = false;
 
         /// <summary>
@@ -76,17 +75,7 @@ namespace OpenTK
         /// <summary>
         /// The set <see cref="GraphicsContextFlags"/> for this widget.
         /// </summary>
-        public GraphicsContextFlags GraphicsContextFlags
-        {
-            get
-            {
-                return _GraphicsContextFlags;
-            }
-            set
-            {
-                _GraphicsContextFlags = value;
-            }
-        }
+        public GraphicsContextFlags GraphicsContextFlags { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GLWidget"/> class.
@@ -364,7 +353,7 @@ namespace OpenTK
                 _WindowInfo = XWindowInfoInitializer.Initialize(graphicsMode, this.Display.Handle, this.Screen.Number, widgetWindowHandle, this.Screen.RootWindow.Handle);
 
             // GraphicsContext
-            _GraphicsContext = new GraphicsContext(graphicsMode, _WindowInfo, GlVersionMajor, GlVersionMinor, _GraphicsContextFlags);
+            _GraphicsContext = new GraphicsContext(graphicsMode, _WindowInfo, GlVersionMajor, GlVersionMinor, GraphicsContextFlags);
             _GraphicsContext.MakeCurrent(_WindowInfo);
 
             if (GraphicsContext.ShareContexts)

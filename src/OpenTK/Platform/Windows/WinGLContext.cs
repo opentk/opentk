@@ -23,7 +23,6 @@ namespace OpenTK.Platform.Windows
     {
         static readonly object LoadLock = new object();
 
-        IntPtr device_context;
         bool vsync_supported;
         bool vsync_tear_supported;
 
@@ -262,12 +261,12 @@ namespace OpenTK.Platform.Windows
                         throw new ArgumentException("window", "Must point to a valid window.");
 
                     success = Wgl.MakeCurrent(wnd.DeviceContext, Handle.Handle);
-                    device_context = wnd.DeviceContext;
+                    DeviceContext = wnd.DeviceContext;
                 }
                 else
                 {
                     success = Wgl.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
-                    device_context = IntPtr.Zero;
+                    DeviceContext = IntPtr.Zero;
                 }
 
                 if (!success)
@@ -387,13 +386,7 @@ namespace OpenTK.Platform.Windows
             return mode;
         }
 
-        internal IntPtr DeviceContext
-        {
-            get
-            {
-                return device_context;
-            }
-        }
+        internal IntPtr DeviceContext { get; private set; }
 
         /// <summary>Returns a System.String describing this OpenGL context.</summary>
         /// <returns>A System.String describing this OpenGL context.</returns>

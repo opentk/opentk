@@ -34,11 +34,9 @@ namespace OpenTK.Input
     /// </summary>
     public struct JoystickHatState : IEquatable<JoystickHatState>
     {
-        HatPosition position;
-
         internal JoystickHatState(HatPosition pos)
         {
-            position = pos;
+            Position = pos;
         }
 
         /// <summary>
@@ -46,7 +44,7 @@ namespace OpenTK.Input
         /// the position of this hat.
         /// </summary>
         /// <value>The position.</value>
-        public HatPosition Position { get { return position; } }
+        public HatPosition Position { get; }
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating

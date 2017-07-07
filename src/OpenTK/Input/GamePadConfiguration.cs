@@ -36,22 +36,12 @@ namespace OpenTK.Input
     {
         static readonly char[] ConfigurationSeparator = new char[] { ',' };
 
-        Guid guid;
-        string name;
         readonly List<GamePadConfigurationItem> configuration_items =
             new List<GamePadConfigurationItem>();
 
-        public Guid Guid
-        {
-            get { return guid; }
-            private set { guid = value; }
-        }
+        public Guid Guid { get; private set; }
 
-        public string Name
-        {
-            get { return name; }
-            private set { name = value; }
-        }
+        public string Name { get; private set; }
 
         public GamePadConfiguration(string configuration)
         {

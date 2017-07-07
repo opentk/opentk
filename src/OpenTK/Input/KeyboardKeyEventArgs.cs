@@ -41,10 +41,6 @@ namespace OpenTK.Input
     /// </remarks>
     public class KeyboardKeyEventArgs : EventArgs
     {
-        Key key;
-        bool repeat;
-        KeyboardState state;
-
         /// <summary>
         /// Constructs a new KeyboardEventArgs instance.
         /// </summary>
@@ -62,11 +58,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets the <see cref="Key"/> that generated this event.
         /// </summary>
-        public Key Key
-        {
-            get { return key; }
-            internal set { key = value; }
-        }
+        public Key Key { get; internal set; }
 
         /// <summary>
         /// Gets the scancode which generated this event.
@@ -83,7 +75,7 @@ namespace OpenTK.Input
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Alt
         {
-            get { return state[Key.AltLeft] || state[Key.AltRight]; }
+            get { return Keyboard[Key.AltLeft] || Keyboard[Key.AltRight]; }
         }
 
         /// <summary>
@@ -92,7 +84,7 @@ namespace OpenTK.Input
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Control
         {
-            get { return state[Key.ControlLeft] || state[Key.ControlRight]; }
+            get { return Keyboard[Key.ControlLeft] || Keyboard[Key.ControlRight]; }
         }
 
         /// <summary>
@@ -101,7 +93,7 @@ namespace OpenTK.Input
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Shift
         {
-            get { return state[Key.ShiftLeft] || state[Key.ShiftRight]; }
+            get { return Keyboard[Key.ShiftLeft] || Keyboard[Key.ShiftRight]; }
         }
 
         /// <summary>
@@ -125,11 +117,7 @@ namespace OpenTK.Input
         /// Gets the current <see cref="OpenTK.Input.KeyboardState"/>.
         /// </summary>
         /// <value>The keyboard.</value>
-        public KeyboardState Keyboard
-        {
-            get { return state; }
-            internal set { state = value; }
-        }
+        public KeyboardState Keyboard { get; internal set; }
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether
@@ -140,10 +128,6 @@ namespace OpenTK.Input
         /// a key; false, if this was caused by the user pressing a
         /// key for the first time.
         /// </value>
-        public bool IsRepeat
-        {
-            get { return repeat; }
-            internal set { repeat = value; }
-        }
+        public bool IsRepeat { get; internal set; }
     }
 }

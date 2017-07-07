@@ -147,8 +147,6 @@ namespace OpenTK.Input
     /// </remarks>
     public class MouseMoveEventArgs : MouseEventArgs
     {
-        int x_delta, y_delta;
-
         /// <summary>
         /// Constructs a new <see cref="MouseMoveEventArgs"/> instance.
         /// </summary>
@@ -180,12 +178,12 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets the change in X position produced by this event.
         /// </summary>
-        public int XDelta { get { return x_delta; } internal set { x_delta = value; } }
+        public int XDelta { get; internal set; }
 
         /// <summary>
         /// Gets the change in Y position produced by this event.
         /// </summary>
-        public int YDelta { get { return y_delta; } internal set { y_delta = value; } }
+        public int YDelta { get; internal set; }
     }
 
     /// <summary>
@@ -200,8 +198,6 @@ namespace OpenTK.Input
     /// </remarks>
     public class MouseButtonEventArgs : MouseEventArgs
     {
-        MouseButton button;
-
         /// <summary>
         /// Constructs a new <see cref="MouseButtonEventArgs"/> instance.
         /// </summary>
@@ -217,7 +213,7 @@ namespace OpenTK.Input
         public MouseButtonEventArgs(int x, int y, MouseButton button, bool pressed)
             : base(x, y)
         {
-            this.button = button;
+            this.Button = button;
             this.IsPressed = pressed;
         }
 
@@ -233,7 +229,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets the <see cref="MouseButton"/> that triggered this event.
         /// </summary>
-        public MouseButton Button { get { return button; } internal set { button = value; } }
+        public MouseButton Button { get; internal set; }
 
         /// <summary>
         /// Gets a System.Boolean representing the state of the mouse button for the event.
@@ -257,8 +253,6 @@ namespace OpenTK.Input
     /// </remarks>
     public class MouseWheelEventArgs : MouseEventArgs
     {
-        float delta;
-
         /// <summary>
         /// Constructs a new <see cref="MouseWheelEventArgs"/> instance.
         /// </summary>
@@ -275,7 +269,7 @@ namespace OpenTK.Input
             : base(x, y)
         {
             Mouse.SetScrollAbsolute(Mouse.Scroll.X, value);
-            this.delta = delta;
+            this.DeltaPrecise = delta;
         }
 
         /// <summary>
@@ -297,7 +291,7 @@ namespace OpenTK.Input
         /// Gets the change in value of the wheel for this event in integer units.
         /// To support high-precision mice, it is recommended to use <see cref="DeltaPrecise"/> instead.
         /// </summary>
-        public int Delta { get { return (int)Math.Round(delta, MidpointRounding.AwayFromZero); } }
+        public int Delta { get { return (int)Math.Round(DeltaPrecise, MidpointRounding.AwayFromZero); } }
 
         /// <summary>
         /// Gets the precise value of the wheel in floating-point units.
@@ -310,7 +304,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets the precise change in value of the wheel for this event in floating-point units.
         /// </summary>
-        public float DeltaPrecise { get { return delta; } internal set { delta = value; } }
+        public float DeltaPrecise { get; internal set; }
     }
 }
 

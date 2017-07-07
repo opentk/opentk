@@ -34,8 +34,6 @@ namespace OpenTK.Platform.Egl
     // Holds information about an EGL window.
     class EglWindowInfo : IWindowInfo
     {
-        IntPtr handle;
-        IntPtr display;
         IntPtr surface;
         bool disposed;
 
@@ -63,9 +61,9 @@ namespace OpenTK.Platform.Egl
             }
         }
 
-        public IntPtr Handle { get { return handle; } set { handle = value; } }
+        public IntPtr Handle { get; set; }
 
-        public IntPtr Display { get { return display; } private set { display = value; } }
+        public IntPtr Display { get; private set; }
 
         public IntPtr Surface { get { return surface; } private set { surface = value; } }
 

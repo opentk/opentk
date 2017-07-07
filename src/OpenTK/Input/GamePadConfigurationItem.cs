@@ -31,26 +31,15 @@ namespace OpenTK.Input
 {
     class GamePadConfigurationItem
     {
-        GamePadConfigurationSource source;
-        GamePadConfigurationTarget target;
-
         public GamePadConfigurationItem(GamePadConfigurationSource source, GamePadConfigurationTarget target)
         {
             Source = source;
             Target = target;
         }
 
-        public GamePadConfigurationSource Source
-        {
-            get { return source; }
-            private set { source = value; }
-        }
+        public GamePadConfigurationSource Source { get; private set; }
 
-        public GamePadConfigurationTarget Target
-        {
-            get { return target; }
-            private set { target = value; }
-        }
+        public GamePadConfigurationTarget Target { get; private set; }
     }
 }
 

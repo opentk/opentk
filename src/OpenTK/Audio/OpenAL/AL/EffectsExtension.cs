@@ -1070,23 +1070,15 @@ namespace OpenTK.Audio.OpenAL
         // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTIV)( ALuint asid, ALenum pname, ALint* values );
         // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTFV)( ALuint asid, ALenum pname, ALfloat* values );
 
-        private bool _valid;
-
         /// <summary>Returns True if the EFX Extension has been found and could be initialized.</summary>
-        public bool IsInitialized
-        {
-            get
-            {
-                return _valid;
-            }
-        }
+        public bool IsInitialized { get; }
 
         /// <summary>
         /// Constructs a new EffectsExtension instance.
         /// </summary>
         public EffectsExtension()
         {
-            _valid = false;
+            IsInitialized = false;
 
             if (AudioContext.CurrentContext == null)
                 throw new InvalidOperationException("AL.LoadAll() needs a current AudioContext.");
@@ -1152,7 +1144,7 @@ namespace OpenTK.Audio.OpenAL
             // Console.WriteLine("Auxiliary Effect Slot functions appear to be ok.");
 
             // didn't return so far, everything went fine.
-            _valid = true;
+            IsInitialized = true;
         }
     }
 }

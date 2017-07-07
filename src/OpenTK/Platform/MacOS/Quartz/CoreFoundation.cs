@@ -41,17 +41,16 @@ namespace OpenTK.Platform.MacOS.Carbon
 
     struct CFArray
     {
-        IntPtr arrayRef;
-        public IntPtr Ref { get { return arrayRef; } set { arrayRef = value; } }
+        public IntPtr Ref { get; set; }
 
         public CFArray(IntPtr reference)
         {
-            arrayRef = reference;
+            Ref = reference;
         }
 
         public int Count
         {
-            get { return CF.CFArrayGetCount(arrayRef); }
+            get { return CF.CFArrayGetCount(Ref); }
         }
         public IntPtr this[int index]
         {
@@ -60,7 +59,7 @@ namespace OpenTK.Platform.MacOS.Carbon
                 if (index >= Count || index < 0)
                     throw new IndexOutOfRangeException();
 
-                return CF.CFArrayGetValueAtIndex(arrayRef, index);
+                return CF.CFArrayGetValueAtIndex(Ref, index);
             }
         }
     }
@@ -69,24 +68,23 @@ namespace OpenTK.Platform.MacOS.Carbon
     {
         public CFDictionary(IntPtr reference)
         {
-            dictionaryRef = reference;
+            Ref = reference;
         }
 
-        IntPtr dictionaryRef;
-        public IntPtr Ref { get { return dictionaryRef; } set { dictionaryRef = value; } }
+        public IntPtr Ref { get; set; }
 
         public int Count
         {
             get
             {
-                return CF.CFDictionaryGetCount(dictionaryRef);
+                return CF.CFDictionaryGetCount(Ref);
             }
         }
 
         public double GetNumberValue(string key)
         {
             double retval;
-            IntPtr cfnum = CF.CFDictionaryGetValue(dictionaryRef,
+            IntPtr cfnum = CF.CFDictionaryGetValue(Ref,
                 CF.CFSTR(key));
 
             CF.CFNumberGetValue(cfnum, CF.CFNumberType.kCFNumberDoubleType, out retval);

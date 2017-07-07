@@ -37,8 +37,6 @@ namespace OpenTK.Input
         Buttons buttons;
         GamePadAxes axes;
         byte gamepad_type;
-        bool is_connected;
-        bool is_mapped;
 
         internal GamePadCapabilities(GamePadType type, GamePadAxes axes, Buttons buttons, bool is_connected, bool is_mapped)
             : this()
@@ -46,8 +44,8 @@ namespace OpenTK.Input
             gamepad_type = (byte)type;
             this.axes = axes;
             this.buttons = buttons;
-            this.is_connected = is_connected;
-            this.is_mapped = is_mapped;
+            this.IsConnected = is_connected;
+            this.IsMapped = is_mapped;
         }
 
         /// <summary>
@@ -306,19 +304,13 @@ namespace OpenTK.Input
         /// currently connected.
         /// </summary>
         /// <value><c>true</c> if this instance is currently connected; otherwise, <c>false</c>.</value>
-        public bool IsConnected
-        {
-            get { return is_connected; }
-        }
+        public bool IsConnected { get; }
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> value describing whether a valid button configuration
         /// exists for this <c>GamePad</c> in the GamePad configuration database.
         /// </summary>
-        public bool IsMapped
-        {
-            get { return is_mapped; }
-        }
+        public bool IsMapped { get; }
 
         /// <param name="left">A <see cref="GamePadCapabilities"/> structure to test for equality.</param>
         /// <param name="right">A <see cref="GamePadCapabilities"/> structure to test for equality.</param>
@@ -358,8 +350,8 @@ namespace OpenTK.Input
         {
             return
                 buttons.GetHashCode() ^
-                is_connected.GetHashCode() ^
-                is_mapped.GetHashCode() ^
+                IsConnected.GetHashCode() ^
+                IsMapped.GetHashCode() ^
                 gamepad_type.GetHashCode();
         }
 
@@ -386,8 +378,8 @@ namespace OpenTK.Input
         {
             return
                 buttons == other.buttons &&
-                is_connected == other.is_connected &&
-                is_mapped == other.is_mapped &&
+                IsConnected == other.IsConnected &&
+                IsMapped == other.IsMapped &&
                 gamepad_type == other.gamepad_type;
         }
     }

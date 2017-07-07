@@ -42,7 +42,6 @@ namespace OpenTK
     public static class BlittableValueType<T>
     {
         static readonly Type Type;
-        static readonly int stride;
 
         static BlittableValueType()
         {
@@ -52,7 +51,7 @@ namespace OpenTK
                 // Does this support generic types? On Mono 2.4.3 it does
                 // On .Net it doesn't.
                 // http://msdn.microsoft.com/en-us/library/5s4920fa.aspx
-                stride = Marshal.SizeOf(typeof(T));
+                Stride = Marshal.SizeOf(typeof(T));
             }
         }
 
@@ -62,7 +61,7 @@ namespace OpenTK
         /// <remarks>
         /// This property returns 0 for non-blittable types.
         /// </remarks>
-        public static int Stride { get { return stride; } }
+        public static int Stride { get; }
 
         /// <summary>
         /// Checks whether the current typename T is blittable.

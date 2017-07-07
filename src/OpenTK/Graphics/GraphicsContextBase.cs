@@ -36,8 +36,6 @@ namespace OpenTK.Graphics
     // Provides the foundation for all IGraphicsContext implementations.
     abstract class GraphicsContextBase : IGraphicsContext, IGraphicsContextInternal, IEquatable<IGraphicsContextInternal>
     {
-        bool disposed;
-
         protected ContextHandle Handle;
         protected GraphicsMode Mode;
 
@@ -47,11 +45,7 @@ namespace OpenTK.Graphics
 
         public abstract bool IsCurrent { get; }
 
-        public bool IsDisposed
-        {
-            get { return disposed; }
-            protected set { disposed = value; }
-        }
+        public bool IsDisposed { get; protected set; }
 
         public bool VSync
         {

@@ -40,9 +40,7 @@ namespace OpenTK.Input
     /// </summary>
     public sealed class MouseDevice : IInputDevice
     {
-        string description;
         IntPtr id;
-        int numButtons, numWheels;
 
         MouseState state;
 #if COMPAT_REV1519
@@ -53,11 +51,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets a string describing this MouseDevice.
         /// </summary>
-        public string Description
-        {
-            get { return description; }
-            internal set { description = value; }
-        }
+        public string Description { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating the InputDeviceType of this InputDevice.
@@ -104,20 +98,12 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets an integer representing the number of buttons on this MouseDevice.
         /// </summary>
-        public int NumberOfButtons
-        {
-            get { return numButtons; }
-            internal set { numButtons = value; }
-        }
+        public int NumberOfButtons { get; internal set; }
 
         /// <summary>
         /// Gets an integer representing the number of wheels on this MouseDevice.
         /// </summary>
-        public int NumberOfWheels
-        {
-            get { return numWheels; }
-            internal set { numWheels = value; }
-        }
+        public int NumberOfWheels { get; internal set; }
 
         /// <summary>
         /// Gets an IntPtr representing a device dependent ID.
@@ -228,7 +214,7 @@ namespace OpenTK.Input
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return (int)(numButtons ^ numWheels ^ id.GetHashCode() ^ description.GetHashCode());
+            return (int)(NumberOfButtons ^ NumberOfWheels ^ id.GetHashCode() ^ Description.GetHashCode());
         }
 
         /// <summary>

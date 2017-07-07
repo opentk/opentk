@@ -17,14 +17,8 @@ namespace Bind.Structures
     /// </summary>
     class Constant : IComparable<Constant>
     {
-        string original_name;
-
         // Gets the name prior to translation.
-        public string OriginalName
-        {
-            get { return original_name; }
-            private set { original_name = value; }
-        }
+        public string OriginalName { get; private set; }
 
         string _name;
 
@@ -67,20 +61,11 @@ namespace Bind.Structures
             }
         }
 
-        string _reference;
-
         /// <summary>
         /// Gets or sets a string indicating the OpenGL enum reference by this constant.
         /// Can be null.
         /// </summary>
-        public string Reference
-        {
-            get { return _reference; }
-            set
-            {
-                _reference = value;
-            }
-        }
+        public string Reference { get; set; }
 
         public bool Unchecked
         {

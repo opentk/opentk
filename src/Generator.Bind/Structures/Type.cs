@@ -13,7 +13,6 @@ namespace Bind.Structures
     class Type : IComparable<Type>, IEquatable<Type>
     {
         string current_qualifier = String.Empty;
-        string previous_qualifier = String.Empty;
 
         public Type()
         {
@@ -41,11 +40,7 @@ namespace Bind.Structures
             set { PreviousQualifier = CurrentQualifier; current_qualifier = value; }
         }
 
-        string PreviousQualifier
-        {
-            get { return previous_qualifier; }
-            set { previous_qualifier = value; }
-        }
+        private string PreviousQualifier { get; set; } = String.Empty;
 
         public string QualifiedType
         {
@@ -103,21 +98,9 @@ namespace Bind.Structures
             }
         }
 
-        private string _previous_type;
+        public string PreviousType { get; private set; }
 
-        public string PreviousType
-        {
-            get { return _previous_type; }
-            private set { _previous_type = value; }
-        }
-
-        bool reference;
-
-        public bool Reference
-        {
-            get { return reference; }
-            set { reference = value; }
-        }
+        public bool Reference { get; set; }
 
         int array;
 
@@ -209,13 +192,7 @@ namespace Bind.Structures
             }
         }
 
-        private WrapperTypes _wrapper_type = WrapperTypes.None;
-
-        public WrapperTypes WrapperType
-        {
-            get { return _wrapper_type; }
-            set { _wrapper_type = value; }
-        }
+        public WrapperTypes WrapperType { get; set; } = WrapperTypes.None;
 
         static readonly string[] PointerLevels =
         {

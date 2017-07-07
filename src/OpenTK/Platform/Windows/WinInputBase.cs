@@ -38,9 +38,9 @@ namespace OpenTK.Platform.Windows
         readonly AutoResetEvent InputReady = new AutoResetEvent(false);
 
         IntPtr OldWndProc;
-        INativeWindow native;
 
-        protected INativeWindow Native { get { return native; } private set { native = value; } }
+        protected INativeWindow Native { get; private set; }
+
         protected WinWindowInfo Parent { get { return (WinWindowInfo)Native.WindowInfo; } }
 
         static readonly IntPtr Unhandled = new IntPtr(-1);

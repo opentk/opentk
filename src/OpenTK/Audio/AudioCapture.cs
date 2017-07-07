@@ -43,10 +43,6 @@ namespace OpenTK.Audio
         IntPtr Handle;
 
         // Alc.CaptureStop should be called prior to device shutdown, this keeps track of Alc.CaptureStart/Stop calls.
-        bool _isrecording = false;
-
-        ALFormat sample_format;
-        int sample_frequency;
 
 
         static AudioCapture()
@@ -80,20 +76,20 @@ namespace OpenTK.Audio
                 throw new ArgumentOutOfRangeException("bufferSize");
 
             // Try to open specified device. If it fails, try to open default device.
-            device_name = deviceName;
+            CurrentDevice = deviceName;
             Handle = Alc.CaptureOpenDevice(deviceName, frequency, sampleFormat, bufferSize);
 
             if (Handle == IntPtr.Zero)
             {
                 Debug.WriteLine(ErrorMessage(deviceName, frequency, sampleFormat, bufferSize));
-                device_name = "IntPtr.Zero";
+                CurrentDevice = "IntPtr.Zero";
                 Handle = Alc.CaptureOpenDevice(null, frequency, sampleFormat, bufferSize);
             }
 
             if (Handle == IntPtr.Zero)
             {
                 Debug.WriteLine(ErrorMessage("IntPtr.Zero", frequency, sampleFormat, bufferSize));
-                device_name = AudioDeviceEnumerator.DefaultRecordingDevice;
+                CurrentDevice = AudioDeviceEnumerator.DefaultRecordingDevice;
                 Handle = Alc.CaptureOpenDevice(AudioDeviceEnumerator.DefaultRecordingDevice, frequency, sampleFormat, bufferSize);
             }
 
@@ -101,7 +97,7 @@ namespace OpenTK.Audio
             {
                 // Everything we tried failed. Capture may not be supported, bail out.
                 Debug.WriteLine(ErrorMessage(AudioDeviceEnumerator.DefaultRecordingDevice, frequency, sampleFormat, bufferSize));
-                device_name = "None";
+                CurrentDevice = "None";
 
                 throw new AudioDeviceException("All attempts to open capture devices returned IntPtr.Zero. See debug log for verbose list.");
             }
@@ -113,18 +109,10 @@ namespace OpenTK.Audio
             SampleFrequency = frequency;
         }
 
-        private string device_name;
-
         /// <summary>
         /// The name of the device associated with this instance.
         /// </summary>
-        public string CurrentDevice
-        {
-            get
-            {
-                return device_name;
-            }
-        }
+        public string CurrentDevice { get; }
 
         /// <summary>
         /// Returns a list of strings containing all known recording devices.
@@ -177,14 +165,14 @@ namespace OpenTK.Audio
         public void Start()
         {
             Alc.CaptureStart(Handle);
-            _isrecording = true;
+            IsRunning = true;
         }
 
         /// <summary>Stop recording samples. This will not clear previously recorded samples.</summary>
         public void Stop()
         {
             Alc.CaptureStop(Handle);
-            _isrecording = false;
+            IsRunning = false;
         }
 
         /// <summary>Returns the number of available samples for capture.</summary>
@@ -236,28 +224,17 @@ namespace OpenTK.Audio
         /// <summary>
         /// Gets the OpenTK.Audio.ALFormat for this instance.
         /// </summary>
-        public ALFormat SampleFormat
-        {
-            get { return sample_format; }
-            private set { sample_format = value; }
-        }
+        public ALFormat SampleFormat { get; private set; }
 
         /// <summary>
         /// Gets the sampling rate for this instance.
         /// </summary>
-        public int SampleFrequency
-        {
-            get { return sample_frequency; }
-            private set { sample_frequency = value; }
-        }
+        public int SampleFrequency { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether this instance is currently capturing samples.
         /// </summary>
-        public bool IsRunning
-        {
-            get { return _isrecording; }
-        }
+        public bool IsRunning { get; private set; } = false;
 
         // Retrieves the sample size in bytes for various ALFormats.
         // Compressed formats always return 1.
@@ -342,7 +319,7 @@ namespace OpenTK.Audio
             {
                 if (this.Handle != IntPtr.Zero)
                 {
-                    if (this._isrecording)
+                    if (this.IsRunning)
                         this.Stop();
 
                     Alc.CaptureCloseDevice(this.Handle);

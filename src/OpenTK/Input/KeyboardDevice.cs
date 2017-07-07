@@ -15,10 +15,8 @@ namespace OpenTK.Input
     public sealed class KeyboardDevice : IInputDevice
     {
         //private IKeyboard keyboard;
-        private string description;
-        private int numKeys, numFKeys, numLeds;
+
         private IntPtr devID;
-        private bool repeat;
         private KeyboardState state;
 
         internal KeyboardDevice() { }
@@ -47,29 +45,17 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets an integer representing the number of keys on this KeyboardDevice.
         /// </summary>
-        public int NumberOfKeys
-        {
-            get { return numKeys; }
-            internal set { numKeys = value; }
-        }
+        public int NumberOfKeys { get; internal set; }
 
         /// <summary>
         /// Gets an integer representing the number of function keys (F-keys) on this KeyboardDevice.
         /// </summary>
-        public int NumberOfFunctionKeys
-        {
-            get { return numFKeys; }
-            internal set { numFKeys = value; }
-        }
+        public int NumberOfFunctionKeys { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating the number of led indicators on this KeyboardDevice.
         /// </summary>
-        public int NumberOfLeds
-        {
-            get { return numLeds; }
-            internal set { numLeds = value; }
-        }
+        public int NumberOfLeds { get; internal set; }
 
         /// <summary>
         /// Gets an IntPtr representing a device dependent ID.
@@ -96,11 +82,7 @@ namespace OpenTK.Input
         /// for game input.
         /// </para>
         /// </remarks>
-        public bool KeyRepeat
-        {
-            get { return repeat; }
-            set { repeat = value; }
-        }
+        public bool KeyRepeat { get; set; }
 
         /// <summary>
         /// Occurs when a key is pressed.
@@ -115,11 +97,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets a <see cref="System.String"/> which describes this instance.
         /// </summary>
-        public string Description
-        {
-            get { return description; }
-            internal set { description = value; }
-        }
+        public string Description { get; internal set; }
 
         /// <summary>
         /// Gets the <see cref="InputDeviceType"/> for this instance.
@@ -157,7 +135,7 @@ namespace OpenTK.Input
         public override int GetHashCode()
         {
             //return base.GetHashCode();
-            return (int)(numKeys ^ numFKeys ^ numLeds ^ devID.GetHashCode() ^ description.GetHashCode());
+            return (int)(NumberOfKeys ^ NumberOfFunctionKeys ^ NumberOfLeds ^ devID.GetHashCode() ^ Description.GetHashCode());
         }
 
         /// <summary>
