@@ -137,6 +137,7 @@
     <Compile Include="Platform\Egl\EglUnixContext.cs" />
     <Compile Include="Platform\Egl\EglWinContext.cs" />
     <Compile Include="Platform\Egl\EglAnglePlatformFactory.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSAutoreleasePool.cs" />
     <Compile Include="Platform\MappedGamePadDriver.cs" />
     <Compile Include="Platform\Windows\Bindings\HidProtocol.cs" />
     <Compile Include="Platform\Windows\WinInputBase.cs" />
