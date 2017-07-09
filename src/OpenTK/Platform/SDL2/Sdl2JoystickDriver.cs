@@ -359,7 +359,7 @@ namespace OpenTK.Platform.SDL2
                 int index = sdl_instanceid_to_joysticks[id];
                 JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
                 float value = ev.Value * RangeMultiplier;
-                joystick.SetAxis((JoystickAxis)ev.Axis, value);
+                joystick.SetAxis(ev.Axis, value);
                 joystick.Details.PacketNumber = Math.Max(0, unchecked(joystick.Details.PacketNumber + 1));
             }
             else
@@ -591,7 +591,7 @@ namespace OpenTK.Platform.SDL2
 
                 for (int i = 0; i < joystick.Axis.Count; i++)
                 {
-                    state.SetAxis(JoystickAxis.Axis0 + i, (short)(joystick.Axis[i] * short.MaxValue + 0.5f));
+                    state.SetAxis(i, (short)(joystick.Axis[i] * short.MaxValue + 0.5f));
                 }
 
                 for (int i = 0; i < joystick.Button.Count; i++)

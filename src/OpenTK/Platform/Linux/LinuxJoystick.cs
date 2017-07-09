@@ -35,7 +35,7 @@ namespace OpenTK.Platform.Linux
 {
     struct AxisInfo
     {
-        public JoystickAxis Axis;
+        public int Axis;
         public InputAbsInfo Info;
     }
 
@@ -230,7 +230,7 @@ namespace OpenTK.Platform.Linux
                         // Analogue hat
                         stick.AxisMap.Add(axis, new AxisInfo
                         {
-                            Axis = (JoystickAxis)(JoystickHat)hats++,
+                            Axis = (int)(JoystickHat)hats++,
                             Info = info
                         });
                     }
@@ -239,7 +239,7 @@ namespace OpenTK.Platform.Linux
                         // Regular axis
                         stick.AxisMap.Add(axis, new AxisInfo
                         {
-                            Axis = (JoystickAxis)axes++,
+                            Axis = axes++,
                             Info = info
                         });
                     }

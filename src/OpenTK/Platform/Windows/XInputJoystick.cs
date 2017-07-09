@@ -54,12 +54,12 @@ namespace OpenTK.Platform.Windows
             {
                 state.SetIsConnected(true);
 
-                state.SetAxis(JoystickAxis.Axis0, (short)xstate.GamePad.ThumbLX);
-                state.SetAxis(JoystickAxis.Axis1, (short)Math.Min(short.MaxValue, -xstate.GamePad.ThumbLY));
-                state.SetAxis(JoystickAxis.Axis2, (short)Common.HidHelper.ScaleValue(xstate.GamePad.LeftTrigger, 0, byte.MaxValue, short.MinValue, short.MaxValue));
-                state.SetAxis(JoystickAxis.Axis3, (short)xstate.GamePad.ThumbRX);
-                state.SetAxis(JoystickAxis.Axis4, (short)Math.Min(short.MaxValue, -xstate.GamePad.ThumbRY));
-                state.SetAxis(JoystickAxis.Axis5, (short)Common.HidHelper.ScaleValue(xstate.GamePad.RightTrigger, 0, byte.MaxValue, short.MinValue, short.MaxValue));
+                state.SetAxis(0, (short)xstate.GamePad.ThumbLX);
+                state.SetAxis(1, (short)Math.Min(short.MaxValue, -xstate.GamePad.ThumbLY));
+                state.SetAxis(2, (short)Common.HidHelper.ScaleValue(xstate.GamePad.LeftTrigger, 0, byte.MaxValue, short.MinValue, short.MaxValue));
+                state.SetAxis(3, (short)xstate.GamePad.ThumbRX);
+                state.SetAxis(4, (short)Math.Min(short.MaxValue, -xstate.GamePad.ThumbRY));
+                state.SetAxis(5, (short)Common.HidHelper.ScaleValue(xstate.GamePad.RightTrigger, 0, byte.MaxValue, short.MinValue, short.MaxValue));
 
                 state.SetButton(0, (xstate.GamePad.Buttons & XInputButtons.A) != 0);
                 state.SetButton(1, (xstate.GamePad.Buttons & XInputButtons.B) != 0);

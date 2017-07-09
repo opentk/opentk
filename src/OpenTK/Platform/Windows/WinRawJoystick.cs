@@ -51,8 +51,8 @@ namespace OpenTK.Platform.Windows
             internal readonly bool IsXInput;
             internal readonly int XInputIndex;
 
-            readonly Dictionary<int, JoystickAxis> axes =
-                new Dictionary<int,JoystickAxis>();
+            readonly Dictionary<int, int> axes =
+                new Dictionary<int,int>();
             readonly Dictionary<int, int> buttons =
                 new Dictionary<int, int>();
             readonly Dictionary<int, JoystickHat> hats =
@@ -79,7 +79,7 @@ namespace OpenTK.Platform.Windows
                     //return an invalid HID page of 1, so
                     if ((int)usage != 1)
                     {
-                        JoystickAxis axis = GetAxis(collection, page, usage);
+                        int axis = GetAxis(collection, page, usage);
                         State.SetAxis(axis, value);
                     }
                 }
@@ -133,12 +133,12 @@ namespace OpenTK.Platform.Windows
                 return (coll_byte << 24) | (page_byte << 16) | unchecked((ushort)usage);
             }
 
-            JoystickAxis GetAxis(short collection, HIDPage page, short usage)
+            int GetAxis(short collection, HIDPage page, short usage)
             {
                 int key = MakeKey(collection, page, usage);
                 if (!axes.ContainsKey(key))
                 {
-                    JoystickAxis axis = HidHelper.TranslateJoystickAxis(page, usage);
+                    int axis = HidHelper.TranslateJoystickAxis(page, usage);
                     axes.Add(key, axis);
                 }
                 return axes[key];
@@ -527,7 +527,7 @@ namespace OpenTK.Platform.Windows
                                     case HIDUsageGD.Dial:
                                     case HIDUsageGD.Wheel:
                                         Debug.Print("Found axis {0} ({1} / {2})",
-                                            JoystickAxis.Axis0 + stick.GetCapabilities().AxisCount,
+                                            stick.GetCapabilities().AxisCount,
                                             page, (HIDUsageGD)stick.AxisCaps[i].NotRange.Usage);
                                         stick.SetAxis(collection, page, stick.AxisCaps[i].NotRange.Usage, 0);
                                         break;
@@ -552,7 +552,7 @@ namespace OpenTK.Platform.Windows
                                     case HIDUsageSim.Rudder:
                                     case HIDUsageSim.Throttle:
                                         Debug.Print("Found simulation axis {0} ({1} / {2})",
-                                            JoystickAxis.Axis0 + stick.GetCapabilities().AxisCount,
+                                            stick.GetCapabilities().AxisCount,
                                             page, (HIDUsageSim)stick.AxisCaps[i].NotRange.Usage);
                                         stick.SetAxis(collection, page, stick.AxisCaps[i].NotRange.Usage, 0);
                                         break;

@@ -74,7 +74,7 @@ namespace OpenTK.Platform
                         case ConfigurationType.Axis:
                             {
                                 // JoystickAxis -> Buttons/GamePadAxes mapping
-                                JoystickAxis source_axis = map.Source.Axis;
+                                int source_axis = map.Source.Axis;
                                 short value = joy.GetAxisRaw(source_axis);
 
                                 switch (map.Target.Type)

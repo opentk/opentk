@@ -850,8 +850,8 @@ namespace OpenTK.Platform.MacOS
                         case HIDUsageGD.Dial:
                         case HIDUsageGD.Wheel:
                             short offset = GetJoystickAxis(val, elem);
-                            JoystickAxis axis = JoystickAxis.Axis0 + joy.Elements[cookie].Index;
-                            if (axis >= JoystickAxis.Axis0 && axis <= JoystickAxis.Last)
+                            int axis = joy.Elements[cookie].Index;
+                            if (axis >= 0 && axis <= 64)
                             {
                                 joy.State.SetAxis(axis, offset);
                             }
@@ -874,8 +874,8 @@ namespace OpenTK.Platform.MacOS
                         case HIDUsageSim.Rudder:
                         case HIDUsageSim.Throttle:
                             short offset = GetJoystickAxis(val, elem);
-                            JoystickAxis axis = JoystickAxis.Axis0 + joy.Elements[cookie].Index;
-                            if (axis >= JoystickAxis.Axis0 && axis <= JoystickAxis.Last)
+                            int axis = 0 + joy.Elements[cookie].Index;
+                            if (axis >= 0 && axis <= 64)
                             {
                                 joy.State.SetAxis(axis, offset);
                             }
