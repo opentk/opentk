@@ -18,11 +18,11 @@ namespace Bind
             OverridesFiles = new List<string>();
         }
 
-        public string DefaultInputPath = "../../../Generator.Bind/Specifications";
-        public string DefaultOutputPath = "../../../Source/OpenTK/Graphics/OpenGL";
+        public string DefaultInputPath = "src/Generator.Bind/Specifications";
+        public string DefaultOutputPath = "src/OpenTK/Graphics/OpenGL";
         public string DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
-        public string DefaultDocPath = "../../../Generator.Bind/Specifications/Docs";
-        public string DefaultFallbackDocPath = "../../../Generator.Bind/Specifications/Docs/GL";
+        public string DefaultDocPath = "src/Generator.Bind/Specifications/Docs";
+        public string DefaultFallbackDocPath = "src/Generator.Bind/Specifications/Docs/GL";
         public string DefaultLicenseFile = "License.txt";
         public string DefaultLanguageTypeMapFile = "csharp.tm";
         public string DefaultKeywordEscapeCharacter = "@";
