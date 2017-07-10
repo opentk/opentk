@@ -155,10 +155,10 @@ namespace OpenTK.Input
             switch (item[0])
             {
                 case 'a':
-                    return new GamePadConfigurationSource(true, ParseAxis(item));
+                    return new GamePadConfigurationSource(isAxis:true, index:ParseAxis(item));
 
                 case 'b':
-                    return new GamePadConfigurationSource(false, ParseButton(item));
+                    return new GamePadConfigurationSource(isAxis:false, index:ParseButton(item));
 
                 case 'h':
                     {

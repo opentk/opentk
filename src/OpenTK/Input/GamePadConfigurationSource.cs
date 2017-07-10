@@ -36,10 +36,10 @@ namespace OpenTK.Input
         JoystickHat? map_hat;
         HatPosition? map_hat_position;
 
-        public GamePadConfigurationSource(bool axis, int index)
+        public GamePadConfigurationSource(bool isAxis, int index)
             : this()
         {
-            if (axis)
+            if (isAxis)
             {
                 Type = ConfigurationType.Axis;
                 Axis = index;
