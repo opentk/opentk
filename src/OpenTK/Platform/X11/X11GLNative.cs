@@ -147,6 +147,12 @@ namespace OpenTK.Platform.X11
         readonly int xi2_version;
         #pragma warning restore 414
 
+        // Used to wait for a specific type of event in ProcessEvents.
+        // Currently this is just used by ClientSize to wait for a
+        // ConfigureNotify event to ensure our size change has actually taken
+        // effect, see issue #259.
+        XEventName _waitForEvent = (XEventName)0;
+
         public X11GLNative(int x, int y, int width, int height, string title,
             GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
             : this()
@@ -801,7 +807,21 @@ namespace OpenTK.Platform.X11
                     if (!Functions.XCheckWindowEvent(window.Display, window.Handle, window.EventMask, ref e) &&
                         !Functions.XCheckTypedWindowEvent(window.Display, window.Handle, XEventName.ClientMessage, ref e) &&
                         !Functions.XCheckTypedWindowEvent(window.Display, window.Handle, XEventName.SelectionNotify, ref e))
-                        break;
+                    {
+                        if (_waitForEvent != (XEventName)0)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                if (_waitForEvent == e.type)
+                {
+                    _waitForEvent = (XEventName)0;
                 }
 
                 // Respond to the event e
@@ -1212,25 +1232,25 @@ namespace OpenTK.Platform.X11
             set
             {
                 bool is_size_changed = client_rectangle.Size != value;
-
-                int width = value.Width;
-                int height = value.Height;
-
-                if (WindowBorder != WindowBorder.Resizable)
+                if (is_size_changed)
                 {
-                    SetWindowMinMax(width, height, width, height);
-                }
+                    int width = value.Width;
+                    int height = value.Height;
 
-                using (new XLock(window.Display))
-                {
-                    if (is_size_changed)
+                    if (WindowBorder != WindowBorder.Resizable)
+                    {
+                        SetWindowMinMax(width, height, width, height);
+                    }
+
+                    using (new XLock(window.Display))
                     {
                         Functions.XResizeWindow(window.Display, window.Handle,
                             width, height);
                     }
-                }
 
-                ProcessEvents();
+                    _waitForEvent = XEventName.ConfigureNotify;
+                    ProcessEvents();
+                }
             }
         }
 
