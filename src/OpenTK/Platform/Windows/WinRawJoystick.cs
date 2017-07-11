@@ -341,16 +341,45 @@ namespace OpenTK.Platform.Windows
 
         HatPosition GetHatPosition(uint value, HidProtocolValueCaps caps)
         {
-            if (caps.LogicalMax == 8)
-                return (HatPosition)value;
-            else if (caps.LogicalMax == 7)
+            if (value > caps.LogicalMax)
             {
+                //Return zero if our value is out of bounds ==> e.g.
+                //Thrustmaster T-Flight Hotas X returns 15 for the centered position
+                return HatPosition.Centered;
+            }
+            if (caps.LogicalMax == 3)
+            {
+                //4-way hat switch as per the example in Appendix C
+                //http://www.usb.org/developers/hidpage/Hut1_12v2.pdf
+                switch (value)
+                {
+                    case 0:
+                        return HatPosition.Left;
+                    case 1:
+                        return HatPosition.Up;
+                    case 2:
+                        return HatPosition.Right;
+                    case 3: 
+                        return HatPosition.Down;
+                }
+            }
+            if (caps.LogicalMax == 8)
+            {
+                //Hat states are represented as a plain number from 0-8
+                //with centered being zero
+                //Padding should have already been stripped out, so just cast
+                return (HatPosition)value;
+            }
+            if (caps.LogicalMax == 7)
+            {
+                //Hat states are represented as a plain number from 0-7
+                //with centered being 8
                 value++;
                 value %= 9;
                 return (HatPosition)value;
             }
-            else
-                return HatPosition.Centered;
+            //The HID report length is unsupported
+            return HatPosition.Centered;
         }
 
         unsafe void UpdateAxes(RawInput* rin, Device stick)
