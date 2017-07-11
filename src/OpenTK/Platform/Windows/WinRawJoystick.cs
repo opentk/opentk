@@ -341,6 +341,24 @@ namespace OpenTK.Platform.Windows
 
         HatPosition GetHatPosition(uint value, HidProtocolValueCaps caps)
         {
+            if (caps.LogicalMax == 3)
+            {
+                //4-way hat switch as per the example in Appendix C
+                //http://www.usb.org/developers/hidpage/Hut1_12v2.pdf
+                switch (value)
+                {
+                    case 0:
+                        return HatPosition.Left;
+                    case 1:
+                        return HatPosition.Up;
+                    case 2:
+                        return HatPosition.Right;
+                    case 3: 
+                        return HatPosition.Down;
+                    default:
+                        return HatPosition.Centered;
+                }
+            }
             if (caps.LogicalMax == 8)
             {
                 //Hat states are represented as a plain number from 0-8
