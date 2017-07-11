@@ -341,6 +341,12 @@ namespace OpenTK.Platform.Windows
 
         HatPosition GetHatPosition(uint value, HidProtocolValueCaps caps)
         {
+            if (value > caps.LogicalMax)
+            {
+                //Return zero if our value is out of bounds ==> e.g.
+                //Thrustmaster T-Flight Hotas X returns 15 for the centered position
+                return HatPosition.Centered;
+            }
             if (caps.LogicalMax == 3)
             {
                 //4-way hat switch as per the example in Appendix C
@@ -355,8 +361,6 @@ namespace OpenTK.Platform.Windows
                         return HatPosition.Right;
                     case 3: 
                         return HatPosition.Down;
-                    default:
-                        return HatPosition.Centered;
                 }
             }
             if (caps.LogicalMax == 8)
@@ -364,23 +368,12 @@ namespace OpenTK.Platform.Windows
                 //Hat states are represented as a plain number from 0-8
                 //with centered being zero
                 //Padding should have already been stripped out, so just cast
-                if (value > 8)
-                {
-                    //Value out of bounds, so return centered
-                    return HatPosition.Centered;
-                }
                 return (HatPosition)value;
             }
             if (caps.LogicalMax == 7)
             {
                 //Hat states are represented as a plain number from 0-7
                 //with centered being 8
-                if (value > 8)
-                {
-                    //Return zero if our value is out of bounds ==> e.g.
-                    //Thrustmaster T-Flight Hotas X returns 15 for the centered position
-                    return HatPosition.Centered;
-                }
                 value++;
                 value %= 9;
                 return (HatPosition)value;
