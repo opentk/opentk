@@ -344,8 +344,8 @@ namespace OpenTK.Platform.X11
             string[] fileNames = new string[splitted.Length];
             for (int i = 0; i < splitted.Length; i++)
             {
-                // Delete start of name - file://
-                fileNames[i] = splitted[i].Substring(7);
+                // Delete starting file://, filename data is URI-encoded
+                fileNames[i] = Uri.UnescapeDataString(splitted[i].Substring(7));
             }
 
             return fileNames;
@@ -886,9 +886,9 @@ namespace OpenTK.Platform.X11
                             else
                             {
                                 formats = Marshal.AllocHGlobal(3 * IntPtr.Size);
-                                Marshal.WriteIntPtr(formats, e.ClientMessageEvent.ptr3);
-                                Marshal.WriteIntPtr(formats, IntPtr.Size * 2, e.ClientMessageEvent.ptr4);
-                                Marshal.WriteIntPtr(formats, IntPtr.Size * 3, e.ClientMessageEvent.ptr5);
+                                Marshal.WriteIntPtr(formats, IntPtr.Size * 0, e.ClientMessageEvent.ptr3);
+                                Marshal.WriteIntPtr(formats, IntPtr.Size * 1, e.ClientMessageEvent.ptr4);
+                                Marshal.WriteIntPtr(formats, IntPtr.Size * 2, e.ClientMessageEvent.ptr5);
                                 formatCount = 3;
                             }
 
