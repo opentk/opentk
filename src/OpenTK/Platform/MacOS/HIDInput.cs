@@ -874,7 +874,7 @@ namespace OpenTK.Platform.MacOS
                         case HIDUsageSim.Rudder:
                         case HIDUsageSim.Throttle:
                             short offset = GetJoystickAxis(val, elem);
-                            int axis = 0 + joy.Elements[cookie].Index;
+                            int axis = joy.Elements[cookie].Index;
                             if (axis >= 0 && axis <= 64)
                             {
                                 joy.State.SetAxis(axis, offset);
