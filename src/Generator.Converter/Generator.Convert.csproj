@@ -108,8 +108,7 @@
     <None Include="paket.references" />
     <None Include="XML schema notes.txt">
     </None>
-    <None Include="Readme.txt">
-    </None>
+    <Content Include="README.md" />
     <Compile Include="GLXmlParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
