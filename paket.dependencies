@@ -2,6 +2,7 @@ source https://nuget.org/api/v2
 
 #Open packages
 
+nuget CommandLineParser
 nuget FSharp.Formatting
 nuget FsCheck
 nuget FsCheck.Xunit
