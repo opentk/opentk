@@ -66,15 +66,15 @@ namespace OpenTK.Convert
 
         static void Main(string[] args)
         {
-            CommandLine.Parser.Default.ParseArguments<Options>(args)
+            Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(result => CLIOptions = result)
                 .WithNotParsed(error => Environment.Exit(-1));
 
             try
             {
-                Parser parser = new GLXmlParser { Prefix = CLIOptions.Prefix };
+                XmlParser xmlParser = new GLXmlParser { Prefix = CLIOptions.Prefix };
 
-                var sigs = CLIOptions.InputFiles.Select(h => parser.Parse(h)).ToList();
+                var sigs = CLIOptions.InputFiles.Select(h => xmlParser.Parse(h)).ToList();
 
                 // Merge any duplicate enum entries (in case an enum is declared
                 // in multiple files with different entries in each file).

@@ -40,7 +40,7 @@ namespace OpenTK.Convert
         }
     }
 
-    class GLXmlParser : Parser
+    class GLXmlParser : XmlParser
     {
         static readonly Regex ExtensionRegex = new Regex(
             @"3DFX|(?!(?<=[1-4])D)[A-Z]{2,}$",
