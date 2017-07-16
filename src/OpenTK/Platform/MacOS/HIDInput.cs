@@ -851,7 +851,7 @@ namespace OpenTK.Platform.MacOS
                         case HIDUsageGD.Wheel:
                             short offset = GetJoystickAxis(val, elem);
                             int axis = joy.Elements[cookie].Index;
-                            if (axis >= 0 && axis <= 64)
+                            if (axis >= 0 && axis <= JoystickState.MaxAxes)
                             {
                                 joy.State.SetAxis(axis, offset);
                             }
@@ -875,7 +875,7 @@ namespace OpenTK.Platform.MacOS
                         case HIDUsageSim.Throttle:
                             short offset = GetJoystickAxis(val, elem);
                             int axis = joy.Elements[cookie].Index;
-                            if (axis >= 0 && axis <= 64)
+                            if (axis >= 0 && axis <= JoystickState.MaxAxes)
                             {
                                 joy.State.SetAxis(axis, offset);
                             }
@@ -887,7 +887,7 @@ namespace OpenTK.Platform.MacOS
                     {
                         bool pressed = GetJoystickButton(val, elem);
                         int button = joy.Elements[cookie].Index;
-                        if (button >= 0 && button <= 64)
+                        if (button >= 0 && button <= JoystickState.MaxButtons)
                         {
                             joy.State.SetButton(button, pressed);
                         }
