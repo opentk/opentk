@@ -92,7 +92,7 @@ namespace OpenTK.Input
 
         internal int Id { get; set; }
 
-        internal void SetAxis(JoystickAxis axis, float @value)
+        internal void SetAxis(int axis, float @value)
         {
             if ((int)axis < Axis.Count)
             {
@@ -178,7 +178,7 @@ namespace OpenTK.Input
         /// <param name="axis">The index of the joystick axis that was moved.</param>
         /// <param name="value">The absolute value of the joystick axis.</param>
         /// <param name="delta">The relative change in value of the joystick axis.</param>
-        public JoystickMoveEventArgs(JoystickAxis axis, float value, float delta)
+        public JoystickMoveEventArgs(int axis, float value, float delta)
         {
             this.Axis = axis;
             this.Value = value;
@@ -188,7 +188,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets a System.Int32 representing the index of the axis that was moved.
         /// </summary>
-        public JoystickAxis Axis { get; internal set; }
+        public int Axis { get; internal set; }
 
         /// <summary>
         /// Gets a System.Single representing the absolute position of the axis.
@@ -260,17 +260,6 @@ namespace OpenTK.Input
         {
             get { return axis_state[index]; }
             internal set { axis_state[index] = value; }
-        }
-
-        /// <summary>
-        /// Gets a System.Single indicating the absolute position of the JoystickAxis.
-        /// </summary>
-        /// <param name="axis">The JoystickAxis to check.</param>
-        /// <returns>A System.Single in the range [-1, 1].</returns>
-        public float this[JoystickAxis axis]
-        {
-            get { return axis_state[(int)axis]; }
-            internal set { axis_state[(int)axis] = value; }
         }
 
         /// <summary>

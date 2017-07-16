@@ -56,7 +56,7 @@ namespace OpenTK.Platform.Common
             return (int)(temp / (value_max - value_min) + result_min);
         }
 
-        public static JoystickAxis TranslateJoystickAxis(HIDPage page, int usage)
+        public static int TranslateJoystickAxis(HIDPage page, int usage)
         {
             switch (page)
             {
@@ -64,26 +64,23 @@ namespace OpenTK.Platform.Common
                     switch ((HIDUsageGD)usage)
                     {
                         case HIDUsageGD.X:
-                            return JoystickAxis.Axis0;
+                            return 0;
                         case HIDUsageGD.Y:
-                            return JoystickAxis.Axis1;
-
+                            return 1;
                         case HIDUsageGD.Z:
-                            return JoystickAxis.Axis2;
+                            return 2;
                         case HIDUsageGD.Rz:
-                            return JoystickAxis.Axis3;
-
+                            return 3;
                         case HIDUsageGD.Rx:
-                            return JoystickAxis.Axis4;
+                            return 4;
                         case HIDUsageGD.Ry:
-                            return JoystickAxis.Axis5;
-
+                            return 5;
                         case HIDUsageGD.Slider:
-                            return JoystickAxis.Axis6;
+                            return 6;
                         case HIDUsageGD.Dial:
-                            return JoystickAxis.Axis7;
+                            return 7;
                         case HIDUsageGD.Wheel:
-                            return JoystickAxis.Axis8;
+                            return 8;
                     }
                     break;
 
@@ -91,9 +88,9 @@ namespace OpenTK.Platform.Common
                     switch ((HIDUsageSim)usage)
                     {
                         case HIDUsageSim.Rudder:
-                            return JoystickAxis.Axis9;
+                            return 9;
                         case HIDUsageSim.Throttle:
-                            return JoystickAxis.Axis10;
+                            return 10;
                     }
                     break;
             }
