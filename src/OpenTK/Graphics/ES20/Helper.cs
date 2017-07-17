@@ -302,7 +302,9 @@ namespace OpenTK.Graphics.ES20
             unsafe
             {
                 fixed (Vector2* ptr = &vector)
+                {
                     GetFloat(pname, (float*)ptr);
+                }
             }
         }
 
@@ -311,7 +313,9 @@ namespace OpenTK.Graphics.ES20
             unsafe
             {
                 fixed (Vector3* ptr = &vector)
+                {
                     GetFloat(pname, (float*)ptr);
+                }
             }
         }
 
@@ -320,7 +324,9 @@ namespace OpenTK.Graphics.ES20
             unsafe
             {
                 fixed (Vector4* ptr = &vector)
+                {
                     GetFloat(pname, (float*)ptr);
+                }
             }
         }
 
@@ -329,7 +335,9 @@ namespace OpenTK.Graphics.ES20
             unsafe
             {
                 fixed (Matrix4* ptr = &matrix)
+                {
                     GetFloat(pname, (float*)ptr);
+                }
             }
         }
 

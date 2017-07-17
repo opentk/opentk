@@ -136,7 +136,9 @@ namespace OpenTK.Convert
             foreach (var e in entries)
             {
                 if (e.Value.Name.LocalName != "enum")
+                {
                     continue;
+                }
                 var tokens = e.Value.Elements()
                     .OrderBy(t => (string)t.Attribute("name"))
                     .ToList();

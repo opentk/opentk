@@ -182,7 +182,9 @@ namespace OpenTK.Rewrite
         {
             // Pretend there is no slots if we want to force everything to work through DllImport (Android & iOS)
             if (dllimport)
+            {
                 return -1;
+            }
 
             var slot_attribute = signature.CustomAttributes
                         .FirstOrDefault(a => a.AttributeType.Name == "SlotAttribute");

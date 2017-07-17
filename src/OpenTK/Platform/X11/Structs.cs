@@ -1821,7 +1821,9 @@ namespace OpenTK.Platform.X11
             {
                 mask = (byte*)Marshal.AllocHGlobal(mask_len);
                 for (int i = 0; i < mask_len; i++)
+                {
                     mask[i] = (byte)((uint)m >> i*8);
+                }
             }
         }
 

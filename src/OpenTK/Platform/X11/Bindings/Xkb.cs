@@ -175,7 +175,9 @@ namespace OpenTK.Platform.X11
                 get
                 {
                     if (i < 0 || i > 3)
+                    {
                         throw new IndexOutOfRangeException();
+                    }
 
                     unsafe
                     {
@@ -228,7 +230,9 @@ namespace OpenTK.Platform.X11
                 get
                 {
                     if (i < 0 || i > 31)
+                    {
                         throw new IndexOutOfRangeException();
+                    }
 
                     unsafe
                     {
@@ -264,7 +268,9 @@ namespace OpenTK.Platform.X11
                 get
                 {
                     if (i < 0 || i > 15)
+                    {
                         throw new IndexOutOfRangeException();
+                    }
 
                     unsafe
                     {

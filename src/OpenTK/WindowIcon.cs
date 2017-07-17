@@ -47,7 +47,9 @@ namespace OpenTK
         private WindowIcon(int width, int height)
         {
             if (width < 0 || width > 256 || height < 0 || height > 256)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
             this.Width = width;
             this.Height = height;
@@ -57,9 +59,13 @@ namespace OpenTK
             : this(width, height)
         {
             if (data == null)
+            {
                 throw new ArgumentNullException();
+            }
             if (data.Length < Width * Height * 4)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
             this.Data = data;
         }
@@ -68,7 +74,9 @@ namespace OpenTK
             : this(width, height)
         {
             if (data == IntPtr.Zero)
+            {
                 throw new ArgumentNullException();
+            }
 
             // We assume that width and height are correctly set.
             // If they are not, we will read garbage and probably

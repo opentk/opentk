@@ -151,7 +151,9 @@ namespace OpenTK.Platform.Egl
             if (Display != IntPtr.Zero)
             {
                 if (!Egl.Terminate(Display))
+                {
                     Debug.Print("[Warning] Failed to terminate display {0}.", Display);
+                }
                 Display = IntPtr.Zero;
             }
         }

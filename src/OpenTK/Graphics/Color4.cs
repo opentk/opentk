@@ -159,7 +159,9 @@ namespace OpenTK.Graphics
         public override bool Equals(object obj)
         {
             if (!(obj is Color4))
+            {
                 return false;
+            }
 
             return Equals((Color4)obj);
         }

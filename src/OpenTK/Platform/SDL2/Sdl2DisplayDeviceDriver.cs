@@ -69,7 +69,9 @@ namespace OpenTK.Platform.SDL2
 
                 AvailableDevices.Add(device);
                 if (d == 0)
+                {
                     Primary = device;
+                }
             }
         }
 

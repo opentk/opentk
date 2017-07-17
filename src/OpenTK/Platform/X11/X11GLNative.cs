@@ -163,9 +163,13 @@ namespace OpenTK.Platform.X11
             : this()
         {
             if (width <= 0)
+            {
                 throw new ArgumentOutOfRangeException("width", "Must be higher than zero.");
+            }
             if (height <= 0)
+            {
                 throw new ArgumentOutOfRangeException("height", "Must be higher than zero.");
+            }
 
             Debug.Indent();
 
@@ -203,10 +207,14 @@ namespace OpenTK.Platform.X11
                     CreateWindowArgs.InputOutput, window.VisualInfo.Visual, mask, attributes);
 
                 if (window.Handle == IntPtr.Zero)
+                {
                     throw new ApplicationException("XCreateWindow call failed (returned 0).");
+                }
 
                 if (title != null)
+                {
                     Functions.XStoreName(window.Display, window.Handle, title);
+                }
             }
 
             XSizeHints hints = new XSizeHints();
@@ -309,7 +317,9 @@ namespace OpenTK.Platform.X11
                 window.Display = Functions.XOpenDisplay(IntPtr.Zero);
                 //window.Display = API.DefaultDisplay;
                 if (window.Display == IntPtr.Zero)
+                {
                     throw new Exception("Could not open connection to X");
+                }
 
                 using (new XLock(window.Display))
                 {
@@ -439,7 +449,9 @@ namespace OpenTK.Platform.X11
                 hints.min_height = min_height;
             }
             else
+            {
                 hints.flags = (IntPtr)((int)hints.flags & ~(int)XSizeHintsFlags.PMinSize);
+            }
 
             if (max_width > 0 || max_height > 0)
             {
@@ -448,7 +460,9 @@ namespace OpenTK.Platform.X11
                 hints.max_height = max_height;
             }
             else
+            {
                 hints.flags = (IntPtr)((int)hints.flags & ~(int)XSizeHintsFlags.PMaxSize);
+            }
 
             if (hints.flags != IntPtr.Zero)
             {
@@ -492,7 +506,9 @@ namespace OpenTK.Platform.X11
                     {
                         // TODO: How to check if MotifWMHints decorations have been really disabled?
                         if (_decorations_hidden)
+                        {
                             return true;
+                        }
                     }
 
                     // Some WMs remove decorations when the transient_for hint is set. Most new ones do not (but those
@@ -501,7 +517,9 @@ namespace OpenTK.Platform.X11
                     IntPtr transient_for_parent;
                     Functions.XGetTransientForHint(window.Display, window.Handle, out transient_for_parent);
                     if (transient_for_parent != IntPtr.Zero)
+                    {
                         return true;
+                    }
 
                     return false;
                 }
@@ -837,7 +855,9 @@ namespace OpenTK.Platform.X11
                             bool previous_visible = visible;
                             visible = true;
                             if (visible != previous_visible)
+                            {
                                 OnVisibleChanged(EventArgs.Empty);
+                            }
                         }
                         return;
 
@@ -846,7 +866,9 @@ namespace OpenTK.Platform.X11
                             bool previous_visible = visible;
                             visible = false;
                             if (visible != previous_visible)
+                            {
                                 OnVisibleChanged(EventArgs.Empty);
+                            }
                         }
                         break;
 
@@ -1089,7 +1111,9 @@ namespace OpenTK.Platform.X11
                             bool previous_focus = has_focus;
                             has_focus = true;
                             if (has_focus != previous_focus)
+                            {
                                 OnFocusedChanged(EventArgs.Empty);
+                            }
 
                             if (Focused && !CursorVisible)
                             {
@@ -1103,7 +1127,9 @@ namespace OpenTK.Platform.X11
                             bool previous_focus = has_focus;
                             has_focus = false;
                             if (has_focus != previous_focus)
+                            {
                                 OnFocusedChanged(EventArgs.Empty);
+                            }
                         }
                         break;
 
@@ -1268,7 +1294,9 @@ namespace OpenTK.Platform.X11
             set
             {
                 if (value == icon)
+                {
                     return;
+                }
 
                 // Note: it seems that Gnome/Metacity does not respect the _NET_WM_ICON hint.
                 // For this reason, we'll also set the icon using XSetWMHints.
@@ -1293,7 +1321,9 @@ namespace OpenTK.Platform.X11
 
                     for (int y = 0; y < bitmap.Height; y++)
                         for (int x = 0; x < bitmap.Width; x++)
+                        {
                             data[index++] = (IntPtr)bitmap.GetPixel(x, y).ToArgb();
+                        }
 
                     using (new XLock(window.Display))
                     {
@@ -1309,7 +1339,9 @@ namespace OpenTK.Platform.X11
                         IntPtr wmHints_ptr = Functions.XGetWMHints(window.Display, window.Handle);
 
                         if (wmHints_ptr == IntPtr.Zero)
+                        {
                             wmHints_ptr = Functions.XAllocWMHints();
+                        }
 
                         XWMHints wmHints = (XWMHints)Marshal.PtrToStructure(wmHints_ptr, typeof(XWMHints));
 
@@ -1368,11 +1400,17 @@ namespace OpenTK.Platform.X11
 
                         if (atom == _atom_net_wm_state_maximized_horizontal ||
                             atom == _atom_net_wm_state_maximized_vertical)
+                        {
                             maximized++;
+                        }
                         else if (atom == _atom_net_wm_state_minimized)
+                        {
                             minimized = true;
+                        }
                         else if (atom == _atom_net_wm_state_fullscreen)
+                        {
                             fullscreen = true;
+                        }
                     }
                     using (new XLock(window.Display))
                     {
@@ -1381,11 +1419,17 @@ namespace OpenTK.Platform.X11
                 }
 
                 if (minimized)
+                {
                     return OpenTK.WindowState.Minimized;
+                }
                 else if (maximized == 2)
+                {
                     return OpenTK.WindowState.Maximized;
+                }
                 else if (fullscreen)
+                {
                     return OpenTK.WindowState.Fullscreen;
+                }
                 /*
                                 attributes = new XWindowAttributes();
                                 Functions.XGetWindowAttributes(window.Display, window.Handle, ref attributes);
@@ -1408,7 +1452,9 @@ namespace OpenTK.Platform.X11
                 }
 
                 if (current_state == value)
+                {
                     return;
+                }
 
                 Debug.Print("GameWindow {0} changing WindowState from {1} to {2}.", window.Handle.ToString(),
                     current_state.ToString(), value.ToString());
@@ -1507,18 +1553,28 @@ namespace OpenTK.Platform.X11
             get
             {
                 if (IsWindowBorderHidden || WindowState == OpenTK.WindowState.Fullscreen)
+                {
                     return WindowBorder.Hidden;
+                }
                 else if (!IsWindowBorderResizable)
+                {
                     return WindowBorder.Fixed;
+                }
                 else if (WindowState == OpenTK.WindowState.Maximized)
+                {
                     return _previous_window_border;
+                }
                 else
+                {
                     return WindowBorder.Resizable;
+                }
             }
             set
             {
                 if (WindowBorder == value)
+                {
                     return;
+                }
 
                 // We cannot change the border of a fullscreen window.
                 // Record the new value and set it on the next WindowState
@@ -1542,7 +1598,9 @@ namespace OpenTK.Platform.X11
         private void ChangeWindowBorder(WindowBorder value, int width, int height)
         {
             if (WindowBorder == WindowBorder.Hidden)
+            {
                 EnableWindowDecorations();
+            }
 
             switch (value)
             {
@@ -1578,7 +1636,9 @@ namespace OpenTK.Platform.X11
                 unsafe
                 {
                     if (value == cursor)
+                    {
                         return;
+                    }
 
                     using (new XLock(window.Display))
                     {
@@ -1697,7 +1757,9 @@ namespace OpenTK.Platform.X11
                     Functions.XFetchName(window.Display, window.Handle, ref name);
                 }
                 if (name != IntPtr.Zero)
+                {
                     return Marshal.PtrToStringAnsi(name);
+                }
 
                 return String.Empty;
             }

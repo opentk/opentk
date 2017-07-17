@@ -44,7 +44,9 @@ namespace Bind
         public XmlSpecReader(Settings settings)
         {
             if (settings == null)
+            {
                 throw new ArgumentNullException("settings");
+            }
             Settings = settings;
         }
 
@@ -71,7 +73,9 @@ namespace Bind
                 foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_delete))
                 {
                     foreach (XPathNavigator node in nav.SelectChildren("function", String.Empty))
+                    {
                         delegates.Remove(node.GetAttribute("name", String.Empty));
+                    }
                 }
                 foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_add))
                 {
@@ -105,7 +109,9 @@ namespace Bind
                 foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_delete))
                 {
                     foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
+                    {
                         enums.Remove(node.GetAttribute("name", String.Empty));
+                    }
                 }
                 foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_add))
                 {
@@ -122,14 +128,18 @@ namespace Bind
                 Dictionary<string, string> GLTypes = new Dictionary<string, string>();
 
                 if (sr == null)
+                {
                     return GLTypes;
+                }
 
                 do
                 {
                     string line = sr.ReadLine();
 
                     if (String.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    {
                         continue;
+                    }
 
                     string[] words = line.Split(" ,*\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
@@ -190,14 +200,20 @@ namespace Bind
                 {
                     string line = sr.ReadLine();
                     if (String.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    {
                         continue;
+                    }
 
                     string[] words = line.Split(" ,\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                     if (words.Length < 2)
+                    {
                         continue;
+                    }
 
                     if (((Settings.Compatibility & Settings.Legacy.NoBoolParameters) != Settings.Legacy.None) && words[1] == "bool")
+                    {
                         words[1] = "Int32";
+                    }
 
                     CSTypes.Add(words[0], words[1]);
                 }
@@ -257,7 +273,9 @@ namespace Bind
                 // so we add them anyway (which is desirable).
                 if (!String.IsNullOrEmpty(version) && !String.IsNullOrEmpty(apiversion) &&
                     Decimal.Parse(version) > Decimal.Parse(apiversion))
+                {
                     continue;
+                }
 
                 // Check whether we are adding to an existing delegate or creating a new one.
                 var d = new Delegate
@@ -272,7 +290,9 @@ namespace Bind
                     Obsolete = node.GetAttribute("obsolete", String.Empty).Trim()
                 };
                 if (!extensions.Contains(d.Extension))
+                {
                     extensions.Add(d.Extension);
+                }
 
                 foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
                 {
@@ -344,7 +364,9 @@ namespace Bind
                     e.Obsolete = node.GetAttribute("obsolete", String.Empty).Trim();
 
                     if (String.IsNullOrEmpty(e.Name))
+                    {
                         throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
+                    }
 
                     // It seems that all flag collections contain "Mask" in their names.
                     // This looks like a heuristic, but it holds 100% in practice

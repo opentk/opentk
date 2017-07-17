@@ -89,7 +89,9 @@ namespace OpenTK.Platform.MacOS
         private void Dispose(bool disposing)
         {
             if (disposed)
+            {
                 return;
+            }
 
             if (disposing)
             {

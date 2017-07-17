@@ -60,7 +60,9 @@ namespace Bind
         public void Unindent()
         {
             if (indent_level > 0)
+            {
                 --indent_level;
+            }
         }
 
         public void Write(WriteOptions options, string value)
@@ -144,7 +146,9 @@ namespace Bind
             if (options != WriteOptions.NoIndent)
             {
                 for (int i = indent_level; i > 0; i--)
+                {
                     sw.Write("    ");
+                }
             }
         }
 

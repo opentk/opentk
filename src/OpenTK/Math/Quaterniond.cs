@@ -137,7 +137,9 @@ namespace OpenTK
         {
             Quaterniond q = this;
             if (Math.Abs(q.W) > 1.0f)
+            {
                 q.Normalize();
+            }
 
             Vector4d result = new Vector4d();
 
@@ -414,7 +416,9 @@ namespace OpenTK
         public static Quaterniond FromAxisAngle(Vector3d axis, double angle)
         {
             if (axis.LengthSquared == 0.0f)
+            {
                 return Identity;
+            }
 
             Quaterniond result = Identity;
 
@@ -594,9 +598,13 @@ namespace OpenTK
 
             Quaterniond result = new Quaterniond(blendA * q1.Xyz + blendB * q2.Xyz, blendA * q1.W + blendB * q2.W);
             if (result.LengthSquared > 0.0f)
+            {
                 return Normalize(result);
+            }
             else
+            {
                 return Identity;
+            }
         }
 
         /// <summary>
@@ -698,7 +706,10 @@ namespace OpenTK
         /// <returns>True if both objects are Quaternions of equal value. Otherwise it returns false.</returns>
         public override bool Equals(object other)
         {
-            if (other is Quaterniond == false) return false;
+            if (other is Quaterniond == false)
+            {
+                return false;
+            }
             return this == (Quaterniond)other;
         }
 

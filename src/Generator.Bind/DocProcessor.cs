@@ -42,7 +42,9 @@ namespace Bind
         public DocProcessor(IBind generator)
         {
             if (generator == null)
+            {
                 throw new ArgumentNullException();
+            }
 
             Generator = generator;
             foreach (string file in Directory.GetFiles(Settings.DocPath).Concat(
@@ -68,9 +70,13 @@ namespace Bind
             {
                 var file = Settings.FunctionPrefix + f.WrappedDelegate.Name + ".xml";
                 if (!DocumentationFiles.ContainsKey(file))
+                {
                     file = Settings.FunctionPrefix + f.TrimmedName + ".xml";
+                }
                 if (!DocumentationFiles.ContainsKey(file))
+                {
                     file = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
+                }
 
                 docs = 
                     (DocumentationFiles.ContainsKey(file) ? ProcessFile(DocumentationFiles[file], processor) : null) ??
@@ -96,7 +102,9 @@ namespace Bind
             string text;
 
             if (LastFile == file)
+            {
                 return Cached;
+            }
 
             LastFile = file;
             text = File.ReadAllText(file);
@@ -155,7 +163,9 @@ namespace Bind
         private Documentation ToInlineDocs(XDocument doc, EnumProcessor enum_processor)
         {
             if (doc == null || enum_processor == null)
+            {
                 throw new ArgumentNullException();
+            }
 
             var no_const_processing = Settings.Legacy.NoAdvancedEnumProcessing | Settings.Legacy.ConstIntEnums;
             if (!Generator.Settings.IsEnabled(no_const_processing))

@@ -44,9 +44,13 @@ namespace OpenTK.Platform.Egl
             int major, int minor, GraphicsContextFlags flags)
         {
             if (mode == null)
+            {
                 throw new ArgumentNullException("mode");
+            }
             if (window == null)
+            {
                 throw new ArgumentNullException("window");
+            }
 
             EglContext shared = GetSharedEglContext(sharedContext);
 
@@ -92,7 +96,9 @@ namespace OpenTK.Platform.Egl
                     Renderable);
 
             if (!Mode.Index.HasValue)
+            {
                 throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
+            }
             IntPtr config = Mode.Index.Value;
 
             if (window.Surface == IntPtr.Zero)
@@ -118,9 +124,13 @@ namespace OpenTK.Platform.Egl
             int major, int minor, GraphicsContextFlags flags)
         {
             if (handle == ContextHandle.Zero)
+            {
                 throw new ArgumentException("handle");
+            }
             if (window == null)
+            {
                 throw new ArgumentNullException("window");
+            }
 
             Handle = handle;
         }
@@ -142,11 +152,15 @@ namespace OpenTK.Platform.Egl
             if (window != null)
             {
                 if (window is EglWindowInfo)
+                {
                     WindowInfo = (EglWindowInfo) window;
-                #if !ANDROID
+                }
+#if !ANDROID
                 else if (window is IAngleWindowInfoInternal)
+                {
                     WindowInfo = ((IAngleWindowInfoInternal) window).EglWindowInfo;
-                #endif
+                }
+#endif
 
                 if (!Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, HandleAsEGLContext))
                 {
@@ -181,10 +195,14 @@ namespace OpenTK.Platform.Egl
                 }
 
                 if (Egl.SwapInterval(WindowInfo.Display, value))
+                {
                     swap_interval = value;
+                }
                 else
+                {
                     Debug.Print("[Warning] Egl.SwapInterval({0}, {1}) failed. Error: {2}",
                         WindowInfo.Display, value, Egl.GetError());
+                }
             }
         }
 
@@ -227,7 +245,9 @@ namespace OpenTK.Platform.Egl
                 if (manual)
                 {
                     if (IsCurrent)
+                    {
                         Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, IntPtr.Zero);
+                    }
                     Egl.DestroyContext(WindowInfo.Display, HandleAsEGLContext);
                 }
                 IsDisposed = true;

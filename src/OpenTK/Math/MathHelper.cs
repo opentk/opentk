@@ -75,7 +75,10 @@ namespace OpenTK
         /// <returns>The next power of two.</returns>
         public static long NextPowerOfTwo(long n)
         {
-            if (n < 0) throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            if (n < 0)
+            {
+                throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            }
             return (long)System.Math.Pow(2, System.Math.Ceiling(System.Math.Log((double)n, 2)));
         }
 
@@ -86,7 +89,10 @@ namespace OpenTK
         /// <returns>The next power of two.</returns>
         public static int NextPowerOfTwo(int n)
         {
-            if (n < 0) throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            if (n < 0)
+            {
+                throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            }
             return (int)System.Math.Pow(2, System.Math.Ceiling(System.Math.Log((double)n, 2)));
         }
 
@@ -97,7 +103,10 @@ namespace OpenTK
         /// <returns>The next power of two.</returns>
         public static float NextPowerOfTwo(float n)
         {
-            if (n < 0) throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            if (n < 0)
+            {
+                throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            }
             return (float)System.Math.Pow(2, System.Math.Ceiling(System.Math.Log((double)n, 2)));
         }
 
@@ -108,7 +117,10 @@ namespace OpenTK
         /// <returns>The next power of two.</returns>
         public static double NextPowerOfTwo(double n)
         {
-            if (n < 0) throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            if (n < 0)
+            {
+                throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            }
             return System.Math.Pow(2, System.Math.Ceiling(System.Math.Log((double)n, 2)));
         }
 
@@ -121,7 +133,9 @@ namespace OpenTK
             long result = 1;
 
             for (; n > 1; n--)
+            {
                 result *= n;
+            }
 
             return result;
         }
@@ -311,11 +325,15 @@ namespace OpenTK
             // we use longs here, otherwise we run into a two's complement problem, causing this to fail with -2 and 2.0
             long aInt = FloatToInt32Bits(a);
             if (aInt < 0)
+            {
                 aInt = Int32.MinValue - aInt;
+            }
 
             long bInt = FloatToInt32Bits(b);
             if (bInt < 0)
+            {
                 bInt = Int32.MinValue - bInt;
+            }
 
             long intDiff = Math.Abs(aInt - bInt);
             return intDiff <= (1 << maxDeltaBits);

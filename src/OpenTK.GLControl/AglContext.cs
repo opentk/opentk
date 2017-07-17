@@ -143,13 +143,21 @@ namespace OpenTK.Platform.MacOS
             int[] glrect = new int[4];
 
             if (XOffset != null)
+            {
                 glrect[0] = rect.X + XOffset();
+            }
             else
+            {
                 glrect[0] = rect.X;
+            }
             if (YOffset != null)
+            {
                 glrect[1] = rect.Y + YOffset();
+            }
             else
+            {
                 glrect[1] = rect.Y;
+            }
             glrect[2] = rect.Width;
             glrect[3] = rect.Height;
 
@@ -190,9 +198,11 @@ namespace OpenTK.Platform.MacOS
             Agl.AglError err = Agl.GetError();
 
             if (err != Agl.AglError.NoError)
+            {
                 throw new Exception(String.Format(
                     "AGL Error from function {0}: {1}  {2}",
                     function, err, Agl.ErrorString(err)));
+            }
         }
 
         private bool firstSwap = true;
@@ -215,7 +225,9 @@ namespace OpenTK.Platform.MacOS
         public void MakeCurrent(IWindowInfo window)
         {
             if (Agl.aglSetCurrentContext(Context.Handle) == false)
+            {
                 MyAGLReportError("aglSetCurrentContext");
+            }
         }
 
         public bool IsCurrent
@@ -241,7 +253,9 @@ namespace OpenTK.Platform.MacOS
             set
             {
                 if (!Agl.aglSetInteger(Context.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, ref value))
+                {
                     MyAGLReportError("aglSetInteger");
+                }
             }
         }
 
@@ -289,7 +303,9 @@ namespace OpenTK.Platform.MacOS
         private void Dispose(bool disposing)
         {
             if (IsDisposed || Context.Handle == IntPtr.Zero)
+            {
                 return;
+            }
 
             Debug.Print("Disposing of AGL context.");
             Agl.aglSetCurrentContext(IntPtr.Zero);

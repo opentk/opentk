@@ -57,7 +57,9 @@ namespace OpenTK.Graphics
         {
             var context = GraphicsContext.CurrentContext as IGraphicsContextInternal;
             if (context == null)
+            {
                 throw new GraphicsContextMissingException();
+            }
             return context != null ? context.GetAddress(funcname) : IntPtr.Zero;
         }
 
@@ -71,7 +73,9 @@ namespace OpenTK.Graphics
 
             IGraphicsContext context = GraphicsContext.CurrentContext;
             if (context == null)
+            {
                 throw new GraphicsContextMissingException();
+            }
 
             IGraphicsContextInternal context_internal = context as IGraphicsContextInternal;
             unsafe

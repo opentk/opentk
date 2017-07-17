@@ -76,15 +76,21 @@ namespace OpenTK.Platform
             int supported = 0;
             Type extensions_class = type.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (extensions_class == null)
+            {
                 throw new InvalidOperationException("The specified type does not have any loadable extensions.");
+            }
 
             FieldInfo[] delegates = extensions_class.GetFields(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (delegates == null)
+            {
                 throw new InvalidOperationException("The specified type does not have any loadable extensions.");
+            }
 
             MethodInfo load_delegate_method_info = type.GetMethod("LoadDelegate", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (load_delegate_method_info == null)
+            {
                 throw new InvalidOperationException(type.ToString() + " does not contain a static LoadDelegate method.");
+            }
             LoadDelegateFunction LoadDelegate = (LoadDelegateFunction)Delegate.CreateDelegate(
                 typeof(LoadDelegateFunction), load_delegate_method_info);
 
@@ -98,14 +104,18 @@ namespace OpenTK.Platform
             {
                 Delegate d = LoadDelegate(f.Name, f.FieldType);
                 if (d != null)
+                {
                     ++supported;
+                }
 
                 f.SetValue(null, d);
             }
 
             FieldInfo rebuildExtensionList = type.GetField("rebuildExtensionList", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (rebuildExtensionList != null)
+            {
                 rebuildExtensionList.SetValue(null, true);
+            }
 
             time.Stop();
             Debug.Print("{0} extensions loaded in {1} ms.", supported, time.ElapsedMilliseconds);
@@ -157,7 +167,9 @@ namespace OpenTK.Platform
                 f.SetValue(null, @new);
                 FieldInfo rebuildExtensionList = type.GetField("rebuildExtensionList", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
                 if (rebuildExtensionList != null)
+                {
                     rebuildExtensionList.SetValue(null, true);
+                }
             }
             return @new != null;
         }

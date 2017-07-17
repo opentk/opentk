@@ -120,7 +120,9 @@ namespace OpenTK.Platform.SDL2
                 {
                     // Check again inside the lock
                     if (inputDriver == null)
+                    {
                         inputDriver = new Sdl2InputDriver();
+                    }
                 }
             }
 

@@ -88,7 +88,9 @@ namespace OpenTK
         public GLControl(GraphicsMode mode, int major, int minor, GraphicsContextFlags flags)
         {
             if (mode == null)
+            {
                 throw new ArgumentNullException("mode");
+            }
 
             // SDL does not currently support embedding
             // on external windows. If Open.Toolkit is not yet
@@ -144,13 +146,19 @@ namespace OpenTK
         private void ValidateState()
         {
             if (IsDisposed)
+            {
                 throw new ObjectDisposedException(GetType().Name);
+            }
 
             if (!IsHandleCreated)
+            {
                 CreateControl();
+            }
 
             if (implementation == null || context == null || context.IsDisposed)
+            {
                 RecreateHandle();
+            }
         }
 
         /// <summary>
@@ -179,21 +187,31 @@ namespace OpenTK
         protected override void OnHandleCreated(EventArgs e)
         {
             if (context != null)
+            {
                 context.Dispose();
+            }
 
             if (implementation != null)
+            {
                 implementation.WindowInfo.Dispose();
+            }
 
             if (design_mode)
+            {
                 implementation = new DummyGLControl();
+            }
             else
+            {
                 implementation = new GLControlFactory().CreateGLControl(format, this);
+            }
 
             context = implementation.CreateContext(major, minor, flags);
             MakeCurrent();
 
             if (!design_mode)
+            {
                 ((IGraphicsContextInternal)Context).LoadAll();
+            }
 
             // Deferred setting of vsync mode. See VSync property for more information.
             if (initial_vsync_value.HasValue)
@@ -242,7 +260,9 @@ namespace OpenTK
             ValidateState();
 
             if (design_mode)
+            {
                 e.Graphics.Clear(BackColor);
+            }
 
             base.OnPaint(e);
         }
@@ -268,7 +288,9 @@ namespace OpenTK
                 BeginInvoke(delay); //Need the native window to resize first otherwise our control will be in the wrong place.
             }
             else if (context != null)
+            {
                 context.Update (Implementation.WindowInfo);
+            }
 
             base.OnResize(e);
         }
@@ -283,7 +305,9 @@ namespace OpenTK
         public void PerformContextUpdate()
         {
             if (context != null)
+            {
                 context.Update (Implementation.WindowInfo);
+            }
         }
 
         /// <summary>
@@ -293,7 +317,9 @@ namespace OpenTK
         protected override void OnParentChanged(EventArgs e)
         {
             if (context != null)
+            {
                 context.Update(Implementation.WindowInfo);
+            }
 
             base.OnParentChanged(e);
         }

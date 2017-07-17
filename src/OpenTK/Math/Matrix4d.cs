@@ -288,19 +288,46 @@ namespace OpenTK
         {
             get
             {
-                if (rowIndex == 0) return Row0[columnIndex];
-                else if (rowIndex == 1) return Row1[columnIndex];
-                else if (rowIndex == 2) return Row2[columnIndex];
-                else if (rowIndex == 3) return Row3[columnIndex];
+                if (rowIndex == 0)
+                {
+                    return Row0[columnIndex];
+                }
+                else if (rowIndex == 1)
+                {
+                    return Row1[columnIndex];
+                }
+                else if (rowIndex == 2)
+                {
+                    return Row2[columnIndex];
+                }
+                else if (rowIndex == 3)
+                {
+                    return Row3[columnIndex];
+                }
                 throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
             }
             set
             {
-                if (rowIndex == 0) Row0[columnIndex] = value;
-                else if (rowIndex == 1) Row1[columnIndex] = value;
-                else if (rowIndex == 2) Row2[columnIndex] = value;
-                else if (rowIndex == 3) Row3[columnIndex] = value;
-                else throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+                if (rowIndex == 0)
+                {
+                    Row0[columnIndex] = value;
+                }
+                else if (rowIndex == 1)
+                {
+                    Row1[columnIndex] = value;
+                }
+                else if (rowIndex == 2)
+                {
+                    Row2[columnIndex] = value;
+                }
+                else if (rowIndex == 3)
+                {
+                    Row3[columnIndex] = value;
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+                }
             }
         }
 
@@ -349,7 +376,9 @@ namespace OpenTK
         {
             Matrix4d m = this;
             if (m.Determinant != 0)
+            {
                 m.Invert();
+            }
             return m;
         }
 
@@ -765,13 +794,21 @@ namespace OpenTK
         public static void CreatePerspectiveFieldOfView(double fovy, double aspect, double zNear, double zFar, out Matrix4d result)
         {
             if (fovy <= 0 || fovy > Math.PI)
+            {
                 throw new ArgumentOutOfRangeException("fovy");
+            }
             if (aspect <= 0)
+            {
                 throw new ArgumentOutOfRangeException("aspect");
+            }
             if (zNear <= 0)
+            {
                 throw new ArgumentOutOfRangeException("zNear");
+            }
             if (zFar <= 0)
+            {
                 throw new ArgumentOutOfRangeException("zFar");
+            }
 
             double yMax = zNear * System.Math.Tan(0.5 * fovy);
             double yMin = -yMax;
@@ -827,11 +864,17 @@ namespace OpenTK
         public static void CreatePerspectiveOffCenter(double left, double right, double bottom, double top, double zNear, double zFar, out Matrix4d result)
         {
             if (zNear <= 0)
+            {
                 throw new ArgumentOutOfRangeException("zNear");
+            }
             if (zFar <= 0)
+            {
                 throw new ArgumentOutOfRangeException("zFar");
+            }
             if (zNear >= zFar)
+            {
                 throw new ArgumentOutOfRangeException("zNear");
+            }
 
             double x = (2.0 * zNear) / (right - left);
             double y = (2.0 * zNear) / (top - bottom);
@@ -1305,7 +1348,9 @@ namespace OpenTK
                 double oneOverPivot = 1.0 / pivot;
                 inverse[icol, icol] = 1.0;
                 for (int k = 0; k < 4; ++k)
+                {
                     inverse[icol, k] *= oneOverPivot;
+                }
 
                 // Do elimination of non-diagonal elements
                 for (int j = 0; j < 4; ++j)
@@ -1316,7 +1361,9 @@ namespace OpenTK
                         double f = inverse[j, icol];
                         inverse[j, icol] = 0.0;
                         for (int k = 0; k < 4; ++k)
+                        {
                             inverse[j, k] -= inverse[icol, k] * f;
+                        }
                     }
                 }
             }
@@ -1463,7 +1510,9 @@ namespace OpenTK
         public override bool Equals(object obj)
         {
             if (!(obj is Matrix4d))
+            {
                 return false;
+            }
 
             return this.Equals((Matrix4d)obj);
         }

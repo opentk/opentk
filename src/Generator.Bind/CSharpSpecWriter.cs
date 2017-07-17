@@ -54,7 +54,9 @@ namespace Bind
             int top = Console.CursorTop;
             Console.Write(text);
             for (int i = text.Length; i < 80; i++)
+            {
                 Console.Write(" ");
+            }
             Console.WriteLine();
             Console.SetCursorPosition(left, top);
         }
@@ -63,7 +65,9 @@ namespace Bind
         {
             Console.WriteLine("Writing bindings to {0}", Settings.OutputPath);
             if (!Directory.Exists(Settings.OutputPath))
+            {
                 Directory.CreateDirectory(Settings.OutputPath);
+            }
 
             string temp_enums_file = Path.GetTempFileName();
             string temp_wrappers_file = Path.GetTempFileName();
@@ -84,7 +88,9 @@ namespace Bind
                     sw.WriteLine("static partial class {0}", Settings.OutputClass);
                 }
                 else
+                {
                     sw.WriteLine("namespace {0}", Settings.EnumsOutput);
+                }
 
                 sw.WriteLine("{");
 
@@ -124,10 +130,22 @@ namespace Bind
             string output_core = Path.Combine(Settings.OutputPath, Settings.ImportsFile);
             string output_wrappers = Path.Combine(Settings.OutputPath, Settings.WrappersFile);
 
-            if (File.Exists(output_enums)) File.Delete(output_enums);
-            if (File.Exists(output_delegates)) File.Delete(output_delegates);
-            if (File.Exists(output_core)) File.Delete(output_core);
-            if (File.Exists(output_wrappers)) File.Delete(output_wrappers);
+            if (File.Exists(output_enums))
+            {
+                File.Delete(output_enums);
+            }
+            if (File.Exists(output_delegates))
+            {
+                File.Delete(output_delegates);
+            }
+            if (File.Exists(output_core))
+            {
+                File.Delete(output_core);
+            }
+            if (File.Exists(output_wrappers))
+            {
+                File.Delete(output_wrappers);
+            }
 
             File.Move(temp_enums_file, output_enums);
             File.Move(temp_wrappers_file, output_wrappers);
@@ -296,9 +314,13 @@ namespace Bind
                 else if (!String.IsNullOrEmpty(f.Version))
                 {
                     if (f.Category.StartsWith("VERSION"))
+                    {
                         category = String.Format("[requires: {0}]", "v" + f.Version);
+                    }
                     else
+                    {
                         category = String.Format("[requires: {0}]", "v" + f.Version + " or " + f.Category);
+                    }
                 }
 
                 // Write function summary
@@ -413,7 +435,9 @@ namespace Bind
 
                 sw.Write(str);
                 if (!String.IsNullOrEmpty(str))
+                {
                     sw.WriteLine(",");
+                }
             }
         }
 
@@ -424,9 +448,13 @@ namespace Bind
             //sw.WriteLine();
 
             if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
+            {
                 Trace.WriteLine(String.Format("Writing enums to:\t{0}.{1}.{2}", Settings.OutputNamespace, Settings.OutputClass, Settings.NestedEnumsClass));
+            }
             else
+            {
                 Trace.WriteLine(String.Format("Writing enums to:\t{0}", Settings.EnumsOutput));
+            }
 
             if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
             {
@@ -480,11 +508,17 @@ namespace Bind
                     }
 
                     if (@enum.IsObsolete)
+                    {
                         sw.WriteLine("[Obsolete(\"{0}\")]", @enum.Obsolete);
+                    }
                     if (!@enum.CLSCompliant)
+                    {
                         sw.WriteLine("[CLSCompliant(false)]");
+                    }
                     if (@enum.IsFlagCollection)
+                    {
                         sw.WriteLine("[Flags]");
+                    }
                     sw.WriteLine("public enum " + @enum.Name + " : " + @enum.Type);
                     sw.WriteLine("{");
                     sw.Indent();
@@ -561,7 +595,9 @@ namespace Bind
 
             sb.Append(d.Unsafe ? "unsafe " : "");
             if (is_delegate)
+            {
                 sb.Append("delegate ");
+            }
             sb.Append(GetDeclarationString(d.ReturnType, Settings.Legacy.ConstIntEnums));
             sb.Append(" ");
             sb.Append(Settings.FunctionPrefix);
@@ -579,12 +615,16 @@ namespace Bind
             {
                 int ret = String.Compare(c1.Value, c2.Value);
                 if (ret == 0)
+                {
                     return String.Compare(c1.Name, c2.Name);
+                }
                 return ret;
             });
 
             if (e.IsFlagCollection)
+            {
                 sb.AppendLine("[Flags]");
+            }
             sb.Append("public enum ");
             sb.Append(e.Name);
             sb.Append(" : ");
@@ -597,7 +637,9 @@ namespace Bind
                 sb.Append("    ");
                 sb.Append(declaration);
                 if (!String.IsNullOrEmpty(declaration))
+                {
                     sb.AppendLine(",");
+                }
             }
             sb.Append("}");
 
@@ -640,7 +682,9 @@ namespace Bind
                 foreach (Parameter p in f.Parameters)
                 {
                     if (p.Generic)
+                    {
                         sb.AppendLine(String.Format("    where {0} : struct", p.CurrentType));
+                    }
                 }
             }
 
@@ -652,16 +696,24 @@ namespace Bind
             StringBuilder sb = new StringBuilder();
 
             if (p.Flow == FlowDirection.Out)
+            {
                 sb.Append("[OutAttribute] ");
+            }
             else if (p.Flow == FlowDirection.Undefined)
+            {
                 sb.Append("[InAttribute, OutAttribute] ");
+            }
 
             if (p.Reference)
             {
                 if (p.Flow == FlowDirection.Out)
+                {
                     sb.Append("out ");
+                }
                 else
+                {
                     sb.Append("ref ");
+                }
             }
 
             if (!override_unsafe_setting && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None))

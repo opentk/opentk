@@ -33,7 +33,9 @@ namespace Bind.Structures
             : base(p)
         {
             if (p == null)
+            {
                 return;
+            }
 
             Name = p.Name;
             Unchecked = p.Unchecked;
@@ -164,7 +166,9 @@ namespace Bind.Structures
         {
             int result = base.CompareTo(other);
             if (result == 0)
+            {
                 result = Name.CompareTo(other.Name);
+            }
             return result;
         }
 
@@ -218,7 +222,9 @@ namespace Bind.Structures
         public ParameterCollection(IEnumerable<Parameter> parameters)
         {
             foreach (Parameter p in parameters)
+            {
                 Add(new Parameter(p));
+            }
         }
 
         private void BuildCache()
@@ -285,16 +291,24 @@ namespace Bind.Structures
             foreach (Parameter p in this)
             {
                 if (p.Pointer != 0 || p.CurrentType.Contains("IntPtr"))
+                {
                     hasPointerParameters = true;
+                }
 
                 if (p.Reference)
+                {
                     hasReferenceParameters = true;
+                }
 
                 if (p.Unsigned)
+                {
                     hasUnsignedParameters = true;
+                }
 
                 if (p.Generic)
+                {
                     hasGenericParameters = true;
+                }
             }
         }
 
@@ -313,7 +327,9 @@ namespace Bind.Structures
                 sb.Replace(", ", ")", sb.Length - 2, 2);
             }
             else
+            {
                 sb.Append(")");
+            }
 
             return sb.ToString();
         }
@@ -321,8 +337,12 @@ namespace Bind.Structures
         public bool ContainsType(string type)
         {
             foreach (Parameter p in this)
+            {
                 if (p.CurrentType == type)
+                {
                     return true;
+                }
+            }
             return false;
         }
 
@@ -423,7 +443,9 @@ namespace Bind.Structures
                 {
                     int result = this[i].CompareTo(other[i]);
                     if (result != 0)
+                    {
                         return result;
+                    }
                 }
                 return 0;
             }
@@ -432,7 +454,9 @@ namespace Bind.Structures
         public bool Equals(ParameterCollection other)
         {
             if (Count != other.Count)
+            {
                 return false;
+            }
 
             bool result = true;
             for (int i = 0; i < Count && result; i++)

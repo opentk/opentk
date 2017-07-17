@@ -69,11 +69,17 @@ namespace OpenTK.Audio
         public AudioCapture(string deviceName, int frequency, ALFormat sampleFormat, int bufferSize)
         {
             if (!AudioDeviceEnumerator.IsOpenALSupported)
+            {
                 throw new DllNotFoundException("openal32.dll");
+            }
             if (frequency <= 0)
+            {
                 throw new ArgumentOutOfRangeException("frequency");
+            }
             if (bufferSize <= 0)
+            {
                 throw new ArgumentOutOfRangeException("bufferSize");
+            }
 
             // Try to open specified device. If it fails, try to open default device.
             CurrentDevice = deviceName;
@@ -205,7 +211,9 @@ namespace OpenTK.Audio
             where TBuffer : struct
         {
             if (buffer == null)
+            {
                 throw new ArgumentNullException("buffer");
+            }
 
             int buffer_size = BlittableValueType<TBuffer>.Stride * buffer.Length;
             // This is more of a heuristic than a 100% valid check. However, it will work
@@ -214,7 +222,9 @@ namespace OpenTK.Audio
             // be produced with compressed sample formats (which are very rare).
             // Still, this is better than no check at all.
             if (sampleCount * GetSampleSize(SampleFormat) > buffer_size)
+            {
                 throw new ArgumentOutOfRangeException("sampleCount");
+            }
 
             GCHandle buffer_ptr = GCHandle.Alloc(buffer, GCHandleType.Pinned);
             try { ReadSamples(buffer_ptr.AddrOfPinnedObject(), sampleCount); }
@@ -320,7 +330,9 @@ namespace OpenTK.Audio
                 if (this.Handle != IntPtr.Zero)
                 {
                     if (this.IsRunning)
+                    {
                         this.Stop();
+                    }
 
                     Alc.CaptureCloseDevice(this.Handle);
                 }

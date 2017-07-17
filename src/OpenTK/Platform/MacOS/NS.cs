@@ -138,7 +138,9 @@ namespace OpenTK.Platform.MacOS
             {
                 symbol = LookupAndBindSymbol(function);
                 if (symbol != IntPtr.Zero)
+                {
                     symbol = AddressOfSymbol(symbol);
+                }
             }
             return symbol;
         }

@@ -82,17 +82,25 @@ namespace OpenTK.Platform.X11
             // X11Keyboard supports a single keyboard only
             ProcessEvents();
             if (index == 0)
+            {
                 return state;
+            }
             else
+            {
                 return new KeyboardState();
+            }
         }
 
         public string GetDeviceName(int index)
         {
             if (index == 0)
+            {
                 return name;
+            }
             else
+            {
                 return String.Empty;
+            }
         }
 
         private void ProcessEvents()

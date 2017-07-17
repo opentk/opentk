@@ -53,9 +53,13 @@ namespace OpenTK.Graphics
             set
             {
                 if (value && SwapInterval <= 0)
+                {
                     SwapInterval = 1;
+                }
                 else if (!value && SwapInterval > 0)
+                {
                     SwapInterval = 0;
+                }
             }
         }
 

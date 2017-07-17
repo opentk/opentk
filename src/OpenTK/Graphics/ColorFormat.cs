@@ -45,7 +45,9 @@ namespace OpenTK.Graphics
         public ColorFormat(int bpp)
         {
             if (bpp < 0)
+            {
                 throw new ArgumentOutOfRangeException("bpp", "Must be greater or equal to zero.");
+            }
             red = green = blue = alpha = 0;
             BitsPerPixel = bpp;
             IsIndexed = false;
@@ -96,7 +98,9 @@ namespace OpenTK.Graphics
         public ColorFormat(int red, int green, int blue, int alpha)
         {
             if (red < 0 || green < 0 || blue < 0 || alpha < 0)
+            {
                 throw new ArgumentOutOfRangeException("Arguments must be greater or equal to zero.");
+            }
             this.red = (byte)red;
             this.green = (byte)green;
             this.blue = (byte)blue;
@@ -104,7 +108,9 @@ namespace OpenTK.Graphics
             this.BitsPerPixel = red + green + blue + alpha;
             this.IsIndexed = false;
             if (this.BitsPerPixel < 15 && this.BitsPerPixel != 0)
+            {
                 this.IsIndexed = true;
+            }
         }
 
         /// <summary>Gets the bits per pixel for the Red channel.</summary>
@@ -154,10 +160,14 @@ namespace OpenTK.Graphics
         {
             int result = BitsPerPixel.CompareTo(other.BitsPerPixel);
             if (result != 0)
+            {
                 return result;
+            }
             result = IsIndexed.CompareTo(other.IsIndexed);
             if (result != 0)
+            {
                 return result;
+            }
             result = Alpha.CompareTo(other.Alpha);
             return result;
         }

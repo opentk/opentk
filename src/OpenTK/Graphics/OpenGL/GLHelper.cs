@@ -1132,7 +1132,9 @@ namespace OpenTK.Graphics.OpenGL
             unsafe
             {
                 fixed (Vector2* ptr = &vector)
+                {
                     GetFloat(pname, (float*)ptr);
+                }
             }
         }
 
@@ -1141,7 +1143,9 @@ namespace OpenTK.Graphics.OpenGL
             unsafe
             {
                 fixed (Vector3* ptr = &vector)
+                {
                     GetFloat(pname, (float*)ptr);
+                }
             }
         }
 
@@ -1150,7 +1154,9 @@ namespace OpenTK.Graphics.OpenGL
             unsafe
             {
                 fixed (Vector4* ptr = &vector)
+                {
                     GetFloat(pname, (float*)ptr);
+                }
             }
         }
 
@@ -1159,7 +1165,9 @@ namespace OpenTK.Graphics.OpenGL
             unsafe
             {
                 fixed (Matrix4* ptr = &matrix)
+                {
                     GetFloat(pname, (float*)ptr);
+                }
             }
         }
 
@@ -1168,7 +1176,9 @@ namespace OpenTK.Graphics.OpenGL
             unsafe
             {
                 fixed (Vector2d* ptr = &vector)
+                {
                     GetDouble(pname, (double*)ptr);
+                }
             }
         }
 
@@ -1177,7 +1187,9 @@ namespace OpenTK.Graphics.OpenGL
             unsafe
             {
                 fixed (Vector3d* ptr = &vector)
+                {
                     GetDouble(pname, (double*)ptr);
+                }
             }
         }
 
@@ -1186,7 +1198,9 @@ namespace OpenTK.Graphics.OpenGL
             unsafe
             {
                 fixed (Vector4d* ptr = &vector)
+                {
                     GetDouble(pname, (double*)ptr);
+                }
             }
         }
 
@@ -1195,7 +1209,9 @@ namespace OpenTK.Graphics.OpenGL
             unsafe
             {
                 fixed (Matrix4d* ptr = &matrix)
+                {
                     GetDouble(pname, (double*)ptr);
+                }
             }
         }
 

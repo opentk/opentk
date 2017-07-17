@@ -32,10 +32,14 @@ namespace Bind.Structures
             set
             {
                 if (String.IsNullOrEmpty(value))
+                {
                     throw new ArgumentNullException("value");
+                }
 
                 if (OriginalName == null)
+                {
                     OriginalName = _name;
+                }
 
                 _name = value;
             }
@@ -55,7 +59,9 @@ namespace Bind.Structures
             set
             {
                 if (String.IsNullOrEmpty(value))
+                {
                     throw new ArgumentNullException("value");
+                }
 
                 _value = value;
             }
@@ -108,9 +114,13 @@ namespace Bind.Structures
         public static bool TranslateConstantWithReference(Constant c, EnumCollection enums)
         {
             if (c == null)
+            {
                 throw new ArgumentNullException("c");
+            }
             if (enums == null)
+            {
                 throw new ArgumentNullException("enums");
+            }
 
             if (!String.IsNullOrEmpty(c.Reference))
             {
@@ -165,7 +175,9 @@ namespace Bind.Structures
         {
             int ret = Value.CompareTo(other.Value);
             if (ret == 0)
+            {
                 return Name.CompareTo(other.Name);
+            }
             return ret;
         }
     }

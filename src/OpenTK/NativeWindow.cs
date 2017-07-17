@@ -89,11 +89,17 @@ namespace OpenTK
         {
             // TODO: Should a constraint be added for the position?
             if (width < 1)
+            {
                 throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
+            }
             if (height < 1)
+            {
                 throw new ArgumentOutOfRangeException("height", "Must be greater than zero.");
+            }
             if (mode == null)
+            {
                 throw new ArgumentNullException("mode");
+            }
 
             this.options = options;
             this.device = device;
@@ -612,7 +618,10 @@ namespace OpenTK
         /// </exception>
         protected void EnsureUndisposed()
         {
-            if (IsDisposed) throw new ObjectDisposedException(GetType().Name);
+            if (IsDisposed)
+            {
+                throw new ObjectDisposedException(GetType().Name);
+            }
         }
 
         /// <summary>
@@ -851,7 +860,10 @@ namespace OpenTK
             {
                 throw new InvalidOperationException("ProcessEvents must be called on the same thread that created the window.");
             }
-            if (!retainEvents && !events) Events = true;
+            if (!retainEvents && !events)
+            {
+                Events = true;
+            }
             implementation.ProcessEvents();
         }
 

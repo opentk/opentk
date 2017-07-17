@@ -48,7 +48,9 @@ namespace OpenTK
         public override bool Equals(object obj)
         {
             if (obj is ContextHandle)
+            {
                 return this.Equals((ContextHandle)obj);
+            }
             return false;
         }
 

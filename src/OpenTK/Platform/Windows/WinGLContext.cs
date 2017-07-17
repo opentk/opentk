@@ -41,7 +41,9 @@ namespace OpenTK.Platform.Windows
                 Debug.WriteLine("[WGL] Creating temporary context to load extensions");
 
                 if (native == null)
+                {
                     throw new ArgumentNullException();
+                }
 
                 // Create temporary context and load WGL entry points
                 // First, set a compatible pixel format to the device context
@@ -102,9 +104,13 @@ namespace OpenTK.Platform.Windows
             lock (LoadLock)
             {
                 if (window == null)
+                {
                     throw new ArgumentNullException("window", "Must point to a valid window.");
+                }
                 if (window.Handle == IntPtr.Zero)
+                {
                     throw new ArgumentException("window", "Must be a valid window.");
+                }
 
                 IntPtr current_context = Wgl.GetCurrentContext();
                 INativeWindow temp_window = null;
@@ -160,7 +166,9 @@ namespace OpenTK.Platform.Windows
                                     sharedContext != null ? (sharedContext as IGraphicsContextInternal).Context.Handle : IntPtr.Zero,
                                     attributes.ToArray()));
                             if (Handle == ContextHandle.Zero)
+                            {
                                 Debug.Print("failed. (Error: {0})", Marshal.GetLastWin32Error());
+                            }
                         }
                         catch (Exception e) { Debug.Print(e.ToString()); }
                     }
@@ -171,11 +179,15 @@ namespace OpenTK.Platform.Windows
                         Debug.Write("Falling back to GL2... ");
                         Handle = new ContextHandle(Wgl.CreateContext(window.DeviceContext));
                         if (Handle == ContextHandle.Zero)
+                        {
                             Handle = new ContextHandle(Wgl.CreateContext(window.DeviceContext));
+                        }
                         if (Handle == ContextHandle.Zero)
+                        {
                             throw new GraphicsContextException(
                                 String.Format("Context creation failed. Wgl.CreateContext() error: {0}.",
                                     Marshal.GetLastWin32Error()));
+                        }
                     }
 
                     Debug.WriteLine(String.Format("success! (id: {0})", Handle));
@@ -234,9 +246,13 @@ namespace OpenTK.Platform.Windows
             int major, int minor, GraphicsContextFlags flags)
         {
             if (handle == ContextHandle.Zero)
+            {
                 throw new ArgumentException("handle");
+            }
             if (window == null)
+            {
                 throw new ArgumentNullException("window");
+            }
 
             Handle = handle;
         }
@@ -244,8 +260,10 @@ namespace OpenTK.Platform.Windows
         public override void SwapBuffers()
         {
             if (!Functions.SwapBuffers(DeviceContext))
+            {
                 throw new GraphicsContextException(String.Format(
                     "Failed to swap buffers for context {0} current. Error: {1}", this, Marshal.GetLastWin32Error()));
+            }
         }
 
         public override void MakeCurrent(IWindowInfo window)
@@ -258,7 +276,9 @@ namespace OpenTK.Platform.Windows
                 if (wnd != null)
                 {
                     if (wnd.Handle == IntPtr.Zero)
+                    {
                         throw new ArgumentException("window", "Must point to a valid window.");
+                    }
 
                     success = Wgl.MakeCurrent(wnd.DeviceContext, Handle.Handle);
                     DeviceContext = wnd.DeviceContext;
@@ -289,9 +309,13 @@ namespace OpenTK.Platform.Windows
                 lock (LoadLock)
                 {
                     if (vsync_supported)
+                    {
                         return Wgl.Ext.GetSwapInterval();
+                    }
                     else
+                    {
                         return 0;
+                    }
                 }
             }
             set
@@ -359,7 +383,9 @@ namespace OpenTK.Platform.Windows
         {
             Debug.Write("Setting pixel format... ");
             if (window == null)
+            {
                 throw new ArgumentNullException("window", "Must point to a valid window.");
+            }
 
             if (!mode.Index.HasValue)
             {
@@ -415,8 +441,10 @@ namespace OpenTK.Platform.Windows
                 {
                     // This will fail if the user calls Dispose() on thread X when the context is current on thread Y.
                     if (!Wgl.DeleteContext(Handle.Handle))
+                    {
                         Debug.Print("Failed to destroy OpenGL context {0}. Error: {1}",
                             Handle.ToString(), Marshal.GetLastWin32Error());
+                    }
                 }
                 catch (AccessViolationException e)
                 {

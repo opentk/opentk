@@ -50,7 +50,9 @@ namespace OpenTK.Platform.Windows
         public WinGraphicsMode(IntPtr device)
         {
             if (device == IntPtr.Zero)
+            {
                 throw new ArgumentException();
+            }
 
             Device = device;
         }
@@ -291,7 +293,9 @@ namespace OpenTK.Platform.Windows
                 valid &= pfd.PixelType == PixelType.RGBA; // indexed modes not currently supported
                 // heavily penalize single-buffered modes when the user requests double buffering
                 if ((pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) == 0 && mode.Buffers > 1)
+                {
                     dist += 1000;
+                }
                 valid &= Compare(pfd.ColorBits, mode.ColorFormat.BitsPerPixel, ref dist);
                 valid &= Compare(pfd.RedBits, mode.ColorFormat.Red, ref dist);
                 valid &= Compare(pfd.GreenBits, mode.ColorFormat.Green, ref dist);

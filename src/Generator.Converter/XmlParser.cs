@@ -85,11 +85,17 @@ namespace OpenTK.Convert
         public string TrimName(string name)
         {
             if (name.StartsWith(EnumPrefix))
+            {
                 return name.Remove(0, EnumPrefix.Length);
+            }
             else if (name.StartsWith(FuncPrefix))
+            {
                 return name.Remove(0, FuncPrefix.Length);
+            }
             else
+            {
                 return name;
+            }
         }
     }
 }

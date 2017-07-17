@@ -85,7 +85,9 @@ namespace OpenTK.Platform.MacOS
             {
                 symbol = NSLookupAndBindSymbol(function);
                 if (symbol != IntPtr.Zero)
+                {
                     symbol = NSAddressOfSymbol(symbol);
+                }
             }
             return symbol;
         }

@@ -213,12 +213,18 @@ namespace OpenTK.Platform.Windows
             // wParam: The low-order word specifies whether the window is being activated or deactivated.
             bool new_focused_state = Focused;
             if (IntPtr.Size == 4)
+            {
                 focused = (wParam.ToInt32() & 0xFFFF) != 0;
+            }
             else
+            {
                 focused = (wParam.ToInt64() & 0xFFFF) != 0;
+            }
 
             if (new_focused_state != Focused)
+            {
                 OnFocusedChanged(EventArgs.Empty);
+            }
         }
 
         private void HandleEnterModalLoop(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -230,7 +236,9 @@ namespace OpenTK.Platform.Windows
             StartTimer(handle);
 
             if (!CursorVisible)
+            {
                 UngrabCursor();
+            }
         }
 
         private void HandleExitModalLoop(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -242,7 +250,9 @@ namespace OpenTK.Platform.Windows
 
             // Ensure cursor remains grabbed
             if (!CursorVisible)
+            {
                 GrabCursor();
+            }
         }
 
         private void HandleWindowPositionChanged(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -274,7 +284,9 @@ namespace OpenTK.Platform.Windows
                             SetWindowPosFlags.NOACTIVATE | SetWindowPosFlags.NOSENDCHANGING);
 
                         if (suppress_resize <= 0)
+                        {
                             OnResize(EventArgs.Empty);
+                        }
                     }
 
                     if (!is_in_modal_loop)
@@ -283,7 +295,9 @@ namespace OpenTK.Platform.Windows
                         // handled inside [ENTER|EXIT]SIZEMOVE case above.
                         // If not, then we have to handle cursor grabbing here.
                         if (!CursorVisible)
+                        {
                             GrabCursor();
+                        }
                     }
                 }
             }
@@ -301,11 +315,17 @@ namespace OpenTK.Platform.Windows
                 {
                     WindowStyle style = ((StyleStruct*)lParam)->New;
                     if ((style & WindowStyle.Popup) != 0)
+                    {
                         new_border = WindowBorder.Hidden;
+                    }
                     else if ((style & WindowStyle.ThickFrame) != 0)
+                    {
                         new_border = WindowBorder.Resizable;
+                    }
                     else if ((style & ~(WindowStyle.ThickFrame | WindowStyle.MaximizeBox)) != 0)
+                    {
                         new_border = WindowBorder.Fixed;
+                    }
                 }
             }
 
@@ -313,7 +333,9 @@ namespace OpenTK.Platform.Windows
             {
                 // Ensure cursor remains grabbed
                 if (!CursorVisible)
+                {
                     GrabCursor();
+                }
 
                 windowBorder = new_border;
                 OnWindowBorderChanged(EventArgs.Empty);
@@ -348,7 +370,9 @@ namespace OpenTK.Platform.Windows
 
                 // Ensure cursor remains grabbed
                 if (!CursorVisible)
+                {
                     GrabCursor();
+                }
             }
         }
 
@@ -381,9 +405,13 @@ namespace OpenTK.Platform.Windows
         {
             char c;
             if (IntPtr.Size == 4)
+            {
                 c = (char)wParam.ToInt32();
+            }
             else
+            {
                 c = (char)wParam.ToInt64();
+            }
 
             if (!Char.IsControl(c))
             {
@@ -474,11 +502,15 @@ namespace OpenTK.Platform.Windows
                     for (i = 0; i < points; ++i)
                     {
                         if (movePoints[i].Time < mouse_last_timestamp)
+                        {
                             break;
+                        }
                         if (movePoints[i].Time == mouse_last_timestamp &&
                             movePoints[i].X == currentScreenPosition.X &&
                             movePoints[i].Y == currentScreenPosition.Y)
+                        {
                             break;
+                        }
                     }
 
                     // Now move the mouse to each point before the one just found.
@@ -850,8 +882,10 @@ namespace OpenTK.Platform.Windows
             me.Flags = TrackMouseEventFlags.LEAVE;
 
             if (!Functions.TrackMouseEvent(ref me))
+            {
                 Debug.Print("[Warning] Failed to enable mouse tracking, error: {0}.",
                     Marshal.GetLastWin32Error());
+            }
         }
 
         private void StartTimer(IntPtr handle)
@@ -860,8 +894,10 @@ namespace OpenTK.Platform.Windows
             {
                 timer_handle = Functions.SetTimer(handle, new UIntPtr(1), ModalLoopTimerPeriod, null);
                 if (timer_handle == UIntPtr.Zero)
+                {
                     Debug.Print("[Warning] Failed to set modal loop timer callback ({0}:{1}->{2}).",
                         GetType().Name, handle, Marshal.GetLastWin32Error());
+                }
             }
         }
 
@@ -870,8 +906,10 @@ namespace OpenTK.Platform.Windows
             if (timer_handle != UIntPtr.Zero)
             {
                 if (!Functions.KillTimer(handle, timer_handle))
+                {
                     Debug.Print("[Warning] Failed to kill modal loop timer callback ({0}:{1}->{2}).",
                         GetType().Name, handle, Marshal.GetLastWin32Error());
+                }
                 timer_handle = UIntPtr.Zero;
             }
         }
@@ -918,7 +956,9 @@ namespace OpenTK.Platform.Windows
                 ushort atom = Functions.RegisterClassEx(ref wc);
 
                 if (atom == 0)
+                {
                     throw new PlatformException(String.Format("Failed to register window class. Error: {0}", Marshal.GetLastWin32Error()));
+                }
 
                 class_registered = true;
             }
@@ -930,7 +970,9 @@ namespace OpenTK.Platform.Windows
                 parentHandle, IntPtr.Zero, Instance, IntPtr.Zero);
 
             if (handle == IntPtr.Zero)
+            {
                 throw new PlatformException(String.Format("Failed to create window. Error: {0}", Marshal.GetLastWin32Error()));
+            }
 
             return handle;
         }
@@ -982,15 +1024,19 @@ namespace OpenTK.Platform.Windows
             rect.top = pos.Y;
             rect.bottom = pos.Y + ClientRectangle.Height;
             if (!Functions.ClipCursor(ref rect))
+            {
                 Debug.WriteLine(String.Format("Failed to grab cursor. Error: {0}",
                     Marshal.GetLastWin32Error()));
+            }
         }
 
         private void UngrabCursor()
         {
             if (!Functions.ClipCursor(IntPtr.Zero))
+            {
                 Debug.WriteLine(String.Format("Failed to ungrab cursor. Error: {0}",
                     Marshal.GetLastWin32Error()));
+            }
         }
 
         public override Rectangle Bounds
@@ -1071,7 +1117,9 @@ namespace OpenTK.Platform.Windows
             {
                 sb_title.Remove(0, sb_title.Length);
                 if (Functions.GetWindowText(window.Handle, sb_title, sb_title.Capacity) == 0)
+                {
                     Debug.Print("Failed to retrieve window title (window:{0}, reason:{1}).", window.Handle, Marshal.GetLastWin32Error());
+                }
                 return sb_title.ToString();
             }
             set
@@ -1079,7 +1127,9 @@ namespace OpenTK.Platform.Windows
                 if (Title != value)
                 {
                     if (!Functions.SetWindowText(window.Handle, value))
+                    {
                         Debug.Print("Failed to change window title (window:{0}, new title:{1}, reason:{2}).", window.Handle, value, Marshal.GetLastWin32Error());
+                    }
                     OnTitleChanged(EventArgs.Empty);
                 }
             }
@@ -1254,7 +1304,9 @@ namespace OpenTK.Platform.Windows
             set
             {
                 if (WindowState == value)
+                {
                     return;
+                }
 
                 ShowWindowCommand command = 0;
                 bool exiting_fullscreen = false;
@@ -1267,7 +1319,9 @@ namespace OpenTK.Platform.Windows
 
                         // If we are leaving fullscreen mode we need to restore the border.
                         if (WindowState == WindowState.Fullscreen)
+                        {
                             exiting_fullscreen = true;
+                        }
                         break;
 
                     case WindowState.Maximized:
@@ -1319,7 +1373,9 @@ namespace OpenTK.Platform.Windows
                 }
 
                 if (command != 0)
+                {
                     Functions.ShowWindow(window.Handle, command);
+                }
 
                 // Restore previous window border or apply pending border change when leaving fullscreen mode.
                 if (exiting_fullscreen)
@@ -1353,7 +1409,9 @@ namespace OpenTK.Platform.Windows
                 }
 
                 if (windowBorder == value)
+                {
                     return;
+                }
 
                 // We wish to avoid making an invisible window visible just to change the border.
                 // However, it's a good idea to make a visible window invisible temporarily, to
@@ -1391,7 +1449,9 @@ namespace OpenTK.Platform.Windows
 
                 // This avoids leaving garbage on the background window.
                 if (was_visible)
+                {
                     Visible = false;
+                }
 
                 Functions.SetWindowLong(window.Handle, GetWindowLongOffsets.STYLE, (IntPtr)(int)new_style);
                 Functions.SetWindowPos(window.Handle, IntPtr.Zero, 0, 0, rect.Width, rect.Height,
@@ -1402,7 +1462,9 @@ namespace OpenTK.Platform.Windows
                 // already visible (invisible windows will change borders when
                 // they become visible, so no need to make them visiable prematurely).
                 if (was_visible)
+                {
                     Visible = true;
+                }
 
                 WindowState = state;
 
@@ -1429,9 +1491,11 @@ namespace OpenTK.Platform.Windows
         public override Point PointToClient(Point point)
         {
             if (!Functions.ScreenToClient(window.Handle, ref point))
+            {
                 throw new InvalidOperationException(String.Format(
                     "Could not convert point {0} from screen to client coordinates. Windows error: {1}",
                     point.ToString(), Marshal.GetLastWin32Error()));
+            }
 
             return point;
         }
@@ -1439,9 +1503,11 @@ namespace OpenTK.Platform.Windows
         public override Point PointToScreen(Point point)
         {
             if (!Functions.ClientToScreen(window.Handle, ref point))
+            {
                 throw new InvalidOperationException(String.Format(
                     "Could not convert point {0} from screen to client coordinates. Windows error: {1}",
                     point.ToString(), Marshal.GetLastWin32Error()));
+            }
 
             return point;
         }
@@ -1477,7 +1543,9 @@ namespace OpenTK.Platform.Windows
                     // Safe to clean managed resources
                     DestroyWindow();
                     if (Icon != null)
+                    {
                         Icon.Dispose();
+                    }
                 }
                 else
                 {

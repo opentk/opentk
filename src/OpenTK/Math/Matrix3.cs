@@ -223,17 +223,38 @@ namespace OpenTK
         {
             get
             {
-                if (rowIndex == 0) return Row0[columnIndex];
-                else if (rowIndex == 1) return Row1[columnIndex];
-                else if (rowIndex == 2) return Row2[columnIndex];
+                if (rowIndex == 0)
+                {
+                    return Row0[columnIndex];
+                }
+                else if (rowIndex == 1)
+                {
+                    return Row1[columnIndex];
+                }
+                else if (rowIndex == 2)
+                {
+                    return Row2[columnIndex];
+                }
                 throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
             }
             set
             {
-                if (rowIndex == 0) Row0[columnIndex] = value;
-                else if (rowIndex == 1) Row1[columnIndex] = value;
-                else if (rowIndex == 2) Row2[columnIndex] = value;
-                else throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+                if (rowIndex == 0)
+                {
+                    Row0[columnIndex] = value;
+                }
+                else if (rowIndex == 1)
+                {
+                    Row1[columnIndex] = value;
+                }
+                else if (rowIndex == 2)
+                {
+                    Row2[columnIndex] = value;
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+                }
             }
         }
 
@@ -284,7 +305,9 @@ namespace OpenTK
         {
             Matrix3 m = this;
             if (m.Determinant != 0)
+            {
                 m.Invert();
+            }
             return m;
         }
 
@@ -774,7 +797,9 @@ namespace OpenTK
                 float oneOverPivot = 1.0f / pivot;
                 inverse[icol, icol] = 1.0f;
                 for (int k = 0; k < 3; ++k)
+                {
                     inverse[icol, k] *= oneOverPivot;
+                }
 
                 for (int j = 0; j < 3; ++j)
                 {
@@ -783,7 +808,9 @@ namespace OpenTK
                         float f = inverse[j, icol];
                         inverse[j, icol] = 0.0f;
                         for (int k = 0; k < 3; ++k)
+                        {
                             inverse[j, k] -= inverse[icol, k] * f;
+                        }
                     }
                 }
             }
@@ -929,7 +956,9 @@ namespace OpenTK
         public override bool Equals(object obj)
         {
             if (!(obj is Matrix3))
+            {
                 return false;
+            }
 
             return this.Equals((Matrix3)obj);
         }

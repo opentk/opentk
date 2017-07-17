@@ -44,14 +44,20 @@ namespace OpenTK.Input
         internal JoystickCapabilities(int axis_count, int button_count, int hat_count, bool is_connected)
         {
             if (axis_count < 0 || axis_count > JoystickState.MaxAxes)
+            {
                 Debug.Print("[{0}] Axis count {1} out of range (0, {2})",
                     typeof(JoystickCapabilities).Name, axis_count, JoystickState.MaxAxes);
+            }
             if (button_count < 0 || button_count > JoystickState.MaxButtons)
+            {
                 Debug.Print("[{0}] Button count {1} out of range (0, {2})",
                     typeof(JoystickCapabilities).Name, button_count, JoystickState.MaxButtons);
+            }
             if (hat_count < 0 || hat_count > JoystickState.MaxHats)
+            {
                 Debug.Print("[{0}] Hat count {1} out of range (0, {2})",
                     typeof(JoystickCapabilities).Name, hat_count, JoystickState.MaxHats);
+            }
 
             axis_count = MathHelper.Clamp(axis_count, 0, JoystickState.MaxAxes);
             button_count = MathHelper.Clamp(button_count, 0, JoystickState.MaxButtons);

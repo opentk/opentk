@@ -39,16 +39,22 @@ namespace OpenTK.Platform.X11
                 // This is only supported on GLX 1.3 - if it fails, fall back to Glx.ChooseVisual.
                 fbconfig = SelectFBConfig(mode);
                 if (fbconfig != IntPtr.Zero)
+                {
                     visual = Glx.GetVisualFromFBConfig(display, fbconfig);
+                }
 
                 if (visual == IntPtr.Zero)
+                {
                     visual = SelectVisual(mode);
+                }
 
                 if (visual == IntPtr.Zero)
                 {
                     // Relax parameters and retry
                     if (!Utilities.RelaxGraphicsMode(ref mode))
+                    {
                         throw new GraphicsModeException("Requested GraphicsMode not available.");
+                    }
                 }
             }
             while (visual == IntPtr.Zero);
@@ -203,7 +209,9 @@ namespace OpenTK.Platform.X11
             if (mode.ColorFormat.BitsPerPixel > 0)
             {
                 if (!mode.ColorFormat.IsIndexed)
+                {
                     visualAttributes.Add((int)GLXAttribute.RGBA);
+                }
                 visualAttributes.Add((int)GLXAttribute.RED_SIZE);
                 visualAttributes.Add(mode.ColorFormat.Red);
                 visualAttributes.Add((int)GLXAttribute.GREEN_SIZE);
@@ -222,7 +230,9 @@ namespace OpenTK.Platform.X11
             }
 
             if (mode.Buffers > 1)
+            {
                 visualAttributes.Add((int)GLXAttribute.DOUBLEBUFFER);
+            }
 
             if (mode.Stencil > 1)
             {
@@ -251,7 +261,9 @@ namespace OpenTK.Platform.X11
             }
 
             if (mode.Stereo)
+            {
                 visualAttributes.Add((int)GLXAttribute.STEREO);
+            }
 
             visualAttributes.Add(0);
 

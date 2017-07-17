@@ -114,13 +114,28 @@ namespace OpenTK
             if (throwOnError)
             {
                 // handle cases that cause overflow rather than silently ignoring it
-                if (f > Half.MaxValue) throw new ArithmeticException("Half: Positive maximum value exceeded.");
-                if (f < -Half.MaxValue) throw new ArithmeticException("Half: Negative minimum value exceeded.");
+                if (f > Half.MaxValue)
+                {
+                    throw new ArithmeticException("Half: Positive maximum value exceeded.");
+                }
+                if (f < -Half.MaxValue)
+                {
+                    throw new ArithmeticException("Half: Negative minimum value exceeded.");
+                }
 
                 // handle cases that make no sense
-                if (Single.IsNaN(f)) throw new ArithmeticException("Half: Input is not a number (NaN).");
-                if (Single.IsPositiveInfinity(f)) throw new ArithmeticException("Half: Input is positive infinity.");
-                if (Single.IsNegativeInfinity(f)) throw new ArithmeticException("Half: Input is negative infinity.");
+                if (Single.IsNaN(f))
+                {
+                    throw new ArithmeticException("Half: Input is not a number (NaN).");
+                }
+                if (Single.IsPositiveInfinity(f))
+                {
+                    throw new ArithmeticException("Half: Input is positive infinity.");
+                }
+                if (Single.IsNegativeInfinity(f))
+                {
+                    throw new ArithmeticException("Half: Input is negative infinity.");
+                }
             }
         }
 
@@ -219,7 +234,10 @@ namespace OpenTK
                 }
 
                 // exponent overflow
-                if (exponent > 30) throw new ArithmeticException("Half: Hardware floating-point overflow.");
+                if (exponent > 30)
+                {
+                    throw new ArithmeticException("Half: Hardware floating-point overflow.");
+                }
 
                 // Assemble the half from S, E and M.
 
@@ -412,16 +430,22 @@ namespace OpenTK
 
             // Make aInt lexicographically ordered as a twos-complement int
             if (aInt < 0)
+            {
                 aInt = (short)(0x8000 - aInt);
+            }
 
             // Make bInt lexicographically ordered as a twos-complement int
             if (bInt < 0)
+            {
                 bInt = (short)(0x8000 - bInt);
+            }
 
             short intDiff = System.Math.Abs((short)(aInt - bInt));
 
             if (intDiff <= maxUlps)
+            {
                 return true;
+            }
 
             return false;
         }

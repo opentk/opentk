@@ -393,7 +393,9 @@ namespace OpenTK.Platform.MacOS
             }
 
             if (suppressResize == 0)
+            {
                 OnResize(EventArgs.Empty);
+            }
         }
 
         private void ApplicationQuit(object sender, CancelEventArgs e)
@@ -590,19 +592,39 @@ namespace OpenTK.Platform.MacOS
         private KeyModifiers GetModifiers(NSEventModifierMask mask)
         {
             OpenTK.Input.KeyModifiers modifiers = 0;
-            if ((mask & NSEventModifierMask.ControlKeyMask) != 0) modifiers |= OpenTK.Input.KeyModifiers.Control;
-            if ((mask & NSEventModifierMask.ShiftKeyMask) != 0) modifiers |= OpenTK.Input.KeyModifiers.Shift;
-            if ((mask & NSEventModifierMask.AlternateKeyMask) != 0) modifiers |= OpenTK.Input.KeyModifiers.Alt;
+            if ((mask & NSEventModifierMask.ControlKeyMask) != 0)
+            {
+                modifiers |= OpenTK.Input.KeyModifiers.Control;
+            }
+            if ((mask & NSEventModifierMask.ShiftKeyMask) != 0)
+            {
+                modifiers |= OpenTK.Input.KeyModifiers.Shift;
+            }
+            if ((mask & NSEventModifierMask.AlternateKeyMask) != 0)
+            {
+                modifiers |= OpenTK.Input.KeyModifiers.Alt;
+            }
             return modifiers;
         }
 
         private MouseButton GetMouseButton(int cocoaButtonIndex)
         {
-            if (cocoaButtonIndex == 0) return MouseButton.Left;
-            if (cocoaButtonIndex == 1) return MouseButton.Right;
-            if (cocoaButtonIndex == 2) return MouseButton.Middle;
+            if (cocoaButtonIndex == 0)
+            {
+                return MouseButton.Left;
+            }
+            if (cocoaButtonIndex == 1)
+            {
+                return MouseButton.Right;
+            }
+            if (cocoaButtonIndex == 2)
+            {
+                return MouseButton.Middle;
+            }
             if (cocoaButtonIndex >= (int)MouseButton.LastButton)
+            {
                 return MouseButton.LastButton;
+            }
 
             return (MouseButton)cocoaButtonIndex;
         }
@@ -616,7 +638,9 @@ namespace OpenTK.Platform.MacOS
                 var e = Cocoa.SendIntPtr(NSApplication.Handle, selNextEventMatchingMask, uint.MaxValue, IntPtr.Zero, NSDefaultRunLoopMode, true);
 
                 if (e == IntPtr.Zero)
+                {
                     break;
+                }
 
                 var type = (NSEventType)Cocoa.SendInt(e, selType);
                 switch (type)
@@ -953,7 +977,9 @@ namespace OpenTK.Platform.MacOS
             {
                 var oldState = windowState;
                 if (oldState == value)
+                {
                     return;
+                }
 
                 RestoreWindowState();
 
@@ -1011,7 +1037,9 @@ namespace OpenTK.Platform.MacOS
                 }
 
                 if (windowBorder == value)
+                {
                     return;
+                }
 
                 SetWindowBorder(value);
                 OnWindowBorderChanged(EventArgs.Empty);
@@ -1225,12 +1253,16 @@ namespace OpenTK.Platform.MacOS
         protected override void Dispose(bool disposing)
         {
             if (disposed)
+            {
                 return;
+            }
 
             Debug.Print("Disposing of CocoaNativeWindow (disposing={0}).", disposing);
 
             if (!NSApplication.IsUIThread)
+            {
                 return;
+            }
 
             NSApplication.Quit -= ApplicationQuit;
 
@@ -1351,7 +1383,9 @@ namespace OpenTK.Platform.MacOS
         private void CloseWindow(bool shutdown)
         {
             if (!Exists)
+            {
                 return;
+            }
 
             exists = false;
 

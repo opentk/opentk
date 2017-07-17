@@ -62,9 +62,13 @@ namespace Bind
         public FuncProcessor(IBind generator, IEnumerable<string> overrides)
         {
             if (generator == null)
+            {
                 throw new ArgumentNullException("generator");
+            }
             if (overrides == null)
+            {
                 throw new ArgumentNullException("overrides");
+            }
 
             Generator = generator;
             Overrides = overrides;
@@ -351,15 +355,23 @@ namespace Bind
             {
                 // For consistency - many overrides use string instead of String.
                 if (enum_override.Value == "string")
+                {
                     type.QualifiedType = "String";
+                }
                 else if (enum_override.Value == "StringBuilder")
+                {
                     type.QualifiedType = "StringBuilder";
+                }
                 else
+                {
                     type.CurrentType = enum_override.Value;
+                }
             }
 
             if (type.CurrentType == "IntPtr" && String.IsNullOrEmpty(type.PreviousType))
+            {
                 type.Pointer = 0;
+            }
 
             if (type.Pointer >= 3)
             {
@@ -455,13 +467,19 @@ namespace Bind
                 string extensionless_name = GetTrimmedExtension(d.Name, ext);
                 function_overload = nav.Select(GetOverloadsPath(apiname, apiversion, d.Name, ext));
                 if (function_overload.Count != 0)
+                {
                     break;
+                }
                 function_overload = nav.Select(GetOverloadsPath(apiname, apiversion, extensionless_name, ext));
                 if (function_overload.Count != 0)
+                {
                     break;
+                }
                 function_overload = nav.Select(GetOverloadsPath(apiname, apiversion, trimmed_name, ext));
                 if (function_overload.Count != 0)
+                {
                     break;
+                }
             }
             return function_overload;
         }
@@ -522,7 +540,9 @@ namespace Bind
                                 case "count":
                                     int count;
                                     if (Int32.TryParse(node.Value, out count))
+                                    {
                                         d.Parameters[i].ElementCount = count;
+                                    }
                                     break;
                             }
                         }
@@ -583,10 +603,14 @@ namespace Bind
             if (d.ReturnType.CurrentType.Contains("GLenum"))
             {
                 if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
+                {
                     d.ReturnType.QualifiedType = String.Format("{0}{1}{2}",
                         Settings.EnumsOutput, Settings.NamespaceSeparator, Settings.CompleteEnumName);
+                }
                 else
+                {
                     d.ReturnType.QualifiedType = "int";
+                }
             }
 
             if (d.ReturnType.CurrentType.ToLower().Contains("bool"))
@@ -623,7 +647,9 @@ namespace Bind
             {
                 TranslateParameter(d.Parameters[i], function_override, nav, enum_processor, enums, d.Category, apiname);
                 if (d.Parameters[i].CurrentType == "UInt16" && d.Name.Contains("LineStipple"))
+                {
                     d.Parameters[i].WrapperType |= WrapperTypes.UncheckedParameter;
+                }
             }
         }
 
@@ -693,7 +719,9 @@ namespace Bind
             }
 
             if (Utilities.CSharpKeywords.Contains(p.Name))
+            {
                 p.Name = Settings.KeywordEscapeCharacter + p.Name;
+            }
 
             // This causes problems with bool arrays
             //if (CurrentType.ToLower().Contains("bool"))
@@ -793,7 +821,9 @@ namespace Bind
                         {
                             cls.Parameters[i].CurrentType = GetCLSCompliantType(cls.Parameters[i]);
                             if (cls.Parameters[i].CurrentType != f.Parameters[i].CurrentType)
+                            {
                                 modified = true;
+                            }
                         }
 
                         // Only add a cls-compliant overload if we have
@@ -840,21 +870,33 @@ namespace Bind
                             for (k = 0; k < wrappers[i].Parameters.Count; k++)
                             {
                                 if (wrappers[i].Parameters[k].CurrentType != wrappers[j].Parameters[k].CurrentType)
+                                {
                                     break;
+                                }
 
                                 if (wrappers[i].Parameters[k].DiffersOnlyOnReference(wrappers[j].Parameters[k]))
+                                {
                                     if (wrappers[i].Parameters[k].Reference)
+                                    {
                                         function_i_is_problematic = true;
+                                    }
                                     else
+                                    {
                                         function_j_is_problematic = true;
+                                    }
+                                }
                             }
 
                             if (k == wrappers[i].Parameters.Count)
                             {
                                 if (function_i_is_problematic)
+                                {
                                     must_remove.Add(i);
+                                }
                                 if (function_j_is_problematic)
+                                {
                                     must_remove.Add(j);
+                                }
                             }
                         }
                     }
@@ -879,7 +921,9 @@ namespace Bind
             if (!type.CLSCompliant)
             {
                 if (type.Pointer != 0 && Settings.Compatibility == Settings.Legacy.Tao)
+                {
                     return "IntPtr";
+                }
 
                 switch (type.CurrentType)
                 {

@@ -212,7 +212,9 @@ namespace OpenTK.Platform.MacOS
         public static IntPtr ToNSString(string str)
         {
             if (str == null)
+            {
                 return IntPtr.Zero;
+            }
 
             unsafe
             {
@@ -255,11 +257,15 @@ namespace OpenTK.Platform.MacOS
         {
             var indirect = NS.GetSymbol(handle, symbol);
             if (indirect == IntPtr.Zero)
+            {
                 return IntPtr.Zero;
+            }
 
             var actual = Marshal.ReadIntPtr(indirect);
             if (actual == IntPtr.Zero)
+            {
                 return IntPtr.Zero;
+            }
 
             return actual;
         }

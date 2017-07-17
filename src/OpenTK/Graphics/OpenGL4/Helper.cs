@@ -373,7 +373,9 @@ namespace OpenTK.Graphics.OpenGL4
             unsafe
             {
                 fixed (Vector2* ptr = &vector)
+                {
                     GetFloat(pname, (float*)ptr);
+                }
             }
         }
 
@@ -382,7 +384,9 @@ namespace OpenTK.Graphics.OpenGL4
             unsafe
             {
                 fixed (Vector3* ptr = &vector)
+                {
                     GetFloat(pname, (float*)ptr);
+                }
             }
         }
 
@@ -391,7 +395,9 @@ namespace OpenTK.Graphics.OpenGL4
             unsafe
             {
                 fixed (Vector4* ptr = &vector)
+                {
                     GetFloat(pname, (float*)ptr);
+                }
             }
         }
 
@@ -400,7 +406,9 @@ namespace OpenTK.Graphics.OpenGL4
             unsafe
             {
                 fixed (Matrix4* ptr = &matrix)
+                {
                     GetFloat(pname, (float*)ptr);
+                }
             }
         }
 

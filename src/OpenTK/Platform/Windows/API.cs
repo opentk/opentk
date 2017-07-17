@@ -265,15 +265,21 @@ namespace OpenTK.Platform.Windows
             SetLastError(0);
 
             if (IntPtr.Size == 4)
+            {
                 retval = new IntPtr(SetWindowLongInternal(handle, item, newValue.ToInt32()));
+            }
             else
+            {
                 retval = SetWindowLongPtrInternal(handle, item, newValue);
+            }
 
             if (retval == IntPtr.Zero)
             {
                 int error = Marshal.GetLastWin32Error();
                 if (error != 0)
+                {
                     throw new PlatformException(String.Format("Failed to modify window border. Error: {0}", error));
+                }
             }
 
             return retval;
@@ -305,7 +311,9 @@ namespace OpenTK.Platform.Windows
         internal static UIntPtr GetWindowLong(IntPtr handle, GetWindowLongOffsets index)
         {
             if (IntPtr.Size == 4)
+            {
                 return (UIntPtr)GetWindowLongInternal(handle, index);
+            }
 
             return GetWindowLongPtrInternal(handle, index);
         }
@@ -2398,7 +2406,9 @@ namespace OpenTK.Platform.Windows
             get
             {
                 if (index < 0 || index > Size * Count)
+                {
                     throw new ArgumentOutOfRangeException("index");
+                }
                 unsafe
                 {
                     fixed (byte* data = &RawData)

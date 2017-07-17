@@ -81,9 +81,13 @@ namespace Bind.Structures
         {
             int ret = Name.CompareTo(other.Name);
             if (ret == 0)
+            {
                 ret = Parameters.CompareTo(other.Parameters);
+            }
             if (ret == 0)
+            {
                 ret = ReturnType.CompareTo(other.ReturnType);
+            }
             return ret;
         }
     }
@@ -112,9 +116,13 @@ namespace Bind.Structures
         public void Unindent()
         {
             if (indent.Length > 4)
+            {
                 indent = indent.Substring(4);
+            }
             else
+            {
                 indent = String.Empty;
+            }
         }
 
         new public void Add(string s)
@@ -133,7 +141,9 @@ namespace Bind.Structures
         public override string ToString()
         {
             if (Count == 0)
+            {
                 return String.Empty;
+            }
 
             StringBuilder sb = new StringBuilder(Count);
 

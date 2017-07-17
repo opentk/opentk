@@ -461,8 +461,14 @@ namespace OpenTK.Audio.OpenAL
         [CLSCompliant(false)]
         public static void DeleteSources(uint[] sources)
         {
-            if (sources == null) throw new ArgumentNullException();
-            if (sources.Length == 0) throw new ArgumentOutOfRangeException();
+            if (sources == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (sources.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             DeleteBuffers(sources.Length, ref sources[0]);
         }
 
@@ -470,8 +476,14 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="sources">An array of source names identifying the sources to be deleted.</param>
         public static void DeleteSources(int[] sources)
         {
-            if (sources == null) throw new ArgumentNullException();
-            if (sources.Length == 0) throw new ArgumentOutOfRangeException();
+            if (sources == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (sources.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             DeleteBuffers(sources.Length, ref sources[0]);
         }
 
@@ -1107,7 +1119,10 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="numEntries">The number of buffers to be unqueued.</param>
         public static int[] SourceUnqueueBuffers(int sid, int numEntries)
         {
-            if (numEntries <= 0) throw new ArgumentOutOfRangeException("numEntries", "Must be greater than zero.");
+            if (numEntries <= 0)
+            {
+                throw new ArgumentOutOfRangeException("numEntries", "Must be greater than zero.");
+            }
             int[] buf = new int[numEntries];
             SourceUnqueueBuffers(sid, numEntries, buf);
             return buf;
@@ -1247,8 +1262,14 @@ namespace OpenTK.Audio.OpenAL
         [CLSCompliant(false)]
         public static void DeleteBuffers(uint[] buffers)
         {
-            if (buffers == null) throw new ArgumentNullException();
-            if (buffers.Length == 0) throw new ArgumentOutOfRangeException();
+            if (buffers == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (buffers.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             DeleteBuffers(buffers.Length, ref buffers[0]);
         }
 
@@ -1256,8 +1277,14 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="buffers">Pointer to an array of buffer names identifying the buffers to be deleted.</param>
         public static void DeleteBuffers(int[] buffers)
         {
-            if (buffers == null) throw new ArgumentNullException();
-            if (buffers.Length == 0) throw new ArgumentOutOfRangeException();
+            if (buffers == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (buffers.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             DeleteBuffers(buffers.Length, ref buffers[0]);
         }
 
@@ -1323,7 +1350,9 @@ namespace OpenTK.Audio.OpenAL
             where TBuffer : struct
         {
             if (!BlittableValueType.Check(buffer))
+            {
                 throw new ArgumentException("buffer");
+            }
 
             GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
             try { BufferData(bid, format, handle.AddrOfPinnedObject(), size, freq); }

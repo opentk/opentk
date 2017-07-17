@@ -57,7 +57,9 @@ namespace OpenTK.Platform.MacOS.Carbon
             get
             {
                 if (index >= Count || index < 0)
+                {
                     throw new IndexOutOfRangeException();
+                }
 
                 return CF.CFArrayGetValueAtIndex(Ref, index);
             }

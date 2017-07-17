@@ -48,7 +48,9 @@ namespace OpenTK.Platform.Common
             int result_min, int result_max)
         {
             if (value_min >= value_max || result_min >= result_max)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
             MathHelper.Clamp(value, value_min, value_max);
 
             int range = result_max - result_min;

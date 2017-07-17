@@ -110,15 +110,27 @@ namespace OpenTK.Graphics
             {
                 bool designMode = false;
                 if (mode == null && window == null)
+                {
                     designMode = true;
-                else if (mode == null) throw new ArgumentNullException("mode", "Must be a valid GraphicsMode.");
-                else if (window == null) throw new ArgumentNullException("window", "Must point to a valid window.");
+                }
+                else if (mode == null)
+                {
+                    throw new ArgumentNullException("mode", "Must be a valid GraphicsMode.");
+                }
+                else if (window == null)
+                {
+                    throw new ArgumentNullException("window", "Must point to a valid window.");
+                }
 
                 // Silently ignore invalid major and minor versions.
                 if (major <= 0)
+                {
                     major = 1;
+                }
                 if (minor < 0)
+                {
                     minor = 0;
+                }
 
                 // Angle needs an embedded context
                 const GraphicsContextFlags useAngleFlag = GraphicsContextFlags.Angle
@@ -209,7 +221,9 @@ namespace OpenTK.Graphics
         public GraphicsContext(ContextHandle handle, GetAddressDelegate getAddress, GetCurrentContextDelegate getCurrent)
         {
             if (getAddress == null || getCurrent == null)
+            {
                 throw new ArgumentNullException();
+            }
 
             // Make sure OpenTK has been initialized.
             // Fixes https://github.com/opentk/opentk/issues/52
@@ -334,7 +348,9 @@ namespace OpenTK.Graphics
                     // making this return null even if another valid context exists.
                     // The workaround is to simply ignore null targets.
                     if (target != null)
+                    {
                         return target;
+                    }
                 }
             }
             return null;
@@ -347,7 +363,9 @@ namespace OpenTK.Graphics
         public static void Assert()
         {
             if (GraphicsContext.CurrentContext == null)
+            {
                 throw new GraphicsContextMissingException();
+            }
         }
 
         internal static GetCurrentContextDelegate GetCurrentContext;
@@ -377,7 +395,9 @@ namespace OpenTK.Graphics
                     {
                         ContextHandle handle = CurrentContextHandle;
                         if (handle.Handle != IntPtr.Zero)
+                        {
                             return (IGraphicsContext)available_contexts[handle];
+                        }
                     }
                     return null;
                 }
@@ -483,7 +503,9 @@ namespace OpenTK.Graphics
         public void LoadAll()
         {
             if (GraphicsContext.CurrentContext != this)
+            {
                 throw new GraphicsContextException();
+            }
 
             implementation.LoadAll();
         }
@@ -578,7 +600,9 @@ namespace OpenTK.Graphics
                 {
                     Debug.Print("Disposing context {0}.", (this as IGraphicsContextInternal).Context.ToString());
                     if (implementation != null)
+                    {
                         implementation.Dispose();
+                    }
                 }
                 else
                 {

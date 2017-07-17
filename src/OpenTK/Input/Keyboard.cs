@@ -59,7 +59,9 @@ namespace OpenTK.Input
         public static KeyboardState GetState(int index)
         {
             if (index < 0)
+            {
                 throw new ArgumentOutOfRangeException("index");
+            }
 
             lock (SyncRoot)
             {

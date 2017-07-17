@@ -67,7 +67,9 @@ namespace OpenTK
             cocoaWindow = (CocoaWindowInfo)window;
 
             if (shareContext is CocoaContext)
+            {
                 shareContextRef = ((CocoaContext)shareContext).Handle.Handle;
+            }
 
             if (shareContext is GraphicsContext)
             {
@@ -86,9 +88,13 @@ namespace OpenTK
         public CocoaContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, int majorVersion, int minorVersion)
         {
             if (handle == ContextHandle.Zero)
+            {
                 throw new ArgumentException("handle");
+            }
             if (window == null)
+            {
                 throw new ArgumentNullException("window");
+            }
 
             Handle = handle;
             cocoaWindow = (CocoaWindowInfo)window;
@@ -210,7 +216,9 @@ namespace OpenTK
 
             Debug.Write("Attribute array:  ");
             for (int i = 0; i < attributes.Count; i++)
+            {
                 Debug.Write(attributes[i].ToString() + "  ");
+            }
             Debug.WriteLine("");
 
             // Create pixel format
@@ -326,15 +334,21 @@ namespace OpenTK
         protected override void Dispose(bool disposing)
         {
             if (IsDisposed || Handle.Handle == IntPtr.Zero)
+            {
                 return;
+            }
 
             Debug.Print("Disposing of Cocoa context.");
 
             if (!NSApplication.IsUIThread)
+            {
                 return;
+            }
 
             if (IsCurrent)
+            {
                 Cocoa.SendVoid(NSOpenGLContext, Selector.Get("clearCurrentContext"));
+            }
             Cocoa.SendVoid(Handle.Handle, Selector.Get("clearDrawable"));
             Cocoa.SendVoid(Handle.Handle, Selector.Get("release"));
 

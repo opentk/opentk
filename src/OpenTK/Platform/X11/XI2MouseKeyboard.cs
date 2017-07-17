@@ -100,7 +100,9 @@ namespace OpenTK.Platform.X11
             }
 
             if (!IsSupported(window.Display))
+            {
                 throw new NotSupportedException("XInput2 not supported.");
+            }
 
             // Enable XI2 mouse/keyboard events
             // Note: the input event loop blocks waiting for these events
@@ -357,13 +359,17 @@ namespace OpenTK.Platform.X11
                                                     {
                                                         Debug.WriteLine("\tAbsolute X movement");
                                                         if (d.MotionX.number == -1)
+                                                        {
                                                             d.MotionX = *valuator;
+                                                        }
                                                     }
                                                     else if (valuator->label == XI.AbsoluteY)
                                                     {
                                                         Debug.WriteLine("\tAbsolute X movement");
                                                         if (d.MotionY.number == -1)
+                                                        {
                                                             d.MotionY = *valuator;
+                                                        }
                                                     }
                                                     else
                                                     {
@@ -479,7 +485,9 @@ namespace OpenTK.Platform.X11
                                 MouseButton button = X11KeyMap.TranslateButton(raw.detail, out dx, out dy);
                                 mouse.State[button] = raw.evtype == XIEventType.RawButtonPress;
                                 if (mouse.ScrollX.number == -1 && mouse.ScrollY.number == -1)
+                                {
                                     mouse.State.SetScrollRelative(dx, dy);
+                                }
                             }
                             break;
 
@@ -532,22 +540,38 @@ namespace OpenTK.Platform.X11
             double h = 0;
             double v = 0;
             if (d.MotionX.number != -1)
+            {
                 x = ReadRawValue(ref raw, d.MotionX.number);
+            }
             if (d.MotionY.number != -1)
+            {
                 y = ReadRawValue(ref raw, d.MotionY.number);
+            }
             if (d.ScrollX.number != -1)
+            {
                 h = ReadRawValue(ref raw, d.ScrollX.number) / d.ScrollX.increment;
+            }
             if (d.ScrollY.number != -1)
+            {
                 v = ReadRawValue(ref raw, d.ScrollY.number) / d.ScrollY.increment;
+            }
 
             if (d.MotionX.mode == XIMode.Relative)
+            {
                 d.State.X += (int)Math.Round(x);
+            }
             else
+            {
                 d.State.X = (int)Math.Round(x);
+            }
             if (d.MotionY.mode == XIMode.Relative)
+            {
                 d.State.Y += (int)Math.Round(y);
+            }
             else
+            {
                 d.State.Y = (int)Math.Round(y);
+            }
 
             // Note: OpenTK follows the windows scrolling convention where
             // (+h, +v) = (right, up). XI2 uses (+h, +v) = (right, down)

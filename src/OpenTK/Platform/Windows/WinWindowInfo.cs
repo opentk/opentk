@@ -74,8 +74,10 @@ namespace OpenTK.Platform.Windows
             get
             {
                 if (dc == IntPtr.Zero)
+                {
                     dc = Functions.GetDC(this.Handle);
-                    //dc = Functions.GetWindowDC(this.Handle);
+                }
+                //dc = Functions.GetWindowDC(this.Handle);
                 return dc;
             }
         }
@@ -98,11 +100,20 @@ namespace OpenTK.Platform.Windows
         /// <returns>True if <c>this</c> and <c>obj</c> reference the same win32 window; false otherwise.</returns>
         public override bool Equals(object obj)
         {
-            if (obj == null) return false;
-            if (this.GetType() != obj.GetType()) return false;
+            if (obj == null)
+            {
+                return false;
+            }
+            if (this.GetType() != obj.GetType())
+            {
+                return false;
+            }
             WinWindowInfo info = (WinWindowInfo)obj;
 
-            if (info == null) return false;
+            if (info == null)
+            {
+                return false;
+            }
             // TODO: Assumes windows will always have unique handles.
             return handle.Equals(info.handle);
         }
@@ -126,13 +137,19 @@ namespace OpenTK.Platform.Windows
             if (!disposed)
             {
                 if (this.dc != IntPtr.Zero)
+                {
                     if (!Functions.ReleaseDC(this.handle, this.dc))
+                    {
                         Debug.Print("[Warning] Failed to release device context {0}. Windows error: {1}.", this.dc, Marshal.GetLastWin32Error());
+                    }
+                }
 
                 if (manual)
                 {
                     if (Parent != null)
+                    {
                         Parent.Dispose();
+                    }
                 }
 
                 disposed = true;

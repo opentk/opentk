@@ -204,7 +204,9 @@ namespace OpenTK.Input
         {
             int index = axis;
             if (index < 0 || index >= MaxAxes)
+            {
                 throw new ArgumentOutOfRangeException("axis");
+            }
 
             unsafe
             {
@@ -223,7 +225,9 @@ namespace OpenTK.Input
         internal void SetButton(int button, bool value)
         {
             if (button < 0 || button >= MaxButtons)
+            {
                 throw new ArgumentOutOfRangeException("button");
+            }
 
             if (value)
             {

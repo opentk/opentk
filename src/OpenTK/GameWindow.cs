@@ -310,11 +310,15 @@ namespace OpenTK
             try
             {
                 if (updates_per_second < 0.0 || updates_per_second > 200.0)
+                {
                     throw new ArgumentOutOfRangeException("updates_per_second", updates_per_second,
-                                                          "Parameter should be inside the range [0.0, 200.0]");
+                        "Parameter should be inside the range [0.0, 200.0]");
+                }
                 if (frames_per_second < 0.0 || frames_per_second > 200.0)
+                {
                     throw new ArgumentOutOfRangeException("frames_per_second", frames_per_second,
-                                                          "Parameter should be inside the range [0.0, 200.0]");
+                        "Parameter should be inside the range [0.0, 200.0]");
+                }
 
                 if (updates_per_second != 0)
                 {
@@ -342,9 +346,13 @@ namespace OpenTK
                 {
                     ProcessEvents();
                     if (Exists && !IsExiting)
+                    {
                         DispatchUpdateAndRenderFrame(this, EventArgs.Empty);
+                    }
                     else
+                    {
                         return;
+                    }
                 }
             }
             finally
@@ -494,7 +502,9 @@ namespace OpenTK
             {
                 EnsureUndisposed();
                 if (render_period == 0.0)
+                {
                     return 1.0;
+                }
                 return 1.0 / render_period;
             }
         }
@@ -541,7 +551,9 @@ namespace OpenTK
             {
                 EnsureUndisposed();
                 if (TargetRenderPeriod == 0.0)
+                {
                     return 0.0;
+                }
                 return 1.0 / TargetRenderPeriod;
             }
             set
@@ -555,7 +567,10 @@ namespace OpenTK
                 {
                     TargetRenderPeriod = 1.0 / value;
                 }
-                else Debug.Print("Target render frequency clamped to {0}Hz.", MaxFrequency);
+                else
+                {
+                    Debug.Print("Target render frequency clamped to {0}Hz.", MaxFrequency);
+                }
             }
         }
 
@@ -584,7 +599,10 @@ namespace OpenTK
                 {
                     target_render_period = value;
                 }
-                else Debug.Print("Target render period clamped to 1.0 seconds.");
+                else
+                {
+                    Debug.Print("Target render period clamped to 1.0 seconds.");
+                }
             }
         }
 
@@ -601,7 +619,9 @@ namespace OpenTK
             {
                 EnsureUndisposed();
                 if (TargetUpdatePeriod == 0.0)
+                {
                     return 0.0;
+                }
                 return 1.0 / TargetUpdatePeriod;
             }
             set
@@ -615,7 +635,10 @@ namespace OpenTK
                 {
                     TargetUpdatePeriod = 1.0 / value;
                 }
-                else Debug.Print("Target render frequency clamped to {0}Hz.", MaxFrequency);
+                else
+                {
+                    Debug.Print("Target render frequency clamped to {0}Hz.", MaxFrequency);
+                }
             }
         }
 
@@ -644,7 +667,10 @@ namespace OpenTK
                 {
                     target_update_period = value;
                 }
-                else Debug.Print("Target update period clamped to 1.0 seconds.");
+                else
+                {
+                    Debug.Print("Target update period clamped to 1.0 seconds.");
+                }
             }
         }
 
@@ -657,7 +683,9 @@ namespace OpenTK
             {
                 EnsureUndisposed();
                 if (update_period == 0.0)
+                {
                     return 1.0;
+                }
                 return 1.0 / update_period;
             }
         }
@@ -744,7 +772,9 @@ namespace OpenTK
                 Debug.Print("Updating Context after setting WindowState to {0}", value);
 
                 if (Context != null)
+                {
                     Context.Update(WindowInfo);
+                }
             }
         }
         /// <summary>
@@ -823,11 +853,19 @@ namespace OpenTK
             OnLoad(e);
         }
 
-        private void OnRenderFrameInternal(FrameEventArgs e) { if (Exists && !isExiting) OnRenderFrame(e); }
+        private void OnRenderFrameInternal(FrameEventArgs e) { if (Exists && !isExiting)
+            {
+                OnRenderFrame(e);
+            }
+        }
 
         private void OnUnloadInternal(EventArgs e) { OnUnload(e); }
 
-        private void OnUpdateFrameInternal(FrameEventArgs e) { if (Exists && !isExiting) OnUpdateFrame(e); }
+        private void OnUpdateFrameInternal(FrameEventArgs e) { if (Exists && !isExiting)
+            {
+                OnUpdateFrame(e);
+            }
+        }
 
         private void OnWindowInfoChangedInternal(EventArgs e)
         {

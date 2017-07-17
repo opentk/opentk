@@ -47,20 +47,37 @@ namespace OpenTK.Platform
 
             // Create regular platform backend
             #if SDL2
-            if (Configuration.RunningOnSdl2) Default = new SDL2.Sdl2Factory();
-            #endif
+            if (Configuration.RunningOnSdl2)
+            {
+                Default = new SDL2.Sdl2Factory();
+            }
+#endif
             #if WIN32
-            else if (Configuration.RunningOnWindows) Default = new Windows.WinFactory();
-            #endif
+            else if (Configuration.RunningOnWindows)
+            {
+                Default = new Windows.WinFactory();
+            }
+#endif
             #if CARBON
-            else if (Configuration.RunningOnMacOS) Default = new MacOS.MacOSFactory();
-            #endif
+            else if (Configuration.RunningOnMacOS)
+            {
+                Default = new MacOS.MacOSFactory();
+            }
+#endif
             #if X11
-            else if (Configuration.RunningOnX11) Default = new X11.X11Factory();
-            else if (Configuration.RunningOnLinux) Default = new Linux.LinuxFactory();
-            #endif
+            else if (Configuration.RunningOnX11)
+            {
+                Default = new X11.X11Factory();
+            }
+            else if (Configuration.RunningOnLinux)
+            {
+                Default = new Linux.LinuxFactory();
+            }
+#endif
             if (Default == null)
+            {
                 Default = new UnsupportedPlatform();
+            }
 
             // Create embedded platform backend for EGL / OpenGL ES.
             // Todo: we could probably delay this until the embedded
@@ -77,22 +94,37 @@ namespace OpenTK.Platform
             #else
             else if (Egl.Egl.IsSupported)
             {
-                if (Configuration.RunningOnLinux) Embedded = Default;
-                #if X11
-                else if (Configuration.RunningOnX11) Embedded = new Egl.EglX11PlatformFactory();
-                #endif
+                if (Configuration.RunningOnLinux)
+                {
+                    Embedded = Default;
+                }
+#if X11
+                else if (Configuration.RunningOnX11)
+                {
+                    Embedded = new Egl.EglX11PlatformFactory();
+                }
+#endif
                 #if WIN32
-                else if (Configuration.RunningOnWindows) Embedded = new Egl.EglWinPlatformFactory();
-                #endif
+                else if (Configuration.RunningOnWindows)
+                {
+                    Embedded = new Egl.EglWinPlatformFactory();
+                }
+#endif
                 #if CARBON
-                else if (Configuration.RunningOnMacOS) Embedded = new Egl.EglMacPlatformFactory();
-                #endif
+                else if (Configuration.RunningOnMacOS)
+                {
+                    Embedded = new Egl.EglMacPlatformFactory();
+                }
+#endif
                 #if ANDROID
                 else if (Configuration.RunningOnAndroid) Embedded = new Android.AndroidFactory();
                 #endif
-                else Embedded = new UnsupportedPlatform();
+                else
+                {
+                    Embedded = new UnsupportedPlatform();
+                }
 
-                #if ANDROID
+#if ANDROID
                 Angle = new UnsupportedPlatform();
                 #else
                 Angle = new Egl.EglAnglePlatformFactory(Embedded);
@@ -106,7 +138,9 @@ namespace OpenTK.Platform
             }
 
             if (Default is UnsupportedPlatform && !(Embedded is UnsupportedPlatform))
+            {
                 Default = Embedded;
+            }
         }
 
         public static IPlatformFactory Default { get; private set; }

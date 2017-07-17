@@ -103,8 +103,9 @@ namespace OpenTK.Platform.MacOS
                         opentk_dev_available_res.Add(thisRes);
 
                         if (current)
+                        {
                             opentk_dev_current_res = thisRes;
-
+                        }
                     }
 
                     NSRect bounds = CG.DisplayBounds(currentDisplay);
@@ -118,7 +119,9 @@ namespace OpenTK.Platform.MacOS
                     AvailableDevices.Add(opentk_dev);
 
                     if (primary)
+                    {
                         Primary = opentk_dev;
+                    }
                 }
 
                 Debug.Unindent();

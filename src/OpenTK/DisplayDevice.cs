@@ -122,13 +122,17 @@ namespace OpenTK
             internal set
             {
                 if (value && primary_display != null && primary_display != this)
+                {
                     primary_display.IsPrimary = false;
+                }
 
                 lock (display_lock)
                 {
                     primary = value;
                     if (value)
+                    {
                         primary_display = this;
+                    }
                 }
             }
         }
@@ -153,11 +157,17 @@ namespace OpenTK
         {
             DisplayResolution resolution = FindResolution(width, height, bitsPerPixel, refreshRate);
             if (resolution == null)
+            {
                 resolution = FindResolution(width, height, bitsPerPixel, 0);
+            }
             if (resolution == null)
+            {
                 resolution = FindResolution(width, height, 0, 0);
+            }
             if (resolution == null)
+            {
                 return current_resolution;
+            }
             return resolution;
         }
 
@@ -181,21 +191,30 @@ namespace OpenTK
         public void ChangeResolution(DisplayResolution resolution)
         {
             if (resolution == null)
+            {
                 this.RestoreResolution();
+            }
 
             if (resolution == current_resolution)
+            {
                 return;
+            }
 
             //effect.FadeOut();
 
             if (implementation.TryChangeResolution(this, resolution))
             {
                 if (OriginalResolution == null)
+                {
                     OriginalResolution = current_resolution;
+                }
                 current_resolution = resolution;
             }
-            else throw new Graphics.GraphicsModeException(String.Format("Device {0}: Failed to change resolution to {1}.",
+            else
+            {
+                throw new Graphics.GraphicsModeException(String.Format("Device {0}: Failed to change resolution to {1}.",
                     this, resolution));
+            }
 
             //effect.FadeIn();
         }
@@ -224,7 +243,10 @@ namespace OpenTK
                     current_resolution = OriginalResolution;
                     OriginalResolution = null;
                 }
-                else throw new Graphics.GraphicsModeException(String.Format("Device {0}: Failed to restore resolution.", this));
+                else
+                {
+                    throw new Graphics.GraphicsModeException(String.Format("Device {0}: Failed to restore resolution.", this));
+                }
 
                 //effect.FadeIn();
             }
