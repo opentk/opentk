@@ -8,10 +8,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -28,7 +28,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
-using Mono.Options;
+using CommandLine;
 
 namespace OpenTK.Convert
 {
@@ -59,48 +59,22 @@ namespace OpenTK.Convert
             }
         }
     }
-    
+
     class EntryPoint
     {
+        static Options CLIOptions;
+
         static void Main(string[] args)
         {
+            Parser.Default.ParseArguments<Options>(args)
+                .WithParsed(result => CLIOptions = result)
+                .WithNotParsed(error => Environment.Exit(-1));
+
             try
             {
-                bool showHelp = false;
-                string prefix = "gl";
-                string path = null;
-                OptionSet opts = new OptionSet
-                {
-                    { "p=", "The {PREFIX} to remove from parsed functions and constants.  " +
-                        "Defaults to \"" + prefix + "\".",
-                        v => prefix = v },
-                    { "o:", "The {PATH} to the output file.",
-                        v => path = v },
-                    { "?|h|help", "Show this message and exit.",
-                        v => showHelp = v != null },
-                };
-                var headers = opts.Parse(args);
-                var app = Path.GetFileName(Environment.GetCommandLineArgs()[0]);
-                if (showHelp)
-                {
-                    Console.WriteLine("usage: {0} -p:PREFIX SPECIFICATIONS", app);
-                    Console.WriteLine();
-                    Console.WriteLine("Options:");
-                    opts.WriteOptionDescriptions(Console.Out);
-                    Console.WriteLine();
-                    Console.WriteLine("SPECIFICATIONS are the Khronos XML files to parse into OpenTK XML.");
-                    return;
-                }
-                if (prefix == null)
-                {
-                    Console.WriteLine("{0}: missing required parameter -p.", app);
-                    Console.WriteLine("Use '{0} --help' for usage.", app);
-                    return;
-                }
+                XmlParser xmlParser = new GLXmlParser { Prefix = CLIOptions.Prefix };
 
-                Parser parser = new GLXmlParser { Prefix = prefix };
-
-                var sigs = headers.Select(h => parser.Parse(h)).ToList();
+                var sigs = CLIOptions.InputFiles.Select(h => xmlParser.Parse(h)).ToList();
 
                 // Merge any duplicate enum entries (in case an enum is declared
                 // in multiple files with different entries in each file).
@@ -112,14 +86,14 @@ namespace OpenTK.Convert
                 settings.Encoding = System.Text.Encoding.UTF8;
 
                 TextWriter out_stream = null;
-                if (path == null)
+                if (CLIOptions.OutputFile == null)
                 {
                     out_stream = Console.Out;
                     Console.OutputEncoding = System.Text.Encoding.UTF8;
                 }
                 else
                 {
-                    out_stream = new StreamWriter(path, false);
+                    out_stream = new StreamWriter(CLIOptions.OutputFile, false);
                 }
 
                 using (var writer = XmlWriter.Create(out_stream, settings))
