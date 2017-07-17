@@ -256,6 +256,19 @@ namespace OpenTK.Rewrite
                         i--;
                     }
                 }
+
+                foreach (var parameter in method.Parameters)
+                {
+                    var pattr = parameter.CustomAttributes;
+                    for (int i = 0; i < pattr.Count; i++)
+                    {
+                        if (pattr[i].AttributeType.Name == "CountAttribute")
+                        {
+                            pattr.RemoveAt(i);
+                            i--;
+                        }
+                    }
+                }
             }
         }
 
