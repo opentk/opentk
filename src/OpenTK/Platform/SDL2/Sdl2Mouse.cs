@@ -33,9 +33,9 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2Mouse : IMouseDriver2
+    internal class Sdl2Mouse : IMouseDriver2
     {
-        MouseState state;
+        private MouseState state;
 
         public Sdl2Mouse()
         {
@@ -67,7 +67,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        void SetButtonState(MouseButton button, bool pressed)
+        private void SetButtonState(MouseButton button, bool pressed)
         {
             if (pressed)
             {

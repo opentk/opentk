@@ -30,9 +30,9 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Linux
 {
-    class Kms
+    internal class Kms
     {
-        const string lib = "libkms";
+        private const string lib = "libkms";
 
         [DllImport(lib, EntryPoint = "kms_bo_map", CallingConvention = CallingConvention.Cdecl)]
         public static extern int MapBuffer(IntPtr bo, out IntPtr @out);

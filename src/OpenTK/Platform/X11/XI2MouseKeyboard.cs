@@ -32,15 +32,15 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
-    sealed class XI2MouseKeyboard : IKeyboardDriver2, IMouseDriver2, IDisposable
+    internal sealed class XI2MouseKeyboard : IKeyboardDriver2, IMouseDriver2, IDisposable
     {
-        static readonly IntPtr ExitAtom;
-        readonly object Sync = new object();
-        readonly Thread ProcessingThread;
-        readonly X11KeyMap KeyMap;
-        bool disposed;
+        private static readonly IntPtr ExitAtom;
+        private readonly object Sync = new object();
+        private readonly Thread ProcessingThread;
+        private readonly X11KeyMap KeyMap;
+        private bool disposed;
 
-        class XIMouse
+        private class XIMouse
         {
             public MouseState State;
             public XIDeviceInfo DeviceInfo;
@@ -51,26 +51,26 @@ namespace OpenTK.Platform.X11
             public string Name;
         }
 
-        class XIKeyboard
+        private class XIKeyboard
         {
             public KeyboardState State;
             public XIDeviceInfo DeviceInfo;
             public string Name;
         }
 
-        long cursor_x, cursor_y; // For GetCursorState()
-        List<XIMouse> devices = new List<XIMouse>(); // list of connected mice
-        Dictionary<int, int> rawids = new Dictionary<int, int>(); // maps hardware device ids to XIMouse ids
+        private long cursor_x, cursor_y; // For GetCursorState()
+        private List<XIMouse> devices = new List<XIMouse>(); // list of connected mice
+        private Dictionary<int, int> rawids = new Dictionary<int, int>(); // maps hardware device ids to XIMouse ids
 
-        List<XIKeyboard> keyboards = new List<XIKeyboard>(); // list of connected keybords
-        Dictionary<int, int> keyboard_ids = new Dictionary<int, int>(); // maps hardware device ids to XIKeyboard ids
+        private List<XIKeyboard> keyboards = new List<XIKeyboard>(); // list of connected keybords
+        private Dictionary<int, int> keyboard_ids = new Dictionary<int, int>(); // maps hardware device ids to XIKeyboard ids
 
         internal readonly X11WindowInfo window;
         internal static int XIOpCode { get; private set; }
         internal static int XIVersion { get; private set; }
 
-        static readonly Functions.EventPredicate PredicateImpl = IsEventValid;
-        readonly IntPtr Predicate = Marshal.GetFunctionPointerForDelegate(PredicateImpl);
+        private static readonly Functions.EventPredicate PredicateImpl = IsEventValid;
+        private readonly IntPtr Predicate = Marshal.GetFunctionPointerForDelegate(PredicateImpl);
 
         static XI2MouseKeyboard()
         {
@@ -253,7 +253,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        void UpdateDevices()
+        private void UpdateDevices()
         {
             lock (Sync)
             {
@@ -394,7 +394,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        void ProcessEvents()
+        private void ProcessEvents()
         {
             while (!disposed)
             {
@@ -452,7 +452,7 @@ namespace OpenTK.Platform.X11
             Debug.WriteLine("[X11] Exiting input event loop.");
         }
 
-        void ProcessRawEvent(ref XGenericEventCookie cookie)
+        private void ProcessRawEvent(ref XGenericEventCookie cookie)
         {
             lock (Sync)
             {
@@ -499,7 +499,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        bool GetMouseDevice(int deviceid, out XIMouse mouse)
+        private bool GetMouseDevice(int deviceid, out XIMouse mouse)
         {
             if (!rawids.ContainsKey(deviceid))
             {
@@ -511,7 +511,7 @@ namespace OpenTK.Platform.X11
             return true;
         }
 
-        bool GetKeyboardDevice(int deviceid, out XIKeyboard keyboard)
+        private bool GetKeyboardDevice(int deviceid, out XIKeyboard keyboard)
         {
             if (!keyboard_ids.ContainsKey(deviceid))
             {
@@ -523,7 +523,7 @@ namespace OpenTK.Platform.X11
             return true;
         }
 
-        unsafe static void ProcessRawMotion(XIMouse d, ref XIRawEvent raw)
+        private unsafe static void ProcessRawMotion(XIMouse d, ref XIRawEvent raw)
         {
             // Note: we use the raw values here, without pointer
             // ballistics and any other modification.
@@ -555,7 +555,7 @@ namespace OpenTK.Platform.X11
             d.State.SetScrollRelative((float)h, (float)(-v));
         }
 
-        unsafe static double ReadRawValue(ref XIRawEvent raw, int bit)
+        private unsafe static double ReadRawValue(ref XIRawEvent raw, int bit)
         {
             double value = 0;
             if (IsBitSet(raw.valuators.mask, bit))
@@ -576,7 +576,7 @@ namespace OpenTK.Platform.X11
             return value;
         }
 
-        static bool IsEventValid(IntPtr display, ref XEvent e, IntPtr arg)
+        private static bool IsEventValid(IntPtr display, ref XEvent e, IntPtr arg)
         {
             bool valid = false;
             switch (e.type)
@@ -605,7 +605,7 @@ namespace OpenTK.Platform.X11
             return valid;
         }
 
-        static bool IsBitSet(IntPtr mask, int bit)
+        private static bool IsBitSet(IntPtr mask, int bit)
         {
             unsafe
             {
@@ -613,7 +613,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        void SendExitEvent()
+        private void SendExitEvent()
         {
             // Send a ClientMessage event to unblock XIfEvent
             // and exit the input event loop.
@@ -636,7 +636,7 @@ namespace OpenTK.Platform.X11
             GC.SuppressFinalize(this);
         }
 
-        void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (!disposed)
             {

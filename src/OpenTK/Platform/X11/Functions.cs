@@ -51,7 +51,7 @@ namespace OpenTK.Platform.X11
         public static readonly object Lock = API.Lock;
 
         [DllImport("libX11", EntryPoint = "XOpenDisplay")]
-        extern static IntPtr sys_XOpenDisplay(IntPtr display);
+        private extern static IntPtr sys_XOpenDisplay(IntPtr display);
         public static IntPtr XOpenDisplay(IntPtr display)
         {
             lock (Lock)
@@ -439,7 +439,7 @@ namespace OpenTK.Platform.X11
         public extern static void XPeekEvent(IntPtr display, ref XEvent xevent);
 
         [DllImport("libX11", EntryPoint = "XGetVisualInfo")]
-        static extern IntPtr XGetVisualInfoInternal(IntPtr display, IntPtr vinfo_mask, ref XVisualInfo template, out int nitems);
+        private static extern IntPtr XGetVisualInfoInternal(IntPtr display, IntPtr vinfo_mask, ref XVisualInfo template, out int nitems);
 
         public static IntPtr XGetVisualInfo(IntPtr display, XVisualInfoMask vinfo_mask, ref XVisualInfo template, out int nitems)
         {
@@ -509,7 +509,7 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11")]
         public static extern void XSetClassHint(IntPtr display, IntPtr window, ref XClassHint hint);
 
-        static readonly IntPtr CopyFromParent = IntPtr.Zero;
+        private static readonly IntPtr CopyFromParent = IntPtr.Zero;
 
         public static void SendNetWMMessage(X11WindowInfo window, IntPtr message_type, IntPtr l0, IntPtr l1, IntPtr l2)
         {
@@ -549,7 +549,7 @@ namespace OpenTK.Platform.X11
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        struct  Pixel
+        private struct  Pixel
         {
             public byte A, R, G, B;
             public Pixel(byte a, byte r, byte g, byte b)

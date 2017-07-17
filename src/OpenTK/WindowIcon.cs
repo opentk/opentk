@@ -44,7 +44,7 @@ namespace OpenTK
         {
         }
 
-        WindowIcon(int width, int height)
+        private WindowIcon(int width, int height)
         {
             if (width < 0 || width > 256 || height < 0 || height > 256)
                 throw new ArgumentOutOfRangeException();

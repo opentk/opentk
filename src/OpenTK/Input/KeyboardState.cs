@@ -35,10 +35,11 @@ namespace OpenTK.Input
     public struct KeyboardState : IEquatable<KeyboardState>
     {
         // Allocate enough ints to store all keyboard keys
-        const int IntSize = sizeof(int) * 8;
-        const int NumInts = ((int)Key.LastKey + IntSize - 1) / IntSize;
+        private const int IntSize = sizeof(int) * 8;
+
+        private const int NumInts = ((int)Key.LastKey + IntSize - 1) / IntSize;
         // The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
-        unsafe fixed int Keys[NumInts];
+        private unsafe fixed int Keys[NumInts];
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the specified
@@ -287,7 +288,7 @@ namespace OpenTK.Input
             IsConnected = value;
         }
 
-        static void ValidateOffset(int offset)
+        private static void ValidateOffset(int offset)
         {
             if (offset < 0 || offset >= NumInts * IntSize)
                 throw new ArgumentOutOfRangeException();

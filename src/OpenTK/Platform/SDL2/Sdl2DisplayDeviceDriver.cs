@@ -32,7 +32,7 @@ using System.Drawing;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2DisplayDeviceDriver : DisplayDeviceBase
+    internal class Sdl2DisplayDeviceDriver : DisplayDeviceBase
     {
         public Sdl2DisplayDeviceDriver()
         {
@@ -73,7 +73,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        int TranslateFormat(uint format)
+        private int TranslateFormat(uint format)
         {
             int bpp;
             uint a, r, g, b;
@@ -81,7 +81,7 @@ namespace OpenTK.Platform.SDL2
             return bpp;
         }
 
-        Rectangle TranslateBounds(Rect rect)
+        private Rectangle TranslateBounds(Rect rect)
         {
             return new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
         }

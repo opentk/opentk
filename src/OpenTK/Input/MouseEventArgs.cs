@@ -44,7 +44,7 @@ namespace OpenTK.Input
     /// </remarks>
     public class MouseEventArgs : EventArgs
     {
-        MouseState state;
+        private MouseState state;
 
         /// <summary>
         /// Constructs a new instance.

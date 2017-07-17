@@ -34,18 +34,17 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
 {
-
-    class WinFactory : PlatformFactoryBase
+    internal class WinFactory : PlatformFactoryBase
     {
-        readonly object SyncRoot = new object();
+        private readonly object SyncRoot = new object();
 
         // The input drivers must be constructed lazily, *after* the
         // WinFactory constructor has finished running. The reason is
         // that they call WinFactory methods internally.
-        WinRawInput rawinput_driver; // For keyboard and mouse input
+        private WinRawInput rawinput_driver; // For keyboard and mouse input
 
         internal static IntPtr OpenGLHandle { get; private set; }
-        const string OpenGLName = "OPENGL32.DLL";
+        private const string OpenGLName = "OPENGL32.DLL";
 
         public WinFactory()
         {
@@ -71,7 +70,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        static void LoadOpenGL()
+        private static void LoadOpenGL()
         {
             OpenGLHandle = Functions.LoadLibrary(OpenGLName);
             if (OpenGLHandle == IntPtr.Zero)
@@ -130,7 +129,7 @@ namespace OpenTK.Platform.Windows
             return RawInputDriver.JoystickDriver;
         }
 
-        WinRawInput RawInputDriver
+        private WinRawInput RawInputDriver
         {
             get
             {

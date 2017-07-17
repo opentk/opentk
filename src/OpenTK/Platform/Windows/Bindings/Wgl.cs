@@ -32,7 +32,7 @@ namespace OpenTK.Platform.Windows
 #pragma warning disable 3019
 #pragma warning disable 1591
 
-    partial class Wgl
+    internal partial class Wgl
     {
         static Wgl()
         {

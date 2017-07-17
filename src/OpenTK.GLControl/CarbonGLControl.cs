@@ -34,10 +34,10 @@ using OpenTK.Platform.MacOS;
 
 namespace OpenTK
 {
-    class CarbonGLControl : IGLControl
+    internal class CarbonGLControl : IGLControl
     {
-        GraphicsMode mode;
-        Control control;
+        private GraphicsMode mode;
+        private Control control;
 
         internal CarbonGLControl(GraphicsMode mode, Control owner)
         {
@@ -71,7 +71,7 @@ namespace OpenTK
         }
 
         // TODO: Fix this
-        bool lastIsIdle = false;
+        private bool lastIsIdle = false;
         public bool IsIdle
         {
             get

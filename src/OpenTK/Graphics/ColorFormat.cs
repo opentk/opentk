@@ -36,7 +36,7 @@ namespace OpenTK.Graphics
     /// </remarks>
     public struct ColorFormat : IComparable<ColorFormat>, IEquatable<ColorFormat>
     {
-        byte red, green, blue, alpha;
+        private byte red, green, blue, alpha;
 
         /// <summary>
         /// Constructs a new ColorFormat with the specified aggregate bits per pixel.

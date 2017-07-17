@@ -15,12 +15,12 @@ namespace Bind.Structures
     /// can be retrieved or set. The value can be either a number, another constant
     /// or an alias to a constant
     /// </summary>
-    class Constant : IComparable<Constant>
+    internal class Constant : IComparable<Constant>
     {
         // Gets the name prior to translation.
         public string OriginalName { get; private set; }
 
-        string _name;
+        private string _name;
 
         /// <summary>
         /// Gets or sets the name of the opengl constant (eg. GL_LINES).
@@ -41,7 +41,7 @@ namespace Bind.Structures
             }
         }
 
-        string _value;
+        private string _value;
 
         /// <summary>
         /// Gets or sets the value of the opengl constant (eg. 0x00000001).

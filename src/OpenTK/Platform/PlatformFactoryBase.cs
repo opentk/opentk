@@ -39,10 +39,10 @@ namespace OpenTK.Platform
     /// for all platform backends. IPlatformFactory implementations
     /// should inherit from this class.
     /// </summary>
-    abstract class PlatformFactoryBase : IPlatformFactory
+    internal abstract class PlatformFactoryBase : IPlatformFactory
     {
-        static readonly object sync = new object();
-        readonly List<IDisposable> Resources = new List<IDisposable>();
+        private static readonly object sync = new object();
+        private readonly List<IDisposable> Resources = new List<IDisposable>();
 
         protected bool IsDisposed;
 

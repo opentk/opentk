@@ -29,7 +29,7 @@ using System;
 
 namespace OpenTK.Platform.Linux
 {
-    static class Cursors
+    internal static class Cursors
     {
         public static readonly MouseCursor Default =
             new MouseCursor(8, 4, 32, 32, new byte[]

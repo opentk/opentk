@@ -33,7 +33,7 @@ using OpenTK.Platform.Windows;
 namespace OpenTK.Platform.Egl
 {
     // EGL factory for the Windows platform.
-    class EglWinPlatformFactory : WinFactory
+    internal class EglWinPlatformFactory : WinFactory
     {
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
@@ -59,7 +59,7 @@ namespace OpenTK.Platform.Egl
             };
         }
 
-        IntPtr GetDisplay(IntPtr dc)
+        private IntPtr GetDisplay(IntPtr dc)
         {
             IntPtr display = Egl.GetDisplay(dc);
             if (display == IntPtr.Zero)

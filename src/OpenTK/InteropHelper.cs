@@ -29,7 +29,7 @@ using System.Text;
 
 namespace OpenTK
 {
-    class InteropHelper
+    internal class InteropHelper
     {
         public static void Call(IntPtr address)
         {

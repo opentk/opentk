@@ -29,7 +29,7 @@ using System;
 
 namespace OpenTK.Platform.MacOS
 {
-    enum NSOpenGLPixelFormatAttribute
+    internal enum NSOpenGLPixelFormatAttribute
     {
         AllRenderers = 1,
         TrippleBuffer = 3, // Lion

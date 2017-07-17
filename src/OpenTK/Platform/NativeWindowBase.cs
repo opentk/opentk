@@ -36,25 +36,25 @@ using OpenTK.Input;
 namespace OpenTK.Platform
 {
     // Common base class for all INativeWindow implementations
-    abstract class NativeWindowBase : INativeWindow
+    internal abstract class NativeWindowBase : INativeWindow
     {
-        readonly MouseButtonEventArgs MouseDownArgs = new MouseButtonEventArgs();
-        readonly MouseButtonEventArgs MouseUpArgs = new MouseButtonEventArgs();
-        readonly MouseMoveEventArgs MouseMoveArgs = new MouseMoveEventArgs();
-        readonly MouseWheelEventArgs MouseWheelArgs = new MouseWheelEventArgs();
+        private readonly MouseButtonEventArgs MouseDownArgs = new MouseButtonEventArgs();
+        private readonly MouseButtonEventArgs MouseUpArgs = new MouseButtonEventArgs();
+        private readonly MouseMoveEventArgs MouseMoveArgs = new MouseMoveEventArgs();
+        private readonly MouseWheelEventArgs MouseWheelArgs = new MouseWheelEventArgs();
 
-        readonly KeyboardKeyEventArgs KeyDownArgs = new KeyboardKeyEventArgs();
-        readonly KeyboardKeyEventArgs KeyUpArgs = new KeyboardKeyEventArgs();
-        readonly KeyPressEventArgs KeyPressArgs = new KeyPressEventArgs((char)0);
+        private readonly KeyboardKeyEventArgs KeyDownArgs = new KeyboardKeyEventArgs();
+        private readonly KeyboardKeyEventArgs KeyUpArgs = new KeyboardKeyEventArgs();
+        private readonly KeyPressEventArgs KeyPressArgs = new KeyPressEventArgs((char)0);
 
-        readonly FileDropEventArgs FileDropArgs = new FileDropEventArgs();
+        private readonly FileDropEventArgs FileDropArgs = new FileDropEventArgs();
 
         // In order to simplify mouse event implementation,
         // we can store the current mouse state here.
         protected MouseState MouseState = new MouseState();
         protected KeyboardState KeyboardState = new KeyboardState();
 
-        MouseState PreviousMouseState = new MouseState();
+        private MouseState PreviousMouseState = new MouseState();
 
         internal NativeWindowBase()
         {

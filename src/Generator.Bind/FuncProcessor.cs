@@ -39,23 +39,25 @@ namespace Bind
     using Enum = Bind.Structures.Enum;
     using Type = Bind.Structures.Type;
 
-    class FuncProcessor
+    internal class FuncProcessor
     {
-        static readonly Regex Endings = new Regex(
+        private static readonly Regex Endings = new Regex(
             @"([fd]v?|u?[isb](64)?v?|v|i_v|fi)$",
             RegexOptions.Compiled);
-        static readonly Regex EndingsNotToTrim = new Regex(
+
+        private static readonly Regex EndingsNotToTrim = new Regex(
             "(sh|ib|[tdrey]s|[eE]n[vd]|bled" +
             "|Attrib|Access|Boolean|Coord|Depth|Feedbacks|Finish|Flag" +
             "|Groups|IDs|Indexed|Instanced|Pixels|Queries|Status|Tess|Through" +
             "|Uniforms|Varyings|Weight|Width)$",
             RegexOptions.Compiled);
-        static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
 
-        readonly IEnumerable<string> Overrides;
+        private static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
 
-        IBind Generator { get; set; }
-        Settings Settings { get { return Generator.Settings; } }
+        private readonly IEnumerable<string> Overrides;
+
+        private IBind Generator { get; set; }
+        private Settings Settings { get { return Generator.Settings; } }
 
         public FuncProcessor(IBind generator, IEnumerable<string> overrides)
         {
@@ -139,7 +141,7 @@ namespace Bind
             return wrappers;
         }
 
-        void GenerateDocumentation(FunctionCollection wrappers,
+        private void GenerateDocumentation(FunctionCollection wrappers,
             EnumProcessor enum_processor, DocProcessor doc_processor)
         {
             foreach (var list in wrappers)
@@ -152,7 +154,7 @@ namespace Bind
             }
         }
 
-        void GenerateAddressTable(DelegateCollection delegates)
+        private void GenerateAddressTable(DelegateCollection delegates)
         {
             // We allocate one slot per entry point. Rules:
             // - All extensions get a slot
@@ -191,7 +193,7 @@ namespace Bind
         // the overloaded ones. This allows us to reduce the amount
         // of delegates we need to generate (1 per entry point instead
         // of 1 per overload), which improves loading times.
-        static void RemoveOverloadedDelegates(DelegateCollection delegates, FunctionCollection wrappers)
+        private static void RemoveOverloadedDelegates(DelegateCollection delegates, FunctionCollection wrappers)
         {
             foreach (var w in wrappers.Values.SelectMany(w => w))
             {
@@ -200,7 +202,7 @@ namespace Bind
             }
         }
 
-        static string GetPath(string apipath, string apiname, string apiversion, string function, string extension)
+        private static string GetPath(string apipath, string apiname, string apiversion, string function, string extension)
         {
             var path = new StringBuilder();
             path.Append("/signatures/");
@@ -246,17 +248,17 @@ namespace Bind
             return path.ToString();
         }
 
-        static string GetOverloadsPath(string apiname, string apiversion, string function, string extension)
+        private static string GetOverloadsPath(string apiname, string apiversion, string function, string extension)
         {
             return GetPath("overload", apiname, apiversion, function, extension);
         }
 
-        static string GetOverridesPath(string apiname, string apiversion, string function, string extension)
+        private static string GetOverridesPath(string apiname, string apiversion, string function, string extension)
         {
             return GetPath("replace", apiname, apiversion, function, extension);
         }
 
-        void TranslateType(Bind.Structures.Type type,
+        private void TranslateType(Bind.Structures.Type type,
             XPathNavigator function_override, XPathNavigator overrides,
             EnumProcessor enum_processor, EnumCollection enums,
             string category, string apiname)
@@ -375,7 +377,7 @@ namespace Bind
             }
         }
 
-        static string TranslateExtension(string extension)
+        private static string TranslateExtension(string extension)
         {
             extension = extension.ToUpper();
             if (extension.Length > 2)
@@ -385,12 +387,12 @@ namespace Bind
             return extension;
         }
 
-        void TranslateExtension(Delegate d)
+        private void TranslateExtension(Delegate d)
         {
             d.Extension = TranslateExtension(d.Extension);
         }
 
-        static string GetTrimmedExtension(string name, string extension)
+        private static string GetTrimmedExtension(string name, string extension)
         {
             // Extensions are always uppercase
             int index = name.LastIndexOf(extension.ToUpper());
@@ -402,7 +404,7 @@ namespace Bind
         }
 
         // Trims unecessary suffices from the specified OpenGL function name.
-        static string GetTrimmedName(Delegate d)
+        private static string GetTrimmedName(Delegate d)
         {
             string name = d.Name;
             string extension = d.Extension;
@@ -441,7 +443,7 @@ namespace Bind
             return trimmed_name;
         }
 
-        static XPathNodeIterator GetFuncOverload(XPathNavigator nav, Delegate d, string apiname, string apiversion)
+        private static XPathNodeIterator GetFuncOverload(XPathNavigator nav, Delegate d, string apiname, string apiversion)
         {
             // Try a few different extension variations that appear in the overrides xml file
             string[] extensions = { d.Extension, TranslateExtension(d.Extension), d.Extension.ToUpper() };
@@ -464,7 +466,7 @@ namespace Bind
             return function_overload;
         }
 
-        static XPathNavigator GetFuncOverride(XPathNavigator nav, Delegate d, string apiname, string apiversion)
+        private static XPathNavigator GetFuncOverride(XPathNavigator nav, Delegate d, string apiname, string apiversion)
         {
             // Try a few different extension variations that appear in the overrides xml file
             string[] extensions = { d.Extension, TranslateExtension(d.Extension), d.Extension.ToUpper() };
@@ -487,12 +489,12 @@ namespace Bind
             return function_override;
         }
 
-        void TrimName(Function f)
+        private void TrimName(Function f)
         {
             f.TrimmedName = GetTrimmedName(f);
         }
 
-        static void ApplyParameterReplacement(Delegate d, XPathNavigator function_override)
+        private static void ApplyParameterReplacement(Delegate d, XPathNavigator function_override)
         {
             if (function_override != null)
             {
@@ -529,7 +531,7 @@ namespace Bind
             }
         }
 
-        static void ApplyReturnTypeReplacement(Delegate d, XPathNavigator function_override)
+        private static void ApplyReturnTypeReplacement(Delegate d, XPathNavigator function_override)
         {
             if (function_override != null)
             {
@@ -550,7 +552,7 @@ namespace Bind
         // 3) A generic object or void* (translates to IntPtr)
         // 4) A GLenum (translates to int on Legacy.Tao or GL.Enums.GLenum otherwise).
         // Return types must always be CLS-compliant, because .Net does not support overloading on return types.
-        void TranslateReturnType(Delegate d,
+        private void TranslateReturnType(Delegate d,
             XPathNavigator function_override, XPathNavigator nav,
             EnumProcessor enum_processor, EnumCollection enums,
             string apiname, string apiversion)
@@ -596,7 +598,7 @@ namespace Bind
             d.ReturnType.CurrentType = GetCLSCompliantType(d.ReturnType);
         }
 
-        Delegate GetCLSCompliantDelegate(Delegate d)
+        private Delegate GetCLSCompliantDelegate(Delegate d)
         {
             Delegate f = new Delegate(d);
 
@@ -610,7 +612,7 @@ namespace Bind
             return f;
         }
 
-        void TranslateParameters(Delegate d,
+        private void TranslateParameters(Delegate d,
             XPathNavigator function_override, XPathNavigator nav,
             EnumProcessor enum_processor, EnumCollection enums,
             string apiname, string apiversion)
@@ -625,7 +627,7 @@ namespace Bind
             }
         }
 
-        void TranslateParameter(Parameter p,
+        private void TranslateParameter(Parameter p,
             XPathNavigator function_override, XPathNavigator overrides,
             EnumProcessor enum_processor, EnumCollection enums,
             string category, string apiname)
@@ -698,7 +700,7 @@ namespace Bind
             //    WrapperType = WrapperTypes.BoolParameter;
         }
 
-        void TranslateAttributes(Delegate d,
+        private void TranslateAttributes(Delegate d,
             XPathNavigator function_override, XPathNavigator nav,
             string apiname, string apiversion)
         {
@@ -730,7 +732,7 @@ namespace Bind
             }
         }
 
-        FunctionCollection CreateWrappers(DelegateCollection delegates, EnumCollection enums)
+        private FunctionCollection CreateWrappers(DelegateCollection delegates, EnumCollection enums)
         {
             var wrappers = new FunctionCollection();
             foreach (var d in delegates.Values.SelectMany(v => v))
@@ -765,7 +767,7 @@ namespace Bind
             return wrappers;
         }
 
-        FunctionCollection CreateCLSCompliantWrappers(FunctionCollection functions, EnumCollection enums)
+        private FunctionCollection CreateCLSCompliantWrappers(FunctionCollection functions, EnumCollection enums)
         {
             // If the function is not CLS-compliant (e.g. it contains unsigned parameters)
             // we need to create a CLS-Compliant overload. However, we should only do this
@@ -806,7 +808,7 @@ namespace Bind
             return wrappers;
         }
 
-        static FunctionCollection MarkCLSCompliance(FunctionCollection collection)
+        private static FunctionCollection MarkCLSCompliance(FunctionCollection collection)
         {
             //foreach (var w in
             //    (from list in collection
@@ -872,7 +874,7 @@ namespace Bind
             return collection;
         }
 
-        string GetCLSCompliantType(Type type)
+        private string GetCLSCompliantType(Type type)
         {
             if (!type.CLSCompliant)
             {
@@ -901,7 +903,7 @@ namespace Bind
             return type.CurrentType;
         }
 
-        IEnumerable<Function> CreateNormalWrappers(Delegate d, EnumCollection enums)
+        private IEnumerable<Function> CreateNormalWrappers(Delegate d, EnumCollection enums)
         {
             Function f = new Function(d);
             TrimName(f);
@@ -913,7 +915,7 @@ namespace Bind
             }
         }
 
-        IEnumerable<Function> CreateConvenienceOverloads(FunctionCollection wrappers)
+        private IEnumerable<Function> CreateConvenienceOverloads(FunctionCollection wrappers)
         {
             var convenience_wrappers = new List<Function>();
             foreach (var d in wrappers.Values.SelectMany(w => w))
@@ -984,7 +986,7 @@ namespace Bind
             return convenience_wrappers;
         }
 
-        static Function CreateReturnTypeConvenienceWrapper(Function d)
+        private static Function CreateReturnTypeConvenienceWrapper(Function d)
         {
             var f = new Function(d);
             f.ReturnType = new Type(f.Parameters.Last());
@@ -1004,7 +1006,7 @@ namespace Bind
             return f;
         }
 
-        static Function CreateArrayReturnTypeConvenienceWrapper(Function d)
+        private static Function CreateArrayReturnTypeConvenienceWrapper(Function d)
         {
             var f = new Function(d);
             var p_array = f.Parameters.Last();
@@ -1021,7 +1023,7 @@ namespace Bind
             return f;
         }
 
-        List<Function> GetWrapper(IDictionary<WrapperTypes, List<Function>> dictionary, WrapperTypes key, Function raw)
+        private List<Function> GetWrapper(IDictionary<WrapperTypes, List<Function>> dictionary, WrapperTypes key, Function raw)
         {
             if (!dictionary.ContainsKey(key))
             {
@@ -1226,7 +1228,7 @@ namespace Bind
             }
         }
 
-        static void WrapReturnType(Function func)
+        private static void WrapReturnType(Function func)
         {
             if ((func.ReturnType.WrapperType & WrapperTypes.StringReturnType) != 0)
             {

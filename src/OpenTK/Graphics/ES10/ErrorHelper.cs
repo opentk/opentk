@@ -40,12 +40,14 @@ namespace OpenTK.Graphics.ES10
     //
     // Make sure that no error checking is added to the GetError function,
     // as that would cause infinite recursion!
-    struct ErrorHelper : IDisposable
+    internal struct ErrorHelper : IDisposable
     {
-        static readonly object SyncRoot = new object();
-        static readonly Dictionary<GraphicsContext, List<ErrorCode>> ContextErrors =
+        private static readonly object SyncRoot = new object();
+
+        private static readonly Dictionary<GraphicsContext, List<ErrorCode>> ContextErrors =
             new Dictionary<GraphicsContext, List<ErrorCode>>();
-        readonly GraphicsContext Context;
+
+        private readonly GraphicsContext Context;
 
         public ErrorHelper(IGraphicsContext context)
         {

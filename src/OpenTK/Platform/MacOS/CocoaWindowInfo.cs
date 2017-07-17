@@ -36,11 +36,11 @@ namespace OpenTK.Platform.MacOS
     /// <summary>
     /// Describes a Cocoa window.
     /// </summary>
-    sealed class CocoaWindowInfo : IWindowInfo
+    internal sealed class CocoaWindowInfo : IWindowInfo
     {
-        static readonly IntPtr selContentView = Selector.Get("contentView");
+        private static readonly IntPtr selContentView = Selector.Get("contentView");
 
-        bool disposed = false;
+        private bool disposed = false;
 
         /// <summary>
         /// Constructs a new instance with the specified parameters.
@@ -86,7 +86,7 @@ namespace OpenTK.Platform.MacOS
             Dispose(true);
         }
 
-        void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (disposed)
                 return;

@@ -37,9 +37,9 @@ namespace Bind
     using Delegate = Bind.Structures.Delegate;
     using Enum = Bind.Structures.Enum;
 
-    class XmlSpecReader : ISpecReader
+    internal class XmlSpecReader : ISpecReader
     {
-        Settings Settings { get; set; }
+        private Settings Settings { get; set; }
 
         public XmlSpecReader(Settings settings)
         {
@@ -206,7 +206,7 @@ namespace Bind
             }
         }
 
-        static void GetSignaturePaths(string apiname, string apiversion, out string xpath_add, out string xpath_delete)
+        private static void GetSignaturePaths(string apiname, string apiversion, out string xpath_add, out string xpath_delete)
         {
             xpath_add = "/signatures/add";
             xpath_delete = "/signatures/delete";
@@ -229,7 +229,7 @@ namespace Bind
             }
         }
 
-        string GetSpecVersion(XPathDocument specs)
+        private string GetSpecVersion(XPathDocument specs)
         {
             var version =
                 specs.CreateNavigator().SelectSingleNode("/signatures")
@@ -241,7 +241,7 @@ namespace Bind
             return version;
         }
 
-        DelegateCollection ReadDelegates(XPathNavigator specs, string apiversion)
+        private DelegateCollection ReadDelegates(XPathNavigator specs, string apiversion)
         {
             DelegateCollection delegates = new DelegateCollection();
             var extensions = new List<string>();
@@ -323,7 +323,7 @@ namespace Bind
             return delegates;
         }
 
-        EnumCollection ReadEnums(XPathNavigator nav)
+        private EnumCollection ReadEnums(XPathNavigator nav)
         {
             EnumCollection enums = new EnumCollection();
             Enum all = new Enum() { Name = Settings.CompleteEnumName };

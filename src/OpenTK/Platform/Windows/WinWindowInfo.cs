@@ -33,10 +33,10 @@ namespace OpenTK.Platform.Windows
 {
     /// \internal
     /// <summary>Describes a win32 window.</summary>
-    sealed class WinWindowInfo : IWindowInfo
+    internal sealed class WinWindowInfo : IWindowInfo
     {
-        IntPtr handle, dc;
-        bool disposed;
+        private IntPtr handle, dc;
+        private bool disposed;
 
         /// <summary>
         /// Constructs a new instance.
@@ -121,7 +121,7 @@ namespace OpenTK.Platform.Windows
             GC.SuppressFinalize(this);
         }
 
-        void Dispose(bool manual)
+        private void Dispose(bool manual)
         {
             if (!disposed)
             {

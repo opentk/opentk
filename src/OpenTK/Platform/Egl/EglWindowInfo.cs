@@ -32,10 +32,10 @@ using OpenTK.Graphics;
 namespace OpenTK.Platform.Egl
 {
     // Holds information about an EGL window.
-    class EglWindowInfo : IWindowInfo
+    internal class EglWindowInfo : IWindowInfo
     {
-        IntPtr surface;
-        bool disposed;
+        private IntPtr surface;
+        private bool disposed;
 
         public EglWindowInfo(IntPtr handle, IntPtr display)
             : this(handle, display, IntPtr.Zero)
@@ -162,7 +162,7 @@ namespace OpenTK.Platform.Egl
             GC.SuppressFinalize(this);
         }
 
-        void Dispose(bool manual)
+        private void Dispose(bool manual)
         {
             if (!disposed)
             {

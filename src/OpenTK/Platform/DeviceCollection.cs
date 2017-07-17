@@ -37,10 +37,10 @@ namespace OpenTK.Platform
     //        Indices are allocated sequentially as devices are added to the system.
     //        If a device is removed, its index will be reused for the next device
     //        that is added.
-    class DeviceCollection<T> : IEnumerable<T>
+    internal class DeviceCollection<T> : IEnumerable<T>
     {
-        readonly Dictionary<long, int> Map = new Dictionary<long, int>();
-        readonly List<T> Devices = new List<T>();
+        private readonly Dictionary<long, int> Map = new Dictionary<long, int>();
+        private readonly List<T> Devices = new List<T>();
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
@@ -162,7 +162,7 @@ namespace OpenTK.Platform
         // Return the index of the first empty slot in Devices.
         // If no empty slot exists, append a new one and return
         // that index.
-        int GetIndex()
+        private int GetIndex()
         {
             for (int i = 0; i < Devices.Count; i++)
             {

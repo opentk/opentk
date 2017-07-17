@@ -30,12 +30,12 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2GraphicsContext : DesktopGraphicsContext
+    internal class Sdl2GraphicsContext : DesktopGraphicsContext
     {
-        IWindowInfo Window { get; set; }
-        ContextHandle SdlContext { get; set; }
+        private IWindowInfo Window { get; set; }
+        private ContextHandle SdlContext { get; set; }
 
-        Sdl2GraphicsContext(IWindowInfo window)
+        private Sdl2GraphicsContext(IWindowInfo window)
         {
             // It is possible to create a GraphicsContext on a window
             // that is not owned by SDL (e.g. a GLControl). In that case,
@@ -90,7 +90,7 @@ namespace OpenTK.Platform.SDL2
             Debug.Print("    GraphicsContextFlags: {0}", flags);
         }
 
-        static GraphicsMode GetGLAttributes(ContextHandle sdlContext, out GraphicsContextFlags context_flags)
+        private static GraphicsMode GetGLAttributes(ContextHandle sdlContext, out GraphicsContextFlags context_flags)
         {
             context_flags = 0;
 
@@ -160,7 +160,7 @@ namespace OpenTK.Platform.SDL2
                 stereo != 0 ? true : false);
         }
 
-        static void ClearGLAttributes()
+        private static void ClearGLAttributes()
         {
             SDL.GL.SetAttribute(ContextAttribute.ACCUM_ALPHA_SIZE, 0);
             SDL.GL.SetAttribute(ContextAttribute.ACCUM_RED_SIZE, 0);
@@ -184,7 +184,7 @@ namespace OpenTK.Platform.SDL2
             SDL.GL.SetAttribute(ContextAttribute.SHARE_WITH_CURRENT_CONTEXT, 0);
         }
 
-        static void SetGLAttributes(GraphicsMode mode,
+        private static void SetGLAttributes(GraphicsMode mode,
             IGraphicsContext shareContext,
             int major, int minor,
             GraphicsContextFlags flags)

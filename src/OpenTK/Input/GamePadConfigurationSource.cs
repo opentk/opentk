@@ -27,12 +27,12 @@
 
 namespace OpenTK.Input
 {
-    struct GamePadConfigurationSource
+    internal struct GamePadConfigurationSource
     {
-        int? map_button;
-        int? map_axis;
-        JoystickHat? map_hat;
-        HatPosition? map_hat_position;
+        private int? map_button;
+        private int? map_axis;
+        private JoystickHat? map_hat;
+        private HatPosition? map_hat_position;
 
         /// <summary>
         /// Creates a new gamepad configuration source from an axis or a button

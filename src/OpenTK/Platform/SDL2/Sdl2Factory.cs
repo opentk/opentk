@@ -30,7 +30,7 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2Factory : PlatformFactoryBase
+    internal class Sdl2Factory : PlatformFactoryBase
     {
         private readonly object inputDriverLock = new object();
         private Sdl2InputDriver inputDriver;

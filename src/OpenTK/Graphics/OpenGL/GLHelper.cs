@@ -67,11 +67,11 @@ namespace OpenTK.Graphics.OpenGL
     {
         internal const string Library = "opengl32.dll";
 
-        static readonly object sync_root = new object();
+        private static readonly object sync_root = new object();
 
-        static IntPtr[] EntryPoints;
-        static byte[] EntryPointNames;
-        static int[] EntryPointNameOffsets;
+        private static IntPtr[] EntryPoints;
+        private static byte[] EntryPointNames;
+        private static int[] EntryPointNameOffsets;
 
         /// <summary>
         /// Constructs a new instance.

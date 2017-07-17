@@ -34,9 +34,10 @@ namespace OpenTK.Input
     /// </summary>
     public static class Keyboard
     {
-        static readonly IKeyboardDriver2 driver =
+        private static readonly IKeyboardDriver2 driver =
             Platform.Factory.Default.CreateKeyboardDriver();
-        static readonly object SyncRoot = new object();
+
+        private static readonly object SyncRoot = new object();
 
         /// <summary>
         /// Retrieves the combined <see cref="OpenTK.Input.KeyboardState"/> for all keyboard devices.

@@ -32,7 +32,7 @@ namespace OpenTK.Platform.MacOS
     //
     // http://web.archive.org/web/20100501161453/http://www.classicteck.com/rbarticles/mackeyboard.php
 
-    enum MacOSKeyCode
+    internal enum MacOSKeyCode
     {
         A = 0,
         B = 11,
@@ -148,7 +148,7 @@ namespace OpenTK.Platform.MacOS
 
     }
     [Flags]
-    enum MacOSKeyModifiers
+    internal enum MacOSKeyModifiers
     {
         None     = 0,
         Shift    = 0x0200,

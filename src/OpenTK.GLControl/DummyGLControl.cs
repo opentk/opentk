@@ -29,7 +29,7 @@ using OpenTK.Platform;
 
 namespace OpenTK
 {
-    class DummyGLControl : IGLControl
+    internal class DummyGLControl : IGLControl
     {
         public IGraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
         {
@@ -46,11 +46,11 @@ namespace OpenTK
             get { return Utilities.CreateDummyWindowInfo(); }
         }
 
-        class DummyContext : IGraphicsContext, IGraphicsContextInternal
+        private class DummyContext : IGraphicsContext, IGraphicsContextInternal
         {
-            static int instance_count;
+            private static int instance_count;
 
-            IWindowInfo current_window;
+            private IWindowInfo current_window;
 
             public void SwapBuffers()
             {

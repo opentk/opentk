@@ -31,11 +31,11 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
-    class X11Input : IInputDriver2
+    internal class X11Input : IInputDriver2
     {
-        readonly X11Mouse mouse = new X11Mouse();
-        readonly X11Keyboard keyboard = new X11Keyboard();
-        readonly Linux.LinuxJoystick joystick = new Linux.LinuxJoystick();
+        private readonly X11Mouse mouse = new X11Mouse();
+        private readonly X11Keyboard keyboard = new X11Keyboard();
+        private readonly Linux.LinuxJoystick joystick = new Linux.LinuxJoystick();
 
         internal X11Input()
         {

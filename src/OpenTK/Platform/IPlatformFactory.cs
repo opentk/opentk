@@ -31,7 +31,7 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform
 {
-    interface IPlatformFactory : IDisposable
+    internal interface IPlatformFactory : IDisposable
     {
         INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device);
 

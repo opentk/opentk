@@ -14,10 +14,10 @@ namespace OpenTK.Graphics
     /// <summary>Defines the format for graphics operations.</summary>
     public class GraphicsMode : IEquatable<GraphicsMode>
     {
-        int samples;
+        private int samples;
 
-        static GraphicsMode defaultMode;
-        static readonly object SyncRoot = new object();
+        private static GraphicsMode defaultMode;
+        private static readonly object SyncRoot = new object();
 
         // Disable BeforeFieldInit
         static GraphicsMode() { }

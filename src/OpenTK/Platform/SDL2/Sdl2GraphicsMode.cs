@@ -28,7 +28,7 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2GraphicsMode : IGraphicsMode
+    internal class Sdl2GraphicsMode : IGraphicsMode
     {
         public Sdl2GraphicsMode()
         {

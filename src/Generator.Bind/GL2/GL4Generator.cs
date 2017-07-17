@@ -31,7 +31,7 @@ using System.Text;
 
 namespace Bind.GL2
 {
-    class GL4Generator : Generator
+    internal class GL4Generator : Generator
     {
         public GL4Generator(Settings settings)
             : base(settings)

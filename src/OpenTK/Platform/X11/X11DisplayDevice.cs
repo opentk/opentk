@@ -33,22 +33,22 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.X11
 {
-    sealed class X11DisplayDevice : DisplayDeviceBase
+    internal sealed class X11DisplayDevice : DisplayDeviceBase
     {
         // Store a mapping between resolutions and their respective
         // size_index (needed for XRRSetScreenConfig). The size_index
         // is simply the sequence number of the resolution as returned by
         // XRRSizes. This is done per available screen.
-        readonly List<Dictionary<DisplayResolution, int>> screenResolutionToIndex =
+        private readonly List<Dictionary<DisplayResolution, int>> screenResolutionToIndex =
             new List<Dictionary<DisplayResolution, int>>();
         // Store a mapping between DisplayDevices and their default resolutions.
-        readonly Dictionary<DisplayDevice, int> deviceToDefaultResolution = new Dictionary<DisplayDevice, int>();
+        private readonly Dictionary<DisplayDevice, int> deviceToDefaultResolution = new Dictionary<DisplayDevice, int>();
         // Store a mapping between DisplayDevices and X11 screens.
-        readonly Dictionary<DisplayDevice, int> deviceToScreen = new Dictionary<DisplayDevice, int>();
+        private readonly Dictionary<DisplayDevice, int> deviceToScreen = new Dictionary<DisplayDevice, int>();
         // Keep the time when the config of each screen was last updated.
-        readonly List<IntPtr> lastConfigUpdate = new List<IntPtr>();
+        private readonly List<IntPtr> lastConfigUpdate = new List<IntPtr>();
 
-        bool xinerama_supported, xrandr_supported, xf86_supported;
+        private bool xinerama_supported, xrandr_supported, xf86_supported;
 
 
         public X11DisplayDevice()
@@ -56,7 +56,7 @@ namespace OpenTK.Platform.X11
             RefreshDisplayDevices();
         }
 
-        void RefreshDisplayDevices()
+        private void RefreshDisplayDevices()
         {
             using (new XLock(API.DefaultDisplay))
             {
@@ -111,7 +111,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        static DisplayDevice FindDefaultDevice(IEnumerable<DisplayDevice> devices)
+        private static DisplayDevice FindDefaultDevice(IEnumerable<DisplayDevice> devices)
         {
                 foreach (DisplayDevice dev in devices)
                     if (dev.IsPrimary)
@@ -120,7 +120,7 @@ namespace OpenTK.Platform.X11
             throw new InvalidOperationException("No primary display found. Please file a bug at http://www.opentk.com");
         }
 
-        bool QueryXinerama(List<DisplayDevice> devices)
+        private bool QueryXinerama(List<DisplayDevice> devices)
         {
             // Try to use Xinerama to obtain the geometry of all output devices.
             int event_base, error_base;
@@ -148,7 +148,7 @@ namespace OpenTK.Platform.X11
             return (devices.Count>0);
         }
 
-        bool QueryXRandR(List<DisplayDevice> devices)
+        private bool QueryXRandR(List<DisplayDevice> devices)
         {
             // Get available resolutions. Then, for each resolution get all available rates.
             foreach (DisplayDevice dev in devices)
@@ -238,7 +238,7 @@ namespace OpenTK.Platform.X11
             return true;
         }
 
-        bool QueryXF86(List<DisplayDevice> devices)
+        private bool QueryXF86(List<DisplayDevice> devices)
         {
             int major;
             int minor;
@@ -289,12 +289,12 @@ namespace OpenTK.Platform.X11
             return true;
         }
 
-        static int[] FindAvailableDepths(int screen)
+        private static int[] FindAvailableDepths(int screen)
         {
             return Functions.XListDepths(API.DefaultDisplay, screen);
         }
 
-        static XRRScreenSize[] FindAvailableResolutions(int screen)
+        private static XRRScreenSize[] FindAvailableResolutions(int screen)
         {
             XRRScreenSize[] resolutions = null;
             resolutions = Functions.XRRSizes(API.DefaultDisplay, screen);
@@ -303,7 +303,7 @@ namespace OpenTK.Platform.X11
             return resolutions;
         }
 
-        static float FindCurrentRefreshRate(int screen)
+        private static float FindCurrentRefreshRate(int screen)
         {
             short rate = 0;
             IntPtr screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, Functions.XRootWindow(API.DefaultDisplay, screen));
@@ -312,12 +312,12 @@ namespace OpenTK.Platform.X11
             return (float)rate;
         }
 
-        static int FindCurrentDepth(int screen)
+        private static int FindCurrentDepth(int screen)
         {
             return (int)Functions.XDefaultDepth(API.DefaultDisplay, screen);
         }
 
-        bool ChangeResolutionXRandR(DisplayDevice device, DisplayResolution resolution)
+        private bool ChangeResolutionXRandR(DisplayDevice device, DisplayResolution resolution)
         {
             using (new XLock(API.DefaultDisplay))
             {
@@ -362,7 +362,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        static bool ChangeResolutionXF86(DisplayDevice device, DisplayResolution resolution)
+        private static bool ChangeResolutionXF86(DisplayDevice device, DisplayResolution resolution)
         {
             return false;
         }
@@ -390,9 +390,9 @@ namespace OpenTK.Platform.X11
             return TryChangeResolution(device, null);
         }
 
-        static class NativeMethods
+        private static class NativeMethods
         {
-            const string Xinerama = "libXinerama";
+            private const string Xinerama = "libXinerama";
 
             [DllImport(Xinerama)]
             public static extern bool XineramaQueryExtension(IntPtr dpy, out int event_basep, out int error_basep);
@@ -404,7 +404,7 @@ namespace OpenTK.Platform.X11
             public static extern bool XineramaIsActive(IntPtr dpy);
 
             [DllImport(Xinerama)]
-            static extern IntPtr XineramaQueryScreens(IntPtr dpy, out int number);
+            private static extern IntPtr XineramaQueryScreens(IntPtr dpy, out int number);
 
             public static IList<XineramaScreenInfo> XineramaQueryScreens(IntPtr dpy)
             {
@@ -427,7 +427,7 @@ namespace OpenTK.Platform.X11
         }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        struct XineramaScreenInfo
+        private struct XineramaScreenInfo
         {
             public int ScreenNumber;
             public short X;

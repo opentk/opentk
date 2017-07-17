@@ -10,9 +10,9 @@ using System.Xml.XPath;
 
 namespace Bind.Structures
 {
-    class Type : IComparable<Type>, IEquatable<Type>
+    internal class Type : IComparable<Type>, IEquatable<Type>
     {
-        string current_qualifier = String.Empty;
+        private string current_qualifier = String.Empty;
 
         public Type()
         {
@@ -34,7 +34,7 @@ namespace Bind.Structures
             }
         }
 
-        string CurrentQualifier
+        private string CurrentQualifier
         {
             get { return current_qualifier; }
             set { PreviousQualifier = CurrentQualifier; current_qualifier = value; }
@@ -70,7 +70,7 @@ namespace Bind.Structures
             }
         }
 
-        string type;
+        private string type;
         /// <summary>
         /// Gets the type of the parameter.
         /// </summary>
@@ -102,7 +102,7 @@ namespace Bind.Structures
 
         public bool Reference { get; set; }
 
-        int array;
+        private int array;
 
         public int Array
         {
@@ -110,7 +110,7 @@ namespace Bind.Structures
             set { array = value > 0 ? value : 0; }
         }
 
-        int element_count;
+        private int element_count;
 
         // If the type is an array and ElementCount > 0, then ElemenCount defines the expected array length.
         public int ElementCount
@@ -119,7 +119,7 @@ namespace Bind.Structures
             set { element_count = value > 0 ? value : 0; }
         }
 
-        int pointer;
+        private int pointer;
 
         public int Pointer
         {
@@ -194,7 +194,7 @@ namespace Bind.Structures
 
         public WrapperTypes WrapperType { get; set; } = WrapperTypes.None;
 
-        static readonly string[] PointerLevels =
+        private static readonly string[] PointerLevels =
         {
             "",
             "*",
@@ -203,7 +203,7 @@ namespace Bind.Structures
             "****"
         };
 
-        static readonly string[] ArrayLevels =
+        private static readonly string[] ArrayLevels =
         {
             "",
             "[]",

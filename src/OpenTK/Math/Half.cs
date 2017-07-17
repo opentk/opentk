@@ -76,7 +76,7 @@ namespace OpenTK
     [Serializable, StructLayout(LayoutKind.Sequential)]
     public struct Half : ISerializable, IComparable<Half>, IFormattable, IEquatable<Half>
     {
-        UInt16 bits;
+        private UInt16 bits;
 
         /// <summary>Returns true if the Half is zero.</summary>
         public bool IsZero { get { return (bits == 0) || (bits == 0x8000); } }
@@ -397,7 +397,7 @@ namespace OpenTK
             bin.Write(this.bits);
         }
 
-        const int maxUlps = 1;
+        private const int maxUlps = 1;
 
         /// <summary>
         /// Returns a value indicating whether this instance is equal to a specified OpenTK.Half value.

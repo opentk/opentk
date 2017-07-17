@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.MacOS
 {
-    static class Selector
+    internal static class Selector
     {
         // Frequently used selectors
         public static readonly IntPtr Init = Selector.Get("init");

@@ -50,8 +50,8 @@ namespace OpenTK.Graphics
         /// <returns>The current OpenGL context, or <c>IntPtr.Zero</c> if no context is on the calling thread.</returns>
         public delegate ContextHandle GetCurrentContextDelegate();
 
-        IGraphicsContext implementation;  // The actual render context implementation for the underlying platform.
-        bool disposed;
+        private IGraphicsContext implementation;  // The actual render context implementation for the underlying platform.
+        private bool disposed;
 
         // Cache for the context handle. We need this for RemoveContext()
         // in case the user does not call Dispose(). When this happens,
@@ -59,11 +59,11 @@ namespace OpenTK.Graphics
         // the IGraphicsContext implementation may already be null
         // (hence we cannot call implementation.Context to retrieve
         // the handle.)
-        ContextHandle handle_cached;
+        private ContextHandle handle_cached;
 
-        readonly static object SyncRoot = new object();
+        private readonly static object SyncRoot = new object();
         // Maps OS-specific context handles to GraphicsContext instances.
-        readonly static Dictionary<ContextHandle, IGraphicsContext> available_contexts =
+        private readonly static Dictionary<ContextHandle, IGraphicsContext> available_contexts =
             new Dictionary<ContextHandle, IGraphicsContext>();
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace OpenTK.Graphics
                 (this as IGraphicsContextInternal).Context == (obj as IGraphicsContextInternal).Context;
         }
 
-        static void AddContext(IGraphicsContextInternal context)
+        private static void AddContext(IGraphicsContextInternal context)
         {
             ContextHandle ctx = context.Context;
             if (!available_contexts.ContainsKey(ctx))
@@ -309,7 +309,7 @@ namespace OpenTK.Graphics
             }
         }
 
-        static void RemoveContext(IGraphicsContextInternal context)
+        private static void RemoveContext(IGraphicsContextInternal context)
         {
             ContextHandle ctx = context.Context;
             if (available_contexts.ContainsKey(ctx))
@@ -322,7 +322,7 @@ namespace OpenTK.Graphics
             }
         }
 
-        static IGraphicsContext FindSharedContext()
+        private static IGraphicsContext FindSharedContext()
         {
             if (GraphicsContext.ShareContexts)
             {
@@ -562,7 +562,7 @@ namespace OpenTK.Graphics
             GC.SuppressFinalize(this);
         }
 
-        void Dispose(bool manual)
+        private void Dispose(bool manual)
         {
             if (!IsDisposed)
             {

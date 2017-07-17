@@ -35,9 +35,9 @@ namespace OpenTK.Input
     /// </summary>
     public struct GamePadTriggers : IEquatable<GamePadTriggers>
     {
-        const float ConversionFactor = 1.0f / byte.MaxValue;
-        byte left;
-        byte right;
+        private const float ConversionFactor = 1.0f / byte.MaxValue;
+        private byte left;
+        private byte right;
 
         internal GamePadTriggers(byte left, byte right)
         {

@@ -34,13 +34,13 @@ using OpenTK.Platform.MacOS;
 
 namespace OpenTK.Platform.MacOS
 {
-    static class NSApplication
+    internal static class NSApplication
     {
         internal static IntPtr Handle;
 
-        static readonly IntPtr selQuit = Selector.Get("quit");
+        private static readonly IntPtr selQuit = Selector.Get("quit");
 
-        static readonly int ThreadId =
+        private static readonly int ThreadId =
             System.Threading.Thread.CurrentThread.ManagedThreadId;
 
         internal static void Initialize() { }
@@ -121,10 +121,11 @@ namespace OpenTK.Platform.MacOS
         internal static event EventHandler<CancelEventArgs> Quit = delegate { };
 
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate void OnQuitDelegate(IntPtr self, IntPtr cmd);
+        private delegate void OnQuitDelegate(IntPtr self, IntPtr cmd);
 
-        static OnQuitDelegate OnQuitHandler = OnQuit;
-        static void OnQuit(IntPtr self, IntPtr cmd)
+        private static OnQuitDelegate OnQuitHandler = OnQuit;
+
+        private static void OnQuit(IntPtr self, IntPtr cmd)
         {
             var e = new CancelEventArgs();
             Quit(null, e);

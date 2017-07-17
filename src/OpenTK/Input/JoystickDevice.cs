@@ -33,8 +33,8 @@ namespace OpenTK.Input
     /// </summary>
     public abstract class JoystickDevice : IInputDevice
     {
-        JoystickMoveEventArgs move_args = new JoystickMoveEventArgs(0, 0, 0);
-        JoystickButtonEventArgs button_args = new JoystickButtonEventArgs(0, false);
+        private JoystickMoveEventArgs move_args = new JoystickMoveEventArgs(0, 0, 0);
+        private JoystickButtonEventArgs button_args = new JoystickButtonEventArgs(0, false);
 
         internal JoystickDevice(int id, int axes, int buttons)
         {
@@ -206,7 +206,7 @@ namespace OpenTK.Input
     /// </summary>
     public sealed class JoystickButtonCollection
     {
-        bool[] button_state;
+        private bool[] button_state;
 
         internal JoystickButtonCollection(int numButtons)
         {
@@ -241,7 +241,7 @@ namespace OpenTK.Input
     /// </summary>
     public sealed class JoystickAxisCollection
     {
-        float[] axis_state;
+        private float[] axis_state;
 
         internal JoystickAxisCollection(int numAxes)
         {

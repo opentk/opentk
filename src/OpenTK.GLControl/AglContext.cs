@@ -43,13 +43,13 @@ namespace OpenTK.Platform.MacOS
     /// <summary>
     /// AGL context implementation for WinForms compatibility.
     /// </summary>
-    class AglContext : IGraphicsContext, IGraphicsContextInternal
+    internal class AglContext : IGraphicsContext, IGraphicsContextInternal
     {
-        IWindowInfo carbonWindow;
-        IGraphicsContext dummyContext; // for extension loading
+        private IWindowInfo carbonWindow;
+        private IGraphicsContext dummyContext; // for extension loading
 
-        readonly GetInt XOffset;
-        readonly GetInt YOffset;
+        private readonly GetInt XOffset;
+        private readonly GetInt YOffset;
 
         public AglContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext,
             GetInt xoffset, GetInt yoffset)
@@ -96,7 +96,7 @@ namespace OpenTK.Platform.MacOS
             aglAttributes.Add(value);
         }
 
-        void CreateContext(GraphicsMode mode, IWindowInfo carbonWindow, IntPtr shareContextRef, bool fullscreen)
+        private void CreateContext(GraphicsMode mode, IWindowInfo carbonWindow, IntPtr shareContextRef, bool fullscreen)
         {
             Debug.Print("AGL pixel format attributes:");
 
@@ -134,7 +134,7 @@ namespace OpenTK.Platform.MacOS
                 });
         }
 
-        void SetBufferRect(IWindowInfo carbonWindow)
+        private void SetBufferRect(IWindowInfo carbonWindow)
         {
             Rect rect = API.GetControlBounds(carbonWindow.Handle);
 
@@ -160,7 +160,7 @@ namespace OpenTK.Platform.MacOS
             MyAGLReportError("aglEnable");
         }
 
-        void SetDrawable(IWindowInfo carbonWindow)
+        private void SetDrawable(IWindowInfo carbonWindow)
         {
             IntPtr windowPort = GetWindowPortForWindowInfo(carbonWindow);
             //Debug.Print("Setting drawable for context {0} to window port: {1}", Handle.Handle, windowPort);
@@ -185,7 +185,7 @@ namespace OpenTK.Platform.MacOS
             Agl.aglUpdateContext(Context.Handle);
         }
 
-        void MyAGLReportError(string function)
+        private void MyAGLReportError(string function)
         {
             Agl.AglError err = Agl.GetError();
 
@@ -195,7 +195,7 @@ namespace OpenTK.Platform.MacOS
                     function, err, Agl.ErrorString(err)));
         }
 
-        bool firstSwap = true;
+        private bool firstSwap = true;
         public void SwapBuffers()
         {
             // this is part of the hack to avoid dropping the first frame when
@@ -286,7 +286,7 @@ namespace OpenTK.Platform.MacOS
             Dispose(true);
         }
 
-        void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (IsDisposed || Context.Handle == IntPtr.Zero)
                 return;

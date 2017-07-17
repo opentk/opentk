@@ -40,11 +40,11 @@ namespace OpenTK
     /// </summary>
     public sealed class Configuration
     {
-        static bool runningOnUnix, runningOnMacOS, runningOnLinux;
-        volatile static bool initialized;
-        readonly static object InitLock = new object();
+        private static bool runningOnUnix, runningOnMacOS, runningOnLinux;
+        private volatile static bool initialized;
+        private readonly static object InitLock = new object();
 
-        Configuration() { }
+        private Configuration() { }
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on a Windows platform.</summary>
         public static bool RunningOnWindows { get; private set; }
@@ -113,7 +113,7 @@ namespace OpenTK
         }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-        struct utsname
+        private struct utsname
         {
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
             public string sysname;
@@ -161,7 +161,7 @@ namespace OpenTK
         [DllImport("libc")]
         private static extern void uname(out utsname uname_struct);
 
-        static bool DetectMono()
+        private static bool DetectMono()
         {
             // Detect the Mono runtime (code taken from http://mono.wikia.com/wiki/Detecting_if_program_is_running_in_Mono).
             Type t = Type.GetType("Mono.Runtime");
@@ -169,7 +169,7 @@ namespace OpenTK
         }
 
         #if SDL2
-        static bool DetectSdl2()
+        private static bool DetectSdl2()
         {
             bool supported = false;
 
@@ -227,7 +227,7 @@ namespace OpenTK
         }
         #endif
 
-        static void DetectUnix(out bool unix, out bool linux, out bool macos)
+        private static void DetectUnix(out bool unix, out bool linux, out bool macos)
         {
             unix = linux = macos = false;
 
@@ -253,7 +253,7 @@ namespace OpenTK
             }
         }
 
-        static bool DetectWindows()
+        private static bool DetectWindows()
         {
             return
                 System.Environment.OSVersion.Platform == PlatformID.Win32NT ||
@@ -262,7 +262,7 @@ namespace OpenTK
                 System.Environment.OSVersion.Platform == PlatformID.WinCE;
         }
 
-        static bool DetectX11()
+        private static bool DetectX11()
         {
             #if X11
             // Detect whether X is present.

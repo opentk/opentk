@@ -34,9 +34,9 @@ namespace OpenTK.Input
     /// </summary>
     public struct GamePadCapabilities : IEquatable<GamePadCapabilities>
     {
-        Buttons buttons;
-        GamePadAxes axes;
-        byte gamepad_type;
+        private Buttons buttons;
+        private GamePadAxes axes;
+        private byte gamepad_type;
 
         internal GamePadCapabilities(GamePadType type, GamePadAxes axes, Buttons buttons, bool is_connected, bool is_mapped)
             : this()

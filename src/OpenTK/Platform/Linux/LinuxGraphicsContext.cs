@@ -42,12 +42,12 @@ namespace OpenTK.Platform.Linux
     /// Note: to display our results, we need to allocate a GBM framebuffer
     /// and point the scanout address to that via Drm.ModeSetCrtc.
     /// </remarks>
-    class LinuxGraphicsContext : Egl.EglUnixContext
+    internal class LinuxGraphicsContext : Egl.EglUnixContext
     {
-        BufferObject bo, bo_next;
-        int fd;
-        bool is_flip_queued;
-        int swap_interval;
+        private BufferObject bo, bo_next;
+        private int fd;
+        private bool is_flip_queued;
+        private int swap_interval;
 
         public LinuxGraphicsContext(GraphicsMode mode, LinuxWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
@@ -111,7 +111,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void WaitFlip(bool block)
+        private void WaitFlip(bool block)
         {
             PollFD fds = new PollFD();
             fds.fd = fd;
@@ -147,7 +147,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void QueueFlip(int buffer)
+        private void QueueFlip(int buffer)
         {
             LinuxWindowInfo wnd = WindowInfo as LinuxWindowInfo;
             if (wnd == null)
@@ -167,7 +167,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void SetScanoutRegion(int buffer)
+        private void SetScanoutRegion(int buffer)
         {
             LinuxWindowInfo wnd = WindowInfo as LinuxWindowInfo;
             if (wnd == null)
@@ -193,13 +193,13 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        BufferObject LockSurface()
+        private BufferObject LockSurface()
         {
             IntPtr gbm_surface = WindowInfo.Handle;
             return Gbm.LockFrontBuffer(gbm_surface);
         }
 
-        int GetFramebuffer(BufferObject bo)
+        private int GetFramebuffer(BufferObject bo)
         {
             if (bo == BufferObject.Zero)
                 goto fail;
@@ -244,9 +244,10 @@ namespace OpenTK.Platform.Linux
             return -1;
         }
 
-        readonly IntPtr PageFlipPtr;
-        readonly PageFlipCallback PageFlip;
-        void HandlePageFlip(int fd,
+        private readonly IntPtr PageFlipPtr;
+        private readonly PageFlipCallback PageFlip;
+
+        private void HandlePageFlip(int fd,
             int sequence,
             int tv_sec,
             int tv_usec,
@@ -255,8 +256,9 @@ namespace OpenTK.Platform.Linux
             is_flip_queued = false;
         }
 
-        static readonly DestroyUserDataCallback DestroyFB = HandleDestroyFB;
-        static void HandleDestroyFB(BufferObject bo, IntPtr data)
+        private static readonly DestroyUserDataCallback DestroyFB = HandleDestroyFB;
+
+        private static void HandleDestroyFB(BufferObject bo, IntPtr data)
         {
             IntPtr gbm = bo.Device;
             int fb = data.ToInt32();

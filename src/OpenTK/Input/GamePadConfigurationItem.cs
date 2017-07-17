@@ -29,7 +29,7 @@ using System;
 
 namespace OpenTK.Input
 {
-    class GamePadConfigurationItem
+    internal class GamePadConfigurationItem
     {
         public GamePadConfigurationItem(GamePadConfigurationSource source, GamePadConfigurationTarget target)
         {

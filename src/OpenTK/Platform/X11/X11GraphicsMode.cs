@@ -14,7 +14,7 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.X11
 {
-    class X11GraphicsMode
+    internal class X11GraphicsMode
     {
         // Todo: Add custom visual selection algorithm, instead of ChooseFBConfig/ChooseVisual.
         // It seems the Choose* methods do not take multisampling into account (at least on some
@@ -58,7 +58,7 @@ namespace OpenTK.Platform.X11
             return gfx;
         }
 
-        static GraphicsMode CreateGraphicsMode(IntPtr display, ref XVisualInfo info)
+        private static GraphicsMode CreateGraphicsMode(IntPtr display, ref XVisualInfo info)
         {
             // See what we *really* got:
             int r, g, b, a;
@@ -86,7 +86,7 @@ namespace OpenTK.Platform.X11
                 new ColorFormat(ar, ag, ab, aa), buffers + 1, st != 0);
         }
 
-        IntPtr SelectFBConfig(GraphicsMode mode)
+        private IntPtr SelectFBConfig(GraphicsMode mode)
         {
             Debug.Print("Selecting FB config for {0}", mode);
 
@@ -194,7 +194,7 @@ namespace OpenTK.Platform.X11
             return result;
         }
 
-        IntPtr SelectVisual(GraphicsMode mode)
+        private IntPtr SelectVisual(GraphicsMode mode)
         {
             Debug.Print("Selecting FB config for {0}", mode);
 

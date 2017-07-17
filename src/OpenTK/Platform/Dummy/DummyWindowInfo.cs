@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OpenTK.Platform.Dummy
 {
-    class DummyWindowInfo : IWindowInfo
+    internal class DummyWindowInfo : IWindowInfo
     {
         public void Dispose()
         {

@@ -34,10 +34,10 @@ namespace OpenTK.Platform.MacOS
     /// <summary>
     /// Describes a Carbon window.
     /// </summary>
-    sealed class CarbonWindowInfo : IWindowInfo
+    internal sealed class CarbonWindowInfo : IWindowInfo
     {
-        bool ownHandle = false;
-        bool disposed = false;
+        private bool ownHandle = false;
+        private bool disposed = false;
 
         /// <summary>
         /// Constructs a new instance with the specified parameters.
@@ -93,7 +93,7 @@ namespace OpenTK.Platform.MacOS
             Dispose(true);
         }
 
-        void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (disposed)
                 return;

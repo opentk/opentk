@@ -30,11 +30,11 @@ using System.Collections.Generic;
 
 namespace OpenTK.Input
 {
-    sealed class GamePadConfiguration
+    internal sealed class GamePadConfiguration
     {
-        static readonly char[] ConfigurationSeparator = new char[] { ',' };
+        private static readonly char[] ConfigurationSeparator = new char[] { ',' };
 
-        readonly List<GamePadConfigurationItem> configuration_items =
+        private readonly List<GamePadConfigurationItem> configuration_items =
             new List<GamePadConfigurationItem>();
 
         public Guid Guid { get; private set; }
@@ -55,10 +55,10 @@ namespace OpenTK.Input
         /// Parses a GamePad configuration string.
         /// This string must follow the rules for SDL2
         /// GameController outlined here:
-        /// http://wiki.libsdl.org/SDL_GameControllerAddMapping 
+        /// http://wiki.libsdl.org/SDL_GameControllerAddMapping
         /// </summary>
         /// <param name="configuration"></param>
-        void ParseConfiguration(string configuration)
+        private void ParseConfiguration(string configuration)
         {
             if (String.IsNullOrEmpty(configuration))
             {
@@ -93,7 +93,7 @@ namespace OpenTK.Input
         /// </summary>
         /// <param name="target">The string to parse</param>
         /// <returns>The configuration target (Button index, axis index etc.)</returns>
-        static GamePadConfigurationTarget ParseTarget(string target)
+        private static GamePadConfigurationTarget ParseTarget(string target)
         {
             switch (target)
             {
@@ -157,7 +157,7 @@ namespace OpenTK.Input
         /// </summary>
         /// <param name="item">The string to parse</param>
         /// <returns>The new gamepad configuration source</returns>
-        static GamePadConfigurationSource ParseSource(string item)
+        private static GamePadConfigurationSource ParseSource(string item)
         {
             if (String.IsNullOrEmpty(item))
             {
@@ -190,7 +190,7 @@ namespace OpenTK.Input
         /// </summary>
         /// <param name="item">The string to parse</param>
         /// <returns>The index of the axis or button</returns>
-        static int ParseIndex(string item)
+       private static int ParseIndex(string item)
         {
             // item is in the format "a#" where # a zero-based integer number
             return Int32.Parse(item.Substring(1)); ;
@@ -204,7 +204,7 @@ namespace OpenTK.Input
         /// <param name="item">The string to parse</param>
         /// <param name="position">The hat position assigned via 'out'</param>
         /// <returns>The new joystick hat</returns>
-        static JoystickHat ParseHat(string item, out HatPosition position)
+        private static JoystickHat ParseHat(string item, out HatPosition position)
         {
             JoystickHat hat = JoystickHat.Hat0;
             int id = Int32.Parse(item.Substring(1, 1));

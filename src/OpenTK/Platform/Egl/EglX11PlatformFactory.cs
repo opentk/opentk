@@ -31,7 +31,7 @@ using OpenTK.Platform.X11;
 
 namespace OpenTK.Platform.Egl
 {
-    class EglX11PlatformFactory : X11Factory
+    internal class EglX11PlatformFactory : X11Factory
     {
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {

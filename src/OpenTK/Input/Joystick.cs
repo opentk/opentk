@@ -41,7 +41,7 @@ namespace OpenTK.Input
     /// <seealso cref="GamePad"/>
     public sealed class Joystick
     {
-        static readonly IJoystickDriver2 implementation =
+        private static readonly IJoystickDriver2 implementation =
             Platform.Factory.Default.CreateJoystickDriver();
 
         private Joystick() { }

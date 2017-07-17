@@ -29,10 +29,10 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2Keyboard : IKeyboardDriver2
+    internal class Sdl2Keyboard : IKeyboardDriver2
     {
         #pragma warning disable 649 // Field never assigned to, compiler bug in Mono 3.4.0
-        KeyboardState state;
+        private KeyboardState state;
         #pragma warning restore 649
 
         public Sdl2Keyboard()
@@ -48,7 +48,7 @@ namespace OpenTK.Platform.SDL2
         // For that reason, we should also poll the keyboard directly
         // as necessary.
         // Fixme: this does not appear to work as expected.
-        void UpdateModifiers()
+        private void UpdateModifiers()
         {
             Keymod mod = SDL.GetModState();
 

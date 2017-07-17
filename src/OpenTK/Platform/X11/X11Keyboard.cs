@@ -32,13 +32,13 @@ namespace OpenTK.Platform.X11
 {
     // Standard keyboard driver that relies on xlib input events.
     // Only one keyboard supported.
-    sealed class X11Keyboard : IKeyboardDriver2
+    internal sealed class X11Keyboard : IKeyboardDriver2
     {
-        readonly static string name = "Core X11 keyboard";
-        readonly byte[] keys = new byte[32];
-        readonly int KeysymsPerKeycode;
-        readonly X11KeyMap KeyMap;
-        KeyboardState state = new KeyboardState();
+        private readonly static string name = "Core X11 keyboard";
+        private readonly byte[] keys = new byte[32];
+        private readonly int KeysymsPerKeycode;
+        private readonly X11KeyMap KeyMap;
+        private KeyboardState state = new KeyboardState();
 
         public X11Keyboard()
         {
@@ -95,7 +95,7 @@ namespace OpenTK.Platform.X11
                 return String.Empty;
         }
 
-        void ProcessEvents()
+        private void ProcessEvents()
         {
             IntPtr display = API.DefaultDisplay;
             using (new XLock(display))

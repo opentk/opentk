@@ -42,14 +42,14 @@ namespace OpenTK.Input
         internal const int MaxButtons = 64;
         internal const int MaxHats = (int)JoystickHat.Last + 1;
 
-        const float ConversionFactor = 1.0f / (short.MaxValue + 0.5f);
+        private const float ConversionFactor = 1.0f / (short.MaxValue + 0.5f);
 
-        long buttons;
-        unsafe fixed short axes[MaxAxes];
-        JoystickHatState hat0;
-        JoystickHatState hat1;
-        JoystickHatState hat2;
-        JoystickHatState hat3;
+        private long buttons;
+        private unsafe fixed short axes[MaxAxes];
+        private JoystickHatState hat0;
+        private JoystickHatState hat1;
+        private JoystickHatState hat2;
+        private JoystickHatState hat3;
 
         /// <summary>
         /// Gets a value between -1.0 and 1.0 representing the current offset of the specified  <see cref="JoystickAxis"/>.
@@ -266,7 +266,7 @@ namespace OpenTK.Input
             PacketNumber = number;
         }
 
-        short GetAxisUnsafe(int index)
+        private short GetAxisUnsafe(int index)
         {
             unsafe
             {

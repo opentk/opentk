@@ -33,9 +33,9 @@ using OpenTK.Platform.MacOS.Carbon;
 
 namespace OpenTK.Platform.MacOS
 {
-    sealed class QuartzDisplayDeviceDriver : DisplayDeviceBase
+    internal sealed class QuartzDisplayDeviceDriver : DisplayDeviceBase
     {
-        static object display_lock = new object();
+        private static object display_lock = new object();
 
         public QuartzDisplayDeviceDriver()
         {
@@ -130,8 +130,8 @@ namespace OpenTK.Platform.MacOS
             return (IntPtr)displayDevice.Id;
         }
 
-        Dictionary<IntPtr, IntPtr> storedModes = new Dictionary<IntPtr, IntPtr>();
-        List<IntPtr> displaysCaptured = new List<IntPtr>();
+        private Dictionary<IntPtr, IntPtr> storedModes = new Dictionary<IntPtr, IntPtr>();
+        private List<IntPtr> displaysCaptured = new List<IntPtr>();
 
         public sealed override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
         {

@@ -32,15 +32,15 @@ namespace OpenTK.Input
     /// </summary>
     public struct GamePadState : IEquatable<GamePadState>
     {
-        const float RangeMultiplier = 1.0f / (short.MaxValue + 1);
+        private const float RangeMultiplier = 1.0f / (short.MaxValue + 1);
 
-        Buttons buttons;
-        short left_stick_x;
-        short left_stick_y;
-        short right_stick_x;
-        short right_stick_y;
-        byte left_trigger;
-        byte right_trigger;
+        private Buttons buttons;
+        private short left_stick_x;
+        private short left_stick_y;
+        private short right_stick_x;
+        private short right_stick_y;
+        private byte left_trigger;
+        private byte right_trigger;
 
         /// <summary>
         /// Gets a <see cref="GamePadThumbSticks"/> structure describing the
@@ -205,13 +205,13 @@ namespace OpenTK.Input
             PacketNumber = number;
         }
 
-        bool IsAxisValid(GamePadAxes axis)
+        private bool IsAxisValid(GamePadAxes axis)
         {
             int index = (int)axis;
             return index >= 0 && index < GamePad.MaxAxisCount;
         }
 
-        bool IsDPadValid(int index)
+        private bool IsDPadValid(int index)
         {
             return index >= 0 && index < GamePad.MaxDPadCount;
         }

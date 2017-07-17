@@ -29,10 +29,10 @@ using System;
 
 namespace OpenTK.Input
 {
-    struct GamePadConfigurationTarget
+    internal struct GamePadConfigurationTarget
     {
-        Nullable<Buttons> map_button;
-        Nullable<GamePadAxes> map_axis;
+        private Nullable<Buttons> map_button;
+        private Nullable<GamePadAxes> map_axis;
 
         public GamePadConfigurationTarget(Buttons button)
             : this()

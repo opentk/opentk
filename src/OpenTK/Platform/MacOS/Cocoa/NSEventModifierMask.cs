@@ -30,7 +30,7 @@ using System;
 namespace OpenTK.Platform.MacOS
 {
     [Flags]
-    enum NSEventModifierMask : uint
+    internal enum NSEventModifierMask : uint
     {
         AlphaShiftKeyMask = 65536U,
         ShiftKeyMask = 131072U,

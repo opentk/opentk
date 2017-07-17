@@ -37,15 +37,15 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Linux
 {
-    class LinuxInput : IKeyboardDriver2, IMouseDriver2, IDisposable
+    internal class LinuxInput : IKeyboardDriver2, IMouseDriver2, IDisposable
     {
-        class DeviceBase
+        private class DeviceBase
         {
-            readonly IntPtr Device;
-            string name;
-            string output;
-            string logical_seat;
-            string physical_seat;
+            private readonly IntPtr Device;
+            private string name;
+            private string output;
+            private string logical_seat;
+            private string physical_seat;
 
             public DeviceBase(IntPtr device, int id)
             {
@@ -110,7 +110,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        class KeyboardDevice : DeviceBase
+        private class KeyboardDevice : DeviceBase
         {
             public KeyboardState State;
 
@@ -120,7 +120,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        class MouseDevice : DeviceBase
+        private class MouseDevice : DeviceBase
         {
             public MouseState State;
 
@@ -130,9 +130,9 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        static readonly object Sync = new object();
-        static readonly Key[] KeyMap = Evdev.KeyMap;
-        static long DeviceFDCount;
+        private static readonly object Sync = new object();
+        private static readonly Key[] KeyMap = Evdev.KeyMap;
+        private static long DeviceFDCount;
 
         // libinput returns various devices with keyboard/pointer even though
         // they are not traditional keyboards/mice (for example "Integrated Camera"
@@ -142,26 +142,29 @@ namespace OpenTK.Platform.Linux
         // to an actual keyboard/mouse only when we receive a valid input event.
         // This is far from optimal, but it appears to be the only viable solution
         // unless a new API is added to libinput.
-        DeviceCollection<KeyboardDevice> KeyboardCandidates = new DeviceCollection<KeyboardDevice>();
-        DeviceCollection<MouseDevice> MouseCandidates = new DeviceCollection<MouseDevice>();
-        DeviceCollection<KeyboardDevice> Keyboards = new DeviceCollection<KeyboardDevice>();
-        DeviceCollection<MouseDevice> Mice = new DeviceCollection<MouseDevice>();
+        private DeviceCollection<KeyboardDevice> KeyboardCandidates = new DeviceCollection<KeyboardDevice>();
+
+        private DeviceCollection<MouseDevice> MouseCandidates = new DeviceCollection<MouseDevice>();
+        private DeviceCollection<KeyboardDevice> Keyboards = new DeviceCollection<KeyboardDevice>();
+        private DeviceCollection<MouseDevice> Mice = new DeviceCollection<MouseDevice>();
 
         // Todo: do we need to maintain the geometry of each display separately?
-        Rectangle bounds;
+        private Rectangle bounds;
 
         // Global mouse cursor state
-        Vector2 CursorPosition = Vector2.Zero;
+        private Vector2 CursorPosition = Vector2.Zero;
         // Global mouse cursor offset (used for emulating SetPosition)
-        Vector2 CursorOffset = Vector2.Zero;
+        private Vector2 CursorOffset = Vector2.Zero;
 
-        IntPtr udev;
-        IntPtr input_context;
-        InputInterface input_interface = new InputInterface(
+        private IntPtr udev;
+        private IntPtr input_context;
+
+        private InputInterface input_interface = new InputInterface(
             OpenRestricted, CloseRestricted);
-        int fd;
-        Thread input_thread;
-        long exit;
+
+        private int fd;
+        private Thread input_thread;
+        private long exit;
 
         public LinuxInput()
         {
@@ -195,8 +198,9 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        static CloseRestrictedCallback CloseRestricted = CloseRestrictedHandler;
-        static void CloseRestrictedHandler(int fd, IntPtr data)
+        private static CloseRestrictedCallback CloseRestricted = CloseRestrictedHandler;
+
+        private static void CloseRestrictedHandler(int fd, IntPtr data)
         {
             Debug.Print("[Input] Closing fd {0}", fd);
             int ret = Libc.close(fd);
@@ -211,8 +215,9 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        static OpenRestrictedCallback OpenRestricted = OpenRestrictedHandler;
-        static int OpenRestrictedHandler(IntPtr path, int flags, IntPtr data)
+        private static OpenRestrictedCallback OpenRestricted = OpenRestrictedHandler;
+
+        private static int OpenRestrictedHandler(IntPtr path, int flags, IntPtr data)
         {
             int fd = Libc.open(path, (OpenFlags)flags);
             Debug.Print("[Input] Opening '{0}' with flags {1}. fd:{2}",
@@ -226,7 +231,7 @@ namespace OpenTK.Platform.Linux
             return fd;
         }
 
-        void InputThreadLoop(object semaphore)
+        private void InputThreadLoop(object semaphore)
         {
             Debug.Print("[Input] Running on thread {0}", Thread.CurrentThread.ManagedThreadId);
             Setup();
@@ -271,7 +276,7 @@ namespace OpenTK.Platform.Linux
             Debug.Print("[Input] Exited input loop.", poll_fd.fd, poll_fd.events);
         }
 
-        void UpdateDisplayBounds()
+        private void UpdateDisplayBounds()
         {
             bounds = Rectangle.Empty;
             for (DisplayIndex i = DisplayIndex.First; i < DisplayIndex.Sixth; i++)
@@ -284,7 +289,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void UpdateCursor()
+        private void UpdateCursor()
         {
             Point p = new Point(
                 (int)Math.Round(CursorPosition.X + CursorOffset.X),
@@ -298,7 +303,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void Setup()
+        private void Setup()
         {
             // Todo: add static path fallback when udev is not installed.
             udev = Udev.New();
@@ -350,7 +355,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void ProcessEvents(IntPtr input_context)
+        private void ProcessEvents(IntPtr input_context)
         {
             // Process all events in the event queue
             while (true)
@@ -411,7 +416,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void HandleDeviceAdded(IntPtr context, IntPtr device)
+        private void HandleDeviceAdded(IntPtr context, IntPtr device)
         {
             if (LibInput.DeviceHasCapability(device, DeviceCapability.Keyboard))
             {
@@ -435,7 +440,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void HandleDeviceRemoved(IntPtr context, IntPtr device)
+        private void HandleDeviceRemoved(IntPtr context, IntPtr device)
         {
             if (LibInput.DeviceHasCapability(device, DeviceCapability.Keyboard))
             {
@@ -452,7 +457,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void HandleKeyboard(KeyboardDevice device, KeyboardEvent e)
+        private void HandleKeyboard(KeyboardDevice device, KeyboardEvent e)
         {
             if (device != null)
             {
@@ -475,7 +480,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void HandlePointerAxis(MouseDevice mouse, PointerEvent e)
+        private void HandlePointerAxis(MouseDevice mouse, PointerEvent e)
         {
             if (mouse != null)
             {
@@ -492,7 +497,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void HandlePointerButton(MouseDevice mouse, PointerEvent e)
+        private void HandlePointerButton(MouseDevice mouse, PointerEvent e)
         {
             if (mouse != null)
             {
@@ -504,7 +509,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void HandlePointerMotion(MouseDevice mouse, PointerEvent e)
+        private void HandlePointerMotion(MouseDevice mouse, PointerEvent e)
         {
             Vector2 delta = new Vector2((float)e.DeltaX, (float)e.DeltaY);
             if (mouse != null)
@@ -519,7 +524,7 @@ namespace OpenTK.Platform.Linux
             UpdateCursor();
         }
 
-        void HandlePointerMotionAbsolute(MouseDevice mouse, PointerEvent e)
+        private void HandlePointerMotionAbsolute(MouseDevice mouse, PointerEvent e)
         {
             if (mouse != null)
             {
@@ -533,12 +538,12 @@ namespace OpenTK.Platform.Linux
             UpdateCursor();
         }
 
-        static int GetId(IntPtr device)
+        private static int GetId(IntPtr device)
         {
             return LibInput.DeviceGetData(device).ToInt32();
         }
 
-        KeyboardDevice GetKeyboard(IntPtr device)
+        private KeyboardDevice GetKeyboard(IntPtr device)
         {
             int id = GetId(device);
             KeyboardDevice keyboard = KeyboardCandidates.FromHardwareId(id);
@@ -553,7 +558,7 @@ namespace OpenTK.Platform.Linux
             return keyboard;
         }
 
-        MouseDevice GetMouse(IntPtr device)
+        private MouseDevice GetMouse(IntPtr device)
         {
             int id = GetId(device);
             MouseDevice mouse = MouseCandidates.FromHardwareId(id);
@@ -665,7 +670,7 @@ namespace OpenTK.Platform.Linux
             GC.SuppressFinalize(this);
         }
 
-        void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (disposing)
             {

@@ -27,7 +27,7 @@ namespace OpenTK.Platform
     /// </summary>
     public static class Utilities
     {
-        static bool throw_on_error;
+        private static bool throw_on_error;
         internal static bool ThrowOnX11Error
         {
             get { return throw_on_error; }
@@ -52,7 +52,7 @@ namespace OpenTK.Platform
             }
         }
 
-        delegate Delegate LoadDelegateFunction(string name, Type signature);
+        private delegate Delegate LoadDelegateFunction(string name, Type signature);
 
         /// <internal />
         /// <summary>Loads all extensions for the specified class. This function is intended

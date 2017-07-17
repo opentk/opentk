@@ -31,10 +31,10 @@ using OpenTK.Audio.OpenAL;
 
 namespace OpenTK.Audio
 {
-    struct AudioDeviceErrorChecker : IDisposable
+    internal struct AudioDeviceErrorChecker : IDisposable
     {
-        readonly IntPtr Device;
-        static readonly string ErrorString = "Device {0} reported {1}.";
+        private readonly IntPtr Device;
+        private static readonly string ErrorString = "Device {0} reported {1}.";
 
         public AudioDeviceErrorChecker(IntPtr device)
         {

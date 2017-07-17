@@ -40,12 +40,12 @@ namespace OpenTK.Input
     /// </summary>
     public sealed class MouseDevice : IInputDevice
     {
-        IntPtr id;
+        private IntPtr id;
 
-        MouseState state;
+        private MouseState state;
 #if COMPAT_REV1519
-        int wheel_last_accessed = 0;
-        Point pos_last_accessed = new Point();
+        private int wheel_last_accessed = 0;
+        private Point pos_last_accessed = new Point();
 #endif
 
         /// <summary>

@@ -13,27 +13,31 @@ using Bind.Structures;
 
 namespace Bind
 {
-    class DocProcessor
+    internal class DocProcessor
     {
-        static readonly char[] numbers = "0123456789".ToCharArray();
-        static readonly Regex remove_mathml = new Regex(
+        private static readonly char[] numbers = "0123456789".ToCharArray();
+
+        private static readonly Regex remove_mathml = new Regex(
             @"<(mml:math|inlineequation)[^>]*?>(?:.|\n)*?</\s*\1\s*>",
             RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
-        static readonly Regex remove_doctype = new Regex(
+
+        private static readonly Regex remove_doctype = new Regex(
             @"<!DOCTYPE[^>\[]*(\[.*\])?>", RegexOptions.Compiled | RegexOptions.Multiline);
-        static readonly Regex remove_xmlns = new Regex(
+
+        private static readonly Regex remove_xmlns = new Regex(
             "xmlns=\".+\"", RegexOptions.Compiled);
 
-        readonly Dictionary<string, string> DocumentationFiles =
+        private readonly Dictionary<string, string> DocumentationFiles =
             new Dictionary<string, string>();
-        readonly Dictionary<string, Documentation> DocumentationCache =
+
+        private readonly Dictionary<string, Documentation> DocumentationCache =
             new Dictionary<string, Documentation>();
 
-        Documentation Cached;
-        string LastFile;
+        private Documentation Cached;
+        private string LastFile;
 
-        IBind Generator { get; set; }
-        Settings Settings { get { return Generator.Settings; } }
+        private IBind Generator { get; set; }
+        private Settings Settings { get { return Generator.Settings; } }
 
         public DocProcessor(IBind generator)
         {
@@ -87,7 +91,7 @@ namespace Bind
         // found in the <!-- eqn: :--> comments in the docs.
         // Todo: Some simple MathML tags do not include comments, find a solution.
         // Todo: Some files include more than 1 function - find a way to map these extra functions.
-        Documentation ProcessFile(string file, EnumProcessor processor)
+        private Documentation ProcessFile(string file, EnumProcessor processor)
         {
             string text;
 
@@ -148,7 +152,7 @@ namespace Bind
             }
         }
 
-        Documentation ToInlineDocs(XDocument doc, EnumProcessor enum_processor)
+        private Documentation ToInlineDocs(XDocument doc, EnumProcessor enum_processor)
         {
             if (doc == null || enum_processor == null)
                 throw new ArgumentNullException();
@@ -190,8 +194,9 @@ namespace Bind
             return inline;
         }
 
-        static readonly char[] newline = new char[] { '\n' };
-        static string Cleanup(string text)
+        private static readonly char[] newline = new char[] { '\n' };
+
+        private static string Cleanup(string text)
         {
             return
                 String.Join(" ", text

@@ -32,7 +32,7 @@ using System.Xml.Linq;
 
 namespace OpenTK.Convert
 {
-    static class Extension
+    internal static class Extension
     {
         public static string ValueOrDefault(this XAttribute a)
         {
@@ -40,9 +40,9 @@ namespace OpenTK.Convert
         }
     }
 
-    class GLXmlParser : XmlParser
+    internal class GLXmlParser : XmlParser
     {
-        static readonly Regex ExtensionRegex = new Regex(
+        private static readonly Regex ExtensionRegex = new Regex(
             @"3DFX|(?!(?<=[1-4])D)[A-Z]{2,}$",
             RegexOptions.Compiled);
 
@@ -69,7 +69,7 @@ namespace OpenTK.Convert
             return elements.Values;
         }
 
-        static string[] GetApiNames(XElement feature)
+        private static string[] GetApiNames(XElement feature)
         {
             string[] apinames = null;
             switch (feature.Name.LocalName)
@@ -107,7 +107,7 @@ namespace OpenTK.Convert
             return apinames;
         }
 
-        IEnumerable<XElement> ParseEnums(XDocument input)
+        private IEnumerable<XElement> ParseEnums(XDocument input)
         {
             var features = input.Root.Elements("feature");
             var extensions = input.Root.Elements("extensions").Elements("extension");
@@ -224,7 +224,7 @@ namespace OpenTK.Convert
             return APIs.Values;
         }
 
-        IEnumerable<XElement> ParseFunctions(XDocument input)
+        private IEnumerable<XElement> ParseFunctions(XDocument input)
         {
             //  Go through the list of commands and build OpenTK functions out of those.
             // Every function has a number of attributes that define which API version and
@@ -404,12 +404,12 @@ namespace OpenTK.Convert
             return function;
         }
 
-        string FunctionName(XElement e)
+        private string FunctionName(XElement e)
         {
             return TrimName(e.Element("proto").Element("name").Value);
         }
 
-        string FunctionParameterType(XElement e)
+        private string FunctionParameterType(XElement e)
         {
             // Parse the C-like <proto> element. Possible instances:
             // Return types:
@@ -444,7 +444,7 @@ namespace OpenTK.Convert
             return ret;
         }
 
-        static string Join(string left, string right)
+        private static string Join(string left, string right)
         {
             if (!String.IsNullOrEmpty(left) && !String.IsNullOrEmpty(right))
                 return left + "|" + right;
@@ -456,7 +456,7 @@ namespace OpenTK.Convert
                 return String.Empty;
         }
 
-        static XAttribute Lookup(IDictionary<string, XElement> categories, string cmd_name, string attribute)
+        private static XAttribute Lookup(IDictionary<string, XElement> categories, string cmd_name, string attribute)
         {
             if (categories.ContainsKey(cmd_name))
             {

@@ -15,7 +15,7 @@ namespace OpenTK.X11
     {
 
 #if GTK3
-        const string UnixLibGdkName = "libgdk-3.so.0";
+        private const string UnixLibGdkName = "libgdk-3.so.0";
 #else
         const string UnixLibGdkName = "libgdk-x11-2.0.so.0";
 #endif

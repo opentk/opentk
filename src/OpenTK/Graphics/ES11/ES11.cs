@@ -14661,1152 +14661,1152 @@ namespace OpenTK.Graphics.ES11
 
         [Slot(31)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern System.Int32 glClientWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
+        private static extern System.Int32 glClientWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
         [Slot(53)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCopyTextureLevelsAPPLE(UInt32 destinationTexture, UInt32 sourceTexture, Int32 sourceBaseLevel, Int32 sourceLevelCount);
+        private static extern void glCopyTextureLevelsAPPLE(UInt32 destinationTexture, UInt32 sourceTexture, Int32 sourceBaseLevel, Int32 sourceLevelCount);
         [Slot(60)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDeleteSyncAPPLE(IntPtr sync);
+        private static extern void glDeleteSyncAPPLE(IntPtr sync);
         [Slot(106)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern IntPtr glFenceSyncAPPLE(System.Int32 condition, UInt32 flags);
+        private static extern IntPtr glFenceSyncAPPLE(System.Int32 condition, UInt32 flags);
         [Slot(151)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetInteger64vAPPLE(System.Int32 pname, [OutAttribute] Int64* @params);
+        private static extern unsafe void glGetInteger64vAPPLE(System.Int32 pname, [OutAttribute] Int64* @params);
         [Slot(168)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetSyncivAPPLE(IntPtr sync, System.Int32 pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
+        private static extern unsafe void glGetSyncivAPPLE(IntPtr sync, System.Int32 pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] Int32* values);
         [Slot(189)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsSyncAPPLE(IntPtr sync);
+        private static extern byte glIsSyncAPPLE(IntPtr sync);
         [Slot(294)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRenderbufferStorageMultisampleAPPLE(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
+        private static extern void glRenderbufferStorageMultisampleAPPLE(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(298)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glResolveMultisampleFramebufferAPPLE();
+        private static extern void glResolveMultisampleFramebufferAPPLE();
         [Slot(382)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
+        private static extern void glWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
         [Slot(1)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glActiveTexture(System.Int32 texture);
+        private static extern void glActiveTexture(System.Int32 texture);
         [Slot(2)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glAlphaFunc(System.Int32 func, Single @ref);
+        private static extern void glAlphaFunc(System.Int32 func, Single @ref);
         [Slot(3)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glAlphaFuncx(System.Int32 func, Int32 @ref);
+        private static extern void glAlphaFuncx(System.Int32 func, Int32 @ref);
         [Slot(5)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindBuffer(System.Int32 target, UInt32 buffer);
+        private static extern void glBindBuffer(System.Int32 target, UInt32 buffer);
         [Slot(8)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindTexture(System.Int32 target, UInt32 texture);
+        private static extern void glBindTexture(System.Int32 target, UInt32 texture);
         [Slot(15)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBlendFunc(System.Int32 sfactor, System.Int32 dfactor);
+        private static extern void glBlendFunc(System.Int32 sfactor, System.Int32 dfactor);
         [Slot(17)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBufferData(System.Int32 target, IntPtr size, IntPtr data, System.Int32 usage);
+        private static extern void glBufferData(System.Int32 target, IntPtr size, IntPtr data, System.Int32 usage);
         [Slot(18)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBufferSubData(System.Int32 target, IntPtr offset, IntPtr size, IntPtr data);
+        private static extern void glBufferSubData(System.Int32 target, IntPtr offset, IntPtr size, IntPtr data);
         [Slot(20)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClear(System.Int32 mask);
+        private static extern void glClear(System.Int32 mask);
         [Slot(22)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearColor(Single red, Single green, Single blue, Single alpha);
+        private static extern void glClearColor(Single red, Single green, Single blue, Single alpha);
         [Slot(23)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearColorx(Int32 red, Int32 green, Int32 blue, Int32 alpha);
+        private static extern void glClearColorx(Int32 red, Int32 green, Int32 blue, Int32 alpha);
         [Slot(25)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearDepthf(Single d);
+        private static extern void glClearDepthf(Single d);
         [Slot(27)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearDepthx(Int32 depth);
+        private static extern void glClearDepthx(Int32 depth);
         [Slot(29)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearStencil(Int32 s);
+        private static extern void glClearStencil(Int32 s);
         [Slot(30)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClientActiveTexture(System.Int32 texture);
+        private static extern void glClientActiveTexture(System.Int32 texture);
         [Slot(32)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glClipPlanef(System.Int32 p, Single* eqn);
+        private static extern unsafe void glClipPlanef(System.Int32 p, Single* eqn);
         [Slot(35)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glClipPlanex(System.Int32 plane, Int32* equation);
+        private static extern unsafe void glClipPlanex(System.Int32 plane, Int32* equation);
         [Slot(40)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColor4f(Single red, Single green, Single blue, Single alpha);
+        private static extern void glColor4f(Single red, Single green, Single blue, Single alpha);
         [Slot(41)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColor4ub(Byte red, Byte green, Byte blue, Byte alpha);
+        private static extern void glColor4ub(Byte red, Byte green, Byte blue, Byte alpha);
         [Slot(42)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColor4x(Int32 red, Int32 green, Int32 blue, Int32 alpha);
+        private static extern void glColor4x(Int32 red, Int32 green, Int32 blue, Int32 alpha);
         [Slot(45)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColorMask(bool red, bool green, bool blue, bool alpha);
+        private static extern void glColorMask(bool red, bool green, bool blue, bool alpha);
         [Slot(46)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColorPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
+        private static extern void glColorPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(47)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCompressedTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
+        private static extern void glCompressedTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data);
         [Slot(48)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCompressedTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, Int32 imageSize, IntPtr data);
+        private static extern void glCompressedTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, Int32 imageSize, IntPtr data);
         [Slot(51)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCopyTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
+        private static extern void glCopyTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
         [Slot(52)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCopyTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
+        private static extern void glCopyTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(54)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCullFace(System.Int32 mode);
+        private static extern void glCullFace(System.Int32 mode);
         [Slot(56)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteBuffers(Int32 n, UInt32* buffers);
+        private static extern unsafe void glDeleteBuffers(Int32 n, UInt32* buffers);
         [Slot(61)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteTextures(Int32 n, UInt32* textures);
+        private static extern unsafe void glDeleteTextures(Int32 n, UInt32* textures);
         [Slot(63)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDepthFunc(System.Int32 func);
+        private static extern void glDepthFunc(System.Int32 func);
         [Slot(64)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDepthMask(bool flag);
+        private static extern void glDepthMask(bool flag);
         [Slot(65)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDepthRangef(Single n, Single f);
+        private static extern void glDepthRangef(Single n, Single f);
         [Slot(67)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDepthRangex(Int32 n, Int32 f);
+        private static extern void glDepthRangex(Int32 n, Int32 f);
         [Slot(69)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDisable(System.Int32 cap);
+        private static extern void glDisable(System.Int32 cap);
         [Slot(70)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDisableClientState(System.Int32 array);
+        private static extern void glDisableClientState(System.Int32 array);
         [Slot(73)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawArrays(System.Int32 mode, Int32 first, Int32 count);
+        private static extern void glDrawArrays(System.Int32 mode, Int32 first, Int32 count);
         [Slot(74)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawElements(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices);
+        private static extern void glDrawElements(System.Int32 mode, Int32 count, System.Int32 type, IntPtr indices);
         [Slot(85)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEnable(System.Int32 cap);
+        private static extern void glEnable(System.Int32 cap);
         [Slot(86)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEnableClientState(System.Int32 array);
+        private static extern void glEnableClientState(System.Int32 array);
         [Slot(107)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFinish();
+        private static extern void glFinish();
         [Slot(109)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFlush();
+        private static extern void glFlush();
         [Slot(111)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFogf(System.Int32 pname, Single param);
+        private static extern void glFogf(System.Int32 pname, Single param);
         [Slot(112)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glFogfv(System.Int32 pname, Single* @params);
+        private static extern unsafe void glFogfv(System.Int32 pname, Single* @params);
         [Slot(113)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFogx(System.Int32 pname, Int32 param);
+        private static extern void glFogx(System.Int32 pname, Int32 param);
         [Slot(115)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glFogxv(System.Int32 pname, Int32* param);
+        private static extern unsafe void glFogxv(System.Int32 pname, Int32* param);
         [Slot(121)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFrontFace(System.Int32 mode);
+        private static extern void glFrontFace(System.Int32 mode);
         [Slot(122)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFrustumf(Single l, Single r, Single b, Single t, Single n, Single f);
+        private static extern void glFrustumf(Single l, Single r, Single b, Single t, Single n, Single f);
         [Slot(124)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFrustumx(Int32 l, Int32 r, Int32 b, Int32 t, Int32 n, Int32 f);
+        private static extern void glFrustumx(Int32 l, Int32 r, Int32 b, Int32 t, Int32 n, Int32 f);
         [Slot(126)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenBuffers(Int32 n, [OutAttribute] UInt32* buffers);
+        private static extern unsafe void glGenBuffers(Int32 n, [OutAttribute] UInt32* buffers);
         [Slot(131)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenTextures(Int32 n, [OutAttribute] UInt32* textures);
+        private static extern unsafe void glGenTextures(Int32 n, [OutAttribute] UInt32* textures);
         [Slot(133)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetBooleanv(System.Int32 pname, [OutAttribute] bool* data);
+        private static extern unsafe void glGetBooleanv(System.Int32 pname, [OutAttribute] bool* data);
         [Slot(134)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetBufferParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetBufferParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(136)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetClipPlanef(System.Int32 plane, [OutAttribute] Single* equation);
+        private static extern unsafe void glGetClipPlanef(System.Int32 plane, [OutAttribute] Single* equation);
         [Slot(138)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetClipPlanex(System.Int32 plane, [OutAttribute] Int32* equation);
+        private static extern unsafe void glGetClipPlanex(System.Int32 plane, [OutAttribute] Int32* equation);
         [Slot(143)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern System.Int32 glGetError();
+        private static extern System.Int32 glGetError();
         [Slot(145)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetFixedv(System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetFixedv(System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(147)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetFloatv(System.Int32 pname, [OutAttribute] Single* data);
+        private static extern unsafe void glGetFloatv(System.Int32 pname, [OutAttribute] Single* data);
         [Slot(152)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetIntegerv(System.Int32 pname, [OutAttribute] Int32* data);
+        private static extern unsafe void glGetIntegerv(System.Int32 pname, [OutAttribute] Int32* data);
         [Slot(153)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetLightfv(System.Int32 light, System.Int32 pname, [OutAttribute] Single* @params);
+        private static extern unsafe void glGetLightfv(System.Int32 light, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(155)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetLightxv(System.Int32 light, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetLightxv(System.Int32 light, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(158)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetMaterialfv(System.Int32 face, System.Int32 pname, [OutAttribute] Single* @params);
+        private static extern unsafe void glGetMaterialfv(System.Int32 face, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(160)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetMaterialxv(System.Int32 face, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetMaterialxv(System.Int32 face, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(164)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetPixelMapxv(System.Int32 map, Int32 size, [OutAttribute] Int32* values);
+        private static extern unsafe void glGetPixelMapxv(System.Int32 map, Int32 size, [OutAttribute] Int32* values);
         [Slot(165)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glGetPointerv(System.Int32 pname, [OutAttribute] IntPtr @params);
+        private static extern void glGetPointerv(System.Int32 pname, [OutAttribute] IntPtr @params);
         [Slot(167)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern IntPtr glGetString(System.Int32 name);
+        private static extern IntPtr glGetString(System.Int32 name);
         [Slot(169)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexEnvfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
+        private static extern unsafe void glGetTexEnvfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(170)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexEnviv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetTexEnviv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(171)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexEnvxv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetTexEnvxv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(177)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
+        private static extern unsafe void glGetTexParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(178)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetTexParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(179)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexParameterxv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetTexParameterxv(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(181)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glHint(System.Int32 target, System.Int32 mode);
+        private static extern void glHint(System.Int32 target, System.Int32 mode);
         [Slot(184)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsBuffer(UInt32 buffer);
+        private static extern byte glIsBuffer(UInt32 buffer);
         [Slot(185)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsEnabled(System.Int32 cap);
+        private static extern byte glIsEnabled(System.Int32 cap);
         [Slot(190)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsTexture(UInt32 texture);
+        private static extern byte glIsTexture(UInt32 texture);
         [Slot(192)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLightf(System.Int32 light, System.Int32 pname, Single param);
+        private static extern void glLightf(System.Int32 light, System.Int32 pname, Single param);
         [Slot(193)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLightfv(System.Int32 light, System.Int32 pname, Single* @params);
+        private static extern unsafe void glLightfv(System.Int32 light, System.Int32 pname, Single* @params);
         [Slot(194)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLightModelf(System.Int32 pname, Single param);
+        private static extern void glLightModelf(System.Int32 pname, Single param);
         [Slot(195)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLightModelfv(System.Int32 pname, Single* @params);
+        private static extern unsafe void glLightModelfv(System.Int32 pname, Single* @params);
         [Slot(196)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLightModelx(System.Int32 pname, Int32 param);
+        private static extern void glLightModelx(System.Int32 pname, Int32 param);
         [Slot(198)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLightModelxv(System.Int32 pname, Int32* param);
+        private static extern unsafe void glLightModelxv(System.Int32 pname, Int32* param);
         [Slot(200)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLightx(System.Int32 light, System.Int32 pname, Int32 param);
+        private static extern void glLightx(System.Int32 light, System.Int32 pname, Int32 param);
         [Slot(202)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLightxv(System.Int32 light, System.Int32 pname, Int32* @params);
+        private static extern unsafe void glLightxv(System.Int32 light, System.Int32 pname, Int32* @params);
         [Slot(204)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLineWidth(Single width);
+        private static extern void glLineWidth(Single width);
         [Slot(205)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLineWidthx(Int32 width);
+        private static extern void glLineWidthx(Int32 width);
         [Slot(207)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLoadIdentity();
+        private static extern void glLoadIdentity();
         [Slot(208)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLoadMatrixf(Single* m);
+        private static extern unsafe void glLoadMatrixf(Single* m);
         [Slot(209)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLoadMatrixx(Int32* m);
+        private static extern unsafe void glLoadMatrixx(Int32* m);
         [Slot(213)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLogicOp(System.Int32 opcode);
+        private static extern void glLogicOp(System.Int32 opcode);
         [Slot(220)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMaterialf(System.Int32 face, System.Int32 pname, Single param);
+        private static extern void glMaterialf(System.Int32 face, System.Int32 pname, Single param);
         [Slot(221)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMaterialfv(System.Int32 face, System.Int32 pname, Single* @params);
+        private static extern unsafe void glMaterialfv(System.Int32 face, System.Int32 pname, Single* @params);
         [Slot(222)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMaterialx(System.Int32 face, System.Int32 pname, Int32 param);
+        private static extern void glMaterialx(System.Int32 face, System.Int32 pname, Int32 param);
         [Slot(224)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMaterialxv(System.Int32 face, System.Int32 pname, Int32* param);
+        private static extern unsafe void glMaterialxv(System.Int32 face, System.Int32 pname, Int32* param);
         [Slot(227)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMatrixMode(System.Int32 mode);
+        private static extern void glMatrixMode(System.Int32 mode);
         [Slot(244)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord4f(System.Int32 target, Single s, Single t, Single r, Single q);
+        private static extern void glMultiTexCoord4f(System.Int32 target, Single s, Single t, Single r, Single q);
         [Slot(245)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord4x(System.Int32 texture, Int32 s, Int32 t, Int32 r, Int32 q);
+        private static extern void glMultiTexCoord4x(System.Int32 texture, Int32 s, Int32 t, Int32 r, Int32 q);
         [Slot(248)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultMatrixf(Single* m);
+        private static extern unsafe void glMultMatrixf(Single* m);
         [Slot(249)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultMatrixx(Int32* m);
+        private static extern unsafe void glMultMatrixx(Int32* m);
         [Slot(252)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glNormal3f(Single nx, Single ny, Single nz);
+        private static extern void glNormal3f(Single nx, Single ny, Single nz);
         [Slot(253)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glNormal3x(Int32 nx, Int32 ny, Int32 nz);
+        private static extern void glNormal3x(Int32 nx, Int32 ny, Int32 nz);
         [Slot(256)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glNormalPointer(System.Int32 type, Int32 stride, IntPtr pointer);
+        private static extern void glNormalPointer(System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(257)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glOrthof(Single l, Single r, Single b, Single t, Single n, Single f);
+        private static extern void glOrthof(Single l, Single r, Single b, Single t, Single n, Single f);
         [Slot(259)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glOrthox(Int32 l, Int32 r, Int32 b, Int32 t, Int32 n, Int32 f);
+        private static extern void glOrthox(Int32 l, Int32 r, Int32 b, Int32 t, Int32 n, Int32 f);
         [Slot(262)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glPixelMapx(System.Int32 map, Int32 size, Int32* values);
+        private static extern unsafe void glPixelMapx(System.Int32 map, Int32 size, Int32* values);
         [Slot(263)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPixelStorei(System.Int32 pname, Int32 param);
+        private static extern void glPixelStorei(System.Int32 pname, Int32 param);
         [Slot(264)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPixelStorex(System.Int32 pname, Int32 param);
+        private static extern void glPixelStorex(System.Int32 pname, Int32 param);
         [Slot(267)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPointParameterf(System.Int32 pname, Single param);
+        private static extern void glPointParameterf(System.Int32 pname, Single param);
         [Slot(268)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glPointParameterfv(System.Int32 pname, Single* @params);
+        private static extern unsafe void glPointParameterfv(System.Int32 pname, Single* @params);
         [Slot(269)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPointParameterx(System.Int32 pname, Int32 param);
+        private static extern void glPointParameterx(System.Int32 pname, Int32 param);
         [Slot(271)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glPointParameterxv(System.Int32 pname, Int32* @params);
+        private static extern unsafe void glPointParameterxv(System.Int32 pname, Int32* @params);
         [Slot(273)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPointSize(Single size);
+        private static extern void glPointSize(Single size);
         [Slot(275)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPointSizex(Int32 size);
+        private static extern void glPointSizex(Int32 size);
         [Slot(277)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPolygonOffset(Single factor, Single units);
+        private static extern void glPolygonOffset(Single factor, Single units);
         [Slot(278)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPolygonOffsetx(Int32 factor, Int32 units);
+        private static extern void glPolygonOffsetx(Int32 factor, Int32 units);
         [Slot(280)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPopMatrix();
+        private static extern void glPopMatrix();
         [Slot(282)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPushMatrix();
+        private static extern void glPushMatrix();
         [Slot(291)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr pixels);
+        private static extern void glReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr pixels);
         [Slot(299)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRotatef(Single angle, Single x, Single y, Single z);
+        private static extern void glRotatef(Single angle, Single x, Single y, Single z);
         [Slot(300)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRotatex(Int32 angle, Int32 x, Int32 y, Int32 z);
+        private static extern void glRotatex(Int32 angle, Int32 x, Int32 y, Int32 z);
         [Slot(302)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glSampleCoverage(Single value, bool invert);
+        private static extern void glSampleCoverage(Single value, bool invert);
         [Slot(304)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glSampleCoveragex(Int32 value, bool invert);
+        private static extern void glSampleCoveragex(Int32 value, bool invert);
         [Slot(306)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glScalef(Single x, Single y, Single z);
+        private static extern void glScalef(Single x, Single y, Single z);
         [Slot(307)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glScalex(Int32 x, Int32 y, Int32 z);
+        private static extern void glScalex(Int32 x, Int32 y, Int32 z);
         [Slot(309)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glScissor(Int32 x, Int32 y, Int32 width, Int32 height);
+        private static extern void glScissor(Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(311)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glShadeModel(System.Int32 mode);
+        private static extern void glShadeModel(System.Int32 mode);
         [Slot(313)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glStencilFunc(System.Int32 func, Int32 @ref, UInt32 mask);
+        private static extern void glStencilFunc(System.Int32 func, Int32 @ref, UInt32 mask);
         [Slot(314)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glStencilMask(UInt32 mask);
+        private static extern void glStencilMask(UInt32 mask);
         [Slot(315)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glStencilOp(System.Int32 fail, System.Int32 zfail, System.Int32 zpass);
+        private static extern void glStencilOp(System.Int32 fail, System.Int32 zfail, System.Int32 zpass);
         [Slot(333)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoordPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
+        private static extern void glTexCoordPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(334)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexEnvf(System.Int32 target, System.Int32 pname, Single param);
+        private static extern void glTexEnvf(System.Int32 target, System.Int32 pname, Single param);
         [Slot(335)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexEnvfv(System.Int32 target, System.Int32 pname, Single* @params);
+        private static extern unsafe void glTexEnvfv(System.Int32 target, System.Int32 pname, Single* @params);
         [Slot(336)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexEnvi(System.Int32 target, System.Int32 pname, Int32 param);
+        private static extern void glTexEnvi(System.Int32 target, System.Int32 pname, Int32 param);
         [Slot(337)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexEnviv(System.Int32 target, System.Int32 pname, Int32* @params);
+        private static extern unsafe void glTexEnviv(System.Int32 target, System.Int32 pname, Int32* @params);
         [Slot(338)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexEnvx(System.Int32 target, System.Int32 pname, Int32 param);
+        private static extern void glTexEnvx(System.Int32 target, System.Int32 pname, Int32 param);
         [Slot(340)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexEnvxv(System.Int32 target, System.Int32 pname, Int32* @params);
+        private static extern unsafe void glTexEnvxv(System.Int32 target, System.Int32 pname, Int32* @params);
         [Slot(348)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexImage2D(System.Int32 target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
+        private static extern void glTexImage2D(System.Int32 target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, System.Int32 format, System.Int32 type, IntPtr pixels);
         [Slot(349)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexParameterf(System.Int32 target, System.Int32 pname, Single param);
+        private static extern void glTexParameterf(System.Int32 target, System.Int32 pname, Single param);
         [Slot(350)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexParameterfv(System.Int32 target, System.Int32 pname, Single* @params);
+        private static extern unsafe void glTexParameterfv(System.Int32 target, System.Int32 pname, Single* @params);
         [Slot(351)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexParameteri(System.Int32 target, System.Int32 pname, Int32 param);
+        private static extern void glTexParameteri(System.Int32 target, System.Int32 pname, Int32 param);
         [Slot(352)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexParameteriv(System.Int32 target, System.Int32 pname, Int32* @params);
+        private static extern unsafe void glTexParameteriv(System.Int32 target, System.Int32 pname, Int32* @params);
         [Slot(353)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexParameterx(System.Int32 target, System.Int32 pname, Int32 param);
+        private static extern void glTexParameterx(System.Int32 target, System.Int32 pname, Int32 param);
         [Slot(355)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexParameterxv(System.Int32 target, System.Int32 pname, Int32* @params);
+        private static extern unsafe void glTexParameterxv(System.Int32 target, System.Int32 pname, Int32* @params);
         [Slot(360)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, System.Int32 type, IntPtr pixels);
+        private static extern void glTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, System.Int32 type, IntPtr pixels);
         [Slot(364)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTranslatef(Single x, Single y, Single z);
+        private static extern void glTranslatef(Single x, Single y, Single z);
         [Slot(365)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTranslatex(Int32 x, Int32 y, Int32 z);
+        private static extern void glTranslatex(Int32 x, Int32 y, Int32 z);
         [Slot(380)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertexPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
+        private static extern void glVertexPointer(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(381)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glViewport(Int32 x, Int32 y, Int32 width, Int32 height);
+        private static extern void glViewport(Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(12)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBlendEquationEXT(System.Int32 mode);
+        private static extern void glBlendEquationEXT(System.Int32 mode);
         [Slot(72)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDiscardFramebufferEXT(System.Int32 target, Int32 numAttachments, System.Int32* attachments);
+        private static extern unsafe void glDiscardFramebufferEXT(System.Int32 target, Int32 numAttachments, System.Int32* attachments);
         [Slot(110)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFlushMappedBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length);
+        private static extern void glFlushMappedBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length);
         [Slot(118)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFramebufferTexture2DMultisampleEXT(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
+        private static extern void glFramebufferTexture2DMultisampleEXT(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
         [Slot(149)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern System.Int32 glGetGraphicsResetStatusEXT();
+        private static extern System.Int32 glGetGraphicsResetStatusEXT();
         [Slot(162)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetnUniformfvEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params);
+        private static extern unsafe void glGetnUniformfvEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Single* @params);
         [Slot(163)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetnUniformivEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetnUniformivEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute] Int32* @params);
         [Slot(217)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern IntPtr glMapBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length, UInt32 access);
+        private static extern IntPtr glMapBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length, UInt32 access);
         [Slot(228)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiDrawArraysEXT(System.Int32 mode, Int32* first, Int32* count, Int32 primcount);
+        private static extern unsafe void glMultiDrawArraysEXT(System.Int32 mode, Int32* first, Int32* count, Int32 primcount);
         [Slot(229)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiDrawElementsEXT(System.Int32 mode, Int32* count, System.Int32 type, IntPtr indices, Int32 primcount);
+        private static extern unsafe void glMultiDrawElementsEXT(System.Int32 mode, Int32* count, System.Int32 type, IntPtr indices, Int32 primcount);
         [Slot(290)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glReadnPixelsEXT(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr data);
+        private static extern void glReadnPixelsEXT(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute] IntPtr data);
         [Slot(295)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRenderbufferStorageMultisampleEXT(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
+        private static extern void glRenderbufferStorageMultisampleEXT(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(357)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexStorage1DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
+        private static extern void glTexStorage1DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
         [Slot(358)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexStorage2DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
+        private static extern void glTexStorage2DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(359)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexStorage3DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
+        private static extern void glTexStorage3DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
         [Slot(361)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTextureStorage1DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
+        private static extern void glTextureStorage1DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
         [Slot(362)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTextureStorage2DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
+        private static extern void glTextureStorage2DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(363)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTextureStorage3DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
+        private static extern void glTextureStorage3DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
         [Slot(33)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glClipPlanefIMG(System.Int32 p, Single* eqn);
+        private static extern unsafe void glClipPlanefIMG(System.Int32 p, Single* eqn);
         [Slot(36)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glClipPlanexIMG(System.Int32 p, Int32* eqn);
+        private static extern unsafe void glClipPlanexIMG(System.Int32 p, Int32* eqn);
         [Slot(119)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFramebufferTexture2DMultisampleIMG(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
+        private static extern void glFramebufferTexture2DMultisampleIMG(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
         [Slot(296)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRenderbufferStorageMultisampleIMG(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
+        private static extern void glRenderbufferStorageMultisampleIMG(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(57)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteFencesNV(Int32 n, UInt32* fences);
+        private static extern unsafe void glDeleteFencesNV(Int32 n, UInt32* fences);
         [Slot(108)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFinishFenceNV(UInt32 fence);
+        private static extern void glFinishFenceNV(UInt32 fence);
         [Slot(128)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenFencesNV(Int32 n, [OutAttribute] UInt32* fences);
+        private static extern unsafe void glGenFencesNV(Int32 n, [OutAttribute] UInt32* fences);
         [Slot(144)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetFenceivNV(UInt32 fence, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetFenceivNV(UInt32 fence, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(186)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsFenceNV(UInt32 fence);
+        private static extern byte glIsFenceNV(UInt32 fence);
         [Slot(310)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glSetFenceNV(UInt32 fence, System.Int32 condition);
+        private static extern void glSetFenceNV(UInt32 fence, System.Int32 condition);
         [Slot(316)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glTestFenceNV(UInt32 fence);
+        private static extern byte glTestFenceNV(UInt32 fence);
         [Slot(0)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glAccumxOES(System.Int32 op, Int32 value);
+        private static extern void glAccumxOES(System.Int32 op, Int32 value);
         [Slot(4)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glAlphaFuncxOES(System.Int32 func, Int32 @ref);
+        private static extern void glAlphaFuncxOES(System.Int32 func, Int32 @ref);
         [Slot(6)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindFramebufferOES(System.Int32 target, UInt32 framebuffer);
+        private static extern void glBindFramebufferOES(System.Int32 target, UInt32 framebuffer);
         [Slot(7)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindRenderbufferOES(System.Int32 target, UInt32 renderbuffer);
+        private static extern void glBindRenderbufferOES(System.Int32 target, UInt32 renderbuffer);
         [Slot(9)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBindVertexArrayOES(UInt32 array);
+        private static extern void glBindVertexArrayOES(UInt32 array);
         [Slot(10)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glBitmapxOES(Int32 width, Int32 height, Int32 xorig, Int32 yorig, Int32 xmove, Int32 ymove, Byte* bitmap);
+        private static extern unsafe void glBitmapxOES(Int32 width, Int32 height, Int32 xorig, Int32 yorig, Int32 xmove, Int32 ymove, Byte* bitmap);
         [Slot(11)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBlendColorxOES(Int32 red, Int32 green, Int32 blue, Int32 alpha);
+        private static extern void glBlendColorxOES(Int32 red, Int32 green, Int32 blue, Int32 alpha);
         [Slot(13)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBlendEquationOES(System.Int32 mode);
+        private static extern void glBlendEquationOES(System.Int32 mode);
         [Slot(14)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBlendEquationSeparateOES(System.Int32 modeRGB, System.Int32 modeAlpha);
+        private static extern void glBlendEquationSeparateOES(System.Int32 modeRGB, System.Int32 modeAlpha);
         [Slot(16)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glBlendFuncSeparateOES(System.Int32 srcRGB, System.Int32 dstRGB, System.Int32 srcAlpha, System.Int32 dstAlpha);
+        private static extern void glBlendFuncSeparateOES(System.Int32 srcRGB, System.Int32 dstRGB, System.Int32 srcAlpha, System.Int32 dstAlpha);
         [Slot(19)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern System.Int32 glCheckFramebufferStatusOES(System.Int32 target);
+        private static extern System.Int32 glCheckFramebufferStatusOES(System.Int32 target);
         [Slot(21)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearAccumxOES(Int32 red, Int32 green, Int32 blue, Int32 alpha);
+        private static extern void glClearAccumxOES(Int32 red, Int32 green, Int32 blue, Int32 alpha);
         [Slot(24)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearColorxOES(Int32 red, Int32 green, Int32 blue, Int32 alpha);
+        private static extern void glClearColorxOES(Int32 red, Int32 green, Int32 blue, Int32 alpha);
         [Slot(26)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearDepthfOES(Single depth);
+        private static extern void glClearDepthfOES(Single depth);
         [Slot(28)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glClearDepthxOES(Int32 depth);
+        private static extern void glClearDepthxOES(Int32 depth);
         [Slot(34)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glClipPlanefOES(System.Int32 plane, Single* equation);
+        private static extern unsafe void glClipPlanefOES(System.Int32 plane, Single* equation);
         [Slot(37)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glClipPlanexOES(System.Int32 plane, Int32* equation);
+        private static extern unsafe void glClipPlanexOES(System.Int32 plane, Int32* equation);
         [Slot(38)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColor3xOES(Int32 red, Int32 green, Int32 blue);
+        private static extern void glColor3xOES(Int32 red, Int32 green, Int32 blue);
         [Slot(39)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glColor3xvOES(Int32* components);
+        private static extern unsafe void glColor3xvOES(Int32* components);
         [Slot(43)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glColor4xOES(Int32 red, Int32 green, Int32 blue, Int32 alpha);
+        private static extern void glColor4xOES(Int32 red, Int32 green, Int32 blue, Int32 alpha);
         [Slot(44)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glColor4xvOES(Int32* components);
+        private static extern unsafe void glColor4xvOES(Int32* components);
         [Slot(49)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glConvolutionParameterxOES(System.Int32 target, System.Int32 pname, Int32 param);
+        private static extern void glConvolutionParameterxOES(System.Int32 target, System.Int32 pname, Int32 param);
         [Slot(50)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glConvolutionParameterxvOES(System.Int32 target, System.Int32 pname, Int32* @params);
+        private static extern unsafe void glConvolutionParameterxvOES(System.Int32 target, System.Int32 pname, Int32* @params);
         [Slot(55)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glCurrentPaletteMatrixOES(UInt32 matrixpaletteindex);
+        private static extern void glCurrentPaletteMatrixOES(UInt32 matrixpaletteindex);
         [Slot(58)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteFramebuffersOES(Int32 n, UInt32* framebuffers);
+        private static extern unsafe void glDeleteFramebuffersOES(Int32 n, UInt32* framebuffers);
         [Slot(59)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteRenderbuffersOES(Int32 n, UInt32* renderbuffers);
+        private static extern unsafe void glDeleteRenderbuffersOES(Int32 n, UInt32* renderbuffers);
         [Slot(62)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDeleteVertexArraysOES(Int32 n, UInt32* arrays);
+        private static extern unsafe void glDeleteVertexArraysOES(Int32 n, UInt32* arrays);
         [Slot(66)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDepthRangefOES(Single n, Single f);
+        private static extern void glDepthRangefOES(Single n, Single f);
         [Slot(68)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDepthRangexOES(Int32 n, Int32 f);
+        private static extern void glDepthRangexOES(Int32 n, Int32 f);
         [Slot(75)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawTexfOES(Single x, Single y, Single z, Single width, Single height);
+        private static extern void glDrawTexfOES(Single x, Single y, Single z, Single width, Single height);
         [Slot(76)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDrawTexfvOES(Single* coords);
+        private static extern unsafe void glDrawTexfvOES(Single* coords);
         [Slot(77)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawTexiOES(Int32 x, Int32 y, Int32 z, Int32 width, Int32 height);
+        private static extern void glDrawTexiOES(Int32 x, Int32 y, Int32 z, Int32 width, Int32 height);
         [Slot(78)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDrawTexivOES(Int32* coords);
+        private static extern unsafe void glDrawTexivOES(Int32* coords);
         [Slot(79)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawTexsOES(Int16 x, Int16 y, Int16 z, Int16 width, Int16 height);
+        private static extern void glDrawTexsOES(Int16 x, Int16 y, Int16 z, Int16 width, Int16 height);
         [Slot(80)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDrawTexsvOES(Int16* coords);
+        private static extern unsafe void glDrawTexsvOES(Int16* coords);
         [Slot(81)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDrawTexxOES(Int32 x, Int32 y, Int32 z, Int32 width, Int32 height);
+        private static extern void glDrawTexxOES(Int32 x, Int32 y, Int32 z, Int32 width, Int32 height);
         [Slot(82)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glDrawTexxvOES(Int32* coords);
+        private static extern unsafe void glDrawTexxvOES(Int32* coords);
         [Slot(83)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEGLImageTargetRenderbufferStorageOES(System.Int32 target, IntPtr image);
+        private static extern void glEGLImageTargetRenderbufferStorageOES(System.Int32 target, IntPtr image);
         [Slot(84)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEGLImageTargetTexture2DOES(System.Int32 target, IntPtr image);
+        private static extern void glEGLImageTargetTexture2DOES(System.Int32 target, IntPtr image);
         [Slot(89)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEvalCoord1xOES(Int32 u);
+        private static extern void glEvalCoord1xOES(Int32 u);
         [Slot(90)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glEvalCoord1xvOES(Int32* coords);
+        private static extern unsafe void glEvalCoord1xvOES(Int32* coords);
         [Slot(91)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEvalCoord2xOES(Int32 u, Int32 v);
+        private static extern void glEvalCoord2xOES(Int32 u, Int32 v);
         [Slot(92)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glEvalCoord2xvOES(Int32* coords);
+        private static extern unsafe void glEvalCoord2xvOES(Int32* coords);
         [Slot(105)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glFeedbackBufferxOES(Int32 n, System.Int32 type, Int32* buffer);
+        private static extern unsafe void glFeedbackBufferxOES(Int32 n, System.Int32 type, Int32* buffer);
         [Slot(114)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFogxOES(System.Int32 pname, Int32 param);
+        private static extern void glFogxOES(System.Int32 pname, Int32 param);
         [Slot(116)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glFogxvOES(System.Int32 pname, Int32* param);
+        private static extern unsafe void glFogxvOES(System.Int32 pname, Int32* param);
         [Slot(117)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFramebufferRenderbufferOES(System.Int32 target, System.Int32 attachment, System.Int32 renderbuffertarget, UInt32 renderbuffer);
+        private static extern void glFramebufferRenderbufferOES(System.Int32 target, System.Int32 attachment, System.Int32 renderbuffertarget, UInt32 renderbuffer);
         [Slot(120)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFramebufferTexture2DOES(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level);
+        private static extern void glFramebufferTexture2DOES(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level);
         [Slot(123)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFrustumfOES(Single l, Single r, Single b, Single t, Single n, Single f);
+        private static extern void glFrustumfOES(Single l, Single r, Single b, Single t, Single n, Single f);
         [Slot(125)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glFrustumxOES(Int32 l, Int32 r, Int32 b, Int32 t, Int32 n, Int32 f);
+        private static extern void glFrustumxOES(Int32 l, Int32 r, Int32 b, Int32 t, Int32 n, Int32 f);
         [Slot(127)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glGenerateMipmapOES(System.Int32 target);
+        private static extern void glGenerateMipmapOES(System.Int32 target);
         [Slot(129)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenFramebuffersOES(Int32 n, [OutAttribute] UInt32* framebuffers);
+        private static extern unsafe void glGenFramebuffersOES(Int32 n, [OutAttribute] UInt32* framebuffers);
         [Slot(130)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenRenderbuffersOES(Int32 n, [OutAttribute] UInt32* renderbuffers);
+        private static extern unsafe void glGenRenderbuffersOES(Int32 n, [OutAttribute] UInt32* renderbuffers);
         [Slot(132)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGenVertexArraysOES(Int32 n, [OutAttribute] UInt32* arrays);
+        private static extern unsafe void glGenVertexArraysOES(Int32 n, [OutAttribute] UInt32* arrays);
         [Slot(135)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glGetBufferPointervOES(System.Int32 target, System.Int32 pname, [OutAttribute] IntPtr @params);
+        private static extern void glGetBufferPointervOES(System.Int32 target, System.Int32 pname, [OutAttribute] IntPtr @params);
         [Slot(137)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetClipPlanefOES(System.Int32 plane, [OutAttribute] Single* equation);
+        private static extern unsafe void glGetClipPlanefOES(System.Int32 plane, [OutAttribute] Single* equation);
         [Slot(139)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetClipPlanexOES(System.Int32 plane, [OutAttribute] Int32* equation);
+        private static extern unsafe void glGetClipPlanexOES(System.Int32 plane, [OutAttribute] Int32* equation);
         [Slot(140)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetConvolutionParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetConvolutionParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(146)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetFixedvOES(System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetFixedvOES(System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(148)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetFramebufferAttachmentParameterivOES(System.Int32 target, System.Int32 attachment, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetFramebufferAttachmentParameterivOES(System.Int32 target, System.Int32 attachment, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(150)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetHistogramParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetHistogramParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(154)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetLightxOES(System.Int32 light, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetLightxOES(System.Int32 light, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(157)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetMapxvOES(System.Int32 target, System.Int32 query, [OutAttribute] Int32* v);
+        private static extern unsafe void glGetMapxvOES(System.Int32 target, System.Int32 query, [OutAttribute] Int32* v);
         [Slot(159)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glGetMaterialxOES(System.Int32 face, System.Int32 pname, Int32 param);
+        private static extern void glGetMaterialxOES(System.Int32 face, System.Int32 pname, Int32 param);
         [Slot(161)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetMaterialxvOES(System.Int32 face, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetMaterialxvOES(System.Int32 face, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(166)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetRenderbufferParameterivOES(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetRenderbufferParameterivOES(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(172)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexEnvxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetTexEnvxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(173)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexGenfvOES(System.Int32 coord, System.Int32 pname, [OutAttribute] Single* @params);
+        private static extern unsafe void glGetTexGenfvOES(System.Int32 coord, System.Int32 pname, [OutAttribute] Single* @params);
         [Slot(174)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexGenivOES(System.Int32 coord, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetTexGenivOES(System.Int32 coord, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(175)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexGenxvOES(System.Int32 coord, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetTexGenxvOES(System.Int32 coord, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(176)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexLevelParameterxvOES(System.Int32 target, Int32 level, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetTexLevelParameterxvOES(System.Int32 target, Int32 level, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(180)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetTexParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glGetTexParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(182)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glIndexxOES(Int32 component);
+        private static extern void glIndexxOES(Int32 component);
         [Slot(183)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glIndexxvOES(Int32* component);
+        private static extern unsafe void glIndexxvOES(Int32* component);
         [Slot(187)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsFramebufferOES(UInt32 framebuffer);
+        private static extern byte glIsFramebufferOES(UInt32 framebuffer);
         [Slot(188)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsRenderbufferOES(UInt32 renderbuffer);
+        private static extern byte glIsRenderbufferOES(UInt32 renderbuffer);
         [Slot(191)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glIsVertexArrayOES(UInt32 array);
+        private static extern byte glIsVertexArrayOES(UInt32 array);
         [Slot(197)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLightModelxOES(System.Int32 pname, Int32 param);
+        private static extern void glLightModelxOES(System.Int32 pname, Int32 param);
         [Slot(199)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLightModelxvOES(System.Int32 pname, Int32* param);
+        private static extern unsafe void glLightModelxvOES(System.Int32 pname, Int32* param);
         [Slot(201)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLightxOES(System.Int32 light, System.Int32 pname, Int32 param);
+        private static extern void glLightxOES(System.Int32 light, System.Int32 pname, Int32 param);
         [Slot(203)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLightxvOES(System.Int32 light, System.Int32 pname, Int32* @params);
+        private static extern unsafe void glLightxvOES(System.Int32 light, System.Int32 pname, Int32* @params);
         [Slot(206)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLineWidthxOES(Int32 width);
+        private static extern void glLineWidthxOES(Int32 width);
         [Slot(210)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLoadMatrixxOES(Int32* m);
+        private static extern unsafe void glLoadMatrixxOES(Int32* m);
         [Slot(211)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glLoadPaletteFromModelViewMatrixOES();
+        private static extern void glLoadPaletteFromModelViewMatrixOES();
         [Slot(212)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glLoadTransposeMatrixxOES(Int32* m);
+        private static extern unsafe void glLoadTransposeMatrixxOES(Int32* m);
         [Slot(214)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMap1xOES(System.Int32 target, Int32 u1, Int32 u2, Int32 stride, Int32 order, Int32 points);
+        private static extern void glMap1xOES(System.Int32 target, Int32 u1, Int32 u2, Int32 stride, Int32 order, Int32 points);
         [Slot(215)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMap2xOES(System.Int32 target, Int32 u1, Int32 u2, Int32 ustride, Int32 uorder, Int32 v1, Int32 v2, Int32 vstride, Int32 vorder, Int32 points);
+        private static extern void glMap2xOES(System.Int32 target, Int32 u1, Int32 u2, Int32 ustride, Int32 uorder, Int32 v1, Int32 v2, Int32 vstride, Int32 vorder, Int32 points);
         [Slot(216)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern IntPtr glMapBufferOES(System.Int32 target, System.Int32 access);
+        private static extern IntPtr glMapBufferOES(System.Int32 target, System.Int32 access);
         [Slot(218)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMapGrid1xOES(Int32 n, Int32 u1, Int32 u2);
+        private static extern void glMapGrid1xOES(Int32 n, Int32 u1, Int32 u2);
         [Slot(219)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMapGrid2xOES(Int32 n, Int32 u1, Int32 u2, Int32 v1, Int32 v2);
+        private static extern void glMapGrid2xOES(Int32 n, Int32 u1, Int32 u2, Int32 v1, Int32 v2);
         [Slot(223)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMaterialxOES(System.Int32 face, System.Int32 pname, Int32 param);
+        private static extern void glMaterialxOES(System.Int32 face, System.Int32 pname, Int32 param);
         [Slot(225)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMaterialxvOES(System.Int32 face, System.Int32 pname, Int32* param);
+        private static extern unsafe void glMaterialxvOES(System.Int32 face, System.Int32 pname, Int32* param);
         [Slot(226)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMatrixIndexPointerOES(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
+        private static extern void glMatrixIndexPointerOES(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(230)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord1bOES(System.Int32 texture, SByte s);
+        private static extern void glMultiTexCoord1bOES(System.Int32 texture, SByte s);
         [Slot(231)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiTexCoord1bvOES(System.Int32 texture, SByte* coords);
+        private static extern unsafe void glMultiTexCoord1bvOES(System.Int32 texture, SByte* coords);
         [Slot(232)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord1xOES(System.Int32 texture, Int32 s);
+        private static extern void glMultiTexCoord1xOES(System.Int32 texture, Int32 s);
         [Slot(233)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiTexCoord1xvOES(System.Int32 texture, Int32* coords);
+        private static extern unsafe void glMultiTexCoord1xvOES(System.Int32 texture, Int32* coords);
         [Slot(234)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord2bOES(System.Int32 texture, SByte s, SByte t);
+        private static extern void glMultiTexCoord2bOES(System.Int32 texture, SByte s, SByte t);
         [Slot(235)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiTexCoord2bvOES(System.Int32 texture, SByte* coords);
+        private static extern unsafe void glMultiTexCoord2bvOES(System.Int32 texture, SByte* coords);
         [Slot(236)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord2xOES(System.Int32 texture, Int32 s, Int32 t);
+        private static extern void glMultiTexCoord2xOES(System.Int32 texture, Int32 s, Int32 t);
         [Slot(237)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiTexCoord2xvOES(System.Int32 texture, Int32* coords);
+        private static extern unsafe void glMultiTexCoord2xvOES(System.Int32 texture, Int32* coords);
         [Slot(238)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord3bOES(System.Int32 texture, SByte s, SByte t, SByte r);
+        private static extern void glMultiTexCoord3bOES(System.Int32 texture, SByte s, SByte t, SByte r);
         [Slot(239)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiTexCoord3bvOES(System.Int32 texture, SByte* coords);
+        private static extern unsafe void glMultiTexCoord3bvOES(System.Int32 texture, SByte* coords);
         [Slot(240)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord3xOES(System.Int32 texture, Int32 s, Int32 t, Int32 r);
+        private static extern void glMultiTexCoord3xOES(System.Int32 texture, Int32 s, Int32 t, Int32 r);
         [Slot(241)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiTexCoord3xvOES(System.Int32 texture, Int32* coords);
+        private static extern unsafe void glMultiTexCoord3xvOES(System.Int32 texture, Int32* coords);
         [Slot(242)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord4bOES(System.Int32 texture, SByte s, SByte t, SByte r, SByte q);
+        private static extern void glMultiTexCoord4bOES(System.Int32 texture, SByte s, SByte t, SByte r, SByte q);
         [Slot(243)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiTexCoord4bvOES(System.Int32 texture, SByte* coords);
+        private static extern unsafe void glMultiTexCoord4bvOES(System.Int32 texture, SByte* coords);
         [Slot(246)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glMultiTexCoord4xOES(System.Int32 texture, Int32 s, Int32 t, Int32 r, Int32 q);
+        private static extern void glMultiTexCoord4xOES(System.Int32 texture, Int32 s, Int32 t, Int32 r, Int32 q);
         [Slot(247)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultiTexCoord4xvOES(System.Int32 texture, Int32* coords);
+        private static extern unsafe void glMultiTexCoord4xvOES(System.Int32 texture, Int32* coords);
         [Slot(250)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultMatrixxOES(Int32* m);
+        private static extern unsafe void glMultMatrixxOES(Int32* m);
         [Slot(251)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glMultTransposeMatrixxOES(Int32* m);
+        private static extern unsafe void glMultTransposeMatrixxOES(Int32* m);
         [Slot(254)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glNormal3xOES(Int32 nx, Int32 ny, Int32 nz);
+        private static extern void glNormal3xOES(Int32 nx, Int32 ny, Int32 nz);
         [Slot(255)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glNormal3xvOES(Int32* coords);
+        private static extern unsafe void glNormal3xvOES(Int32* coords);
         [Slot(258)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glOrthofOES(Single l, Single r, Single b, Single t, Single n, Single f);
+        private static extern void glOrthofOES(Single l, Single r, Single b, Single t, Single n, Single f);
         [Slot(260)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glOrthoxOES(Int32 l, Int32 r, Int32 b, Int32 t, Int32 n, Int32 f);
+        private static extern void glOrthoxOES(Int32 l, Int32 r, Int32 b, Int32 t, Int32 n, Int32 f);
         [Slot(261)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPassThroughxOES(Int32 token);
+        private static extern void glPassThroughxOES(Int32 token);
         [Slot(265)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPixelTransferxOES(System.Int32 pname, Int32 param);
+        private static extern void glPixelTransferxOES(System.Int32 pname, Int32 param);
         [Slot(266)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPixelZoomxOES(Int32 xfactor, Int32 yfactor);
+        private static extern void glPixelZoomxOES(Int32 xfactor, Int32 yfactor);
         [Slot(270)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPointParameterxOES(System.Int32 pname, Int32 param);
+        private static extern void glPointParameterxOES(System.Int32 pname, Int32 param);
         [Slot(272)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glPointParameterxvOES(System.Int32 pname, Int32* @params);
+        private static extern unsafe void glPointParameterxvOES(System.Int32 pname, Int32* @params);
         [Slot(274)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPointSizePointerOES(System.Int32 type, Int32 stride, IntPtr pointer);
+        private static extern void glPointSizePointerOES(System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(276)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPointSizexOES(Int32 size);
+        private static extern void glPointSizexOES(Int32 size);
         [Slot(279)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glPolygonOffsetxOES(Int32 factor, Int32 units);
+        private static extern void glPolygonOffsetxOES(Int32 factor, Int32 units);
         [Slot(281)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glPrioritizeTexturesxOES(Int32 n, UInt32* textures, Int32* priorities);
+        private static extern unsafe void glPrioritizeTexturesxOES(Int32 n, UInt32* textures, Int32* priorities);
         [Slot(283)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe Int32 glQueryMatrixxOES([OutAttribute] Int32* mantissa, [OutAttribute] Int32* exponent);
+        private static extern unsafe Int32 glQueryMatrixxOES([OutAttribute] Int32* mantissa, [OutAttribute] Int32* exponent);
         [Slot(284)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRasterPos2xOES(Int32 x, Int32 y);
+        private static extern void glRasterPos2xOES(Int32 x, Int32 y);
         [Slot(285)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glRasterPos2xvOES(Int32* coords);
+        private static extern unsafe void glRasterPos2xvOES(Int32* coords);
         [Slot(286)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRasterPos3xOES(Int32 x, Int32 y, Int32 z);
+        private static extern void glRasterPos3xOES(Int32 x, Int32 y, Int32 z);
         [Slot(287)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glRasterPos3xvOES(Int32* coords);
+        private static extern unsafe void glRasterPos3xvOES(Int32* coords);
         [Slot(288)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRasterPos4xOES(Int32 x, Int32 y, Int32 z, Int32 w);
+        private static extern void glRasterPos4xOES(Int32 x, Int32 y, Int32 z, Int32 w);
         [Slot(289)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glRasterPos4xvOES(Int32* coords);
+        private static extern unsafe void glRasterPos4xvOES(Int32* coords);
         [Slot(292)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRectxOES(Int32 x1, Int32 y1, Int32 x2, Int32 y2);
+        private static extern void glRectxOES(Int32 x1, Int32 y1, Int32 x2, Int32 y2);
         [Slot(293)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glRectxvOES(Int32* v1, Int32* v2);
+        private static extern unsafe void glRectxvOES(Int32* v1, Int32* v2);
         [Slot(297)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRenderbufferStorageOES(System.Int32 target, System.Int32 internalformat, Int32 width, Int32 height);
+        private static extern void glRenderbufferStorageOES(System.Int32 target, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(301)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glRotatexOES(Int32 angle, Int32 x, Int32 y, Int32 z);
+        private static extern void glRotatexOES(Int32 angle, Int32 x, Int32 y, Int32 z);
         [Slot(303)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glSampleCoverageOES(Int32 value, bool invert);
+        private static extern void glSampleCoverageOES(Int32 value, bool invert);
         [Slot(305)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glSampleCoveragexOES(Int32 value, bool invert);
+        private static extern void glSampleCoveragexOES(Int32 value, bool invert);
         [Slot(308)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glScalexOES(Int32 x, Int32 y, Int32 z);
+        private static extern void glScalexOES(Int32 x, Int32 y, Int32 z);
         [Slot(317)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoord1bOES(SByte s);
+        private static extern void glTexCoord1bOES(SByte s);
         [Slot(318)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexCoord1bvOES(SByte* coords);
+        private static extern unsafe void glTexCoord1bvOES(SByte* coords);
         [Slot(319)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoord1xOES(Int32 s);
+        private static extern void glTexCoord1xOES(Int32 s);
         [Slot(320)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexCoord1xvOES(Int32* coords);
+        private static extern unsafe void glTexCoord1xvOES(Int32* coords);
         [Slot(321)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoord2bOES(SByte s, SByte t);
+        private static extern void glTexCoord2bOES(SByte s, SByte t);
         [Slot(322)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexCoord2bvOES(SByte* coords);
+        private static extern unsafe void glTexCoord2bvOES(SByte* coords);
         [Slot(323)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoord2xOES(Int32 s, Int32 t);
+        private static extern void glTexCoord2xOES(Int32 s, Int32 t);
         [Slot(324)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexCoord2xvOES(Int32* coords);
+        private static extern unsafe void glTexCoord2xvOES(Int32* coords);
         [Slot(325)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoord3bOES(SByte s, SByte t, SByte r);
+        private static extern void glTexCoord3bOES(SByte s, SByte t, SByte r);
         [Slot(326)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexCoord3bvOES(SByte* coords);
+        private static extern unsafe void glTexCoord3bvOES(SByte* coords);
         [Slot(327)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoord3xOES(Int32 s, Int32 t, Int32 r);
+        private static extern void glTexCoord3xOES(Int32 s, Int32 t, Int32 r);
         [Slot(328)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexCoord3xvOES(Int32* coords);
+        private static extern unsafe void glTexCoord3xvOES(Int32* coords);
         [Slot(329)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoord4bOES(SByte s, SByte t, SByte r, SByte q);
+        private static extern void glTexCoord4bOES(SByte s, SByte t, SByte r, SByte q);
         [Slot(330)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexCoord4bvOES(SByte* coords);
+        private static extern unsafe void glTexCoord4bvOES(SByte* coords);
         [Slot(331)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexCoord4xOES(Int32 s, Int32 t, Int32 r, Int32 q);
+        private static extern void glTexCoord4xOES(Int32 s, Int32 t, Int32 r, Int32 q);
         [Slot(332)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexCoord4xvOES(Int32* coords);
+        private static extern unsafe void glTexCoord4xvOES(Int32* coords);
         [Slot(339)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexEnvxOES(System.Int32 target, System.Int32 pname, Int32 param);
+        private static extern void glTexEnvxOES(System.Int32 target, System.Int32 pname, Int32 param);
         [Slot(341)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexEnvxvOES(System.Int32 target, System.Int32 pname, Int32* @params);
+        private static extern unsafe void glTexEnvxvOES(System.Int32 target, System.Int32 pname, Int32* @params);
         [Slot(342)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexGenfOES(System.Int32 coord, System.Int32 pname, Single param);
+        private static extern void glTexGenfOES(System.Int32 coord, System.Int32 pname, Single param);
         [Slot(343)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexGenfvOES(System.Int32 coord, System.Int32 pname, Single* @params);
+        private static extern unsafe void glTexGenfvOES(System.Int32 coord, System.Int32 pname, Single* @params);
         [Slot(344)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexGeniOES(System.Int32 coord, System.Int32 pname, Int32 param);
+        private static extern void glTexGeniOES(System.Int32 coord, System.Int32 pname, Int32 param);
         [Slot(345)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexGenivOES(System.Int32 coord, System.Int32 pname, Int32* @params);
+        private static extern unsafe void glTexGenivOES(System.Int32 coord, System.Int32 pname, Int32* @params);
         [Slot(346)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexGenxOES(System.Int32 coord, System.Int32 pname, Int32 param);
+        private static extern void glTexGenxOES(System.Int32 coord, System.Int32 pname, Int32 param);
         [Slot(347)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexGenxvOES(System.Int32 coord, System.Int32 pname, Int32* @params);
+        private static extern unsafe void glTexGenxvOES(System.Int32 coord, System.Int32 pname, Int32* @params);
         [Slot(354)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTexParameterxOES(System.Int32 target, System.Int32 pname, Int32 param);
+        private static extern void glTexParameterxOES(System.Int32 target, System.Int32 pname, Int32 param);
         [Slot(356)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glTexParameterxvOES(System.Int32 target, System.Int32 pname, Int32* @params);
+        private static extern unsafe void glTexParameterxvOES(System.Int32 target, System.Int32 pname, Int32* @params);
         [Slot(366)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glTranslatexOES(Int32 x, Int32 y, Int32 z);
+        private static extern void glTranslatexOES(Int32 x, Int32 y, Int32 z);
         [Slot(367)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glUnmapBufferOES(System.Int32 target);
+        private static extern byte glUnmapBufferOES(System.Int32 target);
         [Slot(368)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertex2bOES(SByte x, SByte y);
+        private static extern void glVertex2bOES(SByte x, SByte y);
         [Slot(369)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glVertex2bvOES(SByte* coords);
+        private static extern unsafe void glVertex2bvOES(SByte* coords);
         [Slot(370)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertex2xOES(Int32 x);
+        private static extern void glVertex2xOES(Int32 x);
         [Slot(371)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glVertex2xvOES(Int32* coords);
+        private static extern unsafe void glVertex2xvOES(Int32* coords);
         [Slot(372)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertex3bOES(SByte x, SByte y, SByte z);
+        private static extern void glVertex3bOES(SByte x, SByte y, SByte z);
         [Slot(373)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glVertex3bvOES(SByte* coords);
+        private static extern unsafe void glVertex3bvOES(SByte* coords);
         [Slot(374)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertex3xOES(Int32 x, Int32 y);
+        private static extern void glVertex3xOES(Int32 x, Int32 y);
         [Slot(375)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glVertex3xvOES(Int32* coords);
+        private static extern unsafe void glVertex3xvOES(Int32* coords);
         [Slot(376)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertex4bOES(SByte x, SByte y, SByte z, SByte w);
+        private static extern void glVertex4bOES(SByte x, SByte y, SByte z, SByte w);
         [Slot(377)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glVertex4bvOES(SByte* coords);
+        private static extern unsafe void glVertex4bvOES(SByte* coords);
         [Slot(378)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glVertex4xOES(Int32 x, Int32 y, Int32 z);
+        private static extern void glVertex4xOES(Int32 x, Int32 y, Int32 z);
         [Slot(379)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glVertex4xvOES(Int32* coords);
+        private static extern unsafe void glVertex4xvOES(Int32* coords);
         [Slot(383)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glWeightPointerOES(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
+        private static extern void glWeightPointerOES(Int32 size, System.Int32 type, Int32 stride, IntPtr pointer);
         [Slot(71)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glDisableDriverControlQCOM(UInt32 driverControl);
+        private static extern void glDisableDriverControlQCOM(UInt32 driverControl);
         [Slot(87)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEnableDriverControlQCOM(UInt32 driverControl);
+        private static extern void glEnableDriverControlQCOM(UInt32 driverControl);
         [Slot(88)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glEndTilingQCOM(UInt32 preserveMask);
+        private static extern void glEndTilingQCOM(UInt32 preserveMask);
         [Slot(93)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glExtGetBufferPointervQCOM(System.Int32 target, [OutAttribute] IntPtr @params);
+        private static extern void glExtGetBufferPointervQCOM(System.Int32 target, [OutAttribute] IntPtr @params);
         [Slot(94)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetBuffersQCOM([OutAttribute] UInt32* buffers, Int32 maxBuffers, [OutAttribute] Int32* numBuffers);
+        private static extern unsafe void glExtGetBuffersQCOM([OutAttribute] UInt32* buffers, Int32 maxBuffers, [OutAttribute] Int32* numBuffers);
         [Slot(95)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetFramebuffersQCOM([OutAttribute] UInt32* framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32* numFramebuffers);
+        private static extern unsafe void glExtGetFramebuffersQCOM([OutAttribute] UInt32* framebuffers, Int32 maxFramebuffers, [OutAttribute] Int32* numFramebuffers);
         [Slot(96)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetProgramBinarySourceQCOM(UInt32 program, System.Int32 shadertype, [OutAttribute] IntPtr source, [OutAttribute] Int32* length);
+        private static extern unsafe void glExtGetProgramBinarySourceQCOM(UInt32 program, System.Int32 shadertype, [OutAttribute] IntPtr source, [OutAttribute] Int32* length);
         [Slot(97)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetProgramsQCOM([OutAttribute] UInt32* programs, Int32 maxPrograms, [OutAttribute] Int32* numPrograms);
+        private static extern unsafe void glExtGetProgramsQCOM([OutAttribute] UInt32* programs, Int32 maxPrograms, [OutAttribute] Int32* numPrograms);
         [Slot(98)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetRenderbuffersQCOM([OutAttribute] UInt32* renderbuffers, Int32 maxRenderbuffers, [OutAttribute] Int32* numRenderbuffers);
+        private static extern unsafe void glExtGetRenderbuffersQCOM([OutAttribute] UInt32* renderbuffers, Int32 maxRenderbuffers, [OutAttribute] Int32* numRenderbuffers);
         [Slot(99)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetShadersQCOM([OutAttribute] UInt32* shaders, Int32 maxShaders, [OutAttribute] Int32* numShaders);
+        private static extern unsafe void glExtGetShadersQCOM([OutAttribute] UInt32* shaders, Int32 maxShaders, [OutAttribute] Int32* numShaders);
         [Slot(100)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetTexLevelParameterivQCOM(UInt32 texture, System.Int32 face, Int32 level, System.Int32 pname, [OutAttribute] Int32* @params);
+        private static extern unsafe void glExtGetTexLevelParameterivQCOM(UInt32 texture, System.Int32 face, Int32 level, System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(101)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glExtGetTexSubImageQCOM(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr texels);
+        private static extern void glExtGetTexSubImageQCOM(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr texels);
         [Slot(102)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glExtGetTexturesQCOM([OutAttribute] UInt32* textures, Int32 maxTextures, [OutAttribute] Int32* numTextures);
+        private static extern unsafe void glExtGetTexturesQCOM([OutAttribute] UInt32* textures, Int32 maxTextures, [OutAttribute] Int32* numTextures);
         [Slot(103)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern byte glExtIsProgramBinaryQCOM(UInt32 program);
+        private static extern byte glExtIsProgramBinaryQCOM(UInt32 program);
         [Slot(104)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glExtTexObjectStateOverrideiQCOM(System.Int32 target, System.Int32 pname, Int32 param);
+        private static extern void glExtTexObjectStateOverrideiQCOM(System.Int32 target, System.Int32 pname, Int32 param);
         [Slot(141)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute] UInt32* driverControls);
+        private static extern unsafe void glGetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute] UInt32* driverControls);
         [Slot(142)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern unsafe void glGetDriverControlStringQCOM(UInt32 driverControl, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr driverControlString);
+        private static extern unsafe void glGetDriverControlStringQCOM(UInt32 driverControl, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute] IntPtr driverControlString);
         [Slot(312)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        static extern void glStartTilingQCOM(UInt32 x, UInt32 y, UInt32 width, UInt32 height, UInt32 preserveMask);
+        private static extern void glStartTilingQCOM(UInt32 x, UInt32 y, UInt32 width, UInt32 height, UInt32 preserveMask);
     }
 }

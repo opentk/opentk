@@ -32,22 +32,22 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2InputDriver : IInputDriver2
+    internal class Sdl2InputDriver : IInputDriver2
     {
-        readonly static Dictionary<IntPtr, Sdl2InputDriver> DriverHandles =
+        private readonly static Dictionary<IntPtr, Sdl2InputDriver> DriverHandles =
             new Dictionary<IntPtr, Sdl2InputDriver>();
 
-        readonly IntPtr driver_handle;
+        private readonly IntPtr driver_handle;
 
-        readonly Sdl2Keyboard keyboard_driver = new Sdl2Keyboard();
-        readonly Sdl2Mouse mouse_driver = new Sdl2Mouse();
-        readonly Sdl2JoystickDriver joystick_driver = new Sdl2JoystickDriver();
+        private readonly Sdl2Keyboard keyboard_driver = new Sdl2Keyboard();
+        private readonly Sdl2Mouse mouse_driver = new Sdl2Mouse();
+        private readonly Sdl2JoystickDriver joystick_driver = new Sdl2JoystickDriver();
 
-        readonly EventFilter EventFilterDelegate_GCUnsafe = FilterInputEvents;
-        readonly IntPtr EventFilterDelegate;
+        private readonly EventFilter EventFilterDelegate_GCUnsafe = FilterInputEvents;
+        private readonly IntPtr EventFilterDelegate;
 
-        static int count;
-        bool disposed;
+        private static int count;
+        private bool disposed;
 
         public Sdl2InputDriver()
         {
@@ -71,7 +71,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        unsafe static int FilterInputEvents(IntPtr driver_handle, IntPtr e)
+        private unsafe static int FilterInputEvents(IntPtr driver_handle, IntPtr e)
         {
             try
             {
@@ -180,7 +180,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        void Dispose(bool manual)
+        private void Dispose(bool manual)
         {
             if (!disposed)
             {

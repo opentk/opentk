@@ -30,9 +30,9 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Linux
 {
-    class Terminal
+    internal class Terminal
     {
-        const string lib = "libc";
+        private const string lib = "libc";
 
         [DllImport(lib, EntryPoint = "isatty", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I4)]
@@ -46,7 +46,7 @@ namespace OpenTK.Platform.Linux
     }
 
     [Flags]
-    enum InputFlags
+    internal enum InputFlags
     {
         IGNBRK = 1 << 0,
         BRKINT = 1 << 1,
@@ -66,7 +66,7 @@ namespace OpenTK.Platform.Linux
     }
 
     [Flags]
-    enum OutputFlags
+    internal enum OutputFlags
     {
         OPOST  = 1 << 1,
         OLCUC  = 1 << 2,
@@ -79,7 +79,7 @@ namespace OpenTK.Platform.Linux
     }
 
     [Flags]
-    enum ControlFlags
+    internal enum ControlFlags
     {
         B0 = 0, // hang up
         B50,
@@ -100,14 +100,14 @@ namespace OpenTK.Platform.Linux
     }
 
     [Flags]
-    enum LocalFlags
+    internal enum LocalFlags
     {
         ISIG = 0x01,
         ICANON = 0x02,
         ECHO = 0x08,
     }
 
-    enum OptionalActions
+    internal enum OptionalActions
     {
         NOW = 0,
         DRAIN = 1,
@@ -115,7 +115,7 @@ namespace OpenTK.Platform.Linux
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct TerminalState
+    internal struct TerminalState
     {
         public InputFlags InputMode;
         public OutputFlags OutputMode;
@@ -128,7 +128,7 @@ namespace OpenTK.Platform.Linux
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct ControlCharacters
+    internal struct ControlCharacters
     {
         public byte VINTR;
         public byte VQUIT;

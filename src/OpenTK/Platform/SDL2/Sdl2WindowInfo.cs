@@ -28,7 +28,7 @@ using System.Diagnostics;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2WindowInfo : IWindowInfo
+    internal class Sdl2WindowInfo : IWindowInfo
     {
         public IntPtr Handle { get; set; }
         public Sdl2WindowInfo Parent { get; set; }

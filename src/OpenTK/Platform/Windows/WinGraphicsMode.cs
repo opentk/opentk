@@ -33,9 +33,9 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Windows
 {
-    class WinGraphicsMode : IGraphicsMode
+    internal class WinGraphicsMode : IGraphicsMode
     {
-        enum AccelerationType
+        private enum AccelerationType
         {
             // Software acceleration
             None = 0,
@@ -45,7 +45,7 @@ namespace OpenTK.Platform.Windows
             ICD,
         }
 
-        readonly IntPtr Device;
+        private readonly IntPtr Device;
 
         public WinGraphicsMode(IntPtr device)
         {
@@ -80,7 +80,7 @@ namespace OpenTK.Platform.Windows
         // hardware acceleration (e.g. we are running in a VM or in a remote desktop
         // connection), this method will return 0 formats and we will fall back to
         // ChoosePixelFormatPFD.
-        GraphicsMode ChoosePixelFormatARB(IntPtr device, GraphicsMode desired_mode)
+        private GraphicsMode ChoosePixelFormatARB(IntPtr device, GraphicsMode desired_mode)
         {
             GraphicsMode created_mode = null;
             GraphicsMode mode = new GraphicsMode(desired_mode);
@@ -206,7 +206,7 @@ namespace OpenTK.Platform.Windows
             return created_mode;
         }
 
-        static bool Compare(int got, int requested, ref int distance)
+        private static bool Compare(int got, int requested, ref int distance)
         {
             bool valid = true;
             if (got == 0 && requested != 0)
@@ -235,7 +235,7 @@ namespace OpenTK.Platform.Windows
             return valid;
         }
 
-        static AccelerationType GetAccelerationType(ref PixelFormatDescriptor pfd)
+        private static AccelerationType GetAccelerationType(ref PixelFormatDescriptor pfd)
         {
             AccelerationType type = AccelerationType.ICD;
             if ((pfd.Flags & PixelFormatDescriptorFlags.GENERIC_FORMAT) != 0)
@@ -252,7 +252,7 @@ namespace OpenTK.Platform.Windows
             return type;
         }
 
-        GraphicsMode ChoosePixelFormatPFD(IntPtr device, GraphicsMode mode, AccelerationType requested_acceleration_type)
+        private GraphicsMode ChoosePixelFormatPFD(IntPtr device, GraphicsMode mode, AccelerationType requested_acceleration_type)
         {
             PixelFormatDescriptor pfd = new PixelFormatDescriptor();
             PixelFormatDescriptorFlags flags = 0;
@@ -315,7 +315,7 @@ namespace OpenTK.Platform.Windows
             return DescribePixelFormatPFD(device, ref pfd, best);
         }
 
-        static GraphicsMode DescribePixelFormatPFD(IntPtr device, ref PixelFormatDescriptor pfd,
+        private static GraphicsMode DescribePixelFormatPFD(IntPtr device, ref PixelFormatDescriptor pfd,
             int pixelformat)
         {
             GraphicsMode created_mode = null;
@@ -334,7 +334,7 @@ namespace OpenTK.Platform.Windows
             return created_mode;
         }
 
-        GraphicsMode DescribePixelFormatARB(IntPtr device, int pixelformat)
+        private GraphicsMode DescribePixelFormatARB(IntPtr device, int pixelformat)
         {
             GraphicsMode created_mode = null;
             // See http://www.opengl.org/registry/specs/ARB/wgl_pixel_format.txt for more details

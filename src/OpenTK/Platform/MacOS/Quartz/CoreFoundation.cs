@@ -39,7 +39,7 @@ namespace OpenTK.Platform.MacOS.Carbon
     using CFTypeRef = System.IntPtr;
     using CFMachPortRef = IntPtr;
 
-    struct CFArray
+    internal struct CFArray
     {
         public IntPtr Ref { get; set; }
 
@@ -64,7 +64,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         }
     }
 
-    struct CFDictionary
+    internal struct CFDictionary
     {
         public CFDictionary(IntPtr reference)
         {
@@ -92,9 +92,10 @@ namespace OpenTK.Platform.MacOS.Carbon
             return retval;
         }
     }
-    class CF
+
+    internal class CF
     {
-        const string appServices = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
+        private const string appServices = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
 
         [DllImport(appServices)]
         internal static extern int CFArrayGetCount(IntPtr theArray);
@@ -121,7 +122,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         // I don't know why, but __CFStringMakeConstantString is marked as "private and should not be used directly"
         // even though the CFSTR macro just calls it.
         [DllImport(appServices)]
-        static extern IntPtr __CFStringMakeConstantString(string cStr);
+        private static extern IntPtr __CFStringMakeConstantString(string cStr);
         internal static IntPtr CFSTR(string cStr)
         {
             return __CFStringMakeConstantString(cStr);

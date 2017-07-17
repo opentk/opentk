@@ -29,7 +29,7 @@ using System.Text;
 
 namespace OpenTK.Graphics
 {
-    sealed class GraphicsModeComparer : IComparer<GraphicsMode>
+    internal sealed class GraphicsModeComparer : IComparer<GraphicsMode>
     {
         public int Compare(GraphicsMode x, GraphicsMode y)
         {

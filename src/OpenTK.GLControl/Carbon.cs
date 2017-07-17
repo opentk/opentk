@@ -68,10 +68,10 @@ namespace OpenTK.Platform.MacOS.Carbon
     [StructLayout(LayoutKind.Sequential)]
     internal struct Rect
     {
-        short top;
-        short left;
-        short bottom;
-        short right;
+        private short top;
+        private short left;
+        private short bottom;
+        private short right;
 
         internal Rect(int left, int top, int width, int height)
             : this((short)left, (short)top, (short)width, (short)height)
@@ -132,16 +132,16 @@ namespace OpenTK.Platform.MacOS.Carbon
         }
     }
 
-    class API
+    internal class API
     {
-        const string carbon = "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon";
+        private const string carbon = "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon";
 
         [DllImport(carbon)]
         internal unsafe static extern OSStatus DMGetGDeviceByDisplayID(
             IntPtr displayID, out IntPtr displayDevice, Boolean failToMain);
 
         [DllImport(carbon)]
-        static extern IntPtr GetControlBounds(IntPtr control, out Rect bounds);
+        private static extern IntPtr GetControlBounds(IntPtr control, out Rect bounds);
 
         internal static Rect GetControlBounds(IntPtr control)
         {

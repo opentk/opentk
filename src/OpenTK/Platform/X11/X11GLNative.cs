@@ -49,102 +49,107 @@ namespace OpenTK.Platform.X11
         // TODO: What happens if we can't disable decorations through motif?
         // TODO: Mouse/keyboard grabbing/wrapping.
 
-        const int _min_width = 30, _min_height = 30;
+        private const int _min_width = 30, _min_height = 30;
 
-        readonly X11WindowInfo window = new X11WindowInfo();
-        readonly X11KeyMap KeyMap;
+        private readonly X11WindowInfo window = new X11WindowInfo();
+        private readonly X11KeyMap KeyMap;
 
         // Window manager hints for fullscreen windows.
         // Not used right now (the code is written, but is not 64bit-correct), but could be useful for older WMs which
         // are not ICCM compliant, but may support MOTIF hints.
-        const string MOTIF_WM_ATOM = "_MOTIF_WM_HINTS";
-        const string KDE_WM_ATOM = "KWM_WIN_DECORATION";
-        const string KDE_NET_WM_ATOM = "_KDE_NET_WM_WINDOW_TYPE";
-        const string ICCM_WM_ATOM = "_NET_WM_WINDOW_TYPE";
-        const string ICON_NET_ATOM = "_NET_WM_ICON";
+        private const string MOTIF_WM_ATOM = "_MOTIF_WM_HINTS";
+
+        private const string KDE_WM_ATOM = "KWM_WIN_DECORATION";
+        private const string KDE_NET_WM_ATOM = "_KDE_NET_WM_WINDOW_TYPE";
+        private const string ICCM_WM_ATOM = "_NET_WM_WINDOW_TYPE";
+        private const string ICON_NET_ATOM = "_NET_WM_ICON";
 
         // The Atom class from Mono might be useful to avoid calling XInternAtom by hand (somewhat error prone).
-        IntPtr _atom_wm_destroy;
-        IntPtr _atom_net_wm_state;
-        IntPtr _atom_net_wm_state_minimized;
-        IntPtr _atom_net_wm_state_fullscreen;
-        IntPtr _atom_net_wm_state_maximized_horizontal;
-        IntPtr _atom_net_wm_state_maximized_vertical;
+        private IntPtr _atom_wm_destroy;
+
+        private IntPtr _atom_net_wm_state;
+        private IntPtr _atom_net_wm_state_minimized;
+        private IntPtr _atom_net_wm_state_fullscreen;
+        private IntPtr _atom_net_wm_state_maximized_horizontal;
+        private IntPtr _atom_net_wm_state_maximized_vertical;
 
 
-        IntPtr xdndFormat;
-        long sourceXdndVersion;
-        IntPtr sourceHandler;
+        private IntPtr xdndFormat;
+        private long sourceXdndVersion;
+        private IntPtr sourceHandler;
 
         // Xdnd atoms
-        IntPtr _atom_xdnd_enter;
-        IntPtr _atom_xdnd_position;
-        IntPtr _atom_xdnd_status;
-        IntPtr _atom_xdnd_type_list;
-        IntPtr _atom_xdnd_action_copy;
-        IntPtr _atom_xdnd_drop;
-        IntPtr _atom_xdnd_finished;
-        IntPtr _atom_xdnd_selection;
-        IntPtr _atom_xdnd_leave;
+        private IntPtr _atom_xdnd_enter;
 
-        IntPtr _atom_xdnd_primary;
+        private IntPtr _atom_xdnd_position;
+        private IntPtr _atom_xdnd_status;
+        private IntPtr _atom_xdnd_type_list;
+        private IntPtr _atom_xdnd_action_copy;
+        private IntPtr _atom_xdnd_drop;
+        private IntPtr _atom_xdnd_finished;
+        private IntPtr _atom_xdnd_selection;
+        private IntPtr _atom_xdnd_leave;
+
+        private IntPtr _atom_xdnd_primary;
 
         #pragma warning disable 414 // assigned but never used
-        IntPtr _atom_net_wm_allowed_actions;
-        IntPtr _atom_net_wm_action_resize;
-        IntPtr _atom_net_wm_action_maximize_horizontally;
-        IntPtr _atom_net_wm_action_maximize_vertically;
+        private IntPtr _atom_net_wm_allowed_actions;
+        private IntPtr _atom_net_wm_action_resize;
+        private IntPtr _atom_net_wm_action_maximize_horizontally;
+        private IntPtr _atom_net_wm_action_maximize_vertically;
         #pragma warning restore 414
 
-        IntPtr _atom_net_wm_icon;
+        private IntPtr _atom_net_wm_icon;
 
-        IntPtr _atom_net_frame_extents;
+        private IntPtr _atom_net_frame_extents;
 
-        readonly IntPtr _atom_xa_cardinal = new IntPtr(6);
+        private readonly IntPtr _atom_xa_cardinal = new IntPtr(6);
 
-        static readonly IntPtr _atom_remove = (IntPtr)0;
-        static readonly IntPtr _atom_add = (IntPtr)1;
-        static readonly IntPtr _atom_toggle = (IntPtr)2;
+        private static readonly IntPtr _atom_remove = (IntPtr)0;
+        private static readonly IntPtr _atom_add = (IntPtr)1;
+        private static readonly IntPtr _atom_toggle = (IntPtr)2;
 
         #pragma warning disable 649 // never assigned, compiler bug in Mono 3.4.0
-        Rectangle bounds, client_rectangle;
+        private Rectangle bounds, client_rectangle;
         #pragma warning restore 649
-        int border_left, border_right, border_top, border_bottom;
-        Icon icon;
-        bool has_focus;
-        bool visible;
+        private int border_left, border_right, border_top, border_bottom;
+        private Icon icon;
+        private bool has_focus;
+        private bool visible;
 
         // Used for event loop.
-        XEvent e = new XEvent();
+        private XEvent e = new XEvent();
 
-        bool disposed;
-        bool exists;
-        bool isExiting;
+        private bool disposed;
+        private bool exists;
+        private bool isExiting;
 
-        bool _decorations_hidden = false;
+        private bool _decorations_hidden = false;
 
         // Store previous border and bounds
         // when switching from WindowState.Normal
         // to a different state. When switching
         // back, reset window to these.s
-        WindowBorder _previous_window_border;
-        Size _previous_window_size;
-        OpenTK.WindowState _previous_window_state = OpenTK.WindowState.Normal;
+        private WindowBorder _previous_window_border;
 
-        MouseCursor cursor = MouseCursor.Default;
-        IntPtr cursorHandle;
-        bool cursor_visible = true;
+        private Size _previous_window_size;
+        private OpenTK.WindowState _previous_window_state = OpenTK.WindowState.Normal;
+
+        private MouseCursor cursor = MouseCursor.Default;
+        private IntPtr cursorHandle;
+        private bool cursor_visible = true;
 
          // Keyboard input
-        readonly byte[] ascii = new byte[16];
-        readonly char[] chars = new char[16];
+        private readonly byte[] ascii = new byte[16];
 
-        readonly IntPtr EmptyCursor;
+        private readonly char[] chars = new char[16];
+
+        private readonly IntPtr EmptyCursor;
 
         #pragma warning disable 414 // Field assigned but never used, we do that on purpose
-        readonly bool xi2_supported;
-        readonly int xi2_opcode;
-        readonly int xi2_version;
+        private readonly bool xi2_supported;
+        private readonly int xi2_opcode;
+        private readonly int xi2_version;
         #pragma warning restore 414
 
         // Used to wait for a specific type of event in ProcessEvents.
@@ -412,12 +417,12 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        void SetWindowMinMax(int min_width, int min_height, int max_width, int max_height)
+        private void SetWindowMinMax(int min_width, int min_height, int max_width, int max_height)
         {
             SetWindowMinMax((short)min_width, (short)min_height, (short)max_width, (short)max_height);
         }
 
-        void SetWindowMinMax(short min_width, short min_height, short max_width, short max_height)
+        private void SetWindowMinMax(short min_width, short min_height, short max_width, short max_height)
         {
             IntPtr dummy;
             XSizeHints hints = new XSizeHints();
@@ -457,7 +462,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        bool IsWindowBorderResizable
+        private bool IsWindowBorderResizable
         {
             get
             {
@@ -475,7 +480,7 @@ namespace OpenTK.Platform.X11
         }
 
 
-        bool IsWindowBorderHidden
+        private bool IsWindowBorderHidden
         {
             get
             {
@@ -504,7 +509,7 @@ namespace OpenTK.Platform.X11
         }
 
 
-        void DisableWindowDecorations()
+        private void DisableWindowDecorations()
         {
             if (DisableMotifDecorations())
             {
@@ -528,7 +533,7 @@ namespace OpenTK.Platform.X11
         }
 
 
-        bool DisableMotifDecorations()
+        private bool DisableMotifDecorations()
         {
             using (new XLock(window.Display))
             {
@@ -547,7 +552,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        bool DisableGnomeDecorations()
+        private bool DisableGnomeDecorations()
         {
             using (new XLock(window.Display))
             {
@@ -564,7 +569,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        void EnableWindowDecorations()
+        private void EnableWindowDecorations()
         {
             if (EnableMotifDecorations())
             {
@@ -586,7 +591,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        bool EnableMotifDecorations()
+        private bool EnableMotifDecorations()
         {
             using (new XLock(window.Display))
             {
@@ -606,7 +611,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        bool EnableGnomeDecorations()
+        private bool EnableGnomeDecorations()
         {
             using (new XLock(window.Display))
             {
@@ -630,7 +635,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        static void DeleteIconPixmaps(IntPtr display, IntPtr window)
+        private static void DeleteIconPixmaps(IntPtr display, IntPtr window)
         {
             using (new XLock(display))
             {
@@ -659,7 +664,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        bool RefreshWindowBorders()
+        private bool RefreshWindowBorders()
         {
             bool borders_changed = false;
 
@@ -724,7 +729,7 @@ namespace OpenTK.Platform.X11
             return borders_changed;
         }
 
-        void RefreshWindowBounds(ref XEvent e)
+        private void RefreshWindowBounds(ref XEvent e)
         {
             RefreshWindowBorders();
 
@@ -780,7 +785,7 @@ namespace OpenTK.Platform.X11
             //Debug.Print("[X11] Window bounds changed: {0}", bounds);
         }
 
-        static IntPtr CreateEmptyCursor(X11WindowInfo window)
+        private static IntPtr CreateEmptyCursor(X11WindowInfo window)
         {
             IntPtr cursor = IntPtr.Zero;
             using (new XLock(window.Display))
@@ -1433,7 +1438,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        void ResetWindowState(OpenTK.WindowState current_state)
+        private void ResetWindowState(OpenTK.WindowState current_state)
         {
             if (current_state != OpenTK.WindowState.Normal)
             {
@@ -1465,7 +1470,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        void ChangeWindowState(OpenTK.WindowState value)
+        private void ChangeWindowState(OpenTK.WindowState value)
         {
             using (new XLock(window.Display))
             {
@@ -1529,12 +1534,12 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        void ChangeWindowBorder(WindowBorder value)
+        private void ChangeWindowBorder(WindowBorder value)
         {
             ChangeWindowBorder(value, Width, Height);
         }
 
-        void ChangeWindowBorder(WindowBorder value, int width, int height)
+        private void ChangeWindowBorder(WindowBorder value, int width, int height)
         {
             if (WindowBorder == WindowBorder.Hidden)
                 EnableWindowDecorations();
@@ -1643,7 +1648,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        void GrabMouse()
+        private void GrabMouse()
         {
             Functions.XGrabPointer(window.Display, window.Handle, false,
                 EventMask.PointerMotionMask | EventMask.ButtonPressMask |
@@ -1652,7 +1657,7 @@ namespace OpenTK.Platform.X11
                 window.Handle, EmptyCursor, IntPtr.Zero);
         }
 
-        void UngrabMouse()
+        private void UngrabMouse()
         {
             Functions.XUngrabPointer(window.Display, IntPtr.Zero);
         }

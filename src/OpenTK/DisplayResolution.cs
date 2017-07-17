@@ -17,7 +17,7 @@ namespace OpenTK
     /// <summary>Contains information regarding a monitor's display resolution.</summary>
     public class DisplayResolution
     {
-        Rectangle bounds;
+        private Rectangle bounds;
 
         internal DisplayResolution() { }
 

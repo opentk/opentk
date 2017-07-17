@@ -39,24 +39,24 @@ namespace OpenTK.Platform.Linux
 {
     using Egl = OpenTK.Platform.Egl.Egl;
 
-    class LinuxNativeWindow : NativeWindowBase
+    internal class LinuxNativeWindow : NativeWindowBase
     {
-        LinuxWindowInfo window;
-        string title;
-        Icon icon;
-        Rectangle bounds;
-        Size client_size;
-        bool exists;
-        bool is_focused;
-        bool is_cursor_visible = true;
+        private LinuxWindowInfo window;
+        private string title;
+        private Icon icon;
+        private Rectangle bounds;
+        private Size client_size;
+        private bool exists;
+        private bool is_focused;
+        private bool is_cursor_visible = true;
 
-        KeyboardState previous_keyboard;
-        MouseState previous_mouse;
+        private KeyboardState previous_keyboard;
+        private MouseState previous_mouse;
 
-        MouseCursor cursor_current;
-        BufferObject cursor_custom;
-        BufferObject cursor_default;
-        BufferObject cursor_empty;
+        private MouseCursor cursor_current;
+        private BufferObject cursor_custom;
+        private BufferObject cursor_default;
+        private BufferObject cursor_empty;
 
         public LinuxNativeWindow(IntPtr display, IntPtr gbm, int fd,
             int x, int y, int width, int height, string title,
@@ -118,7 +118,7 @@ namespace OpenTK.Platform.Linux
             exists = true;
         }
 
-        static BufferObject CreateCursor(IntPtr gbm, MouseCursor cursor)
+        private static BufferObject CreateCursor(IntPtr gbm, MouseCursor cursor)
         {
             if (cursor.Width > 64 || cursor.Height > 64)
             {
@@ -161,7 +161,7 @@ namespace OpenTK.Platform.Linux
             return bo;
         }
 
-        void SetCursor(MouseCursor cursor)
+        private void SetCursor(MouseCursor cursor)
         {
             BufferObject bo = default(BufferObject);
             if (cursor == MouseCursor.Default)
@@ -194,7 +194,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        static SurfaceFormat GetSurfaceFormat(IntPtr display, GraphicsMode mode)
+        private static SurfaceFormat GetSurfaceFormat(IntPtr display, GraphicsMode mode)
         {
             // Use EGL 1.4 EGL_NATIVE_VISUAL_ID to retrieve
             // the corresponding surface format. If that fails
@@ -236,7 +236,7 @@ namespace OpenTK.Platform.Linux
             return SurfaceFormat.RGBA8888;
         }
 
-        KeyboardState ProcessKeyboard(KeyboardState keyboard)
+        private KeyboardState ProcessKeyboard(KeyboardState keyboard)
         {
             for (Key i = 0; i < Key.LastKey; i++)
             {
@@ -254,7 +254,7 @@ namespace OpenTK.Platform.Linux
             return keyboard;
         }
 
-        MouseState ProcessMouse(MouseState mouse)
+        private MouseState ProcessMouse(MouseState mouse)
         {
             // Handle mouse buttons
             for (MouseButton i = 0; i < MouseButton.LastButton; i++)
@@ -317,7 +317,7 @@ namespace OpenTK.Platform.Linux
             return mouse;
         }
 
-        void SetFocus(bool focus)
+        private void SetFocus(bool focus)
         {
             if (is_focused != focus)
             {

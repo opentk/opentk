@@ -30,7 +30,7 @@ using OpenTK.Graphics.ES20;
 
 namespace OpenTK.Platform.Egl
 {
-    abstract class EglContext : EmbeddedGraphicsContext
+    internal abstract class EglContext : EmbeddedGraphicsContext
     {
         protected readonly RenderableFlags Renderable;
         internal EglWindowInfo WindowInfo;
@@ -38,7 +38,7 @@ namespace OpenTK.Platform.Egl
         internal GraphicsContextFlags GraphicsContextFlags { get; set; }
 
         internal IntPtr HandleAsEGLContext { get { return Handle.Handle; } set { Handle = new ContextHandle(value); } }
-        int swap_interval = 1; // Default interval is defined as 1 in EGL.
+        private int swap_interval = 1; // Default interval is defined as 1 in EGL.
 
         public EglContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
