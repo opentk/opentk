@@ -1128,12 +1128,6 @@ namespace OpenTK
             }
         }
 
-        public OpenTK.Input.IInputDriver InputDriver {
-            get {
-                throw new NotSupportedException ();
-            }
-        }
-
         MouseCursor INativeWindow.Cursor
         {
             get { throw new NotSupportedException(); }
@@ -1189,6 +1183,12 @@ namespace OpenTK
         }
 
         event EventHandler<MouseWheelEventArgs> INativeWindow.MouseWheel
+        {
+            add { throw new NotSupportedException(); }
+            remove { throw new NotSupportedException(); }
+        }
+
+        event EventHandler<FileDropEventArgs> INativeWindow.FileDrop
         {
             add { throw new NotSupportedException(); }
             remove { throw new NotSupportedException(); }

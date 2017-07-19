@@ -967,14 +967,6 @@ namespace OpenTK.Platform.iPhoneOS
         public event EventHandler<FrameEventArgs> UpdateFrame;
         public event EventHandler<FrameEventArgs> RenderFrame;
 
-        public OpenTK.Input.IInputDriver InputDriver
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
-
         MouseCursor INativeWindow.Cursor
         {
             get { throw new NotSupportedException(); }
@@ -1042,6 +1034,12 @@ namespace OpenTK.Platform.iPhoneOS
         }
 
         public event EventHandler<EventArgs> MouseLeave
+        {
+            add { throw new NotSupportedException(); }
+            remove { throw new NotSupportedException(); }
+        }
+
+        public event EventHandler<FileDropEventArgs> FileDrop
         {
             add { throw new NotSupportedException(); }
             remove { throw new NotSupportedException(); }
