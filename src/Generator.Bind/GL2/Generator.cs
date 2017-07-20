@@ -55,7 +55,9 @@ namespace Bind.GL2
         public Generator(Settings settings)
         {
             if (settings == null)
+            {
                 throw new ArgumentNullException("settings");
+            }
 
             Settings = settings.Clone();
 

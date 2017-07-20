@@ -89,7 +89,9 @@ namespace OpenTK.Platform.X11
             DefaultDisplay = Functions.XOpenDisplay(IntPtr.Zero);
 
             if (DefaultDisplay == IntPtr.Zero)
+            {
                 throw new PlatformException("Could not establish connection to the X-Server.");
+            }
 
             using (new XLock(DefaultDisplay))
             {
@@ -1469,7 +1471,9 @@ XF86VidModeGetGammaRampSize(
 
                 byte* data = (byte*)XRRSizes(dpy, screen, &count);//(byte*)ptr;
                 if (count == 0)
+                {
                     return null;
+                }
                 sizes = new XRRScreenSize[count];
                 for (int i = 0; i < count; i++)
                 {
@@ -1493,10 +1497,14 @@ XF86VidModeGetGammaRampSize(
             {
                 short* data = (short*)XRRRates(dpy, screen, size_index, &count);
                 if (count == 0)
+                {
                     return null;
+                }
                 rates = new short[count];
                 for (int i = 0; i < count; i++)
+                {
                     rates[i] = *(data + i);
+                }
             }
             return rates;
         }
@@ -1517,10 +1525,14 @@ XF86VidModeGetGammaRampSize(
                 int count;
                 int* data = XListDepths(display, screen_number, &count);
                 if (count == 0)
+                {
                     return null;
+                }
                 int[] depths = new int[count];
                 for (int i = 0; i < count; i++)
+                {
                     depths[i] = *(data + i);
+                }
 
                 return depths;
             }
@@ -1529,7 +1541,9 @@ XF86VidModeGetGammaRampSize(
         public static Pixmap XCreateBitmapFromData(Display display, Window d, byte[,] data)
         {
             if (data == null)
+            {
                 throw new ArgumentNullException("data");
+            }
 
             unsafe
             {
@@ -1578,13 +1592,17 @@ XF86VidModeGetGammaRampSize(
             get
             {
                 if (_display == IntPtr.Zero)
+                {
                     throw new InvalidOperationException("Internal error (XLockDisplay with IntPtr.Zero). Please report this at http://www.opentk.com/node/add/project-issue/opentk");
+                }
                 return _display;
             }
             set
             {
                 if (value == IntPtr.Zero)
+                {
                     throw new ArgumentException();
+                }
                 _display = value;
             }
         }

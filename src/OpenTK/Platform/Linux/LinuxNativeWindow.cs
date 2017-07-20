@@ -175,7 +175,9 @@ namespace OpenTK.Platform.Linux
             else
             {
                 if (cursor_custom != BufferObject.Zero)
+                {
                     cursor_custom.Dispose();
+                }
                 cursor_custom = CreateCursor(window.BufferManager, cursor);
                 bo = cursor_custom;
             }
@@ -203,7 +205,9 @@ namespace OpenTK.Platform.Linux
             Egl.GetConfigAttrib(display, mode.Index.Value,
                 Egl.NATIVE_VISUAL_ID, out format);
             if ((SurfaceFormat)format != 0)
+            {
                 return (SurfaceFormat)format;
+            }
 
             Debug.Print("[KMS] Failed to retrieve EGL visual from GBM surface. Error: {0}",
                 Egl.GetError());
@@ -215,23 +219,41 @@ namespace OpenTK.Platform.Linux
             int a = mode.ColorFormat.Alpha;
 
             if (mode.ColorFormat.IsIndexed)
+            {
                 return SurfaceFormat.C8;
+            }
             if (r == 3 && g == 3 && b == 2 && a == 0)
+            {
                 return SurfaceFormat.RGB332;
+            }
             if (r == 5 && g == 6 && b == 5 && a == 0)
+            {
                 return SurfaceFormat.RGB565;
+            }
             if (r == 5 && g == 6 && b == 5 && a == 0)
+            {
                 return SurfaceFormat.RGB565;
+            }
             if (r == 8 && g == 8 && b == 8 && a == 0)
+            {
                 return SurfaceFormat.RGB888;
+            }
             if (r == 5 && g == 5 && b == 5 && a == 1)
+            {
                 return SurfaceFormat.RGBA5551;
+            }
             if (r == 10 && g == 10 && b == 10 && a == 2)
+            {
                 return SurfaceFormat.RGBA1010102;
+            }
             if (r == 4 && g == 4 && b == 4 && a == 4)
+            {
                 return SurfaceFormat.RGBA4444;
+            }
             if (r == 8 && g == 8 && b == 8 && a == 8)
+            {
                 return SurfaceFormat.RGBA8888;
+            }
 
             return SurfaceFormat.RGBA8888;
         }

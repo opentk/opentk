@@ -83,9 +83,13 @@ namespace OpenTK
         protected static void MarshalPtrToStringBuilder(IntPtr ptr, StringBuilder sb)
         {
             if (ptr == IntPtr.Zero)
+            {
                 throw new ArgumentException("ptr");
+            }
             if (sb == null)
+            {
                 throw new ArgumentNullException("sb");
+            }
 
             sb.Length = 0;
             for (int i = 0; ; i++)

@@ -61,18 +61,26 @@ namespace Bind.Structures
             get
             {
                 if (cls_compliance_overriden != null)
+                {
                     return (bool)cls_compliance_overriden;
+                }
 
                 if (Unsafe)
+                {
                     return false;
+                }
 
                 if (!ReturnType.CLSCompliant)
+                {
                     return false;
+                }
 
                 foreach (Parameter p in Parameters)
                 {
                     if (!p.CLSCompliant)
+                    {
                         return false;
+                    }
                 }
                 return true;
             }
@@ -96,12 +104,16 @@ namespace Bind.Structures
                 // TODO: Add special cases for (Get)ShaderSource.
 
                 if (ReturnType.WrapperType != WrapperTypes.None)
+                {
                     return true;
+                }
 
                 foreach (Parameter p in Parameters)
                 {
                     if (p.WrapperType != WrapperTypes.None)
+                    {
                         return true;
+                    }
                 }
 
                 return false;
@@ -121,7 +133,9 @@ namespace Bind.Structures
                 //    return false;
 
                 if (ReturnType.Pointer != 0)
+                {
                     return true;
+                }
 
                 foreach (Parameter p in Parameters)
                 {
@@ -198,9 +212,13 @@ namespace Bind.Structures
         {
             int ret = Name.CompareTo(other.Name);
             if (ret == 0)
+            {
                 ret = Parameters.CompareTo(other.Parameters);
+            }
             if (ret == 0)
+            {
                 ret = ReturnType.CompareTo(other.ReturnType);
+            }
             return ret;
         }
 

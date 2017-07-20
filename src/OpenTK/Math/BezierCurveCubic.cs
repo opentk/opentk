@@ -96,14 +96,20 @@ namespace OpenTK
                 + EndAnchor.Y * t * t * t;
 
             if (Parallel == 0.0f)
+            {
                 return r;
+            }
 
             Vector2 perpendicular = new Vector2();
 
             if (t == 0.0f)
+            {
                 perpendicular = FirstControlPoint - StartAnchor;
+            }
             else
+            {
                 perpendicular = r - CalculatePointOfDerivative(t);
+            }
 
             return r + Vector2.Normalize(perpendicular).PerpendicularRight * Parallel;
         }

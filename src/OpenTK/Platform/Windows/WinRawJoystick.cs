@@ -187,7 +187,9 @@ namespace OpenTK.Platform.Windows
             Debug.Indent();
 
             if (window == IntPtr.Zero)
+            {
                 throw new ArgumentNullException("window");
+            }
 
             DeviceTypes = new RawInputDevice[]
             {
@@ -225,7 +227,9 @@ namespace OpenTK.Platform.Windows
             {
                 // Skip non-joystick devices
                 if (dev.Type != RawInputDeviceType.HID)
+                {
                     continue;
+                }
 
                 // We use the device handle as the hardware id.
                 // This works, but the handle will change whenever the
@@ -641,7 +645,9 @@ namespace OpenTK.Platform.Windows
                     }
                 }
                 else
+                {
                     return false;
+                }
             }
             finally
             {

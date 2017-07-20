@@ -115,11 +115,20 @@ namespace OpenTK.Platform.X11
         /// <returns>True if <c>this</c> and <c>obj</c> reference the same win32 window; false otherwise.</returns>
         public override bool Equals(object obj)
         {
-            if (obj == null) return false;
-            if (this.GetType() != obj.GetType()) return false;
+            if (obj == null)
+            {
+                return false;
+            }
+            if (this.GetType() != obj.GetType())
+            {
+                return false;
+            }
             X11WindowInfo info = (X11WindowInfo)obj;
 
-            if (info == null) return false;
+            if (info == null)
+            {
+                return false;
+            }
             // TODO: Assumes windows will have unique handles per X11 display.
             return object.Equals(display, info.display) &&
                    handle.Equals(info.handle);

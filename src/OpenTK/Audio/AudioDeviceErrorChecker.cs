@@ -39,7 +39,9 @@ namespace OpenTK.Audio
         public AudioDeviceErrorChecker(IntPtr device)
         {
             if (device == IntPtr.Zero)
+            {
                 throw new AudioDeviceException();
+            }
 
             Device = device;
         }

@@ -99,7 +99,9 @@ namespace Bind
                                 val = val.ToLower();
                                 bool enable = !opt.StartsWith("-");
                                 if (val.StartsWith("+") || val.StartsWith("-"))
+                                {
                                     val = val.Substring(1);
+                                }
 
                                 var settings = Settings.Legacy.None;
                                 switch (val)

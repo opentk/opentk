@@ -111,15 +111,36 @@ namespace OpenTK
         /// </summary>
         public double this[int index] {
             get{
-                if(index == 0) return X;
-                else if(index == 1) return Y;
-                else if(index == 2) return Z;
+                if(index == 0)
+                {
+                    return X;
+                }
+                else if(index == 1)
+                {
+                    return Y;
+                }
+                else if(index == 2)
+                {
+                    return Z;
+                }
                 throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
             } set{
-                if(index == 0) X = value;
-                else if(index == 1) Y = value;
-                else if(index == 2) Z = value;
-                else throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
+                if(index == 0)
+                {
+                    X = value;
+                }
+                else if(index == 1)
+                {
+                    Y = value;
+                }
+                else if(index == 2)
+                {
+                    Z = value;
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
+                }
             }
         }
 
@@ -1170,7 +1191,9 @@ namespace OpenTK
         public override bool Equals(object obj)
         {
             if (!(obj is Vector3d))
+            {
                 return false;
+            }
 
             return this.Equals((Vector3d)obj);
         }

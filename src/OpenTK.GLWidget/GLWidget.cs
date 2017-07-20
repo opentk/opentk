@@ -191,7 +191,9 @@ namespace OpenTK
         private static void OnGraphicsContextInitialized()
         {
             if (GraphicsContextInitialized != null)
+            {
                 GraphicsContextInitialized(null, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -206,7 +208,9 @@ namespace OpenTK
         private static void OnGraphicsContextShuttingDown()
         {
             if (GraphicsContextShuttingDown != null)
+            {
                 GraphicsContextShuttingDown(null, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -221,7 +225,9 @@ namespace OpenTK
         protected virtual void OnInitialized()
         {
             if (Initialized != null)
+            {
                 Initialized(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -235,7 +241,9 @@ namespace OpenTK
         protected virtual void OnRenderFrame()
         {
             if (RenderFrame != null)
+            {
                 RenderFrame(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -249,7 +257,9 @@ namespace OpenTK
         protected virtual void OnShuttingDown()
         {
             if (ShuttingDown != null)
+            {
                 ShuttingDown(this, EventArgs.Empty);
+            }
         }
 
 #if GTK3
@@ -269,9 +279,13 @@ namespace OpenTK
 #endif
         {
             if (!_Initialized)
+            {
                 Initialize();
+            }
             else
+            {
                 _GraphicsContext.MakeCurrent(_WindowInfo);
+            }
 
 #if GTK3
             var result = base.OnDrawn(cr);
@@ -300,7 +314,9 @@ namespace OpenTK
             bool result = base.OnConfigureEvent(evnt);
 
             if (_GraphicsContext != null)
+            {
                 _GraphicsContext.Update(_WindowInfo);
+            }
 
             return result;
         }
@@ -318,7 +334,9 @@ namespace OpenTK
                 ColorBPP = 32;
 
                 if (DepthBPP == 0)
+                {
                     DepthBPP = 16;
+                }
             }
 
             ColorFormat colorBufferColorFormat = new ColorFormat(ColorBPP);
@@ -327,16 +345,24 @@ namespace OpenTK
 
             int buffers = 2;
             if (SingleBuffer)
+            {
                 buffers--;
+            }
 
             GraphicsMode graphicsMode = new GraphicsMode(colorBufferColorFormat, DepthBPP, StencilBPP, Samples, accumulationColorFormat, buffers, Stereo);
 
             if (Configuration.RunningOnWindows)
+            {
                 Console.WriteLine("OpenTK running on windows");
+            }
             else if (Configuration.RunningOnMacOS)
+            {
                 Console.WriteLine("OpenTK running on OSX");
+            }
             else
+            {
                 Console.WriteLine("OpenTK running on X11");
+            }
 
 #if GTK3
             IntPtr widgetWindowHandle = this.Window.Handle;
@@ -346,11 +372,17 @@ namespace OpenTK
 
             // IWindowInfo
             if (Configuration.RunningOnWindows)
+            {
                 _WindowInfo = WinWindowsInfoInitializer.Initialize(widgetWindowHandle);
+            }
             else if (Configuration.RunningOnMacOS)
+            {
                 _WindowInfo = OSXWindowInfoInitializer.Initialize(widgetWindowHandle);
+            }
             else
+            {
                 _WindowInfo = XWindowInfoInitializer.Initialize(graphicsMode, this.Display.Handle, this.Screen.Number, widgetWindowHandle, this.Screen.RootWindow.Handle);
+            }
 
             // GraphicsContext
             _GraphicsContext = new GraphicsContext(graphicsMode, _WindowInfo, GlVersionMajor, GlVersionMinor, GraphicsContextFlags);

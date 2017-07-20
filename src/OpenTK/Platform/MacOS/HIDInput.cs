@@ -189,7 +189,9 @@ namespace OpenTK.Platform.MacOS
 
             RunLoop = CF.CFRunLoopGetMain();
             if (RunLoop == IntPtr.Zero)
+            {
                 RunLoop = CF.CFRunLoopGetCurrent();
+            }
             if (RunLoop == IntPtr.Zero)
             {
                 Debug.Print("[Error] No CFRunLoop found for {0}", GetType().FullName);

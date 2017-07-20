@@ -70,7 +70,9 @@ namespace OpenTK.Platform.Linux
             get
             {
                 if (Crtc == IntPtr.Zero)
+                {
                     throw new InvalidOperationException();
+                }
 
                 unsafe
                 {
@@ -325,11 +327,15 @@ namespace OpenTK.Platform.Linux
             // Find corresponding encoder
             ModeEncoder* encoder = GetEncoder(fd, c);
             if (encoder == null)
+            {
                 return false;
+            }
 
             ModeCrtc* crtc = GetCrtc(fd, encoder);
             if (crtc == null)
+            {
                 return false;
+            }
 
             display = new LinuxDisplay(fd, (IntPtr)c, (IntPtr)encoder, (IntPtr)crtc);
             return true;

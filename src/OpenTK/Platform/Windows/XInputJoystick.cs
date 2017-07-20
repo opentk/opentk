@@ -85,29 +85,45 @@ namespace OpenTK.Platform.Windows
 
             dir =XInputButtons.DPadUp | XInputButtons.DPadLeft;
             if ((buttons & dir) == dir)
+            {
                 return HatPosition.UpLeft;
+            }
             dir = XInputButtons.DPadUp | XInputButtons.DPadRight;
             if ((buttons & dir) == dir)
+            {
                 return HatPosition.UpRight;
+            }
             dir = XInputButtons.DPadDown | XInputButtons.DPadLeft;
             if ((buttons & dir) == dir)
+            {
                 return HatPosition.DownLeft;
+            }
             dir = XInputButtons.DPadDown | XInputButtons.DPadRight;
             if ((buttons & dir) == dir)
+            {
                 return HatPosition.DownRight;
+            }
 
             dir = XInputButtons.DPadUp;
             if ((buttons & dir) == dir)
+            {
                 return HatPosition.Up;
+            }
             dir = XInputButtons.DPadRight;
             if ((buttons & dir) == dir)
+            {
                 return HatPosition.Right;
+            }
             dir = XInputButtons.DPadDown;
             if ((buttons & dir) == dir)
+            {
                 return HatPosition.Down;
+            }
             dir = XInputButtons.DPadLeft;
             if ((buttons & dir) == dir)
+            {
                 return HatPosition.Left;
+            }
 
             return HatPosition.Centered;
         }
@@ -350,15 +366,25 @@ namespace OpenTK.Platform.Windows
                 // The delegates below will be loaded dynamically from that dll
                 dll = Functions.LoadLibrary("XINPUT1_4");
                 if (dll == IntPtr.Zero)
+                {
                     dll = Functions.LoadLibrary("XINPUT1_3");
+                }
                 if (dll == IntPtr.Zero)
+                {
                     dll = Functions.LoadLibrary("XINPUT1_2");
+                }
                 if (dll == IntPtr.Zero)
+                {
                     dll = Functions.LoadLibrary("XINPUT1_1");
+                }
                 if (dll == IntPtr.Zero)
+                {
                     dll = Functions.LoadLibrary("XINPUT9_1_0");
+                }
                 if (dll == IntPtr.Zero)
+                {
                     throw new NotSupportedException("XInput was not found on this platform");
+                }
 
                 // Load the entry points we are interested in from that dll
                 GetCapabilities = (XInputGetCapabilities)Load("XInputGetCapabilities", typeof(XInputGetCapabilities));
@@ -374,7 +400,9 @@ namespace OpenTK.Platform.Windows
             {
                 IntPtr pfunc = Functions.GetProcAddress(dll, (IntPtr)ordinal);
                 if (pfunc != IntPtr.Zero)
+                {
                     return Marshal.GetDelegateForFunctionPointer(pfunc, type);
+                }
                 return null;
             }
 
@@ -382,7 +410,9 @@ namespace OpenTK.Platform.Windows
             {
                 IntPtr pfunc = Functions.GetProcAddress(dll, name);
                 if (pfunc != IntPtr.Zero)
+                {
                     return Marshal.GetDelegateForFunctionPointer(pfunc, type);
+                }
                 return null;
             }
 

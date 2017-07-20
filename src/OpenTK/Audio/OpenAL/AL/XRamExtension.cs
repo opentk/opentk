@@ -45,7 +45,9 @@ namespace OpenTK.Audio.OpenAL
         { // Query if Extension supported and retrieve Tokens/Pointers if it is.
             IsInitialized = false;
             if (AL.IsExtensionPresent("EAX-RAM") == false)
+            {
                 return;
+            }
 
             AL_EAX_RAM_SIZE = AL.GetEnumValue("AL_EAX_RAM_SIZE");
             AL_EAX_RAM_FREE = AL.GetEnumValue("AL_EAX_RAM_FREE");
@@ -150,9 +152,13 @@ namespace OpenTK.Audio.OpenAL
             int tempresult = Imported_GetBufferMode(buffer, IntPtr.Zero); // IntPtr.Zero due to the parameter being unused/reserved atm
 
             if (tempresult == AL_STORAGE_ACCESSIBLE)
+            {
                 return XRamStorage.Accessible;
+            }
             if (tempresult == AL_STORAGE_HARDWARE)
+            {
                 return XRamStorage.Hardware;
+            }
             // default:
             return XRamStorage.Automatic;
         }

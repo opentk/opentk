@@ -52,13 +52,17 @@ namespace OpenTK.Graphics.ES20
         public ErrorHelper(IGraphicsContext context)
         {
             if (context == null)
+            {
                 throw new GraphicsContextMissingException();
+            }
 
             Context = (GraphicsContext)context;
             lock (SyncRoot)
             {
                 if (!ContextErrors.ContainsKey(Context))
+                {
                     ContextErrors.Add(Context, new List<ErrorCode>());
+                }
             }
             ResetErrors();
         }
@@ -101,7 +105,9 @@ namespace OpenTK.Graphics.ES20
                             sb.Append(", ");
                         }
                         else
+                        {
                             break;
+                        }
                     }
                     sb.Remove(sb.Length - 2, 2); // Remove the last comma
 

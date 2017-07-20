@@ -106,9 +106,13 @@ namespace OpenTK.Platform.Windows
         {
             IntPtr ret =  WindowProcedure(handle, message, wParam, lParam);
             if (ret == Unhandled)
+            {
                 return Functions.CallWindowProc(OldWndProc, handle, message, wParam, lParam);
+            }
             else
+            {
                 return ret;
+            }
         }
 
         protected virtual IntPtr WindowProcedure(

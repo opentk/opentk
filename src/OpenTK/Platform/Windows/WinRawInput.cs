@@ -61,7 +61,9 @@ namespace OpenTK.Platform.Windows
                     new IntPtr((void*)&bdi), DeviceNotification.WINDOW_HANDLE);
             }
             if (dev_notify_handle == IntPtr.Zero)
+            {
                 Debug.Print("[Warning] Failed to register for device notifications. Error: {0}", Marshal.GetLastWin32Error());
+            }
 
             return dev_notify_handle;
         }
@@ -85,17 +87,23 @@ namespace OpenTK.Platform.Windows
                                 {
                                     case RawInputDeviceType.KEYBOARD:
                                         if (((WinRawKeyboard)KeyboardDriver).ProcessKeyboardEvent(lParam))
+                                        {
                                             return IntPtr.Zero;
+                                        }
                                         break;
 
                                     case RawInputDeviceType.MOUSE:
                                         if (((WinRawMouse)MouseDriver).ProcessMouseEvent(lParam))
+                                        {
                                             return IntPtr.Zero;
+                                        }
                                         break;
 
                                     case RawInputDeviceType.HID:
                                         if (((WinRawJoystick)JoystickDriver).ProcessEvent(lParam))
+                                        {
                                             return IntPtr.Zero;
+                                        }
                                         break;
                                 }
                             }
@@ -149,7 +157,9 @@ namespace OpenTK.Platform.Windows
             int count = WinRawInput.DeviceCount;
             RawInputDeviceList[] ridl = new RawInputDeviceList[count];
             for (int i = 0; i < count; i++)
+            {
                 ridl[i] = new RawInputDeviceList();
+            }
             Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
             return ridl;
         }

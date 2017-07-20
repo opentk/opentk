@@ -204,7 +204,9 @@ namespace OpenTK.Platform.Linux
             CloseRestrictedCallback close_restricted)
         {
             if (open_restricted == null || close_restricted == null)
+            {
                 throw new ArgumentNullException();
+            }
 
             open = Marshal.GetFunctionPointerForDelegate(open_restricted);
             close = Marshal.GetFunctionPointerForDelegate(close_restricted);

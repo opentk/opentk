@@ -114,8 +114,12 @@ namespace OpenTK.Platform.X11
         private static DisplayDevice FindDefaultDevice(IEnumerable<DisplayDevice> devices)
         {
                 foreach (DisplayDevice dev in devices)
+                {
                     if (dev.IsPrimary)
+                    {
                         return dev;
+                    }
+                }
 
             throw new InvalidOperationException("No primary display found. Please file a bug at http://www.opentk.com");
         }
@@ -185,8 +189,12 @@ namespace OpenTK.Platform.X11
                         // Note: some X servers (like Xming on Windows) do not report any rates other than 0.
                         // If we only have 1 rate, add it even if it is 0.
                         if (rate != 0 || rates.Length == 1)
+                        {
                             foreach (int depth in depths)
+                            {
                                 available_res.Add(new DisplayResolution(0, 0, size.Width, size.Height, depth, (float)rate));
+                            }
+                        }
                     }
                     // Keep the index of this resolution - we will need it for resolution changes later.
                     foreach (int depth in depths)
@@ -197,7 +205,9 @@ namespace OpenTK.Platform.X11
                         // same resolution twice!
                         DisplayResolution res = new DisplayResolution(0, 0, size.Width, size.Height, depth, 0);
                         if (!screenResolutionToIndex[screen].ContainsKey(res))
+                        {
                             screenResolutionToIndex[screen].Add(res, resolution_count);
+                        }
                     }
 
                     ++resolution_count;
@@ -246,7 +256,9 @@ namespace OpenTK.Platform.X11
             try
             {
                 if (!API.XF86VidModeQueryVersion(API.DefaultDisplay, out major, out minor))
+                {
                     return false;
+                }
             }
             catch (DllNotFoundException)
             {
@@ -299,7 +311,9 @@ namespace OpenTK.Platform.X11
             XRRScreenSize[] resolutions = null;
             resolutions = Functions.XRRSizes(API.DefaultDisplay, screen);
             if (resolutions == null)
+            {
                 throw new NotSupportedException("XRandR extensions not available.");
+            }
             return resolutions;
         }
 
@@ -329,10 +343,14 @@ namespace OpenTK.Platform.X11
                 int current_resolution_index = Functions.XRRConfigCurrentConfiguration(screen_config, out current_rotation);
                 int new_resolution_index;
                 if (resolution != null)
+                {
                     new_resolution_index = screenResolutionToIndex[screen]
                         [new DisplayResolution(0, 0, resolution.Width, resolution.Height, resolution.BitsPerPixel, 0)];
+                }
                 else
+                {
                     new_resolution_index = deviceToDefaultResolution[device];
+                }
 
                 Debug.Print("Changing size of screen {0} from {1} to {2}",
                     screen, current_resolution_index, new_resolution_index);

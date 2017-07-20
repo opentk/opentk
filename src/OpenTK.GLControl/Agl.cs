@@ -355,9 +355,13 @@ namespace OpenTK.Platform.MacOS
             byte retval = _aglSetCurrentContext(context);
 
             if (retval != 0)
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
 
         [DllImport(agl)] internal static extern AGLContext aglGetCurrentContext();

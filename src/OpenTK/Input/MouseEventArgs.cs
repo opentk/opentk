@@ -78,7 +78,9 @@ namespace OpenTK.Input
         internal void SetButton(MouseButton button, ButtonState state)
         {
             if (button < 0 || button > MouseButton.LastButton)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
             switch (state)
             {
@@ -95,7 +97,9 @@ namespace OpenTK.Input
         internal ButtonState GetButton(MouseButton button)
         {
             if (button < 0 || button > MouseButton.LastButton)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
             return
                 state.ReadBit((int)button) ?

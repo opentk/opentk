@@ -395,9 +395,13 @@ namespace OpenTK.Platform.SDL2
         public static int PeepEvents(Event[] e, int count, EventAction action, EventType min, EventType max)
         {
             if (e == null)
+            {
                 throw new ArgumentNullException();
+            }
             if (count <= 0 || count > e.Length)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
             unsafe
             {

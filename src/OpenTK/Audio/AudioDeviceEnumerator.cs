@@ -112,7 +112,9 @@ namespace OpenTK.Audio
                 }
                 AlcError playback_err = Alc.GetError(dummy_device);
                 if (playback_err != AlcError.NoError)
+                {
                     throw new AudioContextException("Alc Error occured when querying available playback devices. " + playback_err.ToString());
+                }
 
                 // Get a list of all known recording devices, at least ALC_ENUMERATION_EXT is needed too
                 if (Version == AlcVersion.Alc1_1 && Alc.IsExtensionPresent(IntPtr.Zero, "ALC_EXT_CAPTURE"))
@@ -126,18 +128,24 @@ namespace OpenTK.Audio
                 }
                 AlcError record_err = Alc.GetError(dummy_device);
                 if (record_err != AlcError.NoError)
+                {
                     throw new AudioContextException("Alc Error occured when querying available recording devices. " + record_err.ToString());
+                }
 
 #if DEBUG
                 Debug.WriteLine("Found playback devices:");
                 foreach (string s in available_playback_devices)
+                {
                     Debug.WriteLine(s);
+                }
 
                 Debug.WriteLine("Default playback device: " + DefaultPlaybackDevice);
 
                 Debug.WriteLine("Found recording devices:");
                 foreach (string s in available_recording_devices)
+                {
                     Debug.WriteLine(s);
+                }
 
                 Debug.WriteLine("Default recording device: " + DefaultRecordingDevice);
 #endif
@@ -163,9 +171,13 @@ namespace OpenTK.Audio
                         // clean up the dummy context
                         Alc.MakeContextCurrent(ContextHandle.Zero);
                         if (dummy_context != ContextHandle.Zero && dummy_context.Handle != IntPtr.Zero)
+                        {
                             Alc.DestroyContext(dummy_context);
+                        }
                         if (dummy_device != IntPtr.Zero)
+                        {
                             Alc.CloseDevice(dummy_device);
+                        }
                     }
                     catch
                     {

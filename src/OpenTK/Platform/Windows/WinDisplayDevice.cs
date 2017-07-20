@@ -95,7 +95,9 @@ namespace OpenTK.Platform.Windows
                 while (Functions.EnumDisplayDevices(null, device_count++, dev1, 0))
                 {
                     if ((dev1.StateFlags & DisplayDeviceStateFlags.AttachedToDesktop) == DisplayDeviceStateFlags.None)
+                    {
                         continue;
+                    }
 
                     DeviceMode monitor_mode = new DeviceMode();
 
@@ -145,13 +147,19 @@ namespace OpenTK.Platform.Windows
 
                     // Set the original resolution if the DisplayDevice was previously available.
                     foreach (DisplayDevice existingDevice in previousDevices)
+                    {
                         if ((string)existingDevice.Id == (string)opentk_dev.Id)
+                        {
                             opentk_dev.OriginalResolution = existingDevice.OriginalResolution;
+                        }
+                    }
 
                     AvailableDevices.Add(opentk_dev);
 
                     if (opentk_dev_primary)
+                    {
                         Primary = opentk_dev;
+                    }
 
                     Debug.Print("DisplayDevice {0} ({1}) supports {2} resolutions.",
                         device_count, opentk_dev.IsPrimary ? "primary" : "secondary", opentk_dev.AvailableResolutions.Count);

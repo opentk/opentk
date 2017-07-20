@@ -63,7 +63,9 @@ namespace OpenTK.Platform.Egl
         {
             IntPtr display = Egl.GetDisplay(dc);
             if (display == IntPtr.Zero)
+            {
                 display = Egl.GetDisplay(IntPtr.Zero);
+            }
 
             return display;
         }

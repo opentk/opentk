@@ -267,7 +267,9 @@ namespace OpenTK.Platform.Linux
                 {
                     fd = Libc.open(path, OpenFlags.NonBlock);
                     if (fd == -1)
+                    {
                         return null;
+                    }
 
                     unsafe
                     {
@@ -364,7 +366,9 @@ namespace OpenTK.Platform.Linux
                 {
                     length = (long)Libc.read(js.FileDescriptor, (void*)events, (UIntPtr)(sizeof(InputEvent) * EventCount));
                     if (length <= 0)
+                    {
                         break;
+                    }
 
                     // Only mark the joystick as connected when we actually start receiving events.
                     // Otherwise, the Xbox wireless receiver will register 4 joysticks even if no

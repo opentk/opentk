@@ -51,9 +51,13 @@ namespace OpenTK.Input
             internal set
             {
                 if (value)
+                {
                     EnableBit((int)button);
+                }
                 else
+                {
                     DisableBit((int)button);
+                }
             }
         }
 
@@ -322,7 +326,9 @@ namespace OpenTK.Input
         private static void ValidateOffset(int offset)
         {
             if (offset < 0 || offset >= 16)
+            {
                 throw new ArgumentOutOfRangeException("offset");
+            }
         }
 
         /// <summary>

@@ -184,9 +184,13 @@ namespace OpenTK.Platform.Windows
                     case Key.Delete: key = Key.KeypadDecimal; break;
                     case Key.NumLock:
                         if (vkey == VirtualKeys.Last)
+                        {
                             is_valid = false;
+                        }
                         else if (vkey == VirtualKeys.PAUSE)
+                        {
                             key = Key.Pause;
+                        }
                         break;
                 }
             }

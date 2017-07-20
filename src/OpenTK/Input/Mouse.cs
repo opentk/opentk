@@ -71,7 +71,9 @@ namespace OpenTK.Input
         public static MouseState GetState(int index)
         {
             if (index < 0)
+            {
                 throw new ArgumentOutOfRangeException("index");
+            }
 
             lock (SyncRoot)
             {

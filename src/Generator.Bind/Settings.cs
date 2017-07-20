@@ -84,9 +84,13 @@ namespace Bind
             get
             {
                 if ((Compatibility & Legacy.NestedEnums) != Legacy.None)
+                {
                     return OutputNamespace + NamespaceSeparator + OutputClass + NamespaceSeparator + NestedEnumsClass;
+                }
                 else
+                {
                     return String.IsNullOrEmpty(EnumsNamespace) ? OutputNamespace : OutputNamespace + NamespaceSeparator + EnumsNamespace;
+                }
             }
         }
 
@@ -95,9 +99,13 @@ namespace Bind
             get
             {
                 if ((Compatibility & Legacy.NestedEnums) != Legacy.None)
+                {
                     return OutputNamespace + NamespaceSeparator + GLClass + NamespaceSeparator + NestedEnumsClass;
+                }
                 else
+                {
                     return OutputNamespace + NamespaceSeparator + EnumsNamespace;
+                }
             }
         }
 
@@ -199,7 +207,15 @@ namespace Bind
         public bool DropMultipleTokens
         {
             get { return (Compatibility & Legacy.NoDropMultipleTokens) == Legacy.None; }
-            set { if (value) Compatibility |= Legacy.NoDropMultipleTokens; else Compatibility &= ~Legacy.NoDropMultipleTokens; }
+            set { if (value)
+                {
+                    Compatibility |= Legacy.NoDropMultipleTokens;
+                }
+                else
+                {
+                    Compatibility &= ~Legacy.NoDropMultipleTokens;
+                }
+            }
         }
 
         public string WindowsGDI = "OpenTK.Platform.Windows.API";

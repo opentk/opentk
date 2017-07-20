@@ -54,7 +54,9 @@ namespace Bind.Structures
             set
             {
                 if (String.IsNullOrEmpty(value))
+                {
                     throw new ArgumentNullException();
+                }
 
                 int qualifier_end = value.LastIndexOf('.');
                 if (qualifier_end > -1)
@@ -83,12 +85,18 @@ namespace Bind.Structures
             set
             {
                 if (String.IsNullOrEmpty(value))
+                {
                     throw new ArgumentException();
+                }
 
                 if (!String.IsNullOrEmpty(type))
+                {
                     PreviousType = type;
+                }
                 if (!String.IsNullOrEmpty(value))
+                {
                     type = value.Trim();
+                }
 
                 while (type.EndsWith("*"))
                 {
@@ -228,19 +236,29 @@ namespace Bind.Structures
             // DelegateCollection.Add that depends on this fact.
             int result = this.CurrentType.CompareTo(other.CurrentType);
             if (result == 0)
+            {
                 result = Pointer.CompareTo(other.Pointer); // Must come after array/ref, see issue [#1098]
+            }
             if (result == 0)
+            {
                 result = Reference.CompareTo(other.Reference);
+            }
             if (result == 0)
+            {
                 result = Array.CompareTo(other.Array);
+            }
             // Note: CLS-compliance and element counts
             // are used for comparison calculations, in order
             // to maintain a stable sorting order, even though
             // they are not used in equality calculations.
             if (result == 0)
+            {
                 result = CLSCompliant.CompareTo(other.CLSCompliant);
+            }
             if (result == 0)
+            {
                 result = ElementCount.CompareTo(other.ElementCount);
+            }
             return result;
         }
 

@@ -141,7 +141,10 @@ namespace OpenTK.Audio.OpenAL
         /// </remarks>
         public int[] GenEffects(int n)
         {
-            if (n <= 0) throw new ArgumentOutOfRangeException("n", "Must be higher than 0.");
+            if (n <= 0)
+            {
+                throw new ArgumentOutOfRangeException("n", "Must be higher than 0.");
+            }
             int[] effects = new int[n];
             GenEffects(n, out effects[0]);
             return effects;
@@ -216,7 +219,10 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="effects">Pointer to n Effect object identifiers.</param>
         public void DeleteEffects(int[] effects)
         {
-            if (effects == null) throw new ArgumentNullException("effects");
+            if (effects == null)
+            {
+                throw new ArgumentNullException("effects");
+            }
             DeleteEffects(effects.Length, ref effects[0]);
         }
 
@@ -225,7 +231,10 @@ namespace OpenTK.Audio.OpenAL
         [CLSCompliant(false)]
         public void DeleteEffects(uint[] effects)
         {
-            if (effects == null) throw new ArgumentNullException("effects");
+            if (effects == null)
+            {
+                throw new ArgumentNullException("effects");
+            }
             DeleteEffects(effects.Length, ref effects[0]);
         }
 
@@ -516,7 +525,10 @@ namespace OpenTK.Audio.OpenAL
         public int[] GenFilters(int n)
         {
 
-            if (n <= 0) throw new ArgumentOutOfRangeException("n", "Must be higher than 0.");
+            if (n <= 0)
+            {
+                throw new ArgumentOutOfRangeException("n", "Must be higher than 0.");
+            }
             int[] filters = new int[n];
             GenFilters(filters.Length, out filters[0]);
             return filters;
@@ -587,7 +599,10 @@ namespace OpenTK.Audio.OpenAL
         [CLSCompliant(false)]
         public void DeleteFilters(uint[] filters)
         {
-            if (filters == null) throw new ArgumentNullException("filters");
+            if (filters == null)
+            {
+                throw new ArgumentNullException("filters");
+            }
             DeleteFilters(filters.Length, ref filters[0]);
         }
 
@@ -595,7 +610,10 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="filters">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
         public void DeleteFilters(int[] filters)
         {
-            if (filters == null) throw new ArgumentNullException("filters");
+            if (filters == null)
+            {
+                throw new ArgumentNullException("filters");
+            }
             DeleteFilters(filters.Length, ref filters[0]);
         }
 
@@ -817,7 +835,10 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>Pointer addressing sufficient memory to store n Effect Slot object identifiers.</returns>
         public int[] GenAuxiliaryEffectSlots(int n)
         {
-            if (n <= 0) throw new ArgumentOutOfRangeException("n", "Must be higher than 0.");
+            if (n <= 0)
+            {
+                throw new ArgumentOutOfRangeException("n", "Must be higher than 0.");
+            }
             int[] slots = new int[n];
             GenAuxiliaryEffectSlots(slots.Length, out slots[0]);
             return slots;
@@ -885,7 +906,10 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="slots">Pointer to n Effect Slot object identifiers.</param>
         public void DeleteAuxiliaryEffectSlots(int[] slots)
         {
-            if (slots == null) throw new ArgumentNullException("slots");
+            if (slots == null)
+            {
+                throw new ArgumentNullException("slots");
+            }
             DeleteAuxiliaryEffectSlots(slots.Length, ref slots[0]);
         }
 
@@ -894,7 +918,10 @@ namespace OpenTK.Audio.OpenAL
         [CLSCompliant(false)]
         public void DeleteAuxiliaryEffectSlots(uint[] slots)
         {
-            if (slots == null) throw new ArgumentNullException("slots");
+            if (slots == null)
+            {
+                throw new ArgumentNullException("slots");
+            }
             DeleteAuxiliaryEffectSlots(slots.Length, ref slots[0]);
         }
 
@@ -1081,7 +1108,9 @@ namespace OpenTK.Audio.OpenAL
             IsInitialized = false;
 
             if (AudioContext.CurrentContext == null)
+            {
                 throw new InvalidOperationException("AL.LoadAll() needs a current AudioContext.");
+            }
 
             if (!AudioContext.CurrentContext.SupportsExtension("ALC_EXT_EFX"))
             {

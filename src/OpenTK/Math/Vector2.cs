@@ -70,13 +70,28 @@ namespace OpenTK
         /// </summary>
         public float this[int index] {
             get{
-                if(index == 0) return X;
-                else if(index == 1) return Y;
+                if(index == 0)
+                {
+                    return X;
+                }
+                else if(index == 1)
+                {
+                    return Y;
+                }
                 throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
             } set{
-                if(index == 0) X = value;
-                else if(index == 1) Y = value;
-                else throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
+                if(index == 0)
+                {
+                    X = value;
+                }
+                else if(index == 1)
+                {
+                    Y = value;
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
+                }
             }
         }
 
@@ -828,7 +843,9 @@ namespace OpenTK
         public override bool Equals(object obj)
         {
             if (!(obj is Vector2))
+            {
                 return false;
+            }
 
             return this.Equals((Vector2)obj);
         }

@@ -61,9 +61,13 @@ namespace OpenTK.Convert
                 var version = (e.Attribute("version") ?? new XAttribute("version", String.Empty)).Value;
                 var key = name + version;
                 if (!elements.ContainsKey(key))
+                {
                     elements.Add(key, e);
+                }
                 else
+                {
                     elements[key].Add(e.Elements());
+                }
             }
 
             return elements.Values;
@@ -124,7 +128,9 @@ namespace OpenTK.Convert
             {
                 var api = (e.Attribute("api") ?? new XAttribute("api", "default")).Value;
                 if (!enums.ContainsKey(api))
+                {
                     enums.Add(api, new SortedDictionary<string, string>());
+                }
 
                 enums[api].Add(
                     TrimName(e.Attribute("name").Value),
@@ -151,12 +157,14 @@ namespace OpenTK.Convert
                 {
                     var key = apiname + version;
                     if (!APIs.ContainsKey(key))
+                    {
                         APIs.Add(
                             key,
                             new XElement(
                                 "api",
                                 new XAttribute("name", apiname),
                                 String.IsNullOrEmpty(version) ? null : new XAttribute("version", version)));
+                    }
                     var api = APIs[key];
 
                     var enum_name = TrimName(feature.Attribute("name").Value);
@@ -267,12 +275,14 @@ namespace OpenTK.Convert
 
                     var key = apiname + cmd_version;
                     if (!APIs.ContainsKey(key))
+                    {
                         APIs.Add(
                             key,
                             new XElement(
-                            "api",
-                            new XAttribute("name", apiname),
-                            new XAttribute("version", cmd_version)));
+                                "api",
+                                new XAttribute("name", apiname),
+                                new XAttribute("version", cmd_version)));
+                    }
                     var api = APIs[key];
 
                     foreach (var command in feature.Elements("require").Elements("command"))
@@ -282,13 +292,17 @@ namespace OpenTK.Convert
                             ExtensionRegex.Match(cmd_name).Value ??
                             (feature.Name == "extension" ? category.Substring(0, category.IndexOf("_")) : "Core");
                         if (String.IsNullOrEmpty(cmd_extension))
+                        {
                             cmd_extension = "Core";
+                        }
 
                         XElement function = TranslateCommand(commands[cmd_name]);
                         function.Add(new XAttribute("category", cmd_category));
                         function.Add(new XAttribute("extension", cmd_extension));
                         if (!String.IsNullOrEmpty(cmd_version))
+                        {
                             function.Add(new XAttribute("version", cmd_version));
+                        }
 
                         Merge(api, function);
                     }
@@ -345,8 +359,9 @@ namespace OpenTK.Convert
 
                 // Sanity check: one function cannot belong to two different extensions
                 if (f.Attribute("extension").Value != function.Attribute("extension").Value)
+                {
                     throw new InvalidOperationException("Different extensions for the same function");
-
+                }
             }
             else
             {
@@ -434,9 +449,13 @@ namespace OpenTK.Convert
             {
                 var words = ret.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                 if (words[0] == "struct" || words[0] == "const")
+                {
                     words[1] = group.Value;
+                }
                 else
+                {
                     words[0] = group.Value;
+                }
 
                 ret = String.Join(" ", words);
             }
@@ -447,13 +466,21 @@ namespace OpenTK.Convert
         private static string Join(string left, string right)
         {
             if (!String.IsNullOrEmpty(left) && !String.IsNullOrEmpty(right))
+            {
                 return left + "|" + right;
+            }
             else if (!String.IsNullOrEmpty(left))
+            {
                 return left;
+            }
             else if (!String.IsNullOrEmpty(right))
+            {
                 return right;
+            }
             else
+            {
                 return String.Empty;
+            }
         }
 
         private static XAttribute Lookup(IDictionary<string, XElement> categories, string cmd_name, string attribute)

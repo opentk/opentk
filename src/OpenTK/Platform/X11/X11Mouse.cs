@@ -74,9 +74,13 @@ namespace OpenTK.Platform.X11
             ProcessEvents();
             // X11Mouse supports only one device
             if (index == 0)
+            {
                 return mouse;
+            }
             else
+            {
                 return new MouseState();
+            }
         }
 
         public MouseState GetCursorState()

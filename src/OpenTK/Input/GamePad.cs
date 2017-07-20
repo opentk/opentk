@@ -59,7 +59,9 @@ namespace OpenTK.Input
         public static GamePadCapabilities GetCapabilities(int index)
         {
             if (index < 0)
+            {
                 throw new IndexOutOfRangeException();
+            }
 
             return driver.GetCapabilities(index);
         }

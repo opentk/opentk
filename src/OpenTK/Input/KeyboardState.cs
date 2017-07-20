@@ -215,7 +215,9 @@ namespace OpenTK.Input
                 {
                     int hashcode = 0;
                     for (int i = 0; i < NumInts; i++)
+                    {
                         hashcode ^= (k + i)->GetHashCode();
+                    }
                     return hashcode;
                 }
             }
@@ -277,7 +279,9 @@ namespace OpenTK.Input
                 fixed (int* k1 = Keys)
                 {
                     for (int i = 0; i < NumInts; i++)
+                    {
                         *(k1 + i) |= *(k2 + i);
+                    }
                 }
             }
             IsConnected |= other.IsConnected;
@@ -291,7 +295,9 @@ namespace OpenTK.Input
         private static void ValidateOffset(int offset)
         {
             if (offset < 0 || offset >= NumInts * IntSize)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -308,7 +314,9 @@ namespace OpenTK.Input
                 fixed (int* k1 = Keys)
                 {
                     for (int i = 0; equal && i < NumInts; i++)
+                    {
                         equal &= *(k1 + i) == *(k2 + i);
+                    }
                 }
             }
             return equal;

@@ -156,15 +156,30 @@ namespace OpenTK
         {
             get
             {
-                if (rowIndex == 0) return Row0[columnIndex];
-                else if (rowIndex == 1) return Row1[columnIndex];
+                if (rowIndex == 0)
+                {
+                    return Row0[columnIndex];
+                }
+                else if (rowIndex == 1)
+                {
+                    return Row1[columnIndex];
+                }
                 throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
             }
             set
             {
-                if (rowIndex == 0) Row0[columnIndex] = value;
-                else if (rowIndex == 1) Row1[columnIndex] = value;
-                else throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+                if (rowIndex == 0)
+                {
+                    Row0[columnIndex] = value;
+                }
+                else if (rowIndex == 1)
+                {
+                    Row1[columnIndex] = value;
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+                }
             }
         }
 
@@ -483,7 +498,9 @@ namespace OpenTK
             double det = mat.Determinant;
 
             if (det == 0)
+            {
                 throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+            }
 
             double invDet = 1f / det;
 
@@ -659,7 +676,9 @@ namespace OpenTK
         public override bool Equals(object obj)
         {
             if (!(obj is Matrix2d))
+            {
                 return false;
+            }
 
             return this.Equals((Matrix2d)obj);
         }

@@ -45,9 +45,13 @@ namespace Bind
         public EnumProcessor(IBind generator, IEnumerable<string> overrides)
         {
             if (generator == null)
+            {
                 throw new ArgumentNullException("generator");
+            }
             if (overrides == null)
+            {
                 throw new ArgumentNullException("overrides");
+            }
 
             Generator = generator;
             Overrides = overrides;
@@ -69,7 +73,9 @@ namespace Bind
         public static string GetOverridesPath(string apiname, string enumeration)
         {
             if (enumeration == null)
+            {
                 throw new ArgumentNullException("enumeration");
+            }
 
             var path = new StringBuilder();
             path.Append("/signatures/replace");
@@ -149,15 +155,21 @@ namespace Bind
         public string TranslateEnumName(string name)
         {
             if (String.IsNullOrEmpty(name))
+            {
                 return name;
+            }
 
             if (Utilities.CSharpKeywords.Contains(name))
+            {
                 return name;
+            }
 
             if (!IsAlreadyProcessed(name))
             {
                 if (Char.IsDigit(name[0]))
+                {
                     name = Settings.ConstantPrefix + name;
+                }
 
                 StringBuilder translator = new StringBuilder(name);
 
@@ -194,11 +206,17 @@ namespace Bind
                     }
 
                     if (is_after_underscore_or_number)
+                    {
                         char_to_add = Char.ToUpper(c);
+                    }
                     else if (is_previous_uppercase)
+                    {
                         char_to_add = Char.ToLower(c);
+                    }
                     else
+                    {
                         char_to_add = c;
+                    }
 
                     translator.Append(char_to_add);
 
@@ -219,7 +237,9 @@ namespace Bind
 
                 name = translator.ToString();
                 if (name.StartsWith(Settings.EnumPrefix))
+                {
                     name = name.Substring(Settings.EnumPrefix.Length);
+                }
             }
 
             return name;
@@ -282,7 +302,9 @@ namespace Bind
         public string TranslateConstantName(string s, bool isValue)
         {
             if (String.IsNullOrEmpty(s))
+            {
                 return s;
+            }
 
             StringBuilder translator = new StringBuilder(s.Length);
 
@@ -302,7 +324,9 @@ namespace Bind
                     bool is_after_digit = false;
 
                     if (!isValue && Char.IsDigit(s[0]))
+                    {
                         s = Settings.ConstantPrefix + s;
+                    }
 
                     foreach (char c in s)
                     {
@@ -333,7 +357,9 @@ namespace Bind
                     translator[0] = Char.ToUpper(translator[0]);
                 }
                 else
+                {
                     translator.Append(s);
+                }
             }
 
             return translator.ToString();
@@ -346,14 +372,20 @@ namespace Bind
             {
                 // Trim the unsigned or long specifiers used in C constants ('u' or 'ull').
                 if (value.ToLower().EndsWith("ull"))
+                {
                     value = value.Substring(0, value.Length - 3);
+                }
                 if (value.ToLower().EndsWith("u"))
+                {
                     value = value.Substring(0, value.Length - 1);
+                }
             }
 
             // Strip the prefix, if any.
             if (value.StartsWith(Settings.ConstantPrefix))
+            {
                 value = value.Substring(Settings.ConstantPrefix.Length);
+            }
 
             return TranslateConstantName(value, IsValue(value));
         }

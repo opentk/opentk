@@ -62,9 +62,13 @@ namespace OpenTK
         internal X11GLControl(GraphicsMode mode, Control control)
         {
             if (mode == null)
+            {
                 throw new ArgumentNullException("mode");
+            }
             if (control == null)
+            {
                 throw new ArgumentNullException("control");
+            }
 
             // Note: the X11 window is created with a default XVisualInfo,
             // that is not necessarily compatible with the desired GraphicsMode.
@@ -83,8 +87,11 @@ namespace OpenTK
                 mode.Buffers,
                 mode.Stereo);
 
-            if (xplatui == null) throw new PlatformNotSupportedException(
+            if (xplatui == null)
+            {
+                throw new PlatformNotSupportedException(
                     "System.Windows.Forms.XplatUIX11 missing. Unsupported platform or Mono runtime version, aborting.");
+            }
 
             // get the required handles from the X11 API.
             display = (IntPtr)GetStaticFieldValue(xplatui, "DisplayHandle");

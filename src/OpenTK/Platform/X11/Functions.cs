@@ -607,7 +607,9 @@ namespace OpenTK.Platform.X11
                     int offset = y * stride + (x >> 3);
 
                     if (image.GetPixel(x, y).A >= 128)
+                    {
                         mask[offset] |= bit;
+                    }
                 }
             }
 

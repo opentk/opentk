@@ -80,7 +80,9 @@ namespace OpenTK
         public static bool Check(Type type)
         {
             if (!CheckStructLayoutAttribute(type))
+            {
                 Debug.Print("Warning: type {0} does not specify a StructLayoutAttribute with Pack=1. The memory layout of the struct may change between platforms.", type.Name);
+            }
 
             return CheckType(type);
         }
@@ -91,17 +93,23 @@ namespace OpenTK
         {
             //Debug.Print("Checking type {0} (size: {1} bytes).", type.Name, Marshal.SizeOf(type));
             if (type.IsPrimitive)
+            {
                 return true;
+            }
 
             if (!type.IsValueType)
+            {
                 return false;
+            }
 
             FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             Debug.Indent();
             foreach (FieldInfo field in fields)
             {
                 if (!CheckType(field.FieldType))
+                {
                     return false;
+                }
             }
             Debug.Unindent();
 
@@ -117,7 +125,9 @@ namespace OpenTK
 
             if ((attr == null) ||
                 (attr != null && attr.Length > 0 && attr[0].Value != LayoutKind.Explicit && attr[0].Pack != 1))
+            {
                 return false;
+            }
 
             return true;
         }
@@ -196,7 +206,9 @@ namespace OpenTK
         public static int StrideOf<T>(T type)
         {
             if (!Check(type))
+            {
                 throw new ArgumentException("type");
+            }
 
             return BlittableValueType<T>.Stride;
         }
@@ -212,7 +224,9 @@ namespace OpenTK
         public static int StrideOf<T>(T[] type)
         {
             if (!Check(type))
+            {
                 throw new ArgumentException("type");
+            }
 
             return BlittableValueType<T>.Stride;
         }
@@ -228,7 +242,9 @@ namespace OpenTK
         public static int StrideOf<T>(T[,] type)
         {
             if (!Check(type))
+            {
                 throw new ArgumentException("type");
+            }
 
             return BlittableValueType<T>.Stride;
         }
@@ -244,7 +260,9 @@ namespace OpenTK
         public static int StrideOf<T>(T[, ,] type)
         {
             if (!Check(type))
+            {
                 throw new ArgumentException("type");
+            }
 
             return BlittableValueType<T>.Stride;
         }

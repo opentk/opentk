@@ -47,7 +47,9 @@ namespace Bind.Structures
             set
             {
                 if (value == null)
+                {
                     throw new ArgumentNullException("value");
+                }
 
                 _constant_collection.Clear();
                 foreach (var item in value)
@@ -89,12 +91,16 @@ namespace Bind.Structures
             // empty check, let's try to remove first Arb, then Ext from the strings.
             int ret = PreferEmpty(ext1, ext2);
             if (ret != 0)
+            {
                 return ret;
+            }
 
             ext1 = ext1.Replace("Arb", ""); ext2 = ext2.Replace("Arb", "");
             ret = PreferEmpty(ext1, ext2);
             if (ret != 0)
+            {
                 return ret;
+            }
 
             ext1 = ext1.Replace("Ext", ""); ext2 = ext2.Replace("Ext", "");
             return PreferEmpty(ext1, ext2);
@@ -104,11 +110,17 @@ namespace Bind.Structures
         private int PreferEmpty(string ext1, string ext2)
         {
             if (String.IsNullOrEmpty(ext1) && !String.IsNullOrEmpty(ext2))
+            {
                 return -1;
+            }
             else if (String.IsNullOrEmpty(ext2) && !String.IsNullOrEmpty(ext1))
+            {
                 return 1;
+            }
             else
+            {
                 return 0;
+            }
         }
 
         public void Add(Enum e)

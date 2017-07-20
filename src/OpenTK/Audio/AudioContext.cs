@@ -205,13 +205,26 @@ namespace OpenTK.Audio
         private void CreateContext(string device, int freq, int refresh, bool sync, bool enableEfx, MaxAuxiliarySends efxAuxiliarySends)
         {
             if (!AudioDeviceEnumerator.IsOpenALSupported)
+            {
                 throw new DllNotFoundException("openal32.dll");
+            }
 
             if (AudioDeviceEnumerator.Version == AudioDeviceEnumerator.AlcVersion.Alc1_1 && AudioDeviceEnumerator.AvailablePlaybackDevices.Count == 0)    // Alc 1.0 does not support device enumeration.
+            {
                 throw new NotSupportedException("No audio hardware is available.");
-            if (context_exists) throw new NotSupportedException("Multiple AudioContexts are not supported.");
-            if (freq < 0) throw new ArgumentOutOfRangeException("freq", freq, "Should be greater than zero.");
-            if (refresh < 0) throw new ArgumentOutOfRangeException("refresh", refresh, "Should be greater than zero.");
+            }
+            if (context_exists)
+            {
+                throw new NotSupportedException("Multiple AudioContexts are not supported.");
+            }
+            if (freq < 0)
+            {
+                throw new ArgumentOutOfRangeException("freq", freq, "Should be greater than zero.");
+            }
+            if (refresh < 0)
+            {
+                throw new ArgumentOutOfRangeException("refresh", refresh, "Should be greater than zero.");
+            }
 
 
             if (!String.IsNullOrEmpty(device))
@@ -292,7 +305,9 @@ namespace OpenTK.Audio
             // an old OpenAL version is detect - it may affect outdated OpenAL versions different than OpenAL SI,
             // but it looks like a good compromise for now.
             if (AudioDeviceEnumerator.AvailablePlaybackDevices.Count > 0)
+            {
                 MakeCurrent();
+            }
 
             CheckErrors();
 
@@ -320,9 +335,11 @@ namespace OpenTK.Audio
             lock (audio_context_lock)
             {
                 if (!Alc.MakeContextCurrent(context != null ? context.context_handle : ContextHandle.Zero))
+                {
                     throw new AudioContextException(String.Format("ALC {0} error detected at {1}.",
                         Alc.GetError(context != null ? (IntPtr)context.context_handle : IntPtr.Zero).ToString(),
                         context != null ? context.ToString() : "null"));
+                }
             }
         }
 
@@ -341,7 +358,9 @@ namespace OpenTK.Audio
                 lock (audio_context_lock)
                 {
                     if (available_contexts.Count == 0)
+                    {
                         return false;
+                    }
                     else
                     {
                         return AudioContext.CurrentContext == this;
@@ -350,8 +369,14 @@ namespace OpenTK.Audio
             }
             set
             {
-                if (value) AudioContext.MakeCurrent(this);
-                else AudioContext.MakeCurrent(null);
+                if (value)
+                {
+                    AudioContext.MakeCurrent(this);
+                }
+                else
+                {
+                    AudioContext.MakeCurrent(null);
+                }
             }
         }
 
@@ -367,7 +392,9 @@ namespace OpenTK.Audio
         public void CheckErrors()
         {
             if (disposed)
+            {
                 throw new ObjectDisposedException(this.GetType().FullName);
+            }
 
             new AudioDeviceErrorChecker(Device).Dispose();
         }
@@ -380,7 +407,9 @@ namespace OpenTK.Audio
             get
             {
                 if (disposed)
+                {
                     throw new ObjectDisposedException(this.GetType().FullName);
+                }
 
                 return Alc.GetError(Device);
             }
@@ -400,7 +429,9 @@ namespace OpenTK.Audio
         public void MakeCurrent()
         {
             if (disposed)
+            {
                 throw new ObjectDisposedException(this.GetType().FullName);
+            }
 
             AudioContext.MakeCurrent(this);
         }
@@ -416,7 +447,9 @@ namespace OpenTK.Audio
             get
             {
                 if (disposed)
+                {
                     throw new ObjectDisposedException(this.GetType().FullName);
+                }
 
                 return is_processing;
             }
@@ -433,7 +466,9 @@ namespace OpenTK.Audio
             get
             {
                 if (disposed)
+                {
                     throw new ObjectDisposedException(this.GetType().FullName);
+                }
 
                 return is_synchronized;
             }
@@ -461,7 +496,9 @@ namespace OpenTK.Audio
         public void Process()
         {
             if (disposed)
+            {
                 throw new ObjectDisposedException(this.GetType().FullName);
+            }
 
             Alc.ProcessContext(this.context_handle);
             IsProcessing = true;
@@ -490,7 +527,9 @@ namespace OpenTK.Audio
         public void Suspend()
         {
             if (disposed)
+            {
                 throw new ObjectDisposedException(this.GetType().FullName);
+            }
 
             Alc.SuspendContext(this.context_handle);
             IsProcessing = false;
@@ -504,7 +543,9 @@ namespace OpenTK.Audio
         public bool SupportsExtension(string extension)
         {
             if (disposed)
+            {
                 throw new ObjectDisposedException(this.GetType().FullName);
+            }
 
             return Alc.IsExtensionPresent(this.Device, extension);
         }
@@ -517,7 +558,9 @@ namespace OpenTK.Audio
             get
             {
                 if (disposed)
+                {
                     throw new ObjectDisposedException(this.GetType().FullName);
+                }
 
                 return device_name;
             }
@@ -537,7 +580,9 @@ namespace OpenTK.Audio
                 lock (audio_context_lock)
                 {
                     if (available_contexts.Count == 0)
+                    {
                         return null;
+                    }
                     else
                     {
                         AudioContext context;
@@ -585,7 +630,9 @@ namespace OpenTK.Audio
             if (!disposed)
             {
                 if (this.IsCurrent)
+                {
                     this.IsCurrent = false;
+                }
 
                 if (context_handle != ContextHandle.Zero)
                 {
@@ -594,7 +641,9 @@ namespace OpenTK.Audio
                 }
 
                 if (Device != IntPtr.Zero)
+                {
                     Alc.CloseDevice(Device);
+                }
 
                 if (manual)
                 {

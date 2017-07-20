@@ -68,7 +68,9 @@ namespace OpenTK.Platform.Windows
                 int count = WinRawInput.DeviceCount;
                 RawInputDeviceList[] ridl = new RawInputDeviceList[count];
                 for (int i = 0; i < count; i++)
+                {
                     ridl[i] = new RawInputDeviceList();
+                }
                 Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
 
                 // Discover keyboard devices:
@@ -96,7 +98,9 @@ namespace OpenTK.Platform.Windows
                         // keyboard device by qeurying the registry.
                         RegistryKey regkey = GetRegistryKey(name);
                         if (regkey == null)
+                        {
                             continue;
+                        }
 
                         string deviceDesc = (string)regkey.GetValue("DeviceDesc");
                         string deviceClass = (string)regkey.GetValue("Class");
@@ -171,7 +175,9 @@ namespace OpenTK.Platform.Windows
                 }
 
                 if (keyboards.Count == 0)
+                {
                     return false;
+                }
 
                 // Note:For some reason, my Microsoft Digital 3000 keyboard reports 0
                 // as rin.Header.Device for the "zoom-in/zoom-out" buttons.
@@ -201,14 +207,18 @@ namespace OpenTK.Platform.Windows
         private static RegistryKey GetRegistryKey(string name)
         {
             if (name.Length < 4)
+            {
                 return null;
+            }
 
             // remove the \??\
             name = name.Substring(4);
 
             string[] split = name.Split('#');
             if (split.Length < 3)
+            {
                 return null;
+            }
 
             string id_01 = split[0];    // ACPI (Class code)
             string id_02 = split[1];    // PNP0303 (SubClass code)
@@ -270,9 +280,13 @@ namespace OpenTK.Platform.Windows
             lock (UpdateLock)
             {
                 if (keyboards.Count > index)
+                {
                     return keyboards[index];
+                }
                 else
+                {
                     return new KeyboardState();
+                }
             }
         }
 
@@ -281,9 +295,13 @@ namespace OpenTK.Platform.Windows
             lock (UpdateLock)
             {
                 if (names.Count > index)
+                {
                     return names[index];
+                }
                 else
+                {
                     return String.Empty;
+                }
             }
         }
     }

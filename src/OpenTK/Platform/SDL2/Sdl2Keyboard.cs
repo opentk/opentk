@@ -86,9 +86,13 @@ namespace OpenTK.Platform.SDL2
         {
             //UpdateModifiers(); // Fixme
             if (index == 0)
+            {
                 return state;
+            }
             else
+            {
                 return new KeyboardState();
+            }
         }
 
         public string GetDeviceName(int index)

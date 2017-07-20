@@ -48,7 +48,9 @@ namespace OpenTK
         public BezierCurve(IEnumerable<Vector2> points)
         {
             if (points == null)
+            {
                 throw new ArgumentNullException("points", "Must point to a valid list of Vector2 structures.");
+            }
 
             this.points = new List<Vector2>(points);
             this.Parallel = 0.0f;
@@ -61,7 +63,9 @@ namespace OpenTK
         public BezierCurve(params Vector2[] points)
         {
             if (points == null)
+            {
                 throw new ArgumentNullException("points", "Must point to a valid list of Vector2 structures.");
+            }
 
             this.points = new List<Vector2>(points);
             this.Parallel = 0.0f;
@@ -75,7 +79,9 @@ namespace OpenTK
         public BezierCurve(float parallel, params Vector2[] points)
         {
             if (points == null)
+            {
                 throw new ArgumentNullException("points", "Must point to a valid list of Vector2 structures.");
+            }
 
             this.Parallel = parallel;
             this.points = new List<Vector2>(points);
@@ -89,7 +95,9 @@ namespace OpenTK
         public BezierCurve(float parallel, IEnumerable<Vector2> points)
         {
             if (points == null)
+            {
                 throw new ArgumentNullException("points", "Must point to a valid list of Vector2 structures.");
+            }
 
             this.Parallel = parallel;
             this.points = new List<Vector2>(points);
@@ -198,14 +206,20 @@ namespace OpenTK
             }
 
             if (parallel == 0.0f)
+            {
                 return r;
+            }
 
             Vector2 perpendicular = new Vector2();
 
             if (t != 0.0f)
+            {
                 perpendicular = r - BezierCurve.CalculatePointOfDerivative(points, t);
+            }
             else
+            {
                 perpendicular = points[1] - points[0];
+            }
 
             return r + Vector2.Normalize(perpendicular).PerpendicularRight * parallel;
         }

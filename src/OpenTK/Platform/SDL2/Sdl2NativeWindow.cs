@@ -86,10 +86,14 @@ namespace OpenTK.Platform.SDL2
 
                 if ((flags & WindowFlags.FULLSCREEN_DESKTOP) != 0 ||
                     (flags & WindowFlags.FULLSCREEN) != 0)
+                {
                     window_state = WindowState.Fullscreen;
+                }
 
                 if ((flags & WindowFlags.RESIZABLE) == 0)
+                {
                     window_border = WindowBorder.Fixed;
+                }
 
                 IntPtr handle;
                 lock (SDL.Sync)
@@ -111,13 +115,19 @@ namespace OpenTK.Platform.SDL2
             if ((flags & GameWindowFlags.Fullscreen) != 0)
             {
                 if (Sdl2Factory.UseFullscreenDesktop)
+                {
                     windowFlags |= WindowFlags.FULLSCREEN_DESKTOP;
+                }
                 else
+                {
                     windowFlags |= WindowFlags.FULLSCREEN;
+                }
             }
 
             if ((flags & GameWindowFlags.FixedWindow) == 0)
+            {
                 windowFlags |= WindowFlags.RESIZABLE;
+            }
 
             return windowFlags;
         }
@@ -257,7 +267,9 @@ namespace OpenTK.Platform.SDL2
             // Calculate the length of the typed text string
             int length;
             for (length = 0; length < TextInputEvent.TextSize && ev.Text[length] != '\0'; length++)
+            {
                 ;
+            }
 
             // Make sure we have enough space to decode this string
             int decoded_length = Encoding.UTF8.GetCharCount(ev.Text, length);
@@ -693,9 +705,13 @@ namespace OpenTK.Platform.SDL2
                     if (Exists)
                     {
                         if (value)
+                        {
                             SDL.ShowWindow(window.Handle);
+                        }
                         else
+                        {
                             SDL.HideWindow(window.Handle);
+                        }
                     }
                 }
             }
@@ -768,7 +784,9 @@ namespace OpenTK.Platform.SDL2
                             }
 
                             if (!CursorVisible)
+                            {
                                 GrabCursor(true);
+                            }
                         }
                     }
                 }
