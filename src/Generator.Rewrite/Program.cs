@@ -29,14 +29,13 @@ namespace OpenTK.Rewrite
     // with the s IL instructions.
     internal class Program
     {
-        private static readonly Options Options = new Options();
+        private static Options Options;
 
         private static void Main(string[] args)
         {
-            if (!Parser.Default.ParseArguments(args, Options))
-            {
-                return;
-            }
+            Parser.Default.ParseArguments<Options>(args)
+                .WithParsed(result => Options = result)
+                .WithNotParsed(error => Environment.Exit(-1));
 
             // Argument error checking
             if (!File.Exists(Options.TargetAssembly))

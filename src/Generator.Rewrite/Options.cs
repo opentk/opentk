@@ -13,18 +13,12 @@ namespace OpenTK.Rewrite
             HelpText = "The path to the strong name key which should be used to sign or resign the assembly.")]
         public string StrongNameKey { get; set; }
 
-        [Option('d', "debug", DefaultValue = false,
+        [Option('d', "debug", Default = false,
             HelpText = "Enable calls to GL.GetError(), wrapped around each native call.")]
         public bool EnableDebugCalls { get; set; }
 
-        [Option("dllimport", DefaultValue = false,
+        [Option("dllimport", Default = false,
             HelpText = "Force native calls to use DllImport instead of GetProcAddress.")]
         public bool UseDLLImport { get; set; }
-
-        [HelpOption]
-        public string GetUsage()
-        {
-            return HelpText.AutoBuild(this, current => HelpText.DefaultParsingErrorsHandler(this, current));
-        }
     }
 }
