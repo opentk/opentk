@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Xml.XPath;
+﻿using System.IO;
 using Bind.GL2;
-using Bind.Structures;
-using Delegate=Bind.Structures.Delegate;
-using Enum=Bind.Structures.Enum;
 
 namespace Bind.ES
 {

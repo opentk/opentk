@@ -24,12 +24,9 @@
 //
 
 using System;
-using System.Collections.Generic;
 #if !MINIMAL
 using System.Drawing;
 #endif
-using System.Text;
-using System.Xml.Serialization;
 
 namespace OpenTK.Graphics
 {

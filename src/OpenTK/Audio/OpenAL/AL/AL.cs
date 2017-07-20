@@ -9,8 +9,6 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
-using OpenTK;
-
 /* Type Mapping
 // 8-bit boolean
 typedef char ALboolean;

@@ -4,9 +4,6 @@
 
 using System;
 
-using OpenTK.Input;
-using System.Diagnostics;
-
 namespace OpenTK.Input
 {
     /// <summary>

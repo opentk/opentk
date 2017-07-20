@@ -23,10 +23,6 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.MacOS

@@ -25,12 +25,6 @@
 // THE SOFTWARE.
 //
 
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
-using OpenTK.Input;
-
 namespace OpenTK.Platform.Linux
 {
     // Todo: this has terrible side-effects on process exit

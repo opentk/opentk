@@ -5,12 +5,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
 using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
 
 namespace OpenTK.Platform.Windows
 {

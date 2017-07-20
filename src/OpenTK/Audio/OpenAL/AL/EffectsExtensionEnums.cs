@@ -5,8 +5,6 @@
  * See license.txt for license details
  * http://www.OpenTK.net */
 
-using System;
-
 namespace OpenTK.Audio.OpenAL
 {
     ///<summary>A list of valid 32-bit Float Effect/GetEffect parameters</summary>

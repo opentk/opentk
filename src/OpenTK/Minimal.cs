@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-#if !MINIMAL
-using System.Drawing;
+﻿#if !MINIMAL
 #endif
-using System.Text;
 
 #if ANDROID || IPHONE || MINIMAL
 

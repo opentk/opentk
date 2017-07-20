@@ -28,8 +28,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using OpenTK;
-using OpenTK.Graphics;
 #if !MINIMAL
 using System.Drawing;
 #endif

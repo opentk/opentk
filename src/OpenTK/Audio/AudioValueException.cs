@@ -23,10 +23,6 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace OpenTK.Audio
 {
     /// <summary>Represents exceptions related to invalid values.</summary>

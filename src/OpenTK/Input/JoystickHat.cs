@@ -25,8 +25,6 @@
 // THE SOFTWARE.
 //
 
-using System;
-
 namespace OpenTK.Input
 {
     /// <summary>

@@ -23,7 +23,6 @@
  // OTHER DEALINGS IN THE SOFTWARE.
  //
 
-using System;
 using System.Diagnostics;
 using OpenTK.Graphics;
 

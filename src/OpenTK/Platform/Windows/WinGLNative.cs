@@ -27,10 +27,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
-using OpenTK.Graphics;
 using OpenTK.Input;
-using System.Collections.Generic;
-using System.IO;
 #if !MINIMAL
 using System.Drawing;
 using System.Drawing.Imaging;

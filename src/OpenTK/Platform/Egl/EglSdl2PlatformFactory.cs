@@ -23,7 +23,6 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
 using OpenTK.Graphics;
 using OpenTK.Platform.SDL2;
 
