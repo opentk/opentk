@@ -1,7 +1,5 @@
-﻿#if !MINIMAL
-#endif
-
-#if ANDROID || IPHONE || MINIMAL
+﻿#if ANDROID || IPHONE || MINIMAL
+using System;
 
 namespace OpenTK
 {

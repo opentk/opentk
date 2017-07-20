@@ -23,9 +23,11 @@
  // OTHER DEALINGS IN THE SOFTWARE.
  //
 
+#if MINIMAL
+using System;
+
 namespace OpenTK
 {
-#if MINIMAL
     /// <summary>
     /// Defines a point on a two-dimensional plane.
     /// </summary>
@@ -167,5 +169,5 @@ namespace OpenTK
             return X == other.X && Y == other.Y;
         }
     }
-#endif
 }
+#endif

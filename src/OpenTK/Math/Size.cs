@@ -23,9 +23,11 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
+#if MINIMAL
+using System;
+
 namespace OpenTK
 {
-#if MINIMAL
     /// <summary>
     /// Stores the width and height of a rectangle.
     /// </summary>
@@ -155,5 +157,5 @@ namespace OpenTK
         }
 
     }
-#endif
 }
+#endif

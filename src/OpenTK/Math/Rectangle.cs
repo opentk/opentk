@@ -23,9 +23,11 @@
  // OTHER DEALINGS IN THE SOFTWARE.
  //
 
+#if MINIMAL
+using System;
+
 namespace OpenTK
 {
-    #if MINIMAL
     /// <summary>
     /// Represents a rectangular region on a two-dimensional plane.
     /// </summary>
@@ -284,5 +286,5 @@ namespace OpenTK
                 Size.Equals(other.Size);
         }
     }
-#endif
 }
+#endif
