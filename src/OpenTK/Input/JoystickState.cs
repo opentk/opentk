@@ -52,14 +52,14 @@ namespace OpenTK.Input
         private JoystickHatState hat3;
 
         /// <summary>
-        /// Gets a value between -1.0 and 1.0 representing the current offset of the specified  <see cref="JoystickAxis"/>.
+        /// Gets a value between -1.0 and 1.0 representing the current offset of the specified axis.
         /// </summary>
         /// <returns>
-        /// A value between -1.0 and 1.0 representing offset of the specified  <see cref="JoystickAxis"/>.
+        /// A value between -1.0 and 1.0 representing offset of the specified axis.
         /// If the specified axis does not exist, then the return value is 0.0. Use <see cref="Joystick.GetCapabilities"/>
         /// to query the number of available axes.
         /// </returns>
-        /// <param name="axis">The <see cref="JoystickAxis"/> to query.</param>
+        /// <param name="axis">The axis to query.</param>
         public float GetAxis(int axis)
         {
             return GetAxisRaw(axis) * ConversionFactor;
