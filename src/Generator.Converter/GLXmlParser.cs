@@ -450,11 +450,11 @@ namespace OpenTK.Convert
                 var words = ret.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                 if (words[0] == "struct" || words[0] == "const")
                 {
-                    words[1] = @group.Value;
+                    words[1] = group.Value;
                 }
                 else
                 {
-                    words[0] = @group.Value;
+                    words[0] = group.Value;
                 }
 
                 ret = String.Join(" ", words);
