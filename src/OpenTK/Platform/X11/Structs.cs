@@ -27,8 +27,6 @@
 // NOT COMPLETE
 
 using System;
-#if !MINIMAL
-#endif
 using System.Runtime.InteropServices;
 
 // Disable unused field warnings. This is interop, we don't use everything
