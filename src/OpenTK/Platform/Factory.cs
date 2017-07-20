@@ -46,25 +46,25 @@ namespace OpenTK.Platform
             Toolkit.Init();
 
             // Create regular platform backend
-            #if SDL2
+#if SDL2
             if (Configuration.RunningOnSdl2)
             {
                 Default = new SDL2.Sdl2Factory();
             }
 #endif
-            #if WIN32
+#if WIN32
             else if (Configuration.RunningOnWindows)
             {
                 Default = new Windows.WinFactory();
             }
 #endif
-            #if CARBON
+#if CARBON
             else if (Configuration.RunningOnMacOS)
             {
                 Default = new MacOS.MacOSFactory();
             }
 #endif
-            #if X11
+#if X11
             else if (Configuration.RunningOnX11)
             {
                 Default = new X11.X11Factory();
@@ -89,9 +89,9 @@ namespace OpenTK.Platform
                 // using the same API.
                 Embedded = Default;
             }
-            #if IPHONE
+#if IPHONE
             else if (Configuration.RunningOnIOS) Embedded = new iPhoneOS.iPhoneFactory();
-            #else
+#else
             else if (Egl.Egl.IsSupported)
             {
                 if (Configuration.RunningOnLinux)
@@ -104,21 +104,21 @@ namespace OpenTK.Platform
                     Embedded = new Egl.EglX11PlatformFactory();
                 }
 #endif
-                #if WIN32
+#if WIN32
                 else if (Configuration.RunningOnWindows)
                 {
                     Embedded = new Egl.EglWinPlatformFactory();
                 }
 #endif
-                #if CARBON
+#if CARBON
                 else if (Configuration.RunningOnMacOS)
                 {
                     Embedded = new Egl.EglMacPlatformFactory();
                 }
 #endif
-                #if ANDROID
+#if ANDROID
                 else if (Configuration.RunningOnAndroid) Embedded = new Android.AndroidFactory();
-                #endif
+#endif
                 else
                 {
                     Embedded = new UnsupportedPlatform();
@@ -126,11 +126,11 @@ namespace OpenTK.Platform
 
 #if ANDROID
                 Angle = new UnsupportedPlatform();
-                #else
+#else
                 Angle = new Egl.EglAnglePlatformFactory(Embedded);
-                #endif
+#endif
             }
-            #endif
+#endif
             else
             {
                 Embedded = new UnsupportedPlatform();
