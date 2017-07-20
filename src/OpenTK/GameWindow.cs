@@ -853,15 +853,22 @@ namespace OpenTK
             OnLoad(e);
         }
 
-        private void OnRenderFrameInternal(FrameEventArgs e) { if (Exists && !isExiting)
+        private void OnRenderFrameInternal(FrameEventArgs e) 
+        { 
+            if (Exists && !isExiting)
             {
                 OnRenderFrame(e);
             }
         }
 
-        private void OnUnloadInternal(EventArgs e) { OnUnload(e); }
+        private void OnUnloadInternal(EventArgs e)
+        {
+            OnUnload(e);
+        }
 
-        private void OnUpdateFrameInternal(FrameEventArgs e) { if (Exists && !isExiting)
+        private void OnUpdateFrameInternal(FrameEventArgs e) 
+        { 
+            if (Exists && !isExiting)
             {
                 OnUpdateFrame(e);
             }
