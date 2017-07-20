@@ -31,7 +31,8 @@ using OpenTK.Graphics;
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Global
-#pragma warning disable 1591
+
+#pragma warning disable 1591 // Missing XML comments
 
 namespace OpenTK.Platform.Egl
 {
