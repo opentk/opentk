@@ -7,8 +7,6 @@ namespace OpenTK.Input
     /// </summary>
     public class FileDropEventArgs : EventArgs
     {
-        private string fileName;
-
         /// <summary>
         /// Gets the name of the file.
         /// </summary>
