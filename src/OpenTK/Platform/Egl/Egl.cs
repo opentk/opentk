@@ -29,6 +29,10 @@ using System.Collections.Generic;
 using System.Text;
 using OpenTK.Graphics;
 
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedMember.Global
+#pragma warning disable 1591
+
 namespace OpenTK.Platform.Egl
 {
     using EGLNativeDisplayType = IntPtr;
@@ -394,7 +398,5 @@ namespace OpenTK.Platform.Egl
                 return true;
             }
         }
-
     }
-#pragma warning restore 0169
 }

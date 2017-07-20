@@ -9,6 +9,9 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
+// ReSharper disable UnusedMember.Global
+// ReSharper disable InconsistentNaming
+#pragma warning disable 1591    // Missing XML comments
 #pragma warning disable 3019    // CLS-compliance checking
 #pragma warning disable 0649    // struct members not explicitly initialized
 #pragma warning disable 0169    // field / method is never used.
@@ -1229,8 +1232,6 @@ XF86VidModeGetGammaRampSize(
          SunOpen = 0x1005ff73,
     }
 
-#pragma warning disable 1591
-
     public enum XVisualClass : int
     {
         StaticGray = 0,
@@ -1240,8 +1241,6 @@ XF86VidModeGetGammaRampSize(
         TrueColor = 4,
         DirectColor = 5,
     }
-
-#pragma warning restore 1591
 
     [Flags]
     public enum XVisualInfoMask
@@ -1616,8 +1615,3 @@ XF86VidModeGetGammaRampSize(
         SyncBoth
     }
 }
-
-#pragma warning restore 3019
-#pragma warning restore 0649
-#pragma warning restore 0169
-#pragma warning restore 0414
