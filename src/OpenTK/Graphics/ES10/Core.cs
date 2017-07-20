@@ -27,7 +27,7 @@ namespace OpenTK.Graphics.ES10
 {
     using System;
 
-#pragma warning disable 3019
+    #pragma warning disable 3019
     #pragma warning disable 1591
 
     partial class GL
