@@ -77,7 +77,7 @@ namespace OpenTK.Platform.Windows
                 {
                     dc = Functions.GetDC(this.Handle);
                 }
-                //dc = Functions.GetWindowDC(this.Handle);
+
                 return dc;
             }
         }
