@@ -15,6 +15,7 @@ namespace OpenTK
     /// <summary>
     /// The <see cref="GLWidget"/> is a GTK widget for which an OpenGL context can be used to draw arbitrary graphics.
     /// </summary>
+    [CLSCompliant(false)]
     [ToolboxItem(true)]
     public class GLWidget: DrawingArea
     {
@@ -268,6 +269,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="cr"></param>
         /// <returns></returns>
+        [CLSCompliant(false)]
         protected override bool OnDrawn(Cairo.Context cr)
 #else
         /// <summary>
@@ -275,6 +277,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="cr"></param>
         /// <returns></returns>
+        [CLSCompliant(false)]
         protected override bool OnExposeEvent(Gdk.EventExpose evnt)
 #endif
         {
@@ -309,6 +312,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="evnt"></param>
         /// <returns></returns>
+        [CLSCompliant(false)]
         protected override bool OnConfigureEvent(Gdk.EventConfigure evnt)
         {
             bool result = base.OnConfigureEvent(evnt);
