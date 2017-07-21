@@ -24,8 +24,6 @@
  //
 
 using System;
-using System.Collections.Specialized;
-using System.Text;
 
 namespace OpenTK.Input
 {

@@ -24,7 +24,6 @@
 //
 
 using System;
-using System.Collections.Generic;
 #if !MINIMAL
 using System.Drawing;
 #endif

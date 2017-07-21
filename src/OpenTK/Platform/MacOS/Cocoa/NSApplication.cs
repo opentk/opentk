@@ -30,7 +30,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
-using OpenTK.Platform.MacOS;
 
 namespace OpenTK.Platform.MacOS
 {

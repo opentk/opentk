@@ -25,7 +25,6 @@
 // THE SOFTWARE.
 //
 
-using System;
 using System.Diagnostics;
 using OpenTK.Input;
 

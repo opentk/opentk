@@ -26,7 +26,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using OpenTK.Graphics;
 
 namespace OpenTK.Platform.MacOS

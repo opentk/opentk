@@ -28,7 +28,6 @@
 #pragma warning disable 0169, 0219
 
 using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Linux

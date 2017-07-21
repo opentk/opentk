@@ -23,13 +23,11 @@
  // OTHER DEALINGS IN THE SOFTWARE.
  //
 
+#if MINIMAL
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OpenTK
 {
-#if MINIMAL
     /// <summary>
     /// Defines a point on a two-dimensional plane.
     /// </summary>
@@ -171,5 +169,5 @@ namespace OpenTK
             return X == other.X && Y == other.Y;
         }
     }
-#endif
 }
+#endif

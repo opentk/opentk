@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-#if !MINIMAL
-using System.Drawing;
-#endif
-using System.Text;
-
-#if ANDROID || IPHONE || MINIMAL
+﻿#if ANDROID || IPHONE || MINIMAL
+using System;
 
 namespace OpenTK
 {

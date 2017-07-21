@@ -23,13 +23,11 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
+#if MINIMAL
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OpenTK
 {
-#if MINIMAL
     /// <summary>
     /// Stores the width and height of a rectangle.
     /// </summary>
@@ -159,5 +157,5 @@ namespace OpenTK
         }
 
     }
-#endif
 }
+#endif

@@ -23,8 +23,6 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-using System.Collections.Generic;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2

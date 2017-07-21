@@ -25,7 +25,6 @@
 // THE SOFTWARE.
 //
 
-using System;
 using System.IO;
 
 namespace Bind.GL2

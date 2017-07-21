@@ -25,13 +25,8 @@
 
 //  Created by Erik Ylvisaker on 3/17/08.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace OpenTK.Platform.MacOS
 {
-    using Carbon;
     using Input;
 
     internal static class MacOSKeyMap

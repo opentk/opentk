@@ -25,8 +25,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Diagnostics;
-using OpenTK.Platform.MacOS.Carbon;
 
 namespace OpenTK.Platform.MacOS
 {

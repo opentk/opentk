@@ -23,9 +23,6 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows

@@ -26,7 +26,6 @@
 using System;
 using System.Diagnostics;
 using OpenTK.Graphics;
-using OpenTK.Graphics.ES20;
 
 namespace OpenTK.Platform.Egl
 {

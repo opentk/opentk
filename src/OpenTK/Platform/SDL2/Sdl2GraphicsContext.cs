@@ -25,7 +25,6 @@
 
 using System;
 using System.Diagnostics;
-using OpenTK;
 using OpenTK.Graphics;
 
 namespace OpenTK.Platform.SDL2

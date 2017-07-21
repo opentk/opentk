@@ -2,10 +2,6 @@
  * See license.txt for license info
  */
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace OpenTK.Input
 {
     /// <summary>

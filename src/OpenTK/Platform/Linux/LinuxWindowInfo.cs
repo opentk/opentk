@@ -26,7 +26,6 @@
 //
 
 using System;
-using System.Diagnostics;
 using OpenTK.Platform.Egl;
 
 namespace OpenTK.Platform.Linux
