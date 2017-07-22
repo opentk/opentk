@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,11 +22,9 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
 
 using OpenTK.Platform;
@@ -40,7 +37,7 @@ namespace OpenTK.Graphics
     public sealed class GraphicsContext : IGraphicsContext, IGraphicsContextInternal
     {
         /// <summary>
-        /// Used to retrive function pointers by name. 
+        /// Used to retrive function pointers by name.
         /// </summary>
         /// <param name="function">The function name.</param>
         /// <returns>A function pointer to <paramref name="function"/>, or <c>IntPtr.Zero</c></returns>
@@ -52,29 +49,21 @@ namespace OpenTK.Graphics
         /// <returns>The current OpenGL context, or <c>IntPtr.Zero</c> if no context is on the calling thread.</returns>
         public delegate ContextHandle GetCurrentContextDelegate();
 
-        #region --- Fields ---
+        private IGraphicsContext implementation;  // The actual render context implementation for the underlying platform.
+        private bool disposed;
 
-        IGraphicsContext implementation;  // The actual render context implementation for the underlying platform.
-        bool disposed;
-        bool check_errors = true;
         // Cache for the context handle. We need this for RemoveContext()
         // in case the user does not call Dispose(). When this happens,
         // RemoveContext() is called by the finalizer, in which case
         // the IGraphicsContext implementation may already be null
         // (hence we cannot call implementation.Context to retrieve
         // the handle.)
-        ContextHandle handle_cached;
+        private ContextHandle handle_cached;
 
-        static bool share_contexts = true;
-        static bool direct_rendering = true;
-        readonly static object SyncRoot = new object();        
+        private readonly static object SyncRoot = new object();
         // Maps OS-specific context handles to GraphicsContext instances.
-        readonly static Dictionary<ContextHandle, IGraphicsContext> available_contexts =
+        private readonly static Dictionary<ContextHandle, IGraphicsContext> available_contexts =
             new Dictionary<ContextHandle, IGraphicsContext>();
-
-        #endregion
-
-        #region --- Constructors ---
 
         /// <summary>
         /// Constructs a new GraphicsContext with the specified GraphicsMode and attaches it to the specified window.
@@ -102,7 +91,8 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Constructs a new GraphicsContext with the specified GraphicsMode, version and flags,  and attaches it to the specified window.
+        /// Constructs a new GraphicsContext with the specified GraphicsMode, version and flags, and attaches it to the specified window. A dummy context will be created if both
+        /// the handle and the window are null.
         /// </summary>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GraphicsContext.</param>
         /// <param name="window">The OpenTK.Platform.IWindowInfo to attach the GraphicsContext to.</param>
@@ -119,15 +109,27 @@ namespace OpenTK.Graphics
             {
                 bool designMode = false;
                 if (mode == null && window == null)
+                {
                     designMode = true;
-                else if (mode == null) throw new ArgumentNullException("mode", "Must be a valid GraphicsMode.");
-                else if (window == null) throw new ArgumentNullException("window", "Must point to a valid window.");
+                }
+                else if (mode == null)
+                {
+                    throw new ArgumentNullException("mode", "Must be a valid GraphicsMode.");
+                }
+                else if (window == null)
+                {
+                    throw new ArgumentNullException("window", "Must point to a valid window.");
+                }
 
                 // Silently ignore invalid major and minor versions.
                 if (major <= 0)
+                {
                     major = 1;
+                }
                 if (minor < 0)
+                {
                     minor = 0;
+                }
 
                 // Angle needs an embedded context
                 const GraphicsContextFlags useAngleFlag = GraphicsContextFlags.Angle
@@ -179,7 +181,7 @@ namespace OpenTK.Graphics
                             GetCurrentContext = factory.CreateGetCurrentGraphicsContext();
                         }
 
-                        implementation = factory.CreateGLContext(mode, window, shareContext, direct_rendering, major, minor, flags);
+                        implementation = factory.CreateGLContext(mode, window, shareContext, DirectRendering, major, minor, flags);
                         handle_cached = ((IGraphicsContextInternal)implementation).Context;
                         factory.RegisterResource(this);
                     }
@@ -218,7 +220,9 @@ namespace OpenTK.Graphics
         public GraphicsContext(ContextHandle handle, GetAddressDelegate getAddress, GetCurrentContextDelegate getCurrent)
         {
             if (getAddress == null || getCurrent == null)
+            {
                 throw new ArgumentNullException();
+            }
 
             // Make sure OpenTK has been initialized.
             // Fixes https://github.com/opentk/opentk/issues/52
@@ -252,7 +256,8 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Constructs a new GraphicsContext from a pre-existing context created outside of OpenTK.
+        /// Constructs a new GraphicsContext from a pre-existing context created outside of OpenTK. A dummy context will be created if both
+        /// the handle and the window are null.
         /// </summary>
         /// <param name="handle">The handle of the existing context. This must be a valid, unique handle that is not known to OpenTK.</param>
         /// <param name="window">This parameter is reserved.</param>
@@ -272,10 +277,6 @@ namespace OpenTK.Graphics
         public GraphicsContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, int major, int minor, GraphicsContextFlags flags)
             : this(handle, Platform.Utilities.CreateGetAddress(), Factory.Default.CreateGetCurrentGraphicsContext())
         { }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Returns a <see cref="System.String"/> representing this instance.
@@ -306,11 +307,7 @@ namespace OpenTK.Graphics
                 (this as IGraphicsContextInternal).Context == (obj as IGraphicsContextInternal).Context;
         }
 
-        #endregion
-
-        #region Private Members
-
-        static void AddContext(IGraphicsContextInternal context)
+        private static void AddContext(IGraphicsContextInternal context)
         {
             ContextHandle ctx = context.Context;
             if (!available_contexts.ContainsKey(ctx))
@@ -325,7 +322,7 @@ namespace OpenTK.Graphics
             }
         }
 
-        static void RemoveContext(IGraphicsContextInternal context)
+        private static void RemoveContext(IGraphicsContextInternal context)
         {
             ContextHandle ctx = context.Context;
             if (available_contexts.ContainsKey(ctx))
@@ -338,7 +335,7 @@ namespace OpenTK.Graphics
             }
         }
 
-        static IGraphicsContext FindSharedContext()
+        private static IGraphicsContext FindSharedContext()
         {
             if (GraphicsContext.ShareContexts)
             {
@@ -350,56 +347,13 @@ namespace OpenTK.Graphics
                     // making this return null even if another valid context exists.
                     // The workaround is to simply ignore null targets.
                     if (target != null)
+                    {
                         return target;
+                    }
                 }
             }
             return null;
         }
-
-        #endregion
-
-        #region --- Static Members ---
-
-        #region public static GraphicsContext CreateDummyContext()
-
-        /// <summary>
-        /// Creates a dummy GraphicsContext to allow OpenTK to work with contexts created by external libraries.
-        /// </summary>
-        /// <returns>A new, dummy GraphicsContext instance.</returns>
-        /// <remarks>
-        /// <para>Instances created by this method will not be functional. Instance methods will have no effect.</para>
-        /// <para>This method requires that a context is current on the calling thread.</para>
-        /// </remarks>
-        [Obsolete("Use GraphicsContext(ContextHandle, IWindowInfo) constructor instead")]
-        public static GraphicsContext CreateDummyContext()
-        {
-            ContextHandle handle = GetCurrentContext();
-            if (handle == ContextHandle.Zero)
-                throw new InvalidOperationException("No GraphicsContext is current on the calling thread.");
-
-            return CreateDummyContext(handle);
-        }
-
-        /// <summary>
-        /// Creates a dummy GraphicsContext to allow OpenTK to work with contexts created by external libraries.
-        /// </summary>
-        /// <param name="handle">The handle of a context.</param>
-        /// <returns>A new, dummy GraphicsContext instance.</returns>
-        /// <remarks>
-        /// <para>Instances created by this method will not be functional. Instance methods will have no effect.</para>
-        /// </remarks>
-        [Obsolete("Use GraphicsContext(ContextHandle, IWindowInfo) constructor instead")]
-        public static GraphicsContext CreateDummyContext(ContextHandle handle)
-        {
-            if (handle == ContextHandle.Zero)
-                throw new ArgumentOutOfRangeException("handle");
-
-            return new GraphicsContext(handle, (IWindowInfo)null);
-        }
-
-        #endregion
-
-        #region public static void Assert()
 
         /// <summary>
         /// Checks if a GraphicsContext exists in the calling thread and throws a GraphicsContextMissingException if it doesn't.
@@ -408,12 +362,10 @@ namespace OpenTK.Graphics
         public static void Assert()
         {
             if (GraphicsContext.CurrentContext == null)
+            {
                 throw new GraphicsContextMissingException();
+            }
         }
-
-        #endregion
-
-        #region public static IGraphicsContext CurrentContext
 
         internal static GetCurrentContextDelegate GetCurrentContext;
 
@@ -442,16 +394,14 @@ namespace OpenTK.Graphics
                     {
                         ContextHandle handle = CurrentContextHandle;
                         if (handle.Handle != IntPtr.Zero)
+                        {
                             return (IGraphicsContext)available_contexts[handle];
+                        }
                     }
                     return null;
                 }
             }
         }
-
-        #endregion
-
-        #region public static bool ShareContexts
 
         /// <summary>Gets or sets a System.Boolean, indicating whether GraphicsContext resources are shared</summary>
         /// <remarks>
@@ -459,11 +409,7 @@ namespace OpenTK.Graphics
         /// false, new GLContexts will not share resources.</para>
         /// <para>Changing this value will not affect already created GLContexts.</para>
         /// </remarks>
-        public static bool ShareContexts { get { return share_contexts; } set { share_contexts = value; } }
-
-        #endregion
-
-        #region public static bool DirectRendering
+        public static bool ShareContexts { get; set; } = true;
 
         /// <summary>Gets or sets a System.Boolean, indicating whether GraphicsContexts will perform direct rendering.</summary>
         /// <remarks>
@@ -476,17 +422,7 @@ namespace OpenTK.Graphics
         /// This property is ignored on Operating Systems without support for indirect rendering, like Windows and OS X.
         /// </para>
         /// </remarks>
-        public static bool DirectRendering
-        {
-            get { return direct_rendering; }
-            set { direct_rendering = value; }
-        }
-
-        #endregion
-
-        #endregion
-
-        #region --- IGraphicsContext Members ---
+        public static bool DirectRendering { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a System.Boolean, indicating whether automatic error checking should be performed.
@@ -494,11 +430,7 @@ namespace OpenTK.Graphics
         /// </summary>
         /// <remarks>Automatic error checking will clear the OpenGL error state. Set CheckErrors to false if you use
         /// the OpenGL error state in your code flow (e.g. for checking supported texture formats).</remarks>
-        public bool ErrorChecking
-        {
-            get { return check_errors; }
-            set { check_errors = value; }
-        }
+        public bool ErrorChecking { get; set; } = true;
 
         /// <summary>
         /// Swaps buffers on a context. This presents the rendered scene to the user.
@@ -539,30 +471,10 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// [obsolete] Use SwapInterval property instead.
-        /// Gets or sets a value indicating whether VSync is enabled. When VSync is
-        /// enabled, <see cref="SwapBuffers()"/> calls will be synced to the refresh
-        /// rate of the <see cref="DisplayDevice"/> that contains improving visual
-        /// quality and reducing CPU usage. However, systems that cannot maintain
-        /// the requested rendering rate will suffer from large jumps in performance.
-        /// This can be counteracted by increasing the <see cref="SwapInterval"/>
-        /// value.
-        /// </summary>
-        [Obsolete("Use SwapInterval property instead.")]
-        public bool VSync
-        {
-#pragma warning disable 0612, 0618 // CS0612/CS0618: 'member' is obsolete
-            get { return implementation.VSync; }
-            set { implementation.VSync = value; }
-#pragma warning restore 0612, 0618
-        }
-
-        /// <summary>
         /// Gets or sets a positive integer in the range [1, n), indicating the number of
         /// <see cref="DisplayDevice"/> refreshes between consecutive
         /// <see cref="SwapBuffers()"/> calls. The maximum value for n is
         /// implementation-dependent. The default value is 1.
-        /// This value will only affect instances where <see cref="VSync"/> is enabled.
         /// Invalid values will be clamped to the valid range.
         /// </summary>
         public int SwapInterval
@@ -590,14 +502,12 @@ namespace OpenTK.Graphics
         public void LoadAll()
         {
             if (GraphicsContext.CurrentContext != this)
+            {
                 throw new GraphicsContextException();
+            }
 
             implementation.LoadAll();
         }
-        
-        #endregion
-
-        #region --- IGraphicsContextInternal Members ---
 
         /// <summary>
         /// Gets the platform-specific implementation of this IGraphicsContext.
@@ -664,10 +574,6 @@ namespace OpenTK.Graphics
             return (implementation as IGraphicsContextInternal).GetAddress(function);
         }
 
-        #endregion
-
-        #region --- IDisposable Members ---
-
         /// <summary>
         /// Disposes of the GraphicsContext.
         /// </summary>
@@ -677,7 +583,7 @@ namespace OpenTK.Graphics
             GC.SuppressFinalize(this);
         }
 
-        void Dispose(bool manual)
+        private void Dispose(bool manual)
         {
             if (!IsDisposed)
             {
@@ -693,7 +599,9 @@ namespace OpenTK.Graphics
                 {
                     Debug.Print("Disposing context {0}.", (this as IGraphicsContextInternal).Context.ToString());
                     if (implementation != null)
+                    {
                         implementation.Dispose();
+                    }
                 }
                 else
                 {
@@ -712,7 +620,5 @@ namespace OpenTK.Graphics
         {
             Dispose(false);
         }
-
-        #endregion
     }
 }

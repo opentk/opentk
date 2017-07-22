@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // NSApplication.cs
 //
 // Author:
@@ -25,24 +24,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
-using OpenTK.Platform.MacOS;
 
 namespace OpenTK.Platform.MacOS
 {
-    static class NSApplication
+    internal static class NSApplication
     {
         internal static IntPtr Handle;
 
-        static readonly IntPtr selQuit = Selector.Get("quit");
+        private static readonly IntPtr selQuit = Selector.Get("quit");
 
-        static readonly int ThreadId =
+        private static readonly int ThreadId =
             System.Threading.Thread.CurrentThread.ManagedThreadId;
 
         internal static void Initialize() { }
@@ -80,7 +77,7 @@ namespace OpenTK.Platform.MacOS
                 Cocoa.SendIntPtr(appMenu, Selector.Get("addItem:"), quitMenuItem);
                 Cocoa.SendIntPtr(menuItem, Selector.Get("setSubmenu:"), appMenu);
 
-                // Tell cocoa we're ready to run the application (usually called by [NSApp run]). 
+                // Tell cocoa we're ready to run the application (usually called by [NSApp run]).
                 // Note: if a main menu exists, then this method has already been called and
                 // calling it again will result in a crash. For this reason, we only call it
                 // when we create our own main menu.
@@ -93,7 +90,7 @@ namespace OpenTK.Platform.MacOS
             IntPtr press_and_hold = Cocoa.SendIntPtr(Class.NSNumber, Selector.Get("numberWithBool:"), false);
 
             // Initialize and register the settings dictionary
-            settings = 
+            settings =
                 Cocoa.SendIntPtr(settings, Selector.Get("initWithObjectsAndKeys:"),
                     //momentum_scrolling, Cocoa.ToNSString("AppleMomentumScrollSupported"),
                     press_and_hold, Cocoa.ToNSString("ApplePressAndHoldEnabled"),
@@ -123,10 +120,11 @@ namespace OpenTK.Platform.MacOS
         internal static event EventHandler<CancelEventArgs> Quit = delegate { };
 
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        delegate void OnQuitDelegate(IntPtr self, IntPtr cmd);
+        private delegate void OnQuitDelegate(IntPtr self, IntPtr cmd);
 
-        static OnQuitDelegate OnQuitHandler = OnQuit;
-        static void OnQuit(IntPtr self, IntPtr cmd)
+        private static OnQuitDelegate OnQuitHandler = OnQuit;
+
+        private static void OnQuit(IntPtr self, IntPtr cmd)
         {
             var e = new CancelEventArgs();
             Quit(null, e);

@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,13 +22,15 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Runtime.InteropServices;
-using System.Collections.Generic;
-using System.Text;
 using OpenTK.Graphics;
+
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedMember.Global
+
+#pragma warning disable 1591 // Missing XML comments
 
 namespace OpenTK.Platform.Egl
 {
@@ -42,7 +43,7 @@ namespace OpenTK.Platform.Egl
     using EGLSurface = IntPtr;
     using EGLClientBuffer = IntPtr;
 
-    enum RenderApi
+    internal enum RenderApi
     {
         ES = Egl.OPENGL_ES_API,
         GL = Egl.OPENGL_API,
@@ -50,7 +51,7 @@ namespace OpenTK.Platform.Egl
     }
 
     [Flags]
-    enum RenderableFlags
+    internal enum RenderableFlags
     {
         ES = Egl.OPENGL_ES_BIT,
         ES2 = Egl.OPENGL_ES2_BIT,
@@ -78,7 +79,7 @@ namespace OpenTK.Platform.Egl
         CONTEXT_LOST = 12302,
     }
 
-    enum SurfaceType
+    internal enum SurfaceType
     {
         PBUFFER_BIT = 0x0001,
         PIXMAP_BIT = 0x0002,
@@ -89,7 +90,7 @@ namespace OpenTK.Platform.Egl
         SWAP_BEHAVIOR_PRESERVED_BIT = 0x0400,
     }
 
-    static partial class Egl
+    internal static partial class Egl
     {
         public const int VERSION_1_0 = 1;
         public const int VERSION_1_1 = 1;
@@ -207,7 +208,7 @@ namespace OpenTK.Platform.Egl
         public const int D3D_TEXTURE_2D_SHARE_HANDLE_ANGLE = 0x3200;
         // EGL_ANGLE_window_fixed_size
         public const int FIXED_SIZE_ANGLE = 0x3201;
-        // EGL_ANGLE_query_surface_pointer 
+        // EGL_ANGLE_query_surface_pointer
         [DllImport("libEGL.dll", EntryPoint = "eglQuerySurfacePointerANGLE")]
         public static extern bool QuerySurfacePointerANGLE(EGLDisplay display, EGLSurface surface, int attribute, out IntPtr value);
 
@@ -323,13 +324,15 @@ namespace OpenTK.Platform.Egl
         public static extern bool SwapInterval(EGLDisplay dpy, int interval);
 
         [DllImportAttribute("libEGL.dll", EntryPoint = "eglCreateContext")]
-        static extern IntPtr eglCreateContext(EGLDisplay dpy, EGLConfig config, EGLContext share_context, int[] attrib_list);
+        private static extern IntPtr eglCreateContext(EGLDisplay dpy, EGLConfig config, EGLContext share_context, int[] attrib_list);
 
         public static EGLContext CreateContext(EGLDisplay dpy, EGLConfig config, EGLContext share_context, int[] attrib_list)
         {
             IntPtr ptr = eglCreateContext(dpy, config, share_context, attrib_list);
             if (ptr == IntPtr.Zero)
+            {
                 throw new GraphicsContextException(String.Format("Failed to create EGL context, error: {0}.", Egl.GetError()));
+            }
             return ptr;
         }
 
@@ -379,13 +382,13 @@ namespace OpenTK.Platform.Egl
         // EGL_EXT_platform_base
         [DllImport("libEGL.dll", EntryPoint = "eglGetPlatformDisplayEXT")]
         public static extern EGLDisplay GetPlatformDisplayEXT(int platform, EGLNativeDisplayType native_display, int[] attrib_list);
-        
+
         [DllImport("libEGL.dll", EntryPoint = "eglCreatePlatformWindowSurfaceEXT")]
         public static extern EGLSurface CreatePlatformWindowSurfaceEXT(EGLDisplay dpy, EGLConfig config, EGLNativeWindowType native_window, int[] attrib_list);
-        
+
         [DllImport("libEGL.dll", EntryPoint = "eglCreatePlatformPixmapSurfaceEXT")]
         public static extern EGLSurface CreatePlatformPixmapSurfaceEXT(EGLDisplay dpy, EGLConfig config, EGLNativePixmapType native_pixmap, int[] attrib_list);
-        
+
         // Returns true if Egl drivers exist on the system.
         public static bool IsSupported
         {
@@ -396,7 +399,5 @@ namespace OpenTK.Platform.Egl
                 return true;
             }
         }
-
     }
-#pragma warning restore 0169
 }

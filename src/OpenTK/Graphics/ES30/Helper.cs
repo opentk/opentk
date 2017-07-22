@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2013 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,10 +22,8 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
 #if !MINIMAL
 using System.Drawing;
 #endif
@@ -43,15 +40,13 @@ namespace OpenTK.Graphics.ES30
 #if IPHONE
         const string Library = "/System/Library/Frameworks/OpenGLES.framework/OpenGLES";
 #else
-        const string Library = "libGLESv2.dll";
+        private const string Library = "libGLESv2.dll";
 #endif
-        static readonly object sync_root = new object();
+        private static readonly object sync_root = new object();
 
-        static IntPtr[] EntryPoints;
-        static byte[] EntryPointNames;
-        static int[] EntryPointNameOffsets;
-
-        #region Constructors
+        private static IntPtr[] EntryPoints;
+        private static byte[] EntryPointNames;
+        private static int[] EntryPointNameOffsets;
 
         /// <summary>
         /// Constructs a new instance.
@@ -63,10 +58,6 @@ namespace OpenTK.Graphics.ES30
             _EntryPointNameOffsetsInstance = EntryPointNameOffsets;
         }
 
-        #endregion
-
-        #region --- Protected Members ---
-
         /// <summary>
         /// Returns a synchronization token unique for the GL class.
         /// </summary>
@@ -75,10 +66,6 @@ namespace OpenTK.Graphics.ES30
             get { return sync_root; }
         }
 
-        #endregion
-
-        #region Helper Overloads
-
 #pragma warning disable 3019
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -86,8 +73,6 @@ namespace OpenTK.Graphics.ES30
 
         // Note: Mono 1.9.1 truncates StringBuilder results (for 'out string' parameters).
         // We work around this issue by doubling the StringBuilder capacity.
-
-        #region public static void ClearColor() overloads
 
         public static void ClearColor(Color color)
         {
@@ -99,10 +84,6 @@ namespace OpenTK.Graphics.ES30
             GL.ClearColor(color.R, color.G, color.B, color.A);
         }
 
-        #endregion
-
-        #region public static void BlendColor() overloads
-
         public static void BlendColor(Color color)
         {
             GL.BlendColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
@@ -112,10 +93,6 @@ namespace OpenTK.Graphics.ES30
         {
             GL.BlendColor(color.R, color.G, color.B, color.A);
         }
-
-        #endregion
-
-        #region Uniform
 
         [CLSCompliant(false)]
         public static void Uniform2(int location, ref Vector2 vector)
@@ -194,39 +171,25 @@ namespace OpenTK.Graphics.ES30
         }
 
 
-        #endregion
-
-        #region Shaders
-
-        #region GetActiveAttrib
-
         public static string GetActiveAttrib(int program, int index, out int size, out ActiveAttribType type)
         {
             int length;
-			GetProgram(program, ES30.GetProgramParameterName.ActiveAttributeMaxLength, out length);
+            GetProgram(program, ES30.GetProgramParameterName.ActiveAttributeMaxLength, out length);
             StringBuilder sb = new StringBuilder(length == 0 ? 1 : length * 2);
 
-			GetActiveAttrib(program, index, sb.Capacity, out length, out size, out type, sb);
+            GetActiveAttrib(program, index, sb.Capacity, out length, out size, out type, sb);
             return sb.ToString();
         }
-
-        #endregion
-
-        #region GetActiveUniform
 
         public static string GetActiveUniform(int program, int uniformIndex, out int size, out ActiveUniformType type)
         {
             int length;
-			GetProgram(program, ES30.GetProgramParameterName.ActiveUniformMaxLength, out length);
+            GetProgram(program, ES30.GetProgramParameterName.ActiveUniformMaxLength, out length);
 
             StringBuilder sb = new StringBuilder(length == 0 ? 1 : length);
             GetActiveUniform(program, uniformIndex, sb.Capacity, out length, out size, out type, sb);
             return sb.ToString();
         }
-
-        #endregion
-
-        #region public static void ShaderSource(Int32 shader, System.String @string)
 
         public static void ShaderSource(Int32 shader, System.String @string)
         {
@@ -237,20 +200,12 @@ namespace OpenTK.Graphics.ES30
             }
         }
 
-        #endregion
-
-        #region public static string GetShaderInfoLog(Int32 shader)
-
         public static string GetShaderInfoLog(Int32 shader)
         {
             string info;
             GetShaderInfoLog(shader, out info);
             return info;
         }
-
-        #endregion
-
-        #region public static void GetShaderInfoLog(Int32 shader, out string info)
 
         public static void GetShaderInfoLog(Int32 shader, out string info)
         {
@@ -269,10 +224,6 @@ namespace OpenTK.Graphics.ES30
             }
         }
 
-        #endregion
-
-        #region public static string GetProgramInfoLog(Int32 program)
-
         public static string GetProgramInfoLog(Int32 program)
         {
             string info;
@@ -280,16 +231,12 @@ namespace OpenTK.Graphics.ES30
             return info;
         }
 
-        #endregion
-
-        #region public static void GetProgramInfoLog(Int32 program, out string info)
-
         public static void GetProgramInfoLog(Int32 program, out string info)
         {
             unsafe
             {
                 int length;
-				GL.GetProgram(program, ES30.GetProgramParameterName.InfoLogLength, out length); if (length == 0)
+                GL.GetProgram(program, ES30.GetProgramParameterName.InfoLogLength, out length); if (length == 0)
                 {
                     info = String.Empty;
                     return;
@@ -300,21 +247,11 @@ namespace OpenTK.Graphics.ES30
             }
         }
 
-        #endregion
-
-        #endregion
-
-        #region public static void VertexAttrib2(Int32 index, ref Vector2 v)
-
         [CLSCompliant(false)]
         public static void VertexAttrib2(Int32 index, ref Vector2 v)
         {
             GL.VertexAttrib2(index, v.X, v.Y);
         }
-
-        #endregion
-
-        #region public static void VertexAttrib3(Int32 index, ref Vector3 v)
 
         [CLSCompliant(false)]
         public static void VertexAttrib3(Int32 index, ref Vector3 v)
@@ -322,46 +259,26 @@ namespace OpenTK.Graphics.ES30
             GL.VertexAttrib3(index, v.X, v.Y, v.Z);
         }
 
-        #endregion
-
-        #region public static void VertexAttrib4(Int32 index, ref Vector4 v)
-
         [CLSCompliant(false)]
         public static void VertexAttrib4(Int32 index, ref Vector4 v)
         {
             GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
 
-        #endregion
-
-        #region public static void VertexAttrib2(Int32 index, Vector2 v)
-
         public static void VertexAttrib2(Int32 index, Vector2 v)
         {
             GL.VertexAttrib2(index, v.X, v.Y);
         }
-
-        #endregion
-
-        #region public static void VertexAttrib3(Int32 index, Vector3 v)
 
         public static void VertexAttrib3(Int32 index, Vector3 v)
         {
             GL.VertexAttrib3(index, v.X, v.Y, v.Z);
         }
 
-        #endregion
-
-        #region public static void VertexAttrib4(Int32 index, Vector4 v)
-
         public static void VertexAttrib4(Int32 index, Vector4 v)
         {
             GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
-
-        #endregion
-
-        #region VertexAttribPointer
 
         public static void VertexAttribPointer(int index, int size, VertexAttribPointerType type, bool normalized, int stride, int offset)
         {
@@ -374,16 +291,14 @@ namespace OpenTK.Graphics.ES30
             VertexAttribPointer(index, size, type, normalized, stride, (IntPtr)offset);
         }
 
-        #endregion
-
-        #region Get[Float|Double]
-
         public static void GetFloat(GetPName pname, out Vector2 vector)
         {
             unsafe
             {
                 fixed (Vector2* ptr = &vector)
+                {
                     GetFloat(pname, (float*)ptr);
+                }
             }
         }
 
@@ -392,7 +307,9 @@ namespace OpenTK.Graphics.ES30
             unsafe
             {
                 fixed (Vector3* ptr = &vector)
+                {
                     GetFloat(pname, (float*)ptr);
+                }
             }
         }
 
@@ -401,7 +318,9 @@ namespace OpenTK.Graphics.ES30
             unsafe
             {
                 fixed (Vector4* ptr = &vector)
+                {
                     GetFloat(pname, (float*)ptr);
+                }
             }
         }
 
@@ -410,13 +329,11 @@ namespace OpenTK.Graphics.ES30
             unsafe
             {
                 fixed (Matrix4* ptr = &matrix)
+                {
                     GetFloat(pname, (float*)ptr);
+                }
             }
         }
-
-        #endregion
-
-        #region Viewport
 
         public static void Viewport(Size size)
         {
@@ -443,20 +360,17 @@ namespace OpenTK.Graphics.ES30
             GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
 #endif
-        #endregion
 
 #pragma warning restore 3019
 #pragma warning restore 1591
 #pragma warning restore 1572
 #pragma warning restore 1573
-
-        #endregion
     }
 
     #pragma warning disable 1574 // XML comment cref attribute could not be resolved, compiler bug in Mono 3.4.0
 
     /// <summary>
-    /// Defines the signature of a debug callback for 
+    /// Defines the signature of a debug callback for
     /// <see cref="GL.DebugMessageCallback"/>.
     /// </summary>
     /// <param name="source">The <see cref="DebugSource"/> for this debug message.</param>
@@ -473,7 +387,7 @@ namespace OpenTK.Graphics.ES30
         IntPtr userParam);
 
     /// <summary>
-    /// Defines the signature of a debug callback for 
+    /// Defines the signature of a debug callback for
     /// <see cref="GL.Khr.DebugMessageCallback"/>.
     /// </summary>
     /// <param name="source">The <see cref="DebugSource"/> for this debug message.</param>

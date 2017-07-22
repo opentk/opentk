@@ -1,11 +1,10 @@
-#region License
 //
 // Xkb.cs
 //
 // Author:
 //       Stefanos Apostolopoulos <stapostol@gmail.com>
 //
-// Copyright (c) 2006-2014 
+// Copyright (c) 2006-2014
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -44,9 +42,9 @@ namespace OpenTK.Platform.X11
     using XkbCompatMapPtr = IntPtr;
     using XkbGeometryPtr = IntPtr;
 
-    class Xkb
+    internal class Xkb
     {
-        const string lib = "libX11";
+        private const string lib = "libX11";
 
         internal const int KeyNameLength = 4;
         internal const int NumModifiers = 8;
@@ -65,10 +63,10 @@ namespace OpenTK.Platform.X11
         internal extern static IntPtr GetKeyboard(IntPtr display, XkbKeyboardMask which, int device_id);
 
         [DllImport(lib, EntryPoint = "XkbGetMap")]
-        internal extern static IntPtr GetMap(IntPtr display, XkbKeyboardMask which, int device_spec); 
+        internal extern static IntPtr GetMap(IntPtr display, XkbKeyboardMask which, int device_spec);
 
         [DllImport(lib, EntryPoint = "XkbGetNames")]
-        unsafe internal extern static IntPtr GetNames(IntPtr display, XkbNamesMask which, XkbDesc* xkb); 
+        unsafe internal extern static IntPtr GetNames(IntPtr display, XkbNamesMask which, XkbDesc* xkb);
 
         [DllImport(lib, EntryPoint = "XkbKeycodeToKeysym")]
         internal extern static XKey KeycodeToKeysym(IntPtr display, int keycode, int group, int level);
@@ -98,7 +96,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    enum XkbKeyboardMask
+    internal enum XkbKeyboardMask
     {
         Controls = 1 << 0,
         ServerMap = 1 << 1,
@@ -111,7 +109,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    enum XkbNamesMask
+    internal enum XkbNamesMask
     {
         Keycodes = 1 << 0,
         Geometry = 1 << 1,
@@ -132,7 +130,7 @@ namespace OpenTK.Platform.X11
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct XkbDesc
+    internal unsafe struct XkbDesc
     {
         internal IntPtr dpy;
         internal ushort flags;
@@ -150,36 +148,36 @@ namespace OpenTK.Platform.X11
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct XkbKeyAlias
+    internal unsafe struct XkbKeyAlias
     {
         internal fixed byte real[Xkb.KeyNameLength];
         internal fixed byte alias[Xkb.KeyNameLength];
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct XkbKeyName
+    internal unsafe struct XkbKeyName
     {
         internal fixed byte name[Xkb.KeyNameLength];
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct XkbNames
+    internal unsafe struct XkbNames
     {
-        #region Structs
-
         [StructLayout(LayoutKind.Sequential)]
         internal struct Groups
         {
-            Atom groups0;
-            Atom groups1;
-            Atom groups2;
-            Atom groups3;
+            private Atom groups0;
+            private Atom groups1;
+            private Atom groups2;
+            private Atom groups3;
             internal Atom this[int i]
             {
                 get
                 {
                     if (i < 0 || i > 3)
+                    {
                         throw new IndexOutOfRangeException();
+                    }
 
                     unsafe
                     {
@@ -195,44 +193,46 @@ namespace OpenTK.Platform.X11
         [StructLayout(LayoutKind.Sequential)]
         internal struct Indicators
         {
-            Atom indicators0;
-            Atom indicators1;
-            Atom indicators2;
-            Atom indicators3;
-            Atom indicators4;
-            Atom indicators5;
-            Atom indicators6;
-            Atom indicators7;
-            Atom indicators8;
-            Atom indicators9;
-            Atom indicators10;
-            Atom indicators11;
-            Atom indicators12;
-            Atom indicators13;
-            Atom indicators14;
-            Atom indicators15;
-            Atom indicators16;
-            Atom indicators17;
-            Atom indicators18;
-            Atom indicators19;
-            Atom indicators20;
-            Atom indicators21;
-            Atom indicators22;
-            Atom indicators23;
-            Atom indicators24;
-            Atom indicators25;
-            Atom indicators26;
-            Atom indicators27;
-            Atom indicators28;
-            Atom indicators29;
-            Atom indicators30;
-            Atom indicators31;
+            private Atom indicators0;
+            private Atom indicators1;
+            private Atom indicators2;
+            private Atom indicators3;
+            private Atom indicators4;
+            private Atom indicators5;
+            private Atom indicators6;
+            private Atom indicators7;
+            private Atom indicators8;
+            private Atom indicators9;
+            private Atom indicators10;
+            private Atom indicators11;
+            private Atom indicators12;
+            private Atom indicators13;
+            private Atom indicators14;
+            private Atom indicators15;
+            private Atom indicators16;
+            private Atom indicators17;
+            private Atom indicators18;
+            private Atom indicators19;
+            private Atom indicators20;
+            private Atom indicators21;
+            private Atom indicators22;
+            private Atom indicators23;
+            private Atom indicators24;
+            private Atom indicators25;
+            private Atom indicators26;
+            private Atom indicators27;
+            private Atom indicators28;
+            private Atom indicators29;
+            private Atom indicators30;
+            private Atom indicators31;
             internal Atom this[int i]
             {
                 get
                 {
                     if (i < 0 || i > 31)
+                    {
                         throw new IndexOutOfRangeException();
+                    }
 
                     unsafe
                     {
@@ -247,28 +247,30 @@ namespace OpenTK.Platform.X11
         [StructLayout(LayoutKind.Sequential)]
         internal struct VMods
         {
-            Atom vmods0;
-            Atom vmods1;
-            Atom vmods2;
-            Atom vmods3;
-            Atom vmods4;
-            Atom vmods5;
-            Atom vmods6;
-            Atom vmods7;
-            Atom vmods8;
-            Atom vmods9;
-            Atom vmods10;
-            Atom vmods11;
-            Atom vmods12;
-            Atom vmods13;
-            Atom vmods14;
-            Atom vmods15;
+            private Atom vmods0;
+            private Atom vmods1;
+            private Atom vmods2;
+            private Atom vmods3;
+            private Atom vmods4;
+            private Atom vmods5;
+            private Atom vmods6;
+            private Atom vmods7;
+            private Atom vmods8;
+            private Atom vmods9;
+            private Atom vmods10;
+            private Atom vmods11;
+            private Atom vmods12;
+            private Atom vmods13;
+            private Atom vmods14;
+            private Atom vmods15;
             internal Atom this[int i]
             {
                 get
                 {
                     if (i < 0 || i > 15)
+                    {
                         throw new IndexOutOfRangeException();
+                    }
 
                     unsafe
                     {
@@ -280,8 +282,6 @@ namespace OpenTK.Platform.X11
                 }
             }
         }
-
-        #endregion
 
         internal Atom keycodes;
         internal Atom geometry;

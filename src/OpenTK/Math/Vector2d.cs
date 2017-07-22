@@ -1,4 +1,3 @@
-#region --- License ---
 /*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
 
@@ -20,7 +19,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-#endregion
 
 using System;
 using System.Runtime.InteropServices;
@@ -33,8 +31,6 @@ namespace OpenTK
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector2d : IEquatable<Vector2d>
     {
-        #region Fields
-
         /// <summary>The X coordinate of this instance.</summary>
         public double X;
 
@@ -66,10 +62,6 @@ namespace OpenTK
         /// </summary>
         public static readonly int SizeInBytes = Marshal.SizeOf(new Vector2d());
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
@@ -89,103 +81,35 @@ namespace OpenTK
             this.Y = y;
         }
 
-        #endregion
-
-        #region Public Members
-
         /// <summary>
         /// Gets or sets the value at the index of the Vector.
         /// </summary>
         public double this[int index] {
             get{
-                if(index == 0) return X;
-                else if(index == 1) return Y;
+                if(index == 0)
+                {
+                    return X;
+                }
+                else if(index == 1)
+                {
+                    return Y;
+                }
                 throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
             } set{
-                if(index == 0) X = value;
-                else if(index == 1) Y = value;
-                else throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
+                if(index == 0)
+                {
+                    X = value;
+                }
+                else if(index == 1)
+                {
+                    Y = value;
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
+                }
             }
         }
-
-        #region Instance
-
-        #region public void Add()
-
-        /// <summary>Add the Vector passed as parameter to this instance.</summary>
-        /// <param name="right">Right operand. This parameter is only read from.</param>
-        [CLSCompliant(false)]
-        [Obsolete("Use static Add() method instead.")]
-        public void Add(Vector2d right)
-        {
-            this.X += right.X;
-            this.Y += right.Y;
-        }
-
-        /// <summary>Add the Vector passed as parameter to this instance.</summary>
-        /// <param name="right">Right operand. This parameter is only read from.</param>
-        [CLSCompliant(false)]
-        [Obsolete("Use static Add() method instead.")]
-        public void Add(ref Vector2d right)
-        {
-            this.X += right.X;
-            this.Y += right.Y;
-        }
-
-        #endregion public void Add()
-
-        #region public void Sub()
-
-        /// <summary>Subtract the Vector passed as parameter from this instance.</summary>
-        /// <param name="right">Right operand. This parameter is only read from.</param>
-        [CLSCompliant(false)]
-        [Obsolete("Use static Subtract() method instead.")]
-        public void Sub(Vector2d right)
-        {
-            this.X -= right.X;
-            this.Y -= right.Y;
-        }
-
-        /// <summary>Subtract the Vector passed as parameter from this instance.</summary>
-        /// <param name="right">Right operand. This parameter is only read from.</param>
-        [CLSCompliant(false)]
-        [Obsolete("Use static Subtract() method instead.")]
-        public void Sub(ref Vector2d right)
-        {
-            this.X -= right.X;
-            this.Y -= right.Y;
-        }
-
-        #endregion public void Sub()
-
-        #region public void Mult()
-
-        /// <summary>Multiply this instance by a scalar.</summary>
-        /// <param name="f">Scalar operand.</param>
-        [Obsolete("Use static Multiply() method instead.")]
-        public void Mult(double f)
-        {
-            this.X *= f;
-            this.Y *= f;
-        }
-
-        #endregion public void Mult()
-
-        #region public void Div()
-
-        /// <summary>Divide this instance by a scalar.</summary>
-        /// <param name="f">Scalar operand.</param>
-        [Obsolete("Use static Divide() method instead.")]
-        public void Div(double f)
-        {
-            double mult = 1.0 / f;
-            this.X *= mult;
-            this.Y *= mult;
-        }
-
-        #endregion public void Div()
-
-        #region public double Length
 
         /// <summary>
         /// Gets the length (magnitude) of the vector.
@@ -198,10 +122,6 @@ namespace OpenTK
                 return System.Math.Sqrt(X * X + Y * Y);
             }
         }
-
-        #endregion
-
-        #region public double LengthSquared
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -219,10 +139,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region public Vector2d PerpendicularRight
-
         /// <summary>
         /// Gets the perpendicular vector on the right side of this vector.
         /// </summary>
@@ -233,10 +149,6 @@ namespace OpenTK
                 return new Vector2d(Y, -X);
             }
         }
-
-        #endregion
-
-        #region public Vector2d PerpendicularLeft
 
         /// <summary>
         /// Gets the perpendicular vector on the left side of this vector.
@@ -249,8 +161,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
         /// <summary>
         /// Returns a copy of the Vector2d scaled to unit length.
         /// </summary>
@@ -262,8 +172,6 @@ namespace OpenTK
             return v;
         }
 
-        #region public void Normalize()
-
         /// <summary>
         /// Scales the Vector2 to unit length.
         /// </summary>
@@ -273,149 +181,6 @@ namespace OpenTK
             X *= scale;
             Y *= scale;
         }
-
-        #endregion
-
-        #region public void Scale()
-
-        /// <summary>
-        /// Scales the current Vector2 by the given amounts.
-        /// </summary>
-        /// <param name="sx">The scale of the X component.</param>
-        /// <param name="sy">The scale of the Y component.</param>
-        [Obsolete("Use static Multiply() method instead.")]
-        public void Scale(double sx, double sy)
-        {
-            X *= sx;
-            Y *= sy;
-        }
-
-        /// <summary>Scales this instance by the given parameter.</summary>
-        /// <param name="scale">The scaling of the individual components.</param>
-        [CLSCompliant(false)]
-        [Obsolete("Use static Multiply() method instead.")]
-        public void Scale(Vector2d scale)
-        {
-            this.X *= scale.X;
-            this.Y *= scale.Y;
-        }
-
-        /// <summary>Scales this instance by the given parameter.</summary>
-        /// <param name="scale">The scaling of the individual components.</param>
-        [CLSCompliant(false)]
-        [Obsolete("Use static Multiply() method instead.")]
-        public void Scale(ref Vector2d scale)
-        {
-            this.X *= scale.X;
-            this.Y *= scale.Y;
-        }
-
-        #endregion public void Scale()
-
-        #endregion
-
-        #region Static
-
-        #region Obsolete
-
-        #region Sub
-
-        /// <summary>
-        /// Subtract one Vector from another
-        /// </summary>
-        /// <param name="a">First operand</param>
-        /// <param name="b">Second operand</param>
-        /// <returns>Result of subtraction</returns>
-        [Obsolete("Use static Subtract() method instead.")]
-        public static Vector2d Sub(Vector2d a, Vector2d b)
-        {
-            a.X -= b.X;
-            a.Y -= b.Y;
-            return a;
-        }
-
-        /// <summary>
-        /// Subtract one Vector from another
-        /// </summary>
-        /// <param name="a">First operand</param>
-        /// <param name="b">Second operand</param>
-        /// <param name="result">Result of subtraction</param>
-        [Obsolete("Use static Subtract() method instead.")]
-        public static void Sub(ref Vector2d a, ref Vector2d b, out Vector2d result)
-        {
-            result.X = a.X - b.X;
-            result.Y = a.Y - b.Y;
-        }
-
-        #endregion
-
-        #region Mult
-
-        /// <summary>
-        /// Multiply a vector and a scalar
-        /// </summary>
-        /// <param name="a">Vector operand</param>
-        /// <param name="d">Scalar operand</param>
-        /// <returns>Result of the multiplication</returns>
-        [Obsolete("Use static Multiply() method instead.")]
-        public static Vector2d Mult(Vector2d a, double d)
-        {
-            a.X *= d;
-            a.Y *= d;
-            return a;
-        }
-
-        /// <summary>
-        /// Multiply a vector and a scalar
-        /// </summary>
-        /// <param name="a">Vector operand</param>
-        /// <param name="d">Scalar operand</param>
-        /// <param name="result">Result of the multiplication</param>
-        [Obsolete("Use static Multiply() method instead.")]
-        public static void Mult(ref Vector2d a, double d, out Vector2d result)
-        {
-            result.X = a.X * d;
-            result.Y = a.Y * d;
-        }
-
-        #endregion
-
-        #region Div
-
-        /// <summary>
-        /// Divide a vector by a scalar
-        /// </summary>
-        /// <param name="a">Vector operand</param>
-        /// <param name="d">Scalar operand</param>
-        /// <returns>Result of the division</returns>
-        [Obsolete("Use static Divide() method instead.")]
-        public static Vector2d Div(Vector2d a, double d)
-        {
-            double mult = 1.0 / d;
-            a.X *= mult;
-            a.Y *= mult;
-            return a;
-        }
-
-        /// <summary>
-        /// Divide a vector by a scalar
-        /// </summary>
-        /// <param name="a">Vector operand</param>
-        /// <param name="d">Scalar operand</param>
-        /// <param name="result">Result of the division</param>
-        [Obsolete("Use static Divide() method instead.")]
-        public static void Div(ref Vector2d a, double d, out Vector2d result)
-        {
-            double mult = 1.0 / d;
-            result.X = a.X * mult;
-            result.Y = a.Y * mult;
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Add
 
         /// <summary>
         /// Adds two vectors.
@@ -440,10 +205,6 @@ namespace OpenTK
             result = new Vector2d(a.X + b.X, a.Y + b.Y);
         }
 
-        #endregion
-
-        #region Subtract
-
         /// <summary>
         /// Subtract one Vector from another
         /// </summary>
@@ -466,10 +227,6 @@ namespace OpenTK
         {
             result = new Vector2d(a.X - b.X, a.Y - b.Y);
         }
-
-        #endregion
-
-        #region Multiply
 
         /// <summary>
         /// Multiplies a vector by a scalar.
@@ -516,10 +273,6 @@ namespace OpenTK
         {
             result = new Vector2d(vector.X * scale.X, vector.Y * scale.Y);
         }
-
-        #endregion
-
-        #region Divide
 
         /// <summary>
         /// Divides a vector by a scalar.
@@ -568,10 +321,6 @@ namespace OpenTK
             result = new Vector2d(vector.X / scale.X, vector.Y / scale.Y);
         }
 
-        #endregion
-
-        #region Min
-
         /// <summary>
         /// Calculate the component-wise minimum of two vectors
         /// </summary>
@@ -598,10 +347,6 @@ namespace OpenTK
             result.X = a.X < b.X ? a.X : b.X;
             result.Y = a.Y < b.Y ? a.Y : b.Y;
         }
-
-        #endregion
-
-        #region Max
 
         /// <summary>
         /// Calculate the component-wise maximum of two vectors
@@ -630,10 +375,6 @@ namespace OpenTK
             result.Y = a.Y > b.Y ? a.Y : b.Y;
         }
 
-        #endregion
-
-        #region ComponentMin
-
         /// <summary>
         /// Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
@@ -658,10 +399,6 @@ namespace OpenTK
             result.X = a.X < b.X ? a.X : b.X;
             result.Y = a.Y < b.Y ? a.Y : b.Y;
         }
-
-        #endregion
-
-        #region ComponentMax
 
         /// <summary>
         /// Returns a vector created from the largest of the corresponding components of the given vectors.
@@ -688,10 +425,6 @@ namespace OpenTK
             result.Y = a.Y > b.Y ? a.Y : b.Y;
         }
 
-        #endregion
-
-        #region MagnitudeMin
-
         /// <summary>
         /// Returns the Vector2d with the minimum magnitude. If the magnitudes are equal, the second vector
         /// is selected.
@@ -717,10 +450,6 @@ namespace OpenTK
             result = left.LengthSquared < right.LengthSquared ? left : right;
         }
 
-        #endregion
-
-        #region MagnitudeMax
-
         /// <summary>
         /// Returns the Vector2d with the minimum magnitude. If the magnitudes are equal, the first vector
         /// is selected.
@@ -745,10 +474,6 @@ namespace OpenTK
         {
             result = left.LengthSquared >= right.LengthSquared ? left : right;
         }
-
-        #endregion
-
-        #region Clamp
 
         /// <summary>
         /// Clamp a vector to the given minimum and maximum vectors
@@ -777,10 +502,6 @@ namespace OpenTK
             result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
         }
 
-        #endregion
-
-        #region Normalize
-
         /// <summary>
         /// Scale a vector to unit length
         /// </summary>
@@ -805,10 +526,6 @@ namespace OpenTK
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }
-
-        #endregion
-
-        #region NormalizeFast
 
         /// <summary>
         /// Scale a vector to approximately unit length
@@ -835,10 +552,6 @@ namespace OpenTK
             result.Y = vec.Y * scale;
         }
 
-        #endregion
-
-        #region Dot
-
         /// <summary>
         /// Calculate the dot (scalar) product of two vectors
         /// </summary>
@@ -860,10 +573,6 @@ namespace OpenTK
         {
             result = left.X * right.X + left.Y * right.Y;
         }
-
-        #endregion
-
-        #region Lerp
 
         /// <summary>
         /// Returns a new Vector that is the linear blend of the 2 given Vectors
@@ -891,10 +600,6 @@ namespace OpenTK
             result.X = blend * (b.X - a.X) + a.X;
             result.Y = blend * (b.Y - a.Y) + a.Y;
         }
-
-        #endregion
-
-        #region Barycentric
 
         /// <summary>
         /// Interpolate 3 Vectors using Barycentric coordinates
@@ -932,10 +637,6 @@ namespace OpenTK
             Add(ref result, ref temp, out result);
         }
 
-        #endregion
-
-        #region Transform
-
         /// <summary>
         /// Transforms a vector by a quaternion rotation.
         /// </summary>
@@ -965,21 +666,11 @@ namespace OpenTK
             result = new Vector2d(v.X, v.Y);
         }
 
-        #endregion
-
-        #endregion
-
-        #region Swizzle
-
         /// <summary>
         /// Gets or sets an OpenTK.Vector2d with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Yx { get { return new Vector2d(Y, X); } set { Y = value.X; X = value.Y; } }
-
-        #endregion
-
-        #region Operators
 
         /// <summary>
         /// Adds two instances.
@@ -1109,12 +800,6 @@ namespace OpenTK
             return new Vector2((float)v2d.X, (float)v2d.Y);
         }
 
-        #endregion
-
-        #region Overrides
-
-        #region public override string ToString()
-
         private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
         /// <summary>
         /// Returns a System.String that represents the current instance.
@@ -1124,10 +809,6 @@ namespace OpenTK
         {
             return String.Format("({0}{2} {1})", X, Y, listSeparator);
         }
-
-        #endregion
-
-        #region public override int GetHashCode()
 
         /// <summary>
         /// Returns the hashcode for this instance.
@@ -1141,10 +822,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region public override bool Equals(object obj)
-
         /// <summary>
         /// Indicates whether this instance and a specified object are equal.
         /// </summary>
@@ -1153,18 +830,12 @@ namespace OpenTK
         public override bool Equals(object obj)
         {
             if (!(obj is Vector2d))
+            {
                 return false;
+            }
 
             return this.Equals((Vector2d)obj);
         }
-
-        #endregion
-
-        #endregion
-
-        #endregion
-
-        #region IEquatable<Vector2d> Members
 
         /// <summary>Indicates whether the current vector is equal to another vector.</summary>
         /// <param name="other">A vector to compare with this vector.</param>
@@ -1175,7 +846,5 @@ namespace OpenTK
                 X == other.X &&
                 Y == other.Y;
         }
-
-        #endregion
     }
 }

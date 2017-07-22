@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,19 +22,14 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.MacOS
 {
     using Graphics;
 
-    class MacOSFactory : PlatformFactoryBase
+    internal class MacOSFactory : PlatformFactoryBase
     {
         // Todo: we can query the exact amount via
         // CGEventSourceGetPixelsPerLine. This is
@@ -43,15 +37,13 @@ namespace OpenTK.Platform.MacOS
         internal const float ScrollFactor = 0.1f;
         internal static bool ExclusiveFullscreen = false;
 
-        readonly IInputDriver2 InputDriver;
+        private readonly IInputDriver2 InputDriver;
 
         public MacOSFactory()
         {
             NSApplication.Initialize();
             InputDriver = new HIDInput();
         }
-
-        #region IPlatformFactory Members
 
         public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
@@ -100,10 +92,7 @@ namespace OpenTK.Platform.MacOS
         {
             return new MappedGamePadDriver();
         }
-        
-        #endregion
 
-        #region IDisposable Members
 
         protected override void Dispose(bool manual)
         {
@@ -117,7 +106,5 @@ namespace OpenTK.Platform.MacOS
                 base.Dispose(manual);
             }
         }
-
-        #endregion
     }
 }

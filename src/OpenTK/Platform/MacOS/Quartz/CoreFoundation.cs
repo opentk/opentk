@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -23,10 +22,8 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -41,54 +38,54 @@ namespace OpenTK.Platform.MacOS.Carbon
     using CFTypeRef = System.IntPtr;
     using CFMachPortRef = IntPtr;
 
-    struct CFArray
+    internal struct CFArray
     {
-        IntPtr arrayRef;
-        public IntPtr Ref { get { return arrayRef; } set { arrayRef = value; } }
+        public IntPtr Ref { get; set; }
 
         public CFArray(IntPtr reference)
         {
-            arrayRef = reference;
+            Ref = reference;
         }
 
         public int Count
         {
-            get { return CF.CFArrayGetCount(arrayRef); }
+            get { return CF.CFArrayGetCount(Ref); }
         }
         public IntPtr this[int index]
         {
             get
             {
                 if (index >= Count || index < 0)
+                {
                     throw new IndexOutOfRangeException();
+                }
 
-                return CF.CFArrayGetValueAtIndex(arrayRef, index);
+                return CF.CFArrayGetValueAtIndex(Ref, index);
             }
         }
     }
 
-    struct CFDictionary
+    internal struct CFDictionary
     {
         public CFDictionary(IntPtr reference)
         {
-            dictionaryRef = reference;
+            Ref = reference;
         }
 
-        IntPtr dictionaryRef;
-        public IntPtr Ref { get { return dictionaryRef; } set { dictionaryRef = value; } }
+        public IntPtr Ref { get; set; }
 
         public int Count
         {
             get
             {
-                return CF.CFDictionaryGetCount(dictionaryRef);
+                return CF.CFDictionaryGetCount(Ref);
             }
         }
 
         public double GetNumberValue(string key)
         {
             double retval;
-            IntPtr cfnum = CF.CFDictionaryGetValue(dictionaryRef,
+            IntPtr cfnum = CF.CFDictionaryGetValue(Ref,
                 CF.CFSTR(key));
 
             CF.CFNumberGetValue(cfnum, CF.CFNumberType.kCFNumberDoubleType, out retval);
@@ -96,9 +93,10 @@ namespace OpenTK.Platform.MacOS.Carbon
             return retval;
         }
     }
-    class CF
+
+    internal class CF
     {
-        const string appServices = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
+        private const string appServices = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
 
         [DllImport(appServices)]
         internal static extern int CFArrayGetCount(IntPtr theArray);
@@ -125,7 +123,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         // I don't know why, but __CFStringMakeConstantString is marked as "private and should not be used directly"
         // even though the CFSTR macro just calls it.
         [DllImport(appServices)]
-        static extern IntPtr __CFStringMakeConstantString(string cStr);
+        private static extern IntPtr __CFStringMakeConstantString(string cStr);
         internal static IntPtr CFSTR(string cStr)
         {
             return __CFStringMakeConstantString(cStr);

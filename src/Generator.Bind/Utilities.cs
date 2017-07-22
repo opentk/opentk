@@ -1,8 +1,6 @@
-﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+﻿/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -15,8 +13,6 @@ using Enum=Bind.Structures.Enum;
 
 namespace Bind
 {
-    #region WrapperTypes enum
-
     [Flags]
     public enum WrapperTypes
     {
@@ -96,9 +92,7 @@ namespace Bind
         SizeParameter = 1 << 14,
     }
 
-    #endregion
-
-    static class Utilities
+    internal static class Utilities
     {
         public static readonly char[] Separators = { ' ', '\n', ',', '(', ')', ';', '#' };
         public static Regex Extensions { get; private set; }
@@ -109,9 +103,9 @@ namespace Bind
         // Note: REMOVING THESE WILL BREAK BINARY-COMPATIBILITY WITH OPENTK 1.0,
         // WRT THE ES 1.1 API.
         // You have been warned.
-        static List<string> extension_names = new List<string>
+        private static List<string> extension_names = new List<string>
         {
-            "SGI", "SGIS", "SGIX", "IBM", "AMD", "INTEL", 
+            "SGI", "SGIS", "SGIX", "IBM", "AMD", "INTEL",
         };
 
         public static void AddExtensions(IEnumerable<string> extensions)
@@ -149,12 +143,12 @@ namespace Bind
             }
         }
 
-        #region internal StreamReader OpenSpecFile(string file)
-
         internal static StreamReader OpenSpecFile(string folder, string file)
         {
             if (String.IsNullOrEmpty(folder) || String.IsNullOrEmpty(file))
+            {
                 return null;
+            }
 
             Console.WriteLine(folder);
             Console.WriteLine(file);
@@ -162,10 +156,6 @@ namespace Bind
             Console.WriteLine(path);
             return new StreamReader(path);
         }
-
-        #endregion
-
-        #region Keywords
 
         public static readonly List<string> CSharpKeywords = new List<string>(
             new string[]
@@ -192,10 +182,6 @@ namespace Bind
                 "enum", "namespace", "string"
             }
         );
-
-        #endregion
-
-        #region Merge
 
         // Merges the specified enum collections.
         internal static void Merge(EnumCollection enums, EnumCollection new_enums)
@@ -245,7 +231,7 @@ namespace Bind
             else
             {
                 // Tried to add a constant that already exists. If one constant
-                // is like: 'Foo = 0x5' and the other like: 'Foo = Bar.Foo', then 
+                // is like: 'Foo = 0x5' and the other like: 'Foo = Bar.Foo', then
                 // keep the first one.
                 if (!String.IsNullOrEmpty(s.ConstantCollection[t.Name].Reference))
                 {
@@ -255,10 +241,6 @@ namespace Bind
 
             return s;
         }
-
-        #endregion
-
-        #region internal static string GetGL2Extension(string name)
 
         internal static string GetGL2Extension(string name)
         {
@@ -286,25 +268,15 @@ namespace Bind
             }
         }
 
-        #endregion
-
-        #region private static bool IsGL2Extension(string function)
-
         private static bool IsGL2Extension(string function)
         {
             return !String.IsNullOrEmpty(GetGL2Extension(function));
         }
 
-        #endregion
-
-        #region internal static string StripGL2Extension(string p)
-        
         internal static string StripGL2Extension(string p)
         {
             return p.Substring(0, p.Length - GetGL2Extension(p).Length);
         }
-
-        #endregion
 
         public static bool RequiresSlot(this Delegate d, Settings settings)
         {

@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2008 the Open Toolkit library, except where noted.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,11 +22,8 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OpenTK.Graphics
 {
@@ -62,22 +58,22 @@ namespace OpenTK.Graphics
         /// </summary>
         Offscreen = 0x0008,
         /// <summary>
-        /// Indicates that this GraphicsContext is targeting OpenGL|ES via Angle 
+        /// Indicates that this GraphicsContext is targeting OpenGL|ES via Angle
         /// and that angle-specific extensions are available.
         /// </summary>
         Angle = 0x0010,
         /// <summary>
-        /// Indicates that this GraphicsContext is targeting OpenGL|ES via Angle 
+        /// Indicates that this GraphicsContext is targeting OpenGL|ES via Angle
         /// and uses Direct3D9 as rendering backend.
         /// </summary>
         AngleD3D9 = 0x0020,
         /// <summary>
-        /// Indicates that this GraphicsContext is targeting OpenGL|ES via Angle 
+        /// Indicates that this GraphicsContext is targeting OpenGL|ES via Angle
         /// and uses Direct3D11 as rendering backend.
         /// </summary>
         AngleD3D11 = 0x0040,
         /// <summary>
-        /// Indicates that this GraphicsContext is targeting OpenGL|ES via Angle 
+        /// Indicates that this GraphicsContext is targeting OpenGL|ES via Angle
         /// and uses OpenGL as rendering backend.
         /// </summary>
         AngleOpenGL = 0x0080,

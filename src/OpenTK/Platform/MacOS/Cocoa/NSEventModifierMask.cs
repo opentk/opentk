@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // NSEventModifierMask.cs
 //
 // Author:
@@ -25,14 +24,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 
 namespace OpenTK.Platform.MacOS
 {
     [Flags]
-    enum NSEventModifierMask : uint
+    internal enum NSEventModifierMask : uint
     {
         AlphaShiftKeyMask = 65536U,
         ShiftKeyMask = 131072U,

@@ -1,11 +1,10 @@
-﻿﻿#region License
-//
+﻿﻿//
 // X11KeyMap.cs
 //
 // Author:
 //       Stefanos Apostolopoulos <stapostol@gmail.com>
 //
-// Copyright (c) 2006-2014 
+// Copyright (c) 2006-2014
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,21 +24,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
-    class X11KeyMap
+    internal class X11KeyMap
     {
         // Keycode lookup table for current layout
-        readonly Key[] keycodes = new Key[256];
-        readonly bool xkb_supported;
+        private readonly Key[] keycodes = new Key[256];
+
+        private readonly bool xkb_supported;
 
         internal X11KeyMap(IntPtr display)
         {
@@ -55,7 +52,7 @@ namespace OpenTK.Platform.X11
         internal void RefreshKeycodes(IntPtr display)
         {
             // Approach inspired by GLFW: http://www.glfw.org/
-            // Huge props to the GLFW team! 
+            // Huge props to the GLFW team!
             if (xkb_supported)
             {
                 unsafe
@@ -258,7 +255,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        static Key TranslateXKey(XKey key)
+        private static Key TranslateXKey(XKey key)
         {
             switch (key)
             {
@@ -613,7 +610,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        bool TranslateKeyEvent(ref XKeyEvent e, out Key key)
+        private bool TranslateKeyEvent(ref XKeyEvent e, out Key key)
         {
             if (xkb_supported)
             {
@@ -625,7 +622,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        bool TranslateKeyX11(ref XKeyEvent e, out Key key)
+        private bool TranslateKeyX11(ref XKeyEvent e, out Key key)
         {
             XKey keysym = (XKey)API.LookupKeysym(ref e, 0);
             XKey keysym2 = (XKey)API.LookupKeysym(ref e, 1);
@@ -642,7 +639,7 @@ namespace OpenTK.Platform.X11
             return key != Key.Unknown;
         }
 
-        bool TranslateKeyXkb(IntPtr display, int keycode, out Key key)
+        private bool TranslateKeyXkb(IntPtr display, int keycode, out Key key)
         {
             if (keycode < 8 || keycode > 255)
             {

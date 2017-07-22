@@ -1,25 +1,20 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Xml.XPath;
 
 namespace Bind.Structures
 {
     /// <summary>
     /// Represents a single parameter of an opengl function.
     /// </summary>
-    class Parameter : Type, IComparable<Parameter>, IEquatable<Parameter>
+    internal class Parameter : Type, IComparable<Parameter>, IEquatable<Parameter>
     {
-        string cache;
-
-        #region Constructors
+        private string cache;
 
         /// <summary>
         /// Creates a new Parameter without type and name.
@@ -37,7 +32,9 @@ namespace Bind.Structures
             : base(p)
         {
             if (p == null)
+            {
                 return;
+            }
 
             Name = p.Name;
             Unchecked = p.Unchecked;
@@ -49,10 +46,6 @@ namespace Bind.Structures
             //this.rebuild = false;
         }
 
-        #endregion
-
-        #region RawName
-
         /// <summary>
         /// Gets or sets the raw name of the parameter.
         /// </summary>
@@ -61,10 +54,6 @@ namespace Bind.Structures
             get;
             private set;
         }
-
-        #endregion
-
-        #region Name
 
         /// <summary>
         /// Gets the name of the parameter. If the name matches a keyword of the current language,
@@ -90,11 +79,7 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region UnmanagedType
-
-        UnmanagedType _unmanaged_type;
+        private UnmanagedType _unmanaged_type;
         /// <summary>
         /// Gets or sets the name of the parameter.
         /// </summary>
@@ -110,11 +95,7 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public FlowDirection Flow
-
-        FlowDirection _flow;
+        private FlowDirection _flow;
 
         /// <summary>
         /// Gets or sets the flow of the parameter.
@@ -131,10 +112,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public bool NeedsPin
-
         public bool NeedsPin
         {
             get
@@ -143,10 +120,6 @@ namespace Bind.Structures
                         !CurrentType.ToLower().Contains("string");
             }
         }
-
-        #endregion
-
-        #region public bool Unchecked
 
         private bool _unchecked;
 
@@ -162,20 +135,7 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public bool Generic
-        
-        bool generic;
-        public bool Generic
-        {
-            get { return generic; }
-            set { generic = value; }
-        }
-
-        #endregion
-
-        #region public bool DiffersOnlyOnReference
+        public bool Generic { get; set; }
 
         // Returns true if this parameter differs only on reference compared to another parameter, i.e:
         // returns true for 'int' & 'ref int'
@@ -191,20 +151,7 @@ namespace Bind.Structures
                 other.Reference && !(Reference || Array > 0 || Pointer != 0));
         }
 
-        #endregion
-
-        #region public string ComputeSize
-
-        string computeSize;
-        public string ComputeSize
-        {
-            get { return computeSize; }
-            set { computeSize = value; }
-        }
-
-        #endregion
-
-        #region Static Members
+        public string ComputeSize { get; set; }
 
         // Returns the FlowDirection that matches the specified string
         // ("out" or "in", otherwise undefined).
@@ -212,36 +159,27 @@ namespace Bind.Structures
         {
             return direction == "out" ? FlowDirection.Out : direction == "in" ? FlowDirection.In : FlowDirection.Undefined;
         }
-        
-        #endregion
 
-        #region IComparable<Parameter> Members
 
         public int CompareTo(Parameter other)
         {
             int result = base.CompareTo(other);
             if (result == 0)
+            {
                 result = Name.CompareTo(other.Name);
+            }
             return result;
         }
-
-        #endregion
-
-        #region ToString
 
         public override string ToString()
         {
             return String.Format("{2}{0} {1}",
                 base.ToString(),
                 Name,
-                Reference ? 
+                Reference ?
                     Flow == FlowDirection.Out ? "out " : "ref " :
                     String.Empty);
         }
-
-        #endregion
-
-        #region IEquatable<Parameter> Members
 
         public bool Equals(Parameter other)
         {
@@ -251,26 +189,22 @@ namespace Bind.Structures
 
             return result;
         }
-
-        #endregion
     }
 
     /// <summary>
     /// Holds the parameter list of an opengl function.
     /// </summary>
-    class ParameterCollection : IList<Parameter>, IComparable<ParameterCollection>, IEquatable<ParameterCollection>
+    internal class ParameterCollection : IList<Parameter>, IComparable<ParameterCollection>, IEquatable<ParameterCollection>
     {
-        readonly List<Parameter> Parameters = new List<Parameter>();
+        private readonly List<Parameter> Parameters = new List<Parameter>();
 
-        bool hasPointerParameters;
-        bool hasReferenceParameters;
-        bool hasUnsignedParameters;
-        bool hasGenericParameters;
+        private bool hasPointerParameters;
+        private bool hasReferenceParameters;
+        private bool hasUnsignedParameters;
+        private bool hasGenericParameters;
 
         public bool Rebuild { get; set; }
-        Settings Settings { get; set; }
-
-        #region Constructors
+        private Settings Settings { get; set; }
 
         public ParameterCollection()
         {
@@ -287,22 +221,16 @@ namespace Bind.Structures
         public ParameterCollection(IEnumerable<Parameter> parameters)
         {
             foreach (Parameter p in parameters)
+            {
                 Add(new Parameter(p));
+            }
         }
 
-        #endregion
-
-        #region BuildCache
-
-        void BuildCache()
+        private void BuildCache()
         {
             BuildReferenceAndPointerParametersCache();
             Rebuild = false;
         }
-
-        #endregion
-
-        #region public bool HasPointerParameters
 
         public bool HasPointerParameters
         {
@@ -317,10 +245,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public bool HasReferenceParameters
-
         public bool HasReferenceParameters
         {
             get
@@ -333,10 +257,6 @@ namespace Bind.Structures
                 return hasReferenceParameters;
             }
         }
-
-        #endregion
-
-        #region public bool HasUnsignedParameters
 
         public bool HasUnsignedParameters
         {
@@ -351,10 +271,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public bool HasGenericParameters
-
         public bool HasGenericParameters
         {
             get
@@ -367,32 +283,33 @@ namespace Bind.Structures
                 return hasGenericParameters;
             }
         }
-        
-        #endregion
 
-        #region void BuildReferenceAndPointerParametersCache()
 
-        void BuildReferenceAndPointerParametersCache()
+        private void BuildReferenceAndPointerParametersCache()
         {
             foreach (Parameter p in this)
             {
                 if (p.Pointer != 0 || p.CurrentType.Contains("IntPtr"))
+                {
                     hasPointerParameters = true;
+                }
 
                 if (p.Reference)
+                {
                     hasReferenceParameters = true;
+                }
 
                 if (p.Unsigned)
+                {
                     hasUnsignedParameters = true;
+                }
 
                 if (p.Generic)
+                {
                     hasGenericParameters = true;
+                }
             }
         }
-
-        #endregion
-
-        #region ToString
 
         // Only use for debugging, not for code generation!
         public override string ToString()
@@ -409,27 +326,25 @@ namespace Bind.Structures
                 sb.Replace(", ", ")", sb.Length - 2, 2);
             }
             else
+            {
                 sb.Append(")");
+            }
 
             return sb.ToString();
         }
 
-        #endregion
-
-        #region ContainsType
-
         public bool ContainsType(string type)
         {
             foreach (Parameter p in this)
+            {
                 if (p.CurrentType == type)
+                {
                     return true;
+                }
+            }
             return false;
         }
 
-        #endregion
-
-        #region IList<Parameter> Members
-        
         public void Add(Parameter p)
         {
             Parameters.Add(p);
@@ -511,10 +426,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region IComparable<ParameterCollection> Members
-
         public int CompareTo(ParameterCollection other)
         {
             if (Count < other.Count)
@@ -531,20 +442,20 @@ namespace Bind.Structures
                 {
                     int result = this[i].CompareTo(other[i]);
                     if (result != 0)
+                    {
                         return result;
+                    }
                 }
                 return 0;
             }
         }
 
-        #endregion
-
-        #region IEquatable<ParameterCollection> Members
-
         public bool Equals(ParameterCollection other)
         {
             if (Count != other.Count)
+            {
                 return false;
+            }
 
             bool result = true;
             for (int i = 0; i < Count && result; i++)
@@ -553,7 +464,5 @@ namespace Bind.Structures
             }
             return result;
         }
-
-        #endregion
     }
 }

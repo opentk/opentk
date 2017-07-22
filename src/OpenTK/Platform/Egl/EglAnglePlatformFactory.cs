@@ -1,5 +1,4 @@
-﻿#region License
-
+﻿
 //
 // The Open Toolkit Library License
 //
@@ -7,7 +6,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -25,8 +24,6 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#endregion
-
 using System;
 using OpenTK.Graphics;
 using OpenTK.Input;
@@ -36,8 +33,6 @@ namespace OpenTK.Platform.Egl
     internal class EglAnglePlatformFactory : PlatformFactoryBase
     {
         private readonly IPlatformFactory _platform_factory;
-        #region Public Members
-
         public EglAnglePlatformFactory(IPlatformFactory platform_factory)
         {
             _platform_factory = platform_factory;
@@ -97,10 +92,6 @@ namespace OpenTK.Platform.Egl
         {
             return _platform_factory.CreateJoystickDriver();
         }
-
-        #endregion
-
-        #region Private Members
 
         private static bool FlagEnabled(GraphicsContextFlags flags, GraphicsContextFlags flag)
         {
@@ -166,7 +157,5 @@ namespace OpenTK.Platform.Egl
                 attribs
                 );
         }
-
-        #endregion
     }
 }

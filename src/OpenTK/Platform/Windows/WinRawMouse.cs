@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2010 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -39,15 +37,13 @@ namespace OpenTK.Platform.Windows
     /// <summary>
     /// Contains methods to register for and process mouse WM_INPUT messages.
     /// </summary>
-    sealed class WinRawMouse : IMouseDriver2
+    internal sealed class WinRawMouse : IMouseDriver2
     {
-        readonly List<MouseState> mice = new List<MouseState>();
-        readonly List<string> names = new List<string>(); 
-        readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
-        readonly IntPtr Window;
-        readonly object UpdateLock = new object();
-
-        #region Constructors
+        private readonly List<MouseState> mice = new List<MouseState>();
+        private readonly List<string> names = new List<string>();
+        private readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
+        private readonly IntPtr Window;
+        private readonly object UpdateLock = new object();
 
         public WinRawMouse(IntPtr window)
         {
@@ -55,17 +51,15 @@ namespace OpenTK.Platform.Windows
             Debug.Indent();
 
             if (window == IntPtr.Zero)
+            {
                 throw new ArgumentNullException("window");
+            }
 
             Window = window;
             RefreshDevices();
 
             Debug.Unindent();
         }
-
-        #endregion
-
-        #region Public Members
 
         public void RefreshDevices()
         {
@@ -106,7 +100,9 @@ namespace OpenTK.Platform.Windows
                         // mouse device by qeurying the registry.
                         RegistryKey regkey = FindRegistryKey(name);
                         if (regkey == null)
+                        {
                             continue;
+                        }
 
                         string deviceDesc = (string)regkey.GetValue("DeviceDesc");
                         string deviceClass = (string)regkey.GetValue("Class") as string;
@@ -122,9 +118,13 @@ namespace OpenTK.Platform.Windows
                         // Since the description is not vital information, use a dummy description
                         // when that happens.
                         if (String.IsNullOrEmpty(deviceDesc))
+                        {
                             deviceDesc = "Windows Mouse " + mice.Count;
+                        }
                         else
+                        {
                             deviceDesc = deviceDesc.Substring(deviceDesc.LastIndexOf(';') + 1);
+                        }
 
                         if (!String.IsNullOrEmpty(deviceClass) && deviceClass.ToLower().Equals("mouse"))
                         {
@@ -166,7 +166,9 @@ namespace OpenTK.Platform.Windows
                 }
 
                 if (mice.Count == 0)
+                {
                     return false;
+                }
 
                 // Note:For some reason, my Microsoft Digital 3000 keyboard reports 0
                 // as rin.Header.Device for the "zoom-in/zoom-out" buttons.
@@ -228,10 +230,14 @@ namespace OpenTK.Platform.Windows
                 }
 
                 if ((raw.ButtonFlags & RawInputMouseState.WHEEL) != 0)
+                {
                     mouse.SetScrollRelative(0, (short)raw.ButtonData / 120.0f);
+                }
 
                 if ((raw.ButtonFlags & RawInputMouseState.HWHEEL) != 0)
+                {
                     mouse.SetScrollRelative((short)raw.ButtonData / 120.0f, 0);
+                }
 
                 if ((raw.Flags & RawMouseFlags.MOUSE_MOVE_ABSOLUTE) != 0)
                 {
@@ -254,11 +260,7 @@ namespace OpenTK.Platform.Windows
             return processed;
         }
 
-        #endregion
-
-        #region Private Members
-
-        static string GetDeviceName(RawInputDeviceList dev)
+        private static string GetDeviceName(RawInputDeviceList dev)
         {
             // get name size
             int size = 0;
@@ -273,17 +275,21 @@ namespace OpenTK.Platform.Windows
             return name;
         }
 
-        static RegistryKey FindRegistryKey(string name)
+        private static RegistryKey FindRegistryKey(string name)
         {
             if (name.Length < 4)
+            {
                 return null;
+            }
 
             // remove the \??\
             name = name.Substring(4);
 
             string[] split = name.Split('#');
             if (split.Length < 3)
+            {
                 return null;
+            }
 
             string id_01 = split[0];    // ACPI (Class code)
             string id_02 = split[1];    // PNP0303 (SubClass code)
@@ -298,7 +304,7 @@ namespace OpenTK.Platform.Windows
             return regkey;
         }
 
-        static void RegisterRawDevice(IntPtr window, string device)
+        private static void RegisterRawDevice(IntPtr window, string device)
         {
             RawInputDevice[] rid = new RawInputDevice[]
             {
@@ -315,10 +321,6 @@ namespace OpenTK.Platform.Windows
                 Debug.Print("Registered mouse {0}", device);
             }
         }
-
-        #endregion
-
-        #region IMouseDriver2 Members
 
         public MouseState GetState()
         {
@@ -338,9 +340,13 @@ namespace OpenTK.Platform.Windows
             lock (UpdateLock)
             {
                 if (mice.Count > index)
+                {
                     return mice[index];
+                }
                 else
+                {
                     return new MouseState();
+                }
             }
         }
 
@@ -361,7 +367,5 @@ namespace OpenTK.Platform.Windows
             state.Y = p.Y;
             return state;
         }
-
-        #endregion
     }
 }

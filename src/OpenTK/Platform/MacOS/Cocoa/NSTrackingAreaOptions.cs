@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // NSTrackingAreaOptions.cs
 //
 // Author:
@@ -25,14 +24,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 
 namespace OpenTK.Platform.MacOS
 {
     [Flags]
-    enum NSTrackingAreaOptions
+    internal enum NSTrackingAreaOptions
     {
         MouseEnteredAndExited = 1,
         MouseMoved = 2,

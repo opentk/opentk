@@ -1,23 +1,14 @@
-﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+﻿/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Xml.XPath;
 
 namespace Bind.Structures
 {
-    class Type : IComparable<Type>, IEquatable<Type>
+    internal class Type : IComparable<Type>, IEquatable<Type>
     {
-        string current_qualifier = String.Empty;
-        string previous_qualifier = String.Empty;
-
-        #region --- Constructors ---
+        private string current_qualifier = String.Empty;
 
         public Type()
         {
@@ -39,25 +30,13 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region Private Members
-
-        string CurrentQualifier
+        private string CurrentQualifier
         {
             get { return current_qualifier; }
             set { PreviousQualifier = CurrentQualifier; current_qualifier = value; }
         }
 
-        string PreviousQualifier
-        {
-            get { return previous_qualifier; }
-            set { previous_qualifier = value; }
-        }
-
-        #endregion
-
-        #region Public Members
+        private string PreviousQualifier { get; set; } = String.Empty;
 
         public string QualifiedType
         {
@@ -71,7 +50,9 @@ namespace Bind.Structures
             set
             {
                 if (String.IsNullOrEmpty(value))
+                {
                     throw new ArgumentNullException();
+                }
 
                 int qualifier_end = value.LastIndexOf('.');
                 if (qualifier_end > -1)
@@ -87,9 +68,7 @@ namespace Bind.Structures
             }
         }
 
-        #region public string CurrentType
-
-        string type;
+        private string type;
         /// <summary>
         /// Gets the type of the parameter.
         /// </summary>
@@ -102,12 +81,18 @@ namespace Bind.Structures
             set
             {
                 if (String.IsNullOrEmpty(value))
+                {
                     throw new ArgumentException();
+                }
 
                 if (!String.IsNullOrEmpty(type))
+                {
                     PreviousType = type;
+                }
                 if (!String.IsNullOrEmpty(value))
+                {
                     type = value.Trim();
+                }
 
                 while (type.EndsWith("*"))
                 {
@@ -117,35 +102,11 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
+        public string PreviousType { get; private set; }
 
-        #region public string PreviousType
+        public bool Reference { get; set; }
 
-        private string _previous_type;
-
-        public string PreviousType
-        {
-            get { return _previous_type; }
-            private set { _previous_type = value; }
-        }
-
-        #endregion
-
-        #region public bool Reference
-
-        bool reference;
-
-        public bool Reference
-        {
-            get { return reference; }
-            set { reference = value; }
-        }
-
-        #endregion
-
-        #region public int Array
-
-        int array;
+        private int array;
 
         public int Array
         {
@@ -153,11 +114,7 @@ namespace Bind.Structures
             set { array = value > 0 ? value : 0; }
         }
 
-        #endregion
-
-        #region public int ElementCount
-
-        int element_count;
+        private int element_count;
 
         // If the type is an array and ElementCount > 0, then ElemenCount defines the expected array length.
         public int ElementCount
@@ -166,11 +123,7 @@ namespace Bind.Structures
             set { element_count = value > 0 ? value : 0; }
         }
 
-        #endregion
-
-        #region public int Pointer
-
-        int pointer;
+        private int pointer;
 
         public int Pointer
         {
@@ -178,12 +131,9 @@ namespace Bind.Structures
             set { pointer = value > 0 ? value : 0; }
         }
 
-        #endregion
-
         // Set to true if parameter is an enum.
         public bool IsEnum { get; set; }
-        
-        #region public bool CLSCompliant
+
 
         public bool CLSCompliant
         {
@@ -238,10 +188,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public bool Unsigned
-
         public bool Unsigned
         {
             get
@@ -250,23 +196,9 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
+        public WrapperTypes WrapperType { get; set; } = WrapperTypes.None;
 
-        #region public WrapperTypes WrapperType
-
-        private WrapperTypes _wrapper_type = WrapperTypes.None;
-
-        public WrapperTypes WrapperType
-        {
-            get { return _wrapper_type; }
-            set { _wrapper_type = value; }
-        }
-
-        #endregion
-
-        #region public override string ToString()
-
-        static readonly string[] PointerLevels =
+        private static readonly string[] PointerLevels =
         {
             "",
             "*",
@@ -275,7 +207,7 @@ namespace Bind.Structures
             "****"
         };
 
-        static readonly string[] ArrayLevels =
+        private static readonly string[] ArrayLevels =
         {
             "",
             "[]",
@@ -292,12 +224,6 @@ namespace Bind.Structures
                 ArrayLevels[Array]);
         }
 
-        #endregion
-
-        #endregion
-
-        #region IComparable<Type> Members
-
         public int CompareTo(Type other)
         {
             // Make sure that Pointer parameters are sorted last to avoid bug [#1098].
@@ -306,25 +232,31 @@ namespace Bind.Structures
             // DelegateCollection.Add that depends on this fact.
             int result = this.CurrentType.CompareTo(other.CurrentType);
             if (result == 0)
+            {
                 result = Pointer.CompareTo(other.Pointer); // Must come after array/ref, see issue [#1098]
+            }
             if (result == 0)
+            {
                 result = Reference.CompareTo(other.Reference);
+            }
             if (result == 0)
+            {
                 result = Array.CompareTo(other.Array);
+            }
             // Note: CLS-compliance and element counts
             // are used for comparison calculations, in order
             // to maintain a stable sorting order, even though
             // they are not used in equality calculations.
             if (result == 0)
+            {
                 result = CLSCompliant.CompareTo(other.CLSCompliant);
+            }
             if (result == 0)
+            {
                 result = ElementCount.CompareTo(other.ElementCount);
+            }
             return result;
         }
-
-        #endregion
-
-        #region IEquatable<Type> Members
 
         public bool Equals(Type other)
         {
@@ -341,7 +273,5 @@ namespace Bind.Structures
             // redefinition errors in the generated bindings.
             return result;
         }
-
-        #endregion
     }
 }

@@ -1,4 +1,3 @@
-#region License
 //
 // CocoaContext.cs
 //
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using OpenTK.Platform;
@@ -37,20 +35,22 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK
 {
-    class CocoaContext : DesktopGraphicsContext
+    internal class CocoaContext : DesktopGraphicsContext
     {
         private CocoaWindowInfo cocoaWindow;
         private IntPtr shareContextRef;
 
-        static readonly IntPtr NSOpenGLContext = Class.Get("NSOpenGLContext");
-        static readonly IntPtr selCurrentContext = Selector.Get("currentContext");
-        static readonly IntPtr selFlushBuffer = Selector.Get("flushBuffer");
-        static readonly IntPtr selMakeCurrentContext = Selector.Get("makeCurrentContext");
-        static readonly IntPtr selUpdate = Selector.Get("update");
-        static readonly IntPtr opengl = NS.AddImage(
+        private static readonly IntPtr NSOpenGLContext = Class.Get("NSOpenGLContext");
+        private static readonly IntPtr selCurrentContext = Selector.Get("currentContext");
+        private static readonly IntPtr selFlushBuffer = Selector.Get("flushBuffer");
+        private static readonly IntPtr selMakeCurrentContext = Selector.Get("makeCurrentContext");
+        private static readonly IntPtr selUpdate = Selector.Get("update");
+
+        private static readonly IntPtr opengl = NS.AddImage(
             "/System/Library/Frameworks/OpenGL.framework/OpenGL",
             AddImageFlags.ReturnOnError);
-        static readonly IntPtr opengles = NS.AddImage(
+
+        private static readonly IntPtr opengles = NS.AddImage(
             "/System/Library/Frameworks/OpenGL.framework/OpenGLES",
             AddImageFlags.ReturnOnError);
 
@@ -63,11 +63,13 @@ namespace OpenTK
         {
             Debug.Print("Context Type: {0}", shareContext);
             Debug.Print("Window info: {0}", window);
-            
+
             cocoaWindow = (CocoaWindowInfo)window;
-            
+
             if (shareContext is CocoaContext)
+            {
                 shareContextRef = ((CocoaContext)shareContext).Handle.Handle;
+            }
 
             if (shareContext is GraphicsContext)
             {
@@ -79,17 +81,21 @@ namespace OpenTK
             {
                 Debug.Print("No context sharing will take place.");
             }
-            
+
             CreateContext(mode, cocoaWindow, shareContextRef, majorVersion, minorVersion, true);
         }
-        
+
         public CocoaContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, int majorVersion, int minorVersion)
         {
             if (handle == ContextHandle.Zero)
+            {
                 throw new ArgumentException("handle");
+            }
             if (window == null)
+            {
                 throw new ArgumentNullException("window");
-            
+            }
+
             Handle = handle;
             cocoaWindow = (CocoaWindowInfo)window;
         }
@@ -97,14 +103,14 @@ namespace OpenTK
         private void AddPixelAttrib(List<NSOpenGLPixelFormatAttribute> attributes, NSOpenGLPixelFormatAttribute attribute)
         {
             Debug.Print(attribute.ToString());
-            
+
             attributes.Add(attribute);
         }
 
         private void AddPixelAttrib(List<NSOpenGLPixelFormatAttribute> attributes, NSOpenGLPixelFormatAttribute attribute, int value)
         {
             Debug.Print("{0} : {1}", attribute, value);
-            
+
             attributes.Add(attribute);
             attributes.Add((NSOpenGLPixelFormatAttribute)value);
         }
@@ -210,13 +216,15 @@ namespace OpenTK
 
             Debug.Write("Attribute array:  ");
             for (int i = 0; i < attributes.Count; i++)
+            {
                 Debug.Write(attributes[i].ToString() + "  ");
+            }
             Debug.WriteLine("");
 
             // Create pixel format
             var pixelFormat = Cocoa.SendIntPtr(Class.Get("NSOpenGLPixelFormat"), Selector.Alloc);
 
-            unsafe 
+            unsafe
             {
                 fixed (NSOpenGLPixelFormatAttribute* ptr = attributes.ToArray())
                 {
@@ -227,7 +235,7 @@ namespace OpenTK
             return pixelFormat;
         }
 
-        bool IsAccelerationSupported()
+        private bool IsAccelerationSupported()
         {
             IntPtr pf = IntPtr.Zero;
             int count = 0;
@@ -272,7 +280,7 @@ namespace OpenTK
         }
 
         public override bool IsCurrent
-        { 
+        {
             get
             {
                 return Handle.Handle == CurrentContext;
@@ -302,7 +310,7 @@ namespace OpenTK
         }
 
         public override int SwapInterval
-        { 
+        {
             get
             {
                 return GetContextValue(NSOpenGLContextParameter.SwapInterval);
@@ -323,20 +331,24 @@ namespace OpenTK
             Cocoa.SendVoid(Handle.Handle, selUpdate);
         }
 
-        #region IDisposable Members
-
         protected override void Dispose(bool disposing)
         {
             if (IsDisposed || Handle.Handle == IntPtr.Zero)
+            {
                 return;
+            }
 
             Debug.Print("Disposing of Cocoa context.");
 
             if (!NSApplication.IsUIThread)
+            {
                 return;
+            }
 
             if (IsCurrent)
+            {
                 Cocoa.SendVoid(NSOpenGLContext, Selector.Get("clearCurrentContext"));
+            }
             Cocoa.SendVoid(Handle.Handle, Selector.Get("clearDrawable"));
             Cocoa.SendVoid(Handle.Handle, Selector.Get("release"));
 
@@ -344,10 +356,6 @@ namespace OpenTK
 
             IsDisposed = true;
         }
-
-        #endregion
-
-        #region IGraphicsContextInternal Members
 
         public override IntPtr GetAddress(IntPtr function)
         {
@@ -393,8 +401,6 @@ namespace OpenTK
                 return address;
             }
         }
-
-        #endregion
     }
 }
 

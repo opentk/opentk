@@ -1,4 +1,3 @@
-#region License
 //
 // JoystickHatState.cs
 //
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 
@@ -36,19 +34,17 @@ namespace OpenTK.Input
     /// </summary>
     public struct JoystickHatState : IEquatable<JoystickHatState>
     {
-        HatPosition position;
-
         internal JoystickHatState(HatPosition pos)
         {
-            position = pos;
+            Position = pos;
         }
 
         /// <summary>
         /// Gets a <see cref="HatPosition"/> value indicating
-        /// the position of this hat. 
+        /// the position of this hat.
         /// </summary>
         /// <value>The position.</value>
-        public HatPosition Position { get { return position; } }
+        public HatPosition Position { get; }
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating
@@ -151,8 +147,6 @@ namespace OpenTK.Input
                 Equals((JoystickHatState)obj);
         }
 
-        #region IEquatable<JoystickHatState> implementation
-
         /// <summary>
         /// Determines whether the specified <see cref="OpenTK.Input.JoystickHatState"/> is equal to the current <see cref="OpenTK.Input.JoystickHatState"/>.
         /// </summary>
@@ -163,8 +157,6 @@ namespace OpenTK.Input
         {
             return Position == other.Position;
         }
-
-        #endregion
     }
 }
 

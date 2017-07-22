@@ -1,23 +1,16 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Xml.XPath;
 
 namespace Bind.Structures
 {
-    #region class Enum
-
-    class Enum
+    internal class Enum
     {
-        string _name, _type;
+        private string _name, _type;
 
         public Enum()
         {
@@ -43,7 +36,7 @@ namespace Bind.Structures
             set { _type = value; }
         }
 
-        SortedDictionary<string, Constant> _constant_collection = new SortedDictionary<string, Constant>();
+        private SortedDictionary<string, Constant> _constant_collection = new SortedDictionary<string, Constant>();
 
         public IDictionary<string, Constant> ConstantCollection
         {
@@ -51,8 +44,10 @@ namespace Bind.Structures
             set
             {
                 if (value == null)
+                {
                     throw new ArgumentNullException("value");
-                
+                }
+
                 _constant_collection.Clear();
                 foreach (var item in value)
                 {
@@ -81,45 +76,49 @@ namespace Bind.Structures
         public bool CLSCompliant { get; set; }
     }
 
-    #endregion
-
-    #region class EnumCollection
-
-    class EnumCollection : IDictionary<string, Enum>
+    internal class EnumCollection : IDictionary<string, Enum>
     {
-        SortedDictionary<string, Enum> Enumerations = new SortedDictionary<string, Enum>();
+        private SortedDictionary<string, Enum> Enumerations = new SortedDictionary<string, Enum>();
 
         // Return -1 for ext1, 1 for ext2 or 0 if no preference.
-        int OrderOfPreference(string ext1, string ext2)
+        private int OrderOfPreference(string ext1, string ext2)
         {
             // If one is empty and the other not, prefer the empty one (empty == core)
             // Otherwise check for Arb and Ext. To reuse the logic for the
             // empty check, let's try to remove first Arb, then Ext from the strings.
             int ret = PreferEmpty(ext1, ext2);
             if (ret != 0)
+            {
                 return ret;
-            
+            }
+
             ext1 = ext1.Replace("Arb", ""); ext2 = ext2.Replace("Arb", "");
             ret = PreferEmpty(ext1, ext2);
             if (ret != 0)
+            {
                 return ret;
-            
+            }
+
             ext1 = ext1.Replace("Ext", ""); ext2 = ext2.Replace("Ext", "");
             return PreferEmpty(ext1, ext2);
         }
 
         // Prefer the empty string over the non-empty.
-        int PreferEmpty(string ext1, string ext2)
+        private int PreferEmpty(string ext1, string ext2)
         {
             if (String.IsNullOrEmpty(ext1) && !String.IsNullOrEmpty(ext2))
+            {
                 return -1;
+            }
             else if (String.IsNullOrEmpty(ext2) && !String.IsNullOrEmpty(ext1))
+            {
                 return 1;
+            }
             else
+            {
                 return 0;
+            }
         }
-
-        #region Public Members
 
         public void Add(Enum e)
         {
@@ -133,10 +132,6 @@ namespace Bind.Structures
                 Add(e);
             }
         }
-
-        #endregion
-
-        #region IDictionary<string, Enum> Members
 
         public void Add(string key, Enum value)
         {
@@ -235,9 +230,5 @@ namespace Bind.Structures
         {
             return Enumerations.GetEnumerator();
         }
-
-        #endregion
     }
-
-    #endregion
 }

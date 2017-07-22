@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // DL.cs
 //
 // Author:
@@ -25,18 +24,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace OpenTK.Platform.X11
 {
-    class DL
+    internal class DL
     {
-        const string lib = "dl";
+        private const string lib = "dl";
 
         [DllImport(lib, EntryPoint = "dlopen")]
         internal static extern IntPtr Open(string filename, DLOpenFlags flags);
@@ -48,7 +44,7 @@ namespace OpenTK.Platform.X11
         internal static extern IntPtr Symbol(IntPtr handle, IntPtr name);
     }
 
-    enum DLOpenFlags
+    internal enum DLOpenFlags
     {
         Lazy = 0x0001,
         Now = 0x0002,

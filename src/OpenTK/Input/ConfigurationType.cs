@@ -1,4 +1,3 @@
-#region License
 //
 // ConfigurationType.cs
 //
@@ -25,13 +24,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
-
-using System;
 
 namespace OpenTK.Input
 {
-    enum ConfigurationType
+    internal enum ConfigurationType
     {
         Unmapped = 0,
         Axis,

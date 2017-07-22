@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // Joystick.cs
 //
 // Author:
@@ -25,11 +24,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
- 
+
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OpenTK.Input
 {
@@ -43,7 +39,7 @@ namespace OpenTK.Input
     /// <seealso cref="GamePad"/>
     public sealed class Joystick
     {
-        static readonly IJoystickDriver2 implementation =
+        private static readonly IJoystickDriver2 implementation =
             Platform.Factory.Default.CreateJoystickDriver();
 
         private Joystick() { }

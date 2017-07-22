@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2010 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -33,25 +31,19 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
 {
-    abstract class WinInputBase
+    internal abstract class WinInputBase
     {
-        #region Fields
+        private readonly WindowProcedure WndProc;
+        private readonly Thread InputThread;
+        private readonly AutoResetEvent InputReady = new AutoResetEvent(false);
 
-        readonly WindowProcedure WndProc;
-        readonly Thread InputThread;
-        readonly AutoResetEvent InputReady = new AutoResetEvent(false); 
-        
-        IntPtr OldWndProc;
-        INativeWindow native;
+        private IntPtr OldWndProc;
 
-        protected INativeWindow Native { get { return native; } private set { native = value; } }
+        protected INativeWindow Native { get; private set; }
+
         protected WinWindowInfo Parent { get { return (WinWindowInfo)Native.WindowInfo; } }
 
-        static readonly IntPtr Unhandled = new IntPtr(-1);
-
-        #endregion
-
-        #region Constructors
+        private static readonly IntPtr Unhandled = new IntPtr(-1);
 
         public WinInputBase()
         {
@@ -65,13 +57,7 @@ namespace OpenTK.Platform.Windows
             InputReady.WaitOne();
         }
 
-        #endregion
-
-        #region Private Members
-
-        #region ConstructMessageWindow
-
-        INativeWindow ConstructMessageWindow()
+        private INativeWindow ConstructMessageWindow()
         {
             Debug.WriteLine("Initializing input driver.");
             Debug.Indent();
@@ -88,11 +74,7 @@ namespace OpenTK.Platform.Windows
         }
 
 
-        #endregion
-
-        #region ProcessEvents
-
-        void ProcessEvents()
+        private void ProcessEvents()
         {
             Native = ConstructMessageWindow();
             CreateDrivers();
@@ -119,27 +101,19 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
-
-        #region WndProcHandler
-
-        IntPtr WndProcHandler(
+        private IntPtr WndProcHandler(
             IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             IntPtr ret =  WindowProcedure(handle, message, wParam, lParam);
             if (ret == Unhandled)
+            {
                 return Functions.CallWindowProc(OldWndProc, handle, message, wParam, lParam);
+            }
             else
+            {
                 return ret;
+            }
         }
-
-        #endregion
-
-        #endregion
-
-        #region Protected Members
-
-        #region WindowProcedure
 
         protected virtual IntPtr WindowProcedure(
             IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -147,28 +121,14 @@ namespace OpenTK.Platform.Windows
             return Unhandled;
         }
 
-        #endregion
-
-        #region CreateDrivers
-
         // Note: this method is called through the input thread.
         protected abstract void CreateDrivers();
-
-        #endregion
-
-        #endregion
-
-        #region Public Members
 
         public abstract IMouseDriver2 MouseDriver { get; }
 
         public abstract IKeyboardDriver2 KeyboardDriver { get; }
 
         public abstract IJoystickDriver2 JoystickDriver { get; }
-
-        #endregion
-
-        #region IDisposable Members
 
         protected bool Disposed;
 
@@ -200,7 +160,5 @@ namespace OpenTK.Platform.Windows
             Debug.Print("[Warning] Resource leaked: {0}.", this);
             Dispose(false);
         }
-
-        #endregion
     }
 }

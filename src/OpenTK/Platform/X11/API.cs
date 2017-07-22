@@ -1,16 +1,15 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * Contributions from Erik Ylvisaker
  * See license.txt for license info
  */
-#endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
+// ReSharper disable UnusedMember.Global
+// ReSharper disable InconsistentNaming
+#pragma warning disable 1591    // Missing XML comments
 #pragma warning disable 3019    // CLS-compliance checking
 #pragma warning disable 0649    // struct members not explicitly initialized
 #pragma warning disable 0169    // field / method is never used.
@@ -18,8 +17,6 @@ using System.Diagnostics;
 
 namespace OpenTK.Platform.X11
 {
-    #region Types
-
     // using XID = System.Int32;
     using Window = System.IntPtr;
     using Drawable = System.IntPtr;
@@ -50,57 +47,66 @@ namespace OpenTK.Platform.X11
     using Status = System.Int32;
     using SizeID = System.UInt16;
 
-    #endregion
-
-    #region internal static class API
+    /// <summary>
+    /// X11 has some defined values they are defined with c's #define in X.h
+    /// </summary>
+    internal static class Consts
+    {
+        /// <summary>
+        /// Universal null resource or null atom. From header: #define None 0L
+        /// </summary>
+        public static readonly IntPtr None = IntPtr.Zero;
+        //
+        /// <summary>
+        /// Special time value. From header: #define CurrentTime 0L
+        /// </summary>
+        public static readonly IntPtr CurrentTime = IntPtr.Zero; //
+    }
 
     internal static class API
     {
-        #region --- Fields ---
-
         private const string _dll_name = "libX11";
         private const string _dll_name_vid = "libXxf86vm";
 
-        static Display defaultDisplay;
-        static int defaultScreen;
-        static Window rootWindow;
-        static int screenCount;
+        private static Window rootWindow;
 
-        internal static Display DefaultDisplay { get { return defaultDisplay; } }
-        static int DefaultScreen { get { return defaultScreen; } }
+        internal static Display DefaultDisplay { get; private set; }
+
+        private static int DefaultScreen { get; set; }
+
         //internal static Window RootWindow { get { return rootWindow; } }
-        internal static int ScreenCount { get { return screenCount; } }
-        
-        internal static object Lock = new object();
+        internal static int ScreenCount { get; }
 
-        #endregion
+        internal static object Lock = new object();
 
         static API()
         {
             int has_threaded_x = Functions.XInitThreads();
             Debug.Print("Initializing threaded X11: {0}.", has_threaded_x.ToString());
-        
-            defaultDisplay = Functions.XOpenDisplay(IntPtr.Zero);
-                
-            if (defaultDisplay == IntPtr.Zero)
-                throw new PlatformException("Could not establish connection to the X-Server.");
 
-            using (new XLock(defaultDisplay))
+            DefaultDisplay = Functions.XOpenDisplay(IntPtr.Zero);
+
+            if (DefaultDisplay == IntPtr.Zero)
             {
-                screenCount = Functions.XScreenCount(DefaultDisplay);
+                throw new PlatformException("Could not establish connection to the X-Server.");
+            }
+
+            using (new XLock(DefaultDisplay))
+            {
+                ScreenCount = Functions.XScreenCount(DefaultDisplay);
             }
             Debug.Print("Display connection: {0}, Screen count: {1}", DefaultDisplay, ScreenCount);
 
             //AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
         }
 
-        static void CurrentDomain_ProcessExit(object sender, EventArgs e)
+        private static void CurrentDomain_ProcessExit(object sender, EventArgs e)
         {
-            if (defaultDisplay != IntPtr.Zero)
+            if (DefaultDisplay != IntPtr.Zero)
             {
-                Functions.XCloseDisplay(defaultDisplay);
-                defaultDisplay = IntPtr.Zero;
-                defaultScreen = 0;
+                Functions.XCloseDisplay(DefaultDisplay);
+                DefaultDisplay = IntPtr.Zero;
+                DefaultScreen = 0;
                 rootWindow = IntPtr.Zero;
             }
         }
@@ -114,8 +120,6 @@ namespace OpenTK.Platform.X11
 
         //[DllImport(_dll_name, EntryPoint = "XCreateColormap")]
         //extern public static IntPtr CreateColormap(Display display, Window window, IntPtr visual, int alloc);
-
-        #region Window handling
 
         [DllImport(_dll_name, EntryPoint = "XCreateSimpleWindow")]
         public extern static Window CreateSimpleWindow(
@@ -140,12 +144,8 @@ namespace OpenTK.Platform.X11
         [DllImport(_dll_name, EntryPoint = "XMapRaised")]
         extern public static void MapRaised(Display display, Window window);
 
-        #endregion
-
         [DllImport(_dll_name, EntryPoint = "XDefaultVisual")]
         extern public static IntPtr DefaultVisual(Display display, int screen_number);
-
-        #region XFree
 
         /// <summary>
         /// Frees the memory used by an X structure. Only use on unmanaged structures!
@@ -153,10 +153,6 @@ namespace OpenTK.Platform.X11
         /// <param name="buffer">A pointer to the structure that will be freed.</param>
         [DllImport(_dll_name, EntryPoint = "XFree")]
         extern public static void Free(IntPtr buffer);
-
-        #endregion
-
-        #region Event queue management
 
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport(_dll_name, EntryPoint = "XEventsQueued")]
@@ -202,7 +198,7 @@ namespace OpenTK.Platform.X11
         /// If a window is not interested in a device event,
         /// it usually propagates to the closest ancestor that is interested,
         /// unless the do_not_propagate mask prohibits it.
-        /// Setting the event-mask attribute of a window overrides any previous call for the same window but not for other clients. Multiple clients can select for the same events on the same window with the following restrictions: 
+        /// Setting the event-mask attribute of a window overrides any previous call for the same window but not for other clients. Multiple clients can select for the same events on the same window with the following restrictions:
         /// <para>Multiple clients can select events on the same window because their event masks are disjoint. When the X server generates an event, it reports it to all interested clients. </para>
         /// <para>Only one client at a time can select CirculateRequest, ConfigureRequest, or MapRequest events, which are associated with the event mask SubstructureRedirectMask. </para>
         /// <para>Only one client at a time can select a ResizeRequest event, which is associated with the event mask ResizeRedirectMask. </para>
@@ -237,10 +233,6 @@ namespace OpenTK.Platform.X11
         [DllImport(_dll_name, EntryPoint = "XCheckMaskEvent")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool CheckMaskEvent(Display display, EventMask event_mask, ref XEvent event_return);
-
-        #endregion
-
-        #region Pointer and Keyboard functions
 
         [DllImport(_dll_name, EntryPoint = "XGrabPointer")]
         extern public static ErrorCodes GrabPointer(Display display, IntPtr grab_window,
@@ -291,10 +283,6 @@ namespace OpenTK.Platform.X11
         [DllImport(_dll_name, EntryPoint = "XDisplayKeycodes")]
         public static extern void DisplayKeycodes(Display display, ref int min_keycodes_return, ref int max_keycodes_return);
 
-        #endregion
-
-        #region Xf86VidMode internal structures
-
         [StructLayout(LayoutKind.Sequential)]
         internal struct XF86VidModeModeLine
         {
@@ -343,7 +331,7 @@ namespace OpenTK.Platform.X11
             public short htotal;
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public short hskew;
 
@@ -368,7 +356,7 @@ namespace OpenTK.Platform.X11
             public short vtotal;
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public short vskew;
 
@@ -377,60 +365,57 @@ namespace OpenTK.Platform.X11
             /// </summary>
             public int flags;
 
-            int privsize;   /* Size of private */
-            IntPtr _private;   /* Server privates */
+            private int privsize;   /* Size of private */
+            private IntPtr _private;   /* Server privates */
         }
 
         //Monitor information:
         [StructLayout(LayoutKind.Sequential)]
         internal struct XF86VidModeMonitor
         {
-            [MarshalAs(UnmanagedType.LPStr)]
-            string vendor;     /* Name of manufacturer */
-            [MarshalAs(UnmanagedType.LPStr)]
-            string model;      /* Model name */
-            float EMPTY;      /* unused, for backward compatibility */
-            byte nhsync;     /* Number of horiz sync ranges */
+            [MarshalAs(UnmanagedType.LPStr)] private string vendor;     /* Name of manufacturer */
+            [MarshalAs(UnmanagedType.LPStr)] private string model;      /* Model name */
+            private float EMPTY;      /* unused, for backward compatibility */
+
+            private byte nhsync;     /* Number of horiz sync ranges */
             /*XF86VidModeSyncRange* */
-            IntPtr hsync;/* Horizontal sync ranges */
-            byte nvsync;     /* Number of vert sync ranges */
+            private IntPtr hsync;/* Horizontal sync ranges */
+
+            private byte nvsync;     /* Number of vert sync ranges */
             /*XF86VidModeSyncRange* */
-            IntPtr vsync;/* Vertical sync ranges */
+            private IntPtr vsync;/* Vertical sync ranges */
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct XF86VidModeSyncRange
         {
-            float hi;         /* Top of range */
-            float lo;         /* Bottom of range */
+            private float hi;         /* Top of range */
+            private float lo;         /* Bottom of range */
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct XF86VidModeNotifyEvent
         {
-            int type;                      /* of event */
-            ulong serial;          /* # of last request processed by server */
-            bool send_event;               /* true if this came from a SendEvent req */
-            Display display;              /* Display the event was read from */
-            IntPtr root;                   /* root window of event screen */
-            int state;                     /* What happened */
-            int kind;                      /* What happened */
-            bool forced;                   /* extents of new region */
+            private int type;                      /* of event */
+            private ulong serial;          /* # of last request processed by server */
+            private bool send_event;               /* true if this came from a SendEvent req */
+            private Display display;              /* Display the event was read from */
+            private IntPtr root;                   /* root window of event screen */
+            private int state;                     /* What happened */
+            private int kind;                      /* What happened */
+
+            private bool forced;                   /* extents of new region */
             /* Time */
-            IntPtr time;                     /* event timestamp */
+            private IntPtr time;                     /* event timestamp */
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct XF86VidModeGamma
         {
-            float red;                     /* Red Gamma value */
-            float green;                   /* Green Gamma value */
-            float blue;                    /* Blue Gamma value */
+            private float red;                     /* Red Gamma value */
+            private float green;                   /* Green Gamma value */
+            private float blue;                    /* Blue Gamma value */
         }
-        #endregion
-
-        #region libXxf86vm Functions
-
         [DllImport(_dll_name_vid)]
         extern public static bool XF86VidModeQueryExtension(
             Display display,
@@ -556,20 +541,12 @@ XF86VidModeGetGammaRampSize(
     int *size);
          * */
 
-        #endregion
-
         [DllImport(_dll_name, EntryPoint = "XLookupKeysym")]
         public static extern KeySym LookupKeysym(ref XKeyEvent key_event, int index);
 
     }
-    #endregion
-
-    #region X11 Structures
-
-    #region Xcursor
-
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct XcursorImage
+    internal unsafe struct XcursorImage
     {
         public XcursorUInt version;
         public XcursorDim size;
@@ -580,37 +557,33 @@ XF86VidModeGetGammaRampSize(
         public XcursorUInt delay;
         public XcursorPixel* pixels;
     }
-    
+
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct XcursorImages 
+    internal unsafe struct XcursorImages
     {
         public int nimage;
         public XcursorImage **images;
         public char *name;
     }
-    
+
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct XcursorCursors 
+    internal unsafe struct XcursorCursors
     {
         public Display dpy;
         public int refcount;
         public int ncursor;
         public Cursor *cursors;
     }
-    
+
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct XcursorAnimate 
+    internal unsafe struct XcursorAnimate
     {
         public XcursorCursors *cursors;
         public int sequence;
     }
 
-    #endregion
-
-    #region internal class XVisualInfo
-
     [StructLayout(LayoutKind.Sequential)]
-    struct XVisualInfo
+    public struct XVisualInfo
     {
         public IntPtr Visual;
         public VisualID VisualID;
@@ -629,79 +602,6 @@ XF86VidModeGetGammaRampSize(
                 VisualID, Screen, Depth, Class);
         }
     }
-
-    #endregion
-
-    #region internal class SetWindowAttributes
-
-    [StructLayout(LayoutKind.Sequential), Obsolete("Use XSetWindowAttributes instead")]
-    internal class SetWindowAttributes
-    {
-        /// <summary>
-        /// background, None, or ParentRelative
-        /// </summary>
-        public Pixmap background_pixmap;
-        /// <summary>
-        /// background pixel
-        /// </summary>
-        public long background_pixel;
-        /// <summary>
-        /// border of the window or CopyFromParent
-        /// </summary>
-        public Pixmap border_pixmap;
-        /// <summary>
-        /// border pixel value
-        /// </summary>
-        public long border_pixel;
-        /// <summary>
-        /// one of bit gravity values
-        /// </summary>
-        public int bit_gravity;
-        /// <summary>
-        /// one of the window gravity values
-        /// </summary>
-        public int win_gravity;
-        /// <summary>
-        /// NotUseful, WhenMapped, Always
-        /// </summary>
-        public int backing_store;
-        /// <summary>
-        /// planes to be preserved if possible
-        /// </summary>
-        public long backing_planes;
-        /// <summary>
-        /// value to use in restoring planes
-        /// </summary>
-        public long backing_pixel;
-        /// <summary>
-        /// should bits under be saved? (popups)
-        /// </summary>
-        public bool save_under;
-        /// <summary>
-        /// set of events that should be saved
-        /// </summary>
-        public EventMask event_mask;
-        /// <summary>
-        /// set of events that should not propagate
-        /// </summary>
-        public long do_not_propagate_mask;
-        /// <summary>
-        /// boolean value for override_redirect
-        /// </summary>
-        public bool override_redirect;
-        /// <summary>
-        /// color map to be associated with window
-        /// </summary>
-        public Colormap colormap;
-        /// <summary>
-        /// cursor to be displayed (or None)
-        /// </summary>
-        public Cursor cursor;
-    }
-
-    #endregion
-
-    #region internal struct SizeHints
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct SizeHints
@@ -724,58 +624,48 @@ XF86VidModeGetGammaRampSize(
         /* this structure may be extended in the future */
     }
 
-    #endregion
-
-    #region internal struct XRRScreenSize
-
     internal struct XRRScreenSize
     {
         internal int Width, Height;
         internal int MWidth, MHeight;
     };
 
-    #endregion
-
-    #region unsafe internal struct Screen
-
     unsafe internal struct Screen
     {
-        XExtData ext_data;    /* hook for extension to hang buffer */
-        IntPtr display;     /* back pointer to display structure */ /* _XDisplay */
-        Window root;        /* Root window id. */
-        int width, height;    /* width and height of screen */
-        int mwidth, mheight;    /* width and height of  in millimeters */
-        int ndepths;        /* number of depths possible */
+        private XExtData ext_data;    /* hook for extension to hang buffer */
+        private IntPtr display;     /* back pointer to display structure */ /* _XDisplay */
+        private Window root;        /* Root window id. */
+
+        private int width, height;    /* width and height of screen */
+        private int mwidth, mheight;    /* width and height of  in millimeters */
+
+        private int ndepths;        /* number of depths possible */
         //Depth *depths;        /* list of allowable depths on the screen */
-        int root_depth;        /* bits per pixel */
+        private int root_depth;        /* bits per pixel */
         //Visual* root_visual;    /* root visual */
-        IntPtr default_gc;        /* GC for the root root visual */   // GC
-        Colormap cmap;        /* default color map */
-        UIntPtr white_pixel;    // unsigned long
-        UIntPtr black_pixel;    /* White and Black pixel values */  // unsigned long
-        int max_maps, min_maps;    /* max and min color maps */
-        int backing_store;    /* Never, WhenMapped, Always */
-        Bool save_unders;    
-        long root_input_mask;    /* initial root input mask */
+        private IntPtr default_gc;        /* GC for the root root visual */   // GC
+
+        private Colormap cmap;        /* default color map */
+        private UIntPtr white_pixel;    // unsigned long
+        private UIntPtr black_pixel;    /* White and Black pixel values */  // unsigned long
+        private int max_maps, min_maps;    /* max and min color maps */
+
+        private int backing_store;    /* Never, WhenMapped, Always */
+        private Bool save_unders;
+        private long root_input_mask;    /* initial root input mask */
     }
-
-    #endregion
-
-    #region unsafe internal class XExtData
 
     unsafe internal class XExtData
     {
-        int number;        /* number returned by XRegisterExtension */
-        XExtData next;    /* next item on list of buffer for structure */
-        delegate int FreePrivateDelegate(XExtData extension);
-        FreePrivateDelegate FreePrivate;    /* called to free private storage */
-        XPointer private_data;    /* buffer private to this extension. */
+        private int number;        /* number returned by XRegisterExtension */
+        private XExtData next;    /* next item on list of buffer for structure */
+
+        private delegate int FreePrivateDelegate(XExtData extension);
+
+        private FreePrivateDelegate FreePrivate;    /* called to free private storage */
+        private XPointer private_data;    /* buffer private to this extension. */
     };
 
-    #endregion
-    
-    #region Motif
-    
     [StructLayout(LayoutKind.Sequential)]
     internal struct MotifWmHints
     {
@@ -790,7 +680,7 @@ XF86VidModeGetGammaRampSize(
             return string.Format("MotifWmHints <flags={0}, functions={1}, decorations={2}, input_mode={3}, status={4}", (MotifFlags) flags.ToInt32 (), (MotifFunctions) functions.ToInt32 (), (MotifDecorations) decorations.ToInt32 (), (MotifInputMode) input_mode.ToInt32 (), status.ToInt32 ());
         }
     }
-    
+
     [Flags]
     internal enum MotifFlags
     {
@@ -821,7 +711,7 @@ XF86VidModeGetGammaRampSize(
         Menu        = 0x10,
         Minimize    = 0x20,
         Maximize    = 0x40,
-        
+
     }
 
     [Flags]
@@ -832,12 +722,6 @@ XF86VidModeGetGammaRampSize(
         SystemModal             = 2,
         FullApplicationModal    = 3
     }
-    
-    #endregion
-
-    #endregion
-
-    #region X11 Constants and Enums
 
     internal struct Constants
     {
@@ -951,8 +835,6 @@ XF86VidModeGetGammaRampSize(
         //CWStackMode    = (1<<6),
     }
 
-    #region XKey
-
     /// <summary>
     /// Defines LATIN-1 and miscellaneous keys.
     /// </summary>
@@ -985,7 +867,7 @@ XF86VidModeGetGammaRampSize(
         SingleCandidate             = 0xff3c,
         MultipleCandidate           = 0xff3d,
         PreviousCandidate           = 0xff3e,
-                
+
         /* Japanese keyboard support */
 
         Kanji                       = 0xff21,  /* Kanji, Kanji convert */
@@ -1350,10 +1232,6 @@ XF86VidModeGetGammaRampSize(
          SunOpen = 0x1005ff73,
     }
 
-    #endregion
-
-#pragma warning disable 1591
-
     public enum XVisualClass : int
     {
         StaticGray = 0,
@@ -1364,10 +1242,8 @@ XF86VidModeGetGammaRampSize(
         DirectColor = 5,
     }
 
-#pragma warning restore 1591
-
     [Flags]
-    internal enum XVisualInfoMask
+    public enum XVisualInfoMask
     {
         No = 0x0,
         ID = 0x1,
@@ -1381,8 +1257,6 @@ XF86VidModeGetGammaRampSize(
         BitsPerRGB = 0x100,
         All = 0x1FF,
     }
-
-    #region internal enum MouseMask
 
     internal enum MouseMask
     {
@@ -1409,16 +1283,10 @@ XF86VidModeGetGammaRampSize(
         Mod5Mask = (1 << 7),
     }
 
-    #endregion
-
-    #endregion
-
     internal static partial class Functions
     {
         internal const string X11Library = "libX11";
         internal const string XcursorLibrary = "libXcursor.so.1";
-
-        #region XCreateWindow
 
         /// <summary>
         /// The XCreateWindow function creates an unmapped subwindow for a specified parent window, returns the window ID of the created window, and causes the X server to generate a CreateNotify event. The created window is placed on top in the stacking order with respect to siblings.
@@ -1437,7 +1305,7 @@ XF86VidModeGetGammaRampSize(
         /// <param name="attributes">Specifies the structure from which the values (as specified by the value mask) are to be taken. The value mask should have the appropriate bits set to indicate which attributes have been set in the structure.</param>
         /// <returns>The window ID of the created window.</returns>
         /// <remarks>
-        /// The coordinate system has the X axis horizontal and the Y axis vertical with the origin [0, 0] at the upper-left corner. Coordinates are integral, in terms of pixels, and coincide with pixel centers. Each window and pixmap has its own coordinate system. For a window, the origin is inside the border at the inside, upper-left corner. 
+        /// The coordinate system has the X axis horizontal and the Y axis vertical with the origin [0, 0] at the upper-left corner. Coordinates are integral, in terms of pixels, and coincide with pixel centers. Each window and pixmap has its own coordinate system. For a window, the origin is inside the border at the inside, upper-left corner.
         /// <para>The border_width for an InputOnly window must be zero, or a BadMatch error results. For class InputOutput, the visual type and depth must be a combination supported for the screen, or a BadMatch error results. The depth need not be the same as the parent, but the parent must not be a window of class InputOnly, or a BadMatch error results. For an InputOnly window, the depth must be zero, and the visual must be one supported by the screen. If either condition is not met, a BadMatch error results. The parent window, however, may have any depth and class. If you specify any invalid window attribute for a window, a BadMatch error results. </para>
         /// <para>The created window is not yet displayed (mapped) on the user's display. To display the window, call XMapWindow(). The new window initially uses the same cursor as its parent. A new cursor can be defined for the new window by calling XDefineCursor(). The window will not be visible on the screen unless it and all of its ancestors are mapped and it is not obscured by any of its ancestors. </para>
         /// <para>XCreateWindow can generate BadAlloc BadColor, BadCursor, BadMatch, BadPixmap, BadValue, and BadWindow errors. </para>
@@ -1465,10 +1333,6 @@ XF86VidModeGetGammaRampSize(
             }
         }
 
-        #endregion
-
-        #region XChangeWindowAttributes
-
         [DllImport(X11Library)]
         internal static extern void XChangeWindowAttributes(Display display, Window w, UIntPtr valuemask, ref XSetWindowAttributes attributes);
 
@@ -1477,10 +1341,6 @@ XF86VidModeGetGammaRampSize(
             XChangeWindowAttributes(display, w, (UIntPtr)valuemask, ref attributes);
         }
 
-        #endregion
-
-        #region Xcursor
-
         [DllImport(XcursorLibrary)]
         internal static unsafe extern XcursorImage* XcursorImageCreate(int width, int height);
 
@@ -1488,11 +1348,7 @@ XF86VidModeGetGammaRampSize(
         internal static unsafe extern void XcursorImageDestroy(XcursorImage* image);
 
         [DllImport(XcursorLibrary)]
-        internal static unsafe extern Cursor XcursorImageLoadCursor(Display dpy, XcursorImage* image); 
-
-        #endregion
-
-        #region XQueryKeymap
+        internal static unsafe extern Cursor XcursorImageLoadCursor(Display dpy, XcursorImage* image);
 
         /*
         /// <summary>
@@ -1514,10 +1370,6 @@ XF86VidModeGetGammaRampSize(
         [DllImport(X11Library, EntryPoint = "XQueryKeymap")]
         extern public static void XQueryKeymap(IntPtr display, byte[] keys);
 
-        #endregion
-
-        #region XMaskEvent
-
         /// <summary>
         /// The XMaskEvent() function searches the event queue for the events associated with the specified mask. When it finds a match, XMaskEvent() removes that event and copies it into the specified XEvent structure. The other events stored in the queue are not discarded. If the event you requested is not in the queue, XMaskEvent() flushes the output buffer and blocks until one is received.
         /// </summary>
@@ -1527,10 +1379,6 @@ XF86VidModeGetGammaRampSize(
         [DllImport(X11Library, EntryPoint = "XMaskEvent")]
         extern public static void XMaskEvent(IntPtr display, EventMask event_mask, ref XEvent e);
 
-        #endregion
-
-        #region XPutBackEvent
-
         /// <summary>
         /// The XPutBackEvent() function pushes an event back onto the head of the display's event queue by copying the event into the queue. This can be useful if you read an event and then decide that you would rather deal with it later. There is no limit to the number of times in succession that you can call XPutBackEvent().
         /// </summary>
@@ -1538,12 +1386,8 @@ XF86VidModeGetGammaRampSize(
         /// <param name="event">Specifies the event.</param>
         [DllImport(X11Library, EntryPoint = "XPutBackEvent")]
         public static extern void XPutBackEvent(IntPtr display, ref XEvent @event);
-        
-        #endregion
 
-        #region Xrandr
-
-        const string XrandrLibrary = "libXrandr.so.2";
+        private const string XrandrLibrary = "libXrandr.so.2";
 
         [DllImport(XrandrLibrary)]
         public static extern Bool XRRQueryExtension(Display dpy, ref int event_basep, ref int error_basep);
@@ -1612,7 +1456,7 @@ XF86VidModeGetGammaRampSize(
         public static extern Rotation XRRRotations(Display dpy, int screen, ref Rotation current_rotation);
 
         [DllImport(XrandrLibrary)]
-        unsafe static extern IntPtr XRRSizes(Display dpy, int screen, int* nsizes);
+        private unsafe static extern IntPtr XRRSizes(Display dpy, int screen, int* nsizes);
 
         public static XRRScreenSize[] XRRSizes(Display dpy, int screen)
         {
@@ -1625,7 +1469,9 @@ XF86VidModeGetGammaRampSize(
 
                 byte* data = (byte*)XRRSizes(dpy, screen, &count);//(byte*)ptr;
                 if (count == 0)
+                {
                     return null;
+                }
                 sizes = new XRRScreenSize[count];
                 for (int i = 0; i < count; i++)
                 {
@@ -1639,7 +1485,7 @@ XF86VidModeGetGammaRampSize(
         }
 
         [DllImport(XrandrLibrary)]
-        unsafe static extern short* XRRRates(Display dpy, int screen, int size_index, int* nrates);
+        private unsafe static extern short* XRRRates(Display dpy, int screen, int size_index, int* nrates);
 
         public static short[] XRRRates(Display dpy, int screen, int size_index)
         {
@@ -1649,10 +1495,14 @@ XF86VidModeGetGammaRampSize(
             {
                 short* data = (short*)XRRRates(dpy, screen, size_index, &count);
                 if (count == 0)
+                {
                     return null;
+                }
                 rates = new short[count];
                 for (int i = 0; i < count; i++)
+                {
                     rates[i] = *(data + i);
+                }
             }
             return rates;
         }
@@ -1660,21 +1510,11 @@ XF86VidModeGetGammaRampSize(
         [DllImport(XrandrLibrary)]
         public static extern Time XRRTimes(Display dpy, int screen, out Time config_timestamp);
 
-        #endregion
-
-        #region Display, Screen and Window functions
-
-        #region XScreenCount
-
         [DllImport(X11Library)]
         public static extern int XScreenCount(Display display);
 
-        #endregion
-
-        #region XListDepths
-
         [DllImport(X11Library)]
-        unsafe static extern int *XListDepths(Display display, int screen_number, int* count_return);
+        private unsafe static extern int *XListDepths(Display display, int screen_number, int* count_return);
 
         public static int[] XListDepths(Display display, int screen_number)
         {
@@ -1683,23 +1523,25 @@ XF86VidModeGetGammaRampSize(
                 int count;
                 int* data = XListDepths(display, screen_number, &count);
                 if (count == 0)
+                {
                     return null;
+                }
                 int[] depths = new int[count];
                 for (int i = 0; i < count; i++)
+                {
                     depths[i] = *(data + i);
+                }
 
                 return depths;
             }
         }
 
-        #endregion
-
-        #endregion
-
         public static Pixmap XCreateBitmapFromData(Display display, Window d, byte[,] data)
         {
             if (data == null)
+            {
                 throw new ArgumentNullException("data");
+            }
 
             unsafe
             {
@@ -1739,22 +1581,26 @@ XF86VidModeGetGammaRampSize(
     */
 
     // Helper structure for calling XLock/UnlockDisplay
-    struct XLock : IDisposable
+    internal struct XLock : IDisposable
     {
-        IntPtr _display;
+        private IntPtr _display;
 
         public IntPtr Display
         {
             get
             {
                 if (_display == IntPtr.Zero)
+                {
                     throw new InvalidOperationException("Internal error (XLockDisplay with IntPtr.Zero). Please report this at http://www.opentk.com/node/add/project-issue/opentk");
+                }
                 return _display;
             }
             set
             {
                 if (value == IntPtr.Zero)
+                {
                     throw new ArgumentException();
+                }
                 _display = value;
             }
         }
@@ -1773,7 +1619,7 @@ XF86VidModeGetGammaRampSize(
     }
 
     // XAllowEvent modes
-    enum EventMode
+    internal enum EventMode
     {
         AsyncPointer = 0,
         SyncPointer,
@@ -1785,8 +1631,3 @@ XF86VidModeGetGammaRampSize(
         SyncBoth
     }
 }
-
-#pragma warning restore 3019
-#pragma warning restore 0649
-#pragma warning restore 0169
-#pragma warning restore 0414

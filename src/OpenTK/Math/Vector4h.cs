@@ -1,4 +1,3 @@
-#region --- License ---
 /*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
 
@@ -20,7 +19,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-#endregion
 
 using System;
 using System.IO;
@@ -36,8 +34,6 @@ namespace OpenTK
     [Serializable, StructLayout(LayoutKind.Sequential)]
     public struct Vector4h : ISerializable, IEquatable<Vector4h>
     {
-        #region Public Fields
-
         /// <summary>The X component of the Half4.</summary>
         public Half X;
 
@@ -49,10 +45,6 @@ namespace OpenTK
 
         /// <summary>The W component of the Half4.</summary>
         public Half W;
-
-        #endregion Public Fields
-
-        #region Constructors
 
         /// <summary>
         /// Constructs a new instance.
@@ -232,12 +224,6 @@ namespace OpenTK
             W = new Half(v.W, throwOnError);
         }
 
-        #endregion Constructors
-
-        #region Swizzle
-
-        #region 2-component
-
         /// <summary>
         /// Gets or sets an OpenTK.Vector2h with the X and Y components of this instance.
         /// </summary>
@@ -309,10 +295,6 @@ namespace OpenTK
         /// </summary>
         [XmlIgnore]
         public Vector2h Wz { get { return new Vector2h(W, Z); } set { W = value.X; Z = value.Y; } }
-
-        #endregion
-
-        #region 3-component
 
         /// <summary>
         /// Gets or sets an OpenTK.Vector3h with the X, Y, and Z components of this instance.
@@ -457,10 +439,6 @@ namespace OpenTK
         /// </summary>
         [XmlIgnore]
         public Vector3h Wzy { get { return new Vector3h(W, Z, Y); } set { W = value.X; Z = value.Y; Y = value.Z; } }
-
-        #endregion
-
-        #region 4-component
 
         /// <summary>
         /// Gets or sets an OpenTK.Vector4h with the X, Y, W, and Z components of this instance.
@@ -624,12 +602,6 @@ namespace OpenTK
         [XmlIgnore]
         public Vector4h Wzyw { get { return new Vector4h(W, Z, Y, W); } set { X = value.X; Z = value.Y; Y = value.Z; W = value.W; } }
 
-        #endregion
-
-        #endregion
-
-        #region Half -> Single
-
         /// <summary>
         /// Returns this Half4 instance's contents as Vector4.
         /// </summary>
@@ -646,10 +618,6 @@ namespace OpenTK
         {
             return new Vector4d(X, Y, Z, W);
         }
-
-        #endregion Half -> Single
-
-        #region Conversions
 
         /// <summary>Converts OpenTK.Vector4 to OpenTK.Half4.</summary>
         /// <param name="v4f">The Vector4 to convert.</param>
@@ -693,16 +661,8 @@ namespace OpenTK
             return result;
         }
 
-        #endregion Conversions
-
-        #region Constants
-
         /// <summary>The size in bytes for an instance of the Half4 struct is 8.</summary>
         public static readonly int SizeInBytes = 8;
-
-        #endregion Constants
-
-        #region ISerializable
 
         /// <summary>Constructor used by ISerializable to deserialize the object.</summary>
         /// <param name="info"></param>
@@ -726,10 +686,6 @@ namespace OpenTK
             info.AddValue("W", this.W);
         }
 
-        #endregion ISerializable
-
-        #region Binary dump
-
         /// <summary>Updates the X,Y,Z and W components of this instance by reading from a Stream.</summary>
         /// <param name="bin">A BinaryReader instance associated with an open Stream.</param>
         public void FromBinaryStream(BinaryReader bin)
@@ -750,10 +706,6 @@ namespace OpenTK
             W.ToBinaryStream(bin);
         }
 
-        #endregion Binary dump
-
-        #region IEquatable<Half4> Members
-
         /// <summary>Returns a value indicating whether this instance is equal to a specified OpenTK.Half4 vector.</summary>
         /// <param name="other">OpenTK.Half4 to compare to this instance..</param>
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
@@ -762,20 +714,12 @@ namespace OpenTK
             return (this.X.Equals(other.X) && this.Y.Equals(other.Y) && this.Z.Equals(other.Z) && this.W.Equals(other.W));
         }
 
-        #endregion
-
-        #region ToString()
-
         private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
         /// <summary>Returns a string that contains this Half4's numbers in human-legible form.</summary>
         public override string ToString()
         {
             return String.Format("({0}{4} {1}{4} {2}{4} {3})", X.ToString(), Y.ToString(), Z.ToString(), W.ToString(), listSeparator);
         }
-
-        #endregion ToString()
-
-        #region BitConverter
 
         /// <summary>Returns the Half4 as an array of bytes.</summary>
         /// <param name="h">The Half4 to convert.</param>
@@ -813,7 +757,5 @@ namespace OpenTK
             h4.W = Half.FromBytes(value, startIndex + 6);
             return h4;
         }
-
-        #endregion BitConverter
     }
 }

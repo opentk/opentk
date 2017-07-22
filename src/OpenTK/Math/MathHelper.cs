@@ -1,17 +1,13 @@
-﻿#region --- License ---
-/* Licensed under the MIT/X11 license.
+﻿/* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  *
  * Contributions by Andy Gill, James Talton and Georg Wächter.
  */
-#endregion
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace OpenTK
 {
@@ -20,8 +16,6 @@ namespace OpenTK
     /// </summary>
     public static class MathHelper
     {
-        #region Fields
-
         /// <summary>
         /// Defines the value of Pi as a <see cref="System.Single"/>.
         /// </summary>
@@ -72,12 +66,6 @@ namespace OpenTK
         /// </summary>
         public const float Log2E = 1.442695041f;
 
-        #endregion
-
-        #region Public Members
-
-        #region NextPowerOfTwo
-
         /// <summary>
         /// Returns the next power of two that is greater than or equal to the specified number.
         /// </summary>
@@ -85,7 +73,10 @@ namespace OpenTK
         /// <returns>The next power of two.</returns>
         public static long NextPowerOfTwo(long n)
         {
-            if (n < 0) throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            if (n < 0)
+            {
+                throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            }
             return (long)System.Math.Pow(2, System.Math.Ceiling(System.Math.Log((double)n, 2)));
         }
 
@@ -96,7 +87,10 @@ namespace OpenTK
         /// <returns>The next power of two.</returns>
         public static int NextPowerOfTwo(int n)
         {
-            if (n < 0) throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            if (n < 0)
+            {
+                throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            }
             return (int)System.Math.Pow(2, System.Math.Ceiling(System.Math.Log((double)n, 2)));
         }
 
@@ -107,7 +101,10 @@ namespace OpenTK
         /// <returns>The next power of two.</returns>
         public static float NextPowerOfTwo(float n)
         {
-            if (n < 0) throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            if (n < 0)
+            {
+                throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            }
             return (float)System.Math.Pow(2, System.Math.Ceiling(System.Math.Log((double)n, 2)));
         }
 
@@ -118,13 +115,12 @@ namespace OpenTK
         /// <returns>The next power of two.</returns>
         public static double NextPowerOfTwo(double n)
         {
-            if (n < 0) throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            if (n < 0)
+            {
+                throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            }
             return System.Math.Pow(2, System.Math.Ceiling(System.Math.Log((double)n, 2)));
         }
-
-        #endregion
-
-        #region Factorial
 
         /// <summary>Calculates the factorial of a given natural number.
         /// </summary>
@@ -135,14 +131,12 @@ namespace OpenTK
             long result = 1;
 
             for (; n > 1; n--)
+            {
                 result *= n;
+            }
 
             return result;
         }
-
-        #endregion
-
-        #region BinomialCoefficient
 
         /// <summary>
         /// Calculates the binomial coefficient <paramref name="n"/> above <paramref name="k"/>.
@@ -154,10 +148,6 @@ namespace OpenTK
         {
             return Factorial(n) / (Factorial(k) * Factorial(n - k));
         }
-
-        #endregion
-
-        #region InverseSqrtFast
 
         /// <summary>
         /// Returns an approximation of the inverse square root of left number.
@@ -211,10 +201,6 @@ namespace OpenTK
 #endif
         }
 
-        #endregion
-
-        #region DegreesToRadians
-
         /// <summary>
         /// Convert degrees to radians
         /// </summary>
@@ -259,10 +245,6 @@ namespace OpenTK
             return radians * radToDeg;
         }
 
-        #endregion
-
-        #region Swap
-
         /// <summary>
         /// Swaps two double values.
         /// </summary>
@@ -286,10 +268,6 @@ namespace OpenTK
             a = b;
             b = temp;
         }
-
-        #endregion
-
-        #region Clamp
 
         /// <summary>
         /// Clamps a number between a minimum and a maximum.
@@ -327,33 +305,37 @@ namespace OpenTK
             return Math.Max(Math.Min(n, max), min);
         }
 
-		private static unsafe int FloatToInt32Bits(float f) {
-			return *((int*) &f);
-		}
+        private static unsafe int FloatToInt32Bits(float f) {
+            return *((int*) &f);
+        }
 
-		/// <summary>
-		/// Approximates floating point equality with a maximum number of different bits.
-		/// This is typically used in place of an epsilon comparison.
-		/// see: https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
-		/// see: https://stackoverflow.com/questions/3874627/floating-point-comparison-functions-for-c-sharp
-		/// </summary>
-		/// <param name="a">the first value to compare</param>
-		/// <param name="b">>the second value to compare</param>
-		/// <param name="maxDeltaBits">the number of floating point bits to check</param>
-		/// <returns></returns>
-		public static bool ApproximatelyEqual(float a, float b, int maxDeltaBits) {
-			// we use longs here, otherwise we run into a two's complement problem, causing this to fail with -2 and 2.0
-			long aInt = FloatToInt32Bits(a);
-			if (aInt < 0)
-				aInt = Int32.MinValue - aInt;
+        /// <summary>
+        /// Approximates floating point equality with a maximum number of different bits.
+        /// This is typically used in place of an epsilon comparison.
+        /// see: https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
+        /// see: https://stackoverflow.com/questions/3874627/floating-point-comparison-functions-for-c-sharp
+        /// </summary>
+        /// <param name="a">the first value to compare</param>
+        /// <param name="b">>the second value to compare</param>
+        /// <param name="maxDeltaBits">the number of floating point bits to check</param>
+        /// <returns></returns>
+        public static bool ApproximatelyEqual(float a, float b, int maxDeltaBits) {
+            // we use longs here, otherwise we run into a two's complement problem, causing this to fail with -2 and 2.0
+            long aInt = FloatToInt32Bits(a);
+            if (aInt < 0)
+            {
+                aInt = Int32.MinValue - aInt;
+            }
 
-			long bInt = FloatToInt32Bits(b);
-			if (bInt < 0)
-				bInt = Int32.MinValue - bInt;
+            long bInt = FloatToInt32Bits(b);
+            if (bInt < 0)
+            {
+                bInt = Int32.MinValue - bInt;
+            }
 
-			long intDiff = Math.Abs(aInt - bInt);
-			return intDiff <= (1 << maxDeltaBits);
-		}
+            long intDiff = Math.Abs(aInt - bInt);
+            return intDiff <= (1 << maxDeltaBits);
+        }
 
         /// <summary>
         /// Approximates double-precision floating point equality by an epsilon (maximum error) value.
@@ -468,8 +450,6 @@ namespace OpenTK
             return diff <= tolerance;
         }
 
-		#endregion
 
-		#endregion
-	}
+            }
 }

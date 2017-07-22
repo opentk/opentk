@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // Drm.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Runtime.InteropServices;
@@ -35,22 +33,22 @@ using System.Runtime.InteropServices;
 namespace OpenTK.Platform.Linux
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate void VBlankCallback(int fd,
+    internal delegate void VBlankCallback(int fd,
         int sequence,
         int tv_sec,
         int tv_usec,
         IntPtr user_data);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate void PageFlipCallback(int fd,
+    internal delegate void PageFlipCallback(int fd,
         int sequence,
         int tv_sec,
         int tv_usec,
         IntPtr user_data);
 
-    class Drm
+    internal class Drm
     {
-        const string lib = "libdrm";
+        private const string lib = "libdrm";
 
         [DllImport(lib, EntryPoint = "drmHandleEvent", CallingConvention = CallingConvention.Cdecl)]
         public static extern int HandleEvent(int fd, ref EventContext evctx);
@@ -100,14 +98,14 @@ namespace OpenTK.Platform.Linux
 
     }
 
-    enum ModeConnection
+    internal enum ModeConnection
     {
         Connected = 1,
         Disconnected = 2,
         Unknown = 3
     }
 
-    enum ModeSubPixel
+    internal enum ModeSubPixel
     {
         Unknown = 1,
         HorizontalRgb = 2,
@@ -118,7 +116,7 @@ namespace OpenTK.Platform.Linux
     }
 
     [Flags]
-    enum PageFlipFlags
+    internal enum PageFlipFlags
     {
         FlipEvent = 0x01,
         FlipAsync = 0x02,
@@ -126,7 +124,7 @@ namespace OpenTK.Platform.Linux
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct EventContext
+    internal struct EventContext
     {
         public int version;
         public IntPtr vblank_handler;
@@ -136,7 +134,7 @@ namespace OpenTK.Platform.Linux
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct ModeConnector
+    internal unsafe struct ModeConnector
     {
         public int connector_id;
         public int encoder_id;
@@ -157,7 +155,7 @@ namespace OpenTK.Platform.Linux
         public int *encoders;
     }
 
-    struct ModeCrtc
+    internal struct ModeCrtc
     {
         public int crtc_id;
         public int buffer_id;
@@ -170,7 +168,7 @@ namespace OpenTK.Platform.Linux
         public int gamma_size;
     }
 
-    struct ModeEncoder
+    internal struct ModeEncoder
     {
         public int encoder_id;
         public int encoder_type;
@@ -180,7 +178,7 @@ namespace OpenTK.Platform.Linux
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct ModeInfo
+    internal unsafe struct ModeInfo
     {
         public uint clock;
         public ushort hdisplay, hsync_start, hsync_end, htotal, hskew;
@@ -194,7 +192,7 @@ namespace OpenTK.Platform.Linux
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    unsafe struct ModeRes
+    internal unsafe struct ModeRes
     {
         public int count_fbs;
         public int* fbs;

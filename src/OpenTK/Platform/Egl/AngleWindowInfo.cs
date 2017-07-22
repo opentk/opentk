@@ -53,18 +53,14 @@ namespace OpenTK.Platform.Egl
 
     internal class AngleWindowInfo : IAngleWindowInfoInternal
     {
-        private readonly IWindowInfo _platform_window;
         private bool _disposed;
 
         public AngleWindowInfo(IWindowInfo platform_window)
         {
-            _platform_window = platform_window;
+            PlatformWindow = platform_window;
         }
 
-        public IWindowInfo PlatformWindow
-        {
-            get { return _platform_window; }
-        }
+        public IWindowInfo PlatformWindow { get; }
 
         public IWindowInfo WindowInfo
         {
@@ -75,7 +71,7 @@ namespace OpenTK.Platform.Egl
         {
             get
             {
-                var win_win = _platform_window as WinWindowInfo;
+                var win_win = PlatformWindow as WinWindowInfo;
                 if (win_win != null)
                 {
                     return win_win.DeviceContext;
@@ -104,7 +100,7 @@ namespace OpenTK.Platform.Egl
 
         public IntPtr Handle
         {
-            get { return _platform_window.Handle; }
+            get { return PlatformWindow.Handle; }
         }
 
         ~AngleWindowInfo()
@@ -120,7 +116,7 @@ namespace OpenTK.Platform.Egl
             }
             if (!called_from_finalizer)
             {
-                _platform_window.Dispose();
+                PlatformWindow.Dispose();
             }
             // dispose unmanaged
 

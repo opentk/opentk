@@ -1,4 +1,3 @@
- #region License
  //
  // The Open Toolkit Library License
  //
@@ -6,7 +5,7 @@
  //
  // Permission is hereby granted, free of charge, to any person obtaining a copy
  // of this software and associated documentation files (the "Software"), to deal
- // in the Software without restriction, including without limitation the rights to 
+ // in the Software without restriction, including without limitation the rights to
  // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
  // the Software, and to permit persons to whom the Software is furnished to do
  // so, subject to the following conditions:
@@ -23,7 +22,6 @@
  // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  // OTHER DEALINGS IN THE SOFTWARE.
  //
- #endregion
 
 using System;
 
@@ -34,19 +32,15 @@ namespace OpenTK.Input
     /// </summary>
     public struct GamePadState : IEquatable<GamePadState>
     {
-        const float RangeMultiplier = 1.0f / (short.MaxValue + 1);
+        private const float RangeMultiplier = 1.0f / (short.MaxValue + 1);
 
-        Buttons buttons;
-        int packet_number;
-        short left_stick_x;
-        short left_stick_y;
-        short right_stick_x;
-        short right_stick_y;
-        byte left_trigger;
-        byte right_trigger;
-        bool is_connected;
-
-        #region Public Members
+        private Buttons buttons;
+        private short left_stick_x;
+        private short left_stick_y;
+        private short right_stick_x;
+        private short right_stick_y;
+        private byte left_trigger;
+        private byte right_trigger;
 
         /// <summary>
         /// Gets a <see cref="GamePadThumbSticks"/> structure describing the
@@ -88,20 +82,14 @@ namespace OpenTK.Input
         /// Gets a value indicating whether this <c>GamePad</c> instance is connected.
         /// </summary>
         /// <value><c>true</c> if this instance is connected; otherwise, <c>false</c>.</value>
-        public bool IsConnected
-        {
-            get { return is_connected; }
-        }
+        public bool IsConnected { get; private set; }
 
         /// <summary>
         /// Gets the packet number for this <c>GamePadState</c> instance.
         /// Use the packet number to determine whether the state of a
         /// <c>GamePad</c> device has changed.
         /// </summary>
-        public int PacketNumber
-        {
-            get { return packet_number; }
-        }
+        public int PacketNumber { get; private set; }
 
         /// <summary>
         /// Returns a <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.GamePadState"/>.
@@ -139,10 +127,6 @@ namespace OpenTK.Input
                 Equals((GamePadState)obj);
         }
 
-        #endregion
-
-        #region IEquatable<GamePadState> Members
-
         /// <summary>
         /// Determines whether the specified <see cref="OpenTK.Input.GamePadState"/> is equal to the current <see cref="OpenTK.Input.GamePadState"/>.
         /// </summary>
@@ -157,10 +141,6 @@ namespace OpenTK.Input
                 DPad == other.DPad &&
                 IsConnected == other.IsConnected;
         }
-
-        #endregion
-
-        #region Internal Members
 
         internal void SetAxis(GamePadAxes axis, short value)
         {
@@ -211,7 +191,7 @@ namespace OpenTK.Input
 
         internal void SetConnected(bool connected)
         {
-            is_connected = connected;
+            IsConnected = connected;
         }
 
         internal void SetTriggers(byte left, byte right)
@@ -222,24 +202,18 @@ namespace OpenTK.Input
 
         internal void SetPacketNumber(int number)
         {
-            packet_number = number;
+            PacketNumber = number;
         }
 
-        #endregion
-
-        #region Private Members
-
-        bool IsAxisValid(GamePadAxes axis)
+        private bool IsAxisValid(GamePadAxes axis)
         {
             int index = (int)axis;
             return index >= 0 && index < GamePad.MaxAxisCount;
         }
 
-        bool IsDPadValid(int index)
+        private bool IsDPadValid(int index)
         {
             return index >= 0 && index < GamePad.MaxDPadCount;
         }
-
-        #endregion
     }
 }

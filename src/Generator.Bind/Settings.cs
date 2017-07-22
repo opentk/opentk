@@ -1,8 +1,6 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -13,18 +11,18 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace Bind
 {
     [Serializable]
-    class Settings
+    internal class Settings
     {
         public Settings()
         {
             OverridesFiles = new List<string>();
         }
 
-        public string DefaultInputPath = "../../../Generator.Bind/Specifications";
-        public string DefaultOutputPath = "../../../Source/OpenTK/Graphics/OpenGL";
+        public string DefaultInputPath = "src/Generator.Bind/Specifications";
+        public string DefaultOutputPath = "src/OpenTK/Graphics/OpenGL";
         public string DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
-        public string DefaultDocPath = "../../../Generator.Bind/Specifications/Docs";
-        public string DefaultFallbackDocPath = "../../../Generator.Bind/Specifications/Docs/GL";
+        public string DefaultDocPath = "src/Generator.Bind/Specifications/Docs";
+        public string DefaultFallbackDocPath = "src/Generator.Bind/Specifications/Docs/GL";
         public string DefaultLicenseFile = "License.txt";
         public string DefaultLanguageTypeMapFile = "csharp.tm";
         public string DefaultKeywordEscapeCharacter = "@";
@@ -34,10 +32,11 @@ namespace Bind
         public string DefaultWrappersFile = "GL.cs";
         public Legacy DefaultCompatibility = Legacy.NoDropMultipleTokens;
 
-        string inputPath, outputPath, outputNamespace, docPath, fallbackDocPath, licenseFile,
+        private string inputPath, outputPath, outputNamespace, docPath, fallbackDocPath, licenseFile,
             languageTypeMapFile, keywordEscapeCharacter, importsFile, delegatesFile, enumsFile,
             wrappersFile;
-        Nullable<Legacy> compatibility;
+
+        private Nullable<Legacy> compatibility;
         public string InputPath { get { return inputPath ?? DefaultInputPath; } set { inputPath = value; } }
         public string OutputPath { get { return outputPath ?? DefaultOutputPath; } set { outputPath = value; } }
         public string OutputNamespace { get { return outputNamespace ?? DefaultOutputNamespace; } set { outputNamespace = value; } }
@@ -74,8 +73,8 @@ namespace Bind
                         normalEnumsClassOverride;
             }
         }
- 
-        public string AuxEnumsClass 
+
+        public string AuxEnumsClass
         {
             get { return GLClass + NamespaceSeparator + NestedEnumsClass; }
         }
@@ -85,9 +84,13 @@ namespace Bind
             get
             {
                 if ((Compatibility & Legacy.NestedEnums) != Legacy.None)
+                {
                     return OutputNamespace + NamespaceSeparator + OutputClass + NamespaceSeparator + NestedEnumsClass;
+                }
                 else
+                {
                     return String.IsNullOrEmpty(EnumsNamespace) ? OutputNamespace : OutputNamespace + NamespaceSeparator + EnumsNamespace;
+                }
             }
         }
 
@@ -96,9 +99,13 @@ namespace Bind
             get
             {
                 if ((Compatibility & Legacy.NestedEnums) != Legacy.None)
+                {
                     return OutputNamespace + NamespaceSeparator + GLClass + NamespaceSeparator + NestedEnumsClass;
+                }
                 else
+                {
                     return OutputNamespace + NamespaceSeparator + EnumsNamespace;
+                }
             }
         }
 
@@ -198,11 +205,19 @@ namespace Bind
 
         /// <summary>True if multiple tokens should be dropped (e.g. FooARB, FooEXT and FooSGI).</summary>
         public bool DropMultipleTokens
-        { 
-            get { return (Compatibility & Legacy.NoDropMultipleTokens) == Legacy.None; } 
-            set { if (value) Compatibility |= Legacy.NoDropMultipleTokens; else Compatibility &= ~Legacy.NoDropMultipleTokens; }
+        {
+            get { return (Compatibility & Legacy.NoDropMultipleTokens) == Legacy.None; }
+            set { if (value)
+                {
+                    Compatibility |= Legacy.NoDropMultipleTokens;
+                }
+                else
+                {
+                    Compatibility &= ~Legacy.NoDropMultipleTokens;
+                }
+            }
         }
-        
+
         public string WindowsGDI = "OpenTK.Platform.Windows.API";
 
         public Settings Clone()

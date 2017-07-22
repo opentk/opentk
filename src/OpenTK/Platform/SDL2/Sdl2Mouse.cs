@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,28 +22,23 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 #if !MINIMAL
-using System.Drawing;
 #endif
 using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2Mouse : IMouseDriver2
+    internal class Sdl2Mouse : IMouseDriver2
     {
-        MouseState state;
+        private MouseState state;
 
         public Sdl2Mouse()
         {
             state.IsConnected = true;
         }
-
-        #region Private Members
 
         static internal MouseButton TranslateButton(Button button)
         {
@@ -71,7 +65,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        void SetButtonState(MouseButton button, bool pressed)
+        private void SetButtonState(MouseButton button, bool pressed)
         {
             if (pressed)
             {
@@ -84,10 +78,6 @@ namespace OpenTK.Platform.SDL2
         }
 
         internal static float Scale = 1.0f;
-
-        #endregion
-
-        #region Public Members
 
         public void ProcessWheelEvent(MouseWheelEvent wheel)
         {
@@ -106,10 +96,6 @@ namespace OpenTK.Platform.SDL2
             SetButtonState(TranslateButton(button.Button), pressed);
         }
 
-        #endregion
-
-        #region IMouseDriver2 Members
-
         public MouseState GetState()
         {
             MouseState scaledState = state;
@@ -124,9 +110,13 @@ namespace OpenTK.Platform.SDL2
         public MouseState GetState(int index)
         {
             if (index == 0)
+            {
                 return GetState();
+            }
             else
+            {
                 return new MouseState();
+            }
         }
 
         public MouseState GetCursorState()
@@ -158,8 +148,6 @@ namespace OpenTK.Platform.SDL2
         {
             SDL.WarpMouseInWindow(IntPtr.Zero, (int)x, (int)y);
         }
-
-    #endregion
     }
 }
 

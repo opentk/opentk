@@ -1,4 +1,3 @@
-#region --- License ---
 /*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
 
@@ -40,7 +39,7 @@ in the documentation and/or other materials provided with the
 distribution.
 *       Neither the name of Industrial Light & Magic nor the names of
 its contributors may be used to endorse or promote products derived
-from this software without specific prior written permission. 
+from this software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -54,7 +53,6 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#endregion --- License ---
 
 using System;
 using System.IO;
@@ -78,13 +76,7 @@ namespace OpenTK
     [Serializable, StructLayout(LayoutKind.Sequential)]
     public struct Half : ISerializable, IComparable<Half>, IFormattable, IEquatable<Half>
     {
-        #region Internal Field
-
-        UInt16 bits;
-
-        #endregion Internal Field
-
-        #region Properties
+        private UInt16 bits;
 
         /// <summary>Returns true if the Half is zero.</summary>
         public bool IsZero { get { return (bits == 0) || (bits == 0x8000); } }
@@ -97,10 +89,6 @@ namespace OpenTK
 
         /// <summary>Returns true if the Half represents negative infinity.</summary>
         public bool IsNegativeInfinity { get { return (bits == 64512); } }
-
-        #endregion Properties
-
-        #region Constructors
 
         /// <summary>
         /// The new Half instance will convert the parameter into 16-bit half-precision floating-point.
@@ -126,13 +114,28 @@ namespace OpenTK
             if (throwOnError)
             {
                 // handle cases that cause overflow rather than silently ignoring it
-                if (f > Half.MaxValue) throw new ArithmeticException("Half: Positive maximum value exceeded.");
-                if (f < -Half.MaxValue) throw new ArithmeticException("Half: Negative minimum value exceeded.");
+                if (f > Half.MaxValue)
+                {
+                    throw new ArithmeticException("Half: Positive maximum value exceeded.");
+                }
+                if (f < -Half.MaxValue)
+                {
+                    throw new ArithmeticException("Half: Negative minimum value exceeded.");
+                }
 
                 // handle cases that make no sense
-                if (Single.IsNaN(f)) throw new ArithmeticException("Half: Input is not a number (NaN).");
-                if (Single.IsPositiveInfinity(f)) throw new ArithmeticException("Half: Input is positive infinity.");
-                if (Single.IsNegativeInfinity(f)) throw new ArithmeticException("Half: Input is negative infinity.");
+                if (Single.IsNaN(f))
+                {
+                    throw new ArithmeticException("Half: Input is not a number (NaN).");
+                }
+                if (Single.IsPositiveInfinity(f))
+                {
+                    throw new ArithmeticException("Half: Input is positive infinity.");
+                }
+                if (Single.IsNegativeInfinity(f))
+                {
+                    throw new ArithmeticException("Half: Input is negative infinity.");
+                }
             }
         }
 
@@ -148,10 +151,6 @@ namespace OpenTK
         /// <param name="d">64-bit double-precision floating-point number.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Half(Double d, bool throwOnError) : this((Single)d, throwOnError) { }
-
-        #endregion Constructors
-
-        #region Single -> Half
 
         /// <summary>Ported from OpenEXR's IlmBase 1.0.1</summary>
         private UInt16 SingleToHalf(Int32 si32)
@@ -213,7 +212,7 @@ namespace OpenTK
                 else
                 {
                     // F is a NAN; we produce a half NAN that preserves the sign bit and the 10 leftmost bits of the
-                    // significand of F, with one exception: If the 10 leftmost bits are all zero, the NAN would turn 
+                    // significand of F, with one exception: If the 10 leftmost bits are all zero, the NAN would turn
                     // into an infinity, so we have to set at least one bit in the significand.
 
                     mantissa >>= 13;
@@ -235,17 +234,16 @@ namespace OpenTK
                 }
 
                 // exponent overflow
-                if (exponent > 30) throw new ArithmeticException("Half: Hardware floating-point overflow.");
+                if (exponent > 30)
+                {
+                    throw new ArithmeticException("Half: Hardware floating-point overflow.");
+                }
 
                 // Assemble the half from S, E and M.
 
                 return (UInt16)(sign | (exponent << 10) | (mantissa >> 13));
             }
         }
-
-        #endregion Single -> Half
-
-        #region Half -> Single
 
         /// <summary>Converts the 16-bit half to 32-bit floating-point.</summary>
         /// <returns>A single-precision floating-point number.</returns>
@@ -315,10 +313,6 @@ namespace OpenTK
             return (sign << 31) | (exponent << 23) | mantissa;
         }
 
-        #endregion Half -> Single
-
-        #region Conversions
-
         /// <summary>
         /// Converts a System.Single to a OpenTK.Half.
         /// </summary>
@@ -375,10 +369,6 @@ namespace OpenTK
             return (double)h.ToSingle();
         }
 
-        #endregion Conversions
-
-        #region Constants
-
         /// <summary>The size in bytes for an instance of the Half struct.</summary>
         public static readonly Int32 SizeInBytes = 2;
 
@@ -393,10 +383,6 @@ namespace OpenTK
 
         /// <summary>Smallest positive e for which half (1.0 + e) != half (1.0)</summary>
         public static readonly Single Epsilon = 0.00097656f;
-
-        #endregion Constants
-
-        #region ISerializable
 
         /// <summary>Constructor used by ISerializable to deserialize the object.</summary>
         /// <param name="info"></param>
@@ -414,10 +400,6 @@ namespace OpenTK
             info.AddValue("bits", this.bits);
         }
 
-        #endregion ISerializable
-
-        #region Binary dump
-
         /// <summary>Updates the Half by reading from a Stream.</summary>
         /// <param name="bin">A BinaryReader instance associated with an open Stream.</param>
         public void FromBinaryStream(BinaryReader bin)
@@ -433,11 +415,7 @@ namespace OpenTK
             bin.Write(this.bits);
         }
 
-        #endregion Binary dump
-
-        #region IEquatable<Half> Members
-
-        const int maxUlps = 1;
+        private const int maxUlps = 1;
 
         /// <summary>
         /// Returns a value indicating whether this instance is equal to a specified OpenTK.Half value.
@@ -452,29 +430,31 @@ namespace OpenTK
 
             // Make aInt lexicographically ordered as a twos-complement int
             if (aInt < 0)
+            {
                 aInt = (short)(0x8000 - aInt);
+            }
 
             // Make bInt lexicographically ordered as a twos-complement int
             if (bInt < 0)
+            {
                 bInt = (short)(0x8000 - bInt);
+            }
 
             short intDiff = System.Math.Abs((short)(aInt - bInt));
 
             if (intDiff <= maxUlps)
+            {
                 return true;
+            }
 
             return false;
         }
-
-        #endregion
-
-        #region IComparable<Half> Members
 
         /// <summary>
         /// Compares this instance to a specified half-precision floating-point number
         /// and returns an integer that indicates whether the value of this instance
         /// is less than, equal to, or greater than the value of the specified half-precision
-        /// floating-point number. 
+        /// floating-point number.
         /// </summary>
         /// <param name="other">A half-precision floating-point number to compare.</param>
         /// <returns>
@@ -492,10 +472,6 @@ namespace OpenTK
             return ((float)this).CompareTo((float)other);
         }
 
-        #endregion IComparable<Half> Members
-
-        #region IFormattable Members
-
         /// <summary>Converts this Half into a human-legible string representation.</summary>
         /// <returns>The string representation of this instance.</returns>
         public override string ToString()
@@ -511,10 +487,6 @@ namespace OpenTK
         {
             return this.ToSingle().ToString(format, formatProvider);
         }
-
-        #endregion IFormattable Members
-
-        #region String -> Half
 
         /// <summary>Converts the string representation of a number to a half-precision floating-point equivalent.</summary>
         /// <param name="s">String representation of the number to convert.</param>
@@ -560,10 +532,6 @@ namespace OpenTK
             return b;
         }
 
-        #endregion String -> Half
-
-        #region BitConverter
-
         /// <summary>Returns the Half as an array of bytes.</summary>
         /// <param name="h">The Half to convert.</param>
         /// <returns>The input as byte array.</returns>
@@ -582,7 +550,5 @@ namespace OpenTK
             h.bits = BitConverter.ToUInt16(value, startIndex);
             return h;
         }
-
-        #endregion BitConverter
     }
 }

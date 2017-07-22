@@ -1,11 +1,10 @@
-﻿#region License
-//
+﻿//
 // Evdev.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
 //
-// Copyright (c) 2006-2014 
+// Copyright (c) 2006-2014
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -35,13 +33,11 @@ using OpenTK.Input;
 namespace OpenTK.Platform.Linux
 {
     // Bindings for linux/input.h
-    class Evdev
+    internal class Evdev
     {
         public const int KeyCount = 0x300;
         public const int AxisCount = 0x40;
         public const int EventCount = (int)EvdevType.CNT;
-
-        #region KeyMap
 
         public static readonly Key[] KeyMap = new Key[]
         {
@@ -335,8 +331,6 @@ namespace OpenTK.Platform.Linux
             Key.Unknown, // reserved
         };
 
-        #endregion
-
         public static MouseButton GetMouseButton(EvdevButton button)
         {
             switch (button)
@@ -371,7 +365,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        static uint IOCreate(DirectionFlags dir, int number, int length)
+        private static uint IOCreate(DirectionFlags dir, int number, int length)
         {
             long v =
                 ((byte)dir << 30) |
@@ -430,7 +424,7 @@ namespace OpenTK.Platform.Linux
         }
     }
 
-    enum EvdevAxis
+    internal enum EvdevAxis
     {
         X           = 0x00,
         Y           = 0x01,
@@ -481,7 +475,7 @@ namespace OpenTK.Platform.Linux
         CNT         = (MAX+1),
     }
 
-    enum EvdevButton
+    internal enum EvdevButton
     {
         MISC        = 0x100,
         BTN0        = 0x100,
@@ -570,7 +564,7 @@ namespace OpenTK.Platform.Linux
         Last = 0x300,
     }
 
-    enum EvdevType : byte
+    internal enum EvdevType : byte
     {
         SYN = 0x00,
         KEY = 0x01,
@@ -588,14 +582,14 @@ namespace OpenTK.Platform.Linux
         CNT = (MAX+1),
     }
 
-    enum EvdevIoctl : uint
+    internal enum EvdevIoctl : uint
     {
         Id = (2u << 30) | ((byte)'E' << 8) | (0x02u << 0) | (8u << 16), //EVIOCGID = _IOR('E', 0x02, struct input_id)
         Name128 = (2u << 30) | ((byte)'E' << 8) | (0x06u << 0) | (128u << 16), //EVIOCGNAME(len) = _IOC(_IOC_READ, 'E', 0x06, len)
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct InputAbsInfo
+    internal struct InputAbsInfo
     {
         public int Value;
         public int Minimum;
@@ -606,7 +600,7 @@ namespace OpenTK.Platform.Linux
     };
 
     [StructLayout(LayoutKind.Sequential)]
-    struct InputId
+    internal struct InputId
     {
         public ushort BusType;
         public ushort Vendor;
@@ -615,10 +609,10 @@ namespace OpenTK.Platform.Linux
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct InputEvent
+    internal struct InputEvent
     {
         public TimeVal Time;
-        ushort type;
+        private ushort type;
         public ushort Code;
         public int Value;
 
@@ -626,7 +620,7 @@ namespace OpenTK.Platform.Linux
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct TimeVal
+    internal struct TimeVal
     {
         public IntPtr Seconds;
         public IntPtr MicroSeconds;

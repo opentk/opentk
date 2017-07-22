@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // EventServices.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Runtime.InteropServices;
@@ -36,7 +34,7 @@ namespace OpenTK.Platform.MacOS
     using CGEventRef = IntPtr;
     using CFMachPortRef = IntPtr;
 
-    partial class CG
+    internal partial class CG
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate CGEventRef EventTapCallBack(
@@ -94,27 +92,27 @@ namespace OpenTK.Platform.MacOS
 
     }
 
-    enum CGEventTapLocation
+    internal enum CGEventTapLocation
     {
         HIDEventTap = 0,
         SessionEventTap,
         AnnotatedSessionEventTap
     }
 
-    enum CGEventTapPlacement
+    internal enum CGEventTapPlacement
     {
         HeadInsert = 0,
         TailAppend
     }
 
-    enum CGEventTapOptions
+    internal enum CGEventTapOptions
     {
         Default = 0x00000000,
         ListenOnly = 0x00000001
     }
 
     [Flags]
-    enum CGEventMask : long
+    internal enum CGEventMask : long
     {
         LeftMouseDown       = 1 << CGEventType.LeftMouseDown,
         LeftMouseUp         = 1 << CGEventType.LeftMouseUp,
@@ -140,7 +138,7 @@ namespace OpenTK.Platform.MacOS
             ScrollWheel | MouseMoved
     }
 
-    enum CGEventType
+    internal enum CGEventType
     {
         Null                = 0,
         LeftMouseDown       = 1,
@@ -163,7 +161,7 @@ namespace OpenTK.Platform.MacOS
         TapDisabledByUserInput = -1
     }
 
-    enum CGEventField
+    internal enum CGEventField
     {
         MouseEventNumber = 0,
         MouseEventClickState = 1,

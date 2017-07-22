@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,19 +22,14 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Reflection;
 
 namespace OpenTK
 {
-    #region BlittableValueType<T>
-
     /// <summary>
     /// Checks whether the specified type parameter is a blittable value type.
     /// </summary>
@@ -45,14 +39,7 @@ namespace OpenTK
     /// </remarks>
     public static class BlittableValueType<T>
     {
-        #region Fields
-
-        static readonly Type Type;
-        static readonly int stride;
-
-        #endregion
-
-        #region Constructors
+        private static readonly Type Type;
 
         static BlittableValueType()
         {
@@ -62,13 +49,9 @@ namespace OpenTK
                 // Does this support generic types? On Mono 2.4.3 it does
                 // On .Net it doesn't.
                 // http://msdn.microsoft.com/en-us/library/5s4920fa.aspx
-                stride = Marshal.SizeOf(typeof(T));
+                Stride = Marshal.SizeOf(typeof(T));
             }
         }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Gets the size of the type in bytes or 0 for non-blittable types.
@@ -76,9 +59,7 @@ namespace OpenTK
         /// <remarks>
         /// This property returns 0 for non-blittable types.
         /// </remarks>
-        public static int Stride { get { return stride; } }
-
-        #region Check
+        public static int Stride { get; }
 
         /// <summary>
         /// Checks whether the current typename T is blittable.
@@ -97,34 +78,36 @@ namespace OpenTK
         public static bool Check(Type type)
         {
             if (!CheckStructLayoutAttribute(type))
+            {
                 Debug.Print("Warning: type {0} does not specify a StructLayoutAttribute with Pack=1. The memory layout of the struct may change between platforms.", type.Name);
+            }
 
             return CheckType(type);
         }
 
-        #endregion
-
-        #endregion
-
-        #region Private Members
-
         // Checks whether the parameter is a primitive type or consists of primitive types recursively.
         // Throws a NotSupportedException if it is not.
-        static bool CheckType(Type type)
+        private static bool CheckType(Type type)
         {
             //Debug.Print("Checking type {0} (size: {1} bytes).", type.Name, Marshal.SizeOf(type));
             if (type.IsPrimitive)
+            {
                 return true;
+            }
 
             if (!type.IsValueType)
+            {
                 return false;
+            }
 
             FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             Debug.Indent();
             foreach (FieldInfo field in fields)
             {
                 if (!CheckType(field.FieldType))
+                {
                     return false;
+                }
             }
             Debug.Unindent();
 
@@ -133,24 +116,20 @@ namespace OpenTK
 
         // Checks whether the specified struct defines [StructLayout(LayoutKind.Sequential, Pack=1)]
         // or [StructLayout(LayoutKind.Explicit)]
-        static bool CheckStructLayoutAttribute(Type type)
+        private static bool CheckStructLayoutAttribute(Type type)
         {
             StructLayoutAttribute[] attr = (StructLayoutAttribute[])
                 type.GetCustomAttributes(typeof(StructLayoutAttribute), true);
 
             if ((attr == null) ||
                 (attr != null && attr.Length > 0 && attr[0].Value != LayoutKind.Explicit && attr[0].Pack != 1))
+            {
                 return false;
+            }
 
             return true;
         }
-
-        #endregion
     }
-
-    #endregion
-
-    #region BlittableValueType
 
     /// <summary>
     /// Checks whether the specified type parameter is a blittable value type.
@@ -161,8 +140,6 @@ namespace OpenTK
     /// </remarks>
     public static class BlittableValueType
     {
-        #region Check
-
         /// <summary>
         /// Checks whether type is a blittable value type.
         /// </summary>
@@ -217,10 +194,6 @@ namespace OpenTK
             return BlittableValueType<T>.Check();
         }
 
-        #endregion
-
-        #region StrideOf
-
         /// <summary>
         /// Returns the size of the specified value type in bytes or 0 if the type is not blittable.
         /// </summary>
@@ -231,7 +204,9 @@ namespace OpenTK
         public static int StrideOf<T>(T type)
         {
             if (!Check(type))
+            {
                 throw new ArgumentException("type");
+            }
 
             return BlittableValueType<T>.Stride;
         }
@@ -247,7 +222,9 @@ namespace OpenTK
         public static int StrideOf<T>(T[] type)
         {
             if (!Check(type))
+            {
                 throw new ArgumentException("type");
+            }
 
             return BlittableValueType<T>.Stride;
         }
@@ -263,7 +240,9 @@ namespace OpenTK
         public static int StrideOf<T>(T[,] type)
         {
             if (!Check(type))
+            {
                 throw new ArgumentException("type");
+            }
 
             return BlittableValueType<T>.Stride;
         }
@@ -279,13 +258,11 @@ namespace OpenTK
         public static int StrideOf<T>(T[, ,] type)
         {
             if (!Check(type))
+            {
                 throw new ArgumentException("type");
+            }
 
             return BlittableValueType<T>.Stride;
         }
-
-        #endregion
     }
-
-    #endregion
 }

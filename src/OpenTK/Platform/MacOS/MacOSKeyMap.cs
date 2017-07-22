@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -23,20 +22,14 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 //  Created by Erik Ylvisaker on 3/17/08.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace OpenTK.Platform.MacOS
 {
-    using Carbon;
     using Input;
 
-    static class MacOSKeyMap
+    internal static class MacOSKeyMap
     {
         public static Key GetKey(MacOSKeyCode code)
         {
@@ -169,7 +162,7 @@ namespace OpenTK.Platform.MacOS
                     return Key.Left;
                 case MacOSKeyCode.M:
                     return Key.M;
-                //Key.MaxKeys 
+                //Key.MaxKeys
                 case MacOSKeyCode.Menu:
                     return Key.Menu;
                 case MacOSKeyCode.Minus:
@@ -226,7 +219,7 @@ namespace OpenTK.Platform.MacOS
                     return Key.Semicolon;
                 case MacOSKeyCode.Shift:
                     return Key.ShiftLeft;
-                //Key.ShiftRight 
+                //Key.ShiftRight
                 case MacOSKeyCode.Slash:
                     return Key.Slash;
                 // Key.Sleep

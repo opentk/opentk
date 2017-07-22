@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Reflection;
-using System.Runtime.InteropServices;
 
 namespace OpenTK.Graphics.ES11
 {
@@ -15,15 +11,13 @@ namespace OpenTK.Graphics.ES11
 #if IPHONE
         const string Library = "/System/Library/Frameworks/OpenGLES.framework/OpenGLES";
 #else
-        const string Library = "GLESv1_CM";
+        private const string Library = "GLESv1_CM";
 #endif
-        static readonly object sync_root = new object();
+        private static readonly object sync_root = new object();
 
-        static IntPtr[] EntryPoints;
-        static byte[] EntryPointNames;
-        static int[] EntryPointNameOffsets;
-
-        #region Constructors
+        private static IntPtr[] EntryPoints;
+        private static byte[] EntryPointNames;
+        private static int[] EntryPointNameOffsets;
 
         /// <summary>
         /// Constructs a new instance.
@@ -35,10 +29,6 @@ namespace OpenTK.Graphics.ES11
             _EntryPointNameOffsetsInstance = EntryPointNameOffsets;
         }
 
-        #endregion
-
-        #region --- Protected Members ---
-
         /// <summary>
         /// Returns a synchronization token unique for the GL class.
         /// </summary>
@@ -46,8 +36,6 @@ namespace OpenTK.Graphics.ES11
         {
             get { return sync_root; }
         }
-
-        #endregion
 
     }
 }

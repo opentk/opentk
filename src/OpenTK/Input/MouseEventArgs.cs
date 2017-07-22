@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // MouseEventArgs.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 #if !MINIMAL
@@ -40,19 +38,13 @@ namespace OpenTK.Input
     /// <remarks>
     /// <para>
     /// Do not cache instances of this type outside their event handler.
-    /// If necessary, you can clone an instance using the 
+    /// If necessary, you can clone an instance using the
     /// <see cref="MouseEventArgs(MouseEventArgs)"/> constructor.
     /// </para>
     /// </remarks>
     public class MouseEventArgs : EventArgs
     {
-        #region Fields
-
-        MouseState state;
-
-        #endregion
-
-        #region Constructors
+        private MouseState state;
 
         /// <summary>
         /// Constructs a new instance.
@@ -83,14 +75,12 @@ namespace OpenTK.Input
         {
         }
 
-        #endregion
-
-        #region Protected Members
-
         internal void SetButton(MouseButton button, ButtonState state)
         {
             if (button < 0 || button > MouseButton.LastButton)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
             switch (state)
             {
@@ -107,16 +97,14 @@ namespace OpenTK.Input
         internal ButtonState GetButton(MouseButton button)
         {
             if (button < 0 || button > MouseButton.LastButton)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
             return
                 state.ReadBit((int)button) ?
                 ButtonState.Pressed : ButtonState.Released;
         }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Gets the X position of the mouse for the event.
@@ -149,8 +137,6 @@ namespace OpenTK.Input
             get { return state; }
             internal set { state = value; }
         }
-
-        #endregion
     }
 
     /// <summary>
@@ -159,20 +145,12 @@ namespace OpenTK.Input
     /// <remarks>
     /// <para>
     /// Do not cache instances of this type outside their event handler.
-    /// If necessary, you can clone an instance using the 
+    /// If necessary, you can clone an instance using the
     /// <see cref="MouseMoveEventArgs(MouseMoveEventArgs)"/> constructor.
     /// </para>
     /// </remarks>
     public class MouseMoveEventArgs : MouseEventArgs
     {
-        #region Fields
-
-        int x_delta, y_delta;
-
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Constructs a new <see cref="MouseMoveEventArgs"/> instance.
         /// </summary>
@@ -201,21 +179,15 @@ namespace OpenTK.Input
         {
         }
 
-        #endregion
-
-        #region Public Members
-
         /// <summary>
         /// Gets the change in X position produced by this event.
         /// </summary>
-        public int XDelta { get { return x_delta; } internal set { x_delta = value; } }
+        public int XDelta { get; internal set; }
 
         /// <summary>
         /// Gets the change in Y position produced by this event.
         /// </summary>
-        public int YDelta { get { return y_delta; } internal set { y_delta = value; } }
-
-        #endregion
+        public int YDelta { get; internal set; }
     }
 
     /// <summary>
@@ -224,20 +196,12 @@ namespace OpenTK.Input
     /// <remarks>
     /// <para>
     /// Do not cache instances of this type outside their event handler.
-    /// If necessary, you can clone an instance using the 
+    /// If necessary, you can clone an instance using the
     /// <see cref="MouseButtonEventArgs(MouseButtonEventArgs)"/> constructor.
     /// </para>
     /// </remarks>
     public class MouseButtonEventArgs : MouseEventArgs
     {
-        #region Fields
-
-        MouseButton button;
-
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Constructs a new <see cref="MouseButtonEventArgs"/> instance.
         /// </summary>
@@ -253,7 +217,7 @@ namespace OpenTK.Input
         public MouseButtonEventArgs(int x, int y, MouseButton button, bool pressed)
             : base(x, y)
         {
-            this.button = button;
+            this.Button = button;
             this.IsPressed = pressed;
         }
 
@@ -266,14 +230,10 @@ namespace OpenTK.Input
         {
         }
 
-        #endregion
-
-        #region Public Members
-
         /// <summary>
         /// Gets the <see cref="MouseButton"/> that triggered this event.
         /// </summary>
-        public MouseButton Button { get { return button; } internal set { button = value; } }
+        public MouseButton Button { get; internal set; }
 
         /// <summary>
         /// Gets a System.Boolean representing the state of the mouse button for the event.
@@ -283,8 +243,6 @@ namespace OpenTK.Input
             get { return GetButton(Button) == ButtonState.Pressed; }
             internal set { SetButton(Button, value ? ButtonState.Pressed : ButtonState.Released); }
         }
-
-        #endregion
     }
 
     /// <summary>
@@ -293,20 +251,12 @@ namespace OpenTK.Input
     /// <remarks>
     /// <para>
     /// Do not cache instances of this type outside their event handler.
-    /// If necessary, you can clone an instance using the 
+    /// If necessary, you can clone an instance using the
     /// <see cref="MouseWheelEventArgs(MouseWheelEventArgs)"/> constructor.
     /// </para>
     /// </remarks>
     public class MouseWheelEventArgs : MouseEventArgs
     {
-        #region Fields
-
-        float delta;
-
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Constructs a new <see cref="MouseWheelEventArgs"/> instance.
         /// </summary>
@@ -323,7 +273,7 @@ namespace OpenTK.Input
             : base(x, y)
         {
             Mouse.SetScrollAbsolute(Mouse.Scroll.X, value);
-            this.delta = delta;
+            this.DeltaPrecise = delta;
         }
 
         /// <summary>
@@ -335,10 +285,6 @@ namespace OpenTK.Input
         {
         }
 
-        #endregion
-
-        #region Public Members
-
         /// <summary>
         /// Gets the value of the wheel in integer units.
         /// To support high-precision mice, it is recommended to use <see cref="ValuePrecise"/> instead.
@@ -349,7 +295,7 @@ namespace OpenTK.Input
         /// Gets the change in value of the wheel for this event in integer units.
         /// To support high-precision mice, it is recommended to use <see cref="DeltaPrecise"/> instead.
         /// </summary>
-        public int Delta { get { return (int)Math.Round(delta, MidpointRounding.AwayFromZero); } }
+        public int Delta { get { return (int)Math.Round(DeltaPrecise, MidpointRounding.AwayFromZero); } }
 
         /// <summary>
         /// Gets the precise value of the wheel in floating-point units.
@@ -362,9 +308,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets the precise change in value of the wheel for this event in floating-point units.
         /// </summary>
-        public float DeltaPrecise { get { return delta; } internal set { delta = value; } }
-
-        #endregion
+        public float DeltaPrecise { get; internal set; }
     }
 }
 

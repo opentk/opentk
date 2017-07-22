@@ -1,12 +1,11 @@
-﻿ #region License
- //
+﻿ //
  // The Open Toolkit Library License
  //
  // Copyright (c) 2006 - 2009 the Open Toolkit library.
  //
  // Permission is hereby granted, free of charge, to any person obtaining a copy
  // of this software and associated documentation files (the "Software"), to deal
- // in the Software without restriction, including without limitation the rights to 
+ // in the Software without restriction, including without limitation the rights to
  // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
  // the Software, and to permit persons to whom the Software is furnished to do
  // so, subject to the following conditions:
@@ -23,11 +22,8 @@
  // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  // OTHER DEALINGS IN THE SOFTWARE.
  //
- #endregion
 
 using System;
-using System.Collections.Specialized;
-using System.Text;
 
 namespace OpenTK.Input
 {
@@ -36,18 +32,12 @@ namespace OpenTK.Input
     /// </summary>
     public struct KeyboardState : IEquatable<KeyboardState>
     {
-        #region Fields
-
         // Allocate enough ints to store all keyboard keys
-        const int IntSize = sizeof(int) * 8;
-        const int NumInts = ((int)Key.LastKey + IntSize - 1) / IntSize;
+        private const int IntSize = sizeof(int) * 8;
+
+        private const int NumInts = ((int)Key.LastKey + IntSize - 1) / IntSize;
         // The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
-        unsafe fixed int Keys[NumInts];
-        bool is_connected;
-
-        #endregion
-
-        #region Public Members
+        private unsafe fixed int Keys[NumInts];
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the specified
@@ -139,11 +129,7 @@ namespace OpenTK.Input
         /// Gets a <see cref="System.Boolean"/> indicating whether this keyboard
         /// is connected.
         /// </summary>
-        public bool IsConnected
-        {
-            get { return is_connected; }
-            internal set { is_connected = value; }
-        }
+        public bool IsConnected { get; internal set; }
 
 #if false
         // Disabled until the correct cross-platform API can be determined.
@@ -227,15 +213,13 @@ namespace OpenTK.Input
                 {
                     int hashcode = 0;
                     for (int i = 0; i < NumInts; i++)
+                    {
                         hashcode ^= (k + i)->GetHashCode();
+                    }
                     return hashcode;
                 }
             }
         }
-
-        #endregion
-
-        #region Internal Members
 
         internal void SetKeyState(Key key, bool down)
         {
@@ -293,7 +277,9 @@ namespace OpenTK.Input
                 fixed (int* k1 = Keys)
                 {
                     for (int i = 0; i < NumInts; i++)
+                    {
                         *(k1 + i) |= *(k2 + i);
+                    }
                 }
             }
             IsConnected |= other.IsConnected;
@@ -304,19 +290,13 @@ namespace OpenTK.Input
             IsConnected = value;
         }
 
-        #endregion
-
-        #region Private Members
-
-        static void ValidateOffset(int offset)
+        private static void ValidateOffset(int offset)
         {
             if (offset < 0 || offset >= NumInts * IntSize)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
         }
-
-        #endregion
-
-        #region IEquatable<KeyboardState> Members
 
         /// <summary>
         /// Compares two KeyboardState instances.
@@ -332,12 +312,12 @@ namespace OpenTK.Input
                 fixed (int* k1 = Keys)
                 {
                     for (int i = 0; equal && i < NumInts; i++)
+                    {
                         equal &= *(k1 + i) == *(k2 + i);
+                    }
                 }
             }
             return equal;
         }
-
-        #endregion
     }
 }

@@ -1,4 +1,3 @@
-#region License
 //
 // GamePad.cs
 //
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 
@@ -47,7 +45,7 @@ namespace OpenTK.Input
         internal const int MaxAxisCount = 10;
         internal const int MaxDPadCount = 2;
 
-        static readonly IGamePadDriver driver =
+        private static readonly IGamePadDriver driver =
             Platform.Factory.Default.CreateGamePadDriver();
 
         private GamePad() { }
@@ -61,7 +59,9 @@ namespace OpenTK.Input
         public static GamePadCapabilities GetCapabilities(int index)
         {
             if (index < 0)
+            {
                 throw new IndexOutOfRangeException();
+            }
 
             return driver.GetCapabilities(index);
         }

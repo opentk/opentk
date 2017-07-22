@@ -2,11 +2,12 @@ source https://nuget.org/api/v2
 
 #Open packages
 
+nuget CommandLineParser >= 2.1.1-beta
 nuget FSharp.Formatting
 nuget FsCheck
 nuget FsCheck.Xunit
 nuget xunit.runner.console
 nuget xunit.assert
 nuget FAKE
-nuget Mono.Cecil >= 0.10.0-beta1
-nuget GtkSharp
+nuget Mono.Cecil >= 0.10.0-beta6
+nuget gtk-sharp3

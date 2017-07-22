@@ -1,17 +1,12 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Xml.XPath;
 
 namespace Bind.Structures
 {
@@ -19,21 +14,19 @@ namespace Bind.Structures
     /// Represents an opengl function.
     /// The return value, function name, function parameters and opengl version can be retrieved or set.
     /// </summary>
-    class Delegate : IComparable<Delegate>, IEquatable<Delegate>
+    internal class Delegate : IComparable<Delegate>, IEquatable<Delegate>
     {
         //internal static DelegateCollection Delegates;
 
-        bool? cls_compliance_overriden;
+        private bool? cls_compliance_overriden;
 
         protected static Regex endings = new Regex(@"((((d|f|fi)|u?[isb])_?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
         protected static Regex endingsNotToTrim = new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flag|Tess|Status|Pixels|Instanced|Indexed|Varyings|Boolean|IDs)", RegexOptions.Compiled | RegexOptions.RightToLeft);
 
         // Add a trailing v to functions matching this regex. Used to differntiate between overloads taking both
         // a 'type' and a 'ref type' (such overloads are not CLS Compliant).
-        // The default Regex matches no functions. Create a new Regex in Bind.Generator classes to override the default behavior. 
+        // The default Regex matches no functions. Create a new Regex in Bind.Generator classes to override the default behavior.
         internal static Regex endingsAddV = new Regex("^0", RegexOptions.Compiled);
-
-        #region --- Constructors ---
 
         public Delegate()
         {
@@ -57,12 +50,6 @@ namespace Bind.Structures
             Slot = d.Slot;
         }
 
-        #endregion
-
-        #region --- Properties ---
-
-        #region public bool CLSCompliant
-
         /// <summary>
         ///  Gets the CLSCompliant property. True if the delegate is not CLSCompliant.
         /// </summary>
@@ -71,18 +58,26 @@ namespace Bind.Structures
             get
             {
                 if (cls_compliance_overriden != null)
+                {
                     return (bool)cls_compliance_overriden;
+                }
 
                 if (Unsafe)
+                {
                     return false;
+                }
 
                 if (!ReturnType.CLSCompliant)
+                {
                     return false;
+                }
 
                 foreach (Parameter p in Parameters)
                 {
                     if (!p.CLSCompliant)
+                    {
                         return false;
+                    }
                 }
                 return true;
             }
@@ -92,21 +87,7 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public string Category
-
-        private string _category;
-
-        public string Category
-        {
-            get { return _category; }
-            set { _category = value; }
-        }
-
-        #endregion
-
-        #region public bool NeedsWrapper
+        public string Category { get; set; }
 
         /// <summary>
         /// Gets a value that indicates whether this function needs to be wrapped with a Marshaling function.
@@ -120,21 +101,21 @@ namespace Bind.Structures
                 // TODO: Add special cases for (Get)ShaderSource.
 
                 if (ReturnType.WrapperType != WrapperTypes.None)
+                {
                     return true;
+                }
 
                 foreach (Parameter p in Parameters)
                 {
                     if (p.WrapperType != WrapperTypes.None)
+                    {
                         return true;
+                    }
                 }
 
                 return false;
             }
         }
-
-        #endregion
-
-        #region public virtual bool Unsafe
 
         /// <summary>
         /// True if the delegate must be declared as 'unsafe'.
@@ -149,7 +130,9 @@ namespace Bind.Structures
                 //    return false;
 
                 if (ReturnType.Pointer != 0)
+                {
                     return true;
+                }
 
                 foreach (Parameter p in Parameters)
                 {
@@ -163,28 +146,12 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public Parameter ReturnType
-
-        Type _return_type = new Type();
         /// <summary>
         /// Gets or sets the return value of the opengl function.
         /// </summary>
-        public Type ReturnType
-        {
-            get { return _return_type; }
-            set
-            {
-                _return_type = value;
-            }
-        }
+        public Type ReturnType { get; set; } = new Type();
 
-        #endregion
-
-        #region public virtual string Name
-
-        string _name;
+        private string _name;
         /// <summary>
         /// Gets or sets the name of the opengl function.
         /// </summary>
@@ -200,44 +167,18 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public ParameterCollection Parameters
-
-        ParameterCollection _parameters;
-
-        public ParameterCollection Parameters
-        {
-            get { return _parameters; }
-            set { _parameters = value; }
-        }
-
-        #endregion
-
-        #region public string Version
-
-        string _version;
+        public ParameterCollection Parameters { get; set; }
 
         /// <summary>
         /// Defines the opengl version that introduced this function.
         /// </summary>
-        public string Version
-        {
-            get { return _version; }
-            set { _version = value; }
-        }
-
-        #endregion
-
-        #region public bool Extension
+        public string Version { get; set; }
 
         public string Extension
         {
             get;
             set;
         }
-
-        #endregion
 
         public bool Deprecated { get; set; }
         public string DeprecatedVersion { get; set; }
@@ -246,8 +187,6 @@ namespace Bind.Structures
 
         // Slot index in the address table
         public int Slot { get; set; }
-
-        #endregion
 
         // This method should only be used for debugging purposes, not for code generation!
         // Returns a string representing the full delegate declaration without decorations.
@@ -266,21 +205,19 @@ namespace Bind.Structures
             return sb.ToString();
         }
 
-        #region IComparable<Delegate> Members
-
         public int CompareTo(Delegate other)
         {
             int ret = Name.CompareTo(other.Name);
             if (ret == 0)
+            {
                 ret = Parameters.CompareTo(other.Parameters);
+            }
             if (ret == 0)
+            {
                 ret = ReturnType.CompareTo(other.ReturnType);
+            }
             return ret;
         }
-
-        #endregion
-
-        #region IEquatable<Delegate> Members
 
         public bool Equals(Delegate other)
         {
@@ -289,15 +226,11 @@ namespace Bind.Structures
                 Parameters.Equals(other.Parameters) &&
                 ReturnType.Equals(other.ReturnType);
         }
-
-        #endregion
     }
 
-    #region DelegateCollection
-
-    class DelegateCollection : IDictionary<string, List<Delegate>>
+    internal class DelegateCollection : IDictionary<string, List<Delegate>>
     {
-        readonly SortedDictionary<string, List<Delegate>> Delegates =
+        private readonly SortedDictionary<string, List<Delegate>> Delegates =
             new SortedDictionary<string, List<Delegate>>();
 
         public void Add(Delegate d)
@@ -348,8 +281,6 @@ namespace Bind.Structures
             }
         }
 
-        #region IDictionary Members
-
         public void Add(string key, List<Delegate> value)
         {
             Delegates.Add(key, value.ToList());
@@ -398,10 +329,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region ICollection implementation
-
         public void Add(KeyValuePair<string, List<Delegate>> item)
         {
             Delegates.Add(item.Key, item.Value.ToList());
@@ -443,26 +370,14 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region IEnumerable implementation
-
         public IEnumerator<KeyValuePair<string, List<Delegate>>> GetEnumerator()
         {
             return Delegates.GetEnumerator();
         }
 
-        #endregion
-
-        #region IEnumerable implementation
-
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return Delegates.GetEnumerator();
         }
-
-        #endregion
     }
-
-    #endregion
 }

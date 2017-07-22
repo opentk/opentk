@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2010 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -37,15 +35,13 @@ using OpenTK.Platform.Common;
 
 namespace OpenTK.Platform.Windows
 {
-    sealed class WinRawKeyboard : IKeyboardDriver2
+    internal sealed class WinRawKeyboard : IKeyboardDriver2
     {
-        readonly List<KeyboardState> keyboards = new List<KeyboardState>();
-        readonly List<string> names = new List<string>();
-        readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
-        readonly IntPtr window;
-        readonly object UpdateLock = new object();
-
-        #region Constructors
+        private readonly List<KeyboardState> keyboards = new List<KeyboardState>();
+        private readonly List<string> names = new List<string>();
+        private readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
+        private readonly IntPtr window;
+        private readonly object UpdateLock = new object();
 
         public WinRawKeyboard(IntPtr windowHandle)
         {
@@ -57,10 +53,6 @@ namespace OpenTK.Platform.Windows
 
             Debug.Unindent();
         }
-
-        #endregion
-
-        #region Public Members
 
         public void RefreshDevices()
         {
@@ -76,7 +68,9 @@ namespace OpenTK.Platform.Windows
                 int count = WinRawInput.DeviceCount;
                 RawInputDeviceList[] ridl = new RawInputDeviceList[count];
                 for (int i = 0; i < count; i++)
+                {
                     ridl[i] = new RawInputDeviceList();
+                }
                 Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
 
                 // Discover keyboard devices:
@@ -104,7 +98,9 @@ namespace OpenTK.Platform.Windows
                         // keyboard device by qeurying the registry.
                         RegistryKey regkey = GetRegistryKey(name);
                         if (regkey == null)
+                        {
                             continue;
+                        }
 
                         string deviceDesc = (string)regkey.GetValue("DeviceDesc");
                         string deviceClass = (string)regkey.GetValue("Class");
@@ -179,7 +175,9 @@ namespace OpenTK.Platform.Windows
                 }
 
                 if (keyboards.Count == 0)
+                {
                     return false;
+                }
 
                 // Note:For some reason, my Microsoft Digital 3000 keyboard reports 0
                 // as rin.Header.Device for the "zoom-in/zoom-out" buttons.
@@ -206,21 +204,21 @@ namespace OpenTK.Platform.Windows
             return processed;
         }
 
-        #endregion
-
-        #region Private Members
-
-        static RegistryKey GetRegistryKey(string name)
+        private static RegistryKey GetRegistryKey(string name)
         {
             if (name.Length < 4)
+            {
                 return null;
+            }
 
             // remove the \??\
             name = name.Substring(4);
 
             string[] split = name.Split('#');
             if (split.Length < 3)
+            {
                 return null;
+            }
 
             string id_01 = split[0];    // ACPI (Class code)
             string id_02 = split[1];    // PNP0303 (SubClass code)
@@ -235,7 +233,7 @@ namespace OpenTK.Platform.Windows
             return regkey;
         }
 
-        static string GetDeviceName(RawInputDeviceList dev)
+        private static string GetDeviceName(RawInputDeviceList dev)
         {
             int size = 0;
             Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size);
@@ -246,7 +244,7 @@ namespace OpenTK.Platform.Windows
             return name;
         }
 
-        static void RegisterKeyboardDevice(IntPtr window, string name)
+        private static void RegisterKeyboardDevice(IntPtr window, string name)
         {
             RawInputDevice[] rid = new RawInputDevice[]
             {
@@ -263,10 +261,6 @@ namespace OpenTK.Platform.Windows
                 Debug.Print("Registered keyboard {0}", name);
             }
         }
-
-        #endregion
-
-        #region IKeyboardDriver2 Members
 
         public KeyboardState GetState()
         {
@@ -286,9 +280,13 @@ namespace OpenTK.Platform.Windows
             lock (UpdateLock)
             {
                 if (keyboards.Count > index)
+                {
                     return keyboards[index];
+                }
                 else
+                {
                     return new KeyboardState();
+                }
             }
         }
 
@@ -297,12 +295,14 @@ namespace OpenTK.Platform.Windows
             lock (UpdateLock)
             {
                 if (names.Count > index)
+                {
                     return names[index];
+                }
                 else
+                {
                     return String.Empty;
+                }
             }
         }
-
-        #endregion
     }
 }

@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // NSApplicationPresentationOptions.cs
 //
 // Author:
@@ -25,11 +24,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 namespace OpenTK.Platform.MacOS
 {
-    enum NSApplicationPresentationOptions
+    internal enum NSApplicationPresentationOptions
     {
         Default = 0,
         AutoHideDock = 1,

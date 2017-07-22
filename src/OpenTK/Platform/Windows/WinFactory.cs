@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,31 +22,26 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
-
 using OpenTK.Graphics;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
 {
-
-    class WinFactory : PlatformFactoryBase
+    internal class WinFactory : PlatformFactoryBase
     {
-        readonly object SyncRoot = new object();
+        private readonly object SyncRoot = new object();
 
         // The input drivers must be constructed lazily, *after* the
         // WinFactory constructor has finished running. The reason is
         // that they call WinFactory methods internally.
-        WinRawInput rawinput_driver; // For keyboard and mouse input
+        private WinRawInput rawinput_driver; // For keyboard and mouse input
 
         internal static IntPtr OpenGLHandle { get; private set; }
-        const string OpenGLName = "OPENGL32.DLL";
+        private const string OpenGLName = "OPENGL32.DLL";
 
         public WinFactory()
         {
@@ -73,7 +67,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        static void LoadOpenGL()
+        private static void LoadOpenGL()
         {
             OpenGLHandle = Functions.LoadLibrary(OpenGLName);
             if (OpenGLHandle == IntPtr.Zero)
@@ -83,8 +77,6 @@ namespace OpenTK.Platform.Windows
             }
             Debug.WriteLine(String.Format("Loaded opengl32.dll: {0}", OpenGLHandle));
         }
-
-        #region IPlatformFactory Members
 
         public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
@@ -134,11 +126,7 @@ namespace OpenTK.Platform.Windows
             return RawInputDriver.JoystickDriver;
         }
 
-        #endregion
-
-        #region Private Members
-
-        WinRawInput RawInputDriver
+        private WinRawInput RawInputDriver
         {
             get
             {
@@ -152,10 +140,6 @@ namespace OpenTK.Platform.Windows
                 }
             }
         }
-
-        #endregion
-
-        #region IDisposable Members
 
         protected override void Dispose(bool manual)
         {
@@ -174,7 +158,5 @@ namespace OpenTK.Platform.Windows
                 base.Dispose(manual);
             }
         }
-
-        #endregion
     }
 }

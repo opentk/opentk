@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library, except where noted.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,31 +22,47 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 using OpenTK.Graphics;
 
 namespace OpenTK
 {
     // Constructs GLControls.
-    class GLControlFactory
+    internal class GLControlFactory
     {
         public IGLControl CreateGLControl(GraphicsMode mode, Control control)
         {
             if (mode == null)
+            {
                 throw new ArgumentNullException("mode");
+            }
             if (control == null)
+            {
                 throw new ArgumentNullException("control");
+            }
 
-            if (Configuration.RunningOnSdl2) return new Sdl2GLControl(mode, control);
-            else if (Configuration.RunningOnWindows) return new WinGLControl(mode, control);
-            else if (Configuration.RunningOnMacOS) return new CarbonGLControl(mode, control);
-            else if (Configuration.RunningOnX11) return new X11GLControl(mode, control);
-            else throw new PlatformNotSupportedException();
+            if (Configuration.RunningOnSdl2)
+            {
+                return new Sdl2GLControl(mode, control);
+            }
+            else if (Configuration.RunningOnWindows)
+            {
+                return new WinGLControl(mode, control);
+            }
+            else if (Configuration.RunningOnMacOS)
+            {
+                return new CarbonGLControl(mode, control);
+            }
+            else if (Configuration.RunningOnX11)
+            {
+                return new X11GLControl(mode, control);
+            }
+            else
+            {
+                throw new PlatformNotSupportedException();
+            }
         }
     }
 }

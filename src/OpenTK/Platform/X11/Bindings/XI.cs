@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2014 Stefanos Apostolopoulos for the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,12 +22,9 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace OpenTK.Platform.X11
 {
@@ -40,9 +36,9 @@ namespace OpenTK.Platform.X11
     using Window = IntPtr;
 
     // Bindings for the XInput2 extension
-    class XI
+    internal class XI
     {
-        const string lib = "libXi";
+        private const string lib = "libXi";
 
         internal const int XIAllDevices = 0;
         internal const int XIAllMasterDevices = 1;
@@ -81,10 +77,10 @@ namespace OpenTK.Platform.X11
         internal static readonly IntPtr AbsoluteDistance = Functions.XInternAtom(API.DefaultDisplay, "Abs Distance", false);
 
         [DllImport(lib, EntryPoint = "XISelectEvents")]
-        static extern int SelectEvents(IntPtr dpy, Window win, [In] XIEventMask[] masks, int num_masks);
-        
+        private static extern int SelectEvents(IntPtr dpy, Window win, [In] XIEventMask[] masks, int num_masks);
+
         [DllImport(lib, EntryPoint = "XISelectEvents")]
-        static extern int SelectEvents(IntPtr dpy, Window win, [In] ref XIEventMask masks, int num_masks);
+        private static extern int SelectEvents(IntPtr dpy, Window win, [In] ref XIEventMask masks, int num_masks);
 
         public static int SelectEvents(IntPtr dpy, Window win, XIEventMask[] masks)
         {
@@ -97,11 +93,11 @@ namespace OpenTK.Platform.X11
         }
 
         [DllImport(lib, EntryPoint = "XIGrabDevice")]
-        static extern Status GrabDevice(IntPtr display, int deviceid, Window grab_window, Time time,
+        private static extern Status GrabDevice(IntPtr display, int deviceid, Window grab_window, Time time,
             Cursor cursor, int grab_mode, int paired_device_mode, Bool owner_events, XIEventMask[] mask);
 
         [DllImport(lib, EntryPoint = "XIUngrabDevice")]
-        static extern Status UngrabDevice(IntPtr display, int deviceid, Time time);
+        private static extern Status UngrabDevice(IntPtr display, int deviceid, Time time);
 
         [DllImport(lib, EntryPoint = "XIWarpPointer")]
         public static extern Bool XIWarpPointer(Display display,
@@ -128,7 +124,7 @@ namespace OpenTK.Platform.X11
         internal static extern Status QueryVersion(Display display, ref int major, ref int minor);
     }
 
-    enum XIDeviceType
+    internal enum XIDeviceType
     {
         MasterPointer = 1,
         MasterKeyboard = 2,
@@ -137,7 +133,7 @@ namespace OpenTK.Platform.X11
         FloatingSlave = 5,
     }
 
-    enum XIMode
+    internal enum XIMode
     {
         Relative = 0,
         Absolute = 1

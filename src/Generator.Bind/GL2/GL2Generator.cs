@@ -1,4 +1,3 @@
-#region License
 //
 // GL2Generator.cs
 //
@@ -25,15 +24,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
-using System;
 using System.IO;
 
 namespace Bind.GL2
 {
-
-    class GL2Generator : Generator
+    internal class GL2Generator : Generator
     {
         public GL2Generator(Settings settings)
             : base(settings)

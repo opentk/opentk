@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,14 +22,13 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Egl
 {
-    class EglGraphicsMode
+    internal class EglGraphicsMode
     {
         public GraphicsMode SelectGraphicsMode(EglWindowInfo window,
             GraphicsMode mode, RenderableFlags flags)
@@ -47,24 +45,24 @@ namespace OpenTK.Platform.Egl
             RenderableFlags renderableFlags)
         {
             return SelectGraphicsMode(
-                SurfaceType.WINDOW_BIT, 
+                SurfaceType.WINDOW_BIT,
                 window.Display,
                 color, depth, stencil, samples, accum, buffers, stereo, renderableFlags);
         }
 
-        public GraphicsMode SelectGraphicsMode(SurfaceType surfaceType, 
+        public GraphicsMode SelectGraphicsMode(SurfaceType surfaceType,
             IntPtr display, ColorFormat color, int depth, int stencil,
             int samples, ColorFormat accum, int buffers, bool stereo,
             RenderableFlags renderableFlags)
         {
             IntPtr[] configs = new IntPtr[1];
-            int[] attribList = new int[] 
-            { 
+            int[] attribList = new int[]
+            {
                 Egl.SURFACE_TYPE, (int) surfaceType,
                 Egl.RENDERABLE_TYPE, (int)renderableFlags,
 
-                Egl.RED_SIZE, color.Red, 
-                Egl.GREEN_SIZE, color.Green, 
+                Egl.RED_SIZE, color.Red,
+                Egl.GREEN_SIZE, color.Green,
                 Egl.BLUE_SIZE, color.Blue,
                 Egl.ALPHA_SIZE, color.Alpha,
 

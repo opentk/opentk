@@ -1,23 +1,16 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * Contributions from Erik Ylvisaker
  * See license.txt for license info
  */
-#endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
-using System.Security;
 
 #pragma warning disable 1591
 
 namespace OpenTK.Platform.X11
 {
-    #region Enums
-
-    enum GLXAttribute : int
+    public enum GLXAttribute : int
     {
         TRANSPARENT_BLUE_VALUE_EXT = 0x27,
         GRAY_SCALE = 0x8006,
@@ -138,7 +131,7 @@ namespace OpenTK.Platform.X11
         MAX_SWAP_INTERVAL_EXT = 0x20F2,
     }
 
-    enum GLXHyperpipeAttrib : int
+    internal enum GLXHyperpipeAttrib : int
     {
         PIPE_RECT_LIMITS_SGIX = 0x00000002,
         PIPE_RECT_SGIX = 0x00000001,
@@ -146,20 +139,20 @@ namespace OpenTK.Platform.X11
         HYPERPIPE_PIXEL_AVERAGE_SGIX = 0x00000004,
     }
 
-    enum GLXStringName : int
+    internal enum GLXStringName : int
     {
         EXTENSIONS = 0x3,
         VERSION = 0x2,
         VENDOR = 0x1,
     }
 
-    enum GLXEventMask : int
+    internal enum GLXEventMask : int
     {
         PBUFFER_CLOBBER_MASK = 0x08000000,
         BUFFER_CLOBBER_MASK_SGIX = 0x08000000,
     }
 
-    enum GLXRenderTypeMask : int
+    internal enum GLXRenderTypeMask : int
     {
         COLOR_INDEX_BIT_SGIX = 0x00000002,
         RGBA_BIT = 0x00000001,
@@ -168,13 +161,13 @@ namespace OpenTK.Platform.X11
         COLOR_INDEX_BIT = 0x00000002,
     }
 
-    enum GLXHyperpipeTypeMask : int
+    internal enum GLXHyperpipeTypeMask : int
     {
         HYPERPIPE_RENDER_PIPE_SGIX = 0x00000002,
         HYPERPIPE_DISPLAY_PIPE_SGIX = 0x00000001,
     }
 
-    enum GLXPbufferClobberMask : int
+    internal enum GLXPbufferClobberMask : int
     {
         ACCUM_BUFFER_BIT_SGIX = 0x00000080,
         FRONT_LEFT_BUFFER_BIT = 0x00000001,
@@ -195,12 +188,12 @@ namespace OpenTK.Platform.X11
         FRONT_RIGHT_BUFFER_BIT = 0x00000002,
     }
 
-    enum GLXHyperpipeMisc : int
+    internal enum GLXHyperpipeMisc : int
     {
         HYPERPIPE_PIPE_NAME_LENGTH_SGIX = 80,
     }
 
-    enum GLXErrorCode : int
+    internal enum GLXErrorCode : int
     {
         BAD_CONTEXT = 5,
         NO_EXTENSION = 3,
@@ -213,13 +206,13 @@ namespace OpenTK.Platform.X11
         BAD_HYPERPIPE_CONFIG_SGIX = 91,
     }
 
-    enum GLXSyncType : int
+    internal enum GLXSyncType : int
     {
         SYNC_SWAP_SGIX = 0x00000001,
         SYNC_FRAME_SGIX = 0x00000000,
     }
 
-    enum GLXDrawableTypeMask : int
+    internal enum GLXDrawableTypeMask : int
     {
         WINDOW_BIT = 0x00000001,
         PIXMAP_BIT = 0x00000002,
@@ -229,7 +222,7 @@ namespace OpenTK.Platform.X11
         PIXMAP_BIT_SGIX = 0x00000002,
     }
 
-    enum ArbCreateContext : int
+    internal enum ArbCreateContext : int
     {
         DebugBit = 0x0001,
         ForwardCompatibleBit = 0x0002,
@@ -243,7 +236,7 @@ namespace OpenTK.Platform.X11
         ProfileMask = 0x9126
     }
 
-    enum ErrorCode : int
+    internal enum ErrorCode : int
     {
         NO_ERROR       = 0,
         BAD_SCREEN     = 1,   /* screen # is bad */
@@ -255,18 +248,16 @@ namespace OpenTK.Platform.X11
         BAD_ENUM       = 7,   /* unused? */
     }
 
-    #endregion
-
     /// \internal
     /// <summary>
     /// Provides access to GLX functions.
     /// </summary>
-    class Glx : Graphics.GraphicsBindingsBase
+    internal class Glx : Graphics.GraphicsBindingsBase
     {
-        const string Library = "libGL.so.1";
-        static readonly object sync_root = new object();
+        private const string Library = "libGL.so.1";
+        private static readonly object sync_root = new object();
 
-        static readonly byte[] EntryPointNames = new byte[]
+        private static readonly byte[] EntryPointNames = new byte[]
         {
             // glXCreateContextAttribsARB
             0x67, 0x6c, 0x58, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x41, 0x74, 0x74, 0x72, 0x69, 0x62, 0x73, 0x41, 0x52, 0x42, 0,
@@ -279,8 +270,9 @@ namespace OpenTK.Platform.X11
             // glXSwapIntervalSGI
             0x67, 0x6c, 0x58, 0x53, 0x77, 0x61, 0x70, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x53, 0x47, 0x49, 0,
         };
-        static readonly int[] EntryPointOffsets = new int[5];
-        static IntPtr[] EntryPoints = new IntPtr[5];
+
+        private static readonly int[] EntryPointOffsets = new int[5];
+        private static IntPtr[] EntryPoints = new IntPtr[5];
 
         internal Glx()
         {
@@ -337,8 +329,6 @@ namespace OpenTK.Platform.X11
             return false;
         }
 
-        #region GLX functions
-
         [DllImport(Library, EntryPoint = "glXIsDirect")]
         public static extern bool IsDirect(IntPtr dpy, IntPtr context);
 
@@ -349,7 +339,7 @@ namespace OpenTK.Platform.X11
         public static extern bool QueryExtension(IntPtr dpy, out int errorBase, out int eventBase);
 
         [DllImport(Library, EntryPoint = "glXQueryExtensionsString")]
-        static extern IntPtr QueryExtensionsStringInternal(IntPtr dpy, int screen);
+        private static extern IntPtr QueryExtensionsStringInternal(IntPtr dpy, int screen);
 
         public static string QueryExtensionsString(IntPtr dpy, int screen)
         {
@@ -364,7 +354,7 @@ namespace OpenTK.Platform.X11
 
         [DllImport(Library, EntryPoint = "glXCreateContext")]
         public static extern IntPtr CreateContext(IntPtr dpy, ref XVisualInfo vis, IntPtr shareList, bool direct);
-    
+
         [DllImport(Library, EntryPoint = "glXDestroyContext")]
         public static extern void DestroyContext(IntPtr dpy, IntPtr context);
 
@@ -396,8 +386,6 @@ namespace OpenTK.Platform.X11
         [DllImport(Library, EntryPoint = "glXGetConfig")]
         public static extern int GetConfig(IntPtr dpy, ref XVisualInfo vis, GLXAttribute attrib, out int value);
 
-        #region glXChooseVisual
-
         [DllImport(Library, EntryPoint = "glXChooseVisual")]
         public extern static IntPtr ChooseVisual(IntPtr dpy, int screen, IntPtr attriblist);
 
@@ -423,12 +411,8 @@ namespace OpenTK.Platform.X11
         [DllImport(Library, EntryPoint = "glXGetVisualFromFBConfig")]
         public unsafe extern static IntPtr GetVisualFromFBConfig(IntPtr dpy, IntPtr fbconfig);
 
-        #endregion
-
         public partial class Arb
         {
-            #region CreateContextAttribs
-
             [AutoGenerated(EntryPoint = "glXCreateContextAttribsARB")]
             unsafe public static IntPtr CreateContextAttribs(IntPtr display, IntPtr fbconfig, IntPtr share_context, bool direct, int* attribs)
             {
@@ -441,10 +425,6 @@ namespace OpenTK.Platform.X11
                 throw new NotImplementedException();
             }
 
-            #endregion
-
-            #region GetProcAddress
-
             // The linux OpenGL ABI 3.6 (1999) requires
             // that glXGetProcAddressARB be available as
             // a static export. The same is *not* true
@@ -456,8 +436,6 @@ namespace OpenTK.Platform.X11
 
             [DllImport(Library, EntryPoint = "glXGetProcAddressARB")]
             public static extern IntPtr GetProcAddress(IntPtr procName);
-
-            #endregion
         }
 
         public partial class Ext
@@ -508,8 +486,6 @@ namespace OpenTK.Platform.X11
         [Slot(4)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         internal static extern ErrorCode glXSwapIntervalSGI(int interval);
-
-        #endregion
     }
 }
 

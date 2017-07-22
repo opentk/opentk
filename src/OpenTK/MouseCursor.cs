@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // Cursor.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 
@@ -36,14 +34,7 @@ namespace OpenTK
     /// </summary>
     public sealed class MouseCursor : WindowIcon
     {
-        static readonly MouseCursor default_cursor = new MouseCursor();
-        static readonly MouseCursor empty_cursor = new MouseCursor(
-            0, 0, 16, 16, new byte[16 * 16 * 4]);
-
-        int x;
-        int y;
-
-        MouseCursor()
+        private MouseCursor()
         {
         }
 
@@ -71,10 +62,12 @@ namespace OpenTK
             : base(width, height, data)
         {
             if (hotx < 0 || hotx >= Width || hoty < 0 || hoty >= Height)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
-            x = hotx;
-            y = hoty;
+            X = hotx;
+            Y = hoty;
         }
 
         /// <summary>
@@ -100,36 +93,27 @@ namespace OpenTK
             : base(width, height, data)
         {
             if (hotx < 0 || hotx >= Width || hoty < 0 || hoty >= Height)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
-            x = hotx;
-            y = hoty;
+            X = hotx;
+            Y = hoty;
         }
 
-        internal int X { get { return x; } }
-        internal int Y { get { return y; } }
+        internal int X { get; }
+        internal int Y { get; }
 
         /// <summary>
         /// Gets the default mouse cursor for this platform.
         /// </summary>
-        public static MouseCursor Default
-        {
-            get
-            {
-                return default_cursor;
-            }
-        }
+        public static MouseCursor Default { get; } = new MouseCursor();
 
         /// <summary>
         /// Gets an empty (invisible) mouse cursor.
         /// </summary>
-        public static MouseCursor Empty
-        {
-            get
-            {
-                return empty_cursor;
-            }
-        }
+        public static MouseCursor Empty { get; } = new MouseCursor(
+            0, 0, 16, 16, new byte[16 * 16 * 4]);
     }
 }
 

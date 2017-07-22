@@ -1,13 +1,9 @@
-﻿#region --- OpenTK.OpenAL License ---
-/* AlTokens.cs
+﻿/* AlTokens.cs
  * C header: \OpenAL 1.1 SDK\include\Al.h
  * Spec: http://www.openal.org/openal_webstf/specs/OpenAL11Specification.pdf
  * Copyright (c) 2008 Christoph Brandtner and Stefanos Apostolopoulos
  * See license.txt for license details
  * http://www.OpenTK.net */
-#endregion
-
-using System;
 
 namespace OpenTK.Audio.OpenAL
 {

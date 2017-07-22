@@ -1,37 +1,30 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  *
  * Date: 12/8/2007
  * Time: 6:43 ��
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Reflection;
-using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Windows
 {
     internal partial class Wgl
     {
-        static IntPtr[] EntryPoints;
-        static string[] EntryPointNames;
+        private static IntPtr[] EntryPoints;
+        private static string[] EntryPointNames;
 
         internal const string Library = "OPENGL32.DLL";
 
-        readonly static Dictionary<string, bool> extensions =
+        private readonly static Dictionary<string, bool> extensions =
             new Dictionary<string, bool>();
 
-        static readonly object sync = new object();
+        private static readonly object sync = new object();
 
         public Wgl()
         {
         }
-
-        #region Public Members
 
         public static bool SupportsExtension(string name)
         {
@@ -96,16 +89,12 @@ namespace OpenTK.Platform.Windows
             return false;
         }
 
-        #endregion
-
-        #region Protected Members
-
-        object SyncRoot
+        private object SyncRoot
         {
             get { return sync; }
         }
 
-        IntPtr GetAddress(string function_string)
+        private IntPtr GetAddress(string function_string)
         {
             IntPtr address = Wgl.GetProcAddress(function_string);
             if (!IsValid(address))
@@ -115,21 +104,13 @@ namespace OpenTK.Platform.Windows
             return address;
         }
 
-        #endregion
-
-        #region Private Members
-
-        static bool IsValid(IntPtr address)
+        private static bool IsValid(IntPtr address)
         {
             // See https://www.opengl.org/wiki/Load_OpenGL_Functions
             long a = address.ToInt64();
             bool is_valid = (a < -1) || (a > 3);
             return is_valid;
         }
-
-        #endregion
-
-        #region Internal Members
 
         internal void LoadEntryPoints()
         {
@@ -145,7 +126,5 @@ namespace OpenTK.Platform.Windows
                 }
             }
         }
-
-        #endregion
     }
 }

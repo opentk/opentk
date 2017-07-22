@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // NSOpenGLProfile.cs
 //
 // Author:
@@ -25,11 +24,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 namespace OpenTK.Platform.MacOS
 {
-    enum NSOpenGLProfile
+    internal enum NSOpenGLProfile
     {
         VersionLegacy = 4096,
         Version3_2Core = 12800,

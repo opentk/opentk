@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,11 +22,9 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -35,9 +32,9 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Windows
 {
-    class WinGraphicsMode : IGraphicsMode
+    internal class WinGraphicsMode : IGraphicsMode
     {
-        enum AccelerationType
+        private enum AccelerationType
         {
             // Software acceleration
             None = 0,
@@ -47,21 +44,17 @@ namespace OpenTK.Platform.Windows
             ICD,
         }
 
-        readonly IntPtr Device;
-
-        #region Constructors
+        private readonly IntPtr Device;
 
         public WinGraphicsMode(IntPtr device)
         {
             if (device == IntPtr.Zero)
+            {
                 throw new ArgumentException();
+            }
 
             Device = device;
         }
-
-        #endregion
-
-        #region IGraphicsMode Members
 
         public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples,
             ColorFormat accum, int buffers, bool stereo)
@@ -83,18 +76,12 @@ namespace OpenTK.Platform.Windows
             return created_mode;
         }
 
-        #endregion
-
-        #region Private Methods
-
-        #region ChoosePixelFormatARB
-
         // Queries pixel formats through the WGL_ARB_pixel_format extension
         // This method only returns accelerated formats. If no format offers
         // hardware acceleration (e.g. we are running in a VM or in a remote desktop
         // connection), this method will return 0 formats and we will fall back to
         // ChoosePixelFormatPFD.
-        GraphicsMode ChoosePixelFormatARB(IntPtr device, GraphicsMode desired_mode)
+        private GraphicsMode ChoosePixelFormatARB(IntPtr device, GraphicsMode desired_mode)
         {
             GraphicsMode created_mode = null;
             GraphicsMode mode = new GraphicsMode(desired_mode);
@@ -220,11 +207,7 @@ namespace OpenTK.Platform.Windows
             return created_mode;
         }
 
-        #endregion
-
-        #region ChoosePixelFormatPFD
-
-        static bool Compare(int got, int requested, ref int distance)
+        private static bool Compare(int got, int requested, ref int distance)
         {
             bool valid = true;
             if (got == 0 && requested != 0)
@@ -253,7 +236,7 @@ namespace OpenTK.Platform.Windows
             return valid;
         }
 
-        static AccelerationType GetAccelerationType(ref PixelFormatDescriptor pfd)
+        private static AccelerationType GetAccelerationType(ref PixelFormatDescriptor pfd)
         {
             AccelerationType type = AccelerationType.ICD;
             if ((pfd.Flags & PixelFormatDescriptorFlags.GENERIC_FORMAT) != 0)
@@ -270,7 +253,7 @@ namespace OpenTK.Platform.Windows
             return type;
         }
 
-        GraphicsMode ChoosePixelFormatPFD(IntPtr device, GraphicsMode mode, AccelerationType requested_acceleration_type)
+        private GraphicsMode ChoosePixelFormatPFD(IntPtr device, GraphicsMode mode, AccelerationType requested_acceleration_type)
         {
             PixelFormatDescriptor pfd = new PixelFormatDescriptor();
             PixelFormatDescriptorFlags flags = 0;
@@ -309,7 +292,9 @@ namespace OpenTK.Platform.Windows
                 valid &= pfd.PixelType == PixelType.RGBA; // indexed modes not currently supported
                 // heavily penalize single-buffered modes when the user requests double buffering
                 if ((pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) == 0 && mode.Buffers > 1)
+                {
                     dist += 1000;
+                }
                 valid &= Compare(pfd.ColorBits, mode.ColorFormat.BitsPerPixel, ref dist);
                 valid &= Compare(pfd.RedBits, mode.ColorFormat.Red, ref dist);
                 valid &= Compare(pfd.GreenBits, mode.ColorFormat.Green, ref dist);
@@ -333,11 +318,7 @@ namespace OpenTK.Platform.Windows
             return DescribePixelFormatPFD(device, ref pfd, best);
         }
 
-        #endregion
-
-        #region DescribePixelFormatPFD
-
-        static GraphicsMode DescribePixelFormatPFD(IntPtr device, ref PixelFormatDescriptor pfd,
+        private static GraphicsMode DescribePixelFormatPFD(IntPtr device, ref PixelFormatDescriptor pfd,
             int pixelformat)
         {
             GraphicsMode created_mode = null;
@@ -356,11 +337,7 @@ namespace OpenTK.Platform.Windows
             return created_mode;
         }
 
-        #endregion
-
-        #region DescribePixelFormatARB
-
-        GraphicsMode DescribePixelFormatARB(IntPtr device, int pixelformat)
+        private GraphicsMode DescribePixelFormatARB(IntPtr device, int pixelformat)
         {
             GraphicsMode created_mode = null;
             // See http://www.opengl.org/registry/specs/ARB/wgl_pixel_format.txt for more details
@@ -377,10 +354,10 @@ namespace OpenTK.Platform.Windows
                     (int)WGL_ARB_pixel_format.BlueBitsArb,
                     (int)WGL_ARB_pixel_format.AlphaBitsArb,
                     (int)WGL_ARB_pixel_format.ColorBitsArb,
-                    
+
                     (int)WGL_ARB_pixel_format.DepthBitsArb,
                     (int)WGL_ARB_pixel_format.StencilBitsArb,
-                    
+
                     (int)WGL_ARB_multisample.SampleBuffersArb,
                     (int)WGL_ARB_multisample.SamplesArb,
 
@@ -421,9 +398,5 @@ namespace OpenTK.Platform.Windows
             }
             return created_mode;
         }
-
-        #endregion
-
-        #endregion
     }
 }

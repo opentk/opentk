@@ -1,27 +1,18 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Xml.XPath;
 using Bind.Structures;
-using Delegate=Bind.Structures.Delegate;
-using Enum=Bind.Structures.Enum;
-using Type=Bind.Structures.Type;
 
 namespace Bind.GL2
 {
-    abstract class Generator : IBind
+    internal abstract class Generator : IBind
     {
-        #region Fields
-
         protected string glTypemap = "GL2/gl.tm";
         protected string csTypemap = "csharp.tm";
         protected string enumSpec = "GL2/enum.spec";
@@ -56,14 +47,12 @@ namespace Bind.GL2
 
         public Settings Settings { get; protected set; }
 
-        #endregion
-
-        #region Constructors
-
         public Generator(Settings settings)
         {
             if (settings == null)
+            {
                 throw new ArgumentNullException("settings");
+            }
 
             Settings = settings.Clone();
 
@@ -86,11 +75,7 @@ namespace Bind.GL2
             SpecReader = new XmlSpecReader(Settings);
         }
 
-        #endregion
-
-        #region Private Members
-
-        IEnumerable<string> GetFiles(string path)
+        private IEnumerable<string> GetFiles(string path)
         {
             path = Path.Combine(Settings.InputPath, path);
             if ((File.GetAttributes(path) & FileAttributes.Directory) != 0)
@@ -106,10 +91,6 @@ namespace Bind.GL2
                 yield return path;
             }
         }
-
-        #endregion
-
-        #region IBind Members
 
         public DelegateCollection Delegates { get; private set; }
         public EnumCollection Enums { get; private set; }
@@ -146,7 +127,5 @@ namespace Bind.GL2
             Wrappers = func_processor.Process(enum_processor, doc_processor,
                 Delegates, Enums, Profile, Version);
         }
-
-        #endregion
     }
 }

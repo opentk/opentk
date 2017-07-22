@@ -1,4 +1,3 @@
-#region License
 //
 // GamePadConfigurationTarget.cs
 //
@@ -25,17 +24,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 
 namespace OpenTK.Input
 {
-    struct GamePadConfigurationTarget
+    internal struct GamePadConfigurationTarget
     {
-        ConfigurationType map_type;
-        Nullable<Buttons> map_button;
-        Nullable<GamePadAxes> map_axis;
+        private Nullable<Buttons> map_button;
+        private Nullable<GamePadAxes> map_axis;
 
         public GamePadConfigurationTarget(Buttons button)
             : this()
@@ -51,11 +48,7 @@ namespace OpenTK.Input
             map_axis = axis;
         }
 
-        public ConfigurationType Type
-        {
-            get { return map_type; }
-            private set { map_type = value; }
-        }
+        public ConfigurationType Type { get; private set; }
 
         public GamePadAxes Axis
         {

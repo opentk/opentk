@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,11 +22,9 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 #if !MINIMAL
 using System.Drawing;
 #endif
@@ -43,25 +40,18 @@ namespace OpenTK
         // TODO: Add properties that describe the 'usable' size of the Display, i.e. the maximized size without the taskbar etc.
         // TODO: Does not detect changes to primary device.
 
-        #region Fields
+        private bool primary;
+        private Rectangle bounds;
+        private DisplayResolution current_resolution = new DisplayResolution();
+        private List<DisplayResolution> available_resolutions = new List<DisplayResolution>();
+        private IList<DisplayResolution> available_resolutions_readonly;
 
-        bool primary;
-        Rectangle bounds;
-        DisplayResolution current_resolution = new DisplayResolution();
-        DisplayResolution original_resolution;
-        List<DisplayResolution> available_resolutions = new List<DisplayResolution>();
-        IList<DisplayResolution> available_resolutions_readonly;
-        
         internal object Id; // A platform-specific id for this monitor
 
-        static readonly object display_lock = new object();
-        static DisplayDevice primary_display;
+        private static readonly object display_lock = new object();
+        private static DisplayDevice primary_display;
 
-        static Platform.IDisplayDeviceDriver implementation;
-
-        #endregion
-
-        #region Constructors
+        private static Platform.IDisplayDeviceDriver implementation;
 
         static DisplayDevice()
         {
@@ -88,12 +78,6 @@ namespace OpenTK
             this.Id = id;
         }
 
-        #endregion
-
-        #region --- Public Methods ---
-
-        #region public Rectangle Bounds
-
         /// <summary>
         /// Gets the bounds of this instance in pixel coordinates..
         /// </summary>
@@ -108,23 +92,11 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region public int Width
-
         /// <summary>Gets a System.Int32 that contains the width of this display in pixels.</summary>
         public int Width { get { return current_resolution.Width; } }
 
-        #endregion
-
-        #region public int Height
-
         /// <summary>Gets a System.Int32 that contains the height of this display in pixels.</summary>
         public int Height { get { return current_resolution.Height; } }
-
-        #endregion
-
-        #region public int BitsPerPixel
 
         /// <summary>Gets a System.Int32 that contains number of bits per pixel of this display. Typical values include 8, 16, 24 and 32.</summary>
         public int BitsPerPixel
@@ -132,10 +104,6 @@ namespace OpenTK
             get { return current_resolution.BitsPerPixel; }
             internal set { current_resolution.BitsPerPixel = value; }
         }
-
-        #endregion
-
-        #region public float RefreshRate
 
         /// <summary>
         /// Gets a System.Single representing the vertical refresh rate of this display.
@@ -146,10 +114,6 @@ namespace OpenTK
             internal set { current_resolution.RefreshRate = value; }
         }
 
-        #endregion
-
-        #region public bool IsPrimary
-
         /// <summary>Gets a System.Boolean that indicates whether this Display is the primary Display in systems with multiple Displays.</summary>
         public bool IsPrimary
         {
@@ -157,20 +121,20 @@ namespace OpenTK
             internal set
             {
                 if (value && primary_display != null && primary_display != this)
+                {
                     primary_display.IsPrimary = false;
+                }
 
                 lock (display_lock)
                 {
                     primary = value;
                     if (value)
+                    {
                         primary_display = this;
+                    }
                 }
             }
         }
-
-        #endregion
-
-        #region public DisplayResolution SelectResolution(int width, int height, int bitsPerPixel, float refreshRate)
 
         /// <summary>
         /// Selects an available resolution that matches the specified parameters.
@@ -192,17 +156,19 @@ namespace OpenTK
         {
             DisplayResolution resolution = FindResolution(width, height, bitsPerPixel, refreshRate);
             if (resolution == null)
+            {
                 resolution = FindResolution(width, height, bitsPerPixel, 0);
+            }
             if (resolution == null)
+            {
                 resolution = FindResolution(width, height, 0, 0);
+            }
             if (resolution == null)
+            {
                 return current_resolution;
+            }
             return resolution;
         }
-
-        #endregion
-
-        #region public IList<DisplayResolution> AvailableResolutions
 
         /// <summary>
         /// Gets the list of <see cref="DisplayResolution"/> objects available on this device.
@@ -217,10 +183,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region public void ChangeResolution(DisplayResolution resolution)
-
         /// <summary>Changes the resolution of the DisplayDevice.</summary>
         /// <param name="resolution">The resolution to set. <see cref="DisplayDevice.SelectResolution"/></param>
         /// <exception cref="Graphics.GraphicsModeException">Thrown if the requested resolution could not be set.</exception>
@@ -228,28 +190,33 @@ namespace OpenTK
         public void ChangeResolution(DisplayResolution resolution)
         {
             if (resolution == null)
+            {
                 this.RestoreResolution();
+            }
 
             if (resolution == current_resolution)
+            {
                 return;
+            }
 
             //effect.FadeOut();
 
             if (implementation.TryChangeResolution(this, resolution))
             {
-                if (original_resolution == null)
-                    original_resolution = current_resolution;
+                if (OriginalResolution == null)
+                {
+                    OriginalResolution = current_resolution;
+                }
                 current_resolution = resolution;
             }
-            else throw new Graphics.GraphicsModeException(String.Format("Device {0}: Failed to change resolution to {1}.",
+            else
+            {
+                throw new Graphics.GraphicsModeException(String.Format("Device {0}: Failed to change resolution to {1}.",
                     this, resolution));
+            }
 
             //effect.FadeIn();
         }
-
-        #endregion
-
-        #region public void ChangeResolution(int width, int height, int bitsPerPixel, float refreshRate)
 
         /// <summary>Changes the resolution of the DisplayDevice.</summary>
         /// <param name="width">The new width of the DisplayDevice.</param>
@@ -262,67 +229,33 @@ namespace OpenTK
             this.ChangeResolution(this.SelectResolution(width, height, bitsPerPixel, refreshRate));
         }
 
-        #endregion
-
-        #region public void RestoreResolution()
-
         /// <summary>Restores the original resolution of the DisplayDevice.</summary>
         /// <exception cref="Graphics.GraphicsModeException">Thrown if the original resolution could not be restored.</exception>
         public void RestoreResolution()
         {
-            if (original_resolution != null)
+            if (OriginalResolution != null)
             {
                 //effect.FadeOut();
 
                 if (implementation.TryRestoreResolution(this))
                 {
-                    current_resolution = original_resolution;
-                    original_resolution = null;
+                    current_resolution = OriginalResolution;
+                    OriginalResolution = null;
                 }
-                else throw new Graphics.GraphicsModeException(String.Format("Device {0}: Failed to restore resolution.", this));
+                else
+                {
+                    throw new Graphics.GraphicsModeException(String.Format("Device {0}: Failed to restore resolution.", this));
+                }
 
                 //effect.FadeIn();
             }
         }
-
-        #endregion
-
-        #region public static IList<DisplayDevice> AvailableDisplays
-
-        /// <summary>
-        /// Gets the list of available <see cref="DisplayDevice"/> objects.
-        /// This function allocates memory.
-        /// </summary>
-        [Obsolete("Use GetDisplay(DisplayIndex) instead.")]
-        public static IList<DisplayDevice> AvailableDisplays
-        {
-            get
-            {
-                List<DisplayDevice> displays = new List<DisplayDevice>();
-                for (int i = 0; i < 6; i++)
-                {
-                    DisplayDevice dev = GetDisplay(DisplayIndex.First + i);
-                    if (dev != null)
-                        displays.Add(dev);
-                }
-
-                return displays.AsReadOnly();
-            }
-        }
-
-        #endregion
-
-        #region public static DisplayDevice Default
 
         /// <summary>Gets the default (primary) display of this system.</summary>
         public static DisplayDevice Default
         {
             get { return implementation.GetDisplay(DisplayIndex.Primary); }
         }
-
-        #endregion
-
-        #region GetDisplay
 
         /// <summary>
         /// Gets the <see cref="DisplayDevice"/> for the specified <see cref="DisplayIndex"/>.
@@ -334,26 +267,10 @@ namespace OpenTK
             return implementation.GetDisplay(index);
         }
 
-        #endregion
-
-        #endregion
-
-        #region --- Internal Methods ---
-
-        #region internal DisplayResolution OriginalResolution
-
         /// <summary>
         /// Gets the original resolution of this instance.
         /// </summary>
-        internal DisplayResolution OriginalResolution
-        {
-            get { return original_resolution; }
-            set { original_resolution = value; }
-        }
-
-        #endregion
-
-        #region FromPoint
+        internal DisplayResolution OriginalResolution { get; set; }
 
         internal static DisplayDevice FromPoint(int x, int y)
         {
@@ -371,15 +288,7 @@ namespace OpenTK
             return null;
         }
 
-        #endregion
-
-        #endregion
-
-        #region --- Private Methods ---
-
-        #region DisplayResolution FindResolution(int width, int height, int bitsPerPixel, float refreshRate)
-
-        DisplayResolution FindResolution(int width, int height, int bitsPerPixel, float refreshRate)
+        private DisplayResolution FindResolution(int width, int height, int bitsPerPixel, float refreshRate)
         {
             return available_resolutions.Find(delegate(DisplayResolution test)
             {
@@ -391,14 +300,6 @@ namespace OpenTK
             });
         }
 
-        #endregion
-
-        #endregion
-
-        #region --- Overrides ---
-
-        #region public override string ToString()
-
         /// <summary>
         /// Returns a System.String representing this DisplayDevice.
         /// </summary>
@@ -408,10 +309,6 @@ namespace OpenTK
             return String.Format("{0}: {1} ({2} modes available)", IsPrimary ? "Primary" : "Secondary",
                 Bounds.ToString(), available_resolutions.Count);
         }
-
-        #endregion
-
-        #region public override bool Equals(object obj)
 
         ///// <summary>Determines whether the specified DisplayDevices are equal.</summary>
         ///// <param name="obj">The System.Object to check against.</param>
@@ -430,23 +327,13 @@ namespace OpenTK
         //    return false;
         //}
 
-        #endregion
-
-        #region public override int GetHashCode()
-
         ///// <summary>Returns a unique hash representing this DisplayDevice.</summary>
         ///// <returns>A System.Int32 that may serve as a hash code for this DisplayDevice.</returns>
         ////public override int GetHashCode()
         //{
         //    return current_resolution.GetHashCode() ^ IsPrimary.GetHashCode() ^ available_resolutions.Count;
         //}
-
-        #endregion
-
-        #endregion
     }
-
-    #region --- FadeEffect ---
 #if false
     class FadeEffect : IDisposable
     {
@@ -550,16 +437,11 @@ namespace OpenTK
                 form.Visible = false;
         }
 
-        #region IDisposable Members
-
         public void Dispose()
         {
             foreach (Form form in forms)
                 form.Dispose();
         }
-
-        #endregion
     }
 #endif
-    #endregion
 }

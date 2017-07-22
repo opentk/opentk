@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2010 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -39,12 +37,10 @@ namespace Bind
     using Enum = Bind.Structures.Enum;
     using Type = Bind.Structures.Type;
 
-    sealed class CSharpSpecWriter
+    internal sealed class CSharpSpecWriter
     {
-        IBind Generator { get; set; }
-        Settings Settings { get { return Generator.Settings; } }
-
-        #region ISpecWriter Members
+        private IBind Generator { get; set; }
+        private Settings Settings { get { return Generator.Settings; } }
 
         public void WriteBindings(IBind generator)
         {
@@ -52,28 +48,26 @@ namespace Bind
             WriteBindings(generator.Delegates, generator.Wrappers, generator.Enums);
         }
 
-        #endregion
-
-        #region Private Members
-
         private static void ConsoleRewrite(string text)
         {
             int left = Console.CursorLeft;
             int top = Console.CursorTop;
             Console.Write(text);
             for (int i = text.Length; i < 80; i++)
+            {
                 Console.Write(" ");
+            }
             Console.WriteLine();
             Console.SetCursorPosition(left, top);
         }
 
-        #region WriteBindings
-
-        void WriteBindings(DelegateCollection delegates, FunctionCollection wrappers, EnumCollection enums)
+        private void WriteBindings(DelegateCollection delegates, FunctionCollection wrappers, EnumCollection enums)
         {
             Console.WriteLine("Writing bindings to {0}", Settings.OutputPath);
             if (!Directory.Exists(Settings.OutputPath))
+            {
                 Directory.CreateDirectory(Settings.OutputPath);
+            }
 
             string temp_enums_file = Path.GetTempFileName();
             string temp_wrappers_file = Path.GetTempFileName();
@@ -94,7 +88,9 @@ namespace Bind
                     sw.WriteLine("static partial class {0}", Settings.OutputClass);
                 }
                 else
+                {
                     sw.WriteLine("namespace {0}", Settings.EnumsOutput);
+                }
 
                 sw.WriteLine("{");
 
@@ -134,20 +130,28 @@ namespace Bind
             string output_core = Path.Combine(Settings.OutputPath, Settings.ImportsFile);
             string output_wrappers = Path.Combine(Settings.OutputPath, Settings.WrappersFile);
 
-            if (File.Exists(output_enums)) File.Delete(output_enums);
-            if (File.Exists(output_delegates)) File.Delete(output_delegates);
-            if (File.Exists(output_core)) File.Delete(output_core);
-            if (File.Exists(output_wrappers)) File.Delete(output_wrappers);
+            if (File.Exists(output_enums))
+            {
+                File.Delete(output_enums);
+            }
+            if (File.Exists(output_delegates))
+            {
+                File.Delete(output_delegates);
+            }
+            if (File.Exists(output_core))
+            {
+                File.Delete(output_core);
+            }
+            if (File.Exists(output_wrappers))
+            {
+                File.Delete(output_wrappers);
+            }
 
             File.Move(temp_enums_file, output_enums);
             File.Move(temp_wrappers_file, output_wrappers);
         }
 
-        #endregion
-
-        #region WriteWrappers
-
-        void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers,
+        private void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers,
             DelegateCollection delegates, EnumCollection enums,
             IDictionary<string, string> CSTypes)
         {
@@ -163,7 +167,7 @@ namespace Bind
             sw.WriteLine("partial class {0}", Settings.OutputClass);
             sw.WriteLine("{");
             sw.Indent();
-            
+
             // Write constructor
             sw.WriteLine("static {0}()", Settings.OutputClass);
             sw.WriteLine("{");
@@ -258,7 +262,7 @@ namespace Bind
             Console.WriteLine("Wrote {0} wrappers for {1} signatures", current_wrapper, current_signature);
         }
 
-        void WriteWrapper(BindStreamWriter sw, Function f, EnumCollection enums)
+        private void WriteWrapper(BindStreamWriter sw, Function f, EnumCollection enums)
         {
             if ((Settings.Compatibility & Settings.Legacy.NoDocumentation) == 0)
             {
@@ -290,7 +294,7 @@ namespace Bind
             sw.WriteLine("public static {0} {{ throw new NotImplementedException(); }}", GetDeclarationString(f, Settings.Compatibility));
         }
 
-        void WriteDocumentation(BindStreamWriter sw, Function f)
+        private void WriteDocumentation(BindStreamWriter sw, Function f)
         {
             var docs = f.Documentation;
 
@@ -310,9 +314,13 @@ namespace Bind
                 else if (!String.IsNullOrEmpty(f.Version))
                 {
                     if (f.Category.StartsWith("VERSION"))
+                    {
                         category = String.Format("[requires: {0}]", "v" + f.Version);
+                    }
                     else
+                    {
                         category = String.Format("[requires: {0}]", "v" + f.Version + " or " + f.Category);
+                    }
                 }
 
                 // Write function summary
@@ -395,12 +403,8 @@ namespace Bind
             catch (Exception e)
             {
                 Console.WriteLine("[Warning] Error documenting function {0}: {1}", f.WrappedDelegate.Name, e.ToString());
-            }   
+            }
         }
-
-        #endregion
-
-        #region WriteTypes
 
         public void WriteTypes(BindStreamWriter sw, Dictionary<string, string> CSTypes)
         {
@@ -411,11 +415,7 @@ namespace Bind
             }
         }
 
-        #endregion
-
-        #region WriteConstants
-
-        void WriteConstants(BindStreamWriter sw, IEnumerable<Constant> constants)
+        private void WriteConstants(BindStreamWriter sw, IEnumerable<Constant> constants)
         {
              // Make sure everything is sorted. This will avoid random changes between
             // consecutive runs of the program.
@@ -435,24 +435,26 @@ namespace Bind
 
                 sw.Write(str);
                 if (!String.IsNullOrEmpty(str))
+                {
                     sw.WriteLine(",");
+                }
             }
         }
 
-        #endregion
-
-        #region WriteEnums
-
-        void WriteEnums(BindStreamWriter sw, EnumCollection enums, FunctionCollection wrappers)
+        private void WriteEnums(BindStreamWriter sw, EnumCollection enums, FunctionCollection wrappers)
         {
             //sw.WriteLine("#pragma warning disable 3019");   // CLSCompliant attribute
             //sw.WriteLine("#pragma warning disable 1591");   // Missing doc comments
             //sw.WriteLine();
 
             if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
+            {
                 Trace.WriteLine(String.Format("Writing enums to:\t{0}.{1}.{2}", Settings.OutputNamespace, Settings.OutputClass, Settings.NestedEnumsClass));
+            }
             else
+            {
                 Trace.WriteLine(String.Format("Writing enums to:\t{0}", Settings.EnumsOutput));
+            }
 
             if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
             {
@@ -506,11 +508,17 @@ namespace Bind
                     }
 
                     if (@enum.IsObsolete)
+                    {
                         sw.WriteLine("[Obsolete(\"{0}\")]", @enum.Obsolete);
+                    }
                     if (!@enum.CLSCompliant)
+                    {
                         sw.WriteLine("[CLSCompliant(false)]");
+                    }
                     if (@enum.IsFlagCollection)
+                    {
                         sw.WriteLine("[Flags]");
+                    }
                     sw.WriteLine("public enum " + @enum.Name + " : " + @enum.Type);
                     sw.WriteLine("{");
                     sw.Indent();
@@ -548,29 +556,24 @@ namespace Bind
             }
         }
 
-        #endregion
-
-        #region WriteLicense
-
         public void WriteLicense(BindStreamWriter sw)
         {
             sw.WriteLine(File.ReadAllText(Path.Combine(Settings.InputPath, Settings.LicenseFile)));
             sw.WriteLine();
         }
 
-        #endregion
-
         // For example, if parameter foo has indirection level = 1, then it
         // is consumed as 'foo*' in the fixed_statements and the call string.
-        readonly static string[] pointer_levels = new string[] { "", "*", "**", "***", "****" };
-        readonly static string[] array_levels = new string[] { "", "[]", "[,]", "[,,]", "[,,,]" };
+        private readonly static string[] pointer_levels = new string[] { "", "*", "**", "***", "****" };
 
-        static bool IsEnum(string s, EnumCollection enums)
+        private readonly static string[] array_levels = new string[] { "", "[]", "[,]", "[,,]", "[,,,]" };
+
+        private static bool IsEnum(string s, EnumCollection enums)
         {
             return enums.ContainsKey(s);
         }
 
-        string GetDeclarationString(Constant c)
+        private string GetDeclarationString(Constant c)
         {
             if (String.IsNullOrEmpty(c.Name))
             {
@@ -586,13 +589,15 @@ namespace Bind
                 c.Value);
         }
 
-        string GetDeclarationString(Delegate d, bool is_delegate)
+        private string GetDeclarationString(Delegate d, bool is_delegate)
         {
             StringBuilder sb = new StringBuilder();
 
             sb.Append(d.Unsafe ? "unsafe " : "");
             if (is_delegate)
+            {
                 sb.Append("delegate ");
+            }
             sb.Append(GetDeclarationString(d.ReturnType, Settings.Legacy.ConstIntEnums));
             sb.Append(" ");
             sb.Append(Settings.FunctionPrefix);
@@ -602,7 +607,7 @@ namespace Bind
             return sb.ToString();
         }
 
-        string GetDeclarationString(Enum e)
+        private string GetDeclarationString(Enum e)
         {
             StringBuilder sb = new StringBuilder();
             List<Constant> constants = new List<Constant>(e.ConstantCollection.Values);
@@ -610,12 +615,16 @@ namespace Bind
             {
                 int ret = String.Compare(c1.Value, c2.Value);
                 if (ret == 0)
+                {
                     return String.Compare(c1.Name, c2.Name);
+                }
                 return ret;
             });
 
             if (e.IsFlagCollection)
+            {
                 sb.AppendLine("[Flags]");
+            }
             sb.Append("public enum ");
             sb.Append(e.Name);
             sb.Append(" : ");
@@ -628,14 +637,16 @@ namespace Bind
                 sb.Append("    ");
                 sb.Append(declaration);
                 if (!String.IsNullOrEmpty(declaration))
+                {
                     sb.AppendLine(",");
+                }
             }
             sb.Append("}");
 
             return sb.ToString();
         }
 
-        string GetDeclarationString(Function f, Settings.Legacy settings)
+        private string GetDeclarationString(Function f, Settings.Legacy settings)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -671,28 +682,38 @@ namespace Bind
                 foreach (Parameter p in f.Parameters)
                 {
                     if (p.Generic)
+                    {
                         sb.AppendLine(String.Format("    where {0} : struct", p.CurrentType));
+                    }
                 }
             }
 
             return sb.ToString();
         }
 
-        string GetDeclarationString(Parameter p, bool override_unsafe_setting, Settings.Legacy settings)
+        private string GetDeclarationString(Parameter p, bool override_unsafe_setting, Settings.Legacy settings)
         {
             StringBuilder sb = new StringBuilder();
 
             if (p.Flow == FlowDirection.Out)
+            {
                 sb.Append("[OutAttribute] ");
+            }
             else if (p.Flow == FlowDirection.Undefined)
+            {
                 sb.Append("[InAttribute, OutAttribute] ");
+            }
 
             if (p.Reference)
             {
                 if (p.Flow == FlowDirection.Out)
+                {
                     sb.Append("out ");
+                }
                 else
+                {
                     sb.Append("ref ");
+                }
             }
 
             if (!override_unsafe_setting && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None))
@@ -719,7 +740,7 @@ namespace Bind
             return sb.ToString();
         }
 
-        string GetDeclarationString(ParameterCollection parameters, Settings.Legacy settings)
+        private string GetDeclarationString(ParameterCollection parameters, Settings.Legacy settings)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -741,7 +762,7 @@ namespace Bind
             return sb.ToString();
         }
 
-        string GetDeclarationString(Type type, Settings.Legacy settings)
+        private string GetDeclarationString(Type type, Settings.Legacy settings)
         {
             var t = type.QualifiedType;
             if ((settings & Settings.Legacy.ConstIntEnums) != 0)
@@ -757,7 +778,5 @@ namespace Bind
                 pointer_levels[type.Pointer],
                 array_levels[type.Array]);
         }
-
-        #endregion
     }
 }

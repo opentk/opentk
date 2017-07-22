@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // Linux.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Runtime.InteropServices;
@@ -35,9 +33,9 @@ using System.Text;
 
 namespace OpenTK.Platform.Linux
 {
-    partial class Libc
+    internal partial class Libc
     {
-        const string lib = "libc";
+        private const string lib = "libc";
 
         [DllImport(lib)]
         public static extern int dup(int file);
@@ -102,7 +100,7 @@ namespace OpenTK.Platform.Linux
         public static extern bool isatty(int fd);
     }
 
-    enum ErrorNumber
+    internal enum ErrorNumber
     {
         Interrupted = 4,
         Again = 11,
@@ -110,7 +108,7 @@ namespace OpenTK.Platform.Linux
     }
 
     [Flags]
-    enum DirectionFlags
+    internal enum DirectionFlags
     {
         None = 0,
         Write = 1,
@@ -118,7 +116,7 @@ namespace OpenTK.Platform.Linux
     }
 
     [Flags]
-    enum OpenFlags
+    internal enum OpenFlags
     {
         ReadOnly = 0x0000,
         WriteOnly = 0x0001,
@@ -128,14 +126,14 @@ namespace OpenTK.Platform.Linux
     }
 
     [Flags]
-    enum JoystickEventType : byte
+    internal enum JoystickEventType : byte
     {
         Button = 0x01,    // button pressed/released
         Axis = 0x02,      // joystick moved
         Init = 0x80       // initial state of device
     }
 
-    enum JoystickIoctlCode : uint
+    internal enum JoystickIoctlCode : uint
     {
         Version = 0x80046a01,
         Axes = 0x80016a11,
@@ -143,14 +141,14 @@ namespace OpenTK.Platform.Linux
         Name128 = (2u << 30) | (0x6A << 8) | (0x13 << 0) | (128 << 16) //JSIOCGNAME(128), which is _IOC(_IO_READ, 'j', 0x13, len)
     }
 
-    enum KeyboardIoctlCode
+    internal enum KeyboardIoctlCode
     {
         GetMode = 0x4b44,
         SetMode = 0x4b45,
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct Stat
+    internal struct Stat
     {
         public IntPtr dev;     /* ID of device containing file */
         public IntPtr ino;     /* inode number */
@@ -167,7 +165,7 @@ namespace OpenTK.Platform.Linux
         public IntPtr ctime;   /* time of last status change */
     }
 
-    struct EvdevInputId
+    internal struct EvdevInputId
     {
         public ushort BusType;
         public ushort Vendor;
@@ -175,7 +173,7 @@ namespace OpenTK.Platform.Linux
         public ushort Version;
     }
 
-    struct JoystickEvent
+    internal struct JoystickEvent
     {
         public uint Time;    // (u32) event timestamp in milliseconds
         public short Value;  // (s16) value

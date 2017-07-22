@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,14 +22,10 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
 using System.Text;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Diagnostics;
 
 namespace OpenTK
 {
@@ -39,32 +34,6 @@ namespace OpenTK
     /// </summary>
     public abstract class BindingsBase
     {
-        #region Fields
-
-        /// <summary>
-        /// A reflection handle to the nested type that contains the function delegates.
-        /// </summary>
-        [Obsolete("Not used")]
-        readonly protected Type DelegatesClass;
-
-        /// <summary>
-        /// A refection handle to the nested type that contains core functions (i.e. not extensions).
-        /// </summary>
-        [Obsolete("Not used")]
-        readonly protected Type CoreClass;
-
-        /// <summary>
-        /// A mapping of core function names to MethodInfo handles.
-        /// </summary>
-        [Obsolete("Not used")]
-        readonly protected SortedList<string, MethodInfo> CoreFunctionMap;
-
-        bool rebuildExtensionList = true;
-
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Constructs a new BindingsBase instance.
         /// </summary>
@@ -72,18 +41,10 @@ namespace OpenTK
         {
         }
 
-        #endregion
-
-        #region Protected Members
-
         /// <summary>
         /// Gets or sets a <see cref="System.Boolean"/> that indicates whether the list of supported extensions may have changed.
         /// </summary>
-        protected bool RebuildExtensionList
-        {
-            get { return rebuildExtensionList; }
-            set { rebuildExtensionList = value; }
-        }
+        protected bool RebuildExtensionList { get; set; } = true;
 
         /// <summary>
         /// Retrieves an unmanaged function pointer to the specified function.
@@ -106,7 +67,7 @@ namespace OpenTK
         /// Gets an object that can be used to synchronize access to the bindings implementation.
         /// </summary>
         /// <remarks>This object should be unique across bindings but consistent between bindings
-        /// of the same type. For example, ES10.GL, OpenGL.GL and CL10.CL should all return 
+        /// of the same type. For example, ES10.GL, OpenGL.GL and CL10.CL should all return
         /// unique objects, but all instances of ES10.GL should return the same object.</remarks>
         protected abstract object SyncRoot { get; }
 
@@ -119,9 +80,13 @@ namespace OpenTK
         protected static void MarshalPtrToStringBuilder(IntPtr ptr, StringBuilder sb)
         {
             if (ptr == IntPtr.Zero)
+            {
                 throw new ArgumentException("ptr");
+            }
             if (sb == null)
+            {
                 throw new ArgumentNullException("sb");
+            }
 
             sb.Length = 0;
             for (int i = 0; ; i++)
@@ -240,12 +205,6 @@ namespace OpenTK
             Marshal.FreeHGlobal(ptr);
         }
 
-        #endregion
-
-        #region Internal Members
-
         internal abstract void LoadEntryPoints();
-
-        #endregion
     }
 }

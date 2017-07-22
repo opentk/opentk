@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // MappedGamePadDriver.cs
 //
 // Author:
@@ -25,11 +24,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using OpenTK.Input;
 
 namespace OpenTK.Platform
@@ -50,11 +47,12 @@ namespace OpenTK.Platform
     /// class implements this mapping scheme.
     /// </para>
     /// </remarks>
-    class MappedGamePadDriver : IGamePadDriver
+    internal class MappedGamePadDriver : IGamePadDriver
     {
-        readonly GamePadConfigurationDatabase database =
+        private readonly GamePadConfigurationDatabase database =
             new GamePadConfigurationDatabase();
-        readonly Dictionary<Guid, GamePadConfiguration> configurations =
+
+        private readonly Dictionary<Guid, GamePadConfiguration> configurations =
             new Dictionary<Guid, GamePadConfiguration>();
 
         public GamePadState GetState(int index)
@@ -76,7 +74,7 @@ namespace OpenTK.Platform
                         case ConfigurationType.Axis:
                             {
                                 // JoystickAxis -> Buttons/GamePadAxes mapping
-                                JoystickAxis source_axis = map.Source.Axis;
+                                int source_axis = map.Source.Axis;
                                 short value = joy.GetAxisRaw(source_axis);
 
                                 switch (map.Target.Type)
@@ -231,9 +229,7 @@ namespace OpenTK.Platform
             return false;
         }
 
-        #region Private Members
-
-        GamePadConfiguration GetConfiguration(Guid guid)
+        private GamePadConfiguration GetConfiguration(Guid guid)
         {
             if (!configurations.ContainsKey(guid))
             {
@@ -244,11 +240,9 @@ namespace OpenTK.Platform
             return configurations[guid];
         }
 
-        bool IsMapped(GamePadConfigurationSource item)
+        private bool IsMapped(GamePadConfigurationSource item)
         {
             return item.Type != ConfigurationType.Unmapped;
         }
-
-        #endregion
     }
 }

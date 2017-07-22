@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -23,18 +22,15 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OpenTK.Platform.MacOS
 {
-	// 
-	// http://web.archive.org/web/20100501161453/http://www.classicteck.com/rbarticles/mackeyboard.php
+    //
+    // http://web.archive.org/web/20100501161453/http://www.classicteck.com/rbarticles/mackeyboard.php
 
-    enum MacOSKeyCode
+    internal enum MacOSKeyCode
     {
         A = 0,
         B = 11,
@@ -79,11 +75,11 @@ namespace OpenTK.Platform.MacOS
 
         Minus = 27,
         Equals = 24,
-        BracketLeft = 33, 
-        BracketRight = 30, 
+        BracketLeft = 33,
+        BracketRight = 30,
         Backslash = 42,
-        Semicolon = 41, 
-        Quote = 39, 
+        Semicolon = 41,
+        Quote = 39,
         Comma = 43,
         Period = 47,
         Slash = 44,
@@ -93,13 +89,13 @@ namespace OpenTK.Platform.MacOS
         Backspace = 51,
         Return = 52,
         Esc = 53,
-        
+
         Command = 55,
         Shift = 56,
         CapsLock = 57,
         OptionAlt = 58,
         Control = 59,
-        
+
         KeyPad_Decimal = 65,
         KeyPad_Multiply = 67,
         KeyPad_Add = 69,
@@ -117,7 +113,7 @@ namespace OpenTK.Platform.MacOS
         KeyPad_7 = 89,
         KeyPad_8 = 91,
         KeyPad_9 = 92,
-        
+
         F1 = 122,
         F2 = 120,
         F3 = 99,
@@ -150,13 +146,13 @@ namespace OpenTK.Platform.MacOS
 
     }
     [Flags]
-    enum MacOSKeyModifiers
+    internal enum MacOSKeyModifiers
     {
         None     = 0,
         Shift    = 0x0200,
         CapsLock = 0x0400,
-        Control  = 0x1000,  // 
-        Command  = 0x0100,  // Open-Apple  - Windows key 
+        Control  = 0x1000,  //
+        Command  = 0x0100,  // Open-Apple  - Windows key
         Option   = 0x0800,  // Option key is same position as the alt key on non-mac keyboards.
     }
 }

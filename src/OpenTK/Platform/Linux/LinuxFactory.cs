@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // LinuxFactory.cs
 //
 // Author:
@@ -25,12 +24,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
 using OpenTK.Graphics;
 using OpenTK.Input;
 using OpenTK.Platform.Egl;
@@ -40,25 +37,23 @@ namespace OpenTK.Platform.Linux
     using Egl = OpenTK.Platform.Egl.Egl;
 
     // Linux KMS platform
-    class LinuxFactory : PlatformFactoryBase
+    internal class LinuxFactory : PlatformFactoryBase
     {
-        int _fd;
-        IntPtr gbm_device;
-        IntPtr egl_display;
+        private int _fd;
+        private IntPtr gbm_device;
+        private IntPtr egl_display;
 
-        IJoystickDriver2 JoystickDriver;
-        LinuxInput MouseKeyboardDriver;
+        private IJoystickDriver2 JoystickDriver;
+        private LinuxInput MouseKeyboardDriver;
 
-        const string gpu_path = "/dev/dri"; // card0, card1, ...
+        private const string gpu_path = "/dev/dri"; // card0, card1, ...
 
         public LinuxFactory()
         {
             Debug.Print("[KMS] Using Linux/KMS backend.");
         }
 
-        #region Private Members
-
-        int gpu_fd
+        private int gpu_fd
         {
             get
             {
@@ -73,7 +68,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        static int CreateDisplay(out IntPtr gbm_device, out IntPtr egl_display)
+        private static int CreateDisplay(out IntPtr gbm_device, out IntPtr egl_display)
         {
             // Query all GPUs until we find one that has a connected display.
             // This is necessary in multi-gpu systems, where only one GPU
@@ -121,13 +116,13 @@ namespace OpenTK.Platform.Linux
             return fd;
         }
 
-        static int SetupDisplay(string gpu, out IntPtr gbm_device, out IntPtr egl_display)
+        private static int SetupDisplay(string gpu, out IntPtr gbm_device, out IntPtr egl_display)
         {
             Debug.Print("[KMS] Attempting to use gpu '{0}'.", gpu);
 
             gbm_device = IntPtr.Zero;
             egl_display = IntPtr.Zero;
-            
+
             int fd = Libc.open(gpu, OpenFlags.ReadWrite | OpenFlags.CloseOnExec);
             if (fd < 0)
             {
@@ -161,10 +156,6 @@ namespace OpenTK.Platform.Linux
             return fd;
         }
 
-        #endregion
-
-        #region Protected Members
-
         protected override void Dispose(bool manual)
         {
             if (egl_display != IntPtr.Zero)
@@ -187,10 +178,6 @@ namespace OpenTK.Platform.Linux
 
             base.Dispose(manual);
         }
-
-        #endregion
-
-        #region IPlatformFactory Members
 
         public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice display_device)
         {
@@ -246,8 +233,6 @@ namespace OpenTK.Platform.Linux
         {
             return new MappedGamePadDriver();
         }
-
-        #endregion
     }
 }
 

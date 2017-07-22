@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,18 +22,15 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 #if !MINIMAL
 using System.Drawing;
 #endif
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2DisplayDeviceDriver : DisplayDeviceBase
+    internal class Sdl2DisplayDeviceDriver : DisplayDeviceBase
     {
         public Sdl2DisplayDeviceDriver()
         {
@@ -71,13 +67,13 @@ namespace OpenTK.Platform.SDL2
 
                 AvailableDevices.Add(device);
                 if (d == 0)
+                {
                     Primary = device;
+                }
             }
         }
 
-        #region Private Members
-
-        int TranslateFormat(uint format)
+        private int TranslateFormat(uint format)
         {
             int bpp;
             uint a, r, g, b;
@@ -85,14 +81,10 @@ namespace OpenTK.Platform.SDL2
             return bpp;
         }
 
-        Rectangle TranslateBounds(Rect rect)
+        private Rectangle TranslateBounds(Rect rect)
         {
             return new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
         }
-
-        #endregion
-
-        #region DisplayDeviceBase Members
 
         public override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
         {
@@ -105,8 +97,6 @@ namespace OpenTK.Platform.SDL2
             Sdl2Factory.UseFullscreenDesktop = true;
             return true;
         }
-
-        #endregion
     }
 }
 

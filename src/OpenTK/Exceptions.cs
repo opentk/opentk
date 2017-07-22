@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 
@@ -35,26 +33,18 @@ namespace OpenTK
     /// </summary>
     public class ContextExistsException : ApplicationException
     {
-        string msg;
-
         /// <summary>
         /// Constructs a new ContextExistsException instance.
         /// </summary>
         /// <param name="message">A System.String explaining the cause of this exception.</param>
         public ContextExistsException(string message)
         {
-            msg = message;
+            Message = message;
         }
 
         /// <summary>
         /// Gets a System.String explaining the cause of this exception.
         /// </summary>
-        public override string Message
-        {
-            get
-            {
-                return msg;
-            }
-        }
+        public override string Message { get; }
     }
 }

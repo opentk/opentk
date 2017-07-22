@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -37,38 +35,37 @@ using OpenTK.Minimal;
 using System.Drawing.Imaging;
 #endif
 using System.Runtime.InteropServices;
-using OpenTK;
 using OpenTK.Input;
 using System.Text;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2NativeWindow : NativeWindowBase
+    internal class Sdl2NativeWindow : NativeWindowBase
     {
-        readonly object sync = new object();
+        private readonly object sync = new object();
 
-        Sdl2WindowInfo window;
-        uint window_id;
-        bool is_visible;
-        bool is_focused;
-        bool is_cursor_visible = true;
-        bool is_cursor_confined = false;
-        bool exists;
-        bool must_destroy;
-        bool disposed;
-        volatile bool is_in_closing_event;
-        WindowState window_state = WindowState.Normal;
-        WindowState previous_window_state = WindowState.Normal;
-        WindowBorder window_border = WindowBorder.Resizable;
-        Icon icon;
-        MouseCursor cursor = MouseCursor.Default;
-        IntPtr sdl_cursor = IntPtr.Zero;
+        private Sdl2WindowInfo window;
+        private uint window_id;
+        private bool is_visible;
+        private bool is_focused;
+        private bool is_cursor_visible = true;
+        private bool is_cursor_confined = false;
+        private bool exists;
+        private bool must_destroy;
+        private bool disposed;
+        private volatile bool is_in_closing_event;
+        private WindowState window_state = WindowState.Normal;
+        private WindowState previous_window_state = WindowState.Normal;
+        private WindowBorder window_border = WindowBorder.Resizable;
+        private Icon icon;
+        private MouseCursor cursor = MouseCursor.Default;
+        private IntPtr sdl_cursor = IntPtr.Zero;
 
         // Used in KeyPress event to decode SDL UTF8 text strings
-        // to .Net UTF16 strings 
-        char[] DecodeTextBuffer = new char[32];
+        // to .Net UTF16 strings
+        private char[] DecodeTextBuffer = new char[32];
 
-        static readonly Dictionary<uint, Sdl2NativeWindow> windows =
+        private static readonly Dictionary<uint, Sdl2NativeWindow> windows =
             new Dictionary<uint, Sdl2NativeWindow>();
 
         public Sdl2NativeWindow(int x, int y, int width, int height,
@@ -89,10 +86,14 @@ namespace OpenTK.Platform.SDL2
 
                 if ((flags & WindowFlags.FULLSCREEN_DESKTOP) != 0 ||
                     (flags & WindowFlags.FULLSCREEN) != 0)
+                {
                     window_state = WindowState.Fullscreen;
+                }
 
                 if ((flags & WindowFlags.RESIZABLE) == 0)
+                {
                     window_border = WindowBorder.Fixed;
+                }
 
                 IntPtr handle;
                 lock (SDL.Sync)
@@ -107,38 +108,42 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        #region Private Members
-
-        static WindowFlags TranslateFlags(GameWindowFlags flags)
+        private static WindowFlags TranslateFlags(GameWindowFlags flags)
         {
             WindowFlags windowFlags = WindowFlags.Default;
 
             if ((flags & GameWindowFlags.Fullscreen) != 0)
             {
                 if (Sdl2Factory.UseFullscreenDesktop)
+                {
                     windowFlags |= WindowFlags.FULLSCREEN_DESKTOP;
+                }
                 else
+                {
                     windowFlags |= WindowFlags.FULLSCREEN;
+                }
             }
 
             if ((flags & GameWindowFlags.FixedWindow) == 0)
+            {
                 windowFlags |= WindowFlags.RESIZABLE;
+            }
 
             return windowFlags;
         }
 
-        static Key TranslateKey(Scancode scan)
+        private static Key TranslateKey(Scancode scan)
         {
             return Sdl2KeyMap.GetKey(scan);
         }
 
-        static Key TranslateKey(Keycode key)
+        private static Key TranslateKey(Keycode key)
         {
             Scancode scan = SDL.GetScancodeFromKey(key);
             return TranslateKey(scan);
         }
 
-        int ProcessEvent(ref Event ev)
+        private int ProcessEvent(ref Event ev)
         {
             bool processed = false;
 
@@ -198,6 +203,15 @@ namespace OpenTK.Platform.SDL2
                         }
                         break;
 
+                    case EventType.DROPFILE:
+                        if (windows.TryGetValue(ev.Drop.WindowID, out window))
+                        {
+                            ProcessDropEvent(window, ev.Drop);
+                            SDL.Free(ev.Drop.File);
+                            processed = true;
+                        }
+                        break;
+
                     case EventType.QUIT:
                         Debug.WriteLine("Sdl2 application quit");
                         break;
@@ -211,7 +225,7 @@ namespace OpenTK.Platform.SDL2
             return processed ? 0 : 1;
         }
 
-        static void ProcessMouseButtonEvent(Sdl2NativeWindow window, MouseButtonEvent ev)
+        private static void ProcessMouseButtonEvent(Sdl2NativeWindow window, MouseButtonEvent ev)
         {
             bool button_pressed = ev.State == State.Pressed;
 
@@ -234,7 +248,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        static void ProcessKeyEvent(Sdl2NativeWindow window, Event ev)
+        private static void ProcessKeyEvent(Sdl2NativeWindow window, Event ev)
         {
             bool key_pressed = ev.Key.State == State.Pressed;
             Key key = TranslateKey(ev.Key.Keysym.Scancode);
@@ -248,12 +262,14 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        static unsafe void ProcessTextInputEvent(Sdl2NativeWindow window, TextInputEvent ev)
+        private static unsafe void ProcessTextInputEvent(Sdl2NativeWindow window, TextInputEvent ev)
         {
             // Calculate the length of the typed text string
             int length;
             for (length = 0; length < TextInputEvent.TextSize && ev.Text[length] != '\0'; length++)
+            {
                 ;
+            }
 
             // Make sure we have enough space to decode this string
             int decoded_length = Encoding.UTF8.GetCharCount(ev.Text, length);
@@ -280,7 +296,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        static void ProcessMouseMotionEvent(Sdl2NativeWindow window, MouseMotionEvent ev)
+        private static void ProcessMouseMotionEvent(Sdl2NativeWindow window, MouseMotionEvent ev)
         {
             float scale = window.ClientSize.Width / (float)window.Size.Width;
             window.OnMouseMove(
@@ -289,12 +305,18 @@ namespace OpenTK.Platform.SDL2
             Sdl2Mouse.Scale = scale;
         }
 
-        static void ProcessMouseWheelEvent(Sdl2NativeWindow window, MouseWheelEvent ev)
+        private static void ProcessMouseWheelEvent(Sdl2NativeWindow window, MouseWheelEvent ev)
         {
             window.OnMouseWheel(ev.X, ev.Y);
         }
 
-        static void ProcessWindowEvent(Sdl2NativeWindow window, WindowEvent e)
+        private static unsafe void ProcessDropEvent(Sdl2NativeWindow window, DropEvent ev)
+        {
+            string dropString = Marshal.PtrToStringAuto(ev.File);
+            window.OnFileDrop(dropString);
+        }
+
+        private static void ProcessWindowEvent(Sdl2NativeWindow window, WindowEvent e)
         {
             switch (e.Event)
             {
@@ -380,7 +402,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        void DestroyWindow()
+        private void DestroyWindow()
         {
             exists = false;
 
@@ -401,7 +423,7 @@ namespace OpenTK.Platform.SDL2
             window.Handle = IntPtr.Zero;
         }
 
-        void GrabCursor(bool grab)
+        private void GrabCursor(bool grab)
         {
             SDL.SetWindowGrab(window.Handle, grab);
         }
@@ -426,7 +448,7 @@ namespace OpenTK.Platform.SDL2
         }
 
         // Hack to force WindowState events to be pumped
-        void HideShowWindowHack()
+        private void HideShowWindowHack()
         {
             SDL.HideWindow(window.Handle);
             ProcessEvents();
@@ -435,7 +457,7 @@ namespace OpenTK.Platform.SDL2
         }
 
         // Revert to WindowState.Normal if necessary
-        void RestoreWindow()
+        private void RestoreWindow()
         {
             WindowState state = WindowState;
 
@@ -459,10 +481,6 @@ namespace OpenTK.Platform.SDL2
 
             window_state = WindowState.Normal;
         }
-
-        #endregion
-
-        #region INativeWindow Members
 
         public override MouseCursor Cursor
         {
@@ -700,9 +718,13 @@ namespace OpenTK.Platform.SDL2
                     if (Exists)
                     {
                         if (value)
+                        {
                             SDL.ShowWindow(window.Handle);
+                        }
                         else
+                        {
                             SDL.HideWindow(window.Handle);
+                        }
                     }
                 }
             }
@@ -774,7 +796,8 @@ namespace OpenTK.Platform.SDL2
                                     break;
                             }
 
-                            if (!CursorVisible) {
+                            if (!CursorVisible)
+                            {
                                 GrabCursor(true);
                             }
                         }
@@ -937,10 +960,6 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        #endregion
-
-        #region IDisposable implementation
-
         protected override void Dispose(bool manual)
         {
             if (!disposed)
@@ -979,8 +998,6 @@ namespace OpenTK.Platform.SDL2
                 }
             }
         }
-
-        #endregion
     }
 }
 

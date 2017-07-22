@@ -27,12 +27,6 @@
 // NOT COMPLETE
 
 using System;
-using System.ComponentModel;
-using System.Collections;
-#if !MINIMAL
-using System.Drawing;
-#endif
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 // Disable unused field warnings. This is interop, we don't use everything
@@ -1671,20 +1665,20 @@ namespace OpenTK.Platform.X11
 
     // XInput2 structures
 
-    enum XIClassType
+    internal enum XIClassType
     {
         Button = 1,
         Valuator = 2,
         Scroll = 3,
     }
 
-    enum XIScrollType
+    internal enum XIScrollType
     {
         Vertical = 1,
         Horizontal = 2
     }
 
-    struct XIDeviceInfo
+    internal struct XIDeviceInfo
     {
         public int deviceid;
         public IntPtr name; // byte*
@@ -1695,13 +1689,13 @@ namespace OpenTK.Platform.X11
         public IntPtr classes; // XIAnyClassInfo**
     }
 
-    struct XIAnyClassInfo
+    internal struct XIAnyClassInfo
     {
         public XIClassType type;
         public int sourceid;
     }
 
-    struct XIButtonClassInfo
+    internal struct XIButtonClassInfo
     {
         public XIClassType type;
         public int sourceid;
@@ -1711,7 +1705,7 @@ namespace OpenTK.Platform.X11
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct XIScrollClassInfo
+    internal struct XIScrollClassInfo
     {
         public XIClassType type;
         public int sourceid;
@@ -1722,7 +1716,7 @@ namespace OpenTK.Platform.X11
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct XIValuatorClassInfo
+    internal struct XIValuatorClassInfo
     {
         public XIClassType type;
         public int sourceid;
@@ -1735,7 +1729,7 @@ namespace OpenTK.Platform.X11
         public XIMode mode;
     }
 
-    struct XIDeviceEvent
+    internal struct XIDeviceEvent
     {
         public int           type;         /* GenericEvent */
         public IntPtr serial;       /* # of last request processed by server */
@@ -1761,7 +1755,7 @@ namespace OpenTK.Platform.X11
         public XIGroupState        @group;
     }
 
-    struct XIRawEvent
+    internal struct XIRawEvent
     {
         public int           type;         /* GenericEvent */
         public IntPtr serial;       /* # of last request processed by server */
@@ -1778,13 +1772,13 @@ namespace OpenTK.Platform.X11
         public IntPtr raw_values; // FP3232*
     }
 
-    struct XIButtonState
+    internal struct XIButtonState
     {
         public int           mask_len;
         public IntPtr mask; // byte*
     }
 
-    struct XIModifierState
+    internal struct XIModifierState
     {
         public int    @base;
         public int    latched;
@@ -1792,7 +1786,7 @@ namespace OpenTK.Platform.X11
         public int    effective;
     }
 
-    struct XIGroupState
+    internal struct XIGroupState
     {
         public int    @base;
         public int    latched;
@@ -1800,18 +1794,18 @@ namespace OpenTK.Platform.X11
         public int    effective;
     }
 
-    struct XIValuatorState
+    internal struct XIValuatorState
     {
         public int           mask_len;
         public IntPtr mask; // byte*
         public IntPtr values; // double*
     }
 
-    struct XIEventMask : IDisposable
+    internal struct XIEventMask : IDisposable
     {
         public int deviceid; // 0 = XIAllDevices, 1 = XIAllMasterDevices
-        int mask_len;
-        unsafe byte* mask;
+        private int mask_len;
+        private unsafe byte* mask;
 
         public XIEventMask(int id, XIEventMasks m)
         {
@@ -1821,7 +1815,9 @@ namespace OpenTK.Platform.X11
             {
                 mask = (byte*)Marshal.AllocHGlobal(mask_len);
                 for (int i = 0; i < mask_len; i++)
+                {
                     mask[i] = (byte)((uint)m >> i*8);
+                }
             }
         }
 
@@ -1834,7 +1830,7 @@ namespace OpenTK.Platform.X11
         }
     }
 
-    enum XIEventType
+    internal enum XIEventType
     {
         DeviceChanged = 1,
         KeyPress,
@@ -1856,7 +1852,7 @@ namespace OpenTK.Platform.X11
         LastEvent = RawMotion
     }
 
-    enum XIEventMasks
+    internal enum XIEventMasks
     {
         DeviceChangedMask =            (1 << (int)XIEventType.DeviceChanged),
         KeyPressMask =                 (1 << (int)XIEventType.KeyPress),
@@ -1878,26 +1874,26 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    enum XIKeyEventFlags
+    internal enum XIKeyEventFlags
     {
         Repeat = (1 << 16),
     }
 
     [Flags]
-    enum XIPointerEventFlags
+    internal enum XIPointerEventFlags
     {
         Emulated = (1 << 16),
     }
 
     [Flags]
-    enum XITouchEventFlags
+    internal enum XITouchEventFlags
     {
         PendingEnd = (1 << 16),
         EmulatingPointer = (1 << 17),
     }
 
     [Flags]
-    enum XIEventFlags
+    internal enum XIEventFlags
     {
         KeyRepeat = XIKeyEventFlags.Repeat,
         PointerEmulated = XIPointerEventFlags.Emulated,

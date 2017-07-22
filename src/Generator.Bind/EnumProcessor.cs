@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2010 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,12 +22,10 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.XPath;
@@ -37,19 +34,23 @@ using Enum = Bind.Structures.Enum;
 
 namespace Bind
 {
-    class EnumProcessor
+    internal class EnumProcessor
     {
-        readonly IEnumerable<string> Overrides;
+        private readonly IEnumerable<string> Overrides;
 
-        IBind Generator { get; set; }
-        Settings Settings { get { return Generator.Settings; } }
+        private IBind Generator { get; set; }
+        private Settings Settings { get { return Generator.Settings; } }
 
         public EnumProcessor(IBind generator, IEnumerable<string> overrides)
         {
             if (generator == null)
+            {
                 throw new ArgumentNullException("generator");
+            }
             if (overrides == null)
+            {
                 throw new ArgumentNullException("overrides");
+            }
 
             Generator = generator;
             Overrides = overrides;
@@ -71,7 +72,9 @@ namespace Bind
         public static string GetOverridesPath(string apiname, string enumeration)
         {
             if (enumeration == null)
+            {
                 throw new ArgumentNullException("enumeration");
+            }
 
             var path = new StringBuilder();
             path.Append("/signatures/replace");
@@ -87,9 +90,7 @@ namespace Bind
             return path.ToString();
         }
 
-        #region Private Members
-
-        EnumCollection ProcessNames(EnumCollection enums, XPathNavigator nav, string apiname)
+        private EnumCollection ProcessNames(EnumCollection enums, XPathNavigator nav, string apiname)
         {
             EnumCollection processed_enums = new EnumCollection();
             foreach (var e in enums.Values)
@@ -125,7 +126,7 @@ namespace Bind
             return processed_enums;
         }
 
-        static string ReplaceName(XPathNavigator nav, string apiname, string name)
+        private static string ReplaceName(XPathNavigator nav, string apiname, string name)
         {
             var enum_override = nav.SelectSingleNode(GetOverridesPath(apiname, name));
             if (enum_override != null)
@@ -139,7 +140,7 @@ namespace Bind
             return name;
         }
 
-        static bool IsAlreadyProcessed(string name)
+        private static bool IsAlreadyProcessed(string name)
         {
             string extension = Utilities.GetExtension(name, true);
             bool unprocessed = false;
@@ -153,15 +154,21 @@ namespace Bind
         public string TranslateEnumName(string name)
         {
             if (String.IsNullOrEmpty(name))
+            {
                 return name;
+            }
 
             if (Utilities.CSharpKeywords.Contains(name))
+            {
                 return name;
+            }
 
             if (!IsAlreadyProcessed(name))
             {
                 if (Char.IsDigit(name[0]))
+                {
                     name = Settings.ConstantPrefix + name;
+                }
 
                 StringBuilder translator = new StringBuilder(name);
 
@@ -198,11 +205,17 @@ namespace Bind
                     }
 
                     if (is_after_underscore_or_number)
+                    {
                         char_to_add = Char.ToUpper(c);
+                    }
                     else if (is_previous_uppercase)
+                    {
                         char_to_add = Char.ToLower(c);
+                    }
                     else
+                    {
                         char_to_add = c;
+                    }
 
                     translator.Append(char_to_add);
 
@@ -210,7 +223,7 @@ namespace Bind
                     is_after_underscore_or_number = false;
                 }
 
-                // First letter should always be uppercase in order 
+                // First letter should always be uppercase in order
                 // to conform to .Net style guidelines.
                 translator[0] = Char.ToUpper(translator[0]);
 
@@ -223,13 +236,15 @@ namespace Bind
 
                 name = translator.ToString();
                 if (name.StartsWith(Settings.EnumPrefix))
+                {
                     name = name.Substring(Settings.EnumPrefix.Length);
+                }
             }
 
             return name;
         }
 
-        EnumCollection ProcessConstants(EnumCollection enums, XPathNavigator nav, string apiname)
+        private EnumCollection ProcessConstants(EnumCollection enums, XPathNavigator nav, string apiname)
         {
             foreach (var e in enums.Values)
             {
@@ -262,7 +277,7 @@ namespace Bind
             return enums;
         }
 
-        static void ReplaceConstant(XPathNavigator enum_override, Constant c)
+        private static void ReplaceConstant(XPathNavigator enum_override, Constant c)
         {
             if (enum_override != null)
             {
@@ -286,7 +301,9 @@ namespace Bind
         public string TranslateConstantName(string s, bool isValue)
         {
             if (String.IsNullOrEmpty(s))
+            {
                 return s;
+            }
 
             StringBuilder translator = new StringBuilder(s.Length);
 
@@ -306,7 +323,9 @@ namespace Bind
                     bool is_after_digit = false;
 
                     if (!isValue && Char.IsDigit(s[0]))
+                    {
                         s = Settings.ConstantPrefix + s;
+                    }
 
                     foreach (char c in s)
                     {
@@ -337,7 +356,9 @@ namespace Bind
                     translator[0] = Char.ToUpper(translator[0]);
                 }
                 else
+                {
                     translator.Append(s);
+                }
             }
 
             return translator.ToString();
@@ -350,14 +371,20 @@ namespace Bind
             {
                 // Trim the unsigned or long specifiers used in C constants ('u' or 'ull').
                 if (value.ToLower().EndsWith("ull"))
+                {
                     value = value.Substring(0, value.Length - 3);
+                }
                 if (value.ToLower().EndsWith("u"))
+                {
                     value = value.Substring(0, value.Length - 1);
+                }
             }
 
             // Strip the prefix, if any.
             if (value.StartsWith(Settings.ConstantPrefix))
+            {
                 value = value.Substring(Settings.ConstantPrefix.Length);
+            }
 
             return TranslateConstantName(value, IsValue(value));
         }
@@ -366,7 +393,7 @@ namespace Bind
         // (e.g. FOG_COORD_ARRAY_TYPE = GL_FOG_COORDINATE_ARRAY_TYPE)
         // In this case try searching all enums for the correct constant to alias (stupid opengl specs).
         // This turns every bare alias into a normal alias that is processed afterwards.
-        static void ResolveBareAlias(Constant c, EnumCollection enums)
+        private static void ResolveBareAlias(Constant c, EnumCollection enums)
         {
             // Constants are considered bare aliases when they don't have a reference and
             // their values are non-numeric.
@@ -387,7 +414,7 @@ namespace Bind
         // Resolve 'use' tokens by searching and replacing the correct
         // value from the enum collection.
         // Tokens that can't be resolved are removed.
-        static void ResolveAliases(Enum e, EnumCollection enums)
+        private static void ResolveAliases(Enum e, EnumCollection enums)
         {
             // Note that we have the removal must be a separate step, since
             // we cannot modify a collection while iterating with foreach.
@@ -401,7 +428,7 @@ namespace Bind
             }
         }
 
-        static bool IsValue(string test)
+        private static bool IsValue(string test)
         {
             // Check if the result is a number.
             long number;
@@ -420,7 +447,5 @@ namespace Bind
             }
             return is_number;
         }
-
-        #endregion
     }
 }

@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // JoystickCapabilities.cs
 //
 // Author:
@@ -25,12 +24,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace OpenTK.Input
 {
@@ -39,24 +35,27 @@ namespace OpenTK.Input
     /// </summary>
     public struct JoystickCapabilities : IEquatable<JoystickCapabilities>
     {
-        byte axis_count;
-        byte button_count;
-        byte hat_count;
-        bool is_connected;
-
-        #region Constructors
+        private byte axis_count;
+        private byte button_count;
+        private byte hat_count;
 
         internal JoystickCapabilities(int axis_count, int button_count, int hat_count, bool is_connected)
         {
             if (axis_count < 0 || axis_count > JoystickState.MaxAxes)
+            {
                 Debug.Print("[{0}] Axis count {1} out of range (0, {2})",
                     typeof(JoystickCapabilities).Name, axis_count, JoystickState.MaxAxes);
+            }
             if (button_count < 0 || button_count > JoystickState.MaxButtons)
+            {
                 Debug.Print("[{0}] Button count {1} out of range (0, {2})",
                     typeof(JoystickCapabilities).Name, button_count, JoystickState.MaxButtons);
+            }
             if (hat_count < 0 || hat_count > JoystickState.MaxHats)
+            {
                 Debug.Print("[{0}] Hat count {1} out of range (0, {2})",
                     typeof(JoystickCapabilities).Name, hat_count, JoystickState.MaxHats);
+            }
 
             axis_count = MathHelper.Clamp(axis_count, 0, JoystickState.MaxAxes);
             button_count = MathHelper.Clamp(button_count, 0, JoystickState.MaxButtons);
@@ -65,21 +64,13 @@ namespace OpenTK.Input
             this.axis_count = (byte)axis_count;
             this.button_count = (byte)button_count;
             this.hat_count = (byte)hat_count;
-            this.is_connected = is_connected;
+            this.IsConnected = is_connected;
         }
-
-        #endregion
-
-        #region Internal Members
 
         internal void SetIsConnected(bool value)
         {
-            is_connected = value;
+            IsConnected = value;
         }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Gets the number of axes supported by this <see cref="JoystickDevice"/>.
@@ -109,11 +100,7 @@ namespace OpenTK.Input
         /// Gets a value indicating whether this <see cref="JoystickDevice"/> is connected.
         /// </summary>
         /// <value><c>true</c> if this instance is connected; otherwise, <c>false</c>.</value>
-        public bool IsConnected
-        {
-            get { return is_connected; }
-            private set { is_connected = value; }
-        }
+        public bool IsConnected { get; private set; }
 
         /// <summary>
         /// Returns a <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.JoystickCapabilities"/>.
@@ -153,10 +140,6 @@ namespace OpenTK.Input
                 Equals((JoystickCapabilities)obj);
         }
 
-        #endregion
-
-        #region IEquatable<JoystickCapabilities> Members
-
         /// <summary>
         /// Determines whether the specified <see cref="OpenTK.Input.JoystickCapabilities"/> is equal to the current <see cref="OpenTK.Input.JoystickCapabilities"/>.
         /// </summary>
@@ -171,7 +154,5 @@ namespace OpenTK.Input
                 HatCount == other.HatCount &&
                 IsConnected == other.IsConnected;
         }
-
-        #endregion
     }
 }

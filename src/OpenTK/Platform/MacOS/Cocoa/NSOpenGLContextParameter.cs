@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // NSOpenGLContextParameter.cs
 //
 // Author:
@@ -25,13 +24,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 
 namespace OpenTK.Platform.MacOS
 {
-    enum NSOpenGLContextParameter
+    internal enum NSOpenGLContextParameter
     {
         [Obsolete] SwapRectangle = 200,
         [Obsolete] SwapRectangleEnable = 201,

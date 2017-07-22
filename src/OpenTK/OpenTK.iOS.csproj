@@ -11,6 +11,7 @@
     <AssemblyName>OpenTK</AssemblyName>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -121,6 +122,7 @@
     <Compile Include="Input\ButtonState.cs" />
     <Compile Include="Input\Buttons.cs" />
     <Compile Include="Input\ConfigurationType.cs" />
+    <Compile Include="Input\FileDropEventArgs.cs" />
     <Compile Include="Input\GamePad.cs" />
     <Compile Include="Input\GamePadAxes.cs" />
     <Compile Include="Input\GamePadButtons.cs" />
@@ -138,16 +140,11 @@
     <Compile Include="Input\HatPosition.cs" />
     <Compile Include="Input\IGamePadDriver.cs" />
     <Compile Include="Input\IInputDevice.cs" />
-    <Compile Include="Input\IInputDriver.cs" />
     <Compile Include="Input\IInputDriver2.cs" />
-    <Compile Include="Input\IJoystickDriver.cs" />
     <Compile Include="Input\IJoystickDriver2.cs" />
-    <Compile Include="Input\IKeyboardDriver.cs" />
     <Compile Include="Input\IKeyboardDriver2.cs" />
-    <Compile Include="Input\IMouseDriver.cs" />
     <Compile Include="Input\IMouseDriver2.cs" />
     <Compile Include="Input\Joystick.cs" />
-    <Compile Include="Input\JoystickAxis.cs" />
     <Compile Include="Input\JoystickCapabilities.cs" />
     <Compile Include="Input\JoystickDevice.cs" />
     <Compile Include="Input\JoystickHat.cs" />
@@ -169,7 +166,6 @@
     <Compile Include="Math\BezierCurveCubic.cs" />
     <Compile Include="Math\BezierCurveQuadric.cs" />
     <Compile Include="Math\Box2.cs" />
-    <Compile Include="Math\Functions.cs" />
     <Compile Include="Math\Half.cs" />
     <Compile Include="Math\MathHelper.cs" />
     <Compile Include="Math\Matrix2.cs" />
@@ -209,11 +205,8 @@
     <Compile Include="Platform\EmbeddedGraphicsContext.cs" />
     <Compile Include="Platform\Factory.cs" />
     <Compile Include="Platform\IDisplayDeviceDriver.cs" />
-    <Compile Include="Platform\INativeGLWindow.cs" />
     <Compile Include="Platform\IPlatformFactory.cs" />
     <Compile Include="Platform\IWindowInfo.cs" />
-    <Compile Include="Platform\LegacyInputDriver.cs" />
-    <Compile Include="Platform\LegacyJoystickDriver.cs" />
     <Compile Include="Platform\MappedGamePadDriver.cs" />
     <Compile Include="Platform\NativeWindowBase.cs" />
     <Compile Include="Platform\PlatformException.cs" />
@@ -235,7 +228,7 @@
     <None Include="paket.references" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

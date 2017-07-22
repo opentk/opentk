@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,11 +22,9 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 using OpenTK.Audio.OpenAL;
@@ -36,8 +33,6 @@ namespace OpenTK.Audio
 {
     internal static class AudioDeviceEnumerator
     {
-        #region All device strings
-
         private static readonly List<string> available_playback_devices = new List<string>();
         private static readonly List<string> available_recording_devices = new List<string>();
 
@@ -56,44 +51,11 @@ namespace OpenTK.Audio
             }
         }
 
-        #endregion All device strings
+        internal static string DefaultPlaybackDevice { get; }
 
-        #region Default device strings
+        internal static string DefaultRecordingDevice { get; }
 
-        private static string default_playback_device;
-        internal static string DefaultPlaybackDevice
-        {
-            get
-            {
-                return default_playback_device;
-            }
-        }
-
-        private static string default_recording_device;
-        internal static string DefaultRecordingDevice
-        {
-            get
-            {
-                return default_recording_device;
-            }
-        }
-
-        #endregion Default device strings
-
-        #region Is OpenAL supported?
-
-        private static bool openal_supported = true;
-        internal static bool IsOpenALSupported
-        {
-            get
-            {
-                return openal_supported;
-            }
-        }
-
-        #endregion Is OpenAL supported?
-
-        #region Alc Version number
+        internal static bool IsOpenALSupported { get; } = true;
 
         internal enum AlcVersion
         {
@@ -101,18 +63,7 @@ namespace OpenTK.Audio
             Alc1_1
         }
 
-        private static AlcVersion version;
-        internal static AlcVersion Version
-        {
-            get
-            {
-                return version;
-            }
-        }
-
-        #endregion Alc Version number
-
-        #region Constructors
+        internal static AlcVersion Version { get; }
 
         // Loads all available audio devices into the available_*_devices lists.
         static AudioDeviceEnumerator()
@@ -141,32 +92,34 @@ namespace OpenTK.Audio
                 // Get a list of all known playback devices, using best extension available
                 if (Alc.IsExtensionPresent(IntPtr.Zero, "ALC_ENUMERATION_EXT"))
                 {
-                    version = AlcVersion.Alc1_1;
+                    Version = AlcVersion.Alc1_1;
                     if (Alc.IsExtensionPresent(IntPtr.Zero, "ALC_ENUMERATE_ALL_EXT"))
                     {
                         available_playback_devices.AddRange(Alc.GetString(IntPtr.Zero, AlcGetStringList.AllDevicesSpecifier));
-                        default_playback_device = Alc.GetString(IntPtr.Zero, AlcGetString.DefaultAllDevicesSpecifier);
+                        DefaultPlaybackDevice = Alc.GetString(IntPtr.Zero, AlcGetString.DefaultAllDevicesSpecifier);
                     }
                     else
                     {
                         available_playback_devices.AddRange(Alc.GetString(IntPtr.Zero, AlcGetStringList.DeviceSpecifier));
-                        default_playback_device = Alc.GetString(IntPtr.Zero, AlcGetString.DefaultDeviceSpecifier);
+                        DefaultPlaybackDevice = Alc.GetString(IntPtr.Zero, AlcGetString.DefaultDeviceSpecifier);
                     }
                 }
                 else
                 {
-                    version = AlcVersion.Alc1_0;
+                    Version = AlcVersion.Alc1_0;
                     Debug.Print("Device enumeration extension not available. Failed to enumerate playback devices.");
                 }
                 AlcError playback_err = Alc.GetError(dummy_device);
                 if (playback_err != AlcError.NoError)
+                {
                     throw new AudioContextException("Alc Error occured when querying available playback devices. " + playback_err.ToString());
+                }
 
                 // Get a list of all known recording devices, at least ALC_ENUMERATION_EXT is needed too
-                if (version == AlcVersion.Alc1_1 && Alc.IsExtensionPresent(IntPtr.Zero, "ALC_EXT_CAPTURE"))
+                if (Version == AlcVersion.Alc1_1 && Alc.IsExtensionPresent(IntPtr.Zero, "ALC_EXT_CAPTURE"))
                 {
                     available_recording_devices.AddRange(Alc.GetString(IntPtr.Zero, AlcGetStringList.CaptureDeviceSpecifier));
-                    default_recording_device = Alc.GetString(IntPtr.Zero, AlcGetString.CaptureDefaultDeviceSpecifier);
+                    DefaultRecordingDevice = Alc.GetString(IntPtr.Zero, AlcGetString.CaptureDefaultDeviceSpecifier);
                 }
                 else
                 {
@@ -174,55 +127,63 @@ namespace OpenTK.Audio
                 }
                 AlcError record_err = Alc.GetError(dummy_device);
                 if (record_err != AlcError.NoError)
+                {
                     throw new AudioContextException("Alc Error occured when querying available recording devices. " + record_err.ToString());
+                }
 
 #if DEBUG
                 Debug.WriteLine("Found playback devices:");
                 foreach (string s in available_playback_devices)
+                {
                     Debug.WriteLine(s);
+                }
 
-                Debug.WriteLine("Default playback device: " + default_playback_device);
+                Debug.WriteLine("Default playback device: " + DefaultPlaybackDevice);
 
                 Debug.WriteLine("Found recording devices:");
                 foreach (string s in available_recording_devices)
+                {
                     Debug.WriteLine(s);
+                }
 
-                Debug.WriteLine("Default recording device: " + default_recording_device);
+                Debug.WriteLine("Default recording device: " + DefaultRecordingDevice);
 #endif
             }
             catch (DllNotFoundException e)
             {
                 Trace.WriteLine(e.ToString());
-                openal_supported = false;
+                IsOpenALSupported = false;
             }
             catch (AudioContextException ace)
             {
                 Trace.WriteLine(ace.ToString());
-                openal_supported = false;
+                IsOpenALSupported = false;
             }
             finally
             {
                 Debug.Unindent();
 
-                if (openal_supported)
+                if (IsOpenALSupported)
                 {
                     try
                     {
                         // clean up the dummy context
                         Alc.MakeContextCurrent(ContextHandle.Zero);
                         if (dummy_context != ContextHandle.Zero && dummy_context.Handle != IntPtr.Zero)
+                        {
                             Alc.DestroyContext(dummy_context);
+                        }
                         if (dummy_device != IntPtr.Zero)
+                        {
                             Alc.CloseDevice(dummy_device);
+                        }
                     }
                     catch
                     {
-                        openal_supported = false;
+                        IsOpenALSupported = false;
                     }
                 }
             }
         }
-
-        #endregion
     }
 }

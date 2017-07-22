@@ -1,4 +1,3 @@
-#region License
 //
 // NS.cs
 //
@@ -26,8 +25,6 @@
 // THE SOFTWARE.
 //
 
-#endregion
-
 using System;
 using System.Runtime.InteropServices;
 
@@ -35,18 +32,18 @@ namespace OpenTK.Platform.MacOS
 {
     internal class NS
     {
-        const string Library = "libdl.dylib";
+        private const string Library = "libdl.dylib";
 
         [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
-        static extern bool NSIsSymbolNameDefined(string s);
+        private static extern bool NSIsSymbolNameDefined(string s);
         [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
-        static extern bool NSIsSymbolNameDefined(IntPtr s);
+        private static extern bool NSIsSymbolNameDefined(IntPtr s);
         [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
-        static extern IntPtr NSLookupAndBindSymbol(string s);
+        private static extern IntPtr NSLookupAndBindSymbol(string s);
         [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
-        static extern IntPtr NSLookupAndBindSymbol(IntPtr s);
+        private static extern IntPtr NSLookupAndBindSymbol(IntPtr s);
         [DllImport(Library, EntryPoint = "NSAddressOfSymbol")]
-        static extern IntPtr NSAddressOfSymbol(IntPtr symbol);
+        private static extern IntPtr NSAddressOfSymbol(IntPtr symbol);
         [DllImport(Library)]
         private static extern IntPtr dlopen(String fileName, int flags);
         [DllImport(Library)]
@@ -88,7 +85,9 @@ namespace OpenTK.Platform.MacOS
             {
                 symbol = NSLookupAndBindSymbol(function);
                 if (symbol != IntPtr.Zero)
+                {
                     symbol = NSAddressOfSymbol(symbol);
+                }
             }
             return symbol;
         }

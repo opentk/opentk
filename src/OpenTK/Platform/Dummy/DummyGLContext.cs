@@ -1,14 +1,10 @@
-#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  */
-#endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
 using OpenTK.Graphics;
@@ -22,13 +18,10 @@ namespace OpenTK.Platform.Dummy
     /// </summary>
     internal sealed class DummyGLContext : GraphicsContextBase
     {
-        readonly GraphicsContext.GetAddressDelegate Loader;
+        private readonly GraphicsContext.GetAddressDelegate Loader;
 
-        int swap_interval;
-        static int handle_count;
-        Thread current_thread;
-
-        #region --- Constructors ---
+        private static int handle_count;
+        private Thread current_thread;
 
         public DummyGLContext()
         {
@@ -47,10 +40,6 @@ namespace OpenTK.Platform.Dummy
             Loader = loader;
             Mode = new GraphicsMode(new IntPtr(2), 32, 16, 0, 0, 0, 2, false);
         }
-
-        #endregion
-
-        #region --- IGraphicsContext Members ---
 
         public override void SwapBuffers() { }
 
@@ -85,17 +74,7 @@ namespace OpenTK.Platform.Dummy
             return Loader(str);
         }
 
-        public override int SwapInterval
-        {
-            get
-            {
-                return swap_interval;
-            }
-            set
-            {
-                swap_interval = value;
-            }
-        }
+        public override int SwapInterval { get; set; }
 
         public override void Update(IWindowInfo window)
         { }
@@ -113,12 +92,6 @@ namespace OpenTK.Platform.Dummy
             #endif
         }
 
-        #endregion
-
-        #region --- IDisposable Members ---
-
         protected override void Dispose(bool disposing) { IsDisposed = true; }
-
-        #endregion
     }
 }

@@ -1,4 +1,3 @@
-#region License
 //
 // GamePadConfigurationDatabase.cs
 //
@@ -25,24 +24,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
 
 namespace OpenTK.Input
 {
-    class GamePadConfigurationDatabase
+    internal class GamePadConfigurationDatabase
     {
         internal const string UnmappedName = "Unmapped Controller";
 
-        readonly Dictionary<Guid, string> Configurations = new Dictionary<Guid, string>();
+        private readonly Dictionary<Guid, string> Configurations = new Dictionary<Guid, string>();
 
         internal GamePadConfigurationDatabase()
         {
             // Configuration database copied from SDL
-
-            #region License
             // Simple DirectMedia Layer
             // Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
             //
@@ -61,8 +57,6 @@ namespace OpenTK.Input
             // 2. Altered source versions must be plainly marked as such, and must not be
             // misrepresented as being the original software.
             // 3. This notice may not be removed or altered from any source distribution.
-            #endregion
-
             // Default (unknown) configuration
             if (!Configuration.RunningOnSdl2)
             {
@@ -187,7 +181,7 @@ namespace OpenTK.Input
             Add("03000000a306000018f5000010010000,Saitek PLC Saitek P3200 Rumble Pad,x:b0,a:b1,b:b2,y:b3,back:b8,start:b9,dpleft:h0.8,dpdown:h0.0,dpdown:h0.4,dpright:h0.0,dpright:h0.2,dpup:h0.0,dpup:h0.1,leftshoulder:h0.0,leftshoulder:b4,lefttrigger:a2,rightshoulder:b6,rightshoulder:b5,righttrigger:b7,leftstick:b10,rightstick:b11,leftx:a0,lefty:a1,rightx:a3,righty:a4,");
             Add("03000000830500006020000010010000,iBuffalo USB 2-axis 8-button Gamepad,a:b1,b:b0,x:b3,y:b2,back:b6,start:b7,leftshoulder:b4,rightshoulder:b5,leftx:a0,lefty:a1,");
             Add("03000000c9110000f055000011010000,HJC Game GAMEPAD,leftx:a0,lefty:a1,dpdown:h0.4,rightstick:b11,rightshoulder:b5,rightx:a2,start:b9,righty:a3,dpleft:h0.8,lefttrigger:b6,x:b2,dpup:h0.1,back:b8,leftstick:b10,leftshoulder:b4,y:b3,a:b0,dpright:h0.2,righttrigger:b7,b:b1,");
-            
+
             // Android
             Add("4e564944494120436f72706f72617469,NVIDIA Controller,a:b0,b:b1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b9,leftstick:b7,lefttrigger:a4,leftx:a0,lefty:a1,rightshoulder:b10,rightstick:b8,righttrigger:a5,rightx:a2,righty:a3,start:b6,x:b2,y:b3,");
 

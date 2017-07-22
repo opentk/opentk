@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library, except where noted.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,11 +22,8 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 
 using OpenTK.Graphics;
@@ -35,13 +31,9 @@ using OpenTK.Platform;
 
 namespace OpenTK
 {
-    class WinGLControl : IGLControl
+    internal class WinGLControl : IGLControl
     {
-        #region P/Invoke declarations
-
-        #region Message
-
-        struct MSG
+        private struct MSG
         {
             public IntPtr HWnd;
             public uint Message;
@@ -57,11 +49,7 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region Point
-
-        struct POINT
+        private struct POINT
         {
             public int X;
             public int Y;
@@ -83,46 +71,23 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region PeekMessage
-
         [System.Security.SuppressUnmanagedCodeSecurity]
         [System.Runtime.InteropServices.DllImport("User32.dll")]
-        static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, int flags);
+        private static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, int flags);
 
-        #endregion
-
-        #region
-
-        #endregion
-
-        #endregion
-
-        #region Fields
-
-        MSG msg = new MSG();
-        IWindowInfo window_info;
-        GraphicsMode mode;
-
-        #endregion
-
-        #region Constructors
+        private MSG msg = new MSG();
+        private GraphicsMode mode;
 
         public WinGLControl(GraphicsMode mode, Control control)
         {
             this.mode = mode;
 
-            window_info = Utilities.CreateWindowsWindowInfo(control.Handle);
+            WindowInfo = Utilities.CreateWindowsWindowInfo(control.Handle);
         }
-
-        #endregion
-
-        #region IGLControl Members
 
         public IGraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
         {
-            return new GraphicsContext(mode, window_info, major, minor, flags);
+            return new GraphicsContext(mode, WindowInfo, major, minor, flags);
         }
 
         public bool IsIdle
@@ -130,15 +95,6 @@ namespace OpenTK
             get { return !PeekMessage(ref msg, IntPtr.Zero, 0, 0, 0); }
         }
 
-        public IWindowInfo WindowInfo
-        {
-            get
-            {
-                // This method forces the creation of the control. Beware of this side-effect!
-                return window_info;
-            }
-        }
-
-        #endregion
+        public IWindowInfo WindowInfo { get; }
     }
 }
