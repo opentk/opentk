@@ -145,6 +145,7 @@ namespace OpenTK.Platform.MacOS
         private bool shouldClose;
         private int suppressResize;
         private MouseCursor selectedCursor = MouseCursor.Default; // user-selected cursor
+        private bool cursorConfined = false;
 
         public CocoaNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
@@ -637,7 +638,7 @@ namespace OpenTK.Platform.MacOS
                     case NSEventType.MouseMoved:
                         {
                             Point p = new Point(MouseState.X, MouseState.Y);
-                            if (CursorVisible)
+                            if (CursorVisible && !cursorConfined)
                             {
                                 // Use absolute coordinates
                                 var pf = Cocoa.SendPoint(e, selLocationInWindowOwner);
@@ -666,6 +667,10 @@ namespace OpenTK.Platform.MacOS
                             // Only raise events when the mouse has actually moved
                             if (MouseState.X != p.X || MouseState.Y != p.Y)
                             {
+                                if (cursorConfined)
+                                {
+                                    MoveCursorInWindow(p);
+                                }
                                 OnMouseMove(p.X, p.Y);
                             }
                         }
@@ -747,9 +752,10 @@ namespace OpenTK.Platform.MacOS
             return new Point((int)r.X, (int)(GetCurrentScreenFrame().Height - r.Y));
         }
 
-        public override void ConfineCursor (bool confine)
+        public override void ConfineCursor(bool confine)
         {
-            throw new NotImplementedException ();
+            cursorConfined = confine;
+            SetCursorGrab(confine);
         }
 
         public override Icon Icon
@@ -873,6 +879,22 @@ namespace OpenTK.Platform.MacOS
             SetWindowBorder(WindowBorder.Hidden);
             ProcessEvents();
             suppressResize--;
+        }
+
+        // Use when point use window related coordinate system
+        private void MoveCursorInWindow(Point p)
+        {
+            var r = Cocoa.SendRect(
+                windowInfo.Handle,
+                Selector.Get("contentRectForFrameRect:"),
+                Cocoa.SendRect(
+                    windowInfo.Handle,
+                    Selector.Get("frame")));
+
+            var screenPoint = new NSPoint();
+            screenPoint.X = r.X + p.X;
+            screenPoint.Y = r.Y + p.Y;
+            CG.DisplayMoveCursorToPoint(WindowInfo.Handle, screenPoint);
         }
 
         private void RestoreBorder()
@@ -1159,10 +1181,13 @@ namespace OpenTK.Platform.MacOS
                 if (value && !cursorVisible)
                 {
                     SetCursorVisible(true);
+                    SetCursorGrab(true);
                 }
                 else if (!value && cursorVisible)
                 {
                     SetCursorVisible(false);
+                    if (!cursorConfined)
+                        SetCursorGrab(false);
                 }
                 cursorVisible = value;
             }
@@ -1234,25 +1259,31 @@ namespace OpenTK.Platform.MacOS
 
         private void SetCursorVisible(bool visible)
         {
-            // If the mouse is outside the window and we want to hide it,
+            SetCursorGrab(!visible);
+            Cocoa.SendVoid(NSCursor, visible ? selUnhide : selHide);
+        }
+
+        private void SetCursorGrab(bool grab)
+        {
+            // If the mouse is outside the window and we want to grab it,
             // move it inside the window first.
-            // Otherwise, if we are making the cursor visible again,
+            // Otherwise, if we are making the cursor grab again,
             // we place it in the same spot as reported in the current
             // MouseState to avoid sudden jumps.
-            if (!visible && !Bounds.Contains(new Point(MouseState.X, MouseState.Y)))
+            if (grab)
             {
-                Mouse.SetPosition(
-                    (Bounds.Left + Bounds.Right) / 2,
-                    (Bounds.Top + Bounds.Bottom) / 2);
-            }
-            else if (visible)
-            {
-                var p = PointToScreen(new Point(MouseState.X, MouseState.Y));
-                Mouse.SetPosition((int)p.X, (int)p.Y);
-            }
+                var r = Cocoa.SendRect(
+                    windowInfo.Handle,
+                    Selector.Get("contentRectForFrameRect:"),
+                    Cocoa.SendRect(
+                        windowInfo.Handle,
+                        Selector.Get("frame")));
 
-            CG.AssociateMouseAndMouseCursorPosition(visible);
-            Cocoa.SendVoid(NSCursor, visible ? selUnhide : selHide);
+                var p = new NSPoint();
+                p.X = (float)r.X + MouseState.X;
+                p.Y = (float)r.Y + MouseState.Y;
+                CG.DisplayMoveCursorToPoint(WindowInfo.Handle, p);
+            }
         }
 
         private void SetMenuVisible(bool visible)

@@ -139,7 +139,7 @@ namespace OpenTK.Platform.MacOS
         extern static float SendFloat_i386(IntPtr receiver, IntPtr selector);
 
         [DllImport(LibObjC, EntryPoint="objc_msgSend")]
-        extern static float SendFloat_normal(IntPtr receiver, IntPtr selector);
+        extern static double SendFloat_normal(IntPtr receiver, IntPtr selector);
 
         public static float SendFloat(IntPtr receiver, IntPtr selector)
         {
@@ -152,7 +152,7 @@ namespace OpenTK.Platform.MacOS
             }
             else
             {
-                return SendFloat_normal(receiver, selector);
+                return (float)SendFloat_normal(receiver, selector);
             }
             #endif
         }
