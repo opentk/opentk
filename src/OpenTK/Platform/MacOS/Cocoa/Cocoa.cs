@@ -156,6 +156,7 @@ namespace OpenTK.Platform.MacOS
             {
                 return (float)SendFloat_x64(receiver, selector);
             }
+            #endif
         }
 
         // Not the _stret version, perhaps because a NSPoint fits in one register?
