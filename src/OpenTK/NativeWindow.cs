@@ -686,14 +686,14 @@ namespace OpenTK
                 // Release cursor when losing focus, to ensure
                 // IDEs continue working as expected.
                 previous_cursor_visible = CursorVisible;
-                CursorVisible = true;
+                CursorGrabbed = true;
             }
             else if (!previous_cursor_visible)
             {
                 // Make cursor invisible when focus is regained
                 // if cursor was invisible on previous focus loss.
                 previous_cursor_visible = true;
-                CursorVisible = false;
+                CursorGrabbed = false;
             }
             FocusedChanged(this, e);
         }

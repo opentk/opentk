@@ -1116,9 +1116,9 @@ namespace OpenTK.Platform.X11
                                 OnFocusedChanged(EventArgs.Empty);
                             }
 
-                            if (Focused && !CursorVisible)
+                            if (Focused && CursorGrabbed)
                             {
-                                GrabMouse(true, true);
+                                GrabCursor(true);
                             }
                         }
                         break;
@@ -1683,29 +1683,10 @@ namespace OpenTK.Platform.X11
             get { return cursor_visible; }
             set
             {
-                if (value && !cursor_visible)
+                using (new XLock(window.Display))
                 {
-                    using (new XLock(window.Display))
-                    {
-                        if (!is_cursor_confined)
-                            GrabMouse(false, false);
-
-                        Point p = PointToScreen(new Point(MouseState.X, MouseState.Y));
-                        Mouse.SetPosition(p.X, p.Y);
-
-                        // Note: if cursorHandle = IntPtr.Zero, this restores the default cursor
-                        // (equivalent to calling XUndefineCursor)
-                        Functions.XDefineCursor(window.Display, window.Handle, cursorHandle);
-                        cursor_visible = true;
-                    }
-                }
-                else if(!value && cursor_visible)
-                {
-                    using (new XLock(window.Display))
-                    {
-                        GrabMouse(true, true);
-                        cursor_visible = false;
-                    }
+                    HideCursor(value);
+                    cursor_visible = value;
                 }
             }
         }
@@ -1715,25 +1696,33 @@ namespace OpenTK.Platform.X11
             get { return cursor_grabbed; }
             set
             {
-                GrabMouse(value, cursor_visible);
-                cursor_grabbed= value;
+                using (new XLock(window.Display))
+                {
+                    GrabCursor(value);
+                    cursor_grabbed = value;
+                }
             }
         }
 
-        private void GrabMouse(bool grab, bool hide)
+        private void GrabCursor(bool grab)
         {
             if (grab)
             {
                 Functions.XGrabPointer(window.Display, window.Handle, false,
                                        EventMask.PointerMotionMask | EventMask.ButtonPressMask |
-                                       EventMask.ButtonReleaseMask,
+                                       EventMask.ButtonReleaseMask | EventMask.FocusChangeMask,
                                        GrabMode.GrabModeAsync, GrabMode.GrabModeAsync,
-                                       window.Handle, hide ? EmptyCursor : IntPtr.Zero, IntPtr.Zero);
+                                       window.Handle, IntPtr.Zero, IntPtr.Zero);
             }
             else
             {
                 Functions.XUngrabPointer(window.Display, IntPtr.Zero);
             }
+        }
+
+        private void HideCursor(bool hide)
+        {
+            Functions.XDefineCursor(window.Display, window.Handle, hide ? EmptyCursor : cursorHandle);
         }
 
         /// <summary>
