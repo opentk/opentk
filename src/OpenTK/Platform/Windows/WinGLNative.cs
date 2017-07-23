@@ -90,7 +90,7 @@ namespace OpenTK.Platform.Windows
         private MouseCursor cursor = MouseCursor.Default;
         private IntPtr cursor_handle = Functions.LoadCursor(CursorName.Arrow);
         private int cursor_visible_count = 0;
-        private bool is_cursor_confined = false;
+        private bool cursor_grabbed = false;
 
         private static readonly object SyncRoot = new object();
 
@@ -233,7 +233,7 @@ namespace OpenTK.Platform.Windows
             is_in_modal_loop = true;
             StartTimer(handle);
 
-            if (!CursorVisible && !is_cursor_confined)
+            if (cursor_grabbed)
             {
                 GrabCursor(false);
             }
@@ -247,7 +247,7 @@ namespace OpenTK.Platform.Windows
             StopTimer(handle);
 
             // Ensure cursor remains grabbed
-            if (!CursorVisible)
+            if (cursor_grabbed)
             {
                 GrabCursor(true);
             }
@@ -292,7 +292,7 @@ namespace OpenTK.Platform.Windows
                         // If we are in a modal resize/move loop, cursor grabbing is
                         // handled inside [ENTER|EXIT]SIZEMOVE case above.
                         // If not, then we have to handle cursor grabbing here.
-                        if (!CursorVisible)
+                        if (cursor_grabbed)
                         {
                             GrabCursor(true);
                         }
@@ -330,7 +330,7 @@ namespace OpenTK.Platform.Windows
             if (new_border != windowBorder)
             {
                 // Ensure cursor remains grabbed
-                if (!CursorVisible)
+                if (cursor_grabbed)
                 {
                     GrabCursor(true);
                 }
@@ -367,7 +367,7 @@ namespace OpenTK.Platform.Windows
                 OnWindowStateChanged(EventArgs.Empty);
 
                 // Ensure cursor remains grabbed
-                if (!CursorVisible)
+                if (cursor_grabbed)
                 {
                     GrabCursor(true);
                 }
@@ -1263,10 +1263,10 @@ namespace OpenTK.Platform.Windows
 
         public override bool CursorGrabbed
         {
-            get { return is_cursor_confined; }
+            get { return cursor_grabbed; }
             set
             {
-                is_cursor_confined = value;
+                cursor_grabbed = value;
                 GrabCursor(value);
             }
         }
@@ -1283,9 +1283,6 @@ namespace OpenTK.Platform.Windows
                         cursor_visible_count = Functions.ShowCursor(true);
                     }
                     while (cursor_visible_count < 0);
-
-                    if (!is_cursor_confined)
-                        GrabCursor(false);
                 }
                 else if (!value && cursor_visible_count >= 0)
                 {
@@ -1294,8 +1291,6 @@ namespace OpenTK.Platform.Windows
                         cursor_visible_count = Functions.ShowCursor(false);
                     }
                     while (cursor_visible_count >= 0);
-
-                    GrabCursor(true);
                 }
             }
         }
