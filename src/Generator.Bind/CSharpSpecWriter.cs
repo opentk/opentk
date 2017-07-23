@@ -380,7 +380,7 @@ namespace Bind
                         }
                         if (!String.IsNullOrEmpty(docparam.Documentation))
                         {
-                            sw.WriteLine(WriteOptions.NoIndent, " ");
+                            sw.WriteLine(WriteOptions.NoIndent, "");
                             sw.WriteLine("/// {0}", docparam.Documentation);
                             sw.WriteLine("/// </param>");
                         }
