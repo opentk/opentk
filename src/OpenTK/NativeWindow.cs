@@ -47,8 +47,6 @@ namespace OpenTK
         private readonly INativeWindow implementation;
 
         private bool events;
-        private bool cursor_visible = true;
-        private bool cursor_grabbed = false;
         private bool previous_cursor_visible = true;
 
         /// <summary>
@@ -166,9 +164,9 @@ namespace OpenTK
         /// <summary>
         /// Processes operating system events until the NativeWindow becomes idle.
         /// </summary>
-        public void ProcessEvents ()
+        public void ProcessEvents()
         {
-            ProcessEvents (false);
+            ProcessEvents(false);
         }
 
         /// <summary>
@@ -477,10 +475,12 @@ namespace OpenTK
         /// </summary>
         public bool CursorVisible
         {
-            get { return cursor_visible; }
+            get
+            {
+                return implementation.CursorVisible;
+            }
             set
             {
-                cursor_visible = value;
                 implementation.CursorVisible = value;
             }
         }
@@ -490,9 +490,12 @@ namespace OpenTK
         /// </summary>
         public bool CursorGrabbed
         {
-            get { return cursor_grabbed; }
-            set {
-                cursor_grabbed = value;
+            get
+            {
+                return implementation.CursorGrabbed;
+            }
+            set
+            {
                 implementation.CursorGrabbed = value;
             }
         }

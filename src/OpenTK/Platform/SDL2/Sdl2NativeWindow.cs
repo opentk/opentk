@@ -428,23 +428,9 @@ namespace OpenTK.Platform.SDL2
             SDL.SetWindowGrab(window.Handle, grab);
         }
 
-        void HideCursor(bool hide)
+        private void HideCursor(bool hide)
         {
             SDL.ShowCursor(!hide);
-            SDL.SetRelativeMouseMode(hide);
-            if (!hide)
-            {
-                // Move the cursor to the current position
-                // in order to avoid a sudden jump when it
-                // becomes visible again
-                int x, y;
-                SDL.GetMouseState(out x, out y);
-                Console.WriteLine(x + " " + y);
-                float scale = Width / (float)Size.Width;
-                SDL.WarpMouseInWindow(window.Handle,
-                                      (int)Math.Round(MouseState.X / scale),
-                                      (int)Math.Round(MouseState.Y / scale));
-            }
         }
 
         // Hack to force WindowState events to be pumped
@@ -941,8 +927,14 @@ namespace OpenTK.Platform.SDL2
             }
             set
             {
-                is_cursor_confined = value;
-                GrabCursor(value);
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        GrabCursor(value);
+                        is_cursor_confined = value;
+                    }
+                }
             }
         }
 
@@ -958,8 +950,6 @@ namespace OpenTK.Platform.SDL2
                 {
                     if (Exists)
                     {
-                        if (!is_cursor_confined)
-                            GrabCursor(!value);
                         HideCursor(!value);
                         is_cursor_visible = value;
                     }
