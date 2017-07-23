@@ -135,10 +135,10 @@ namespace OpenTK
         /// </summary>
         bool CursorVisible { get; set; }
 
-//        /// <summary>
-//        /// Gets or sets a value, indicating whether the mouse cursor is confined inside the window size.
-//        /// </summary>
-//        bool CursorGrabbed { get; set; }
+        /// <summary>
+        /// Gets or sets a value, indicating whether the mouse cursor is confined inside the window size.
+        /// </summary>
+        bool CursorGrabbed { get; set; }
 
         /// <summary>
         /// Closes this window.
@@ -171,12 +171,6 @@ namespace OpenTK
         /// The point transformed to screen coordinates.
         /// </returns>
         Point PointToScreen(Point point);
-
-        /// <summary>
-        /// Confines the cursor to window.
-        /// </summary>
-        /// <param name="confine">If set to <c>true</c> - confine.</param>
-        void ConfineCursor(bool confine);
 
         /// <summary>
         /// Occurs whenever the window is moved.

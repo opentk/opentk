@@ -835,12 +835,6 @@ namespace OpenTK.Platform.MacOS
             return new Point((int)r.X, (int)(GetCurrentScreenFrame().Height - r.Y));
         }
 
-        public override void ConfineCursor(bool confine)
-        {
-            cursorConfined = confine;
-            SetCursorGrab(confine);
-        }
-
         public override Icon Icon
         {
             get { return icon; }
@@ -1258,6 +1252,16 @@ namespace OpenTK.Platform.MacOS
         private void InvalidateCursorRects()
         {
             Cocoa.SendVoid(windowInfo.Handle, selInvalidateCursorRectsForView, windowInfo.ViewHandle);
+        }
+
+        public override bool CursorGrabbed
+        {
+            get { return cursorConfined; }
+            set
+            {
+                cursorConfined = value;
+                SetCursorGrab(value);
+            }
         }
 
         public override bool CursorVisible

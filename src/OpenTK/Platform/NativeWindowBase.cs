@@ -337,8 +337,6 @@ namespace OpenTK.Platform
 
         public abstract Point PointToScreen(Point point);
 
-        public abstract void ConfineCursor(bool confine);
-
         public abstract Icon Icon { get; set; }
 
         public abstract string Title { get; set; }
@@ -446,6 +444,8 @@ namespace OpenTK.Platform
         public abstract Size ClientSize { get; set; }
 
         public abstract bool CursorVisible { get; set; }
+
+        public abstract bool CursorGrabbed { get; set; }
 
         public abstract MouseCursor Cursor { get; set; }
 

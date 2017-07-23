@@ -137,6 +137,7 @@ namespace OpenTK.Platform.X11
         private MouseCursor cursor = MouseCursor.Default;
         private IntPtr cursorHandle;
         private bool cursor_visible = true;
+        private bool cursor_grabbed = false;
         private bool is_cursor_confined = false;
 
         // Keyboard input
@@ -1709,6 +1710,16 @@ namespace OpenTK.Platform.X11
             }
         }
 
+        public override bool CursorGrabbed
+        {
+            get { return cursor_grabbed; }
+            set
+            {
+                GrabMouse(value, cursor_visible);
+                cursor_grabbed= value;
+            }
+        }
+
         private void GrabMouse(bool grab, bool hide)
         {
             if (grab)
@@ -1877,12 +1888,6 @@ namespace OpenTK.Platform.X11
             point.Y = oy;
 
             return point;
-        }
-
-        public override void ConfineCursor(bool confine)
-        {
-            is_cursor_confined = confine;
-            GrabMouse(confine, false);
         }
 
         protected override void Dispose(bool manuallyCalled)

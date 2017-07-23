@@ -1261,6 +1261,16 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        public override bool CursorGrabbed
+        {
+            get { return is_cursor_confined; }
+            set
+            {
+                is_cursor_confined = value;
+                GrabCursor(value);
+            }
+        }
+
         public override bool CursorVisible
         {
             get { return cursor_visible_count >= 0; } // Not used
@@ -1511,12 +1521,6 @@ namespace OpenTK.Platform.Windows
             }
 
             return point;
-        }
-
-        public override void ConfineCursor(bool confine)
-        {
-            is_cursor_confined = true;
-            GrabCursor(confine);
         }
 
         private MSG msg;

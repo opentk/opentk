@@ -48,6 +48,7 @@ namespace OpenTK
 
         private bool events;
         private bool cursor_visible = true;
+        private bool cursor_grabbed = false;
         private bool previous_cursor_visible = true;
 
         /// <summary>
@@ -165,18 +166,9 @@ namespace OpenTK
         /// <summary>
         /// Processes operating system events until the NativeWindow becomes idle.
         /// </summary>
-        public void ProcessEvents()
+        public void ProcessEvents ()
         {
-            ProcessEvents(false);
-        }
-
-        /// <summary>
-        /// Confines the cursor to window.
-        /// </summary>
-        /// <param name="confine">If set to <c>true</c> confine.</param>
-        public void ConfineCursor(bool confine)
-        {
-            implementation.ConfineCursor(confine);
+            ProcessEvents (false);
         }
 
         /// <summary>
@@ -490,6 +482,18 @@ namespace OpenTK
             {
                 cursor_visible = value;
                 implementation.CursorVisible = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the mouse cursor is grabbed.
+        /// </summary>
+        public bool CursorGrabbed
+        {
+            get { return cursor_grabbed; }
+            set {
+                cursor_grabbed = value;
+                implementation.CursorGrabbed = value;
             }
         }
 

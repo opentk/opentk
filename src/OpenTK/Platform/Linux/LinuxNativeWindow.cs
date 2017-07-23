@@ -374,9 +374,10 @@ namespace OpenTK.Platform.Linux
             return new Point(point.X + client.X, point.Y + client.Y);
         }
 
-        public override void ConfineCursor (bool confine)
+        public override bool CursorGrabbed
         {
-            throw new NotImplementedException ();
+            set {}
+            get { return true; }
         }
 
         protected override void Dispose(bool disposing)

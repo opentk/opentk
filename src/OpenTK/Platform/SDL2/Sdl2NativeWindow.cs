@@ -616,12 +616,6 @@ namespace OpenTK.Platform.SDL2
             return new Point(point.X + client.X, point.Y + client.Y);
         }
 
-        public override void ConfineCursor(bool confine)
-        {
-            is_cursor_confined = confine;
-            GrabCursor(confine);
-        }
-
         public override Icon Icon
         {
             get
@@ -936,6 +930,19 @@ namespace OpenTK.Platform.SDL2
             {
                 float scale = Size.Width / (float)ClientSize.Width;
                 Size = new Size((int)(value.Width * scale), (int)(value.Height * scale));
+            }
+        }
+
+        public override bool CursorGrabbed
+        {
+            get
+            {
+                return is_cursor_confined;
+            }
+            set
+            {
+                is_cursor_confined = value;
+                GrabCursor(value);
             }
         }
 
