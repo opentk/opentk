@@ -1,5 +1,4 @@
-﻿#define COMPAT_REV1519 // Keeps compatibility with revision 1519
- //
+﻿ //
  // The Open Toolkit Library License
  //
  // Copyright (c) 2006 - 2009 the Open Toolkit library.
@@ -40,10 +39,6 @@ namespace OpenTK.Input
         private IntPtr id;
 
         private MouseState state;
-#if COMPAT_REV1519
-        private int wheel_last_accessed = 0;
-        private Point pos_last_accessed = new Point();
-#endif
 
         /// <summary>
         /// Gets a string describing this MouseDevice.
