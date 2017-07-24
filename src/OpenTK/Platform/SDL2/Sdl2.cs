@@ -490,6 +490,10 @@ namespace OpenTK.Platform.SDL2
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_WarpMouseInWindow", ExactSpelling = true)]
         public static extern void WarpMouseInWindow(IntPtr window, int x, int y);
 
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport (lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_WarpMouseGlobal", ExactSpelling = true)]
+        public static extern void WarpMouseGlobal(int x, int y);
+
         /// <summary>
         /// Retrieves driver-dependent window information.
         /// </summary>

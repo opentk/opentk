@@ -146,7 +146,7 @@ namespace OpenTK.Platform.SDL2
 
         public void SetPosition(double x, double y)
         {
-            SDL.WarpMouseInWindow(IntPtr.Zero, (int)x, (int)y);
+            SDL.WarpMouseGlobal((int)x, (int)y);
         }
     }
 }
