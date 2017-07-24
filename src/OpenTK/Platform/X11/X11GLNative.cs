@@ -138,7 +138,6 @@ namespace OpenTK.Platform.X11
         private IntPtr cursorHandle;
         private bool cursor_visible = true;
         private bool cursor_grabbed = false;
-        private bool is_cursor_confined = false;
 
         // Keyboard input
         private readonly byte[] ascii = new byte[16];
@@ -1685,7 +1684,7 @@ namespace OpenTK.Platform.X11
             {
                 using (new XLock(window.Display))
                 {
-                    HideCursor(value);
+                    HideCursor(!value);
                     cursor_visible = value;
                 }
             }

@@ -47,6 +47,7 @@ namespace OpenTK
         private readonly INativeWindow implementation;
 
         private bool events;
+        private bool previous_cursor_grabbed = false;
         private bool previous_cursor_visible = true;
 
         /// <summary>
@@ -683,17 +684,17 @@ namespace OpenTK
         {
             if (!Focused)
             {
-                // Release cursor when losing focus, to ensure
-                // IDEs continue working as expected.
+                // Release cursor and make it visible when losing focus,
+                // to ensure IDEs continue working as expected.
+                previous_cursor_grabbed = CursorGrabbed;
                 previous_cursor_visible = CursorVisible;
-                CursorGrabbed = true;
-            }
-            else if (!previous_cursor_visible)
-            {
-                // Make cursor invisible when focus is regained
-                // if cursor was invisible on previous focus loss.
-                previous_cursor_visible = true;
                 CursorGrabbed = false;
+                CursorVisible = true;
+            }
+            else
+            {
+                CursorGrabbed = previous_cursor_grabbed;
+                CursorVisible = previous_cursor_visible;
             }
             FocusedChanged(this, e);
         }
