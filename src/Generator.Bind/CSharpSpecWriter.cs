@@ -252,7 +252,7 @@ namespace Bind
             {
                 sw.WriteLine("[Slot({0})]", d.Slot);
                 sw.WriteLine("[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
-                sw.WriteLine("static extern {0};", GetDeclarationString(d, false));
+                sw.WriteLine("private static extern {0};", GetDeclarationString(d, false));
                 current_signature++;
             }
 
@@ -380,7 +380,7 @@ namespace Bind
                         }
                         if (!String.IsNullOrEmpty(docparam.Documentation))
                         {
-                            sw.WriteLine(WriteOptions.NoIndent, " ");
+                            sw.WriteLine(WriteOptions.NoIndent, "");
                             sw.WriteLine("/// {0}", docparam.Documentation);
                             sw.WriteLine("/// </param>");
                         }
