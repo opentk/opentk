@@ -269,7 +269,6 @@ namespace OpenTK
         /// </summary>
         /// <param name="cr"></param>
         /// <returns></returns>
-        [CLSCompliant(false)]
         protected override bool OnDrawn(Cairo.Context cr)
 #else
         /// <summary>
@@ -277,7 +276,6 @@ namespace OpenTK
         /// </summary>
         /// <param name="cr"></param>
         /// <returns></returns>
-        [CLSCompliant(false)]
         protected override bool OnExposeEvent(Gdk.EventExpose evnt)
 #endif
         {
@@ -312,7 +310,6 @@ namespace OpenTK
         /// </summary>
         /// <param name="evnt"></param>
         /// <returns></returns>
-        [CLSCompliant(false)]
         protected override bool OnConfigureEvent(Gdk.EventConfigure evnt)
         {
             bool result = base.OnConfigureEvent(evnt);
