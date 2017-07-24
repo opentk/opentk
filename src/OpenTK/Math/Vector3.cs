@@ -237,7 +237,7 @@ namespace OpenTK
         public static readonly Vector3 UnitY = new Vector3(0, 1, 0);
 
         /// <summary>
-        /// /// Defines a unit-length Vector3 that points towards the Z-axis.
+        /// Defines a unit-length Vector3 that points towards the Z-axis.
         /// </summary>
         public static readonly Vector3 UnitZ = new Vector3(0, 0, 1);
 
@@ -255,6 +255,36 @@ namespace OpenTK
         /// Defines the size of the Vector3 struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Marshal.SizeOf(new Vector3());
+
+        /// <summary>
+        /// Defines a unit-length Vector3 that points upward.
+        /// </summary>
+        public static readonly Vector3 Up = new Vector3(0, 1, 0);
+
+        /// <summary>
+        /// Defines a unit-length Vector3 that points downward.
+        /// </summary>
+        public static readonly Vector3 Down = new Vector3(0, -1, 0);
+
+        /// <summary>
+        /// Defines a unit-length Vector3 that points right.
+        /// </summary>
+        public static readonly Vector3 Right = new Vector3(1, 0, 0);
+
+        /// <summary>
+        /// Defines a unit-length Vector3 that points left.
+        /// </summary>
+        public static readonly Vector3 Left = new Vector3(-1, 0, 0);
+
+        /// <summary>
+        /// Defines a unit-length Vector3 that points forward.
+        /// </summary>
+        public static readonly Vector3 Forward = new Vector3(0, 0, -1);
+
+        /// <summary>
+        /// Defines a unit-length Vector3 that points backward.
+        /// </summary>
+        public static readonly Vector3 Backward = new Vector3(0, 0, 1);
 
         /// <summary>
         /// Adds two vectors.
@@ -551,6 +581,28 @@ namespace OpenTK
             result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
             result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
             result.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
+        }
+
+        /// <summary>
+        /// Compute the euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <returns>The distance</returns>
+        public static float Distance(Vector3 vec1, Vector3 vec2)
+        {
+            return (vec1 - vec2).Length;
+        }
+
+        /// <summary>
+        /// Compute the squared euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <returns>The squared distance</returns>
+        public static float DistanceSquared(Vector3 vec1, Vector3 vec2)
+        {
+            return (vec1 - vec2).LengthSquared;
         }
 
         /// <summary>

@@ -135,11 +135,6 @@ namespace OpenTK.Platform.Windows
                         scale_x, scale_y, scale_width, scale_height,
                         title, options, device, IntPtr.Zero),
                     null);
-                child_window = new WinWindowInfo(
-                    CreateWindow(
-                        0, 0, ClientSize.Width, ClientSize.Height,
-                        title, options, device, window.Handle),
-                    window);
                 Functions.DragAcceptFiles(window.Handle, true);
 
                 exists = true;
@@ -276,7 +271,7 @@ namespace OpenTK.Platform.Windows
                         Functions.GetClientRect(handle, out rect);
                         client_rectangle = rect.ToRectangle();
 
-                        Functions.SetWindowPos(child_window.Handle, IntPtr.Zero, 0, 0, ClientRectangle.Width, ClientRectangle.Height,
+                        Functions.SetWindowPos(window.Handle, IntPtr.Zero, bounds.X, bounds.Y, bounds.Width, bounds.Height,
                             SetWindowPosFlags.NOZORDER | SetWindowPosFlags.NOOWNERZORDER |
                             SetWindowPosFlags.NOACTIVATE | SetWindowPosFlags.NOSENDCHANGING);
 
@@ -535,7 +530,7 @@ namespace OpenTK.Platform.Windows
         {
             // If the mouse is captured we get spurious MOUSELEAVE events.
             // So ignore WM_MOUSELEAVE if capture count != 0.
-            if (mouse_capture_count == 0 )
+            if (mouse_capture_count == 0)
             {
                 mouse_outside_window = true;
                 // Mouse tracking is disabled automatically by the OS
@@ -688,7 +683,6 @@ namespace OpenTK.Platform.Windows
                 Functions.UnregisterClass(ClassName, Instance);
             }
             window.Dispose();
-            child_window.Dispose();
 
             OnClosed(EventArgs.Empty);
         }
@@ -735,7 +729,7 @@ namespace OpenTK.Platform.Windows
                     break;
 
                 case WindowMessage.ERASEBKGND:
-                    return new IntPtr(1);
+                    break;
 
                 case WindowMessage.WINDOWPOSCHANGED:
                     HandleWindowPositionChanged(handle, message, wParam, lParam);
@@ -875,7 +869,7 @@ namespace OpenTK.Platform.Windows
         {
             TrackMouseEventStructure me = new TrackMouseEventStructure();
             me.Size = TrackMouseEventStructure.SizeInBytes;
-            me.TrackWindowHandle = child_window.Handle;
+            me.TrackWindowHandle = window.Handle;
             me.Flags = TrackMouseEventFlags.LEAVE;
 
             if (!Functions.TrackMouseEvent(ref me))
@@ -911,6 +905,33 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        [DllImport("gdi32.dll")]
+        static extern IntPtr GetStockObject(StockObjects fnObject);
+
+        public enum StockObjects
+        {
+            WHITE_BRUSH = 0,
+            LTGRAY_BRUSH = 1,
+            GRAY_BRUSH = 2,
+            DKGRAY_BRUSH = 3,
+            BLACK_BRUSH = 4,
+            NULL_BRUSH = 5,
+            HOLLOW_BRUSH = NULL_BRUSH,
+            WHITE_PEN = 6,
+            BLACK_PEN = 7,
+            NULL_PEN = 8,
+            OEM_FIXED_FONT = 10,
+            ANSI_FIXED_FONT = 11,
+            ANSI_VAR_FONT = 12,
+            SYSTEM_FONT = 13,
+            DEVICE_DEFAULT_FONT = 14,
+            DEFAULT_PALETTE = 15,
+            SYSTEM_FIXED_FONT = 16,
+            DEFAULT_GUI_FONT = 17,
+            DC_BRUSH = 18,
+            DC_PEN = 19,
+        }
+
         private IntPtr CreateWindow(int x, int y, int width, int height, string title, GameWindowFlags options, DisplayDevice device, IntPtr parentHandle)
         {
             // Use win32 to create the native window.
@@ -942,6 +963,7 @@ namespace OpenTK.Platform.Windows
             {
                 ExtendedWindowClass wc = new ExtendedWindowClass();
                 wc.Size = ExtendedWindowClass.SizeInBytes;
+                wc.Background = GetStockObject(StockObjects.BLACK_BRUSH);
                 wc.Style = DefaultClassStyle;
                 wc.Instance = Instance;
                 wc.WndProc = WindowProcedureDelegate;
@@ -1161,7 +1183,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public override  bool Exists { get { return exists; } }
+        public override bool Exists { get { return exists; } }
 
         public override MouseCursor Cursor
         {
@@ -1441,7 +1463,7 @@ namespace OpenTK.Platform.Windows
 
                 // Make sure client size doesn't change when changing the border style.
                 Size client_size = ClientSize;
-                Win32Rectangle rect = Win32Rectangle.From(client_size);
+                Win32Rectangle rect = Win32Rectangle.From(bounds);
                 Functions.AdjustWindowRectEx(ref rect, new_style, false, ParentStyleEx);
 
                 // This avoids leaving garbage on the background window.
@@ -1522,7 +1544,7 @@ namespace OpenTK.Platform.Windows
 
         public override IWindowInfo WindowInfo
         {
-            get { return child_window; }
+            get { return window; }
         }
 
         protected override void Dispose(bool calledManually)

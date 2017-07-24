@@ -509,6 +509,32 @@ namespace OpenTK
             result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
         }
 
+        #region Distance
+
+        /// <summary>
+        /// Compute the euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <returns>The distance</returns>
+        public static float Distance(Vector2 vec1, Vector2 vec2)
+        {
+            return (vec1 - vec2).Length;
+        }
+
+        /// <summary>
+        /// Compute the squared euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <returns>The squared distance</returns>
+        public static float DistanceSquared(Vector2 vec1, Vector2 vec2)
+        {
+            return (vec1 - vec2).LengthSquared;
+        }
+
+        #endregion
+
         /// <summary>
         /// Scale a vector to unit length
         /// </summary>
@@ -667,6 +693,19 @@ namespace OpenTK
         }
 
         /// <summary>
+        /// Transforms a vector by a Matrix rotation.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The matrix to rotate the vector by.</param>
+        /// <returns>The result of the operation.</returns>
+        public static Vector2 Transform(ref Matrix2 mat, ref Vector2 vec)
+        {
+            Vector2 result;
+            Matrix2.Mult(ref mat, ref vec, out result);
+            return result;
+        }
+
+        /// <summary>
         /// Transforms a vector by a quaternion rotation.
         /// </summary>
         /// <param name="vec">The vector to transform.</param>
@@ -693,6 +732,18 @@ namespace OpenTK
             Quaternion.Multiply(ref t, ref i, out v);
 
             result = new Vector2(v.X, v.Y);
+        }
+
+        /// <summary>Transform a Position by the given Matrix</summary>
+        /// <param name="pos">The position to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed position</returns>
+        public static Vector2 TransformPosition(Vector2 pos, Matrix3 mat)
+        {
+            Vector2 p;
+            p.X = Vector2.Dot(pos, new Vector2(mat.Column0.X, mat.Column0.Y)) + mat.Row2.X;
+            p.Y = Vector2.Dot(pos, new Vector2(mat.Column1.X, mat.Column1.Y)) + mat.Row2.Y;
+            return p;
         }
 
         /// <summary>
@@ -776,6 +827,28 @@ namespace OpenTK
             vec.X *= scale.X;
             vec.Y *= scale.Y;
             return vec;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix2
+        /// </summary>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="vec">The vector to transform</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector2 operator *(Vector2 vec, Matrix2 mat)
+        {
+            return Vector2.Transform(ref mat, ref vec);
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix3
+        /// </summary>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="vec">The vector to transform</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector2 operator *(Vector2 vec, Matrix3 mat)
+        {
+            return TransformPosition(vec, mat);
         }
 
         /// <summary>
