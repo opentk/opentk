@@ -350,6 +350,22 @@ namespace OpenTK
         }
 
         /// <summary>
+        /// Multiplies a matrix and a vector.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
+        public static void Mult(ref Matrix2 left, ref Vector2 right, out Vector2 result)
+        {
+            float lM11 = left.Row0.X, lM12 = left.Row0.Y,
+                lM21 = left.Row1.X, lM22 = left.Row1.Y,
+                rX = right.X, rY = right.Y;
+
+            result.X = (lM11 * rX) + (lM21 * rY);
+            result.Y = (lM12 * rX) + (lM22 * rY);
+        }
+
+        /// <summary>
         /// Multiplies two instances.
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
@@ -358,6 +374,19 @@ namespace OpenTK
         public static Matrix2 Mult(Matrix2 left, Matrix2 right)
         {
             Matrix2 result;
+            Mult(ref left, ref right, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Multiplies a matrix and a vector.
+        /// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
+        public static Vector2 Mult(Matrix2 left, Vector2 right)
+        {
+            Vector2 result;
             Mult(ref left, ref right, out result);
             return result;
         }
