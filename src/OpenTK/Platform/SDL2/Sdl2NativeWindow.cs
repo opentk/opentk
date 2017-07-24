@@ -231,7 +231,7 @@ namespace OpenTK.Platform.SDL2
 
             // We need MouseUp events to be reported even if they occur
             // outside the window. SetWindowGrab ensures we get them.
-            if (window.CursorVisible && !window.is_cursor_confined)
+            if (!window.is_cursor_confined)
             {
                 SDL.SetWindowGrab(window.window.Handle,
                     button_pressed ? true : false);
