@@ -150,6 +150,7 @@ namespace OpenTK.Rewrite
             catch (InvalidOperationException inex)
             {
                 Console.WriteLine("Failed to load the assembly. It may already have been rewritten, and the debug symbols no longer match.");
+                Console.WriteLine(inex);
             }
         }
 
