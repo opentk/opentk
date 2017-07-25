@@ -117,10 +117,10 @@
     <Rule Id="SA1403" Action="None" /> <!-- File may only contain a single namespace -->
     <Rule Id="SA1404" Action="None" /> <!-- Code analysis suppression must have justification -->
     <Rule Id="SA1405" Action="None" /> <!-- Debug.Assert must provide message text -->
-    <Rule Id="SA1406" Action="None" /> <!-- Debug.Fail must provide message text -->
+    <Rule Id="SA1406" Action="Error" /> <!-- Debug.Fail must provide message text -->
     <Rule Id="SA1407" Action="None" /> <!-- Arithmetic expressions must declare precedence -->
     <Rule Id="SA1408" Action="None" /> <!-- Conditional expressions must declare precedence -->
-    <Rule Id="SA1410" Action="None" /> <!-- Remove delegate parenthesis when possible -->
+    <Rule Id="SA1410" Action="Error" /> <!-- Remove delegate parenthesis when possible -->
     <Rule Id="SA1411" Action="None" /> <!-- Attribute constructor must not use unnecessary parenthesis -->
     <Rule Id="SA1412" Action="None" /> <!-- Store files as UTF-8 with byte order mark -->
     <Rule Id="SA1413" Action="None" /> <!-- Use trailing comma in multi-line initializers -->
