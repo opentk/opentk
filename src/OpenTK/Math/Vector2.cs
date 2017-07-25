@@ -739,8 +739,8 @@ namespace OpenTK
         /// <returns>The transformed position</returns>
         public static void Transform(ref Matrix2 mat, ref Vector2 pos, out Vector2 result)
         {
-            result.X = mat.Row0.X * pos.X + mat.Row1.X * pos.Y;
-            result.Y = mat.Row0.Y * pos.X + mat.Row1.Y * pos.Y;
+            result.X = mat.M11 * pos.X + mat.M12 * pos.Y;
+            result.Y = mat.M21 * pos.X + mat.M22 * pos.Y;
         }
 
         /// <summary>Transform a Position by the given Matrix using right-handed notation.</summary>
@@ -761,8 +761,8 @@ namespace OpenTK
         /// <returns>The transformed position</returns>
         public static void Transform(ref Matrix3 mat, ref Vector2 pos, out Vector2 result)
         {
-            result.X = Dot(pos, new Vector2(mat.Column0.X, mat.Column0.Y)) + mat.Row2.X;
-            result.Y = Dot(pos, new Vector2(mat.Column1.X, mat.Column1.Y)) + mat.Row2.Y;
+            result.X = mat.M11 * pos.X + mat.M12 * pos.Y + mat.M13;
+            result.Y = mat.M21 * pos.X + mat.M22 * pos.Y + mat.M23;
         }
 
         /// <summary>
