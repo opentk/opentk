@@ -110,6 +110,7 @@
     <Rule Id="SA1311" Action="None" /> <!-- Static readonly fields must begin with upper-case letter -->
     <Rule Id="SA1312" Action="None" /> <!-- Variable names must begin with lower-case letter -->
     <Rule Id="SA1313" Action="None" /> <!-- Parameter names must begin with lower-case letter -->
+    <Rule Id="SA1314" Action="None" /> <!-- Type name parameters must begin with T -->
 
     <!-- Maintainability rules -->
     <Rule Id="SA1400" Action="None" /> <!-- Access modifier must be declared -->
@@ -177,6 +178,7 @@
     <Rule Id="SA1625" Action="None" /> <!-- Element documentation must not be copied and pasted -->
     <Rule Id="SA1626" Action="None" /> <!-- Single-line comments must not use documentation style slashes -->
     <Rule Id="SA1627" Action="None" /> <!-- Documentation text must not be empty -->
+    <Rule Id="SA1629" Action="None" /> <!-- Documentation text must end with a period -->
     <Rule Id="SA1633" Action="None" /> <!-- File must have header -->
     <Rule Id="SA1634" Action="None" /> <!-- File header must show copyright -->
     <Rule Id="SA1635" Action="None" /> <!-- File header must have copyright text -->
@@ -188,6 +190,7 @@
     <Rule Id="SA1641" Action="None" /> <!-- File header company name text must match -->
     <Rule Id="SA1642" Action="None" /> <!-- Constructor summary documentation must begin with standard text -->
     <Rule Id="SA1643" Action="None" /> <!-- Destructor summary documentation must begin with standard text -->
+    <Rule Id="SA1644" Action="None" /> <!-- Documentation header must not contain blank lines -->
     <Rule Id="SA1648" Action="None" /> <!-- inheritdoc must be used with inheriting class -->
     <Rule Id="SA1649" Action="None" /> <!-- File name must match first type name -->
     <Rule Id="SA1651" Action="None" /> <!-- Do not use placeholder elements -->
