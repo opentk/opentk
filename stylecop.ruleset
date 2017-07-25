@@ -136,7 +136,7 @@
     <Rule Id="SA1507" Action="None" /> <!-- Code must not contain multiple blank lines in a row -->
     <Rule Id="SA1508" Action="None" /> <!-- Closing braces must not be preceded by blank line -->
     <Rule Id="SA1509" Action="None" /> <!-- Opening braces must not be preceded by blank line -->
-    <Rule Id="SA1510" Action="None" /> <!-- Chained statement blocks must not be preceded by blank line -->
+    <Rule Id="SA1510" Action="Error" /> <!-- Chained statement blocks must not be preceded by blank line -->
     <Rule Id="SA1511" Action="None" /> <!-- While-do footer must not be preceded by blank line -->
     <Rule Id="SA1512" Action="None" /> <!-- Single-line comments must not be followed by blank line -->
     <Rule Id="SA1513" Action="None" /> <!-- Closing brace must be followed by blank line -->
