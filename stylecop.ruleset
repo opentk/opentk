@@ -95,14 +95,16 @@
 
     <!-- Naming rules -->
     <Rule Id="SA1300" Action="None" /> <!-- Element must begin with upper-case letter -->
-    <Rule Id="SA1302" Action="None" /> <!-- Interface names must begin with I -->
+    <Rule Id="SA1302" Action="Error" /> <!-- Interface names must begin with I -->
     <Rule Id="SA1303" Action="None" /> <!-- Const field names must begin with upper-case letter -->
     <Rule Id="SA1304" Action="None" /> <!-- Non-private readonly fields must begin with upper-case letter -->
     <Rule Id="SA1305" Action="None" /> <!-- Field names must not use Hungarian notation -->
     <Rule Id="SA1306" Action="None" /> <!-- Field names must begin with lower-case letter -->
     <Rule Id="SA1307" Action="None" /> <!-- Accessible fields must begin with upper-case letter -->
-    <Rule Id="SA1308" Action="None" /> <!-- Variable names must not be prefixed -->
+    <Rule Id="SA1308" Action="Error" /> <!-- Variable names must not be prefixed -->
     <Rule Id="SA1309" Action="None" /> <!-- Field names must not begin with underscore -->
+    <Rule Id="SX1309" Action="None" /> <!-- Field names must begin with underscore -->
+    <Rule Id="SX1309S" Action="None" /> <!-- Static field names must begin with underscore -->
     <Rule Id="SA1310" Action="None" /> <!-- Field names must not contain underscore -->
     <Rule Id="SA1311" Action="None" /> <!-- Static readonly fields must begin with upper-case letter -->
     <Rule Id="SA1312" Action="None" /> <!-- Variable names must begin with lower-case letter -->
@@ -191,7 +193,6 @@
 
     <Rule Id="SX1101" Action="None" /> <!-- Do not prefix local calls with this. -->
 
-    <Rule Id="SX1309" Action="None" /> <!-- Field names must begin with underscore -->
-    <Rule Id="SX1309S" Action="None" /> <!-- Static field names must begin with underscore -->
+
   </Rules>
 </RuleSet>
