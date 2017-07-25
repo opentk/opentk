@@ -39,6 +39,7 @@
     <!-- Readability rules -->
     <Rule Id="SA1100" Action="None" /> <!-- Do not prefix calls with base unless local implementation exists -->
     <Rule Id="SA1101" Action="None" Intentional="true" /> <!-- Prefix local calls with this -->
+    <Rule Id="SX1101" Action="None" /> <!-- Do not prefix local calls with this. -->
     <Rule Id="SA1102" Action="Error" /> <!-- Query clause must follow previous clause -->
     <Rule Id="SA1103" Action="Error" /> <!-- Query clauses must be on separate lines or all on one line -->
     <Rule Id="SA1104" Action="Error" /> <!-- Query clause must begin on new line when previous clause spans multiple lines -->
@@ -190,9 +191,5 @@
     <Rule Id="SA1648" Action="None" /> <!-- inheritdoc must be used with inheriting class -->
     <Rule Id="SA1649" Action="None" /> <!-- File name must match first type name -->
     <Rule Id="SA1651" Action="None" /> <!-- Do not use placeholder elements -->
-
-    <Rule Id="SX1101" Action="None" /> <!-- Do not prefix local calls with this. -->
-
-
   </Rules>
 </RuleSet>
