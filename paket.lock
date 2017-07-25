@@ -150,6 +150,7 @@ NUGET
     runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.1) - restriction: || (&& (< net452) (>= netstandard1.3) (< monotouch) (< xamarinios) (< xamarinmac)) (&& (>= netstandard1.6) (< monotouch) (< xamarinios) (< xamarinmac))
     runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.1) - restriction: || (&& (< net452) (>= netstandard1.3) (< monotouch) (< xamarinios) (< xamarinmac)) (&& (>= netstandard1.6) (< monotouch) (< xamarinios) (< xamarinmac))
     runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.1) - restriction: || (&& (< net452) (>= netstandard1.3) (< monotouch) (< xamarinios) (< xamarinmac)) (&& (>= netstandard1.6) (< monotouch) (< xamarinios) (< xamarinmac))
+    StyleCop.Analyzers (1.0.2)
     System.AppContext (4.3) - restriction: || (&& (< net452) (>= netstandard1.3)) (>= netstandard1.6)
       System.Runtime (>= 4.3) - restriction: || (&& (< net46) (>= netstandard1.3) (< netstandard1.6) (< monoandroid)) (>= dnxcore50) (&& (>= netstandard1.6) (< monotouch) (< xamarinios) (< xamarinmac))
     System.Buffers (4.3) - restriction: || (&& (< net45) (>= netstandard1.3) (< monotouch) (< xamarinios) (< xamarinmac) (< win8) (< wpa81)) (&& (< net452) (>= netstandard1.3) (< monotouch) (< xamarinios) (< xamarinmac)) (&& (>= dnxcore50) (>= netstandard1.1)) (&& (>= dnxcore50) (>= netstandard1.6)) (&& (>= netstandard1.6) (< monotouch) (< xamarinios) (< xamarinmac))
