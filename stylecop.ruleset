@@ -12,29 +12,29 @@
     <Rule Id="SA1003" Action="Error" /> <!-- Symbols must be spaced correctly -->
     <Rule Id="SA1004" Action="Error" /> <!-- Documentation lines must begin with single space -->
     <Rule Id="SA1005" Action="None" /> <!-- Single line comments must begin with single space -->
-    <Rule Id="SA1006" Action="None" /> <!-- Preprocessor keywords must not be preceded by space -->
-    <Rule Id="SA1007" Action="None" /> <!-- Operator keyword must be followed by space -->
-    <Rule Id="SA1008" Action="None" /> <!-- Opening parenthesis must be spaced correctly -->
-    <Rule Id="SA1009" Action="None" /> <!-- Closing parenthesis must be spaced correctly -->
-    <Rule Id="SA1010" Action="None" /> <!-- Opening square brackets must be spaced correctly -->
-    <Rule Id="SA1011" Action="None" /> <!-- Closing square brackets must be spaced correctly -->
-    <Rule Id="SA1012" Action="None" /> <!-- Opening braces must be spaced correctly -->
-    <Rule Id="SA1013" Action="None" /> <!-- Closing braces must be spaced correctly -->
-    <Rule Id="SA1014" Action="None" /> <!-- Opening generic brackets must be spaced correctly -->
-    <Rule Id="SA1015" Action="None" /> <!-- Closing generic brackets must be spaced correctly -->
-    <Rule Id="SA1016" Action="None" /> <!-- Opening attribute brackets must be spaced correctly -->
-    <Rule Id="SA1017" Action="None" /> <!-- Closing attribute brackets must be spaced correctly -->
-    <Rule Id="SA1018" Action="None" /> <!-- Nullable type symbols must be spaced correctly -->
-    <Rule Id="SA1019" Action="None" /> <!-- Member access symbols must be spaced correctly -->
-    <Rule Id="SA1020" Action="None" /> <!-- Increment decrement symbols must be spaced correctly -->
-    <Rule Id="SA1021" Action="None" /> <!-- Negative signs must be spaced correctly -->
-    <Rule Id="SA1022" Action="None" /> <!-- Positive signs must be spaced correctly -->
-    <Rule Id="SA1023" Action="None" /> <!-- Dereference and access of symbols must be spaced correctly -->
+    <Rule Id="SA1006" Action="Error" /> <!-- Preprocessor keywords must not be preceded by space -->
+    <Rule Id="SA1007" Action="Error" /> <!-- Operator keyword must be followed by space -->
+    <Rule Id="SA1008" Action="Error" /> <!-- Opening parenthesis must be spaced correctly -->
+    <Rule Id="SA1009" Action="Error" /> <!-- Closing parenthesis must be spaced correctly -->
+    <Rule Id="SA1010" Action="Error" /> <!-- Opening square brackets must be spaced correctly -->
+    <Rule Id="SA1011" Action="Error" /> <!-- Closing square brackets must be spaced correctly -->
+    <Rule Id="SA1012" Action="Error" /> <!-- Opening braces must be spaced correctly -->
+    <Rule Id="SA1013" Action="Error" /> <!-- Closing braces must be spaced correctly -->
+    <Rule Id="SA1014" Action="Error" /> <!-- Opening generic brackets must be spaced correctly -->
+    <Rule Id="SA1015" Action="Error" /> <!-- Closing generic brackets must be spaced correctly -->
+    <Rule Id="SA1016" Action="Error" /> <!-- Opening attribute brackets must be spaced correctly -->
+    <Rule Id="SA1017" Action="Error" /> <!-- Closing attribute brackets must be spaced correctly -->
+    <Rule Id="SA1018" Action="Error" /> <!-- Nullable type symbols must be spaced correctly -->
+    <Rule Id="SA1019" Action="Error" /> <!-- Member access symbols must be spaced correctly -->
+    <Rule Id="SA1020" Action="Error" /> <!-- Increment decrement symbols must be spaced correctly -->
+    <Rule Id="SA1021" Action="Error" /> <!-- Negative signs must be spaced correctly -->
+    <Rule Id="SA1022" Action="Error" /> <!-- Positive signs must be spaced correctly -->
+    <Rule Id="SA1023" Action="Error" /> <!-- Dereference and access of symbols must be spaced correctly -->
     <Rule Id="SA1024" Action="None" /> <!-- Colons Must Be Spaced Correctly -->
-    <Rule Id="SA1025" Action="None" /> <!-- Code must not contain multiple whitespace in a row -->
-    <Rule Id="SA1026" Action="None" /> <!-- Code must not contain space after new keyword in implicitly typed array allocation -->
-    <Rule Id="SA1027" Action="None" /> <!-- Use tabs correctly -->
-    <Rule Id="SA1028" Action="None" /> <!-- Code must not contain trailing whitespace -->
+    <Rule Id="SA1025" Action="Error" /> <!-- Code must not contain multiple whitespace in a row -->
+    <Rule Id="SA1026" Action="Error" /> <!-- Code must not contain space after new keyword in implicitly typed array allocation -->
+    <Rule Id="SA1027" Action="Error" /> <!-- Use tabs correctly -->
+    <Rule Id="SA1028" Action="Error" /> <!-- Code must not contain trailing whitespace -->
 
     <!-- Readability rules -->
     <Rule Id="SA1100" Action="None" /> <!-- Do not prefix calls with base unless local implementation exists -->
