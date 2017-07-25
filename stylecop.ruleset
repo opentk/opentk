@@ -1,4 +1,4 @@
-<RuleSet Name="MP3Sharp Rules" ToolsVersion="12.0">
+<RuleSet Name="OpenTK Rules" ToolsVersion="12.0">
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
 
     <!-- Special rules -->
@@ -6,51 +6,51 @@
     <Rule Id="SA0002" Action="Error" /> <!-- Invalid settings file -->
 
     <!-- Spacing rules -->
-    <Rule Id="SA1000" Action="Error" /> <!-- Keywords must be spaced correctly -->
-    <Rule Id="SA1001" Action="Error" /> <!-- Commas must be spaced correctly -->
+    <Rule Id="SA1000" Action="None" /> <!-- Keywords must be spaced correctly -->
+    <Rule Id="SA1001" Action="None" /> <!-- Commas must be spaced correctly -->
     <Rule Id="SA1002" Action="None" /> <!-- Semicolons must be spaced correctly -->
-    <Rule Id="SA1003" Action="Error" /> <!-- Symbols must be spaced correctly -->
-    <Rule Id="SA1004" Action="Error" /> <!-- Documentation lines must begin with single space -->
+    <Rule Id="SA1003" Action="None" /> <!-- Symbols must be spaced correctly -->
+    <Rule Id="SA1004" Action="None" /> <!-- Documentation lines must begin with single space -->
     <Rule Id="SA1005" Action="None" /> <!-- Single line comments must begin with single space -->
     <Rule Id="SA1006" Action="Error" /> <!-- Preprocessor keywords must not be preceded by space -->
-    <Rule Id="SA1007" Action="Error" /> <!-- Operator keyword must be followed by space -->
-    <Rule Id="SA1008" Action="Error" /> <!-- Opening parenthesis must be spaced correctly -->
-    <Rule Id="SA1009" Action="Error" /> <!-- Closing parenthesis must be spaced correctly -->
-    <Rule Id="SA1010" Action="Error" /> <!-- Opening square brackets must be spaced correctly -->
-    <Rule Id="SA1011" Action="Error" /> <!-- Closing square brackets must be spaced correctly -->
-    <Rule Id="SA1012" Action="Error" /> <!-- Opening braces must be spaced correctly -->
-    <Rule Id="SA1013" Action="Error" /> <!-- Closing braces must be spaced correctly -->
+    <Rule Id="SA1007" Action="None" /> <!-- Operator keyword must be followed by space -->
+    <Rule Id="SA1008" Action="None" /> <!-- Opening parenthesis must be spaced correctly -->
+    <Rule Id="SA1009" Action="None" /> <!-- Closing parenthesis must be spaced correctly -->
+    <Rule Id="SA1010" Action="None" /> <!-- Opening square brackets must be spaced correctly -->
+    <Rule Id="SA1011" Action="None" /> <!-- Closing square brackets must be spaced correctly -->
+    <Rule Id="SA1012" Action="None" /> <!-- Opening braces must be spaced correctly -->
+    <Rule Id="SA1013" Action="None" /> <!-- Closing braces must be spaced correctly -->
     <Rule Id="SA1014" Action="Error" /> <!-- Opening generic brackets must be spaced correctly -->
     <Rule Id="SA1015" Action="Error" /> <!-- Closing generic brackets must be spaced correctly -->
     <Rule Id="SA1016" Action="Error" /> <!-- Opening attribute brackets must be spaced correctly -->
     <Rule Id="SA1017" Action="Error" /> <!-- Closing attribute brackets must be spaced correctly -->
     <Rule Id="SA1018" Action="Error" /> <!-- Nullable type symbols must be spaced correctly -->
-    <Rule Id="SA1019" Action="Error" /> <!-- Member access symbols must be spaced correctly -->
+    <Rule Id="SA1019" Action="None" /> <!-- Member access symbols must be spaced correctly -->
     <Rule Id="SA1020" Action="Error" /> <!-- Increment decrement symbols must be spaced correctly -->
     <Rule Id="SA1021" Action="Error" /> <!-- Negative signs must be spaced correctly -->
     <Rule Id="SA1022" Action="Error" /> <!-- Positive signs must be spaced correctly -->
-    <Rule Id="SA1023" Action="Error" /> <!-- Dereference and access of symbols must be spaced correctly -->
+    <Rule Id="SA1023" Action="None" /> <!-- Dereference and access of symbols must be spaced correctly -->
     <Rule Id="SA1024" Action="None" /> <!-- Colons Must Be Spaced Correctly -->
-    <Rule Id="SA1025" Action="Error" /> <!-- Code must not contain multiple whitespace in a row -->
-    <Rule Id="SA1026" Action="Error" /> <!-- Code must not contain space after new keyword in implicitly typed array allocation -->
+    <Rule Id="SA1025" Action="None" /> <!-- Code must not contain multiple whitespace in a row -->
+    <Rule Id="SA1026" Action="None" /> <!-- Code must not contain space after new keyword in implicitly typed array allocation -->
     <Rule Id="SA1027" Action="Error" /> <!-- Use tabs correctly -->
-    <Rule Id="SA1028" Action="Error" /> <!-- Code must not contain trailing whitespace -->
+    <Rule Id="SA1028" Action="None" /> <!-- Code must not contain trailing whitespace -->
 
     <!-- Readability rules -->
     <Rule Id="SA1100" Action="None" /> <!-- Do not prefix calls with base unless local implementation exists -->
-    <Rule Id="SA1101" Action="None" /> <!-- Prefix local calls with this -->
-    <Rule Id="SA1102" Action="None" /> <!-- Query clause must follow previous clause -->
-    <Rule Id="SA1103" Action="None" /> <!-- Query clauses must be on separate lines or all on one line -->
-    <Rule Id="SA1104" Action="None" /> <!-- Query clause must begin on new line when previous clause spans multiple lines -->
-    <Rule Id="SA1105" Action="None" /> <!-- Query clauses spanning multiple lines must begin on own line -->
+    <Rule Id="SA1101" Action="None" /> <!-- Prefix local calls with this --> <!-- Intentional -->
+    <Rule Id="SA1102" Action="Error" /> <!-- Query clause must follow previous clause -->
+    <Rule Id="SA1103" Action="Error" /> <!-- Query clauses must be on separate lines or all on one line -->
+    <Rule Id="SA1104" Action="Error" /> <!-- Query clause must begin on new line when previous clause spans multiple lines -->
+    <Rule Id="SA1105" Action="Error" /> <!-- Query clauses spanning multiple lines must begin on own line -->
     <Rule Id="SA1106" Action="None" /> <!-- Code must not contain empty statements -->
     <Rule Id="SA1107" Action="None" /> <!-- Code must not contain multiple statements on one line -->
     <Rule Id="SA1108" Action="None" /> <!-- Block statements must not contain embedded comments -->
     <Rule Id="SA1110" Action="None" /> <!-- Opening parenthesis or bracket must be on declaration line -->
     <Rule Id="SA1111" Action="None" /> <!-- Closing parenthesis must be on line of last parameter -->
-    <Rule Id="SA1112" Action="None" /> <!-- Closing parenthesis must be on line of opening parenthesis -->
-    <Rule Id="SA1113" Action="None" /> <!-- Comma must be on the same line as previous parameter -->
-    <Rule Id="SA1114" Action="None" /> <!-- Parameter list must follow declaration -->
+    <Rule Id="SA1112" Action="Error" /> <!-- Closing parenthesis must be on line of opening parenthesis -->
+    <Rule Id="SA1113" Action="Error" /> <!-- Comma must be on the same line as previous parameter -->
+    <Rule Id="SA1114" Action="Error" /> <!-- Parameter list must follow declaration -->
     <Rule Id="SA1115" Action="None" /> <!-- Parameter must follow comma -->
     <Rule Id="SA1116" Action="None" /> <!-- Split parameters must start on line after declaration -->
     <Rule Id="SA1117" Action="None" /> <!-- Parameters must be on same line or separate lines -->
@@ -59,8 +59,8 @@
     <Rule Id="SA1120" Action="None" /> <!-- Comments must contain text -->
     <Rule Id="SA1121" Action="None" /> <!-- Use built-in type alias -->
     <Rule Id="SA1122" Action="None" /> <!-- Use string.Empty for empty strings -->
-    <Rule Id="SA1123" Action="None" /> <!-- Do not place regions within elements -->
-    <Rule Id="SA1124" Action="None" /> <!-- Do not use regions -->
+    <Rule Id="SA1123" Action="Error" /> <!-- Do not place regions within elements -->
+    <Rule Id="SA1124" Action="Error" /> <!-- Do not use regions -->
     <Rule Id="SA1125" Action="None" /> <!-- Use shorthand for nullable types -->
     <Rule Id="SA1127" Action="None" /> <!-- Generic type constraints must be on their own line -->
     <Rule Id="SA1128" Action="None" /> <!-- Put constructor initializers on their own line -->
@@ -70,7 +70,9 @@
     <Rule Id="SA1132" Action="None" /> <!-- Do not combine fields -->
     <Rule Id="SA1133" Action="None" /> <!-- Do not combine attributes -->
     <Rule Id="SA1134" Action="None" /> <!-- Attributes must not share line -->
-    <Rule Id="SA1136" Action="None" /> <!-- Enum values should be on separate lines -->
+    <Rule Id="SA1136" Action="Error" /> <!-- Enum values should be on separate lines -->
+    <Rule Id="SA1137" Action="Error" /> <!-- Elements should have the same indentation -->
+    <Rule Id="SA1139" Action="Error" /> <!-- Use literals suffix notation instead of casting -->
 
     <!-- Ordering rules -->
     <Rule Id="SA1200" Action="None" /> <!-- Using directives must be placed correctly -->
