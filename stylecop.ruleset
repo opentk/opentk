@@ -38,7 +38,7 @@
 
     <!-- Readability rules -->
     <Rule Id="SA1100" Action="None" /> <!-- Do not prefix calls with base unless local implementation exists -->
-    <Rule Id="SA1101" Action="None" /> <!-- Prefix local calls with this --> <!-- Intentional -->
+    <Rule Id="SA1101" Action="None" Intentional="true" /> <!-- Prefix local calls with this -->
     <Rule Id="SA1102" Action="Error" /> <!-- Query clause must follow previous clause -->
     <Rule Id="SA1103" Action="Error" /> <!-- Query clauses must be on separate lines or all on one line -->
     <Rule Id="SA1104" Action="Error" /> <!-- Query clause must begin on new line when previous clause spans multiple lines -->
@@ -46,8 +46,8 @@
     <Rule Id="SA1106" Action="None" /> <!-- Code must not contain empty statements -->
     <Rule Id="SA1107" Action="None" /> <!-- Code must not contain multiple statements on one line -->
     <Rule Id="SA1108" Action="None" /> <!-- Block statements must not contain embedded comments -->
-    <Rule Id="SA1110" Action="None" /> <!-- Opening parenthesis or bracket must be on declaration line -->
-    <Rule Id="SA1111" Action="None" /> <!-- Closing parenthesis must be on line of last parameter -->
+    <Rule Id="SA1110" Action="None" Intentional="true" /> <!-- Opening parenthesis or bracket must be on declaration line -->
+    <Rule Id="SA1111" Action="None" Intentional="true" /> <!-- Closing parenthesis must be on line of last parameter -->
     <Rule Id="SA1112" Action="Error" /> <!-- Closing parenthesis must be on line of opening parenthesis -->
     <Rule Id="SA1113" Action="Error" /> <!-- Comma must be on the same line as previous parameter -->
     <Rule Id="SA1114" Action="Error" /> <!-- Parameter list must follow declaration -->
@@ -87,11 +87,11 @@
     <Rule Id="SA1209" Action="None" /> <!-- Using alias directives must be placed after other using directives -->
     <Rule Id="SA1210" Action="None" /> <!-- Using directives must be ordered alphabetically by namespace -->
     <Rule Id="SA1211" Action="None" /> <!-- Using alias directives must be ordered alphabetically by alias name -->
-    <Rule Id="SA1212" Action="None" /> <!-- Property accessors must follow order -->
-    <Rule Id="SA1213" Action="None" /> <!-- Event accessors must follow order -->
+    <Rule Id="SA1212" Action="Error" /> <!-- Property accessors must follow order -->
+    <Rule Id="SA1213" Action="Error" /> <!-- Event accessors must follow order -->
     <Rule Id="SA1214" Action="None" /> <!-- Readonly fields must appear before non-readonly fields -->
-    <Rule Id="SA1216" Action="None" /> <!-- Using static directives must be placed at the correct location. -->
-    <Rule Id="SA1217" Action="None" /> <!-- Using static directives must be ordered alphabetically -->
+    <Rule Id="SA1216" Action="Error" /> <!-- Using static directives must be placed at the correct location. -->
+    <Rule Id="SA1217" Action="Error" /> <!-- Using static directives must be ordered alphabetically -->
 
     <!-- Naming rules -->
     <Rule Id="SA1300" Action="None" /> <!-- Element must begin with upper-case letter -->
