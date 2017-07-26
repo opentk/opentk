@@ -1,6 +1,10 @@
 ﻿#if ANDROID || IPHONE || MINIMAL
 using System;
 
+#if !MINIMAL
+using System.Drawing;
+#endif
+
 namespace OpenTK
 {
     // Override a number of System.* classes when compiling for
