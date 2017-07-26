@@ -233,7 +233,7 @@ namespace OpenTK
                 case null:
                 case "":
                     throw new PlatformNotSupportedException(
-                        "Unknown platform. Please file a bug report at http://www.opentk.com");
+                        "Unknown platform. Please file a bug report at https://github.com/opentk/opentk/issues");
 
                 case "Linux":
                     linux = unix = true;
