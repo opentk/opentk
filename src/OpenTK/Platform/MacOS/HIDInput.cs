@@ -678,17 +678,17 @@ namespace OpenTK.Platform.MacOS
 
                 if (axis_elements.Count >= JoystickState.MaxAxes)
                 {
-                    Debug.Print("[Mac] JoystickAxis limit reached ({0} > {1}), please report a bug at http://www.opentk.com",
+                    Debug.Print("[Mac] JoystickAxis limit reached ({0} > {1}), please report a bug at https://github.com/opentk/opentk/issues",
                         axis_elements.Count, JoystickState.MaxAxes);
                 }
                 if (button_elements.Count > JoystickState.MaxButtons)
                 {
-                    Debug.Print("[Mac] JoystickButton limit reached ({0} > {1}), please report a bug at http://www.opentk.com",
+                    Debug.Print("[Mac] JoystickButton limit reached ({0} > {1}), please report a bug at https://github.com/opentk/opentk/issues",
                         button_elements.Count, JoystickState.MaxButtons);
                 }
                 if (hat_elements.Count > JoystickState.MaxHats)
                 {
-                    Debug.Print("[Mac] JoystickHat limit reached ({0} > {1}), please report a bug at http://www.opentk.com",
+                    Debug.Print("[Mac] JoystickHat limit reached ({0} > {1}), please report a bug at https://github.com/opentk/opentk/issues",
                         hat_elements.Count, JoystickState.MaxHats);
                 }
 

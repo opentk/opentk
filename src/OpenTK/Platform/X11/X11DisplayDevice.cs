@@ -121,7 +121,7 @@ namespace OpenTK.Platform.X11
                     }
                 }
 
-            throw new InvalidOperationException("No primary display found. Please file a bug at http://www.opentk.com");
+            throw new InvalidOperationException("No primary display found. Please file a bug at https://github.com/opentk/opentk/issues");
         }
 
         private bool QueryXinerama(List<DisplayDevice> devices)
