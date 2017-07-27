@@ -43,6 +43,12 @@
     <DocumentationFile>bin\Release\Android\OpenTK.xml</DocumentationFile>
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(OS)' == 'Unix' ">
+    <MonoAndroidToolsDirectory>/usr/lib/mono/mandroid</MonoAndroidToolsDirectory>
+    <MonoAndroidBinDirectory>/usr/lib/mono/xamarin-android/bin</MonoAndroidBinDirectory>
+    <AndroidSdkDirectory>$(ANDROID_SDK_PATH)</AndroidSdkDirectory>
+    <AndroidNdkDirectory>$(ANDROID_NDK_PATH)</AndroidNdkDirectory>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Xml" />
     <Reference Include="Mono.Android" />
