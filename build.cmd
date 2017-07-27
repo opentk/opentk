@@ -16,6 +16,7 @@ IF NOT EXIST build.fsx (
   packages\FAKE\tools\FAKE.exe init.fsx
 )
 
+SET BuildTarget=
 if "%BuildRunner%" == "MyGet" (
   SET BuildTarget=NuGet
 )
