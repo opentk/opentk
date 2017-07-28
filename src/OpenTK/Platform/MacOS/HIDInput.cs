@@ -1165,7 +1165,7 @@ namespace OpenTK.Platform.MacOS
             [DllImport(hid)]
             public static extern IOReturn IOHIDManagerOpen(
                 IOHIDManagerRef manager,
-                IOOptionBits options) ;
+                IOOptionBits options);
 
             [DllImport(hid)]
             public static extern IOReturn IOHIDDeviceOpen(
@@ -1234,7 +1234,7 @@ namespace OpenTK.Platform.MacOS
             [DllImport(hid)]
             public static extern double IOHIDValueGetScaledValue(
                 IOHIDValueRef @value,
-                IOHIDValueScaleType type) ;
+                IOHIDValueScaleType type);
 
             [DllImport(hid)]
             public static extern IOHIDElementType IOHIDElementGetType(

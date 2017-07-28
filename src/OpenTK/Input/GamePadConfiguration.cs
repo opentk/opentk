@@ -216,7 +216,7 @@ namespace OpenTK.Input
                 case 1: position = HatPosition.Up; break;
                 case 2: position = HatPosition.Right; break;
                 case 3: position = HatPosition.UpRight; break;
-                case 4: position = HatPosition.Down ; break;
+                case 4: position = HatPosition.Down; break;
                 case 6: position = HatPosition.DownRight; break;
                 case 8: position = HatPosition.Left; break;
                 case 9: position = HatPosition.UpLeft; break;

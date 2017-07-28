@@ -379,7 +379,7 @@ namespace OpenTK.Platform.X11
 
             private byte nhsync;     /* Number of horiz sync ranges */
             /*XF86VidModeSyncRange* */
-            private IntPtr hsync;/* Horizontal sync ranges */
+            private IntPtr hsync; /* Horizontal sync ranges */
 
             private byte nvsync;     /* Number of vert sync ranges */
             /*XF86VidModeSyncRange* */
@@ -1467,7 +1467,7 @@ XF86VidModeGetGammaRampSize(
             {
                 //ptr = XRRSizes(dpy, screen, &nsizes);
 
-                byte* data = (byte*)XRRSizes(dpy, screen, &count);//(byte*)ptr;
+                byte* data = (byte*)XRRSizes(dpy, screen, &count); //(byte*)ptr;
                 if (count == 0)
                 {
                     return null;
