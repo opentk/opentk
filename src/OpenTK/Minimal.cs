@@ -227,7 +227,9 @@ namespace OpenTK
         public override bool Equals(object obj)
         {
             if (obj is PointF)
+            {
                 return Equals((PointF)obj);
+            }
 
             return false;
         }
@@ -286,7 +288,9 @@ namespace OpenTK
             set
             {
                 if (width < 0)
+                {
                     throw new ArgumentOutOfRangeException();
+                }
                 width = value;
             }
         }
@@ -300,7 +304,9 @@ namespace OpenTK
             set
             {
                 if (height < 0)
+                {
                     throw new ArgumentOutOfRangeException();
+                }
                 height = value;
             }
         }
@@ -353,7 +359,9 @@ namespace OpenTK
         public override bool Equals(object obj)
         {
             if (obj is SizeF)
+            {
                 return Equals((SizeF)obj);
+            }
 
             return false;
         }
@@ -578,7 +586,9 @@ namespace OpenTK
         public override bool Equals(object obj)
         {
             if (obj is RectangleF)
+            {
                 return Equals((RectangleF)obj);
+            }
 
             return false;
         }
@@ -789,7 +799,9 @@ namespace OpenTK
         public override bool Equals(object obj)
         {
             if (!(obj is Color))
+            {
                 return false;
+            }
 
             return Equals((Color)obj);
         }

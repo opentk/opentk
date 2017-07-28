@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -7,7 +6,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -24,7 +23,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -38,8 +36,6 @@ namespace OpenTK.Platform.iPhoneOS
 {
     class iPhoneFactory : PlatformFactoryBase
     {
-        #region IPlatformFactory Members
-
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new iPhoneOS.iPhoneOSGraphicsContext(mode, window, shareContext, major, minor, flags);
@@ -56,7 +52,9 @@ namespace OpenTK.Platform.iPhoneOS
                 EAGLContext c = EAGLContext.CurrentContext;
                 IntPtr h = IntPtr.Zero;
                 if (c != null)
+                {
                     h = c.Handle;
+                }
                 return new ContextHandle(h);
             };
         }
@@ -85,7 +83,5 @@ namespace OpenTK.Platform.iPhoneOS
         {
             throw new NotImplementedException();
         }
-
-        #endregion
     }
 }
