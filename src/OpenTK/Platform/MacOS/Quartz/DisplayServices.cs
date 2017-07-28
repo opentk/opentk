@@ -60,10 +60,10 @@ namespace OpenTK.Platform.MacOS
         // CGSize -> NSSize
         // CGRect -> NSRect
 
-        [DllImport(lib,EntryPoint="CGGetActiveDisplayList")]
+        [DllImport(lib, EntryPoint="CGGetActiveDisplayList")]
         internal unsafe static extern CGDisplayErr GetActiveDisplayList(int maxDisplays, IntPtr* activeDspys, out int dspyCnt);
 
-        [DllImport(lib,EntryPoint="CGMainDisplayID")]
+        [DllImport(lib, EntryPoint="CGMainDisplayID")]
         internal static extern IntPtr MainDisplayID();
 
         // Note: sizeof(HIRect) == 16, which is larger than 8 bytes.
