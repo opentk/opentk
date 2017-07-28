@@ -34,7 +34,7 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.iPhoneOS
 {
-    class iPhoneFactory : PlatformFactoryBase
+    internal class iPhoneFactory : PlatformFactoryBase
     {
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {

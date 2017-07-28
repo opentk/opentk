@@ -86,25 +86,25 @@ namespace OpenTK
     #endif
 
     // System.Xml.XmlIgnoreAttribute
-    class XmlIgnoreAttribute : Attribute
+    internal class XmlIgnoreAttribute : Attribute
     {
     }
 
     // System.ComponentModel.EditorBrowrableAttribute
-    class EditorBrowsableAttribute : Attribute
+    internal class EditorBrowsableAttribute : Attribute
     {
         public EditorBrowsableAttribute(EditorBrowsableState state) { }
     }
 
     // System.ComponentModel.EditorBrowsableState
-    enum EditorBrowsableState
+    internal enum EditorBrowsableState
     {
         Always = 0,
         Never = 1,
         Advanced = 2,
     }
 
-    class RegistryKey
+    internal class RegistryKey
     {
         public RegistryKey OpenSubKey(string name)
         {
@@ -117,14 +117,14 @@ namespace OpenTK
         }
     }
 
-    class Registry
+    internal class Registry
     {
         public static readonly RegistryKey LocalMachine = new RegistryKey();
     }
 
     public struct PointF : IEquatable<PointF>
     {
-        float x, y;
+        private float x, y;
 
         /// <summary>
         /// Constructs a new PointF instance.
@@ -265,7 +265,7 @@ namespace OpenTK
 
     public struct SizeF : IEquatable<SizeF>
     {
-        float width, height;
+        private float width, height;
 
         /// <summary>
         /// Constructs a new SizeF instance.
@@ -397,8 +397,8 @@ namespace OpenTK
 
     public struct RectangleF : IEquatable<RectangleF>
     {
-        PointF location;
-        SizeF size;
+        private PointF location;
+        private SizeF size;
 
         /// <summary>
         /// Constructs a new RectangleF instance.
@@ -625,7 +625,7 @@ namespace OpenTK
 
     public sealed class Icon : IDisposable
     {
-        IntPtr handle;
+        private IntPtr handle;
 
         public Icon(Icon icon, int width, int height)
         {
@@ -665,8 +665,8 @@ namespace OpenTK
 
     public sealed class Bitmap : Image
     {
-        int width;
-        int height;
+        private int width;
+        private int height;
 
         public Bitmap() { }
 
@@ -1549,7 +1549,7 @@ namespace OpenTK
         }
     }
 
-    sealed class BitmapData
+    internal sealed class BitmapData
     {
         internal BitmapData(int width, int height, int stride)
         {
@@ -1564,7 +1564,7 @@ namespace OpenTK
         public int Stride { get; private set; }
     }
 
-    enum ImageLockMode
+    internal enum ImageLockMode
     {
         ReadOnly,
         WriteOnly,
@@ -1572,16 +1572,16 @@ namespace OpenTK
         UserInputBuffer
     }
 
-    enum PixelFormat
+    internal enum PixelFormat
     {
         Format32bppArgb
     }
 
-    enum ImageFormat {
+    internal enum ImageFormat {
         Png
     }
 
-    sealed class SystemEvents
+    internal sealed class SystemEvents
     {
         public static event EventHandler DisplaySettingsChanged;
     }
@@ -1590,7 +1590,7 @@ namespace OpenTK
 // Need a different namespace to avoid clash with OpenTK.Graphics.
 namespace OpenTK.Minimal
 {
-    sealed class Graphics : IDisposable
+    internal sealed class Graphics : IDisposable
     {
         public static Graphics FromImage(OpenTK.Image img)
         {

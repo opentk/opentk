@@ -30,7 +30,7 @@ using ES30 = OpenTK.Graphics.ES30;
 
 namespace OpenTK.Platform.iPhoneOS
 {
-    sealed class GLCalls {
+    internal sealed class GLCalls {
         public delegate void glBindFramebuffer(All target, int framebuffer);
         public delegate void glBindRenderbuffer(All target, int renderbuffer);
         public delegate void glDeleteFramebuffers(int n, ref int framebuffers);
@@ -69,7 +69,7 @@ namespace OpenTK.Platform.iPhoneOS
             throw new ArgumentException("api");
         }
 
-        static GLCalls CreateES1()
+        private static GLCalls CreateES1()
         {
             return new GLCalls() {
                 BindFramebuffer         = (t, f)              => ES11.GL.Oes.BindFramebuffer(t, f),
@@ -88,7 +88,7 @@ namespace OpenTK.Platform.iPhoneOS
             };
         }
 
-        static GLCalls CreateES2()
+        private static GLCalls CreateES2()
         {
             return new GLCalls() {
                 BindFramebuffer         = (t, f)              => ES20.GL.BindFramebuffer((ES20.FramebufferTarget) t, f),
@@ -107,7 +107,7 @@ namespace OpenTK.Platform.iPhoneOS
             };
         }
 
-        static GLCalls CreateES3()
+        private static GLCalls CreateES3()
         {
             return new GLCalls() {
                 BindFramebuffer         = (t, f)              => ES30.GL.BindFramebuffer((ES30.FramebufferTarget) t, f),
@@ -127,7 +127,7 @@ namespace OpenTK.Platform.iPhoneOS
         }
     }
 
-    interface ITimeSource {
+    internal interface ITimeSource {
         void Suspend ();
         void Resume ();
 
@@ -135,12 +135,12 @@ namespace OpenTK.Platform.iPhoneOS
     }
 
     [Register]
-    class CADisplayLinkTimeSource : NSObject, ITimeSource {
-        const string selectorName = "runIteration:";
-        static Selector selRunIteration = new Selector (selectorName);
+    internal class CADisplayLinkTimeSource : NSObject, ITimeSource {
+        private const string selectorName = "runIteration:";
+        private static Selector selRunIteration = new Selector (selectorName);
 
-        iPhoneOSGameView view;
-        CADisplayLink displayLink;
+        private iPhoneOSGameView view;
+        private CADisplayLink displayLink;
 
         public CADisplayLinkTimeSource (iPhoneOSGameView view, int frameInterval)
         {
@@ -177,18 +177,17 @@ namespace OpenTK.Platform.iPhoneOS
 
         [Export (selectorName)]
         [Preserve (Conditional = true)]
-        void RunIteration (NSObject parameter)
+        private void RunIteration (NSObject parameter)
         {
             view.RunIteration (null);
         }
     }
 
-    class NSTimerTimeSource : ITimeSource {
+    internal class NSTimerTimeSource : ITimeSource {
+        private TimeSpan timeout;
+        private NSTimer timer;
 
-        TimeSpan timeout;
-        NSTimer timer;
-
-        iPhoneOSGameView view;
+        private iPhoneOSGameView view;
 
         public NSTimerTimeSource (iPhoneOSGameView view, double updatesPerSecond)
         {
@@ -227,19 +226,19 @@ namespace OpenTK.Platform.iPhoneOS
 
     public class iPhoneOSGameView : UIView, IGameWindow
     {
-        bool suspended;
-        bool disposed;
+        private bool suspended;
+        private bool disposed;
 
-        int framebuffer, renderbuffer;
+        private int framebuffer, renderbuffer;
 
-        GLCalls gl;
+        private GLCalls gl;
 
-        ITimeSource timesource;
-        System.Diagnostics.Stopwatch stopwatch;
-        TimeSpan prevUpdateTime;
-        TimeSpan prevRenderTime;
+        private ITimeSource timesource;
+        private System.Diagnostics.Stopwatch stopwatch;
+        private TimeSpan prevUpdateTime;
+        private TimeSpan prevRenderTime;
 
-        IWindowInfo windowInfo = Utilities.CreateDummyWindowInfo();
+        private IWindowInfo windowInfo = Utilities.CreateDummyWindowInfo();
 
         [Export("initWithCoder:")]
         public iPhoneOSGameView(NSCoder coder)
@@ -261,7 +260,7 @@ namespace OpenTK.Platform.iPhoneOS
             return new Class (typeof (CAEAGLLayer));
         }
 
-        void AssertValid()
+        private void AssertValid()
         {
             if (disposed)
             {
@@ -269,7 +268,7 @@ namespace OpenTK.Platform.iPhoneOS
             }
         }
 
-        void AssertContext()
+        private void AssertContext()
         {
             if (GraphicsContext == null)
             {
@@ -277,7 +276,7 @@ namespace OpenTK.Platform.iPhoneOS
             }
         }
 
-        EAGLRenderingAPI api;
+        private EAGLRenderingAPI api;
         public EAGLRenderingAPI ContextRenderingApi {
             get {
                 AssertValid();
@@ -315,7 +314,7 @@ namespace OpenTK.Platform.iPhoneOS
             }
         }
 
-        bool retainedBacking;
+        private bool retainedBacking;
         public bool LayerRetainsBacking {
             get {
                 AssertValid();
@@ -331,7 +330,7 @@ namespace OpenTK.Platform.iPhoneOS
             }
         }
 
-        NSString colorFormat;
+        private NSString colorFormat;
         public NSString LayerColorFormat {
             get {
                 AssertValid();
@@ -357,7 +356,7 @@ namespace OpenTK.Platform.iPhoneOS
 
         public bool AutoResize {get; set;}
 
-        UIViewController GetViewController()
+        private UIViewController GetViewController()
         {
             UIResponder r = this;
             while (r != null) {
@@ -505,7 +504,7 @@ namespace OpenTK.Platform.iPhoneOS
             set {throw new NotSupportedException();}
         }
 
-        Size size;
+        private Size size;
         public Size Size {
             get {
                 AssertValid();
@@ -648,7 +647,7 @@ namespace OpenTK.Platform.iPhoneOS
             CreateFrameBuffer(eaglLayer);
         }
 
-        void CreateFrameBuffer(CAEAGLLayer eaglLayer)
+        private void CreateFrameBuffer(CAEAGLLayer eaglLayer)
         {
             int oldRenderbuffer = 1;
             gl.GetInteger(All.RenderbufferBindingOes, out oldRenderbuffer);
@@ -773,8 +772,8 @@ namespace OpenTK.Platform.iPhoneOS
             GraphicsContext.SwapBuffers();
         }
 
-        WeakReference frameBufferWindow;
-        WeakReference frameBufferLayer;
+        private WeakReference frameBufferWindow;
+        private WeakReference frameBufferLayer;
 
         public void Run()
         {
@@ -832,7 +831,7 @@ namespace OpenTK.Platform.iPhoneOS
             Start ();
         }
 
-    void Start ()
+        private void Start ()
     {
         prevUpdateTime = TimeSpan.Zero;
         prevRenderTime = TimeSpan.Zero;
@@ -850,7 +849,7 @@ namespace OpenTK.Platform.iPhoneOS
             OnUnload(EventArgs.Empty);
         }
 
-        void Suspend ()
+        private void Suspend ()
         {
             if (timesource != null)
             {
@@ -860,7 +859,7 @@ namespace OpenTK.Platform.iPhoneOS
             suspended = true;
         }
 
-        void Resume ()
+        private void Resume ()
         {
             if (timesource != null)
             {
@@ -950,8 +949,8 @@ namespace OpenTK.Platform.iPhoneOS
             }
         }
 
-        FrameEventArgs updateEventArgs = new FrameEventArgs();
-        FrameEventArgs renderEventArgs = new FrameEventArgs();
+        private FrameEventArgs updateEventArgs = new FrameEventArgs();
+        private FrameEventArgs renderEventArgs = new FrameEventArgs();
 
         internal void RunIteration (NSTimer timer)
         {

@@ -13,8 +13,7 @@ using OpenGLES;
 using OpenTK.Graphics;
 
 namespace OpenTK.Platform.iPhoneOS {
-
-    class iPhoneOSGraphicsContext : EmbeddedGraphicsContext
+    internal class iPhoneOSGraphicsContext : EmbeddedGraphicsContext
     {
         public EAGLContext EAGLContext {get; private set;}
 
