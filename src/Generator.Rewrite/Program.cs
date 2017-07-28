@@ -552,7 +552,7 @@ namespace OpenTK.Rewrite
 
                 if (!p.ParameterType.IsArray && p.ParameterType.Name == "String")
                 {
-                    EmitStringEpilogue(wrapper, p, body, il,GetGeneratedVariable(generatedVariables, p.Name + "_string_ptr", body));
+                    EmitStringEpilogue(wrapper, p, body, il, GetGeneratedVariable(generatedVariables, p.Name + "_string_ptr", body));
                 }
 
                 if (p.ParameterType.IsArray && p.ParameterType.GetElementType().Name == "String")
