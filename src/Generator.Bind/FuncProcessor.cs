@@ -358,7 +358,7 @@ namespace Bind
                 }
                 else if (enum_override.Value == "StringBuilder")
                 {
-                    type.QualifiedType = "StringBuilder";
+                    throw new NotSupportedException("StringBuilder enum overrides are no longer supported");
                 }
                 else
                 {
@@ -1237,13 +1237,10 @@ namespace Bind
                     var p = wrapper.Parameters[i];
                     if ((p.WrapperType & WrapperTypes.StringParameter) != 0)
                     {
+                        p.QualifiedType = "String";
                         if (p.Flow == FlowDirection.Out)
                         {
-                            p.QualifiedType = "StringBuilder";
-                        }
-                        else
-                        {
-                            p.QualifiedType = "String";
+                            p.Reference = true;
                         }
                     }
 
