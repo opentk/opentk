@@ -87,7 +87,7 @@ namespace OpenTK
             {
                 sbyte* str = (sbyte*)ptr.ToPointer();
                 int len = 0;
-                while(*str != 0)
+                while (*str != 0)
                 {
                     ++len;
                     ++str;
