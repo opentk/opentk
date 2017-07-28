@@ -110,7 +110,7 @@ namespace Bind
         }
 
         // New enums namespace (don't use a nested class).
-        public string EnumsNamespace = null;// = "Enums";
+        public string EnumsNamespace = null; // = "Enums";
 
         public string DelegatesClass = "Delegates";
         public string ImportsClass = "Core";
