@@ -16,8 +16,7 @@ using OpenTK.Graphics;
 using OpenTK.Platform.Egl;
 
 namespace OpenTK.Platform.Android {
-
-    class AndroidGraphicsContext : EglContext
+    internal class AndroidGraphicsContext : EglContext
     {
         public AndroidGraphicsContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
@@ -39,8 +38,8 @@ namespace OpenTK.Platform.Android {
 
     public class AndroidWindow : IWindowInfo, IDisposable
     {
-        bool disposed;
-        WeakReference refHolder;
+        private bool disposed;
+        private WeakReference refHolder;
         private EglWindowInfo eglWindowInfo;
 
         // Get native window from surface
@@ -136,7 +135,7 @@ namespace OpenTK.Platform.Android {
             GC.SuppressFinalize (this);
         }
 
-        void Dispose (bool disposing)
+        private void Dispose (bool disposing)
         {
             if (!disposed)
             {

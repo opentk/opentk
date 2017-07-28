@@ -19,7 +19,7 @@ using ES30 = OpenTK.Graphics.ES30;
 
 namespace OpenTK
 {
-    sealed class GLCalls
+    internal sealed class GLCalls
     {
         public GLVersion Version;
 

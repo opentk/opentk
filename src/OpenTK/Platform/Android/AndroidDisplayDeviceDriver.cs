@@ -9,9 +9,9 @@ using System;
 
 namespace OpenTK.Platform.Android
 {
-    class AndroidDisplayDeviceDriver : IDisplayDeviceDriver
+    internal class AndroidDisplayDeviceDriver : IDisplayDeviceDriver
     {
-        static DisplayDevice dev;
+        private static DisplayDevice dev;
         static AndroidDisplayDeviceDriver ()
         {
             dev = new DisplayDevice ();

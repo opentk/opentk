@@ -10,7 +10,7 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Android
 {
-    sealed class AndroidFactory : PlatformFactoryBase
+    internal sealed class AndroidFactory : PlatformFactoryBase
     {
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
