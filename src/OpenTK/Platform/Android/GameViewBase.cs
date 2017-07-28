@@ -1,11 +1,9 @@
-#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2011 Xamarin Inc.
  * Copyright 2013 Xamarin Inc
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  */
-#endregion
 
 using System;
 using System.ComponentModel;
@@ -88,8 +86,6 @@ namespace OpenTK
         {
             return point;
         }
-
-        #region IGameWindow implementation
 
         /// <summary>
         ///   Occurs before the run loop starts.
@@ -454,9 +450,6 @@ namespace OpenTK
         ///   invoked on it.
         /// </exception>
         public abstract void SwapBuffers ();
-        #endregion
-
-        #region INativeWindow implementation
 
         /// <summary>This member is not supported.</summary>
         /// <value>To be added.</value>
@@ -1193,7 +1186,5 @@ namespace OpenTK
             add { throw new NotSupportedException(); }
             remove { throw new NotSupportedException(); }
         }
-
-        #endregion
     }
 }

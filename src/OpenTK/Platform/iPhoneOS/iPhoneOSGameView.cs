@@ -1,4 +1,3 @@
-#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2009 Novell, Inc.
  * Copyright 2013 Xamarin Inc
@@ -6,7 +5,6 @@
  * See license.txt for licensing detailed licensing details.
  */
 // Copyright 2011 Xamarin Inc. All rights reserved.
-#endregion
 
 using System;
 using System.ComponentModel;
@@ -32,7 +30,7 @@ using ES30 = OpenTK.Graphics.ES30;
 
 namespace OpenTK.Platform.iPhoneOS
 {
-    sealed class GLCalls {
+    internal sealed class GLCalls {
         public delegate void glBindFramebuffer(All target, int framebuffer);
         public delegate void glBindRenderbuffer(All target, int renderbuffer);
         public delegate void glDeleteFramebuffers(int n, ref int framebuffers);
@@ -71,7 +69,7 @@ namespace OpenTK.Platform.iPhoneOS
             throw new ArgumentException("api");
         }
 
-        static GLCalls CreateES1()
+        private static GLCalls CreateES1()
         {
             return new GLCalls() {
                 BindFramebuffer         = (t, f)              => ES11.GL.Oes.BindFramebuffer(t, f),
@@ -90,7 +88,7 @@ namespace OpenTK.Platform.iPhoneOS
             };
         }
 
-        static GLCalls CreateES2()
+        private static GLCalls CreateES2()
         {
             return new GLCalls() {
                 BindFramebuffer         = (t, f)              => ES20.GL.BindFramebuffer((ES20.FramebufferTarget) t, f),
@@ -109,7 +107,7 @@ namespace OpenTK.Platform.iPhoneOS
             };
         }
 
-        static GLCalls CreateES3()
+        private static GLCalls CreateES3()
         {
             return new GLCalls() {
                 BindFramebuffer         = (t, f)              => ES30.GL.BindFramebuffer((ES30.FramebufferTarget) t, f),
@@ -129,7 +127,7 @@ namespace OpenTK.Platform.iPhoneOS
         }
     }
 
-    interface ITimeSource {
+    internal interface ITimeSource {
         void Suspend ();
         void Resume ();
 
@@ -137,19 +135,21 @@ namespace OpenTK.Platform.iPhoneOS
     }
 
     [Register]
-    class CADisplayLinkTimeSource : NSObject, ITimeSource {
-        const string selectorName = "runIteration:";
-        static Selector selRunIteration = new Selector (selectorName);
+    internal class CADisplayLinkTimeSource : NSObject, ITimeSource {
+        private const string selectorName = "runIteration:";
+        private static Selector selRunIteration = new Selector (selectorName);
 
-        iPhoneOSGameView view;
-        CADisplayLink displayLink;
+        private iPhoneOSGameView view;
+        private CADisplayLink displayLink;
 
         public CADisplayLinkTimeSource (iPhoneOSGameView view, int frameInterval)
         {
             this.view = view;
 
             if (displayLink != null)
+            {
                 displayLink.Invalidate ();
+            }
 
             displayLink = CADisplayLink.Create (this, selRunIteration);
             displayLink.FrameInterval = frameInterval;
@@ -177,18 +177,17 @@ namespace OpenTK.Platform.iPhoneOS
 
         [Export (selectorName)]
         [Preserve (Conditional = true)]
-        void RunIteration (NSObject parameter)
+        private void RunIteration (NSObject parameter)
         {
             view.RunIteration (null);
         }
     }
 
-    class NSTimerTimeSource : ITimeSource {
+    internal class NSTimerTimeSource : ITimeSource {
+        private TimeSpan timeout;
+        private NSTimer timer;
 
-        TimeSpan timeout;
-        NSTimer timer;
-
-        iPhoneOSGameView view;
+        private iPhoneOSGameView view;
 
         public NSTimerTimeSource (iPhoneOSGameView view, double updatesPerSecond)
         {
@@ -211,7 +210,9 @@ namespace OpenTK.Platform.iPhoneOS
         public void Resume ()
         {
             if (timeout != new TimeSpan (-1))
+            {
                 timer = NSTimer.CreateRepeatingScheduledTimer (timeout, view.RunIteration);
+            }
         }
 
         public void Invalidate ()
@@ -225,19 +226,19 @@ namespace OpenTK.Platform.iPhoneOS
 
     public class iPhoneOSGameView : UIView, IGameWindow
     {
-        bool suspended;
-        bool disposed;
+        private bool suspended;
+        private bool disposed;
 
-        int framebuffer, renderbuffer;
+        private int framebuffer, renderbuffer;
 
-        GLCalls gl;
+        private GLCalls gl;
 
-        ITimeSource timesource;
-        System.Diagnostics.Stopwatch stopwatch;
-        TimeSpan prevUpdateTime;
-        TimeSpan prevRenderTime;
+        private ITimeSource timesource;
+        private System.Diagnostics.Stopwatch stopwatch;
+        private TimeSpan prevUpdateTime;
+        private TimeSpan prevRenderTime;
 
-        IWindowInfo windowInfo = Utilities.CreateDummyWindowInfo();
+        private IWindowInfo windowInfo = Utilities.CreateDummyWindowInfo();
 
         [Export("initWithCoder:")]
         public iPhoneOSGameView(NSCoder coder)
@@ -259,19 +260,23 @@ namespace OpenTK.Platform.iPhoneOS
             return new Class (typeof (CAEAGLLayer));
         }
 
-        void AssertValid()
+        private void AssertValid()
         {
             if (disposed)
+            {
                 throw new ObjectDisposedException("");
+            }
         }
 
-        void AssertContext()
+        private void AssertContext()
         {
             if (GraphicsContext == null)
+            {
                 throw new InvalidOperationException("Operation requires a GraphicsContext, which hasn't been created yet.");
+            }
         }
 
-        EAGLRenderingAPI api;
+        private EAGLRenderingAPI api;
         public EAGLRenderingAPI ContextRenderingApi {
             get {
                 AssertValid();
@@ -280,7 +285,9 @@ namespace OpenTK.Platform.iPhoneOS
             set {
                 AssertValid();
                 if (GraphicsContext != null)
+                {
                     throw new NotSupportedException("Can't change RenderingApi after GraphicsContext is constructed.");
+                }
                 this.api = value;
             }
         }
@@ -292,18 +299,22 @@ namespace OpenTK.Platform.iPhoneOS
                 if (GraphicsContext != null) {
                     iPhoneOSGraphicsContext c = GraphicsContext as iPhoneOSGraphicsContext;
                     if (c != null)
+                    {
                         return c.EAGLContext;
+                    }
                     var i = GraphicsContext as IGraphicsContextInternal;
                     IGraphicsContext ic = i == null ? null : i.Implementation;
                     c = ic as iPhoneOSGraphicsContext;
                     if (c != null)
+                    {
                         return c.EAGLContext;
+                    }
                 }
                 return null;
             }
         }
 
-        bool retainedBacking;
+        private bool retainedBacking;
         public bool LayerRetainsBacking {
             get {
                 AssertValid();
@@ -312,12 +323,14 @@ namespace OpenTK.Platform.iPhoneOS
             set {
                 AssertValid();
                 if (GraphicsContext != null)
+                {
                     throw new NotSupportedException("Can't change LayerRetainsBacking after GraphicsContext is constructed.");
+                }
                 retainedBacking = value;
             }
         }
 
-        NSString colorFormat;
+        private NSString colorFormat;
         public NSString LayerColorFormat {
             get {
                 AssertValid();
@@ -326,7 +339,9 @@ namespace OpenTK.Platform.iPhoneOS
             set {
                 AssertValid();
                 if (GraphicsContext != null)
+                {
                     throw new NotSupportedException("Can't change LayerColorFormat after GraphicsContext is constructed.");
+                }
                 colorFormat = value;
             }
         }
@@ -341,13 +356,15 @@ namespace OpenTK.Platform.iPhoneOS
 
         public bool AutoResize {get; set;}
 
-        UIViewController GetViewController()
+        private UIViewController GetViewController()
         {
             UIResponder r = this;
             while (r != null) {
                 var c = r as UIViewController;
                 if (c != null)
+                {
                     return c;
+                }
                 r = r.NextResponder;
             }
             return null;
@@ -358,7 +375,9 @@ namespace OpenTK.Platform.iPhoneOS
                 AssertValid();
                 var c = GetViewController();
                 if (c != null)
+                {
                     return c.Title;
+                }
                 throw new NotSupportedException();
             }
             set {
@@ -371,7 +390,9 @@ namespace OpenTK.Platform.iPhoneOS
                     }
                 }
                 else
+                {
                     throw new NotSupportedException();
+                }
             }
         }
 
@@ -379,7 +400,9 @@ namespace OpenTK.Platform.iPhoneOS
         {
             var h = TitleChanged;
             if (h != null)
+            {
                 h (this, EventArgs.Empty);
+            }
         }
 
         bool INativeWindow.Focused {
@@ -404,7 +427,9 @@ namespace OpenTK.Platform.iPhoneOS
         {
             var h = VisibleChanged;
             if (h != null)
+            {
                 h (this, EventArgs.Empty);
+            }
         }
 
         bool INativeWindow.Exists {
@@ -427,7 +452,9 @@ namespace OpenTK.Platform.iPhoneOS
 #else
                 if (c != null && c.WantsFullScreenLayout)
 #endif
+                {
                     return WindowState.Fullscreen;
+                }
                 return WindowState.Normal;
             }
             set {
@@ -454,7 +481,9 @@ namespace OpenTK.Platform.iPhoneOS
         {
             var h = WindowStateChanged;
             if (h != null)
+            {
                 h (this, EventArgs.Empty);
+            }
         }
 
         public virtual WindowBorder WindowBorder {
@@ -475,7 +504,7 @@ namespace OpenTK.Platform.iPhoneOS
             set {throw new NotSupportedException();}
         }
 
-        Size size;
+        private Size size;
         public Size Size {
             get {
                 AssertValid();
@@ -494,7 +523,9 @@ namespace OpenTK.Platform.iPhoneOS
         {
             var h = Resize;
             if (h != null)
+            {
                 h (this, e);
+            }
         }
 
         int INativeWindow.X {
@@ -531,7 +562,9 @@ namespace OpenTK.Platform.iPhoneOS
         {
             AssertValid();
             if (LayerColorFormat == null)
+            {
                 throw new InvalidOperationException("Set the LayerColorFormat property to an EAGLColorFormat value before calling Run().");
+            }
 
             CAEAGLLayer eaglLayer = (CAEAGLLayer) Layer;
             eaglLayer.DrawableProperties = NSDictionary.FromObjectsAndKeys (
@@ -573,16 +606,22 @@ namespace OpenTK.Platform.iPhoneOS
             AssertContext();
             EAGLContext oldContext = EAGLContext.CurrentContext;
             if (!GraphicsContext.IsCurrent)
+            {
                 MakeCurrent();
+            }
 
             gl.DeleteFramebuffers (1, ref framebuffer);
             gl.DeleteRenderbuffers (1, ref renderbuffer);
             framebuffer = renderbuffer = 0;
 
             if (oldContext != EAGLContext)
+            {
                 EAGLContext.SetCurrentContext(oldContext);
+            }
             else
+            {
                 EAGLContext.SetCurrentContext(null);
+            }
 
             GraphicsContext.Dispose();
             GraphicsContext = null;
@@ -608,7 +647,7 @@ namespace OpenTK.Platform.iPhoneOS
             CreateFrameBuffer(eaglLayer);
         }
 
-        void CreateFrameBuffer(CAEAGLLayer eaglLayer)
+        private void CreateFrameBuffer(CAEAGLLayer eaglLayer)
         {
             int oldRenderbuffer = 1;
             gl.GetInteger(All.RenderbufferBindingOes, out oldRenderbuffer);
@@ -646,33 +685,45 @@ namespace OpenTK.Platform.iPhoneOS
         {
             var h = Closed;
             if (h != null)
+            {
                 h (this, e);
+            }
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposed)
+            {
                 return;
+            }
             if (disposing) {
                 if (timesource != null)
+                {
                     timesource.Invalidate ();
+                }
                 timesource = null;
                 if (stopwatch != null)
+                {
                     stopwatch.Stop();
+                }
                 stopwatch = null;
                 DestroyFrameBuffer();
             }
             base.Dispose (disposing);
             disposed = true;
             if (disposing)
+            {
                 OnDisposed(EventArgs.Empty);
+            }
         }
 
         protected virtual void OnDisposed(EventArgs e)
         {
             var h = Disposed;
             if (h != null)
+            {
                 h (this, e);
+            }
         }
 
         void INativeWindow.ProcessEvents()
@@ -694,7 +745,9 @@ namespace OpenTK.Platform.iPhoneOS
         {
             base.LayoutSubviews ();
             if (GraphicsContext == null)
+            {
                 return;
+            }
 
             var bounds = Bounds;
             if (AutoResize && (Math.Round(bounds.Width) != Size.Width ||
@@ -719,8 +772,8 @@ namespace OpenTK.Platform.iPhoneOS
             GraphicsContext.SwapBuffers();
         }
 
-        WeakReference frameBufferWindow;
-        WeakReference frameBufferLayer;
+        private WeakReference frameBufferWindow;
+        private WeakReference frameBufferLayer;
 
         public void Run()
         {
@@ -730,17 +783,21 @@ namespace OpenTK.Platform.iPhoneOS
         public void Run (double updatesPerSecond)
         {
             if (updatesPerSecond < 0.0)
+            {
                 throw new ArgumentException ("updatesPerSecond");
-            
+            }
+
             if (updatesPerSecond == 0.0) {
                 RunWithFrameInterval (1);
                 return;
             }
-            
-        if (timesource != null)
-            timesource.Invalidate ();
 
-        timesource = new NSTimerTimeSource (this, updatesPerSecond);
+        if (timesource != null)
+        {
+            timesource.Invalidate ();
+        }
+
+            timesource = new NSTimerTimeSource (this, updatesPerSecond);
 
             CreateFrameBuffer ();
             OnLoad (EventArgs.Empty);
@@ -756,21 +813,25 @@ namespace OpenTK.Platform.iPhoneOS
         public void RunWithFrameInterval (int frameInterval)
         {
             AssertValid ();
-            
+
             if (frameInterval < 1)
+            {
                 throw new ArgumentException ("frameInterval");
+            }
 
-        if (timesource != null)
-            timesource.Invalidate ();
+            if (timesource != null)
+            {
+                timesource.Invalidate ();
+            }
 
-        timesource = new CADisplayLinkTimeSource (this, frameInterval);
+            timesource = new CADisplayLinkTimeSource (this, frameInterval);
 
             CreateFrameBuffer ();
             OnLoad (EventArgs.Empty);
             Start ();
         }
 
-    void Start ()
+        private void Start ()
     {
         prevUpdateTime = TimeSpan.Zero;
         prevRenderTime = TimeSpan.Zero;
@@ -788,18 +849,22 @@ namespace OpenTK.Platform.iPhoneOS
             OnUnload(EventArgs.Empty);
         }
 
-        void Suspend ()
+        private void Suspend ()
         {
             if (timesource != null)
+            {
                 timesource.Suspend ();
+            }
             stopwatch.Stop();
             suspended = true;
         }
 
-        void Resume ()
+        private void Resume ()
         {
             if (timesource != null)
+            {
                 timesource.Resume ();
+            }
             stopwatch.Start();
             suspended = false;
         }
@@ -833,7 +898,7 @@ namespace OpenTK.Platform.iPhoneOS
             // otherwise, use kCGImageAlphaPremultipliedLast
             using (var data_provider = new CGDataProvider (data, 0, data.Length)) {
                 using (var colorspace = CGColorSpace.CreateDeviceRGB ()) {
-                    using (var iref = new CGImage (width, height, 8, 32, width * 4, colorspace, 
+                    using (var iref = new CGImage (width, height, 8, 32, width * 4, colorspace,
                                     (CGImageAlphaInfo) ((int) CGBitmapFlags.ByteOrder32Big | (int) CGImageAlphaInfo.PremultipliedLast),
                                     data_provider, null, true, CGColorRenderingIntent.Default)) {
 
@@ -869,7 +934,9 @@ namespace OpenTK.Platform.iPhoneOS
         public override void WillMoveToWindow(UIWindow window)
         {
             if (window == null && !suspended)
+            {
                 Suspend();
+            }
             else if (window != null && suspended) {
                 if (frameBufferLayer != null && ((CALayer)frameBufferLayer.Target) != Layer ||
                     frameBufferWindow != null && ((UIWindow)frameBufferWindow.Target) != window) {
@@ -882,8 +949,8 @@ namespace OpenTK.Platform.iPhoneOS
             }
         }
 
-        FrameEventArgs updateEventArgs = new FrameEventArgs();
-        FrameEventArgs renderEventArgs = new FrameEventArgs();
+        private FrameEventArgs updateEventArgs = new FrameEventArgs();
+        private FrameEventArgs renderEventArgs = new FrameEventArgs();
 
         internal void RunIteration (NSTimer timer)
         {
@@ -910,7 +977,9 @@ namespace OpenTK.Platform.iPhoneOS
         {
             var h = Load;
             if (h != null)
+            {
                 h (this, e);
+            }
         }
 
         protected virtual void OnUnload(EventArgs e)
@@ -918,21 +987,27 @@ namespace OpenTK.Platform.iPhoneOS
             var h = Unload;
             DestroyFrameBuffer();
             if (h != null)
+            {
                 h (this, e);
+            }
         }
 
         protected virtual void OnUpdateFrame(FrameEventArgs e)
         {
             var h = UpdateFrame;
             if (h != null)
+            {
                 h (this, e);
+            }
         }
 
         protected virtual void OnRenderFrame(FrameEventArgs e)
         {
             var h = RenderFrame;
             if (h != null)
+            {
                 h (this, e);
+            }
         }
 
         event EventHandler<EventArgs> INativeWindow.Move {
