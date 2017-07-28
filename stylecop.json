@@ -1,0 +1,54 @@
+{
+    "$schema" : "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+    "settings" : {
+        "indentation" : {
+            "indentationSize" : 4,
+            "tabSize" : 4,
+            "useTabs" : false
+        },
+        "spacingRules" : {
+        },
+        "readabilityRules" : {
+        },
+        "orderingRules" : {
+            "elementOrder" : [
+                "kind",
+                "constant",
+                "accessibility",
+                "static",
+                "readonly"
+            ],
+            "systemUsingDirectivesFirst" : true,
+            "usingDirectivesPlacement" : "outsideNamespace",
+            "blankLinesBetweenUsingGroups" : "allow"
+        },
+        "namingRules" : {
+            "allowCommonHungarianPrefixes" : true,
+            "allowedHungarianPrefixes" : []
+        },
+        "maintainabilityRules" : {
+            "topLevelTypes" : [
+                "class",
+                "interface",
+                "struct",
+                "enum"
+            ]
+        },
+        "layoutRules" : {
+            "newlineAtEndOfFile" : "omit",
+            "allowConsecutiveUsings" : false
+        },
+        "documentationRules" : {
+            "companyName" : "OpenTK",
+            "copyrightText" : "Copyright (c) {companyName}. All Rights Reserved.\r\nLicensed under the MIT License. See License.txt in the project root for license information.",
+            "xmlHeader" : false,
+            "documentInterfaces" : true,
+            "documentExposedElements" : true,
+            "documentInternalElements" : true,
+            "documentPrivateElements" : false,
+            "documentPrivateFields" : false,
+            "documentationCulture" : "en-US",
+            "fileNamingConvention" : "stylecop"
+        }
+    }
+}
