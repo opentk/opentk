@@ -1254,6 +1254,7 @@ namespace OpenTK.Platform.X11
                     }
                 }
 
+                _waitForEvent = XEventName.ConfigureNotify;
                 ProcessEvents();
             }
         }
