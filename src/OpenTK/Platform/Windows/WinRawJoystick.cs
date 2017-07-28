@@ -51,7 +51,7 @@ namespace OpenTK.Platform.Windows
             internal readonly int XInputIndex;
 
             private readonly Dictionary<int, int> axes =
-                new Dictionary<int,int>();
+                new Dictionary<int, int>();
 
             private readonly Dictionary<int, int> buttons =
                 new Dictionary<int, int>();
