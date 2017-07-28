@@ -228,7 +228,7 @@ namespace OpenTK.Platform.X11
             {
                 foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
                 {
-                    if (AppDomain.CurrentDomain.FriendlyName.EndsWith(assembly.ManifestModule.Name))
+                    if (assembly.ManifestModule.Name.Contains(AppDomain.CurrentDomain.FriendlyName))
                     {
                         if (entry_assembly == null || assembly.ManifestModule.Name.Length > entry_assembly.ManifestModule.Name.Length)
                         {
@@ -238,7 +238,11 @@ namespace OpenTK.Platform.X11
                 }
             }
 
-            var name = entry_assembly.GetName().Name;
+            var name = "null";
+            if (entry_assembly != null)
+            {
+                name = entry_assembly.GetName().Name;
+            }
             class_hint.Class = name;
             class_hint.Name = name.ToLower();
 
