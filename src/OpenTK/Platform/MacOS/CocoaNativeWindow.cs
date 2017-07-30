@@ -1259,10 +1259,7 @@ namespace OpenTK.Platform.MacOS
             get { return cursorGrabbed; }
             set
             {
-                if (value != cursorGrabbed)
-                {
-                    SetCursorGrab(value);
-                }
+                SetCursorGrab(value);
                 cursorGrabbed = value;
             }
         }
