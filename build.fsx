@@ -146,7 +146,7 @@ Target "Clean" (fun _ ->
 
 Target "Build" (fun _ ->
     activeProjects
-    |> MSBuildRelease "" "Rebuild"
+    |> MSBuildRelease "" "Build"
     |> ignore
 )
 
