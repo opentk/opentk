@@ -118,8 +118,8 @@ namespace OpenTK
         // or [StructLayout(LayoutKind.Explicit)]
         private static bool CheckStructLayoutAttribute(Type type)
         {
-            StructLayoutAttribute[] attr = (StructLayoutAttribute[])
-                type.GetCustomAttributes(typeof(StructLayoutAttribute), true);
+            StructLayoutAttribute[] attr =
+                (StructLayoutAttribute[])type.GetCustomAttributes(typeof(StructLayoutAttribute), true);
 
             if ((attr == null) ||
                 (attr != null && attr.Length > 0 && attr[0].Value != LayoutKind.Explicit && attr[0].Pack != 1))
