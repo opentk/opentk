@@ -428,9 +428,9 @@ namespace OpenTK.Platform.SDL2
             SDL.SetWindowGrab(window.Handle, grab);
         }
 
-        private void HideCursor(bool hide)
+        private void SetCursorVisible(bool shouldVisible)
         {
-            SDL.ShowCursor(!hide);
+            SDL.ShowCursor(shouldVisible);
         }
 
         // Hack to force WindowState events to be pumped
@@ -950,7 +950,7 @@ namespace OpenTK.Platform.SDL2
                 {
                     if (Exists)
                     {
-                        HideCursor(!value);
+                        SetCursorVisible(value);
                         is_cursor_visible = value;
                     }
                 }

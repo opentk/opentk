@@ -1684,7 +1684,7 @@ namespace OpenTK.Platform.X11
             {
                 using (new XLock(window.Display))
                 {
-                    HideCursor(!value);
+                    SetCursorVisible(value);
                     cursor_visible = value;
                 }
             }
@@ -1719,9 +1719,9 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        private void HideCursor(bool hide)
+        private void SetCursorVisible(bool shouldVisible)
         {
-            Functions.XDefineCursor(window.Display, window.Handle, hide ? EmptyCursor : cursorHandle);
+            Functions.XDefineCursor(window.Display, window.Handle, shouldVisible ? cursorHandle : EmptyCursor);
         }
 
         /// <summary>

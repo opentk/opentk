@@ -1013,9 +1013,9 @@ namespace OpenTK.Platform.Windows
             suppress_resize--;
         }
 
-        private void GrabCursor(bool grab)
+        private void GrabCursor(bool shouldGrab)
         {
-            if (grab)
+            if (shouldGrab)
             {
                 Point pos = PointToScreen(new Point(ClientRectangle.X, ClientRectangle.Y));
                 Win32Rectangle rect = new Win32Rectangle();
