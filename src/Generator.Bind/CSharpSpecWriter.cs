@@ -709,13 +709,13 @@ namespace Bind
             if (!String.IsNullOrEmpty(p.ComputeSize))
             {
                 int count;
-                if(Int32.TryParse(p.ComputeSize, out count))
+                if (Int32.TryParse(p.ComputeSize, out count))
                 {
                     attributes.Add(String.Format("CountAttribute(Count = {0})", count));
                 }
                 else
                 {
-                    if(p.ComputeSize.StartsWith("COMPSIZE"))
+                    if (p.ComputeSize.StartsWith("COMPSIZE"))
                     {
                         //remove the compsize hint, just keep comma delimited param names
                         var len = "COMPSIZE(".Length;
@@ -729,7 +729,7 @@ namespace Bind
                 }
             }
 
-            if(attributes.Count != 0)
+            if (attributes.Count != 0)
             {
                 sb.Append("[");
                 sb.Append(string.Join(", ", attributes));

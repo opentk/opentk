@@ -111,29 +111,29 @@ namespace OpenTK
         /// </summary>
         public double this[int index] {
             get{
-                if(index == 0)
+                if (index == 0)
                 {
                     return X;
                 }
-                else if(index == 1)
+                else if (index == 1)
                 {
                     return Y;
                 }
-                else if(index == 2)
+                else if (index == 2)
                 {
                     return Z;
                 }
                 throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
             } set{
-                if(index == 0)
+                if (index == 0)
                 {
                     X = value;
                 }
-                else if(index == 1)
+                else if (index == 1)
                 {
                     Y = value;
                 }
-                else if(index == 2)
+                else if (index == 2)
                 {
                     Z = value;
                 }

@@ -106,7 +106,7 @@ namespace OpenTK.Platform.Windows
 
                         string deviceDesc = (string)regkey.GetValue("DeviceDesc");
                         string deviceClass = (string)regkey.GetValue("Class") as string;
-                        if(deviceClass == null)
+                        if (deviceClass == null)
                         {
                             // Added to address OpenTK issue 3198 with mouse on Windows 8
                             string deviceClassGUID = (string)regkey.GetValue("ClassGUID");

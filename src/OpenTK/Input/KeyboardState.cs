@@ -111,7 +111,7 @@ namespace OpenTK.Input
                 {
                     fixed (int* k = Keys)
                     {
-                        for(int i = 0; i < NumInts; ++i)
+                        for (int i = 0; i < NumInts; ++i)
                         {
                             if (k[i] != 0)
                             {
