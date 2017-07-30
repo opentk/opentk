@@ -446,7 +446,7 @@ namespace OpenTK.Platform.Windows
                 }
                 catch (AccessViolationException e)
                 {
-                    Debug.WriteLine("An access violation occured while destroying the OpenGL context. Please report at http://www.opentk.com.");
+                    Debug.WriteLine("An access violation occured while destroying the OpenGL context. Please report at https://github.com/opentk/opentk/issues");
                     Debug.Indent();
                     Debug.Print("Marshal.GetLastWin32Error(): {0}", Marshal.GetLastWin32Error().ToString());
                     Debug.WriteLine(e.ToString());

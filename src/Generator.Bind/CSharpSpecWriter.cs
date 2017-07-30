@@ -252,7 +252,7 @@ namespace Bind
             {
                 sw.WriteLine("[Slot({0})]", d.Slot);
                 sw.WriteLine("[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
-                sw.WriteLine("static extern {0};", GetDeclarationString(d, false));
+                sw.WriteLine("private static extern {0};", GetDeclarationString(d, false));
                 current_signature++;
             }
 
@@ -380,7 +380,7 @@ namespace Bind
                         }
                         if (!String.IsNullOrEmpty(docparam.Documentation))
                         {
-                            sw.WriteLine(WriteOptions.NoIndent, " ");
+                            sw.WriteLine(WriteOptions.NoIndent, "");
                             sw.WriteLine("/// {0}", docparam.Documentation);
                             sw.WriteLine("/// </param>");
                         }
@@ -695,13 +695,45 @@ namespace Bind
         {
             StringBuilder sb = new StringBuilder();
 
+            List<string> attributes = new List<string>();
             if (p.Flow == FlowDirection.Out)
             {
-                sb.Append("[OutAttribute] ");
+                attributes.Add("OutAttribute");
             }
             else if (p.Flow == FlowDirection.Undefined)
             {
-                sb.Append("[InAttribute, OutAttribute] ");
+                attributes.Add("InAttribute");
+                attributes.Add("OutAttribute");
+            }
+
+            if (!String.IsNullOrEmpty(p.ComputeSize))
+            {
+                int count;
+                if (Int32.TryParse(p.ComputeSize, out count))
+                {
+                    attributes.Add(String.Format("CountAttribute(Count = {0})", count));
+                }
+                else
+                {
+                    if (p.ComputeSize.StartsWith("COMPSIZE"))
+                    {
+                        //remove the compsize hint, just keep comma delimited param names
+                        var len = "COMPSIZE(".Length;
+                        var computed = p.ComputeSize.Substring(len, (p.ComputeSize.Length - len) - 1);
+                        attributes.Add(String.Format("CountAttribute(Computed = \"{0}\")", computed));
+                    }
+                    else
+                    {
+                        attributes.Add(String.Format("CountAttribute(Parameter = \"{0}\")", p.ComputeSize));
+                    }
+                }
+            }
+
+            if (attributes.Count != 0)
+            {
+                sb.Append("[");
+                sb.Append(string.Join(", ", attributes));
+                sb.Append("] ");
             }
 
             if (p.Reference)

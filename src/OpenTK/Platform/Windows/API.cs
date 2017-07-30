@@ -2126,6 +2126,14 @@ namespace OpenTK.Platform.Windows
             Target = target;
         }
 
+        public RawInputDevice(HIDUsageCD usage, RawInputDeviceFlags flags, HWND target)
+        {
+            UsagePage = HIDPage.Consumer;
+            Usage = (short)usage;
+            Flags = flags;
+            Target = target;
+        }
+
         public RawInputDevice(HIDUsageSim usage, RawInputDeviceFlags flags, HWND target)
         {
             UsagePage = HIDPage.Simulation;

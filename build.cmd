@@ -15,4 +15,10 @@ IF NOT EXIST build.fsx (
   .paket\paket.exe update
   packages\FAKE\tools\FAKE.exe init.fsx
 )
-packages\FAKE\tools\FAKE.exe build.fsx %*
+
+SET BuildTarget=
+if "%BuildRunner%" == "MyGet" (
+  SET BuildTarget=NuGet
+)
+
+packages\FAKE\tools\FAKE.exe build.fsx %* %BuildTarget%

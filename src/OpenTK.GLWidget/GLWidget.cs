@@ -15,6 +15,7 @@ namespace OpenTK
     /// <summary>
     /// The <see cref="GLWidget"/> is a GTK widget for which an OpenGL context can be used to draw arbitrary graphics.
     /// </summary>
+    [CLSCompliant(false)]
     [ToolboxItem(true)]
     public class GLWidget: DrawingArea
     {

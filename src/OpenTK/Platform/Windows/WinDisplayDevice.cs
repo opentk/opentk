@@ -182,7 +182,7 @@ namespace OpenTK.Platform.Windows
             if (mode.BitsPerPel == 0)
             {
                 Debug.Print(
-                    "[Warning] DisplayDevice '{0}' reported a mode with 0 bpp. Please create a bug report at http://www.opentk.com",
+                    "[Warning] DisplayDevice '{0}' reported a mode with 0 bpp. Please create a bug report at https://github.com/opentk/opentk/issues",
                     device.DeviceName.ToString());
                 mode.BitsPerPel = 32;
             }

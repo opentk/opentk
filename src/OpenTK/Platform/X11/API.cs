@@ -1591,7 +1591,7 @@ XF86VidModeGetGammaRampSize(
             {
                 if (_display == IntPtr.Zero)
                 {
-                    throw new InvalidOperationException("Internal error (XLockDisplay with IntPtr.Zero). Please report this at http://www.opentk.com/node/add/project-issue/opentk");
+                    throw new InvalidOperationException("Internal error (XLockDisplay with IntPtr.Zero). Please report this at https://github.com/opentk/opentk/issues");
                 }
                 return _display;
             }

@@ -177,7 +177,7 @@ Target "NuGet" (fun _ ->
     Paket.Pack(fun p ->
         { p with
             OutputPath = "bin"
-            ExcludedTemplates = "OpenTK.GLWidget" :: xamExcludes
+            ExcludedTemplates = xamExcludes
             Version = release.NugetVersion
             ReleaseNotes = toLines release.Notes})
 )

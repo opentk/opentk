@@ -1,11 +1,9 @@
-#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2011 Xamarin, Inc.
  * Copyright 2013 Xamarin Inc
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  */
-#endregion
 
 using System;
 using OpenTK;
@@ -21,7 +19,7 @@ using ES30 = OpenTK.Graphics.ES30;
 
 namespace OpenTK
 {
-    sealed class GLCalls
+    internal sealed class GLCalls
     {
         public GLVersion Version;
 

@@ -1889,10 +1889,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int length;
             GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.ActiveAttributeMaxLength, out length);
-            StringBuilder sb = new StringBuilder(length == 0 ? 1 : length * 2);
+            string str;
 
-            GetActiveAttrib(program, index, sb.Capacity, out length, out size, out type, sb);
-            return sb.ToString();
+            GetActiveAttrib(program, index, length == 0 ? 1 : length * 2, out length, out size, out type, out str);
+            return str;
         }
 
         /// <summary>
@@ -1919,9 +1919,9 @@ namespace OpenTK.Graphics.OpenGL
             int length;
             GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.ActiveUniformMaxLength, out length);
 
-            StringBuilder sb = new StringBuilder(length == 0 ? 1 : length);
-            GetActiveUniform(program, uniformIndex, sb.Capacity, out length, out size, out type, sb);
-            return sb.ToString();
+            string str;
+            GetActiveUniform(program, uniformIndex, length == 0 ? 1 : length, out length, out size, out type, out str);
+            return str;
         }
 
         /// <summary>
@@ -1941,10 +1941,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int length;
             GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.ActiveUniformMaxLength, out length);
-            StringBuilder sb = new StringBuilder(length == 0 ? 1 : length * 2);
+            string str;
 
-            GetActiveUniformName(program, uniformIndex, sb.Capacity, out length, sb);
-            return sb.ToString();
+            GetActiveUniformName(program, uniformIndex, length == 0 ? 1 : length * 2, out length, out str);
+            return str;
         }
 
         /// <summary>
@@ -1964,10 +1964,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int length;
             GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.ActiveUniformBlockMaxNameLength, out length);
-            StringBuilder sb = new StringBuilder(length == 0 ? 1 : length * 2);
+            string str;
 
-            GetActiveUniformBlockName(program, uniformIndex, sb.Capacity, out length, sb);
-            return sb.ToString();
+            GetActiveUniformBlockName(program, uniformIndex, length == 0 ? 1 : length * 2, out length, out str);
+            return str;
         }
 
         /// <summary>
@@ -2027,9 +2027,7 @@ namespace OpenTK.Graphics.OpenGL
                     info = String.Empty;
                     return;
                 }
-                StringBuilder sb = new StringBuilder(length * 2);
-                GL.GetShaderInfoLog((UInt32)shader, sb.Capacity, &length, sb);
-                info = sb.ToString();
+                GL.GetShaderInfoLog((UInt32)shader, length * 2, &length, out info);
             }
         }
 
@@ -2070,9 +2068,7 @@ namespace OpenTK.Graphics.OpenGL
                     info = String.Empty;
                     return;
                 }
-                StringBuilder sb = new StringBuilder(length * 2);
-                GL.GetProgramInfoLog((UInt32)program, sb.Capacity, &length, sb);
-                info = sb.ToString();
+                GL.GetProgramInfoLog((UInt32)program, length * 2, &length, out info);
             }
         }
 

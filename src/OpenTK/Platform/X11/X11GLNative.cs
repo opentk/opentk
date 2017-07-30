@@ -1652,7 +1652,7 @@ namespace OpenTK.Platform.X11
                         }
                         else
                         {
-                            fixed(byte* pixels = value.Data)
+                            fixed (byte* pixels = value.Data)
                             {
                                 var xcursorimage = Functions.XcursorImageCreate(value.Width, value.Height);
                                 xcursorimage->xhot = (uint)value.X;
@@ -1887,7 +1887,7 @@ namespace OpenTK.Platform.X11
                     if (window != null && window.Handle != IntPtr.Zero)
                     {
                         Functions.XFreeCursor(window.Display, EmptyCursor);
-                        if(cursorHandle != IntPtr.Zero)
+                        if (cursorHandle != IntPtr.Zero)
                         {
                             Functions.XFreeCursor(window.Display, cursorHandle);
                         }

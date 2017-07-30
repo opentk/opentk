@@ -246,10 +246,10 @@ namespace OpenTK.Graphics.OpenGL4
         {
             int length;
             GetProgram(program, OpenGL4.GetProgramParameterName.ActiveAttributeMaxLength, out length);
-            StringBuilder sb = new StringBuilder(length == 0 ? 1 : length * 2);
+            string str;
 
-            GetActiveAttrib(program, index, sb.Capacity, out length, out size, out type, sb);
-            return sb.ToString();
+            GetActiveAttrib(program, index, length == 0 ? 1 : length * 2, out length, out size, out type, out str);
+            return str;
         }
 
         public static string GetActiveUniform(int program, int uniformIndex, out int size, out ActiveUniformType type)
@@ -257,9 +257,9 @@ namespace OpenTK.Graphics.OpenGL4
             int length;
             GetProgram(program, OpenGL4.GetProgramParameterName.ActiveUniformMaxLength, out length);
 
-            StringBuilder sb = new StringBuilder(length == 0 ? 1 : length);
-            GetActiveUniform(program, uniformIndex, sb.Capacity, out length, out size, out type, sb);
-            return sb.ToString();
+            string str;
+            GetActiveUniform(program, uniformIndex, length == 0 ? 1 : length, out length, out size, out type, out str);
+            return str;
         }
 
         public static void ShaderSource(Int32 shader, System.String @string)
@@ -289,9 +289,7 @@ namespace OpenTK.Graphics.OpenGL4
                     info = String.Empty;
                     return;
                 }
-                StringBuilder sb = new StringBuilder(length * 2);
-                GL.GetShaderInfoLog((UInt32)shader, sb.Capacity, &length, sb);
-                info = sb.ToString();
+                GL.GetShaderInfoLog((UInt32)shader, length * 2, &length, out info);
             }
         }
 
@@ -312,9 +310,7 @@ namespace OpenTK.Graphics.OpenGL4
                     info = String.Empty;
                     return;
                 }
-                StringBuilder sb = new StringBuilder(length * 2);
-                GL.GetProgramInfoLog((UInt32)program, sb.Capacity, &length, sb);
-                info = sb.ToString();
+                GL.GetProgramInfoLog((UInt32)program, length * 2, &length, out info);
             }
         }
 

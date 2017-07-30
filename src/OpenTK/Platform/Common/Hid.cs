@@ -141,7 +141,8 @@ namespace OpenTK.Platform.Common
     // Consumer electronic devices
     internal enum HIDUsageCD
     {
-        ACPan = 0x0238
+        ACPan = 0x0238,
+        ConsumerControl = 0x01
     }
 
     // Generic desktop usage
