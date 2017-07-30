@@ -235,7 +235,7 @@ namespace OpenTK.Platform.Windows
 
             if (cursor_grabbed)
             {
-                GrabCursor(false);
+                SetCursorGrab(false);
             }
         }
 
@@ -249,7 +249,7 @@ namespace OpenTK.Platform.Windows
             // Ensure cursor remains grabbed
             if (cursor_grabbed)
             {
-                GrabCursor(true);
+                SetCursorGrab(true);
             }
         }
 
@@ -294,7 +294,7 @@ namespace OpenTK.Platform.Windows
                         // If not, then we have to handle cursor grabbing here.
                         if (cursor_grabbed)
                         {
-                            GrabCursor(true);
+                            SetCursorGrab(true);
                         }
                     }
                 }
@@ -332,7 +332,7 @@ namespace OpenTK.Platform.Windows
                 // Ensure cursor remains grabbed
                 if (cursor_grabbed)
                 {
-                    GrabCursor(true);
+                    SetCursorGrab(true);
                 }
 
                 windowBorder = new_border;
@@ -369,7 +369,7 @@ namespace OpenTK.Platform.Windows
                 // Ensure cursor remains grabbed
                 if (cursor_grabbed)
                 {
-                    GrabCursor(true);
+                    SetCursorGrab(true);
                 }
             }
         }
@@ -1013,7 +1013,7 @@ namespace OpenTK.Platform.Windows
             suppress_resize--;
         }
 
-        private void GrabCursor(bool shouldGrab)
+        private void SetCursorGrab(bool shouldGrab)
         {
             if (shouldGrab)
             {
@@ -1267,7 +1267,7 @@ namespace OpenTK.Platform.Windows
             set
             {
                 cursor_grabbed = value;
-                GrabCursor(value);
+                SetCursorGrab(value);
             }
         }
 

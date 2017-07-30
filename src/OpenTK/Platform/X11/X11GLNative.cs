@@ -1117,7 +1117,7 @@ namespace OpenTK.Platform.X11
 
                             if (Focused && CursorGrabbed)
                             {
-                                GrabCursor(true);
+                                SetCursorGrab(true);
                             }
                         }
                         break;
@@ -1697,15 +1697,15 @@ namespace OpenTK.Platform.X11
             {
                 using (new XLock(window.Display))
                 {
-                    GrabCursor(value);
+                    SetCursorGrab(value);
                     cursor_grabbed = value;
                 }
             }
         }
 
-        private void GrabCursor(bool grab)
+        private void SetCursorGrab(bool shouldGrab)
         {
-            if (grab)
+            if (shouldGrab)
             {
                 Functions.XGrabPointer(window.Display, window.Handle, false,
                                        EventMask.PointerMotionMask | EventMask.ButtonPressMask |

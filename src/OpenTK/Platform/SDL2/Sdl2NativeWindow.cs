@@ -423,9 +423,9 @@ namespace OpenTK.Platform.SDL2
             window.Handle = IntPtr.Zero;
         }
 
-        private void GrabCursor(bool grab)
+        private void SetCursorGrab(bool shouldGrab)
         {
-            SDL.SetWindowGrab(window.Handle, grab);
+            SDL.SetWindowGrab(window.Handle, shouldGrab);
         }
 
         private void SetCursorVisible(bool shouldVisible)
@@ -778,7 +778,7 @@ namespace OpenTK.Platform.SDL2
 
                             if (!CursorVisible)
                             {
-                                GrabCursor(true);
+                                SetCursorGrab(true);
                             }
                         }
                     }
@@ -931,7 +931,7 @@ namespace OpenTK.Platform.SDL2
                 {
                     if (Exists)
                     {
-                        GrabCursor(value);
+                        SetCursorGrab(value);
                         is_cursor_grabbed = value;
                     }
                 }
