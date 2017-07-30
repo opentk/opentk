@@ -553,7 +553,7 @@ namespace OpenTK.Platform.X11
             public byte A, R, G, B;
             public Pixel(byte a, byte r, byte g, byte b)
             {
-                A= a;
+                A = a;
                 R = r;
                 G = g;
                 B = b;
@@ -602,7 +602,7 @@ namespace OpenTK.Platform.X11
             {
                 for (int x = 0; x < width; ++x)
                 {
-                    byte bit = (byte) (1 << (msbfirst ? (7 - (x & 7)) : (x & 7)));
+                    byte bit = (byte)(1 << (msbfirst ? (7 - (x & 7)) : (x & 7)));
                     int offset = y * stride + (x >> 3);
 
                     if (image.GetPixel(x, y).A >= 128)

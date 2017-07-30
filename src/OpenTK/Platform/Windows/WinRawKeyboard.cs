@@ -109,7 +109,7 @@ namespace OpenTK.Platform.Windows
                         // making a guess at backwards compatability. Not sure what older windows returns in these cases...
                         if (deviceClass == null || deviceClass.Equals(string.Empty)){
                             RegistryKey classGUIDKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Class\" + deviceClassGUID);
-                            deviceClass = classGUIDKey != null ? (string) classGUIDKey.GetValue("Class") : string.Empty;
+                            deviceClass = classGUIDKey != null ? (string)classGUIDKey.GetValue("Class") : string.Empty;
                         }
 
                         if (String.IsNullOrEmpty(deviceDesc))

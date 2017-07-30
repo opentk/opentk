@@ -306,7 +306,7 @@ namespace OpenTK
         }
 
         private static unsafe int FloatToInt32Bits(float f) {
-            return *((int*) &f);
+            return *((int*)&f);
         }
 
         /// <summary>

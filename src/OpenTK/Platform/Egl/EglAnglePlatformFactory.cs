@@ -53,7 +53,7 @@ namespace OpenTK.Platform.Egl
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window,
             IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            var angle_window = (IAngleWindowInfoInternal) window;
+            var angle_window = (IAngleWindowInfoInternal)window;
             var egl_window = CreateWindowInfo(angle_window, major, flags);
             var egl_context = new EglWinContext(mode, egl_window, shareContext, major, minor, flags);
             angle_window.EglContext = egl_context;
@@ -63,7 +63,7 @@ namespace OpenTK.Platform.Egl
         public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window,
             IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            var angle_window = (IAngleWindowInfoInternal) window;
+            var angle_window = (IAngleWindowInfoInternal)window;
             var egl_window = CreateWindowInfo(angle_window, major, flags);
             var egl_context = new EglWinContext(handle, egl_window, shareContext, major, minor, flags);
             angle_window.EglContext = egl_context;
