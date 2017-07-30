@@ -49,7 +49,7 @@ namespace OpenTK.Platform.SDL2
         private bool is_visible;
         private bool is_focused;
         private bool is_cursor_visible = true;
-        private bool is_cursor_confined = false;
+        private bool is_cursor_grabbed = false;
         private bool exists;
         private bool must_destroy;
         private bool disposed;
@@ -231,7 +231,7 @@ namespace OpenTK.Platform.SDL2
 
             // We need MouseUp events to be reported even if they occur
             // outside the window. SetWindowGrab ensures we get them.
-            if (!window.is_cursor_confined)
+            if (!window.is_cursor_grabbed)
             {
                 SDL.SetWindowGrab(window.window.Handle,
                     button_pressed ? true : false);
@@ -923,7 +923,7 @@ namespace OpenTK.Platform.SDL2
         {
             get
             {
-                return is_cursor_confined;
+                return is_cursor_grabbed;
             }
             set
             {
@@ -932,7 +932,7 @@ namespace OpenTK.Platform.SDL2
                     if (Exists)
                     {
                         GrabCursor(value);
-                        is_cursor_confined = value;
+                        is_cursor_grabbed = value;
                     }
                 }
             }
