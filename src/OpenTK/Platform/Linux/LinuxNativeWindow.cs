@@ -376,14 +376,13 @@ namespace OpenTK.Platform.Linux
 
         public override bool CursorGrabbed
         {
+            get { return true; }
             set
             {
-                if (value == false)
-                {
-                    throw new NotImplementedException();
+                if (value == false) {
+                    throw new NotImplementedException ();
                 }
             }
-            get { return true; }
         }
 
         protected override void Dispose(bool disposing)
