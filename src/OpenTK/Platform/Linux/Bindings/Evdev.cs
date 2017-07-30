@@ -472,7 +472,7 @@ namespace OpenTK.Platform.Linux
         MT_TOOL_Y       = 0x3d,    /* Center Y tool position */
 
         MAX         = 0x3f,
-        CNT         = (MAX+1),
+        CNT         = (MAX + 1),
     }
 
     internal enum EvdevButton
@@ -579,7 +579,7 @@ namespace OpenTK.Platform.Linux
         PWR = 0x16,
         FF_STATUS = 0x17,
         MAX = 0x1f,
-        CNT = (MAX+1),
+        CNT = (MAX + 1),
     }
 
     internal enum EvdevIoctl : uint

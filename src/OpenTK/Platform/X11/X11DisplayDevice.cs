@@ -149,7 +149,7 @@ namespace OpenTK.Platform.X11
                     deviceToScreen.Add(dev, 0 /*screen.ScreenNumber*/);
                 }
             }
-            return (devices.Count>0);
+            return (devices.Count > 0);
         }
 
         private bool QueryXRandR(List<DisplayDevice> devices)
@@ -356,7 +356,7 @@ namespace OpenTK.Platform.X11
                     screen, current_resolution_index, new_resolution_index);
 
                 int ret = 0;
-                short refresh_rate =(short)(resolution != null ? resolution.RefreshRate : 0);
+                short refresh_rate = (short)(resolution != null ? resolution.RefreshRate : 0);
                 if (refresh_rate > 0)
                 {
                     ret = Functions.XRRSetScreenConfigAndRate(API.DefaultDisplay,
