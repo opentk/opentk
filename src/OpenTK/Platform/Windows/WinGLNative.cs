@@ -942,6 +942,7 @@ namespace OpenTK.Platform.Windows
             {
                 ExtendedWindowClass wc = new ExtendedWindowClass();
                 wc.Size = ExtendedWindowClass.SizeInBytes;
+                // Setting the background here ensures the window doesn't flash gray/white until the first frame is rendered.
                 wc.Background = Functions.GetStockObject(StockObjects.BLACK_BRUSH);
                 wc.Style = DefaultClassStyle;
                 wc.Instance = Instance;
