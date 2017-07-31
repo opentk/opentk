@@ -717,7 +717,7 @@ namespace OpenTK
             result = new Vector2(v.X, v.Y);
         }
 
-        /// <summary>Transform a Position by the given Matrix rotation using right-handed notation.</summary>
+        /// <summary>Transform a Position by the given Matrix rotation.</summary>
         /// <param name="mat">The desired transformation</param>
         /// <param name="pos">The position to transform</param>
         /// <returns>The transformed position</returns>
@@ -728,7 +728,7 @@ namespace OpenTK
             return result;
         }
 
-        /// <summary>Transform a Position by the given Matrix rotation using right-handed notation.</summary>
+        /// <summary>Transform a Position by the given Matrix rotation.</summary>
         /// <param name="mat">The desired transformation</param>
         /// <param name="pos">The position to transform</param>
         /// <param name="result">The transformed vector</param>
@@ -739,7 +739,7 @@ namespace OpenTK
             result.Y = mat.M21 * pos.X + mat.M22 * pos.Y;
         }
 
-        /// <summary>Transform a Position by the given Matrix using right-handed notation.</summary>
+        /// <summary>Transform a Position by the given Matrix.</summary>
         /// <param name="mat">The desired transformation</param>
         /// <param name="pos">The position to transform</param>
         /// <returns>The transformed position</returns>
@@ -750,7 +750,7 @@ namespace OpenTK
             return result;
         }
 
-        /// <summary>Transform a Position by the given Matrix using right-handed notation</summary>
+        /// <summary>Transform a Position by the given Matrix</summary>
         /// <param name="mat">The desired transformation</param>
         /// <param name="pos">The position to transform</param>
         /// <param name="result">The transformed vector</param>
@@ -858,7 +858,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// Transform a Vector by the given Matrix.
         /// </summary>
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
