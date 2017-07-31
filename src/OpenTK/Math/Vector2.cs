@@ -68,27 +68,23 @@ namespace OpenTK
         /// <summary>
         /// Gets or sets the value at the index of the Vector.
         /// </summary>
-        public float this[int index]
-        {
-            get
-            {
-                if (index == 0)
+        public float this[int index] {
+            get{
+                if(index == 0)
                 {
                     return X;
                 }
-                else if (index == 1)
+                else if(index == 1)
                 {
                     return Y;
                 }
                 throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
-            }
-            set
-            {
-                if (index == 0)
+            } set{
+                if(index == 0)
                 {
                     X = value;
                 }
-                else if (index == 1)
+                else if(index == 1)
                 {
                     Y = value;
                 }
