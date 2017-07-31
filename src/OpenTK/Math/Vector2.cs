@@ -517,7 +517,20 @@ namespace OpenTK
         /// <returns>The distance</returns>
         public static float Distance(Vector2 vec1, Vector2 vec2)
         {
-            return (vec1 - vec2).Length;
+            float result;
+            Distance(ref vec1, ref vec2, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Compute the euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <param name="result">The distance</param>
+        public static void Distance(ref Vector2 vec1, ref Vector2 vec2, out float result)
+        {
+            result = (float)Math.Sqrt((vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y));
         }
 
         /// <summary>
@@ -528,7 +541,20 @@ namespace OpenTK
         /// <returns>The squared distance</returns>
         public static float DistanceSquared(Vector2 vec1, Vector2 vec2)
         {
-            return (vec1 - vec2).LengthSquared;
+            float result;
+            DistanceSquared(ref vec1, ref vec2, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Compute the squared euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <param name="result">The squared distance</param>
+        public static void DistanceSquared(ref Vector2 vec1, ref Vector2 vec2, out float result)
+        {
+            result = (vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y);
         }
 
         /// <summary>
