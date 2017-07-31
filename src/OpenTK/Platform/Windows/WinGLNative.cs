@@ -735,6 +735,8 @@ namespace OpenTK.Platform.Windows
                     break;
 
                 case WindowMessage.ERASEBKGND:
+                    // This is triggered only when the client area changes.
+                    // As such it does not affect steady-state performance.
                     break;
 
                 case WindowMessage.WINDOWPOSCHANGED:
