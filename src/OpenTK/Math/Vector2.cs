@@ -845,19 +845,6 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Transform a Vector by the given Matrix using right-handed notation.
-        /// </summary>
-        /// <param name="vec">The vector to transform</param>
-        /// <param name="mat">The desired transformation</param>
-        /// <returns>The transformed vector</returns>
-        public static Vector2 operator *(Matrix3 mat, Vector2 vec)
-        {
-            Vector2 result;
-            Vector2.Transform(ref mat, ref vec, out result);
-            return result;
-        }
-
-        /// <summary>
         /// Transform a Vector by the given Matrix.
         /// </summary>
         /// <param name="vec">The vector to transform</param>
