@@ -57,6 +57,7 @@ namespace Bind
             {
                 Console.Write(" ");
             }
+
             Console.WriteLine();
             Console.SetCursorPosition(left, top);
         }
@@ -134,14 +135,17 @@ namespace Bind
             {
                 File.Delete(output_enums);
             }
+
             if (File.Exists(output_delegates))
             {
                 File.Delete(output_delegates);
             }
+
             if (File.Exists(output_core))
             {
                 File.Delete(output_core);
             }
+
             if (File.Exists(output_wrappers))
             {
                 File.Delete(output_wrappers);
@@ -188,6 +192,7 @@ namespace Bind
                         System.Text.Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()));
                 }
             }
+
             sw.Unindent();
             sw.WriteLine("};");
             // Write entry point name offsets.
@@ -205,6 +210,7 @@ namespace Bind
                     offset += name.Length + 1;
                 }
             }
+
             sw.Unindent();
             sw.WriteLine("};");
             sw.WriteLine("EntryPoints = new IntPtr[EntryPointNameOffsets.Length];");
@@ -226,6 +232,7 @@ namespace Bind
                         // Identifiers cannot start with a number:
                         sw.WriteLine("public static partial class {0}{1}", Settings.ConstantPrefix, key);
                     }
+
                     sw.WriteLine("{");
                     sw.Indent();
                 }
@@ -268,6 +275,7 @@ namespace Bind
             {
                 WriteDocumentation(sw, f);
             }
+
             WriteMethod(sw, f, enums);
             sw.WriteLine();
         }
@@ -329,6 +337,7 @@ namespace Bind
                 {
                     sw.Write(WriteOptions.NoIndent, "{0}{1}", category, warning);
                 }
+
                 if (!String.IsNullOrEmpty(docs.Summary))
                 {
                     sw.WriteLine();
@@ -378,6 +387,7 @@ namespace Bind
                         {
                             sw.Write(WriteOptions.NoIndent, "{0}", length);
                         }
+
                         if (!String.IsNullOrEmpty(docparam.Documentation))
                         {
                             sw.WriteLine(WriteOptions.NoIndent, "");
@@ -473,6 +483,7 @@ namespace Bind
                     // Initialize the dictionary
                     enum_counts.Add(e, new List<Function>());
                 }
+
                 foreach (var wrapper in wrappers.Values.SelectMany(w => w))
                 {
                     // Add every function to every enum parameter it references
@@ -511,14 +522,17 @@ namespace Bind
                     {
                         sw.WriteLine("[Obsolete(\"{0}\")]", @enum.Obsolete);
                     }
+
                     if (!@enum.CLSCompliant)
                     {
                         sw.WriteLine("[CLSCompliant(false)]");
                     }
+
                     if (@enum.IsFlagCollection)
                     {
                         sw.WriteLine("[Flags]");
                     }
+
                     sw.WriteLine("public enum " + @enum.Name + " : " + @enum.Type);
                     sw.WriteLine("{");
                     sw.Indent();
@@ -598,6 +612,7 @@ namespace Bind
             {
                 sb.Append("delegate ");
             }
+
             sb.Append(GetDeclarationString(d.ReturnType, Settings.Legacy.ConstIntEnums));
             sb.Append(" ");
             sb.Append(Settings.FunctionPrefix);
@@ -625,6 +640,7 @@ namespace Bind
             {
                 sb.AppendLine("[Flags]");
             }
+
             sb.Append("public enum ");
             sb.Append(e.Name);
             sb.Append(" : ");
@@ -641,6 +657,7 @@ namespace Bind
                     sb.AppendLine(",");
                 }
             }
+
             sb.Append("}");
 
             return sb.ToString();
@@ -657,6 +674,7 @@ namespace Bind
             {
                 sb.Append(Settings.FunctionPrefix);
             }
+
             sb.Append(!String.IsNullOrEmpty(f.TrimmedName) ? f.TrimmedName : f.Name);
 
             if (f.Parameters.HasGenericParameters)
@@ -758,6 +776,7 @@ namespace Bind
             {
                 sb.Append(GetDeclarationString(p as Type, settings));
             }
+
             if (!String.IsNullOrEmpty(p.Name))
             {
                 sb.Append(" ");
@@ -779,6 +798,7 @@ namespace Bind
                     sb.Append(GetDeclarationString(p, false, settings));
                     sb.Append(", ");
                 }
+
                 sb.Replace(", ", ")", sb.Length - 2, 2);
             }
             else
