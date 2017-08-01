@@ -55,11 +55,14 @@ namespace OpenTK
         ///   to this <see cref="T:OpenTK.Platform.Android.AndroidGameView" />
         ///   instance.
         /// </value>
-        public IGraphicsContext GraphicsContext {
-            get {
+        public IGraphicsContext GraphicsContext
+        {
+            get
+            {
                 return graphicsContext;
             }
-            protected set {
+            protected set
+            {
                 graphicsContext = value;
                 OnContextSet (null);
             }
@@ -854,16 +857,19 @@ namespace OpenTK
         ///     Throws a <see cref="T:System.NotSupportedException" />.
         ///   </para>
         /// </remarks>
-        event EventHandler<KeyPressEventArgs> INativeWindow.KeyPress {
+        event EventHandler<KeyPressEventArgs> INativeWindow.KeyPress
+        {
             add { throw new NotSupportedException (); }
             remove { throw new NotSupportedException (); }
         }
 
-        public virtual int Width {
+        public virtual int Width
+        {
             get; set;
         }
 
-        public virtual int Height {
+        public virtual int Height
+        {
             get;
             set;
         }
@@ -874,7 +880,8 @@ namespace OpenTK
         ///     Throws a <see cref="T:System.NotSupportedException" />.
         ///   </para>
         /// </remarks>
-        public event EventHandler<EventArgs> MouseEnter {
+        public event EventHandler<EventArgs> MouseEnter
+        {
             add { throw new NotSupportedException (); }
             remove { throw new NotSupportedException (); }
         }
@@ -885,7 +892,8 @@ namespace OpenTK
         ///     Throws a <see cref="T:System.NotSupportedException" />.
         ///   </para>
         /// </remarks>
-        public event EventHandler<EventArgs> MouseLeave {
+        public event EventHandler<EventArgs> MouseLeave
+        {
             add { throw new NotSupportedException (); }
             remove { throw new NotSupportedException (); }
         }
@@ -911,11 +919,14 @@ namespace OpenTK
             throw new NotImplementedException ();
         }
 
-        public string Title {
-            get {
+        public string Title
+        {
+            get
+            {
                 throw new NotImplementedException ();
             }
-            set {
+            set
+            {
                 throw new NotImplementedException ();
             }
         }
@@ -927,8 +938,10 @@ namespace OpenTK
         ///     Throws a <see cref="T:System.NotSupportedException" />.
         ///   </para>
         /// </remarks>
-        public bool Focused {
-            get {
+        public bool Focused
+        {
+            get
+            {
                 throw new NotSupportedException ();
             }
         }
@@ -947,11 +960,14 @@ namespace OpenTK
         ///   <see cref="M:OpenTK.Platform.Android.AndroidGameView.Dispose" />
         ///   invoked on it.
         /// </exception>
-        public bool Visible {
-            get {
+        public bool Visible
+        {
+            get
+            {
                 throw new NotImplementedException ();
             }
-            set {
+            set
+            {
                 throw new NotImplementedException ();
             }
         }
@@ -963,8 +979,10 @@ namespace OpenTK
         ///     Throws a <see cref="T:System.NotImplementedException" />.
         ///   </para>
         /// </remarks>
-        public bool Exists {
-            get {
+        public bool Exists
+        {
+            get
+            {
                 throw new NotImplementedException ();
             }
         }
@@ -981,8 +999,10 @@ namespace OpenTK
         ///   <see cref="M:OpenTK.Platform.Android.AndroidGameView.Dispose" />
         ///   invoked on it.
         /// </exception>
-        public virtual IWindowInfo WindowInfo {
-            get {
+        public virtual IWindowInfo WindowInfo
+        {
+            get
+            {
                 throw new NotImplementedException ();
             }
         }
@@ -1001,11 +1021,14 @@ namespace OpenTK
         /// </remarks>
         /// <exception cref="T:System.NotImplementedException">
         /// </exception>
-        public virtual WindowState WindowState {
-            get {
+        public virtual WindowState WindowState
+        {
+            get
+            {
                 throw new NotImplementedException ();
             }
-            set {
+            set
+            {
                 throw new NotImplementedException ();
             }
         }
@@ -1027,27 +1050,14 @@ namespace OpenTK
         /// </remarks>
         /// <exception cref="T:System.NotImplementedException">
         /// </exception>
-        public virtual WindowBorder WindowBorder {
-            get {
+        public virtual WindowBorder WindowBorder
+        {
+            get
+            {
                 throw new NotImplementedException ();
             }
-            set {
-                throw new NotImplementedException ();
-            }
-        }
-
-        /// <summary>This member is not supported.</summary>
-        /// <value>To be added.</value>
-        /// <remarks>
-        ///   <para>
-        ///     Throws a <see cref="T:System.NotImplementedException" />.
-        ///   </para>
-        /// </remarks>
-        public virtual Rectangle Bounds {
-            get {
-                throw new NotImplementedException ();
-            }
-            set {
+            set
+            {
                 throw new NotImplementedException ();
             }
         }
@@ -1059,11 +1069,33 @@ namespace OpenTK
         ///     Throws a <see cref="T:System.NotImplementedException" />.
         ///   </para>
         /// </remarks>
-        public virtual Point Location {
-            get {
+        public virtual Rectangle Bounds
+        {
+            get
+            {
                 throw new NotImplementedException ();
             }
-            set {
+            set
+            {
+                throw new NotImplementedException ();
+            }
+        }
+
+        /// <summary>This member is not supported.</summary>
+        /// <value>To be added.</value>
+        /// <remarks>
+        ///   <para>
+        ///     Throws a <see cref="T:System.NotImplementedException" />.
+        ///   </para>
+        /// </remarks>
+        public virtual Point Location
+        {
+            get
+            {
+                throw new NotImplementedException ();
+            }
+            set
+            {
                 throw new NotImplementedException ();
             }
         }
@@ -1077,11 +1109,14 @@ namespace OpenTK
         /// </value>
         /// <exception cref="T:System.NotImplementedException">
         /// </exception>
-        public virtual Size Size {
-            get {
+        public virtual Size Size
+        {
+            get
+            {
                 throw new NotImplementedException ();
             }
-            set {
+            set
+            {
                 throw new NotImplementedException ();
             }
         }
@@ -1092,26 +1127,14 @@ namespace OpenTK
         ///     Throws a <see cref="T:System.NotSupportedException" />.
         ///   </para>
         /// </remarks>
-        public int X {
-            get {
+        public int X
+        {
+            get
+            {
                 throw new NotSupportedException ();
             }
-            set {
-                throw new NotSupportedException ();
-            }
-        }
-
-        /// <summary>This member is not supported.</summary>
-        /// <remarks>
-        ///   <para>
-        ///     Throws a <see cref="T:System.NotSupportedException" />.
-        ///   </para>
-        /// </remarks>
-        public int Y {
-            get {
-                throw new NotSupportedException ();
-            }
-            set {
+            set
+            {
                 throw new NotSupportedException ();
             }
         }
@@ -1122,11 +1145,32 @@ namespace OpenTK
         ///     Throws a <see cref="T:System.NotSupportedException" />.
         ///   </para>
         /// </remarks>
-        public Rectangle ClientRectangle {
-            get {
+        public int Y
+        {
+            get
+            {
                 throw new NotSupportedException ();
             }
-            set {
+            set
+            {
+                throw new NotSupportedException ();
+            }
+        }
+
+        /// <summary>This member is not supported.</summary>
+        /// <remarks>
+        ///   <para>
+        ///     Throws a <see cref="T:System.NotSupportedException" />.
+        ///   </para>
+        /// </remarks>
+        public Rectangle ClientRectangle
+        {
+            get
+            {
+                throw new NotSupportedException ();
+            }
+            set
+            {
                 throw new NotSupportedException ();
             }
         }
@@ -1138,11 +1182,14 @@ namespace OpenTK
         ///     Throws a <see cref="T:System.NotSupportedException" />.
         ///   </para>
         /// </remarks>
-        public Size ClientSize {
-            get {
+        public Size ClientSize
+        {
+            get
+            {
                 throw new NotSupportedException ();
             }
-            set {
+            set
+            {
                 throw new NotSupportedException ();
             }
         }

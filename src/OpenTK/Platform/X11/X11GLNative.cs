@@ -300,7 +300,8 @@ namespace OpenTK.Platform.X11
             // Alow window recive Xdnd Events
             IntPtr xdndAware = Functions.XInternAtom(window.Display, "XdndAware", false);
             IntPtr xdndProtocol = new IntPtr(5);
-            using (new XLock (window.Display)) {
+            using (new XLock (window.Display))
+            {
                 Functions.XChangeProperty(this.window.Display, this.Handle, xdndAware, (IntPtr)AtomName.XA_ATOM, 32, PropertyMode.Replace, ref xdndProtocol, 1);
             }
 

@@ -93,7 +93,8 @@ namespace OpenTK.Graphics.OpenGL4
                 {
                     error = GL.GetError();
                     error_list.Add(error);
-                } while (error != ErrorCode.NoError);
+                }
+                while (error != ErrorCode.NoError);
 
                 if (error_list.Count != 1)
                 {

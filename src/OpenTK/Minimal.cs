@@ -1579,7 +1579,8 @@ namespace OpenTK
         Format32bppArgb
     }
 
-    internal enum ImageFormat {
+    internal enum ImageFormat 
+    {
         Png
     }
 

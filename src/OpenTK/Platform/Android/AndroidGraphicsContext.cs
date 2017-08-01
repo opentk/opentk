@@ -15,7 +15,8 @@ using Javax.Microedition.Khronos.Egl;
 using OpenTK.Graphics;
 using OpenTK.Platform.Egl;
 
-namespace OpenTK.Platform.Android {
+namespace OpenTK.Platform.Android
+{
     internal class AndroidGraphicsContext : EglContext
     {
         public AndroidGraphicsContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
@@ -57,8 +58,10 @@ namespace OpenTK.Platform.Android {
             get { return eglWindowInfo != null && eglWindowInfo.Surface != IntPtr.Zero; }
         }
 
-        public ISurfaceHolder Holder {
-            get {
+        public ISurfaceHolder Holder
+        {
+            get
+            {
                 return refHolder.Target as ISurfaceHolder;
             }
         }
@@ -78,7 +81,8 @@ namespace OpenTK.Platform.Android {
         {
             UpdateEglWindowInfo();
 
-            if (refHolder.Target == null) {
+            if (refHolder.Target == null)
+            {
                 eglWindowInfo.CreatePbufferSurface(config);
                 return;
             }
@@ -144,7 +148,8 @@ namespace OpenTK.Platform.Android {
         {
             if (!disposed)
             {
-                if (disposing) {
+                if (disposing)
+                {
                     DestroySurface ();
                     TerminateDisplay ();
                     refHolder = null;

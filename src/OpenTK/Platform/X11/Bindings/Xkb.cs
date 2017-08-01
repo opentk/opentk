@@ -240,7 +240,8 @@ namespace OpenTK.Platform.X11
                         fixed (Atom* ptr = &indicators0)
                         {
                             return *(ptr + i);
-                        }                    }
+                        }
+                    }
                 }
             }
         }

@@ -741,9 +741,12 @@ namespace OpenTK
             int[] rowIdx = { 0, 0, 0 };
             int[] pivotIdx = { -1, -1, -1 };
 
-            float[,] inverse = {{mat.Row0.X, mat.Row0.Y, mat.Row0.Z},
-                {mat.Row1.X, mat.Row1.Y, mat.Row1.Z},
-                {mat.Row2.X, mat.Row2.Y, mat.Row2.Z}};
+            float[,] inverse =
+            {
+                { mat.Row0.X, mat.Row0.Y, mat.Row0.Z },
+                { mat.Row1.X, mat.Row1.Y, mat.Row1.Z },
+                { mat.Row2.X, mat.Row2.Y, mat.Row2.Z }
+            };
 
             int icol = 0;
             int irow = 0;

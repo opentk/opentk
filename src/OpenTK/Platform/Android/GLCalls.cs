@@ -31,7 +31,8 @@ namespace OpenTK
 
         public static GLCalls GetGLCalls (GLVersion api)
         {
-            switch (api) {
+            switch (api)
+            {
             case GLVersion.ES1:
                 return CreateES1 ();
             case GLVersion.ES2:
@@ -39,12 +40,14 @@ namespace OpenTK
             case GLVersion.ES3:
                 return CreateES3 ();
             }
+
             throw new ArgumentException ("api");
         }
 
         public static GLCalls CreateES1 ()
         {
-            return new GLCalls () {
+            return new GLCalls ()
+            {
                 Version                 = GLVersion.ES1,
                 Scissor                 = (x, y, w, h)        => ES11.GL.Scissor(x, y, w, h),
                 Viewport                = (x, y, w, h)        => ES11.GL.Viewport(x, y, w, h),
@@ -53,7 +56,8 @@ namespace OpenTK
 
         public static GLCalls CreateES2 ()
         {
-            return new GLCalls () {
+            return new GLCalls ()
+            {
                 Version                 = GLVersion.ES2,
                 Scissor                 = (x, y, w, h)        => ES20.GL.Scissor(x, y, w, h),
                 Viewport                = (x, y, w, h)        => ES20.GL.Viewport(x, y, w, h),
@@ -62,7 +66,8 @@ namespace OpenTK
 
         public static GLCalls CreateES3 ()
         {
-            return new GLCalls () {
+            return new GLCalls ()
+            {
                 Version                 = GLVersion.ES3,
                 Scissor                 = (x, y, w, h)        => ES30.GL.Scissor(x, y, w, h),
                 Viewport                = (x, y, w, h)        => ES30.GL.Viewport(x, y, w, h),

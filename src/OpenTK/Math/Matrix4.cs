@@ -1253,10 +1253,14 @@ namespace OpenTK
             int[] pivotIdx = { -1, -1, -1, -1 };
 
             // convert the matrix to an array for easy looping
-            float[,] inverse = {{mat.Row0.X, mat.Row0.Y, mat.Row0.Z, mat.Row0.W},
-                                {mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W},
-                                {mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W},
-                                {mat.Row3.X, mat.Row3.Y, mat.Row3.Z, mat.Row3.W} };
+            float[,] inverse = 
+            {
+                { mat.Row0.X, mat.Row0.Y, mat.Row0.Z, mat.Row0.W },
+                { mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W },
+                { mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W },
+                { mat.Row3.X, mat.Row3.Y, mat.Row3.Z, mat.Row3.W } 
+            };
+            
             int icol = 0;
             int irow = 0;
             for (int i = 0; i < 4; i++)
