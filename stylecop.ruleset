@@ -141,7 +141,7 @@
     <Rule Id="SA1510" Action="Error" /> <!-- Chained statement blocks must not be preceded by blank line -->
     <Rule Id="SA1511" Action="None" /> <!-- While-do footer must not be preceded by blank line -->
     <Rule Id="SA1512" Action="None" /> <!-- Single-line comments must not be followed by blank line -->
-    <Rule Id="SA1513" Action="Warning" /> <!-- Closing brace must be followed by blank line -->
+    <Rule Id="SA1513" Action="None" Intentional="true" Reason="Waiting for configurable option"/> <!-- Closing brace must be followed by blank line -->
     <Rule Id="SA1514" Action="None" /> <!-- Element documentation header must be preceded by blank line -->
     <Rule Id="SA1515" Action="None" /> <!-- Single-line comment must be preceded by blank line -->
     <Rule Id="SA1516" Action="None" /> <!-- Elements must be separated by blank line -->
