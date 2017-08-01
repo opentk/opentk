@@ -134,6 +134,7 @@ namespace OpenTK.Platform.X11
                     mouse_detached_x = root_x;
                     mouse_detached_y = root_y;
                 }
+
                 cursor[MouseButton.Left] = mouse[MouseButton.Left] = (buttons & (int)MouseMask.Button1Mask) != 0;
                 cursor[MouseButton.Middle] = mouse[MouseButton.Middle] = (buttons & (int)MouseMask.Button2Mask) != 0;
                 cursor[MouseButton.Right] = mouse[MouseButton.Right] = (buttons & (int)MouseMask.Button3Mask) != 0;
