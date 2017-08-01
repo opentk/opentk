@@ -47,6 +47,7 @@ namespace Bind
             {
                 throw new ArgumentNullException("generator");
             }
+
             if (overrides == null)
             {
                 throw new ArgumentNullException("overrides");
@@ -66,6 +67,7 @@ namespace Bind
                 enums = ProcessNames(enums, nav, apiname);
                 enums = ProcessConstants(enums, nav, apiname);
             }
+
             return enums;
         }
 
@@ -137,6 +139,7 @@ namespace Bind
                     name = name_override.Value;
                 }
             }
+
             return name;
         }
 
@@ -181,6 +184,7 @@ namespace Bind
                     translator.Insert(insert_pos, "_");
                     match = match.NextMatch();
                 }
+
                 name = translator.ToString();
                 translator.Remove(0, translator.Length);
 
@@ -259,6 +263,7 @@ namespace Bind
                         processed_constants.Add(c.Name, c);
                     }
                 }
+
                 e.ConstantCollection = processed_constants;
 
                 var enum_override = nav.SelectSingleNode(GetOverridesPath(apiname, e.Name));
@@ -348,6 +353,7 @@ namespace Bind
                             {
                                 next_char_uppercase = true;
                             }
+
                             translator.Append(next_char_uppercase ? Char.ToUpper(c) : Char.ToLower(c));
                             is_after_digit = next_char_uppercase = false;
                         }
@@ -374,6 +380,7 @@ namespace Bind
                 {
                     value = value.Substring(0, value.Length - 3);
                 }
+
                 if (value.ToLower().EndsWith("u"))
                 {
                     value = value.Substring(0, value.Length - 1);
@@ -445,6 +452,7 @@ namespace Bind
                     System.Globalization.CultureInfo.InvariantCulture,
                     out number);
             }
+
             return is_number;
         }
     }
