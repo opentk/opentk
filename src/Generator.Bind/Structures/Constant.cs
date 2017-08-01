@@ -115,6 +115,7 @@ namespace Bind.Structures
             {
                 throw new ArgumentNullException("c");
             }
+            
             if (enums == null)
             {
                 throw new ArgumentNullException("enums");
@@ -156,6 +157,7 @@ namespace Bind.Structures
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -176,6 +178,7 @@ namespace Bind.Structures
             {
                 return Name.CompareTo(other.Name);
             }
+
             return ret;
         }
     }
