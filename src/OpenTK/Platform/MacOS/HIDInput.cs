@@ -565,7 +565,6 @@ namespace OpenTK.Platform.MacOS
             // Couldn't find any details in USB spec or Apple docs for this behavior.
             if (usage >= 0)
             {
-
                 switch (page)
                 {
                     case HIDPage.GenericDesktop:

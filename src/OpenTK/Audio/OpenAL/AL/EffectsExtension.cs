@@ -526,7 +526,6 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>Pointer addressing sufficient memory to store n Filter object identifiers.</returns>
         public int[] GenFilters(int n)
         {
-
             if (n <= 0)
             {
                 throw new ArgumentOutOfRangeException("n", "Must be higher than 0.");

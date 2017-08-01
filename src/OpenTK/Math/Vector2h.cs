@@ -28,7 +28,6 @@ using System.Xml.Serialization;
 
 namespace OpenTK
 {
-
     /// <summary>2-component Vector of the Half type. Occupies 4 Byte total.</summary>
     [Serializable, StructLayout(LayoutKind.Sequential)]
     public struct Vector2h : ISerializable, IEquatable<Vector2h>

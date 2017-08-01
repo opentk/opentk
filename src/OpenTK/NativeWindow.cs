@@ -34,7 +34,6 @@ using OpenTK.Platform;
 
 namespace OpenTK
 {
-
     /// <summary>
     /// Instances of this class implement the <see cref="OpenTK.INativeWindow"/> interface on the current platform.
     /// </summary>

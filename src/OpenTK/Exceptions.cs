@@ -27,7 +27,6 @@ using System;
 
 namespace OpenTK
 {
-
     /// <summary>
     /// This exception is thrown when a GraphicsContext property cannot be changed after creation.
     /// </summary>

@@ -61,7 +61,6 @@ using System.Runtime.Serialization;
 
 namespace OpenTK
 {
-
     /// <summary>
     /// The name Half is derived from half-precision floating-point number.
     /// It occupies only 16 bits, which are split into 1 Sign bit, 5 Exponent bits and 10 Mantissa bits.
@@ -263,7 +262,6 @@ namespace OpenTK
         /// <summary>Ported from OpenEXR's IlmBase 1.0.1</summary>
         private Int32 HalfToFloat(UInt16 ui16)
         {
-
             Int32 sign = (ui16 >> 15) & 0x00000001;
             Int32 exponent = (ui16 >> 10) & 0x0000001f;
             Int32 mantissa = ui16 & 0x000003ff;

@@ -13,7 +13,6 @@ namespace OpenTK.X11
     /// </summary>
     public static class XWindowInfoInitializer
     {
-
 #if GTK3
         private const string UnixLibGdkName = "libgdk-3.so.0";
 #else

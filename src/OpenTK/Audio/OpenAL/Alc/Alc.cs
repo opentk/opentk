@@ -67,7 +67,6 @@ typedef void ALCvoid;
 
 namespace OpenTK.Audio.OpenAL
 {
-
     /// <summary>Alc = Audio Library Context</summary>
     public static class Alc
     {

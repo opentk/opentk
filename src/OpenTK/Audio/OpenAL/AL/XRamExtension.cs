@@ -11,7 +11,6 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Audio.OpenAL
 {
-
     ///<summary>
     ///The X-Ram Extension is provided on the top-end Sound Blaster X-Fi solutions (Sound Blaster X-Fi Fatal1ty, Sound Blaster X-Fi Elite Pro, or later).
     ///These products feature 64MB of X-Ram that can only be used for audio purposes, which can be controlled by this Extension.

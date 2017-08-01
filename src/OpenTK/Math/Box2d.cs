@@ -11,7 +11,6 @@ namespace OpenTK
     [StructLayout(LayoutKind.Sequential)]
     public struct Box2d : IEquatable<Box2d>
     {
-
         /// <summary>
         /// The left boundary of the structure.
         /// </summary>
