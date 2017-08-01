@@ -352,7 +352,6 @@ namespace OpenTK.Rewrite
 
         private static DebugVariables EmitDebugPrologue(MethodDefinition wrapper, ILProcessor il)
         {
-
             DebugVariables vars = null;
             if (il.Body.Method.Name != "GetError")
             {
@@ -988,6 +987,7 @@ namespace OpenTK.Rewrite
                                 mscorlib.MainModule.GetType("System.Array").Methods.First(m => m.Name == "get_Length"));
                             il.Emit(OpCodes.Callvirt, get_length);
                         }
+
                         il.Emit(OpCodes.Brtrue, pin);
 
                         // empty: IntPtr ptr = IntPtr.Zero
