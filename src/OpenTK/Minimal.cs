@@ -291,6 +291,7 @@ namespace OpenTK
                 {
                     throw new ArgumentOutOfRangeException();
                 }
+                
                 width = value;
             }
         }
@@ -307,6 +308,7 @@ namespace OpenTK
                 {
                     throw new ArgumentOutOfRangeException();
                 }
+                
                 height = value;
             }
         }

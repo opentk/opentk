@@ -62,6 +62,7 @@ namespace OpenTK.Platform.Android {
                 return refHolder.Target as ISurfaceHolder;
             }
         }
+
         public AndroidWindow (ISurfaceHolder holder)
         {
             refHolder = new WeakReference (holder);
