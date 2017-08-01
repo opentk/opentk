@@ -207,7 +207,9 @@ namespace Bind
         public bool DropMultipleTokens
         {
             get { return (Compatibility & Legacy.NoDropMultipleTokens) == Legacy.None; }
-            set { if (value)
+            set
+            {
+                if (value)
                 {
                     Compatibility |= Legacy.NoDropMultipleTokens;
                 }
