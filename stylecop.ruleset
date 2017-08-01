@@ -136,8 +136,8 @@
     <Rule Id="SA1505" Action="Warning" /> <!-- Opening braces must not be followed by blank line -->
     <Rule Id="SA1506" Action="None" /> <!-- Element documentation headers must not be followed by blank line -->
     <Rule Id="SA1507" Action="None" /> <!-- Code must not contain multiple blank lines in a row -->
-    <Rule Id="SA1508" Action="Warning" /> <!-- Closing braces must not be preceded by blank line -->
-    <Rule Id="SA1509" Action="Warning" /> <!-- Opening braces must not be preceded by blank line -->
+    <Rule Id="SA1508" Action="Error" /> <!-- Closing braces must not be preceded by blank line -->
+    <Rule Id="SA1509" Action="Error" /> <!-- Opening braces must not be preceded by blank line -->
     <Rule Id="SA1510" Action="Error" /> <!-- Chained statement blocks must not be preceded by blank line -->
     <Rule Id="SA1511" Action="None" /> <!-- While-do footer must not be preceded by blank line -->
     <Rule Id="SA1512" Action="None" /> <!-- Single-line comments must not be followed by blank line -->

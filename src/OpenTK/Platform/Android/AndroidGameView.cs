@@ -403,12 +403,15 @@ namespace OpenTK.Platform.Android
 
                         if (RenderOnUIThread)
                         {
-                            global::Android.App.Application.SynchronizationContext.Send (_ => {
-                                RunIteration (token);
+                            global::Android.App.Application.SynchronizationContext.Send(_ =>
+                            {
+                                RunIteration(token);
                             }, null);
                         }
                         else
+                        {
                             RunIteration (token);
+                        }
 
                         if (updates > 0) {
                             var t = updates - (stopWatch.Elapsed.TotalMilliseconds - tick);
