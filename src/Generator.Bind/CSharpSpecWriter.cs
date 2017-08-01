@@ -238,9 +238,18 @@ namespace Bind
                 }
 
                 wrappers[key].Sort();
-                foreach (Function f in wrappers[key])
+                for (int i = 0; i < wrappers[key].Count; ++i)
                 {
+                    Function f = wrappers[key][i];
+
                     WriteWrapper(sw, f, enums);
+
+                    // Skip the last newline
+                    if (i < wrappers[key].Count - 1)
+                    {
+                        sw.WriteLine();
+                    }
+
                     current_wrapper++;
                 }
 
@@ -277,7 +286,6 @@ namespace Bind
             }
 
             WriteMethod(sw, f, enums);
-            sw.WriteLine();
         }
 
         private void WriteMethod(BindStreamWriter sw, Function f, EnumCollection enums)
@@ -495,8 +503,10 @@ namespace Bind
                     }
                 }
 
-                foreach (Enum @enum in enums.Values)
+                for (int i = 0; i < enums.Values.Count; ++i)
                 {
+                    Enum @enum = enums.Values.ElementAt(i);
+
                     if (!Settings.IsEnabled(Settings.Legacy.NoDocumentation))
                     {
                         // Document which functions use this enum.
@@ -539,7 +549,12 @@ namespace Bind
                     WriteConstants(sw, @enum.ConstantCollection.Values);
                     sw.Unindent();
                     sw.WriteLine("}");
-                    sw.WriteLine();
+
+                    // Skip the last newline
+                    if (i < enums.Values.Count - 1)
+                    {
+                        sw.WriteLine();
+                    }
                 }
 
                 if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None &&
