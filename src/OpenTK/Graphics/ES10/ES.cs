@@ -5970,6 +5970,5 @@ namespace OpenTK.Graphics.ES10
             }
             #endif
         }
-
     }
 }

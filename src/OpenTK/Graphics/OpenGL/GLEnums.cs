@@ -64330,5 +64330,4 @@ namespace OpenTK.Graphics.OpenGL
         /// </summary>
         FogSpecularTextureWin = ((int)0x80EC),
     }
-
 }
