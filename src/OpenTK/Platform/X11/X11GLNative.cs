@@ -166,6 +166,7 @@ namespace OpenTK.Platform.X11
             {
                 throw new ArgumentOutOfRangeException("width", "Must be higher than zero.");
             }
+            
             if (height <= 0)
             {
                 throw new ArgumentOutOfRangeException("height", "Must be higher than zero.");
@@ -493,6 +494,7 @@ namespace OpenTK.Platform.X11
                         return hints.min_width != hints.max_width || hints.min_height != hints.max_height;
                     }
                 }
+
                 return false;
             }
         }
@@ -570,6 +572,7 @@ namespace OpenTK.Platform.X11
                                               ref hints, Marshal.SizeOf(hints) / IntPtr.Size);
                     return true;
                 }
+
                 return false;
             }
         }
@@ -629,6 +632,7 @@ namespace OpenTK.Platform.X11
 
                     return true;
                 }
+
                 return false;
             }
         }
@@ -820,6 +824,7 @@ namespace OpenTK.Platform.X11
                 cursor = Functions.XCreatePixmapCursor(window.Display,
                     bmp_empty, bmp_empty, ref black, ref black, 0, 0);
             }
+
             return cursor;
         }
 
@@ -855,32 +860,34 @@ namespace OpenTK.Platform.X11
                 switch (e.type)
                 {
                     case XEventName.MapNotify:
+                    {
+                        bool previous_visible = visible;
+                        visible = true;
+                        if (visible != previous_visible)
                         {
-                            bool previous_visible = visible;
-                            visible = true;
-                            if (visible != previous_visible)
-                            {
-                                OnVisibleChanged(EventArgs.Empty);
-                            }
+                            OnVisibleChanged(EventArgs.Empty);
                         }
+
                         return;
-
+                    }
                     case XEventName.UnmapNotify:
+                    {
+                        bool previous_visible = visible;
+                        visible = false;
+                        if (visible != previous_visible)
                         {
-                            bool previous_visible = visible;
-                            visible = false;
-                            if (visible != previous_visible)
-                            {
-                                OnVisibleChanged(EventArgs.Empty);
-                            }
+                            OnVisibleChanged(EventArgs.Empty);
                         }
-                        break;
 
+                        break;
+                    }
                     case XEventName.CreateNotify:
+                    {
                         // A child was was created - nothing to do
                         break;
-
+                    }
                     case XEventName.ClientMessage:
+                    {
                         if (!isExiting && e.ClientMessageEvent.ptr1 == _atom_wm_destroy)
                         {
                             Debug.Print("[X11] Exit message received for window {0:X} on display {1:X}", window.Handle, window.Display);
@@ -895,9 +902,9 @@ namespace OpenTK.Platform.X11
                                 break;
                             }
                         }
-                        // For X11 drag and drop handling use https://freedesktop.org/wiki/Specifications/XDND/#index9h2
                         else if (e.ClientMessageEvent.message_type == _atom_xdnd_enter)
                         {
+                            // For X11 drag and drop handling use https://freedesktop.org/wiki/Specifications/XDND/#index9h2
                             // Xdnd started
                             // ptr1 -> source window handler
                             // ptr2 bit 0 -> set to 1 if source support more than three data formats
@@ -965,6 +972,7 @@ namespace OpenTK.Platform.X11
                             {
                                 reply.ClientMessageEvent.ptr2 = (IntPtr)0;
                             }
+
                             reply.ClientMessageEvent.ptr3 = (IntPtr)0;
                             reply.ClientMessageEvent.ptr4 = (IntPtr)0;
                             reply.ClientMessageEvent.ptr5 = _atom_xdnd_action_copy;
@@ -1006,19 +1014,23 @@ namespace OpenTK.Platform.X11
                         {
                             break;
                         }
-                        break;
 
+                        break;
+                    }
                     case XEventName.DestroyNotify:
+                    {
                         Debug.WriteLine("Window destroyed");
                         exists = false;
                         return;
-
+                    }
                     case XEventName.ConfigureNotify:
+                    {
                         RefreshWindowBounds(ref e);
                         break;
-
+                    }
                     case XEventName.KeyPress:
                     case XEventName.KeyRelease:
+                    {
                         bool pressed = e.type == XEventName.KeyPress;
                         Key key;
                         if (KeyMap.TranslateKey(ref e.KeyEvent, out key))
@@ -1053,8 +1065,9 @@ namespace OpenTK.Platform.X11
                                 }
                             }
                         }
-                        break;
 
+                        break;
+                    }
                     case XEventName.MotionNotify:
                     {
                         int x = e.MotionEvent.x;
@@ -1066,78 +1079,78 @@ namespace OpenTK.Platform.X11
                                 MathHelper.Clamp(x, 0, Width),
                                 MathHelper.Clamp(y, 0, Height));
                         }
+
                         break;
                     }
-
                     case XEventName.ButtonPress:
+                    {
+                        float dx, dy;
+                        MouseButton button = X11KeyMap.TranslateButton(e.ButtonEvent.button, out dx, out dy);
+
+                        if (button != MouseButton.LastButton)
                         {
-                            float dx, dy;
-                            MouseButton button = X11KeyMap.TranslateButton(e.ButtonEvent.button, out dx, out dy);
-
-                            if (button != MouseButton.LastButton)
-                            {
-                                OnMouseDown(button);
-                            }
-
-                            if (xi2_version >= 210)
-                            {
-                                // High resolution scroll events supported.
-                                // This code is implemented in XI2Mouse.GetCursorState().
-                                // Instead of reimplementing this functionality, just
-                                // use the values from there.
-                                MouseState state = Mouse.GetCursorState();
-                                dx = state.Scroll.X - MouseState.Scroll.X;
-                                dy = state.Scroll.Y - MouseState.Scroll.Y;
-                            }
-
-                            if (dx != 0 || dy != 0)
-                            {
-                                // High resolution scroll events not supported
-                                // fallback to the old Button4-7 scroll buttons
-                                OnMouseWheel(dx, dy);
-                            }
+                            OnMouseDown(button);
                         }
-                        break;
 
+                        if (xi2_version >= 210)
+                        {
+                            // High resolution scroll events supported.
+                            // This code is implemented in XI2Mouse.GetCursorState().
+                            // Instead of reimplementing this functionality, just
+                            // use the values from there.
+                            MouseState state = Mouse.GetCursorState();
+                            dx = state.Scroll.X - MouseState.Scroll.X;
+                            dy = state.Scroll.Y - MouseState.Scroll.Y;
+                        }
+
+                        if (dx != 0 || dy != 0)
+                        {
+                            // High resolution scroll events not supported
+                            // fallback to the old Button4-7 scroll buttons
+                            OnMouseWheel(dx, dy);
+                        }
+
+                        break;
+                    }
                     case XEventName.ButtonRelease:
+                    {
+                        float dx, dy;
+                        MouseButton button = X11KeyMap.TranslateButton(e.ButtonEvent.button, out dx, out dy);
+                        if (button != MouseButton.LastButton)
                         {
-                            float dx, dy;
-                            MouseButton button = X11KeyMap.TranslateButton(e.ButtonEvent.button, out dx, out dy);
-                            if (button != MouseButton.LastButton)
-                            {
-                                OnMouseUp(button);
-                            }
+                            OnMouseUp(button);
                         }
-                        break;
 
+                        break;
+                    }
                     case XEventName.FocusIn:
+                    {
+                        bool previous_focus = has_focus;
+                        has_focus = true;
+                        if (has_focus != previous_focus)
                         {
-                            bool previous_focus = has_focus;
-                            has_focus = true;
-                            if (has_focus != previous_focus)
-                            {
-                                OnFocusedChanged(EventArgs.Empty);
-                            }
-
-                            if (Focused && !CursorVisible)
-                            {
-                                GrabMouse();
-                            }
+                            OnFocusedChanged(EventArgs.Empty);
                         }
-                        break;
 
+                        if (Focused && !CursorVisible)
+                        {
+                            GrabMouse();
+                        }
+
+                        break;
+                    }
                     case XEventName.FocusOut:
+                    {
+                        bool previous_focus = has_focus;
+                        has_focus = false;
+                        if (has_focus != previous_focus)
                         {
-                            bool previous_focus = has_focus;
-                            has_focus = false;
-                            if (has_focus != previous_focus)
-                            {
-                                OnFocusedChanged(EventArgs.Empty);
-                            }
+                            OnFocusedChanged(EventArgs.Empty);
                         }
                         break;
-
+                    }
                     case XEventName.LeaveNotify:
+                    {
                         if (CursorVisible)
                         {
                             int x = MathHelper.Clamp(e.CrossingEvent.x, 0, Width);
@@ -1149,12 +1162,14 @@ namespace OpenTK.Platform.X11
                             OnMouseLeave(EventArgs.Empty);
                         }
                         break;
-
+                    }
                     case XEventName.EnterNotify:
+                    {
                         OnMouseEnter(EventArgs.Empty);
                         break;
-
+                    }
                     case XEventName.MappingNotify:
+                    {
                         // 0 == MappingModifier, 1 == MappingKeyboard
                         if (e.MappingEvent.request == 0 || e.MappingEvent.request == 1)
                         {
@@ -1163,20 +1178,18 @@ namespace OpenTK.Platform.X11
                             KeyMap.RefreshKeycodes(window.Display);
                         }
                         break;
-
-                   case XEventName.PropertyNotify:
+                    }
+                    case XEventName.PropertyNotify:
+                    {
                         if (e.PropertyEvent.atom == _atom_net_wm_state)
                         {
                             OnWindowStateChanged(EventArgs.Empty);
                         }
 
-                        //if (e.PropertyEvent.atom == _atom_net_frame_extents)
-                        //{
-                        //    RefreshWindowBorders();
-                        //}
-                        break;
-
+                       break;
+                    }
                     case XEventName.SelectionNotify:
+                    {
                         if (e.SelectionEvent.property == _atom_xdnd_primary)
                         {
                             IntPtr data = IntPtr.Zero;
@@ -1206,10 +1219,12 @@ namespace OpenTK.Platform.X11
                             Functions.XSendEvent(this.window.Display, e.ClientMessageEvent.ptr1, false, (IntPtr)EventMask.NoEventMask, ref reply);
                         }
                         break;
-
+                    }
                     default:
+                    {
                         //Debug.WriteLine(String.Format("{0} event was not handled", e.type));
                         break;
+                    }
                 }
             }
         }
@@ -1417,6 +1432,7 @@ namespace OpenTK.Platform.X11
                             fullscreen = true;
                         }
                     }
+
                     using (new XLock(window.Display))
                     {
                         Functions.XFree(prop);
@@ -1435,12 +1451,7 @@ namespace OpenTK.Platform.X11
                 {
                     return OpenTK.WindowState.Fullscreen;
                 }
-                /*
-                                attributes = new XWindowAttributes();
-                                Functions.XGetWindowAttributes(window.Display, window.Handle, ref attributes);
-                                if (attributes.map_state == MapState.IsUnmapped)
-                                    return (OpenTK.WindowState)(-1);
-                */
+
                 return OpenTK.WindowState.Normal;
             }
             set
@@ -1761,6 +1772,7 @@ namespace OpenTK.Platform.X11
                 {
                     Functions.XFetchName(window.Display, window.Handle, ref name);
                 }
+
                 if (name != IntPtr.Zero)
                 {
                     return Marshal.PtrToStringAnsi(name);
@@ -1907,6 +1919,7 @@ namespace OpenTK.Platform.X11
                 {
                     Debug.Print("[Warning] {0} leaked.", this.GetType().Name);
                 }
+
                 disposed = true;
             }
         }
