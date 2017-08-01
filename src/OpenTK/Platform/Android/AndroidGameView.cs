@@ -402,9 +402,11 @@ namespace OpenTK.Platform.Android
                         }
 
                         if (RenderOnUIThread)
+                        {
                             global::Android.App.Application.SynchronizationContext.Send (_ => {
                                 RunIteration (token);
                             }, null);
+                        }
                         else
                             RunIteration (token);
 
