@@ -104,6 +104,7 @@ namespace OpenTK.Platform.X11
                     visualAttributes.Add((int)GLXAttribute.RENDER_TYPE);
                     visualAttributes.Add((int)GLXRenderTypeMask.RGBA_BIT);
                 }
+
                 visualAttributes.Add((int)GLXAttribute.RED_SIZE);
                 visualAttributes.Add(mode.ColorFormat.Red);
                 visualAttributes.Add((int)GLXAttribute.GREEN_SIZE);
@@ -211,6 +212,7 @@ namespace OpenTK.Platform.X11
                 {
                     visualAttributes.Add((int)GLXAttribute.RGBA);
                 }
+
                 visualAttributes.Add((int)GLXAttribute.RED_SIZE);
                 visualAttributes.Add(mode.ColorFormat.Red);
                 visualAttributes.Add((int)GLXAttribute.GREEN_SIZE);
