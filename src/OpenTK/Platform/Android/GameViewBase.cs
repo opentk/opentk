@@ -148,7 +148,9 @@ namespace OpenTK
         protected virtual void OnLoad (EventArgs e)
         {
             if (Load != null)
+            {
                 Load (this, e);
+            }
         }
 
         /// <summary>
@@ -224,7 +226,9 @@ namespace OpenTK
         protected virtual void OnUnload (EventArgs e)
         {
             if (Unload != null)
+            {
                 Unload (this, e);
+            }
         }
 
         /// <summary>
@@ -300,7 +304,9 @@ namespace OpenTK
         protected virtual void OnUpdateFrame (FrameEventArgs e)
         {
             if (UpdateFrame != null)
+            {
                 UpdateFrame (this, e);
+            }
         }
 
         /// <summary>
@@ -376,7 +382,9 @@ namespace OpenTK
         protected virtual void OnRenderFrame (FrameEventArgs e)
         {
             if (RenderFrame != null)
+            {
                 RenderFrame (this, e);
+            }
         }
 
         /// <summary>
@@ -492,7 +500,9 @@ namespace OpenTK
         protected virtual void OnResize (EventArgs e)
         {
             if (Resize != null)
+            {
                 Resize (this, e);
+            }
         }
 
         /// <summary>This member is not supported.</summary>
@@ -534,7 +544,9 @@ namespace OpenTK
         protected virtual void OnClosed (EventArgs e)
         {
             if (Closed != null)
+            {
                 Closed (this, e);
+            }
         }
 
         /// <summary>
@@ -567,7 +579,9 @@ namespace OpenTK
         protected virtual void OnDisposed (EventArgs e)
         {
             if (Disposed != null)
+            {
                 Disposed (this, e);
+            }
         }
 
         /// <summary>
@@ -602,7 +616,9 @@ namespace OpenTK
         protected virtual void OnContextLost (EventArgs e)
         {
             if (ContextLost != null)
+            {
                 ContextLost (this, e);
+            }
         }
 
         /// <summary>
@@ -640,7 +656,9 @@ namespace OpenTK
         protected virtual void OnContextSet (EventArgs e)
         {
             if (ContextSet != null)
+            {
                 ContextSet (this, e);
+            }
         }
 
         /// <summary>
@@ -676,7 +694,9 @@ namespace OpenTK
         protected virtual void OnRenderThreadExited (EventArgs e)
         {
             if (RenderThreadExited != null)
+            {
                 RenderThreadExited (this, e);
+            }
         }
 
         /// <summary>
@@ -711,7 +731,9 @@ namespace OpenTK
         protected virtual void OnTitleChanged (EventArgs e)
         {
             if (TitleChanged != null)
+            {
                 TitleChanged (this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -746,7 +768,9 @@ namespace OpenTK
         protected virtual void OnVisibleChanged (EventArgs e)
         {
             if (VisibleChanged != null)
+            {
                 VisibleChanged (this, EventArgs.Empty);
+            }
         }
 
         /// <summary>This member is not supported.</summary>
@@ -799,7 +823,9 @@ namespace OpenTK
         protected virtual void OnWindowStateChanged (EventArgs e)
         {
             if (WindowStateChanged != null)
+            {
                 WindowStateChanged (this, EventArgs.Empty);
+            }
         }
 
         /// <summary>

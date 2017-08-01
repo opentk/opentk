@@ -147,13 +147,18 @@ namespace OpenTK.Platform.Android
         protected override void Dispose (bool disposing)
         {
             if (disposed)
+            {
                 return;
+            }
 
             // Stop the timer before anything else
             StopThread ();
 
             if (disposing)
+            {
                 OnDisposed (EventArgs.Empty);
+            }
+
             disposed = true;
 
             base.Dispose (disposing);
@@ -268,10 +273,14 @@ namespace OpenTK.Platform.Android
             Mark ();
 #endif
             if (!ReadyToRender)
+            {
                 return;
+            }
 
             if (autoSetContextOnRenderFrame)
+            {
                 MakeCurrent ();
+            }
 
             OnRenderFrame (e);
         }
@@ -307,7 +316,9 @@ namespace OpenTK.Platform.Android
         private void UpdateFrameInternal (FrameEventArgs e)
         {
             if (!ReadyToRender)
+            {
                 return;
+            }
 
             OnUpdateFrame (e);
         }
@@ -315,13 +326,17 @@ namespace OpenTK.Platform.Android
         private void EnsureUndisposed ()
         {
             if (disposed)
+            {
                 throw new ObjectDisposedException ("");
+            }
         }
 
         private void AssertContext ()
         {
             if (GraphicsContext == null)
+            {
                 throw new InvalidOperationException ("Operation requires a GraphicsContext, which hasn't been created yet.");
+            }
         }
 
         private void CreateSurface()
@@ -337,6 +352,7 @@ namespace OpenTK.Platform.Android
                 // Context already created, so only recreate the surface
                 windowInfo.CreateSurface(GraphicsContext.GraphicsMode.Index.Value);
             }
+
             MakeCurrent();
         }
 
@@ -352,7 +368,9 @@ namespace OpenTK.Platform.Android
 
             // Setup GraphicsMode to default if not set
             if (GraphicsMode == null)
+            {
                 GraphicsMode = GraphicsMode.Default;
+            }
 
             GraphicsContext = new GraphicsContext(GraphicsMode, WindowInfo, (int)ContextRenderingApi, 0, GraphicsContextFlags.Embedded);
         }
@@ -378,7 +396,9 @@ namespace OpenTK.Platform.Android
             callMakeCurrent = true;
 
             if (source != null)
+            {
                 return;
+            }
 
             source = new CancellationTokenSource ();
             RenderThreadException = null;
@@ -388,15 +408,19 @@ namespace OpenTK.Platform.Android
                     tick = 0;
                     renderingThread = Thread.CurrentThread;
                     var token = (CancellationToken)k;
-                    while (true) {
+                    while (true)
+                    {
                         if (token.IsCancellationRequested)
+                        {
                             return;
+                        }
 
                         tick = stopWatch.Elapsed.TotalMilliseconds;
 
                         pauseSignal.WaitOne ();
 
-                        if (!RenderOnUIThread && callMakeCurrent) {
+                        if (!RenderOnUIThread && callMakeCurrent)
+                        {
                             MakeCurrent ();
                             callMakeCurrent = false;
                         }
@@ -413,38 +437,50 @@ namespace OpenTK.Platform.Android
                             RunIteration (token);
                         }
 
-                        if (updates > 0) {
+                        if (updates > 0)
+                        {
                             var t = updates - (stopWatch.Elapsed.TotalMilliseconds - tick);
-                            if (t > 0) {
+                            if (t > 0)
+                            {
 #if TIMING
                                 //Log.Verbose ("AndroidGameView", "took {0:F2}ms, should take {1:F2}ms, sleeping for {2:F2}", stopWatch.Elapsed.TotalMilliseconds - tick, updates, t);
 #endif
                                 if (token.IsCancellationRequested)
+                                {
                                     return;
+                                }
 
                                 pauseSignal.Reset ();
                                 pauseSignal.WaitOne ((int)t);
                                 if (renderOn)
+                                {
                                     pauseSignal.Set ();
+                                }
                             }
                         }
                     }
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     RenderThreadException = e;
                 }
             }, source.Token).ContinueWith ((t) => {
-                if (!source.IsCancellationRequested) {
+                if (!source.IsCancellationRequested)
+                {
                     restartCounter++;
                     source = null;
                     if (restartCounter >= RenderThreadRestartRetries)
                     {
                         OnRenderThreadExited (null);
                     }
-                    else {
+                    else
+                    {
                         callMakeCurrent = true;
                         StartThread ();
                     }
-                } else {
+                }
+                else
+                {
                     restartCounter = 0;
                     source = null;
                 }
@@ -456,7 +492,9 @@ namespace OpenTK.Platform.Android
             log ("StopThread");
             restartCounter = 0;
             if (source == null)
+            {
                 return;
+            }
 
             stopped = true;
             renderOn = false;
@@ -465,7 +503,10 @@ namespace OpenTK.Platform.Android
 
             // if the render thread is paused, let it run so it exits
             pauseSignal.Set ();
-            if (stopWatch != null) stopWatch.Stop ();
+            if (stopWatch != null)
+            {
+                stopWatch.Stop ();
+            }
         }
 
         private void PauseThread ()
@@ -473,7 +514,9 @@ namespace OpenTK.Platform.Android
             log ("PauseThread");
             restartCounter = 0;
             if (source == null)
+            {
                 return;
+            }
 
             pauseSignal.Reset ();
             renderOn = false;
@@ -484,7 +527,9 @@ namespace OpenTK.Platform.Android
             log ("ResumeThread");
             restartCounter = 0;
             if (source == null)
+            {
                 return;
+            }
 
             if (!renderOn) {
                 tick = 0;
@@ -508,10 +553,14 @@ namespace OpenTK.Platform.Android
         private void RunIteration (CancellationToken token)
         {
             if (token.IsCancellationRequested)
+            {
                 return;
+            }
 
             if (!ReadyToRender)
+            {
                 return;
+            }
 
             curUpdateTime = DateTime.Now;
             if (prevUpdateTime.Ticks != 0) {
@@ -571,7 +620,9 @@ namespace OpenTK.Platform.Android
         private GLCalls GLCalls {
             get {
                 if (gl == null || gl.Version != ContextRenderingApi)
+                {
                     gl = GLCalls.GetGLCalls (ContextRenderingApi);
+                }
                 return gl;
             }
         }
@@ -608,7 +659,9 @@ namespace OpenTK.Platform.Android
             set {
                 EnsureUndisposed ();
                 if (GraphicsContext != null)
+                {
                     throw new NotSupportedException ("Can't change RenderingApi after GraphicsContext is constructed.");
+                }
                 this.api = value;
             }
         }

@@ -89,7 +89,9 @@ namespace OpenTK.Platform.Android {
         private void UpdateEglWindowInfo()
         {
             if (eglWindowInfo == null)
+            {
                 eglWindowInfo = new EglWindowInfo(IntPtr.Zero, IntPtr.Zero);
+            }
 
             var newHandle = IntPtr.Zero;
             var holder = Holder;
@@ -103,7 +105,9 @@ namespace OpenTK.Platform.Android {
             {
                 // Same, we can release this reference
                 if (newHandle != IntPtr.Zero)
+                {
                     ANativeWindow_release(newHandle);
+                }
             }
             else
             {
