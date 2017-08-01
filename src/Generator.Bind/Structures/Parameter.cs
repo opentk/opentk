@@ -73,6 +73,7 @@ namespace Bind.Structures
                         Pointer++;
                         value = value.Substring(1);
                     }
+
                     RawName = value;
                 }
             }
@@ -167,6 +168,7 @@ namespace Bind.Structures
             {
                 result = Name.CompareTo(other.Name);
             }
+
             return result;
         }
 
@@ -322,6 +324,7 @@ namespace Bind.Structures
                     sb.Append(p.ToString());
                     sb.Append(", ");
                 }
+
                 sb.Replace(", ", ")", sb.Length - 2, 2);
             }
             else
@@ -341,6 +344,7 @@ namespace Bind.Structures
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -383,6 +387,7 @@ namespace Bind.Structures
             {
                 Rebuild = true;
             }
+
             return result;
         }
 
@@ -445,6 +450,7 @@ namespace Bind.Structures
                         return result;
                     }
                 }
+
                 return 0;
             }
         }
@@ -461,6 +467,7 @@ namespace Bind.Structures
             {
                 result &= this[i].Equals(other[i]);
             }
+
             return result;
         }
     }
