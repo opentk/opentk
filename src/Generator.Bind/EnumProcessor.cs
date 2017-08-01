@@ -121,9 +121,6 @@ namespace Bind
                     e2.CLSCompliant = false;
                 }
             }
-            foreach (var e in enums.Values)
-            {
-            }
 
             return processed_enums;
         }
