@@ -727,7 +727,7 @@ namespace OpenTK.Platform.Android
                 EnsureUndisposed ();
                 return WindowState.Normal;
             }
-            set {}
+            set { }
         }
 
         /// <summary>Always returns <see cref="F:OpenTK.WindowBorder.Hidden" />.</summary>
@@ -740,7 +740,7 @@ namespace OpenTK.Platform.Android
                 EnsureUndisposed ();
                 return WindowBorder.Hidden;
             }
-            set {}
+            set { }
         }
 
         /// <summary>The size of the current view.</summary>

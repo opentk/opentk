@@ -359,7 +359,7 @@ namespace OpenTK.Platform.X11
 
         private string[] parseUriList(string rawString)
         {
-            string[] separator = new string[] {"\r", "\n"};
+            string[] separator = new string[] { "\r", "\n" };
             string[] splitted = rawString.Split(separator, StringSplitOptions.RemoveEmptyEntries);
 
             string[] fileNames = new string[splitted.Length];

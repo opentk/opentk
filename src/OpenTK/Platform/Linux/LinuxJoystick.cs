@@ -53,10 +53,10 @@ namespace OpenTK.Platform.Linux
 
         internal int[,] hatStates =
         {
-            {0, 0},
-            {0, 0},
-            {0, 0},
-            {0, 0}
+            { 0, 0 },
+            { 0, 0 },
+            { 0, 0 },
+            { 0, 0 }
         };
     }
 
