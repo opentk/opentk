@@ -79,7 +79,7 @@ namespace Bind.Structures
                         return false;
                     }
                 }
-                
+
                 return true;
             }
             set

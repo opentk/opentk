@@ -115,7 +115,7 @@ namespace Bind.Structures
             {
                 throw new ArgumentNullException("c");
             }
-            
+
             if (enums == null)
             {
                 throw new ArgumentNullException("enums");
