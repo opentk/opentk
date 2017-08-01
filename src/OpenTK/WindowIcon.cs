@@ -62,6 +62,7 @@ namespace OpenTK
             {
                 throw new ArgumentNullException();
             }
+            
             if (data.Length < Width * Height * 4)
             {
                 throw new ArgumentOutOfRangeException();
