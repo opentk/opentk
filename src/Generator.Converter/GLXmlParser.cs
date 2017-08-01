@@ -88,6 +88,7 @@ namespace OpenTK.Convert
                         // the <remove> elements.
                         v = "gl|glcore";
                     }
+
                     apinames = v.Split('|');
                     break;
                 }
@@ -108,6 +109,7 @@ namespace OpenTK.Convert
                 default:
                     throw new NotSupportedException("Unknown feature type");
             }
+
             return apinames;
         }
 
@@ -165,6 +167,7 @@ namespace OpenTK.Convert
                                 new XAttribute("name", apiname),
                                 String.IsNullOrEmpty(version) ? null : new XAttribute("version", version)));
                     }
+
                     var api = APIs[key];
 
                     var enum_name = TrimName(feature.Attribute("name").Value);
@@ -283,6 +286,7 @@ namespace OpenTK.Convert
                                 new XAttribute("name", apiname),
                                 new XAttribute("version", cmd_version)));
                     }
+
                     var api = APIs[key];
 
                     foreach (var command in feature.Elements("require").Elements("command"))
@@ -489,6 +493,7 @@ namespace OpenTK.Convert
             {
                 return categories[cmd_name].Attribute(attribute);
             }
+
             return null;
         }
     }
