@@ -73,6 +73,7 @@ namespace Bind
                     {
                         WriteIndentations(options);
                     }
+
                     newline = false;
                     sw.Write(lines[i]);
                 }
