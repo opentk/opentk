@@ -44,6 +44,7 @@ namespace OpenTK.Platform.X11
             {
                 throw new ArgumentNullException("mode");
             }
+
             if (window == null)
             {
                 throw new ArgumentNullException("window");
@@ -143,6 +144,7 @@ namespace OpenTK.Platform.X11
             {
                 throw new ArgumentException("handle");
             }
+
             if (window == null)
             {
                 throw new ArgumentNullException("window");
@@ -175,6 +177,7 @@ namespace OpenTK.Platform.X11
                     attributes.Add((int)ArbCreateContext.ProfileMask);
                     attributes.Add((int)GetARBProfileFlags(flags));
                 }
+
                 // According to the docs, " <attribList> specifies a list of attributes for the context.
                 // The list consists of a sequence of <name,value> pairs terminated by the
                 // value 0. [...]"
@@ -233,10 +236,12 @@ namespace OpenTK.Platform.X11
                 {
                     throw new ArgumentOutOfRangeException();
                 }
+
                 if (display != IntPtr.Zero)
                 {
                     throw new InvalidOperationException("The display connection may not be changed after being set.");
                 }
+
                 display = value;
             }
         }
@@ -262,10 +267,12 @@ namespace OpenTK.Platform.X11
             {
                 throw new ArgumentNullException("window");
             }
+
             if (e == null)
             {
                 throw new ArgumentNullException("e");
             }
+
             if (window.Display != display)
             {
                 throw new InvalidOperationException();
@@ -278,6 +285,7 @@ namespace OpenTK.Platform.X11
                     extensions = Glx.QueryExtensionsString(display, window.Screen);
                 }
             }
+
             return !String.IsNullOrEmpty(extensions) && extensions.Contains(e);
         }
 
@@ -295,6 +303,7 @@ namespace OpenTK.Platform.X11
                 throw new InvalidOperationException(
                     String.Format("Window is invalid. Display ({0}), Handle ({1}).", Display, currentWindow.Handle));
             }
+
             using (new XLock(Display))
             {
                 Glx.SwapBuffers(Display, currentWindow.Handle);
@@ -327,6 +336,7 @@ namespace OpenTK.Platform.X11
                         currentWindow = null;
                     }
                 }
+
                 Debug.Print("{0}", result ? "done!" : "failed.");
             }
             else
@@ -493,6 +503,7 @@ namespace OpenTK.Platform.X11
                             Glx.MakeCurrent(display, IntPtr.Zero, IntPtr.Zero);
                         }
                     }
+
                     using (new XLock(display))
                     {
                         Glx.DestroyContext(display, Handle);
@@ -503,6 +514,7 @@ namespace OpenTK.Platform.X11
             {
                 Debug.Print("[Warning] {0} leaked.", this.GetType().Name);
             }
+
             IsDisposed = true;
         }
     }
