@@ -714,7 +714,6 @@ XF86VidModeGetGammaRampSize(
         Menu        = 0x10,
         Minimize    = 0x20,
         Maximize    = 0x40,
-
     }
 
     [Flags]

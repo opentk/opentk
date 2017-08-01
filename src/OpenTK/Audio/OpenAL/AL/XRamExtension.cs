@@ -155,7 +155,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 return XRamStorage.Accessible;
             }
-            
+
             if (tempresult == AL_STORAGE_HARDWARE)
             {
                 return XRamStorage.Hardware;
@@ -174,6 +174,5 @@ namespace OpenTK.Audio.OpenAL
             return GetBufferMode(ref temp);
         }
     }
-
 }
 

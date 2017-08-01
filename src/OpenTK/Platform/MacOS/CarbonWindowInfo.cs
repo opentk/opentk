@@ -97,11 +97,6 @@ namespace OpenTK.Platform.MacOS
                 return;
             }
 
-            if (disposing)
-            {
-
-            }
-
             if (ownHandle)
             {
                 Handle = IntPtr.Zero;
@@ -114,6 +109,5 @@ namespace OpenTK.Platform.MacOS
         {
             Dispose(false);
         }
-
     }
 }

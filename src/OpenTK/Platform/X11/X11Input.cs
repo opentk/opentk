@@ -73,7 +73,6 @@ namespace OpenTK.Platform.X11
         {
             joystick.Dispose();
         }
-
     }
 }
 

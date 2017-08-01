@@ -118,7 +118,7 @@ namespace OpenTK
                 {
                     throw new ArithmeticException("Half: Positive maximum value exceeded.");
                 }
-                
+
                 if (f < -Half.MaxValue)
                 {
                     throw new ArithmeticException("Half: Negative minimum value exceeded.");
@@ -129,12 +129,12 @@ namespace OpenTK
                 {
                     throw new ArithmeticException("Half: Input is not a number (NaN).");
                 }
-                
+
                 if (Single.IsPositiveInfinity(f))
                 {
                     throw new ArithmeticException("Half: Input is positive infinity.");
                 }
-                
+
                 if (Single.IsNegativeInfinity(f))
                 {
                     throw new ArithmeticException("Half: Input is negative infinity.");
@@ -408,7 +408,6 @@ namespace OpenTK
         public void FromBinaryStream(BinaryReader bin)
         {
             this.bits = bin.ReadUInt16();
-
         }
 
         /// <summary>Writes the Half into a Stream.</summary>

@@ -229,7 +229,7 @@ namespace OpenTK
                 {
                     return Row2[columnIndex];
                 }
-                
+
                 throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
             }
             set
@@ -303,7 +303,7 @@ namespace OpenTK
             {
                 m.Invert();
             }
-            
+
             return m;
         }
 
@@ -319,7 +319,7 @@ namespace OpenTK
             m.Row2 = m.Row2.Normalized();
             return m;
         }
-        
+
         /// <summary>
         /// Returns a copy of this Matrix3 without rotation.
         /// </summary>
@@ -969,6 +969,5 @@ namespace OpenTK
                     Row1 == other.Row1 &&
                     Row2 == other.Row2;
         }
-
     }
 }

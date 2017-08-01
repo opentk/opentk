@@ -128,7 +128,6 @@ namespace OpenTK
 
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1024)]
             public string extraJustInCase;
-
         }
 
         /// <summary>

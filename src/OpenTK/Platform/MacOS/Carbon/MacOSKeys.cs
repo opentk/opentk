@@ -142,8 +142,6 @@ namespace OpenTK.Platform.MacOS
         Down = 125,
         Left = 123,
         Right = 124,
-
-
     }
 
     [Flags]

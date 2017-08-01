@@ -36,6 +36,5 @@ namespace OpenTK.Graphics.ES11
         {
             get { return sync_root; }
         }
-
     }
 }

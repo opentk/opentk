@@ -89,7 +89,6 @@ namespace OpenTK.Platform.MacOS
 
             return r;
         }
-
     }
 
     internal enum CGEventTapLocation

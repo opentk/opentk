@@ -1415,6 +1415,5 @@ namespace OpenTK.Platform.MacOS
                 Cocoa.SendVoid(windowInfo.Handle, selPerformClose, windowInfo.Handle);
             }
         }
-
     }
 }

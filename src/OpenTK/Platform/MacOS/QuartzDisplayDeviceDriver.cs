@@ -166,7 +166,6 @@ namespace OpenTK.Platform.MacOS
 
                     return true;
                 }
-
             }
 
             return false;

@@ -92,12 +92,12 @@ namespace OpenTK
             {
                 throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
             }
-            
+
             if (height < 1)
             {
                 throw new ArgumentOutOfRangeException("height", "Must be greater than zero.");
             }
-            
+
             if (mode == null)
             {
                 throw new ArgumentNullException("mode");
@@ -118,7 +118,7 @@ namespace OpenTK
                 {
                     this.device.ChangeResolution(width, height, mode.ColorFormat.BitsPerPixel, 0);
                 }
-                
+
                 WindowState = WindowState.Fullscreen;
             }
 
@@ -248,7 +248,7 @@ namespace OpenTK
                 {
                     value = MouseCursor.Empty;
                 }
-                
+
                 implementation.Cursor = value;
             }
         }
@@ -607,7 +607,7 @@ namespace OpenTK
                         device.RestoreResolution();
                     }
                 }
-                
+
                 implementation.Dispose();
                 GC.SuppressFinalize(this);
 
@@ -684,7 +684,7 @@ namespace OpenTK
                 previous_cursor_visible = true;
                 CursorVisible = false;
             }
-            
+
             FocusedChanged(this, e);
         }
 
@@ -866,12 +866,12 @@ namespace OpenTK
             {
                 throw new InvalidOperationException("ProcessEvents must be called on the same thread that created the window.");
             }
-            
+
             if (!retainEvents && !events)
             {
                 Events = true;
             }
-            
+
             implementation.ProcessEvents();
         }
 
@@ -928,7 +928,7 @@ namespace OpenTK
                     {
                         throw new InvalidOperationException("Event propagation is already enabled.");
                     }
-                    
+
                     implementation.Closed += OnClosedInternal;
                     implementation.Closing += OnClosingInternal;
                     implementation.Disposed += OnDisposedInternal;
@@ -984,5 +984,4 @@ namespace OpenTK
             }
         }
     }
-
 }

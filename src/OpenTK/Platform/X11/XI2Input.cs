@@ -71,7 +71,6 @@ namespace OpenTK.Platform.X11
             mouse_keyboard.Dispose();
             joystick.Dispose();
         }
-
     }
 }
 

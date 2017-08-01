@@ -300,7 +300,6 @@ namespace OpenTK.Platform.MacOS
 
                         break;
                     }
-
                 }
             }
             catch (Exception e)

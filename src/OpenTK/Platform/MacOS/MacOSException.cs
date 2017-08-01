@@ -113,7 +113,5 @@ namespace OpenTK.Platform.MacOS
         EventNotInQueue = -9877,
         HotKeyExists = -9878,
         EventPassToNextTarget = -9880
-
     }
-
 }

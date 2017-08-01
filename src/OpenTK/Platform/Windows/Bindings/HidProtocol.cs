@@ -111,7 +111,6 @@ namespace OpenTK.Platform.Windows
 
     internal enum HidProtocolCollectionType : byte
     {
-
     }
 
     internal enum HidProtocolReportType : ushort

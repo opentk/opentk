@@ -162,7 +162,6 @@ namespace OpenTK.Platform.X11
         {
             Debug.Write("Using GLX_ARB_create_context... ");
             IntPtr context = IntPtr.Zero;
-
             {
                 // We need the FB config for the current GraphicsMode.
                 List<int> attributes = new List<int>();
