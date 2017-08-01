@@ -46,6 +46,7 @@ namespace OpenTK
             {
                 throw new ArgumentNullException("factory");
             }
+
             platform_factory = factory;
         }
 
@@ -134,6 +135,7 @@ namespace OpenTK
                     // platform-specific factory constructors.
                     toolkit = new Toolkit(new Factory());
                 }
+
                 return toolkit;
             }
         }
