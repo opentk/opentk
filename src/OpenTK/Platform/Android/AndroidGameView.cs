@@ -198,8 +198,11 @@ namespace OpenTK.Platform.Android
             if (Context != null)
             {
                 Context.SwapBuffers();
-            } else
+            }
+            else
+            {
                 GraphicsContext.SwapBuffers ();
+            }
         }
 
         private double updates;
@@ -429,7 +432,9 @@ namespace OpenTK.Platform.Android
                     restartCounter++;
                     source = null;
                     if (restartCounter >= RenderThreadRestartRetries)
+                    {
                         OnRenderThreadExited (null);
+                    }
                     else {
                         callMakeCurrent = true;
                         StartThread ();

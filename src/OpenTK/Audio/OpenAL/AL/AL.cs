@@ -66,7 +66,6 @@ namespace OpenTK.Audio.OpenAL
     /// </summary>
     public static partial class AL
     {
-
         internal const string Lib = "openal32.dll";
         private const CallingConvention Style = CallingConvention.Cdecl;
 
@@ -413,7 +412,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 sources[i] = (int)temp[i];
             }
-            
+
             return sources;
         }
 
@@ -464,12 +463,12 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentNullException();
             }
-            
+
             if (sources.Length == 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            
+
             DeleteBuffers(sources.Length, ref sources[0]);
         }
 
@@ -481,12 +480,12 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentNullException();
             }
-            
+
             if (sources.Length == 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            
+
             DeleteBuffers(sources.Length, ref sources[0]);
         }
 
@@ -789,7 +788,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 temp[i] = (uint)sids[i];
             }
-            
+
             SourcePlay(ns, temp);
         }
 
@@ -840,7 +839,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 temp[i] = (uint)sids[i];
             }
-            
+
             SourceStop(ns, temp);
         }
 
@@ -891,7 +890,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 temp[i] = (uint)sids[i];
             }
-            
+
             SourceRewind(ns, temp);
         }
 
@@ -931,7 +930,7 @@ namespace OpenTK.Audio.OpenAL
                 }
             }
         }
-        
+
         /// <summary>This function pauses a set of sources. The paused sources will have their state changed to ALSourceState.Paused.</summary>
         /// <param name="ns">The number of sources to be paused.</param>
         /// <param name="sids">A pointer to an array of sources to be paused.</param>
@@ -942,7 +941,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 temp[i] = (uint)sids[i];
             }
-            
+
             SourcePause(ns, temp);
         }
 
@@ -1048,7 +1047,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 temp[i] = (uint)bids[i];
             }
-            
+
             SourceQueueBuffers((uint)sid, numEntries, temp);
         }
 
@@ -1132,7 +1131,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentOutOfRangeException("numEntries", "Must be greater than zero.");
             }
-            
+
             int[] buf = new int[numEntries];
             SourceUnqueueBuffers(sid, numEntries, buf);
             return buf;
@@ -1276,12 +1275,12 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentNullException();
             }
-            
+
             if (buffers.Length == 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            
+
             DeleteBuffers(buffers.Length, ref buffers[0]);
         }
 
@@ -1293,12 +1292,12 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentNullException();
             }
-            
+
             if (buffers.Length == 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            
+
             DeleteBuffers(buffers.Length, ref buffers[0]);
         }
 
