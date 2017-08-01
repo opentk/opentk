@@ -72,10 +72,12 @@ namespace OpenTK.Audio
             {
                 throw new DllNotFoundException("openal32.dll");
             }
+
             if (frequency <= 0)
             {
                 throw new ArgumentOutOfRangeException("frequency");
             }
+
             if (bufferSize <= 0)
             {
                 throw new ArgumentOutOfRangeException("bufferSize");
@@ -298,6 +300,7 @@ namespace OpenTK.Audio
                     alcerrmsg = alcerrcode.ToString();
                     break;
             }
+
             return "The handle returned by Alc.CaptureOpenDevice is null." +
                    "\nAlc Error: " + alcerrmsg +
                    "\nDevice Name: " + devicename +
@@ -336,6 +339,7 @@ namespace OpenTK.Audio
 
                     Alc.CaptureCloseDevice(this.Handle);
                 }
+                
                 this.IsDisposed = true;
             }
         }

@@ -304,6 +304,7 @@ namespace OpenTK
                 {
                     return Row3[columnIndex];
                 }
+                
                 throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
             }
             set
@@ -379,6 +380,7 @@ namespace OpenTK
             {
                 m.Invert();
             }
+            
             return m;
         }
 
@@ -391,6 +393,7 @@ namespace OpenTK
             m.Row3.Xyz = Vector3d.Zero;
             return m;
         }
+        
         /// <summary>
         /// Returns a copy of this Matrix4d without scale.
         /// </summary>
@@ -402,6 +405,7 @@ namespace OpenTK
             m.Row2.Xyz = m.Row2.Xyz.Normalized();
             return m;
         }
+        
         /// <summary>
         /// Returns a copy of this Matrix4d without rotation.
         /// </summary>
@@ -413,6 +417,7 @@ namespace OpenTK
             m.Row2.Xyz = new Vector3d(0, 0, m.Row2.Xyz.Length);
             return m;
         }
+        
         /// <summary>
         /// Returns a copy of this Matrix4d without projection.
         /// </summary>
@@ -797,14 +802,17 @@ namespace OpenTK
             {
                 throw new ArgumentOutOfRangeException("fovy");
             }
+            
             if (aspect <= 0)
             {
                 throw new ArgumentOutOfRangeException("aspect");
             }
+            
             if (zNear <= 0)
             {
                 throw new ArgumentOutOfRangeException("zNear");
             }
+            
             if (zFar <= 0)
             {
                 throw new ArgumentOutOfRangeException("zFar");
@@ -867,10 +875,12 @@ namespace OpenTK
             {
                 throw new ArgumentOutOfRangeException("zNear");
             }
+            
             if (zFar <= 0)
             {
                 throw new ArgumentOutOfRangeException("zFar");
             }
+            
             if (zNear >= zFar)
             {
                 throw new ArgumentOutOfRangeException("zNear");
@@ -913,6 +923,7 @@ namespace OpenTK
             CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar, out result);
             return result;
         }
+        
         /// <summary>
         /// Build a rotation matrix from the specified quaternion.
         /// </summary>

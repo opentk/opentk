@@ -64,6 +64,7 @@ namespace OpenTK.Platform.MacOS
                     f.Value = *(IntPtr*)&d;
                 }
             }
+
             return f;
         }
 
@@ -82,6 +83,7 @@ namespace OpenTK.Platform.MacOS
                     f.Value = *(IntPtr*)&v;
                 }
             }
+
             return f;
         }
 

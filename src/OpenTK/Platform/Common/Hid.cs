@@ -48,6 +48,7 @@ namespace OpenTK.Platform.Common
             {
                 throw new ArgumentOutOfRangeException();
             }
+
             MathHelper.Clamp(value, value_min, value_max);
 
             int range = result_max - result_min;
@@ -60,38 +61,65 @@ namespace OpenTK.Platform.Common
             switch (page)
             {
                 case HIDPage.GenericDesktop:
+                {
                     switch ((HIDUsageGD)usage)
                     {
                         case HIDUsageGD.X:
+                        {
                             return 0;
+                        }
                         case HIDUsageGD.Y:
+                        {
                             return 1;
+                        }
                         case HIDUsageGD.Z:
+                        {
                             return 2;
+                        }
                         case HIDUsageGD.Rz:
+                        {
                             return 3;
+                        }
                         case HIDUsageGD.Rx:
+                        {
                             return 4;
+                        }
                         case HIDUsageGD.Ry:
+                        {
                             return 5;
+                        }
                         case HIDUsageGD.Slider:
+                        {
                             return 6;
+                        }
                         case HIDUsageGD.Dial:
+                        {
                             return 7;
+                        }
                         case HIDUsageGD.Wheel:
+                        {
                             return 8;
+                        }
                     }
-                    break;
 
+                    break;
+                }
                 case HIDPage.Simulation:
+                {
                     switch ((HIDUsageSim)usage)
                     {
                         case HIDUsageSim.Rudder:
+                        {
                             return 9;
+                        }
                         case HIDUsageSim.Throttle:
+                        {
                             return 10;
+                        }
                     }
+
                     break;
+                }
             }
 
             Debug.Print("[Input] Unknown axis with HID page/usage {0}/{1}", page, usage);

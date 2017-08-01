@@ -46,6 +46,7 @@ namespace OpenTK.Platform.Egl
             {
                 throw new ArgumentNullException("mode");
             }
+
             if (window == null)
             {
                 throw new ArgumentNullException("window");
@@ -98,6 +99,7 @@ namespace OpenTK.Platform.Egl
             {
                 throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
             }
+
             IntPtr config = Mode.Index.Value;
 
             if (window.Surface == IntPtr.Zero)
@@ -126,6 +128,7 @@ namespace OpenTK.Platform.Egl
             {
                 throw new ArgumentException("handle");
             }
+
             if (window == null)
             {
                 throw new ArgumentNullException("window");
@@ -247,8 +250,10 @@ namespace OpenTK.Platform.Egl
                     {
                         Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, IntPtr.Zero);
                     }
+
                     Egl.DestroyContext(WindowInfo.Display, HandleAsEGLContext);
                 }
+
                 IsDisposed = true;
             }
         }
@@ -265,6 +270,7 @@ namespace OpenTK.Platform.Egl
             {
                 return (EglContext)internalContext.Implementation;
             }
+
             return (EglContext)sharedContext;
         }
     }

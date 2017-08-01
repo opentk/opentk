@@ -91,6 +91,7 @@ namespace OpenTK
             {
                 throw new ArgumentException("handle");
             }
+
             if (window == null)
             {
                 throw new ArgumentNullException("window");
@@ -219,6 +220,7 @@ namespace OpenTK
             {
                 Debug.Write(attributes[i].ToString() + "  ");
             }
+
             Debug.WriteLine("");
 
             // Create pixel format
@@ -322,6 +324,7 @@ namespace OpenTK
                     // NSOpenGL does not offer EXT_swap_control_tear yet
                     value = 1;
                 }
+
                 SetContextValue(value, NSOpenGLContextParameter.SwapInterval);
             }
         }
@@ -346,15 +349,12 @@ namespace OpenTK
             }
 
             using (var pool = new NSAutoreleasePool())
+            {if (IsCurrent)
             {
-                if (IsCurrent)
-                {
-                    Cocoa.SendVoid(NSOpenGLContext, Selector.Get("clearCurrentContext"));
-                }
-
-                Cocoa.SendVoid(Handle.Handle, Selector.Get("clearDrawable"));
-                Cocoa.SendVoid(Handle.Handle, Selector.Get("release"));
+                Cocoa.SendVoid(NSOpenGLContext, Selector.Get("clearCurrentContext"));
             }
+            Cocoa.SendVoid(Handle.Handle, Selector.Get("clearDrawable"));
+            Cocoa.SendVoid(Handle.Handle, Selector.Get("release"));}
 
             Handle = ContextHandle.Zero;
 
@@ -393,15 +393,18 @@ namespace OpenTK
                     symbol = NS.LookupSymbolInImage(opengl, new IntPtr(fun),
                         SymbolLookupFlags.Bind | SymbolLookupFlags.ReturnOnError);
                 }
+
                 if (symbol == IntPtr.Zero && opengles != IntPtr.Zero)
                 {
                     symbol = NS.LookupSymbolInImage(opengles, new IntPtr(fun),
                         SymbolLookupFlags.Bind | SymbolLookupFlags.ReturnOnError);
                 }
+
                 if (symbol != IntPtr.Zero)
                 {
                     address = NS.AddressOfSymbol(symbol);
                 }
+
                 return address;
             }
         }

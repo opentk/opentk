@@ -46,6 +46,7 @@ namespace OpenTK.Graphics
             {
                 throw new ArgumentOutOfRangeException("bpp", "Must be greater or equal to zero.");
             }
+
             red = green = blue = alpha = 0;
             BitsPerPixel = bpp;
             IsIndexed = false;
@@ -53,35 +54,51 @@ namespace OpenTK.Graphics
             switch (bpp)
             {
                 case 32:
+                {
                     Red = Green = Blue = Alpha = 8;
                     break;
+                }
                 case 24:
+                {
                     Red = Green = Blue = 8;
                     break;
+                }
                 case 16:
+                {
                     Red = Blue = 5;
                     Green = 6;
                     break;
+                }
                 case 15:
+                {
                     Red = Green = Blue = 5;
                     break;
+                }
                 case 8:
+                {
                     Red = Green = 3;
                     Blue = 2;
                     IsIndexed = true;
                     break;
+                }
                 case 4:
+                {
                     Red = Green = 2;
                     Blue = 1;
                     IsIndexed = true;
                     break;
+                }
                 case 1:
+                {
                     IsIndexed = true;
                     break;
+                }
                 default:
+                {
                     Red = Blue = Alpha = (byte)(bpp / 4);
                     Green = (byte)((bpp / 4) + (bpp % 4));
                     break;
+                }
             }
         }
 
@@ -99,6 +116,7 @@ namespace OpenTK.Graphics
             {
                 throw new ArgumentOutOfRangeException("Arguments must be greater or equal to zero.");
             }
+
             this.red = (byte)red;
             this.green = (byte)green;
             this.blue = (byte)blue;
@@ -161,11 +179,13 @@ namespace OpenTK.Graphics
             {
                 return result;
             }
+
             result = IsIndexed.CompareTo(other.IsIndexed);
             if (result != 0)
             {
                 return result;
             }
+
             result = Alpha.CompareTo(other.Alpha);
             return result;
         }

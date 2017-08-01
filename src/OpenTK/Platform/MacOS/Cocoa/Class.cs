@@ -62,6 +62,7 @@ namespace OpenTK.Platform.MacOS
             {
                 throw new ArgumentException("Unknown class: " + name);
             }
+
             return id;
         }
 

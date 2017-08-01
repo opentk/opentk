@@ -102,16 +102,19 @@ namespace OpenTK.Platform.Windows
             {
                 return false;
             }
+
             if (this.GetType() != obj.GetType())
             {
                 return false;
             }
+
             WinWindowInfo info = (WinWindowInfo)obj;
 
             if (info == null)
             {
                 return false;
             }
+
             // TODO: Assumes windows will always have unique handles.
             return handle.Equals(info.handle);
         }

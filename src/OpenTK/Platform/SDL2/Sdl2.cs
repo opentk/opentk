@@ -57,6 +57,7 @@ namespace OpenTK.Platform.SDL2
                     {
                         version = GetVersion();
                     }
+
                     return version.Value;
                 }
                 catch
@@ -398,6 +399,7 @@ namespace OpenTK.Platform.SDL2
             {
                 throw new ArgumentNullException();
             }
+
             if (count <= 0 || count > e.Length)
             {
                 throw new ArgumentOutOfRangeException();
@@ -571,6 +573,7 @@ namespace OpenTK.Platform.SDL2
             {
                 return SetAttribute(attr, (int)value);
             }
+
             public static int SetAttribute(ContextAttribute attr, ContextProfileFlags value)
             {
                 return SetAttribute(attr, (int)value);

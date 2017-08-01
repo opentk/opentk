@@ -333,6 +333,7 @@ namespace OpenTK.Platform.Egl
             {
                 throw new GraphicsContextException(String.Format("Failed to create EGL context, error: {0}.", Egl.GetError()));
             }
+            
             return ptr;
         }
 

@@ -558,6 +558,7 @@ namespace OpenTK.Platform.X11
                 G = g;
                 B = b;
             }
+
             public static implicit operator Pixel(int argb)
             {
                 return new Pixel(
@@ -567,6 +568,7 @@ namespace OpenTK.Platform.X11
                     (byte)(argb & 0xFF));
             }
         }
+
         public static IntPtr CreatePixmapFromImage(Display display, Bitmap image)
         {
             int width = image.Width;

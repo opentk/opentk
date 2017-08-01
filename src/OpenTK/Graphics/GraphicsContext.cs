@@ -126,6 +126,7 @@ namespace OpenTK.Graphics
                 {
                     major = 1;
                 }
+                
                 if (minor < 0)
                 {
                     minor = 0;
@@ -252,6 +253,7 @@ namespace OpenTK.Graphics
                 GetCurrentContext = getCurrent ?? GetCurrentContext;
                 AddContext(this);
             }
+            
             implementation.LoadAll();
         }
 
@@ -352,6 +354,7 @@ namespace OpenTK.Graphics
                     }
                 }
             }
+            
             return null;
         }
 
@@ -398,6 +401,7 @@ namespace OpenTK.Graphics
                             return (IGraphicsContext)available_contexts[handle];
                         }
                     }
+                    
                     return null;
                 }
             }
@@ -528,6 +532,7 @@ namespace OpenTK.Graphics
                 {
                     handle_cached = ((IGraphicsContextInternal)implementation).Context;
                 }
+                
                 return handle_cached;
             }
         }
@@ -607,6 +612,7 @@ namespace OpenTK.Graphics
                 {
                     Debug.WriteLine("GraphicsContext leaked, did you forget to call Dispose()?");
                 }
+                
                 IsDisposed = true;
             }
         }

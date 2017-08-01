@@ -317,6 +317,7 @@ namespace OpenTK
                 {
                     return Row3[columnIndex];
                 }
+                
                 throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
             }
             set
@@ -392,6 +393,7 @@ namespace OpenTK
             {
                 m.Invert();
             }
+            
             return m;
         }
 
@@ -404,6 +406,7 @@ namespace OpenTK
             m.Row3.Xyz = Vector3.Zero;
             return m;
         }
+        
         /// <summary>
         /// Returns a copy of this Matrix4 without scale.
         /// </summary>
@@ -415,6 +418,7 @@ namespace OpenTK
             m.Row2.Xyz = m.Row2.Xyz.Normalized();
             return m;
         }
+        
         /// <summary>
         /// Returns a copy of this Matrix4 without rotation.
         /// </summary>
@@ -426,6 +430,7 @@ namespace OpenTK
             m.Row2.Xyz = new Vector3(0, 0, m.Row2.Xyz.Length);
             return m;
         }
+        
         /// <summary>
         /// Returns a copy of this Matrix4 without projection.
         /// </summary>
@@ -919,14 +924,17 @@ namespace OpenTK
             {
                 throw new ArgumentOutOfRangeException("fovy");
             }
+            
             if (aspect <= 0)
             {
                 throw new ArgumentOutOfRangeException("aspect");
             }
+            
             if (zNear <= 0)
             {
                 throw new ArgumentOutOfRangeException("zNear");
             }
+            
             if (zFar <= 0)
             {
                 throw new ArgumentOutOfRangeException("zFar");
@@ -989,10 +997,12 @@ namespace OpenTK
             {
                 throw new ArgumentOutOfRangeException("zNear");
             }
+            
             if (zFar <= 0)
             {
                 throw new ArgumentOutOfRangeException("zFar");
             }
+            
             if (zNear >= zFar)
             {
                 throw new ArgumentOutOfRangeException("zNear");

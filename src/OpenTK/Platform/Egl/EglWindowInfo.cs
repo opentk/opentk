@@ -97,6 +97,7 @@ namespace OpenTK.Platform.Egl
             {
                 DestroySurface();
             }
+            
             CreatePbufferSurface(config, width, height, out surface);
         }
 
@@ -134,6 +135,7 @@ namespace OpenTK.Platform.Egl
             {
                 Egl.MakeCurrent(Display, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
             }
+            
             if (Egl.DestroySurface(Display, bufferSurface))
             {
                 bufferSurface = IntPtr.Zero;
@@ -152,6 +154,7 @@ namespace OpenTK.Platform.Egl
                 {
                     Debug.Print("[Warning] Failed to terminate display {0}.", Display);
                 }
+                
                 Display = IntPtr.Zero;
             }
         }

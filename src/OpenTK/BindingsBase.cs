@@ -185,6 +185,7 @@ namespace OpenTK
                     throw;
                 }
             }
+            
             return ptr;
         }
 
@@ -199,6 +200,7 @@ namespace OpenTK
             {
                 Marshal.FreeHGlobal(Marshal.ReadIntPtr(ptr, i * IntPtr.Size));
             }
+            
             Marshal.FreeHGlobal(ptr);
         }
 

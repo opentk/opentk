@@ -216,6 +216,7 @@ namespace OpenTK.Input
                     {
                         hashcode ^= (k + i)->GetHashCode();
                     }
+                    
                     return hashcode;
                 }
             }
@@ -282,6 +283,7 @@ namespace OpenTK.Input
                     }
                 }
             }
+            
             IsConnected |= other.IsConnected;
         }
 
@@ -317,6 +319,7 @@ namespace OpenTK.Input
                     }
                 }
             }
+            
             return equal;
         }
     }

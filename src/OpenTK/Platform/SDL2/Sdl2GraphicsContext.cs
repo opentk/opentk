@@ -83,6 +83,7 @@ namespace OpenTK.Platform.SDL2
 
                 Mode = GetGLAttributes(SdlContext, out flags);
             }
+
             Handle = GraphicsContext.GetCurrentContext();
             Debug.Print("SDL2 created GraphicsContext (handle: {0})", Handle);
             Debug.Print("    GraphicsMode: {0}", Mode);
@@ -376,6 +377,7 @@ namespace OpenTK.Platform.SDL2
                     Debug.Print("Sdl2GraphicsContext (handle: {0}) leaked, did you forget to call Dispose()?",
                         Handle);
                 }
+
                 IsDisposed = true;
             }
         }

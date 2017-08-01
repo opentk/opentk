@@ -57,6 +57,7 @@ namespace OpenTK.Platform.Linux
             {
                 throw new ArgumentException();
             }
+
             fd = window.FD;
 
             PageFlip = HandlePageFlip;
@@ -309,6 +310,7 @@ namespace OpenTK.Platform.Linux
                     }
                 }
             }
+
             base.Dispose(manual);
         }
     }

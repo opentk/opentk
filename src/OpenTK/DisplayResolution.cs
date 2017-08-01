@@ -26,14 +26,17 @@ namespace OpenTK
             {
                 throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
             }
+            
             if (height <= 0)
             {
                 throw new ArgumentOutOfRangeException("height", "Must be greater than zero.");
             }
+            
             if (bitsPerPixel <= 0)
             {
                 throw new ArgumentOutOfRangeException("bitsPerPixel", "Must be greater than zero.");
             }
+            
             if (refreshRate < 0)
             {
                 throw new ArgumentOutOfRangeException("refreshRate", "Must be greater than, or equal to zero.");
@@ -125,6 +128,7 @@ namespace OpenTK
             {
                 return false;
             }
+            
             if (this.GetType() == obj.GetType())
             {
                 DisplayResolution res = (DisplayResolution)obj;
@@ -164,6 +168,7 @@ namespace OpenTK
             {
                 return false;
             }
+            
             return left.Equals(right);
         }
 

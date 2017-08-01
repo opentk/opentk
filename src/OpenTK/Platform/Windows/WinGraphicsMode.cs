@@ -233,6 +233,7 @@ namespace OpenTK.Platform.Windows
                 const int penalty = 8;
                 distance += penalty * Math.Abs(got - requested);
             }
+
             return valid;
         }
 
@@ -250,6 +251,7 @@ namespace OpenTK.Platform.Windows
                     type = AccelerationType.None;
                 }
             }
+
             return type;
         }
 
@@ -295,6 +297,7 @@ namespace OpenTK.Platform.Windows
                 {
                     dist += 1000;
                 }
+
                 valid &= Compare(pfd.ColorBits, mode.ColorFormat.BitsPerPixel, ref dist);
                 valid &= Compare(pfd.RedBits, mode.ColorFormat.Red, ref dist);
                 valid &= Compare(pfd.GreenBits, mode.ColorFormat.Green, ref dist);
@@ -334,6 +337,7 @@ namespace OpenTK.Platform.Windows
                     (pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) != 0 ? 2 : 1,
                     (pfd.Flags & PixelFormatDescriptorFlags.STEREO) != 0);
             }
+
             return created_mode;
         }
 
@@ -396,6 +400,7 @@ namespace OpenTK.Platform.Windows
                         values[16] == 1 ? true : false);
                 }
             }
+
             return created_mode;
         }
     }

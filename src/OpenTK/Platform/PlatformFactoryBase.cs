@@ -100,6 +100,7 @@ namespace OpenTK.Platform
                         {
                             resource.Dispose();
                         }
+
                         Resources.Clear();
                     }
                 }
@@ -108,6 +109,7 @@ namespace OpenTK.Platform
                     Debug.Print("[OpenTK] {0} leaked with {1} live resources, did you forget to call Dispose()?",
                         GetType().FullName, Resources.Count);
                 }
+
                 IsDisposed = true;
             }
         }

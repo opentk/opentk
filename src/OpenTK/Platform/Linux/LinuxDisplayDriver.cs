@@ -141,6 +141,7 @@ namespace OpenTK.Platform.Linux
                     Debug.Print("[KMS] Drm.ModeGetResources failed.");
                     return false;
                 }
+
                 Debug.Print("[KMS] DRM found {0} connectors", resources->count_connectors);
 
                 // Search for a valid connector
@@ -255,6 +256,7 @@ namespace OpenTK.Platform.Linux
                 Debug.Print("[KMS] Failed to find crtc {0} for encoder {1}",
                     encoder->crtc_id, encoder->encoder_id);
             }
+
             return crtc;
         }
 
@@ -283,6 +285,7 @@ namespace OpenTK.Platform.Linux
             {
                 current = GetDisplayResolution(display.pConnector->modes);
             }
+
             Debug.Print("Current mode: {0}", current.ToString());
         }
 
@@ -307,6 +310,7 @@ namespace OpenTK.Platform.Linux
                 Debug.Print("[KMS] Adding display {0} as {1}", display.Id, AvailableDevices.Count);
                 DisplayIds.Add(display.Id, AvailableDevices.Count);
             }
+
             int index = DisplayIds[display.Id];
             if (index >= AvailableDevices.Count)
             {
@@ -380,6 +384,7 @@ namespace OpenTK.Platform.Linux
                     return mode;
                 }
             }
+
             return null;
         }
 
@@ -395,6 +400,7 @@ namespace OpenTK.Platform.Linux
                     return Drm.ModeSetCrtc(FD, display.Id, 0, 0, 0,
                         &connector_id, 1, mode) == 0;
                 }
+
                 return false;
             }
         }

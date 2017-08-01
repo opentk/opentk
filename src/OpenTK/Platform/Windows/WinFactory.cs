@@ -75,6 +75,7 @@ namespace OpenTK.Platform.Windows
                 throw new ApplicationException(String.Format("LoadLibrary(\"{0}\") call failed with code {1}",
                     OpenGLName, Marshal.GetLastWin32Error()));
             }
+
             Debug.WriteLine(String.Format("Loaded opengl32.dll: {0}", OpenGLHandle));
         }
 
@@ -136,6 +137,7 @@ namespace OpenTK.Platform.Windows
                     {
                         rawinput_driver = new WinRawInput();
                     }
+
                     return rawinput_driver;
                 }
             }

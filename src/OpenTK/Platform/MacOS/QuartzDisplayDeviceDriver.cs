@@ -160,11 +160,6 @@ namespace OpenTK.Platform.MacOS
 
                 if (width == resolution.Width && height == resolution.Height && bpp == resolution.BitsPerPixel && System.Math.Abs(freq - resolution.RefreshRate) < 1e-6)
                 {
-//                    if (displaysCaptured.Contains(display) == false)
-//                    {
-//                        CG.DisplayCapture(display);
-//                    }
-
                     Debug.Print("Changing resolution to {0}x{1}x{2}@{3}.", width, height, bpp, freq);
 
                     CG.DisplaySwitchToMode(display, displayModes[j]);
@@ -173,6 +168,7 @@ namespace OpenTK.Platform.MacOS
                 }
 
             }
+
             return false;
         }
 

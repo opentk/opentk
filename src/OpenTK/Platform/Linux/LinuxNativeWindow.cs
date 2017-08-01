@@ -86,6 +86,7 @@ namespace OpenTK.Platform.Linux
             {
                 mode = new EglGraphicsMode().SelectGraphicsMode(window, mode, 0);
             }
+
             Debug.Print("[KMS] Selected EGL mode {0}", mode);
 
             SurfaceFormat format = GetSurfaceFormat(display, mode);
@@ -155,6 +156,7 @@ namespace OpenTK.Platform.Linux
                     cursor_data, dst_offset,
                     src_length);
             }
+
             bo.Write(cursor_data);
 
             return bo;
@@ -177,6 +179,7 @@ namespace OpenTK.Platform.Linux
                 {
                     cursor_custom.Dispose();
                 }
+
                 cursor_custom = CreateCursor(window.BufferManager, cursor);
                 bo = cursor_custom;
             }
@@ -221,34 +224,42 @@ namespace OpenTK.Platform.Linux
             {
                 return SurfaceFormat.C8;
             }
+
             if (r == 3 && g == 3 && b == 2 && a == 0)
             {
                 return SurfaceFormat.RGB332;
             }
+
             if (r == 5 && g == 6 && b == 5 && a == 0)
             {
                 return SurfaceFormat.RGB565;
             }
+
             if (r == 5 && g == 6 && b == 5 && a == 0)
             {
                 return SurfaceFormat.RGB565;
             }
+
             if (r == 8 && g == 8 && b == 8 && a == 0)
             {
                 return SurfaceFormat.RGB888;
             }
+
             if (r == 5 && g == 5 && b == 5 && a == 1)
             {
                 return SurfaceFormat.RGBA5551;
             }
+
             if (r == 10 && g == 10 && b == 10 && a == 2)
             {
                 return SurfaceFormat.RGBA1010102;
             }
+
             if (r == 4 && g == 4 && b == 4 && a == 4)
             {
                 return SurfaceFormat.RGBA4444;
             }
+
             if (r == 8 && g == 8 && b == 8 && a == 8)
             {
                 return SurfaceFormat.RGBA8888;
@@ -272,6 +283,7 @@ namespace OpenTK.Platform.Linux
                     OnKeyUp(i);
                 }
             }
+
             return keyboard;
         }
 
@@ -516,6 +528,7 @@ namespace OpenTK.Platform.Linux
                 {
                     SetCursor(MouseCursor.Empty);
                 }
+
                 is_cursor_visible = value;
             }
         }
@@ -539,6 +552,7 @@ namespace OpenTK.Platform.Linux
                     {
                         SetCursor(value);
                     }
+
                     cursor_current = value;
                 }
             }

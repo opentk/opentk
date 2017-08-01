@@ -71,6 +71,7 @@ namespace OpenTK.Platform.Windows
                 {
                     ridl[i] = new RawInputDeviceList();
                 }
+
                 Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
 
                 // Discover keyboard devices:
@@ -271,6 +272,7 @@ namespace OpenTK.Platform.Windows
                 {
                     master.MergeBits(ks);
                 }
+
                 return master;
             }
         }

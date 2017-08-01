@@ -113,6 +113,7 @@ namespace OpenTK.Platform.MacOS
                     Debug.Print("[Warning] UI resources must be disposed in the UI thread #{0}, not #{1}.",
                         NSApplication.ThreadId, thread_id);
                 }
+
                 return is_ui_thread;
             }
         }

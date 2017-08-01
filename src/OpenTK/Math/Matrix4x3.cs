@@ -228,6 +228,7 @@ namespace OpenTK
                 {
                     return Row3[columnIndex];
                 }
+                
                 throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
             }
             set
@@ -791,6 +792,7 @@ namespace OpenTK
             result.Row2 = inverseRotation.Row2;
             result.Row3 = new Vector3(-Vector3.Dot(inverseRotation.Row0, translation), -Vector3.Dot(inverseRotation.Row1, translation), -Vector3.Dot(inverseRotation.Row2, translation));
         }
+        
         /// <summary>
         /// Calculate the transpose of the given matrix
         /// </summary>

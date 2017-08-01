@@ -142,6 +142,7 @@ namespace OpenTK.Platform.Windows
                     int axis = HidHelper.TranslateJoystickAxis(page, usage);
                     axes.Add(key, axis);
                 }
+
                 return axes[key];
             }
 
@@ -152,6 +153,7 @@ namespace OpenTK.Platform.Windows
                 {
                     buttons.Add(key, buttons.Count);
                 }
+
                 return buttons[key];
             }
 
@@ -162,6 +164,7 @@ namespace OpenTK.Platform.Windows
                 {
                     hats.Add(key, JoystickHat.Hat0 + hats.Count);
                 }
+
                 return hats[key];
             }
         }
@@ -260,6 +263,7 @@ namespace OpenTK.Platform.Windows
                     {
                         continue;
                     }
+
                     device.SetConnected(true);
 
                     // Check if a disconnected device with identical GUID already exists.
@@ -272,6 +276,7 @@ namespace OpenTK.Platform.Windows
                             match = candidate;
                         }
                     }
+
                     if (match != null)
                     {
                         Devices.Remove(match.Handle.ToInt64());
@@ -353,6 +358,7 @@ namespace OpenTK.Platform.Windows
                 //Thrustmaster T-Flight Hotas X returns 15 for the centered position
                 return HatPosition.Centered;
             }
+
             if (caps.LogicalMax == 3)
             {
                 //4-way hat switch as per the example in Appendix C
@@ -369,6 +375,7 @@ namespace OpenTK.Platform.Windows
                         return HatPosition.Down;
                 }
             }
+
             if (caps.LogicalMax == 8)
             {
                 //Hat states are represented as a plain number from 0-8
@@ -376,6 +383,7 @@ namespace OpenTK.Platform.Windows
                 //Padding should have already been stripped out, so just cast
                 return (HatPosition)value;
             }
+
             if (caps.LogicalMax == 7)
             {
                 //Hat states are represented as a plain number from 0-7
@@ -384,6 +392,7 @@ namespace OpenTK.Platform.Windows
                 value %= 9;
                 return (HatPosition)value;
             }
+
             //The HID report length is unsupported
             return HatPosition.Centered;
         }
@@ -549,6 +558,7 @@ namespace OpenTK.Platform.Windows
                         switch (page)
                         {
                             case HIDPage.GenericDesktop:
+                            {
                                 HIDUsageGD gd_usage = (HIDUsageGD)stick.AxisCaps[i].NotRange.Usage;
                                 switch (gd_usage)
                                 {
@@ -561,42 +571,52 @@ namespace OpenTK.Platform.Windows
                                     case HIDUsageGD.Slider:
                                     case HIDUsageGD.Dial:
                                     case HIDUsageGD.Wheel:
+                                    {
                                         Debug.Print("Found axis {0} ({1} / {2})",
                                             stick.GetCapabilities().AxisCount,
                                             page, (HIDUsageGD)stick.AxisCaps[i].NotRange.Usage);
+
                                         stick.SetAxis(collection, page, stick.AxisCaps[i].NotRange.Usage, 0);
                                         break;
-
+                                    }
                                     case HIDUsageGD.Hatswitch:
+                                    {
                                         Debug.Print("Found hat {0} ({1} / {2})",
                                             JoystickHat.Hat0 + stick.GetCapabilities().HatCount,
                                             page, (HIDUsageGD)stick.AxisCaps[i].NotRange.Usage);
+
                                         stick.SetHat(collection, page, stick.AxisCaps[i].NotRange.Usage, HatPosition.Centered);
                                         break;
-
+                                    }
                                     default:
-                                        Debug.Print("Unknown usage {0} for page {1}",
-                                            gd_usage, page);
+                                    {
+                                        Debug.Print("Unknown usage {0} for page {1}", gd_usage, page);
                                         break;
+                                    }
                                 }
                                 break;
-
+                            }
                             case HIDPage.Simulation:
+                            {
                                 switch ((HIDUsageSim)stick.AxisCaps[i].NotRange.Usage)
                                 {
                                     case HIDUsageSim.Rudder:
                                     case HIDUsageSim.Throttle:
+                                    {
                                         Debug.Print("Found simulation axis {0} ({1} / {2})",
                                             stick.GetCapabilities().AxisCount,
                                             page, (HIDUsageSim)stick.AxisCaps[i].NotRange.Usage);
                                         stick.SetAxis(collection, page, stick.AxisCaps[i].NotRange.Usage, 0);
                                         break;
+                                    }
                                 }
                                 break;
-
+                            }
                             default:
+                            {
                                 Debug.Print("Unknown page {0}", page);
                                 break;
+                            }
                         }
                     }
 
@@ -619,6 +639,7 @@ namespace OpenTK.Platform.Windows
                         switch (page)
                         {
                             case HIDPage.Button:
+                            {
                                 if (is_range)
                                 {
                                     for (short usage = stick.ButtonCaps[i].Range.UsageMin; usage <= stick.ButtonCaps[i].Range.UsageMax; usage++)
@@ -636,11 +657,14 @@ namespace OpenTK.Platform.Windows
                                         page, stick.ButtonCaps[i].NotRange.Usage);
                                     stick.SetButton(collection, page, stick.ButtonCaps[i].NotRange.Usage, false);
                                 }
-                                break;
 
+                                break;
+                            }
                             default:
+                            {
                                 Debug.Print("Unknown page {0} for button.", page);
                                 break;
+                            }
                         }
                     }
                 }
@@ -816,6 +840,7 @@ namespace OpenTK.Platform.Windows
                         return dev.GetState();
                     }
                 }
+
                 return new JoystickState();
             }
         }
@@ -836,6 +861,7 @@ namespace OpenTK.Platform.Windows
                         return dev.GetCapabilities();
                     }
                 }
+
                 return new JoystickCapabilities();
             }
         }
@@ -856,6 +882,7 @@ namespace OpenTK.Platform.Windows
                         return dev.GetGuid();
                     }
                 }
+
                 return new Guid();
             }
         }

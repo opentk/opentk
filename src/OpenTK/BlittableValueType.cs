@@ -109,6 +109,7 @@ namespace OpenTK
                     return false;
                 }
             }
+            
             Debug.Unindent();
 
             return Stride != 0;

@@ -192,11 +192,13 @@ namespace OpenTK.Platform.MacOS
             {
                 RunLoop = CF.CFRunLoopGetCurrent();
             }
+
             if (RunLoop == IntPtr.Zero)
             {
                 Debug.Print("[Error] No CFRunLoop found for {0}", GetType().FullName);
                 throw new InvalidOperationException();
             }
+
             CF.CFRetain(RunLoop);
 
             HandleDeviceAdded = DeviceAdded;
@@ -258,45 +260,47 @@ namespace OpenTK.Platform.MacOS
                     case CGEventType.LeftMouseDragged:
                     case CGEventType.RightMouseDragged:
                     case CGEventType.OtherMouseDragged:
-                        {
-                            NSPoint p = CG.EventGetLocation(@event);
-                            CursorState.X = (int)Math.Round(p.X);
-                            CursorState.Y = (int)Math.Round(p.Y);
-                        }
-                        break;
+                    {
+                        NSPoint p = CG.EventGetLocation(@event);
+                        CursorState.X = (int)Math.Round(p.X);
+                        CursorState.Y = (int)Math.Round(p.Y);
 
+                        break;
+                    }
                     case CGEventType.ScrollWheel:
-                        {
-                            // Note: OpenTK follows the win32 convention, where
-                            // (+h, +v) = (right, up). MacOS reports (+h, +v) = (left, up)
-                            // so we need to flip the horizontal scroll direction.
-                            double h = CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis2) * MacOSFactory.ScrollFactor;
-                            double v = CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis1) * MacOSFactory.ScrollFactor;
-                            CursorState.SetScrollRelative((float)(-h), (float)v);
-                        }
-                        break;
+                    {
+                        // Note: OpenTK follows the win32 convention, where
+                        // (+h, +v) = (right, up). MacOS reports (+h, +v) = (left, up)
+                        // so we need to flip the horizontal scroll direction.
+                        double h = CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis2) * MacOSFactory.ScrollFactor;
+                        double v = CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis1) * MacOSFactory.ScrollFactor;
+                        CursorState.SetScrollRelative((float)(-h), (float)v);
 
+                        break;
+                    }
                     case CGEventType.LeftMouseDown:
                     case CGEventType.RightMouseDown:
                     case CGEventType.OtherMouseDown:
-                        {
-                            int n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
-                            n = n == 1 ? 2 : n == 2 ? 1 : n; // flip middle and right button numbers to match OpenTK
-                            MouseButton b = MouseButton.Left + n;
-                            CursorState[b] = true;
-                        }
-                        break;
+                    {
+                        int n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
+                        n = n == 1 ? 2 : n == 2 ? 1 : n; // flip middle and right button numbers to match OpenTK
+                        MouseButton b = MouseButton.Left + n;
+                        CursorState[b] = true;
 
+                        break;
+                    }
                     case CGEventType.LeftMouseUp:
                     case CGEventType.RightMouseUp:
                     case CGEventType.OtherMouseUp:
-                        {
-                            int n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
-                            n = n == 1 ? 2 : n == 2 ? 1 : n; // flip middle and right button numbers to match OpenTK
-                            MouseButton b = MouseButton.Left + n;
-                            CursorState[b] = false;
-                        }
+                    {
+                        int n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
+                        n = n == 1 ? 2 : n == 2 ? 1 : n; // flip middle and right button numbers to match OpenTK
+                        MouseButton b = MouseButton.Left + n;
+                        CursorState[b] = false;
+
                         break;
+                    }
+
                 }
             }
             catch (Exception e)
@@ -490,39 +494,50 @@ namespace OpenTK.Platform.MacOS
             switch (page)
             {
                 case HIDPage.GenericDesktop:
+                {
                     switch ((HIDUsageGD)usage)
                     {
                         case HIDUsageGD.X:
+                        {
                             mouse.State.X += v_int;
                             break;
-
+                        }
                         case HIDUsageGD.Y:
+                        {
                             mouse.State.Y += v_int;
                             break;
-
+                        }
                         case HIDUsageGD.Z:
+                        {
                             // Horizontal scrolling for apple mouse (old-style with trackball)
                             mouse.State.SetScrollRelative(v_int, 0);
                             break;
-
+                        }
                         case HIDUsageGD.Wheel:
+                        {
                             mouse.State.SetScrollRelative(0, v_int);
                             break;
+                        }
                     }
-                    break;
 
+                    break;
+                }
                 case HIDPage.Button:
-                    mouse.State[OpenTK.Input.MouseButton.Left + usage - 1] = v_int == 1;
+                {
+                    mouse.State[MouseButton.Left + usage - 1] = v_int == 1;
                     break;
-
+                }
                 case HIDPage.Consumer:
+                {
                     switch ((HIDUsageCD)usage)
                     {
                         case HIDUsageCD.ACPan:
                             mouse.State.SetScrollRelative(v_int, 0);
                             break;
                     }
+
                     break;
+                }
             }
         }
 
@@ -580,6 +595,7 @@ namespace OpenTK.Platform.MacOS
             {
                 CF.CFNumberGetValue(vendor_id_ref, CF.CFNumberType.kCFNumberLongType, out vendor_id);
             }
+
             if (product_id_ref != IntPtr.Zero)
             {
                 CF.CFNumberGetValue(product_id_ref, CF.CFNumberType.kCFNumberLongType, out product_id);
@@ -616,6 +632,7 @@ namespace OpenTK.Platform.MacOS
                 Array.Reverse(guid_array, 4, 2);
                 Array.Reverse(guid_array, 6, 2);
             }
+
             return new Guid(guid_array);
         }
 
@@ -681,11 +698,13 @@ namespace OpenTK.Platform.MacOS
                     Debug.Print("[Mac] JoystickAxis limit reached ({0} > {1}), please report a bug at https://github.com/opentk/opentk/issues",
                         axis_elements.Count, JoystickState.MaxAxes);
                 }
+
                 if (button_elements.Count > JoystickState.MaxButtons)
                 {
                     Debug.Print("[Mac] JoystickButton limit reached ({0} > {1}), please report a bug at https://github.com/opentk/opentk/issues",
                         button_elements.Count, JoystickState.MaxButtons);
                 }
+
                 if (hat_elements.Count > JoystickState.MaxHats)
                 {
                     Debug.Print("[Mac] JoystickHat limit reached ({0} > {1}), please report a bug at https://github.com/opentk/opentk/issues",
@@ -698,6 +717,7 @@ namespace OpenTK.Platform.MacOS
                 joy.Capabilities = new JoystickCapabilities(
                     axis_elements.Count, button_elements.Count, hat_elements.Count, true);
             }
+
             CF.CFRelease(element_array_ref);
 
             return joy;
@@ -722,9 +742,11 @@ namespace OpenTK.Platform.MacOS
                         case IOHIDElementType.Input_Axis:
                         case IOHIDElementType.Input_Button:
                         case IOHIDElementType.Input_Misc:
+                        {
                             switch (page)
                             {
                                 case HIDPage.GenericDesktop:
+                                {
                                     switch ((HIDUsageGD)usage)
                                     {
                                         case HIDUsageGD.X:
@@ -736,62 +758,81 @@ namespace OpenTK.Platform.MacOS
                                         case HIDUsageGD.Slider:
                                         case HIDUsageGD.Dial:
                                         case HIDUsageGD.Wheel:
+                                        {
                                             e = new JoystickElement(element_ref, cookie, page, usage, 0, 0);
                                             if (!axis_elements.Contains(e))
                                             {
                                                 axis_elements.Add(e);
                                             }
-                                            break;
 
+                                            break;
+                                        }
                                         case HIDUsageGD.Hatswitch:
+                                        {
                                             e = new JoystickElement(element_ref, cookie, page, usage, 0, 0);
                                             if (!hat_elements.Contains(e))
                                             {
                                                 hat_elements.Add(e);
                                             }
-                                            break;
-                                    }
-                                    break;
 
+                                            break;
+                                        }
+                                    }
+
+                                    break;
+                                }
                                 case HIDPage.Simulation:
+                                {
                                     switch ((HIDUsageSim)usage)
                                     {
                                         case HIDUsageSim.Rudder:
                                         case HIDUsageSim.Throttle:
+                                        {
                                             e = new JoystickElement(element_ref, cookie, page, usage, 0, 0);
                                             if (!axis_elements.Contains(e))
                                             {
                                                 axis_elements.Add(e);
                                             }
-                                            break;
-                                    }
-                                    break;
 
+                                            break;
+                                        }
+                                    }
+
+                                    break;
+                                }
                                 case HIDPage.Button:
+                                {
                                     e = new JoystickElement(element_ref, cookie, page, usage, 0, 0);
                                     if (!button_elements.Contains(e))
                                     {
                                         button_elements.Add(e);
                                     }
                                     break;
-
+                                }
                                 case HIDPage.VendorDefinedStart:
+                                {
                                     e = new JoystickElement(element_ref, cookie, page, usage, 0, 0);
                                     if (!vendor_elements.Contains(e))
                                     {
                                         vendor_elements.Add(e);
                                     }
-                                    break;
-                            }
-                            break;
 
+                                    break;
+                                }
+                            }
+
+                            break;
+                        }
                         case IOHIDElementType.Collection:
+                        {
                             CFArrayRef children_array_ref = NativeMethods.IOHIDElementGetChildren(element_ref);
                             if (children_array_ref != IntPtr.Zero)
                             {
                                 AddElements(joy, children_array_ref);
                             }
+
                             break;
+                        }
                     }
                 }
             }
@@ -838,12 +879,14 @@ namespace OpenTK.Platform.MacOS
             {
                 Debug.Print("[{0}] Reported joystick element {1:x} ({2}/{3}) is unknown",
                     typeof(HIDInput).Name, cookie, page, usage);
+
                 return;
             }
 
             switch (page)
             {
                 case HIDPage.GenericDesktop:
+                {
                     switch ((HIDUsageGD)usage)
                     {
                         case HIDUsageGD.X:
@@ -855,30 +898,38 @@ namespace OpenTK.Platform.MacOS
                         case HIDUsageGD.Slider:
                         case HIDUsageGD.Dial:
                         case HIDUsageGD.Wheel:
+                        {
                             short offset = GetJoystickAxis(val, elem);
                             int axis = joy.Elements[cookie].Index;
                             if (axis >= 0 && axis <= JoystickState.MaxAxes)
                             {
                                 joy.State.SetAxis(axis, offset);
                             }
-                            break;
 
+                            break;
+                        }
                         case HIDUsageGD.Hatswitch:
+                        {
                             HatPosition position = GetJoystickHat(val, elem);
                             JoystickHat hat = JoystickHat.Hat0 + joy.Elements[cookie].Index;
                             if (hat >= JoystickHat.Hat0 && hat <= JoystickHat.Last)
                             {
                                 joy.State.SetHat(hat, new JoystickHatState(position));
                             }
-                            break;
-                    }
-                    break;
 
+                            break;
+                        }
+                    }
+
+                    break;
+                }
                 case HIDPage.Simulation:
+                {
                     switch ((HIDUsageSim)usage)
                     {
                         case HIDUsageSim.Rudder:
                         case HIDUsageSim.Throttle:
+                        {
                             short offset = GetJoystickAxis(val, elem);
                             int axis = joy.Elements[cookie].Index;
                             if (axis >= 0 && axis <= JoystickState.MaxAxes)
@@ -886,19 +937,21 @@ namespace OpenTK.Platform.MacOS
                                 joy.State.SetAxis(axis, offset);
                             }
                             break;
-                    }
-                    break;
-
-                case HIDPage.Button:
-                    {
-                        bool pressed = GetJoystickButton(val, elem);
-                        int button = joy.Elements[cookie].Index;
-                        if (button >= 0 && button <= JoystickState.MaxButtons)
-                        {
-                            joy.State.SetButton(button, pressed);
                         }
                     }
                     break;
+                }
+                case HIDPage.Button:
+                {
+                    bool pressed = GetJoystickButton(val, elem);
+                    int button = joy.Elements[cookie].Index;
+                    if (button >= 0 && button <= JoystickState.MaxButtons)
+                    {
+                        joy.State.SetButton(button, pressed);
+                    }
+
+                    break;
+                }
             }
         }
 
@@ -1064,6 +1117,7 @@ namespace OpenTK.Platform.MacOS
                 // Todo: find out the real vendor/product name from the relevant ids.
                 return String.Format("{0}:{1}", vendor_id, product_id);
             }
+
             return String.Empty;
         }
 
@@ -1074,6 +1128,7 @@ namespace OpenTK.Platform.MacOS
             {
                 return joystick.State;
             }
+
             return new JoystickState();
         }
 
@@ -1084,6 +1139,7 @@ namespace OpenTK.Platform.MacOS
             {
                 return joystick.Capabilities;
             }
+
             return new JoystickCapabilities();
         }
 
@@ -1094,6 +1150,7 @@ namespace OpenTK.Platform.MacOS
             {
                 return joystick.Guid;
             }
+
             return new Guid();
         }
 
@@ -1711,6 +1768,7 @@ namespace OpenTK.Platform.MacOS
                 {
                     Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
                 }
+
                 disposed = true;
             }
         }

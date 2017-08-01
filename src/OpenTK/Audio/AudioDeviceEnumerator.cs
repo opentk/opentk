@@ -43,6 +43,7 @@ namespace OpenTK.Audio
                 return available_playback_devices.AsReadOnly();
             }
         }
+        
         internal static IList<string> AvailableRecordingDevices
         {
             get
@@ -109,6 +110,7 @@ namespace OpenTK.Audio
                     Version = AlcVersion.Alc1_0;
                     Debug.Print("Device enumeration extension not available. Failed to enumerate playback devices.");
                 }
+                
                 AlcError playback_err = Alc.GetError(dummy_device);
                 if (playback_err != AlcError.NoError)
                 {
@@ -125,6 +127,7 @@ namespace OpenTK.Audio
                 {
                     Debug.Print("Capture extension not available. Failed to enumerate recording devices.");
                 }
+                
                 AlcError record_err = Alc.GetError(dummy_device);
                 if (record_err != AlcError.NoError)
                 {
@@ -173,6 +176,7 @@ namespace OpenTK.Audio
                         {
                             Alc.DestroyContext(dummy_context);
                         }
+                        
                         if (dummy_device != IntPtr.Zero)
                         {
                             Alc.CloseDevice(dummy_device);

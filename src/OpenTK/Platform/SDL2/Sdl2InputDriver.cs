@@ -63,6 +63,7 @@ namespace OpenTK.Platform.SDL2
                 {
                     Debug.Print("[SDL2] InputDriver failed to init Joystick subsystem. Error: {0}", SDL.GetError());
                 }
+
                 if (SDL.InitSubSystem(SystemFlags.GAMECONTROLLER) < 0)
                 {
                     Debug.Print("[SDL2] InputDriver failed to init GameController subsystem. Error: {0}", SDL.GetError());
@@ -191,12 +192,14 @@ namespace OpenTK.Platform.SDL2
                     {
                         SDL.DelEventWatch(EventFilterDelegate, driver_handle);
                     }
+
                     DriverHandles.Remove(driver_handle);
                 }
                 else
                 {
                     Debug.WriteLine("Sdl2InputDriver leaked, did you forget to call Dispose()?");
                 }
+
                 disposed = true;
             }
         }

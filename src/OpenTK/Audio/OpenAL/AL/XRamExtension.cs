@@ -155,11 +155,12 @@ namespace OpenTK.Audio.OpenAL
             {
                 return XRamStorage.Accessible;
             }
+            
             if (tempresult == AL_STORAGE_HARDWARE)
             {
                 return XRamStorage.Hardware;
             }
-            // default:
+
             return XRamStorage.Automatic;
         }
 

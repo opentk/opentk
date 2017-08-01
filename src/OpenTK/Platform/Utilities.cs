@@ -88,6 +88,7 @@ namespace OpenTK.Platform
             {
                 throw new InvalidOperationException(type.ToString() + " does not contain a static LoadDelegate method.");
             }
+            
             LoadDelegateFunction LoadDelegate = (LoadDelegateFunction)Delegate.CreateDelegate(
                 typeof(LoadDelegateFunction), load_delegate_method_info);
 
@@ -168,6 +169,7 @@ namespace OpenTK.Platform
                     rebuildExtensionList.SetValue(null, true);
                 }
             }
+            
             return @new != null;
         }
 

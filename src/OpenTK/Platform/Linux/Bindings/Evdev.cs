@@ -597,7 +597,7 @@ namespace OpenTK.Platform.Linux
         public int Fuzz;
         public int Flat;
         public int Resolution;
-    };
+    }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct InputId

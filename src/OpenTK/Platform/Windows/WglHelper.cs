@@ -69,6 +69,7 @@ namespace OpenTK.Platform.Windows
             {
                 return extensions.ContainsKey(name);
             }
+
             return false;
         }
 
@@ -86,6 +87,7 @@ namespace OpenTK.Platform.Windows
             {
                 return EntryPoints[index] != IntPtr.Zero;
             }
+
             return false;
         }
 
@@ -101,6 +103,7 @@ namespace OpenTK.Platform.Windows
             {
                 address = Functions.GetProcAddress(WinFactory.OpenGLHandle, function_string);
             }
+
             return address;
         }
 
@@ -122,6 +125,7 @@ namespace OpenTK.Platform.Windows
                     {
                         EntryPoints[i] = GetAddress(EntryPointNames[i]);
                     }
+
                     extensions.Clear();
                 }
             }

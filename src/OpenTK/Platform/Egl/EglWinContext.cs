@@ -57,6 +57,7 @@ namespace OpenTK.Platform.Egl
             {
                 return Windows.Functions.GetProcAddress(ES1, function);
             }
+
             return IntPtr.Zero;
         }
 
@@ -66,6 +67,7 @@ namespace OpenTK.Platform.Egl
             {
                 Windows.Functions.FreeLibrary(ES1);
             }
+
             if (ES2 != IntPtr.Zero)
             {
                 Windows.Functions.FreeLibrary(ES2);

@@ -1364,6 +1364,7 @@ namespace OpenTK.Platform.Windows
                     }
                 }
             }
+
             return size;
         }
 
@@ -1378,6 +1379,7 @@ namespace OpenTK.Platform.Windows
                         (IntPtr)pdata, ref size, API.RawInputHeaderSize);
                 }
             }
+
             return size;
         }
 
@@ -1392,6 +1394,7 @@ namespace OpenTK.Platform.Windows
                         (IntPtr)pdata, ref size, API.RawInputHeaderSize);
                 }
             }
+
             return size;
         }
 
@@ -1791,7 +1794,8 @@ namespace OpenTK.Platform.Windows
         /// Specifies the vertical (y) coordinate of a point.
         /// </summary>
         internal float Y;
-    };
+    }
+
     /*
     typedef struct _devicemode {
       BCHAR  dmDeviceName[CCHDEVICENAME];
@@ -1920,6 +1924,7 @@ namespace OpenTK.Platform.Windows
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
         internal string DeviceKey;
     }
+
     [StructLayout(LayoutKind.Sequential)]
     internal struct WindowClass
     {
@@ -1941,6 +1946,7 @@ namespace OpenTK.Platform.Windows
 
         internal static int SizeInBytes = Marshal.SizeOf(default(WindowClass));
     }
+
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     internal struct ExtendedWindowClass
     {
@@ -2413,6 +2419,7 @@ namespace OpenTK.Platform.Windows
                 {
                     throw new ArgumentOutOfRangeException("index");
                 }
+
                 unsafe
                 {
                     fixed (byte* data = &RawData)
@@ -2449,7 +2456,7 @@ namespace OpenTK.Platform.Windows
             internal RawInputKeyboardDeviceInfo Keyboard;
             [FieldOffset(0)]
             internal RawInputHIDDeviceInfo HID;
-        };
+        }
     }
 
     /// \internal
@@ -2689,7 +2696,7 @@ namespace OpenTK.Platform.Windows
         public string szDisplayName;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
         public string szTypeName;
-    };
+    }
 
     internal struct TrackMouseEventStructure
     {
@@ -3001,6 +3008,7 @@ namespace OpenTK.Platform.Windows
         USERDATA      = (-21),
         ID            = (-12),
     }
+
     [Flags]
     internal enum PixelFormatDescriptorFlags : int
     {
@@ -3026,6 +3034,7 @@ namespace OpenTK.Platform.Windows
         DOUBLEBUFFER_DONTCARE = unchecked((int)0x40000000),
         STEREO_DONTCARE = unchecked((int)0x80000000)
     }
+
     internal enum PixelType : byte
     {
         RGBA = 0,
@@ -3039,6 +3048,7 @@ namespace OpenTK.Platform.Windows
         TOPMOST = -1,
         NOTOPMOST = -2
     }
+
     [Flags]
     internal enum ClassStyle
     {
@@ -3061,6 +3071,7 @@ namespace OpenTK.Platform.Windows
         DropShadow = 0x00020000
         // #endif /* _WIN32_WINNT >= 0x0501 */
     }
+
     [Flags]
     internal enum RawInputDeviceFlags : int
     {

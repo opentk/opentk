@@ -63,6 +63,7 @@ namespace OpenTK.Platform.Egl
             {
                 return X11.DL.Symbol(GL, function);
             }
+
             return IntPtr.Zero;
         }
 
@@ -72,10 +73,12 @@ namespace OpenTK.Platform.Egl
             {
                 X11.DL.Close(ES1);
             }
+
             if (ES2 != IntPtr.Zero)
             {
                 X11.DL.Close(ES2);
             }
+
             if (GL != IntPtr.Zero)
             {
                 X11.DL.Close(GL);

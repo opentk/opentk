@@ -148,6 +148,7 @@ namespace OpenTK.Input
                 sb.Append(" ");
                 sb.Append(String.Format("{0:f4}", GetAxis(i)));
             }
+            
             return String.Format(
                 "{{Axes:{0}; Buttons: {1}; Hat: {2}; IsConnected: {3}}}",
                 sb.ToString(),
@@ -168,6 +169,7 @@ namespace OpenTK.Input
             {
                 hash ^= GetAxisUnsafe(i).GetHashCode();
             }
+            
             return hash;
         }
 
@@ -197,6 +199,7 @@ namespace OpenTK.Input
             {
                 Debug.Print("[Joystick] Invalid axis {0}", axis);
             }
+            
             return value;
         }
 
@@ -296,11 +299,13 @@ namespace OpenTK.Input
             {
                 equals &= GetAxisUnsafe(i) == other.GetAxisUnsafe(i);
             }
+            
             for (int i = 0; equals && i < MaxHats; i++)
             {
                 JoystickHat hat = JoystickHat.Hat0 + i;
                 equals &= GetHat(hat).Equals(other.GetHat(hat));
             }
+            
             return equals;
         }
     }

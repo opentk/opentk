@@ -174,6 +174,7 @@ namespace OpenTK.Platform.Windows
             {
                 scale = monitor_mode.LogPixels / 96.0f;
             }
+
             return scale;
         }
 

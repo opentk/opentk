@@ -349,7 +349,7 @@ namespace OpenTK.Platform.MacOS
         private bool PerformDragOperation(IntPtr self, IntPtr cmd, IntPtr sender)
         {
             IntPtr pboard = Cocoa.SendIntPtr(sender, Selector.Get("draggingPasteboard"));
-            
+
             IntPtr files = Cocoa.SendIntPtr(pboard, Selector.Get("propertyListForType:"), NSFilenamesPboardType);
 
             int count = Cocoa.SendInt(files, Selector.Get("count"));
@@ -359,7 +359,7 @@ namespace OpenTK.Platform.MacOS
                 IntPtr str = Cocoa.SendIntPtr(obj, Selector.Get("cStringUsingEncoding:"), new IntPtr(1));
                 OnFileDrop(Marshal.PtrToStringAuto(str));
             }
-            
+
             return true;
         }
 
@@ -597,14 +597,17 @@ namespace OpenTK.Platform.MacOS
             {
                 modifiers |= OpenTK.Input.KeyModifiers.Control;
             }
+
             if ((mask & NSEventModifierMask.ShiftKeyMask) != 0)
             {
                 modifiers |= OpenTK.Input.KeyModifiers.Shift;
             }
+
             if ((mask & NSEventModifierMask.AlternateKeyMask) != 0)
             {
                 modifiers |= OpenTK.Input.KeyModifiers.Alt;
             }
+
             return modifiers;
         }
 
@@ -614,14 +617,17 @@ namespace OpenTK.Platform.MacOS
             {
                 return MouseButton.Left;
             }
+
             if (cocoaButtonIndex == 1)
             {
                 return MouseButton.Right;
             }
+
             if (cocoaButtonIndex == 2)
             {
                 return MouseButton.Middle;
             }
+
             if (cocoaButtonIndex >= (int)MouseButton.LastButton)
             {
                 return MouseButton.LastButton;
@@ -647,159 +653,161 @@ namespace OpenTK.Platform.MacOS
                 switch (type)
                 {
                     case NSEventType.KeyDown:
+                    {
+                        MacOSKeyCode keyCode = (MacOSKeyCode)Cocoa.SendUshort(e, selKeyCode);
+                        var isARepeat = Cocoa.SendBool(e, selIsARepeat);
+                        Key key = MacOSKeyMap.GetKey(keyCode);
+
+                        OnKeyDown(key, isARepeat);
+
+                        var s = Cocoa.FromNSString(Cocoa.SendIntPtr(e, selCharactersIgnoringModifiers));
+                        foreach (var c in s)
                         {
-                            MacOSKeyCode keyCode = (MacOSKeyCode)Cocoa.SendUshort(e, selKeyCode);
-                            var isARepeat = Cocoa.SendBool(e, selIsARepeat);
-                            Key key = MacOSKeyMap.GetKey(keyCode);
-
-                            OnKeyDown(key, isARepeat);
-
-                            var s = Cocoa.FromNSString(Cocoa.SendIntPtr(e, selCharactersIgnoringModifiers));
-                            foreach (var c in s)
+                            int intVal = (int)c;
+                            if (!Char.IsControl(c) && (intVal < 63232 || intVal > 63235))
                             {
-                                int intVal = (int)c;
-                                if (!Char.IsControl(c) && (intVal < 63232 || intVal > 63235))
-                                {
-                                    // For some reason, arrow keys (mapped 63232-63235)
-                                    // are seen as non-control characters, so get rid of those.
-                                    OnKeyPress(c);
-                                }
+                                // For some reason, arrow keys (mapped 63232-63235)
+                                // are seen as non-control characters, so get rid of those.
+                                OnKeyPress(c);
                             }
                         }
-                        break;
 
+                        break;
+                    }
                     case NSEventType.KeyUp:
-                        {
-                            MacOSKeyCode keyCode = (MacOSKeyCode)Cocoa.SendUshort(e, selKeyCode);
-                            Key key = MacOSKeyMap.GetKey(keyCode);
-                            OnKeyUp(key);
-                        }
-                        break;
+                    {
+                        MacOSKeyCode keyCode = (MacOSKeyCode)Cocoa.SendUshort(e, selKeyCode);
+                        Key key = MacOSKeyMap.GetKey(keyCode);
+                        OnKeyUp(key);
 
+                        break;
+                    }
                     case NSEventType.FlagsChanged:
-                        {
-                            var modifierFlags = (NSEventModifierMask)Cocoa.SendUint(e, selModifierFlags);
-                            UpdateModifierFlags(GetModifiers(modifierFlags));
-                        }
-                        break;
+                    {
+                        var modifierFlags = (NSEventModifierMask)Cocoa.SendUint(e, selModifierFlags);
+                        UpdateModifierFlags(GetModifiers(modifierFlags));
 
+                        break;
+                    }
                     case NSEventType.MouseEntered:
+                    {
+                        var eventTrackingArea = Cocoa.SendIntPtr(e, selTrackingArea);
+                        var trackingAreaOwner = Cocoa.SendIntPtr(eventTrackingArea, selOwner);
+                        if (trackingAreaOwner == windowInfo.ViewHandle)
                         {
-                            var eventTrackingArea = Cocoa.SendIntPtr(e, selTrackingArea);
-                            var trackingAreaOwner = Cocoa.SendIntPtr(eventTrackingArea, selOwner);
-                            if (trackingAreaOwner == windowInfo.ViewHandle)
+                            if (selectedCursor != MouseCursor.Default)
                             {
-                                if (selectedCursor != MouseCursor.Default)
-                                {
-                                    //SetCursor(selectedCursor);
-                                }
-
-                                OnMouseEnter(EventArgs.Empty);
+                                //SetCursor(selectedCursor);
                             }
-                        }
-                        break;
 
+                            OnMouseEnter(EventArgs.Empty);
+                        }
+
+                        break;
+                    }
                     case NSEventType.MouseExited:
+                    {
+                        var eventTrackingArea = Cocoa.SendIntPtr(e, selTrackingArea);
+                        var trackingAreaOwner = Cocoa.SendIntPtr(eventTrackingArea, selOwner);
+                        if (trackingAreaOwner == windowInfo.ViewHandle)
                         {
-                            var eventTrackingArea = Cocoa.SendIntPtr(e, selTrackingArea);
-                            var trackingAreaOwner = Cocoa.SendIntPtr(eventTrackingArea, selOwner);
-                            if (trackingAreaOwner == windowInfo.ViewHandle)
+                            if (selectedCursor != MouseCursor.Default)
                             {
-                                if (selectedCursor != MouseCursor.Default)
-                                {
-                                    //SetCursor(MouseCursor.Default);
-                                }
-
-                                OnMouseLeave(EventArgs.Empty);
+                                //SetCursor(MouseCursor.Default);
                             }
-                        }
-                        break;
 
+                            OnMouseLeave(EventArgs.Empty);
+                        }
+
+                        break;
+                    }
                     case NSEventType.LeftMouseDragged:
                     case NSEventType.RightMouseDragged:
                     case NSEventType.OtherMouseDragged:
                     case NSEventType.MouseMoved:
+                    {
+                        Point p = new Point(MouseState.X, MouseState.Y);
+                        if (CursorVisible)
                         {
-                            Point p = new Point(MouseState.X, MouseState.Y);
-                            if (CursorVisible)
-                            {
-                                // Use absolute coordinates
-                                var pf = Cocoa.SendPoint(e, selLocationInWindowOwner);
+                            // Use absolute coordinates
+                            var pf = Cocoa.SendPoint(e, selLocationInWindowOwner);
 
-                                // Convert from points to pixel coordinates
-                                var rf = Cocoa.SendRect(windowInfo.Handle, selConvertRectToBacking,
-                                    new RectangleF(pf.X, pf.Y, 0, 0));
+                            // Convert from points to pixel coordinates
+                            var rf = Cocoa.SendRect(windowInfo.Handle, selConvertRectToBacking,
+                                new RectangleF(pf.X, pf.Y, 0, 0));
 
-                                // See CocoaDrawingGuide under "Converting from Window to View Coordinates"
-                                p = new Point(
-                                    MathHelper.Clamp((int)Math.Round(rf.X), 0, Width),
-                                    MathHelper.Clamp((int)Math.Round(Height - rf.Y), 0, Height));
-                            }
-                            else
-                            {
-                                // Mouse has been disassociated,
-                                // use relative coordinates
-                                var dx = Cocoa.SendFloat(e, selDeltaX);
-                                var dy = Cocoa.SendFloat(e, selDeltaY);
-
-                                p = new Point(
-                                    MathHelper.Clamp((int)Math.Round(p.X + dx), 0, Width),
-                                    MathHelper.Clamp((int)Math.Round(p.Y + dy), 0, Height));
-                            }
-
-                            // Only raise events when the mouse has actually moved
-                            if (MouseState.X != p.X || MouseState.Y != p.Y)
-                            {
-                                OnMouseMove(p.X, p.Y);
-                            }
+                            // See CocoaDrawingGuide under "Converting from Window to View Coordinates"
+                            p = new Point(
+                                MathHelper.Clamp((int)Math.Round(rf.X), 0, Width),
+                                MathHelper.Clamp((int)Math.Round(Height - rf.Y), 0, Height));
                         }
-                        break;
+                        else
+                        {
+                            // Mouse has been disassociated,
+                            // use relative coordinates
+                            var dx = Cocoa.SendFloat(e, selDeltaX);
+                            var dy = Cocoa.SendFloat(e, selDeltaY);
 
+                            p = new Point(
+                                MathHelper.Clamp((int)Math.Round(p.X + dx), 0, Width),
+                                MathHelper.Clamp((int)Math.Round(p.Y + dy), 0, Height));
+                        }
+
+                        // Only raise events when the mouse has actually moved
+                        if (MouseState.X != p.X || MouseState.Y != p.Y)
+                        {
+                            OnMouseMove(p.X, p.Y);
+                        }
+
+                        break;
+                    }
                     case NSEventType.CursorUpdate:
+                    {
                         break;
-
+                    }
                     case NSEventType.ScrollWheel:
+                    {
+                        float dx, dy;
+                        if (Cocoa.SendBool(e, selHasPreciseScrollingDeltas))
                         {
-                            float dx, dy;
-                            if (Cocoa.SendBool(e, selHasPreciseScrollingDeltas))
-                            {
-                                dx = Cocoa.SendFloat(e, selScrollingDeltaX) * MacOSFactory.ScrollFactor;
-                                dy = Cocoa.SendFloat(e, selScrollingDeltaY) * MacOSFactory.ScrollFactor;
-                            }
-                            else
-                            {
-                                dx = Cocoa.SendFloat(e, selDeltaX);
-                                dy = Cocoa.SendFloat(e, selDeltaY);
-                            }
-
-                            // Only raise wheel events when the user has actually scrolled
-                            if (dx != 0 || dy != 0)
-                            {
-                                // Note: OpenTK follows the win32 convention, where
-                                // (+h, +v) = (right, up). MacOS reports (+h, +v) = (left, up)
-                                // so we need to flip the horizontal scroll direction.
-                                OnMouseWheel(-dx, dy);
-                            }
+                            dx = Cocoa.SendFloat(e, selScrollingDeltaX) * MacOSFactory.ScrollFactor;
+                            dy = Cocoa.SendFloat(e, selScrollingDeltaY) * MacOSFactory.ScrollFactor;
                         }
-                        break;
+                        else
+                        {
+                            dx = Cocoa.SendFloat(e, selDeltaX);
+                            dy = Cocoa.SendFloat(e, selDeltaY);
+                        }
 
+                        // Only raise wheel events when the user has actually scrolled
+                        if (dx != 0 || dy != 0)
+                        {
+                            // Note: OpenTK follows the win32 convention, where
+                            // (+h, +v) = (right, up). MacOS reports (+h, +v) = (left, up)
+                            // so we need to flip the horizontal scroll direction.
+                            OnMouseWheel(-dx, dy);
+                        }
+
+                        break;
+                    }
                     case NSEventType.LeftMouseDown:
                     case NSEventType.RightMouseDown:
                     case NSEventType.OtherMouseDown:
-                        {
-                            var buttonNumber = Cocoa.SendInt(e, selButtonNumber);
-                            OnMouseDown(GetMouseButton(buttonNumber));
-                        }
-                        break;
+                    {
+                        var buttonNumber = Cocoa.SendInt(e, selButtonNumber);
+                        OnMouseDown(GetMouseButton(buttonNumber));
 
+                        break;
+                    }
                     case NSEventType.LeftMouseUp:
                     case NSEventType.RightMouseUp:
                     case NSEventType.OtherMouseUp:
-                        {
-                            var buttonNumber = Cocoa.SendInt(e, selButtonNumber);
-                            OnMouseUp(GetMouseButton(buttonNumber));
-                        }
+                    {
+                        var buttonNumber = Cocoa.SendInt(e, selButtonNumber);
+                        OnMouseUp(GetMouseButton(buttonNumber));
+
                         break;
+                    }
                 }
 
                 Cocoa.SendVoid(NSApplication.Handle, selSendEvent, e);
@@ -1174,6 +1182,7 @@ namespace OpenTK.Platform.MacOS
                             (argb & 0x00FF0000u) >> 8 |
                             (argb & 0xFF000000u) >> 24;
                     }
+
                     Marshal.WriteInt32(data, i, unchecked((int)argb));
                     i += 4;
                 }
@@ -1191,6 +1200,7 @@ namespace OpenTK.Platform.MacOS
                 Cocoa.SendVoid(imgdata, Selector.Release);
                 return IntPtr.Zero;
             }
+
             Cocoa.SendVoid(img, selAddRepresentation, imgdata);
 
             // Convert the NSImage to a NSCursor
@@ -1247,6 +1257,7 @@ namespace OpenTK.Platform.MacOS
                 {
                     SetCursorVisible(false);
                 }
+
                 cursorVisible = value;
             }
         }

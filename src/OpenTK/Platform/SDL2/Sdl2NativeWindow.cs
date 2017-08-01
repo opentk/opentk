@@ -100,6 +100,7 @@ namespace OpenTK.Platform.SDL2
                     handle = SDL.CreateWindow(title, bounds.Left + x, bounds.Top + y, width, height, flags);
                     exists = true;
                 }
+
                 ProcessEvents();
                 window = new Sdl2WindowInfo(handle, null);
                 window_id = SDL.GetWindowID(handle);
@@ -153,67 +154,83 @@ namespace OpenTK.Platform.SDL2
                 switch (ev.Type)
                 {
                     case EventType.WINDOWEVENT:
+                    {
                         if (windows.TryGetValue(ev.Window.WindowID, out window))
                         {
                             ProcessWindowEvent(window, ev.Window);
                             processed = true;
                         }
-                        break;
 
+                        break;
+                    }
                     case EventType.TEXTINPUT:
+                    {
                         if (windows.TryGetValue(ev.Text.WindowID, out window))
                         {
                             ProcessTextInputEvent(window, ev.Text);
                             processed = true;
                         }
-                        break;
 
+                        break;
+                    }
                     case EventType.KEYDOWN:
                     case EventType.KEYUP:
+                    {
                         if (windows.TryGetValue(ev.Key.WindowID, out window))
                         {
                             ProcessKeyEvent(window, ev);
                             processed = true;
                         }
-                        break;
 
+                        break;
+                    }
                     case EventType.MOUSEBUTTONDOWN:
                     case EventType.MOUSEBUTTONUP:
+                    {
                         if (windows.TryGetValue(ev.Button.WindowID, out window))
                         {
                             ProcessMouseButtonEvent(window, ev.Button);
                             processed = true;
                         }
-                        break;
 
+                        break;
+                    }
                     case EventType.MOUSEMOTION:
+                    {
                         if (windows.TryGetValue(ev.Motion.WindowID, out window))
                         {
                             ProcessMouseMotionEvent(window, ev.Motion);
                             processed = true;
                         }
-                        break;
 
+                        break;
+                    }
                     case EventType.MOUSEWHEEL:
+                    {
                         if (windows.TryGetValue(ev.Wheel.WindowID, out window))
                         {
                             ProcessMouseWheelEvent(window, ev.Wheel);
                             processed = true;
                         }
-                        break;
 
+                        break;
+                    }
                     case EventType.DROPFILE:
+                    {
                         if (windows.TryGetValue(ev.Drop.WindowID, out window))
                         {
                             ProcessDropEvent(window, ev.Drop);
                             SDL.Free(ev.Drop.File);
                             processed = true;
                         }
-                        break;
 
+                        break;
+                    }
                     case EventType.QUIT:
+                    {
                         Debug.WriteLine("Sdl2 application quit");
                         break;
+                    }
                 }
             }
             catch (Exception ex)
@@ -320,6 +337,7 @@ namespace OpenTK.Platform.SDL2
             switch (e.Event)
             {
                 case WindowEventID.CLOSE:
+                {
                     var close_args = new System.ComponentModel.CancelEventArgs();
                     try
                     {
@@ -336,68 +354,83 @@ namespace OpenTK.Platform.SDL2
                         window.OnClosed(EventArgs.Empty);
                         window.must_destroy = true;
                     }
-                    break;
 
+                    break;
+                }
                 case WindowEventID.ENTER:
+                {
                     window.OnMouseEnter(EventArgs.Empty);
                     break;
-
+                }
                 case WindowEventID.LEAVE:
+                {
                     window.OnMouseLeave(EventArgs.Empty);
                     break;
-
+                }
                 case WindowEventID.EXPOSED:
+                {
                     // do nothing
                     break;
-
+                }
                 case WindowEventID.FOCUS_GAINED:
+                {
                     window.is_focused = true;
                     window.OnFocusedChanged(EventArgs.Empty);
                     break;
-
+                }
                 case WindowEventID.FOCUS_LOST:
+                {
                     window.is_focused = false;
                     window.OnFocusedChanged(EventArgs.Empty);
                     break;
-
+                }
                 case WindowEventID.HIDDEN:
+                {
                     window.is_visible = false;
                     window.OnVisibleChanged(EventArgs.Empty);
                     break;
-
+                }
                 case WindowEventID.SHOWN:
+                {
                     window.is_visible = true;
                     window.OnVisibleChanged(EventArgs.Empty);
                     break;
-
+                }
                 case WindowEventID.MAXIMIZED:
+                {
                     window.window_state = WindowState.Maximized;
                     window.OnWindowStateChanged(EventArgs.Empty);
                     break;
-
+                }
                 case WindowEventID.MINIMIZED:
+                {
                     window.previous_window_state = window.window_state;
                     window.window_state = WindowState.Minimized;
                     window.OnWindowStateChanged(EventArgs.Empty);
                     break;
-
+                }
                 case WindowEventID.RESTORED:
+                {
                     window.window_state = window.previous_window_state;
                     window.OnWindowStateChanged(EventArgs.Empty);
                     break;
-
+                }
                 case WindowEventID.MOVED:
+                {
                     window.OnMove(EventArgs.Empty);
                     break;
-
+                }
                 case WindowEventID.RESIZED:
                 case WindowEventID.SIZE_CHANGED:
+                {
                     window.OnResize(EventArgs.Empty);
                     break;
-
+                }
                 default:
+                {
                     Debug.Print("SDL2 unhandled event: {0}", e.Type);
                     break;
+                }
             }
         }
 
@@ -414,6 +447,7 @@ namespace OpenTK.Platform.SDL2
                     {
                         windows.Remove(window_id);
                     }
+
                     SDL.DestroyWindow(window.Handle);
                 }
             }
@@ -643,7 +677,6 @@ namespace OpenTK.Platform.SDL2
                                 SDL.FreeSurface(surface);
                                 bmp.UnlockBits(data);
                             }
-
                         }
                         else
                         {
@@ -668,6 +701,7 @@ namespace OpenTK.Platform.SDL2
                     {
                         return SDL.GetWindowTitle(window.Handle);
                     }
+
                     return String.Empty;
                 }
             }
@@ -806,22 +840,25 @@ namespace OpenTK.Platform.SDL2
                     {
                         if (Exists)
                         {
-
                             switch (value)
                             {
                                 case WindowBorder.Resizable:
+                                {
                                     SDL.SetWindowBordered(window.Handle, true);
                                     window_border = WindowBorder.Resizable;
                                     break;
-
+                                }
                                 case WindowBorder.Hidden:
+                                {
                                     SDL.SetWindowBordered(window.Handle, false);
                                     window_border = WindowBorder.Hidden;
                                     break;
-
+                                }
                                 case WindowBorder.Fixed:
+                                {
                                     Debug.WriteLine("SDL2 cannot change to fixed-size windows at runtime.");
                                     break;
+                                }
                             }
                         }
                     }
@@ -859,6 +896,7 @@ namespace OpenTK.Platform.SDL2
                         SDL.GetWindowPosition(window.Handle, out x, out y);
                         return new Point(x, y);
                     }
+
                     return new Point();
                 }
             }
@@ -886,6 +924,7 @@ namespace OpenTK.Platform.SDL2
                         SDL.GetWindowSize(window.Handle, out w, out h);
                         return new Size(w, h);
                     }
+
                     return new Size();
                 }
             }
@@ -916,6 +955,7 @@ namespace OpenTK.Platform.SDL2
                 {
                     SDL.GetWindowSize(window.Handle, out w, out h);
                 }
+
                 return new Size(w, h);
             }
             set
@@ -978,6 +1018,7 @@ namespace OpenTK.Platform.SDL2
                             Close();
                         }
                     }
+
                     disposed = true;
                 }
             }

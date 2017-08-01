@@ -145,6 +145,7 @@ namespace OpenTK.Platform.MacOS
 
 
     }
+
     [Flags]
     internal enum MacOSKeyModifiers
     {

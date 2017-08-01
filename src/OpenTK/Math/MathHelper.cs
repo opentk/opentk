@@ -77,6 +77,7 @@ namespace OpenTK
             {
                 throw new ArgumentOutOfRangeException("n", "Must be positive.");
             }
+            
             return (long)System.Math.Pow(2, System.Math.Ceiling(System.Math.Log((double)n, 2)));
         }
 
@@ -91,6 +92,7 @@ namespace OpenTK
             {
                 throw new ArgumentOutOfRangeException("n", "Must be positive.");
             }
+            
             return (int)System.Math.Pow(2, System.Math.Ceiling(System.Math.Log((double)n, 2)));
         }
 
@@ -105,6 +107,7 @@ namespace OpenTK
             {
                 throw new ArgumentOutOfRangeException("n", "Must be positive.");
             }
+            
             return (float)System.Math.Pow(2, System.Math.Ceiling(System.Math.Log((double)n, 2)));
         }
 
@@ -119,6 +122,7 @@ namespace OpenTK
             {
                 throw new ArgumentOutOfRangeException("n", "Must be positive.");
             }
+            
             return System.Math.Pow(2, System.Math.Ceiling(System.Math.Log((double)n, 2)));
         }
 

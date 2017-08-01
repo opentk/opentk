@@ -38,11 +38,13 @@ namespace OpenTK.Platform.MacOS
         {
             this.ErrorCode = errorCode;
         }
+
         public MacOSException(OSStatus errorCode, string message)
             : base(message)
         {
             this.ErrorCode = errorCode;
         }
+
         internal MacOSException(int errorCode, string message)
             : base(message)
         {

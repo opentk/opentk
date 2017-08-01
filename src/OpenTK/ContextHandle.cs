@@ -49,6 +49,7 @@ namespace OpenTK
             {
                 return this.Equals((ContextHandle)obj);
             }
+            
             return false;
         }
 

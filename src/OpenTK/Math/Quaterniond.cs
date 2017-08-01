@@ -555,6 +555,7 @@ namespace OpenTK
                 {
                     return Identity;
                 }
+                
                 return q2;
             }
             else if (q2.LengthSquared == 0.0f)
@@ -709,6 +710,7 @@ namespace OpenTK
             {
                 return false;
             }
+            
             return this == (Quaterniond)other;
         }
 

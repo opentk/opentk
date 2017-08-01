@@ -64,6 +64,7 @@ namespace OpenTK.Graphics.OpenGL4
                     ContextErrors.Add(Context, new List<ErrorCode>());
                 }
             }
+
             ResetErrors();
         }
 
@@ -109,6 +110,7 @@ namespace OpenTK.Graphics.OpenGL4
                             break;
                         }
                     }
+
                     sb.Remove(sb.Length - 2, 2); // Remove the last comma
 
                     throw new GraphicsErrorException(sb.ToString());

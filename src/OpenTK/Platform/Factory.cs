@@ -264,6 +264,7 @@ namespace OpenTK.Platform
                 {
                     Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
                 }
+                
                 disposed = true;
             }
         }
