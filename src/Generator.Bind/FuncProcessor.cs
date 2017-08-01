@@ -63,6 +63,7 @@ namespace Bind
             {
                 throw new ArgumentNullException("generator");
             }
+
             if (overrides == null)
             {
                 throw new ArgumentNullException("overrides");
@@ -112,6 +113,7 @@ namespace Bind
                             overload_list.Add(overload);
                         }
                     }
+
                     foreach (var overload in overload_list)
                     {
                         delegates.Add(overload);
@@ -394,6 +396,7 @@ namespace Bind
             {
                 extension = extension[0] + extension.Substring(1).ToLower();
             }
+
             return extension;
         }
 
@@ -410,6 +413,7 @@ namespace Bind
             {
                 name = name.Remove(index);
             }
+
             return name;
         }
 
@@ -468,17 +472,20 @@ namespace Bind
                 {
                     break;
                 }
+
                 function_overload = nav.Select(GetOverloadsPath(apiname, apiversion, extensionless_name, ext));
                 if (function_overload.Count != 0)
                 {
                     break;
                 }
+
                 function_overload = nav.Select(GetOverloadsPath(apiname, apiversion, trimmed_name, ext));
                 if (function_overload.Count != 0)
                 {
                     break;
                 }
             }
+
             return function_overload;
         }
 
@@ -502,6 +509,7 @@ namespace Bind
                     break;
                 }
             }
+
             return function_override;
         }
 
@@ -541,6 +549,7 @@ namespace Bind
                                     {
                                         d.Parameters[i].ElementCount = count;
                                     }
+
                                     break;
                             }
                         }
@@ -687,6 +696,7 @@ namespace Bind
                 {
                     throw new NotSupportedException("[Out] String* parameters are not currently supported.");
                 }
+
                 if (p.Pointer >= 2)
                 {
                     throw new NotSupportedException("String arrays with arity >= 2 are not currently supported.");
@@ -788,8 +798,10 @@ namespace Bind
                         return fnew;
                     }));
                 }
+
                 wrappers.AddRange(overloads);
             }
+
             return wrappers;
         }
 
@@ -833,6 +845,7 @@ namespace Bind
                     }
                 }
             }
+
             return wrappers;
         }
 
@@ -891,6 +904,7 @@ namespace Bind
                                 {
                                     must_remove.Add(i);
                                 }
+
                                 if (function_j_is_problematic)
                                 {
                                     must_remove.Add(j);
@@ -911,6 +925,7 @@ namespace Bind
                     count++;
                 }
             }
+
             return collection;
         }
 
@@ -1016,6 +1031,7 @@ namespace Bind
                             f = f ?? new Function(d);
                             f.Parameters[i].QualifiedType = "Int32";
                         }
+
                         i++;
                     }
 
@@ -1025,6 +1041,7 @@ namespace Bind
                     }
                 }
             }
+
             return convenience_wrappers;
         }
 
@@ -1045,6 +1062,7 @@ namespace Bind
                     f.ReturnType.WrapperType |= WrapperTypes.ConvenienceArrayReturnType;
                 }
             }
+
             return f;
         }
 
@@ -1075,6 +1093,7 @@ namespace Bind
                     dictionary[key].Add(new Function(raw));
                 }
             }
+
             return dictionary[key];
         }
 
@@ -1111,6 +1130,7 @@ namespace Bind
                             {
                                 p.Array++;
                             }
+
                             p.Pointer--;
                         }
                     }
@@ -1161,6 +1181,7 @@ namespace Bind
                 // existing wrappers, add one here to get the process started.
                 wrappers.Add(WrapperTypes.None, new List<Function> { new Function(func) });
             }
+
             var list = new List<Function>();
             foreach (var wrapper in wrappers.Values.SelectMany(v => v))
             {
@@ -1182,6 +1203,7 @@ namespace Bind
                         p.Flow = FlowDirection.Undefined;
                     }
                 }
+
                 if (generic_wrapper != null)
                 {
                     list.Add(generic_wrapper);
@@ -1203,6 +1225,7 @@ namespace Bind
                                 // Overloading on array arity is not CLS-compliant
                                 generic_wrapper.CLSCompliant = false;
                             }
+
                             var p = generic_wrapper.Parameters[i];
 
                             p.Reference = false;
@@ -1220,12 +1243,14 @@ namespace Bind
                             }
                         }
                     }
+
                     if (generic_wrapper != null)
                     {
                         list.Add(generic_wrapper);
                     }
                 }
             }
+
             GetWrapper(wrappers, WrapperTypes.GenericParameter, null)
                 .AddRange(list);
 
