@@ -379,8 +379,9 @@ namespace OpenTK.Platform.Linux
             get { return true; }
             set
             {
-                if (value == false) {
-                    throw new NotImplementedException ();
+                if (value == false)
+                {
+                    throw new NotImplementedException();
                 }
             }
         }

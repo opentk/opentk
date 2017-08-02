@@ -1233,7 +1233,11 @@ namespace OpenTK.Platform.MacOS
 
             // Inside this rectangle, the following NSCursor will be used
             var cursor = IntPtr.Zero;
-            if (selectedCursor == MouseCursor.Default)
+            if (!CursorVisible)
+            {
+                cursor = ToNSCursor(MouseCursor.Empty);
+            }
+            else if (selectedCursor == MouseCursor.Default)
             {
                 cursor = Cocoa.SendIntPtr(NSCursor, selArrowCursor);
             }
@@ -1269,11 +1273,10 @@ namespace OpenTK.Platform.MacOS
             get { return cursorVisible; }
             set
             {
-                if (value != cursorVisible)
-                {
-                    SetCursorVisible(value);
-                }
                 cursorVisible = value;
+                // Another approach will be use of hide and unhide methods
+                // of NSCursor
+                InvalidateCursorRects();
             }
         }
 
@@ -1345,17 +1348,15 @@ namespace OpenTK.Platform.MacOS
             return Cocoa.SendRect(GetCurrentScreen(), selVisibleFrame);
         }
 
-        private void SetCursorVisible(bool visible)
+        private void SetCursorGrab(bool shouldGrab)
         {
-            Cocoa.SendVoid(NSCursor, visible ? selUnhide : selHide);
-        }
-
-        private void SetCursorGrab(bool grab)
-        {
-            var p = new Point();
-            p.X = MouseState.X;
-            p.Y = MouseState.Y;
-            MoveCursorInWindow(p);
+            if (shouldGrab)
+            {
+                var p = new Point();
+                p.X = MouseState.X;
+                p.Y = MouseState.Y;
+                MoveCursorInWindow(p);
+            }
         }
 
         private void SetMenuVisible(bool visible)
