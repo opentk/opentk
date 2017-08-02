@@ -88,7 +88,7 @@ let activeProjects =
             -- "**/OpenTK.iOS.csproj"
 
     !! "src/**/*.??proj"
-    ++ "tests/**/OpenTK.Tests.fsproj"
+    ++ "tests/**/OpenTK.Tests*.fsproj"
     |> xamarinFilter
 
 // Generate assembly info files with the right version & up-to-date information

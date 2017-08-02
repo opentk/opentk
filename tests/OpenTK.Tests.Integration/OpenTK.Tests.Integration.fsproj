@@ -5,18 +5,18 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>6801c263-adda-4a7b-979d-649bcb5a1df7</ProjectGuid>
+    <ProjectGuid>522d9279-3ed6-475f-867a-6ae69a53c24a</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>OpenTK.Tests</RootNamespace>
-    <AssemblyName>OpenTK.Tests</AssemblyName>
+    <RootNamespace>OpenTK.Tests.Integration</RootNamespace>
+    <AssemblyName>OpenTK.Tests.Integration</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.4.0.0</TargetFSharpCoreVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Name>OpenTK.Tests</Name>
+    <Name>OpenTK.Tests.Integration</Name>
     <Deterministic>true</Deterministic>
     <StartAction>Program</StartAction>
     <StartProgram>packages\xunit.runner.console\tools\xunit.console.exe</StartProgram>
-    <StartArguments>OpenTK.Tests.dll</StartArguments>
+    <StartArguments>OpenTK.Tests.Integration.dll</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,7 +26,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Debug\OpenTK.Tests.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\OpenTK.Tests.Integration.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,7 +35,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Release\OpenTK.Tests.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\OpenTK.Tests.Integration.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
@@ -62,13 +62,7 @@
   -->
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="Assertions.fs" />
-    <Compile Include="Generators.fs" />
-    <Compile Include="MathHelperTests.fs" />
-    <Compile Include="Matrix4Tests.fs" />
-    <Compile Include="Vector2Tests.fs" />
-    <Compile Include="Vector3Tests.fs" />
-    <Compile Include="Vector4Tests.fs" />
+    <Compile Include="GameWindowTests.fs" />
     <Content Include="App.config" />
     <None Include="paket.references" />
   </ItemGroup>
@@ -76,6 +70,7 @@
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
     <ProjectReference Include="..\..\src\OpenTK\OpenTK.csproj">
       <Name>OpenTK</Name>
