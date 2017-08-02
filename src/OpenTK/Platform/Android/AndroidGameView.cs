@@ -640,6 +640,7 @@ namespace OpenTK.Platform.Android
                 {
                     gl = GLCalls.GetGLCalls (ContextRenderingApi);
                 }
+
                 return gl;
             }
         }
@@ -665,6 +666,7 @@ namespace OpenTK.Platform.Android
                 {
                     throw new InvalidOperationException("The Surface has already been created");
                 }
+
                 surfaceFormat = value;
                 mHolder.SetFormat(SurfaceFormat);
             }
@@ -685,6 +687,7 @@ namespace OpenTK.Platform.Android
                 {
                     throw new NotSupportedException ("Can't change RenderingApi after GraphicsContext is constructed.");
                 }
+
                 this.api = value;
             }
         }

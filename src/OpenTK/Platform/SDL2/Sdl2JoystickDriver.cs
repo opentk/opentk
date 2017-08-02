@@ -365,6 +365,7 @@ namespace OpenTK.Platform.SDL2
                     {
                         Debug.Print("[SDL2] Invalid joystick id {0} in {1}", id, ev.Type);
                     }
+
                     break;
                 }
             }

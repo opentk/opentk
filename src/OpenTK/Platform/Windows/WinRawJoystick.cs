@@ -594,6 +594,7 @@ namespace OpenTK.Platform.Windows
                                         break;
                                     }
                                 }
+
                                 break;
                             }
                             case HIDPage.Simulation:
@@ -610,6 +611,7 @@ namespace OpenTK.Platform.Windows
                                         break;
                                     }
                                 }
+
                                 break;
                             }
                             default:

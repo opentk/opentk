@@ -805,6 +805,7 @@ namespace OpenTK.Platform.MacOS
                                     {
                                         button_elements.Add(e);
                                     }
+
                                     break;
                                 }
                                 case HIDPage.VendorDefinedStart:
@@ -934,9 +935,11 @@ namespace OpenTK.Platform.MacOS
                             {
                                 joy.State.SetAxis(axis, offset);
                             }
+
                             break;
                         }
                     }
+
                     break;
                 }
                 case HIDPage.Button:

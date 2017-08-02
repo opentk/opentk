@@ -1148,6 +1148,7 @@ namespace OpenTK.Platform.X11
                         {
                             OnFocusedChanged(EventArgs.Empty);
                         }
+
                         break;
                     }
                     case XEventName.LeaveNotify:
@@ -1160,8 +1161,10 @@ namespace OpenTK.Platform.X11
                             {
                                 OnMouseMove(x, y);
                             }
+
                             OnMouseLeave(EventArgs.Empty);
                         }
+
                         break;
                     }
                     case XEventName.EnterNotify:
@@ -1178,6 +1181,7 @@ namespace OpenTK.Platform.X11
                             Functions.XRefreshKeyboardMapping(ref e.MappingEvent);
                             KeyMap.RefreshKeycodes(window.Display);
                         }
+
                         break;
                     }
                     case XEventName.PropertyNotify:
@@ -1219,6 +1223,7 @@ namespace OpenTK.Platform.X11
 
                             Functions.XSendEvent(this.window.Display, e.ClientMessageEvent.ptr1, false, (IntPtr)EventMask.NoEventMask, ref reply);
                         }
+
                         break;
                     }
                     default:
