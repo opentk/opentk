@@ -721,39 +721,38 @@ namespace OpenTK.Platform.MacOS
                     case NSEventType.MouseMoved:
                         {
                             Point p = new Point(MouseState.X, MouseState.Y);
-                            if (!cursorGrabbed)
+                            // Use absolute coordinates
+                            var pf = Cocoa.SendPoint(e, selLocationInWindowOwner);
+
+                            // Convert from points to pixel coordinates
+                            var rf = Cocoa.SendRect(
+                                windowInfo.Handle,
+                                selConvertRectToBacking,
+                                new RectangleF(pf.X, pf.Y, 0, 0));
+
+                            // See CocoaDrawingGuide under "Converting from Window to View Coordinates"
+                            p = new Point(
+                                MathHelper.Clamp((int)Math.Round(rf.X), 0, Width),
+                                MathHelper.Clamp((int)Math.Round(Height - rf.Y), 0, Height));
+
+                            // This code used for relative mouse movement which is currently disabled
+                            // Mouse has been disassociated,
+                            // use relative coordinates
+                            // var dx = Cocoa.SendFloat(e, selDeltaX);
+                            //   var dy = Cocoa.SendFloat(e, selDeltaY);
+
+                            //   p = new Point(
+                            //       MathHelper.Clamp((int)Math.Round(p.X + dx), 0, Width),
+                            //       MathHelper.Clamp((int)Math.Round(p.Y + dy), 0, Height);
+
+                            if (cursorGrabbed)
                             {
-                                // Use absolute coordinates
-                                var pf = Cocoa.SendPoint(e, selLocationInWindowOwner);
-
-                                // Convert from points to pixel coordinates
-                                var rf = Cocoa.SendRect(windowInfo.Handle, selConvertRectToBacking,
-                                    new RectangleF(pf.X, pf.Y, 0, 0));
-
-                                // See CocoaDrawingGuide under "Converting from Window to View Coordinates"
-                                p = new Point(
-                                    MathHelper.Clamp((int)Math.Round(rf.X), 0, Width),
-                                    MathHelper.Clamp((int)Math.Round(Height - rf.Y), 0, Height));
-                            }
-                            else
-                            {
-                                // Mouse has been disassociated,
-                                // use relative coordinates
-                                var dx = Cocoa.SendFloat(e, selDeltaX);
-                                var dy = Cocoa.SendFloat(e, selDeltaY);
-
-                                p = new Point(
-                                    MathHelper.Clamp((int)Math.Round(p.X + dx), 0, Width),
-                                    MathHelper.Clamp((int)Math.Round(p.Y + dy), 0, Height));
+                                MoveCursorInWindow(p);
                             }
 
                             // Only raise events when the mouse has actually moved
                             if (MouseState.X != p.X || MouseState.Y != p.Y)
                             {
-                                if (cursorGrabbed)
-                                {
-                                    MoveCursorInWindow(p);
-                                }
                                 OnMouseMove(p.X, p.Y);
                             }
                         }
