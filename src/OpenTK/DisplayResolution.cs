@@ -14,10 +14,6 @@ namespace OpenTK
     /// <summary>Contains information regarding a monitor's display resolution.</summary>
     public class DisplayResolution
     {
-        private Rectangle bounds;
-
-        internal DisplayResolution() { }
-
         // Creates a new DisplayResolution object for the primary DisplayDevice.
         internal DisplayResolution(int x, int y, int width, int height, int bitsPerPixel, float refreshRate)
         {
@@ -39,71 +35,39 @@ namespace OpenTK
                 throw new ArgumentOutOfRangeException("refreshRate", "Must be greater than, or equal to zero.");
             }
 
-            this.bounds = new Rectangle(x, y, width, height);
+            this.Bounds = new Rectangle(x, y, width, height);
             this.BitsPerPixel = bitsPerPixel;
             this.RefreshRate = refreshRate;
         }
 
-#if false
-
-        /// <summary>
-        /// Creates a new DisplayResolution object for the specified DisplayDevice.
-        /// </summary>
-        /// <param name="width">The requested width in pixels.</param>
-        /// <param name="height">The requested height in pixels.</param>
-        /// <param name="bitsPerPixel">The requested bits per pixel in bits.</param>
-        /// <param name="refreshRate">The requested refresh rate in hertz.</param>
-        /// <remarks>OpenTK will select the closest match between all available resolutions on the specified DisplayDevice.</remarks>
-        ///
-        public DisplayResolution(int width, int height, int bitsPerPixel, float refreshRate, DisplayDevice device)
-        {
-            // Refresh rate may be zero, since this information may not be available on some platforms.
-            if (width <= 0) throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
-            if (height <= 0) throw new ArgumentOutOfRangeException("height", "Must be greater than zero.");
-            if (bitsPerPixel <= 0) throw new ArgumentOutOfRangeException("bitsPerPixel", "Must be greater than zero.");
-            if (refreshRate < 0) throw new ArgumentOutOfRangeException("refreshRate", "Must be greater than, or equal to zero.");
-            if (device == null) throw new ArgumentNullException("DisplayDevice", "Must be a valid DisplayDevice");
-
-            DisplayResolution res = device.SelectResolution(width, height, bitsPerPixel, refreshRate);
-
-            this.width = res.width;
-            this.height = res.height;
-            this.bits_per_pixel = res.bits_per_pixel;
-            this.refresh_rate = res.refresh_rate;
-        }
-#endif
-
         /// <summary>
         /// Gets a System.Drawing.Rectangle that contains the bounds of this display device.
         /// </summary>
-        [Obsolete("This property will return invalid results if a monitor changes resolution. Use DisplayDevice.Bounds instead.")]
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public Rectangle Bounds
         {
-            get { return bounds; }
+            get;
         }
 
         /// <summary>Gets a System.Int32 that contains the width of this display in pixels.</summary>
         public int Width
         {
-            get { return bounds.Width; }
-            internal set { bounds.Width = value; }
+            get { return Bounds.Width; }
         }
 
         /// <summary>Gets a System.Int32 that contains the height of this display in pixels.</summary>
         public int Height
         {
-            get { return bounds.Height; }
-            internal set { bounds.Height = value; }
+            get { return Bounds.Height; }
         }
 
         /// <summary>Gets a System.Int32 that contains number of bits per pixel of this display. Typical values include 8, 16, 24 and 32.</summary>
-        public int BitsPerPixel { get; internal set; }
+        public int BitsPerPixel { get; }
 
         /// <summary>
         /// Gets a System.Single representing the vertical refresh rate of this display.
         /// </summary>
-        public float RefreshRate { get; internal set; }
+        public float RefreshRate { get; }
 
         /// <summary>
         /// Returns a System.String representing this DisplayResolution.
@@ -111,9 +75,7 @@ namespace OpenTK
         /// <returns>A System.String representing this DisplayResolution.</returns>
         public override string ToString()
         {
-            #pragma warning disable 612,618
             return String.Format("{0}x{1}@{2}Hz", Bounds, BitsPerPixel, RefreshRate);
-            #pragma warning restore 612,618
         }
 
         /// <summary>Determines whether the specified resolutions are equal.</summary>

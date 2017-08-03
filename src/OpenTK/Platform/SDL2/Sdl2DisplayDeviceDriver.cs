@@ -30,8 +30,15 @@ using System.Drawing;
 
 namespace OpenTK.Platform.SDL2
 {
-    internal class Sdl2DisplayDeviceDriver : DisplayDeviceBase
+    internal class Sdl2DisplayDeviceDriver : DisplayDeviceDriver
     {
+        private class SdlDevice
+        {
+            public int Index;
+            public DisplayResolution OriginalResolution;
+            public List<DisplayResolution> AvailableResolutions;
+        }
+
         public Sdl2DisplayDeviceDriver()
         {
             int displays = SDL.GetNumVideoDisplays();
@@ -40,36 +47,26 @@ namespace OpenTK.Platform.SDL2
                 Rect bounds;
                 SDL.GetDisplayBounds(d, out bounds);
 
-                DisplayMode current_mode;
-                SDL.GetCurrentDisplayMode(d, out current_mode);
-
-                var mode_list = new List<DisplayResolution>();
-                int num_modes = SDL.GetNumDisplayModes(d);
-                for (int m = 0; m < num_modes; m++)
+                var availableResolutions = new List<DisplayResolution>();
+                int numModes = SDL.GetNumDisplayModes(d);
+                for (int m = 0; m < numModes; m++)
                 {
                     DisplayMode sdl_mode;
                     SDL.GetDisplayMode(d, m, out sdl_mode);
-                    mode_list.Add(new DisplayResolution(
+                    availableResolutions.Add(new DisplayResolution(
                         bounds.X, bounds.Y,
                         sdl_mode.Width, sdl_mode.Height,
                         TranslateFormat(sdl_mode.Format),
                         sdl_mode.RefreshRate));
                 }
 
-                var current_resolution = new DisplayResolution(
-                    bounds.X, bounds.Y,
-                    current_mode.Width, current_mode.Height,
-                    TranslateFormat(current_mode.Format),
-                    current_mode.RefreshRate);
+                var sdlDevice = new SdlDevice() { Index = d };
+                sdlDevice.OriginalResolution = GetResolution(sdlDevice);
+                sdlDevice.AvailableResolutions = availableResolutions;
 
-                var device = new DisplayDevice(
-                    current_resolution, d == 0, mode_list, TranslateBounds(bounds), d);
+                var displayDevice = new DisplayDevice(sdlDevice);
 
-                AvailableDevices.Add(device);
-                if (d == 0)
-                {
-                    Primary = device;
-                }
+                Devices.Add(displayDevice);
             }
         }
 
@@ -86,16 +83,45 @@ namespace OpenTK.Platform.SDL2
             return new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
         }
 
-        public override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
+        public override bool TryChangeResolution(object device, DisplayResolution resolution)
         {
             Sdl2Factory.UseFullscreenDesktop = false;
             return true;
         }
 
-        public override bool TryRestoreResolution(DisplayDevice device)
+        public override bool TryRestoreResolution(object device)
         {
             Sdl2Factory.UseFullscreenDesktop = true;
             return true;
+        }
+
+        public override DisplayResolution GetResolution(object device)
+        {
+            var sdlDevice = (SdlDevice)device;
+
+            Rect bounds;
+            SDL.GetDisplayBounds(sdlDevice.Index, out bounds);
+
+            DisplayMode currentMode;
+            SDL.GetCurrentDisplayMode(sdlDevice.Index, out currentMode);
+
+            return new DisplayResolution(
+                bounds.X, bounds.Y,
+                currentMode.Width, currentMode.Height,
+                TranslateFormat(currentMode.Format),
+                currentMode.RefreshRate);
+        }
+
+        public override bool GetIsPrimary(object device)
+        {
+            var sdlDevice = (SdlDevice)device;
+            return sdlDevice.Index == 0;
+        }
+
+        public override IList<DisplayResolution> GetAvailableResolutions(object device)
+        {
+            var sdlDevice = (SdlDevice)device;
+            return sdlDevice.AvailableResolutions.AsReadOnly();
         }
     }
 }

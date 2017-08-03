@@ -64,7 +64,7 @@ namespace OpenTK.Platform.X11
             return new X11GLNative(x, y, width, height, title, mode, options, device);
         }
 
-        public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        public override DisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return new X11DisplayDevice();
         }

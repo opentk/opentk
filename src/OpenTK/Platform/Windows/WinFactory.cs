@@ -83,7 +83,7 @@ namespace OpenTK.Platform.Windows
             return new WinGLNative(x, y, width, height, title, options, device);
         }
 
-        public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        public override DisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return new WinDisplayDeviceDriver();
         }

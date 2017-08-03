@@ -37,7 +37,7 @@ namespace OpenTK.Platform.Android
             throw new NotImplementedException();
         }
 
-        public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        public override DisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return new AndroidDisplayDeviceDriver();
         }

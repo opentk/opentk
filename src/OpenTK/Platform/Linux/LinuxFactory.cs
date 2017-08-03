@@ -184,7 +184,7 @@ namespace OpenTK.Platform.Linux
             return new LinuxNativeWindow(egl_display, gbm_device, gpu_fd, x, y, width, height, title, mode, options, display_device);
         }
 
-        public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        public override DisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return new LinuxDisplayDriver(gpu_fd);
         }

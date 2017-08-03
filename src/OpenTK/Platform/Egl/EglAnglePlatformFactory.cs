@@ -45,7 +45,7 @@ namespace OpenTK.Platform.Egl
                 mode, options, device);
         }
 
-        public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        public override DisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return _platform_factory.CreateDisplayDeviceDriver();
         }

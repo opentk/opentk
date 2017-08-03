@@ -281,9 +281,10 @@ namespace OpenTK.Platform.Linux
             for (DisplayIndex i = DisplayIndex.First; i < DisplayIndex.Sixth; i++)
             {
                 DisplayDevice display = DisplayDevice.GetDisplay(i);
+                var display_bounds = display.CurrentResolution.Bounds;
                 if (display != null)
                 {
-                    bounds = Rectangle.Union(bounds, display.Bounds);
+                    bounds = Rectangle.Union(bounds, display_bounds);
                 }
             }
         }
@@ -294,12 +295,9 @@ namespace OpenTK.Platform.Linux
                 (int)Math.Round(CursorPosition.X + CursorOffset.X),
                 (int)Math.Round(CursorPosition.Y + CursorOffset.Y));
 
-            DisplayDevice display = DisplayDevice.FromPoint(p.X, p.Y) ?? DisplayDevice.Default;
-            if (display != null)
-            {
-                LinuxDisplay d = (LinuxDisplay)display.Id;
-                Drm.MoveCursor(d.FD, d.Id, p.X, p.Y);
-            }
+            DisplayDevice display = LinuxDisplayDriver.FromPoint(p.X, p.Y) ?? DisplayDevice.Default;
+            LinuxDisplay d = (LinuxDisplay)display.id;
+            Drm.MoveCursor(d.FD, d.Id, p.X, p.Y);
         }
 
         private void Setup()

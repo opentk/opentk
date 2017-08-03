@@ -32,40 +32,151 @@ using Microsoft.Win32;
 
 namespace OpenTK.Platform.Windows
 {
-    internal sealed class WinDisplayDeviceDriver : DisplayDeviceBase
+    internal sealed class WinDisplayResolution : DisplayResolution
+    {
+        internal WinDisplayResolution(int x, int y, int width, int height, int bitsPerPixel, float refreshRate, int displayFlags)
+            : base(x, y, width, height, bitsPerPixel, refreshRate)
+        {
+            this.DisplayFlags = displayFlags;
+        }
+
+        public readonly int DisplayFlags;
+    }
+
+    internal sealed class WinDisplayDeviceDriver : DisplayDeviceDriver
     {
         private readonly object display_lock = new object();
+
+        // Small object for tracking name, available resolutions, and original resolution.
+        private sealed class WinDevice
+        {
+            public int DevNum;
+            public string Name;
+            public DisplayResolution OriginalResolution;
+            public List<DisplayResolution> AvailableResolutions;
+        }
 
         public WinDisplayDeviceDriver()
         {
             RefreshDisplayDevices();
-            SystemEvents.DisplaySettingsChanged +=
-                HandleDisplaySettingsChanged;
+            SystemEvents.DisplaySettingsChanged += HandleDisplaySettingsChanged;
         }
 
-        public sealed override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
+        public override bool GetIsPrimary(object device)
         {
+            var winDevice = (WinDevice)device;
+            WindowsDisplayDevice dev1 = new WindowsDisplayDevice();
+            if (!Functions.EnumDisplayDevices(null, winDevice.DevNum, dev1, 0))
+            {
+                Debug.Print(
+                    "[Warning] DisplayDevice '{0}' not enumerated by EnumDisplayDevices. Please create a bug report at http://github.com/opentk/opentk/issues",
+                    winDevice.Name);
+                return false;
+            }
+            Debug.Print("GetIsPrimary.dev1:\n{0}", dev1);
+
+            return (dev1.StateFlags & DisplayDeviceStateFlags.PrimaryDevice) != DisplayDeviceStateFlags.None;
+        }
+
+        public override DisplayResolution GetResolution(object device)
+        {
+            var winDevice = (WinDevice)device;
+            var monitorMode = new DeviceMode();
+
+            // The second function should only be executed when the first one fails
+            // (e.g. when the monitor is disabled)
+            if (Functions.EnumDisplaySettingsEx(winDevice.Name, DisplayModeSettingsEnum.CurrentSettings, monitorMode, 0) ||
+                Functions.EnumDisplaySettingsEx(winDevice.Name, DisplayModeSettingsEnum.RegistrySettings, monitorMode, 0))
+            {
+                VerifyMode(winDevice.Name, monitorMode);
+
+                float scale = GetScale(monitorMode);
+                return new WinDisplayResolution(
+                    (int)(monitorMode.Position.X / scale), (int)(monitorMode.Position.Y / scale),
+                    (int)(monitorMode.PelsWidth / scale), (int)(monitorMode.PelsHeight / scale),
+                    monitorMode.BitsPerPel, monitorMode.DisplayFrequency, monitorMode.DisplayFlags);
+            }
+            else
+            {
+                Debug.Print(
+                    "[Warning] DisplayDevice '{0}' reported no resolution. Please create a bug report at http://github.com/opentk/opentk/issues",
+                    winDevice.Name);
+                return null;
+            }
+        }
+
+        public override IList<DisplayResolution> GetAvailableResolutions(object device)
+        {
+            var winDevice = (WinDevice)device;
+            return winDevice.AvailableResolutions.AsReadOnly();
+        }
+
+        public override bool TryChangeResolution(object device, DisplayResolution resolution)
+        {
+            var winResolution = (WinDisplayResolution)resolution;
+            var winDevice = (WinDevice)device;
             DeviceMode mode = null;
 
             if (resolution != null)
             {
                 mode = new DeviceMode();
-                mode.PelsWidth = resolution.Width;
-                mode.PelsHeight = resolution.Height;
-                mode.BitsPerPel = resolution.BitsPerPixel;
-                mode.DisplayFrequency = (int)resolution.RefreshRate;
+                mode.PelsWidth = winResolution.Width;
+                mode.PelsHeight = winResolution.Height;
+                mode.BitsPerPel = winResolution.BitsPerPixel;
+                mode.DisplayFrequency = (int)winResolution.RefreshRate;
+                mode.DisplayFlags = winResolution.DisplayFlags;
                 mode.Fields = Constants.DM_BITSPERPEL
                     | Constants.DM_PELSWIDTH
                     | Constants.DM_PELSHEIGHT
-                    | Constants.DM_DISPLAYFREQUENCY;
+                    | Constants.DM_DISPLAYFREQUENCY
+                    | Constants.DM_DISPLAYFLAGS;
             }
 
-            return Constants.DISP_CHANGE_SUCCESSFUL ==
-                Functions.ChangeDisplaySettingsEx((string)device.Id, mode, IntPtr.Zero,
-                    ChangeDisplaySettingsEnum.Fullscreen, IntPtr.Zero);
+            var changeResult = Functions.ChangeDisplaySettingsEx(winDevice.Name, mode, IntPtr.Zero,
+                ChangeDisplaySettingsEnum.Fullscreen, IntPtr.Zero);
+
+            string reason;
+            switch (changeResult)
+            {
+                case Constants.DISP_CHANGE_SUCCESSFUL:
+                    return true;
+
+                case Constants.DISP_CHANGE_BADDUALVIEW:
+                    reason = "The settings change was unsuccessful because the system is DualView capable.";
+                    break;
+                case Constants.DISP_CHANGE_BADFLAGS:
+                    reason = "An invalid set of flags was passed in.";
+                    break;
+                case Constants.DISP_CHANGE_BADMODE:
+                    reason = "The graphics mode is not supported.";
+                    break;
+                case Constants.DISP_CHANGE_BADPARAM:
+                    reason = "An invalid parameter was passed in. This can include an invalid flag or combination of flags.";
+                    break;
+                case Constants.DISP_CHANGE_FAILED:
+                    reason = "The display driver failed the specified graphics mode.";
+                    break;
+                case Constants.DISP_CHANGE_NOTUPDATED:
+                    reason = "Unable to write settings to the registry.";
+                    break;
+                case Constants.DISP_CHANGE_RESTART:
+                    reason = "The computer must be restarted for the graphics mode to work.";
+                    break;
+                default:
+                    reason = String.Format(
+                        "Unknown reason '{0}'. Please create a bug report at http://github.com/opentk/opentk/issues.",
+                        changeResult);
+                    break;
+            }
+
+            Debug.Print(
+                "[Warning] DisplayDevice '{0}' could not change resolution. {1}",
+                winDevice.Name,
+                reason);
+            return false;
         }
 
-        public sealed override bool TryRestoreResolution(DisplayDevice device)
+        public override bool TryRestoreResolution(object device)
         {
             return TryChangeResolution(device, null);
         }
@@ -76,100 +187,89 @@ namespace OpenTK.Platform.Windows
             {
                 // Store an array of the current available DisplayDevice objects.
                 // This is needed to preserve the original resolution.
-                DisplayDevice[] previousDevices = AvailableDevices.ToArray();
+                var previousDevices = Devices.ToArray();
 
-                AvailableDevices.Clear();
+                Devices.Clear();
 
-                // We save all necessary parameters in temporary variables
-                // and construct the device when every needed detail is available.
-                // The main DisplayDevice constructor adds the newly constructed device
-                // to the list of available devices.
-                DisplayDevice opentk_dev;
-                DisplayResolution opentk_dev_current_res = null;
-                List<DisplayResolution> opentk_dev_available_res = new List<DisplayResolution>();
-                bool opentk_dev_primary = false;
-                int device_count = 0, mode_count = 0;
+                var deviceCount = 0;
 
                 // Get available video adapters and enumerate all monitors
-                WindowsDisplayDevice dev1 = new WindowsDisplayDevice();
-                while (Functions.EnumDisplayDevices(null, device_count++, dev1, 0))
+                var dev1 = new WindowsDisplayDevice();
+                while (Functions.EnumDisplayDevices(null, deviceCount++, dev1, 0))
                 {
+                    Debug.Print("RefreshDisplayDevices.EnumDisplayDevices[{0}]:\n{1}", deviceCount - 1, dev1);
+
+                    var monitorCount = 0;
+                    var mon1 = new WindowsDisplayDevice();
+                    while (Functions.EnumDisplayDevices(dev1.DeviceName, monitorCount++, mon1, 0))
+                    {
+                        Debug.Print("RefreshDisplayDevices.EnumDisplayDevices[{0}]:\n{1}", monitorCount - 1, mon1);
+                    }
+
                     if ((dev1.StateFlags & DisplayDeviceStateFlags.AttachedToDesktop) == DisplayDeviceStateFlags.None)
                     {
                         continue;
                     }
 
-                    DeviceMode monitor_mode = new DeviceMode();
+                    var isPrimary =
+                        (dev1.StateFlags & DisplayDeviceStateFlags.PrimaryDevice) != DisplayDeviceStateFlags.None;
 
-                    // The second function should only be executed when the first one fails
-                    // (e.g. when the monitor is disabled)
-                    if (Functions.EnumDisplaySettingsEx(dev1.DeviceName.ToString(), DisplayModeSettingsEnum.CurrentSettings, monitor_mode, 0) ||
-                        Functions.EnumDisplaySettingsEx(dev1.DeviceName.ToString(), DisplayModeSettingsEnum.RegistrySettings, monitor_mode, 0))
+                    var winDevice = new WinDevice()
                     {
-                        VerifyMode(dev1, monitor_mode);
+                        DevNum = deviceCount - 1,
+                        Name = dev1.DeviceName,
+                    };
 
-                        float scale = GetScale(ref monitor_mode);
-                        opentk_dev_current_res = new DisplayResolution(
-                            (int)(monitor_mode.Position.X / scale), (int)(monitor_mode.Position.Y / scale),
-                            (int)(monitor_mode.PelsWidth / scale), (int)(monitor_mode.PelsHeight / scale),
-                            monitor_mode.BitsPerPel, monitor_mode.DisplayFrequency);
-
-                        opentk_dev_primary =
-                            (dev1.StateFlags & DisplayDeviceStateFlags.PrimaryDevice) != DisplayDeviceStateFlags.None;
-                    }
-
-                    opentk_dev_available_res.Clear();
-                    mode_count = 0;
-                    while (Functions.EnumDisplaySettingsEx(dev1.DeviceName.ToString(), mode_count++, monitor_mode, 0))
+                    winDevice.AvailableResolutions = new List<DisplayResolution>();
+                    var modeCount = 0;
+                    var monitorMode = new DeviceMode();
+                    while (Functions.EnumDisplaySettingsEx(dev1.DeviceName, modeCount++, monitorMode, 0))
                     {
-                        VerifyMode(dev1, monitor_mode);
+                        Debug.Print("RefreshDisplayDevices.EnumDisplaySettingsEx[{0}]: {{{1}, {2}, {3}, {4}, {5}, {6}}}",
+                            modeCount - 1,
+                            monitorMode.Position.X, monitorMode.Position.Y,
+                            monitorMode.PelsWidth, monitorMode.PelsHeight,
+                            monitorMode.BitsPerPel, monitorMode.DisplayFrequency,
+                            monitorMode.DisplayFlags);
 
-                        float scale = GetScale(ref monitor_mode);
-                        DisplayResolution res = new DisplayResolution(
-                            (int)(monitor_mode.Position.X / scale), (int)(monitor_mode.Position.Y / scale),
-                            (int)(monitor_mode.PelsWidth / scale), (int)(monitor_mode.PelsHeight / scale),
-                            monitor_mode.BitsPerPel, monitor_mode.DisplayFrequency);
+                        VerifyMode(dev1.DeviceName, monitorMode);
+                        var scale = GetScale(monitorMode);
+                        var res = new WinDisplayResolution(
+                            (int)(monitorMode.Position.X / scale), (int)(monitorMode.Position.Y / scale),
+                            (int)(monitorMode.PelsWidth / scale), (int)(monitorMode.PelsHeight / scale),
+                            monitorMode.BitsPerPel, monitorMode.DisplayFrequency, monitorMode.DisplayFlags);
 
-                        opentk_dev_available_res.Add(res);
+                        winDevice.AvailableResolutions.Add(res);
                     }
-
-                    // Construct the OpenTK DisplayDevice through the accumulated parameters.
-                    // The constructor will automatically add the DisplayDevice to the list
-                    // of available devices.
-                    #pragma warning disable 612,618
-                    opentk_dev = new DisplayDevice(
-                        opentk_dev_current_res,
-                        opentk_dev_primary,
-                        opentk_dev_available_res,
-                        opentk_dev_current_res.Bounds,
-                        dev1.DeviceName);
-                    #pragma warning restore 612,618
 
                     // Set the original resolution if the DisplayDevice was previously available.
                     foreach (DisplayDevice existingDevice in previousDevices)
                     {
-                        if ((string)existingDevice.Id == (string)opentk_dev.Id)
+                        var winExistingDevice = (WinDevice)existingDevice.id;
+                        if (winExistingDevice.Name == winDevice.Name)
                         {
-                            opentk_dev.OriginalResolution = existingDevice.OriginalResolution;
+                            winDevice.OriginalResolution = winExistingDevice.OriginalResolution;
                         }
                     }
 
-                    AvailableDevices.Add(opentk_dev);
-
-                    if (opentk_dev_primary)
+                    // New device, need to get it's current resolution to save
+                    if (winDevice.OriginalResolution == null)
                     {
-                        Primary = opentk_dev;
+                        winDevice.OriginalResolution = GetResolution(winDevice);
                     }
 
-                    Debug.Print("DisplayDevice {0} ({1}) supports {2} resolutions.",
-                        device_count, opentk_dev.IsPrimary ? "primary" : "secondary", opentk_dev.AvailableResolutions.Count);
+                    var displayDevice = new DisplayDevice(winDevice);
+                    Devices.Add(displayDevice);
+
+                    Debug.Print("DisplayDevice {0} ({1}) added.",
+                        deviceCount, isPrimary ? "primary" : "secondary");
                 }
             }
         }
 
-        private float GetScale(ref DeviceMode monitor_mode)
+        private float GetScale(DeviceMode monitor_mode)
         {
-            float scale = 1.0f;
+            var scale = 1.0f;
             if ((monitor_mode.Fields & Constants.DM_LOGPIXELS) != 0)
             {
                 scale = monitor_mode.LogPixels / 96.0f;
@@ -177,26 +277,26 @@ namespace OpenTK.Platform.Windows
             return scale;
         }
 
-        private static void VerifyMode(WindowsDisplayDevice device, DeviceMode mode)
+        private static void VerifyMode(string deviceName, DeviceMode mode)
         {
             if (mode.BitsPerPel == 0)
             {
                 Debug.Print(
-                    "[Warning] DisplayDevice '{0}' reported a mode with 0 bpp. Please create a bug report at https://github.com/opentk/opentk/issues",
-                    device.DeviceName.ToString());
+                    "[Warning] DisplayDevice '{0}' reported a mode with 0 bpp. Please create a bug report at http://github.com/opentk/opentk/issues",
+                    deviceName);
                 mode.BitsPerPel = 32;
             }
         }
 
         private void HandleDisplaySettingsChanged(object sender, EventArgs e)
         {
+            Debug.Print("Display Settings Changed");
             RefreshDisplayDevices();
         }
 
         ~WinDisplayDeviceDriver()
         {
-            SystemEvents.DisplaySettingsChanged -=
-                HandleDisplaySettingsChanged;
+            SystemEvents.DisplaySettingsChanged -= HandleDisplaySettingsChanged;
         }
     }
 }

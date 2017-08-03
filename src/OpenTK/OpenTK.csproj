@@ -131,7 +131,7 @@
     <Compile Include="Math\Matrix4x3.cs" />
     <Compile Include="Math\Matrix4x3d.cs" />
     <Compile Include="Platform\Common\Hid.cs" />
-    <Compile Include="Platform\DisplayDeviceBase.cs" />
+    <Compile Include="Platform\DisplayDeviceDriver.cs" />
     <Compile Include="Platform\Egl\AngleWindowInfo.cs" />
     <Compile Include="Platform\Egl\EglException.cs" />
     <Compile Include="Platform\Egl\EglUnixContext.cs" />
@@ -205,9 +205,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\IDisplayDeviceDriver.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Platform\IWindowInfo.cs">

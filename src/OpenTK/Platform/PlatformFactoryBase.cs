@@ -52,7 +52,7 @@ namespace OpenTK.Platform
 
         public abstract INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device);
 
-        public abstract IDisplayDeviceDriver CreateDisplayDeviceDriver();
+        public abstract DisplayDeviceDriver CreateDisplayDeviceDriver();
 
         public abstract IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags);
 

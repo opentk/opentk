@@ -215,10 +215,9 @@
     <Compile Include="Math\Vector4d.cs" />
     <Compile Include="Math\Vector4h.cs" />
     <Compile Include="Platform\DesktopGraphicsContext.cs" />
-    <Compile Include="Platform\DisplayDeviceBase.cs" />
+    <Compile Include="Platform\DisplayDeviceDriver.cs" />
     <Compile Include="Platform\EmbeddedGraphicsContext.cs" />
     <Compile Include="Platform\Factory.cs" />
-    <Compile Include="Platform\IDisplayDeviceDriver.cs" />
     <Compile Include="Platform\IPlatformFactory.cs" />
     <Compile Include="Platform\IWindowInfo.cs" />
     <Compile Include="Platform\MappedGamePadDriver.cs" />

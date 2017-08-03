@@ -72,10 +72,7 @@ namespace OpenTK.Platform.X11
 
         internal static Display DefaultDisplay { get; private set; }
 
-        private static int DefaultScreen { get; set; }
-
         //internal static Window RootWindow { get { return rootWindow; } }
-        internal static int ScreenCount { get; }
 
         internal static object Lock = new object();
 
@@ -91,12 +88,6 @@ namespace OpenTK.Platform.X11
                 throw new PlatformException("Could not establish connection to the X-Server.");
             }
 
-            using (new XLock(DefaultDisplay))
-            {
-                ScreenCount = Functions.XScreenCount(DefaultDisplay);
-            }
-            Debug.Print("Display connection: {0}, Screen count: {1}", DefaultDisplay, ScreenCount);
-
             //AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
         }
 
@@ -106,7 +97,6 @@ namespace OpenTK.Platform.X11
             {
                 Functions.XCloseDisplay(DefaultDisplay);
                 DefaultDisplay = IntPtr.Zero;
-                DefaultScreen = 0;
                 rootWindow = IntPtr.Zero;
             }
         }
@@ -1498,6 +1488,7 @@ XF86VidModeGetGammaRampSize(
                 {
                     return null;
                 }
+
                 rates = new short[count];
                 for (int i = 0; i < count; i++)
                 {
@@ -1522,16 +1513,24 @@ XF86VidModeGetGammaRampSize(
             {
                 int count;
                 int* data = XListDepths(display, screen_number, &count);
-                if (count == 0)
+                if (data == null)
                 {
                     return null;
                 }
+
+                if (count == 0)
+                {
+                    XFree(new IntPtr(data));
+                    return null;
+                }
+
                 int[] depths = new int[count];
                 for (int i = 0; i < count; i++)
                 {
                     depths[i] = *(data + i);
                 }
 
+                XFree(new IntPtr(data));
                 return depths;
             }
         }

@@ -5,28 +5,40 @@ using OpenTK.Platform;
 
 namespace OpenTK.Platform.iPhoneOS
 {
-    internal class AndroidDisplayDeviceDriver : IDisplayDeviceDriver
+    internal class AndroidDisplayDeviceDriver : DisplayDeviceDriver
     {
         private static DisplayDevice dev;
         static AndroidDisplayDeviceDriver()
         {
-            dev = new DisplayDevice();
-            dev.IsPrimary = true;
-            dev.BitsPerPixel = 16;
+            dev = new DisplayDevice(null);
         }
 
-        public DisplayDevice GetDisplay(DisplayIndex displayIndex)
+        public override IList<DisplayResolution> GetAvailableResolutions(object device)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override DisplayDevice GetDisplay(DisplayIndex displayIndex)
         {
             return (displayIndex == DisplayIndex.First || displayIndex == DisplayIndex.Primary) ? dev : null;
         }
 
+        public override bool GetIsPrimary(object device)
+        {
+            return true;
+        }
 
-        public bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
+        public override DisplayResolution GetResolution(object device)
+        {
+            return new DisplayResolution(0, 0, 0, 0, 16, 0);
+        }
+
+        public override bool TryChangeResolution(object device, DisplayResolution resolution)
         {
             return false;
         }
-
-        public bool TryRestoreResolution(DisplayDevice device)
+        
+        public override bool TryRestoreResolution(object device)
         {
             return false;
         }

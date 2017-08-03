@@ -158,7 +158,7 @@ namespace OpenTK.Platform
             return Default.CreateNativeWindow(x, y, width, height, title, mode, options, device);
         }
 
-        public IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        public DisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return Default.CreateDisplayDeviceDriver();
         }
@@ -212,7 +212,7 @@ namespace OpenTK.Platform
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
+            public override DisplayDeviceDriver CreateDisplayDeviceDriver()
             {
                 throw new PlatformNotSupportedException(error_string);
             }

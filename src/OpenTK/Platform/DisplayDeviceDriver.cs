@@ -1,7 +1,7 @@
 ﻿//
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2010 the Open Toolkit library.
+// Copyright (c) 2006 - 2017 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,24 +27,34 @@ using System.Collections.Generic;
 
 namespace OpenTK.Platform
 {
-    internal abstract class DisplayDeviceBase : IDisplayDeviceDriver
+    internal abstract class DisplayDeviceDriver
     {
-        protected readonly List<DisplayDevice> AvailableDevices = new List<DisplayDevice>();
-        protected DisplayDevice Primary;
+        public abstract bool TryChangeResolution(object device, DisplayResolution resolution);
+        public abstract bool TryRestoreResolution(object device);
+        public abstract bool GetIsPrimary(object device);
+        public abstract DisplayResolution GetResolution(object device);
+        public abstract IList<DisplayResolution> GetAvailableResolutions(object device);
 
-        public abstract bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution);
-        public abstract bool TryRestoreResolution(DisplayDevice device);
+        protected readonly List<DisplayDevice> Devices = new List<DisplayDevice>();
 
         // Gets the DisplayDevice that corresponds to the specified index.
         public virtual DisplayDevice GetDisplay(DisplayIndex index)
         {
             if (index == DisplayIndex.Primary)
             {
-                return Primary;
+                foreach (var device in Devices)
+                {
+                    if (device.IsPrimary)
+                    {
+                        return device;
+                    }
+                }
+
+                throw new System.InvalidOperationException("No primary device found");
             }
-            else if ((int)index >= 0 && (int)index < AvailableDevices.Count)
+            else if ((int)index >= 0 && (int)index < Devices.Count)
             {
-                return AvailableDevices[(int)index];
+                return Devices[(int)index];
             }
             else
             {

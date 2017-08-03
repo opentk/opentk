@@ -72,13 +72,14 @@ namespace OpenTK.Platform.Linux
                 throw new NotSupportedException("[KMS] Driver does not currently support headless systems");
             }
 
-            window = new LinuxWindowInfo(display, fd, gbm, display_device.Id as LinuxDisplay);
+            window = new LinuxWindowInfo(display, fd, gbm, display_device.id as LinuxDisplay);
 
             // Note: we only support fullscreen windows on KMS.
             // We implicitly override the requested width and height
             // by the width and height of the DisplayDevice, if any.
-            width = display_device.Width;
-            height = display_device.Height;
+            var current_resolution = display_device.CurrentResolution;
+            width = current_resolution.Width;
+            height = current_resolution.Height;
             bounds = new Rectangle(0, 0, width, height);
             client_size = bounds.Size;
 
