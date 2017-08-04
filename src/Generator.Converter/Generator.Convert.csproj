@@ -64,7 +64,7 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE;</DefineConstants>
-    <DocumentationFile>bin\Debug\Convert.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Convert.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
     <OutputPath>bin\Release\</OutputPath>

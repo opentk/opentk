@@ -64,7 +64,7 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE;</DefineConstants>
-    <DocumentationFile>bin\Debug\Bind.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Bind.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
     <OutputPath>bin\Release\</OutputPath>

@@ -35,7 +35,7 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <DocumentationFile>bin\Debug\Rewrite.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Rewrite.xml</DocumentationFile>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Commandlineparameters>../../OpenTK/Release/OpenTK.dll ../../../OpenTK.snk</Commandlineparameters>
