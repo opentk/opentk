@@ -16,8 +16,8 @@ namespace OpenTK.Platform.MacOS
         /// </summary>
         public NSAutoreleasePool()
         {
-            _autoreleasePool = Cocoa.SendIntPtr(Class.NSAutoreleasePool, Selector.Get("alloc"));
-            _autoreleasePool = Cocoa.SendIntPtr(_autoreleasePool, Selector.Get("init"));
+            _autoreleasePool = Cocoa.SendIntPtr(Class.NSAutoreleasePool, Selector.Alloc);
+            _autoreleasePool = Cocoa.SendIntPtr(_autoreleasePool, Selector.Init);
         }
 
         /// <summary>
