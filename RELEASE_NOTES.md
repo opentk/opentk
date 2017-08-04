@@ -1,4 +1,5 @@
 ### 3.0.0-pre
+	* Support for OpenGL 4.6
 	* Replaced JoystickButton enum with simple long. (breaking API change)
 	* Increase available joystick buttons to 64.
 	* Add support for OpenGL ES3 through Angle + DIrect3D.
