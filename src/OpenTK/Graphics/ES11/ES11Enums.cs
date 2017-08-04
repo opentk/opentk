@@ -242,6 +242,10 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         ColorBufferBit4Qcom = ((int)0x00000010),
         /// <summary>
+        /// Original was GL_CONTEXT_FLAG_PROTECTED_CONTENT_BIT_EXT = 0x00000010
+        /// </summary>
+        ContextFlagProtectedContentBitExt = ((int)0x00000010),
+        /// <summary>
         /// Original was GL_POLYGON_STIPPLE_BIT = 0x00000010
         /// </summary>
         PolygonStippleBit = ((int)0x00000010),
@@ -4726,25 +4730,25 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         FragmentLight7Sgix = ((int)0x8413),
         /// <summary>
-        /// Original was GL_PACK_RESAMPLE_SGIX = 0x842C
+        /// Original was GL_PACK_RESAMPLE_SGIX = 0x842E
         /// </summary>
-        PackResampleSgix = ((int)0x842C),
+        PackResampleSgix = ((int)0x842E),
         /// <summary>
-        /// Original was GL_UNPACK_RESAMPLE_SGIX = 0x842D
+        /// Original was GL_UNPACK_RESAMPLE_SGIX = 0x842F
         /// </summary>
-        UnpackResampleSgix = ((int)0x842D),
-        /// <summary>
-        /// Original was GL_RESAMPLE_REPLICATE_SGIX = 0x842E
-        /// </summary>
-        ResampleReplicateSgix = ((int)0x842E),
-        /// <summary>
-        /// Original was GL_RESAMPLE_ZERO_FILL_SGIX = 0x842F
-        /// </summary>
-        ResampleZeroFillSgix = ((int)0x842F),
+        UnpackResampleSgix = ((int)0x842F),
         /// <summary>
         /// Original was GL_RESAMPLE_DECIMATE_SGIX = 0x8430
         /// </summary>
         ResampleDecimateSgix = ((int)0x8430),
+        /// <summary>
+        /// Original was GL_RESAMPLE_REPLICATE_SGIX = 0x8433
+        /// </summary>
+        ResampleReplicateSgix = ((int)0x8433),
+        /// <summary>
+        /// Original was GL_RESAMPLE_ZERO_FILL_SGIX = 0x8434
+        /// </summary>
+        ResampleZeroFillSgix = ((int)0x8434),
         /// <summary>
         /// Original was GL_NEAREST_CLIPMAP_NEAREST_SGIX = 0x844D
         /// </summary>
@@ -4934,6 +4938,22 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         FenceConditionNv = ((int)0x84F4),
         /// <summary>
+        /// Original was GL_TEXTURE_RECTANGLE = 0x84F5
+        /// </summary>
+        TextureRectangle = ((int)0x84F5),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_RECTANGLE = 0x84F7
+        /// </summary>
+        ProxyTextureRectangle = ((int)0x84F7),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_RECTANGLE_ARB = 0x84F7
+        /// </summary>
+        ProxyTextureRectangleArb = ((int)0x84F7),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_RECTANGLE_NV = 0x84F7
+        /// </summary>
+        ProxyTextureRectangleNv = ((int)0x84F7),
+        /// <summary>
         /// Original was GL_DEPTH_STENCIL_OES = 0x84F9
         /// </summary>
         DepthStencilOes = ((int)0x84F9),
@@ -4958,6 +4978,10 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         TextureFilterControlExt = ((int)0x8500),
         /// <summary>
+        /// Original was GL_TEXTURE_LOD_BIAS = 0x8501
+        /// </summary>
+        TextureLodBias = ((int)0x8501),
+        /// <summary>
         /// Original was GL_TEXTURE_LOD_BIAS_EXT = 0x8501
         /// </summary>
         TextureLodBiasExt = ((int)0x8501),
@@ -4978,6 +5002,10 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         ReflectionMapOes = ((int)0x8512),
         /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP = 0x8513
+        /// </summary>
+        TextureCubeMap = ((int)0x8513),
+        /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP_OES = 0x8513
         /// </summary>
         TextureCubeMapOes = ((int)0x8513),
@@ -4986,29 +5014,65 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         TextureBindingCubeMapOes = ((int)0x8514),
         /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_POSITIVE_X = 0x8515
+        /// </summary>
+        TextureCubeMapPositiveX = ((int)0x8515),
+        /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP_POSITIVE_X_OES = 0x8515
         /// </summary>
         TextureCubeMapPositiveXOes = ((int)0x8515),
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_NEGATIVE_X = 0x8516
+        /// </summary>
+        TextureCubeMapNegativeX = ((int)0x8516),
         /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP_NEGATIVE_X_OES = 0x8516
         /// </summary>
         TextureCubeMapNegativeXOes = ((int)0x8516),
         /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_POSITIVE_Y = 0x8517
+        /// </summary>
+        TextureCubeMapPositiveY = ((int)0x8517),
+        /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP_POSITIVE_Y_OES = 0x8517
         /// </summary>
         TextureCubeMapPositiveYOes = ((int)0x8517),
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_NEGATIVE_Y = 0x8518
+        /// </summary>
+        TextureCubeMapNegativeY = ((int)0x8518),
         /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP_NEGATIVE_Y_OES = 0x8518
         /// </summary>
         TextureCubeMapNegativeYOes = ((int)0x8518),
         /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_POSITIVE_Z = 0x8519
+        /// </summary>
+        TextureCubeMapPositiveZ = ((int)0x8519),
+        /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP_POSITIVE_Z_OES = 0x8519
         /// </summary>
         TextureCubeMapPositiveZOes = ((int)0x8519),
         /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_NEGATIVE_Z = 0x851A
+        /// </summary>
+        TextureCubeMapNegativeZ = ((int)0x851A),
+        /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_OES = 0x851A
         /// </summary>
         TextureCubeMapNegativeZOes = ((int)0x851A),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_CUBE_MAP = 0x851B
+        /// </summary>
+        ProxyTextureCubeMap = ((int)0x851B),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_CUBE_MAP_ARB = 0x851B
+        /// </summary>
+        ProxyTextureCubeMapArb = ((int)0x851B),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_CUBE_MAP_EXT = 0x851B
+        /// </summary>
+        ProxyTextureCubeMapExt = ((int)0x851B),
         /// <summary>
         /// Original was GL_MAX_CUBE_MAP_TEXTURE_SIZE_OES = 0x851C
         /// </summary>
@@ -5282,6 +5346,14 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         MatrixIndexArrayPointerOes = ((int)0x8849),
         /// <summary>
+        /// Original was GL_TEXTURE_COMPARE_MODE = 0x884C
+        /// </summary>
+        TextureCompareMode = ((int)0x884C),
+        /// <summary>
+        /// Original was GL_TEXTURE_COMPARE_FUNC = 0x884D
+        /// </summary>
+        TextureCompareFunc = ((int)0x884D),
+        /// <summary>
         /// Original was GL_POINT_SPRITE_OES = 0x8861
         /// </summary>
         PointSpriteOes = ((int)0x8861),
@@ -5326,9 +5398,21 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         WeightArrayBufferBindingOes = ((int)0x889E),
         /// <summary>
+        /// Original was GL_READ_ONLY = 0x88B8
+        /// </summary>
+        ReadOnly = ((int)0x88B8),
+        /// <summary>
+        /// Original was GL_WRITE_ONLY = 0x88B9
+        /// </summary>
+        WriteOnly = ((int)0x88B9),
+        /// <summary>
         /// Original was GL_WRITE_ONLY_OES = 0x88B9
         /// </summary>
         WriteOnlyOes = ((int)0x88B9),
+        /// <summary>
+        /// Original was GL_READ_WRITE = 0x88BA
+        /// </summary>
+        ReadWrite = ((int)0x88BA),
         /// <summary>
         /// Original was GL_BUFFER_ACCESS_OES = 0x88BB
         /// </summary>
@@ -5342,13 +5426,49 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         BufferMapPointerOes = ((int)0x88BD),
         /// <summary>
+        /// Original was GL_STREAM_DRAW = 0x88E0
+        /// </summary>
+        StreamDraw = ((int)0x88E0),
+        /// <summary>
+        /// Original was GL_STREAM_READ = 0x88E1
+        /// </summary>
+        StreamRead = ((int)0x88E1),
+        /// <summary>
+        /// Original was GL_STREAM_COPY = 0x88E2
+        /// </summary>
+        StreamCopy = ((int)0x88E2),
+        /// <summary>
         /// Original was GL_STATIC_DRAW = 0x88E4
         /// </summary>
         StaticDraw = ((int)0x88E4),
         /// <summary>
+        /// Original was GL_STATIC_READ = 0x88E5
+        /// </summary>
+        StaticRead = ((int)0x88E5),
+        /// <summary>
+        /// Original was GL_STATIC_COPY = 0x88E6
+        /// </summary>
+        StaticCopy = ((int)0x88E6),
+        /// <summary>
         /// Original was GL_DYNAMIC_DRAW = 0x88E8
         /// </summary>
         DynamicDraw = ((int)0x88E8),
+        /// <summary>
+        /// Original was GL_DYNAMIC_READ = 0x88E9
+        /// </summary>
+        DynamicRead = ((int)0x88E9),
+        /// <summary>
+        /// Original was GL_DYNAMIC_COPY = 0x88EA
+        /// </summary>
+        DynamicCopy = ((int)0x88EA),
+        /// <summary>
+        /// Original was GL_PIXEL_PACK_BUFFER = 0x88EB
+        /// </summary>
+        PixelPackBuffer = ((int)0x88EB),
+        /// <summary>
+        /// Original was GL_PIXEL_UNPACK_BUFFER = 0x88EC
+        /// </summary>
+        PixelUnpackBuffer = ((int)0x88EC),
         /// <summary>
         /// Original was GL_DEPTH24_STENCIL8_OES = 0x88F0
         /// </summary>
@@ -5386,6 +5506,10 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         TextureMatrixFloatAsIntBitsOes = ((int)0x898F),
         /// <summary>
+        /// Original was GL_UNIFORM_BUFFER = 0x8A11
+        /// </summary>
+        UniformBuffer = ((int)0x8A11),
+        /// <summary>
         /// Original was GL_SYNC_OBJECT_APPLE = 0x8A53
         /// </summary>
         SyncObjectApple = ((int)0x8A53),
@@ -5401,6 +5525,10 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_FRAGMENT_SHADER_DERIVATIVE_HINT_OES = 0x8B8B
         /// </summary>
         FragmentShaderDerivativeHintOes = ((int)0x8B8B),
+        /// <summary>
+        /// Original was GL_SHADING_LANGUAGE_VERSION = 0x8B8C
+        /// </summary>
+        ShadingLanguageVersion = ((int)0x8B8C),
         /// <summary>
         /// Original was GL_PALETTE4_RGB8_OES = 0x8B90
         /// </summary>
@@ -5550,6 +5678,34 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         AddBlendImg = ((int)0x8C09),
         /// <summary>
+        /// Original was GL_TEXTURE_1D_ARRAY = 0x8C18
+        /// </summary>
+        Texture1DArray = ((int)0x8C18),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_1D_ARRAY = 0x8C19
+        /// </summary>
+        ProxyTexture1DArray = ((int)0x8C19),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_1D_ARRAY_EXT = 0x8C19
+        /// </summary>
+        ProxyTexture1DArrayExt = ((int)0x8C19),
+        /// <summary>
+        /// Original was GL_TEXTURE_2D_ARRAY = 0x8C1A
+        /// </summary>
+        Texture2DArray = ((int)0x8C1A),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_2D_ARRAY = 0x8C1B
+        /// </summary>
+        ProxyTexture2DArray = ((int)0x8C1B),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_2D_ARRAY_EXT = 0x8C1B
+        /// </summary>
+        ProxyTexture2DArrayExt = ((int)0x8C1B),
+        /// <summary>
+        /// Original was GL_TEXTURE_BUFFER = 0x8C2A
+        /// </summary>
+        TextureBuffer = ((int)0x8C2A),
+        /// <summary>
         /// Original was GL_SRGB_EXT = 0x8C40
         /// </summary>
         SrgbExt = ((int)0x8C40),
@@ -5561,6 +5717,10 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_SRGB8_ALPHA8_EXT = 0x8C43
         /// </summary>
         Srgb8Alpha8Ext = ((int)0x8C43),
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_BUFFER = 0x8C8E
+        /// </summary>
+        TransformFeedbackBuffer = ((int)0x8C8E),
         /// <summary>
         /// Original was GL_ATC_RGB_AMD = 0x8C92
         /// </summary>
@@ -5758,6 +5918,38 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         FramebufferAttachmentTextureSamplesExt = ((int)0x8D6C),
         /// <summary>
+        /// Original was GL_TEXTURE_SWIZZLE_R = 0x8E42
+        /// </summary>
+        TextureSwizzleR = ((int)0x8E42),
+        /// <summary>
+        /// Original was GL_TEXTURE_SWIZZLE_G = 0x8E43
+        /// </summary>
+        TextureSwizzleG = ((int)0x8E43),
+        /// <summary>
+        /// Original was GL_TEXTURE_SWIZZLE_B = 0x8E44
+        /// </summary>
+        TextureSwizzleB = ((int)0x8E44),
+        /// <summary>
+        /// Original was GL_TEXTURE_SWIZZLE_A = 0x8E45
+        /// </summary>
+        TextureSwizzleA = ((int)0x8E45),
+        /// <summary>
+        /// Original was GL_TEXTURE_SWIZZLE_RGBA = 0x8E46
+        /// </summary>
+        TextureSwizzleRgba = ((int)0x8E46),
+        /// <summary>
+        /// Original was GL_COPY_READ_BUFFER = 0x8F36
+        /// </summary>
+        CopyReadBuffer = ((int)0x8F36),
+        /// <summary>
+        /// Original was GL_COPY_WRITE_BUFFER = 0x8F37
+        /// </summary>
+        CopyWriteBuffer = ((int)0x8F37),
+        /// <summary>
+        /// Original was GL_DRAW_INDIRECT_BUFFER = 0x8F3F
+        /// </summary>
+        DrawIndirectBuffer = ((int)0x8F3F),
+        /// <summary>
         /// Original was GL_PERFMON_GLOBAL_MODE_QCOM = 0x8FA0
         /// </summary>
         PerfmonGlobalModeQcom = ((int)0x8FA0),
@@ -5766,9 +5958,61 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         BinningControlHintQcom = ((int)0x8FB0),
         /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_ARRAY = 0x9009
+        /// </summary>
+        TextureCubeMapArray = ((int)0x9009),
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_ARRAY_ARB = 0x9009
+        /// </summary>
+        TextureCubeMapArrayArb = ((int)0x9009),
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_ARRAY_EXT = 0x9009
+        /// </summary>
+        TextureCubeMapArrayExt = ((int)0x9009),
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_ARRAY_OES = 0x9009
+        /// </summary>
+        TextureCubeMapArrayOes = ((int)0x9009),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_CUBE_MAP_ARRAY = 0x900B
+        /// </summary>
+        ProxyTextureCubeMapArray = ((int)0x900B),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_CUBE_MAP_ARRAY_ARB = 0x900B
+        /// </summary>
+        ProxyTextureCubeMapArrayArb = ((int)0x900B),
+        /// <summary>
+        /// Original was GL_SHADER_STORAGE_BUFFER = 0x90D2
+        /// </summary>
+        ShaderStorageBuffer = ((int)0x90D2),
+        /// <summary>
+        /// Original was GL_DEPTH_STENCIL_TEXTURE_MODE = 0x90EA
+        /// </summary>
+        DepthStencilTextureMode = ((int)0x90EA),
+        /// <summary>
+        /// Original was GL_DISPATCH_INDIRECT_BUFFER = 0x90EE
+        /// </summary>
+        DispatchIndirectBuffer = ((int)0x90EE),
+        /// <summary>
         /// Original was GL_CONTEXT_ROBUST_ACCESS_EXT = 0x90F3
         /// </summary>
         ContextRobustAccessExt = ((int)0x90F3),
+        /// <summary>
+        /// Original was GL_TEXTURE_2D_MULTISAMPLE = 0x9100
+        /// </summary>
+        Texture2DMultisample = ((int)0x9100),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_2D_MULTISAMPLE = 0x9101
+        /// </summary>
+        ProxyTexture2DMultisample = ((int)0x9101),
+        /// <summary>
+        /// Original was GL_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9102
+        /// </summary>
+        Texture2DMultisampleArray = ((int)0x9102),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9103
+        /// </summary>
+        ProxyTexture2DMultisampleArray = ((int)0x9103),
         /// <summary>
         /// Original was GL_MAX_SERVER_WAIT_TIMEOUT_APPLE = 0x9111
         /// </summary>
@@ -5842,9 +6086,113 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         TextureSamplesImg = ((int)0x9136),
         /// <summary>
+        /// Original was GL_QUERY_BUFFER = 0x9192
+        /// </summary>
+        QueryBuffer = ((int)0x9192),
+        /// <summary>
+        /// Original was GL_ATOMIC_COUNTER_BUFFER = 0x92C0
+        /// </summary>
+        AtomicCounterBuffer = ((int)0x92C0),
+        /// <summary>
         /// Original was GL_BGRA8_EXT = 0x93A1
         /// </summary>
         Bgra8Ext = ((int)0x93A1),
+        /// <summary>
+        /// Original was GL_TEXTURE_TILING_EXT = 0x9580
+        /// </summary>
+        TextureTilingExt = ((int)0x9580),
+        /// <summary>
+        /// Original was GL_DEDICATED_MEMORY_OBJECT_EXT = 0x9581
+        /// </summary>
+        DedicatedMemoryObjectExt = ((int)0x9581),
+        /// <summary>
+        /// Original was GL_HANDLE_TYPE_OPAQUE_FD_EXT = 0x9586
+        /// </summary>
+        HandleTypeOpaqueFdExt = ((int)0x9586),
+        /// <summary>
+        /// Original was GL_HANDLE_TYPE_OPAQUE_WIN32_EXT = 0x9587
+        /// </summary>
+        HandleTypeOpaqueWin32Ext = ((int)0x9587),
+        /// <summary>
+        /// Original was GL_HANDLE_TYPE_OPAQUE_WIN32_KMT_EXT = 0x9588
+        /// </summary>
+        HandleTypeOpaqueWin32KmtExt = ((int)0x9588),
+        /// <summary>
+        /// Original was GL_HANDLE_TYPE_D3D12_TILEPOOL_EXT = 0x9589
+        /// </summary>
+        HandleTypeD3D12TilepoolExt = ((int)0x9589),
+        /// <summary>
+        /// Original was GL_HANDLE_TYPE_D3D12_RESOURCE_EXT = 0x958A
+        /// </summary>
+        HandleTypeD3D12ResourceExt = ((int)0x958A),
+        /// <summary>
+        /// Original was GL_HANDLE_TYPE_D3D11_IMAGE_EXT = 0x958B
+        /// </summary>
+        HandleTypeD3D11ImageExt = ((int)0x958B),
+        /// <summary>
+        /// Original was GL_HANDLE_TYPE_D3D11_IMAGE_KMT_EXT = 0x958C
+        /// </summary>
+        HandleTypeD3D11ImageKmtExt = ((int)0x958C),
+        /// <summary>
+        /// Original was GL_LAYOUT_GENERAL_EXT = 0x958D
+        /// </summary>
+        LayoutGeneralExt = ((int)0x958D),
+        /// <summary>
+        /// Original was GL_LAYOUT_COLOR_ATTACHMENT_EXT = 0x958E
+        /// </summary>
+        LayoutColorAttachmentExt = ((int)0x958E),
+        /// <summary>
+        /// Original was GL_LAYOUT_DEPTH_STENCIL_ATTACHMENT_EXT = 0x958F
+        /// </summary>
+        LayoutDepthStencilAttachmentExt = ((int)0x958F),
+        /// <summary>
+        /// Original was GL_LAYOUT_DEPTH_STENCIL_READ_ONLY_EXT = 0x9590
+        /// </summary>
+        LayoutDepthStencilReadOnlyExt = ((int)0x9590),
+        /// <summary>
+        /// Original was GL_LAYOUT_SHADER_READ_ONLY_EXT = 0x9591
+        /// </summary>
+        LayoutShaderReadOnlyExt = ((int)0x9591),
+        /// <summary>
+        /// Original was GL_LAYOUT_TRANSFER_SRC_EXT = 0x9592
+        /// </summary>
+        LayoutTransferSrcExt = ((int)0x9592),
+        /// <summary>
+        /// Original was GL_LAYOUT_TRANSFER_DST_EXT = 0x9593
+        /// </summary>
+        LayoutTransferDstExt = ((int)0x9593),
+        /// <summary>
+        /// Original was GL_HANDLE_TYPE_D3D12_FENCE_EXT = 0x9594
+        /// </summary>
+        HandleTypeD3D12FenceExt = ((int)0x9594),
+        /// <summary>
+        /// Original was GL_D3D12_FENCE_VALUE_EXT = 0x9595
+        /// </summary>
+        D3D12FenceValueExt = ((int)0x9595),
+        /// <summary>
+        /// Original was GL_DEVICE_UUID_EXT = 0x9597
+        /// </summary>
+        DeviceUuidExt = ((int)0x9597),
+        /// <summary>
+        /// Original was GL_DRIVER_UUID_EXT = 0x9598
+        /// </summary>
+        DriverUuidExt = ((int)0x9598),
+        /// <summary>
+        /// Original was GL_DEVICE_LUID_EXT = 0x9599
+        /// </summary>
+        DeviceLuidExt = ((int)0x9599),
+        /// <summary>
+        /// Original was GL_DEVICE_NODE_MASK_EXT = 0x959A
+        /// </summary>
+        DeviceNodeMaskExt = ((int)0x959A),
+        /// <summary>
+        /// Original was GL_PROTECTED_MEMORY_OBJECT_EXT = 0x959B
+        /// </summary>
+        ProtectedMemoryObjectExt = ((int)0x959B),
+        /// <summary>
+        /// Original was GL_FRAMEBUFFER_FETCH_NONCOHERENT_QCOM = 0x96A2
+        /// </summary>
+        FramebufferFetchNoncoherentQcom = ((int)0x96A2),
         /// <summary>
         /// Original was GL_ALL_ATTRIB_BITS = 0xFFFFFFFF
         /// </summary>
@@ -6671,6 +7019,25 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    public enum BufferAccessArb : int
+    {
+        /// <summary>
+        /// Original was GL_READ_ONLY = 0x88B8
+        /// </summary>
+        ReadOnly = ((int)0x88B8),
+        /// <summary>
+        /// Original was GL_WRITE_ONLY = 0x88B9
+        /// </summary>
+        WriteOnly = ((int)0x88B9),
+        /// <summary>
+        /// Original was GL_READ_WRITE = 0x88BA
+        /// </summary>
+        ReadWrite = ((int)0x88BA),
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum BufferObjects : int
     {
         /// <summary>
@@ -6721,6 +7088,112 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_DYNAMIC_DRAW = 0x88E8
         /// </summary>
         DynamicDraw = ((int)0x88E8),
+    }
+
+    /// <summary>
+    /// Used in GL.BindBuffer, GL.BufferData and 2 other functions
+    /// </summary>
+    public enum BufferTargetArb : int
+    {
+        /// <summary>
+        /// Original was GL_ARRAY_BUFFER = 0x8892
+        /// </summary>
+        ArrayBuffer = ((int)0x8892),
+        /// <summary>
+        /// Original was GL_ELEMENT_ARRAY_BUFFER = 0x8893
+        /// </summary>
+        ElementArrayBuffer = ((int)0x8893),
+        /// <summary>
+        /// Original was GL_PIXEL_PACK_BUFFER = 0x88EB
+        /// </summary>
+        PixelPackBuffer = ((int)0x88EB),
+        /// <summary>
+        /// Original was GL_PIXEL_UNPACK_BUFFER = 0x88EC
+        /// </summary>
+        PixelUnpackBuffer = ((int)0x88EC),
+        /// <summary>
+        /// Original was GL_UNIFORM_BUFFER = 0x8A11
+        /// </summary>
+        UniformBuffer = ((int)0x8A11),
+        /// <summary>
+        /// Original was GL_TEXTURE_BUFFER = 0x8C2A
+        /// </summary>
+        TextureBuffer = ((int)0x8C2A),
+        /// <summary>
+        /// Original was GL_TRANSFORM_FEEDBACK_BUFFER = 0x8C8E
+        /// </summary>
+        TransformFeedbackBuffer = ((int)0x8C8E),
+        /// <summary>
+        /// Original was GL_COPY_READ_BUFFER = 0x8F36
+        /// </summary>
+        CopyReadBuffer = ((int)0x8F36),
+        /// <summary>
+        /// Original was GL_COPY_WRITE_BUFFER = 0x8F37
+        /// </summary>
+        CopyWriteBuffer = ((int)0x8F37),
+        /// <summary>
+        /// Original was GL_DRAW_INDIRECT_BUFFER = 0x8F3F
+        /// </summary>
+        DrawIndirectBuffer = ((int)0x8F3F),
+        /// <summary>
+        /// Original was GL_SHADER_STORAGE_BUFFER = 0x90D2
+        /// </summary>
+        ShaderStorageBuffer = ((int)0x90D2),
+        /// <summary>
+        /// Original was GL_DISPATCH_INDIRECT_BUFFER = 0x90EE
+        /// </summary>
+        DispatchIndirectBuffer = ((int)0x90EE),
+        /// <summary>
+        /// Original was GL_QUERY_BUFFER = 0x9192
+        /// </summary>
+        QueryBuffer = ((int)0x9192),
+        /// <summary>
+        /// Original was GL_ATOMIC_COUNTER_BUFFER = 0x92C0
+        /// </summary>
+        AtomicCounterBuffer = ((int)0x92C0),
+    }
+
+    /// <summary>
+    /// Used in GL.BufferData
+    /// </summary>
+    public enum BufferUsageArb : int
+    {
+        /// <summary>
+        /// Original was GL_STREAM_DRAW = 0x88E0
+        /// </summary>
+        StreamDraw = ((int)0x88E0),
+        /// <summary>
+        /// Original was GL_STREAM_READ = 0x88E1
+        /// </summary>
+        StreamRead = ((int)0x88E1),
+        /// <summary>
+        /// Original was GL_STREAM_COPY = 0x88E2
+        /// </summary>
+        StreamCopy = ((int)0x88E2),
+        /// <summary>
+        /// Original was GL_STATIC_DRAW = 0x88E4
+        /// </summary>
+        StaticDraw = ((int)0x88E4),
+        /// <summary>
+        /// Original was GL_STATIC_READ = 0x88E5
+        /// </summary>
+        StaticRead = ((int)0x88E5),
+        /// <summary>
+        /// Original was GL_STATIC_COPY = 0x88E6
+        /// </summary>
+        StaticCopy = ((int)0x88E6),
+        /// <summary>
+        /// Original was GL_DYNAMIC_DRAW = 0x88E8
+        /// </summary>
+        DynamicDraw = ((int)0x88E8),
+        /// <summary>
+        /// Original was GL_DYNAMIC_READ = 0x88E9
+        /// </summary>
+        DynamicRead = ((int)0x88E9),
+        /// <summary>
+        /// Original was GL_DYNAMIC_COPY = 0x88EA
+        /// </summary>
+        DynamicCopy = ((int)0x88EA),
     }
 
     /// <summary>
@@ -7027,6 +7500,10 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT_ARB = 0x00000004
         /// </summary>
         ContextFlagRobustAccessBitArb = ((int)0x00000004),
+        /// <summary>
+        /// Original was GL_CONTEXT_FLAG_PROTECTED_CONTENT_BIT_EXT = 0x00000010
+        /// </summary>
+        ContextFlagProtectedContentBitExt = ((int)0x00000010),
     }
 
     /// <summary>
@@ -7244,6 +7721,25 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_AUX3 = 0x040C
         /// </summary>
         Aux3 = ((int)0x040C),
+    }
+
+    /// <summary>
+    /// Used in GL.DrawElements, GL.Ext.MultiDrawElements
+    /// </summary>
+    public enum DrawElementsType : int
+    {
+        /// <summary>
+        /// Original was GL_UNSIGNED_BYTE = 0x1401
+        /// </summary>
+        UnsignedByte = ((int)0x1401),
+        /// <summary>
+        /// Original was GL_UNSIGNED_SHORT = 0x1403
+        /// </summary>
+        UnsignedShort = ((int)0x1403),
+        /// <summary>
+        /// Original was GL_UNSIGNED_INT = 0x1405
+        /// </summary>
+        UnsignedInt = ((int)0x1405),
     }
 
     /// <summary>
@@ -7776,6 +8272,45 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_STENCIL_EXT = 0x1802
         /// </summary>
         StencilExt = ((int)0x1802),
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum ExternalHandleType : int
+    {
+        /// <summary>
+        /// Original was GL_HANDLE_TYPE_OPAQUE_FD_EXT = 0x9586
+        /// </summary>
+        HandleTypeOpaqueFdExt = ((int)0x9586),
+        /// <summary>
+        /// Original was GL_HANDLE_TYPE_OPAQUE_WIN32_EXT = 0x9587
+        /// </summary>
+        HandleTypeOpaqueWin32Ext = ((int)0x9587),
+        /// <summary>
+        /// Original was GL_HANDLE_TYPE_OPAQUE_WIN32_KMT_EXT = 0x9588
+        /// </summary>
+        HandleTypeOpaqueWin32KmtExt = ((int)0x9588),
+        /// <summary>
+        /// Original was GL_HANDLE_TYPE_D3D12_TILEPOOL_EXT = 0x9589
+        /// </summary>
+        HandleTypeD3D12TilepoolExt = ((int)0x9589),
+        /// <summary>
+        /// Original was GL_HANDLE_TYPE_D3D12_RESOURCE_EXT = 0x958A
+        /// </summary>
+        HandleTypeD3D12ResourceExt = ((int)0x958A),
+        /// <summary>
+        /// Original was GL_HANDLE_TYPE_D3D11_IMAGE_EXT = 0x958B
+        /// </summary>
+        HandleTypeD3D11ImageExt = ((int)0x958B),
+        /// <summary>
+        /// Original was GL_HANDLE_TYPE_D3D11_IMAGE_KMT_EXT = 0x958C
+        /// </summary>
+        HandleTypeD3D11ImageKmtExt = ((int)0x958C),
+        /// <summary>
+        /// Original was GL_HANDLE_TYPE_D3D12_FENCE_EXT = 0x9594
+        /// </summary>
+        HandleTypeD3D12FenceExt = ((int)0x9594),
     }
 
     /// <summary>
@@ -8332,6 +8867,17 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_FRAGMENT_LIGHT_MODEL_NORMAL_INTERPOLATION_SGIX = 0x840B
         /// </summary>
         FragmentLightModelNormalInterpolationSgix = ((int)0x840B),
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum FramebufferFetchNoncoherent : int
+    {
+        /// <summary>
+        /// Original was GL_FRAMEBUFFER_FETCH_NONCOHERENT_QCOM = 0x96A2
+        /// </summary>
+        FramebufferFetchNoncoherentQcom = ((int)0x96A2),
     }
 
     /// <summary>
@@ -10093,13 +10639,13 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         FragmentLight0Sgix = ((int)0x840C),
         /// <summary>
-        /// Original was GL_PACK_RESAMPLE_SGIX = 0x842C
+        /// Original was GL_PACK_RESAMPLE_SGIX = 0x842E
         /// </summary>
-        PackResampleSgix = ((int)0x842C),
+        PackResampleSgix = ((int)0x842E),
         /// <summary>
-        /// Original was GL_UNPACK_RESAMPLE_SGIX = 0x842D
+        /// Original was GL_UNPACK_RESAMPLE_SGIX = 0x842F
         /// </summary>
-        UnpackResampleSgix = ((int)0x842D),
+        UnpackResampleSgix = ((int)0x842F),
         /// <summary>
         /// Original was GL_ALIASED_POINT_SIZE_RANGE = 0x846D
         /// </summary>
@@ -10116,6 +10662,22 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_UNPACK_SUBSAMPLE_RATE_SGIX = 0x85A1
         /// </summary>
         UnpackSubsampleRateSgix = ((int)0x85A1),
+        /// <summary>
+        /// Original was GL_DEVICE_UUID_EXT = 0x9597
+        /// </summary>
+        DeviceUuidExt = ((int)0x9597),
+        /// <summary>
+        /// Original was GL_DRIVER_UUID_EXT = 0x9598
+        /// </summary>
+        DriverUuidExt = ((int)0x9598),
+        /// <summary>
+        /// Original was GL_DEVICE_LUID_EXT = 0x9599
+        /// </summary>
+        DeviceLuidExt = ((int)0x9599),
+        /// <summary>
+        /// Original was GL_DEVICE_NODE_MASK_EXT = 0x959A
+        /// </summary>
+        DeviceNodeMaskExt = ((int)0x959A),
     }
 
     /// <summary>
@@ -11976,6 +12538,21 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_ALL_BARRIER_BITS_EXT = 0xFFFFFFFF
         /// </summary>
         AllBarrierBitsExt = unchecked((int)0xFFFFFFFF),
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum MemoryObjectParameterName : int
+    {
+        /// <summary>
+        /// Original was GL_DEDICATED_MEMORY_OBJECT_EXT = 0x9581
+        /// </summary>
+        DedicatedMemoryObjectExt = ((int)0x9581),
+        /// <summary>
+        /// Original was GL_PROTECTED_MEMORY_OBJECT_EXT = 0x959B
+        /// </summary>
+        ProtectedMemoryObjectExt = ((int)0x959B),
     }
 
     /// <summary>
@@ -14150,13 +14727,13 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         PixelTileCacheSizeSgix = ((int)0x8145),
         /// <summary>
-        /// Original was GL_PACK_RESAMPLE_SGIX = 0x842C
+        /// Original was GL_PACK_RESAMPLE_SGIX = 0x842E
         /// </summary>
-        PackResampleSgix = ((int)0x842C),
+        PackResampleSgix = ((int)0x842E),
         /// <summary>
-        /// Original was GL_UNPACK_RESAMPLE_SGIX = 0x842D
+        /// Original was GL_UNPACK_RESAMPLE_SGIX = 0x842F
         /// </summary>
-        UnpackResampleSgix = ((int)0x842D),
+        UnpackResampleSgix = ((int)0x842F),
         /// <summary>
         /// Original was GL_PACK_SUBSAMPLE_RATE_SGIX = 0x85A0
         /// </summary>
@@ -14181,17 +14758,17 @@ namespace OpenTK.Graphics.ES11
     public enum PixelStoreResampleMode : int
     {
         /// <summary>
-        /// Original was GL_RESAMPLE_REPLICATE_SGIX = 0x842E
-        /// </summary>
-        ResampleReplicateSgix = ((int)0x842E),
-        /// <summary>
-        /// Original was GL_RESAMPLE_ZERO_FILL_SGIX = 0x842F
-        /// </summary>
-        ResampleZeroFillSgix = ((int)0x842F),
-        /// <summary>
         /// Original was GL_RESAMPLE_DECIMATE_SGIX = 0x8430
         /// </summary>
         ResampleDecimateSgix = ((int)0x8430),
+        /// <summary>
+        /// Original was GL_RESAMPLE_REPLICATE_SGIX = 0x8433
+        /// </summary>
+        ResampleReplicateSgix = ((int)0x8433),
+        /// <summary>
+        /// Original was GL_RESAMPLE_ZERO_FILL_SGIX = 0x8434
+        /// </summary>
+        ResampleZeroFillSgix = ((int)0x8434),
     }
 
     /// <summary>
@@ -15132,6 +15709,17 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    public enum SemaphoreParameterName : int
+    {
+        /// <summary>
+        /// Original was GL_D3D12_FENCE_VALUE_EXT = 0x9595
+        /// </summary>
+        D3D12FenceValueExt = ((int)0x9595),
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum SeparableTargetExt : int
     {
         /// <summary>
@@ -15157,6 +15745,25 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_SMOOTH = 0x1D01
         /// </summary>
         Smooth = ((int)0x1D01),
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
+    public enum StencilFaceDirection : int
+    {
+        /// <summary>
+        /// Original was GL_FRONT = 0x0404
+        /// </summary>
+        Front = ((int)0x0404),
+        /// <summary>
+        /// Original was GL_BACK = 0x0405
+        /// </summary>
+        Back = ((int)0x0405),
+        /// <summary>
+        /// Original was GL_FRONT_AND_BACK = 0x0408
+        /// </summary>
+        FrontAndBack = ((int)0x0408),
     }
 
     /// <summary>
@@ -15250,6 +15857,10 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_EXTENSIONS = 0x1F03
         /// </summary>
         Extensions = ((int)0x1F03),
+        /// <summary>
+        /// Original was GL_SHADING_LANGUAGE_VERSION = 0x8B8C
+        /// </summary>
+        ShadingLanguageVersion = ((int)0x8B8C),
     }
 
     /// <summary>
@@ -15547,6 +16158,41 @@ namespace OpenTK.Graphics.ES11
     /// <summary>
     /// Not used directly.
     /// </summary>
+    public enum TextureLayout : int
+    {
+        /// <summary>
+        /// Original was GL_LAYOUT_GENERAL_EXT = 0x958D
+        /// </summary>
+        LayoutGeneralExt = ((int)0x958D),
+        /// <summary>
+        /// Original was GL_LAYOUT_COLOR_ATTACHMENT_EXT = 0x958E
+        /// </summary>
+        LayoutColorAttachmentExt = ((int)0x958E),
+        /// <summary>
+        /// Original was GL_LAYOUT_DEPTH_STENCIL_ATTACHMENT_EXT = 0x958F
+        /// </summary>
+        LayoutDepthStencilAttachmentExt = ((int)0x958F),
+        /// <summary>
+        /// Original was GL_LAYOUT_DEPTH_STENCIL_READ_ONLY_EXT = 0x9590
+        /// </summary>
+        LayoutDepthStencilReadOnlyExt = ((int)0x9590),
+        /// <summary>
+        /// Original was GL_LAYOUT_SHADER_READ_ONLY_EXT = 0x9591
+        /// </summary>
+        LayoutShaderReadOnlyExt = ((int)0x9591),
+        /// <summary>
+        /// Original was GL_LAYOUT_TRANSFER_SRC_EXT = 0x9592
+        /// </summary>
+        LayoutTransferSrcExt = ((int)0x9592),
+        /// <summary>
+        /// Original was GL_LAYOUT_TRANSFER_DST_EXT = 0x9593
+        /// </summary>
+        LayoutTransferDstExt = ((int)0x9593),
+    }
+
+    /// <summary>
+    /// Not used directly.
+    /// </summary>
     public enum TextureMagFilter : int
     {
         /// <summary>
@@ -15732,6 +16378,22 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         TextureWrapQSgis = ((int)0x8137),
         /// <summary>
+        /// Original was GL_TEXTURE_MIN_LOD = 0x813A
+        /// </summary>
+        TextureMinLod = ((int)0x813A),
+        /// <summary>
+        /// Original was GL_TEXTURE_MAX_LOD = 0x813B
+        /// </summary>
+        TextureMaxLod = ((int)0x813B),
+        /// <summary>
+        /// Original was GL_TEXTURE_BASE_LEVEL = 0x813C
+        /// </summary>
+        TextureBaseLevel = ((int)0x813C),
+        /// <summary>
+        /// Original was GL_TEXTURE_MAX_LEVEL = 0x813D
+        /// </summary>
+        TextureMaxLevel = ((int)0x813D),
+        /// <summary>
         /// Original was GL_TEXTURE_CLIPMAP_CENTER_SGIX = 0x8171
         /// </summary>
         TextureClipmapCenterSgix = ((int)0x8171),
@@ -15799,6 +16461,46 @@ namespace OpenTK.Graphics.ES11
         /// Original was GL_TEXTURE_MAX_CLAMP_R_SGIX = 0x836B
         /// </summary>
         TextureMaxClampRSgix = ((int)0x836B),
+        /// <summary>
+        /// Original was GL_TEXTURE_LOD_BIAS = 0x8501
+        /// </summary>
+        TextureLodBias = ((int)0x8501),
+        /// <summary>
+        /// Original was GL_TEXTURE_COMPARE_MODE = 0x884C
+        /// </summary>
+        TextureCompareMode = ((int)0x884C),
+        /// <summary>
+        /// Original was GL_TEXTURE_COMPARE_FUNC = 0x884D
+        /// </summary>
+        TextureCompareFunc = ((int)0x884D),
+        /// <summary>
+        /// Original was GL_TEXTURE_SWIZZLE_R = 0x8E42
+        /// </summary>
+        TextureSwizzleR = ((int)0x8E42),
+        /// <summary>
+        /// Original was GL_TEXTURE_SWIZZLE_G = 0x8E43
+        /// </summary>
+        TextureSwizzleG = ((int)0x8E43),
+        /// <summary>
+        /// Original was GL_TEXTURE_SWIZZLE_B = 0x8E44
+        /// </summary>
+        TextureSwizzleB = ((int)0x8E44),
+        /// <summary>
+        /// Original was GL_TEXTURE_SWIZZLE_A = 0x8E45
+        /// </summary>
+        TextureSwizzleA = ((int)0x8E45),
+        /// <summary>
+        /// Original was GL_TEXTURE_SWIZZLE_RGBA = 0x8E46
+        /// </summary>
+        TextureSwizzleRgba = ((int)0x8E46),
+        /// <summary>
+        /// Original was GL_DEPTH_STENCIL_TEXTURE_MODE = 0x90EA
+        /// </summary>
+        DepthStencilTextureMode = ((int)0x90EA),
+        /// <summary>
+        /// Original was GL_TEXTURE_TILING_EXT = 0x9580
+        /// </summary>
+        TextureTilingExt = ((int)0x9580),
     }
 
     /// <summary>
@@ -15863,37 +16565,125 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         ProxyTexture4DSgis = ((int)0x8135),
         /// <summary>
-        /// Original was GL_TEXTURE_MIN_LOD = 0x813A
+        /// Original was GL_TEXTURE_RECTANGLE = 0x84F5
         /// </summary>
-        TextureMinLod = ((int)0x813A),
+        TextureRectangle = ((int)0x84F5),
         /// <summary>
-        /// Original was GL_TEXTURE_MIN_LOD_SGIS = 0x813A
+        /// Original was GL_PROXY_TEXTURE_RECTANGLE = 0x84F7
         /// </summary>
-        TextureMinLodSgis = ((int)0x813A),
+        ProxyTextureRectangle = ((int)0x84F7),
         /// <summary>
-        /// Original was GL_TEXTURE_MAX_LOD = 0x813B
+        /// Original was GL_PROXY_TEXTURE_RECTANGLE_ARB = 0x84F7
         /// </summary>
-        TextureMaxLod = ((int)0x813B),
+        ProxyTextureRectangleArb = ((int)0x84F7),
         /// <summary>
-        /// Original was GL_TEXTURE_MAX_LOD_SGIS = 0x813B
+        /// Original was GL_PROXY_TEXTURE_RECTANGLE_NV = 0x84F7
         /// </summary>
-        TextureMaxLodSgis = ((int)0x813B),
+        ProxyTextureRectangleNv = ((int)0x84F7),
         /// <summary>
-        /// Original was GL_TEXTURE_BASE_LEVEL = 0x813C
+        /// Original was GL_TEXTURE_CUBE_MAP = 0x8513
         /// </summary>
-        TextureBaseLevel = ((int)0x813C),
+        TextureCubeMap = ((int)0x8513),
         /// <summary>
-        /// Original was GL_TEXTURE_BASE_LEVEL_SGIS = 0x813C
+        /// Original was GL_TEXTURE_CUBE_MAP_POSITIVE_X = 0x8515
         /// </summary>
-        TextureBaseLevelSgis = ((int)0x813C),
+        TextureCubeMapPositiveX = ((int)0x8515),
         /// <summary>
-        /// Original was GL_TEXTURE_MAX_LEVEL = 0x813D
+        /// Original was GL_TEXTURE_CUBE_MAP_NEGATIVE_X = 0x8516
         /// </summary>
-        TextureMaxLevel = ((int)0x813D),
+        TextureCubeMapNegativeX = ((int)0x8516),
         /// <summary>
-        /// Original was GL_TEXTURE_MAX_LEVEL_SGIS = 0x813D
+        /// Original was GL_TEXTURE_CUBE_MAP_POSITIVE_Y = 0x8517
         /// </summary>
-        TextureMaxLevelSgis = ((int)0x813D),
+        TextureCubeMapPositiveY = ((int)0x8517),
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_NEGATIVE_Y = 0x8518
+        /// </summary>
+        TextureCubeMapNegativeY = ((int)0x8518),
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_POSITIVE_Z = 0x8519
+        /// </summary>
+        TextureCubeMapPositiveZ = ((int)0x8519),
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_NEGATIVE_Z = 0x851A
+        /// </summary>
+        TextureCubeMapNegativeZ = ((int)0x851A),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_CUBE_MAP = 0x851B
+        /// </summary>
+        ProxyTextureCubeMap = ((int)0x851B),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_CUBE_MAP_ARB = 0x851B
+        /// </summary>
+        ProxyTextureCubeMapArb = ((int)0x851B),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_CUBE_MAP_EXT = 0x851B
+        /// </summary>
+        ProxyTextureCubeMapExt = ((int)0x851B),
+        /// <summary>
+        /// Original was GL_TEXTURE_1D_ARRAY = 0x8C18
+        /// </summary>
+        Texture1DArray = ((int)0x8C18),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_1D_ARRAY = 0x8C19
+        /// </summary>
+        ProxyTexture1DArray = ((int)0x8C19),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_1D_ARRAY_EXT = 0x8C19
+        /// </summary>
+        ProxyTexture1DArrayExt = ((int)0x8C19),
+        /// <summary>
+        /// Original was GL_TEXTURE_2D_ARRAY = 0x8C1A
+        /// </summary>
+        Texture2DArray = ((int)0x8C1A),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_2D_ARRAY = 0x8C1B
+        /// </summary>
+        ProxyTexture2DArray = ((int)0x8C1B),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_2D_ARRAY_EXT = 0x8C1B
+        /// </summary>
+        ProxyTexture2DArrayExt = ((int)0x8C1B),
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_ARRAY = 0x9009
+        /// </summary>
+        TextureCubeMapArray = ((int)0x9009),
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_ARRAY_ARB = 0x9009
+        /// </summary>
+        TextureCubeMapArrayArb = ((int)0x9009),
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_ARRAY_EXT = 0x9009
+        /// </summary>
+        TextureCubeMapArrayExt = ((int)0x9009),
+        /// <summary>
+        /// Original was GL_TEXTURE_CUBE_MAP_ARRAY_OES = 0x9009
+        /// </summary>
+        TextureCubeMapArrayOes = ((int)0x9009),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_CUBE_MAP_ARRAY = 0x900B
+        /// </summary>
+        ProxyTextureCubeMapArray = ((int)0x900B),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_CUBE_MAP_ARRAY_ARB = 0x900B
+        /// </summary>
+        ProxyTextureCubeMapArrayArb = ((int)0x900B),
+        /// <summary>
+        /// Original was GL_TEXTURE_2D_MULTISAMPLE = 0x9100
+        /// </summary>
+        Texture2DMultisample = ((int)0x9100),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_2D_MULTISAMPLE = 0x9101
+        /// </summary>
+        ProxyTexture2DMultisample = ((int)0x9101),
+        /// <summary>
+        /// Original was GL_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9102
+        /// </summary>
+        Texture2DMultisampleArray = ((int)0x9102),
+        /// <summary>
+        /// Original was GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9103
+        /// </summary>
+        ProxyTexture2DMultisampleArray = ((int)0x9103),
     }
 
     /// <summary>
