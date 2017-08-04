@@ -340,18 +340,16 @@ namespace OpenTK
 
             Debug.Print("Disposing of Cocoa context.");
 
+            if (!NSApplication.IsUIThread)
+            {
+                return;
+            }
+
             using (var pool = new NSAutoreleasePool())
             {
-                if (!NSApplication.IsUIThread)
-                {
-                    return;
-
-                }
-
                 if (IsCurrent)
                 {
                     Cocoa.SendVoid(NSOpenGLContext, Selector.Get("clearCurrentContext"));
-
                 }
 
                 Cocoa.SendVoid(Handle.Handle, Selector.Get("clearDrawable"));
