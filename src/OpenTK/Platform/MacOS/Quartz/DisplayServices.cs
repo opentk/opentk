@@ -60,10 +60,10 @@ namespace OpenTK.Platform.MacOS
         // CGSize -> NSSize
         // CGRect -> NSRect
 
-        [DllImport(lib,EntryPoint="CGGetActiveDisplayList")]
+        [DllImport(lib, EntryPoint="CGGetActiveDisplayList")]
         internal unsafe static extern CGDisplayErr GetActiveDisplayList(int maxDisplays, IntPtr* activeDspys, out int dspyCnt);
 
-        [DllImport(lib,EntryPoint="CGMainDisplayID")]
+        [DllImport(lib, EntryPoint="CGMainDisplayID")]
         internal static extern IntPtr MainDisplayID();
 
         // Note: sizeof(HIRect) == 16, which is larger than 8 bytes.
@@ -81,28 +81,28 @@ namespace OpenTK.Platform.MacOS
         [DllImport(lib, EntryPoint = "CGDisplayBounds")]
         private unsafe static extern void DisplayBounds(out NSRect rect, IntPtr display);
 
-        [DllImport(lib,EntryPoint="CGDisplayPixelsWide")]
+        [DllImport(lib, EntryPoint="CGDisplayPixelsWide")]
         internal static extern int DisplayPixelsWide(IntPtr display);
 
-        [DllImport(lib,EntryPoint="CGDisplayPixelsHigh")]
+        [DllImport(lib, EntryPoint="CGDisplayPixelsHigh")]
         internal static extern int DisplayPixelsHigh(IntPtr display);
 
-        [DllImport(lib,EntryPoint="CGDisplayCurrentMode")]
+        [DllImport(lib, EntryPoint="CGDisplayCurrentMode")]
         internal static extern IntPtr DisplayCurrentMode(IntPtr display);
 
-        [DllImport(lib,EntryPoint="CGDisplayCapture")]
+        [DllImport(lib, EntryPoint="CGDisplayCapture")]
         internal static extern CGDisplayErr DisplayCapture(IntPtr display);
 
-        [DllImport(lib,EntryPoint="CGCaptureAllDisplays")]
+        [DllImport(lib, EntryPoint="CGCaptureAllDisplays")]
         internal static extern CGDisplayErr CaptureAllDisplays();
 
-        [DllImport(lib,EntryPoint="CGShieldingWindowLevel")]
+        [DllImport(lib, EntryPoint="CGShieldingWindowLevel")]
         internal static extern uint ShieldingWindowLevel();
 
-        [DllImport(lib,EntryPoint="CGDisplayRelease")]
+        [DllImport(lib, EntryPoint="CGDisplayRelease")]
         internal static extern CGDisplayErr DisplayRelease(IntPtr display);
 
-        [DllImport(lib,EntryPoint="CGReleaseAllDisplays")]
+        [DllImport(lib, EntryPoint="CGReleaseAllDisplays")]
         internal static extern CGDisplayErr DisplayReleaseAll();
 
         [DllImport(lib, EntryPoint = "CGDisplayAvailableModes")]

@@ -662,15 +662,13 @@ namespace Bind
             if (f.Parameters.HasGenericParameters)
             {
                 sb.Append("<");
-                foreach (Parameter p in f.Parameters)
+                foreach (Parameter p in f.Parameters.Where(p  => p.Generic))
                 {
-                    if (p.Generic)
-                    {
-                        sb.Append(p.CurrentType);
-                        sb.Append(",");
-                    }
+                    sb.Append(p.CurrentType);
+                    sb.Append(", ");
                 }
-                sb.Remove(sb.Length - 1, 1);
+
+                sb.Remove(sb.Length - 2, 2);
                 sb.Append(">");
             }
 
@@ -679,12 +677,9 @@ namespace Bind
             if (f.Parameters.HasGenericParameters)
             {
                 sb.AppendLine();
-                foreach (Parameter p in f.Parameters)
+                foreach (Parameter p in f.Parameters.Where(p => p.Generic))
                 {
-                    if (p.Generic)
-                    {
-                        sb.AppendLine(String.Format("    where {0} : struct", p.CurrentType));
-                    }
+                    sb.AppendLine(String.Format("    where {0} : struct", p.CurrentType));
                 }
             }
 

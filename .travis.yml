@@ -1,6 +1,6 @@
 language: csharp
 
-sudo: false  # use the new container-based Travis infrastructure 
+sudo: false  # use the new container-based Travis infrastructure
 
 before_install:
   - chmod +x build.sh
@@ -10,10 +10,10 @@ before_script:
  - "export DISPLAY=:99.0"
  - "sh -e /etc/init.d/xvfb start"
  - sleep 3 # give xvfb some time to start
- 
-script: 
-  - ./build.sh NuGet
-  
+
+script:
+  - travis_wait ./build.sh NuGet
+
 after_script:
   - mono --debug --profile=log:coverage,covfilter=+OpenTK,covfilter=-OpenTK.Tests,covfilter=-FSharp.Core,covfilter=-FsCheck,covfilter=-xunit.assert "packages/xunit.runner.console/tools/xunit.console.exe"  "tests/OpenTK.Tests/bin/Release/OpenTK.Tests.dll" -parallel none
   - mprof-report --reports=coverage --coverage-out=coverage.xml output.mlpd

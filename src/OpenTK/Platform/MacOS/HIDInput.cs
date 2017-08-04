@@ -1022,7 +1022,7 @@ namespace OpenTK.Platform.MacOS
                 }
                 else
                 {
-                    float f1 = (float)x; 
+                    float f1 = (float)x;
                     float f2 = (float)y;
                     p.X.Value = *(IntPtr *)&f1;
                     p.Y.Value = *(IntPtr *)&f2;
@@ -1599,7 +1599,7 @@ namespace OpenTK.Platform.MacOS
             Key.Unknown, /* Volume Up */
             Key.Unknown, /* Volume Down */
             Key.CapsLock, /* Locking Caps Lock */
-            Key.NumLock , /* Locking Num Lock */
+            Key.NumLock, /* Locking Num Lock */
             Key.ScrollLock, /* Locking Scroll Lock */
             Key.KeypadDecimal, /* Keypad Comma */
             Key.Unknown, /* Keypad Equal Sign for AS/400 */
