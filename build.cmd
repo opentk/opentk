@@ -19,6 +19,9 @@ IF NOT EXIST build.fsx (
 SET BuildTarget=
 if "%BuildRunner%" == "MyGet" (
   SET BuildTarget=NuGet
+
+  echo ### %PackageVersion% > RELEASE_NOTES.md
+  echo 	* git build >> RELEASE_NOTES.md
 )
 
 packages\FAKE\tools\FAKE.exe build.fsx %* %BuildTarget%
