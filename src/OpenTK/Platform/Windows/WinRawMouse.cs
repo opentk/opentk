@@ -111,7 +111,7 @@ namespace OpenTK.Platform.Windows
                             // Added to address OpenTK issue 3198 with mouse on Windows 8
                             string deviceClassGUID = (string)regkey.GetValue("ClassGUID");
                             RegistryKey classGUIDKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Class\" + deviceClassGUID);
-                            deviceClass = classGUIDKey != null ? (string) classGUIDKey.GetValue("Class") : string.Empty;
+                            deviceClass = classGUIDKey != null ? (string)classGUIDKey.GetValue("Class") : string.Empty;
                         }
 
                         // deviceDesc remained null on a new Win7 system - not sure why.

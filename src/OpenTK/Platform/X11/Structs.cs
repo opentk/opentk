@@ -5,10 +5,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -1050,21 +1050,21 @@ namespace OpenTK.Platform.X11
         Sibling = 1 << 5,
         StackMode = 1 << 6,
 
-        //BackPixmap    (1L<<0)
-        //BackPixel    (1L<<1)
-        //SaveUnder    (1L<<10)
-        //EventMask    (1L<<11)
-        //DontPropagate    (1L<<12)
-        //Colormap    (1L<<13)
-        //Cursor    (1L<<14)
-        //BorderPixmap    (1L<<2)
-        //BorderPixel    (1L<<3)
-        //BitGravity    (1L<<4)
-        //WinGravity    (1L<<5)
-        //BackingStore    (1L<<6)
-        //BackingPlanes    (1L<<7)
-        //BackingPixel    (1L<<8)
-        OverrideRedirect = 1<<9,
+        //BackPixmap    (1L << 0)
+        //BackPixel    (1L << 1)
+        //SaveUnder    (1L << 10)
+        //EventMask    (1L << 11)
+        //DontPropagate    (1L << 12)
+        //Colormap    (1L << 13)
+        //Cursor    (1L << 14)
+        //BorderPixmap    (1L << 2)
+        //BorderPixel    (1L << 3)
+        //BitGravity    (1L << 4)
+        //WinGravity    (1L << 5)
+        //BackingStore    (1L << 6)
+        //BackingPlanes    (1L << 7)
+        //BackingPixel    (1L << 8)
+        OverrideRedirect = 1 << 9,
     }
 
     internal enum StackMode
@@ -1816,7 +1816,7 @@ namespace OpenTK.Platform.X11
                 mask = (byte*)Marshal.AllocHGlobal(mask_len);
                 for (int i = 0; i < mask_len; i++)
                 {
-                    mask[i] = (byte)((uint)m >> i*8);
+                    mask[i] = (byte)((uint)m >> i * 8);
                 }
             }
         }

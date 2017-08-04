@@ -3326,7 +3326,7 @@ namespace OpenTK.Platform.Windows
         /*
          * NEC PC-9800 kbd definitions
          */
-        OEM_NEC_EQUAL= 0x92,  // '=' key on numpad
+        OEM_NEC_EQUAL = 0x92,  // '=' key on numpad
 
         /*
          * Fujitsu/OASYS kbd definitions

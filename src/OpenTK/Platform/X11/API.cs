@@ -677,7 +677,7 @@ XF86VidModeGetGammaRampSize(
 
         public override string ToString ()
         {
-            return string.Format("MotifWmHints <flags={0}, functions={1}, decorations={2}, input_mode={3}, status={4}", (MotifFlags) flags.ToInt32 (), (MotifFunctions) functions.ToInt32 (), (MotifDecorations) decorations.ToInt32 (), (MotifInputMode) input_mode.ToInt32 (), status.ToInt32 ());
+            return string.Format("MotifWmHints <flags={0}, functions={1}, decorations={2}, input_mode={3}, status={4}", (MotifFlags)flags.ToInt32 (), (MotifFunctions)functions.ToInt32 (), (MotifDecorations)decorations.ToInt32 (), (MotifInputMode)input_mode.ToInt32 (), status.ToInt32 ());
         }
     }
 
@@ -764,26 +764,26 @@ XF86VidModeGetGammaRampSize(
 
     internal enum WindowState
     {
-        Sticky           = (1<<0), /* everyone knows sticky */
-        Minimized        = (1<<1), /* ??? */
-        MaximizedVertically = (1<<2), /* window in maximized V state */
-        MaximizedHorizontally = (1<<3), /* window in maximized H state */
-        Hidden           = (1<<4), /* not on taskbar but window visible */
-        Shaded           = (1<<5), /* shaded (NeXT style), */
-        HID_WORKSPACE    = (1<<6), /* not on current desktop */
-        HID_TRANSIENT    = (1<<7), /* owner of transient is hidden */
-        FixedPosition    = (1<<8), /* window is fixed in position even */
-        ArrangeIgnore    = (1<<9),  /* ignore for auto arranging */
+        Sticky           = (1 << 0), /* everyone knows sticky */
+        Minimized        = (1 << 1), /* ??? */
+        MaximizedVertically = (1 << 2), /* window in maximized V state */
+        MaximizedHorizontally = (1 << 3), /* window in maximized H state */
+        Hidden           = (1 << 4), /* not on taskbar but window visible */
+        Shaded           = (1 << 5), /* shaded (NeXT style), */
+        HID_WORKSPACE    = (1 << 6), /* not on current desktop */
+        HID_TRANSIENT    = (1 << 7), /* owner of transient is hidden */
+        FixedPosition    = (1 << 8), /* window is fixed in position even */
+        ArrangeIgnore    = (1 << 9),  /* ignore for auto arranging */
     }
 
     internal enum WindowHints
     {
-        SkipFocus = (1<<0), /* "alt-tab" skips this win */
-        SkipWinlist = (1<<1), /* not in win list */
-        SkipTaskbar = (1<<2), /* not on taskbar */
-        GroupTransient = (1<<3), /* ??????? */
-        FocusOnClick = (1<<4), /* app only accepts focus when clicked */
-        DoNotCover = (1<<5),  /* attempt to not cover this window */
+        SkipFocus = (1 << 0), /* "alt-tab" skips this win */
+        SkipWinlist = (1 << 1), /* not in win list */
+        SkipTaskbar = (1 << 2), /* not on taskbar */
+        GroupTransient = (1 << 3), /* ??????? */
+        FocusOnClick = (1 << 4), /* app only accepts focus when clicked */
+        DoNotCover = (1 << 5),  /* attempt to not cover this window */
     }
 
     internal enum ErrorCodes : int
@@ -811,28 +811,28 @@ XF86VidModeGetGammaRampSize(
     [Flags]
     internal enum CreateWindowMask : long//: ulong
     {
-        CWBackPixmap    = (1L<<0),
-        CWBackPixel     = (1L<<1),
-        CWSaveUnder        = (1L<<10),
-        CWEventMask        = (1L<<11),
-        CWDontPropagate    = (1L<<12),
-        CWColormap      = (1L<<13),
-        CWCursor        = (1L<<14),
-        CWBorderPixmap    = (1L<<2),
-        CWBorderPixel    = (1L<<3),
-        CWBitGravity    = (1L<<4),
-        CWWinGravity    = (1L<<5),
-        CWBackingStore    = (1L<<6),
-        CWBackingPlanes    = (1L<<7),
-        CWBackingPixel     = (1L<<8),
-        CWOverrideRedirect    = (1L<<9),
+        CWBackPixmap    = (1L << 0),
+        CWBackPixel     = (1L << 1),
+        CWSaveUnder        = (1L << 10),
+        CWEventMask        = (1L << 11),
+        CWDontPropagate    = (1L << 12),
+        CWColormap      = (1L << 13),
+        CWCursor        = (1L << 14),
+        CWBorderPixmap    = (1L << 2),
+        CWBorderPixel    = (1L << 3),
+        CWBitGravity    = (1L << 4),
+        CWWinGravity    = (1L << 5),
+        CWBackingStore    = (1L << 6),
+        CWBackingPlanes    = (1L << 7),
+        CWBackingPixel     = (1L << 8),
+        CWOverrideRedirect    = (1L << 9),
 
-        //CWY    = (1<<1),
-        //CWWidth    = (1<<2),
-        //CWHeight    = (1<<3),
-        //CWBorderWidth    = (1<<4),
-        //CWSibling    = (1<<5),
-        //CWStackMode    = (1<<6),
+        //CWY    = (1 << 1),
+        //CWWidth    = (1 << 2),
+        //CWHeight    = (1 << 3),
+        //CWBorderWidth    = (1 << 4),
+        //CWSibling    = (1 << 5),
+        //CWStackMode    = (1 << 6),
     }
 
     /// <summary>
@@ -1197,7 +1197,7 @@ XF86VidModeGetGammaRampSize(
         XF86AudioPrev = 0x1008ff16,
         XF86AudioNext = 0x1008ff17,
         XF86AudioRecord = 0x1008ff1c,
-        XF86AudioPause =0x1008ff31,
+        XF86AudioPause = 0x1008ff31,
         XF86AudioRewind = 0x1008ff3e,
         XF86AudioForward = 0x1008ff97,
         XF86Phone = 0x1008ff6e,

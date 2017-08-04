@@ -20,7 +20,6 @@ namespace Bind.Structures
         /// Creates a new Parameter without type and name.
         /// </summary>
         public Parameter()
-            :base()
         {
         }
 

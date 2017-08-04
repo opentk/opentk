@@ -58,7 +58,7 @@ namespace OpenTK.Platform.Egl
             IntPtr[] configs = new IntPtr[1];
             int[] attribList = new int[]
             {
-                Egl.SURFACE_TYPE, (int) surfaceType,
+                Egl.SURFACE_TYPE, (int)surfaceType,
                 Egl.RENDERABLE_TYPE, (int)renderableFlags,
 
                 Egl.RED_SIZE, color.Red,
