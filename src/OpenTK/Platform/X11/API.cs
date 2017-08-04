@@ -383,7 +383,7 @@ namespace OpenTK.Platform.X11
 
             private byte nvsync;     /* Number of vert sync ranges */
             /*XF86VidModeSyncRange* */
-            private IntPtr vsync;/* Vertical sync ranges */
+            private IntPtr vsync; /* Vertical sync ranges */
         }
 
         [StructLayout(LayoutKind.Sequential)]
