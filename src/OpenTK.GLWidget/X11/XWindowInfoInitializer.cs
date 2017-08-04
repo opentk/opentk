@@ -125,16 +125,16 @@ namespace OpenTK.X11
             //attributeList.Add(Buffers);
 
             attributeList.Add((int)GLXAttribute.ACCUM_RED_SIZE);
-            attributeList.Add(mode.AccumulatorFormat.Red / 4);// TODO support 16-bit
+            attributeList.Add(mode.AccumulatorFormat.Red / 4); // TODO support 16-bit
 
             attributeList.Add((int)GLXAttribute.ACCUM_GREEN_SIZE);
-            attributeList.Add(mode.AccumulatorFormat.Green / 4);// TODO support 16-bit
+            attributeList.Add(mode.AccumulatorFormat.Green / 4); // TODO support 16-bit
 
             attributeList.Add((int)GLXAttribute.ACCUM_BLUE_SIZE);
-            attributeList.Add(mode.AccumulatorFormat.Blue / 4);// TODO support 16-bit
+            attributeList.Add(mode.AccumulatorFormat.Blue / 4); // TODO support 16-bit
 
             attributeList.Add((int)GLXAttribute.ACCUM_ALPHA_SIZE);
-            attributeList.Add(mode.AccumulatorFormat.Alpha / 4);// TODO support 16-bit
+            attributeList.Add(mode.AccumulatorFormat.Alpha / 4); // TODO support 16-bit
 
             attributeList.Add((int)GLXAttribute.NONE);
 
