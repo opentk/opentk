@@ -693,15 +693,14 @@ namespace OpenTK.Platform.Windows
             {
                 // Don't forget about \0 at the end
                 uint filenameChars = Functions.DragQueryFile(hDrop, i, IntPtr.Zero, 0) + 1;
-                int filenameSize = (int)(filenameChars * 2); // for unicode char set, 2 bytes per character
+                int filenameSize = (int)(filenameChars * Marshal.SystemDefaultCharSize);
                 IntPtr str = Marshal.AllocHGlobal(filenameSize);
 
                 Functions.DragQueryFile(hDrop, i, str, filenameChars);
 
                 string dropString = Marshal.PtrToStringAuto(str);
-                OnFileDrop(dropString);
-
                 Marshal.FreeHGlobal(str);
+                OnFileDrop(dropString);
             }
 
             Functions.DragFinish(hDrop);
