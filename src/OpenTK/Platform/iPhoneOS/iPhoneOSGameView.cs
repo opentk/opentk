@@ -257,7 +257,7 @@ namespace OpenTK.Platform.iPhoneOS
         [Export ("layerClass")]
         public static Class GetLayerClass ()
         {
-            return new Class (typeof (CAEAGLLayer));
+            return new Class (typeof(CAEAGLLayer));
         }
 
         private void AssertValid()
