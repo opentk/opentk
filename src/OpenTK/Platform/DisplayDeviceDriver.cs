@@ -29,12 +29,6 @@ namespace OpenTK.Platform
 {
     internal abstract class DisplayDeviceDriver
     {
-        public abstract bool TryChangeResolution(object device, DisplayResolution resolution);
-        public abstract bool TryRestoreResolution(object device);
-        public abstract bool GetIsPrimary(object device);
-        public abstract DisplayResolution GetResolution(object device);
-        public abstract IList<DisplayResolution> GetAvailableResolutions(object device);
-
         protected readonly List<DisplayDevice> Devices = new List<DisplayDevice>();
 
         // Gets the DisplayDevice that corresponds to the specified index.

@@ -35,11 +35,10 @@ namespace OpenTK
     /// Defines a display device on the underlying system, and provides
     /// methods to query and change its display parameters.
     /// </summary>
-    public class DisplayDevice
+    public abstract class DisplayDevice
     {
         // TODO: Add properties that describe the 'usable' size of the Display, i.e. the maximized size without the taskbar etc.
 
-        readonly internal object id; // A platform-specific id for this monitor
         private static Platform.DisplayDeviceDriver implementation;
 
         static DisplayDevice()
@@ -47,19 +46,14 @@ namespace OpenTK
             implementation = Platform.Factory.Default.CreateDisplayDeviceDriver();
         }
 
-        internal DisplayDevice(object id)
-        {
-            this.id = id;
-        }
-
         /// <summary>
         /// Get or set the current resolution of this instance.
         /// </summary>
-        public DisplayResolution CurrentResolution
+        public virtual DisplayResolution CurrentResolution
         {
             get
             {
-                return implementation.GetResolution(id);
+                throw new NotImplementedException();
             }
             set
             {
@@ -101,7 +95,7 @@ namespace OpenTK
         }
 
         /// <summary>Gets a System.Boolean that indicates whether this Display is the primary Display in systems with multiple Displays.</summary>
-        public bool IsPrimary { get { return implementation.GetIsPrimary(id); } }
+        public abstract bool IsPrimary { get; }
 
         /// <summary>
         /// Selects an available resolution that matches the specified parameters.
@@ -140,33 +134,13 @@ namespace OpenTK
         /// <summary>
         /// Gets the list of <see cref="DisplayResolution"/> objects available on this device.
         /// </summary>
-        public IList<DisplayResolution> AvailableResolutions
-        {
-            get { return implementation.GetAvailableResolutions(id); }
-        }
+        public abstract IList<DisplayResolution> AvailableResolutions { get; }
 
         /// <summary>Changes the resolution of the DisplayDevice.</summary>
         /// <param name="resolution">The resolution to set. <see cref="DisplayDevice.SelectResolution"/></param>
         /// <exception cref="Graphics.GraphicsModeException">Thrown if the requested resolution could not be set.</exception>
         /// <remarks>If the specified resolution is null, this function will restore the original DisplayResolution.</remarks>
-        public void ChangeResolution(DisplayResolution resolution)
-        {
-            if (resolution == null)
-            {
-                RestoreResolution();
-            }
-
-            if (resolution == CurrentResolution)
-            {
-                return;
-            }
-
-            if (!implementation.TryChangeResolution(id, resolution))
-            {
-                throw new Graphics.GraphicsModeException(
-                    String.Format("Device {0}: Failed to change resolution to {1}.", this, resolution));
-            }
-        }
+        public abstract void ChangeResolution(DisplayResolution resolution);
 
         /// <summary>Changes the resolution of the DisplayDevice.</summary>
         /// <param name="width">The new width of the DisplayDevice.</param>
@@ -181,15 +155,7 @@ namespace OpenTK
 
         /// <summary>Restores the original resolution of the DisplayDevice.</summary>
         /// <exception cref="Graphics.GraphicsModeException">Thrown if the original resolution could not be restored.</exception>
-        public void RestoreResolution()
-        {
-            if (!implementation.TryRestoreResolution(id))
-            {
-                throw new Graphics.GraphicsModeException(
-                    String.Format("Device {0}: Failed to restore resolution.", this));
-            }
-
-        }
+        public abstract void RestoreResolution();
 
         /// <summary>Gets the default (primary) display of this system.</summary>
         public static DisplayDevice Default
@@ -240,34 +206,6 @@ namespace OpenTK
         {
             return String.Format("{0}: {1} ({2} modes available)", IsPrimary ? "Primary" : "Secondary",
                 CurrentResolution.Bounds.ToString(), AvailableResolutions.Count);
-        }
-
-        /// <summary>Determines whether the specified DisplayDevices are equal.</summary>
-        /// <param name="obj">The System.Object to check against.</param>
-        /// <returns>True if the System.Object is an equal DisplayDevice; false otherwise.</returns>
-        public override bool Equals(object obj)
-        {
-            if (obj is DisplayDevice)
-            {
-                return Equals((DisplayDevice)obj);
-            }
-
-            return false;
-        }
-
-        /// <summary>Determines whether the specified DisplayDevices are equal.</summary>
-        /// <param name="other">The DisplayDevice to check against.</param>
-        /// <returns>True if the other DisplayDevice is a equal; false otherwise.</returns>
-        public bool Equals(DisplayDevice other)
-        {
-            return id == other.id;
-        }
-
-        /// <summary>Returns a unique hash representing this DisplayDevice.</summary>
-        /// <returns>A System.Int32 that may serve as a hash code for this DisplayDevice.</returns>
-        public override int GetHashCode()
-        {
-            return id.GetHashCode();
         }
     }
 }

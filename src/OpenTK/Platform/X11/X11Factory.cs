@@ -66,7 +66,7 @@ namespace OpenTK.Platform.X11
 
         public override DisplayDeviceDriver CreateDisplayDeviceDriver()
         {
-            return new X11DisplayDevice();
+            return new X11DisplayDeviceDriver();
         }
 
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)

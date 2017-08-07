@@ -23,6 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
 using System.Collections.Generic;
 #if !MINIMAL
 using System.Drawing;
@@ -30,13 +31,71 @@ using System.Drawing;
 
 namespace OpenTK.Platform.SDL2
 {
+    internal sealed class Sdl2DisplayDevice : DisplayDevice
+    {
+        public readonly int Index;
+        public readonly DisplayResolution OriginalResolution;
+        public readonly List<DisplayResolution> Resolutions = new List<DisplayResolution>();
+
+        public Sdl2DisplayDevice(int index)
+        {
+            Index = index;
+            OriginalResolution = CurrentResolution;
+        }
+
+        public override DisplayResolution CurrentResolution
+        {
+            get
+            {
+                Rect bounds;
+                SDL.GetDisplayBounds(Index, out bounds);
+
+                DisplayMode currentMode;
+                SDL.GetCurrentDisplayMode(Index, out currentMode);
+
+                return new DisplayResolution(
+                    bounds.X, bounds.Y,
+                    currentMode.Width, currentMode.Height,
+                    Sdl2DisplayDeviceDriver.TranslateFormat(currentMode.Format),
+                    currentMode.RefreshRate);
+            }
+            set
+            {
+                base.CurrentResolution = value;
+            }
+        }
+
+        public override IList<DisplayResolution> AvailableResolutions
+        {
+            get
+            {
+                return Resolutions.AsReadOnly();
+            }
+        }
+
+        public override bool IsPrimary
+        {
+            get
+            {
+                return Index == 0;
+            }
+        }
+
+        public override void ChangeResolution(DisplayResolution resolution)
+        {
+            Sdl2Factory.UseFullscreenDesktop = false;
+        }
+
+        public override void RestoreResolution()
+        {
+            Sdl2Factory.UseFullscreenDesktop = true;
+        }
+    }
+
     internal class Sdl2DisplayDeviceDriver : DisplayDeviceDriver
     {
         private class SdlDevice
         {
-            public int Index;
-            public DisplayResolution OriginalResolution;
-            public List<DisplayResolution> AvailableResolutions;
         }
 
         public Sdl2DisplayDeviceDriver()
@@ -47,30 +106,25 @@ namespace OpenTK.Platform.SDL2
                 Rect bounds;
                 SDL.GetDisplayBounds(d, out bounds);
 
-                var availableResolutions = new List<DisplayResolution>();
+
+                var sdlDevice = new Sdl2DisplayDevice(d);
                 int numModes = SDL.GetNumDisplayModes(d);
                 for (int m = 0; m < numModes; m++)
                 {
                     DisplayMode sdl_mode;
                     SDL.GetDisplayMode(d, m, out sdl_mode);
-                    availableResolutions.Add(new DisplayResolution(
+                    sdlDevice.Resolutions.Add(new DisplayResolution(
                         bounds.X, bounds.Y,
                         sdl_mode.Width, sdl_mode.Height,
                         TranslateFormat(sdl_mode.Format),
                         sdl_mode.RefreshRate));
                 }
 
-                var sdlDevice = new SdlDevice() { Index = d };
-                sdlDevice.OriginalResolution = GetResolution(sdlDevice);
-                sdlDevice.AvailableResolutions = availableResolutions;
-
-                var displayDevice = new DisplayDevice(sdlDevice);
-
-                Devices.Add(displayDevice);
+                Devices.Add(sdlDevice);
             }
         }
 
-        private int TranslateFormat(uint format)
+        internal static int TranslateFormat(uint format)
         {
             int bpp;
             uint a, r, g, b;
@@ -81,47 +135,6 @@ namespace OpenTK.Platform.SDL2
         private Rectangle TranslateBounds(Rect rect)
         {
             return new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
-        }
-
-        public override bool TryChangeResolution(object device, DisplayResolution resolution)
-        {
-            Sdl2Factory.UseFullscreenDesktop = false;
-            return true;
-        }
-
-        public override bool TryRestoreResolution(object device)
-        {
-            Sdl2Factory.UseFullscreenDesktop = true;
-            return true;
-        }
-
-        public override DisplayResolution GetResolution(object device)
-        {
-            var sdlDevice = (SdlDevice)device;
-
-            Rect bounds;
-            SDL.GetDisplayBounds(sdlDevice.Index, out bounds);
-
-            DisplayMode currentMode;
-            SDL.GetCurrentDisplayMode(sdlDevice.Index, out currentMode);
-
-            return new DisplayResolution(
-                bounds.X, bounds.Y,
-                currentMode.Width, currentMode.Height,
-                TranslateFormat(currentMode.Format),
-                currentMode.RefreshRate);
-        }
-
-        public override bool GetIsPrimary(object device)
-        {
-            var sdlDevice = (SdlDevice)device;
-            return sdlDevice.Index == 0;
-        }
-
-        public override IList<DisplayResolution> GetAvailableResolutions(object device)
-        {
-            var sdlDevice = (SdlDevice)device;
-            return sdlDevice.AvailableResolutions.AsReadOnly();
         }
     }
 }

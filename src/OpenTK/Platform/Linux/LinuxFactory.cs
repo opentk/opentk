@@ -90,7 +90,7 @@ namespace OpenTK.Platform.Linux
                     {
                         try
                         {
-                            if (LinuxDisplayDriver.QueryDisplays(test_fd, null))
+                            if (LinuxDisplayDeviceDriver.QueryDisplays(test_fd, null))
                             {
                                 fd = test_fd;
                                 break;
@@ -186,7 +186,7 @@ namespace OpenTK.Platform.Linux
 
         public override DisplayDeviceDriver CreateDisplayDeviceDriver()
         {
-            return new LinuxDisplayDriver(gpu_fd);
+            return new LinuxDisplayDeviceDriver(gpu_fd);
         }
 
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)

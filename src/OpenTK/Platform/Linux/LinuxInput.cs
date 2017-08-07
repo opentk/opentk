@@ -295,8 +295,8 @@ namespace OpenTK.Platform.Linux
                 (int)Math.Round(CursorPosition.X + CursorOffset.X),
                 (int)Math.Round(CursorPosition.Y + CursorOffset.Y));
 
-            DisplayDevice display = LinuxDisplayDriver.FromPoint(p.X, p.Y) ?? DisplayDevice.Default;
-            LinuxDisplay d = (LinuxDisplay)display.id;
+            DisplayDevice display = LinuxDisplayDeviceDriver.FromPoint(p.X, p.Y) ?? DisplayDevice.Default;
+            LinuxDisplayDevice d = (LinuxDisplayDevice)display;
             Drm.MoveCursor(d.FD, d.Id, p.X, p.Y);
         }
 
