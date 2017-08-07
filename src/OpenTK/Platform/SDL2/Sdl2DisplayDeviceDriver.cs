@@ -23,6 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
 using System.Collections.Generic;
 #if !MINIMAL
 using System.Drawing;
@@ -30,8 +31,73 @@ using System.Drawing;
 
 namespace OpenTK.Platform.SDL2
 {
-    internal class Sdl2DisplayDeviceDriver : DisplayDeviceBase
+    internal sealed class Sdl2DisplayDevice : DisplayDevice
     {
+        public readonly int Index;
+        public readonly DisplayResolution OriginalResolution;
+        public readonly List<DisplayResolution> Resolutions = new List<DisplayResolution>();
+
+        public Sdl2DisplayDevice(int index)
+        {
+            Index = index;
+            OriginalResolution = CurrentResolution;
+        }
+
+        public override DisplayResolution CurrentResolution
+        {
+            get
+            {
+                Rect bounds;
+                SDL.GetDisplayBounds(Index, out bounds);
+
+                DisplayMode currentMode;
+                SDL.GetCurrentDisplayMode(Index, out currentMode);
+
+                return new DisplayResolution(
+                    bounds.X, bounds.Y,
+                    currentMode.Width, currentMode.Height,
+                    Sdl2DisplayDeviceDriver.TranslateFormat(currentMode.Format),
+                    currentMode.RefreshRate);
+            }
+            set
+            {
+                base.CurrentResolution = value;
+            }
+        }
+
+        public override IList<DisplayResolution> AvailableResolutions
+        {
+            get
+            {
+                return Resolutions.AsReadOnly();
+            }
+        }
+
+        public override bool IsPrimary
+        {
+            get
+            {
+                return Index == 0;
+            }
+        }
+
+        public override void ChangeResolution(DisplayResolution resolution)
+        {
+            Sdl2Factory.UseFullscreenDesktop = false;
+        }
+
+        public override void RestoreResolution()
+        {
+            Sdl2Factory.UseFullscreenDesktop = true;
+        }
+    }
+
+    internal class Sdl2DisplayDeviceDriver : DisplayDeviceDriver
+    {
+        private class SdlDevice
+        {
+        }
+
         public Sdl2DisplayDeviceDriver()
         {
             int displays = SDL.GetNumVideoDisplays();
@@ -40,40 +106,25 @@ namespace OpenTK.Platform.SDL2
                 Rect bounds;
                 SDL.GetDisplayBounds(d, out bounds);
 
-                DisplayMode current_mode;
-                SDL.GetCurrentDisplayMode(d, out current_mode);
 
-                var mode_list = new List<DisplayResolution>();
-                int num_modes = SDL.GetNumDisplayModes(d);
-                for (int m = 0; m < num_modes; m++)
+                var sdlDevice = new Sdl2DisplayDevice(d);
+                int numModes = SDL.GetNumDisplayModes(d);
+                for (int m = 0; m < numModes; m++)
                 {
                     DisplayMode sdl_mode;
                     SDL.GetDisplayMode(d, m, out sdl_mode);
-                    mode_list.Add(new DisplayResolution(
+                    sdlDevice.Resolutions.Add(new DisplayResolution(
                         bounds.X, bounds.Y,
                         sdl_mode.Width, sdl_mode.Height,
                         TranslateFormat(sdl_mode.Format),
                         sdl_mode.RefreshRate));
                 }
 
-                var current_resolution = new DisplayResolution(
-                    bounds.X, bounds.Y,
-                    current_mode.Width, current_mode.Height,
-                    TranslateFormat(current_mode.Format),
-                    current_mode.RefreshRate);
-
-                var device = new DisplayDevice(
-                    current_resolution, d == 0, mode_list, TranslateBounds(bounds), d);
-
-                AvailableDevices.Add(device);
-                if (d == 0)
-                {
-                    Primary = device;
-                }
+                Devices.Add(sdlDevice);
             }
         }
 
-        private int TranslateFormat(uint format)
+        internal static int TranslateFormat(uint format)
         {
             int bpp;
             uint a, r, g, b;
@@ -84,18 +135,6 @@ namespace OpenTK.Platform.SDL2
         private Rectangle TranslateBounds(Rect rect)
         {
             return new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
-        }
-
-        public override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
-        {
-            Sdl2Factory.UseFullscreenDesktop = false;
-            return true;
-        }
-
-        public override bool TryRestoreResolution(DisplayDevice device)
-        {
-            Sdl2Factory.UseFullscreenDesktop = true;
-            return true;
         }
     }
 }

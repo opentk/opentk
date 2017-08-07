@@ -33,20 +33,130 @@ using OpenTK.Platform.MacOS.Carbon;
 
 namespace OpenTK.Platform.MacOS
 {
-    internal sealed class QuartzDisplayDeviceDriver : DisplayDeviceBase
+    internal sealed class QuartzDisplayDevice : DisplayDevice
+    {
+        public readonly IntPtr Display;
+        public readonly DisplayResolution OriginalResolution;
+        public readonly List<DisplayResolution> Resolutions = new List<DisplayResolution>();
+
+        public QuartzDisplayDevice(IntPtr display)
+        {
+            Display = display;
+            OriginalResolution = CurrentResolution;
+        }
+
+        public override DisplayResolution CurrentResolution
+        {
+            get
+            {
+                IntPtr displayModesPtr = CG.DisplayAvailableModes(Display);
+                CFArray displayModes = new CFArray(displayModesPtr);
+
+                DisplayResolution opentkDevCurrentRes = null;
+                IntPtr currentModePtr = CG.DisplayCurrentMode(Display);
+                CFDictionary currentMode = new CFDictionary(currentModePtr);
+
+                for (int j = 0; j < displayModes.Count; j++)
+                {
+                    CFDictionary dict = new CFDictionary(displayModes[j]);
+
+                    int width = (int)dict.GetNumberValue("Width");
+                    int height = (int)dict.GetNumberValue("Height");
+                    int bpp = (int)dict.GetNumberValue("BitsPerPixel");
+                    double freq = dict.GetNumberValue("RefreshRate");
+                    bool current = currentMode.Ref == dict.Ref;
+
+                    if (current)
+                    {
+                        opentkDevCurrentRes = new DisplayResolution(0, 0, width, height, bpp, (float)freq);
+                        break;
+                    }
+                }
+
+                NSRect bounds = CG.DisplayBounds(Display);
+
+                return new DisplayResolution((int)bounds.Location.X, (int)bounds.Location.Y,
+                    opentkDevCurrentRes.Width, opentkDevCurrentRes.Height,
+                    opentkDevCurrentRes.BitsPerPixel, opentkDevCurrentRes.RefreshRate);
+            }
+
+            set
+            {
+                base.CurrentResolution = value;
+            }
+        }
+
+        public override IList<DisplayResolution> AvailableResolutions
+        {
+            get
+            {
+                return Resolutions.AsReadOnly();
+            }
+        }
+
+        public override bool IsPrimary
+        {
+            get
+            {
+                IntPtr primaryDisplay;
+                int displayCount;
+
+                unsafe
+                {
+                    CG.GetActiveDisplayList(1, &primaryDisplay, out displayCount);
+                }
+
+                return Display == primaryDisplay;
+            }
+        }
+
+        public override void ChangeResolution(DisplayResolution resolution)
+        {
+            IntPtr currentModePtr = CG.DisplayCurrentMode(Display);
+
+            IntPtr displayModesPtr = CG.DisplayAvailableModes(Display);
+            CFArray displayModes = new CFArray(displayModesPtr);
+
+            for (int j = 0; j < displayModes.Count; j++)
+            {
+                CFDictionary dict = new CFDictionary(displayModes[j]);
+
+                int width = (int)dict.GetNumberValue("Width");
+                int height = (int)dict.GetNumberValue("Height");
+                int bpp = (int)dict.GetNumberValue("BitsPerPixel");
+                double freq = dict.GetNumberValue("RefreshRate");
+
+                if (width == resolution.Width && height == resolution.Height && bpp == resolution.BitsPerPixel && Math.Abs(freq - resolution.RefreshRate) < 1e-6)
+                {
+                    Debug.Print("Changing resolution to {0}x{1}x{2}@{3}.", width, height, bpp, freq);
+
+                    CG.DisplaySwitchToMode(Display, displayModes[j]);
+                }
+            }
+
+            throw new Graphics.GraphicsModeException(
+                string.Format("Device {0}: Failed to change resolution to {1}.", this, resolution));
+        }
+
+        public override void RestoreResolution()
+        {
+            ChangeResolution(OriginalResolution);
+        }
+    }
+
+    internal sealed class QuartzDisplayDeviceDriver : DisplayDeviceDriver
     {
         private static object display_lock = new object();
+
+        // Small object for tracking name, available resolutions, and original resolution.
+        private sealed class QuartzDevice
+        {
+        }
 
         public QuartzDisplayDeviceDriver()
         {
             lock (display_lock)
             {
-                // To minimize the need to add static methods to OpenTK.Graphics.DisplayDevice
-                // we only allow settings to be set through its constructor.
-                // Thus, we save all necessary parameters in temporary variables
-                // and construct the device when every needed detail is available.
-                // The main DisplayDevice constructor adds the newly constructed device
-                // to the list of available devices.
                 const int maxDisplayCount = 20;
                 IntPtr[] displays = new IntPtr[maxDisplayCount];
                 int displayCount;
@@ -65,24 +175,11 @@ namespace OpenTK.Platform.MacOS
                 for (int i = 0; i < displayCount; i++)
                 {
                     IntPtr currentDisplay = displays[i];
-
-                    // according to docs, first element in the array is always the
-                    // main display.
-                    bool primary = (i == 0);
-
-                    // gets current settings
-                    int currentWidth = CG.DisplayPixelsWide(currentDisplay);
-                    int currentHeight = CG.DisplayPixelsHigh(currentDisplay);
-                    Debug.Print("Display {0} is at  {1}x{2}", i, currentWidth, currentHeight);
+                    var quartzDevice = new QuartzDisplayDevice(currentDisplay);
 
                     IntPtr displayModesPtr = CG.DisplayAvailableModes(currentDisplay);
                     CFArray displayModes = new CFArray(displayModesPtr);
                     Debug.Print("Supports {0} display modes.", displayModes.Count);
-
-                    DisplayResolution opentk_dev_current_res = null;
-                    List<DisplayResolution> opentk_dev_available_res = new List<DisplayResolution>();
-                    IntPtr currentModePtr = CG.DisplayCurrentMode(currentDisplay);
-                    CFDictionary currentMode = new CFDictionary(currentModePtr);
 
                     for (int j = 0; j < displayModes.Count; j++)
                     {
@@ -92,106 +189,16 @@ namespace OpenTK.Platform.MacOS
                         int height = (int)dict.GetNumberValue("Height");
                         int bpp = (int)dict.GetNumberValue("BitsPerPixel");
                         double freq = dict.GetNumberValue("RefreshRate");
-                        bool current = currentMode.Ref == dict.Ref;
-
-                        //if (current) Debug.Write("  * ");
-                        //else Debug.Write("    ");
-
-                        //Debug.Print("Mode {0} is {1}x{2}x{3} @ {4}.", j, width, height, bpp, freq);
 
                         DisplayResolution thisRes = new DisplayResolution(0, 0, width, height, bpp, (float)freq);
-                        opentk_dev_available_res.Add(thisRes);
-
-                        if (current)
-                        {
-                            opentk_dev_current_res = thisRes;
-                        }
+                        quartzDevice.AvailableResolutions.Add(thisRes);
                     }
 
-                    NSRect bounds = CG.DisplayBounds(currentDisplay);
-                    Rectangle newRect = new Rectangle((int)bounds.Location.X, (int)bounds.Location.Y, (int)bounds.Size.Width, (int)bounds.Size.Height);
-
-                    Debug.Print("Display {0} bounds: {1}", i, newRect);
-
-                    DisplayDevice opentk_dev = new DisplayDevice(opentk_dev_current_res,
-                        primary, opentk_dev_available_res, newRect, currentDisplay);
-
-                    AvailableDevices.Add(opentk_dev);
-
-                    if (primary)
-                    {
-                        Primary = opentk_dev;
-                    }
+                    Devices.Add(quartzDevice);
                 }
 
                 Debug.Unindent();
             }
-        }
-
-        static internal IntPtr HandleTo(DisplayDevice displayDevice)
-        {
-            return (IntPtr)displayDevice.Id;
-        }
-
-        private Dictionary<IntPtr, IntPtr> storedModes = new Dictionary<IntPtr, IntPtr>();
-        private List<IntPtr> displaysCaptured = new List<IntPtr>();
-
-        public sealed override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
-        {
-            IntPtr display = HandleTo(device);
-            IntPtr currentModePtr = CG.DisplayCurrentMode(display);
-
-            if (storedModes.ContainsKey(display) == false)
-            {
-                storedModes.Add(display, currentModePtr);
-            }
-
-            IntPtr displayModesPtr = CG.DisplayAvailableModes(display);
-            CFArray displayModes = new CFArray(displayModesPtr);
-
-            for (int j = 0; j < displayModes.Count; j++)
-            {
-                CFDictionary dict = new CFDictionary(displayModes[j]);
-
-                int width = (int)dict.GetNumberValue("Width");
-                int height = (int)dict.GetNumberValue("Height");
-                int bpp = (int)dict.GetNumberValue("BitsPerPixel");
-                double freq = dict.GetNumberValue("RefreshRate");
-
-                if (width == resolution.Width && height == resolution.Height && bpp == resolution.BitsPerPixel && System.Math.Abs(freq - resolution.RefreshRate) < 1e-6)
-                {
-//                    if (displaysCaptured.Contains(display) == false)
-//                    {
-//                        CG.DisplayCapture(display);
-//                    }
-
-                    Debug.Print("Changing resolution to {0}x{1}x{2}@{3}.", width, height, bpp, freq);
-
-                    CG.DisplaySwitchToMode(display, displayModes[j]);
-
-                    return true;
-                }
-
-            }
-            return false;
-        }
-
-        public sealed override bool TryRestoreResolution(DisplayDevice device)
-        {
-            IntPtr display = HandleTo(device);
-
-            if (storedModes.ContainsKey(display))
-            {
-                Debug.Print("Restoring resolution.");
-
-                CG.DisplaySwitchToMode(display, storedModes[display]);
-                //CG.DisplayRelease(display);
-                displaysCaptured.Remove(display);
-
-                return true;
-            }
-
-            return false;
         }
     }
 }

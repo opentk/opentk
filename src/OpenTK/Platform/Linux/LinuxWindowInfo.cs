@@ -33,10 +33,10 @@ namespace OpenTK.Platform.Linux
     internal class LinuxWindowInfo : EglWindowInfo
     {
         public int FD { get; private set; }
-        public LinuxDisplay DisplayDevice { get; private set; }
+        public LinuxDisplayDevice DisplayDevice { get; private set; }
         public IntPtr BufferManager { get; private set; }
 
-        public LinuxWindowInfo(IntPtr display, int fd, IntPtr gbm, LinuxDisplay display_device)
+        public LinuxWindowInfo(IntPtr display, int fd, IntPtr gbm, LinuxDisplayDevice display_device)
             : base(IntPtr.Zero, display, IntPtr.Zero)
         {
             if (display_device == null)

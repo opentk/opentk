@@ -50,7 +50,7 @@ namespace OpenTK.Platform.MacOS
             return new CocoaNativeWindow(x, y, width, height, title, mode, options, device);
         }
 
-        public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        public override DisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return new QuartzDisplayDeviceDriver();
         }

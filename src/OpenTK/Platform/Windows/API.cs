@@ -1543,6 +1543,11 @@ namespace OpenTK.Platform.Windows
             internal const int DISP_CHANGE_SUCCESSFUL = 0;
             internal const int DISP_CHANGE_RESTART = 1;
             internal const int DISP_CHANGE_FAILED = -1;
+            internal const int DISP_CHANGE_BADMODE = -2;
+            internal const int DISP_CHANGE_NOTUPDATED = -3;
+            internal const int DISP_CHANGE_BADFLAGS = -4;
+            internal const int DISP_CHANGE_BADPARAM = -5;
+            internal const int DISP_CHANGE_BADDUALVIEW = -6;
 
             // (found in winuser.h)
             internal const int ENUM_REGISTRY_SETTINGS = -2;
@@ -1919,6 +1924,12 @@ namespace OpenTK.Platform.Windows
         internal string DeviceID;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
         internal string DeviceKey;
+
+        public override string ToString()
+        {
+            return string.Format("size = {0}\nDeviceName = {1}\nDeviceString = {2}\nDeviceId = {3}\nDeviceKey = {4}\nStateFlags = {5}",
+                size, DeviceName, DeviceString, DeviceID, DeviceKey, StateFlags);
+        }
     }
     [StructLayout(LayoutKind.Sequential)]
     internal struct WindowClass

@@ -5,30 +5,60 @@ using OpenTK.Platform;
 
 namespace OpenTK.Platform.iPhoneOS
 {
-    internal class AndroidDisplayDeviceDriver : IDisplayDeviceDriver
+    internal sealed class AndroidDisplayDevice : DisplayDevice
+    {
+        public override DisplayResolution CurrentResolution
+        {
+            get
+            {
+                return new DisplayResolution(0, 0, 0, 0, 16, 0);
+            }
+
+            set
+            {
+                base.CurrentResolution = value;
+            }
+        }
+
+        public override IList<DisplayResolution> AvailableResolutions
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public override bool IsPrimary
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public override void ChangeResolution(DisplayResolution resolution)
+        {
+            throw new Graphics.GraphicsModeException(
+                string.Format("Device {0}: Failed to change resolution to {1}.", this, resolution));
+        }
+
+        public override void RestoreResolution()
+        {
+            throw new Graphics.GraphicsModeException(string.Format("Device {0}: Failed to restore resolution.", this));
+        }
+    }
+
+    internal class AndroidDisplayDeviceDriver : DisplayDeviceDriver
     {
         private static DisplayDevice dev;
         static AndroidDisplayDeviceDriver()
         {
-            dev = new DisplayDevice();
-            dev.IsPrimary = true;
-            dev.BitsPerPixel = 16;
+            dev = new AndroidDisplayDevice();
         }
 
-        public DisplayDevice GetDisplay(DisplayIndex displayIndex)
+        public override DisplayDevice GetDisplay(DisplayIndex displayIndex)
         {
             return (displayIndex == DisplayIndex.First || displayIndex == DisplayIndex.Primary) ? dev : null;
-        }
-
-
-        public bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
-        {
-            return false;
-        }
-
-        public bool TryRestoreResolution(DisplayDevice device)
-        {
-            return false;
         }
     }
 }

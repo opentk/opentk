@@ -1,7 +1,7 @@
 ﻿//
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2010 the Open Toolkit library.
+// Copyright (c) 2006 - 2017 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,37 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System.Collections.Generic;
+
 namespace OpenTK.Platform
 {
-    internal interface IDisplayDeviceDriver
+    internal abstract class DisplayDeviceDriver
     {
-        bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution);
-        bool TryRestoreResolution(DisplayDevice device);
-        DisplayDevice GetDisplay(DisplayIndex displayIndex);
+        protected readonly List<DisplayDevice> Devices = new List<DisplayDevice>();
+
+        // Gets the DisplayDevice that corresponds to the specified index.
+        public virtual DisplayDevice GetDisplay(DisplayIndex index)
+        {
+            if (index == DisplayIndex.Primary)
+            {
+                foreach (var device in Devices)
+                {
+                    if (device.IsPrimary)
+                    {
+                        return device;
+                    }
+                }
+
+                throw new System.InvalidOperationException("No primary device found");
+            }
+            else if ((int)index >= 0 && (int)index < Devices.Count)
+            {
+                return Devices[(int)index];
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

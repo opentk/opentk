@@ -64,7 +64,7 @@ namespace OpenTK.Platform.iPhoneOS
             throw new NotImplementedException();
         }
 
-        public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        public override DisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return new AndroidDisplayDeviceDriver();
         }

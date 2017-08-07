@@ -241,6 +241,9 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XDefaultScreenOfDisplay")]
         public extern static IntPtr XDefaultScreenOfDisplay(IntPtr display);
 
+        [DllImport("libX11", EntryPoint = "XScreenOfDisplay")]
+        public extern static IntPtr XScreenOfDisplay(IntPtr display, int screen_number);
+
         [DllImport("libX11", EntryPoint = "XScreenNumberOfScreen")]
         public extern static int XScreenNumberOfScreen(IntPtr display, IntPtr Screen);
 
@@ -366,6 +369,15 @@ namespace OpenTK.Platform.X11
 
         [DllImport("libX11", EntryPoint = "XBlackPixel")]
         public extern static IntPtr XBlackPixel(IntPtr display, int screen_no);
+
+        [DllImport("libX11", EntryPoint = "XPlanesOfScreen")]
+        public extern static int XPlanesOfScreen(IntPtr screen);
+
+        [DllImport("libX11", EntryPoint = "XWidthOfScreen")]
+        public extern static int XWidthOfScreen(IntPtr screen);
+
+        [DllImport("libX11", EntryPoint = "XHeightOfScreen")]
+        public extern static int XHeightOfScreen(IntPtr display);
 
         [DllImport("libX11", EntryPoint = "XGrabServer")]
         public extern static void XGrabServer(IntPtr display);

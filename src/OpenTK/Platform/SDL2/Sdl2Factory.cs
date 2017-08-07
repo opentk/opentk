@@ -56,7 +56,7 @@ namespace OpenTK.Platform.SDL2
             return new Sdl2NativeWindow(x, y, width, height, title, options, device);
         }
 
-        public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        public override DisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return new Sdl2DisplayDeviceDriver();
         }

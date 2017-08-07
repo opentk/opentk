@@ -40,6 +40,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OpenTK.Tests", "tests\OpenT
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OpenTK.Tests.Integration", "tests\OpenTK.Tests.Integration\OpenTK.Tests.Integration.fsproj", "{522D9279-3ED6-475F-867A-6AE69A53C24A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Platform.DisplayDevice", "tests\Test.Platform.DisplayDevice\Test.Platform.DisplayDevice.csproj", "{BFF9487C-FDD5-47EA-8E32-616656AD73D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,6 +92,10 @@ Global
 		{522D9279-3ED6-475F-867A-6AE69A53C24A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{522D9279-3ED6-475F-867A-6AE69A53C24A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{522D9279-3ED6-475F-867A-6AE69A53C24A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFF9487C-FDD5-47EA-8E32-616656AD73D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFF9487C-FDD5-47EA-8E32-616656AD73D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFF9487C-FDD5-47EA-8E32-616656AD73D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFF9487C-FDD5-47EA-8E32-616656AD73D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,5 +104,6 @@ Global
 		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99} = {1857BB8E-1A35-4EBF-9F6D-685F11DC025B}
 		{6801C263-ADDA-4A7B-979D-649BCB5A1DF7} = {1857BB8E-1A35-4EBF-9F6D-685F11DC025B}
 		{522D9279-3ED6-475F-867A-6AE69A53C24A} = {1857BB8E-1A35-4EBF-9F6D-685F11DC025B}
+		{BFF9487C-FDD5-47EA-8E32-616656AD73D7} = {1857BB8E-1A35-4EBF-9F6D-685F11DC025B}
 	EndGlobalSection
 EndGlobal
