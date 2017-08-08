@@ -232,7 +232,7 @@ namespace OpenTK.Platform.X11
                 dev.RefreshRate = current_refresh_rate;
                 dev.AvailableResolutions = available_res;
 
-                deviceToDefaultResolution.Add(dev, current_resolution_index);
+                deviceToDefaultResolution.Add(dev, current_sizes_index);
             }
 
             return true;
