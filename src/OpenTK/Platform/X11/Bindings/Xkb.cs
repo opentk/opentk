@@ -78,6 +78,10 @@ namespace OpenTK.Platform.X11
         [DllImport(lib, EntryPoint = "XkbSetDetectableAutoRepeat")]
         internal extern static bool SetDetectableAutoRepeat(IntPtr display, bool detectable, out bool supported);
 
+        [DllImport (lib, EntryPoint = "XkbGetNamedIndicator")]
+        internal extern static bool GetNamedIndicator(
+            IntPtr display, Atom name, out int ndx_rtrn, out bool state_rtrn, out IntPtr map_rtrn, out bool real_rtrn);
+
         internal static bool IsSupported(IntPtr display)
         {
             // The XkbQueryExtension manpage says that we cannot
