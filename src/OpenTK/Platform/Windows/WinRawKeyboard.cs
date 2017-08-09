@@ -271,6 +271,7 @@ namespace OpenTK.Platform.Windows
                 {
                     master.MergeBits(ks);
                 }
+                UpdateModifiers(ref master);
                 return master;
             }
         }
@@ -281,7 +282,9 @@ namespace OpenTK.Platform.Windows
             {
                 if (keyboards.Count > index)
                 {
-                    return keyboards[index];
+                    var state = keyboards[index];
+                    UpdateModifiers(ref state);
+                    return state;
                 }
                 else
                 {
@@ -303,6 +306,12 @@ namespace OpenTK.Platform.Windows
                     return String.Empty;
                 }
             }
+        }
+        
+        private void UpdateModifiers(ref KeyboardState state)
+        {
+            state.CapsLock = (Functions.GetKeyState(VirtualKeys.CAPITAL) & 1) == 1;
+            state.NumLock = (Functions.GetKeyState(VirtualKeys.NUMLOCK) & 1) == 1;
         }
     }
 }
