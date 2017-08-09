@@ -180,6 +180,15 @@ namespace OpenTK.Platform.X11
             
             return state;
         }
+        
+        private void UpdateModifiers(ref KeyboardState state)
+        {
+            if (Xkb.IsSupported (API.DefaultDisplay))
+            {
+                state.CapsLock = GetIndicatorState("Caps Lock");
+                state.NumLock = GetIndicatorState("Num Lock");                     
+            }
+        }
 
         KeyboardState IKeyboardDriver2.GetState()
         {
@@ -187,16 +196,13 @@ namespace OpenTK.Platform.X11
             {
                 KeyboardState state = new KeyboardState();
 
-                if (Xkb.IsSupported (API.DefaultDisplay))
-                {
-                    state.CapsLock = GetIndicatorState("Caps Lock");
-                    state.NumLock = GetIndicatorState("Num Lock");                     
-                }
-
                 foreach (XIKeyboard k in keyboards)
                 {
                     state.MergeBits(k.State);
                 }
+                
+                UpdateModifiers(ref state);
+                
                 return state;
             }
         }
@@ -209,12 +215,8 @@ namespace OpenTK.Platform.X11
                 {
                     var state = keyboards[index].State;
                     
-                    if (Xkb.IsSupported (API.DefaultDisplay))
-                    {
-                        state.CapsLock = GetIndicatorState("Caps Lock");
-                        state.NumLock = GetIndicatorState("Num Lock");                     
-                    }
-                
+                    UpdateModifiers(ref state);
+                                    
                     return state;
                 }
                 return new KeyboardState();
