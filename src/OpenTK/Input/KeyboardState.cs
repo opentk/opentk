@@ -40,6 +40,26 @@ namespace OpenTK.Input
         private unsafe fixed int Keys[NumInts];
 
         /// <summary>
+        /// Gets or sets a state for Caps Lock button.
+        /// </summary>
+        /// <value><c>true</c> if locked; otherwise, <c>false</c>.</value>
+        public bool CapsLock
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
+        /// Gets or sets a state for Num Lock button.
+        /// </summary>
+        /// <value><c>true</c> if locked; otherwise, <c>false</c>.</value>
+        public bool NumLock
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the specified
         /// <see cref="OpenTK.Input.Key"/> is pressed.
         /// </summary>

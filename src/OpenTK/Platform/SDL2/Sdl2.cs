@@ -1000,7 +1000,6 @@ namespace OpenTK.Platform.SDL2
         SLEEP = (1 << 30) | (int)Scancode.SLEEP
     }
 
-    [Flags]
     internal enum Keymod : ushort
     {
         NONE = 0x0000,
