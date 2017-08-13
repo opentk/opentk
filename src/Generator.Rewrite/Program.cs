@@ -577,8 +577,6 @@ namespace OpenTK.Rewrite
 
         private static GeneratedVariableIdentifier EmitStringOutParameter(MethodDefinition method, ParameterDefinition parameter, MethodBody body, ILProcessor il)
         {
-            var p = parameter.ParameterType;
-
             // void GetShaderInfoLog(..., out String foo)
             // IntPtr foo_string_ptr;
             // try {
@@ -684,8 +682,6 @@ namespace OpenTK.Rewrite
         private static GeneratedVariableIdentifier EmitStringParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body,
             ILProcessor il)
         {
-            var p = parameter.ParameterType;
-
             // string marshaling:
             // IntPtr ptr = MarshalStringToPtr(str);
             // try { calli }
@@ -711,7 +707,6 @@ namespace OpenTK.Rewrite
         private static void EmitStringEpilogue(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body,
             ILProcessor il, GeneratedVariableIdentifier generatedPtrVar)
         {
-            var p = parameter.ParameterType;
             var free = wrapper.Module.ImportReference(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringPtr"));
 
             // FreeStringPtr(ptr)
@@ -722,8 +717,6 @@ namespace OpenTK.Rewrite
         private static GeneratedVariableIdentifier EmitStringArrayParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body,
             ILProcessor il)
         {
-            var p = parameter.ParameterType;
-
             // string[] masrhaling:
             // IntPtr ptr = MarshalStringArrayToPtr(strings);
             // try { calli }
@@ -757,7 +750,6 @@ namespace OpenTK.Rewrite
 
             // Note: only works for string vectors (1d arrays).
             // We do not (and will probably never) support 2d or higher string arrays
-            var p = parameter.ParameterType;
             var free = wrapper.Module.ImportReference(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringArrayPtr"));
 
             // FreeStringArrayPtr(string_array_ptr, string_array.Length)
