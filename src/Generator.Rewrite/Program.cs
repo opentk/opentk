@@ -545,7 +545,7 @@ namespace OpenTK.Rewrite
         {
             foreach (var p in wrapper.Parameters)
             {
-                if (!p.ParameterType.IsArray && p.ParameterType.Name == "String" && p.IsOut)
+                if (!p.ParameterType.IsArray && p.ParameterType.Name == "String&")
                 {
                     EmitStringOutEpilogue(wrapper, native, p, body, il, GetGeneratedVariable(generatedVariables, p.Name + "_string_ptr", body));
                 }
@@ -587,6 +587,10 @@ namespace OpenTK.Rewrite
             // finally {
             //  Marshal.FreeHGlobal(foo_string_ptr);
             // }
+
+            // Pop off the string parameter that would of just been loaded
+            il.Emit(OpCodes.Pop);
+
             // Make sure we have imported Marshal::AllocHGlobal
             var alloc_hglobal = method.Module.ImportReference(TypeMarshal.Methods.First(m => m.Name == "AllocHGlobal"));
 
@@ -621,10 +625,17 @@ namespace OpenTK.Rewrite
             }
             else if (count.Computed != null)
             {
-                // We don't handle count.Computed. Computed counts are hard and
-                // require manual reading of the specification for each one.
-                // But currently no string out parameters require it.
-                throw new NotSupportedException(string.Format("{0}({1}) requires a computed count: {2}", method.Name, parameter.Name, count.Computed));
+                if (method.Name == "GetActiveVarying")
+                {
+                    // GetActiveVaryingNV's name parameter has a count of "COMPSIZE(program,index,bufSize)" but really it should be bufSize.
+                    var countVariable = EmitCountVariable(method, body, il, "bufSize");
+                    il.Emit(OpCodes.Ldloc, countVariable.Index);
+                }
+                else
+                {
+                    // Computed counts are hard and require manual reading of the specification for each one.
+                    throw new NotSupportedException(string.Format("{0}({1}) requires a computed count: {2}", method.Name, parameter.Name, count.Computed));
+                }
             }
 
             il.Emit(OpCodes.Ldc_I4, 1);
@@ -665,10 +676,10 @@ namespace OpenTK.Rewrite
             var block = new ExceptionHandler(ExceptionHandlerType.Finally);
             block.TryStart = body.Instructions[0];
 
-            il.Emit(OpCodes.Ldloc, generatedPtrVar.Definition.Index);
             il.Emit(OpCodes.Ldarg, parameter.Index);
+            il.Emit(OpCodes.Ldloc, generatedPtrVar.Definition.Index);
             il.Emit(OpCodes.Call, ptr_to_str);
-            il.Emit(OpCodes.Starg, parameter.Index);
+            il.Emit(OpCodes.Stind_Ref);
 
             block.TryEnd = body.Instructions.Last();
             block.HandlerStart = body.Instructions.Last();
@@ -907,7 +918,7 @@ namespace OpenTK.Rewrite
                     // We need to convert the loaded argument to IntPtr.
                     il.Emit(OpCodes.Conv_I);
                 }
-                else if (p.Name == "String" && !p.IsArray && parameter.IsOut)
+                else if (p.Name == "String&" && !p.IsArray)
                 {
                     generatedVariables.Add(EmitStringOutParameter(method, parameter, body, il));
                 }

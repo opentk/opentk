@@ -85,7 +85,7 @@ namespace OpenTK
 
             unsafe
             {
-                sbyte* str = (sbyte*)ptr.ToPointer();
+                sbyte* str = (sbyte*)ptr;
                 int len = 0;
                 while (*str != 0)
                 {
@@ -93,7 +93,7 @@ namespace OpenTK
                     ++str;
                 }
 
-                return new string(str, 0, len, null);
+                return new string((sbyte*)ptr, 0, len, null);
             }
         }
 
