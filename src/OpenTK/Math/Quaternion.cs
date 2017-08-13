@@ -95,7 +95,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="eulerAngles">The euler angles as a Vector3</param>
         public Quaternion(Vector3 eulerAngles)
-            :this(eulerAngles.X, eulerAngles.Y, eulerAngles.Z)
+            : this(eulerAngles.X, eulerAngles.Y, eulerAngles.Z)
         { }
 
         /// <summary>

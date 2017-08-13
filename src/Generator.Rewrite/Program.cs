@@ -51,7 +51,6 @@ namespace OpenTK.Rewrite
         private static AssemblyDefinition mscorlib;
 
         private static TypeDefinition TypeMarshal;
-        private static TypeDefinition TypeStringBuilder;
         private static TypeDefinition TypeVoid;
         private static TypeDefinition TypeIntPtr;
         private static TypeDefinition TypeInt32;
@@ -123,7 +122,6 @@ namespace OpenTK.Rewrite
                             return;
                         }
                         TypeMarshal = mscorlib.MainModule.GetType("System.Runtime.InteropServices.Marshal");
-                        TypeStringBuilder = mscorlib.MainModule.GetType("System.Text.StringBuilder");
                         TypeVoid = mscorlib.MainModule.GetType("System.Void");
                         TypeIntPtr = mscorlib.MainModule.GetType("System.IntPtr");
                         TypeInt32 = mscorlib.MainModule.GetType("System.Int32");
@@ -254,6 +252,19 @@ namespace OpenTK.Rewrite
                     {
                         attr.RemoveAt(i);
                         i--;
+                    }
+                }
+
+                foreach (var parameter in method.Parameters)
+                {
+                    var pattr = parameter.CustomAttributes;
+                    for (int i = 0; i < pattr.Count; i++)
+                    {
+                        if (pattr[i].AttributeType.Name == "CountAttribute")
+                        {
+                            pattr.RemoveAt(i);
+                            i--;
+                        }
                     }
                 }
             }
@@ -534,14 +545,14 @@ namespace OpenTK.Rewrite
         {
             foreach (var p in wrapper.Parameters)
             {
-                if (p.ParameterType.Name == "StringBuilder")
+                if (!p.ParameterType.IsArray && p.ParameterType.Name == "String" && p.IsOut)
                 {
-                    EmitStringBuilderEpilogue(wrapper, native, p, body, il, GetGeneratedVariable(generatedVariables, p.Name + "_sb_ptr", body));
+                    EmitStringOutEpilogue(wrapper, native, p, body, il, GetGeneratedVariable(generatedVariables, p.Name + "_string_ptr", body));
                 }
 
                 if (!p.ParameterType.IsArray && p.ParameterType.Name == "String")
                 {
-                    EmitStringEpilogue(wrapper, p, body, il,GetGeneratedVariable(generatedVariables, p.Name + "_string_ptr", body));
+                    EmitStringEpilogue(wrapper, p, body, il, GetGeneratedVariable(generatedVariables, p.Name + "_string_ptr", body));
                 }
 
                 if (p.ParameterType.IsArray && p.ParameterType.GetElementType().Name == "String")
@@ -564,44 +575,73 @@ namespace OpenTK.Rewrite
                                                            body.Variables.Contains(v.Definition));
         }
 
-        private static GeneratedVariableIdentifier EmitStringBuilderParameter(MethodDefinition method, ParameterDefinition parameter, MethodBody body, ILProcessor il)
+        private static GeneratedVariableIdentifier EmitStringOutParameter(MethodDefinition method, ParameterDefinition parameter, MethodBody body, ILProcessor il)
         {
             var p = parameter.ParameterType;
 
-            // void GetShaderInfoLog(..., StringBuilder foo)
-            // IntPtr foo_sb_ptr;
+            // void GetShaderInfoLog(..., out String foo)
+            // IntPtr foo_string_ptr;
             // try {
-            //  foo_sb_ptr = Marshal.AllocHGlobal(sb.Capacity + 1);
-            //  glGetShaderInfoLog(..., foo_sb_ptr);
-            //  MarshalPtrToStringBuilder(foo_sb_ptr, sb);
+            //  foo_string_ptr = Marshal.AllocHGlobal(count + 1);
+            //  glGetShaderInfoLog(..., foo_string_ptr);
+            //  foo = MarshalPtrToString(foo_string_ptr);
             // }
             // finally {
-            //  Marshal.FreeHGlobal(sb_ptr);
+            //  Marshal.FreeHGlobal(foo_string_ptr);
             // }
-            // Make sure we have imported StringBuilder::Capacity and Marshal::AllocHGlobal
-            var sb_get_capacity = method.Module.ImportReference(TypeStringBuilder.Methods.First(m => m.Name == "get_Capacity"));
+            // Make sure we have imported Marshal::AllocHGlobal
             var alloc_hglobal = method.Module.ImportReference(TypeMarshal.Methods.First(m => m.Name == "AllocHGlobal"));
 
             // IntPtr ptr;
             var variableDefinition = new VariableDefinition(TypeIntPtr);
             body.Variables.Add(variableDefinition);
-            int stringBuilderPtrIndex = body.Variables.Count - 1;
+            int stringPtrIndex = body.Variables.Count - 1;
 
-            GeneratedVariableIdentifier stringBuilderPtrVar = new GeneratedVariableIdentifier(body, variableDefinition, parameter.Name + "_sb_ptr");
+            GeneratedVariableIdentifier stringPtrVar = new GeneratedVariableIdentifier(body, variableDefinition, parameter.Name + "_string_ptr");
 
-            // ptr = Marshal.AllocHGlobal(sb.Capacity + 1);
-            il.Emit(OpCodes.Callvirt, sb_get_capacity);
+            // ptr = Marshal.AllocHGlobal(count + 1);
+            var count = GetCountAttribute(parameter);
+            if (count == null)
+            {
+                // We need a count attribute so we know what size to make the
+                // string buffer. Currently every string out parameter has a
+                // count attribute but this check is in place to make things
+                // clearer if this case is ever hit.
+                throw new InvalidOperationException(string.Format("{0}({1}) doesn't have a count attribute", method.Name, parameter.Name));
+            }
+
+            if (count.Count != 0)
+            {
+                // Fixed size
+                il.Emit(OpCodes.Ldc_I4, count.Count);
+            }
+            else if (count.Parameter != null)
+            {
+                // Parameter sized
+                var countVariable = EmitCountVariable(method, body, il, count.Parameter);
+                il.Emit(OpCodes.Ldloc, countVariable.Index);
+            }
+            else if (count.Computed != null)
+            {
+                // We don't handle count.Computed. Computed counts are hard and
+                // require manual reading of the specification for each one.
+                // But currently no string out parameters require it.
+                throw new NotSupportedException(string.Format("{0}({1}) requires a computed count: {2}", method.Name, parameter.Name, count.Computed));
+            }
+
+            il.Emit(OpCodes.Ldc_I4, 1);
+            il.Emit(OpCodes.Add);
             il.Emit(OpCodes.Call, alloc_hglobal);
-            il.Emit(OpCodes.Stloc, stringBuilderPtrIndex);
-            il.Emit(OpCodes.Ldloc, stringBuilderPtrIndex);
+            il.Emit(OpCodes.Stloc, stringPtrIndex);
+            il.Emit(OpCodes.Ldloc, stringPtrIndex);
 
             // We'll emit the try-finally block in the epilogue implementation,
             // because we haven't yet emitted all necessary instructions here.
 
-            return stringBuilderPtrVar;
+            return stringPtrVar;
         }
 
-        private static void EmitStringBuilderEpilogue(MethodDefinition wrapper, MethodDefinition native,
+        private static void EmitStringOutEpilogue(MethodDefinition wrapper, MethodDefinition native,
             ParameterDefinition parameter, MethodBody body, ILProcessor il, GeneratedVariableIdentifier generatedPtrVar)
         {
             if (generatedPtrVar == null)
@@ -609,38 +649,36 @@ namespace OpenTK.Rewrite
                 throw new ArgumentNullException(nameof(generatedPtrVar));
             }
 
-            var p = parameter.ParameterType;
-            if (p.Name == "StringBuilder")
-            {
-                // void GetShaderInfoLog(..., StringBuilder foo)
-                // try {
-                //  foo_sb_ptr = Marshal.AllocHGlobal(sb.Capacity + 1); -- already emitted
-                //  glGetShaderInfoLog(..., foo_sb_ptr); -- already emitted
-                //  MarshalPtrToStringBuilder(foo_sb_ptr, foo);
-                // }
-                // finally {
-                //  Marshal.FreeHGlobal(foo_sb_ptr);
-                // }
+            // void GetShaderInfoLog(..., out String foo)
+            // IntPtr foo_string_ptr;
+            // try {
+            //  foo_string_ptr = Marshal.AllocHGlobal(count + 1);
+            //  glGetShaderInfoLog(..., foo_string_ptr);
+            //  foo = MarshalPtrToString(foo_string_ptr);
+            // }
+            // finally {
+            //  Marshal.FreeHGlobal(foo_string_ptr);
+            // }
 
-                // Make sure we have imported BindingsBase::MasrhalPtrToStringBuilder and Marshal::FreeHGlobal
-                var ptr_to_sb = wrapper.Module.ImportReference(TypeBindingsBase.Methods.First(m => m.Name == "MarshalPtrToStringBuilder"));
-                var free_hglobal = wrapper.Module.ImportReference(TypeMarshal.Methods.First(m => m.Name == "FreeHGlobal"));
+            // Make sure we have imported BindingsBase::MasrhalPtrToString and Marshal::FreeHGlobal
+            var ptr_to_str = wrapper.Module.ImportReference(TypeBindingsBase.Methods.First(m => m.Name == "MarshalPtrToString"));
+            var free_hglobal = wrapper.Module.ImportReference(TypeMarshal.Methods.First(m => m.Name == "FreeHGlobal"));
 
-                var block = new ExceptionHandler(ExceptionHandlerType.Finally);
-                block.TryStart = body.Instructions[0];
+            var block = new ExceptionHandler(ExceptionHandlerType.Finally);
+            block.TryStart = body.Instructions[0];
 
-                il.Emit(OpCodes.Ldloc, generatedPtrVar.Definition.Index);
-                il.Emit(OpCodes.Ldarg, parameter.Index);
-                il.Emit(OpCodes.Call, ptr_to_sb);
+            il.Emit(OpCodes.Ldloc, generatedPtrVar.Definition.Index);
+            il.Emit(OpCodes.Ldarg, parameter.Index);
+            il.Emit(OpCodes.Call, ptr_to_str);
+            il.Emit(OpCodes.Starg, parameter.Index);
 
-                block.TryEnd = body.Instructions.Last();
-                block.HandlerStart = body.Instructions.Last();
+            block.TryEnd = body.Instructions.Last();
+            block.HandlerStart = body.Instructions.Last();
 
-                il.Emit(OpCodes.Ldloc, generatedPtrVar.Definition.Index);
-                il.Emit(OpCodes.Call, free_hglobal);
+            il.Emit(OpCodes.Ldloc, generatedPtrVar.Definition.Index);
+            il.Emit(OpCodes.Call, free_hglobal);
 
-                block.HandlerEnd = body.Instructions.Last();
-            }
+            block.HandlerEnd = body.Instructions.Last();
         }
 
         private static GeneratedVariableIdentifier EmitStringParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body,
@@ -804,6 +842,64 @@ namespace OpenTK.Rewrite
             return generatedVariables;
         }
 
+        private static object GetAttributeField(CustomAttribute attribute, string name)
+        {
+            try
+            {
+                var field = attribute.Fields.First(f => f.Name == name);
+                return field.Argument.Value;
+            }
+            catch (InvalidOperationException)
+            {
+                return null;
+            }
+        }
+
+        private static CountAttribute GetCountAttribute(ParameterDefinition parameter)
+        {
+            var attribute = parameter.CustomAttributes
+                        .FirstOrDefault(a => a.AttributeType.Name == "CountAttribute");
+
+            var count = new CountAttribute();
+            if (attribute != null)
+            {
+                count.Count = (int)(GetAttributeField(attribute, "Count") ?? 0);
+                count.Parameter = (string)(GetAttributeField(attribute, "Parameter"));
+                count.Computed = (string)(GetAttributeField(attribute, "Computed"));
+            }
+            return count;
+        }
+
+
+        private static VariableDefinition EmitCountVariable(MethodDefinition method, MethodBody body, ILProcessor il, string countParameter)
+        {
+            var countVariable = new VariableDefinition(TypeInt32);
+            body.Variables.Add(countVariable);
+
+            // Parameter will either by a simple name or an
+            // expression like "name*5"
+            var parameter = method.Parameters.FirstOrDefault(
+                param => param.Name == countParameter);
+            if (parameter != null)
+            {
+                il.Emit(OpCodes.Ldarg, parameter.Index);
+                il.Emit(OpCodes.Stloc, countVariable.Index);
+            }
+            else
+            {
+                var operands = countParameter.Split('*');
+                parameter = method.Parameters.FirstOrDefault(
+                    param => param.Name == operands[0]);
+                var scale = int.Parse(operands[1]);
+
+                il.Emit(OpCodes.Ldarg, parameter.Index);
+                il.Emit(OpCodes.Ldc_I4, scale);
+                il.Emit(OpCodes.Mul);
+                il.Emit(OpCodes.Stloc, countVariable.Index);
+            }
+            return countVariable;
+        }
+
         private static List<GeneratedVariableIdentifier> EmitParameters(MethodDefinition method, MethodDefinition native, MethodBody body, ILProcessor il)
         {
             List<GeneratedVariableIdentifier> generatedVariables = new List<GeneratedVariableIdentifier>();
@@ -819,9 +915,9 @@ namespace OpenTK.Rewrite
                     // We need to convert the loaded argument to IntPtr.
                     il.Emit(OpCodes.Conv_I);
                 }
-                else if (p.Name == "StringBuilder")
+                else if (p.Name == "String" && !p.IsArray && parameter.IsOut)
                 {
-                    generatedVariables.Add(EmitStringBuilderParameter(method, parameter, body, il));
+                    generatedVariables.Add(EmitStringOutParameter(method, parameter, body, il));
                 }
                 else if (p.Name == "String" && !p.IsArray)
                 {

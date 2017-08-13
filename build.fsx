@@ -88,7 +88,7 @@ let activeProjects =
             -- "**/OpenTK.iOS.csproj"
 
     !! "src/**/*.??proj"
-    ++ "tests/**/OpenTK.Tests.fsproj"
+    ++ "tests/**/OpenTK.Tests*.fsproj"
     |> xamarinFilter
 
 // Generate assembly info files with the right version & up-to-date information
@@ -146,7 +146,7 @@ Target "Clean" (fun _ ->
 
 Target "Build" (fun _ ->
     activeProjects
-    |> MSBuildRelease "" "Rebuild"
+    |> MSBuildRelease "" "Build"
     |> ignore
 )
 
@@ -177,7 +177,7 @@ Target "NuGet" (fun _ ->
     Paket.Pack(fun p ->
         { p with
             OutputPath = "bin"
-            ExcludedTemplates = "OpenTK.GLWidget" :: xamExcludes
+            ExcludedTemplates = xamExcludes
             Version = release.NugetVersion
             ReleaseNotes = toLines release.Notes})
 )

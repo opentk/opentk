@@ -1,21 +1,17 @@
-#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2011 Xamarin, Inc.
  * Copyright 2013 Xamarin Inc
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  */
-#endregion
 
 using System;
 using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Android
 {
-    sealed class AndroidFactory : PlatformFactoryBase
+    internal sealed class AndroidFactory : PlatformFactoryBase
     {
-        #region IPlatformFactory Members
-
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             AndroidWindow android_win = (AndroidWindow)window;
@@ -60,7 +56,5 @@ namespace OpenTK.Platform.Android
         {
             throw new NotImplementedException();
         }
-
-        #endregion
     }
 }

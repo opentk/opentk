@@ -55,7 +55,7 @@ namespace OpenTK.Platform.Windows
         private bool class_registered;
         private bool disposed;
         private bool exists;
-        private WinWindowInfo window, child_window;
+        private WinWindowInfo window;
         private WindowBorder windowBorder = WindowBorder.Resizable;
         private Nullable<WindowBorder> previous_window_border; // Set when changing to fullscreen state.
         private Nullable<WindowBorder> deferred_window_border; // Set to avoid changing borders during fullscreen state.
@@ -128,18 +128,11 @@ namespace OpenTK.Platform.Windows
                     scale_y = ScaleY(y);
                 }
 
-                // To avoid issues with Ati drivers on Windows 6+ with compositing enabled, the context will not be
-                // bound to the top-level window, but rather to a child window docked in the parent.
                 window = new WinWindowInfo(
                     CreateWindow(
                         scale_x, scale_y, scale_width, scale_height,
                         title, options, device, IntPtr.Zero),
                     null);
-                child_window = new WinWindowInfo(
-                    CreateWindow(
-                        0, 0, ClientSize.Width, ClientSize.Height,
-                        title, options, device, window.Handle),
-                    window);
                 Functions.DragAcceptFiles(window.Handle, true);
 
                 exists = true;
@@ -276,7 +269,7 @@ namespace OpenTK.Platform.Windows
                         Functions.GetClientRect(handle, out rect);
                         client_rectangle = rect.ToRectangle();
 
-                        Functions.SetWindowPos(child_window.Handle, IntPtr.Zero, 0, 0, ClientRectangle.Width, ClientRectangle.Height,
+                        Functions.SetWindowPos(window.Handle, IntPtr.Zero, bounds.X, bounds.Y, bounds.Width, bounds.Height,
                             SetWindowPosFlags.NOZORDER | SetWindowPosFlags.NOOWNERZORDER |
                             SetWindowPosFlags.NOACTIVATE | SetWindowPosFlags.NOSENDCHANGING);
 
@@ -535,7 +528,7 @@ namespace OpenTK.Platform.Windows
         {
             // If the mouse is captured we get spurious MOUSELEAVE events.
             // So ignore WM_MOUSELEAVE if capture count != 0.
-            if (mouse_capture_count == 0 )
+            if (mouse_capture_count == 0)
             {
                 mouse_outside_window = true;
                 // Mouse tracking is disabled automatically by the OS
@@ -688,7 +681,6 @@ namespace OpenTK.Platform.Windows
                 Functions.UnregisterClass(ClassName, Instance);
             }
             window.Dispose();
-            child_window.Dispose();
 
             OnClosed(EventArgs.Empty);
         }
@@ -700,15 +692,15 @@ namespace OpenTK.Platform.Windows
             for (uint i = 0; i < filesCounter; ++i)
             {
                 // Don't forget about \0 at the end
-                uint fileNameSize = Functions.DragQueryFile(hDrop, i, IntPtr.Zero, 0) + 1;
-                IntPtr str = Marshal.AllocHGlobal((int)fileNameSize);
+                uint filenameChars = Functions.DragQueryFile(hDrop, i, IntPtr.Zero, 0) + 1;
+                int filenameSize = (int)(filenameChars * Marshal.SystemDefaultCharSize);
+                IntPtr str = Marshal.AllocHGlobal(filenameSize);
 
-                Functions.DragQueryFile(hDrop, i, str, fileNameSize);
+                Functions.DragQueryFile(hDrop, i, str, filenameChars);
 
                 string dropString = Marshal.PtrToStringAuto(str);
-                OnFileDrop(dropString);
-
                 Marshal.FreeHGlobal(str);
+                OnFileDrop(dropString);
             }
 
             Functions.DragFinish(hDrop);
@@ -735,7 +727,9 @@ namespace OpenTK.Platform.Windows
                     break;
 
                 case WindowMessage.ERASEBKGND:
-                    return new IntPtr(1);
+                    // This is triggered only when the client area changes.
+                    // As such it does not affect steady-state performance.
+                    break;
 
                 case WindowMessage.WINDOWPOSCHANGED:
                     HandleWindowPositionChanged(handle, message, wParam, lParam);
@@ -855,7 +849,7 @@ namespace OpenTK.Platform.Windows
         {
             if (mouse_capture_count == 0)
             {
-                Functions.SetCapture(child_window.Handle);
+                Functions.SetCapture(window.Handle);
             }
             mouse_capture_count++;
         }
@@ -875,7 +869,7 @@ namespace OpenTK.Platform.Windows
         {
             TrackMouseEventStructure me = new TrackMouseEventStructure();
             me.Size = TrackMouseEventStructure.SizeInBytes;
-            me.TrackWindowHandle = child_window.Handle;
+            me.TrackWindowHandle = window.Handle;
             me.Flags = TrackMouseEventFlags.LEAVE;
 
             if (!Functions.TrackMouseEvent(ref me))
@@ -942,6 +936,8 @@ namespace OpenTK.Platform.Windows
             {
                 ExtendedWindowClass wc = new ExtendedWindowClass();
                 wc.Size = ExtendedWindowClass.SizeInBytes;
+                // Setting the background here ensures the window doesn't flash gray/white until the first frame is rendered.
+                wc.Background = Functions.GetStockObject(StockObjects.BLACK_BRUSH);
                 wc.Style = DefaultClassStyle;
                 wc.Instance = Instance;
                 wc.WndProc = WindowProcedureDelegate;
@@ -1161,7 +1157,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public override  bool Exists { get { return exists; } }
+        public override bool Exists { get { return exists; } }
 
         public override MouseCursor Cursor
         {
@@ -1441,7 +1437,7 @@ namespace OpenTK.Platform.Windows
 
                 // Make sure client size doesn't change when changing the border style.
                 Size client_size = ClientSize;
-                Win32Rectangle rect = Win32Rectangle.From(client_size);
+                Win32Rectangle rect = Win32Rectangle.From(bounds);
                 Functions.AdjustWindowRectEx(ref rect, new_style, false, ParentStyleEx);
 
                 // This avoids leaving garbage on the background window.
@@ -1522,7 +1518,7 @@ namespace OpenTK.Platform.Windows
 
         public override IWindowInfo WindowInfo
         {
-            get { return child_window; }
+            get { return window; }
         }
 
         protected override void Dispose(bool calledManually)

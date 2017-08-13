@@ -51,7 +51,7 @@ namespace OpenTK.Platform.Windows
             internal readonly int XInputIndex;
 
             private readonly Dictionary<int, int> axes =
-                new Dictionary<int,int>();
+                new Dictionary<int, int>();
 
             private readonly Dictionary<int, int> buttons =
                 new Dictionary<int, int>();
@@ -194,6 +194,7 @@ namespace OpenTK.Platform.Windows
             {
                 new RawInputDevice(HIDUsageGD.Joystick, RawInputDeviceFlags.DEVNOTIFY | RawInputDeviceFlags.INPUTSINK, window),
                 new RawInputDevice(HIDUsageGD.GamePad, RawInputDeviceFlags.DEVNOTIFY | RawInputDeviceFlags.INPUTSINK, window),
+                new RawInputDevice(HIDUsageCD.ConsumerControl, RawInputDeviceFlags.DEVNOTIFY | RawInputDeviceFlags.INPUTSINK, window),
             };
 
             if (!Functions.RegisterRawInputDevices(DeviceTypes, DeviceTypes.Length, API.RawInputDeviceSize))
@@ -393,7 +394,7 @@ namespace OpenTK.Platform.Windows
             {
                 if (stick.AxisCaps[i].IsRange)
                 {
-                    Debug.Print("[{0}] Axis range collections not implemented. Please report your controller type at http://www.opentk.com",
+                    Debug.Print("[{0}] Axis range collections not implemented. Please report your controller type at https://github.com/opentk/opentk/issues",
                         GetType().Name);
                     continue;
                 }
@@ -425,8 +426,8 @@ namespace OpenTK.Platform.Windows
                 {
                     if (stick.AxisCaps[i].LogicalMin > 0)
                     {
-                        short scaled_value = (short) HidHelper.ScaleValue(
-                            (int) ((long) value + stick.AxisCaps[i].LogicalMin),
+                        short scaled_value = (short)HidHelper.ScaleValue(
+                            (int)((long)value + stick.AxisCaps[i].LogicalMin),
                             stick.AxisCaps[i].LogicalMin, stick.AxisCaps[i].LogicalMax,
                             Int16.MinValue, Int16.MaxValue);
                         stick.SetAxis(collection, page, usage, scaled_value);

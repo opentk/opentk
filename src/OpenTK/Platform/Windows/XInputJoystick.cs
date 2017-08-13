@@ -81,7 +81,7 @@ namespace OpenTK.Platform.Windows
         {
             XInputButtons dir = 0;
 
-            dir =XInputButtons.DPadUp | XInputButtons.DPadLeft;
+            dir = XInputButtons.DPadUp | XInputButtons.DPadLeft;
             if ((buttons & dir) == dir)
             {
                 return HatPosition.UpLeft;

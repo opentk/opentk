@@ -678,17 +678,17 @@ namespace OpenTK.Platform.MacOS
 
                 if (axis_elements.Count >= JoystickState.MaxAxes)
                 {
-                    Debug.Print("[Mac] JoystickAxis limit reached ({0} > {1}), please report a bug at http://www.opentk.com",
+                    Debug.Print("[Mac] JoystickAxis limit reached ({0} > {1}), please report a bug at https://github.com/opentk/opentk/issues",
                         axis_elements.Count, JoystickState.MaxAxes);
                 }
                 if (button_elements.Count > JoystickState.MaxButtons)
                 {
-                    Debug.Print("[Mac] JoystickButton limit reached ({0} > {1}), please report a bug at http://www.opentk.com",
+                    Debug.Print("[Mac] JoystickButton limit reached ({0} > {1}), please report a bug at https://github.com/opentk/opentk/issues",
                         button_elements.Count, JoystickState.MaxButtons);
                 }
                 if (hat_elements.Count > JoystickState.MaxHats)
                 {
-                    Debug.Print("[Mac] JoystickHat limit reached ({0} > {1}), please report a bug at http://www.opentk.com",
+                    Debug.Print("[Mac] JoystickHat limit reached ({0} > {1}), please report a bug at https://github.com/opentk/opentk/issues",
                         hat_elements.Count, JoystickState.MaxHats);
                 }
 
@@ -1022,7 +1022,7 @@ namespace OpenTK.Platform.MacOS
                 }
                 else
                 {
-                    float f1 = (float)x; 
+                    float f1 = (float)x;
                     float f2 = (float)y;
                     p.X.Value = *(IntPtr *)&f1;
                     p.Y.Value = *(IntPtr *)&f2;
@@ -1165,7 +1165,7 @@ namespace OpenTK.Platform.MacOS
             [DllImport(hid)]
             public static extern IOReturn IOHIDManagerOpen(
                 IOHIDManagerRef manager,
-                IOOptionBits options) ;
+                IOOptionBits options);
 
             [DllImport(hid)]
             public static extern IOReturn IOHIDDeviceOpen(
@@ -1234,7 +1234,7 @@ namespace OpenTK.Platform.MacOS
             [DllImport(hid)]
             public static extern double IOHIDValueGetScaledValue(
                 IOHIDValueRef @value,
-                IOHIDValueScaleType type) ;
+                IOHIDValueScaleType type);
 
             [DllImport(hid)]
             public static extern IOHIDElementType IOHIDElementGetType(
@@ -1599,7 +1599,7 @@ namespace OpenTK.Platform.MacOS
             Key.Unknown, /* Volume Up */
             Key.Unknown, /* Volume Down */
             Key.CapsLock, /* Locking Caps Lock */
-            Key.NumLock , /* Locking Num Lock */
+            Key.NumLock, /* Locking Num Lock */
             Key.ScrollLock, /* Locking Scroll Lock */
             Key.KeypadDecimal, /* Keypad Comma */
             Key.Unknown, /* Keypad Equal Sign for AS/400 */

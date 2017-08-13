@@ -152,12 +152,12 @@ namespace OpenTK.Platform.Egl
             {
                 if (window is EglWindowInfo)
                 {
-                    WindowInfo = (EglWindowInfo) window;
+                    WindowInfo = (EglWindowInfo)window;
                 }
 #if !ANDROID
                 else if (window is IAngleWindowInfoInternal)
                 {
-                    WindowInfo = ((IAngleWindowInfoInternal) window).EglWindowInfo;
+                    WindowInfo = ((IAngleWindowInfoInternal)window).EglWindowInfo;
                 }
 #endif
 
@@ -263,9 +263,9 @@ namespace OpenTK.Platform.Egl
             var internalContext = sharedContext as IGraphicsContextInternal;
             if (internalContext != null)
             {
-                return (EglContext) internalContext.Implementation;
+                return (EglContext)internalContext.Implementation;
             }
-            return (EglContext) sharedContext;
+            return (EglContext)sharedContext;
         }
     }
 }

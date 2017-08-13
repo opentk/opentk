@@ -137,6 +137,7 @@ namespace OpenTK.Platform.MacOS
         }
 
         private CocoaWindowInfo windowInfo;
+
         private IntPtr windowClass;
         private IntPtr trackingArea;
         private IntPtr current_icon_handle;

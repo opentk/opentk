@@ -184,7 +184,7 @@ namespace OpenTK
         /// </summary>
         public override bool Equals(object obj)
         {
-            return obj is Box2 && Equals((Box2) obj);
+            return obj is Box2 && Equals((Box2)obj);
         }
 
         /// <summary>

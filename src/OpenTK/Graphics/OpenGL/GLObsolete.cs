@@ -292,7 +292,7 @@ namespace OpenTK.Graphics.OpenGL
         [Obsolete("Use GetSeparableFilter<T3, T4, T5> overload instead")]
         [CLSCompliant(false)]
         public static
-        void GetSeparableFilter<T4,T5>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [InAttribute, OutAttribute] T4[] column, [InAttribute, OutAttribute] T5[,,] span)
+        void GetSeparableFilter<T4, T5>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [InAttribute, OutAttribute] T4[] column, [InAttribute, OutAttribute] T5[,,] span)
             where T4 : struct
             where T5 : struct { throw new NotImplementedException(); }
 
@@ -334,7 +334,7 @@ namespace OpenTK.Graphics.OpenGL
         [Obsolete("Use GetSeparableFilter<T3, T4, T5> overload instead")]
         [CLSCompliant(false)]
         public static
-        void GetSeparableFilter<T4,T5>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [InAttribute, OutAttribute] T4[,] column, [InAttribute, OutAttribute] T5[,,] span)
+        void GetSeparableFilter<T4, T5>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [InAttribute, OutAttribute] T4[,] column, [InAttribute, OutAttribute] T5[,,] span)
             where T4 : struct
             where T5 : struct { throw new NotImplementedException(); }
 
@@ -376,7 +376,7 @@ namespace OpenTK.Graphics.OpenGL
         [Obsolete("Use GetSeparableFilter<T3, T4, T5> overload instead")]
         [CLSCompliant(false)]
         public static
-        void GetSeparableFilter<T4,T5>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [InAttribute, OutAttribute] T4[,,] column, [InAttribute, OutAttribute] T5[,,] span)
+        void GetSeparableFilter<T4, T5>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [InAttribute, OutAttribute] T4[,,] column, [InAttribute, OutAttribute] T5[,,] span)
             where T4 : struct
             where T5 : struct { throw new NotImplementedException(); }
 
@@ -418,7 +418,7 @@ namespace OpenTK.Graphics.OpenGL
         [Obsolete("Use GetSeparableFilter<T3, T4, T5> overload instead")]
         [CLSCompliant(false)]
         public static
-        void GetSeparableFilter<T4,T5>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [InAttribute, OutAttribute] ref T4 column, [InAttribute, OutAttribute] T5[,,] span)
+        void GetSeparableFilter<T4, T5>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [InAttribute, OutAttribute] ref T4 column, [InAttribute, OutAttribute] T5[,,] span)
             where T4 : struct
             where T5 : struct { throw new NotImplementedException(); }
 
@@ -460,7 +460,7 @@ namespace OpenTK.Graphics.OpenGL
         [Obsolete("Use GetSeparableFilter<T3, T4, T5> overload with equal array dimensions instead")]
         [CLSCompliant(false)]
         public static
-        void GetSeparableFilter<T3,T4,T5>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T3[] row, [InAttribute, OutAttribute] T4[,,] column, [InAttribute, OutAttribute] T5[,,] span)
+        void GetSeparableFilter<T3, T4, T5>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T3[] row, [InAttribute, OutAttribute] T4[,,] column, [InAttribute, OutAttribute] T5[,,] span)
             where T3 : struct
             where T4 : struct
             where T5 : struct { throw new NotImplementedException(); }
@@ -503,7 +503,7 @@ namespace OpenTK.Graphics.OpenGL
         [Obsolete("Use GetSeparableFilter<T3, T4, T5> overload with equal array dimensions instead")]
         [CLSCompliant(false)]
         public static
-        void GetSeparableFilter<T3,T4,T5>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T3[,] row, [InAttribute, OutAttribute] T4[,,] column, [InAttribute, OutAttribute] T5[,,] span)
+        void GetSeparableFilter<T3, T4, T5>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T3[,] row, [InAttribute, OutAttribute] T4[,,] column, [InAttribute, OutAttribute] T5[,,] span)
             where T3 : struct
             where T4 : struct
             where T5 : struct { throw new NotImplementedException(); }
@@ -545,7 +545,7 @@ namespace OpenTK.Graphics.OpenGL
         [AutoGenerated(Category = "Version12Deprecated", Version = "1.2", EntryPoint = "glGetSeparableFilter")]
         [Obsolete("Use GetSeparableFilter<T3, T4, T5> with three ref arguments instead")]
         public static
-        void GetSeparableFilter<T3,T4,T5>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] ref T3 row, [InAttribute, OutAttribute] T4[,,] column, [InAttribute, OutAttribute] T5[,,] span)
+        void GetSeparableFilter<T3, T4, T5>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] ref T3 row, [InAttribute, OutAttribute] T4[,,] column, [InAttribute, OutAttribute] T5[,,] span)
             where T3 : struct
             where T4 : struct
             where T5 : struct { throw new NotImplementedException(); }
@@ -808,7 +808,7 @@ namespace OpenTK.Graphics.OpenGL
         [Obsolete("Use overload with equal array dimensions instead")]
         [CLSCompliant(false)]
         public static
-        void SeparableFilter2D<T6,T7>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T6[] row, [InAttribute, OutAttribute] T7[,,] column)
+        void SeparableFilter2D<T6, T7>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T6[] row, [InAttribute, OutAttribute] T7[,,] column)
             where T6 : struct
             where T7 : struct { throw new NotImplementedException(); }
 
@@ -860,7 +860,7 @@ namespace OpenTK.Graphics.OpenGL
         [Obsolete("Use overload with equal array dimensions instead")]
         [CLSCompliant(false)]
         public static
-        void SeparableFilter2D<T6,T7>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T6[,] row, [InAttribute, OutAttribute] T7[,,] column)
+        void SeparableFilter2D<T6, T7>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T6[,] row, [InAttribute, OutAttribute] T7[,,] column)
             where T6 : struct
             where T7 : struct { throw new NotImplementedException(); }
 
@@ -912,7 +912,7 @@ namespace OpenTK.Graphics.OpenGL
         [Obsolete("Use overload with equal array dimensions instead")]
         [CLSCompliant(false)]
         public static
-        void SeparableFilter2D<T6,T7>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] ref T6 row, [InAttribute, OutAttribute] T7[,,] column)
+        void SeparableFilter2D<T6, T7>(OpenTK.Graphics.OpenGL.SeparableTarget target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] ref T6 row, [InAttribute, OutAttribute] T7[,,] column)
             where T6 : struct
             where T7 : struct { throw new NotImplementedException(); }
 
@@ -1517,7 +1517,7 @@ namespace OpenTK.Graphics.OpenGL
             [Obsolete("Use GetSeparableFilter<T4, T5, T6> overloads instead")]
             [CLSCompliant(false)]
             public static
-            void GetSeparableFilter<T4,T5>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [InAttribute, OutAttribute] T4[] column, [InAttribute, OutAttribute] T5[,,] span)
+            void GetSeparableFilter<T4, T5>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [InAttribute, OutAttribute] T4[] column, [InAttribute, OutAttribute] T5[,,] span)
                 where T4 : struct
                 where T5 : struct { throw new NotImplementedException(); }
 
@@ -1559,7 +1559,7 @@ namespace OpenTK.Graphics.OpenGL
             [Obsolete("Use GetSeparableFilter<T4, T5, T6> overloads instead")]
             [CLSCompliant(false)]
             public static
-            void GetSeparableFilter<T4,T5>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [InAttribute, OutAttribute] T4[,] column, [InAttribute, OutAttribute] T5[,,] span)
+            void GetSeparableFilter<T4, T5>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [InAttribute, OutAttribute] T4[,] column, [InAttribute, OutAttribute] T5[,,] span)
                 where T4 : struct
                 where T5 : struct { throw new NotImplementedException(); }
 
@@ -1601,7 +1601,7 @@ namespace OpenTK.Graphics.OpenGL
             [Obsolete("Use GetSeparableFilter<T4, T5, T6> overloads instead")]
             [CLSCompliant(false)]
             public static
-            void GetSeparableFilter<T4,T5>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [InAttribute, OutAttribute] T4[,,] column, [InAttribute, OutAttribute] T5[,,] span)
+            void GetSeparableFilter<T4, T5>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [InAttribute, OutAttribute] T4[,,] column, [InAttribute, OutAttribute] T5[,,] span)
                 where T4 : struct
                 where T5 : struct { throw new NotImplementedException(); }
 
@@ -1642,7 +1642,7 @@ namespace OpenTK.Graphics.OpenGL
             [AutoGenerated(Category = "ExtConvolution", Version = "1.0", EntryPoint = "glGetSeparableFilterEXT")]
             [Obsolete("Use GetSeparableFilter<T4, T5, T6> overloads instead")]
             public static
-            void GetSeparableFilter<T4,T5>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [InAttribute, OutAttribute] ref T4 column, [InAttribute, OutAttribute] T5[,,] span)
+            void GetSeparableFilter<T4, T5>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [OutAttribute] IntPtr row, [InAttribute, OutAttribute] ref T4 column, [InAttribute, OutAttribute] T5[,,] span)
                 where T4 : struct
                 where T5 : struct { throw new NotImplementedException(); }
 
@@ -1684,7 +1684,7 @@ namespace OpenTK.Graphics.OpenGL
             [Obsolete("Use ref/array overloads instead")]
             [CLSCompliant(false)]
             public static
-            void GetSeparableFilter<T3,T4,T5>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T3[] row, [InAttribute, OutAttribute] T4[,,] column, [InAttribute, OutAttribute] T5[,,] span)
+            void GetSeparableFilter<T3, T4, T5>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T3[] row, [InAttribute, OutAttribute] T4[,,] column, [InAttribute, OutAttribute] T5[,,] span)
                 where T3 : struct
                 where T4 : struct
                 where T5 : struct { throw new NotImplementedException(); }
@@ -1727,7 +1727,7 @@ namespace OpenTK.Graphics.OpenGL
             [Obsolete("Use ref/array overloads instead")]
             [CLSCompliant(false)]
             public static
-            void GetSeparableFilter<T3,T4,T5>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T3[,] row, [InAttribute, OutAttribute] T4[,,] column, [InAttribute, OutAttribute] T5[,,] span)
+            void GetSeparableFilter<T3, T4, T5>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T3[,] row, [InAttribute, OutAttribute] T4[,,] column, [InAttribute, OutAttribute] T5[,,] span)
                 where T3 : struct
                 where T4 : struct
                 where T5 : struct { throw new NotImplementedException(); }
@@ -1770,7 +1770,7 @@ namespace OpenTK.Graphics.OpenGL
             [Obsolete("Use ref/array overloads instead")]
             [CLSCompliant(false)]
             public static
-            void GetSeparableFilter<T3,T4,T5>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] ref T3 row, [InAttribute, OutAttribute] T4[,,] column, [InAttribute, OutAttribute] T5[,,] span)
+            void GetSeparableFilter<T3, T4, T5>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] ref T3 row, [InAttribute, OutAttribute] T4[,,] column, [InAttribute, OutAttribute] T5[,,] span)
                 where T3 : struct
                 where T4 : struct
                 where T5 : struct { throw new NotImplementedException(); }
@@ -1871,7 +1871,7 @@ namespace OpenTK.Graphics.OpenGL
             [AutoGenerated(Category = "ExtConvolution", Version = "1.0", EntryPoint = "glSeparableFilter2DEXT")]
             [Obsolete("Use ref/array overloads instead")]
             public static
-            void SeparableFilter2D<T6,T7>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] ref T6 row, [InAttribute, OutAttribute] ref T7 column)
+            void SeparableFilter2D<T6, T7>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] ref T6 row, [InAttribute, OutAttribute] ref T7 column)
                 where T6 : struct
                 where T7 : struct { throw new NotImplementedException(); }
 
@@ -1923,7 +1923,7 @@ namespace OpenTK.Graphics.OpenGL
             [Obsolete("Use ref/array overloads instead")]
             [CLSCompliant(false)]
             public static
-            void SeparableFilter2D<T6,T7>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T6[] row, [InAttribute, OutAttribute] T7[] column)
+            void SeparableFilter2D<T6, T7>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T6[] row, [InAttribute, OutAttribute] T7[] column)
                 where T6 : struct
                 where T7 : struct { throw new NotImplementedException(); }
 
@@ -1975,7 +1975,7 @@ namespace OpenTK.Graphics.OpenGL
             [Obsolete("Use ref/array overloads instead")]
             [CLSCompliant(false)]
             public static
-            void SeparableFilter2D<T6,T7>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T6[,] row, [InAttribute, OutAttribute] T7[,] column)
+            void SeparableFilter2D<T6, T7>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T6[,] row, [InAttribute, OutAttribute] T7[,] column)
                 where T6 : struct
                 where T7 : struct { throw new NotImplementedException(); }
 
@@ -2027,7 +2027,7 @@ namespace OpenTK.Graphics.OpenGL
             [Obsolete("Use ref/array overloads instead")]
             [CLSCompliant(false)]
             public static
-            void SeparableFilter2D<T6,T7>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T6[,,] row, [InAttribute, OutAttribute] T7[,,] column)
+            void SeparableFilter2D<T6, T7>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T6[,,] row, [InAttribute, OutAttribute] T7[,,] column)
                 where T6 : struct
                 where T7 : struct { throw new NotImplementedException(); }
 
@@ -2282,7 +2282,7 @@ namespace OpenTK.Graphics.OpenGL
             [Obsolete("Use ref/array overloads instead")]
             [CLSCompliant(false)]
             public static
-            void SeparableFilter2D<T6,T7>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T6[] row, [InAttribute, OutAttribute] T7[,,] column)
+            void SeparableFilter2D<T6, T7>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T6[] row, [InAttribute, OutAttribute] T7[,,] column)
                 where T6 : struct
                 where T7 : struct { throw new NotImplementedException(); }
 
@@ -2333,7 +2333,7 @@ namespace OpenTK.Graphics.OpenGL
             [AutoGenerated(Category = "ExtConvolution", Version = "1.0", EntryPoint = "glSeparableFilter2DEXT")]
             [Obsolete("Use ref/array overloads instead")]
             public static
-            void SeparableFilter2D<T6,T7>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T6[,] row, [InAttribute, OutAttribute] T7[,,] column)
+            void SeparableFilter2D<T6, T7>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] T6[,] row, [InAttribute, OutAttribute] T7[,,] column)
                 where T6 : struct
                 where T7 : struct { throw new NotImplementedException(); }
         }
@@ -2384,7 +2384,7 @@ namespace OpenTK.Graphics.OpenGL
         [AutoGenerated(Category = "ExtConvolution", Version = "1.0", EntryPoint = "glSeparableFilter2DEXT")]
         [Obsolete("Use ref/array overloads instead")]
         public static
-        void SeparableFilter2D<T6,T7>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] ref T6 row, [InAttribute, OutAttribute] T7[,,] column)
+        void SeparableFilter2D<T6, T7>(OpenTK.Graphics.OpenGL.ExtConvolution target, OpenTK.Graphics.OpenGL.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [InAttribute, OutAttribute] ref T6 row, [InAttribute, OutAttribute] T7[,,] column)
             where T6 : struct
             where T7 : struct { throw new NotImplementedException(); }
 

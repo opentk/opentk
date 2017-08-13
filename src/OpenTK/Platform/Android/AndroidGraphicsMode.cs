@@ -14,8 +14,8 @@ namespace OpenTK.Platform.Android
         /// <see cref="M:OpenTK.Platform.Android.AndroidGraphicsMode(Javax.Microedition.Khronos.Egl.EGLDisplay,int,OpenTK.Graphics.ColorFormat,int,int,int,int,bool)" />
         /// constructors (pass null to the display parameter for lazy initialization)
         /// </summary>
-        public AndroidGraphicsMode(ColorFormat color, int depth, int stencil, int samples, int buffers, bool stereo) :
-            this(null, 1, color, depth, stencil, samples, buffers, stereo)
+        public AndroidGraphicsMode(ColorFormat color, int depth, int stencil, int samples, int buffers, bool stereo)
+            : this(null, 1, color, depth, stencil, samples, buffers, stereo)
         {
         }
 
@@ -30,8 +30,8 @@ namespace OpenTK.Platform.Android
         /// </param>
         /// <param name="majorVersion">Requested OpenGL version (1 or 2)</param>
         /// <param name="mode">GraphicsMode to copy values from.</param>
-        public AndroidGraphicsMode(object display_ignored, int majorVersion, GraphicsMode mode) :
-            this(display_ignored, majorVersion, mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples, mode.Buffers, mode.Stereo)
+        public AndroidGraphicsMode(object display_ignored, int majorVersion, GraphicsMode mode)
+            : this(display_ignored, majorVersion, mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples, mode.Buffers, mode.Stereo)
         {
         }
 

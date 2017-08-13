@@ -662,15 +662,13 @@ namespace Bind
             if (f.Parameters.HasGenericParameters)
             {
                 sb.Append("<");
-                foreach (Parameter p in f.Parameters)
+                foreach (Parameter p in f.Parameters.Where(p  => p.Generic))
                 {
-                    if (p.Generic)
-                    {
-                        sb.Append(p.CurrentType);
-                        sb.Append(",");
-                    }
+                    sb.Append(p.CurrentType);
+                    sb.Append(", ");
                 }
-                sb.Remove(sb.Length - 1, 1);
+
+                sb.Remove(sb.Length - 2, 2);
                 sb.Append(">");
             }
 
@@ -679,12 +677,9 @@ namespace Bind
             if (f.Parameters.HasGenericParameters)
             {
                 sb.AppendLine();
-                foreach (Parameter p in f.Parameters)
+                foreach (Parameter p in f.Parameters.Where(p => p.Generic))
                 {
-                    if (p.Generic)
-                    {
-                        sb.AppendLine(String.Format("    where {0} : struct", p.CurrentType));
-                    }
+                    sb.AppendLine(String.Format("    where {0} : struct", p.CurrentType));
                 }
             }
 
@@ -695,13 +690,45 @@ namespace Bind
         {
             StringBuilder sb = new StringBuilder();
 
+            List<string> attributes = new List<string>();
             if (p.Flow == FlowDirection.Out)
             {
-                sb.Append("[OutAttribute] ");
+                attributes.Add("OutAttribute");
             }
             else if (p.Flow == FlowDirection.Undefined)
             {
-                sb.Append("[InAttribute, OutAttribute] ");
+                attributes.Add("InAttribute");
+                attributes.Add("OutAttribute");
+            }
+
+            if (!String.IsNullOrEmpty(p.ComputeSize))
+            {
+                int count;
+                if (Int32.TryParse(p.ComputeSize, out count))
+                {
+                    attributes.Add(String.Format("CountAttribute(Count = {0})", count));
+                }
+                else
+                {
+                    if (p.ComputeSize.StartsWith("COMPSIZE"))
+                    {
+                        //remove the compsize hint, just keep comma delimited param names
+                        var len = "COMPSIZE(".Length;
+                        var computed = p.ComputeSize.Substring(len, (p.ComputeSize.Length - len) - 1);
+                        attributes.Add(String.Format("CountAttribute(Computed = \"{0}\")", computed));
+                    }
+                    else
+                    {
+                        attributes.Add(String.Format("CountAttribute(Parameter = \"{0}\")", p.ComputeSize));
+                    }
+                }
+            }
+
+            if (attributes.Count != 0)
+            {
+                sb.Append("[");
+                sb.Append(string.Join(", ", attributes));
+                sb.Append("] ");
             }
 
             if (p.Reference)
