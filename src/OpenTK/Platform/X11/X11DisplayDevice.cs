@@ -230,7 +230,6 @@ namespace OpenTK.Platform.X11
 
                 if (dev.Bounds == Rectangle.Empty)
                 {
-
                     dev.Bounds = new Rectangle(0, 0, sizes[current_sizes_index].Width, sizes[current_sizes_index].Height);
                 }
 

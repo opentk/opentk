@@ -349,12 +349,15 @@ namespace OpenTK
             }
 
             using (var pool = new NSAutoreleasePool())
-            {if (IsCurrent)
             {
-                Cocoa.SendVoid(NSOpenGLContext, Selector.Get("clearCurrentContext"));
+                if (IsCurrent)
+                {
+                    Cocoa.SendVoid(NSOpenGLContext, Selector.Get("clearCurrentContext"));
+                }
+
+                Cocoa.SendVoid(Handle.Handle, Selector.Get("clearDrawable"));
+                Cocoa.SendVoid(Handle.Handle, Selector.Get("release"));
             }
-            Cocoa.SendVoid(Handle.Handle, Selector.Get("clearDrawable"));
-            Cocoa.SendVoid(Handle.Handle, Selector.Get("release"));}
 
             Handle = ContextHandle.Zero;
 
