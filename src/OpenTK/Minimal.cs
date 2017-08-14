@@ -13,32 +13,6 @@ namespace OpenTK
 
     #if MINIMAL
 
-    // System.Diagnostics.Debug
-    static class Debug
-    {
-        public static void Write(string message) { }
-        public static void Write(object obj) { }
-        public static void WriteLine(string message) { }
-        public static void WriteLine(object obj) { }
-        public static void Print(string message) { }
-        public static void Print(string format, params object[] args) { }
-        public static void Indent() { }
-        public static void Unindent() { }
-        public static void Flush() { }
-    }
-
-    // System.Diagnostics.Trace
-    static class Trace
-    {
-        public static void Write(string message) { }
-        public static void Write(object obj) { }
-        public static void WriteLine(string message) { }
-        public static void WriteLine(object obj) { }
-        public static void Indent() { }
-        public static void Unindent() { }
-        public static void Flush() { }
-    }
-
     // System.Diagnostics.Stopwatch
     sealed class Stopwatch
     {

@@ -2786,6 +2786,7 @@ namespace OpenTK.Graphics.OpenGL
             GL.Viewport(0, 0, size.Width, size.Height);
         }
 
+#if !MINIMAL
         /// <summary>
         /// [requires: v1.0]
         /// Set the viewport.
@@ -2814,7 +2815,7 @@ namespace OpenTK.Graphics.OpenGL
         {
             GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
-#if MINIMAL
+#else
         /// <summary>
         /// [requires: v1.0]
         /// Set the viewport.

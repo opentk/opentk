@@ -45,7 +45,7 @@ namespace OpenTK.Platform.Windows
         private const ExtendedWindowStyle ParentStyleEx = ExtendedWindowStyle.WindowEdge | ExtendedWindowStyle.ApplicationWindow;
         private const ExtendedWindowStyle ChildStyleEx = 0;
 
-        private readonly IntPtr Instance = Marshal.GetHINSTANCE(typeof(WinGLNative).Module);
+        private readonly IntPtr Instance = Functions.GetModuleHandle(typeof(WinGLNative).Module.Name);
         private readonly IntPtr ClassName = Marshal.StringToHGlobalAuto(Guid.NewGuid().ToString());
         private readonly WindowProcedure WindowProcedureDelegate;
 
