@@ -35,6 +35,7 @@ Instructions
 ============
 
 The simplest way to use OpenTK in your project is to install the [NuGet package](http://www.nuget.org/packages/OpenTK/).
+If you want to try out the latest development build from the `develop` branch, we also have a [MyGet feed](https://www.myget.org/F/opentk-develop/api/v3/index.json).
 
 Note what installing NuGet package will add reference to OpenTK.dll, but OpenTK.dll.config 
 will not be copied to the project output directory automatically, so you need to add it to your project 
