@@ -13,6 +13,10 @@ using Enum=Bind.Structures.Enum;
 
 namespace Bind
 {
+    /// <summary>
+    /// Defines different types of parameter wrapper identifiers, which are used for hinting at how the method
+    /// signatures should be generated.
+    /// </summary>
     [Flags]
     public enum WrapperTypes
     {

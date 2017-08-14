@@ -92,12 +92,23 @@ namespace Bind.Structures
         }
     }
 
+    /// <summary>
+    /// The <see cref="FunctionBody"/> class acts as a wrapper around a block of source code that makes up the body
+    /// of a function.
+    /// </summary>
     public class FunctionBody : List<string>
     {
+        /// <summary>
+        /// Initializes an empty <see cref="FunctionBody"/>.
+        /// </summary>
         public FunctionBody()
         {
         }
 
+        /// <summary>
+        /// Initializes a <see cref="FunctionBody"/> from an existing FunctionBody.
+        /// </summary>
+        /// <param name="fb">The body to copy from.</param>
         public FunctionBody(FunctionBody fb)
         {
             foreach (string s in fb)
@@ -108,11 +119,17 @@ namespace Bind.Structures
 
         private string indent = "";
 
+        /// <summary>
+        /// Indents this <see cref="FunctionBody"/> another level.
+        /// </summary>
         public void Indent()
         {
             indent += "    ";
         }
 
+        /// <summary>
+        /// Removes a level of indentation from this <see cref="FunctionBody"/>.
+        /// </summary>
         public void Unindent()
         {
             if (indent.Length > 4)
@@ -125,11 +142,19 @@ namespace Bind.Structures
             }
         }
 
+        /// <summary>
+        /// Adds a line of source code to the body at the current indentation level.
+        /// </summary>
+        /// <param name="s">The line to add.</param>
         new public void Add(string s)
         {
             base.Add(indent + s.TrimEnd('\r', '\n'));
         }
 
+        /// <summary>
+        /// Adds a range of source code lines to the body at the current indentation level.
+        /// </summary>
+        /// <param name="collection"></param>
         new public void AddRange(IEnumerable<string> collection)
         {
             foreach (string t in collection)
@@ -138,6 +163,10 @@ namespace Bind.Structures
             }
         }
 
+        /// <summary>
+        /// Builds the contents of the function body into a string and encloses it with braces.
+        /// </summary>
+        /// <returns>The body, enclosed in braces.</returns>
         public override string ToString()
         {
             if (Count == 0)
