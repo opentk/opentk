@@ -18,6 +18,15 @@ Project website: https://opentk.github.io/
 Official git repository: https://github.com/opentk/opentk
 
 
+Build Status
+========
+
+| Platform       | Status         |
+| -------------- | -------------- |
+| Windows        | [![Build status](https://ci.appveyor.com/api/projects/status/opentk/branch/develop?svg=true)](https://ci.appveyor.com/project/varon/opentk/branch/develop) |
+| Mono/Linux     | [![Build status](https://travis-ci.org/opentk/opentk.svg?branch=develop)](https://travis-ci.org/opentk/opentk) |
+
+
 Features
 ========
 
