@@ -780,6 +780,7 @@
     <None Include="OpenTK.csproj.paket.template" />
     <None Include="paket.references" />
     <Compile Include="Platform\MacOS\Cocoa\NSDragOperation.cs" />
+    <Compile Include="Platform\MacOS\CoreVideo.cs" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="$(SolutionDir)\stylecop.json">

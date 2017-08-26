@@ -94,6 +94,20 @@ namespace OpenTK.Platform.MacOS
                         double freq = dict.GetNumberValue("RefreshRate");
                         bool current = currentMode.Ref == dict.Ref;
 
+                        if (freq <= 0)
+                        {
+                            IntPtr displayLink;
+                            CV.DisplayLinkCreateWithCGDisplay(currentDisplay, out displayLink);
+
+                            CVTime t = CV.DisplayLinkGetNominalOutputVideoRefreshPeriod(displayLink);
+                            if ((t.flags & (Int32)CV.TimeFlags.TimeIsIndefinite) != (Int32)CV.TimeFlags.TimeIsIndefinite)
+                            {
+                                freq = (double)t.timeScale / t.timeValue;
+                            }
+
+                            CV.DisplayLinkRelease(displayLink);
+                        }
+
                         //if (current) Debug.Write("  * ");
                         //else Debug.Write("    ");
 
