@@ -936,7 +936,7 @@ namespace OpenTK.Rewrite
                 }
                 else if (p.IsArray)
                 {
-                    if (p.Name != method.Module.ImportReference(typeof(string[])).Name)
+                    if (p.Name != "String[]")
                     {
                         // .Net treats 1d arrays differently than higher rank arrays.
                         // 1d arrays are directly supported by instructions such as ldlen and ldelema.
