@@ -72,57 +72,57 @@ namespace OpenTK.Platform.iPhoneOS
         private static GLCalls CreateES1()
         {
             return new GLCalls() {
-                BindFramebuffer         = (t, f)              => ES11.GL.Oes.BindFramebuffer(t, f),
-                BindRenderbuffer        = (t, r)              => ES11.GL.Oes.BindRenderbuffer(t, r),
-                DeleteFramebuffers      = (int n, ref int f)  => ES11.GL.Oes.DeleteFramebuffers(n, ref f),
-                DeleteRenderbuffers     = (int n, ref int r)  => ES11.GL.Oes.DeleteRenderbuffers(n, ref r),
-                FramebufferRenderbuffer = (t, a, rt, rb)      => ES11.GL.Oes.FramebufferRenderbuffer(t, a, rt, rb),
-                GenFramebuffers         = (int n, out int f)  => ES11.GL.Oes.GenFramebuffers(n, out f),
-                GenRenderbuffers        = (int n, out int r)  => ES11.GL.Oes.GenRenderbuffers(n, out r),
-                GetInteger              = (All n, out int v)  => ES11.GL.GetInteger(n, out v),
-                Scissor                 = (x, y, w, h)        => ES11.GL.Scissor(x, y, w, h),
-                Viewport                = (x, y, w, h)        => ES11.GL.Viewport(x, y, w, h),
-                GetRenderbufferParameter= (All t, All p, out int a) => ES11.GL.Oes.GetRenderbufferParameter (t, p, out a),
-                PixelStore              = (n, p)                    => ES11.GL.PixelStore(n, p),
-                ReadPixels              = (x, y, w, h, f, t, d)     => ES11.GL.ReadPixels(x, y, w, h, f, t, d),
+                BindFramebuffer          = (t, f)              => ES11.GL.Oes.BindFramebuffer(t, f),
+                BindRenderbuffer         = (t, r)              => ES11.GL.Oes.BindRenderbuffer(t, r),
+                DeleteFramebuffers       = (int n, ref int f)  => ES11.GL.Oes.DeleteFramebuffers(n, ref f),
+                DeleteRenderbuffers      = (int n, ref int r)  => ES11.GL.Oes.DeleteRenderbuffers(n, ref r),
+                FramebufferRenderbuffer  = (t, a, rt, rb)      => ES11.GL.Oes.FramebufferRenderbuffer(t, a, rt, rb),
+                GenFramebuffers          = (int n, out int f)  => ES11.GL.Oes.GenFramebuffers(n, out f),
+                GenRenderbuffers         = (int n, out int r)  => ES11.GL.Oes.GenRenderbuffers(n, out r),
+                GetInteger               = (All n, out int v)  => ES11.GL.GetInteger(n, out v),
+                Scissor                  = (x, y, w, h)        => ES11.GL.Scissor(x, y, w, h),
+                Viewport                 = (x, y, w, h)        => ES11.GL.Viewport(x, y, w, h),
+                GetRenderbufferParameter = (All t, All p, out int a) => ES11.GL.Oes.GetRenderbufferParameter (t, p, out a),
+                PixelStore               = (n, p)                    => ES11.GL.PixelStore(n, p),
+                ReadPixels               = (x, y, w, h, f, t, d)     => ES11.GL.ReadPixels(x, y, w, h, f, t, d),
             };
         }
 
         private static GLCalls CreateES2()
         {
             return new GLCalls() {
-                BindFramebuffer         = (t, f)              => ES20.GL.BindFramebuffer((ES20.FramebufferTarget) t, f),
-                BindRenderbuffer        = (t, r)              => ES20.GL.BindRenderbuffer((ES20.RenderbufferTarget) t, r),
-                DeleteFramebuffers      = (int n, ref int f)  => ES20.GL.DeleteFramebuffers(n, ref f),
-                DeleteRenderbuffers     = (int n, ref int r)  => ES20.GL.DeleteRenderbuffers(n, ref r),
-                FramebufferRenderbuffer = (t, a, rt, rb)      => ES20.GL.FramebufferRenderbuffer((ES20.FramebufferTarget) t, (ES20.FramebufferSlot) a, (ES20.RenderbufferTarget) rt, rb),
-                GenFramebuffers         = (int n, out int f)  => ES20.GL.GenFramebuffers(n, out f),
-                GenRenderbuffers        = (int n, out int r)  => ES20.GL.GenRenderbuffers(n, out r),
-                GetInteger              = (All n, out int v)  => ES20.GL.GetInteger((ES20.GetPName) n, out v),
-                Scissor                 = (x, y, w, h)        => ES20.GL.Scissor(x, y, w, h),
-                Viewport                = (x, y, w, h)        => ES20.GL.Viewport(x, y, w, h),
-                GetRenderbufferParameter= (All t, All p, out int a) => ES20.GL.GetRenderbufferParameter ((ES20.RenderbufferTarget) t, (ES20.RenderbufferParameterName) p, out a),
-                PixelStore              = (n, p)                    => ES20.GL.PixelStore((ES20.PixelStoreParameter) n, p),
-                ReadPixels              = (x, y, w, h, f, t, d)     => ES20.GL.ReadPixels(x, y, w, h, (ES20.PixelFormat) f, (ES20.PixelType) t, d),
+                BindFramebuffer          = (t, f)              => ES20.GL.BindFramebuffer((ES20.FramebufferTarget)t, f),
+                BindRenderbuffer         = (t, r)              => ES20.GL.BindRenderbuffer((ES20.RenderbufferTarget)t, r),
+                DeleteFramebuffers       = (int n, ref int f)  => ES20.GL.DeleteFramebuffers(n, ref f),
+                DeleteRenderbuffers      = (int n, ref int r)  => ES20.GL.DeleteRenderbuffers(n, ref r),
+                FramebufferRenderbuffer  = (t, a, rt, rb)      => ES20.GL.FramebufferRenderbuffer((ES20.FramebufferTarget)t, (ES20.FramebufferSlot)a, (ES20.RenderbufferTarget)rt, rb),
+                GenFramebuffers          = (int n, out int f)  => ES20.GL.GenFramebuffers(n, out f),
+                GenRenderbuffers         = (int n, out int r)  => ES20.GL.GenRenderbuffers(n, out r),
+                GetInteger               = (All n, out int v)  => ES20.GL.GetInteger((ES20.GetPName)n, out v),
+                Scissor                  = (x, y, w, h)        => ES20.GL.Scissor(x, y, w, h),
+                Viewport                 = (x, y, w, h)        => ES20.GL.Viewport(x, y, w, h),
+                GetRenderbufferParameter = (All t, All p, out int a) => ES20.GL.GetRenderbufferParameter ((ES20.RenderbufferTarget)t, (ES20.RenderbufferParameterName)p, out a),
+                PixelStore               = (n, p)                    => ES20.GL.PixelStore((ES20.PixelStoreParameter)n, p),
+                ReadPixels               = (x, y, w, h, f, t, d)     => ES20.GL.ReadPixels(x, y, w, h, (ES20.PixelFormat)f, (ES20.PixelType)t, d),
             };
         }
 
         private static GLCalls CreateES3()
         {
             return new GLCalls() {
-                BindFramebuffer         = (t, f)              => ES30.GL.BindFramebuffer((ES30.FramebufferTarget) t, f),
-                BindRenderbuffer        = (t, r)              => ES30.GL.BindRenderbuffer((ES30.RenderbufferTarget) t, r),
-                DeleteFramebuffers      = (int n, ref int f)  => ES30.GL.DeleteFramebuffers(n, ref f),
-                DeleteRenderbuffers     = (int n, ref int r)  => ES30.GL.DeleteRenderbuffers(n, ref r),
-                FramebufferRenderbuffer = (t, a, rt, rb)      => ES30.GL.FramebufferRenderbuffer((ES30.FramebufferTarget) t, (ES30.FramebufferAttachment) a, (ES30.RenderbufferTarget) rt, rb),
-                GenFramebuffers         = (int n, out int f)  => ES30.GL.GenFramebuffers(n, out f),
-                GenRenderbuffers        = (int n, out int r)  => ES30.GL.GenRenderbuffers(n, out r),
-                GetInteger              = (All n, out int v)  => ES30.GL.GetInteger((ES30.GetPName) n, out v),
-                Scissor                 = (x, y, w, h)        => ES30.GL.Scissor(x, y, w, h),
-                Viewport                = (x, y, w, h)        => ES30.GL.Viewport(x, y, w, h),
-                GetRenderbufferParameter= (All t, All p, out int a) => ES30.GL.GetRenderbufferParameter ((ES30.RenderbufferTarget) t, (ES30.RenderbufferParameterName) p, out a),
-                PixelStore              = (n, p)                    => ES30.GL.PixelStore((ES30.PixelStoreParameter) n, p),
-                ReadPixels              = (x, y, w, h, f, t, d)     => ES30.GL.ReadPixels(x, y, w, h, (ES30.PixelFormat) f, (ES30.PixelType) t, d),
+                BindFramebuffer          = (t, f)              => ES30.GL.BindFramebuffer((ES30.FramebufferTarget)t, f),
+                BindRenderbuffer         = (t, r)              => ES30.GL.BindRenderbuffer((ES30.RenderbufferTarget)t, r),
+                DeleteFramebuffers       = (int n, ref int f)  => ES30.GL.DeleteFramebuffers(n, ref f),
+                DeleteRenderbuffers      = (int n, ref int r)  => ES30.GL.DeleteRenderbuffers(n, ref r),
+                FramebufferRenderbuffer  = (t, a, rt, rb)      => ES30.GL.FramebufferRenderbuffer((ES30.FramebufferTarget)t, (ES30.FramebufferAttachment)a, (ES30.RenderbufferTarget)rt, rb),
+                GenFramebuffers          = (int n, out int f)  => ES30.GL.GenFramebuffers(n, out f),
+                GenRenderbuffers         = (int n, out int r)  => ES30.GL.GenRenderbuffers(n, out r),
+                GetInteger               = (All n, out int v)  => ES30.GL.GetInteger((ES30.GetPName)n, out v),
+                Scissor                  = (x, y, w, h)        => ES30.GL.Scissor(x, y, w, h),
+                Viewport                 = (x, y, w, h)        => ES30.GL.Viewport(x, y, w, h),
+                GetRenderbufferParameter = (All t, All p, out int a) => ES30.GL.GetRenderbufferParameter ((ES30.RenderbufferTarget)t, (ES30.RenderbufferParameterName)p, out a),
+                PixelStore               = (n, p)                    => ES30.GL.PixelStore((ES30.PixelStoreParameter)n, p),
+                ReadPixels               = (x, y, w, h, f, t, d)     => ES30.GL.ReadPixels(x, y, w, h, (ES30.PixelFormat)f, (ES30.PixelType)t, d),
             };
         }
     }
@@ -196,7 +196,7 @@ namespace OpenTK.Platform.iPhoneOS
             // Can't use TimeSpan.FromSeconds() as that only has 1ms
             // resolution, and we need better (e.g. 60fps doesn't fit nicely
             // in 1ms resolution, but does in ticks).
-            timeout = new TimeSpan ((long) (((1.0 * TimeSpan.TicksPerSecond) / updatesPerSecond) + 0.5));
+            timeout = new TimeSpan ((long)(((1.0 * TimeSpan.TicksPerSecond) / updatesPerSecond) + 0.5));
         }
 
         public void Suspend ()
@@ -292,7 +292,7 @@ namespace OpenTK.Platform.iPhoneOS
             }
         }
 
-        public IGraphicsContext GraphicsContext {get; set;}
+        public IGraphicsContext GraphicsContext {get; set; }
         public EAGLContext EAGLContext {
             get {
                 AssertValid();
@@ -347,14 +347,14 @@ namespace OpenTK.Platform.iPhoneOS
         }
 
         public int Framebuffer {
-            get {return framebuffer;}
+            get {return framebuffer; }
         }
 
         public int Renderbuffer {
-            get {return renderbuffer;}
+            get {return renderbuffer; }
         }
 
-        public bool AutoResize {get; set;}
+        public bool AutoResize {get; set; }
 
         private UIViewController GetViewController()
         {
@@ -406,7 +406,7 @@ namespace OpenTK.Platform.iPhoneOS
         }
 
         bool INativeWindow.Focused {
-            get {throw new NotImplementedException();}
+            get {throw new NotImplementedException(); }
         }
 
         public virtual bool Visible {
@@ -433,7 +433,7 @@ namespace OpenTK.Platform.iPhoneOS
         }
 
         bool INativeWindow.Exists {
-            get {throw new NotImplementedException();}
+            get {throw new NotImplementedException(); }
         }
 
         public virtual IWindowInfo WindowInfo {
@@ -495,13 +495,13 @@ namespace OpenTK.Platform.iPhoneOS
         }
 
         Rectangle INativeWindow.Bounds {
-            get {throw new NotSupportedException();}
-            set {throw new NotSupportedException();}
+            get {throw new NotSupportedException(); }
+            set {throw new NotSupportedException(); }
         }
 
         Point INativeWindow.Location {
-            get {throw new NotSupportedException();}
-            set {throw new NotSupportedException();}
+            get {throw new NotSupportedException(); }
+            set {throw new NotSupportedException(); }
         }
 
         private Size size;
@@ -529,33 +529,33 @@ namespace OpenTK.Platform.iPhoneOS
         }
 
         int INativeWindow.X {
-            get {throw new NotSupportedException();}
-            set {throw new NotSupportedException();}
+            get {throw new NotSupportedException(); }
+            set {throw new NotSupportedException(); }
         }
 
         int INativeWindow.Y {
-            get {throw new NotSupportedException();}
-            set {throw new NotSupportedException();}
+            get {throw new NotSupportedException(); }
+            set {throw new NotSupportedException(); }
         }
 
         int INativeWindow.Width {
-            get {throw new NotSupportedException();}
-            set {throw new NotSupportedException();}
+            get {throw new NotSupportedException(); }
+            set {throw new NotSupportedException(); }
         }
 
         int INativeWindow.Height {
-            get {throw new NotSupportedException();}
-            set {throw new NotSupportedException();}
+            get {throw new NotSupportedException(); }
+            set {throw new NotSupportedException(); }
         }
 
         Rectangle INativeWindow.ClientRectangle {
-            get {throw new NotSupportedException();}
-            set {throw new NotSupportedException();}
+            get {throw new NotSupportedException(); }
+            set {throw new NotSupportedException(); }
         }
 
         Size INativeWindow.ClientSize {
-            get {throw new NotSupportedException();}
-            set {throw new NotSupportedException();}
+            get {throw new NotSupportedException(); }
+            set {throw new NotSupportedException(); }
         }
 
         protected virtual void CreateFrameBuffer()
@@ -566,7 +566,7 @@ namespace OpenTK.Platform.iPhoneOS
                 throw new InvalidOperationException("Set the LayerColorFormat property to an EAGLColorFormat value before calling Run().");
             }
 
-            CAEAGLLayer eaglLayer = (CAEAGLLayer) Layer;
+            CAEAGLLayer eaglLayer = (CAEAGLLayer)Layer;
             eaglLayer.DrawableProperties = NSDictionary.FromObjectsAndKeys (
                     new NSObject [] {NSNumber.FromBoolean(LayerRetainsBacking), LayerColorFormat},
                     new NSObject [] {EAGLDrawableProperty.RetainedBacking,      EAGLDrawableProperty.ColorFormat}
@@ -899,15 +899,15 @@ namespace OpenTK.Platform.iPhoneOS
             using (var data_provider = new CGDataProvider (data, 0, data.Length)) {
                 using (var colorspace = CGColorSpace.CreateDeviceRGB ()) {
                     using (var iref = new CGImage (width, height, 8, 32, width * 4, colorspace,
-                                    (CGImageAlphaInfo) ((int) CGBitmapFlags.ByteOrder32Big | (int) CGImageAlphaInfo.PremultipliedLast),
+                                    (CGImageAlphaInfo)((int)CGBitmapFlags.ByteOrder32Big | (int)CGImageAlphaInfo.PremultipliedLast),
                                     data_provider, null, true, CGColorRenderingIntent.Default)) {
 
                         // OpenGL ES measures data in PIXELS
                         // Create a graphics context with the target size measured in POINTS
                         int widthInPoints, heightInPoints;
-                        float scale = (float) ContentScaleFactor;
-                        widthInPoints = (int) (width / scale);
-                        heightInPoints = (int) (height / scale);
+                        float scale = (float)ContentScaleFactor;
+                        widthInPoints = (int)(width / scale);
+                        heightInPoints = (int)(height / scale);
                         UIGraphics.BeginImageContextWithOptions (new System.Drawing.SizeF (widthInPoints, heightInPoints), false, scale);
 
                         try {
@@ -1011,30 +1011,30 @@ namespace OpenTK.Platform.iPhoneOS
         }
 
         event EventHandler<EventArgs> INativeWindow.Move {
-            add {throw new NotSupportedException();}
-            remove {throw new NotSupportedException();}
+            add {throw new NotSupportedException(); }
+            remove {throw new NotSupportedException(); }
         }
         public event EventHandler<EventArgs> Resize;
         event EventHandler<CancelEventArgs> INativeWindow.Closing {
-            add {throw new NotSupportedException();}
-            remove {throw new NotSupportedException();}
+            add {throw new NotSupportedException(); }
+            remove {throw new NotSupportedException(); }
         }
         public event EventHandler<EventArgs> Closed;
         public event EventHandler<EventArgs> Disposed;
         public event EventHandler<EventArgs> TitleChanged;
         public event EventHandler<EventArgs> VisibleChanged;
         event EventHandler<EventArgs> INativeWindow.FocusedChanged {
-            add {throw new NotSupportedException();}
-            remove {throw new NotSupportedException();}
+            add {throw new NotSupportedException(); }
+            remove {throw new NotSupportedException(); }
         }
         event EventHandler<EventArgs> INativeWindow.WindowBorderChanged {
-            add {throw new NotSupportedException();}
-            remove {throw new NotSupportedException();}
+            add {throw new NotSupportedException(); }
+            remove {throw new NotSupportedException(); }
         }
         public event EventHandler<EventArgs> WindowStateChanged;
         event EventHandler<KeyPressEventArgs> INativeWindow.KeyPress {
-            add {throw new NotSupportedException();}
-            remove {throw new NotSupportedException();}
+            add {throw new NotSupportedException(); }
+            remove {throw new NotSupportedException(); }
         }
 
         public event EventHandler<EventArgs> Load;

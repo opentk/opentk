@@ -15,11 +15,11 @@ using OpenTK.Graphics;
 namespace OpenTK.Platform.iPhoneOS {
     internal class iPhoneOSGraphicsContext : EmbeddedGraphicsContext
     {
-        public EAGLContext EAGLContext {get; private set;}
+        public EAGLContext EAGLContext {get; private set; }
 
         internal iPhoneOSGraphicsContext(ContextHandle h)
         {
-            EAGLContext = (EAGLContext) Runtime.GetNSObject(h.Handle);
+            EAGLContext = (EAGLContext)Runtime.GetNSObject(h.Handle);
         }
 
         internal iPhoneOSGraphicsContext(ContextHandle handle, IWindowInfo window, IGraphicsContext sharedContext, int major, int minor, GraphicsContextFlags flags)
@@ -52,7 +52,7 @@ namespace OpenTK.Platform.iPhoneOS {
                     : new EAGLContext(version);
                 Handle = new ContextHandle(EAGLContext.Handle);
             } else {
-                EAGLContext = (EAGLContext) Runtime.GetNSObject (handle.Handle);
+                EAGLContext = (EAGLContext)Runtime.GetNSObject (handle.Handle);
                 Handle = handle;
             }
         }
@@ -89,7 +89,7 @@ namespace OpenTK.Platform.iPhoneOS {
 
         public override void SwapBuffers()
         {
-            if (!EAGLContext.PresentRenderBuffer((uint) OpenTK.Graphics.ES11.All.RenderbufferOes))
+            if (!EAGLContext.PresentRenderBuffer((uint)OpenTK.Graphics.ES11.All.RenderbufferOes))
             {
                 throw new InvalidOperationException ("EAGLContext.PresentRenderbuffer failed.");
             }
@@ -105,7 +105,7 @@ namespace OpenTK.Platform.iPhoneOS {
 
         public override bool IsCurrent
         {
-            get {return EAGLContext.CurrentContext == EAGLContext;}
+            get {return EAGLContext.CurrentContext == EAGLContext; }
         }
 
         public override int SwapInterval
@@ -119,7 +119,7 @@ namespace OpenTK.Platform.iPhoneOS {
             return IntPtr.Zero;
         }
 
-        public GraphicsMode GraphicsMode {get; private set;}
+        public GraphicsMode GraphicsMode {get; private set; }
 
         protected override void Dispose(bool disposing)
         {
