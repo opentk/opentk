@@ -235,7 +235,7 @@ namespace OpenTK
         public static readonly Vector3d UnitY = new Vector3d(0, 1, 0);
 
         /// <summary>
-        /// /// Defines a unit-length Vector3d that points towards the Z-axis.
+        /// Defines a unit-length Vector3d that points towards the Z-axis.
         /// </summary>
         public static readonly Vector3d UnitZ = new Vector3d(0, 0, 1);
 
