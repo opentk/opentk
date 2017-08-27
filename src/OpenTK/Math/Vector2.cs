@@ -239,7 +239,8 @@ namespace OpenTK
         /// <param name="result">Result of operation.</param>
         public static void Add(ref Vector2 a, ref Vector2 b, out Vector2 result)
         {
-            result = new Vector2(a.X + b.X, a.Y + b.Y);
+            result.X = a.X + b.X;
+            result.Y = a.Y + b.Y;
         }
 
         /// <summary>
@@ -262,7 +263,8 @@ namespace OpenTK
         /// <param name="result">Result of subtraction</param>
         public static void Subtract(ref Vector2 a, ref Vector2 b, out Vector2 result)
         {
-            result = new Vector2(a.X - b.X, a.Y - b.Y);
+            result.X = a.X - b.X;
+            result.Y = a.Y - b.Y;
         }
 
         /// <summary>
@@ -285,7 +287,8 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Multiply(ref Vector2 vector, float scale, out Vector2 result)
         {
-            result = new Vector2(vector.X * scale, vector.Y * scale);
+            result.X = vector.X * scale;
+            result.Y = vector.Y * scale;
         }
 
         /// <summary>
@@ -308,7 +311,8 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Multiply(ref Vector2 vector, ref Vector2 scale, out Vector2 result)
         {
-            result = new Vector2(vector.X * scale.X, vector.Y * scale.Y);
+            result.X = vector.X * scale.X;
+            result.Y = vector.Y * scale.Y;
         }
 
         /// <summary>
@@ -355,7 +359,8 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector2 vector, ref Vector2 scale, out Vector2 result)
         {
-            result = new Vector2(vector.X / scale.X, vector.Y / scale.Y);
+            result.X = vector.X / scale.X;
+            result.Y = vector.Y / scale.Y;
         }
 
         /// <summary>
@@ -692,7 +697,8 @@ namespace OpenTK
             Quaternion.Multiply(ref quat, ref v, out t);
             Quaternion.Multiply(ref t, ref i, out v);
 
-            result = new Vector2(v.X, v.Y);
+            result.X = v.X;
+            result.Y = v.Y;
         }
 
         /// <summary>
