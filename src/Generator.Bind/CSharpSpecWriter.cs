@@ -291,7 +291,7 @@ namespace Bind
                 sw.WriteLine("[CLSCompliant(false)]");
             }
 
-            sw.WriteLine("public static {0} {{ throw new NotImplementedException(); }}", GetDeclarationString(f, Settings.Compatibility));
+            sw.WriteLine("public static {0} {{ throw new BindingsNotRewrittenException(); }}", GetDeclarationString(f, Settings.Compatibility));
         }
 
         private void WriteDocumentation(BindStreamWriter sw, Function f)
