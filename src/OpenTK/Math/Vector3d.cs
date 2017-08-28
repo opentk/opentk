@@ -649,6 +649,11 @@ namespace OpenTK
         /// <summary>
         /// Caclulate the cross (vector) product of two vectors
         /// </summary>
+        /// <remarks>
+        /// It is incorrect to call this method passing the same variable for
+        /// <paramref name="result"/> as for <paramref name="left"/> or
+        /// <paramref name="right"/>.
+        /// </remarks>
         /// <param name="left">First operand</param>
         /// <param name="right">Second operand</param>
         /// <returns>The cross product of the two inputs</returns>
@@ -741,6 +746,10 @@ namespace OpenTK
         /// <summary>Transform a direction vector by the given Matrix
         /// Assumes the matrix has a bottom row of (0,0,0,1), that is the translation part is ignored.
         /// </summary>
+        /// <remarks>
+        /// It is incorrect to call this method passing the same variable for
+        /// <paramref name="result"/> as for <paramref name="vec"/>.
+        /// </remarks>
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
         /// <param name="result">The transformed vector</param>
@@ -870,6 +879,11 @@ namespace OpenTK
         }
 
         /// <summary>Transform a Vector by the given Matrix</summary>
+        /// <remarks>
+        /// It is incorrect to call this method passing the same variable for
+        /// <paramref name="result"/> as for <paramref name="left"/> or
+        /// <paramref name="right"/>.
+        /// </remarks>
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
         /// <param name="result">The transformed vector</param>
