@@ -27,8 +27,7 @@
     <DocumentationFile>bin\Debug\Rewrite.xml</DocumentationFile>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Commandlineparameters>--assembly ../../OpenTK/Debug/OpenTK.dll --signing-key ../../../OpenTK.snk --debug
-      -debug</Commandlineparameters>
+    <Commandlineparameters>--assembly ../../OpenTK/Debug/OpenTK.dll --signing-key ../../../OpenTK.snk --debug</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -39,8 +38,7 @@
     <DocumentationFile>bin\Release\Rewrite.xml</DocumentationFile>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Commandlineparameters>--assembly ../../OpenTK/Release/OpenTK.dll --signing-key ../../../OpenTK
-      .snk</Commandlineparameters>
+    <Commandlineparameters>--assembly ../../OpenTK/Release/OpenTK.dll --signing-key ../../../OpenTK.snk</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
