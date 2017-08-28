@@ -5,7 +5,7 @@ namespace OpenTK.Rewrite
 {
     public class Options
     {
-        [Option('i', "assembly", Required = true,
+        [Option('a', "assembly", Required = true,
             HelpText = "The path to the target assembly that should be rewritten.")]
         public string TargetAssembly { get; set; }
 
