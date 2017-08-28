@@ -301,7 +301,7 @@ namespace OpenTK.Rewrite
                 generatedVariables = EmitConvenienceWrapper(wrapper, native, difference, body, il);
             }
 
-            if (Options.UseDLLImport)
+            if (slot == -1 || Options.UseDLLImport)
             {
                 // issue DllImport call
                 EmitCall(il, native);
