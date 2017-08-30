@@ -49,6 +49,7 @@ namespace OpenTK.Platform.X11
                         input_driver = new X11Input();
                     }
                 }
+
                 return input_driver;
             }
         }

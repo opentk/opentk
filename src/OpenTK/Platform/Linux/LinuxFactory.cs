@@ -63,6 +63,7 @@ namespace OpenTK.Platform.Linux
                     {
                         _fd = CreateDisplay(out gbm_device, out egl_display);
                     }
+
                     return _fd;
                 }
             }
@@ -129,6 +130,7 @@ namespace OpenTK.Platform.Linux
                 Debug.Print("[KMS] Failed to open gpu");
                 return fd;
             }
+
             Debug.Print("[KMS] GPU '{0}' opened as fd:{1}", gpu, fd);
 
             gbm_device = Gbm.CreateDevice(fd);
@@ -136,6 +138,7 @@ namespace OpenTK.Platform.Linux
             {
                 throw new NotSupportedException("[KMS] Failed to create GBM device");
             }
+
             Debug.Print("[KMS] GBM {0:x} created successfully; ", gbm_device);
 
             egl_display = Egl.GetDisplay(gbm_device);
@@ -143,6 +146,7 @@ namespace OpenTK.Platform.Linux
             {
                 throw new NotSupportedException("[KMS] Failed to create EGL display");
             }
+
             Debug.Print("[KMS] EGL display {0:x} created successfully", egl_display);
 
             int major, minor;
@@ -151,6 +155,7 @@ namespace OpenTK.Platform.Linux
                 ErrorCode error = Egl.GetError();
                 throw new NotSupportedException("[KMS] Failed to initialize EGL display. Error code: " + error);
             }
+
             Debug.Print("[KMS] EGL {0}.{1} initialized successfully on display {2:x}", major, minor, egl_display);
 
             return fd;
@@ -164,12 +169,14 @@ namespace OpenTK.Platform.Linux
                 Egl.Terminate(egl_display);
                 egl_display = IntPtr.Zero;
             }
+
             if (gbm_device != IntPtr.Zero)
             {
                 Debug.Print("[KMS] Destroying GBM device.");
                 Gbm.DestroyDevice(gbm_device);
                 gbm_device = IntPtr.Zero;
             }
+
             if (_fd >= 0)
             {
                 Debug.Print("[KMS] Closing GPU fd.");

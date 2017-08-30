@@ -64,6 +64,7 @@ namespace OpenTK.Graphics.OpenGL
                     ContextErrors.Add(Context, new List<ErrorCode>());
                 }
             }
+
             ResetErrors();
         }
 
@@ -92,7 +93,8 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     error = GL.GetError();
                     error_list.Add(error);
-                } while (error != ErrorCode.NoError);
+                }
+                while (error != ErrorCode.NoError);
 
                 if (error_list.Count != 1)
                 {
@@ -109,6 +111,7 @@ namespace OpenTK.Graphics.OpenGL
                             break;
                         }
                     }
+
                     sb.Remove(sb.Length - 2, 2); // Remove the last comma
 
                     throw new GraphicsErrorException(sb.ToString());

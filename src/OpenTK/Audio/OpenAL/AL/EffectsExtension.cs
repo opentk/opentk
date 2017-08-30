@@ -145,6 +145,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentOutOfRangeException("n", "Must be higher than 0.");
             }
+
             int[] effects = new int[n];
             GenEffects(n, out effects[0]);
             return effects;
@@ -176,7 +177,6 @@ namespace OpenTK.Audio.OpenAL
                     effect = *ptr;
                 }
             }
-
         }
 
         //[CLSCompliant(false)]
@@ -223,6 +223,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentNullException("effects");
             }
+
             DeleteEffects(effects.Length, ref effects[0]);
         }
 
@@ -235,6 +236,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentNullException("effects");
             }
+
             DeleteEffects(effects.Length, ref effects[0]);
         }
 
@@ -524,11 +526,11 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>Pointer addressing sufficient memory to store n Filter object identifiers.</returns>
         public int[] GenFilters(int n)
         {
-
             if (n <= 0)
             {
                 throw new ArgumentOutOfRangeException("n", "Must be higher than 0.");
             }
+
             int[] filters = new int[n];
             GenFilters(filters.Length, out filters[0]);
             return filters;
@@ -603,6 +605,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentNullException("filters");
             }
+
             DeleteFilters(filters.Length, ref filters[0]);
         }
 
@@ -614,6 +617,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentNullException("filters");
             }
+
             DeleteFilters(filters.Length, ref filters[0]);
         }
 
@@ -839,6 +843,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentOutOfRangeException("n", "Must be higher than 0.");
             }
+
             int[] slots = new int[n];
             GenAuxiliaryEffectSlots(slots.Length, out slots[0]);
             return slots;
@@ -910,6 +915,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentNullException("slots");
             }
+
             DeleteAuxiliaryEffectSlots(slots.Length, ref slots[0]);
         }
 
@@ -922,6 +928,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentNullException("slots");
             }
+
             DeleteAuxiliaryEffectSlots(slots.Length, ref slots[0]);
         }
 
@@ -1117,7 +1124,6 @@ namespace OpenTK.Audio.OpenAL
                 Debug.Print("EFX Extension (ALC_EXT_EFX) is not supported(AudioContext: {0}).", AudioContext.CurrentContext.ToString());
                 return;
             }
-            // Console.WriteLine("ALC_EXT_EFX found. Efx can be used.");
 
             try
             {
@@ -1136,7 +1142,6 @@ namespace OpenTK.Audio.OpenAL
                 Debug.WriteLine("Failed to marshal Effect functions. " + e.ToString());
                 return;
             }
-            // Console.WriteLine("Effect functions appear to be ok.");
 
             try
             {
@@ -1153,7 +1158,6 @@ namespace OpenTK.Audio.OpenAL
                 Debug.WriteLine("Failed to marshal Filter functions. " + e.ToString());
                 return;
             }
-            // Console.WriteLine("Filter functions appear to be ok.");
 
             try
             {
@@ -1170,7 +1174,6 @@ namespace OpenTK.Audio.OpenAL
                 Debug.WriteLine("Failed to marshal AuxiliaryEffectSlot functions. " + e.ToString());
                 return;
             }
-            // Console.WriteLine("Auxiliary Effect Slot functions appear to be ok.");
 
             // didn't return so far, everything went fine.
             IsInitialized = true;

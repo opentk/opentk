@@ -64,32 +64,44 @@ namespace Bind
                         {
                             case "?":
                             case "help":
+                            {
                                 ShowHelp();
                                 return;
+                            }
                             case "in":
                             case "input":
+                            {
                                 Settings.InputPath = val;
                                 break;
+                            }
                             case "out":
                             case "output":
+                            {
                                 Settings.OutputPath = val;
                                 break;
+                            }
                             case "mode":
-                                {
-                                    string arg = val.ToLower();
-                                    SetGeneratorMode(arg);
-                                    break;
-                                }
+                            {
+                                string arg = val.ToLower();
+                                SetGeneratorMode(arg);
+                                break;
+                            }
                             case "namespace":
                             case "ns":
+                            {
                                 Settings.OutputNamespace = val;
                                 break;
+                            }
                             case "class":
+                            {
                                 Settings.OutputClass = val;
                                 break;
+                            }
                             case "gl":
+                            {
                                 Settings.GLClass = val;
                                 break;
+                            }
                             case "legacy":
                             case "o":
                             case "option":
@@ -125,9 +137,11 @@ namespace Bind
                                 break;
                             }
                             default:
+                            {
                                 throw new ArgumentException(
                                     String.Format("Argument {0} not recognized. Use the '/?' switch for help.", a)
                                 );
+                            }
                         }
                     }
                 }

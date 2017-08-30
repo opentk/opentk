@@ -99,7 +99,6 @@ namespace OpenTK.Audio.OpenAL
                 RoomRolloffFactor = roomRolloffFactor;
                 Flags = flags;
             }
-
         }
 
         // TODO: CLS compliance.

@@ -264,6 +264,7 @@ namespace Bind
                         ext = ext[0] + ext.Substring(1).ToLower();
                     }
                 }
+
                 return ext;
             }
             else

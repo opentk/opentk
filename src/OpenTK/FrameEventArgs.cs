@@ -63,6 +63,7 @@ namespace OpenTK
                 {
                     throw new ArgumentOutOfRangeException();
                 }
+                
                 elapsed = value;
             }
         }

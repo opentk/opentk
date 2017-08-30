@@ -71,6 +71,7 @@ namespace OpenTK.Platform.Windows
                 {
                     ridl[i] = new RawInputDeviceList();
                 }
+
                 Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
 
                 // Discover keyboard devices:
@@ -107,7 +108,8 @@ namespace OpenTK.Platform.Windows
                         string deviceClassGUID = (string)regkey.GetValue("ClassGUID"); // for windows 8 support via OpenTK issue 3198
 
                         // making a guess at backwards compatability. Not sure what older windows returns in these cases...
-                        if (deviceClass == null || deviceClass.Equals(string.Empty)){
+                        if (deviceClass == null || deviceClass.Equals(string.Empty))
+                        {
                             RegistryKey classGUIDKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Class\" + deviceClassGUID);
                             deviceClass = classGUIDKey != null ? (string)classGUIDKey.GetValue("Class") : string.Empty;
                         }
@@ -271,6 +273,7 @@ namespace OpenTK.Platform.Windows
                 {
                     master.MergeBits(ks);
                 }
+
                 return master;
             }
         }

@@ -93,6 +93,7 @@ namespace OpenTK.Platform.MacOS
                 {
                     Marshal.WriteByte(ptr, i + 1, (byte)function[i]);
                 }
+
                 Marshal.WriteByte(ptr, function.Length + 1, 0); // null-terminate
 
                 IntPtr symbol = GetAddressInternal(ptr);
@@ -142,6 +143,7 @@ namespace OpenTK.Platform.MacOS
                     symbol = AddressOfSymbol(symbol);
                 }
             }
+
             return symbol;
         }
 

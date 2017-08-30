@@ -661,5 +661,4 @@ namespace OpenTK.Graphics.ES10
         Repeat = ((int)0x2901),
         ClampToEdge = ((int)0x812F),
     }
-
 }

@@ -44,6 +44,7 @@ namespace Bind
             {
                 throw new ArgumentNullException("settings");
             }
+
             Settings = settings;
         }
 
@@ -74,6 +75,7 @@ namespace Bind
                         delegates.Remove(node.GetAttribute("name", String.Empty));
                     }
                 }
+
                 foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_add))
                 {
                     delegates.AddRange(ReadDelegates(nav, apiversion));
@@ -110,6 +112,7 @@ namespace Bind
                         enums.Remove(node.GetAttribute("name", String.Empty));
                     }
                 }
+
                 foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_add))
                 {
                     Utilities.Merge(enums, ReadEnums(nav));
@@ -159,10 +162,6 @@ namespace Bind
                         // String[] or StringBuilder[].
                         GLTypes.Add(words[0], "String");
                     }
-                    /*else if (words[0].Contains("Pointer"))
-                    {
-                        GLTypes.Add(words[0], words[1].Replace("Pointer", "*"));
-                    }*/
                     else if (words[1].Contains("GLvoid"))
                     {
                         GLTypes.Add(words[0], "void");
@@ -251,6 +250,7 @@ namespace Bind
             {
                 version = "1";
             }
+
             return version;
         }
 

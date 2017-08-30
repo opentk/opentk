@@ -165,6 +165,7 @@ namespace OpenTK
                 {
                     return Row1[columnIndex];
                 }
+                
                 throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
             }
             set

@@ -51,6 +51,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         {
             get { return CF.CFArrayGetCount(Ref); }
         }
+
         public IntPtr this[int index]
         {
             get
@@ -148,6 +149,7 @@ namespace OpenTK.Platform.MacOS.Carbon
                     return Encoding.UTF8.GetString(utf8_chars);
                 }
             }
+
             return String.Empty;
         }
 
@@ -182,7 +184,7 @@ namespace OpenTK.Platform.MacOS.Carbon
             kCFNumberNSIntegerType = 15,
             kCFNumberCGFloatType = 16,
             kCFNumberMaxType = 16
-        };
+        }
 
         public enum CFRunLoopExitReason
         {

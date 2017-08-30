@@ -40065,5 +40065,4 @@ namespace OpenTK.Graphics.OpenGL4
         /// </summary>
         WaitFailed = ((int)0x911D),
     }
-
 }

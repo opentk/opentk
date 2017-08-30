@@ -150,6 +150,7 @@ namespace OpenTK.Input
             {
                 return state[button];
             }
+            
             internal set
             {
                 state[button] = value;

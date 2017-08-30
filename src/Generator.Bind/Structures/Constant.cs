@@ -115,6 +115,7 @@ namespace Bind.Structures
             {
                 throw new ArgumentNullException("c");
             }
+
             if (enums == null)
             {
                 throw new ArgumentNullException("enums");
@@ -131,7 +132,8 @@ namespace Bind.Structures
                         enums.ContainsKey(reference.Reference) &&
                         enums[reference.Reference].ConstantCollection.ContainsKey(reference.Value) ?
                         enums[reference.Reference].ConstantCollection[reference.Value] : null;
-                } while (reference != null && reference.Reference != null && reference.Reference != c.Reference);
+                }
+                while (reference != null && reference.Reference != null && reference.Reference != c.Reference);
 
                 // If we haven't managed to locate the reference, do
                 // a brute-force search through all enums.
@@ -156,6 +158,7 @@ namespace Bind.Structures
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -176,6 +179,7 @@ namespace Bind.Structures
             {
                 return Name.CompareTo(other.Name);
             }
+
             return ret;
         }
     }

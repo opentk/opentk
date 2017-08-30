@@ -46,11 +46,13 @@ namespace OpenTK.Input
                 Debug.Print("[{0}] Axis count {1} out of range (0, {2})",
                     typeof(JoystickCapabilities).Name, axis_count, JoystickState.MaxAxes);
             }
+            
             if (button_count < 0 || button_count > JoystickState.MaxButtons)
             {
                 Debug.Print("[{0}] Button count {1} out of range (0, {2})",
                     typeof(JoystickCapabilities).Name, button_count, JoystickState.MaxButtons);
             }
+            
             if (hat_count < 0 || hat_count > JoystickState.MaxHats)
             {
                 Debug.Print("[{0}] Hat count {1} out of range (0, {2})",

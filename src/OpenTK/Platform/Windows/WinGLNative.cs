@@ -155,8 +155,10 @@ namespace OpenTK.Platform.Windows
                     float scale = dpi / 96.0f;
                     v = (int)Math.Round(v * scale);
                 }
+
                 Functions.ReleaseDC(IntPtr.Zero, dc);
             }
+
             return v;
         }
 
@@ -182,8 +184,10 @@ namespace OpenTK.Platform.Windows
                     float scale = dpi / 96.0f;
                     v = (int)Math.Round(v / scale);
                 }
+
                 Functions.ReleaseDC(IntPtr.Zero, dc);
             }
+
             return v;
         }
 
@@ -495,6 +499,7 @@ namespace OpenTK.Platform.Windows
                         {
                             break;
                         }
+
                         if (movePoints[i].Time == mouse_last_timestamp &&
                             movePoints[i].X == currentScreenPosition.X &&
                             movePoints[i].Y == currentScreenPosition.Y)
@@ -512,14 +517,17 @@ namespace OpenTK.Platform.Windows
                         {
                             position.X -= 65536;
                         }
+
                         if (position.Y > 32767)
                         {
                             position.Y -= 65536;
                         }
+
                         Functions.ScreenToClient(handle, ref position);
                         OnMouseMove(position.X, position.Y);
                     }
                 }
+
                 mouse_last_timestamp = timestamp;
             }
         }
@@ -680,6 +688,7 @@ namespace OpenTK.Platform.Windows
             {
                 Functions.UnregisterClass(ClassName, Instance);
             }
+
             window.Dispose();
 
             OnClosed(EventArgs.Empty);
@@ -851,6 +860,7 @@ namespace OpenTK.Platform.Windows
             {
                 Functions.SetCapture(window.Handle);
             }
+
             mouse_capture_count++;
         }
 
@@ -901,6 +911,7 @@ namespace OpenTK.Platform.Windows
                     Debug.Print("[Warning] Failed to kill modal loop timer callback ({0}:{1}->{2}).",
                         GetType().Name, handle, Marshal.GetLastWin32Error());
                 }
+
                 timer_handle = UIntPtr.Zero;
             }
         }
@@ -1093,6 +1104,7 @@ namespace OpenTK.Platform.Windows
                         Functions.SendMessage(window.Handle, WindowMessage.SETICON, (IntPtr)0, icon == null ? IntPtr.Zero : value.Handle);
                         Functions.SendMessage(window.Handle, WindowMessage.SETICON, (IntPtr)1, icon == null ? IntPtr.Zero : value.Handle);
                     }
+
                     OnIconChanged(EventArgs.Empty);
                 }
             }
@@ -1113,6 +1125,7 @@ namespace OpenTK.Platform.Windows
                 {
                     Debug.Print("Failed to retrieve window title (window:{0}, reason:{1}).", window.Handle, Marshal.GetLastWin32Error());
                 }
+
                 return sb_title.ToString();
             }
             set
@@ -1123,6 +1136,7 @@ namespace OpenTK.Platform.Windows
                     {
                         Debug.Print("Failed to change window title (window:{0}, new title:{1}, reason:{2}).", window.Handle, value, Marshal.GetLastWin32Error());
                     }
+
                     OnTitleChanged(EventArgs.Empty);
                 }
             }
@@ -1198,6 +1212,7 @@ namespace OpenTK.Platform.Windows
                                     new IntPtr(pixels));
                             }
                         }
+
                         using (bmp)
                         {
                             var iconInfo = new IconInfo();
@@ -1307,6 +1322,7 @@ namespace OpenTK.Platform.Windows
                 switch (value)
                 {
                     case WindowState.Normal:
+                    {
                         command = ShowWindowCommand.RESTORE;
                         borderless_maximized_window_state = false;
 
@@ -1315,9 +1331,11 @@ namespace OpenTK.Platform.Windows
                         {
                             exiting_fullscreen = true;
                         }
-                        break;
 
+                        break;
+                    }
                     case WindowState.Maximized:
+                    {
                         // Note: if we use the MAXIMIZE command and the window border is Hidden (i.e. WS_POPUP),
                         // we will enter fullscreen mode - we don't want that! As a workaround, we'll resize the window
                         // manually to cover the whole working area of the current monitor.
@@ -1341,13 +1359,16 @@ namespace OpenTK.Platform.Windows
                             borderless_maximized_window_state = false;
                             command = ShowWindowCommand.MAXIMIZE;
                         }
-                        break;
 
+                        break;
+                    }
                     case WindowState.Minimized:
+                    {
                         command = ShowWindowCommand.MINIMIZE;
                         break;
-
+                    }
                     case WindowState.Fullscreen:
+                    {
                         // We achieve fullscreen by hiding the window border and sending the MAXIMIZE command.
                         // We cannot use the WindowState.Maximized directly, as that will not send the MAXIMIZE
                         // command for windows with hidden borders.
@@ -1363,6 +1384,7 @@ namespace OpenTK.Platform.Windows
                         Functions.SetForegroundWindow(window.Handle);
 
                         break;
+                    }
                 }
 
                 if (command != 0)

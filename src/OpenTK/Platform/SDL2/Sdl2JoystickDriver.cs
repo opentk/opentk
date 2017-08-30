@@ -322,34 +322,35 @@ namespace OpenTK.Platform.SDL2
             switch (ev.Type)
             {
                 case EventType.JOYDEVICEADDED:
+                {
+                    IntPtr handle = SDL.JoystickOpen(id);
+                    if (handle != IntPtr.Zero)
                     {
-                        IntPtr handle = SDL.JoystickOpen(id);
-                        if (handle != IntPtr.Zero)
+                        JoystickDevice<Sdl2JoystickDetails> joystick = OpenJoystick(id);
+
+                        int instance_id = joystick.Details.InstanceId;
+                        int device_id = id;
+
+                        if (joystick != null)
                         {
-                            JoystickDevice<Sdl2JoystickDetails> joystick = OpenJoystick(id);
-
-                            int instance_id = joystick.Details.InstanceId;
-                            int device_id = id;
-
-                            if (joystick != null)
+                            joystick.Details.IsConnected = true;
+                            if (device_id < joysticks.Count)
                             {
-                                joystick.Details.IsConnected = true;
-                                if (device_id < joysticks.Count)
-                                {
-                                    joysticks[device_id] = joystick;
-                                }
-                                else
-                                {
-                                    joysticks.Add(joystick);
-                                }
-
-                                sdl_instanceid_to_joysticks.Add(instance_id, device_id);
+                                joysticks[device_id] = joystick;
                             }
+                            else
+                            {
+                                joysticks.Add(joystick);
+                            }
+
+                            sdl_instanceid_to_joysticks.Add(instance_id, device_id);
                         }
                     }
-                    break;
 
+                    break;
+                }
                 case EventType.JOYDEVICEREMOVED:
+                {
                     if (IsJoystickInstanceValid(id))
                     {
                         int instance_id = id;
@@ -364,7 +365,9 @@ namespace OpenTK.Platform.SDL2
                     {
                         Debug.Print("[SDL2] Invalid joystick id {0} in {1}", id, ev.Type);
                     }
+
                     break;
+                }
             }
         }
 
@@ -432,6 +435,7 @@ namespace OpenTK.Platform.SDL2
                 {
                     Debug.Print("[SDL2] Hat {0} out of range [0, {1}]", ev.Hat, JoystickState.MaxHats);
                 }
+
                 joystick.Details.PacketNumber = Math.Max(0, unchecked(joystick.Details.PacketNumber + 1));
             }
             else
@@ -641,6 +645,7 @@ namespace OpenTK.Platform.SDL2
                     joystick.Details.HatCount,
                     joystick.Details.IsConnected);
             }
+
             return new JoystickCapabilities();
         }
 
@@ -654,6 +659,7 @@ namespace OpenTK.Platform.SDL2
 
                 return joystick.Details.Guid;
             }
+
             return guid;
         }
 
@@ -678,6 +684,7 @@ namespace OpenTK.Platform.SDL2
                 {
                     Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
                 }
+
                 disposed = true;
             }
         }

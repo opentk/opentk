@@ -207,6 +207,7 @@ namespace OpenTK
                     base.Dispose();
                 }
             }
+            
             GC.SuppressFinalize(this);
         }
 
@@ -307,6 +308,7 @@ namespace OpenTK
                     throw new ArgumentOutOfRangeException("updates_per_second", updates_per_second,
                         "Parameter should be inside the range [0.0, 200.0]");
                 }
+                
                 if (frames_per_second < 0.0 || frames_per_second > 200.0)
                 {
                     throw new ArgumentOutOfRangeException("frames_per_second", frames_per_second,
@@ -317,6 +319,7 @@ namespace OpenTK
                 {
                     TargetUpdateFrequency = updates_per_second;
                 }
+                
                 if (frames_per_second != 0)
                 {
                     TargetRenderFrequency = frames_per_second;
@@ -498,6 +501,7 @@ namespace OpenTK
                 {
                     return 1.0;
                 }
+                
                 return 1.0 / render_period;
             }
         }
@@ -547,6 +551,7 @@ namespace OpenTK
                 {
                     return 0.0;
                 }
+                
                 return 1.0 / TargetRenderPeriod;
             }
             set
@@ -615,6 +620,7 @@ namespace OpenTK
                 {
                     return 0.0;
                 }
+                
                 return 1.0 / TargetUpdatePeriod;
             }
             set
@@ -679,6 +685,7 @@ namespace OpenTK
                 {
                     return 1.0;
                 }
+                
                 return 1.0 / update_period;
             }
         }
@@ -770,6 +777,7 @@ namespace OpenTK
                 }
             }
         }
+        
         /// <summary>
         /// Occurs before the window is displayed for the first time.
         /// </summary>

@@ -104,6 +104,7 @@ namespace OpenTK.Platform.SDL2
                 scaledState.X = (int)Math.Round(scaledState.X * Scale);
                 scaledState.Y = (int)Math.Round(scaledState.Y * Scale);
             }
+
             return scaledState;
         }
 

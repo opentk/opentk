@@ -210,14 +210,17 @@ namespace OpenTK.Audio
             {
                 throw new NotSupportedException("No audio hardware is available.");
             }
+            
             if (context_exists)
             {
                 throw new NotSupportedException("Multiple AudioContexts are not supported.");
             }
+            
             if (freq < 0)
             {
                 throw new ArgumentOutOfRangeException("freq", freq, "Should be greater than zero.");
             }
+            
             if (refresh < 0)
             {
                 throw new ArgumentOutOfRangeException("refresh", refresh, "Should be greater than zero.");
@@ -229,16 +232,19 @@ namespace OpenTK.Audio
                 device_name = device;
                 Device = Alc.OpenDevice(device); // try to open device by name
             }
+            
             if (Device == IntPtr.Zero)
             {
                 device_name = "IntPtr.Zero (null string)";
                 Device = Alc.OpenDevice(null); // try to open unnamed default device
             }
+            
             if (Device == IntPtr.Zero)
             {
                 device_name = AudioContext.DefaultDevice;
                 Device = Alc.OpenDevice(AudioContext.DefaultDevice); // try to open named default device
             }
+            
             if (Device == IntPtr.Zero)
             {
                 device_name = "None";
@@ -286,6 +292,7 @@ namespace OpenTK.Audio
                 attributes.Add((int)AlcContextAttributes.EfxMaxAuxiliarySends);
                 attributes.Add(num_slots);
             }
+            
             attributes.Add(0);
 
             context_handle = Alc.CreateContext(Device, attributes.ToArray());
@@ -450,6 +457,7 @@ namespace OpenTK.Audio
 
                 return is_processing;
             }
+            
             private set { is_processing = value; }
         }
 
@@ -602,6 +610,7 @@ namespace OpenTK.Audio
                 return AudioDeviceEnumerator.AvailablePlaybackDevices;
             }
         }
+        
         /// <summary>
         /// Returns the name of the device that will be used as playback default.
         /// </summary>
@@ -645,6 +654,7 @@ namespace OpenTK.Audio
                 if (manual)
                 {
                 }
+                
                 disposed = true;
             }
         }

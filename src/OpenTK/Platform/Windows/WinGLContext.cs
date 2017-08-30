@@ -105,6 +105,7 @@ namespace OpenTK.Platform.Windows
                 {
                     throw new ArgumentNullException("window", "Must point to a valid window.");
                 }
+
                 if (window.Handle == IntPtr.Zero)
                 {
                     throw new ArgumentException("window", "Must be a valid window.");
@@ -151,6 +152,7 @@ namespace OpenTK.Platform.Windows
                                 attributes.Add((int)ArbCreateContext.ProfileMask);
                                 attributes.Add((int)GetARBContextProfile(flags));
                             }
+
                             // According to the docs, " <attribList> specifies a list of attributes for the context.
                             // The list consists of a sequence of <name,value> pairs terminated by the
                             // value 0. [...]"
@@ -180,6 +182,7 @@ namespace OpenTK.Platform.Windows
                         {
                             Handle = new ContextHandle(Wgl.CreateContext(window.DeviceContext));
                         }
+
                         if (Handle == ContextHandle.Zero)
                         {
                             throw new GraphicsContextException(
@@ -197,6 +200,7 @@ namespace OpenTK.Platform.Windows
                         temp_context.Dispose();
                         temp_context = null;
                     }
+
                     if (temp_window != null)
                     {
                         temp_window.Dispose();
@@ -247,6 +251,7 @@ namespace OpenTK.Platform.Windows
             {
                 throw new ArgumentException("handle");
             }
+
             if (window == null)
             {
                 throw new ArgumentNullException("window");
@@ -326,6 +331,7 @@ namespace OpenTK.Platform.Windows
                         {
                             value = 1;
                         }
+
                         if (!Wgl.Ext.SwapInterval(value))
                         {
                             Debug.Print("wglSwapIntervalEXT call failed.");
@@ -350,12 +356,6 @@ namespace OpenTK.Platform.Windows
 
             base.LoadAll();
         }
-        /*
-        IWindowInfo IGraphicsContextInternal.Info
-        {
-            get { return (IWindowInfo)windowInfo; }
-        }
-        */
 
         public override IntPtr GetAddress(IntPtr function_string)
         {
@@ -364,6 +364,7 @@ namespace OpenTK.Platform.Windows
             {
                 address = Functions.GetProcAddress(WinFactory.OpenGLHandle, function_string);
             }
+
             return address;
         }
 
@@ -427,6 +428,7 @@ namespace OpenTK.Platform.Windows
                 {
                     DestroyContext();
                 }
+
                 IsDisposed = true;
             }
         }
@@ -452,6 +454,7 @@ namespace OpenTK.Platform.Windows
                     Debug.WriteLine(e.ToString());
                     Debug.Unindent();
                 }
+
                 Handle = ContextHandle.Zero;
             }
         }

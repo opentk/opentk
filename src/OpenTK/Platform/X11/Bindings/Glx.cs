@@ -326,6 +326,7 @@ namespace OpenTK.Platform.X11
             {
                 return EntryPoints[index] != IntPtr.Zero;
             }
+
             return false;
         }
 

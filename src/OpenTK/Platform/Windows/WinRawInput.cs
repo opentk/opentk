@@ -59,6 +59,7 @@ namespace OpenTK.Platform.Windows
                 dev_notify_handle = Functions.RegisterDeviceNotification(parent.Handle,
                     new IntPtr((void*)&bdi), DeviceNotification.WINDOW_HANDLE);
             }
+
             if (dev_notify_handle == IntPtr.Zero)
             {
                 Debug.Print("[Warning] Failed to register for device notifications. Error: {0}", Marshal.GetLastWin32Error());
@@ -77,44 +78,54 @@ namespace OpenTK.Platform.Windows
                 switch (message)
                 {
                     case WindowMessage.INPUT:
+                    {
+                        // Retrieve the raw input data buffer
+                        RawInputHeader header;
+                        if (Functions.GetRawInputData(lParam, out header) == RawInputHeader.SizeInBytes)
                         {
-                            // Retrieve the raw input data buffer
-                            RawInputHeader header;
-                            if (Functions.GetRawInputData(lParam, out header) == RawInputHeader.SizeInBytes)
+                            switch (header.Type)
                             {
-                                switch (header.Type)
+                                case RawInputDeviceType.KEYBOARD:
                                 {
-                                    case RawInputDeviceType.KEYBOARD:
-                                        if (((WinRawKeyboard)KeyboardDriver).ProcessKeyboardEvent(lParam))
-                                        {
-                                            return IntPtr.Zero;
-                                        }
-                                        break;
+                                    if (((WinRawKeyboard)KeyboardDriver).ProcessKeyboardEvent(lParam))
+                                    {
+                                        return IntPtr.Zero;
+                                    }
 
-                                    case RawInputDeviceType.MOUSE:
-                                        if (((WinRawMouse)MouseDriver).ProcessMouseEvent(lParam))
-                                        {
-                                            return IntPtr.Zero;
-                                        }
-                                        break;
+                                    break;
+                                }
+                                case RawInputDeviceType.MOUSE:
+                                {
+                                    if (((WinRawMouse)MouseDriver).ProcessMouseEvent(lParam))
+                                    {
+                                        return IntPtr.Zero;
+                                    }
 
-                                    case RawInputDeviceType.HID:
-                                        if (((WinRawJoystick)JoystickDriver).ProcessEvent(lParam))
-                                        {
-                                            return IntPtr.Zero;
-                                        }
-                                        break;
+                                    break;
+                                }
+                                case RawInputDeviceType.HID:
+                                {
+                                    if (((WinRawJoystick)JoystickDriver).ProcessEvent(lParam))
+                                    {
+                                        return IntPtr.Zero;
+                                    }
+
+                                    break;
                                 }
                             }
                         }
-                        break;
 
+                        break;
+                    }
                     case WindowMessage.DEVICECHANGE:
+                    {
                         ((WinRawKeyboard)KeyboardDriver).RefreshDevices();
                         ((WinRawMouse)MouseDriver).RefreshDevices();
                         ((WinRawJoystick)JoystickDriver).RefreshDevices();
                         break;
+                    }
                 }
+
                 return base.WindowProcedure(handle, message, wParam, lParam);
             }
             catch (Exception e)
@@ -159,6 +170,7 @@ namespace OpenTK.Platform.Windows
             {
                 ridl[i] = new RawInputDeviceList();
             }
+
             Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
             return ridl;
         }

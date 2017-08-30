@@ -6,12 +6,12 @@ namespace OpenTK.Platform.Egl
 {
     using EGLSurface = IntPtr;
     /// <summary>
-    /// A window info for angle. 
+    /// A window info for angle.
     /// </summary>
     public interface IAngleWindowInfo : IWindowInfo
     {
         /// <summary>
-        /// Query the underlying platform pointer / handle for this window's 
+        /// Query the underlying platform pointer / handle for this window's
         /// default surface or IntPtr.Zero
         /// </summary>
         IntPtr QuerySurfacePointer();
@@ -34,7 +34,7 @@ namespace OpenTK.Platform.Egl
         /// <param name="surface">Reference to the surface.</param>
         void MakeCurrent(EGLSurface surface);
         /// <summary>
-        /// Query the underlying platform pointer / handle for an EGLSurface 
+        /// Query the underlying platform pointer / handle for an EGLSurface
         /// created with CreateSurface.
         /// </summary>
         /// <param name="surface"></param>
@@ -76,6 +76,7 @@ namespace OpenTK.Platform.Egl
                 {
                     return win_win.DeviceContext;
                 }
+
                 return IntPtr.Zero;
             }
         }
@@ -114,10 +115,12 @@ namespace OpenTK.Platform.Egl
             {
                 return;
             }
+
             if (!called_from_finalizer)
             {
                 PlatformWindow.Dispose();
             }
+
             // dispose unmanaged
 
             _disposed = true;
@@ -134,7 +137,7 @@ namespace OpenTK.Platform.Egl
             IntPtr surface;
             EglWindowInfo.CreatePbufferSurface(
                 EglContext.GraphicsMode.Index.Value,
-                width, height, 
+                width, height,
                 out surface);
             return surface;
         }
@@ -153,9 +156,10 @@ namespace OpenTK.Platform.Egl
         {
             if (UsesDirect3DBackend())
             {
-                return QuerySurfacePointer(surface, 
+                return QuerySurfacePointer(surface,
                     Egl.EGL_D3D_TEXTURE_2D_SHARE_HANDLE_ANGLE);
             }
+
             return IntPtr.Zero;
         }
 
@@ -167,6 +171,7 @@ namespace OpenTK.Platform.Egl
             {
                 return surface_pointer;
             }
+
             return IntPtr.Zero;
         }
 

@@ -162,7 +162,6 @@ namespace OpenTK.Platform.Linux
         public byte C29;
         public byte C30;
         public byte C31;
-
     }
 }
 

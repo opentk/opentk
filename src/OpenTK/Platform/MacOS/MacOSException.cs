@@ -32,17 +32,20 @@ namespace OpenTK.Platform.MacOS
     internal class MacOSException : Exception
     {
         public MacOSException()
-        {}
+        { }
+
         public MacOSException(OSStatus errorCode)
             : base("Error Code " + ((int)errorCode).ToString() + ": " + errorCode.ToString())
         {
             this.ErrorCode = errorCode;
         }
+
         public MacOSException(OSStatus errorCode, string message)
             : base(message)
         {
             this.ErrorCode = errorCode;
         }
+
         internal MacOSException(int errorCode, string message)
             : base(message)
         {
@@ -111,7 +114,5 @@ namespace OpenTK.Platform.MacOS
         EventNotInQueue = -9877,
         HotKeyExists = -9878,
         EventPassToNextTarget = -9880
-
     }
-
 }

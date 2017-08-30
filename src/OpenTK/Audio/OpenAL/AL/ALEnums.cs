@@ -7,7 +7,6 @@
 
 namespace OpenTK.Audio.OpenAL
 {
-
     ///<summary>A list of valid Enable/Disable/IsEnabled parameters</summary>
     public enum ALCapability : int
     {
@@ -86,7 +85,6 @@ namespace OpenTK.Audio.OpenAL
 
         ///<summary>(EFX Extension) A directed Source points in a specified direction. The Source sounds at full volume when the listener is directly in front of the source; it is attenuated as the listener circles the Source away from the front. Range [0.0f .. 1.0f] Default: 1.0f</summary>
         EfxConeOuterGainHighFrequency = 0x20009,
-
     }
 
     ///<summary>A list of valid Math.Vector3 Source/GetSource parameters</summary>
@@ -423,5 +421,4 @@ namespace OpenTK.Audio.OpenAL
         ///<summary>AL_EXT_EXPONENT_DISTANCE extension.</summary>
         ExponentDistanceClamped = 0xD006,
     }
-
 }

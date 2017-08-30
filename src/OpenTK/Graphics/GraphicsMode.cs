@@ -30,14 +30,17 @@ namespace OpenTK.Graphics
             {
                 throw new ArgumentOutOfRangeException("depth", "Must be greater than, or equal to zero.");
             }
+            
             if (stencil < 0)
             {
                 throw new ArgumentOutOfRangeException("stencil", "Must be greater than, or equal to zero.");
             }
+            
             if (buffers < 0)
             {
                 throw new ArgumentOutOfRangeException("buffers", "Must be greater than, or equal to zero.");
             }
+            
             if (samples < 0)
             {
                 throw new ArgumentOutOfRangeException("samples", "Must be greater than, or equal to zero.");
@@ -189,6 +192,7 @@ namespace OpenTK.Graphics
                         defaultMode = new GraphicsMode(null, 32, 16, 0, 0, 0, 2, false);
                         Debug.Print("GraphicsMode.Default = {0}", defaultMode.ToString());
                     }
+                    
                     return defaultMode;
                 }
             }
@@ -222,6 +226,7 @@ namespace OpenTK.Graphics
             {
                 return Equals((GraphicsMode)obj);
             }
+            
             return false;
         }
 

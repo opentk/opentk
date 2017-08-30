@@ -28456,5 +28456,4 @@ namespace OpenTK.Graphics.ES20
         /// </summary>
         WaitFailedApple = ((int)0x911D),
     }
-
 }

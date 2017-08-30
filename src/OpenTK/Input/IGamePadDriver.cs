@@ -2,7 +2,6 @@
 {
     internal interface IGamePadDriver
     {
-
         GamePadState GetState(int index);
 
         GamePadCapabilities GetCapabilities(int index);

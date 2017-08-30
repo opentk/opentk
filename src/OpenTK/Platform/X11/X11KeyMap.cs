@@ -631,6 +631,7 @@ namespace OpenTK.Platform.X11
             {
                 key = X11KeyMap.TranslateXKey(keysym2);
             }
+
             if (key == Key.Unknown)
             {
                 Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.", e.keycode, (XKey)keysym, (XKey)keysym2);
@@ -684,6 +685,7 @@ namespace OpenTK.Platform.X11
             {
                 key = keycodes[keycode];
             }
+
             return key != Key.Unknown;
         }
 

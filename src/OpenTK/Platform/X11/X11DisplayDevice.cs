@@ -144,11 +144,13 @@ namespace OpenTK.Platform.X11
                         dev.IsPrimary = true;
                         first = false;
                     }
+
                     devices.Add(dev);
                     // It seems that all X screens are equal to 0 is Xinerama is enabled, at least on Nvidia (verify?)
                     deviceToScreen.Add(dev, 0 /*screen.ScreenNumber*/);
                 }
             }
+
             return (devices.Count > 0);
         }
 
@@ -179,6 +181,7 @@ namespace OpenTK.Platform.X11
                         Debug.Print("[Warning] XRandR returned an invalid resolution ({0}) for display device {1}", size, screen);
                         continue;
                     }
+
                     short[] rates = null;
                     rates = Functions.XRRRates(API.DefaultDisplay, screen, resolution_count);
 
@@ -197,6 +200,7 @@ namespace OpenTK.Platform.X11
                             }
                         }
                     }
+
                     // Keep the index of this resolution - we will need it for resolution changes later.
                     foreach (int depth in depths)
                     {
@@ -228,6 +232,7 @@ namespace OpenTK.Platform.X11
                 {
                     dev.Bounds = new Rectangle(0, 0, sizes[current_sizes_index].Width, sizes[current_sizes_index].Height);
                 }
+
                 dev.BitsPerPixel = current_depth;
                 dev.RefreshRate = current_refresh_rate;
                 dev.AvailableResolutions = available_res;
@@ -288,6 +293,7 @@ namespace OpenTK.Platform.X11
                 dev.RefreshRate = (pixelClock * 1000F) / (currentMode.vtotal * currentMode.htotal);
                 currentScreen++;
             }
+
             return true;
         }
 
@@ -304,6 +310,7 @@ namespace OpenTK.Platform.X11
             {
                 throw new NotSupportedException("XRandR extensions not available.");
             }
+
             return resolutions;
         }
 

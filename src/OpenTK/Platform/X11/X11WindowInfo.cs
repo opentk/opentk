@@ -78,9 +78,11 @@ namespace OpenTK.Platform.X11
                 {
                     return (XVisualInfo)Marshal.PtrToStructure(Visual, typeof(XVisualInfo));
                 }
+
                 return default(XVisualInfo);
             }
         }
+
         /// <summary>Gets or sets the X11 EventMask.</summary>
         public EventMask EventMask { get; set; }
 
@@ -117,16 +119,18 @@ namespace OpenTK.Platform.X11
             {
                 return false;
             }
+
             if (this.GetType() != obj.GetType())
             {
                 return false;
             }
-            X11WindowInfo info = (X11WindowInfo)obj;
 
+            X11WindowInfo info = (X11WindowInfo)obj;
             if (info == null)
             {
                 return false;
             }
+
             // TODO: Assumes windows will have unique handles per X11 display.
             return object.Equals(display, info.display) &&
                    handle.Equals(info.handle);

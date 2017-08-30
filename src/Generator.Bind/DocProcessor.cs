@@ -71,12 +71,13 @@ namespace Bind
                 {
                     file = Settings.FunctionPrefix + f.TrimmedName + ".xml";
                 }
+
                 if (!DocumentationFiles.ContainsKey(file))
                 {
                     file = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
                 }
 
-                docs = 
+                docs =
                     (DocumentationFiles.ContainsKey(file) ? ProcessFile(DocumentationFiles[file], processor) : null) ??
                     new Documentation
                     {
@@ -129,6 +130,7 @@ namespace Bind
                         // Note: a few docs from man4 delimit eqn end with ": -->"
                         eqn_end = removed.IndexOf(": -->") - equation - 4;
                     }
+
                     if (eqn_end < 0)
                     {
                         Console.WriteLine("[Warning] Failed to find equation for mml.");
@@ -177,6 +179,7 @@ namespace Bind
                         // Remove "GL_" from the beginning of the string
                         c = c.Replace(Settings.ConstantPrefix, String.Empty);
                     }
+
                     e.Value = enum_processor.TranslateConstantName(c, false);
                 }
             }

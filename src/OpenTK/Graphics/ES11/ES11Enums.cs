@@ -18289,5 +18289,4 @@ namespace OpenTK.Graphics.ES11
         /// </summary>
         Double = ((int)0x140A),
     }
-
 }

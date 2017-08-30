@@ -35,8 +35,6 @@ namespace OpenTK.Graphics.ES10
 
     partial class GL
     {
-
-
         /// <summary>[requires: v1.0 and 1.0]
         /// Select active texture unit
         /// </summary>
@@ -5970,6 +5968,5 @@ namespace OpenTK.Graphics.ES10
             }
             #endif
         }
-
     }
 }

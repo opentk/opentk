@@ -95,7 +95,6 @@ namespace OpenTK.Platform.Linux
 
         [DllImport(lib, EntryPoint = "drmModeMoveCursor", CallingConvention = CallingConvention.Cdecl)]
         public static extern int MoveCursor(int fd, int crtcId, int x, int y);
-
     }
 
     internal enum ModeConnection

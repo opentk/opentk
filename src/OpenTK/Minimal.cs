@@ -291,6 +291,7 @@ namespace OpenTK
                 {
                     throw new ArgumentOutOfRangeException();
                 }
+                
                 width = value;
             }
         }
@@ -307,6 +308,7 @@ namespace OpenTK
                 {
                     throw new ArgumentOutOfRangeException();
                 }
+                
                 height = value;
             }
         }
@@ -1577,7 +1579,8 @@ namespace OpenTK
         Format32bppArgb
     }
 
-    internal enum ImageFormat {
+    internal enum ImageFormat 
+    {
         Png
     }
 

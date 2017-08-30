@@ -15,7 +15,8 @@ using Javax.Microedition.Khronos.Egl;
 using OpenTK.Graphics;
 using OpenTK.Platform.Egl;
 
-namespace OpenTK.Platform.Android {
+namespace OpenTK.Platform.Android
+{
     internal class AndroidGraphicsContext : EglContext
     {
         public AndroidGraphicsContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
@@ -57,11 +58,14 @@ namespace OpenTK.Platform.Android {
             get { return eglWindowInfo != null && eglWindowInfo.Surface != IntPtr.Zero; }
         }
 
-        public ISurfaceHolder Holder {
-            get {
+        public ISurfaceHolder Holder
+        {
+            get
+            {
                 return refHolder.Target as ISurfaceHolder;
             }
         }
+
         public AndroidWindow (ISurfaceHolder holder)
         {
             refHolder = new WeakReference (holder);
@@ -77,7 +81,8 @@ namespace OpenTK.Platform.Android {
         {
             UpdateEglWindowInfo();
 
-            if (refHolder.Target == null) {
+            if (refHolder.Target == null)
+            {
                 eglWindowInfo.CreatePbufferSurface(config);
                 return;
             }
@@ -88,7 +93,9 @@ namespace OpenTK.Platform.Android {
         private void UpdateEglWindowInfo()
         {
             if (eglWindowInfo == null)
+            {
                 eglWindowInfo = new EglWindowInfo(IntPtr.Zero, IntPtr.Zero);
+            }
 
             var newHandle = IntPtr.Zero;
             var holder = Holder;
@@ -102,7 +109,9 @@ namespace OpenTK.Platform.Android {
             {
                 // Same, we can release this reference
                 if (newHandle != IntPtr.Zero)
+                {
                     ANativeWindow_release(newHandle);
+                }
             }
             else
             {
@@ -139,7 +148,8 @@ namespace OpenTK.Platform.Android {
         {
             if (!disposed)
             {
-                if (disposing) {
+                if (disposing)
+                {
                     DestroySurface ();
                     TerminateDisplay ();
                     refHolder = null;

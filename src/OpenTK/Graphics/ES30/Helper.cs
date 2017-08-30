@@ -218,6 +218,7 @@ namespace OpenTK.Graphics.ES30
                     info = String.Empty;
                     return;
                 }
+                
                 GL.GetShaderInfoLog((UInt32)shader, length * 2, &length, out info);
             }
         }
@@ -239,6 +240,7 @@ namespace OpenTK.Graphics.ES30
                     info = String.Empty;
                     return;
                 }
+                
                 GL.GetProgramInfoLog((UInt32)program, length * 2, &length, out info);
             }
         }

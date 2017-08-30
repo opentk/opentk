@@ -53,10 +53,10 @@ namespace OpenTK.Platform.Linux
 
         internal int[,] hatStates =
         {
-            {0, 0},
-            {0, 0},
-            {0, 0},
-            {0, 0}
+            { 0, 0 },
+            { 0, 0 },
+            { 0, 0 },
+            { 0, 0 }
         };
     }
 
@@ -123,6 +123,7 @@ namespace OpenTK.Platform.Linux
                     return num;
                 }
             }
+
             return -1;
         }
 
@@ -381,57 +382,59 @@ namespace OpenTK.Platform.Linux
                         switch (e->Type)
                         {
                             case EvdevType.ABS:
+                            {
+                                AxisInfo axis;
+                                if (js.AxisMap.TryGetValue((EvdevAxis)e->Code, out axis))
                                 {
-                                    AxisInfo axis;
-                                    if (js.AxisMap.TryGetValue((EvdevAxis)e->Code, out axis))
+                                    if (axis.Info.Maximum > axis.Info.Minimum)
                                     {
-                                        if (axis.Info.Maximum > axis.Info.Minimum)
+                                        if (e->Code >= (int)EvdevAxis.HAT0X && e->Code <= (int)EvdevAxis.HAT3Y)
                                         {
-                                            if (e->Code >= (int)EvdevAxis.HAT0X && e->Code <= (int)EvdevAxis.HAT3Y)
+                                            // We currently treat analogue hats as digital hats
+                                            // to maintain compatibility with SDL2. We can do
+                                            // better than this, however.
+                                            int hat = (e->Code - (int)EvdevAxis.HAT0X) / 2;
+                                            int xy_axis = (int)axis.Axis & 0x1;
+                                            int value = e->Value.CompareTo(0) + 1;
+                                            switch (xy_axis)
                                             {
-                                                // We currently treat analogue hats as digital hats
-                                                // to maintain compatibility with SDL2. We can do
-                                                // better than this, however.
-                                                int hat = (e->Code - (int)EvdevAxis.HAT0X) / 2;
-                                                int xy_axis = (int)axis.Axis & 0x1;
-                                                int value = e->Value.CompareTo(0) + 1;
-                                                switch (xy_axis)
-                                                {
-                                                    case 0:
-                                                        // X-axis
-                                                        js.hatStates[hat, 1] = value;
-                                                        break;
+                                                case 0:
+                                                    // X-axis
+                                                    js.hatStates[hat, 1] = value;
+                                                    break;
 
-                                                    case 1:
-                                                        // Y-axis
-                                                        js.hatStates[hat, 0] = value;
-                                                        break;
-                                                }
-                                                js.State.SetHat((JoystickHat)hat, TranslateHat(js.hatStates[hat, 0], js.hatStates[hat, 1]));
+                                                case 1:
+                                                    // Y-axis
+                                                    js.hatStates[hat, 0] = value;
+                                                    break;
                                             }
-                                            else
-                                            {
-                                                // This axis represents a regular axis or trigger
-                                                js.State.SetAxis(
-                                                    axis.Axis,
-                                                    (short)Common.HidHelper.ScaleValue(e->Value,
-                                                        axis.Info.Minimum, axis.Info.Maximum,
-                                                        short.MinValue, short.MaxValue));
-                                            }
+
+                                            js.State.SetHat((JoystickHat)hat, TranslateHat(js.hatStates[hat, 0], js.hatStates[hat, 1]));
+                                        }
+                                        else
+                                        {
+                                            // This axis represents a regular axis or trigger
+                                            js.State.SetAxis(
+                                                axis.Axis,
+                                                (short)Common.HidHelper.ScaleValue(e->Value,
+                                                    axis.Info.Minimum, axis.Info.Maximum,
+                                                    short.MinValue, short.MaxValue));
                                         }
                                     }
-                                    break;
                                 }
 
+                                break;
+                            }
                             case EvdevType.KEY:
+                            {
+                                int button;
+                                if (js.ButtonMap.TryGetValue((EvdevButton)e->Code, out button))
                                 {
-                                    int button;
-                                    if (js.ButtonMap.TryGetValue((EvdevButton)e->Code, out button))
-                                    {
-                                        js.State.SetButton(button, e->Value != 0);
-                                    }
-                                    break;
+                                    js.State.SetButton(button, e->Value != 0);
                                 }
+
+                                break;
+                            }
                         }
 
                         // Create a serial number (total seconds in 24.8 fixed point format)
@@ -486,6 +489,7 @@ namespace OpenTK.Platform.Linux
                 PollJoystick(js);
                 return js.State;
             }
+
             return new JoystickState();
         }
 
@@ -496,6 +500,7 @@ namespace OpenTK.Platform.Linux
             {
                 return js.Caps;
             }
+
             return new JoystickCapabilities();
         }
 
@@ -506,6 +511,7 @@ namespace OpenTK.Platform.Linux
             {
                 return js.Guid;
             }
+
             return Guid.Empty;
         }
     }

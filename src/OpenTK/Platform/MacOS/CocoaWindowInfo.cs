@@ -47,7 +47,6 @@ namespace OpenTK.Platform.MacOS
         /// <param name="nsWindowRef">A valid NSWindow reference.</param>
         public CocoaWindowInfo(IntPtr nsWindowRef) : this(nsWindowRef, Cocoa.SendIntPtr(nsWindowRef, selContentView))
         {
-
         }
 
         /// <summary>

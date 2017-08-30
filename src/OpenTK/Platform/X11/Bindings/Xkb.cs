@@ -91,6 +91,7 @@ namespace OpenTK.Platform.X11
             {
                 Debug.Print("XKB version is {0}.{1}", major, minor);
             }
+
             return supported;
         }
     }
@@ -239,7 +240,8 @@ namespace OpenTK.Platform.X11
                         fixed (Atom* ptr = &indicators0)
                         {
                             return *(ptr + i);
-                        }                    }
+                        }
+                    }
                 }
             }
         }

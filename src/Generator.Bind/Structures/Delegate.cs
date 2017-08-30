@@ -79,6 +79,7 @@ namespace Bind.Structures
                         return false;
                     }
                 }
+
                 return true;
             }
             set
@@ -212,10 +213,12 @@ namespace Bind.Structures
             {
                 ret = Parameters.CompareTo(other.Parameters);
             }
+
             if (ret == 0)
             {
                 ret = ReturnType.CompareTo(other.ReturnType);
             }
+
             return ret;
         }
 
@@ -257,6 +260,7 @@ namespace Bind.Structures
                     {
                         list[index].Category += "|" + d.Category;
                     }
+
                     if (String.IsNullOrEmpty(list[index].Version))
                     {
                         list[index].Version = d.Version;

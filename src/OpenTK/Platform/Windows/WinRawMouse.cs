@@ -183,46 +183,55 @@ namespace OpenTK.Platform.Windows
                     mouse.EnableBit((int)MouseButton.Left);
                     Functions.SetCapture(Window);
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_UP) != 0)
                 {
                     mouse.DisableBit((int)MouseButton.Left);
                     Functions.ReleaseCapture();
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_DOWN) != 0)
                 {
                     mouse.EnableBit((int)MouseButton.Right);
                     Functions.SetCapture(Window);
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_UP) != 0)
                 {
                     mouse.DisableBit((int)MouseButton.Right);
                     Functions.ReleaseCapture();
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_DOWN) != 0)
                 {
                     mouse.EnableBit((int)MouseButton.Middle);
                     Functions.SetCapture(Window);
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_UP) != 0)
                 {
                     mouse.DisableBit((int)MouseButton.Middle);
                     Functions.ReleaseCapture();
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_DOWN) != 0)
                 {
                     mouse.EnableBit((int)MouseButton.Button1);
                     Functions.SetCapture(Window);
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_UP) != 0)
                 {
                     mouse.DisableBit((int)MouseButton.Button1);
                     Functions.ReleaseCapture();
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_DOWN) != 0)
                 {
                     mouse.EnableBit((int)MouseButton.Button2);
                     Functions.SetCapture(Window);
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_UP) != 0)
                 {
                     mouse.DisableBit((int)MouseButton.Button2);
@@ -331,6 +340,7 @@ namespace OpenTK.Platform.Windows
                 {
                     master.MergeBits(ms);
                 }
+
                 return master;
             }
         }

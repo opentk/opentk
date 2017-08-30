@@ -317,6 +317,7 @@ namespace OpenTK
                 {
                     return Row3[columnIndex];
                 }
+                
                 throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
             }
             set
@@ -392,6 +393,7 @@ namespace OpenTK
             {
                 m.Invert();
             }
+            
             return m;
         }
 
@@ -404,6 +406,7 @@ namespace OpenTK
             m.Row3.Xyz = Vector3.Zero;
             return m;
         }
+        
         /// <summary>
         /// Returns a copy of this Matrix4 without scale.
         /// </summary>
@@ -415,6 +418,7 @@ namespace OpenTK
             m.Row2.Xyz = m.Row2.Xyz.Normalized();
             return m;
         }
+        
         /// <summary>
         /// Returns a copy of this Matrix4 without rotation.
         /// </summary>
@@ -426,6 +430,7 @@ namespace OpenTK
             m.Row2.Xyz = new Vector3(0, 0, m.Row2.Xyz.Length);
             return m;
         }
+        
         /// <summary>
         /// Returns a copy of this Matrix4 without projection.
         /// </summary>
@@ -919,14 +924,17 @@ namespace OpenTK
             {
                 throw new ArgumentOutOfRangeException("fovy");
             }
+            
             if (aspect <= 0)
             {
                 throw new ArgumentOutOfRangeException("aspect");
             }
+            
             if (zNear <= 0)
             {
                 throw new ArgumentOutOfRangeException("zNear");
             }
+            
             if (zFar <= 0)
             {
                 throw new ArgumentOutOfRangeException("zFar");
@@ -989,10 +997,12 @@ namespace OpenTK
             {
                 throw new ArgumentOutOfRangeException("zNear");
             }
+            
             if (zFar <= 0)
             {
                 throw new ArgumentOutOfRangeException("zFar");
             }
+            
             if (zNear >= zFar)
             {
                 throw new ArgumentOutOfRangeException("zNear");
@@ -1243,10 +1253,14 @@ namespace OpenTK
             int[] pivotIdx = { -1, -1, -1, -1 };
 
             // convert the matrix to an array for easy looping
-            float[,] inverse = {{mat.Row0.X, mat.Row0.Y, mat.Row0.Z, mat.Row0.W},
-                                {mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W},
-                                {mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W},
-                                {mat.Row3.X, mat.Row3.Y, mat.Row3.Z, mat.Row3.W} };
+            float[,] inverse = 
+            {
+                { mat.Row0.X, mat.Row0.Y, mat.Row0.Z, mat.Row0.W },
+                { mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W },
+                { mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W },
+                { mat.Row3.X, mat.Row3.Y, mat.Row3.Z, mat.Row3.W } 
+            };
+            
             int icol = 0;
             int irow = 0;
             for (int i = 0; i < 4; i++)

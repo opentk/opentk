@@ -44,13 +44,13 @@ namespace OpenTK.Convert
                 yield return new Example
                 (
                     "Converting local files",
-                    new Options { Prefix = "gl", OutputFile = "signatures.xml", InputFiles = new []{ "gl.xml" } }
+                    new Options { Prefix = "gl", OutputFile = "signatures.xml", InputFiles = new [] { "gl.xml" } }
                 );
 
                 yield return new Example
                 (
                     "Converting latest remote specification",
-                    new Options { Prefix = "gl", OutputFile = "signatures.xml", InputFiles = new []{ "https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/api/gl.xml" } }
+                    new Options { Prefix = "gl", OutputFile = "signatures.xml", InputFiles = new [] { "https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/api/gl.xml" } }
                 );
             }
         }

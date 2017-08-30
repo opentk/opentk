@@ -19,7 +19,6 @@ namespace OpenTK
     [ToolboxItem(true)]
     public class GLWidget: DrawingArea
     {
-
         private static int _GraphicsContextCount;
         private static bool _SharedContextInitialized = false;
 

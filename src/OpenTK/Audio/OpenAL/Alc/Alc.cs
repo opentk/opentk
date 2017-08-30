@@ -67,7 +67,6 @@ typedef void ALCvoid;
 
 namespace OpenTK.Audio.OpenAL
 {
-
     /// <summary>Alc = Audio Library Context</summary>
     public static class Alc
     {
@@ -115,6 +114,7 @@ namespace OpenTK.Audio.OpenAL
         {
             return MakeContextCurrent(context.Handle);
         }
+
         // ALC_API ALCboolean      ALC_APIENTRY alcMakeContextCurrent( ALCcontext *context );
 
         [DllImport(Alc.Lib, EntryPoint = "alcProcessContext", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
@@ -126,6 +126,7 @@ namespace OpenTK.Audio.OpenAL
         {
             ProcessContext(context.Handle);
         }
+
         // ALC_API void            ALC_APIENTRY alcProcessContext( ALCcontext *context );
 
         [DllImport(Alc.Lib, EntryPoint = "alcSuspendContext", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
@@ -137,6 +138,7 @@ namespace OpenTK.Audio.OpenAL
         {
             SuspendContext(context.Handle);
         }
+
         // ALC_API void            ALC_APIENTRY alcSuspendContext( ALCcontext *context );
 
         [DllImport(Alc.Lib, EntryPoint = "alcDestroyContext", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
@@ -148,6 +150,7 @@ namespace OpenTK.Audio.OpenAL
         {
             DestroyContext(context.Handle);
         }
+
         // ALC_API void            ALC_APIENTRY alcDestroyContext( ALCcontext *context );
 
         [DllImport(Alc.Lib, EntryPoint = "alcGetCurrentContext", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
@@ -159,6 +162,7 @@ namespace OpenTK.Audio.OpenAL
         {
             return new ContextHandle(sys_GetCurrentContext());
         }
+
         // ALC_API ALCcontext *    ALC_APIENTRY alcGetCurrentContext( void );
 
         [DllImport(Alc.Lib, EntryPoint = "alcGetContextsDevice", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
@@ -171,6 +175,7 @@ namespace OpenTK.Audio.OpenAL
         {
             return GetContextsDevice(context.Handle);
         }
+
         // ALC_API ALCdevice*      ALC_APIENTRY alcGetContextsDevice( ALCcontext *context );
 
         /// <summary>This function opens a device by name.</summary>
@@ -178,6 +183,7 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>Returns a pointer to the opened device. The return value will be NULL if there is an error.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcOpenDevice", ExactSpelling = true, CallingConvention = Alc.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
         public static extern IntPtr OpenDevice([In] string devicename);
+
         // ALC_API ALCdevice *     ALC_APIENTRY alcOpenDevice( const ALCchar *devicename );
 
         /// <summary>This function closes a device by name.</summary>
@@ -185,6 +191,7 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>True will be returned on success or False on failure. Closing a device will fail if the device contains any contexts or buffers.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcCloseDevice", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
         public static extern bool CloseDevice([In] IntPtr device);
+
         // ALC_API ALCboolean      ALC_APIENTRY alcCloseDevice( ALCdevice *device );
 
         /// <summary>This function retrieves the current context error state.</summary>
@@ -192,6 +199,7 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>Errorcode Int32.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcGetError", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
         public static extern AlcError GetError([In] IntPtr device);
+
         // ALC_API ALCenum         ALC_APIENTRY alcGetError( ALCdevice *device );
 
         /// <summary>This function queries if a specified context extension is available.</summary>
@@ -200,6 +208,7 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>Returns True if the extension is available, False if the extension is not available.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcIsExtensionPresent", ExactSpelling = true, CallingConvention = Alc.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
         public static extern bool IsExtensionPresent([In] IntPtr device, [In] string extname);
+
         // ALC_API ALCboolean      ALC_APIENTRY alcIsExtensionPresent( ALCdevice *device, const ALCchar *extname );
 
         /// <summary>This function retrieves the address of a specified context extension function.</summary>
@@ -208,6 +217,7 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>Returns the address of the function, or NULL if it is not found.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcGetProcAddress", ExactSpelling = true, CallingConvention = Alc.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
         public static extern IntPtr GetProcAddress([In] IntPtr device, [In] string funcname);
+
         // ALC_API void  *         ALC_APIENTRY alcGetProcAddress( ALCdevice *device, const ALCchar *funcname );
 
         /// <summary>This function retrieves the enum value for a specified enumeration name.</summary>
@@ -216,10 +226,12 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>Returns the enum value described by the enumName string. This is most often used for querying an enum value for an ALC extension.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcGetEnumValue", ExactSpelling = true, CallingConvention = Alc.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
         public static extern int GetEnumValue([In] IntPtr device, [In] string enumname);
+
         // ALC_API ALCenum         ALC_APIENTRY alcGetEnumValue( ALCdevice *device, const ALCchar *enumname );
 
         [DllImport(Alc.Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = Alc.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
         private static extern IntPtr GetStringPrivate([In] IntPtr device, AlcGetString param);
+
         // ALC_API const ALCchar * ALC_APIENTRY alcGetString( ALCdevice *device, ALCenum param );
 
         /// <summary>This function returns pointers to strings related to the context.</summary>
@@ -241,6 +253,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 str = Marshal.PtrToStringAnsi(pstr);
             }
+
             return str;
         }
 
@@ -308,6 +321,7 @@ namespace OpenTK.Audio.OpenAL
 
         [DllImport(Alc.Lib, EntryPoint = "alcGetIntegerv", ExactSpelling = true, CallingConvention = Alc.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
         private unsafe static extern void GetInteger(IntPtr device, AlcGetInteger param, int size, int* data);
+
         // ALC_API void            ALC_APIENTRY alcGetIntegerv( ALCdevice *device, ALCenum param, ALCsizei size, ALCint *buffer );
 
         /// <summary>This function returns integers related to the context.</summary>
@@ -367,6 +381,7 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>Returns True if the close operation was successful, False on failure.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcCaptureCloseDevice", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
         public static extern bool CaptureCloseDevice([In] IntPtr device);
+
         // ALC_API ALCboolean      ALC_APIENTRY alcCaptureCloseDevice( ALCdevice *device );
 
         /// <summary>This function begins a capture operation.</summary>
@@ -374,12 +389,14 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="device">a pointer to a capture device.</param>
         [DllImport(Alc.Lib, EntryPoint = "alcCaptureStart", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
         public static extern void CaptureStart([In] IntPtr device);
+
         // ALC_API void            ALC_APIENTRY alcCaptureStart( ALCdevice *device );
 
         /// <summary>This function stops a capture operation.</summary>
         /// <param name="device">a pointer to a capture device.</param>
         [DllImport(Alc.Lib, EntryPoint = "alcCaptureStop", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
         public static extern void CaptureStop([In] IntPtr device);
+
         // ALC_API void            ALC_APIENTRY alcCaptureStop( ALCdevice *device );
 
         /// <summary>This function completes a capture operation, and does not block.</summary>
@@ -388,6 +405,7 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="samples">the number of samples to be retrieved.</param>
         [DllImport(Alc.Lib, EntryPoint = "alcCaptureSamples", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
         public static extern void CaptureSamples(IntPtr device, IntPtr buffer, int samples);
+
         // ALC_API void            ALC_APIENTRY alcCaptureSamples( ALCdevice *device, ALCvoid *buffer, ALCsizei samples );
 
         /// <summary>This function completes a capture operation, and does not block.</summary>
@@ -440,7 +458,5 @@ namespace OpenTK.Audio.OpenAL
         {
             CaptureSamples(device, ref buffer[0, 0, 0], samples);
         }
-
     }
-
 }

@@ -180,6 +180,7 @@ namespace OpenTK.Platform
                 {
                     OnKeyUp(Key.AltLeft);
                 }
+                
                 if (KeyboardState[Key.AltRight])
                 {
                     OnKeyUp(Key.AltRight);
@@ -197,6 +198,7 @@ namespace OpenTK.Platform
                 {
                     OnKeyUp(Key.ControlLeft);
                 }
+                
                 if (KeyboardState[Key.ControlRight])
                 {
                     OnKeyUp(Key.ControlRight);
@@ -214,6 +216,7 @@ namespace OpenTK.Platform
                 {
                     OnKeyUp(Key.ShiftLeft);
                 }
+                
                 if (KeyboardState[Key.ShiftRight])
                 {
                     OnKeyUp(Key.ShiftRight);

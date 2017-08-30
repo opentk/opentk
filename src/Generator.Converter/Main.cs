@@ -113,6 +113,7 @@ namespace OpenTK.Convert
                                     .ThenBy(s => (string)s.Attribute("extension") ?? String.Empty)
                                 ));
                     }
+
                     output.WriteTo(writer);
                     writer.Flush();
                     writer.Close();
@@ -139,6 +140,7 @@ namespace OpenTK.Convert
                 {
                     continue;
                 }
+
                 var tokens = e.Value.Elements()
                     .OrderBy(t => (string)t.Attribute("name"))
                     .ToList();
@@ -167,6 +169,7 @@ namespace OpenTK.Convert
                     entries.Add(key, e);
                 }
             }
+
             return entries;
         }
     }

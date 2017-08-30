@@ -72,7 +72,8 @@ namespace OpenTK.Platform.MacOS
         {
             NSPoint r = new NSPoint();
 
-            unsafe {
+            unsafe
+            {
                 if (IntPtr.Size == 4)
                 {
                     NSPointF pf = EventGetLocationF(@event);
@@ -89,7 +90,6 @@ namespace OpenTK.Platform.MacOS
 
             return r;
         }
-
     }
 
     internal enum CGEventTapLocation

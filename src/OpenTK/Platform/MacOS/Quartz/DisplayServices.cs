@@ -34,7 +34,6 @@ namespace OpenTK.Platform.MacOS
 
     internal enum CGDisplayErr
     {
-
     }
 
     internal enum CGError

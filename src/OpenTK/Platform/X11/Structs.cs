@@ -673,9 +673,11 @@ namespace OpenTK.Platform.X11
                 {
                     result += ", ";
                 }
+
                 object value = fields[i].GetValue(ev);
                 result += fields[i].Name + "=" + (value == null ? "<null>" : value.ToString());
             }
+
             return type.Name + " (" + result + ")";
         }
     }

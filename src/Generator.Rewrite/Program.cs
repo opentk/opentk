@@ -121,6 +121,7 @@ namespace OpenTK.Rewrite
                             Console.Error.WriteLine("Failed to locate mscorlib");
                             return;
                         }
+
                         TypeMarshal = mscorlib.MainModule.GetType("System.Runtime.InteropServices.Marshal");
                         TypeVoid = mscorlib.MainModule.GetType("System.Void");
                         TypeIntPtr = mscorlib.MainModule.GetType("System.IntPtr");
@@ -336,6 +337,7 @@ namespace OpenTK.Rewrite
                 // (otherwise peverify complains bitterly)
                 body.InitLocals = true;
             }
+
             body.OptimizeMacros();
         }
 
@@ -350,7 +352,6 @@ namespace OpenTK.Rewrite
 
         private static DebugVariables EmitDebugPrologue(MethodDefinition wrapper, ILProcessor il)
         {
-
             DebugVariables vars = null;
             if (il.Body.Method.Name != "GetError")
             {
@@ -870,6 +871,7 @@ namespace OpenTK.Rewrite
                 count.Parameter = (string)(GetAttributeField(attribute, "Parameter"));
                 count.Computed = (string)(GetAttributeField(attribute, "Computed"));
             }
+
             return count;
         }
 
@@ -900,6 +902,7 @@ namespace OpenTK.Rewrite
                 il.Emit(OpCodes.Mul);
                 il.Emit(OpCodes.Stloc, countVariable.Index);
             }
+
             return countVariable;
         }
 
@@ -984,6 +987,7 @@ namespace OpenTK.Rewrite
                                 mscorlib.MainModule.GetType("System.Array").Methods.First(m => m.Name == "get_Length"));
                             il.Emit(OpCodes.Callvirt, get_length);
                         }
+
                         il.Emit(OpCodes.Brtrue, pin);
 
                         // empty: IntPtr ptr = IntPtr.Zero
@@ -1009,6 +1013,7 @@ namespace OpenTK.Rewrite
                             {
                                 get_address.Parameters.Add(new ParameterDefinition(TypeInt32));
                             }
+
                             get_address.HasThis = true;
 
                             // emit the get_address call
@@ -1016,6 +1021,7 @@ namespace OpenTK.Rewrite
                             {
                                 il.Emit(OpCodes.Ldc_I4, 0);
                             }
+
                             il.Emit(OpCodes.Call, get_address);
                         }
 

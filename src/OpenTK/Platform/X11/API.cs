@@ -95,6 +95,7 @@ namespace OpenTK.Platform.X11
             {
                 ScreenCount = Functions.XScreenCount(DefaultDisplay);
             }
+
             Debug.Print("Display connection: {0}, Screen count: {1}", DefaultDisplay, ScreenCount);
 
             //AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
@@ -416,6 +417,7 @@ namespace OpenTK.Platform.X11
             private float green;                   /* Green Gamma value */
             private float blue;                    /* Blue Gamma value */
         }
+
         [DllImport(_dll_name_vid)]
         extern public static bool XF86VidModeQueryExtension(
             Display display,
@@ -543,8 +545,8 @@ XF86VidModeGetGammaRampSize(
 
         [DllImport(_dll_name, EntryPoint = "XLookupKeysym")]
         public static extern KeySym LookupKeysym(ref XKeyEvent key_event, int index);
-
     }
+
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct XcursorImage
     {
@@ -621,6 +623,7 @@ XF86VidModeGetGammaRampSize(
             public int y;       /* denominator */
             private void stop_the_compiler_warnings() { x = y = 0; }
         }
+
         /* this structure may be extended in the future */
     }
 
@@ -628,7 +631,7 @@ XF86VidModeGetGammaRampSize(
     {
         internal int Width, Height;
         internal int MWidth, MHeight;
-    };
+    }
 
     unsafe internal struct Screen
     {
@@ -664,7 +667,7 @@ XF86VidModeGetGammaRampSize(
 
         private FreePrivateDelegate FreePrivate;    /* called to free private storage */
         private XPointer private_data;    /* buffer private to this extension. */
-    };
+    }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct MotifWmHints
@@ -711,7 +714,6 @@ XF86VidModeGetGammaRampSize(
         Menu        = 0x10,
         Minimize    = 0x20,
         Maximize    = 0x40,
-
     }
 
     [Flags]
@@ -1472,6 +1474,7 @@ XF86VidModeGetGammaRampSize(
                 {
                     return null;
                 }
+
                 sizes = new XRRScreenSize[count];
                 for (int i = 0; i < count; i++)
                 {
@@ -1479,6 +1482,7 @@ XF86VidModeGetGammaRampSize(
                     sizes[i] = (XRRScreenSize)Marshal.PtrToStructure((IntPtr)data, typeof(XRRScreenSize));
                     data += Marshal.SizeOf(typeof(XRRScreenSize));
                 }
+
                 //XFree(ptr);   // Looks like we must not free this.
                 return sizes;
             }
@@ -1498,12 +1502,14 @@ XF86VidModeGetGammaRampSize(
                 {
                     return null;
                 }
+
                 rates = new short[count];
                 for (int i = 0; i < count; i++)
                 {
                     rates[i] = *(data + i);
                 }
             }
+
             return rates;
         }
 
@@ -1526,6 +1532,7 @@ XF86VidModeGetGammaRampSize(
                 {
                     return null;
                 }
+
                 int[] depths = new int[count];
                 for (int i = 0; i < count; i++)
                 {
@@ -1558,6 +1565,7 @@ XF86VidModeGetGammaRampSize(
         [DllImport("libX11", EntryPoint = "XAllocColor")]
         public static extern Status XAllocNamedColor(Display display, Colormap colormap, string color_name, out XColor screen_def_return, out XColor exact_def_return);
     }
+
     /*
     [StructLayout(LayoutKind.Sequential)]
     internal struct Keymap
@@ -1593,6 +1601,7 @@ XF86VidModeGetGammaRampSize(
                 {
                     throw new InvalidOperationException("Internal error (XLockDisplay with IntPtr.Zero). Please report this at https://github.com/opentk/opentk/issues");
                 }
+
                 return _display;
             }
             set
@@ -1601,6 +1610,7 @@ XF86VidModeGetGammaRampSize(
                 {
                     throw new ArgumentException();
                 }
+
                 _display = value;
             }
         }

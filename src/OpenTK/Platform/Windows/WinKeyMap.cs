@@ -180,6 +180,7 @@ namespace OpenTK.Platform.Windows
                     case Key.PrintScreen: key = Key.KeypadMultiply; break;
                     case Key.Delete: key = Key.KeypadDecimal; break;
                     case Key.NumLock:
+                    {
                         if (vkey == VirtualKeys.Last)
                         {
                             is_valid = false;
@@ -188,7 +189,9 @@ namespace OpenTK.Platform.Windows
                         {
                             key = Key.Pause;
                         }
+
                         break;
+                    }
                 }
             }
             else

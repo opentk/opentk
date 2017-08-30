@@ -59,6 +59,7 @@ namespace OpenTK.Graphics
             {
                 throw new GraphicsContextMissingException();
             }
+            
             return context != null ? context.GetAddress(funcname) : IntPtr.Zero;
         }
 

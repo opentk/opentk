@@ -37,6 +37,7 @@ namespace OpenTK.Platform.Dummy
             {
                 Handle = handle;
             }
+            
             Loader = loader;
             Mode = new GraphicsMode(new IntPtr(2), 32, 16, 0, 0, 0, 2, false);
         }

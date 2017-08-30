@@ -89,6 +89,7 @@ namespace Bind.Structures
                 {
                     PreviousType = type;
                 }
+
                 if (!String.IsNullOrEmpty(value))
                 {
                     type = value.Trim();
@@ -235,14 +236,17 @@ namespace Bind.Structures
             {
                 result = Pointer.CompareTo(other.Pointer); // Must come after array/ref, see issue [#1098]
             }
+
             if (result == 0)
             {
                 result = Reference.CompareTo(other.Reference);
             }
+
             if (result == 0)
             {
                 result = Array.CompareTo(other.Array);
             }
+
             // Note: CLS-compliance and element counts
             // are used for comparison calculations, in order
             // to maintain a stable sorting order, even though
@@ -251,10 +255,12 @@ namespace Bind.Structures
             {
                 result = CLSCompliant.CompareTo(other.CLSCompliant);
             }
+
             if (result == 0)
             {
                 result = ElementCount.CompareTo(other.ElementCount);
             }
+
             return result;
         }
 

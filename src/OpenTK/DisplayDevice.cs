@@ -159,14 +159,17 @@ namespace OpenTK
             {
                 resolution = FindResolution(width, height, bitsPerPixel, 0);
             }
+            
             if (resolution == null)
             {
                 resolution = FindResolution(width, height, 0, 0);
             }
+            
             if (resolution == null)
             {
                 return current_resolution;
             }
+            
             return resolution;
         }
 
@@ -207,6 +210,7 @@ namespace OpenTK
                 {
                     OriginalResolution = current_resolution;
                 }
+                
                 current_resolution = resolution;
             }
             else
@@ -285,6 +289,7 @@ namespace OpenTK
                     }
                 }
             }
+            
             return null;
         }
 

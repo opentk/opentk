@@ -120,7 +120,10 @@ namespace OpenTK.Platform
                 }
 #endif
 #if ANDROID
-                else if (Configuration.RunningOnAndroid) Embedded = new Android.AndroidFactory();
+                else if (Configuration.RunningOnAndroid)
+                {
+                    Embedded = new Android.AndroidFactory();
+                }
 #endif
                 else
                 {
@@ -264,6 +267,7 @@ namespace OpenTK.Platform
                 {
                     Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
                 }
+                
                 disposed = true;
             }
         }

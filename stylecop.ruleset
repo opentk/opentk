@@ -18,8 +18,8 @@
     <Rule Id="SA1009" Action="None" /> <!-- Closing parenthesis must be spaced correctly -->
     <Rule Id="SA1010" Action="None" /> <!-- Opening square brackets must be spaced correctly -->
     <Rule Id="SA1011" Action="None" /> <!-- Closing square brackets must be spaced correctly -->
-    <Rule Id="SA1012" Action="None" /> <!-- Opening braces must be spaced correctly -->
-    <Rule Id="SA1013" Action="None" /> <!-- Closing braces must be spaced correctly -->
+    <Rule Id="SA1012" Action="Error" /> <!-- Opening braces must be spaced correctly -->
+    <Rule Id="SA1013" Action="Error" /> <!-- Closing braces must be spaced correctly -->
     <Rule Id="SA1014" Action="Error" /> <!-- Opening generic brackets must be spaced correctly -->
     <Rule Id="SA1015" Action="Error" /> <!-- Closing generic brackets must be spaced correctly -->
     <Rule Id="SA1016" Action="Error" /> <!-- Opening attribute brackets must be spaced correctly -->
@@ -128,27 +128,27 @@
     <Rule Id="SA1413" Action="None" /> <!-- Use trailing comma in multi-line initializers -->
 
     <!-- Layout rules -->
-    <Rule Id="SA1500" Action="None" /> <!-- Braces for multi-line statements must not share line -->
+    <Rule Id="SA1500" Action="Error" /> <!-- Braces for multi-line statements must not share line -->
     <Rule Id="SA1501" Action="None" /> <!-- Statement must not be on a single line -->
     <Rule Id="SA1502" Action="None" /> <!-- Element must not be on a single line -->
-    <Rule Id="SA1503" Action="None" /> <!-- Braces must not be omitted -->
+    <Rule Id="SA1503" Action="Error" /> <!-- Braces must not be omitted -->
     <Rule Id="SA1504" Action="None" /> <!-- All accessors must be single-line or multi-line -->
-    <Rule Id="SA1505" Action="None" /> <!-- Opening braces must not be followed by blank line -->
+    <Rule Id="SA1505" Action="Error" /> <!-- Opening braces must not be followed by blank line -->
     <Rule Id="SA1506" Action="None" /> <!-- Element documentation headers must not be followed by blank line -->
     <Rule Id="SA1507" Action="None" /> <!-- Code must not contain multiple blank lines in a row -->
-    <Rule Id="SA1508" Action="None" /> <!-- Closing braces must not be preceded by blank line -->
-    <Rule Id="SA1509" Action="None" /> <!-- Opening braces must not be preceded by blank line -->
+    <Rule Id="SA1508" Action="Error" /> <!-- Closing braces must not be preceded by blank line -->
+    <Rule Id="SA1509" Action="Error" /> <!-- Opening braces must not be preceded by blank line -->
     <Rule Id="SA1510" Action="Error" /> <!-- Chained statement blocks must not be preceded by blank line -->
     <Rule Id="SA1511" Action="None" /> <!-- While-do footer must not be preceded by blank line -->
     <Rule Id="SA1512" Action="None" /> <!-- Single-line comments must not be followed by blank line -->
-    <Rule Id="SA1513" Action="None" /> <!-- Closing brace must be followed by blank line -->
+    <Rule Id="SA1513" Action="None" Intentional="true" Reason="Waiting for configurable option"/> <!-- Closing brace must be followed by blank line -->
     <Rule Id="SA1514" Action="None" /> <!-- Element documentation header must be preceded by blank line -->
     <Rule Id="SA1515" Action="None" /> <!-- Single-line comment must be preceded by blank line -->
     <Rule Id="SA1516" Action="None" /> <!-- Elements must be separated by blank line -->
     <Rule Id="SA1517" Action="None" /> <!-- Code must not contain blank lines at start of file -->
     <Rule Id="SA1518" Action="None" /> <!-- Use line endings correctly at end of file -->
-    <Rule Id="SA1519" Action="None" /> <!-- Braces must not be omitted from multi-line child statement -->
-    <Rule Id="SA1520" Action="None" /> <!-- Use braces consistently -->
+    <Rule Id="SA1519" Action="Error" /> <!-- Braces must not be omitted from multi-line child statement -->
+    <Rule Id="SA1520" Action="Error" /> <!-- Use braces consistently -->
 
     <!-- Documentation rules -->
     <Rule Id="SA1600" Action="None" /> <!-- Elements must be documented -->

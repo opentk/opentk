@@ -272,6 +272,7 @@ namespace OpenTK.Platform.Linux
                     Interlocked.Increment(ref exit);
                 }
             }
+
             Debug.Print("[Input] Exited input loop.", poll_fd.fd, poll_fd.events);
         }
 
@@ -312,6 +313,7 @@ namespace OpenTK.Platform.Linux
                 Interlocked.Increment(ref exit);
                 return;
             }
+
             Debug.Print("[Input] Udev.New() = {0:x}", udev);
 
             input_context = LibInput.CreateContext(input_interface, IntPtr.Zero, udev);
@@ -321,6 +323,7 @@ namespace OpenTK.Platform.Linux
                 Interlocked.Increment(ref exit);
                 return;
             }
+
             Debug.Print("[Input] LibInput.CreateContext({0:x}) = {1:x}", udev, input_context);
 
             string seat_id = "seat0";
@@ -331,6 +334,7 @@ namespace OpenTK.Platform.Linux
                 Interlocked.Increment(ref exit);
                 return;
             }
+
             Debug.Print("[Input] LibInput.AssignSeat({0:x}) = {1}", input_context, seat_id);
 
             fd = LibInput.GetFD(input_context);
@@ -340,6 +344,7 @@ namespace OpenTK.Platform.Linux
                 Interlocked.Increment(ref exit);
                 return;
             }
+
             Debug.Print("[Input] LibInput.GetFD({0:x}) = {1}.", input_context, fd);
 
             ProcessEvents(input_context);
@@ -489,6 +494,7 @@ namespace OpenTK.Platform.Linux
                 {
                     mouse.State.SetScrollRelative((float)e.AxisValue(PointerAxis.HorizontalScroll), 0);
                 }
+
                 if (e.HasAxis(PointerAxis.VerticalScroll))
                 {
                     mouse.State.SetScrollRelative(0, (float)e.AxisValue(PointerAxis.VerticalScroll));
@@ -554,6 +560,7 @@ namespace OpenTK.Platform.Linux
             {
                 Debug.Print("[Input] Keyboard {0} does not exist in device list.", id);
             }
+
             return keyboard;
         }
 
@@ -569,6 +576,7 @@ namespace OpenTK.Platform.Linux
             {
                 Debug.Print("[Input] Mouse {0} does not exist in device list.", id);
             }
+
             return mouse;
         }
 
@@ -581,6 +589,7 @@ namespace OpenTK.Platform.Linux
                 {
                     state.MergeBits(keyboard.State);
                 }
+
                 return state;
             }
         }
@@ -626,6 +635,7 @@ namespace OpenTK.Platform.Linux
                 {
                     state.MergeBits(mouse.State);
                 }
+
                 return state;
             }
         }
