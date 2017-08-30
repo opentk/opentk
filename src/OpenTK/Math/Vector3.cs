@@ -276,7 +276,9 @@ namespace OpenTK
         /// <param name="result">Result of operation.</param>
         public static void Add(ref Vector3 a, ref Vector3 b, out Vector3 result)
         {
-            result = new Vector3(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+            result.X = a.X + b.X;
+            result.Y = a.Y + b.Y;
+            result.Z = a.Z + b.Z;
         }
 
         /// <summary>
@@ -299,7 +301,9 @@ namespace OpenTK
         /// <param name="result">Result of subtraction</param>
         public static void Subtract(ref Vector3 a, ref Vector3 b, out Vector3 result)
         {
-            result = new Vector3(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
+            result.X = a.X - b.X;
+            result.Y = a.Y - b.Y;
+            result.Z = a.Z - b.Z;
         }
 
         /// <summary>
@@ -322,7 +326,9 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Multiply(ref Vector3 vector, float scale, out Vector3 result)
         {
-            result = new Vector3(vector.X * scale, vector.Y * scale, vector.Z * scale);
+            result.X = vector.X * scale;
+            result.Y = vector.Y * scale;
+            result.Z = vector.Z * scale;
         }
 
         /// <summary>
@@ -345,7 +351,9 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Multiply(ref Vector3 vector, ref Vector3 scale, out Vector3 result)
         {
-            result = new Vector3(vector.X * scale.X, vector.Y * scale.Y, vector.Z * scale.Z);
+            result.X = vector.X * scale.X;
+            result.Y = vector.Y * scale.Y;
+            result.Z = vector.Z * scale.Z;
         }
 
         /// <summary>
@@ -393,7 +401,9 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector3 vector, ref Vector3 scale, out Vector3 result)
         {
-            result = new Vector3(vector.X / scale.X, vector.Y / scale.Y, vector.Z / scale.Z);
+            result.X = vector.X / scale.X;
+            result.Y = vector.Y / scale.Y;
+            result.Z = vector.Z / scale.Z;
         }
 
         /// <summary>
@@ -645,15 +655,20 @@ namespace OpenTK
         /// <summary>
         /// Caclulate the cross (vector) product of two vectors
         /// </summary>
+        /// <remarks>
+        /// It is incorrect to call this method passing the same variable for
+        /// <paramref name="result"/> as for <paramref name="left"/> or
+        /// <paramref name="right"/>.
+        /// </remarks>
         /// <param name="left">First operand</param>
         /// <param name="right">Second operand</param>
         /// <returns>The cross product of the two inputs</returns>
         /// <param name="result">The cross product of the two inputs</param>
         public static void Cross(ref Vector3 left, ref Vector3 right, out Vector3 result)
         {
-            result = new Vector3(left.Y * right.Z - left.Z * right.Y,
-                left.Z * right.X - left.X * right.Z,
-                left.X * right.Y - left.Y * right.X);
+            result.X = left.Y * right.Z - left.Z * right.Y;
+            result.Y = left.Z * right.X - left.X * right.Z;
+            result.Z = left.X * right.Y - left.Y * right.X;
         }
 
         /// <summary>
@@ -729,16 +744,18 @@ namespace OpenTK
         /// <returns>The transformed vector</returns>
         public static Vector3 TransformVector(Vector3 vec, Matrix4 mat)
         {
-            Vector3 v;
-            v.X = Vector3.Dot(vec, new Vector3(mat.Column0));
-            v.Y = Vector3.Dot(vec, new Vector3(mat.Column1));
-            v.Z = Vector3.Dot(vec, new Vector3(mat.Column2));
-            return v;
+            Vector3 result;
+            TransformVector(ref vec, ref mat, out result);
+            return result;
         }
 
         /// <summary>Transform a direction vector by the given Matrix
         /// Assumes the matrix has a bottom row of (0,0,0,1), that is the translation part is ignored.
         /// </summary>
+        /// <remarks>
+        /// It is incorrect to call this method passing the same variable for
+        /// <paramref name="result"/> as for <paramref name="vec"/>.
+        /// </remarks>
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
         /// <param name="result">The transformed vector</param>
@@ -767,8 +784,9 @@ namespace OpenTK
         /// <returns>The transformed normal</returns>
         public static Vector3 TransformNormal(Vector3 norm, Matrix4 mat)
         {
-            mat.Invert();
-            return TransformNormalInverse(norm, mat);
+            Vector3 result;
+            TransformNormal(ref norm, ref mat, out result);
+            return result;
         }
 
         /// <summary>Transform a Normal by the given Matrix</summary>
@@ -795,11 +813,9 @@ namespace OpenTK
         /// <returns>The transformed normal</returns>
         public static Vector3 TransformNormalInverse(Vector3 norm, Matrix4 invMat)
         {
-            Vector3 n;
-            n.X = Vector3.Dot(norm, new Vector3(invMat.Row0));
-            n.Y = Vector3.Dot(norm, new Vector3(invMat.Row1));
-            n.Z = Vector3.Dot(norm, new Vector3(invMat.Row2));
-            return n;
+            Vector3 result;
+            TransformNormalInverse(ref norm, ref invMat, out result);
+            return result;
         }
 
         /// <summary>Transform a Normal by the (transpose of the) given Matrix</summary>
@@ -831,11 +847,9 @@ namespace OpenTK
         /// <returns>The transformed position</returns>
         public static Vector3 TransformPosition(Vector3 pos, Matrix4 mat)
         {
-            Vector3 p;
-            p.X = Vector3.Dot(pos, new Vector3(mat.Column0)) + mat.Row3.X;
-            p.Y = Vector3.Dot(pos, new Vector3(mat.Column1)) + mat.Row3.Y;
-            p.Z = Vector3.Dot(pos, new Vector3(mat.Column2)) + mat.Row3.Z;
-            return p;
+            Vector3 result;
+            TransformPosition(ref pos, ref mat, out result);
+            return result;
         }
 
         /// <summary>Transform a Position by the given Matrix</summary>
@@ -877,10 +891,9 @@ namespace OpenTK
         /// <param name="result">The transformed vector</param>
         public static void Transform(ref Vector3 vec, ref Matrix3 mat, out Vector3 result)
         {
-            result = new Vector3(
-                vec.X * mat.Row0.X + vec.Y * mat.Row1.X + vec.Z * mat.Row2.X,
-                vec.X * mat.Row0.Y + vec.Y * mat.Row1.Y + vec.Z * mat.Row2.Y,
-                vec.X * mat.Row0.Z + vec.Y * mat.Row1.Z + vec.Z * mat.Row2.Z);
+            result.X = vec.X * mat.Row0.X + vec.Y * mat.Row1.X + vec.Z * mat.Row2.X;
+            result.Y = vec.X * mat.Row0.Y + vec.Y * mat.Row1.Y + vec.Z * mat.Row2.Y;
+            result.Z = vec.X * mat.Row0.Z + vec.Y * mat.Row1.Z + vec.Z * mat.Row2.Z;
         }
 
         /// <summary>
@@ -931,10 +944,9 @@ namespace OpenTK
         /// <param name="result">The transformed vector</param>
         public static void Transform(ref Matrix3 mat, ref Vector3 vec, out Vector3 result)
         {
-            result = new Vector3(
-                mat.Row0.X * vec.X + mat.Row0.Y * vec.Y + mat.Row0.Z * vec.Z,
-                mat.Row1.X * vec.X + mat.Row1.Y * vec.Y + mat.Row1.Z * vec.Z,
-                mat.Row2.X * vec.X + mat.Row2.Y * vec.Y + mat.Row2.Z * vec.Z);
+            result.X = mat.Row0.X * vec.X + mat.Row0.Y * vec.Y + mat.Row0.Z * vec.Z;
+            result.Y = mat.Row1.X * vec.X + mat.Row1.Y * vec.Y + mat.Row1.Z * vec.Z;
+            result.Z = mat.Row2.X * vec.X + mat.Row2.Y * vec.Y + mat.Row2.Z * vec.Z;
         }
 
         /// <summary>Transform a Vector3 by the given Matrix, and project the resulting Vector4 back to a Vector3</summary>
@@ -954,7 +966,7 @@ namespace OpenTK
         /// <param name="result">The transformed vector</param>
         public static void TransformPerspective(ref Vector3 vec, ref Matrix4 mat, out Vector3 result)
         {
-            Vector4 v = new Vector4(vec, 1);
+            Vector4 v = new Vector4(vec.X, vec.Y, vec.Z, 1);
             Vector4.Transform(ref v, ref mat, out v);
             result.X = v.X / v.W;
             result.Y = v.Y / v.W;

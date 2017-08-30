@@ -202,7 +202,8 @@ namespace OpenTK
         /// <param name="result">Result of operation.</param>
         public static void Add(ref Vector2d a, ref Vector2d b, out Vector2d result)
         {
-            result = new Vector2d(a.X + b.X, a.Y + b.Y);
+            result.X = a.X + b.X;
+            result.Y = a.Y + b.Y;
         }
 
         /// <summary>
@@ -225,7 +226,8 @@ namespace OpenTK
         /// <param name="result">Result of subtraction</param>
         public static void Subtract(ref Vector2d a, ref Vector2d b, out Vector2d result)
         {
-            result = new Vector2d(a.X - b.X, a.Y - b.Y);
+            result.X = a.X - b.X;
+            result.Y = a.Y - b.Y;
         }
 
         /// <summary>
@@ -248,7 +250,8 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Multiply(ref Vector2d vector, double scale, out Vector2d result)
         {
-            result = new Vector2d(vector.X * scale, vector.Y * scale);
+            result.X = vector.X * scale;
+            result.Y = vector.Y * scale;
         }
 
         /// <summary>
@@ -271,7 +274,8 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Multiply(ref Vector2d vector, ref Vector2d scale, out Vector2d result)
         {
-            result = new Vector2d(vector.X * scale.X, vector.Y * scale.Y);
+            result.X = vector.X * scale.X;
+            result.Y = vector.Y * scale.Y;
         }
 
         /// <summary>
@@ -318,7 +322,8 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector2d vector, ref Vector2d scale, out Vector2d result)
         {
-            result = new Vector2d(vector.X / scale.X, vector.Y / scale.Y);
+            result.X = vector.X / scale.X;
+            result.Y = vector.Y / scale.Y;
         }
 
         /// <summary>
@@ -663,7 +668,8 @@ namespace OpenTK
             Quaterniond.Multiply(ref quat, ref v, out t);
             Quaterniond.Multiply(ref t, ref i, out v);
 
-            result = new Vector2d(v.X, v.Y);
+            result.X = v.X;
+            result.Y = v.Y;
         }
 
         /// <summary>
