@@ -381,7 +381,7 @@ namespace OpenTK.Platform.Windows
                 }
                 if (dll == IntPtr.Zero)
                 {
-                  //XInput was not found on this platform
+                   Debug.Print("XInput was not found on this platform");
                    return;
                 }
 
