@@ -131,7 +131,7 @@ namespace OpenTK
 #endif
             if (disposing)
             {
-                _GraphicsContext.MakeCurrent(_WindowInfo);
+                MakeCurrent();
                 OnShuttingDown();
                 if (GraphicsContext.ShareContexts && (Interlocked.Decrement(ref _GraphicsContextCount) == 0))
                 {
