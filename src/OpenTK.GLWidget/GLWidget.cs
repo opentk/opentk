@@ -388,7 +388,7 @@ namespace OpenTK
             }
             else
             {
-                _WindowInfo = XWindowInfoInitializer.Initialize(graphicsMode, this.Display.Handle, this.Screen.Number, widgetWindowHandle, this.Screen.RootWindow.Handle);
+                _WindowInfo = XWindowInfoInitializer.Initialize(this.Display.Handle, this.Screen.Number, widgetWindowHandle, this.Screen.RootWindow.Handle);
             }
 
             // Make the GDK GL context current
