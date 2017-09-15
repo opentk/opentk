@@ -39,6 +39,7 @@ namespace OpenTK.X11
             IntPtr rootWindowXid = gdk_x11_drawable_get_xid(gdkRootWindowHandle);
 #endif
 
+            // No visual needs to be passed here, since we're piggybacking on the GdkGLContext from the base GLArea
             IWindowInfo retval = Utilities.CreateX11WindowInfo(display, screenNumber, windowXid, rootWindowXid, IntPtr.Zero);
 
             return retval;
