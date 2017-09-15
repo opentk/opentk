@@ -298,7 +298,7 @@ namespace OpenTK
             }
 
             // Make the GDK GL context current
-            Context.MakeCurrent();
+            MakeCurrent();
 
             // Create an OpenTK graphics context using the GdkGLContext as a foreign context
             // Since the GDK context is already created and has been made current, we can retrieve its handle.
@@ -306,7 +306,8 @@ namespace OpenTK
 
             GetRequiredVersion(out int glVersionMajor, out int glVersionMinor);
             _GraphicsContext = new GraphicsContext(gdkContextHandle, _WindowInfo, null, glVersionMajor, glVersionMinor, GraphicsContextFlags);
-            _GraphicsContext.MakeCurrent(_WindowInfo);
+
+            MakeCurrent();
 
             if (GraphicsContext.ShareContexts)
             {
