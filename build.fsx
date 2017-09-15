@@ -99,13 +99,19 @@ Target "AssemblyInfo" (fun _ ->
                 projectName.Split('.').[0]
             else
                 projectName
-        [ Attribute.Title (projectName)
-          Attribute.Product project
-          Attribute.Description summary
-          Attribute.Version release.AssemblyVersion
-          Attribute.FileVersion release.AssemblyVersion
-          Attribute.CLSCompliant true
-          Attribute.Copyright copyright  ]
+        let baseAttributes =
+            [ Attribute.Title (projectName)
+              Attribute.Product project
+              Attribute.Description summary
+              Attribute.Version release.AssemblyVersion
+              Attribute.FileVersion release.AssemblyVersion
+              Attribute.CLSCompliant true
+              Attribute.Copyright copyright
+            ]
+        if projectName = "OpenTK" then
+            baseAttributes @ [Attribute.InternalsVisibleTo "OpenTK.GLWidget, PublicKey=0024000004800000940000000602000000240000525341310004000011000000a3e05aafb87f71fb8fd02b512707f289c12341de98c6ce2ec1494b71c20cb2032cbd65d091b447df3ec772257efb9fa3591201937890e067da1d29a339948a12b29c2847a787cc9fbef2a3bf78267026e85f36aab827228df4bb580e3ae0599ade036f0a97a0e6982f5406d98d114455f332350f6d8369db655e9c3e7976c2c8"]
+        else
+            baseAttributes
 
     let getProjectDetails projectPath =
         let projectName = System.IO.Path.GetFileNameWithoutExtension(projectPath)
