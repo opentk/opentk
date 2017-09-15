@@ -7,6 +7,7 @@ using OpenTK.Platform;
 
 using Gtk;
 using OpenTK.OSX;
+using OpenTK.Platform.X11;
 using OpenTK.Win;
 using OpenTK.X11;
 
@@ -17,7 +18,7 @@ namespace OpenTK
     /// </summary>
     [CLSCompliant(false)]
     [ToolboxItem(true)]
-    public class GLWidget: DrawingArea
+    public class GLWidget: GLArea
     {
 
         private static int _GraphicsContextCount;
@@ -386,6 +387,7 @@ namespace OpenTK
             }
 
             // GraphicsContext
+
             _GraphicsContext = new GraphicsContext(graphicsMode, _WindowInfo, GlVersionMajor, GlVersionMinor, GraphicsContextFlags);
             _GraphicsContext.MakeCurrent(_WindowInfo);
 
