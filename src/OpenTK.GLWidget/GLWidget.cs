@@ -194,22 +194,6 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Called when this <see cref="GLWidget"/> needs to render a frame.
-        /// </summary>
-        public event EventHandler RenderFrame;
-
-        /// <summary>
-        /// Invokes the <see cref="RenderFrame"/> event.
-        /// </summary>
-        protected virtual void OnRenderFrame()
-        {
-            if (RenderFrame != null)
-            {
-                RenderFrame(this, EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
         /// Called when this <see cref="GLWidget"/> is being disposed.
         /// </summary>
         public event EventHandler ShuttingDown;
@@ -255,9 +239,6 @@ namespace OpenTK
 #else
             bool result = base.OnExposeEvent(evnt);
 #endif
-
-            OnRenderFrame();
-
 #if !GTK3
             evnt.Window.Display.Sync(); // Add Sync call to fix resize rendering problem (Jay L. T. Cornwall) - How does this affect VSync?
 #endif
