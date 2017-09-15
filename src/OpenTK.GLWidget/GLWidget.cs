@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.ComponentModel;
-
+using Gdk;
 using OpenTK.Graphics;
 using OpenTK.Platform;
 
@@ -104,8 +104,24 @@ namespace OpenTK
             Samples = graphicsMode.Samples;
             Stereo = graphicsMode.Stereo;
 
-            SetRequiredVersion(glVersionMajor, glVersionMinor);
             GraphicsContextFlags = graphicsContextFlags;
+
+            SetRequiredVersion(glVersionMajor, glVersionMinor);
+
+            if (graphicsMode.Depth > 0)
+            {
+                HasDepthBuffer = true;
+            }
+
+            if (graphicsMode.Stencil > 0)
+            {
+                HasStencilBuffer = true;
+            }
+
+            if (graphicsMode.ColorFormat.Alpha > 0)
+            {
+                HasAlpha = true;
+            }
         }
 
         /// <summary>
