@@ -29,42 +29,6 @@ namespace OpenTK
         private bool _Initialized = false;
 
         /// <summary>
-        /// Use a single buffer versus a double buffer.
-        /// </summary>
-        [Browsable(true)]
-        public bool SingleBuffer { get; set; }
-
-        /// <summary>
-        /// Color Buffer Bits-Per-Pixel
-        /// </summary>
-        public int ColorBPP { get; set; }
-
-        /// <summary>
-        /// Accumulation Buffer Bits-Per-Pixel
-        /// </summary>
-        public int AccumulatorBPP { get; set; }
-
-        /// <summary>
-        /// Depth Buffer Bits-Per-Pixel
-        /// </summary>
-        public int DepthBPP { get; set; }
-
-        /// <summary>
-        /// Stencil Buffer Bits-Per-Pixel
-        /// </summary>
-        public int StencilBPP { get; set; }
-
-        /// <summary>
-        /// Number of samples
-        /// </summary>
-        public int Samples { get; set; }
-
-        /// <summary>
-        /// Indicates if steropic renderering is enabled
-        /// </summary>
-        public bool Stereo { get; set; }
-
-        /// <summary>
         /// The set <see cref="GraphicsContextFlags"/> for this widget.
         /// </summary>
         public GraphicsContextFlags GraphicsContextFlags { get; set; }
@@ -95,14 +59,6 @@ namespace OpenTK
         public GLWidget(GraphicsMode graphicsMode, int glVersionMajor, int glVersionMinor, GraphicsContextFlags graphicsContextFlags)
         {
             this.DoubleBuffered = false;
-
-            SingleBuffer = graphicsMode.Buffers == 1;
-            ColorBPP = graphicsMode.ColorFormat.BitsPerPixel;
-            AccumulatorBPP = graphicsMode.AccumulatorFormat.BitsPerPixel;
-            DepthBPP = graphicsMode.Depth;
-            StencilBPP = graphicsMode.Stencil;
-            Samples = graphicsMode.Samples;
-            Stereo = graphicsMode.Stereo;
 
             GraphicsContextFlags = graphicsContextFlags;
 
@@ -334,29 +290,6 @@ namespace OpenTK
         private void Initialize()
         {
             _Initialized = true;
-
-            // If this looks uninitialized...  initialize.
-            if (ColorBPP == 0)
-            {
-                ColorBPP = 32;
-
-                if (DepthBPP == 0)
-                {
-                    DepthBPP = 16;
-                }
-            }
-
-            ColorFormat colorBufferColorFormat = new ColorFormat(ColorBPP);
-
-            ColorFormat accumulationColorFormat = new ColorFormat(AccumulatorBPP);
-
-            int buffers = 2;
-            if (SingleBuffer)
-            {
-                buffers--;
-            }
-
-            GraphicsMode graphicsMode = new GraphicsMode(colorBufferColorFormat, DepthBPP, StencilBPP, Samples, accumulationColorFormat, buffers, Stereo);
 
             if (Configuration.RunningOnWindows)
             {
