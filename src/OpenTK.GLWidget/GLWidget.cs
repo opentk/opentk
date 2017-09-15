@@ -229,11 +229,6 @@ namespace OpenTK
             {
                 Initialize();
             }
-            else
-            {
-                _GraphicsContext.MakeCurrent(_WindowInfo);
-            }
-
 #if GTK3
             var result = base.OnDrawn(cr);
 #else
