@@ -65,16 +65,6 @@ namespace OpenTK
         public bool Stereo { get; set; }
 
         /// <summary>
-        /// The major version of OpenGL to use.
-        /// </summary>
-        public int GlVersionMajor { get; set; }
-
-        /// <summary>
-        /// The minor version of OpenGL to use.
-        /// </summary>
-        public int GlVersionMinor { get; set; }
-
-        /// <summary>
         /// The set <see cref="GraphicsContextFlags"/> for this widget.
         /// </summary>
         public GraphicsContextFlags GraphicsContextFlags { get; set; }
@@ -114,8 +104,7 @@ namespace OpenTK
             Samples = graphicsMode.Samples;
             Stereo = graphicsMode.Stereo;
 
-            GlVersionMajor = glVersionMajor;
-            GlVersionMinor = glVersionMinor;
+            SetRequiredVersion(glVersionMajor, glVersionMinor);
             GraphicsContextFlags = graphicsContextFlags;
         }
 
@@ -393,7 +382,8 @@ namespace OpenTK
             // Since the GDK context is already created and has been made current, we can retrieve its handle.
             var gdkContextHandle = Factory.Default.CreateGetCurrentGraphicsContext()();
 
-            _GraphicsContext = new GraphicsContext(gdkContextHandle, _WindowInfo, null, GlVersionMajor, GlVersionMinor, GraphicsContextFlags);
+            GetRequiredVersion(out int glVersionMajor, out int glVersionMinor);
+            _GraphicsContext = new GraphicsContext(gdkContextHandle, _WindowInfo, null, glVersionMajor, glVersionMinor, GraphicsContextFlags);
             _GraphicsContext.MakeCurrent(_WindowInfo);
 
             if (GraphicsContext.ShareContexts)
