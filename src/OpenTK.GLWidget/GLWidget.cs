@@ -237,9 +237,6 @@ namespace OpenTK
 #if !GTK3
             evnt.Window.Display.Sync(); // Add Sync call to fix resize rendering problem (Jay L. T. Cornwall) - How does this affect VSync?
 #endif
-
-            _GraphicsContext.SwapBuffers();
-
             return result;
         }
 
