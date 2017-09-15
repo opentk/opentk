@@ -307,8 +307,6 @@ namespace OpenTK
             GetRequiredVersion(out int glVersionMajor, out int glVersionMinor);
             _GraphicsContext = new GraphicsContext(gdkContextHandle, _WindowInfo, null, glVersionMajor, glVersionMinor, GraphicsContextFlags);
 
-            MakeCurrent();
-
             if (GraphicsContext.ShareContexts)
             {
                 Interlocked.Increment(ref _GraphicsContextCount);
