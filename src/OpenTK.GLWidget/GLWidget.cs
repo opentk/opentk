@@ -386,9 +386,14 @@ namespace OpenTK
                 _WindowInfo = XWindowInfoInitializer.Initialize(graphicsMode, this.Display.Handle, this.Screen.Number, widgetWindowHandle, this.Screen.RootWindow.Handle);
             }
 
-            // GraphicsContext
+            // Make the GDK GL context current
+            Context.MakeCurrent();
 
-            _GraphicsContext = new GraphicsContext(graphicsMode, _WindowInfo, GlVersionMajor, GlVersionMinor, GraphicsContextFlags);
+            // Create an OpenTK graphics context using the GdkGLContext as a foreign context
+            // Since the GDK context is already created and has been made current, we can retrieve its handle.
+            var gdkContextHandle = Factory.Default.CreateGetCurrentGraphicsContext()();
+
+            _GraphicsContext = new GraphicsContext(gdkContextHandle, _WindowInfo, null, GlVersionMajor, GlVersionMinor, GraphicsContextFlags);
             _GraphicsContext.MakeCurrent(_WindowInfo);
 
             if (GraphicsContext.ShareContexts)
