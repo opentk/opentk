@@ -98,13 +98,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OSX\OSXWindowInfoInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GLWidget.cs" />
-    <Compile Include="Win\WinWindowsInfoInitializer.cs" />
-    <Compile Include="X11\XWindowInfoInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="paket.references" />

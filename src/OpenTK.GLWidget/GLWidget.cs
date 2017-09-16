@@ -1,15 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.ComponentModel;
-using Gdk;
 using OpenTK.Graphics;
-using OpenTK.Platform;
-
 using Gtk;
-using OpenTK.OSX;
-using OpenTK.Platform.X11;
-using OpenTK.Win;
-using OpenTK.X11;
 
 namespace OpenTK
 {
@@ -25,7 +18,6 @@ namespace OpenTK
         private static bool _SharedContextInitialized = false;
 
         private IGraphicsContext _GraphicsContext;
-        private IWindowInfo _WindowInfo;
         private bool _Initialized = false;
 
         /// <summary>
@@ -241,71 +233,17 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Called whenever the widget is resized.
-        /// </summary>
-        /// <param name="evnt"></param>
-        /// <returns></returns>
-        protected override bool OnConfigureEvent(Gdk.EventConfigure evnt)
-        {
-            bool result = base.OnConfigureEvent(evnt);
-
-            if (_GraphicsContext != null)
-            {
-                _GraphicsContext.Update(_WindowInfo);
-            }
-
-            return result;
-        }
-
-        /// <summary>
         /// Initializes the <see cref="GLWidget"/> with its given values and creates a <see cref="GraphicsContext"/>.
         /// </summary>
         private void Initialize()
         {
             _Initialized = true;
 
-            if (Configuration.RunningOnWindows)
-            {
-                Console.WriteLine("OpenTK running on windows");
-            }
-            else if (Configuration.RunningOnMacOS)
-            {
-                Console.WriteLine("OpenTK running on OSX");
-            }
-            else
-            {
-                Console.WriteLine("OpenTK running on X11");
-            }
-
-#if GTK3
-            IntPtr widgetWindowHandle = this.Window.Handle;
-#else
-            IntPtr widgetWindowHandle = this.GdkWindow.Handle;
-#endif
-
-            // IWindowInfo
-            if (Configuration.RunningOnWindows)
-            {
-                _WindowInfo = WinWindowsInfoInitializer.Initialize(widgetWindowHandle);
-            }
-            else if (Configuration.RunningOnMacOS)
-            {
-                _WindowInfo = OSXWindowInfoInitializer.Initialize(widgetWindowHandle);
-            }
-            else
-            {
-                _WindowInfo = XWindowInfoInitializer.Initialize(this.Display.Handle, this.Screen.Number, widgetWindowHandle, this.Screen.RootWindow.Handle);
-            }
-
             // Make the GDK GL context current
             MakeCurrent();
 
-            // Create an OpenTK graphics context using the GdkGLContext as a foreign context
-            // Since the GDK context is already created and has been made current, we can retrieve its handle.
-            var gdkContextHandle = Factory.Default.CreateGetCurrentGraphicsContext()();
-
-            GetRequiredVersion(out int glVersionMajor, out int glVersionMinor);
-            _GraphicsContext = new GraphicsContext(gdkContextHandle, _WindowInfo, null, glVersionMajor, glVersionMinor, GraphicsContextFlags);
+            // Create a dummy context that will grab the GdkGLContext that is current on the thread
+            _GraphicsContext = new GraphicsContext(ContextHandle.Zero, null);
 
             if (GraphicsContext.ShareContexts)
             {
