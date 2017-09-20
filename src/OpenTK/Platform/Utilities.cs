@@ -182,7 +182,7 @@ namespace OpenTK.Platform
             #if WIN32
             if (Configuration.RunningOnWindows)
             {
-                return Platform.Windows.Wgl.GetProcAddress;
+                return Platform.Windows.Wgl.GetAddress;
             }
             #endif
             #if X11
