@@ -1,0 +1,13 @@
+root=true
+
+[*.{cs,fsx}]
+indent_style=space
+indent_size=4
+
+[*.{sln,spec}]
+indent_style=tab
+indent_size=4
+
+[*.{xml,sh,cmd,yml,csproj}]
+indent_style=space
+indent_size=2

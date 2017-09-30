@@ -1,21 +1,36 @@
 OpenTK
 ======
 
+
+### MAINTAINERS WANTED
+
+OpenTK is a large project, with a huge number of components. We're looking to add a more maintainers to the team.
+Email [@varon](https://github.com/varon) or message him in Gitter if you'd like to help out. 
+
 [![Join the chat at https://gitter.im/opentk/opentk](https://badges.gitter.im/opentk/opentk.svg)](https://gitter.im/opentk/opentk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 The Open Toolkit library is a fast, low-level C# binding for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research.
 
 Use OpenTK to add cross-platform 3d graphics, audio, compute and haptics to your C# application. Integrate it into your existing user interface or use it standalone without any external dependencies.
 
-Project website: http://www.opentk.com/
+Project website: https://opentk.github.io/
 
 Official git repository: https://github.com/opentk/opentk
+
+
+Build Status
+========
+
+| Platform       | Status         |
+| -------------- | -------------- |
+| Windows        | [![Build status](https://ci.appveyor.com/api/projects/status/opentk/branch/develop?svg=true)](https://ci.appveyor.com/project/varon/opentk/branch/develop) |
+| Mono/Linux     | [![Build status](https://travis-ci.org/opentk/opentk.svg?branch=develop)](https://travis-ci.org/opentk/opentk) |
 
 
 Features
 ========
 
-- Create cutting-edge graphics with OpenGL 4.4 and OpenGL ES 3.0
+- Create cutting-edge graphics with OpenGL 4.6 and OpenGL ES 3.0
 - Spice up your GUI with 3d acceleration
 - Improve your code flow with strong types and inline documentation
 - Write once run everywhere
@@ -28,17 +43,12 @@ OpenTK is available for Windows, Linux, Mac OS X, *BSD, SteamOS, Android and iOS
 Instructions
 ============
 
-The simplest way to use OpenTK in your project is to install the [NuGet package](http://www.nuget.org/packages/OpenTK/). 
+The simplest way to use OpenTK in your project is to install the [NuGet package](http://www.nuget.org/packages/OpenTK/).
+If you want to try out the latest development build from the `develop` branch, we also have a [MyGet feed](https://www.myget.org/F/opentk-develop/api/v3/index.json).
 
 Note what installing NuGet package will add reference to OpenTK.dll, but OpenTK.dll.config 
 will not be copied to the project output directory automatically, so you need to add it to your project 
 and then enable the "Copy to Output Directory" option (as in step 3 below).
-
-Alternatively, download the [OpenTK binaries](http://www.opentk.com) and:
-
-1. Copy OpenTK.dll and OpenTK.dll.config to your project directory
-2. Use "Add reference" to add OpenTK.dll as a project reference
-3. Use "Add files" to add OpenTK.dll.config to your project, and enable the "Copy to Output Directory" option.
 
 To build OpenTK from source, simply double-click OpenTK.sln and build through your IDE.
 
@@ -46,17 +56,58 @@ Alternatively, open a command prompt and type:
 ```
 git clone https://github.com/opentk/opentk   # Download source code from git
 cd opentk                                    # Enter the source directory
-msbuild /p:Configuration=Release OpenTK.sln  # Build on .Net (Windows)
-xbuild  /p:Configuration=Release OpenTK.sln  # Build on Mono (Linux / Mac OS X)
+./build.cmd                                  # Build on .Net (Windows)
+./build.sh                                   # Build on Mono (Linux / Mac OS X)
 ```
 
 
 News
 ====
 
+### 2017-05-08
+
+A pre-release package is available.
+
+https://www.nuget.org/packages/OpenTK/3.0.0-pre
+
+https://www.nuget.org/packages/OpenTK.GLControl/3.0.0-pre
+
+### 2016-09-23
+
+OpenTK 2.0.0 is now available for download from [Nuget](https://www.nuget.org/packages/OpenTK/2.0.0).
+
+Aside from being a maintenance release to bring the current package closer in-line with develop, this the project's first release since adopting a new build system.
+
+Release notes:
+ - Moved to new FAKE/Paket based build system
+ - Removed superfluous release configurations
+ - Numerous other fixes and enhancements
+
+We would welcome any feedback on the package, so please open a GitHub issue if you require assistance or experience difficulties.
+
+### 2016-07-19
+
+The new OpenTK website is live. You can view it at [opentk.github.io](https://opentk.github.io/)
+
+We are currently looking for contributors for tutorials and other resources.
+
+### 2016-07-13
+
+A pre-release package is available.
+
+https://www.nuget.org/packages/OpenTK.Next/1.2.2336.6514-pre
+https://www.nuget.org/packages/OpenTK.Next.GLControl/1.2.2336.6514-pre
+
+*The OpenTK.Next package id will no longer be used for future releases.
+
+
+### 2014-07-24
+
 OpenTK 1.1.4c was released on 24 July 2014.
 
 This is a hotfix release that improves stability on Mac OS X. Moreover, it synchronizes the GamePad configuration database with SDL 2.0.4 and fixes an invalid GUID introduced in 1.1.4b.
+
+### 2014-07-21
 
 OpenTK 1.1.4 was released on 21 July 2014.
 
