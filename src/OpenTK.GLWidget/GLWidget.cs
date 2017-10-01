@@ -144,36 +144,12 @@ namespace OpenTK
             base.Destroy();
         }
 
-#if !GTK3
-        /// <summary>
-        /// Disposes the current object, releasing any native resources it was using.
-        /// </summary>
-        /// <param name="disposing"></param>
-        public override void Dispose()
-        {
-            GC.SuppressFinalize(this);
-            Dispose(true);
-
-            base.Dispose();
-        }
-#endif
-
-#if GTK3
         /// <summary>
         /// Disposes the current object, releasing any native resources it was using.
         /// </summary>
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
-            base.Dispose(disposing);
-#else
-        /// <summary>
-        /// Disposes the current object, releasing any native resources it was using.
-        /// </summary>
-        /// <param name="disposing"></param>
-        public virtual void Dispose(bool disposing)
-        {
-#endif
             if (disposing)
             {
                 MakeCurrent();
@@ -254,34 +230,19 @@ namespace OpenTK
             }
         }
 
-#if GTK3
         /// <summary>
         /// Called when the widget needs to be (fully or partially) redrawn.
         /// </summary>
         /// <param name="cr"></param>
         /// <returns></returns>
         protected override bool OnDrawn(Cairo.Context cr)
-#else
-        /// <summary>
-        /// Called when the widget is exposed.
-        /// </summary>
-        /// <param name="cr"></param>
-        /// <returns></returns>
-        protected override bool OnExposeEvent(Gdk.EventExpose evnt)
-#endif
         {
             if (!_Initialized)
             {
                 Initialize();
             }
-#if GTK3
+
             var result = base.OnDrawn(cr);
-#else
-            bool result = base.OnExposeEvent(evnt);
-#endif
-#if !GTK3
-            evnt.Window.Display.Sync(); // Add Sync call to fix resize rendering problem (Jay L. T. Cornwall) - How does this affect VSync?
-#endif
             return result;
         }
 
