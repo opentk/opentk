@@ -109,6 +109,22 @@ namespace OpenTK
             return true;
         }
 
+
+        /// <inheritdoc />
+        protected override GLContext OnCreateContext()
+        {
+            var gdkGLContext = Window.CreateGlContext();
+
+            GetRequiredVersion(out var major, out var minor);
+            gdkGLContext.SetRequiredVersion(major, minor);
+
+            gdkGLContext.DebugEnabled = GraphicsContextFlags.HasFlag(GraphicsContextFlags.Debug);
+            gdkGLContext.ForwardCompatible = GraphicsContextFlags.HasFlag(GraphicsContextFlags.ForwardCompatible);
+
+            gdkGLContext.Realize();
+            return gdkGLContext;
+        }
+
         /// <summary>
         /// Destructs this object.
         /// </summary>
