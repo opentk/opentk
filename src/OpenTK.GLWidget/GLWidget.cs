@@ -24,7 +24,7 @@ namespace OpenTK
         /// <summary>
         /// The previous frame time reported by GTK.
         /// </summary>
-        private double? PreviousFrameTime;
+        private double? _PreviousFrameTime;
 
         /// <summary>
         /// Gets the time taken to render the last frame (in seconds).
@@ -94,17 +94,17 @@ namespace OpenTK
         {
             var frameTimeµSeconds = frameClock.FrameTime;
 
-            if (!PreviousFrameTime.HasValue)
+            if (!_PreviousFrameTime.HasValue)
             {
-                PreviousFrameTime = frameTimeµSeconds;
+                _PreviousFrameTime = frameTimeµSeconds;
 
                 return true;
             }
 
-            var frameTimeSeconds = (frameTimeµSeconds - PreviousFrameTime) / 10e6;
+            var frameTimeSeconds = (frameTimeµSeconds - _PreviousFrameTime) / 10e6;
 
             DeltaTime = (float)frameTimeSeconds;
-            PreviousFrameTime = frameTimeµSeconds;
+            _PreviousFrameTime = frameTimeµSeconds;
 
             return true;
         }
