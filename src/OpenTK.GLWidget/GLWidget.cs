@@ -12,9 +12,8 @@ namespace OpenTK
     /// </summary>
     [CLSCompliant(false)]
     [ToolboxItem(true)]
-    public class GLWidget: GLArea
+    public class GLWidget : GLArea
     {
-
         private static int _GraphicsContextCount;
         private static bool _SharedContextInitialized = false;
 
