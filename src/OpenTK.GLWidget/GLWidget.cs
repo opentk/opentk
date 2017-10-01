@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.ComponentModel;
+using Gdk;
 using OpenTK.Graphics;
 using Gtk;
 
@@ -19,6 +20,16 @@ namespace OpenTK
 
         private IGraphicsContext _GraphicsContext;
         private bool _Initialized = false;
+
+        /// <summary>
+        /// The previous frame time reported by GTK.
+        /// </summary>
+        private double? PreviousFrameTime;
+
+        /// <summary>
+        /// Gets the time taken to render the last frame (in seconds).
+        /// </summary>
+        public double DeltaTime { get; private set; }
 
         /// <summary>
         /// The set <see cref="GraphicsContextFlags"/> for this widget.
@@ -54,6 +65,7 @@ namespace OpenTK
 
             GraphicsContextFlags = graphicsContextFlags;
 
+            AddTickCallback(UpdateFrameTime);
             SetRequiredVersion(glVersionMajor, glVersionMinor);
 
             if (graphicsMode.Depth > 0)
@@ -70,6 +82,31 @@ namespace OpenTK
             {
                 HasAlpha = true;
             }
+        }
+
+        /// <summary>
+        /// Updates the time delta with a new value from the last frame.
+        /// </summary>
+        /// <param name="widget">The sending widget.</param>
+        /// <param name="frameClock">The relevant frame clock.</param>
+        /// <returns>true if the callback should be called again; otherwise, false.</returns>
+        private bool UpdateFrameTime(Widget widget, FrameClock frameClock)
+        {
+            var frameTimeµSeconds = frameClock.FrameTime;
+
+            if (!PreviousFrameTime.HasValue)
+            {
+                PreviousFrameTime = frameTimeµSeconds;
+
+                return true;
+            }
+
+            var frameTimeSeconds = (frameTimeµSeconds - PreviousFrameTime) / 10e6;
+
+            DeltaTime = (float)frameTimeSeconds;
+            PreviousFrameTime = frameTimeµSeconds;
+
+            return true;
         }
 
         /// <summary>
