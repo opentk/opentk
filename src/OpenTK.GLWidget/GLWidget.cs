@@ -256,6 +256,11 @@ namespace OpenTK
             // Create a dummy context that will grab the GdkGLContext that is current on the thread
             _GraphicsContext = new GraphicsContext(ContextHandle.Zero, null);
 
+            if (GraphicsContextFlags.HasFlag(GraphicsContextFlags.Debug))
+            {
+                _GraphicsContext.ErrorChecking = true;
+            }
+
             if (GraphicsContext.ShareContexts)
             {
                 Interlocked.Increment(ref _GraphicsContextCount);
