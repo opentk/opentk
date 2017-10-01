@@ -60,8 +60,6 @@ namespace OpenTK
         /// </param>
         public GLWidget(GraphicsMode graphicsMode, int glVersionMajor, int glVersionMinor, GraphicsContextFlags graphicsContextFlags)
         {
-            this.DoubleBuffered = false;
-
             GraphicsContextFlags = graphicsContextFlags;
 
             AddTickCallback(UpdateFrameTime);
