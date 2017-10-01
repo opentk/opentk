@@ -31,9 +31,9 @@ namespace OpenTK
         public double DeltaTime { get; private set; }
 
         /// <summary>
-        /// The set <see cref="GraphicsContextFlags"/> for this widget.
+        /// The set <see cref="ContextFlags"/> for this widget.
         /// </summary>
-        public GraphicsContextFlags GraphicsContextFlags { get; set; }
+        public GraphicsContextFlags ContextFlags { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GLWidget"/> class.
@@ -55,12 +55,12 @@ namespace OpenTK
         /// <param name="graphicsMode">The <see cref="GraphicsMode"/> which the widget should be constructed with.</param>
         /// <param name="glVersionMajor">The major OpenGL version to attempt to initialize.</param>
         /// <param name="glVersionMinor">The minor OpenGL version to attempt to initialize.</param>
-        /// <param name="graphicsContextFlags">
+        /// <param name="contextFlags">
         /// Any flags which should be used during initialization of the <see cref="GraphicsContext"/>.
         /// </param>
-        public GLWidget(GraphicsMode graphicsMode, int glVersionMajor, int glVersionMinor, GraphicsContextFlags graphicsContextFlags)
+        public GLWidget(GraphicsMode graphicsMode, int glVersionMajor, int glVersionMinor, GraphicsContextFlags contextFlags)
         {
-            GraphicsContextFlags = graphicsContextFlags;
+            ContextFlags = contextFlags;
 
             AddTickCallback(UpdateFrameTime);
             SetRequiredVersion(glVersionMajor, glVersionMinor);
@@ -115,8 +115,8 @@ namespace OpenTK
             GetRequiredVersion(out var major, out var minor);
             gdkGLContext.SetRequiredVersion(major, minor);
 
-            gdkGLContext.DebugEnabled = GraphicsContextFlags.HasFlag(GraphicsContextFlags.Debug);
-            gdkGLContext.ForwardCompatible = GraphicsContextFlags.HasFlag(GraphicsContextFlags.ForwardCompatible);
+            gdkGLContext.DebugEnabled = ContextFlags.HasFlag(GraphicsContextFlags.Debug);
+            gdkGLContext.ForwardCompatible = ContextFlags.HasFlag(GraphicsContextFlags.ForwardCompatible);
 
             gdkGLContext.Realize();
             return gdkGLContext;
@@ -256,7 +256,7 @@ namespace OpenTK
             // Create a dummy context that will grab the GdkGLContext that is current on the thread
             _GraphicsContext = new GraphicsContext(ContextHandle.Zero, null);
 
-            if (GraphicsContextFlags.HasFlag(GraphicsContextFlags.Debug))
+            if (ContextFlags.HasFlag(GraphicsContextFlags.Debug))
             {
                 _GraphicsContext.ErrorChecking = true;
             }
