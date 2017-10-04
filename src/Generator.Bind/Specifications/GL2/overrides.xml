@@ -7440,4 +7440,13 @@
 
   </add>
 
+  <!-- INTEL_performance_query -->
+  <replace name="gl|glcore|gles1|gles2">
+    <!-- GetPerfQueryIdByNameINTEL is not const-correct -->
+    <function name="GetPerfQueryIdByNameINTEL" extension="INTEL">
+      <param name="queryName">
+        <flow>in</flow>
+      </param>
+    </function>
+  </replace>
 </signatures>
