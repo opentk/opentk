@@ -863,9 +863,10 @@ namespace OpenTK.Rewrite
             var attribute = parameter.CustomAttributes
                         .FirstOrDefault(a => a.AttributeType.Name == "CountAttribute");
 
-            var count = new CountAttribute();
+            CountAttribute count = null;
             if (attribute != null)
             {
+                count = new CountAttribute();
                 count.Count = (int)(GetAttributeField(attribute, "Count") ?? 0);
                 count.Parameter = (string)(GetAttributeField(attribute, "Parameter"));
                 count.Computed = (string)(GetAttributeField(attribute, "Computed"));
