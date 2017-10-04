@@ -41,23 +41,24 @@ namespace OpenTK
     /// </summary>
     public partial class GLControl : UserControl
     {
-        private IGraphicsContext context;
-        private IGLControl implementation;
-        private GraphicsMode format;
-        private int major, minor;
-        private GraphicsContextFlags flags;
+        private IGraphicsContext m_context;
+        private IGLControl m_implementation;
+        private readonly GraphicsMode m_format;
+        private readonly int m_major;
+        private readonly int m_minor;
+        private readonly GraphicsContextFlags m_flags;
+        private bool? m_initialVsyncValue;
 
-        private bool? initial_vsync_value;
         // Indicates that OnResize was called before OnHandleCreated.
         // To avoid issues with missing OpenGL contexts, we suppress
         // the premature Resize event and raise it as soon as the handle
         // is ready.
-        private bool resize_event_suppressed;
+        private bool m_resizeEventSuppressed;
 
         // Indicates whether the control is in design mode. Due to issues
         // wiith the DesignMode property and nested controls,we need to
         // evaluate this in the constructor.
-        private readonly bool design_mode;
+        private readonly bool m_designMode;
 
         /// <summary>
         /// Constructs a new instance.
@@ -83,9 +84,8 @@ namespace OpenTK
         /// <param name="flags">The GraphicsContextFlags for the OpenGL GraphicsContext.</param>
         public GLControl(GraphicsMode mode, int major, int minor, GraphicsContextFlags flags)
         {
-            if (mode == null)
-            {
-                throw new ArgumentNullException("mode");
+            if (mode == null) {
+                throw new ArgumentNullException(nameof(mode));
             }
 
             // SDL does not currently support embedding
@@ -105,15 +105,15 @@ namespace OpenTK
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             DoubleBuffered = false;
 
-            this.format = mode;
-            this.major = major;
-            this.minor = minor;
-            this.flags = flags;
+            m_format = mode;
+            m_major = major;
+            m_minor = minor;
+            m_flags = flags;
 
             // Note: the DesignMode property may be incorrect when nesting controls.
             // We use LicenseManager.UsageMode as a workaround (this only works in
             // the constructor).
-            design_mode =
+            m_designMode =
                 DesignMode ||
                 LicenseManager.UsageMode == LicenseUsageMode.Designtime;
 
@@ -122,12 +122,12 @@ namespace OpenTK
 
         /// <summary>
         /// Gets a value indicating whether [failed to create OpenGL context].
-        /// So that the application stays running and able to recover.
+        /// So that the application stays running and is able to recover.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [failed create context]; otherwise, <c>false</c>.
+        /// <c>true</c> if [failed create context]; otherwise, <c>false</c>.
         /// </value>
-        public bool FailedCreateContext { get; private set; }
+        public bool HasValidContext { get; private set; }
 
         private IGLControl Implementation
         {
@@ -135,44 +135,35 @@ namespace OpenTK
             {
                 ValidateState();
 
-                return implementation;
+                return m_implementation;
             }
         }
 
         [Conditional("DEBUG")]
         private void ValidateContext(string message)
         {
-            if (!Context.IsCurrent)
-            {
-                Debug.Print("[GLControl] Attempted to access {0} on a non-current context. Results undefined.", message);
+            if (!Context.IsCurrent) {
+                Debug.Print(@"[GLControl] Attempted to access {0} on a non-current context. Results undefined.", message);
             }
         }
 
         private void ValidateState()
         {
-            if (FailedCreateContext)
-            {
-                return;
-            }
-
-            if (IsDisposed)
-            {
+            if (IsDisposed) {
                 throw new ObjectDisposedException(GetType().Name);
             }
 
-            if (!IsHandleCreated)
-            {
+            if (!IsHandleCreated) {
                 CreateControl();
             }
 
-            if (implementation == null || context == null || context.IsDisposed)
-            {
+            if (m_implementation == null || m_context == null || m_context.IsDisposed) {
                 RecreateHandle();
             }
         }
 
         /// <summary>
-        /// Gets the <c>CreateParams</c> instance for this <c>GLControl</c>
+        ///     Gets the <c>CreateParams</c> instance for this <c>GLControl</c>
         /// </summary>
         protected override CreateParams CreateParams
         {
@@ -182,9 +173,8 @@ namespace OpenTK
                 const int CS_HREDRAW = 0x2;
                 const int CS_OWNDC = 0x20;
 
-                CreateParams cp = base.CreateParams;
-                if (Configuration.RunningOnWindows)
-                {
+                var cp = base.CreateParams;
+                if (Configuration.RunningOnWindows) {
                     // Setup necessary class style for OpenGL on windows
                     cp.ClassStyle |= CS_VREDRAW | CS_HREDRAW | CS_OWNDC;
                 }
@@ -196,57 +186,46 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected override void OnHandleCreated(EventArgs e)
         {
-            if (FailedCreateContext)
-            {
-                base.OnHandleCreated(e);
-                return;
-            }
+            if (!(m_implementation is DummyGLControl)) { // No need to recreate our DummyGLControl
+                m_context?.Dispose();
+                m_implementation?.WindowInfo.Dispose();
 
-            if (context != null)
-            {
-                context.Dispose();
-            }
+                if (m_designMode) {
+                    m_implementation = new DummyGLControl();
+                    m_context = m_implementation.CreateContext(m_major, m_minor, m_flags);
+                    HasValidContext = false;
+                }
+                else {
+                    try {
+                        m_implementation = new GLControlFactory().CreateGLControl(m_format, this);
+                        m_context = m_implementation.CreateContext(m_major, m_minor, m_flags);
+                        HasValidContext = true;
+                    }
+                    catch (GraphicsModeException) {
+                        m_implementation = new DummyGLControl();
+                        m_context = m_implementation.CreateContext(m_major, m_minor, m_flags);
+                        HasValidContext = false;
+                    }
+                }
 
-            if (implementation != null)
-            {
-                implementation.WindowInfo.Dispose();
-            }
-
-            try
-            {
-                if (design_mode)
-                    implementation = new DummyGLControl();
-                else
-                    implementation = new GLControlFactory().CreateGLControl(format, this);
-
-                context = implementation.CreateContext(major, minor, flags);
                 MakeCurrent();
 
-                if (!design_mode)
-                    ((IGraphicsContextInternal)Context).LoadAll();
+                if (HasValidContext) {
+                    ((IGraphicsContextInternal) m_context).LoadAll();
+                }
 
                 // Deferred setting of vsync mode. See VSync property for more information.
-                if (initial_vsync_value.HasValue)
-                {
-                    Context.SwapInterval = initial_vsync_value.Value ? 1 : 0;
-                    initial_vsync_value = null;
+                if (m_initialVsyncValue.HasValue) {
+                    m_context.SwapInterval = m_initialVsyncValue.Value ? 1 : 0;
+                    m_initialVsyncValue = null;
                 }
             }
-            catch
-            {
-                FailedCreateContext = true;
-                implementation = null;
-                context = null;
-            }
-            finally
-            {
-                base.OnHandleCreated(e);
-            }
 
-            if (resize_event_suppressed)
-            {
+            base.OnHandleCreated(e);
+
+            if (m_resizeEventSuppressed) {
                 OnResize(EventArgs.Empty);
-                resize_event_suppressed = false;
+                m_resizeEventSuppressed = false;
             }
         }
 
@@ -258,30 +237,31 @@ namespace OpenTK
             // => This allows to perform cleanup operations in OnHandleDestroyed handlers
             base.OnHandleDestroyed(e);
 
-            if (context != null)
-            {
-                context.Dispose();
-                context = null;
+            if (m_implementation is DummyGLControl) {
+                // No need to destroy our DummyGLControl
+                return;
             }
 
-            if (implementation != null)
-            {
-                implementation.WindowInfo.Dispose();
-                implementation = null;
+                if (m_context != null) {
+                m_context.Dispose();
+                m_context = null;
             }
 
+            if (m_implementation != null) {
+                m_implementation.WindowInfo.Dispose();
+                m_implementation = null;
+            }
         }
 
         /// <summary>
-        /// Raises the System.Windows.Forms.Control.Paint event.
+        ///     Raises the System.Windows.Forms.Control.Paint event.
         /// </summary>
         /// <param name="e">A System.Windows.Forms.PaintEventArgs that contains the event data.</param>
         protected override void OnPaint(PaintEventArgs e)
         {
             ValidateState();
 
-            if (design_mode)
-            {
+            if (m_designMode) {
                 e.Graphics.Clear(BackColor);
             }
 
@@ -297,20 +277,17 @@ namespace OpenTK
         protected override void OnResize(EventArgs e)
         {
             // Do not raise OnResize event before the handle and context are created.
-            if (!IsHandleCreated)
-            {
-                resize_event_suppressed = true;
+            if (!IsHandleCreated) {
+                m_resizeEventSuppressed = true;
                 return;
             }
 
-            if (Configuration.RunningOnMacOS)
-            {
+            if (Configuration.RunningOnMacOS) {
                 DelayUpdate delay = PerformContextUpdate;
                 BeginInvoke(delay); //Need the native window to resize first otherwise our control will be in the wrong place.
             }
-            else if (context != null)
-            {
-                context.Update(Implementation.WindowInfo);
+            else {
+                m_context?.Update(Implementation.WindowInfo);
             }
 
             base.OnResize(e);
@@ -320,27 +297,22 @@ namespace OpenTK
         /// Needed to delay the invoke on OS X. Also needed because OpenTK is .NET 2, otherwise I'd use an inline Action.
         /// </summary>
         public delegate void DelayUpdate();
+
         /// <summary>
         /// Execute the delayed context update
         /// </summary>
         public void PerformContextUpdate()
         {
-            if (context != null)
-            {
-                context.Update(Implementation.WindowInfo);
-            }
+            m_context?.Update(Implementation.WindowInfo);
         }
 
         /// <summary>
-        /// Raises the ParentChanged event.
+        ///     Raises the ParentChanged event.
         /// </summary>
         /// <param name="e">A System.EventArgs that contains the event data.</param>
         protected override void OnParentChanged(EventArgs e)
         {
-            if (context != null)
-            {
-                context.Update(Implementation.WindowInfo);
-            }
+            m_context?.Update(Implementation.WindowInfo);
 
             base.OnParentChanged(e);
         }
@@ -352,7 +324,7 @@ namespace OpenTK
         public void SwapBuffers()
         {
             ValidateState();
-            Context?.SwapBuffers();
+            Context.SwapBuffers();
         }
 
         /// <summary>
@@ -373,7 +345,7 @@ namespace OpenTK
         public void MakeCurrent()
         {
             ValidateState();
-            Context?.MakeCurrent(Implementation.WindowInfo);
+            Context.MakeCurrent(Implementation.WindowInfo);
         }
 
         /// <summary>
@@ -385,7 +357,7 @@ namespace OpenTK
             get
             {
                 ValidateState();
-                return Implementation == null || Implementation.IsIdle;
+                return Implementation.IsIdle;
             }
         }
 
@@ -403,9 +375,8 @@ namespace OpenTK
             get
             {
                 ValidateState();
-                return context;
+                return m_context;
             }
-            private set { context = value; }
         }
 
         /// <summary>
@@ -417,7 +388,7 @@ namespace OpenTK
             get
             {
                 ValidateState();
-                return ClientSize.Width / (float)ClientSize.Height;
+                return ClientSize.Width / (float) ClientSize.Height;
             }
         }
 
@@ -433,20 +404,14 @@ namespace OpenTK
         {
             get
             {
-                if (!IsHandleCreated)
-                {
-                    return initial_vsync_value.HasValue ?
-                        initial_vsync_value.Value : true;
+                if (!IsHandleCreated) {
+                    return !m_initialVsyncValue.HasValue || m_initialVsyncValue.Value;
                 }
 
                 ValidateState();
-                ValidateContext("VSync");
-                if (Context != null)
-                {
-                    return Context.SwapInterval != 0;
-                }
+                ValidateContext(@"VSync");
 
-                return false;
+                return Context.SwapInterval != 0;
             }
             set
             {
@@ -454,18 +419,14 @@ namespace OpenTK
                 // However, events are typically connected after the VSync = false assignment, which
                 // can lead to "event xyz is not fired" issues.
                 // Work around this issue by deferring VSync mode setting to the HandleCreated event.
-                if (!IsHandleCreated)
-                {
-                    initial_vsync_value = value;
+                if (!IsHandleCreated) {
+                    m_initialVsyncValue = value;
                     return;
                 }
 
                 ValidateState();
-                ValidateContext("VSync");
-                if (Context != null)
-                {
-                    Context.SwapInterval = value ? 1 : 0;
-                }
+                ValidateContext(@"VSync");
+                Context.SwapInterval = value ? 1 : 0;
             }
         }
 
@@ -479,16 +440,13 @@ namespace OpenTK
             get
             {
                 ValidateState();
-                return Context?.GraphicsMode;
+                return Context.GraphicsMode;
             }
         }
 
         /// <summary>
         /// Gets the <see cref="OpenTK.Platform.IWindowInfo"/> for this instance.
         /// </summary>
-        public IWindowInfo WindowInfo
-        {
-            get { return implementation?.WindowInfo; }
-        }
+        public IWindowInfo WindowInfo => m_implementation.WindowInfo;
     }
 }
