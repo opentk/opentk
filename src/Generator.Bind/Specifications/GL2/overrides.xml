@@ -228,12 +228,6 @@
       </param>
     </function>
 
-    <function name="ShaderSource" extension="Core|Arb">
-      <param name="length">
-        <count>0</count>
-      </param>
-    </function>
-
     <function name="GetActiveAttrib" extension="Core">
       <param name="type">
         <type>ActiveAttribType</type>
