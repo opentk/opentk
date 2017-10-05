@@ -1691,6 +1691,12 @@
     <function name="EdgeFlagv" extension="Core">
       <param name="flag" legacyArrayParameter="true" />
     </function>
+    <function name="GetObjectPtrLabel" extension="Core">
+      <param name="length" legacyArrayParameter="true" />
+    </function>
+    <function name="GetObjectPtrLabel" extension="KHR">
+      <param name="length" legacyArrayParameter="true" />
+    </function>
   </replace>
 
   <overload name="glcore">
@@ -1701,11 +1707,6 @@
       </param>
     </function>
     <!-- For backwards compatibility -->
-    <function name="GetObjectPtrLabel" extension="Core" obsolete="Use out overload instead">
-      <param name="length">
-        <count>0</count>
-      </param>
-    </function>
     <function name="GetProgramResourceiv" extension="Core" obsolete="Use out overload instead">
       <param name="length">
         <count>0</count>
@@ -1716,16 +1717,17 @@
         <count>0</count>
       </param>
     </function>
-    <function name="GetObjectPtrLabel" extension="KHR" obsolete="Use out overload instead">
-      <param name="length">
-        <count>0</count>
-      </param>
-    </function>
   </overload>
 
   <!-- For backwards compatibility -->
   <replace name="gl">
     <function name="GetObjectLabel" extension="Ext">
+      <param name="length" legacyArrayParameter="true" />
+    </function>
+    <function name="GetObjectPtrLabel" extension="Core">
+      <param name="length" legacyArrayParameter="true" />
+    </function>
+    <function name="GetObjectPtrLabel" extension="KHR">
       <param name="length" legacyArrayParameter="true" />
     </function>
   </replace>
@@ -1867,11 +1869,7 @@
         <type>BeginMode</type>
       </param>
     </function>
-    <function name="GetObjectPtrLabel" extension="Core" obsolete="Use out overload instead">
-      <param name="length">
-        <count>0</count>
-      </param>
-    </function>
+
     <function name="GetPointerv" extension="Core" obsolete="Use out overload instead">
       <param name="params">
         <count>0</count>
@@ -2055,11 +2053,6 @@
     <function name="FogCoordPointerList" extension="Ibm" obsolete="Use FogPointerType overload instead">
       <param name="type" index="0">
         <type>IbmVertexArrayLists</type>
-      </param>
-    </function>
-    <function name="GetObjectPtrLabel" extension="KHR" obsolete="Use out overload instead">
-      <param name="length">
-        <count>0</count>
       </param>
     </function>
     <function name="GetPointerv" extension="KHR" obsolete="Use out overload instead">
@@ -5573,13 +5566,13 @@
     <function name="GetObjectLabel">
       <param name="length" legacyArrayParameter="true" />
     </function>
+    <function name="GetObjectPtrLabel">
+      <param name="length" legacyArrayParameter="true" />
+    </function>
   </replace>
 
    <!-- gles2 overloads for backwards compatibility (2.0 and 3.0) -->
   <overload name="gles2">
-    <function name="GetObjectPtrLabel" obsolete="Use out overload instead">
-      <param name="length"><count>0</count></param>
-    </function>
     <function name="GetTranslatedShaderSource" extension="ANGLE" obsolete="Use out overload instead">
       <param name="length"><count>0</count></param>
     </function>
