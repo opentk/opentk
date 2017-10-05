@@ -880,14 +880,22 @@ namespace OpenTK.Rewrite
             var countVariable = new VariableDefinition(TypeInt32);
             body.Variables.Add(countVariable);
 
-            // Parameter will either by a simple name or an
-            // expression like "name*5"
+            // Parameter will either by a simple name, a dereference of a name
+            // like "*name" or an expression like "name*5"
             var parameter = method.Parameters.FirstOrDefault(
                 param => param.Name == countParameter);
             if (parameter != null)
             {
                 il.Emit(OpCodes.Ldarg, parameter.Index);
                 il.Emit(OpCodes.Stloc, countVariable.Index);
+            }
+            else if (countParameter[0] == '*')
+            {
+                var pointerParam = method.Parameters.FirstOrDefault(
+                    param => param.Name == countParameter.Substring(1));
+
+                il.Emit(OpCodes.Ldarg, pointerParam.Index);
+                il.Emit(OpCodes.Ldind_I4);
             }
             else
             {

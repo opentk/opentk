@@ -7470,4 +7470,14 @@
       </param>
     </function>
   </replace>
+
+  <!-- ExtGetProgramBinarySourceQCOM -->
+  <replace name="gl|glcore|gles1|gles2">
+    <!-- ExtGetProgramBinarySourceQCOM is missing count attributes -->
+    <function name="ExtGetProgramBinarySourceQCOM" extension="QCOM">
+      <param name="source">
+        <count>*length</count>
+      </param>
+    </function>
+  </replace>
 </signatures>
