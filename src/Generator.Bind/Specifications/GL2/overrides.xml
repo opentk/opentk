@@ -4959,27 +4959,29 @@
     <function name="DrawElements" obsolete="Use PrimitiveType overload instead">
       <param name="mode"><type>BeginMode</type></param>
     </function>
-    <function name="ExtGetBuffersQCOM" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numBuffers"><count>0</count></param>
-    </function>
-    <function name="ExtGetFramebuffersQCOM" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numFramebuffers"><count>0</count></param>
-    </function>
-    <function name="ExtGetProgramsQCOM" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numPrograms"><count>0</count></param>
-    </function>
-    <function name="ExtGetRenderbuffersQCOM" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numRenderbuffers"><count>0</count></param>
-    </function>
-    <function name="ExtGetShadersQCOM" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numShaders"><count>0</count></param>
-    </function>
   </overload>
 
   <replace name="gles1">
     <!-- AMD_performance_monitors is not const-correct -->
     <function name="DeletePerfMonitors" extension="AMD">
       <param name="monitors"><flow>in</flow></param>
+    </function>
+
+    <!-- For backwards compatibility -->
+    <function name="ExtGetBuffersQCOM" extension="QCOM">
+      <param name="numBuffers" legacyArrayParameter="true" />
+    </function>
+    <function name="ExtGetFramebuffersQCOM" extension="QCOM">
+      <param name="numFramebuffers" legacyArrayParameter="true" />
+    </function>
+    <function name="ExtGetProgramsQCOM" extension="QCOM">
+      <param name="numPrograms" legacyArrayParameter="true" />
+    </function>
+    <function name="ExtGetRenderbuffersQCOM" extension="QCOM">
+      <param name="numRenderbuffers" legacyArrayParameter="true" />
+    </function>
+    <function name="ExtGetShadersQCOM" extension="QCOM">
+      <param name="numShaders" legacyArrayParameter="true" />
     </function>
   </replace>
 
@@ -5553,6 +5555,21 @@
     <function name="GetProgramPipelineInfoLog" extension="EXT">
       <param name="length" legacyArrayParameter="true" />
     </function>
+    <function name="ExtGetBuffers" extension="QCOM">
+      <param name="numBuffers" legacyArrayParameter="true" />
+    </function>
+    <function name="ExtGetFramebuffers" extension="QCOM">
+      <param name="numFramebuffers" legacyArrayParameter="true" />
+    </function>
+    <function name="ExtGetPrograms" extension="QCOM">
+      <param name="numPrograms" legacyArrayParameter="true" />
+    </function>
+    <function name="ExtGetRenderbuffers" extension="QCOM">
+      <param name="numRenderbuffers" legacyArrayParameter="true" />
+    </function>
+    <function name="ExtGetShaders" extension="QCOM">
+      <param name="numShaders" legacyArrayParameter="true" />
+    </function>
   </replace>
 
    <!-- gles2 overloads for backwards compatibility (2.0 and 3.0) -->
@@ -5563,21 +5580,6 @@
     <function name="GetProgramBinary" extension="OES" obsolete="Use out overload instead">
       <param name="length"><count>0</count></param>
       <param name="binaryFormat"><count>0</count></param>
-    </function>
-    <function name="ExtGetBuffers" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numBuffers"><count>0</count></param>
-    </function>
-    <function name="ExtGetFramebuffers" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numFramebuffers"><count>0</count></param>
-    </function>
-    <function name="ExtGetPrograms" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numPrograms"><count>0</count></param>
-    </function>
-    <function name="ExtGetRenderbuffers" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numRenderbuffers"><count>0</count></param>
-    </function>
-    <function name="ExtGetShaders" extension="QCOM" obsolete="Use out overload instead">
-      <param name="numShaders"><count>0</count></param>
     </function>
   </overload>
 
