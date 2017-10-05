@@ -7448,5 +7448,15 @@
         <flow>in</flow>
       </param>
     </function>
+
+    <!-- GetPerfCounterInfoINTEL is missing count attributes -->
+    <function name="GetPerfCounterInfoINTEL" extension="INTEL">
+      <param name="counterName">
+        <count>counterNameLength</count>
+      </param>
+      <param name="counterDesc">
+        <count>counterDescLength</count>
+      </param>
+    </function>
   </replace>
 </signatures>
