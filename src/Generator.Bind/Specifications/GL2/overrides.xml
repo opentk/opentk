@@ -5555,6 +5555,9 @@
     <function name="GetProgramPipelineInfoLog" extension="EXT">
       <param name="length" legacyArrayParameter="true" />
     </function>
+    <function name="GetTranslatedShaderSource" extension="ANGLE">
+      <param name="length" legacyArrayParameter="true" />
+    </function>
     <function name="ExtGetBuffers" extension="QCOM">
       <param name="numBuffers" legacyArrayParameter="true" />
     </function>
@@ -5574,9 +5577,6 @@
 
    <!-- gles2 overloads for backwards compatibility (2.0 and 3.0) -->
   <overload name="gles2">
-    <function name="GetTranslatedShaderSource" extension="ANGLE" obsolete="Use out overload instead">
-      <param name="length"><count>0</count></param>
-    </function>
     <function name="GetProgramBinary" extension="OES" obsolete="Use out overload instead">
       <param name="length"><count>0</count></param>
       <param name="binaryFormat"><count>0</count></param>
