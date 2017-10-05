@@ -1730,6 +1730,12 @@
     <function name="GetObjectPtrLabel" extension="KHR">
       <param name="length" legacyArrayParameter="true" />
     </function>
+    <function name="GetProgramPipelineInfoLog" extension="Core">
+      <param name="length" legacyArrayParameter="true" />
+    </function>
+    <function name="GetProgramPipelineInfoLog" extension="Ext">
+      <param name="length" legacyArrayParameter="true" />
+    </function>
   </replace>
 
   <overload name="gl">
@@ -1875,11 +1881,6 @@
         <type>ProgramParameter</type>
       </param>
     </function>
-    <function name="GetProgramPipelineInfoLog" extension="Core" obsolete="Use out overload instead">
-      <param name="length">
-        <count>0</count>
-      </param>
-    </function>
     <function name="GetProgramResourceiv" extension="Core" obsolete="Use out overload instead">
       <param name="length">
         <count>0</count>
@@ -1988,11 +1989,6 @@
     <function name="GetNamedProgram" extension="Ext" obsolete="Use ProgramProperty overload instead">
       <param name="pname" index="2">
         <type>ExtDirectStateAccess</type>
-      </param>
-    </function>
-    <function name="GetProgramPipelineInfoLog" extension="Ext" obsolete="Use out overload instead">
-      <param name="length">
-        <count>0</count>
       </param>
     </function>
     <function name="IsEnabledIndexed" extension="Ext" obsolete="Use IndexedEnableCap overload instead">
@@ -5554,14 +5550,14 @@
     <function name="GetObjectPtrLabel">
       <param name="length" legacyArrayParameter="true" />
     </function>
+    <function name="GetProgramPipelineInfoLog" extension="EXT">
+      <param name="length" legacyArrayParameter="true" />
+    </function>
   </replace>
 
    <!-- gles2 overloads for backwards compatibility (2.0 and 3.0) -->
   <overload name="gles2">
     <function name="GetTranslatedShaderSource" extension="ANGLE" obsolete="Use out overload instead">
-      <param name="length"><count>0</count></param>
-    </function>
-    <function name="GetProgramPipelineInfoLog" extension="EXT" obsolete="Use out overload instead">
       <param name="length"><count>0</count></param>
     </function>
     <function name="GetProgramBinary" extension="OES" obsolete="Use out overload instead">
