@@ -1098,6 +1098,7 @@
       <param name="identifier">
         <type>ObjectLabelIdentifier</type>
       </param>
+      <param name="length" legacyArrayParameter="true" />
     </function>
 
     <function name="GetProgramInterfaceiv" extension="Core">
@@ -1700,11 +1701,6 @@
       </param>
     </function>
     <!-- For backwards compatibility -->
-    <function name="GetObjectLabel" extension="Core">
-      <param name="length">
-        <count>0</count>
-      </param>
-    </function>
     <function name="GetObjectPtrLabel" extension="Core" obsolete="Use out overload instead">
       <param name="length">
         <count>0</count>
@@ -1726,6 +1722,13 @@
       </param>
     </function>
   </overload>
+
+  <!-- For backwards compatibility -->
+  <replace name="gl">
+    <function name="GetObjectLabel" extension="Ext">
+      <param name="length" legacyArrayParameter="true" />
+    </function>
+  </replace>
 
   <overload name="gl">
     <!-- generated from apitest -->
@@ -1864,11 +1867,6 @@
         <type>BeginMode</type>
       </param>
     </function>
-    <function name="GetObjectLabel" extension="Core">
-      <param name="length">
-        <count>0</count>
-      </param>
-    </function>
     <function name="GetObjectPtrLabel" extension="Core" obsolete="Use out overload instead">
       <param name="length">
         <count>0</count>
@@ -1997,11 +1995,6 @@
     <function name="GetNamedProgram" extension="Ext" obsolete="Use ProgramProperty overload instead">
       <param name="pname" index="2">
         <type>ExtDirectStateAccess</type>
-      </param>
-    </function>
-    <function name="GetObjectLabel" extension="Ext">
-      <param name="length">
-        <count>0</count>
       </param>
     </function>
     <function name="GetPointerv" extension="Ext" obsolete="Use out overload instead">
@@ -5568,17 +5561,22 @@
     </function>
     <function name="GetObjectLabel">
       <param name="identifier"><type>ObjectLabelIdentifier</type></param>
+      <param name="length" legacyArrayParameter="true" />
     </function>
     <function name="ObjectLabel">
       <param name="identifier"><type>ObjectLabelIdentifier</type></param>
     </function>
    </replace>
 
-     <!-- gles2 overloads for backwards compatibility (2.0 and 3.0) -->
-  <overload name="gles2">
+  <!--  gles2 replacements for backwards compatibility -->
+  <replace name="gles2">
     <function name="GetObjectLabel">
-      <param name="length"><count>0</count></param>
+      <param name="length" legacyArrayParameter="true" />
     </function>
+  </replace>
+
+   <!-- gles2 overloads for backwards compatibility (2.0 and 3.0) -->
+  <overload name="gles2">
     <function name="GetObjectPtrLabel" obsolete="Use out overload instead">
       <param name="length"><count>0</count></param>
     </function>
