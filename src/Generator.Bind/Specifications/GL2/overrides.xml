@@ -1686,6 +1686,10 @@
       </param>
     </function>
 
+    <!--  For backwards compatibility -->
+    <function name="EdgeFlagv" extension="Core">
+      <param name="flag" legacyArrayParameter="true" />
+    </function>
   </replace>
 
   <overload name="glcore">
@@ -1858,11 +1862,6 @@
     <function name="DrawRangeElementsBaseVertex" extension="Core" obsolete="Use PrimitiveType overload instead">
       <param name="mode" index="0">
         <type>BeginMode</type>
-      </param>
-    </function>
-    <function name="EdgeFlagv" extension="Core" obsolete="Use ref overload instead">
-      <param name="flag">
-        <count>0</count>
       </param>
     </function>
     <function name="GetObjectLabel" extension="Core">
