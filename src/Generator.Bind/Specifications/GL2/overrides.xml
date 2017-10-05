@@ -1870,11 +1870,6 @@
       </param>
     </function>
 
-    <function name="GetPointerv" extension="Core" obsolete="Use out overload instead">
-      <param name="params">
-        <count>0</count>
-      </param>
-    </function>
     <function name="GetProgram" extension="Core" obsolete="Use GetProgramParameterName overload instead">
       <param name="pname" index="1">
         <type>ProgramParameter</type>
@@ -1995,11 +1990,6 @@
         <type>ExtDirectStateAccess</type>
       </param>
     </function>
-    <function name="GetPointerv" extension="Ext" obsolete="Use out overload instead">
-      <param name="params">
-        <count>0</count>
-      </param>
-    </function>
     <function name="GetProgramPipelineInfoLog" extension="Ext" obsolete="Use out overload instead">
       <param name="length">
         <count>0</count>
@@ -2053,11 +2043,6 @@
     <function name="FogCoordPointerList" extension="Ibm" obsolete="Use FogPointerType overload instead">
       <param name="type" index="0">
         <type>IbmVertexArrayLists</type>
-      </param>
-    </function>
-    <function name="GetPointerv" extension="KHR" obsolete="Use out overload instead">
-      <param name="params">
-        <count>0</count>
       </param>
     </function>
     <function name="DrawTransformFeedback" extension="NV" obsolete="Use PrimitiveType overload instead">
