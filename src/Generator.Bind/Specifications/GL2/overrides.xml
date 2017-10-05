@@ -7458,5 +7458,12 @@
         <count>counterDescLength</count>
       </param>
     </function>
+
+    <!-- GetPerfQueryInfoINTEL is missing count attributes -->
+    <function name="GetPerfQueryInfoINTEL" extension="INTEL">
+      <param name="queryName">
+        <count>queryNameLength</count>
+      </param>
+    </function>
   </replace>
 </signatures>
