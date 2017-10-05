@@ -5536,8 +5536,12 @@
     <function name="GetProgramPipelineInfoLog" extension="EXT">
       <param name="length" legacyArrayParameter="true" />
     </function>
+    <!-- GetTranslatedShaderSource is missing count attributes -->
     <function name="GetTranslatedShaderSource" extension="ANGLE">
       <param name="length" legacyArrayParameter="true" />
+      <param name="source">
+        <count>bufsize</count>
+      </param>
     </function>
     <function name="GetProgramBinary" extension="OES">
       <param name="length" legacyArrayParameter="true" />
