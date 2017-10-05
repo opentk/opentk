@@ -536,10 +536,15 @@ namespace Bind
                                     d.Parameters[i].Flow = Parameter.GetFlowDirection((string)node.TypedValue);
                                     break;
                                 case "count":
+                                    d.Parameters[i].ComputeSize = node.Value.Trim();
                                     int count;
-                                    if (Int32.TryParse(node.Value, out count))
+                                    if (Int32.TryParse(d.Parameters[i].ComputeSize, out count))
                                     {
                                         d.Parameters[i].ElementCount = count;
+                                    }
+                                    else
+                                    {
+                                        d.Parameters[i].ElementCount = 0;
                                     }
                                     break;
                             }
