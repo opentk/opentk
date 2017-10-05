@@ -1130,6 +1130,7 @@
       <param name="props">
         <type>ProgramProperty</type>
       </param>
+      <param name="length" legacyArrayParameter="true" />
     </function>
 
     <function name="GetProgramResourceLocation" extension="Core">
@@ -1707,12 +1708,6 @@
         <type>int</type>
       </param>
     </function>
-    <!-- For backwards compatibility -->
-    <function name="GetProgramResourceiv" extension="Core" obsolete="Use out overload instead">
-      <param name="length">
-        <count>0</count>
-      </param>
-    </function>
   </overload>
 
   <!-- For backwards compatibility -->
@@ -1875,11 +1870,6 @@
     <function name="GetProgram" extension="Core" obsolete="Use GetProgramParameterName overload instead">
       <param name="pname" index="1">
         <type>ProgramParameter</type>
-      </param>
-    </function>
-    <function name="GetProgramResourceiv" extension="Core" obsolete="Use out overload instead">
-      <param name="length">
-        <count>0</count>
       </param>
     </function>
     <function name="GetString" extension="Core" obsolete="Use StringNameIndexed overload instead">
