@@ -1120,6 +1120,7 @@
       <param name="programInterface">
         <type>ProgramInterface</type>
       </param>
+      <param name="length" legacyArrayParameter="true" />
     </function>
 
     <function name="GetProgramResourceiv" extension="Core">
@@ -1712,11 +1713,6 @@
         <count>0</count>
       </param>
     </function>
-    <function name="GetProgramResourceName" extension="Core" obsolete="Use out overload instead">
-      <param name="length">
-        <count>0</count>
-      </param>
-    </function>
   </overload>
 
   <!-- For backwards compatibility -->
@@ -1882,11 +1878,6 @@
       </param>
     </function>
     <function name="GetProgramResourceiv" extension="Core" obsolete="Use out overload instead">
-      <param name="length">
-        <count>0</count>
-      </param>
-    </function>
-    <function name="GetProgramResourceName" extension="Core" obsolete="Use out overload instead">
       <param name="length">
         <count>0</count>
       </param>
