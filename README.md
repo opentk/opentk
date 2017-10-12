@@ -181,7 +181,7 @@ Requirements
 Documentation
 =============
 
-Your favorite IDE will display inline documentation for all OpenTK APIs. Additional information can be found in the [OpenTK Manual](http://www.opentk.com/doc) and in the [opentk/Documentation/](https://github.com/opentk/opentk/tree/develop/Documentation) folder.
+Your favorite IDE will display inline documentation for all OpenTK APIs. Additional information can be found in the [OpenTK Manual](http://web.archive.org/web/20150923092918/http://www.opentk.com/doc).
 
 Technical documentation about the implementation of OpenTK can be found in the [Technical Wiki](https://github.com/opentk/opentk/wiki).
 
