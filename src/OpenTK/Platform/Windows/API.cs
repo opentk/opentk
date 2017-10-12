@@ -279,7 +279,7 @@ namespace OpenTK.Platform.Windows
                 if (error != 0)
                 {
                     throw new PlatformException(String.Format("Failed to modify window border. Error: {0}", error));
-            }
+                }
             }
 
             return retval;

@@ -219,7 +219,7 @@ namespace OpenTK.Platform.Windows
             if (!CursorVisible)
             {
                 UngrabCursor();
-        }
+            }
         }
 
         private void HandleExitModalLoop(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -233,7 +233,7 @@ namespace OpenTK.Platform.Windows
             if (!CursorVisible)
             {
                 GrabCursor();
-        }
+            }
         }
 
         private void HandleWindowPositionChanged(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -267,7 +267,7 @@ namespace OpenTK.Platform.Windows
                         if (suppress_resize <= 0)
                         {
                             OnResize(EventArgs.Empty);
-                    }
+                        }
                     }
 
                     if (!is_in_modal_loop)
@@ -278,10 +278,10 @@ namespace OpenTK.Platform.Windows
                         if (!CursorVisible)
                         {
                             GrabCursor();
+                        }
                     }
                 }
             }
-        }
         }
 
         private void HandleStyleChanged(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -306,8 +306,8 @@ namespace OpenTK.Platform.Windows
                     else if ((style & ~(WindowStyle.ThickFrame | WindowStyle.MaximizeBox)) != 0)
                     {
                         new_border = WindowBorder.Fixed;
+                    }
                 }
-            }
             }
 
             if (new_border != windowBorder)
@@ -353,8 +353,8 @@ namespace OpenTK.Platform.Windows
                 if (!CursorVisible)
                 {
                     GrabCursor();
+                }
             }
-        }
         }
 
         private IntPtr? HandleSetCursor(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -491,7 +491,7 @@ namespace OpenTK.Platform.Windows
                             movePoints[i].Y == currentScreenPosition.Y)
                         {
                             break;
-                    }
+                        }
                     }
 
                     // Now move the mouse to each point before the one just found.
@@ -857,7 +857,7 @@ namespace OpenTK.Platform.Windows
             {
                 Debug.Print("[Warning] Failed to enable mouse tracking, error: {0}.",
                     Marshal.GetLastWin32Error());
-        }
+            }
         }
 
         private void StartTimer(IntPtr handle)
@@ -869,8 +869,8 @@ namespace OpenTK.Platform.Windows
                 {
                     Debug.Print("[Warning] Failed to set modal loop timer callback ({0}:{1}->{2}).",
                         GetType().Name, handle, Marshal.GetLastWin32Error());
+                }
             }
-        }
         }
 
         private void StopTimer(IntPtr handle)
@@ -1001,7 +1001,7 @@ namespace OpenTK.Platform.Windows
             {
                 Debug.WriteLine(String.Format("Failed to grab cursor. Error: {0}",
                     Marshal.GetLastWin32Error()));
-        }
+            }
         }
 
         private void UngrabCursor()
@@ -1010,7 +1010,7 @@ namespace OpenTK.Platform.Windows
             {
                 Debug.WriteLine(String.Format("Failed to ungrab cursor. Error: {0}",
                     Marshal.GetLastWin32Error()));
-        }
+            }
         }
 
         public override Rectangle Bounds
@@ -1138,7 +1138,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public override  bool Exists { get { return exists; } }
+        public override bool Exists { get { return exists; } }
 
         public override MouseCursor Cursor
         {
