@@ -205,7 +205,7 @@ namespace OpenTK.Platform.Windows
             if (new_focused_state != Focused)
             {
                 OnFocusedChanged(EventArgs.Empty);
-        }
+            }
         }
 
         private void HandleEnterModalLoop(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -1519,7 +1519,7 @@ namespace OpenTK.Platform.Windows
                     if (Icon != null)
                     {
                         Icon.Dispose();
-                }
+                    }
                 }
                 else
                 {
