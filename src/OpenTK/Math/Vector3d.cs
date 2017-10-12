@@ -235,7 +235,7 @@ namespace OpenTK
         public static readonly Vector3d UnitY = new Vector3d(0, 1, 0);
 
         /// <summary>
-        /// /// Defines a unit-length Vector3d that points towards the Z-axis.
+        /// Defines a unit-length Vector3d that points towards the Z-axis.
         /// </summary>
         public static readonly Vector3d UnitZ = new Vector3d(0, 0, 1);
 
@@ -555,6 +555,54 @@ namespace OpenTK
             result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
             result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
             result.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
+        }
+
+        /// <summary>
+        /// Compute the euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <returns>The distance</returns>
+        public static double Distance(Vector3d vec1, Vector3d vec2)
+        {
+            double result;
+            Distance(ref vec1, ref vec2, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Compute the euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <param name="result">The distance</param>
+        public static void Distance(ref Vector3d vec1, ref Vector3d vec2, out double result)
+        {
+            result = Math.Sqrt((vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y) + (vec2.Z - vec1.Z) * (vec2.Z - vec1.Z));
+        }
+
+        /// <summary>
+        /// Compute the squared euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <returns>The squared distance</returns>
+        public static double DistanceSquared(Vector3d vec1, Vector3d vec2)
+        {
+            double result;
+            DistanceSquared(ref vec1, ref vec2, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Compute the squared euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <param name="result">The squared distance</param>
+        public static void DistanceSquared(ref Vector3d vec1, ref Vector3d vec2, out double result)
+        {
+            result = (vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y) + (vec2.Z - vec1.Z) * (vec2.Z - vec1.Z);
         }
 
         /// <summary>

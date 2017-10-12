@@ -16,7 +16,7 @@ module private AssertHelpers =
 
     let approxEq a b = MathHelper.ApproximatelyEquivalent(a, b, EquivalenceTolerance)
 
-    let approxEqDelta a b = MathHelper.ApproximatelyEqual(a,b,BitAccuracy)
+    let approxEqDelta a b = MathHelper.ApproximatelyEqual(a, b, BitAccuracy)
 
     let approxEqSingleEpsilon a b = MathHelper.ApproximatelyEqualEpsilon(a, b, 0.00001f)
     let approxEqDoubleEpsilon a b = MathHelper.ApproximatelyEqualEpsilon(a, b, 0.00001)
@@ -74,3 +74,6 @@ type internal Assert =
         if approxEqDoubleEpsilonWithError(a, b, c) then raise <| new Xunit.Sdk.EqualException(a,b)
 
     static member ThrowsIndexExn(f:unit -> unit) = Assert.Throws<IndexOutOfRangeException>(f) |> ignore
+
+    static member ApproximatelyEqual(a : float32, b : float32) =
+        if not <| approxEqDelta a b then raise <| new Xunit.Sdk.EqualException(a, b)
