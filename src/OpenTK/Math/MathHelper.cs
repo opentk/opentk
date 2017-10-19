@@ -331,19 +331,6 @@ namespace OpenTK
             return ((value - lowerCurrent) / (upperCurrent - lowerCurrent)) * (upperTarget - lowerTarget) + lowerTarget;
         }
 
-        /// <summary>
-        /// Re-maps a number from one range to another.
-        /// </summary>
-        /// <param name="value">The incoming value to be converted.</param>
-        /// <param name="lowerCurrent">Lower bound of the value's current range.</param>
-        /// <param name="upperCurrent">Upper bound of the value's current range.</param>
-        /// <param name="lowerTarget">Lower bound of the value's target range.</param>
-        /// <param name="upperTarget">Upper bound of the value's target range.</param>
-        public static int Map(int value, int lowerCurrent, int upperCurrent, int lowerTarget, int upperTarget)
-        {
-            return ((value - lowerCurrent) / (upperCurrent - lowerCurrent)) * (upperTarget - lowerTarget) + lowerTarget;
-        }
-
         private static unsafe int FloatToInt32Bits(float f) {
             return *((int*)&f);
         }
