@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.ComponentModel;
-
+using Gdk;
 using OpenTK.Graphics;
-using OpenTK.Platform;
-
 using Gtk;
-using OpenTK.OSX;
-using OpenTK.Win;
-using OpenTK.X11;
 
 namespace OpenTK
 {
@@ -17,66 +12,28 @@ namespace OpenTK
     /// </summary>
     [CLSCompliant(false)]
     [ToolboxItem(true)]
-    public class GLWidget: DrawingArea
+    public class GLWidget : GLArea
     {
-
         private static int _GraphicsContextCount;
         private static bool _SharedContextInitialized = false;
 
         private IGraphicsContext _GraphicsContext;
-        private IWindowInfo _WindowInfo;
         private bool _Initialized = false;
 
         /// <summary>
-        /// Use a single buffer versus a double buffer.
+        /// The previous frame time reported by GTK.
         /// </summary>
-        [Browsable(true)]
-        public bool SingleBuffer { get; set; }
+        private double? _PreviousFrameTime;
 
         /// <summary>
-        /// Color Buffer Bits-Per-Pixel
+        /// Gets the time taken to render the last frame (in seconds).
         /// </summary>
-        public int ColorBPP { get; set; }
+        public double DeltaTime { get; private set; }
 
         /// <summary>
-        /// Accumulation Buffer Bits-Per-Pixel
+        /// The set <see cref="ContextFlags"/> for this widget.
         /// </summary>
-        public int AccumulatorBPP { get; set; }
-
-        /// <summary>
-        /// Depth Buffer Bits-Per-Pixel
-        /// </summary>
-        public int DepthBPP { get; set; }
-
-        /// <summary>
-        /// Stencil Buffer Bits-Per-Pixel
-        /// </summary>
-        public int StencilBPP { get; set; }
-
-        /// <summary>
-        /// Number of samples
-        /// </summary>
-        public int Samples { get; set; }
-
-        /// <summary>
-        /// Indicates if steropic renderering is enabled
-        /// </summary>
-        public bool Stereo { get; set; }
-
-        /// <summary>
-        /// The major version of OpenGL to use.
-        /// </summary>
-        public int GlVersionMajor { get; set; }
-
-        /// <summary>
-        /// The minor version of OpenGL to use.
-        /// </summary>
-        public int GlVersionMinor { get; set; }
-
-        /// <summary>
-        /// The set <see cref="GraphicsContextFlags"/> for this widget.
-        /// </summary>
-        public GraphicsContextFlags GraphicsContextFlags { get; set; }
+        public GraphicsContextFlags ContextFlags { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GLWidget"/> class.
@@ -98,24 +55,71 @@ namespace OpenTK
         /// <param name="graphicsMode">The <see cref="GraphicsMode"/> which the widget should be constructed with.</param>
         /// <param name="glVersionMajor">The major OpenGL version to attempt to initialize.</param>
         /// <param name="glVersionMinor">The minor OpenGL version to attempt to initialize.</param>
-        /// <param name="graphicsContextFlags">
+        /// <param name="contextFlags">
         /// Any flags which should be used during initialization of the <see cref="GraphicsContext"/>.
         /// </param>
-        public GLWidget(GraphicsMode graphicsMode, int glVersionMajor, int glVersionMinor, GraphicsContextFlags graphicsContextFlags)
+        public GLWidget(GraphicsMode graphicsMode, int glVersionMajor, int glVersionMinor, GraphicsContextFlags contextFlags)
         {
-            this.DoubleBuffered = false;
+            ContextFlags = contextFlags;
 
-            SingleBuffer = graphicsMode.Buffers == 1;
-            ColorBPP = graphicsMode.ColorFormat.BitsPerPixel;
-            AccumulatorBPP = graphicsMode.AccumulatorFormat.BitsPerPixel;
-            DepthBPP = graphicsMode.Depth;
-            StencilBPP = graphicsMode.Stencil;
-            Samples = graphicsMode.Samples;
-            Stereo = graphicsMode.Stereo;
+            AddTickCallback(UpdateFrameTime);
+            SetRequiredVersion(glVersionMajor, glVersionMinor);
 
-            GlVersionMajor = glVersionMajor;
-            GlVersionMinor = glVersionMinor;
-            GraphicsContextFlags = graphicsContextFlags;
+            if (graphicsMode.Depth > 0)
+            {
+                HasDepthBuffer = true;
+            }
+
+            if (graphicsMode.Stencil > 0)
+            {
+                HasStencilBuffer = true;
+            }
+
+            if (graphicsMode.ColorFormat.Alpha > 0)
+            {
+                HasAlpha = true;
+            }
+        }
+
+        /// <summary>
+        /// Updates the time delta with a new value from the last frame.
+        /// </summary>
+        /// <param name="widget">The sending widget.</param>
+        /// <param name="frameClock">The relevant frame clock.</param>
+        /// <returns>true if the callback should be called again; otherwise, false.</returns>
+        private bool UpdateFrameTime(Widget widget, FrameClock frameClock)
+        {
+            var frameTimeµSeconds = frameClock.FrameTime;
+
+            if (!_PreviousFrameTime.HasValue)
+            {
+                _PreviousFrameTime = frameTimeµSeconds;
+
+                return true;
+            }
+
+            var frameTimeSeconds = (frameTimeµSeconds - _PreviousFrameTime) / 10e6;
+
+            DeltaTime = (float)frameTimeSeconds;
+            _PreviousFrameTime = frameTimeµSeconds;
+
+            return true;
+        }
+
+
+        /// <inheritdoc />
+        protected override GLContext OnCreateContext()
+        {
+            var gdkGLContext = Window.CreateGlContext();
+
+            GetRequiredVersion(out var major, out var minor);
+            gdkGLContext.SetRequiredVersion(major, minor);
+
+            gdkGLContext.DebugEnabled = ContextFlags.HasFlag(GraphicsContextFlags.Debug);
+            gdkGLContext.ForwardCompatible = ContextFlags.HasFlag(GraphicsContextFlags.ForwardCompatible);
+
+            gdkGLContext.Realize();
+            return gdkGLContext;
         }
 
         /// <summary>
@@ -137,39 +141,15 @@ namespace OpenTK
             base.Destroy();
         }
 
-#if !GTK3
-        /// <summary>
-        /// Disposes the current object, releasing any native resources it was using.
-        /// </summary>
-        /// <param name="disposing"></param>
-        public override void Dispose()
-        {
-            GC.SuppressFinalize(this);
-            Dispose(true);
-
-            base.Dispose();
-        }
-#endif
-
-#if GTK3
         /// <summary>
         /// Disposes the current object, releasing any native resources it was using.
         /// </summary>
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
-            base.Dispose(disposing);
-#else
-        /// <summary>
-        /// Disposes the current object, releasing any native resources it was using.
-        /// </summary>
-        /// <param name="disposing"></param>
-        public virtual void Dispose(bool disposing)
-        {
-#endif
             if (disposing)
             {
-                _GraphicsContext.MakeCurrent(_WindowInfo);
+                MakeCurrent();
                 OnShuttingDown();
                 if (GraphicsContext.ShareContexts && (Interlocked.Decrement(ref _GraphicsContextCount) == 0))
                 {
@@ -232,22 +212,6 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Called when this <see cref="GLWidget"/> needs to render a frame.
-        /// </summary>
-        public event EventHandler RenderFrame;
-
-        /// <summary>
-        /// Invokes the <see cref="RenderFrame"/> event.
-        /// </summary>
-        protected virtual void OnRenderFrame()
-        {
-            if (RenderFrame != null)
-            {
-                RenderFrame(this, EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
         /// Called when this <see cref="GLWidget"/> is being disposed.
         /// </summary>
         public event EventHandler ShuttingDown;
@@ -263,62 +227,19 @@ namespace OpenTK
             }
         }
 
-#if GTK3
         /// <summary>
         /// Called when the widget needs to be (fully or partially) redrawn.
         /// </summary>
         /// <param name="cr"></param>
         /// <returns></returns>
         protected override bool OnDrawn(Cairo.Context cr)
-#else
-        /// <summary>
-        /// Called when the widget is exposed.
-        /// </summary>
-        /// <param name="cr"></param>
-        /// <returns></returns>
-        protected override bool OnExposeEvent(Gdk.EventExpose evnt)
-#endif
         {
             if (!_Initialized)
             {
                 Initialize();
             }
-            else
-            {
-                _GraphicsContext.MakeCurrent(_WindowInfo);
-            }
 
-#if GTK3
             var result = base.OnDrawn(cr);
-#else
-            bool result = base.OnExposeEvent(evnt);
-#endif
-
-            OnRenderFrame();
-
-#if !GTK3
-            evnt.Window.Display.Sync(); // Add Sync call to fix resize rendering problem (Jay L. T. Cornwall) - How does this affect VSync?
-#endif
-
-            _GraphicsContext.SwapBuffers();
-
-            return result;
-        }
-
-        /// <summary>
-        /// Called whenever the widget is resized.
-        /// </summary>
-        /// <param name="evnt"></param>
-        /// <returns></returns>
-        protected override bool OnConfigureEvent(Gdk.EventConfigure evnt)
-        {
-            bool result = base.OnConfigureEvent(evnt);
-
-            if (_GraphicsContext != null)
-            {
-                _GraphicsContext.Update(_WindowInfo);
-            }
-
             return result;
         }
 
@@ -329,65 +250,16 @@ namespace OpenTK
         {
             _Initialized = true;
 
-            // If this looks uninitialized...  initialize.
-            if (ColorBPP == 0)
+            // Make the GDK GL context current
+            MakeCurrent();
+
+            // Create a dummy context that will grab the GdkGLContext that is current on the thread
+            _GraphicsContext = new GraphicsContext(ContextHandle.Zero, null);
+
+            if (ContextFlags.HasFlag(GraphicsContextFlags.Debug))
             {
-                ColorBPP = 32;
-
-                if (DepthBPP == 0)
-                {
-                    DepthBPP = 16;
-                }
+                _GraphicsContext.ErrorChecking = true;
             }
-
-            ColorFormat colorBufferColorFormat = new ColorFormat(ColorBPP);
-
-            ColorFormat accumulationColorFormat = new ColorFormat(AccumulatorBPP);
-
-            int buffers = 2;
-            if (SingleBuffer)
-            {
-                buffers--;
-            }
-
-            GraphicsMode graphicsMode = new GraphicsMode(colorBufferColorFormat, DepthBPP, StencilBPP, Samples, accumulationColorFormat, buffers, Stereo);
-
-            if (Configuration.RunningOnWindows)
-            {
-                Console.WriteLine("OpenTK running on windows");
-            }
-            else if (Configuration.RunningOnMacOS)
-            {
-                Console.WriteLine("OpenTK running on OSX");
-            }
-            else
-            {
-                Console.WriteLine("OpenTK running on X11");
-            }
-
-#if GTK3
-            IntPtr widgetWindowHandle = this.Window.Handle;
-#else
-            IntPtr widgetWindowHandle = this.GdkWindow.Handle;
-#endif
-
-            // IWindowInfo
-            if (Configuration.RunningOnWindows)
-            {
-                _WindowInfo = WinWindowsInfoInitializer.Initialize(widgetWindowHandle);
-            }
-            else if (Configuration.RunningOnMacOS)
-            {
-                _WindowInfo = OSXWindowInfoInitializer.Initialize(widgetWindowHandle);
-            }
-            else
-            {
-                _WindowInfo = XWindowInfoInitializer.Initialize(graphicsMode, this.Display.Handle, this.Screen.Number, widgetWindowHandle, this.Screen.RootWindow.Handle);
-            }
-
-            // GraphicsContext
-            _GraphicsContext = new GraphicsContext(graphicsMode, _WindowInfo, GlVersionMajor, GlVersionMinor, GraphicsContextFlags);
-            _GraphicsContext.MakeCurrent(_WindowInfo);
 
             if (GraphicsContext.ShareContexts)
             {
