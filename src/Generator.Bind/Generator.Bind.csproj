@@ -214,7 +214,9 @@
     </Compile>
     <Compile Include="GL2\GL2Generator.cs" />
     <Compile Include="Structures\Documentation.cs" />
-    <None Include="Specifications\GL2\overrides.xml" />
+    <None Include="Specifications\GL2\overrides.xml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Specifications\GL2\GL\4.5\ARB_direct_state_access.xml" />
     <None Include="Specifications\GL2\ES\3.1\KHR_compute_shader.xml" />
     <None Include="Specifications\GL2\ES\3.1\KHR_separate_shader_objects.xml" />
