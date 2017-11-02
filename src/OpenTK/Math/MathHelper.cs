@@ -305,6 +305,32 @@ namespace OpenTK
             return Math.Max(Math.Min(n, max), min);
         }
 
+        /// <summary>
+        /// Re-maps a number from one range to another.
+        /// </summary>
+        /// <param name="value">The incoming value to be converted.</param>
+        /// <param name="lowerCurrent">Lower bound of the value's current range.</param>
+        /// <param name="upperCurrent">Upper bound of the value's current range.</param>
+        /// <param name="lowerTarget">Lower bound of the value's target range.</param>
+        /// <param name="upperTarget">Upper bound of the value's target range.</param>
+        public static double Map(double value, double lowerCurrent, double upperCurrent, double lowerTarget, double upperTarget)
+        {
+            return ((value - lowerCurrent) / (upperCurrent - lowerCurrent)) * (upperTarget - lowerTarget) + lowerTarget;
+        }
+
+        /// <summary>
+        /// Re-maps a number from one range to another.
+        /// </summary>
+        /// <param name="value">The incoming value to be converted.</param>
+        /// <param name="lowerCurrent">Lower bound of the value's current range.</param>
+        /// <param name="upperCurrent">Upper bound of the value's current range.</param>
+        /// <param name="lowerTarget">Lower bound of the value's target range.</param>
+        /// <param name="upperTarget">Upper bound of the value's target range.</param>
+        public static float Map(float value, float lowerCurrent, float upperCurrent, float lowerTarget, float upperTarget)
+        {
+            return ((value - lowerCurrent) / (upperCurrent - lowerCurrent)) * (upperTarget - lowerTarget) + lowerTarget;
+        }
+
         private static unsafe int FloatToInt32Bits(float f) {
             return *((int*)&f);
         }
