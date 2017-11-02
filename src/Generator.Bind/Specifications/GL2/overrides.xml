@@ -5536,8 +5536,12 @@
     <function name="GetProgramPipelineInfoLog" extension="EXT">
       <param name="length" legacyArrayParameter="true" />
     </function>
+    <!-- GetTranslatedShaderSource is missing count attributes -->
     <function name="GetTranslatedShaderSource" extension="ANGLE">
       <param name="length" legacyArrayParameter="true" />
+      <param name="source">
+        <count>bufsize</count>
+      </param>
     </function>
     <function name="GetProgramBinary" extension="OES">
       <param name="length" legacyArrayParameter="true" />
@@ -7440,4 +7444,40 @@
 
   </add>
 
+  <!-- INTEL_performance_query -->
+  <replace name="gl|glcore|gles1|gles2">
+    <!-- GetPerfQueryIdByNameINTEL is not const-correct -->
+    <function name="GetPerfQueryIdByNameINTEL" extension="INTEL">
+      <param name="queryName">
+        <flow>in</flow>
+      </param>
+    </function>
+
+    <!-- GetPerfCounterInfoINTEL is missing count attributes -->
+    <function name="GetPerfCounterInfoINTEL" extension="INTEL">
+      <param name="counterName">
+        <count>counterNameLength</count>
+      </param>
+      <param name="counterDesc">
+        <count>counterDescLength</count>
+      </param>
+    </function>
+
+    <!-- GetPerfQueryInfoINTEL is missing count attributes -->
+    <function name="GetPerfQueryInfoINTEL" extension="INTEL">
+      <param name="queryName">
+        <count>queryNameLength</count>
+      </param>
+    </function>
+  </replace>
+
+  <!-- ExtGetProgramBinarySourceQCOM -->
+  <replace name="gl|glcore|gles1|gles2">
+    <!-- ExtGetProgramBinarySourceQCOM is missing count attributes -->
+    <function name="ExtGetProgramBinarySourceQCOM" extension="QCOM">
+      <param name="source">
+        <count>*length</count>
+      </param>
+    </function>
+  </replace>
 </signatures>
