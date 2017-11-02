@@ -53,6 +53,8 @@ namespace OpenTK.Platform.MacOS
     // Todo: create a driver for older installations. Maybe use CGGetLastMouseDelta for that?
     internal class HIDInput : IInputDriver2, IMouseDriver2, IKeyboardDriver2, IJoystickDriver2
     {
+        public IntPtr NSEvent;
+
         private class MouseData
         {
             public IntPtr Id;
@@ -215,6 +217,8 @@ namespace OpenTK.Platform.MacOS
 
             // For retrieving the global cursor position
             RegisterMouseMonitor();
+
+            NSEvent = Class.Get("NSEvent");
         }
 
         private void RegisterMouseMonitor()
@@ -1032,6 +1036,12 @@ namespace OpenTK.Platform.MacOS
             CG.WarpMouseCursorPosition(p);
         }
 
+        private void UpdateModifiers(ref KeyboardState state)
+        {
+            var v = Cocoa.SendUint(NSEvent, Selector.Get("modifierFlags"));
+            state.CapsLock = ((v & (1 << 16)) == (1 << 16));
+        }
+
         KeyboardState IKeyboardDriver2.GetState()
         {
             KeyboardState master = new KeyboardState();
@@ -1039,6 +1049,8 @@ namespace OpenTK.Platform.MacOS
             {
                 master.MergeBits(item.State);
             }
+
+            UpdateModifiers(ref master);
 
             return master;
         }
@@ -1048,7 +1060,9 @@ namespace OpenTK.Platform.MacOS
             KeyboardData keyboard;
             if (KeyboardDevices.FromIndex(index, out keyboard))
             {
-                return keyboard.State;
+                var state = keyboard.State;
+                UpdateModifiers(ref state);
+                return state;
             }
 
             return new KeyboardState();

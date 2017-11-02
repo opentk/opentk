@@ -167,15 +167,42 @@ namespace OpenTK.Platform.X11
             return false;
         }
 
+        private bool GetIndicatorState(string name)
+        {
+            bool state = false;
+            bool lockState = false;
+            int ndx = 0;
+            IntPtr map = new IntPtr ();
+            bool real = false;
+        
+            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, name, true);
+            Xkb.GetNamedIndicator(API.DefaultDisplay, atom, out ndx, out state, out map, out real);
+            
+            return state;
+        }
+        
+        private void UpdateModifiers(ref KeyboardState state)
+        {
+            if (Xkb.IsSupported (API.DefaultDisplay))
+            {
+                state.CapsLock = GetIndicatorState("Caps Lock");
+                state.NumLock = GetIndicatorState("Num Lock");                     
+            }
+        }
+
         KeyboardState IKeyboardDriver2.GetState()
         {
             lock (Sync)
             {
                 KeyboardState state = new KeyboardState();
+
                 foreach (XIKeyboard k in keyboards)
                 {
                     state.MergeBits(k.State);
                 }
+                
+                UpdateModifiers(ref state);
+                
                 return state;
             }
         }
@@ -186,7 +213,11 @@ namespace OpenTK.Platform.X11
             {
                 if (index >= 0 && index < keyboards.Count)
                 {
-                    return keyboards[index].State;
+                    var state = keyboards[index].State;
+                    
+                    UpdateModifiers(ref state);
+                                    
+                    return state;
                 }
                 return new KeyboardState();
             }
