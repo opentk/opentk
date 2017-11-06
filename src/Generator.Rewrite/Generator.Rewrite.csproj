@@ -14,8 +14,6 @@
     <ProductVersion>12.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <Deterministic>true</Deterministic>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>..\..\stylecop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -68,14 +66,6 @@
       <Link>OpenTK.snk</Link>
     </None>
     <None Include="paket.references" />
-  </ItemGroup>
-  <ItemGroup>
-    <AdditionalFiles Include="$(SolutionDir)\stylecop.json">
-      <Link>stylecop.json</Link>
-    </AdditionalFiles>
-    <AdditionalFiles Include="$(SolutionDir)\stylecop.ruleset">
-      <Link>stylecop.ruleset</Link>
-    </AdditionalFiles>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
@@ -202,14 +192,7 @@
       </ItemGroup>
     </When>
   </Choose>
-  <ItemGroup>
-    <Analyzer Include="..\..\packages\StyleCop.Analyzers\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll">
-      <Paket>True</Paket>
-    </Analyzer>
-    <Analyzer Include="..\..\packages\StyleCop.Analyzers\analyzers\dotnet\cs\StyleCop.Analyzers.dll">
-      <Paket>True</Paket>
-    </Analyzer>
-  </ItemGroup>
+  <Import Project="..\..\build\StyleCop.props" />
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v1.1' Or $(TargetFrameworkVersion) == 'v1.2')">
       <ItemGroup>
