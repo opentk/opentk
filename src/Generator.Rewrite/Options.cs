@@ -23,14 +23,14 @@ namespace OpenTK.Rewrite
         public string StrongNameKey { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether enable calls to GL.GetError(), wrapped around each native call.
+        /// Gets or sets a value indicating whether calls to GL.GetError() are wrapped around each native call.
         /// </summary>
         [Option('d', "debug", Default = false,
             HelpText = "Enable calls to GL.GetError(), wrapped around each native call.")]
         public bool EnableDebugCalls { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether force native calls to use DllImport instead of GetProcAddress.
+        /// Gets or sets a value indicating whether native calls are forced to use DllImport instead of GetProcAddress.
         /// </summary>
         [Option("dllimport", Default = false,
             HelpText = "Force native calls to use DllImport instead of GetProcAddress.")]
