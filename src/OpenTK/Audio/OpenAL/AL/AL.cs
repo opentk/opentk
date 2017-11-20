@@ -66,8 +66,12 @@ namespace OpenTK.Audio.OpenAL
     /// </summary>
     public static partial class AL
     {
-
+        #if TIZEN
+        internal const string Lib = "libopenal.so.1.17.2";
+        #else
         internal const string Lib = "openal32.dll";
+        #endif
+
         private const CallingConvention Style = CallingConvention.Cdecl;
 
         /// <summary>This function enables a feature of the OpenAL driver. There are no capabilities defined in OpenAL 1.1 to be used with this function, but it may be used by an extension.</summary>
