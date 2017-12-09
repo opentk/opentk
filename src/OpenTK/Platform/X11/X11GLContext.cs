@@ -346,10 +346,6 @@ namespace OpenTK.Platform.X11
                     currentWindow = w;
                 }
 
-
-
-
-
                 if (!result)
                 {
                     throw new GraphicsContextException("Failed to make context current.");
@@ -367,10 +363,7 @@ namespace OpenTK.Platform.X11
         {
             get
             {
-                using (new XLock(Display))
-                {
-                    return Glx.GetCurrentContext() == Handle.Handle;
-                }
+                return Glx.GetCurrentContext() == Handle.Handle;
             }
         }
 
