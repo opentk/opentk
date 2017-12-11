@@ -89,6 +89,7 @@ let activeProjects =
 
     !! "src/**/*.??proj"
     ++ "tests/**/OpenTK.Tests*.fsproj"
+    ++ "tests/**/OpenTK.Tests*.csproj"
     |> xamarinFilter
 
 // Generate assembly info files with the right version & up-to-date information
@@ -164,6 +165,15 @@ Target "RunTests" (fun _ ->
 )
 
 // --------------------------------------------------------------------------------------
+// Run in hard coded style the C# Unit test project (Quick and Dirty, totaly new in F#)
+let nunitRunnerPath = "packages/NUnit.ConsoleRunner/tools/nunit3-console.exe"
+let testDir = "bin/*.CSharp"
+Target "RunCSharpTests" (fun _ ->
+    !! (testDir + "/*.Tests.CSharp.dll")
+    |> NUnit3 (fun p ->
+        {p with ToolPath = nunitRunnerPath}) )
+
+// --------------------------------------------------------------------------------------
 // Build a NuGet package
 
 Target "NuGet" (fun _ ->
@@ -195,6 +205,7 @@ Target "All" DoNothing
   ==> "AssemblyInfo"
   ==> "Build"
   ==> "CopyBinaries"
+  ==> "RunCSharpTests"
   ==> "RunTests"
   ==> "All"
 
