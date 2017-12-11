@@ -41,6 +41,8 @@ namespace OpenTK.Platform.SDL2
         const string lib = "libSDL2.so";
         #elif IPHONE
         const string lib = "__Internal";
+        #elif TIZEN
+        private const string lib = "libSDL2-2.0.so.0";
         #else
         private const string lib = "SDL2.dll";
         #endif
@@ -109,6 +111,14 @@ namespace OpenTK.Platform.SDL2
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateWindow", ExactSpelling = true)]
         public static extern IntPtr CreateWindow(string title, int x, int y, int w, int h, WindowFlags flags);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetMainReady", ExactSpelling = true)]
+        public static extern void SetMainReady();
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetHint", ExactSpelling = true)]
+        public static extern IntPtr SetHint(string name, string value);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateWindowFrom", ExactSpelling = true)]

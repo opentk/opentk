@@ -39,6 +39,8 @@ namespace OpenTK.Graphics.ES20
     {
 #if IPHONE
         private const string Library = "/System/Library/Frameworks/OpenGLES.framework/OpenGLES";
+#elif TIZEN
+        private const string Library = "libGLESv2.so.2";
 #else
         private const string Library = "libGLESv2.dll";
 #endif

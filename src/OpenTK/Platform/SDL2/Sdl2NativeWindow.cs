@@ -77,7 +77,13 @@ namespace OpenTK.Platform.SDL2
                 var bounds = device.Bounds;
                 var flags = TranslateFlags(options);
                 flags |= WindowFlags.OPENGL;
+
+                #if TIZEN
+                flags |= WindowFlags.SHOWN;
+                #else
                 flags |= WindowFlags.HIDDEN;
+                #endif
+
                 if (Toolkit.Options.EnableHighResolution)
                 {
                     flags |= WindowFlags.ALLOW_HIGHDPI;
@@ -104,6 +110,10 @@ namespace OpenTK.Platform.SDL2
                 window = new Sdl2WindowInfo(handle, null);
                 window_id = SDL.GetWindowID(handle);
                 windows.Add(window_id, this);
+
+                #if TIZEN
+                SDL.SetHint("SDL_IOS_ORIENTATIONS", "Portrait LandscapeLeft LandscapeRight PortraitUpsideDown");
+                #endif
             }
         }
 

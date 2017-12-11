@@ -10,6 +10,8 @@ namespace OpenTK.Graphics.ES11
     {
 #if IPHONE
         private const string Library = "/System/Library/Frameworks/OpenGLES.framework/OpenGLES";
+#elif TIZEN
+        private const string Library = "libGLESv1_CM.so.1";
 #else
         private const string Library = "GLESv1_CM";
 #endif
