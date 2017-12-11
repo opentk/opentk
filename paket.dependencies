@@ -6,6 +6,8 @@ nuget CommandLineParser >= 2.1.1-beta
 nuget FSharp.Formatting
 nuget FsCheck
 nuget FsCheck.Xunit
+nuget nunit
+nuget nunit.consolerunner
 nuget StyleCop.Analyzers
 nuget xunit.runner.console
 nuget xunit.assert
