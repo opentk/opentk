@@ -1,11 +1,10 @@
-#region License
 //
 // LinuxGraphicsContext.cs
 //
 // Author:
 //       thefiddler <stapostol@gmail.com>
 //
-// Copyright (c) 2006-2014 
+// Copyright (c) 2006-2014
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -44,19 +42,21 @@ namespace OpenTK.Platform.Linux
     /// Note: to display our results, we need to allocate a GBM framebuffer
     /// and point the scanout address to that via Drm.ModeSetCrtc.
     /// </remarks>
-    class LinuxGraphicsContext : Egl.EglUnixContext
+    internal class LinuxGraphicsContext : Egl.EglUnixContext
     {
-        BufferObject bo, bo_next;
-        int fd;
-        bool is_flip_queued;
-        int swap_interval;
+        private BufferObject bo, bo_next;
+        private int fd;
+        private bool is_flip_queued;
+        private int swap_interval;
 
         public LinuxGraphicsContext(GraphicsMode mode, LinuxWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
             : base(mode, window, sharedContext, major, minor, flags)
         {
             if (mode.Buffers < 1)
+            {
                 throw new ArgumentException();
+            }
             fd = window.FD;
 
             PageFlip = HandlePageFlip;
@@ -66,9 +66,6 @@ namespace OpenTK.Platform.Linux
         public override void SwapBuffers()
         {
             base.SwapBuffers();
-
-            bo_next = LockSurface();
-            int fb = GetFramebuffer(bo_next);
 
             if (is_flip_queued)
             {
@@ -84,6 +81,8 @@ namespace OpenTK.Platform.Linux
                 }
             }
 
+            bo_next = LockSurface();
+            int fb = GetFramebuffer(bo_next);
             QueueFlip(fb);
         }
 
@@ -114,7 +113,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void WaitFlip(bool block)
+        private void WaitFlip(bool block)
         {
             PollFD fds = new PollFD();
             fds.fd = fd;
@@ -130,15 +129,23 @@ namespace OpenTK.Platform.Linux
             {
                 fds.revents = 0;
                 if (Libc.poll(ref fds, 1, timeout) < 0)
+                {
                     break;
+                }
 
                 if ((fds.revents & (PollFlags.Hup | PollFlags.Error)) != 0)
+                {
                     break;
+                }
 
                 if ((fds.revents & PollFlags.In) != 0)
+                {
                     Drm.HandleEvent(fd, ref evctx);
+                }
                 else
+                {
                     break;
+                }
             }
 
             // Page flip has taken place, update buffer objects
@@ -150,11 +157,13 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void QueueFlip(int buffer)
+        private void QueueFlip(int buffer)
         {
             LinuxWindowInfo wnd = WindowInfo as LinuxWindowInfo;
             if (wnd == null)
+            {
                 throw new InvalidOperationException();
+            }
 
             unsafe
             {
@@ -170,11 +179,13 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void SetScanoutRegion(int buffer)
+        private void SetScanoutRegion(int buffer)
         {
             LinuxWindowInfo wnd = WindowInfo as LinuxWindowInfo;
             if (wnd == null)
+            {
                 throw new InvalidOperationException();
+            }
 
             unsafe
             {
@@ -196,16 +207,18 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        BufferObject LockSurface()
+        private BufferObject LockSurface()
         {
             IntPtr gbm_surface = WindowInfo.Handle;
             return Gbm.LockFrontBuffer(gbm_surface);
         }
 
-        int GetFramebuffer(BufferObject bo)
+        private int GetFramebuffer(BufferObject bo)
         {
             if (bo == BufferObject.Zero)
+            {
                 goto fail;
+            }
 
             int bo_handle = bo.Handle;
             if (bo_handle == 0)
@@ -247,9 +260,10 @@ namespace OpenTK.Platform.Linux
             return -1;
         }
 
-        readonly IntPtr PageFlipPtr;
-        readonly PageFlipCallback PageFlip;
-        void HandlePageFlip(int fd,
+        private readonly IntPtr PageFlipPtr;
+        private readonly PageFlipCallback PageFlip;
+
+        private void HandlePageFlip(int fd,
             int sequence,
             int tv_sec,
             int tv_usec,
@@ -258,8 +272,9 @@ namespace OpenTK.Platform.Linux
             is_flip_queued = false;
         }
 
-        static readonly DestroyUserDataCallback DestroyFB = HandleDestroyFB;
-        static void HandleDestroyFB(BufferObject bo, IntPtr data)
+        private static readonly DestroyUserDataCallback DestroyFB = HandleDestroyFB;
+
+        private static void HandleDestroyFB(BufferObject bo, IntPtr data)
         {
             IntPtr gbm = bo.Device;
             int fb = data.ToInt32();

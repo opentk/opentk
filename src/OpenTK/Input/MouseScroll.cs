@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // MouseWheel.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 
@@ -36,8 +34,6 @@ namespace OpenTK.Input
     /// </summary>
     public struct MouseScroll : IEquatable<MouseScroll>
     {
-        #region Public Members
-
         /// <summary>
         /// Gets the absolute horizontal offset of the wheel,
         /// or 0 if no horizontal scroll wheel exists.
@@ -98,10 +94,6 @@ namespace OpenTK.Input
                 Equals((MouseScroll)obj);
         }
 
-        #endregion
-
-        #region IEquatable Members
-
         /// <summary>
         /// Determines whether the specified <see cref="OpenTK.Input.MouseScroll"/> is equal to the current <see cref="OpenTK.Input.MouseScroll"/>.
         /// </summary>
@@ -112,8 +104,6 @@ namespace OpenTK.Input
         {
             return X == other.X && Y == other.Y;
         }
-
-        #endregion
     }
 }
 

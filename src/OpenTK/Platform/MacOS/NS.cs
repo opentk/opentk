@@ -1,4 +1,3 @@
-#region License
 //
 // NS.cs
 //
@@ -26,15 +25,13 @@
 // THE SOFTWARE.
 //
 
-#endregion
-
 using System;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.MacOS
 {
     [Flags]
-    enum AddImageFlags
+    internal enum AddImageFlags
     {
         ReturnOnError = 1,
         WithSearching = 2,
@@ -42,7 +39,7 @@ namespace OpenTK.Platform.MacOS
     }
 
     [Flags]
-    enum SymbolLookupFlags
+    internal enum SymbolLookupFlags
     {
         Bind = 0,
         BindNow = 1,
@@ -52,7 +49,7 @@ namespace OpenTK.Platform.MacOS
 
     internal class NS
     {
-        const string Library = "libdl.dylib";
+        private const string Library = "libdl.dylib";
 
         [DllImport(Library, EntryPoint = "NSAddImage")]
         internal static extern IntPtr AddImage(string s, AddImageFlags flags);
@@ -134,14 +131,16 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        static IntPtr GetAddressInternal(IntPtr function)
+        private static IntPtr GetAddressInternal(IntPtr function)
         {
             IntPtr symbol = IntPtr.Zero;
             if (IsSymbolNameDefined(function))
             {
                 symbol = LookupAndBindSymbol(function);
                 if (symbol != IntPtr.Zero)
+                {
                     symbol = AddressOfSymbol(symbol);
+                }
             }
             return symbol;
         }

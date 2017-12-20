@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,12 +22,8 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
 namespace OpenTK.Platform.MacOS
 {
@@ -36,19 +31,10 @@ namespace OpenTK.Platform.MacOS
     /// <summary>
     /// Describes a Carbon window.
     /// </summary>
-    sealed class CarbonWindowInfo : IWindowInfo
+    internal sealed class CarbonWindowInfo : IWindowInfo
     {
-        IntPtr windowRef;
-        bool ownHandle = false;
-        bool disposed = false;
-        bool isControl = true;
-        bool goFullScreenHack = false;
-        bool goWindowedHack = false;
-
-        GetInt xOffset;
-        GetInt yOffset;
-
-        #region Constructors
+        private bool ownHandle = false;
+        private bool disposed = false;
 
         /// <summary>
         /// Constructs a new instance with the specified parameters.
@@ -58,48 +44,30 @@ namespace OpenTK.Platform.MacOS
         /// <param name="isControl"></param>
         public CarbonWindowInfo(IntPtr windowRef, bool ownHandle, bool isControl)
         {
-            this.windowRef = windowRef;
+            this.Handle = windowRef;
             this.ownHandle = ownHandle;
-            this.isControl = isControl;
+            this.IsControl = isControl;
         }
 
         public CarbonWindowInfo(IntPtr windowRef, bool ownHandle, bool isControl, GetInt getX, GetInt getY) : this(windowRef, ownHandle, isControl)
         {
-            this.xOffset = getX;
-            this.yOffset = getY;
+            this.XOffset = getX;
+            this.YOffset = getY;
         }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Gets the window reference for this instance.
         /// </summary>
-        public IntPtr Handle
-        {
-            get { return this.windowRef; }
-            set { this.windowRef = value; }
-        }
+        public IntPtr Handle { get; set; }
 
-        internal bool GoFullScreenHack
-        {
-            get { return goFullScreenHack; }
-            set { goFullScreenHack = value; }
-        }
-        internal bool GoWindowedHack
-        {
-            get { return goWindowedHack; }
-            set { goWindowedHack = value; }
-        }
+        internal bool GoFullScreenHack { get; set; } = false;
+
+        internal bool GoWindowedHack { get; set; } = false;
 
         /// <summary>
         /// Gets a value indicating whether this instance refers to a System.Windows.Forms.Control.
         /// </summary>
-        public bool IsControl
-        {
-            get { return isControl; }
-        }
+        public bool IsControl { get; } = true;
 
         /// <summary>Returns a System.String that represents the current window.</summary>
         /// <returns>A System.String that represents the current window.</returns>
@@ -113,40 +81,32 @@ namespace OpenTK.Platform.MacOS
         // (e.g. MonoGame)
         public IntPtr WindowHandle { get { return Handle; } set { Handle = value; } }
 
-        public GetInt XOffset
-        {
-            get { return xOffset; }
-            set { xOffset = value; }
-        }
-        public GetInt YOffset
-        {
-            get { return yOffset; }
-            set { yOffset = value; }
-        }
-        #endregion
+        public GetInt XOffset { get; set; }
 
-        #region IDisposable Members
+        public GetInt YOffset { get; set; }
 
         public void Dispose()
         {
             Dispose(true);
         }
 
-        void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (disposed)
+            {
                 return;
-            
+            }
+
             if (disposing)
             {
-                
+
             }
-            
+
             if (ownHandle)
             {
-                windowRef = IntPtr.Zero;
+                Handle = IntPtr.Zero;
             }
-            
+
             disposed = true;
         }
 
@@ -154,7 +114,6 @@ namespace OpenTK.Platform.MacOS
         {
             Dispose(false);
         }
-        
-        #endregion
+
     }
 }

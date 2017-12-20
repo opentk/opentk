@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -31,27 +29,29 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Egl
 {
-    abstract class EglContext : EmbeddedGraphicsContext
+    internal abstract class EglContext : EmbeddedGraphicsContext
     {
-        #region Fields
-
         protected readonly RenderableFlags Renderable;
-        protected EglWindowInfo WindowInfo;
+        internal EglWindowInfo WindowInfo;
 
-        IntPtr HandleAsEGLContext { get { return Handle.Handle; } set { Handle = new ContextHandle(value); } }
-        int swap_interval = 1; // Default interval is defined as 1 in EGL.
+        internal GraphicsContextFlags GraphicsContextFlags { get; set; }
 
-        #endregion
-
-        #region Constructors
+        internal IntPtr HandleAsEGLContext { get { return Handle.Handle; } set { Handle = new ContextHandle(value); } }
+        private int swap_interval = 1; // Default interval is defined as 1 in EGL.
 
         public EglContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
         {
             if (mode == null)
+            {
                 throw new ArgumentNullException("mode");
+            }
             if (window == null)
+            {
                 throw new ArgumentNullException("window");
+            }
+
+            EglContext shared = GetSharedEglContext(sharedContext);
 
             WindowInfo = window;
 
@@ -83,35 +83,56 @@ namespace OpenTK.Platform.Egl
                 Debug.Print("[EGL] Failed to bind rendering API. Error: {0}", Egl.GetError());
             }
 
-            Mode = new EglGraphicsMode().SelectGraphicsMode(window,
-                mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
-                mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
-                Renderable);
+            bool offscreen = (flags & GraphicsContextFlags.Offscreen) != 0;
+
+            SurfaceType surfaceType = offscreen
+                ? SurfaceType.PBUFFER_BIT
+                : SurfaceType.WINDOW_BIT;
+
+            Mode = new EglGraphicsMode().SelectGraphicsMode(surfaceType,
+                    window.Display, mode.ColorFormat, mode.Depth, mode.Stencil,
+                    mode.Samples, mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
+                    Renderable);
+
             if (!Mode.Index.HasValue)
+            {
                 throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
+            }
             IntPtr config = Mode.Index.Value;
 
             if (window.Surface == IntPtr.Zero)
-                window.CreateWindowSurface(config);
+            {
+                if (!offscreen)
+                {
+                    window.CreateWindowSurface(config);
+                }
+                else
+                {
+                    window.CreatePbufferSurface(config);
+                }
+            }
 
-            int[] attrib_list = new int[] { Egl.CONTEXT_CLIENT_VERSION, major, Egl.NONE };
-            HandleAsEGLContext = Egl.CreateContext(window.Display, config, sharedContext != null ? (sharedContext as IGraphicsContextInternal).Context.Handle : IntPtr.Zero, attrib_list);
+            int[] attribList = { Egl.CONTEXT_CLIENT_VERSION, major, Egl.NONE };
+            var shareContext = shared?.HandleAsEGLContext ?? IntPtr.Zero;
+            HandleAsEGLContext = Egl.CreateContext(window.Display, config, shareContext, attribList);
+
+            GraphicsContextFlags = flags;
         }
 
         public EglContext(ContextHandle handle, EglWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
         {
             if (handle == ContextHandle.Zero)
+            {
                 throw new ArgumentException("handle");
+            }
             if (window == null)
+            {
                 throw new ArgumentNullException("window");
+            }
 
             Handle = handle;
         }
-
-        #endregion
-
-        #region IGraphicsContext Members
 
         public override void SwapBuffers()
         {
@@ -130,7 +151,16 @@ namespace OpenTK.Platform.Egl
             if (window != null)
             {
                 if (window is EglWindowInfo)
-                    WindowInfo = (EglWindowInfo) window;
+                {
+                    WindowInfo = (EglWindowInfo)window;
+                }
+#if !ANDROID
+                else if (window is IAngleWindowInfoInternal)
+                {
+                    WindowInfo = ((IAngleWindowInfoInternal)window).EglWindowInfo;
+                }
+#endif
+
                 if (!Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, HandleAsEGLContext))
                 {
                     throw new GraphicsContextException(string.Format("Failed to make context {0} current. Error: {1}", Handle, Egl.GetError()));
@@ -164,10 +194,14 @@ namespace OpenTK.Platform.Egl
                 }
 
                 if (Egl.SwapInterval(WindowInfo.Display, value))
+                {
                     swap_interval = value;
+                }
                 else
+                {
                     Debug.Print("[Warning] Egl.SwapInterval({0}, {1}) failed. Error: {2}",
                         WindowInfo.Display, value, Egl.GetError());
+                }
             }
         }
 
@@ -175,7 +209,7 @@ namespace OpenTK.Platform.Egl
         {
             MakeCurrent(window);
             // ANGLE updates the width and height of the back buffer surfaces in the WaitClient function.
-            // So without this calling this function, the surface won't match the size of the window after it 
+            // So without this calling this function, the surface won't match the size of the window after it
             // was resized.
             // https://bugs.chromium.org/p/angleproject/issues/detail?id=1438
             if (!Egl.WaitClient())
@@ -183,10 +217,6 @@ namespace OpenTK.Platform.Egl
                 Debug.Print("[Warning] Egl.WaitClient() failed. Error: {0}", Egl.GetError());
             }
         }
-
-        #endregion
-
-        #region IGraphicsContextInternal Members
 
         public override IntPtr GetAddress(IntPtr function)
         {
@@ -203,15 +233,7 @@ namespace OpenTK.Platform.Egl
             return address;
         }
 
-        #endregion
-
-        #region Abstract Members
-
         protected abstract IntPtr GetStaticAddress(IntPtr function, RenderableFlags renderable);
-
-        #endregion
-
-        #region IDisposable Members
 
         // Todo: cross-reference the specs. What should happen if the context is destroyed from a different
         // thread?
@@ -222,13 +244,28 @@ namespace OpenTK.Platform.Egl
                 if (manual)
                 {
                     if (IsCurrent)
+                    {
                         Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, IntPtr.Zero);
+                    }
                     Egl.DestroyContext(WindowInfo.Display, HandleAsEGLContext);
                 }
                 IsDisposed = true;
             }
         }
 
-        #endregion
+        private EglContext GetSharedEglContext(IGraphicsContext sharedContext)
+        {
+            if (sharedContext == null)
+            {
+                return null;
+            }
+
+            var internalContext = sharedContext as IGraphicsContextInternal;
+            if (internalContext != null)
+            {
+                return (EglContext)internalContext.Implementation;
+            }
+            return (EglContext)sharedContext;
+        }
     }
 }

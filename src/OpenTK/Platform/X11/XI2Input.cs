@@ -1,11 +1,10 @@
-#region License
 //
 // XI2Input.cs
 //
 // Author:
 //       thefiddler <stapostol@gmail.com>
 //
-// Copyright (c) 2006-2014 
+// Copyright (c) 2006-2014
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,26 +24,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
-using System;
 using System.Diagnostics;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
-    class XI2Input : IInputDriver2
+    internal class XI2Input : IInputDriver2
     {
-        readonly XI2MouseKeyboard mouse_keyboard = new XI2MouseKeyboard();
-        readonly Linux.LinuxJoystick joystick = new Linux.LinuxJoystick();
-        readonly IGamePadDriver gamepad = new MappedGamePadDriver();
+        private readonly XI2MouseKeyboard mouse_keyboard = new XI2MouseKeyboard();
+        private readonly Linux.LinuxJoystick joystick = new Linux.LinuxJoystick();
 
         internal XI2Input()
         {
             Debug.WriteLine("Using XI2 input driver.");
         }
-
-        #region IInputDriver2 Members
 
         public IMouseDriver2 MouseDriver
         {
@@ -62,13 +56,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        public IGamePadDriver GamePadDriver
-        {
-            get
-            {
-                return gamepad;
-            }
-        }
+        public IGamePadDriver GamePadDriver { get; } = new MappedGamePadDriver();
 
         public IJoystickDriver2 JoystickDriver
         {
@@ -78,17 +66,11 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        #endregion
-
-        #region IDisposable Members
-
         public void Dispose()
         {
             mouse_keyboard.Dispose();
             joystick.Dispose();
         }
-
-        #endregion
 
     }
 }

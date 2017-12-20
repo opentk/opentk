@@ -1,18 +1,12 @@
-﻿#region --- OpenTK.OpenAL License ---
-/* EfxTokens.cs
+﻿/* EfxTokens.cs
  * C headers: \OpenAL 1.1 SDK\include\ "efx.h", "efx-creative.h", "Efx-Util.h"
  * Spec: Effects Extension Guide.pdf (bundled with OpenAL SDK)
  * Copyright (c) 2008 Christoph Brandtner and Stefanos Apostolopoulos
  * See license.txt for license details
  * http://www.OpenTK.net */
-#endregion
-
-using System;
 
 namespace OpenTK.Audio.OpenAL
 {
-    #region Effect
-
     ///<summary>A list of valid 32-bit Float Effect/GetEffect parameters</summary>
     public enum EfxEffectf : int
     {
@@ -167,7 +161,7 @@ namespace OpenTK.Audio.OpenAL
     ///<summary>A list of valid Math.Vector3 Effect/GetEffect parameters</summary>
     public enum EfxEffect3f : int
     {
-        /// <summary>Reverb Pan does for the Reverb what Reflections Pan does for the Reflections. Unit: Vector3 of length 0f to 1f Default: {0.0f, 0.0f, 0.0f}</summary>  
+        /// <summary>Reverb Pan does for the Reverb what Reflections Pan does for the Reflections. Unit: Vector3 of length 0f to 1f Default: {0.0f, 0.0f, 0.0f}</summary>
         EaxReverbLateReverbPan = 0x000E,
         /// <summary>This Vector3 controls the spatial distribution of the cluster of early reflections. The direction of this vector controls the global direction of the reflections, while its magnitude controls how focused the reflections are towards this direction. For legacy reasons this Vector3 follows a left-handed co-ordinate system! Note that OpenAL uses a right-handed coordinate system. Unit: Vector3 of length 0f to 1f Default: {0.0f, 0.0f, 0.0f}</summary>
         EaxReverbReflectionsPan = 0x000B,
@@ -230,7 +224,7 @@ namespace OpenTK.Audio.OpenAL
         /// The A phoneme of the vocal morpher.
         /// </summary>
         VocalMorpherPhonemeA = 0,
-        
+
         /// <summary>
         /// The E phoneme of the vocal morpher.
         /// </summary>
@@ -377,7 +371,7 @@ namespace OpenTK.Audio.OpenAL
         VocalMorpherPhonemeZ = 29,
     }
 
-    ///<summary>Effect type definitions to be used with EfxEffecti.EffectType.</summary>  
+    ///<summary>Effect type definitions to be used with EfxEffecti.EffectType.</summary>
     public enum EfxEffectType : int
     {
         ///<summary>No Effect, disable. This Effect type is used when an Effect object is initially created.</summary>
@@ -410,10 +404,6 @@ namespace OpenTK.Audio.OpenAL
         EaxReverb = 0x8000,
     }
 
-    #endregion Effect
-
-    #region Auxiliary Effect Slot
-
     ///<summary>A list of valid Int32 AuxiliaryEffectSlot/GetAuxiliaryEffectSlot parameters</summary>
     public enum EfxAuxiliaryi : int
     {
@@ -430,10 +420,6 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>This property is used to specify an output level for the Auxiliary Effect Slot. Setting the gain to 0.0f mutes the output. Range [0.0f .. 1.0f] Default: 1.0f</summary>
         EffectslotGain = 0x0002,
     }
-
-    #endregion Auxiliary Effect Slot
-
-    #region Filter Object
 
     ///<summary>A list of valid 32-bits Float Filter/GetFilter parameters</summary>
     public enum EfxFilterf : int
@@ -475,6 +461,4 @@ namespace OpenTK.Audio.OpenAL
         ///<summary>Currently not implemented. A band-pass filter is used to remove high and low frequency content from a signal.</summary>
         Bandpass = 0x0003,
     }
-
-    #endregion Filter Object
 }

@@ -1,4 +1,3 @@
-#region License
  //
  // The Open Toolkit Library License
  //
@@ -6,7 +5,7 @@
  //
  // Permission is hereby granted, free of charge, to any person obtaining a copy
  // of this software and associated documentation files (the "Software"), to deal
- // in the Software without restriction, including without limitation the rights to 
+ // in the Software without restriction, including without limitation the rights to
  // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
  // the Software, and to permit persons to whom the Software is furnished to do
  // so, subject to the following conditions:
@@ -23,27 +22,18 @@
  // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  // OTHER DEALINGS IN THE SOFTWARE.
  //
- #endregion
- 
+
+#if MINIMAL
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OpenTK
 {
-#if MINIMAL
     /// <summary>
     /// Defines a point on a two-dimensional plane.
     /// </summary>
     public struct Point : IEquatable<Point>
     {
-        #region Fields
-
         int x, y;
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Constructs a new Point instance.
@@ -56,10 +46,6 @@ namespace OpenTK
             X = x;
             Y = y;
         }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> that indicates whether this instance is empty or zero.
@@ -173,10 +159,6 @@ namespace OpenTK
             return String.Format("{{{0}, {1}}}", X, Y);
         }
 
-        #endregion
-
-        #region IEquatable<Point> Members
-
         /// <summary>
         /// Indicates whether this instance is equal to the specified Point.
         /// </summary>
@@ -186,8 +168,6 @@ namespace OpenTK
         {
             return X == other.X && Y == other.Y;
         }
-
-        #endregion
     }
-#endif
 }
+#endif

@@ -40,6 +40,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <Deterministic>true</Deterministic>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
@@ -55,7 +57,7 @@
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\stylecop.ruleset</CodeAnalysisRuleSet>
     <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -71,8 +73,8 @@
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DebugType>none</DebugType>
+    <CodeAnalysisRuleSet>..\..\stylecop.ruleset</CodeAnalysisRuleSet>
+    <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>True</SignAssembly>
@@ -157,6 +159,14 @@
     </None>
     <None Include="paket.references" />
     <None Include="paket.template" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="$(SolutionDir)\stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
+    <AdditionalFiles Include="$(SolutionDir)\stylecop.ruleset">
+      <Link>stylecop.ruleset</Link>
+    </AdditionalFiles>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

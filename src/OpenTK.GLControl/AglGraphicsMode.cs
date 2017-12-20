@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,17 +22,15 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using OpenTK.Graphics;
 
 namespace OpenTK.Platform.MacOS
 {
-    class AglGraphicsMode
+    internal class AglGraphicsMode
     {
         public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil,
             int samples, ColorFormat accum, int buffers, bool stereo, out IntPtr pixelformat)
@@ -58,9 +55,7 @@ namespace OpenTK.Platform.MacOS
             return GetGraphicsModeFromPixelFormat(pixelformat);
         }
 
-        #region Internal Members
-
-        static bool RelaxGraphicsMode(ref ColorFormat color, ref int depth, ref int stencil, ref int samples, ref ColorFormat accum, ref int buffers, ref bool stereo)
+        private static bool RelaxGraphicsMode(ref ColorFormat color, ref int depth, ref int stencil, ref int samples, ref ColorFormat accum, ref int buffers, ref bool stereo)
         {
             // Parameters are relaxed in order of importance.
             // - Accumulator buffers are way outdated as a concept,
@@ -128,7 +123,7 @@ namespace OpenTK.Platform.MacOS
             return false;
         }
 
-        GraphicsMode GetGraphicsModeFromPixelFormat(IntPtr pixelformat)
+        private GraphicsMode GetGraphicsModeFromPixelFormat(IntPtr pixelformat)
         {
             int r, g, b, a;
             Agl.aglDescribePixelFormat(pixelformat, Agl.PixelFormatAttribute.AGL_RED_SIZE, out r);
@@ -151,13 +146,13 @@ namespace OpenTK.Platform.MacOS
                 depth, stencil, samples, new ColorFormat(ar, ag, ab, aa), buffers + 1, stereo != 0);
         }
 
-        IntPtr SelectPixelFormat(ColorFormat color, int depth, int stencil, int samples,
+        private IntPtr SelectPixelFormat(ColorFormat color, int depth, int stencil, int samples,
             ColorFormat accum, int buffers, bool stereo)
         {
             List<int> attribs = new List<int>();
 
             Debug.Print("Bits per pixel: {0}", color.BitsPerPixel);
-            
+
             if (color.BitsPerPixel > 0)
             {
                 if (!color.IsIndexed)
@@ -224,7 +219,5 @@ namespace OpenTK.Platform.MacOS
             IntPtr pixelformat = Agl.aglChoosePixelFormat(IntPtr.Zero, 0, attribs.ToArray());
             return pixelformat;
         }
-
-        #endregion
     }
 }

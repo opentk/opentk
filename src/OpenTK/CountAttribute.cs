@@ -1,12 +1,11 @@
-﻿#region License
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2008 the Open Toolkit library, except where noted.
+// Copyright (c) 2017 the Open Toolkit library, except where noted.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,23 +22,42 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK.Input
+namespace OpenTK
 {
     /// <summary>
-    /// Defines the interface for JoystickDevice drivers.
+    /// Used to indicate how to calculate the count/length of a parameter.
+    ///
+    /// Only one of Parameter, Count, or Computed should be set.
     /// </summary>
-    [Obsolete]
-    public interface IJoystickDriver
+    [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]
+    public sealed class CountAttribute : Attribute
     {
         /// <summary>
-        /// Gets the list of available JoystickDevices.
+        /// Specifies another parameter to look at for the count of this parameter.
         /// </summary>
-        IList<JoystickDevice> Joysticks { get; }
+        public string Parameter;
+
+        /// <summary>
+        /// Specifies a fixed count.
+        /// </summary>
+        public int Count;
+
+        /// <summary>
+        /// Specifies a computed count based on other parameters.
+        /// </summary>
+        public string Computed;
+
+        /// <summary>
+        /// Constructs a new CountAttribute instance.
+        /// </summary>
+        public CountAttribute()
+        {
+        }
     }
 }
+

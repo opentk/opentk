@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // EglWinContext.cs
 //
 // Author:
@@ -25,17 +24,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Egl
 {
-    class EglWinContext : EglContext
+    internal class EglWinContext : EglContext
     {
-        IntPtr ES1 = OpenTK.Platform.Windows.Functions.LoadLibrary("libGLESv1_CM");
-        IntPtr ES2 = OpenTK.Platform.Windows.Functions.LoadLibrary("libGLESv2");
+        private IntPtr ES1 = OpenTK.Platform.Windows.Functions.LoadLibrary("libGLESv1_CM");
+        private IntPtr ES2 = OpenTK.Platform.Windows.Functions.LoadLibrary("libGLESv2");
 
         public EglWinContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
@@ -48,8 +46,6 @@ namespace OpenTK.Platform.Egl
             : base(handle, window, sharedContext, major, minor, flags)
         {
         }
-
-        #region Protected Members
 
         protected override IntPtr GetStaticAddress(IntPtr function, RenderableFlags renderable)
         {
@@ -79,7 +75,5 @@ namespace OpenTK.Platform.Egl
 
             base.Dispose(manual);
         }
-
-        #endregion
     }
 }

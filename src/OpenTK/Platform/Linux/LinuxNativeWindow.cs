@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // LinuxNativeWindow.cs
 //
 // Author:
@@ -25,14 +24,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
 #if !MINIMAL
 using System.Drawing;
 #endif
-using System.Runtime.InteropServices;
 using OpenTK.Graphics;
 using OpenTK.Input;
 using OpenTK.Platform.Egl;
@@ -41,24 +38,24 @@ namespace OpenTK.Platform.Linux
 {
     using Egl = OpenTK.Platform.Egl.Egl;
 
-    class LinuxNativeWindow : NativeWindowBase
+    internal class LinuxNativeWindow : NativeWindowBase
     {
-        LinuxWindowInfo window;
-        string title;
-        Icon icon;
-        Rectangle bounds;
-        Size client_size;
-        bool exists;
-        bool is_focused;
-        bool is_cursor_visible = true;
+        private LinuxWindowInfo window;
+        private string title;
+        private Icon icon;
+        private Rectangle bounds;
+        private Size client_size;
+        private bool exists;
+        private bool is_focused;
+        private bool is_cursor_visible = true;
 
-        KeyboardState previous_keyboard;
-        MouseState previous_mouse;
+        private KeyboardState previous_keyboard;
+        private MouseState previous_mouse;
 
-        MouseCursor cursor_current;
-        BufferObject cursor_custom;
-        BufferObject cursor_default;
-        BufferObject cursor_empty;
+        private MouseCursor cursor_current;
+        private BufferObject cursor_custom;
+        private BufferObject cursor_default;
+        private BufferObject cursor_empty;
 
         public LinuxNativeWindow(IntPtr display, IntPtr gbm, int fd,
             int x, int y, int width, int height, string title,
@@ -120,9 +117,7 @@ namespace OpenTK.Platform.Linux
             exists = true;
         }
 
-        #region Private Members
-
-        static BufferObject CreateCursor(IntPtr gbm, MouseCursor cursor)
+        private static BufferObject CreateCursor(IntPtr gbm, MouseCursor cursor)
         {
             if (cursor.Width > 64 || cursor.Height > 64)
             {
@@ -165,7 +160,7 @@ namespace OpenTK.Platform.Linux
             return bo;
         }
 
-        void SetCursor(MouseCursor cursor)
+        private void SetCursor(MouseCursor cursor)
         {
             BufferObject bo = default(BufferObject);
             if (cursor == MouseCursor.Default)
@@ -179,7 +174,9 @@ namespace OpenTK.Platform.Linux
             else
             {
                 if (cursor_custom != BufferObject.Zero)
+                {
                     cursor_custom.Dispose();
+                }
                 cursor_custom = CreateCursor(window.BufferManager, cursor);
                 bo = cursor_custom;
             }
@@ -198,7 +195,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        static SurfaceFormat GetSurfaceFormat(IntPtr display, GraphicsMode mode)
+        private static SurfaceFormat GetSurfaceFormat(IntPtr display, GraphicsMode mode)
         {
             // Use EGL 1.4 EGL_NATIVE_VISUAL_ID to retrieve
             // the corresponding surface format. If that fails
@@ -207,7 +204,9 @@ namespace OpenTK.Platform.Linux
             Egl.GetConfigAttrib(display, mode.Index.Value,
                 Egl.NATIVE_VISUAL_ID, out format);
             if ((SurfaceFormat)format != 0)
+            {
                 return (SurfaceFormat)format;
+            }
 
             Debug.Print("[KMS] Failed to retrieve EGL visual from GBM surface. Error: {0}",
                 Egl.GetError());
@@ -219,28 +218,46 @@ namespace OpenTK.Platform.Linux
             int a = mode.ColorFormat.Alpha;
 
             if (mode.ColorFormat.IsIndexed)
+            {
                 return SurfaceFormat.C8;
+            }
             if (r == 3 && g == 3 && b == 2 && a == 0)
+            {
                 return SurfaceFormat.RGB332;
+            }
             if (r == 5 && g == 6 && b == 5 && a == 0)
+            {
                 return SurfaceFormat.RGB565;
+            }
             if (r == 5 && g == 6 && b == 5 && a == 0)
+            {
                 return SurfaceFormat.RGB565;
+            }
             if (r == 8 && g == 8 && b == 8 && a == 0)
+            {
                 return SurfaceFormat.RGB888;
+            }
             if (r == 5 && g == 5 && b == 5 && a == 1)
+            {
                 return SurfaceFormat.RGBA5551;
+            }
             if (r == 10 && g == 10 && b == 10 && a == 2)
+            {
                 return SurfaceFormat.RGBA1010102;
+            }
             if (r == 4 && g == 4 && b == 4 && a == 4)
+            {
                 return SurfaceFormat.RGBA4444;
+            }
             if (r == 8 && g == 8 && b == 8 && a == 8)
+            {
                 return SurfaceFormat.RGBA8888;
+            }
 
             return SurfaceFormat.RGBA8888;
         }
 
-        KeyboardState ProcessKeyboard(KeyboardState keyboard)
+        private KeyboardState ProcessKeyboard(KeyboardState keyboard)
         {
             for (Key i = 0; i < Key.LastKey; i++)
             {
@@ -258,7 +275,7 @@ namespace OpenTK.Platform.Linux
             return keyboard;
         }
 
-        MouseState ProcessMouse(MouseState mouse)
+        private MouseState ProcessMouse(MouseState mouse)
         {
             // Handle mouse buttons
             for (MouseButton i = 0; i < MouseButton.LastButton; i++)
@@ -321,7 +338,7 @@ namespace OpenTK.Platform.Linux
             return mouse;
         }
 
-        void SetFocus(bool focus)
+        private void SetFocus(bool focus)
         {
             if (is_focused != focus)
             {
@@ -329,10 +346,6 @@ namespace OpenTK.Platform.Linux
                 OnFocusedChanged(EventArgs.Empty);
             }
         }
-
-        #endregion
-
-        #region INativeWindow Members
 
         public override void ProcessEvents()
         {
@@ -366,6 +379,7 @@ namespace OpenTK.Platform.Linux
             if (disposing)
             {
                 Debug.Print("[KMS] Destroying window {0}.", window.Handle);
+                Drm.SetCursor(window.FD, window.DisplayDevice.Id, 0, 0, 0, 0, 0);
                 window.Dispose();
                 Gbm.DestroySurface(window.Handle);
             }
@@ -529,8 +543,6 @@ namespace OpenTK.Platform.Linux
                 }
             }
         }
-
-        #endregion
     }
 }
 

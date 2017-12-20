@@ -1,4 +1,3 @@
- #region License
  //
  // The Open Toolkit Library License
  //
@@ -6,7 +5,7 @@
  //
  // Permission is hereby granted, free of charge, to any person obtaining a copy
  // of this software and associated documentation files (the "Software"), to deal
- // in the Software without restriction, including without limitation the rights to 
+ // in the Software without restriction, including without limitation the rights to
  // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
  // the Software, and to permit persons to whom the Software is furnished to do
  // so, subject to the following conditions:
@@ -23,11 +22,8 @@
  // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  // OTHER DEALINGS IN THE SOFTWARE.
  //
- #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OpenTK.Input
 {
@@ -36,17 +32,10 @@ namespace OpenTK.Input
     /// </summary>
     public struct MouseState : IEquatable<MouseState>
     {
-        #region Fields
-
         internal const int MaxButtons = 16; // we are storing in an ushort
-        Vector2 position;
-        MouseScroll scroll;
-        ushort buttons;
-        bool is_connected;
-
-        #endregion
-
-        #region Public Members
+        private Vector2 position;
+        private MouseScroll scroll;
+        private ushort buttons;
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the specified
@@ -60,9 +49,13 @@ namespace OpenTK.Input
             internal set
             {
                 if (value)
+                {
                     EnableBit((int)button);
+                }
                 else
+                {
                     DisableBit((int)button);
+                }
             }
         }
 
@@ -199,11 +192,7 @@ namespace OpenTK.Input
         /// Gets a value indicating whether this instance is connected.
         /// </summary>
         /// <value><c>true</c> if this instance is connected; otherwise, <c>false</c>.</value>
-        public bool IsConnected
-        {
-            get { return is_connected; }
-            internal set { is_connected = value; }
-        }
+        public bool IsConnected { get; internal set; }
 
         /// <summary>
         /// Checks whether two <see cref="MouseState" /> instances are equal.
@@ -282,10 +271,6 @@ namespace OpenTK.Input
                 X, Y, Scroll, b, IsConnected);
         }
 
-        #endregion
-
-        #region Internal Members
-
         internal Vector2 Position
         {
             get { return position; }
@@ -324,8 +309,6 @@ namespace OpenTK.Input
             IsConnected = value;
         }
 
-        #region Internal Members
-
         internal void SetScrollAbsolute(float x, float y)
         {
             scroll.X = x;
@@ -338,21 +321,13 @@ namespace OpenTK.Input
             scroll.Y += y;
         }
 
-        #endregion
-
-        #endregion
-
-        #region Private Members
-
-        static void ValidateOffset(int offset)
+        private static void ValidateOffset(int offset)
         {
             if (offset < 0 || offset >= 16)
+            {
                 throw new ArgumentOutOfRangeException("offset");
+            }
         }
-
-        #endregion
-
-        #region IEquatable<MouseState> Members
 
         /// <summary>
         /// Compares two MouseState instances.
@@ -367,7 +342,5 @@ namespace OpenTK.Input
                 Y == other.Y &&
                 Scroll == other.Scroll;
         }
-
-        #endregion
     }
 }

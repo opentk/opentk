@@ -1,19 +1,17 @@
-#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2011 Xamarin, Inc.
  * Copyright 2013 Xamarin Inc
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  */
-#endregion
 
 using System;
 
 namespace OpenTK.Platform.Android
 {
-    class AndroidDisplayDeviceDriver : IDisplayDeviceDriver
+    internal class AndroidDisplayDeviceDriver : IDisplayDeviceDriver
     {
-        static DisplayDevice dev;
+        private static DisplayDevice dev;
         static AndroidDisplayDeviceDriver ()
         {
             dev = new DisplayDevice ();

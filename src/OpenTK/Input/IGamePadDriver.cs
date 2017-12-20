@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OpenTK.Input
+﻿namespace OpenTK.Input
 {
-    interface IGamePadDriver
+    internal interface IGamePadDriver
     {
 
         GamePadState GetState(int index);

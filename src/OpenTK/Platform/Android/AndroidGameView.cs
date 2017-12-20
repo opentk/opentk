@@ -1,11 +1,9 @@
-#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2011 Xamarin Inc.
  * Copyright 2013 Xamarin Inc
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  */
-#endregion
 
 using System;
 using System.ComponentModel;
@@ -27,34 +25,35 @@ using Android.Views;
 using Android.Runtime;
 using Android.Graphics;
 using OpenTK.Platform.Egl;
+using SurfaceType = Android.Views.SurfaceType;
 
 namespace OpenTK.Platform.Android
 {
     [Register ("opentk_1_1/platform/android/AndroidGameView")]
     public partial class AndroidGameView : GameViewBase, ISurfaceHolderCallback
     {
-        bool disposed;
-        System.Timers.Timer timer;
-        Java.Util.Timer j_timer;
-        ISurfaceHolder mHolder;
-        GLCalls gl;
-        AndroidWindow windowInfo;
-        Object ticking = new Object ();
-        bool stopped = true;
-        bool renderOn = false;
-        bool sizeChanged = false;
-        bool requestRender = false;
-        bool autoSetContextOnRenderFrame = true;
-        bool renderOnUIThread = true;
-        bool callMakeCurrent = false;
-        CancellationTokenSource source;
-        Task renderTask;
-        Thread renderingThread;
-        ManualResetEvent pauseSignal;
-        global::Android.Graphics.Rect surfaceRect;
-        Size size;
-        System.Diagnostics.Stopwatch stopWatch;
-        double tick = 0;
+        private bool disposed;
+        private System.Timers.Timer timer;
+        private Java.Util.Timer j_timer;
+        private ISurfaceHolder mHolder;
+        private GLCalls gl;
+        private AndroidWindow windowInfo;
+        private Object ticking = new Object ();
+        private bool stopped = true;
+        private bool renderOn = false;
+        private bool sizeChanged = false;
+        private bool requestRender = false;
+        private bool autoSetContextOnRenderFrame = true;
+        private bool renderOnUIThread = true;
+        private bool callMakeCurrent = false;
+        private CancellationTokenSource source;
+        private Task renderTask;
+        private Thread renderingThread;
+        private ManualResetEvent pauseSignal;
+        private global::Android.Graphics.Rect surfaceRect;
+        private Size size;
+        private System.Diagnostics.Stopwatch stopWatch;
+        private double tick = 0;
 
         [Register (".ctor", "(Landroid/content/Context;)V", "")]
         public AndroidGameView (Context context) : base (context)
@@ -203,7 +202,7 @@ namespace OpenTK.Platform.Android
                 GraphicsContext.SwapBuffers ();
         }
 
-        double updates;
+        private double updates;
         public override void Run ()
         {
             EnsureUndisposed ();
@@ -249,19 +248,18 @@ namespace OpenTK.Platform.Android
             ResumeThread ();
         }
 
-#region Private
-        void LoadInternal (EventArgs e)
+        private void LoadInternal (EventArgs e)
         {
             OnLoad (e);
         }
 
-        void UnloadInternal (EventArgs e)
+        private void UnloadInternal (EventArgs e)
         {
             OnUnload (e);
             DestroyFrameBuffer ();
         }
 
-        void RenderFrameInternal (FrameEventArgs e)
+        private void RenderFrameInternal (FrameEventArgs e)
         {
 #if TIMING
             Mark ();
@@ -303,7 +301,7 @@ namespace OpenTK.Platform.Android
         }
 #endif
 
-        void UpdateFrameInternal (FrameEventArgs e)
+        private void UpdateFrameInternal (FrameEventArgs e)
         {
             if (!ReadyToRender)
                 return;
@@ -311,19 +309,19 @@ namespace OpenTK.Platform.Android
             OnUpdateFrame (e);
         }
 
-        void EnsureUndisposed ()
+        private void EnsureUndisposed ()
         {
             if (disposed)
                 throw new ObjectDisposedException ("");
         }
 
-        void AssertContext ()
+        private void AssertContext ()
         {
             if (GraphicsContext == null)
                 throw new InvalidOperationException ("Operation requires a GraphicsContext, which hasn't been created yet.");
         }
 
-        void CreateSurface()
+        private void CreateSurface()
         {
             if (GraphicsContext == null)
             {
@@ -339,13 +337,13 @@ namespace OpenTK.Platform.Android
             MakeCurrent();
         }
 
-        void DestroySurface()
+        private void DestroySurface()
         {
             log("DestroySurface");
             windowInfo.DestroySurface();
         }
 
-        void CreateContext ()
+        private void CreateContext ()
         {
             log ("CreateContext");
 
@@ -356,7 +354,7 @@ namespace OpenTK.Platform.Android
             GraphicsContext = new GraphicsContext(GraphicsMode, WindowInfo, (int)ContextRenderingApi, 0, GraphicsContextFlags.Embedded);
         }
 
-        void DestroyContext ()
+        private void DestroyContext ()
         {
             if (GraphicsContext != null) {
                 GraphicsContext.Dispose ();
@@ -364,11 +362,11 @@ namespace OpenTK.Platform.Android
             }
         }
 
-        int restartCounter = 0;
+        private int restartCounter = 0;
         public int RenderThreadRestartRetries { get; set; }
         public Exception RenderThreadException;
 
-        void StartThread ()
+        private void StartThread ()
         {
             log ("StartThread");
 
@@ -443,7 +441,7 @@ namespace OpenTK.Platform.Android
             });
         }
 
-        void StopThread ()
+        private void StopThread ()
         {
             log ("StopThread");
             restartCounter = 0;
@@ -460,7 +458,7 @@ namespace OpenTK.Platform.Android
             if (stopWatch != null) stopWatch.Stop ();
         }
 
-        void PauseThread ()
+        private void PauseThread ()
         {
             log ("PauseThread");
             restartCounter = 0;
@@ -471,7 +469,7 @@ namespace OpenTK.Platform.Android
             renderOn = false;
         }
 
-        void ResumeThread ()
+        private void ResumeThread ()
         {
             log ("ResumeThread");
             restartCounter = 0;
@@ -485,19 +483,19 @@ namespace OpenTK.Platform.Android
             }
         }
 
-        bool ReadyToRender {
+        private bool ReadyToRender {
             get { return windowInfo.HasSurface && renderOn && !stopped; }
         }
 
-        DateTime prevUpdateTime;
-        DateTime prevRenderTime;
-        DateTime curUpdateTime;
-        DateTime curRenderTime;
-        FrameEventArgs updateEventArgs = new FrameEventArgs();
-        FrameEventArgs renderEventArgs = new FrameEventArgs();
+        private DateTime prevUpdateTime;
+        private DateTime prevRenderTime;
+        private DateTime curUpdateTime;
+        private DateTime curRenderTime;
+        private FrameEventArgs updateEventArgs = new FrameEventArgs();
+        private FrameEventArgs renderEventArgs = new FrameEventArgs();
 
         // this method is called on the main thread if RenderOnUIThread is true
-        void RunIteration (CancellationToken token)
+        private void RunIteration (CancellationToken token)
         {
             if (token.IsCancellationRequested)
                 return;
@@ -540,9 +538,6 @@ namespace OpenTK.Platform.Android
             global::Android.Util.Log.Debug ("AndroidGameView", String.Format("width:{0} height:{1} size:{2} surfaceRect:{3}", Width, Height, size, surfaceRect));
         }
 #endif
-#endregion
-
-#region Properties
 
 
         public bool AutoSetContextOnRenderFrame {
@@ -563,7 +558,7 @@ namespace OpenTK.Platform.Android
             }
         }
 
-        GLCalls GLCalls {
+        private GLCalls GLCalls {
             get {
                 if (gl == null || gl.Version != ContextRenderingApi)
                     gl = GLCalls.GetGLCalls (ContextRenderingApi);
@@ -571,7 +566,7 @@ namespace OpenTK.Platform.Android
             }
         }
 
-        IGraphicsContext Context {
+        private IGraphicsContext Context {
             get { return GraphicsContext; }
         }
 
@@ -593,7 +588,7 @@ namespace OpenTK.Platform.Android
             }
         }
 
-        GLVersion api;
+        private GLVersion api;
         public GLVersion ContextRenderingApi
         {
             get {
@@ -669,6 +664,5 @@ namespace OpenTK.Platform.Android
                 }
             }
         }
-#endregion
     }
 }

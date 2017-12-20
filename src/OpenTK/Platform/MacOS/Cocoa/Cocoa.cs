@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // Cocoa.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System.Runtime.InteropServices;
 using System;
@@ -36,9 +34,9 @@ using System.Drawing.Imaging;
 
 namespace OpenTK.Platform.MacOS
 {
-    static class Cocoa
+    internal static class Cocoa
     {
-        static readonly IntPtr selUTF8String = Selector.Get("UTF8String");
+        private static readonly IntPtr selUTF8String = Selector.Get("UTF8String");
 
         internal const string LibObjC = "/usr/lib/libobjc.dylib";
 
@@ -136,15 +134,19 @@ namespace OpenTK.Platform.MacOS
         public extern static ushort SendUshort(IntPtr receiver, IntPtr selector);
 
         [DllImport(LibObjC, EntryPoint="objc_msgSend_fpret")]
-        extern static float SendFloat_i386(IntPtr receiver, IntPtr selector);
+        private extern static float SendFloat_i386(IntPtr receiver, IntPtr selector);
+
+        // On x64 using selector that return CGFloat give you 64 bit == double
+        [DllImport(LibObjC, EntryPoint="objc_msgSend")]
+        private extern static double SendFloat_x64(IntPtr receiver, IntPtr selector);
 
         [DllImport(LibObjC, EntryPoint="objc_msgSend")]
-        extern static float SendFloat_normal(IntPtr receiver, IntPtr selector);
+        private extern static float SendFloat_ios(IntPtr receiver, IntPtr selector);
 
         public static float SendFloat(IntPtr receiver, IntPtr selector)
         {
             #if IOS
-            return SendFloat_normal(receiver, selector);
+            return SendFloat_ios(receiver, selector);
             #else
             if (IntPtr.Size == 4)
             {
@@ -152,7 +154,7 @@ namespace OpenTK.Platform.MacOS
             }
             else
             {
-                return SendFloat_normal(receiver, selector);
+                return (float)SendFloat_x64(receiver, selector);
             }
             #endif
         }
@@ -160,13 +162,38 @@ namespace OpenTK.Platform.MacOS
         // Not the _stret version, perhaps because a NSPoint fits in one register?
         // thefiddler: gcc is indeed using objc_msgSend for NSPoint on i386
         [DllImport (LibObjC, EntryPoint="objc_msgSend")]
-        public extern static NSPoint SendPoint(IntPtr receiver, IntPtr selector);
+        public extern static NSPointF SendPointF(IntPtr receiver, IntPtr selector);
+        [DllImport (LibObjC, EntryPoint="objc_msgSend")]
+        public extern static NSPointD SendPointD(IntPtr receiver, IntPtr selector);
+
+        public static NSPoint SendPoint(IntPtr receiver, IntPtr selector)
+        {
+            NSPoint r = new NSPoint();
+
+            unsafe
+            {
+                if (IntPtr.Size == 4)
+                {
+                    NSPointF pf = SendPointF(receiver, selector);
+                    r.X.Value = *(IntPtr *)&pf.X;
+                    r.Y.Value = *(IntPtr *)&pf.Y;
+                }
+                else
+                {
+                    NSPointD pd = SendPointD(receiver, selector);
+                    r.X.Value = *(IntPtr *)&pd.X;
+                    r.Y.Value = *(IntPtr *)&pd.Y;
+                }
+            }
+
+            return r;
+        }
 
         [DllImport (LibObjC, EntryPoint="objc_msgSend_stret")]
-        extern static void SendRect(out NSRect retval, IntPtr receiver, IntPtr selector);
+        private extern static void SendRect(out NSRect retval, IntPtr receiver, IntPtr selector);
 
         [DllImport (LibObjC, EntryPoint="objc_msgSend_stret")]
-        extern static void SendRect(out NSRect retval, IntPtr receiver, IntPtr selector, NSRect rect1);
+        private extern static void SendRect(out NSRect retval, IntPtr receiver, IntPtr selector, NSRect rect1);
 
         public static NSRect SendRect(IntPtr receiver, IntPtr selector)
         {
@@ -185,9 +212,11 @@ namespace OpenTK.Platform.MacOS
         public static IntPtr ToNSString(string str)
         {
             if (str == null)
+            {
                 return IntPtr.Zero;
+            }
 
-            unsafe 
+            unsafe
             {
                 fixed (char* ptrFirstChar = str)
                 {
@@ -215,7 +244,7 @@ namespace OpenTK.Platform.MacOS
                     IntPtr nsData = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSData"), Selector.Alloc),
                         Selector.Get("initWithBytes:length:"), (IntPtr)pBytes, b.Length);
 
-                    IntPtr nsImage = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSImage"), Selector.Alloc), 
+                    IntPtr nsImage = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSImage"), Selector.Alloc),
                         Selector.Get("initWithData:"), nsData);
 
                     Cocoa.SendVoid(nsData, Selector.Release);
@@ -228,11 +257,15 @@ namespace OpenTK.Platform.MacOS
         {
             var indirect = NS.GetSymbol(handle, symbol);
             if (indirect == IntPtr.Zero)
+            {
                 return IntPtr.Zero;
+            }
 
             var actual = Marshal.ReadIntPtr(indirect);
             if (actual == IntPtr.Zero)
+            {
                 return IntPtr.Zero;
+            }
 
             return actual;
         }

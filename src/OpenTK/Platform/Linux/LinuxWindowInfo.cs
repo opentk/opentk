@@ -1,4 +1,3 @@
-#region License
 //
 // LinuxWindowInfo.cs
 //
@@ -25,15 +24,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Diagnostics;
 using OpenTK.Platform.Egl;
 
 namespace OpenTK.Platform.Linux
 {
-    class LinuxWindowInfo : EglWindowInfo
+    internal class LinuxWindowInfo : EglWindowInfo
     {
         public int FD { get; private set; }
         public LinuxDisplay DisplayDevice { get; private set; }
@@ -43,7 +40,9 @@ namespace OpenTK.Platform.Linux
             : base(IntPtr.Zero, display, IntPtr.Zero)
         {
             if (display_device == null)
+            {
                 throw new ArgumentNullException();
+            }
 
             FD = fd;
             BufferManager = gbm;

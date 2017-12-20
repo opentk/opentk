@@ -1,4 +1,3 @@
-#region License
  //
  // The Open Toolkit Library License
  //
@@ -6,7 +5,7 @@
  //
  // Permission is hereby granted, free of charge, to any person obtaining a copy
  // of this software and associated documentation files (the "Software"), to deal
- // in the Software without restriction, including without limitation the rights to 
+ // in the Software without restriction, including without limitation the rights to
  // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
  // the Software, and to permit persons to whom the Software is furnished to do
  // so, subject to the following conditions:
@@ -23,28 +22,19 @@
  // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  // OTHER DEALINGS IN THE SOFTWARE.
  //
- #endregion
- 
+
+#if MINIMAL
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OpenTK
 {
-    #if MINIMAL
     /// <summary>
     /// Represents a rectangular region on a two-dimensional plane.
     /// </summary>
     public struct Rectangle : IEquatable<Rectangle>
     {
-        #region Fields
-
         Point location;
         Size size;
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Constructs a new Rectangle instance.
@@ -57,7 +47,7 @@ namespace OpenTK
             Location = location;
             Size = size;
         }
-        
+
         /// <summary>
         /// Constructs a new Rectangle instance.
         /// </summary>
@@ -68,10 +58,6 @@ namespace OpenTK
         public Rectangle(int x, int y, int width, int height)
             : this(new Point(x, y), new Size(width, height))
         { }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Gets or sets the x coordinate of the Rectangle.
@@ -95,7 +81,7 @@ namespace OpenTK
         /// Gets or sets the width of the Rectangle.
         /// </summary>
         public int Width
-        { 
+        {
             get { return Size.Width; }
             set { Size = new Size (value, Height); }
         }
@@ -153,7 +139,7 @@ namespace OpenTK
         /// Gets a <see cref="System.Boolean"/> that indicates whether this
         /// Rectangle is equal to the empty Rectangle.
         /// </summary>
-        public bool IsEmpty 
+        public bool IsEmpty
         {
             get { return Location.IsEmpty && Size.IsEmpty; }
         }
@@ -191,7 +177,7 @@ namespace OpenTK
         /// are exclusive.</remarks>
         public bool Contains(int x, int y)
         {
-            return x >= Left && x < Right && 
+            return x >= Left && x < Right &&
                 y >= Top && y < Bottom;
         }
 
@@ -204,7 +190,7 @@ namespace OpenTK
         /// are exclusive.</remarks>
         public bool Contains(Point point)
         {
-            return point.X >= Left && point.X < Right && 
+            return point.X >= Left && point.X < Right &&
                 point.Y >= Top && point.Y < Bottom;
         }
 
@@ -250,11 +236,11 @@ namespace OpenTK
         public static Rectangle Union (Rectangle a, Rectangle b)
         {
             int x1 = Math.Min(a.X, b.X);
-            int x2 = Math.Max(a.X + a.Width, b.X + b.Width); 
+            int x2 = Math.Max(a.X + a.Width, b.X + b.Width);
             int y1 = Math.Min(a.Y, b.Y);
             int y2 = Math.Max(a.Y + a.Height, b.Y + b.Height);
 
-            return new Rectangle(x1, y1, x2 - x1, y2 - y1); 
+            return new Rectangle(x1, y1, x2 - x1, y2 - y1);
         }
 
         /// <summary>
@@ -289,10 +275,6 @@ namespace OpenTK
         }
 
 
-        #endregion
-
-        #region IEquatable<Rectangle> Members
-
         /// <summary>
         /// Indicates whether this instance is equal to the specified Rectangle.
         /// </summary>
@@ -303,8 +285,6 @@ namespace OpenTK
             return Location.Equals(other.Location) &&
                 Size.Equals(other.Size);
         }
-
-        #endregion
     }
-#endif
 }
+#endif

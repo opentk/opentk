@@ -1,4 +1,3 @@
-#region License
 //
 // GamePadConfigurationItem.cs
 //
@@ -25,34 +24,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
-
-using System;
 
 namespace OpenTK.Input
 {
-    struct GamePadConfigurationSource
+    internal struct GamePadConfigurationSource
     {
-        ConfigurationType map_type;
-        int? map_button;
-        JoystickAxis? map_axis;
-        JoystickHat? map_hat;
-        HatPosition? map_hat_position;
+        private int? map_button;
+        private int? map_axis;
+        private JoystickHat? map_hat;
+        private HatPosition? map_hat_position;
 
-        public GamePadConfigurationSource(JoystickAxis axis)
+        /// <summary>
+        /// Creates a new gamepad configuration source from an axis or a button
+        /// </summary>
+        /// <param name="isAxis">Whether this source is an axis or a button</param>
+        /// <param name="index">The index of this source</param>
+        public GamePadConfigurationSource(bool isAxis, int index)
             : this()
         {
-            Type = ConfigurationType.Axis;
-            Axis = axis;
+            if (isAxis)
+            {
+                Type = ConfigurationType.Axis;
+                Axis = index;
+            }
+            else
+            {
+                Type = ConfigurationType.Button;
+                Button = index;
+            }
         }
 
-        public GamePadConfigurationSource(int button)
-            : this()
-        {
-            Type = ConfigurationType.Button;
-            Button = button;
-        }
-
+        /// <summary>
+        /// Creates a new gamepad configuration source from a hat
+        /// </summary>
+        /// <param name="hat">The hat</param>
+        /// <param name="pos">The starting hat position</param>
         public GamePadConfigurationSource(JoystickHat hat, HatPosition pos)
             : this()
         {
@@ -61,30 +67,38 @@ namespace OpenTK.Input
             map_hat_position = pos;
         }
 
-        public ConfigurationType Type
-        {
-            get { return map_type; }
-            private set { map_type = value; }
-        }
+        public ConfigurationType Type { get; private set; }
 
-        public JoystickAxis Axis
+        /// <summary>
+        /// Represents a gamepad axis
+        /// </summary>
+        public int Axis
         {
             get { return map_axis.Value; }
             private set { map_axis = value; }
         }
 
+        /// <summary>
+        /// Represents a gamepad button
+        /// </summary>
         public int Button
         {
             get { return map_button.Value; }
             private set { map_button = value; }
         }
 
+        /// <summary>
+        /// Represents a gamepad hat
+        /// </summary>
         public JoystickHat Hat
         {
             get { return map_hat.Value; }
             private set { map_hat = value; }
         }
 
+        /// <summary>
+        /// Represents the position of a gamepad hat
+        /// </summary>
         public HatPosition HatPosition
         {
             get { return map_hat_position.Value; }

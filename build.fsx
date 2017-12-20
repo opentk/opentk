@@ -42,7 +42,7 @@ let tags = "OpenTK OpenGL OpenGLES GLES OpenAL C# F# VB .NET Mono Vector Math Ga
 
 let copyright = "Copyright (c) 2006 - 2016 Stefanos Apostolopoulos <stapostol@gmail.com> for the Open Toolkit library."
 
-// File system information 
+// File system information
 let solutionFile  = "OpenTK.sln"
 
 // Pattern specifying assemblies to be tested using NUnit
@@ -50,7 +50,7 @@ let testAssemblies = "tests/**/bin/Release/*Tests*.dll"
 
 // Git configuration (used for publishing documentation in gh-pages branch)
 // The profile where the project is posted
-let gitOwner = "opentk" 
+let gitOwner = "opentk"
 let gitHome = "https://github.com/" + gitOwner
 
 // The name of the project on GitHub
@@ -70,7 +70,7 @@ let isXamarinPlatform = false //EnvironmentHelper.isMacOS || Environment.OSVersi
 
 
 // Helper active pattern for project types
-let (|Fsproj|Csproj|Vbproj|) (projFileName:string) = 
+let (|Fsproj|Csproj|Vbproj|) (projFileName:string) =
     match projFileName with
     | f when f.EndsWith "fsproj" -> Fsproj
     | f when f.EndsWith "csproj" -> Csproj
@@ -78,8 +78,8 @@ let (|Fsproj|Csproj|Vbproj|) (projFileName:string) =
     | _                           -> failwith (sprintf "Project file %s not supported. Unknown project type." projFileName)
 
 
-let activeProjects = 
-    let xamarinFilter f = 
+let activeProjects =
+    let xamarinFilter f =
         if isXamarinPlatform then
             f
         else
@@ -88,13 +88,13 @@ let activeProjects =
             -- "**/OpenTK.iOS.csproj"
 
     !! "src/**/*.??proj"
-    -- "**/OpenTK.GLWidget.csproj"
+    ++ "tests/**/OpenTK.Tests*.fsproj"
     |> xamarinFilter
 
 // Generate assembly info files with the right version & up-to-date information
 Target "AssemblyInfo" (fun _ ->
     let getAssemblyInfoAttributes (projectName:string) =
-        let projectName = 
+        let projectName =
             if projectName.Contains(".iOS") || projectName.Contains(".Android") then
                 projectName.Split('.').[0]
             else
@@ -105,11 +105,12 @@ Target "AssemblyInfo" (fun _ ->
           Attribute.Version release.AssemblyVersion
           Attribute.FileVersion release.AssemblyVersion
           Attribute.CLSCompliant true
-          Attribute.Copyright copyright  ]
+          Attribute.Copyright copyright
+        ]
 
     let getProjectDetails projectPath =
         let projectName = System.IO.Path.GetFileNameWithoutExtension(projectPath)
-        ( projectPath, 
+        ( projectPath,
           projectName,
           System.IO.Path.GetDirectoryName(projectPath),
           (getAssemblyInfoAttributes projectName)
@@ -126,7 +127,7 @@ Target "AssemblyInfo" (fun _ ->
 )
 
 // Copies binaries from default VS location to expected bin folder
-// But keeps a subdirectory structure for each project in the 
+// But keeps a subdirectory structure for each project in the
 // src folder to support multiple project outputs
 Target "CopyBinaries" (fun _ ->
     activeProjects
@@ -146,7 +147,7 @@ Target "Clean" (fun _ ->
 
 Target "Build" (fun _ ->
     activeProjects
-    |> MSBuildRelease "" "Rebuild"
+    |> MSBuildRelease "" "Build"
     |> ignore
 )
 
@@ -174,10 +175,10 @@ Target "NuGet" (fun _ ->
               "OpenTK.iOS" ]
 
 
-    Paket.Pack(fun p -> 
+    Paket.Pack(fun p ->
         { p with
             OutputPath = "bin"
-            ExcludedTemplates = "OpenTK.GLWidget" :: xamExcludes
+            ExcludedTemplates = xamExcludes
             Version = release.NugetVersion
             ReleaseNotes = toLines release.Notes})
 )
@@ -194,10 +195,10 @@ Target "All" DoNothing
   ==> "AssemblyInfo"
   ==> "Build"
   ==> "CopyBinaries"
-//  ==> "RunTests"
+  ==> "RunTests"
   ==> "All"
 
-"All" 
+"All"
   ==> "NuGet"
 
 

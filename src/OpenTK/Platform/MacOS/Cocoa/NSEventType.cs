@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // NSEventType.cs
 //
 // Author:
@@ -25,11 +24,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 namespace OpenTK.Platform.MacOS
 {
-    enum NSEventType
+    internal enum NSEventType
     {
         LeftMouseDown = 1,
         LeftMouseUp = 2,

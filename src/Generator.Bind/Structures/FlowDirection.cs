@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,18 +22,28 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 namespace Bind.Structures
 {
+    /// <summary>
+    /// Enumarates the possible flows of a parameter (ie. is this parameter
+    /// used as input or as output?)
+    /// </summary>
+    public enum FlowDirection
+    {
         /// <summary>
-        /// Enumarates the possible flows of a parameter (ie. is this parameter
-        /// used as input or as output?)
+        /// No defined flow.
         /// </summary>
-        public enum FlowDirection
-        {
-            Undefined = 0,
-            In,
-            Out
-        }
+        Undefined = 0,
+
+        /// <summary>
+        /// Input parameter.
+        /// </summary>
+        In,
+
+        /// <summary>
+        /// Output parameter, typically decorated with the out keyword.
+        /// </summary>
+        Out
+    }
 }

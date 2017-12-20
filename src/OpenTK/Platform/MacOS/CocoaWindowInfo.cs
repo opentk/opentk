@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // CocoaWindowInfo.cs
 //
 // Author:
@@ -25,12 +24,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace OpenTK.Platform.MacOS
 {
@@ -38,16 +34,11 @@ namespace OpenTK.Platform.MacOS
     /// <summary>
     /// Describes a Cocoa window.
     /// </summary>
-    sealed class CocoaWindowInfo : IWindowInfo
+    internal sealed class CocoaWindowInfo : IWindowInfo
     {
-        static readonly IntPtr selContentView = Selector.Get("contentView");
+        private static readonly IntPtr selContentView = Selector.Get("contentView");
 
-        IntPtr nsWindowRef;
-        IntPtr nsViewRef;
-
-        bool disposed = false;
-
-        #region Constructors
+        private bool disposed = false;
 
         /// <summary>
         /// Constructs a new instance with the specified parameters.
@@ -66,53 +57,47 @@ namespace OpenTK.Platform.MacOS
         /// <param name="nsViewRef">A valid NSView reference.</param>
         public CocoaWindowInfo(IntPtr nsWindowRef, IntPtr nsViewRef)
         {
-            this.nsWindowRef = nsWindowRef;
-            this.nsViewRef = nsViewRef;
+            this.Handle = nsWindowRef;
+            this.ViewHandle = nsViewRef;
             Cocoa.SendVoid(nsWindowRef, Selector.Retain);
         }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Gets the window reference for this instance.
         /// </summary>
-        public IntPtr Handle { get { return nsWindowRef; } }
+        public IntPtr Handle { get; }
 
         /// <summary>
         /// Gets the view reference for this instance.
         /// </summary>
-        public IntPtr ViewHandle { get { return nsViewRef; } }
+        public IntPtr ViewHandle { get; }
 
         /// <summary>Returns a System.String that represents the current window.</summary>
         /// <returns>A System.String that represents the current window.</returns>
         public override string ToString()
         {
-            return String.Format("MacOS.CocoaWindowInfo: NSWindow {0}, NSView {1}", nsWindowRef, nsViewRef);
+            return String.Format("MacOS.CocoaWindowInfo: NSWindow {0}, NSView {1}", Handle, ViewHandle);
         }
-
-        #endregion
-
-        #region IDisposable Members
 
         public void Dispose()
         {
             Dispose(true);
         }
 
-        void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (disposed)
+            {
                 return;
+            }
 
             if (disposing)
             {
-                Cocoa.SendVoid(nsWindowRef, Selector.Release);
+                Cocoa.SendVoid(Handle, Selector.Release);
             }
             else
             {
-                Debug.Print("CocoaWindowInfo:{0} leaked, did you forget to call Dispose()?", nsWindowRef);
+                Debug.Print("CocoaWindowInfo:{0} leaked, did you forget to call Dispose()?", Handle);
             }
 
             disposed = true;
@@ -124,7 +109,5 @@ namespace OpenTK.Platform.MacOS
             Dispose(false);
         }
         #endif
-
-        #endregion
     }
 }

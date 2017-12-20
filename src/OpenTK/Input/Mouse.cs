@@ -1,4 +1,3 @@
- #region License
  //
  // The Open Toolkit Library License
  //
@@ -6,7 +5,7 @@
  //
  // Permission is hereby granted, free of charge, to any person obtaining a copy
  // of this software and associated documentation files (the "Software"), to deal
- // in the Software without restriction, including without limitation the rights to 
+ // in the Software without restriction, including without limitation the rights to
  // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
  // the Software, and to permit persons to whom the Software is furnished to do
  // so, subject to the following conditions:
@@ -23,11 +22,8 @@
  // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  // OTHER DEALINGS IN THE SOFTWARE.
  //
- #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OpenTK.Input
 {
@@ -36,15 +32,10 @@ namespace OpenTK.Input
     /// </summary>
     public static class Mouse
     {
-        #region Fields
-
-        static readonly IMouseDriver2 driver =
+        private static readonly IMouseDriver2 driver =
             Platform.Factory.Default.CreateMouseDriver();
-        static readonly object SyncRoot = new object();
 
-        #endregion
-
-        #region Public Members
+        private static readonly object SyncRoot = new object();
 
         /// <summary>
         /// Retrieves the combined <see cref="OpenTK.Input.MouseState"/> for all specified mouse devices.
@@ -78,7 +69,9 @@ namespace OpenTK.Input
         public static MouseState GetState(int index)
         {
             if (index < 0)
+            {
                 throw new ArgumentOutOfRangeException("index");
+            }
 
             lock (SyncRoot)
             {
@@ -119,7 +112,5 @@ namespace OpenTK.Input
                 driver.SetPosition(x, y);
             }
         }
-
-        #endregion
     }
 }

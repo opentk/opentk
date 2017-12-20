@@ -8,10 +8,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -29,13 +29,12 @@ using System.Xml.Linq;
 namespace OpenTK.Convert
 {
     // The base class for a parser.
-    abstract class Parser
+    internal abstract class XmlParser
     {
         // Defines a prefix that should be removed from methods and tokens in the XML files, e.g. "gl", "cl", etc.
         public string Prefix { get; set; }
-        
-        // Defines the version of the spec files (optional).
-        public string Version { get; set; }
+        public string EnumPrefix { get { return Prefix.ToUpper() + "_"; } }
+        public string FuncPrefix { get { return Prefix; } }
 
         // Implements the parsing logic for a specific input file.
         public abstract IEnumerable<XElement> Parse(string[] lines);
@@ -81,6 +80,22 @@ namespace OpenTK.Convert
             }
 
             return Parse(contents);
+        }
+
+        public string TrimName(string name)
+        {
+            if (name.StartsWith(EnumPrefix))
+            {
+                return name.Remove(0, EnumPrefix.Length);
+            }
+            else if (name.StartsWith(FuncPrefix))
+            {
+                return name.Remove(0, FuncPrefix.Length);
+            }
+            else
+            {
+                return name;
+            }
         }
     }
 }

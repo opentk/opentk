@@ -1,16 +1,12 @@
-#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
- * 
+ *
  * Contributions by Georg W�chter.
  */
-#endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OpenTK
 {
@@ -20,8 +16,6 @@ namespace OpenTK
     [Serializable]
     public struct BezierCurveQuadric
     {
-        #region Fields
-
         /// <summary>
         /// Start anchor point.
         /// </summary>
@@ -45,10 +39,6 @@ namespace OpenTK
         /// the original curve, 5.0f i.e. stands for a curve that has always a distance
         /// of 5.f to the orignal curve at any point.</remarks>
         public float Parallel;
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Constructs a new <see cref="BezierCurveQuadric"/>.
@@ -79,10 +69,6 @@ namespace OpenTK
             this.ControlPoint = controlPoint;
         }
 
-        #endregion
-
-        #region Functions
-
         /// <summary>
         /// Calculates the point with the specified t.
         /// </summary>
@@ -97,14 +83,20 @@ namespace OpenTK
             r.Y = (c * c * StartAnchor.Y) + (2 * t * c * ControlPoint.Y) + (t * t * EndAnchor.Y);
 
             if (Parallel == 0.0f)
+            {
                 return r;
+            }
 
             Vector2 perpendicular = new Vector2();
 
             if (t == 0.0f)
+            {
                 perpendicular = ControlPoint - StartAnchor;
+            }
             else
+            {
                 perpendicular = r - CalculatePointOfDerivative(t);
+            }
 
             return r + Vector2.Normalize(perpendicular).PerpendicularRight * Parallel;
         }
@@ -145,7 +137,5 @@ namespace OpenTK
 
             return length;
         }
-
-        #endregion
     }
 }

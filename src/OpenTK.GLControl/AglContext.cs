@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,14 +22,12 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 // Created by Erik Ylvisaker on 3/17/08.
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.MacOS
 {
@@ -45,17 +42,13 @@ namespace OpenTK.Platform.MacOS
     /// <summary>
     /// AGL context implementation for WinForms compatibility.
     /// </summary>
-    class AglContext : IGraphicsContext, IGraphicsContextInternal
+    internal class AglContext : IGraphicsContext, IGraphicsContextInternal
     {
-        ContextHandle Handle;
-        GraphicsMode mode;
-        IWindowInfo carbonWindow;
-        IGraphicsContext dummyContext; // for extension loading
-        bool disposed;
-        bool error_checking;
+        private IWindowInfo carbonWindow;
+        private IGraphicsContext dummyContext; // for extension loading
 
-        readonly GetInt XOffset;
-        readonly GetInt YOffset;
+        private readonly GetInt XOffset;
+        private readonly GetInt YOffset;
 
         public AglContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext,
             GetInt xoffset, GetInt yoffset)
@@ -71,7 +64,7 @@ namespace OpenTK.Platform.MacOS
 
             if (shareContext is AglContext)
             {
-                shareContextRef = ((AglContext)shareContext).Handle.Handle;
+                shareContextRef = ((AglContext)shareContext).Context.Handle;
             }
             else if (shareContext is GraphicsContext)
             {
@@ -102,7 +95,7 @@ namespace OpenTK.Platform.MacOS
             aglAttributes.Add(value);
         }
 
-        void CreateContext(GraphicsMode mode, IWindowInfo carbonWindow, IntPtr shareContextRef, bool fullscreen)
+        private void CreateContext(GraphicsMode mode, IWindowInfo carbonWindow, IntPtr shareContextRef, bool fullscreen)
         {
             Debug.Print("AGL pixel format attributes:");
 
@@ -118,7 +111,7 @@ namespace OpenTK.Platform.MacOS
 
             Debug.Print("Creating AGL context.  Sharing with {0}", shareContextRef);
             // create the context and share it with the share reference.
-            Handle = new ContextHandle(Agl.aglCreateContext(pixelformat, shareContextRef));
+            Context = new ContextHandle(Agl.aglCreateContext(pixelformat, shareContextRef));
             MyAGLReportError("aglCreateContext");
 
             // Free the pixel format from memory.
@@ -130,9 +123,9 @@ namespace OpenTK.Platform.MacOS
             Update(carbonWindow);
 
             MakeCurrent(carbonWindow);
-            Debug.Print("context: {0}", Handle.Handle);
+            Debug.Print("context: {0}", Context.Handle);
 
-            dummyContext = new GraphicsContext(Handle,
+            dummyContext = new GraphicsContext(Context,
                 GetAddress,
                 delegate()
                 {
@@ -140,7 +133,7 @@ namespace OpenTK.Platform.MacOS
                 });
         }
 
-        void SetBufferRect(IWindowInfo carbonWindow)
+        private void SetBufferRect(IWindowInfo carbonWindow)
         {
             Rect rect = API.GetControlBounds(carbonWindow.Handle);
 
@@ -149,28 +142,36 @@ namespace OpenTK.Platform.MacOS
             int[] glrect = new int[4];
 
             if (XOffset != null)
+            {
                 glrect[0] = rect.X + XOffset();
+            }
             else
+            {
                 glrect[0] = rect.X;
+            }
             if (YOffset != null)
+            {
                 glrect[1] = rect.Y + YOffset();
+            }
             else
+            {
                 glrect[1] = rect.Y;
+            }
             glrect[2] = rect.Width;
             glrect[3] = rect.Height;
 
-            Agl.aglSetInteger(Handle.Handle, Agl.ParameterNames.AGL_BUFFER_RECT, glrect);
+            Agl.aglSetInteger(Context.Handle, Agl.ParameterNames.AGL_BUFFER_RECT, glrect);
             MyAGLReportError("aglSetInteger");
 
-            Agl.aglEnable(Handle.Handle, Agl.ParameterNames.AGL_BUFFER_RECT);
+            Agl.aglEnable(Context.Handle, Agl.ParameterNames.AGL_BUFFER_RECT);
             MyAGLReportError("aglEnable");
         }
 
-        void SetDrawable(IWindowInfo carbonWindow)
+        private void SetDrawable(IWindowInfo carbonWindow)
         {
             IntPtr windowPort = GetWindowPortForWindowInfo(carbonWindow);
             //Debug.Print("Setting drawable for context {0} to window port: {1}", Handle.Handle, windowPort);
-            Agl.aglSetDrawable(Handle.Handle, windowPort);
+            Agl.aglSetDrawable(Context.Handle, windowPort);
             MyAGLReportError("aglSetDrawable");
         }
 
@@ -188,22 +189,22 @@ namespace OpenTK.Platform.MacOS
             SetDrawable(window);
             SetBufferRect(window);
 
-            Agl.aglUpdateContext(Handle.Handle);
+            Agl.aglUpdateContext(Context.Handle);
         }
 
-        void MyAGLReportError(string function)
+        private void MyAGLReportError(string function)
         {
             Agl.AglError err = Agl.GetError();
 
             if (err != Agl.AglError.NoError)
+            {
                 throw new Exception(String.Format(
                     "AGL Error from function {0}: {1}  {2}",
                     function, err, Agl.ErrorString(err)));
+            }
         }
 
-        #region IGraphicsContext Members
-
-        bool firstSwap = true;
+        private bool firstSwap = true;
         public void SwapBuffers()
         {
             // this is part of the hack to avoid dropping the first frame when
@@ -216,19 +217,21 @@ namespace OpenTK.Platform.MacOS
                 Update(carbonWindow);
             }
 
-            Agl.aglSwapBuffers(Handle.Handle);
+            Agl.aglSwapBuffers(Context.Handle);
             MyAGLReportError("aglSwapBuffers");
         }
 
         public void MakeCurrent(IWindowInfo window)
         {
-            if (Agl.aglSetCurrentContext(Handle.Handle) == false)
+            if (Agl.aglSetCurrentContext(Context.Handle) == false)
+            {
                 MyAGLReportError("aglSetCurrentContext");
+            }
         }
 
         public bool IsCurrent
         {
-            get { return (Handle.Handle == Agl.aglGetCurrentContext()); }
+            get { return (Context.Handle == Agl.aglGetCurrentContext()); }
         }
 
         public int SwapInterval
@@ -236,7 +239,7 @@ namespace OpenTK.Platform.MacOS
             get
             {
                 int swap_interval = 0;
-                if (Agl.aglGetInteger(Handle.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, out swap_interval))
+                if (Agl.aglGetInteger(Context.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, out swap_interval))
                 {
                     return swap_interval;
                 }
@@ -248,36 +251,21 @@ namespace OpenTK.Platform.MacOS
             }
             set
             {
-                if (!Agl.aglSetInteger(Handle.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, ref value))
+                if (!Agl.aglSetInteger(Context.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, ref value))
+                {
                     MyAGLReportError("aglSetInteger");
+                }
             }
         }
 
-        public GraphicsMode Mode
-        {
-            get
-            {
-                return mode;
-            }
-            set
-            {
-                mode = value;
-            }
-
-        }
+        public GraphicsMode Mode { get; set; }
 
         public void LoadAll()
         {
             dummyContext.LoadAll();
         }
 
-        public bool IsDisposed
-        {
-            get
-            {
-                return disposed;
-            }
-        }
+        public bool IsDisposed { get; private set; }
 
         public bool VSync
         {
@@ -295,25 +283,11 @@ namespace OpenTK.Platform.MacOS
         {
             get
             {
-                return mode;
+                return Mode;
             }
         }
 
-        public bool ErrorChecking
-        {
-            get
-            {
-                return error_checking;
-            }
-            set
-            {
-                error_checking = value;
-            }
-        }
-
-        #endregion
-
-        #region IDisposable Members
+        public bool ErrorChecking { get; set; }
 
         ~AglContext()
         {
@@ -325,10 +299,12 @@ namespace OpenTK.Platform.MacOS
             Dispose(true);
         }
 
-        void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
-            if (IsDisposed || Handle.Handle == IntPtr.Zero)
+            if (IsDisposed || Context.Handle == IntPtr.Zero)
+            {
                 return;
+            }
 
             Debug.Print("Disposing of AGL context.");
             Agl.aglSetCurrentContext(IntPtr.Zero);
@@ -343,10 +319,10 @@ namespace OpenTK.Platform.MacOS
             // Actually, it seems to crash the mono runtime. -AMK 2013
 
             Debug.Print("Destroying context");
-            if (Agl.aglDestroyContext(Handle.Handle) == true)
+            if (Agl.aglDestroyContext(Context.Handle) == true)
             {
                 Debug.Print("Context destruction completed successfully.");
-                Handle = ContextHandle.Zero;
+                Context = ContextHandle.Zero;
                 return;
             }
 
@@ -360,12 +336,8 @@ namespace OpenTK.Platform.MacOS
                 throw new Exception(Agl.ErrorString(Agl.GetError()));
             }
 
-            disposed = true;
+            IsDisposed = true;
         }
-
-        #endregion
-
-        #region IGraphicsContextInternal Members
 
         public IntPtr GetAddress(string function)
         {
@@ -385,14 +357,6 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public ContextHandle Context
-        {
-            get
-            {
-                return Handle;
-            }
-        }
-
-        #endregion
+        public ContextHandle Context { get; private set; }
     }
 }

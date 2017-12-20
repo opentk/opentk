@@ -1,14 +1,10 @@
-﻿#region --- License ---
-/* Licensed under the MIT/X11 license.
+﻿/* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  */
-#endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
@@ -17,26 +13,24 @@ using OpenTK.Platform;
 
 namespace OpenTK
 {
-    class X11GLControl : IGLControl
+    internal class X11GLControl : IGLControl
     {
-        #region P/Invokes
-
         [DllImport("libX11")]
-        static extern IntPtr XCreateColormap(IntPtr display, IntPtr window, IntPtr visual, int alloc);
+        private static extern IntPtr XCreateColormap(IntPtr display, IntPtr window, IntPtr visual, int alloc);
 
         [DllImport("libX11", EntryPoint = "XGetVisualInfo")]
-        static extern IntPtr XGetVisualInfoInternal(IntPtr display, IntPtr vinfo_mask, ref XVisualInfo template, out int nitems);
+        private static extern IntPtr XGetVisualInfoInternal(IntPtr display, IntPtr vinfo_mask, ref XVisualInfo template, out int nitems);
 
-        static IntPtr XGetVisualInfo(IntPtr display, int vinfo_mask, ref XVisualInfo template, out int nitems)
+        private static IntPtr XGetVisualInfo(IntPtr display, int vinfo_mask, ref XVisualInfo template, out int nitems)
         {
             return XGetVisualInfoInternal(display, (IntPtr)vinfo_mask, ref template, out nitems);
         }
 
         [DllImport("libX11")]
-        extern static int XPending(IntPtr diplay);
+        private extern static int XPending(IntPtr diplay);
 
         [StructLayout(LayoutKind.Sequential)]
-        struct XVisualInfo
+        private struct XVisualInfo
         {
             public IntPtr Visual;
             public IntPtr VisualID;
@@ -56,26 +50,23 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region Fields
-
-        GraphicsMode mode;
-        IWindowInfo window_info;
-        IntPtr display;
-        IntPtr rootWindow;
+        private GraphicsMode mode;
+        private IntPtr display;
+        private IntPtr rootWindow;
 
         // Use reflection to retrieve the necessary values from Mono's Windows.Forms implementation.
-        Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
-
-        #endregion
+        private Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
 
         internal X11GLControl(GraphicsMode mode, Control control)
         {
             if (mode == null)
+            {
                 throw new ArgumentNullException("mode");
+            }
             if (control == null)
+            {
                 throw new ArgumentNullException("control");
+            }
 
             // Note: the X11 window is created with a default XVisualInfo,
             // that is not necessarily compatible with the desired GraphicsMode.
@@ -94,18 +85,19 @@ namespace OpenTK
                 mode.Buffers,
                 mode.Stereo);
 
-            if (xplatui == null) throw new PlatformNotSupportedException(
+            if (xplatui == null)
+            {
+                throw new PlatformNotSupportedException(
                     "System.Windows.Forms.XplatUIX11 missing. Unsupported platform or Mono runtime version, aborting.");
+            }
 
             // get the required handles from the X11 API.
             display = (IntPtr)GetStaticFieldValue(xplatui, "DisplayHandle");
             rootWindow = (IntPtr)GetStaticFieldValue(xplatui, "RootWindow");
             int screen = (int)GetStaticFieldValue(xplatui, "ScreenNo");
 
-            window_info = Utilities.CreateX11WindowInfo(display, screen, control.Handle, rootWindow, IntPtr.Zero);
+            WindowInfo = Utilities.CreateX11WindowInfo(display, screen, control.Handle, rootWindow, IntPtr.Zero);
         }
-
-        #region IGLControl Members
 
         public IGraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
         {
@@ -133,30 +125,18 @@ namespace OpenTK
             get { return XPending(display) == 0; }
         }
 
-        public IWindowInfo WindowInfo
-        {
-            get
-            {
-                return window_info;
-            }
-        }
+        public IWindowInfo WindowInfo { get; }
 
-        #endregion
-
-        #region Private Members
-
-        static object GetStaticFieldValue(Type type, string fieldName)
+        private static object GetStaticFieldValue(Type type, string fieldName)
         {
             return type.GetField(fieldName,
                 System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
         }
-        
-        static void SetStaticFieldValue(Type type, string fieldName, object value)
+
+        private static void SetStaticFieldValue(Type type, string fieldName, object value)
         {
             type.GetField(fieldName,
                 System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).SetValue(null, value);
         }
-
-        #endregion
     }
 }

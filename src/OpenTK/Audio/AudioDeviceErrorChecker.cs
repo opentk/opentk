@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,38 +22,26 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-
 using OpenTK.Audio.OpenAL;
 
 namespace OpenTK.Audio
 {
-    struct AudioDeviceErrorChecker : IDisposable
+    internal struct AudioDeviceErrorChecker : IDisposable
     {
-        #region Fields
-
-        readonly IntPtr Device;
-        static readonly string ErrorString = "Device {0} reported {1}.";
-
-        #endregion
-
-        #region Constructors
+        private readonly IntPtr Device;
+        private static readonly string ErrorString = "Device {0} reported {1}.";
 
         public AudioDeviceErrorChecker(IntPtr device)
         {
             if (device == IntPtr.Zero)
+            {
                 throw new AudioDeviceException();
+            }
 
             Device = device;
         }
-
-        #endregion
-
-        #region IDisposable Members
 
         public void Dispose()
         {
@@ -63,23 +50,21 @@ namespace OpenTK.Audio
             {
                 case AlcError.OutOfMemory:
                     throw new OutOfMemoryException(String.Format(ErrorString, Device, err));
-                
+
                 case AlcError.InvalidValue:
                     throw new AudioValueException(String.Format(ErrorString, Device, err));
-                
+
                 case AlcError.InvalidDevice:
                     throw new AudioDeviceException(String.Format(ErrorString, Device, err));
-                
+
                 case AlcError.InvalidContext:
                     throw new AudioContextException(String.Format(ErrorString, Device, err));
-                
+
                 case AlcError.NoError:
                 default:
                     // everything went fine, do nothing
                     break;
             }
         }
-
-        #endregion
     }
 }

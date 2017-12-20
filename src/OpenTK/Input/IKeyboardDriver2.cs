@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OpenTK.Input
+﻿namespace OpenTK.Input
 {
-    interface IKeyboardDriver2
+    internal interface IKeyboardDriver2
     {
         /// <summary>
         /// Retrieves the combined <see cref="OpenTK.Input.KeyboardState"/> for all keyboard devices.

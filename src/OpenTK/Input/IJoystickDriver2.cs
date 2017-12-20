@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // IJoystickDriver2.cs
 //
 // Author:
@@ -25,15 +24,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OpenTK.Input
 {
-    interface IJoystickDriver2
+    internal interface IJoystickDriver2
     {
         JoystickState GetState(int index);
         JoystickCapabilities GetCapabilities(int index);

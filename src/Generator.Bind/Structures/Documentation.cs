@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // Documentation.cs
 //
 // Author:
@@ -25,20 +24,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
-using System;
 using System.Collections.Generic;
 
 namespace Bind.Structures
 {
-    class Documentation
+    internal class Documentation
     {
         public string Summary { get; set; }
         public List<DocumentationParameter> Parameters { get; set; }
     }
 
-    class DocumentationParameter
+    internal class DocumentationParameter
     {
         public string Name { get; set; }
         public string Documentation { get; set; }

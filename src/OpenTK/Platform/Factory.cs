@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,28 +22,18 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace OpenTK.Platform
 {
     using Graphics;
     using Input;
 
-    sealed class Factory : IPlatformFactory
+    internal sealed class Factory : IPlatformFactory
     {
-        #region Fields
-
-        bool disposed;
-        static IPlatformFactory default_implementation, embedded_implementation;
-
-        #endregion
-
-        #region Constructors
+        private bool disposed;
 
         static Factory()
         {
@@ -57,21 +46,38 @@ namespace OpenTK.Platform
             Toolkit.Init();
 
             // Create regular platform backend
-            #if SDL2
-            if (Configuration.RunningOnSdl2) Default = new SDL2.Sdl2Factory();
-            #endif
-            #if WIN32
-            else if (Configuration.RunningOnWindows) Default = new Windows.WinFactory();
-            #endif
-            #if CARBON
-            else if (Configuration.RunningOnMacOS) Default = new MacOS.MacOSFactory();
-            #endif
-            #if X11
-            else if (Configuration.RunningOnX11) Default = new X11.X11Factory();
-            else if (Configuration.RunningOnLinux) Default = new Linux.LinuxFactory();
-            #endif
+#if SDL2
+            if (Configuration.RunningOnSdl2)
+            {
+                Default = new SDL2.Sdl2Factory();
+            }
+#endif
+#if WIN32
+            else if (Configuration.RunningOnWindows)
+            {
+                Default = new Windows.WinFactory();
+            }
+#endif
+#if CARBON
+            else if (Configuration.RunningOnMacOS)
+            {
+                Default = new MacOS.MacOSFactory();
+            }
+#endif
+#if X11
+            else if (Configuration.RunningOnX11)
+            {
+                Default = new X11.X11Factory();
+            }
+            else if (Configuration.RunningOnLinux)
+            {
+                Default = new Linux.LinuxFactory();
+            }
+#endif
             if (Default == null)
+            {
                 Default = new UnsupportedPlatform();
+            }
 
             // Create embedded platform backend for EGL / OpenGL ES.
             // Todo: we could probably delay this until the embedded
@@ -83,124 +89,123 @@ namespace OpenTK.Platform
                 // using the same API.
                 Embedded = Default;
             }
-            #if IPHONE
-            else if (Configuration.RunningOnIOS) Embedded = new iPhoneOS.iPhoneFactory();
-            #else
+#if IPHONE
+            else if (Configuration.RunningOnIOS)
+            {
+                Embedded = new iPhoneOS.iPhoneFactory();
+            }
+#else
             else if (Egl.Egl.IsSupported)
             {
-                if (Configuration.RunningOnLinux) Embedded = Default;
-                #if X11
-                else if (Configuration.RunningOnX11) Embedded = new Egl.EglX11PlatformFactory();
-                #endif
-                #if WIN32
-                else if (Configuration.RunningOnWindows) Embedded = new Egl.EglWinPlatformFactory();
-                #endif
-                #if CARBON
-                else if (Configuration.RunningOnMacOS) Embedded = new Egl.EglMacPlatformFactory();
-                #endif
-                #if ANDROID
+                if (Configuration.RunningOnLinux)
+                {
+                    Embedded = Default;
+                }
+#if X11
+                else if (Configuration.RunningOnX11)
+                {
+                    Embedded = new Egl.EglX11PlatformFactory();
+                }
+#endif
+#if WIN32
+                else if (Configuration.RunningOnWindows)
+                {
+                    Embedded = new Egl.EglWinPlatformFactory();
+                }
+#endif
+#if CARBON
+                else if (Configuration.RunningOnMacOS)
+                {
+                    Embedded = new Egl.EglMacPlatformFactory();
+                }
+#endif
+#if ANDROID
                 else if (Configuration.RunningOnAndroid) Embedded = new Android.AndroidFactory();
-                #endif
-                else Embedded = new UnsupportedPlatform();
+#endif
+                else
+                {
+                    Embedded = new UnsupportedPlatform();
+                }
+
+#if ANDROID
+                Angle = new UnsupportedPlatform();
+#else
+                Angle = new Egl.EglAnglePlatformFactory(Embedded);
+#endif
             }
-            #endif
+#endif
             else
             {
                 Embedded = new UnsupportedPlatform();
+                Angle = Embedded;
             }
 
             if (Default is UnsupportedPlatform && !(Embedded is UnsupportedPlatform))
+            {
                 Default = Embedded;
+            }
         }
 
-        #endregion
+        public static IPlatformFactory Default { get; private set; }
 
-        #region Public Members
+        public static IPlatformFactory Embedded { get; private set; }
 
-        public static IPlatformFactory Default
-        {
-            get { return default_implementation; }
-            private set { default_implementation = value; }
-        }
-
-        public static IPlatformFactory Embedded
-        {
-            get { return embedded_implementation; }
-            private set { embedded_implementation = value; }
-        }
-
-        #endregion
-
-        #region IPlatformFactory Members
+        public static IPlatformFactory Angle { get; private set; }
 
         public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title,
             GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
-            return default_implementation.CreateNativeWindow(x, y, width, height, title, mode, options, device);
+            return Default.CreateNativeWindow(x, y, width, height, title, mode, options, device);
         }
 
         public IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
-            return default_implementation.CreateDisplayDeviceDriver();
+            return Default.CreateDisplayDeviceDriver();
         }
 
         public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            return default_implementation.CreateGLContext(mode, window, shareContext, directRendering, major, minor, flags);
+            return Default.CreateGLContext(mode, window, shareContext, directRendering, major, minor, flags);
         }
 
         public IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            return default_implementation.CreateGLContext(handle, window, shareContext, directRendering, major, minor, flags);
+            return Default.CreateGLContext(handle, window, shareContext, directRendering, major, minor, flags);
         }
 
         public GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
-            return default_implementation.CreateGetCurrentGraphicsContext();
+            return Default.CreateGetCurrentGraphicsContext();
         }
 
         public IKeyboardDriver2 CreateKeyboardDriver()
         {
-            return default_implementation.CreateKeyboardDriver();
+            return Default.CreateKeyboardDriver();
         }
 
         public IMouseDriver2 CreateMouseDriver()
         {
-            return default_implementation.CreateMouseDriver();
+            return Default.CreateMouseDriver();
         }
 
         public IGamePadDriver CreateGamePadDriver()
         {
-            return default_implementation.CreateGamePadDriver();
+            return Default.CreateGamePadDriver();
         }
 
         public IJoystickDriver2 CreateJoystickDriver()
         {
-            return default_implementation.CreateJoystickDriver();
-        }
-
-        [Obsolete]
-        public IJoystickDriver CreateLegacyJoystickDriver()
-        {
-            #pragma warning disable 612,618
-            return default_implementation.CreateLegacyJoystickDriver();
-            #pragma warning restore 612,618
+            return Default.CreateJoystickDriver();
         }
 
         public void RegisterResource(IDisposable resource)
         {
-            default_implementation.RegisterResource(resource);
+            Default.RegisterResource(resource);
         }
 
-        class UnsupportedPlatform : PlatformFactoryBase
+        private class UnsupportedPlatform : PlatformFactoryBase
         {
-            #region Fields
-
-            static readonly string error_string = "Please, refer to http://www.opentk.com for more information.";
-            
-            #endregion
-            
-            #region IPlatformFactory Members
+            private static readonly string error_string = "Please, refer to http://www.opentk.com for more information.";
 
             public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
             {
@@ -241,15 +246,9 @@ namespace OpenTK.Platform
             {
                 throw new PlatformNotSupportedException(error_string);
             }
-
-            #endregion
         }
 
-        #endregion
-
-        #region IDisposable Members
-
-        void Dispose(bool manual)
+        private void Dispose(bool manual)
         {
             if (!disposed)
             {
@@ -279,7 +278,5 @@ namespace OpenTK.Platform
         {
             Dispose(false);
         }
-
-        #endregion
     }
 }

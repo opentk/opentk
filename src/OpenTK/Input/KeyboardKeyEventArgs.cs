@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,11 +22,8 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OpenTK.Input
 {
@@ -37,22 +33,12 @@ namespace OpenTK.Input
     /// <remarks>
     /// <para>
     /// Do not cache instances of this type outside their event handler.
-    /// If necessary, you can clone a KeyboardEventArgs instance using the 
+    /// If necessary, you can clone a KeyboardEventArgs instance using the
     /// <see cref="KeyboardKeyEventArgs(KeyboardKeyEventArgs)"/> constructor.
     /// </para>
     /// </remarks>
     public class KeyboardKeyEventArgs : EventArgs
     {
-        #region Fields
-
-        Key key;
-        bool repeat;
-        KeyboardState state;
-
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Constructs a new KeyboardEventArgs instance.
         /// </summary>
@@ -67,18 +53,10 @@ namespace OpenTK.Input
             Key = args.Key;
         }
 
-        #endregion
-
-        #region Public Members
-
         /// <summary>
         /// Gets the <see cref="Key"/> that generated this event.
         /// </summary>
-        public Key Key
-        {
-            get { return key; }
-            internal set { key = value; }
-        }
+        public Key Key { get; internal set; }
 
         /// <summary>
         /// Gets the scancode which generated this event.
@@ -95,7 +73,7 @@ namespace OpenTK.Input
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Alt
         {
-            get { return state[Key.AltLeft] || state[Key.AltRight]; }
+            get { return Keyboard[Key.AltLeft] || Keyboard[Key.AltRight]; }
         }
 
         /// <summary>
@@ -104,7 +82,7 @@ namespace OpenTK.Input
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Control
         {
-            get { return state[Key.ControlLeft] || state[Key.ControlRight]; }
+            get { return Keyboard[Key.ControlLeft] || Keyboard[Key.ControlRight]; }
         }
 
         /// <summary>
@@ -113,7 +91,7 @@ namespace OpenTK.Input
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Shift
         {
-            get { return state[Key.ShiftLeft] || state[Key.ShiftRight]; }
+            get { return Keyboard[Key.ShiftLeft] || Keyboard[Key.ShiftRight]; }
         }
 
         /// <summary>
@@ -137,11 +115,7 @@ namespace OpenTK.Input
         /// Gets the current <see cref="OpenTK.Input.KeyboardState"/>.
         /// </summary>
         /// <value>The keyboard.</value>
-        public KeyboardState Keyboard
-        {
-            get { return state; }
-            internal set { state = value; }
-        }
+        public KeyboardState Keyboard { get; internal set; }
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether
@@ -152,12 +126,6 @@ namespace OpenTK.Input
         /// a key; false, if this was caused by the user pressing a
         /// key for the first time.
         /// </value>
-        public bool IsRepeat
-        {
-            get { return repeat; }
-            internal set { repeat = value; }
-        }
-
-        #endregion
+        public bool IsRepeat { get; internal set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // NativeWindowBase.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.ComponentModel;
@@ -38,39 +36,32 @@ using OpenTK.Input;
 namespace OpenTK.Platform
 {
     // Common base class for all INativeWindow implementations
-    abstract class NativeWindowBase : INativeWindow
+    internal abstract class NativeWindowBase : INativeWindow
     {
-        #pragma warning disable 612,618
-        readonly LegacyInputDriver LegacyInputDriver;
-        #pragma warning restore 612,618
+        private readonly MouseButtonEventArgs MouseDownArgs = new MouseButtonEventArgs();
+        private readonly MouseButtonEventArgs MouseUpArgs = new MouseButtonEventArgs();
+        private readonly MouseMoveEventArgs MouseMoveArgs = new MouseMoveEventArgs();
+        private readonly MouseWheelEventArgs MouseWheelArgs = new MouseWheelEventArgs();
 
-        readonly MouseButtonEventArgs MouseDownArgs = new MouseButtonEventArgs();
-        readonly MouseButtonEventArgs MouseUpArgs = new MouseButtonEventArgs();
-        readonly MouseMoveEventArgs MouseMoveArgs = new MouseMoveEventArgs();
-        readonly MouseWheelEventArgs MouseWheelArgs = new MouseWheelEventArgs();
+        private readonly KeyboardKeyEventArgs KeyDownArgs = new KeyboardKeyEventArgs();
+        private readonly KeyboardKeyEventArgs KeyUpArgs = new KeyboardKeyEventArgs();
+        private readonly KeyPressEventArgs KeyPressArgs = new KeyPressEventArgs((char)0);
 
-        readonly KeyboardKeyEventArgs KeyDownArgs = new KeyboardKeyEventArgs();
-        readonly KeyboardKeyEventArgs KeyUpArgs = new KeyboardKeyEventArgs();
-        readonly KeyPressEventArgs KeyPressArgs = new KeyPressEventArgs((char)0);
+        private readonly FileDropEventArgs FileDropArgs = new FileDropEventArgs();
 
         // In order to simplify mouse event implementation,
         // we can store the current mouse state here.
         protected MouseState MouseState = new MouseState();
         protected KeyboardState KeyboardState = new KeyboardState();
 
-        MouseState PreviousMouseState = new MouseState();
+        private MouseState PreviousMouseState = new MouseState();
 
         internal NativeWindowBase()
         {
-            #pragma warning disable 612,618
-            LegacyInputDriver = new LegacyInputDriver(this);
-            #pragma warning restore 612,618
             MouseState.SetIsConnected(true);
             KeyboardState.SetIsConnected(true);
             PreviousMouseState.SetIsConnected(true);
         }
-
-        #region Protected Members
 
         protected void OnMove(EventArgs e)
         {
@@ -154,6 +145,13 @@ namespace OpenTK.Platform
             e.Key = key;
             e.IsRepeat = false;
             KeyUp(this, e);
+        }
+
+        protected void OnFileDrop(string s)
+        {
+            var e = FileDropArgs;
+            FileDropArgs.FileName = s;
+            FileDrop(this, e);
         }
 
         /// \internal
@@ -294,10 +292,6 @@ namespace OpenTK.Platform
             MouseWheel(this, e);
         }
 
-        #endregion
-
-        #region INativeWindow Members
-
         public event EventHandler<EventArgs> Move = delegate { };
         public event EventHandler<EventArgs> Resize = delegate { };
         public event EventHandler<System.ComponentModel.CancelEventArgs> Closing = delegate { };
@@ -318,6 +312,7 @@ namespace OpenTK.Platform
         public event EventHandler<MouseButtonEventArgs> MouseUp = delegate { };
         public event EventHandler<MouseMoveEventArgs> MouseMove = delegate { };
         public event EventHandler<MouseWheelEventArgs> MouseWheel = delegate { };
+        public event EventHandler<FileDropEventArgs> FileDrop = delegate { };
 
         public abstract void Close();
 
@@ -448,22 +443,9 @@ namespace OpenTK.Platform
 
         public abstract Size ClientSize { get; set; }
 
-        [Obsolete]
-        public virtual IInputDriver InputDriver
-        {
-            get
-            {
-                return LegacyInputDriver;
-            }
-        }
-
         public abstract bool CursorVisible { get; set; }
 
         public abstract MouseCursor Cursor { get; set; }
-
-        #endregion
-
-        #region IDisposable Members
 
         public void Dispose()
         {
@@ -478,8 +460,6 @@ namespace OpenTK.Platform
             Debug.Print("NativeWindowBase leaked, did you forget to call Dispose()?");
             Dispose(false);
         }
-
-        #endregion
     }
 }
 

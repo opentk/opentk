@@ -1,11 +1,10 @@
-﻿#region License
-//
+﻿//
 // LinuxKeyboardTTY.cs
 //
 // Author:
 //       thefiddler <stapostol@gmail.com>
 //
-// Copyright (c) 2006-2014 
+// Copyright (c) 2006-2014
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,13 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
-
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
-using OpenTK.Input;
 
 namespace OpenTK.Platform.Linux
 {
@@ -67,8 +59,6 @@ namespace OpenTK.Platform.Linux
             input_thread.IsBackground = true;
             input_thread.Start();
         }
-
-        #region Private Members
 
         bool SetupTTY(int stdin)
         {
@@ -201,10 +191,6 @@ namespace OpenTK.Platform.Linux
 
         static readonly Key[] KeyMap = Evdev.KeyMap;
 
-        #endregion
-
-        #region IKeyboardDriver2 implementation
-
         public KeyboardState GetState()
         {
             lock (this)
@@ -232,10 +218,6 @@ namespace OpenTK.Platform.Linux
                 return String.Empty;
         }
 
-        #endregion
-
-        #region IDisposable Implementation
-
         public void Dispose()
         {
             Dispose(true);
@@ -260,8 +242,6 @@ namespace OpenTK.Platform.Linux
         {
             Dispose(false);
         }
-
-        #endregion
     }
     #endif
 }

@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,26 +22,21 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
-using System;
-using System.Collections.Generic;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2Keyboard : IKeyboardDriver2
+    internal class Sdl2Keyboard : IKeyboardDriver2
     {
         #pragma warning disable 649 // Field never assigned to, compiler bug in Mono 3.4.0
-        KeyboardState state;
+        private KeyboardState state;
         #pragma warning restore 649
 
         public Sdl2Keyboard()
         {
             state.IsConnected = true;
         }
-
-        #region Private Members
 
         // Unfortunately, SDL does not report KeyDown events
         // when a modifier (e.g. shift, alt, etc) is first pressed.
@@ -52,7 +46,7 @@ namespace OpenTK.Platform.SDL2
         // For that reason, we should also poll the keyboard directly
         // as necessary.
         // Fixme: this does not appear to work as expected.
-        void UpdateModifiers()
+        private void UpdateModifiers()
         {
             Keymod mod = SDL.GetModState();
 
@@ -68,10 +62,6 @@ namespace OpenTK.Platform.SDL2
             //state[Key.] = (mod & Keymod.MODE) != 0;
         }
 
-        #endregion
-
-        #region Internal Members
-
         internal void ProcessKeyboardEvent(KeyboardEvent e)
         {
             bool pressed = e.State != 0;
@@ -84,10 +74,6 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        #endregion
-
-        #region IKeyboardDriver2 Members
-
         public KeyboardState GetState()
         {
             //UpdateModifiers(); // Fixme
@@ -98,17 +84,19 @@ namespace OpenTK.Platform.SDL2
         {
             //UpdateModifiers(); // Fixme
             if (index == 0)
+            {
                 return state;
+            }
             else
+            {
                 return new KeyboardState();
+            }
         }
 
         public string GetDeviceName(int index)
         {
             return "SDL2 Default Keyboard";
         }
-
-        #endregion
     }
 }
 

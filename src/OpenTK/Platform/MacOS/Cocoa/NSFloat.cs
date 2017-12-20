@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // NSFloat.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 #if !MINIMAL
@@ -41,23 +39,29 @@ namespace OpenTK.Platform.MacOS
     // We do this by adding implicit conversions between IntPtr and float/double.
     // Note that this conversion is against C# best practices, as it can lose information.
     // However, NSFloat is used internally in places where this precision loss does not matter.
-    struct NSFloat
+    internal struct NSFloat
     {
-        IntPtr value;
+        private IntPtr _value;
+
+        public IntPtr Value
+        {
+            get { return _value; }
+            set { _value = value; }
+        }
 
         public static implicit operator NSFloat(float v)
         {
-            NSFloat f;
+            NSFloat f = new NSFloat();
             unsafe
             {
                 if (IntPtr.Size == 4)
                 {
-                    f.value = *(IntPtr*)&v;
+                    f.Value = *(IntPtr*)&v;
                 }
                 else
                 {
                     double d = v;
-                    f.value = *(IntPtr*)&d;
+                    f.Value = *(IntPtr*)&d;
                 }
             }
             return f;
@@ -65,17 +69,17 @@ namespace OpenTK.Platform.MacOS
 
         public static implicit operator NSFloat(double v)
         {
-            NSFloat f;
+            NSFloat f = new NSFloat();
             unsafe
             {
                 if (IntPtr.Size == 4)
                 {
                     float fv = (float)v;
-                    f.value = *(IntPtr*)&fv;
+                    f.Value = *(IntPtr*)&fv;
                 }
                 else
                 {
-                    f.value = *(IntPtr*)&v;
+                    f.Value = *(IntPtr*)&v;
                 }
             }
             return f;
@@ -87,11 +91,11 @@ namespace OpenTK.Platform.MacOS
             {
                 if (IntPtr.Size == 4)
                 {
-                    return *(float*)&f.value;
+                    return *(float*)&f._value;
                 }
                 else
                 {
-                    return (float)*(double*)&f.value;
+                    return (float)*(double*)&f._value;
                 }
             }
         }
@@ -102,18 +106,18 @@ namespace OpenTK.Platform.MacOS
             {
                 if (IntPtr.Size == 4)
                 {
-                    return (double)*(float*)&f.value;
+                    return (double)*(float*)&f._value;
                 }
                 else
                 {
-                    return *(float*)&f.value;
+                    return *(double*)&f._value;
                 }
             }
         }
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct NSPoint
+    internal struct NSPoint
     {
         public NSFloat X;
         public NSFloat Y;
@@ -134,7 +138,7 @@ namespace OpenTK.Platform.MacOS
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct NSSize
+    internal struct NSSize
     {
         public NSFloat Width;
         public NSFloat Height;
@@ -155,7 +159,7 @@ namespace OpenTK.Platform.MacOS
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct NSRect
+    internal struct NSRect
     {
         public NSPoint Location;
         public NSSize Size;
@@ -177,7 +181,23 @@ namespace OpenTK.Platform.MacOS
         public static implicit operator RectangleF(NSRect s)
         {
             return new RectangleF(s.Location, s.Size);
-        } 
+        }
+    }
+
+    // Using IntPtr in NSFloat cause that if imported function
+    // return struct that consist of them you will get wrong data
+    // This types are used for such function.
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct NSPointF
+    {
+        public float X;
+        public float Y;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct NSPointD
+    {
+        public double X;
+        public double Y;
     }
 }
-

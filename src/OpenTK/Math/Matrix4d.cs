@@ -1,4 +1,3 @@
-#region --- License ---
 /*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
 
@@ -20,7 +19,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-#endregion
 
 using System;
 using System.Runtime.InteropServices;
@@ -35,8 +33,6 @@ namespace OpenTK
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix4d : IEquatable<Matrix4d>
     {
-        #region Fields
-
         /// <summary>
         /// Top row of the matrix
         /// </summary>
@@ -53,15 +49,11 @@ namespace OpenTK
         /// Bottom row of the matrix
         /// </summary>
         public Vector4d  Row3;
- 
+
         /// <summary>
         /// The identity matrix
         /// </summary>
         public static Matrix4d Identity = new Matrix4d(Vector4d .UnitX, Vector4d .UnitY, Vector4d .UnitZ, Vector4d .UnitW);
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Constructs a new instance.
@@ -132,12 +124,6 @@ namespace OpenTK
             Row3.Z = 0;
             Row3.W = 1;
         }
-
-        #endregion
-
-        #region Public Members
-
-        #region Properties
 
         /// <summary>
         /// The determinant of this matrix
@@ -295,10 +281,6 @@ namespace OpenTK
         /// </summary>
         public double Trace { get { return Row0.X + Row1.Y + Row2.Z + Row3.W; } }
 
-        #endregion
-
-        #region Indexers
-
         /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
@@ -306,27 +288,48 @@ namespace OpenTK
         {
             get
             {
-                if (rowIndex == 0) return Row0[columnIndex];
-                else if (rowIndex == 1) return Row1[columnIndex];
-                else if (rowIndex == 2) return Row2[columnIndex];
-                else if (rowIndex == 3) return Row3[columnIndex];
+                if (rowIndex == 0)
+                {
+                    return Row0[columnIndex];
+                }
+                else if (rowIndex == 1)
+                {
+                    return Row1[columnIndex];
+                }
+                else if (rowIndex == 2)
+                {
+                    return Row2[columnIndex];
+                }
+                else if (rowIndex == 3)
+                {
+                    return Row3[columnIndex];
+                }
                 throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
             }
             set
             {
-                if (rowIndex == 0) Row0[columnIndex] = value;
-                else if (rowIndex == 1) Row1[columnIndex] = value;
-                else if (rowIndex == 2) Row2[columnIndex] = value;
-                else if (rowIndex == 3) Row3[columnIndex] = value;
-                else throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+                if (rowIndex == 0)
+                {
+                    Row0[columnIndex] = value;
+                }
+                else if (rowIndex == 1)
+                {
+                    Row1[columnIndex] = value;
+                }
+                else if (rowIndex == 2)
+                {
+                    Row2[columnIndex] = value;
+                }
+                else if (rowIndex == 3)
+                {
+                    Row3[columnIndex] = value;
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+                }
             }
         }
-
-        #endregion
-
-        #region Instance
-
-        #region public void Invert()
 
         /// <summary>
         /// Converts this instance into its inverse.
@@ -336,10 +339,6 @@ namespace OpenTK
             this = Matrix4d.Invert(this);
         }
 
-        #endregion
-
-        #region public void Transpose()
-
         /// <summary>
         /// Converts this instance into its transpose.
         /// </summary>
@@ -347,8 +346,6 @@ namespace OpenTK
         {
             this = Matrix4d.Transpose(this);
         }
-
-        #endregion
 
         /// <summary>
         /// Returns a normalised copy of this instance.
@@ -379,7 +376,9 @@ namespace OpenTK
         {
             Matrix4d m = this;
             if (m.Determinant != 0)
+            {
                 m.Invert();
+            }
             return m;
         }
 
@@ -510,12 +509,6 @@ namespace OpenTK
         }
 
 
-        #endregion
-
-        #region Static
-
-        #region CreateFromAxisAngle
-
         /// <summary>
         /// Build a rotation matrix from the specified axis/angle rotation.
         /// </summary>
@@ -572,10 +565,6 @@ namespace OpenTK
             CreateFromAxisAngle(axis, angle, out result);
             return result;
         }
-
-        #endregion
-
-        #region CreateRotation[XYZ]
 
         /// <summary>
         /// Builds a rotation matrix for a rotation around the x-axis.
@@ -661,10 +650,6 @@ namespace OpenTK
             return result;
         }
 
-        #endregion
-
-        #region CreateTranslation
-
         /// <summary>
         /// Creates a translation matrix.
         /// </summary>
@@ -715,10 +700,6 @@ namespace OpenTK
             return result;
         }
 
-        #endregion
-
-        #region CreateOrthographic
-
         /// <summary>
         /// Creates an orthographic projection matrix.
         /// </summary>
@@ -746,10 +727,6 @@ namespace OpenTK
             CreateOrthographicOffCenter(-width / 2, width / 2, -height / 2, height / 2, zNear, zFar, out result);
             return result;
         }
-
-        #endregion
-
-        #region CreateOrthographicOffCenter
 
         /// <summary>
         /// Creates an orthographic projection matrix.
@@ -796,10 +773,6 @@ namespace OpenTK
             return result;
         }
 
-        #endregion
-
-        #region CreatePerspectiveFieldOfView
-
         /// <summary>
         /// Creates a perspective projection matrix.
         /// </summary>
@@ -821,13 +794,21 @@ namespace OpenTK
         public static void CreatePerspectiveFieldOfView(double fovy, double aspect, double zNear, double zFar, out Matrix4d result)
         {
             if (fovy <= 0 || fovy > Math.PI)
+            {
                 throw new ArgumentOutOfRangeException("fovy");
+            }
             if (aspect <= 0)
+            {
                 throw new ArgumentOutOfRangeException("aspect");
+            }
             if (zNear <= 0)
+            {
                 throw new ArgumentOutOfRangeException("zNear");
+            }
             if (zFar <= 0)
+            {
                 throw new ArgumentOutOfRangeException("zFar");
+            }
 
             double yMax = zNear * System.Math.Tan(0.5 * fovy);
             double yMin = -yMax;
@@ -862,10 +843,6 @@ namespace OpenTK
             return result;
         }
 
-        #endregion
-
-        #region CreatePerspectiveOffCenter
-
         /// <summary>
         /// Creates an perspective projection matrix.
         /// </summary>
@@ -887,11 +864,17 @@ namespace OpenTK
         public static void CreatePerspectiveOffCenter(double left, double right, double bottom, double top, double zNear, double zFar, out Matrix4d result)
         {
             if (zNear <= 0)
+            {
                 throw new ArgumentOutOfRangeException("zNear");
+            }
             if (zFar <= 0)
+            {
                 throw new ArgumentOutOfRangeException("zFar");
+            }
             if (zNear >= zFar)
+            {
                 throw new ArgumentOutOfRangeException("zNear");
+            }
 
             double x = (2.0 * zNear) / (right - left);
             double y = (2.0 * zNear) / (top - bottom);
@@ -930,10 +913,6 @@ namespace OpenTK
             CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar, out result);
             return result;
         }
-
-        #endregion
-
-        #region CreateFromQuaternion
         /// <summary>
         /// Build a rotation matrix from the specified quaternion.
         /// </summary>
@@ -958,118 +937,6 @@ namespace OpenTK
             CreateFromQuaternion(ref q, out result);
             return result;
         }
-        
-
-        /// <summary>
-        /// Build a rotation matrix from the specified quaternion.
-        /// </summary>
-        /// <param name="q">Quaternion to translate.</param>
-        /// <param name="m">Matrix result.</param>
-        [Obsolete("Use double-precision overload instead")]
-        public static void CreateFromQuaternion(ref Quaternion q,ref Matrix4 m)
-        {
-            m = Matrix4.Identity;
-            
-            float X = q.X;
-            float Y = q.Y;
-            float Z = q.Z;
-            float W = q.W;
-            
-            float xx = X * X;
-            float xy = X * Y;
-            float xz = X * Z;
-            float xw = X * W;
-            float yy = Y * Y;
-            float yz = Y * Z;
-            float yw = Y * W;
-            float zz = Z * Z;
-            float zw = Z * W;
-            
-            m.M11 = 1 - 2 * (yy + zz);
-            m.M21 = 2 * (xy - zw);
-            m.M31 = 2 * (xz + yw);
-            m.M12 = 2 * (xy + zw);
-            m.M22 = 1 - 2 * (xx + zz);
-            m.M32 = 2 * (yz - xw);
-            m.M13 = 2 * (xz - yw);
-            m.M23 = 2 * (yz + xw);
-            m.M33 = 1 - 2 * (xx + yy);
-        }
-        
-        /// <summary>
-        /// Build a rotation matrix from the specified quaternion.
-        /// </summary>
-        /// <param name="q">Quaternion to translate.</param>
-        /// <returns>A matrix instance.</returns>
-        [Obsolete("Use double-precision overload instead")]
-        public static Matrix4 CreateFromQuaternion(ref Quaternion q)
-        {
-            Matrix4 result = Matrix4.Identity;
-            
-            float X = q.X;
-            float Y = q.Y;
-            float Z = q.Z;
-            float W = q.W;
-            
-            float xx = X * X;
-            float xy = X * Y;
-            float xz = X * Z;
-            float xw = X * W;
-            float yy = Y * Y;
-            float yz = Y * Z;
-            float yw = Y * W;
-            float zz = Z * Z;
-            float zw = Z * W;
-            
-            result.M11 = 1 - 2 * (yy + zz);
-            result.M21 = 2 * (xy - zw);
-            result.M31 = 2 * (xz + yw);
-            result.M12 = 2 * (xy + zw);
-            result.M22 = 1 - 2 * (xx + zz);
-            result.M32 = 2 * (yz - xw);
-            result.M13 = 2 * (xz - yw);
-            result.M23 = 2 * (yz + xw);
-            result.M33 = 1 - 2 * (xx + yy);
-            return result;
-        }
-        
-        #endregion
-
-        #region Obsolete Functions
-
-        #region Translation Functions
-
-        /// <summary>
-        /// Build a translation matrix with the given translation
-        /// </summary>
-        /// <param name="trans">The vector to translate along</param>
-        /// <returns>A Translation matrix</returns>
-        [Obsolete("Use CreateTranslation instead.")]
-        public static Matrix4d Translation(Vector3d trans)
-        {
-            return Translation(trans.X, trans.Y, trans.Z);
-        }
-
-        /// <summary>
-        /// Build a translation matrix with the given translation
-        /// </summary>
-        /// <param name="x">X translation</param>
-        /// <param name="y">Y translation</param>
-        /// <param name="z">Z translation</param>
-        /// <returns>A Translation matrix</returns>
-        [Obsolete("Use CreateTranslation instead.")]
-        public static Matrix4d Translation(double x, double y, double z)
-        {
-            Matrix4d result = Identity;
-            result.Row3 = new Vector4d(x, y, z, 1.0);
-            return result;
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Scale Functions
 
         /// <summary>
         /// Build a scaling matrix
@@ -1107,10 +974,6 @@ namespace OpenTK
             result.Row3 = Vector4d .UnitW;
             return result;
         }
-
-        #endregion
-
-        #region Rotation Functions
 
         /// <summary>
         /// Build a rotation matrix that rotates about the x-axis
@@ -1201,10 +1064,6 @@ namespace OpenTK
             return Rotate(axis, angle);
         }
 
-        #endregion
-
-        #region Camera Helper Functions
-
         /// <summary>
         /// Build a world space to camera space matrix
         /// </summary>
@@ -1285,10 +1144,6 @@ namespace OpenTK
             return Frustum(xMin, xMax, yMin, yMax, near, far);
         }
 
-        #endregion
-
-        #region Add Functions
-
         /// <summary>
         /// Adds two instances.
         /// </summary>
@@ -1316,10 +1171,6 @@ namespace OpenTK
             result.Row3 = left.Row3 + right.Row3;
         }
 
-        #endregion
-
-        #region Subtract Functions
-
         /// <summary>
         /// Subtracts one instance from another.
         /// </summary>
@@ -1346,10 +1197,6 @@ namespace OpenTK
             result.Row2 = left.Row2 - right.Row2;
             result.Row3 = left.Row3 - right.Row3;
         }
-
-        #endregion
-
-        #region Multiply Functions
 
         /// <summary>
         /// Multiplies two instances.
@@ -1426,10 +1273,6 @@ namespace OpenTK
             result.Row3 = left.Row3 * right;
         }
 
-        #endregion
-
-        #region Invert Functions
-
         /// <summary>
         /// Calculate the inverse of the given matrix
         /// </summary>
@@ -1443,9 +1286,9 @@ namespace OpenTK
             int[] pivotIdx = { -1, -1, -1, -1 };
 
             // convert the matrix to an array for easy looping
-            double[,] inverse = {{mat.Row0.X, mat.Row0.Y, mat.Row0.Z, mat.Row0.W}, 
-                                {mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W}, 
-                                {mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W}, 
+            double[,] inverse = {{mat.Row0.X, mat.Row0.Y, mat.Row0.Z, mat.Row0.W},
+                                {mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W},
+                                {mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W},
                                 {mat.Row3.X, mat.Row3.Y, mat.Row3.Z, mat.Row3.W} };
             int icol = 0;
             int irow = 0;
@@ -1505,7 +1348,9 @@ namespace OpenTK
                 double oneOverPivot = 1.0 / pivot;
                 inverse[icol, icol] = 1.0;
                 for (int k = 0; k < 4; ++k)
+                {
                     inverse[icol, k] *= oneOverPivot;
+                }
 
                 // Do elimination of non-diagonal elements
                 for (int j = 0; j < 4; ++j)
@@ -1516,7 +1361,9 @@ namespace OpenTK
                         double f = inverse[j, icol];
                         inverse[j, icol] = 0.0;
                         for (int k = 0; k < 4; ++k)
+                        {
                             inverse[j, k] -= inverse[icol, k] * f;
+                        }
                     }
                 }
             }
@@ -1539,10 +1386,6 @@ namespace OpenTK
             mat.Row3 = new Vector4d (inverse[3, 0], inverse[3, 1], inverse[3, 2], inverse[3, 3]);
             return mat;
         }
-
-        #endregion
-
-        #region Transpose
 
         /// <summary>
         /// Calculate the transpose of the given matrix
@@ -1567,12 +1410,6 @@ namespace OpenTK
             result.Row2 = mat.Column2;
             result.Row3 = mat.Column3;
         }
-
-        #endregion
-
-        #endregion
-
-        #region Operators
 
         /// <summary>
         /// Matrix multiplication
@@ -1640,12 +1477,6 @@ namespace OpenTK
             return !left.Equals(right);
         }
 
-        #endregion
-
-        #region Overrides
-
-        #region public override string ToString()
-
         /// <summary>
         /// Returns a System.String that represents the current Matrix44.
         /// </summary>
@@ -1654,10 +1485,6 @@ namespace OpenTK
         {
             return String.Format("{0}\n{1}\n{2}\n{3}", Row0, Row1, Row2, Row3);
         }
-
-        #endregion
-
-        #region public override int GetHashCode()
 
         /// <summary>
         /// Returns the hashcode for this instance.
@@ -1675,10 +1502,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region public override bool Equals(object obj)
-
         /// <summary>
         /// Indicates whether this instance and a specified object are equal.
         /// </summary>
@@ -1687,18 +1510,12 @@ namespace OpenTK
         public override bool Equals(object obj)
         {
             if (!(obj is Matrix4d))
+            {
                 return false;
+            }
 
             return this.Equals((Matrix4d)obj);
         }
-
-        #endregion
-
-        #endregion
-
-        #endregion
-
-        #region IEquatable<Matrix4d> Members
 
         /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>
         /// <param name="other">A matrix to compare with this matrix.</param>
@@ -1711,7 +1528,5 @@ namespace OpenTK
                 Row2 == other.Row2 &&
                 Row3 == other.Row3;
         }
-
-        #endregion
     }
 }

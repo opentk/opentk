@@ -1,4 +1,3 @@
-#region License
 //
 // Poll.cs
 //
@@ -25,14 +24,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Linux
 {
-    partial class Libc
+    internal partial class Libc
     {
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         public static extern int poll(ref PollFD fd, IntPtr fd_count, int timeout);
@@ -44,7 +42,7 @@ namespace OpenTK.Platform.Linux
     }
 
     [Flags]
-    enum PollFlags : short
+    internal enum PollFlags : short
     {
         In = 0x01,
         Pri = 0x02,
@@ -55,7 +53,7 @@ namespace OpenTK.Platform.Linux
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    struct PollFD
+    internal struct PollFD
     {
         public int fd;
         public PollFlags events;

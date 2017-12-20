@@ -1,4 +1,3 @@
-#region License
 //
 // GamePadCapabilities.cs
 //
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 
@@ -36,13 +34,9 @@ namespace OpenTK.Input
     /// </summary>
     public struct GamePadCapabilities : IEquatable<GamePadCapabilities>
     {
-        Buttons buttons;
-        GamePadAxes axes;
-        byte gamepad_type;
-        bool is_connected;
-        bool is_mapped;
-
-        #region Constructors
+        private Buttons buttons;
+        private GamePadAxes axes;
+        private byte gamepad_type;
 
         internal GamePadCapabilities(GamePadType type, GamePadAxes axes, Buttons buttons, bool is_connected, bool is_mapped)
             : this()
@@ -50,13 +44,9 @@ namespace OpenTK.Input
             gamepad_type = (byte)type;
             this.axes = axes;
             this.buttons = buttons;
-            this.is_connected = is_connected;
-            this.is_mapped = is_mapped;
+            this.IsConnected = is_connected;
+            this.IsMapped = is_mapped;
         }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Gets a <see cref="GamePadType"/>  value describing the type of a <see cref="GamePad"/> input device.
@@ -314,19 +304,13 @@ namespace OpenTK.Input
         /// currently connected.
         /// </summary>
         /// <value><c>true</c> if this instance is currently connected; otherwise, <c>false</c>.</value>
-        public bool IsConnected
-        {
-            get { return is_connected; }
-        }
+        public bool IsConnected { get; }
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> value describing whether a valid button configuration
         /// exists for this <c>GamePad</c> in the GamePad configuration database.
         /// </summary>
-        public bool IsMapped
-        {
-            get { return is_mapped; }
-        }
+        public bool IsMapped { get; }
 
         /// <param name="left">A <see cref="GamePadCapabilities"/> structure to test for equality.</param>
         /// <param name="right">A <see cref="GamePadCapabilities"/> structure to test for equality.</param>
@@ -366,8 +350,8 @@ namespace OpenTK.Input
         {
             return
                 buttons.GetHashCode() ^
-                is_connected.GetHashCode() ^
-                is_mapped.GetHashCode() ^
+                IsConnected.GetHashCode() ^
+                IsMapped.GetHashCode() ^
                 gamepad_type.GetHashCode();
         }
 
@@ -384,10 +368,6 @@ namespace OpenTK.Input
                 Equals((GamePadCapabilities)obj);
         }
 
-        #endregion
-
-        #region IEquatable<GamePadCapabilities> Members
-
         /// <summary>
         /// Determines whether the specified <see cref="OpenTK.Input.GamePadCapabilities"/> is equal to the current <see cref="OpenTK.Input.GamePadCapabilities"/>.
         /// </summary>
@@ -398,12 +378,10 @@ namespace OpenTK.Input
         {
             return
                 buttons == other.buttons &&
-                is_connected == other.is_connected &&
-                is_mapped == other.is_mapped &&
+                IsConnected == other.IsConnected &&
+                IsMapped == other.IsMapped &&
                 gamepad_type == other.gamepad_type;
         }
-
-        #endregion
     }
 }
 

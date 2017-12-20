@@ -14,7 +14,7 @@
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
     <DelaySign>false</DelaySign>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>
     </AppDesignerFolder>
@@ -40,12 +40,16 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <Deterministic>true</Deterministic>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\..\stylecop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <DocumentationFile>bin\Debug\Bind.xml</DocumentationFile>
     <DebugSymbols>True</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <Optimize>False</Optimize>
@@ -53,7 +57,6 @@
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -61,13 +64,13 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE;</DefineConstants>
+    <DocumentationFile>bin\Release\Bind.xml</DocumentationFile>
     <FileAlignment>4096</FileAlignment>
     <Optimize>True</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <RegisterForComInterop>False</RegisterForComInterop>
     <RemoveIntegerChecks>False</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugType>none</DebugType>
   </PropertyGroup>
   <PropertyGroup>
@@ -211,7 +214,9 @@
     </Compile>
     <Compile Include="GL2\GL2Generator.cs" />
     <Compile Include="Structures\Documentation.cs" />
-    <None Include="Specifications\GL2\overrides.xml" />
+    <None Include="Specifications\GL2\overrides.xml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Specifications\GL2\GL\4.5\ARB_direct_state_access.xml" />
     <None Include="Specifications\GL2\ES\3.1\KHR_compute_shader.xml" />
     <None Include="Specifications\GL2\ES\3.1\KHR_separate_shader_objects.xml" />
@@ -238,6 +243,14 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="$(SolutionDir)\stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
+    <AdditionalFiles Include="$(SolutionDir)\stylecop.ruleset">
+      <Link>stylecop.ruleset</Link>
+    </AdditionalFiles>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
@@ -261,5 +274,13 @@
   </ProjectExtensions>
   <ItemGroup>
     <Folder Include="Specifications\Docs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll">
+      <Paket>True</Paket>
+    </Analyzer>
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers\analyzers\dotnet\cs\StyleCop.Analyzers.dll">
+      <Paket>True</Paket>
+    </Analyzer>
   </ItemGroup>
 </Project>

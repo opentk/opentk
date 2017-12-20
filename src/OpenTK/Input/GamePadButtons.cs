@@ -1,4 +1,3 @@
-#region License
 //
 // GamePadButtons.cs
 //
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 
@@ -36,7 +34,7 @@ namespace OpenTK.Input
     /// </summary>
     public struct GamePadButtons : IEquatable<GamePadButtons>
     {
-        Buttons buttons;
+        private Buttons buttons;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenTK.Input.GamePadButtons"/> structure.
@@ -46,8 +44,6 @@ namespace OpenTK.Input
         {
             buttons = state;
         }
-
-        #region Public Members
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the A button.
@@ -175,29 +171,53 @@ namespace OpenTK.Input
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             if (A == ButtonState.Pressed)
+            {
                 sb.Append("A");
+            }
             if (B == ButtonState.Pressed)
+            {
                 sb.Append("B");
+            }
             if (X == ButtonState.Pressed)
+            {
                 sb.Append("X");
+            }
             if (Y == ButtonState.Pressed)
+            {
                 sb.Append("Y");
+            }
             if (Back == ButtonState.Pressed)
+            {
                 sb.Append("Bk");
+            }
             if (Start == ButtonState.Pressed)
+            {
                 sb.Append("St");
+            }
             if (BigButton == ButtonState.Pressed)
+            {
                 sb.Append("Gd");
+            }
             if (Back == ButtonState.Pressed)
+            {
                 sb.Append("Bk");
+            }
             if (LeftShoulder == ButtonState.Pressed)
+            {
                 sb.Append("L");
+            }
             if (RightShoulder == ButtonState.Pressed)
+            {
                 sb.Append("R");
+            }
             if (LeftStick == ButtonState.Pressed)
+            {
                 sb.Append("Ls");
+            }
             if (RightStick == ButtonState.Pressed)
+            {
                 sb.Append("Rs");
+            }
 
             return sb.ToString();
         }
@@ -225,10 +245,6 @@ namespace OpenTK.Input
                 Equals((GamePadButtons)obj);
         }
 
-        #endregion
-
-        #region IEquatable<GamePadButtons> Members
-
         /// <summary>
         /// Determines whether the specified <see cref="OpenTK.Input.GamePadButtons"/> is equal to the current <see cref="OpenTK.Input.GamePadButtons"/>.
         /// </summary>
@@ -240,16 +256,10 @@ namespace OpenTK.Input
             return buttons == other.buttons;
         }
 
-        #endregion
-
-        #region Private Members
-
-        ButtonState GetButton(Buttons b)
+        private ButtonState GetButton(Buttons b)
         {
             return (buttons & b) != 0 ? ButtonState.Pressed : ButtonState.Released;
         }
-
-        #endregion
     }
 }
 

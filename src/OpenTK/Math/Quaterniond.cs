@@ -1,4 +1,3 @@
-#region --- License ---
 /*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
 
@@ -20,11 +19,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-#endregion
 
 using System;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Xml.Serialization;
 
 namespace OpenTK
@@ -36,14 +33,15 @@ namespace OpenTK
     [StructLayout(LayoutKind.Sequential)]
     public struct Quaterniond : IEquatable<Quaterniond>
     {
-        #region Fields
+        /// <summary>
+        /// The X, Y and Z components of this instance.
+        /// </summary>
+        public Vector3d Xyz;
 
-        Vector3d xyz;
-        double w;
-
-        #endregion
-
-        #region Constructors
+        /// <summary>
+        /// The W component of this instance.
+        /// </summary>
+        public double W;
 
         /// <summary>
         /// Construct a new Quaterniond from vector and w components
@@ -52,8 +50,8 @@ namespace OpenTK
         /// <param name="w">The w part</param>
         public Quaterniond(Vector3d v, double w)
         {
-            this.xyz = v;
-            this.w = w;
+            Xyz = v;
+            W = w;
         }
 
         /// <summary>
@@ -86,10 +84,10 @@ namespace OpenTK
             double s2 = Math.Sin(pitch);
             double s3 = Math.Sin(roll);
 
-            this.w = c1 * c2 * c3 - s1 * s2 * s3;
-            this.xyz.X = s1 * s2 * c3 + c1 * c2 * s3;
-            this.xyz.Y = s1 * c2 * c3 + c1 * s2 * s3;
-            this.xyz.Z = c1 * s2 * c3 - s1 * c2 * s3;
+            W = c1 * c2 * c3 - s1 * s2 * s3;
+            Xyz.X = s1 * s2 * c3 + c1 * c2 * s3;
+            Xyz.Y = s1 * c2 * c3 + c1 * s2 * s3;
+            Xyz.Z = c1 * s2 * c3 - s1 * c2 * s3;
         }
 
         /// <summary>
@@ -97,61 +95,26 @@ namespace OpenTK
         /// </summary>
         /// <param name="eulerAngles">The euler angles as a Vector3d</param>
         public Quaterniond(Vector3d eulerAngles)
-            :this(eulerAngles.X, eulerAngles.Y, eulerAngles.Z)
+            : this(eulerAngles.X, eulerAngles.Y, eulerAngles.Z)
         { }
-
-        #endregion
-
-        #region Public Members
-
-        #region Properties
-
-        #pragma warning disable 3005 // Identifier differing only in case is not CLS-compliant, compiler bug in Mono 3.4.0
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the X, Y and Z components of this instance.
-        /// </summary>
-        [Obsolete("Use Xyz property instead.")]
-        [CLSCompliant(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [XmlIgnore]
-        public Vector3d XYZ { get { return Xyz; } set { Xyz = value; } }
-
-        /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the X, Y and Z components of this instance.
-        /// </summary>
-        public Vector3d Xyz { get { return xyz; } set { xyz = value; } }
-
-        #pragma warning restore 3005
 
         /// <summary>
         /// Gets or sets the X component of this instance.
         /// </summary>
         [XmlIgnore]
-        public double X { get { return xyz.X; } set { xyz.X = value; } }
+        public double X { get { return Xyz.X; } set { Xyz.X = value; } }
 
         /// <summary>
         /// Gets or sets the Y component of this instance.
         /// </summary>
         [XmlIgnore]
-        public double Y { get { return xyz.Y; } set { xyz.Y = value; } }
+        public double Y { get { return Xyz.Y; } set { Xyz.Y = value; } }
 
         /// <summary>
         /// Gets or sets the Z component of this instance.
         /// </summary>
         [XmlIgnore]
-        public double Z { get { return xyz.Z; } set { xyz.Z = value; } }
-
-        /// <summary>
-        /// Gets or sets the W component of this instance.
-        /// </summary>
-        public double W { get { return w; } set { w = value; } }
-        
-        #endregion
-
-        #region Instance
-
-        #region ToAxisAngle
+        public double Z { get { return Xyz.Z; } set { Xyz.Z = value; } }
 
         /// <summary>
         /// Convert the current quaternion to axis angle representation
@@ -173,7 +136,9 @@ namespace OpenTK
         {
             Quaterniond q = this;
             if (Math.Abs(q.W) > 1.0f)
+            {
                 q.Normalize();
+            }
 
             Vector4d result = new Vector4d();
 
@@ -185,17 +150,13 @@ namespace OpenTK
             }
             else
             {
-                // This occurs when the angle is zero. 
+                // This occurs when the angle is zero.
                 // Not a problem: just set an arbitrary normalized axis.
                 result.Xyz = Vector3d.UnitX;
             }
 
             return result;
         }
-
-        #endregion
-
-        #region public double Length
 
         /// <summary>
         /// Gets the length (magnitude) of the Quaterniond.
@@ -209,10 +170,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region public double LengthSquared
-
         /// <summary>
         /// Gets the square of the Quaterniond length (magnitude).
         /// </summary>
@@ -223,8 +180,6 @@ namespace OpenTK
                 return W * W + Xyz.LengthSquared;
             }
         }
-
-        #endregion
 
         /// <summary>
         /// Returns a copy of the Quaterniond scaled to unit length.
@@ -254,8 +209,6 @@ namespace OpenTK
             return q;
         }
 
-        #region public void Normalize()
-
         /// <summary>
         /// Scales the Quaterniond to unit length.
         /// </summary>
@@ -266,10 +219,6 @@ namespace OpenTK
             W *= scale;
         }
 
-        #endregion
-
-        #region public void Conjugate()
-
         /// <summary>
         /// Inverts the Vector3d component of this Quaterniond.
         /// </summary>
@@ -278,22 +227,10 @@ namespace OpenTK
             Xyz = -Xyz;
         }
 
-        #endregion
-
-        #endregion
-
-        #region Static
-
-        #region Fields
-
         /// <summary>
         /// Defines the identity quaternion.
         /// </summary>
         public readonly static Quaterniond Identity = new Quaterniond(0, 0, 0, 1);
-
-        #endregion
-
-        #region Add
 
         /// <summary>
         /// Add two quaternions
@@ -321,10 +258,6 @@ namespace OpenTK
                 left.W + right.W);
         }
 
-        #endregion
-
-        #region Sub
-
         /// <summary>
         /// Subtracts two instances.
         /// </summary>
@@ -349,38 +282,6 @@ namespace OpenTK
             result = new Quaterniond(
                 left.Xyz - right.Xyz,
                 left.W - right.W);
-        }
-
-        #endregion
-
-        #region Mult
-
-        /// <summary>
-        /// Multiplies two instances.
-        /// </summary>
-        /// <param name="left">The first instance.</param>
-        /// <param name="right">The second instance.</param>
-        /// <returns>A new instance containing the result of the calculation.</returns>
-        [Obsolete("Use Multiply instead.")]
-        public static Quaterniond Mult(Quaterniond left, Quaterniond right)
-        {
-            return new Quaterniond(
-                right.W * left.Xyz + left.W * right.Xyz + Vector3d.Cross(left.Xyz, right.Xyz),
-                left.W * right.W - Vector3d.Dot(left.Xyz, right.Xyz));
-        }
-
-        /// <summary>
-        /// Multiplies two instances.
-        /// </summary>
-        /// <param name="left">The first instance.</param>
-        /// <param name="right">The second instance.</param>
-        /// <param name="result">A new instance containing the result of the calculation.</param>
-        [Obsolete("Use Multiply instead.")]
-        public static void Mult(ref Quaterniond left, ref Quaterniond right, out Quaterniond result)
-        {
-            result = new Quaterniond(
-                right.W * left.Xyz + left.W * right.Xyz + Vector3d.Cross(left.Xyz, right.Xyz),
-                left.W * right.W - Vector3d.Dot(left.Xyz, right.Xyz));
         }
 
         /// <summary>
@@ -431,10 +332,6 @@ namespace OpenTK
             return new Quaterniond(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale, quaternion.W * scale);
         }
 
-        #endregion
-
-        #region Conjugate
-
         /// <summary>
         /// Get the conjugate of the given Quaterniond
         /// </summary>
@@ -454,10 +351,6 @@ namespace OpenTK
         {
             result = new Quaterniond(-q.Xyz, q.W);
         }
-
-        #endregion
-
-        #region Invert
 
         /// <summary>
         /// Get the inverse of the given Quaterniond
@@ -490,10 +383,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region Normalize
-
         /// <summary>
         /// Scale the given Quaterniond to unit length
         /// </summary>
@@ -517,10 +406,6 @@ namespace OpenTK
             result = new Quaterniond(q.Xyz * scale, q.W * scale);
         }
 
-        #endregion
-
-        #region FromAxisAngle
-
         /// <summary>
         /// Build a Quaterniond from the given axis and angle
         /// </summary>
@@ -530,7 +415,9 @@ namespace OpenTK
         public static Quaterniond FromAxisAngle(Vector3d axis, double angle)
         {
             if (axis.LengthSquared == 0.0f)
+            {
                 return Identity;
+            }
 
             Quaterniond result = Identity;
 
@@ -541,10 +428,6 @@ namespace OpenTK
 
             return Normalize(result);
         }
-
-        #endregion
-
-        #region FromEulerAngles
 
         /// <summary>
         /// Builds a Quaterniond from the given euler angles
@@ -582,15 +465,11 @@ namespace OpenTK
             double s2 = Math.Sin(eulerAngles.X * 0.5);
             double s3 = Math.Sin(eulerAngles.Z * 0.5);
 
-            result.w = c1 * c2 * c3 - s1 * s2 * s3;
-            result.xyz.X = s1 * s2 * c3 + c1 * c2 * s3;
-            result.xyz.Y = s1 * c2 * c3 + c1 * s2 * s3;
-            result.xyz.Z = c1 * s2 * c3 - s1 * c2 * s3;
+            result.W = c1 * c2 * c3 - s1 * s2 * s3;
+            result.Xyz.X = s1 * s2 * c3 + c1 * c2 * s3;
+            result.Xyz.Y = s1 * c2 * c3 + c1 * s2 * s3;
+            result.Xyz.Z = c1 * s2 * c3 - s1 * c2 * s3;
         }
-
-        #endregion
-
-        #region FromMatrix
 
         /// <summary>
         /// Builds a quaternion from the given rotation matrix
@@ -618,10 +497,10 @@ namespace OpenTK
                 double s = Math.Sqrt(trace + 1) * 2;
                 double invS = 1.0 / s;
 
-                result.w = s * 0.25;
-                result.xyz.X = (matrix.Row2.Y - matrix.Row1.Z) * invS;
-                result.xyz.Y = (matrix.Row0.Z - matrix.Row2.X) * invS;
-                result.xyz.Z = (matrix.Row1.X - matrix.Row0.Y) * invS;
+                result.W = s * 0.25;
+                result.Xyz.X = (matrix.Row2.Y - matrix.Row1.Z) * invS;
+                result.Xyz.Y = (matrix.Row0.Z - matrix.Row2.X) * invS;
+                result.Xyz.Z = (matrix.Row1.X - matrix.Row0.Y) * invS;
             }
             else
             {
@@ -632,40 +511,36 @@ namespace OpenTK
                     double s = Math.Sqrt(1 + m00 - m11 - m22) * 2;
                     double invS = 1.0 / s;
 
-                    result.w = (matrix.Row2.Y - matrix.Row1.Z) * invS;
-                    result.xyz.X = s * 0.25;
-                    result.xyz.Y = (matrix.Row0.Y + matrix.Row1.X) * invS;
-                    result.xyz.Z = (matrix.Row0.Z + matrix.Row2.X) * invS;
+                    result.W = (matrix.Row2.Y - matrix.Row1.Z) * invS;
+                    result.Xyz.X = s * 0.25;
+                    result.Xyz.Y = (matrix.Row0.Y + matrix.Row1.X) * invS;
+                    result.Xyz.Z = (matrix.Row0.Z + matrix.Row2.X) * invS;
                 }
                 else if (m11 > m22)
                 {
                     double s = Math.Sqrt(1 + m11 - m00 - m22) * 2;
                     double invS = 1.0 / s;
 
-                    result.w = (matrix.Row0.Z - matrix.Row2.X) * invS;
-                    result.xyz.X = (matrix.Row0.Y + matrix.Row1.X) * invS;
-                    result.xyz.Y = s * 0.25;
-                    result.xyz.Z = (matrix.Row1.Z + matrix.Row2.Y) * invS;
+                    result.W = (matrix.Row0.Z - matrix.Row2.X) * invS;
+                    result.Xyz.X = (matrix.Row0.Y + matrix.Row1.X) * invS;
+                    result.Xyz.Y = s * 0.25;
+                    result.Xyz.Z = (matrix.Row1.Z + matrix.Row2.Y) * invS;
                 }
                 else
                 {
                     double s = Math.Sqrt(1 + m22 - m00 - m11) * 2;
                     double invS = 1.0 / s;
 
-                    result.w = (matrix.Row1.X - matrix.Row0.Y) * invS;
-                    result.xyz.X = (matrix.Row0.Z + matrix.Row2.X) * invS;
-                    result.xyz.Y = (matrix.Row1.Z + matrix.Row2.Y) * invS;
-                    result.xyz.Z = s * 0.25;
+                    result.W = (matrix.Row1.X - matrix.Row0.Y) * invS;
+                    result.Xyz.X = (matrix.Row0.Z + matrix.Row2.X) * invS;
+                    result.Xyz.Y = (matrix.Row1.Z + matrix.Row2.Y) * invS;
+                    result.Xyz.Z = s * 0.25;
                 }
             }
         }
 
-        #endregion
-
-        #region Slerp
-
         /// <summary>
-        /// Do Spherical linear interpolation between two quaternions 
+        /// Do Spherical linear interpolation between two quaternions
         /// </summary>
         /// <param name="q1">The first Quaterniond</param>
         /// <param name="q2">The second Quaterniond</param>
@@ -722,16 +597,14 @@ namespace OpenTK
 
             Quaterniond result = new Quaterniond(blendA * q1.Xyz + blendB * q2.Xyz, blendA * q1.W + blendB * q2.W);
             if (result.LengthSquared > 0.0f)
+            {
                 return Normalize(result);
+            }
             else
+            {
                 return Identity;
+            }
         }
-
-        #endregion
-
-        #endregion
-                
-        #region Operators
 
         /// <summary>
         /// Adds two instances.
@@ -816,12 +689,6 @@ namespace OpenTK
             return !left.Equals(right);
         }
 
-        #endregion
-
-        #region Overrides
-
-        #region public override string ToString()
-
         /// <summary>
         /// Returns a System.String that represents the current Quaterniond.
         /// </summary>
@@ -831,27 +698,22 @@ namespace OpenTK
             return String.Format("V: {0}, W: {1}", Xyz, W);
         }
 
-        #endregion
-
-        #region public override bool Equals (object o)
-
         /// <summary>
-        /// Compares this object instance to another object for equality. 
+        /// Compares this object instance to another object for equality.
         /// </summary>
         /// <param name="other">The other object to be used in the comparison.</param>
         /// <returns>True if both objects are Quaternions of equal value. Otherwise it returns false.</returns>
         public override bool Equals(object other)
         {
-            if (other is Quaterniond == false) return false;
+            if (other is Quaterniond == false)
+            {
+                return false;
+            }
             return this == (Quaterniond)other;
         }
 
-        #endregion
-
-        #region public override int GetHashCode ()
-
         /// <summary>
-        /// Provides the hash code for this object. 
+        /// Provides the hash code for this object.
         /// </summary>
         /// <returns>A hash code formed from the bitwise XOR of this objects members.</returns>
 
@@ -859,19 +721,11 @@ namespace OpenTK
         {
             unchecked
             {
-                return (this.xyz.GetHashCode() * 397) ^ this.w.GetHashCode();
+                return (this.Xyz.GetHashCode() * 397) ^ this.W.GetHashCode();
             }
         }
 
-        #endregion
-
-        #endregion
-
-        #endregion
-
 #if false
-
-        #region Fields
 
         /// <summary>The W component of the Quaterniond.</summary>
         public double W;
@@ -884,10 +738,6 @@ namespace OpenTK
 
         /// <summary>The Z component of the Quaterniond.</summary>
         public double Z;
-
-        #endregion
-        
-        #region Constructors
 
         /// <summary>Constructs left Quaterniond that is left copy of the given Quaterniond.</summary>
         /// <param name="quaterniond">The Quaterniond to copy.</param>
@@ -945,11 +795,11 @@ namespace OpenTK
         public Quaterniond(ref Matrix4d matrix)
         {
             double scale = System.Math.Pow(matrix.Determinant, 1.0d/3.0d);
- 
+
             W = System.Math.Sqrt(System.Math.Max(0, scale + matrix[0, 0] + matrix[1, 1] + matrix[2, 2])) / 2;
             X = System.Math.Sqrt(System.Math.Max(0, scale + matrix[0, 0] - matrix[1, 1] - matrix[2, 2])) / 2;
             Y = System.Math.Sqrt(System.Math.Max(0, scale - matrix[0, 0] + matrix[1, 1] - matrix[2, 2])) / 2;
-            Z = System.Math.Sqrt(System.Math.Max(0, scale - matrix[0, 0] - matrix[1, 1] + matrix[2, 2])) / 2; 
+            Z = System.Math.Sqrt(System.Math.Max(0, scale - matrix[0, 0] - matrix[1, 1] + matrix[2, 2])) / 2;
             if( matrix[2,1] - matrix[1,2] < 0 ) X = -X;
             if( matrix[0,2] - matrix[2,0] < 0 ) Y = -Y;
             if( matrix[1,0] - matrix[0,1] < 0 ) Z = -Z;
@@ -967,10 +817,6 @@ namespace OpenTK
             if (matrix[0, 2] - matrix[2, 0] < 0) Y = -Y;
             if (matrix[1, 0] - matrix[0, 1] < 0) Z = -Z;
         }
-
-        #endregion
-
-        #region Arithmetic Operators
 
         public void Add(ref Quaterniond Quaterniond)
         {
@@ -1087,10 +933,6 @@ namespace OpenTK
             result.Y = Quaterniond.Y / scalar;
             result.Z = Quaterniond.Z / scalar;
         }
-
-        #endregion
-        
-        #region Functions
 
         public double Modulus
         {
@@ -1431,10 +1273,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-        
-        #region HashCode
-
         /// <summary>Returns the hash code for this instance.</summary>
         /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
         public override int GetHashCode()
@@ -1442,10 +1280,6 @@ namespace OpenTK
             base.GetHashCode();
             return W.GetHashCode() ^ X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
         }
-
-        #endregion
-        
-        #region String and Parse
 
         /// <summary>Returns the fully qualified type name of this instance.</summary>
         /// <returns>A System.String containing left fully qualified type name.</returns>
@@ -1468,10 +1302,6 @@ namespace OpenTK
             result.Z = double.Parse(match.Result("${z}"));
         }
 
-        #endregion
-        
-        #region Constants
-
         /// <summary>A quaterion with all zero components.</summary>
         public static readonly Quaterniond Zero = new Quaterniond(0, 0, 0, 0);
 
@@ -1490,14 +1320,10 @@ namespace OpenTK
         /// <summary>A quaterion representing the Z axis.</summary>
         public static readonly Quaterniond ZAxis = new Quaterniond(0, 0, 0, 1);
 
-        #endregion
-
 #endif
 
-        #region IEquatable<Quaterniond> Members
-
         /// <summary>
-        /// Compares this Quaterniond instance to another Quaterniond for equality. 
+        /// Compares this Quaterniond instance to another Quaterniond for equality.
         /// </summary>
         /// <param name="other">The other Quaterniond to be used in the comparison.</param>
         /// <returns>True if both instances are equal; false otherwise.</returns>
@@ -1505,7 +1331,5 @@ namespace OpenTK
         {
             return Xyz == other.Xyz && W == other.W;
         }
-
-        #endregion
     }
 }

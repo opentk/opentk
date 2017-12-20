@@ -1,11 +1,9 @@
-#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2011 Xamarin Inc.
  * Copyright 2013 Xamarin Inc
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  */
-#endregion
 
 using System;
 using System.ComponentModel;
@@ -88,8 +86,6 @@ namespace OpenTK
         {
             return point;
         }
-
-        #region IGameWindow implementation
 
         /// <summary>
         ///   Occurs before the run loop starts.
@@ -454,9 +450,6 @@ namespace OpenTK
         ///   invoked on it.
         /// </exception>
         public abstract void SwapBuffers ();
-        #endregion
-
-        #region INativeWindow implementation
 
         /// <summary>This member is not supported.</summary>
         /// <value>To be added.</value>
@@ -836,8 +829,8 @@ namespace OpenTK
         ///   </para>
         /// </remarks>
         event EventHandler<KeyPressEventArgs> INativeWindow.KeyPress {
-            add { throw new NotSupportedException ();}
-            remove { throw new NotSupportedException ();}
+            add { throw new NotSupportedException (); }
+            remove { throw new NotSupportedException (); }
         }
 
         public virtual int Width {
@@ -1128,12 +1121,6 @@ namespace OpenTK
             }
         }
 
-        public OpenTK.Input.IInputDriver InputDriver {
-            get {
-                throw new NotSupportedException ();
-            }
-        }
-
         MouseCursor INativeWindow.Cursor
         {
             get { throw new NotSupportedException(); }
@@ -1194,6 +1181,10 @@ namespace OpenTK
             remove { throw new NotSupportedException(); }
         }
 
-        #endregion
+        event EventHandler<FileDropEventArgs> INativeWindow.FileDrop
+        {
+            add { throw new NotSupportedException(); }
+            remove { throw new NotSupportedException(); }
+        }
     }
 }

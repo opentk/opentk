@@ -1,4 +1,3 @@
- #region License
  //
  // The Open Toolkit Library License
  //
@@ -6,7 +5,7 @@
  //
  // Permission is hereby granted, free of charge, to any person obtaining a copy
  // of this software and associated documentation files (the "Software"), to deal
- // in the Software without restriction, including without limitation the rights to 
+ // in the Software without restriction, including without limitation the rights to
  // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
  // the Software, and to permit persons to whom the Software is furnished to do
  // so, subject to the following conditions:
@@ -23,7 +22,6 @@
  // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  // OTHER DEALINGS IN THE SOFTWARE.
  //
- #endregion
 
 namespace OpenTK.Input
 {
@@ -34,7 +32,7 @@ namespace OpenTK.Input
     {
         /// <summary>A key outside the known keys.</summary>
         Unknown = 0,
-    
+
         // Modifiers
         /// <summary>The left shift key.</summary>
         ShiftLeft,
@@ -70,7 +68,7 @@ namespace OpenTK.Input
         RWin = WinRight,
         /// <summary>The menu key.</summary>
         Menu,
-    
+
         // Function keys (hopefully enough for most keyboards - mine has 26)
         // <keysymdef.h> on X11 reports up to 35 function keys.
         /// <summary>The F1 key.</summary>
@@ -143,7 +141,7 @@ namespace OpenTK.Input
         F34,
         /// <summary>The F35 key.</summary>
         F35,
-    
+
         // Direction arrows
         /// <summary>The up arrow key.</summary>
         Up,
@@ -153,7 +151,7 @@ namespace OpenTK.Input
         Left,
         /// <summary>The right arrow key.</summary>
         Right,
-    
+
         /// <summary>The enter key.</summary>
         Enter,
         /// <summary>The escape key.</summary>
@@ -188,7 +186,7 @@ namespace OpenTK.Input
         Pause,
         /// <summary>The num lock key.</summary>
         NumLock,
-    
+
         // Special keys
         /// <summary>The clear key (Keypad5 with NumLock disabled, on typical keyboards).</summary>
         Clear,
@@ -207,7 +205,7 @@ namespace OpenTK.Input
         Spell,
         Save,
         Calculator,
-        
+
         // Folders and applications
         Documents,
         Pictures,
@@ -216,7 +214,7 @@ namespace OpenTK.Input
         Mail,
         Browser,
         Messenger,
-        
+
         // Multimedia keys
         Mute,
         PlayPause,
@@ -225,7 +223,7 @@ namespace OpenTK.Input
         VolumeDown,
         TrackPrevious,
         TrackNext,*/
-    
+
         // Keypad keys
         /// <summary>The keypad 0 key.</summary>
         Keypad0,
@@ -265,7 +263,7 @@ namespace OpenTK.Input
         KeypadPeriod = KeypadDecimal,
         /// <summary>The keypad enter key.</summary>
         KeypadEnter,
-    
+
         // Letters
         /// <summary>The A key.</summary>
         A,
@@ -319,7 +317,7 @@ namespace OpenTK.Input
         Y,
         /// <summary>The Z key.</summary>
         Z,
-    
+
         // Numbers
         /// <summary>The number 0 key.</summary>
         Number0,
@@ -341,7 +339,7 @@ namespace OpenTK.Input
         Number8,
         /// <summary>The number 9 key.</summary>
         Number9,
-    
+
         // Symbols
         /// <summary>The tilde key.</summary>
         Tilde,

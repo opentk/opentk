@@ -1,4 +1,3 @@
-#region License
 //
 // LinuxDisplayDriver.cs
 //
@@ -25,13 +24,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using OpenTK;
-using OpenTK.Graphics;
 #if !MINIMAL
 using System.Drawing;
 #endif
@@ -39,7 +35,7 @@ using System.Drawing;
 namespace OpenTK.Platform.Linux
 {
     // Stores platform-specific information about a display
-    class LinuxDisplay
+    internal class LinuxDisplay
     {
         public int FD;
         public IntPtr Connector;
@@ -72,7 +68,9 @@ namespace OpenTK.Platform.Linux
             get
             {
                 if (Crtc == IntPtr.Zero)
+                {
                     throw new InvalidOperationException();
+                }
 
                 unsafe
                 {
@@ -94,10 +92,11 @@ namespace OpenTK.Platform.Linux
         }
     }
 
-    class LinuxDisplayDriver : DisplayDeviceBase
+    internal class LinuxDisplayDriver : DisplayDeviceBase
     {
-        readonly int FD;
-        readonly Dictionary<int, int> DisplayIds =
+        private readonly int FD;
+
+        private readonly Dictionary<int, int> DisplayIds =
             new Dictionary<int, int>();
 
         public LinuxDisplayDriver(int fd)
@@ -184,7 +183,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        void UpdateDisplays(int fd)
+        private void UpdateDisplays(int fd)
         {
             unsafe
             {
@@ -210,7 +209,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        unsafe static ModeEncoder* GetEncoder(int fd, ModeConnector* c)
+        private unsafe static ModeEncoder* GetEncoder(int fd, ModeConnector* c)
         {
             ModeEncoder* encoder = null;
             for (int i = 0; i < c->count_encoders && encoder == null; i++)
@@ -243,7 +242,7 @@ namespace OpenTK.Platform.Linux
             return encoder;
         }
 
-        unsafe static ModeCrtc* GetCrtc(int fd, ModeEncoder* encoder)
+        private unsafe static ModeCrtc* GetCrtc(int fd, ModeEncoder* encoder)
         {
             ModeCrtc* crtc = (ModeCrtc*)Drm.ModeGetCrtc(fd, encoder->crtc_id);
             if (crtc != null)
@@ -259,7 +258,7 @@ namespace OpenTK.Platform.Linux
             return crtc;
         }
 
-        unsafe static void GetModes(LinuxDisplay display, DisplayResolution[] modes, out DisplayResolution current)
+        private unsafe static void GetModes(LinuxDisplay display, DisplayResolution[] modes, out DisplayResolution current)
         {
             int mode_count = display.pConnector->count_modes;
             Debug.Print("[KMS] Display supports {0} mode(s)", mode_count);
@@ -287,7 +286,7 @@ namespace OpenTK.Platform.Linux
             Debug.Print("Current mode: {0}", current.ToString());
         }
 
-        Rectangle GetBounds(DisplayResolution current)
+        private Rectangle GetBounds(DisplayResolution current)
         {
             // Note: since we are not running a display manager, we are free
             // to choose the display layout for multiple displays ourselves.
@@ -301,7 +300,7 @@ namespace OpenTK.Platform.Linux
                 x, y, current.Width, current.Height);
         }
 
-        void UpdateDisplayIndices(LinuxDisplay display, DisplayDevice device)
+        private void UpdateDisplayIndices(LinuxDisplay display, DisplayDevice device)
         {
             if (!DisplayIds.ContainsKey(display.Id))
             {
@@ -319,24 +318,28 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        unsafe static bool QueryDisplay(int fd, ModeConnector* c, out LinuxDisplay display)
+        private unsafe static bool QueryDisplay(int fd, ModeConnector* c, out LinuxDisplay display)
         {
             display = null;
 
             // Find corresponding encoder
             ModeEncoder* encoder = GetEncoder(fd, c);
             if (encoder == null)
+            {
                 return false;
+            }
 
             ModeCrtc* crtc = GetCrtc(fd, encoder);
             if (crtc == null)
+            {
                 return false;
+            }
 
             display = new LinuxDisplay(fd, (IntPtr)c, (IntPtr)encoder, (IntPtr)crtc);
             return true;
         }
 
-        unsafe void AddDisplay(LinuxDisplay display)
+        private unsafe void AddDisplay(LinuxDisplay display)
         {
             DisplayResolution[] modes = new DisplayResolution[display.pConnector->count_modes];
             DisplayResolution current;
@@ -356,7 +359,7 @@ namespace OpenTK.Platform.Linux
             Debug.Print("[KMS] Added DisplayDevice {0}", device);
         }
 
-        unsafe static DisplayResolution GetDisplayResolution(ModeInfo* mode)
+        private unsafe static DisplayResolution GetDisplayResolution(ModeInfo* mode)
         {
             return new DisplayResolution(
                 0, 0,
@@ -365,7 +368,7 @@ namespace OpenTK.Platform.Linux
                 mode->vrefresh);
         }
 
-        unsafe static ModeInfo* GetModeInfo(LinuxDisplay display, DisplayResolution resolution)
+        private unsafe static ModeInfo* GetModeInfo(LinuxDisplay display, DisplayResolution resolution)
         {
             for (int i = 0; i < display.pConnector->count_modes; i++)
             {
@@ -379,8 +382,6 @@ namespace OpenTK.Platform.Linux
             }
             return null;
         }
-
-        #region IDisplayDeviceDriver
 
         public override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
         {
@@ -409,8 +410,6 @@ namespace OpenTK.Platform.Linux
                     &connector_id, 1, &mode) == 0;
             }
         }
-
-        #endregion
     }
 }
 

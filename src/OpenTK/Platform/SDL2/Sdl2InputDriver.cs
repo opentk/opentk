@@ -1,4 +1,3 @@
-#region License
 //
 // The Open Toolkit Library License
 //
@@ -6,7 +5,7 @@
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,33 +22,31 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Threading;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
-    class Sdl2InputDriver : IInputDriver2
+    internal class Sdl2InputDriver : IInputDriver2
     {
-        readonly static Dictionary<IntPtr, Sdl2InputDriver> DriverHandles =
+        private readonly static Dictionary<IntPtr, Sdl2InputDriver> DriverHandles =
             new Dictionary<IntPtr, Sdl2InputDriver>();
 
-        readonly IntPtr driver_handle;
+        private readonly IntPtr driver_handle;
 
-        readonly Sdl2Keyboard keyboard_driver = new Sdl2Keyboard();
-        readonly Sdl2Mouse mouse_driver = new Sdl2Mouse();
-        readonly Sdl2JoystickDriver joystick_driver = new Sdl2JoystickDriver();
+        private readonly Sdl2Keyboard keyboard_driver = new Sdl2Keyboard();
+        private readonly Sdl2Mouse mouse_driver = new Sdl2Mouse();
+        private readonly Sdl2JoystickDriver joystick_driver = new Sdl2JoystickDriver();
 
-        readonly EventFilter EventFilterDelegate_GCUnsafe = FilterInputEvents;
-        readonly IntPtr EventFilterDelegate;
+        private readonly EventFilter EventFilterDelegate_GCUnsafe = FilterInputEvents;
+        private readonly IntPtr EventFilterDelegate;
 
-        static int count;
-        bool disposed;
+        private static int count;
+        private bool disposed;
 
         public Sdl2InputDriver()
         {
@@ -73,9 +70,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        #region Private Members
-
-        unsafe static int FilterInputEvents(IntPtr driver_handle, IntPtr e)
+        private unsafe static int FilterInputEvents(IntPtr driver_handle, IntPtr e)
         {
             try
             {
@@ -152,10 +147,6 @@ namespace OpenTK.Platform.SDL2
             return 0;
         }
 
-        #endregion
-
-        #region IInputDriver2 Members
-
         public IMouseDriver2 MouseDriver
         {
             get
@@ -188,11 +179,7 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        #endregion
-
-        #region IDisposable Members
-
-        void Dispose(bool manual)
+        private void Dispose(bool manual)
         {
             if (!disposed)
             {
@@ -224,8 +211,6 @@ namespace OpenTK.Platform.SDL2
         {
             Dispose(false);
         }
-
-        #endregion
     }
 }
 

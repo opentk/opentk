@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // NSBackingStore.cs
 //
 // Author:
@@ -25,11 +24,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 namespace OpenTK.Platform.MacOS
 {
-    enum NSBackingStore
+    internal enum NSBackingStore
     {
         Retained,
         Nonretained,

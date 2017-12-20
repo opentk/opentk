@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2013 Stefanos Apostolopoulos for the Open Toolkit Library
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -24,31 +23,25 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-
-#endregion
-
 using System;
 using System.IO;
-using System.Text.RegularExpressions;
-using Bind.Structures;
-using Enum=Bind.Structures.Enum;
 
 namespace Bind
 {
-    enum WriteOptions
+    internal enum WriteOptions
     {
         Default = 0,
         NoIndent = 1
     }
 
-    class BindStreamWriter : IDisposable
+    internal class BindStreamWriter : IDisposable
     {
-        static readonly string[] SplitStrings = new string[] { System.Environment.NewLine };
-        readonly StreamWriter sw;
+        private static readonly string[] SplitStrings = new string[] { System.Environment.NewLine };
+        private readonly StreamWriter sw;
         public readonly string File;
 
-        bool newline = true;
-        int indent_level = 0;
+        private bool newline = true;
+        private int indent_level = 0;
 
         public BindStreamWriter(string file)
         {
@@ -64,9 +57,11 @@ namespace Bind
         public void Unindent()
         {
             if (indent_level > 0)
+            {
                 --indent_level;
+            }
         }
-        
+
         public void Write(WriteOptions options, string value)
         {
             var lines = value.Split(SplitStrings, StringSplitOptions.None);
@@ -143,12 +138,14 @@ namespace Bind
             sw.Close();
         }
 
-        void WriteIndentations(WriteOptions options)
+        private void WriteIndentations(WriteOptions options)
         {
             if (options != WriteOptions.NoIndent)
             {
                 for (int i = indent_level; i > 0; i--)
+                {
                     sw.Write("    ");
+                }
             }
         }
 

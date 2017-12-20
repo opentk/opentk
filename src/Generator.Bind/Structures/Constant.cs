@@ -1,40 +1,25 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 
 namespace Bind.Structures
 {
     /// <summary>
     /// Represents an opengl constant in C# format. Both the constant name and value
     /// can be retrieved or set. The value can be either a number, another constant
-    /// or an alias to a constant 
+    /// or an alias to a constant
     /// </summary>
-    class Constant : IComparable<Constant>
+    internal class Constant : IComparable<Constant>
     {
-        #region PreviousName
-
-        string original_name;
-
         // Gets the name prior to translation.
-        public string OriginalName
-        {
-            get { return original_name; }
-            private set { original_name = value; }
-        }
+        public string OriginalName { get; private set; }
 
-        #endregion
-
-        #region public string Name
-
-        string _name;
+        private string _name;
 
         /// <summary>
         /// Gets or sets the name of the opengl constant (eg. GL_LINES).
@@ -43,23 +28,23 @@ namespace Bind.Structures
         public string Name
         {
             get { return _name; }
-            set 
+            set
             {
                 if (String.IsNullOrEmpty(value))
+                {
                     throw new ArgumentNullException("value");
+                }
 
                 if (OriginalName == null)
+                {
                     OriginalName = _name;
+                }
 
                 _name = value;
             }
         }
 
-        #endregion
-
-        #region public string Value
-
-        string _value;
+        private string _value;
 
         /// <summary>
         /// Gets or sets the value of the opengl constant (eg. 0x00000001).
@@ -73,34 +58,19 @@ namespace Bind.Structures
             set
             {
                 if (String.IsNullOrEmpty(value))
+                {
                     throw new ArgumentNullException("value");
+                }
 
                 _value = value;
             }
         }
 
-        #endregion
-
-        #region public string Reference
-
-        string _reference;
-
         /// <summary>
         /// Gets or sets a string indicating the OpenGL enum reference by this constant.
         /// Can be null.
         /// </summary>
-        public string Reference
-        {
-            get { return _reference; }
-            set
-            {
-                _reference = value;
-            }
-        }
-
-        #endregion
-
-        #region public bool Unchecked
+        public string Reference { get; set; }
 
         public bool Unchecked
         {
@@ -111,13 +81,9 @@ namespace Bind.Structures
                 string test = Value;
                 return UInt64.TryParse(test.ToLower().Replace("0x", String.Empty),
                     NumberStyles.AllowHexSpecifier, null, out number) &&
-                    number > Int32.MaxValue; 
+                    number > Int32.MaxValue;
             }
         }
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Creates an empty Constant.
@@ -137,21 +103,22 @@ namespace Bind.Structures
             Value = value;
         }
 
-        #endregion
-
         /// <summary>
         /// Replces the Value of the given constant with the value referenced by the [c.Reference, c.Value] pair.
         /// </summary>
         /// <param name="c">The Constant to translate</param>
         /// <param name="enums">The list of enums to check.</param>
-        /// <param name="auxEnums">The list of auxilliary enums to check.</param>
         /// <returns>True if the reference was found; false otherwise.</returns>
         public static bool TranslateConstantWithReference(Constant c, EnumCollection enums)
         {
             if (c == null)
+            {
                 throw new ArgumentNullException("c");
+            }
             if (enums == null)
+            {
                 throw new ArgumentNullException("enums");
+            }
 
             if (!String.IsNullOrEmpty(c.Reference))
             {
@@ -192,8 +159,6 @@ namespace Bind.Structures
             return true;
         }
 
-        #region ToString
-
         public override string ToString()
         {
             return
@@ -204,18 +169,14 @@ namespace Bind.Structures
                 Value);
         }
 
-        #endregion
-
-        #region IComparable <Constant>Members
-
         public int CompareTo(Constant other)
         {
             int ret = Value.CompareTo(other.Value);
             if (ret == 0)
+            {
                 return Name.CompareTo(other.Name);
+            }
             return ret;
         }
-
-        #endregion
     }
 }

@@ -1,4 +1,3 @@
-#region License
 //
 // Selector.cs
 //
@@ -25,14 +24,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.MacOS
 {
-    static class Selector
+    internal static class Selector
     {
         // Frequently used selectors
         public static readonly IntPtr Init = Selector.Get("init");
@@ -42,7 +40,7 @@ namespace OpenTK.Platform.MacOS
         public static readonly IntPtr Release = Selector.Get("release");
         public static readonly IntPtr Autorelease = Selector.Get("autorelease");
 
-		[DllImport ("/usr/lib/libobjc.dylib", EntryPoint="sel_registerName")]
-		public extern static IntPtr Get(string name);
-	}
+        [DllImport ("/usr/lib/libobjc.dylib", EntryPoint="sel_registerName")]
+        public extern static IntPtr Get(string name);
+    }
 }

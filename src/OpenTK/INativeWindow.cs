@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,21 +22,18 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 #if !MINIMAL
 using System.Drawing;
 #endif
-using System.Text;
 using OpenTK.Platform;
 
 namespace OpenTK
 {
     /// <summary>
-    /// Defines the interface for a native window. 
+    /// Defines the interface for a native window.
     /// </summary>
     public interface INativeWindow : IDisposable
     {
@@ -50,32 +46,32 @@ namespace OpenTK
         /// Gets or sets the title of the window.
         /// </summary>
         string Title { get; set; }
-        
+
         /// <summary>
         /// Gets a System.Boolean that indicates whether this window has input focus.
         /// </summary>
         bool Focused { get; }
-        
+
         /// <summary>
         /// Gets or sets a System.Boolean that indicates whether the window is visible.
         /// </summary>
         bool Visible { get; set; }
-        
+
         /// <summary>
         /// Gets a System.Boolean that indicates whether the window has been created and has not been destroyed.
         /// </summary>
         bool Exists { get; }
-        
+
         /// <summary>
         /// Gets the <see cref="OpenTK.Platform.IWindowInfo"/> for this window.
         /// </summary>
         IWindowInfo WindowInfo { get; }
-        
+
         /// <summary>
         /// Gets or sets the <see cref="OpenTK.WindowState"/> for this window.
         /// </summary>
         WindowState WindowState { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the <see cref="OpenTK.WindowBorder"/> for this window.
         /// </summary>
@@ -86,53 +82,47 @@ namespace OpenTK
         /// External bounds include the title bar, borders and drawing area of the window.
         /// </summary>
         Rectangle Bounds { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a <see cref="System.Drawing.Point"/> structure that contains the location of this window on the desktop.
         /// </summary>
         Point Location { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a <see cref="System.Drawing.Size"/> structure that contains the external size of this window.
         /// </summary>
         Size Size { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the horizontal location of this window on the desktop.
         /// </summary>
         int X { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the vertical location of this window on the desktop.
         /// </summary>
         int Y { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the external width of this window.
         /// </summary>
         int Width { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the external height of this window.
         /// </summary>
         int Height { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a <see cref="System.Drawing.Rectangle"/> structure that contains the internal bounds of this window, in client coordinates.
         /// The internal bounds include the drawing area of the window, but exclude the titlebar and window borders.
         /// </summary>
         Rectangle ClientRectangle { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a <see cref="System.Drawing.Size"/> structure that contains the internal size this window.
         /// </summary>
         Size ClientSize { get; set; }
-
-        /// <summary>
-        /// This property is deprecated and should not be used.
-        /// </summary>
-        [Obsolete("Use OpenTK.Input.Mouse/Keyboard/Joystick/GamePad instead.")]
-        OpenTK.Input.IInputDriver InputDriver { get; }
 
         /// <summary>
         /// Gets or sets the <see cref="OpenTK.MouseCursor"/> for this window.
@@ -154,14 +144,14 @@ namespace OpenTK
         /// Closes this window.
         /// </summary>
         void Close();
-        
+
         /// <summary>
         /// Processes pending window events.
         /// </summary>
         void ProcessEvents();
-        
+
         /// <summary>
-        /// Transforms the specified point from screen to client coordinates. 
+        /// Transforms the specified point from screen to client coordinates.
         /// </summary>
         /// <param name="point">
         /// A <see cref="System.Drawing.Point"/> to transform.
@@ -170,9 +160,9 @@ namespace OpenTK
         /// The point transformed to client coordinates.
         /// </returns>
         Point PointToClient(Point point);
-        
+
         /// <summary>
-        /// Transforms the specified point from client to screen coordinates. 
+        /// Transforms the specified point from client to screen coordinates.
         /// </summary>
         /// <param name="point">
         /// A <see cref="System.Drawing.Point"/> to transform.
@@ -183,32 +173,32 @@ namespace OpenTK
         Point PointToScreen(Point point);
 
         /// <summary>
-        /// Occurs whenever the window is moved. 
+        /// Occurs whenever the window is moved.
         /// </summary>
         event EventHandler<EventArgs> Move;
 
         /// <summary>
-        /// Occurs whenever the window is resized. 
+        /// Occurs whenever the window is resized.
         /// </summary>
         event EventHandler<EventArgs> Resize;
 
         /// <summary>
-        /// Occurs when the window is about to close. 
+        /// Occurs when the window is about to close.
         /// </summary>
         event EventHandler<CancelEventArgs> Closing;
 
         /// <summary>
-        /// Occurs after the window has closed. 
+        /// Occurs after the window has closed.
         /// </summary>
         event EventHandler<EventArgs> Closed;
 
         /// <summary>
-        /// Occurs when the window is disposed. 
+        /// Occurs when the window is disposed.
         /// </summary>
         event EventHandler<EventArgs> Disposed;
 
         /// <summary>
-        /// Occurs when the <see cref="Icon"/> property of the window changes. 
+        /// Occurs when the <see cref="Icon"/> property of the window changes.
         /// </summary>
         event EventHandler<EventArgs> IconChanged;
 
@@ -238,7 +228,7 @@ namespace OpenTK
         event EventHandler<EventArgs> WindowStateChanged;
 
         /// <summary>
-        /// Occurs whenever a keybord key is pressed.
+        /// Occurs whenever a keyboard key is pressed.
         /// </summary>
         event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyDown;
 
@@ -246,7 +236,7 @@ namespace OpenTK
         /// Occurs whenever a character is typed.
         /// </summary>
         event EventHandler<KeyPressEventArgs> KeyPress;
-        
+
         /// <summary>
         /// Occurs whenever a keyboard key is released.
         /// </summary>
@@ -285,9 +275,9 @@ namespace OpenTK
         //event EventHandler<MouseEventArgs> MouseClick;
         //event EventHandler<MouseEventArgs> MouseDoubleClick;
 
-        //event EventHandler<DragEventArgs> DragDrop;
-        //event EventHandler<DragEventArgs> DragEnter;
-        //event EventHandler<DragEventArgs> DragOver;
-        //event EventHandler<EventArgs> DragLeave;
+        /// <summary>
+        /// Occurs whenever file dropped on window.
+        /// </summary>
+        event EventHandler<OpenTK.Input.FileDropEventArgs> FileDrop;
     }
 }

@@ -1,5 +1,4 @@
-﻿// #region License
-//
+﻿//
 // GamePadTriggers.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-// #endregion
 
 
 using System;
@@ -37,17 +35,15 @@ namespace OpenTK.Input
     /// </summary>
     public struct GamePadTriggers : IEquatable<GamePadTriggers>
     {
-        const float ConversionFactor = 1.0f / byte.MaxValue;
-        byte left;
-        byte right;
+        private const float ConversionFactor = 1.0f / byte.MaxValue;
+        private byte left;
+        private byte right;
 
         internal GamePadTriggers(byte left, byte right)
         {
             this.left = left;
             this.right = right;
         }
-
-        #region Public Members
 
         /// <summary>
         /// Gets the offset of the left trigger button, between 0.0 and 1.0.
@@ -114,10 +110,6 @@ namespace OpenTK.Input
                 Equals((GamePadTriggers)obj);
         }
 
-        #endregion
-
-        #region IEquatable<GamePadTriggers> Members
-
         /// <summary>
         /// Determines whether the specified <see cref="OpenTK.Input.GamePadTriggers"/> is equal to the current <see cref="OpenTK.Input.GamePadTriggers"/>.
         /// </summary>
@@ -130,7 +122,5 @@ namespace OpenTK.Input
                 left == other.left &&
                 right == other.right;
         }
-
-        #endregion
     }
 }

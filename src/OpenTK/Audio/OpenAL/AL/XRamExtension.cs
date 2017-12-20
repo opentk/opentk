@@ -1,11 +1,9 @@
-﻿#region --- OpenTK.OpenAL License ---
-/* XRamExtension.cs
+﻿/* XRamExtension.cs
  * C header: \OpenAL 1.1 SDK\include\xram.h
  * Spec: ?
  * Copyright (c) 2008 Christoph Brandtner and Stefanos Apostolopoulos
  * See license.txt for license details (MIT)
  * http://www.OpenTK.net */
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -21,19 +19,8 @@ namespace OpenTK.Audio.OpenAL
     [CLSCompliant(true)]
     public sealed class XRamExtension
     {
-        #region Instance state
-
-        private bool _valid = false;
-
         /// <summary>Returns True if the X-Ram Extension has been found and could be initialized.</summary>
-        public bool IsInitialized
-        {
-            get { return _valid; }
-        }
-
-        #endregion Instance state
-
-        #region X-RAM Function pointer definitions
+        public bool IsInitialized { get; } = false;
 
         // [CLSCompliant(false)]
         private delegate bool Delegate_SetBufferMode(int n, ref uint buffers, int value);
@@ -48,25 +35,19 @@ namespace OpenTK.Audio.OpenAL
         //[CLSCompliant(false)]
         private Delegate_GetBufferMode Imported_GetBufferMode;
 
-        #endregion X-RAM Function pointer definitions
-
-        #region X-RAM Tokens
-
         private int AL_EAX_RAM_SIZE, AL_EAX_RAM_FREE,
                     AL_STORAGE_AUTOMATIC, AL_STORAGE_HARDWARE, AL_STORAGE_ACCESSIBLE;
-
-        #endregion X-RAM Tokens
-
-        #region Constructor / Extension Loading
 
         /// <summary>
         /// Constructs a new XRamExtension instance.
         /// </summary>
         public XRamExtension()
         { // Query if Extension supported and retrieve Tokens/Pointers if it is.
-            _valid = false;
+            IsInitialized = false;
             if (AL.IsExtensionPresent("EAX-RAM") == false)
+            {
                 return;
+            }
 
             AL_EAX_RAM_SIZE = AL.GetEnumValue("AL_EAX_RAM_SIZE");
             AL_EAX_RAM_FREE = AL.GetEnumValue("AL_EAX_RAM_FREE");
@@ -99,12 +80,8 @@ namespace OpenTK.Audio.OpenAL
                 return;
             }
 
-            _valid = true;
+            IsInitialized = true;
         }
-
-        #endregion Constructor / Extension Loading
-
-        #region Public Methods
 
         /// <summary>Query total amount of X-RAM in bytes.</summary>
         public int GetRamSize
@@ -175,9 +152,13 @@ namespace OpenTK.Audio.OpenAL
             int tempresult = Imported_GetBufferMode(buffer, IntPtr.Zero); // IntPtr.Zero due to the parameter being unused/reserved atm
 
             if (tempresult == AL_STORAGE_ACCESSIBLE)
+            {
                 return XRamStorage.Accessible;
+            }
             if (tempresult == AL_STORAGE_HARDWARE)
+            {
                 return XRamStorage.Hardware;
+            }
             // default:
             return XRamStorage.Automatic;
         }
@@ -191,8 +172,6 @@ namespace OpenTK.Audio.OpenAL
             uint temp = (uint)buffer;
             return GetBufferMode(ref temp);
         }
-
-        #endregion Public Methods
     }
 
 }

@@ -1,4 +1,3 @@
- #region License
  //
  // The Open Toolkit Library License
  //
@@ -6,7 +5,7 @@
  //
  // Permission is hereby granted, free of charge, to any person obtaining a copy
  // of this software and associated documentation files (the "Software"), to deal
- // in the Software without restriction, including without limitation the rights to 
+ // in the Software without restriction, including without limitation the rights to
  // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
  // the Software, and to permit persons to whom the Software is furnished to do
  // so, subject to the following conditions:
@@ -23,10 +22,8 @@
  // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  // OTHER DEALINGS IN THE SOFTWARE.
  //
- #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using OpenTK.Input;
 
@@ -43,17 +40,18 @@ namespace OpenTK.Platform.X11
     // Note 3: this driver cannot drive the mouse wheel reliably.
     // See comments in ProcessEvents() for more information.
     // (If someone knows of a solution, please tell!)
-    sealed class X11Mouse : IMouseDriver2
+    internal sealed class X11Mouse : IMouseDriver2
     {
-        readonly IntPtr display;
-        readonly IntPtr root_window;
-        MouseState mouse = new MouseState();
-        MouseState cursor = new MouseState();
+        private readonly IntPtr display;
+        private readonly IntPtr root_window;
+        private MouseState mouse = new MouseState();
+        private MouseState cursor = new MouseState();
 
         // When the mouse warps, "detach" the current location
         // from the pointer.
-        bool mouse_detached;
-        int mouse_detached_x, mouse_detached_y;
+        private bool mouse_detached;
+
+        private int mouse_detached_x, mouse_detached_y;
 
         public X11Mouse()
         {
@@ -75,9 +73,13 @@ namespace OpenTK.Platform.X11
             ProcessEvents();
             // X11Mouse supports only one device
             if (index == 0)
+            {
                 return mouse;
+            }
             else
+            {
                 return new MouseState();
+            }
         }
 
         public MouseState GetCursorState()
@@ -105,7 +107,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        void ProcessEvents()
+        private void ProcessEvents()
         {
             IntPtr root, child;
             int root_x, root_y, win_x, win_y;

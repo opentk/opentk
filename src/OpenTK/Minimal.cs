@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#if ANDROID || IPHONE || MINIMAL
+using System;
+
 #if !MINIMAL
 using System.Drawing;
 #endif
-using System.Text;
-
-#if ANDROID || IPHONE || MINIMAL
 
 namespace OpenTK
 {
@@ -88,27 +86,25 @@ namespace OpenTK
     #endif
 
     // System.Xml.XmlIgnoreAttribute
-    class XmlIgnoreAttribute : Attribute
+    internal class XmlIgnoreAttribute : Attribute
     {
     }
 
     // System.ComponentModel.EditorBrowrableAttribute
-    class EditorBrowsableAttribute : Attribute
+    internal class EditorBrowsableAttribute : Attribute
     {
         public EditorBrowsableAttribute(EditorBrowsableState state) { }
     }
 
     // System.ComponentModel.EditorBrowsableState
-    enum EditorBrowsableState
+    internal enum EditorBrowsableState
     {
         Always = 0,
         Never = 1,
         Advanced = 2,
     }
 
-    #region RegistryKey
-
-    class RegistryKey
+    internal class RegistryKey
     {
         public RegistryKey OpenSubKey(string name)
         {
@@ -121,28 +117,14 @@ namespace OpenTK
         }
     }
 
-    #endregion
-
-    #region Registry
-
-    class Registry
+    internal class Registry
     {
         public static readonly RegistryKey LocalMachine = new RegistryKey();
     }
 
-    #endregion
-
-    #region PointF
-
     public struct PointF : IEquatable<PointF>
     {
-        #region Fields
-
-        float x, y;
-
-        #endregion
-
-        #region Constructors
+        private float x, y;
 
         /// <summary>
         /// Constructs a new PointF instance.
@@ -155,10 +137,6 @@ namespace OpenTK
             X = x;
             Y = y;
         }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> that indicates whether this instance is empty or zero.
@@ -249,7 +227,9 @@ namespace OpenTK
         public override bool Equals(object obj)
         {
             if (obj is PointF)
+            {
                 return Equals((PointF)obj);
+            }
 
             return false;
         }
@@ -272,10 +252,6 @@ namespace OpenTK
             return String.Format("{{{0}, {1}}}", X, Y);
         }
 
-        #endregion
-
-        #region IEquatable<PointF> Members
-
         /// <summary>
         /// Indicates whether this instance is equal to the specified PointF.
         /// </summary>
@@ -285,23 +261,11 @@ namespace OpenTK
         {
             return X == other.X && Y == other.Y;
         }
-
-        #endregion
     }
-
-    #endregion
-
-    #region SizeF
 
     public struct SizeF : IEquatable<SizeF>
     {
-        #region Fields
-
-        float width, height;
-
-        #endregion
-
-        #region Constructors
+        private float width, height;
 
         /// <summary>
         /// Constructs a new SizeF instance.
@@ -315,10 +279,6 @@ namespace OpenTK
             Height = height;
         }
 
-        #endregion
-
-        #region Public Members
-
         /// <summary>
         /// Gets or sets the width of this instance.
         /// </summary>
@@ -328,7 +288,9 @@ namespace OpenTK
             set
             {
                 if (width < 0)
+                {
                     throw new ArgumentOutOfRangeException();
+                }
                 width = value;
             }
         }
@@ -342,7 +304,9 @@ namespace OpenTK
             set
             {
                 if (height < 0)
+                {
                     throw new ArgumentOutOfRangeException();
+                }
                 height = value;
             }
         }
@@ -395,7 +359,9 @@ namespace OpenTK
         public override bool Equals(object obj)
         {
             if (obj is SizeF)
+            {
                 return Equals((SizeF)obj);
+            }
 
             return false;
         }
@@ -418,10 +384,6 @@ namespace OpenTK
             return String.Format("{{{0}, {1}}}", Width, Height);
         }
 
-        #endregion
-
-        #region IEquatable<SizeF> Members
-
         /// <summary>
         /// Indicates whether this instance is equal to the specified SizeF.
         /// </summary>
@@ -431,24 +393,12 @@ namespace OpenTK
         {
             return Width == other.Width && Height == other.Height;
         }
-
-        #endregion
     }
-
-    #endregion
-
-    #region RectangleF
 
     public struct RectangleF : IEquatable<RectangleF>
     {
-        #region Fields
-
-        PointF location;
-        SizeF size;
-
-        #endregion
-
-        #region Constructors
+        private PointF location;
+        private SizeF size;
 
         /// <summary>
         /// Constructs a new RectangleF instance.
@@ -472,10 +422,6 @@ namespace OpenTK
         public RectangleF(float x, float y, float width, float height)
             : this(new PointF(x, y), new SizeF(width, height))
         { }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Gets or sets the x coordinate of the RectangleF.
@@ -640,7 +586,9 @@ namespace OpenTK
         public override bool Equals(object obj)
         {
             if (obj is RectangleF)
+            {
                 return Equals((RectangleF)obj);
+            }
 
             return false;
         }
@@ -663,10 +611,6 @@ namespace OpenTK
             return String.Format("{{{0}-{1}}}", Location, Location + Size);
         }
 
-        #endregion
-
-        #region IEquatable<RectangleF> Members
-
         /// <summary>
         /// Indicates whether this instance is equal to the specified RectangleF.
         /// </summary>
@@ -677,17 +621,11 @@ namespace OpenTK
             return Location.Equals(other.Location) &&
                 Size.Equals(other.Size);
         }
-
-        #endregion
     }
-
-    #endregion
-
-    #region Icon
 
     public sealed class Icon : IDisposable
     {
-        IntPtr handle;
+        private IntPtr handle;
 
         public Icon(Icon icon, int width, int height)
         {
@@ -716,10 +654,6 @@ namespace OpenTK
         }
     }
 
-    #endregion
-
-    #region Image
-
     public abstract class Image : IDisposable
     {
         public void Dispose() { }
@@ -729,14 +663,10 @@ namespace OpenTK
         }
     }
 
-    #endregion
-
-    #region Bitmap
-
     public sealed class Bitmap : Image
     {
-        int width;
-        int height;
+        private int width;
+        private int height;
 
         public Bitmap() { }
 
@@ -770,7 +700,7 @@ namespace OpenTK
         {
             return new BitmapData(Width, Height, 0);
         }
-            
+
         internal static int GetPixelFormatSize (PixelFormat format)
         {
             return 0;
@@ -782,18 +712,12 @@ namespace OpenTK
         }
     }
 
-    #endregion
-
-    #region Color
-
     /// <summary>
     /// Represents a color with 4 8bit components (R, G, B, A).
     /// </summary>
     [Serializable]
     public struct Color : IEquatable<Color>
     {
-        #region Fields
-
         /// <summary>
         /// The red component of this Color structure.
         /// </summary>
@@ -814,10 +738,6 @@ namespace OpenTK
         /// </summary>
         public byte A;
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Constructs a new Color structure from the specified components.
         /// </summary>
@@ -832,10 +752,6 @@ namespace OpenTK
             B = (byte)b;
             A = (byte)a;
         }
-
-        #endregion
-
-        #region Public Members
 
         /// <summary>
         /// Converts this color to an integer representation with 8 bits per channel.
@@ -883,7 +799,9 @@ namespace OpenTK
         public override bool Equals(object obj)
         {
             if (!(obj is Color))
+            {
                 return false;
+            }
 
             return Equals((Color)obj);
         }
@@ -905,8 +823,6 @@ namespace OpenTK
         {
             return String.Format("{{(R, G, B, A) = ({0}, {1}, {2}, {3})}}", R.ToString(), G.ToString(), B.ToString(), A.ToString());
         }
-
-#region System colors
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 255, 255, 0).
@@ -1613,12 +1529,6 @@ namespace OpenTK
         /// </summary>
         public static Color YellowGreen { get { return new Color(154, 205, 50, 255); } }
 
-        #endregion
-
-        #endregion
-
-        #region IEquatable<Color> Members
-
         /// <summary>
         /// Compares whether this Color structure is equal to the specified Color.
         /// </summary>
@@ -1633,19 +1543,13 @@ namespace OpenTK
                 this.A == other.A;
         }
 
-        #endregion
-
         public static Color FromArgb(int a, int r, int g, int b)
         {
             return new Color(r, g, b, a);
         }
     }
 
-    #endregion
-
-    #region BitmapData
-
-    sealed class BitmapData
+    internal sealed class BitmapData
     {
         internal BitmapData(int width, int height, int stride)
         {
@@ -1660,11 +1564,7 @@ namespace OpenTK
         public int Stride { get; private set; }
     }
 
-    #endregion
-
-    #region ImageLockMode
-
-    enum ImageLockMode
+    internal enum ImageLockMode
     {
         ReadOnly,
         WriteOnly,
@@ -1672,37 +1572,25 @@ namespace OpenTK
         UserInputBuffer
     }
 
-    #endregion
-
-    #region PixelFormat
-
-    enum PixelFormat
+    internal enum PixelFormat
     {
         Format32bppArgb
     }
 
-    enum ImageFormat {
+    internal enum ImageFormat {
         Png
     }
 
-    #endregion
-
-    #region SystemEvents
-
-    sealed class SystemEvents
+    internal sealed class SystemEvents
     {
         public static event EventHandler DisplaySettingsChanged;
     }
-
-    #endregion
 }
 
 // Need a different namespace to avoid clash with OpenTK.Graphics.
 namespace OpenTK.Minimal
 {
-    #region Graphics
-
-    sealed class Graphics : IDisposable
+    internal sealed class Graphics : IDisposable
     {
         public static Graphics FromImage(OpenTK.Image img)
         {
@@ -1716,8 +1604,6 @@ namespace OpenTK.Minimal
         {
         }
     }
-
-    #endregion
 }
 
 

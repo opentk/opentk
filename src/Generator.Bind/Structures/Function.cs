@@ -1,8 +1,6 @@
-﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+﻿/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -12,16 +10,8 @@ using System.Text.RegularExpressions;
 
 namespace Bind.Structures
 {
-    class Function : Delegate, IEquatable<Function>, IComparable<Function>
+    internal class Function : Delegate, IEquatable<Function>, IComparable<Function>
     {
-        #region Fields
-
-        Delegate wrapped_delegate;
-
-        #endregion
-
-        #region --- Constructors ---
-
         public Function(Delegate d)
             : base(d)
         {
@@ -42,19 +32,7 @@ namespace Bind.Structures
             Body.AddRange(f.Body);
         }
 
-        #endregion
-
-        #region public Delegate WrappedDelegate
-
-        public Delegate WrappedDelegate
-        {
-            get { return wrapped_delegate; }
-            set { wrapped_delegate = value; }
-        }
-
-        #endregion
-
-        #region public void TurnVoidPointersToIntPtr()
+        public Delegate WrappedDelegate { get; set; }
 
         public void TurnVoidPointersToIntPtr()
         {
@@ -68,10 +46,6 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public override bool Unsafe
-
         public override bool Unsafe
         {
             get
@@ -80,33 +54,11 @@ namespace Bind.Structures
             }
         }
 
-        #endregion
-
-        #region public FunctionBody Body
-
-        FunctionBody _body;
-
-        public FunctionBody Body
-        {
-            get { return _body; }
-            set { _body = value; }
-        }
-
-        #endregion
-
-        #region public string TrimmedName
+        public FunctionBody Body { get; set; }
 
         public string TrimmedName { get; set; }
 
-        #endregion
-
-        #region Documentation
-
         public Documentation Documentation { get; set; }
-
-        #endregion
-
-        #region ToString
 
         public override string ToString()
         {
@@ -115,10 +67,6 @@ namespace Bind.Structures
                 TrimmedName,
                 Parameters);
         }
-
-        #endregion
-
-        #region IEquatable<Function> Members
 
         public bool Equals(Function other)
         {
@@ -129,31 +77,38 @@ namespace Bind.Structures
             return result;
         }
 
-        #endregion
-
-        #region IComparable<Function> Members
-
         public int CompareTo(Function other)
         {
             int ret = Name.CompareTo(other.Name);
             if (ret == 0)
+            {
                 ret = Parameters.CompareTo(other.Parameters);
+            }
             if (ret == 0)
+            {
                 ret = ReturnType.CompareTo(other.ReturnType);
+            }
             return ret;
         }
-
-        #endregion
     }
 
-    #region class FunctionBody : List<string>
-
+    /// <summary>
+    /// The <see cref="FunctionBody"/> class acts as a wrapper around a block of source code that makes up the body
+    /// of a function.
+    /// </summary>
     public class FunctionBody : List<string>
     {
+        /// <summary>
+        /// Initializes an empty <see cref="FunctionBody"/>.
+        /// </summary>
         public FunctionBody()
         {
         }
 
+        /// <summary>
+        /// Initializes a <see cref="FunctionBody"/> from an existing FunctionBody.
+        /// </summary>
+        /// <param name="fb">The body to copy from.</param>
         public FunctionBody(FunctionBody fb)
         {
             foreach (string s in fb)
@@ -164,24 +119,42 @@ namespace Bind.Structures
 
         private string indent = "";
 
+        /// <summary>
+        /// Indents this <see cref="FunctionBody"/> another level.
+        /// </summary>
         public void Indent()
         {
             indent += "    ";
         }
 
+        /// <summary>
+        /// Removes a level of indentation from this <see cref="FunctionBody"/>.
+        /// </summary>
         public void Unindent()
         {
             if (indent.Length > 4)
+            {
                 indent = indent.Substring(4);
+            }
             else
+            {
                 indent = String.Empty;
+            }
         }
 
+        /// <summary>
+        /// Adds a line of source code to the body at the current indentation level.
+        /// </summary>
+        /// <param name="s">The line to add.</param>
         new public void Add(string s)
         {
             base.Add(indent + s.TrimEnd('\r', '\n'));
         }
 
+        /// <summary>
+        /// Adds a range of source code lines to the body at the current indentation level.
+        /// </summary>
+        /// <param name="collection"></param>
         new public void AddRange(IEnumerable<string> collection)
         {
             foreach (string t in collection)
@@ -190,10 +163,16 @@ namespace Bind.Structures
             }
         }
 
+        /// <summary>
+        /// Builds the contents of the function body into a string and encloses it with braces.
+        /// </summary>
+        /// <returns>The body, enclosed in braces.</returns>
         public override string ToString()
         {
             if (Count == 0)
+            {
                 return String.Empty;
+            }
 
             StringBuilder sb = new StringBuilder(Count);
 
@@ -208,15 +187,11 @@ namespace Bind.Structures
         }
     }
 
-    #endregion
-
-    #region class FunctionCollection : SortedDictionary<string, List<Function>>
-
-    class FunctionCollection : SortedDictionary<string, List<Function>>
+    internal class FunctionCollection : SortedDictionary<string, List<Function>>
     {
-        Regex unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
+        private Regex unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
 
-        void Add(Function f)
+        private void Add(Function f)
         {
             if (!ContainsKey(f.Extension))
             {
@@ -276,6 +251,4 @@ namespace Bind.Structures
             }
         }
     }
-
-    #endregion
 }

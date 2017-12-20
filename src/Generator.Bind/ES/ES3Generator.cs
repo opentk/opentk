@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Xml.XPath;
+﻿using System.IO;
 using Bind.GL2;
-using Bind.Structures;
-using Delegate=Bind.Structures.Delegate;
-using Enum=Bind.Structures.Enum;
 
 namespace Bind.ES
 {
     // Generation implementation for OpenGL ES 3.0
-    class ES3Generator : Generator
+    internal class ES3Generator : Generator
     {
         public ES3Generator(Settings settings)
             : base(settings)

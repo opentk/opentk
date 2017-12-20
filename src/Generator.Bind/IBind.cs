@@ -1,15 +1,13 @@
-﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+﻿/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using Bind.Structures;
 using System.Collections.Generic;
 
 namespace Bind
 {
-    interface IBind
+    internal interface IBind
     {
         DelegateCollection Delegates { get; }
         EnumCollection Enums { get; }

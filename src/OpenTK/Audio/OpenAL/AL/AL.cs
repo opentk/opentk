@@ -1,64 +1,60 @@
-﻿#region --- OpenTK.OpenAL License ---
-/* AlFunctions.cs
+﻿/* AlFunctions.cs
  * C header: \OpenAL 1.1 SDK\include\Al.h
  * Spec: http://www.openal.org/openal_webstf/specs/OpenAL11Specification.pdf
  * Copyright (c) 2008 Christoph Brandtner and Stefanos Apostolopoulos
  * See license.txt for license details
  * http://www.OpenTK.net */
-#endregion
 
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
-using OpenTK;
-
 /* Type Mapping
-// 8-bit boolean 
+// 8-bit boolean
 typedef char ALboolean;
  * bool
-// character 
+// character
 typedef char ALchar;
  * byte
-// signed 8-bit 2's complement integer 
+// signed 8-bit 2's complement integer
 typedef char ALbyte;
  * byte
 
-// unsigned 8-bit integer 
+// unsigned 8-bit integer
 typedef unsigned char ALubyte;
  * byte
 
-// signed 16-bit 2's complement integer 
+// signed 16-bit 2's complement integer
 typedef short ALshort;
  * short
 
-// unsigned 16-bit integer 
+// unsigned 16-bit integer
 typedef unsigned short ALushort;
  * ushort
 
-// unsigned 32-bit integer 
+// unsigned 32-bit integer
 typedef unsigned int ALuint;
  * uint
- 
-// signed 32-bit 2's complement integer 
+
+// signed 32-bit 2's complement integer
 typedef int ALint;
  * int
-// non-negative 32-bit binary integer size 
+// non-negative 32-bit binary integer size
 typedef int ALsizei;
  * int
 // enumerated 32-bit value
 typedef int ALenum;
  * int
 
-// 32-bit IEEE754 floating-point 
+// 32-bit IEEE754 floating-point
 typedef float ALfloat;
  * float
 
-// 64-bit IEEE754 floating-point 
+// 64-bit IEEE754 floating-point
 typedef double ALdouble;
  * double
 
-// void type (for opaque pointers only) 
+// void type (for opaque pointers only)
 typedef void ALvoid;
  * void
 */
@@ -71,14 +67,8 @@ namespace OpenTK.Audio.OpenAL
     public static partial class AL
     {
 
-        #region Constants
-
         internal const string Lib = "openal32.dll";
         private const CallingConvention Style = CallingConvention.Cdecl;
-
-        #endregion Constants
-
-        #region Renderer State management
 
         /// <summary>This function enables a feature of the OpenAL driver. There are no capabilities defined in OpenAL 1.1 to be used with this function, but it may be used by an extension.</summary>
         /// <param name="capability">The name of a capability to enable.</param>
@@ -90,18 +80,14 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="capability">The name of a capability to disable.</param>
         [DllImport(AL.Lib, EntryPoint = "alDisable", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
         public static extern void Disable(ALCapability capability);
-        // AL_API void AL_APIENTRY alDisable( ALenum capability ); 
+        // AL_API void AL_APIENTRY alDisable( ALenum capability );
 
         /// <summary>This function returns a boolean indicating if a specific feature is enabled in the OpenAL driver.</summary>
         /// <param name="capability">The name of a capability to enable.</param>
         /// <returns>True if enabled, False if disabled.</returns>
         [DllImport(AL.Lib, EntryPoint = "alIsEnabled", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
         public static extern bool IsEnabled(ALCapability capability);
-        // AL_API ALboolean AL_APIENTRY alIsEnabled( ALenum capability ); 
-
-        #endregion Renderer State management
-
-        #region State retrieval
+        // AL_API ALboolean AL_APIENTRY alIsEnabled( ALenum capability );
 
         [DllImport(AL.Lib, EntryPoint = "alGetString", ExactSpelling = true, CallingConvention = AL.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
         private static extern IntPtr GetStringPrivate(ALGetString param); // accepts the enums AlError, AlContextString
@@ -168,10 +154,6 @@ namespace OpenTK.Audio.OpenAL
         public static extern ALError GetError();
         // AL_API ALenum AL_APIENTRY alGetError( void );
 
-        #endregion State retrieval
-
-        #region Extension support.
-
         ///<summary>This function tests if a specific Extension is available for the OpenAL driver.</summary>
         /// <param name="extname">A string naming the desired extension. Example: "EAX-RAM"</param>
         /// <returns>Returns True if the Extension is available or False if not available.</returns>
@@ -193,12 +175,10 @@ namespace OpenTK.Audio.OpenAL
         public static extern int GetEnumValue([In] string ename);
         // AL_API ALenum AL_APIENTRY alGetEnumValue( const ALchar* ename );
 
-        #endregion Extension support.
-
         /* Listener
          * Listener represents the location and orientation of the
          * 'user' in 3D-space.
-         * 
+         *
          * Properties include: -
          *
          * Gain         AL_GAIN         ALfloat
@@ -206,8 +186,6 @@ namespace OpenTK.Audio.OpenAL
          * Velocity     AL_VELOCITY     ALfloat[3]
          * Orientation  AL_ORIENTATION  ALfloat[6] (Forward then Up vectors)
          */
-
-        #region Set Listener parameters
 
         /// <summary>This function sets a floating-point property for the listener.</summary>
         /// <param name="param">The name of the attribute to be set: ALListenerf.Gain</param>
@@ -281,10 +259,6 @@ namespace OpenTK.Audio.OpenAL
         // AL_API void AL_APIENTRY alListener3i( ALenum param, ALint value1, ALint value2, ALint value3 );
         // AL_API void AL_APIENTRY alListeneriv( ALenum param, const ALint* values );
 
-        #endregion Set Listener parameters
-
-        #region Get Listener parameters
-
         /// <summary>This function retrieves a floating-point property of the listener.</summary>
         /// <param name="param">the name of the attribute to be retrieved: ALListenerf.Gain</param>
         /// <param name="value">a pointer to the floating-point value being retrieved.</param>
@@ -345,24 +319,22 @@ namespace OpenTK.Audio.OpenAL
         // AL_API void AL_APIENTRY alGetListener3i( ALenum param, ALint *value1, ALint *value2, ALint *value3 );
         // AL_API void AL_APIENTRY alGetListeneriv( ALenum param, ALint* values );
 
-        #endregion Get Listener parameters
-
         /* Source
          * Sources represent individual sound objects in 3D-space.
          * Sources take the PCM buffer provided in the specified Buffer,
          * apply Source-specific modifications, and then
          * submit them to be mixed according to spatial arrangement etc.
-         * 
+         *
          * Properties include: -
          *
-        
+
          * Position                          AL_POSITION             ALfloat[3]
          * Velocity                          AL_VELOCITY             ALfloat[3]
          * Direction                         AL_DIRECTION            ALfloat[3]
 
          * Head Relative Mode                AL_SOURCE_RELATIVE      ALint (AL_TRUE or AL_FALSE)
          * Looping                           AL_LOOPING              ALint (AL_TRUE or AL_FALSE)
-         * 
+         *
          * Reference Distance                AL_REFERENCE_DISTANCE   ALfloat
          * Max Distance                      AL_MAX_DISTANCE         ALfloat
          * RollOff Factor                    AL_ROLLOFF_FACTOR       ALfloat
@@ -372,21 +344,17 @@ namespace OpenTK.Audio.OpenAL
          * Max Gain                          AL_MAX_GAIN             ALfloat
          * Inner Angle                       AL_CONE_INNER_ANGLE     ALint or ALfloat
          * Outer Angle                       AL_CONE_OUTER_ANGLE     ALint or ALfloat
-         * Cone Outer Gain                   AL_CONE_OUTER_GAIN      ALint or ALfloat 
-         * 
+         * Cone Outer Gain                   AL_CONE_OUTER_GAIN      ALint or ALfloat
+         *
          * MS Offset                         AL_MSEC_OFFSET          ALint or ALfloat
          * Byte Offset                       AL_BYTE_OFFSET          ALint or ALfloat
          * Sample Offset                     AL_SAMPLE_OFFSET        ALint or ALfloat
          * Attached Buffer                   AL_BUFFER               ALint
-         * 
+         *
          * State (Query only)                AL_SOURCE_STATE         ALint
          * Buffers Queued (Query only)       AL_BUFFERS_QUEUED       ALint
          * Buffers Processed (Query only)    AL_BUFFERS_PROCESSED    ALint
          */
-
-        #region Create Source objects
-
-        #region GenSources()
 
         [DllImport(AL.Lib, EntryPoint = "alGenSources", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
         unsafe private static extern void GenSourcesPrivate(int n, [Out] uint* sources);
@@ -465,16 +433,12 @@ namespace OpenTK.Audio.OpenAL
             GenSources(1, out source);
         }
 
-        #endregion GenSources()
-
-        #region DeleteSources()
-
         /// <summary>This function deletes one or more sources.</summary>
         /// <param name="n">The number of sources to be deleted.</param>
         /// <param name="sources">Pointer to an array of source names identifying the sources to be deleted.</param>
         [CLSCompliant(false)]
         [DllImport(AL.Lib, EntryPoint = "alDeleteSources", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
-        unsafe public static extern void DeleteSources(int n, [In] uint* sources); // Delete Source objects 
+        unsafe public static extern void DeleteSources(int n, [In] uint* sources); // Delete Source objects
         // AL_API void AL_APIENTRY alDeleteSources( ALsizei n, const ALuint* Sources );
 
         /// <summary>This function deletes one or more sources.</summary>
@@ -495,8 +459,14 @@ namespace OpenTK.Audio.OpenAL
         [CLSCompliant(false)]
         public static void DeleteSources(uint[] sources)
         {
-            if (sources == null) throw new ArgumentNullException();
-            if (sources.Length == 0) throw new ArgumentOutOfRangeException();
+            if (sources == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (sources.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             DeleteBuffers(sources.Length, ref sources[0]);
         }
 
@@ -504,8 +474,14 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="sources">An array of source names identifying the sources to be deleted.</param>
         public static void DeleteSources(int[] sources)
         {
-            if (sources == null) throw new ArgumentNullException();
-            if (sources.Length == 0) throw new ArgumentOutOfRangeException();
+            if (sources == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (sources.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             DeleteBuffers(sources.Length, ref sources[0]);
         }
 
@@ -524,10 +500,6 @@ namespace OpenTK.Audio.OpenAL
             DeleteSources(1, ref source);
         }
 
-        #endregion DeleteSources()
-
-        #region IsSource()
-
         /// <summary>This function tests if a source name is valid, returning True if valid and False if not.</summary>
         /// <param name="sid">A source name to be tested for validity</param>
         /// <returns>Success.</returns>
@@ -542,14 +514,6 @@ namespace OpenTK.Audio.OpenAL
         {
             return IsSource((uint)sid);
         }
-
-        #endregion IsSource()
-
-        #endregion Create Source objects
-
-        #region Set Source parameters
-
-        #region Sourcef
 
         /// <summary>This function sets a floating-point property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being set</param>
@@ -567,10 +531,6 @@ namespace OpenTK.Audio.OpenAL
         {
             Source((uint)sid, param, value);
         }
-
-        #endregion Sourcef
-
-        #region Source3f
 
         /// <summary>This function sets a source property requiring three floating-point values.</summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
@@ -612,17 +572,13 @@ namespace OpenTK.Audio.OpenAL
             Source((uint)sid, param, values.X, values.Y, values.Z);
         }
 
-        #endregion Source3f
-
-        #region Sourcei
-
         /// <summary>This function sets an integer property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
         /// <param name="param">The name of the attribute to set: ALSourcei.SourceRelative, ConeInnerAngle, ConeOuterAngle, Looping, Buffer, SourceState.</param>
         /// <param name="value">The value to set the attribute to.</param>
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alSourcei", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
         public static extern void Source(uint sid, ALSourcei param, int value);
-        // AL_API void AL_APIENTRY alSourcei( ALuint sid, ALenum param, ALint value ); 
+        // AL_API void AL_APIENTRY alSourcei( ALuint sid, ALenum param, ALint value );
 
         /// <summary>This function sets an integer property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
@@ -669,10 +625,6 @@ namespace OpenTK.Audio.OpenAL
             Source((uint)source, ALSourcei.Buffer, buffer);
         }
 
-        #endregion Sourcei
-
-        #region Source3i
-
         /// <summary>This function sets 3 integer properties of a source. This property is used to establish connections between Sources and Auxiliary Effect Slots.</summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
         /// <param name="param">The name of the attribute to set: EfxAuxiliarySendFilter</param>
@@ -681,7 +633,7 @@ namespace OpenTK.Audio.OpenAL
         ///<param name="value3">The value to set the attribute to. (EFX Extension) optional Filter ID.</param>
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alSource3i", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
         public static extern void Source(uint sid, ALSource3i param, int value1, int value2, int value3);
-        // AL_API void AL_APIENTRY alSource3i( ALuint sid, ALenum param, ALint value1, ALint value2, ALint value3 );      
+        // AL_API void AL_APIENTRY alSource3i( ALuint sid, ALenum param, ALint value1, ALint value2, ALint value3 );
 
         /// <summary>This function sets 3 integer properties of a source. This property is used to establish connections between Sources and Auxiliary Effect Slots.</summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
@@ -694,17 +646,9 @@ namespace OpenTK.Audio.OpenAL
             Source((uint)sid, param, value1, value2, value3);
         }
 
-        #endregion Source3i
-
         // Not used by any Enum:
         // AL_API void AL_APIENTRY alSourcefv( ALuint sid, ALenum param, const ALfloat* values );
         // AL_API void AL_APIENTRY alSourceiv( ALuint sid, ALenum param, const ALint* values );
-
-        #endregion Set Source parameters
-
-        #region Get Source parameters
-
-        #region GetSourcef
 
         /// <summary>This function retrieves a floating-point property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
@@ -722,10 +666,6 @@ namespace OpenTK.Audio.OpenAL
         {
             GetSource((uint)sid, param, out value);
         }
-
-        #endregion GetSourcef
-
-        #region GetSource3f
 
         /// <summary>This function retrieves three floating-point values representing a property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
@@ -767,10 +707,6 @@ namespace OpenTK.Audio.OpenAL
             GetSource((uint)sid, param, out values.X, out values.Y, out values.Z);
         }
 
-        #endregion GetSource3f
-
-        #region GetSourcei
-
         /// <summary>This function retrieves an integer property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
         /// <param name="param">The name of the attribute to retrieve: ALSourcei.SourceRelative, Buffer, SourceState, BuffersQueued, BuffersProcessed.</param>
@@ -811,18 +747,10 @@ namespace OpenTK.Audio.OpenAL
             value = result != 0;
         }
 
-        #endregion GetSourcei
-
         // Not used by any Enum:
         // AL_API void AL_APIENTRY alGetSource3i( ALuint sid, ALenum param, ALint* value1, ALint* value2, ALint* value3);
         // AL_API void AL_APIENTRY alGetSourcefv( ALuint sid, ALenum param, ALfloat* values );
         // AL_API void AL_APIENTRY alGetSourceiv( ALuint sid,  ALenum param, ALint* values );
-
-        #endregion Get Source parameters
-
-        #region Source vector based playback calls
-
-        #region SourcePlay
 
         /// <summary>This function plays a set of sources. The playing sources will have their state changed to ALSourceState.Playing. When called on a source which is already playing, the source will restart at the beginning. When the attached buffer(s) are done playing, the source will progress to the ALSourceState.Stopped state.</summary>
         /// <param name="ns">The number of sources to be played.</param>
@@ -874,10 +802,6 @@ namespace OpenTK.Audio.OpenAL
             }
         }
 
-        #endregion SourcePlay
-
-        #region SourceStop
-
         /// <summary>This function stops a set of sources. The stopped sources will have their state changed to ALSourceState.Stopped.</summary>
         /// <param name="ns">The number of sources to stop.</param>
         /// <param name="sids">A pointer to an array of sources to be stopped.</param>
@@ -927,10 +851,6 @@ namespace OpenTK.Audio.OpenAL
                 }
             }
         }
-
-        #endregion SourceStop
-
-        #region SourceRewind
 
         /// <summary>This function stops a set of sources and sets all their states to ALSourceState.Initial.</summary>
         /// <param name="ns">The number of sources to be rewound.</param>
@@ -982,10 +902,6 @@ namespace OpenTK.Audio.OpenAL
             }
         }
 
-        #endregion SourceRewind
-
-        #region SourcePause
-
         /// <summary>This function pauses a set of sources. The paused sources will have their state changed to ALSourceState.Paused.</summary>
         /// <param name="ns">The number of sources to be paused.</param>
         /// <param name="sids">A pointer to an array of sources to be paused.</param>
@@ -1035,14 +951,6 @@ namespace OpenTK.Audio.OpenAL
             }
         }
 
-        #endregion SourcePause
-
-        #endregion Source vector based playback calls
-
-        #region Source based playback calls
-
-        #region SourcePlay
-
         /// <summary>This function plays, replays or resumes a source. The playing source will have it's state changed to ALSourceState.Playing. When called on a source which is already playing, the source will restart at the beginning. When the attached buffer(s) are done playing, the source will progress to the ALSourceState.Stopped state.</summary>
         /// <param name="sid">The name of the source to be played.</param>
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alSourcePlay", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
@@ -1055,10 +963,6 @@ namespace OpenTK.Audio.OpenAL
         {
             SourcePlay((uint)sid);
         }
-
-        #endregion SourcePlay
-
-        #region SourceStop
 
         /// <summary>This function stops a source. The stopped source will have it's state changed to ALSourceState.Stopped.</summary>
         /// <param name="sid">The name of the source to be stopped.</param>
@@ -1073,10 +977,6 @@ namespace OpenTK.Audio.OpenAL
             SourceStop((uint)sid);
         }
 
-        #endregion SourceStop
-
-        #region SourceRewind
-
         /// <summary>This function stops the source and sets its state to ALSourceState.Initial.</summary>
         /// <param name="sid">The name of the source to be rewound.</param>
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alSourceRewind", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
@@ -1090,10 +990,6 @@ namespace OpenTK.Audio.OpenAL
             SourceRewind((uint)sid);
         }
 
-        #endregion SourceRewind
-
-        #region SourcePause
-
         /// <summary>This function pauses a source. The paused source will have its state changed to ALSourceState.Paused.</summary>
         /// <param name="sid">The name of the source to be paused.</param>
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alSourcePause", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
@@ -1106,14 +1002,6 @@ namespace OpenTK.Audio.OpenAL
         {
             SourcePause((uint)sid);
         }
-
-        #endregion SourcePause
-
-        #endregion Source based playback calls
-
-        #region Source Queuing
-
-        #region SourceQueueBuffers
 
         /// <summary>This function queues a set of buffers on a source. All buffers attached to a source will be played in sequence, and the number of processed buffers can be detected using AL.GetSource with parameter ALGetSourcei.BuffersProcessed. When first created, a source will be of type ALSourceType.Undetermined. A successful AL.SourceQueueBuffers call will change the source type to ALSourceType.Streaming.</summary>
         /// <param name="sid">The name of the source to queue buffers onto.</param>
@@ -1177,10 +1065,6 @@ namespace OpenTK.Audio.OpenAL
             unsafe { AL.SourceQueueBuffers((uint)source, 1, (uint*)&buffer); }
         }
 
-        #endregion SourceQueueBuffers
-
-        #region SourceUnqueueBuffers
-
         /// <summary>This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected using AL.GetSource with parameter ALGetSourcei.BuffersProcessed, which is the maximum number of buffers that can be unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the queue.</summary>
         /// <param name="sid">The name of the source to unqueue buffers from.</param>
         /// <param name="numEntries">The number of buffers to be unqueued.</param>
@@ -1233,15 +1117,14 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="numEntries">The number of buffers to be unqueued.</param>
         public static int[] SourceUnqueueBuffers(int sid, int numEntries)
         {
-            if (numEntries <= 0) throw new ArgumentOutOfRangeException("numEntries", "Must be greater than zero.");
+            if (numEntries <= 0)
+            {
+                throw new ArgumentOutOfRangeException("numEntries", "Must be greater than zero.");
+            }
             int[] buf = new int[numEntries];
             SourceUnqueueBuffers(sid, numEntries, buf);
             return buf;
         }
-
-        #endregion SourceUnqueueBuffers
-
-        #endregion Source Queuing
 
         /*
          * Buffer
@@ -1256,10 +1139,6 @@ namespace OpenTK.Audio.OpenAL
          * Bits (Query only)         AL_BITS           ALint
          * Channels (Query only)     AL_CHANNELS       ALint
          */
-
-        #region Buffer objects
-
-        #region GenBuffers
 
         /// <summary>This function generates one or more buffers, which contain audio buffer (see AL.BufferData). References to buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).</summary>
         /// <param name="n">The number of buffers to be generated.</param>
@@ -1332,10 +1211,6 @@ namespace OpenTK.Audio.OpenAL
             GenBuffers(1, out buffer);
         }
 
-        #endregion GenBuffers
-
-        #region DeleteBuffers
-
         /// <summary>This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
         /// <param name="n">The number of buffers to be deleted.</param>
         /// <param name="buffers">Pointer to an array of buffer names identifying the buffers to be deleted.</param>
@@ -1385,8 +1260,14 @@ namespace OpenTK.Audio.OpenAL
         [CLSCompliant(false)]
         public static void DeleteBuffers(uint[] buffers)
         {
-            if (buffers == null) throw new ArgumentNullException();
-            if (buffers.Length == 0) throw new ArgumentOutOfRangeException();
+            if (buffers == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (buffers.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             DeleteBuffers(buffers.Length, ref buffers[0]);
         }
 
@@ -1394,8 +1275,14 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="buffers">Pointer to an array of buffer names identifying the buffers to be deleted.</param>
         public static void DeleteBuffers(int[] buffers)
         {
-            if (buffers == null) throw new ArgumentNullException();
-            if (buffers.Length == 0) throw new ArgumentOutOfRangeException();
+            if (buffers == null)
+            {
+                throw new ArgumentNullException();
+            }
+            if (buffers.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             DeleteBuffers(buffers.Length, ref buffers[0]);
         }
 
@@ -1414,10 +1301,6 @@ namespace OpenTK.Audio.OpenAL
             DeleteBuffers(1, ref buffer);
         }
 
-        #endregion DeleteBuffers
-
-        #region IsBuffer
-
         /// <summary>This function tests if a buffer name is valid, returning True if valid, False if not.</summary>
         /// <param name="bid">A buffer Handle previously allocated with <see cref="GenBuffers(int)"/>.</param>
         /// <returns>Success.</returns>
@@ -1433,10 +1316,6 @@ namespace OpenTK.Audio.OpenAL
             uint temp = (uint)bid;
             return IsBuffer(temp);
         }
-
-        #endregion IsBuffer
-
-        #region BufferData
 
         /// <summary>This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function may be used by extensions to load other buffer types as well.</summary>
         /// <param name="bid">buffer Handle/Name to be filled with buffer.</param>
@@ -1469,18 +1348,14 @@ namespace OpenTK.Audio.OpenAL
             where TBuffer : struct
         {
             if (!BlittableValueType.Check(buffer))
+            {
                 throw new ArgumentException("buffer");
+            }
 
             GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
             try { BufferData(bid, format, handle.AddrOfPinnedObject(), size, freq); }
             finally { handle.Free(); }
         }
-
-        #endregion BufferData
-
-        #endregion Buffer objects
-
-        #region Set Buffer parameters (currently parameters can only be read)
 
         /*
         Remarks (from Manual)
@@ -1504,12 +1379,6 @@ namespace OpenTK.Audio.OpenAL
             Buffer3f( bid, param, values.X, values.Y, values.Z );
         }*/
 
-        #endregion Set Buffer parameters
-
-        #region Get Buffer parameters
-
-        #region GetBufferi
-
         /// <summary>This function retrieves an integer property of a buffer.</summary>
         /// <param name="bid">Buffer name whose attribute is being retrieved</param>
         /// <param name="param">The name of the attribute to be retrieved: ALGetBufferi.Frequency, Bits, Channels, Size, and the currently hidden AL_DATA (dangerous).</param>
@@ -1527,17 +1396,11 @@ namespace OpenTK.Audio.OpenAL
             GetBuffer((uint)bid, param, out value);
         }
 
-        #endregion GetBufferi
-
         // AL_API void AL_APIENTRY alGetBufferf( ALuint bid, ALenum param, ALfloat* value );
         // AL_API void AL_APIENTRY alGetBuffer3f( ALuint bid, ALenum param, ALfloat* value1, ALfloat* value2, ALfloat* value3);
         // AL_API void AL_APIENTRY alGetBufferfv( ALuint bid, ALenum param, ALfloat* values );
         // AL_API void AL_APIENTRY alGetBuffer3i( ALuint bid, ALenum param, ALint* value1, ALint* value2, ALint* value3);
         // AL_API void AL_APIENTRY alGetBufferiv( ALuint bid, ALenum param, ALint* values );
-
-        #endregion Get Buffer parameters
-
-        #region Global Parameters
 
         /// <summary>AL.DopplerFactor is a simple scaling of source and listener velocities to exaggerate or deemphasize the Doppler (pitch) shift resulting from the calculation.</summary>
         /// <param name="value">A negative value will result in an error, the command is then ignored. The default value is 1f. The current setting can be queried using AL.Get with parameter ALGetFloat.SpeedOfSound.</param>
@@ -1561,29 +1424,29 @@ namespace OpenTK.Audio.OpenAL
         /// <remarks>
         /// The ALDistanceModel .InverseDistance model works according to the following formula:
         /// gain = ALSourcef.ReferenceDistance / (ALSourcef.ReferenceDistance + ALSourcef.RolloffFactor * (distance – ALSourcef.ReferenceDistance));
-        /// 
+        ///
         /// The ALDistanceModel .InverseDistanceClamped model works according to the following formula:
         /// distance = max(distance,ALSourcef.ReferenceDistance);
         /// distance = min(distance,ALSourcef.MaxDistance);
         /// gain = ALSourcef.ReferenceDistance / (ALSourcef.ReferenceDistance + ALSourcef.RolloffFactor * (distance – ALSourcef.ReferenceDistance));
-        /// 
-        /// The ALDistanceModel.LinearDistance model works according to the following formula: 
+        ///
+        /// The ALDistanceModel.LinearDistance model works according to the following formula:
         /// distance = min(distance, ALSourcef.MaxDistance) // avoid negative gain
         /// gain = (1 – ALSourcef.RolloffFactor * (distance – ALSourcef.ReferenceDistance) / (ALSourcef.MaxDistance – ALSourcef.ReferenceDistance))
-        /// 
+        ///
         /// The ALDistanceModel.LinearDistanceClamped model works according to the following formula:
         /// distance = max(distance, ALSourcef.ReferenceDistance)
         /// distance = min(distance, ALSourcef.MaxDistance)
         /// gain = (1 – ALSourcef.RolloffFactor * (distance – ALSourcef.ReferenceDistance) / (ALSourcef.MaxDistance – ALSourcef.ReferenceDistance))
-        /// 
+        ///
         /// The ALDistanceModel.ExponentDistance model works according to the following formula:
-        /// gain = (distance / ALSourcef.ReferenceDistance) ^ (- ALSourcef.RolloffFactor) 
-        /// 
+        /// gain = (distance / ALSourcef.ReferenceDistance) ^ (- ALSourcef.RolloffFactor)
+        ///
         /// The ALDistanceModel.ExponentDistanceClamped model works according to the following formula:
         /// distance = max(distance, ALSourcef.ReferenceDistance)
         /// distance = min(distance, ALSourcef.MaxDistance)
         /// gain = (distance / ALSourcef.ReferenceDistance) ^ (- ALSourcef.RolloffFactor)
-        /// 
+        ///
         /// The ALDistanceModel.None model works according to the following formula:
         /// gain = 1f;
         /// </remarks>
@@ -1591,10 +1454,6 @@ namespace OpenTK.Audio.OpenAL
         [DllImport(AL.Lib, EntryPoint = "alDistanceModel", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
         public static extern void DistanceModel(ALDistanceModel distancemodel);
         // AL_API void AL_APIENTRY alDistanceModel( ALenum distanceModel );
-
-        #endregion Global Parameters
-
-        #region Helpers
 
         /// <summary>(Helper) Returns Source state information.</summary>
         /// <param name="sid">The source to be queried.</param>
@@ -1646,7 +1505,5 @@ namespace OpenTK.Audio.OpenAL
         {
             return (ALDistanceModel)AL.Get(ALGetInteger.DistanceModel);
         }
-
-        #endregion Helpers
     }
 }

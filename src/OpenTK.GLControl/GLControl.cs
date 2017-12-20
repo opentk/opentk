@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library, except where noted.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,20 +22,14 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
 
 using OpenTK.Platform;
 using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
 
 namespace OpenTK
 {
@@ -48,23 +41,22 @@ namespace OpenTK
     /// </summary>
     public partial class GLControl : UserControl
     {
-        IGraphicsContext context;
-        IGLControl implementation;
-        GraphicsMode format;
-        int major, minor;
-        GraphicsContextFlags flags;
-        bool? initial_vsync_value;
+        private IGraphicsContext context;
+        private IGLControl implementation;
+        private GraphicsMode format;
+        private int major, minor;
+        private GraphicsContextFlags flags;
+
+        private bool? initial_vsync_value;
         // Indicates that OnResize was called before OnHandleCreated.
         // To avoid issues with missing OpenGL contexts, we suppress
         // the premature Resize event and raise it as soon as the handle
         // is ready.
-        bool resize_event_suppressed;
+        private bool resize_event_suppressed;
         // Indicates whether the control is in design mode. Due to issues
         // wiith the DesignMode property and nested controls,we need to
         // evaluate this in the constructor.
-        readonly bool design_mode;
-
-        #region --- Constructors ---
+        private readonly bool design_mode;
 
         /// <summary>
         /// Constructs a new instance.
@@ -91,7 +83,9 @@ namespace OpenTK
         public GLControl(GraphicsMode mode, int major, int minor, GraphicsContextFlags flags)
         {
             if (mode == null)
+            {
                 throw new ArgumentNullException("mode");
+            }
 
             // SDL does not currently support embedding
             // on external windows. If Open.Toolkit is not yet
@@ -104,7 +98,7 @@ namespace OpenTK
             {
                 Backend = PlatformBackend.PreferNative
             });
-            
+
             SetStyle(ControlStyles.Opaque, true);
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -125,11 +119,7 @@ namespace OpenTK
             InitializeComponent();
         }
 
-        #endregion
-
-        #region --- Private  Methods ---
-
-        IGLControl Implementation
+        private IGLControl Implementation
         {
             get
             {
@@ -140,7 +130,7 @@ namespace OpenTK
         }
 
         [Conditional("DEBUG")]
-        void ValidateContext(string message)
+        private void ValidateContext(string message)
         {
             if (!Context.IsCurrent)
             {
@@ -148,21 +138,23 @@ namespace OpenTK
             }
         }
 
-        void ValidateState()
+        private void ValidateState()
         {
             if (IsDisposed)
+            {
                 throw new ObjectDisposedException(GetType().Name);
+            }
 
             if (!IsHandleCreated)
+            {
                 CreateControl();
+            }
 
             if (implementation == null || context == null || context.IsDisposed)
+            {
                 RecreateHandle();
+            }
         }
-
-        #endregion
-
-        #region --- Protected Methods ---
 
         /// <summary>
         /// Gets the <c>CreateParams</c> instance for this <c>GLControl</c>
@@ -190,21 +182,31 @@ namespace OpenTK
         protected override void OnHandleCreated(EventArgs e)
         {
             if (context != null)
+            {
                 context.Dispose();
+            }
 
             if (implementation != null)
+            {
                 implementation.WindowInfo.Dispose();
+            }
 
             if (design_mode)
+            {
                 implementation = new DummyGLControl();
+            }
             else
+            {
                 implementation = new GLControlFactory().CreateGLControl(format, this);
+            }
 
             context = implementation.CreateContext(major, minor, flags);
             MakeCurrent();
 
             if (!design_mode)
+            {
                 ((IGraphicsContextInternal)Context).LoadAll();
+            }
 
             // Deferred setting of vsync mode. See VSync property for more information.
             if (initial_vsync_value.HasValue)
@@ -253,7 +255,9 @@ namespace OpenTK
             ValidateState();
 
             if (design_mode)
+            {
                 e.Graphics.Clear(BackColor);
+            }
 
             base.OnPaint(e);
         }
@@ -273,13 +277,15 @@ namespace OpenTK
                 return;
             }
 
-            if (Configuration.RunningOnMacOS) 
+            if (Configuration.RunningOnMacOS)
             {
                 DelayUpdate delay = PerformContextUpdate;
                 BeginInvoke(delay); //Need the native window to resize first otherwise our control will be in the wrong place.
             }
             else if (context != null)
+            {
                 context.Update (Implementation.WindowInfo);
+            }
 
             base.OnResize(e);
         }
@@ -294,7 +300,9 @@ namespace OpenTK
         public void PerformContextUpdate()
         {
             if (context != null)
+            {
                 context.Update (Implementation.WindowInfo);
+            }
         }
 
         /// <summary>
@@ -304,16 +312,12 @@ namespace OpenTK
         protected override void OnParentChanged(EventArgs e)
         {
             if (context != null)
+            {
                 context.Update(Implementation.WindowInfo);
+            }
 
             base.OnParentChanged(e);
         }
-
-        #endregion
-
-        #region --- Public Methods ---
-
-        #region public void SwapBuffers()
 
         /// <summary>
         /// Swaps the front and back buffers, presenting the rendered scene to the screen.
@@ -324,10 +328,6 @@ namespace OpenTK
             ValidateState();
             Context.SwapBuffers();
         }
-
-        #endregion
-
-        #region public void MakeCurrent()
 
         /// <summary>
         /// <para>
@@ -350,10 +350,6 @@ namespace OpenTK
             Context.MakeCurrent(Implementation.WindowInfo);
         }
 
-        #endregion
-
-        #region public bool IsIdle
-
         /// <summary>
         /// Gets a value indicating whether the current thread contains pending system messages.
         /// </summary>
@@ -366,10 +362,6 @@ namespace OpenTK
                 return Implementation.IsIdle;
             }
         }
-
-        #endregion
-
-        #region public IGraphicsContext Context
 
         /// <summary>
         /// Gets the <c>IGraphicsContext</c> instance that is associated with the <c>GLControl</c>.
@@ -390,10 +382,6 @@ namespace OpenTK
             private set { context = value; }
         }
 
-        #endregion
-
-        #region public float AspectRatio
-
         /// <summary>
         /// Gets the aspect ratio of this GLControl.
         /// </summary>
@@ -406,10 +394,6 @@ namespace OpenTK
                 return ClientSize.Width / (float)ClientSize.Height;
             }
         }
-
-        #endregion
-
-        #region public bool VSync
 
         /// <summary>
         /// Gets or sets a value indicating whether vsync is active for this <c>GLControl</c>.
@@ -451,10 +435,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region public GraphicsMode GraphicsMode
-
         /// <summary>
         /// Gets the <c>GraphicsMode</c> of the <c>IGraphicsContext</c> associated with
         /// this <c>GLControl</c>. If you wish to change <c>GraphicsMode</c>, you must
@@ -469,10 +449,6 @@ namespace OpenTK
             }
         }
 
-        #endregion
-
-        #region WindowInfo
-
         /// <summary>
         /// Gets the <see cref="OpenTK.Platform.IWindowInfo"/> for this instance.
         /// </summary>
@@ -480,41 +456,5 @@ namespace OpenTK
         {
             get { return implementation.WindowInfo; }
         }
-        
-        #endregion
-
-        #region public Bitmap GrabScreenshot()
-
-        /// <summary>
-        /// Grabs a screenshot of the frontbuffer contents.
-        /// When using multiple <c>GLControl</c>s, ensure that  <see cref="Context"/>
-        /// is current before accessing this property.
-        /// <seealso cref="Context"/>
-        /// <seealso cref="MakeCurrent"/>
-        /// </summary>
-        /// <returns>A System.Drawing.Bitmap, containing the contents of the frontbuffer.</returns>
-        /// <exception cref="OpenTK.Graphics.GraphicsContextException">
-        /// Occurs when no OpenTK.Graphics.GraphicsContext is current in the calling thread.
-        /// </exception>
-        [Obsolete("This method will not work correctly with OpenGL|ES. Please use GL.ReadPixels to capture the contents of the framebuffer (refer to http://www.opentk.com/doc/graphics/save-opengl-rendering-to-disk for more information).")]
-        public Bitmap GrabScreenshot()
-        {
-            ValidateState();
-            ValidateContext("GrabScreenshot()");
-
-            Bitmap bmp = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
-            System.Drawing.Imaging.BitmapData data =
-                bmp.LockBits(this.ClientRectangle, System.Drawing.Imaging.ImageLockMode.WriteOnly,
-                             System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            GL.ReadPixels(0, 0, this.ClientSize.Width, this.ClientSize.Height, PixelFormat.Bgr, PixelType.UnsignedByte,
-                          data.Scan0);
-            bmp.UnlockBits(data);
-            bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-			return bmp;
-        }
-
-        #endregion
-
-        #endregion
     }
 }

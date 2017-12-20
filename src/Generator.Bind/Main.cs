@@ -1,14 +1,10 @@
-#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Security;
 using System.Text.RegularExpressions;
@@ -18,7 +14,7 @@ using Bind.GL2;
 
 namespace Bind
 {
-    enum GeneratorMode
+    internal enum GeneratorMode
     {
         All = 0,
         Default = All,
@@ -33,13 +29,13 @@ namespace Bind
         CL10,
     }
 
-    static class MainClass
+    internal static class MainClass
     {
-        static GeneratorMode mode = GeneratorMode.Default;
+        private static GeneratorMode mode = GeneratorMode.Default;
         static internal List<IBind> Generators = new List<IBind>();
-        static Settings Settings = new Settings();
+        private static Settings Settings = new Settings();
 
-        static void Main(string[] arguments)
+        private static void Main(string[] arguments)
         {
             Debug.Listeners.Clear();
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
@@ -52,7 +48,7 @@ namespace Bind
                 Assembly.GetExecutingAssembly().GetName().Version.ToString());
             Console.WriteLine("For comments, bugs and suggestions visit http://github.com/opentk/opentk");
             Console.WriteLine();
-            
+
             try
             {
                 var split = new Regex(@"-\w+", RegexOptions.Compiled);
@@ -101,7 +97,9 @@ namespace Bind
                                 val = val.ToLower();
                                 bool enable = !opt.StartsWith("-");
                                 if (val.StartsWith("+") || val.StartsWith("-"))
+                                {
                                     val = val.Substring(1);
+                                }
 
                                 var settings = Settings.Legacy.None;
                                 switch (val)
@@ -172,11 +170,11 @@ namespace Bind
                     case GeneratorMode.ES10:
                         Generators.Add(new ESGenerator(Settings));
                         break;
-                    
+
                     case GeneratorMode.ES11:
                         Generators.Add(new ESGenerator(Settings));
                         break;
-                    
+
                     case GeneratorMode.ES20:
                         Generators.Add(new ES2Generator(Settings));
                         break;
@@ -192,7 +190,7 @@ namespace Bind
                     case GeneratorMode.CL10:
                         Generators.Add(new CLGenerator(Settings));
                         break;
-                    
+
                     default:
                         Console.WriteLine("Please specify a generator mode (use '-mode:gl2/gl4/es10/es11/es20/es30')");
                         return;
@@ -212,7 +210,7 @@ namespace Bind
                     Console.WriteLine();
                     Console.WriteLine("Bindings generated in {0} seconds.", ticks / (double)10000000.0);
                 }
-                
+
                 Console.WriteLine();
                 if (Debugger.IsAttached)
                 {
@@ -243,7 +241,7 @@ namespace Bind
 
                 case "gl3":
                 case "gl4":
-					mode = GeneratorMode.GL4;
+                    mode = GeneratorMode.GL4;
                     break;
 
                 case "es10":

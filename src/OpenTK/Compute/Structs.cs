@@ -1,12 +1,11 @@
-﻿#region License
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to 
+// in the Software without restriction, including without limitation the rights to
 // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 // the Software, and to permit persons to whom the Software is furnished to do
 // so, subject to the following conditions:
@@ -23,7 +22,6 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-#endregion
 
 #if EXPERIMENTAL
 
@@ -34,12 +32,8 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Compute
 {
-    #region struct Handle<T>
-
     struct Handle<T> : IEquatable<Handle<T>>, IComparable<Handle<T>>
     {
-        #region Fields
-
         IntPtr handle;
 
         /// <summary>
@@ -50,21 +44,11 @@ namespace OpenTK.Compute
         /// <summary>A read-only field that represents a handle that has been initialized to zero.</summary>
         public static readonly Handle<T> Zero = new Handle<T>(IntPtr.Zero);
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Constructs a new instance with the specified handle.
         /// </summary>
         /// <param name="h">A System.IntPtr containing the value for this instance.</param>
         public Handle(IntPtr h) { handle = h; }
-
-        #endregion
-
-        #region Public Members
-
-        #region ToString
 
         /// <summary>
         /// Converts this instance to its equivalent string representation.
@@ -74,10 +58,6 @@ namespace OpenTK.Compute
         {
             return Value.ToString();
         }
-
-        #endregion
-
-        #region Equals
 
         /// <summary>
         /// Compares this instance to the specified object.
@@ -91,10 +71,6 @@ namespace OpenTK.Compute
             return false;
         }
 
-        #endregion
-
-        #region GetHashCode
-
         /// <summary>
         /// Returns the hash code for this instance.
         /// </summary>
@@ -103,10 +79,6 @@ namespace OpenTK.Compute
         {
             return Value.GetHashCode();
         }
-
-        #endregion
-
-        #region public static explicit operator IntPtr(Handle<T> c)
 
         /// <summary>
         /// Converts the specified ContextHandle to the equivalent IntPtr.
@@ -118,10 +90,6 @@ namespace OpenTK.Compute
             return c != Handle<T>.Zero ? c.Value : IntPtr.Zero;
         }
 
-        #endregion
-
-        #region public static explicit operator Handle<T>(IntPtr p)
-
         /// <summary>
         /// Converts the specified IntPtr to the equivalent ContextHandle.
         /// </summary>
@@ -131,8 +99,6 @@ namespace OpenTK.Compute
         {
             return new Handle<T>(p);
         }
-
-        #endregion
 
         /// <summary>
         /// Compares two instances for equality.
@@ -156,10 +122,6 @@ namespace OpenTK.Compute
             return !left.Equals(right);
         }
 
-        #endregion
-
-        #region IComparable<Handle<T>> Members
-
         /// <summary>
         /// Compares the numerical value of this instance to other and returns a value indicating their relative order.
         /// </summary>
@@ -173,10 +135,6 @@ namespace OpenTK.Compute
             }
         }
 
-        #endregion
-
-        #region IEquatable<Handle<T>> Members
-
         /// <summary>
         /// Compares this instance to the specified ContextHandle for equality.
         /// </summary>
@@ -186,11 +144,7 @@ namespace OpenTK.Compute
         {
             return Value == other.Value;
         }
-
-        #endregion
     }
-
-    #endregion
 
 }
 

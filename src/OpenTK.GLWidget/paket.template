@@ -2,7 +2,7 @@ type project
 id OpenTK.GLWidget
 owners
     opentk thefiddler
-authors 
+authors
     The Open Toolkit Team
 projectUrl
     http://www.opentk.com
@@ -19,5 +19,8 @@ tags
 summary
     A set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL.
 description
-    The Open Toolkit is set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research. 
+    The Open Toolkit is set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research.
     OpenTK provides several utility libraries, including a math/linear algebra package, a windowing system, and input handling.
+include-pdbs true
+excludeddependencies
+    StyleCop.Analyzers

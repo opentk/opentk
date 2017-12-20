@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // JoystickState.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Diagnostics;
@@ -40,33 +38,29 @@ namespace OpenTK.Input
     {
         // If we ever add more values to JoystickAxis or JoystickButton
         // then we'll need to increase these limits.
-        internal const int MaxAxes = (int)JoystickAxis.Last + 1;
+        internal const int MaxAxes = 64;
         internal const int MaxButtons = 64;
         internal const int MaxHats = (int)JoystickHat.Last + 1;
 
-        const float ConversionFactor = 1.0f / (short.MaxValue + 0.5f);
+        private const float ConversionFactor = 1.0f / (short.MaxValue + 0.5f);
 
-        int packet_number;
-        long buttons;
-        unsafe fixed short axes[MaxAxes];
-        JoystickHatState hat0;
-        JoystickHatState hat1;
-        JoystickHatState hat2;
-        JoystickHatState hat3;
-        bool is_connected;
-
-        #region Public Members
+        private long buttons;
+        private unsafe fixed short axes[MaxAxes];
+        private JoystickHatState hat0;
+        private JoystickHatState hat1;
+        private JoystickHatState hat2;
+        private JoystickHatState hat3;
 
         /// <summary>
-        /// Gets a value between -1.0 and 1.0 representing the current offset of the specified  <see cref="JoystickAxis"/>.
+        /// Gets a value between -1.0 and 1.0 representing the current offset of the specified axis.
         /// </summary>
         /// <returns>
-        /// A value between -1.0 and 1.0 representing offset of the specified  <see cref="JoystickAxis"/>.
+        /// A value between -1.0 and 1.0 representing offset of the specified axis.
         /// If the specified axis does not exist, then the return value is 0.0. Use <see cref="Joystick.GetCapabilities"/>
         /// to query the number of available axes.
         /// </returns>
-        /// <param name="axis">The <see cref="JoystickAxis"/> to query.</param>
-        public float GetAxis(JoystickAxis axis)
+        /// <param name="axis">The axis to query.</param>
+        public float GetAxis(int axis)
         {
             return GetAxisRaw(axis) * ConversionFactor;
         }
@@ -140,10 +134,7 @@ namespace OpenTK.Input
         /// Gets a value indicating whether this instance is connected.
         /// </summary>
         /// <value><c>true</c> if this instance is connected; otherwise, <c>false</c>.</value>
-        public bool IsConnected
-        {
-            get { return is_connected; }
-        }
+        public bool IsConnected { get; private set; }
 
         /// <summary>
         /// Returns a <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.JoystickState"/>.
@@ -155,7 +146,7 @@ namespace OpenTK.Input
             for (int i = 0; i < MaxAxes; i++)
             {
                 sb.Append(" ");
-                sb.Append(String.Format("{0:f4}", GetAxis(JoystickAxis.Axis0 + i)));
+                sb.Append(String.Format("{0:f4}", GetAxis(i)));
             }
             return String.Format(
                 "{{Axes:{0}; Buttons: {1}; Hat: {2}; IsConnected: {3}}}",
@@ -193,19 +184,7 @@ namespace OpenTK.Input
                 Equals((JoystickState)obj);
         }
 
-        #endregion
-
-        #region Internal Members
-
-        internal int PacketNumber
-        {
-            get { return packet_number; }
-        }
-
-        internal short GetAxisRaw(JoystickAxis axis)
-        {
-            return GetAxisRaw((int)axis);
-        }
+        internal int PacketNumber { get; private set; }
 
         internal short GetAxisRaw(int axis)
         {
@@ -221,11 +200,13 @@ namespace OpenTK.Input
             return value;
         }
 
-        internal void SetAxis(JoystickAxis axis, short value)
+        internal void SetAxis(int axis, short value)
         {
-            int index = (int)axis;
+            int index = axis;
             if (index < 0 || index >= MaxAxes)
+            {
                 throw new ArgumentOutOfRangeException("axis");
+            }
 
             unsafe
             {
@@ -244,7 +225,9 @@ namespace OpenTK.Input
         internal void SetButton(int button, bool value)
         {
             if (button < 0 || button >= MaxButtons)
+            {
                 throw new ArgumentOutOfRangeException("button");
+            }
 
             if (value)
             {
@@ -279,19 +262,15 @@ namespace OpenTK.Input
 
         internal void SetIsConnected(bool value)
         {
-            is_connected = value;
+            IsConnected = value;
         }
 
         internal void SetPacketNumber(int number)
         {
-            packet_number = number;
+            PacketNumber = number;
         }
 
-        #endregion
-
-        #region Private Members
-
-        short GetAxisUnsafe(int index)
+        private short GetAxisUnsafe(int index)
         {
             unsafe
             {
@@ -301,10 +280,6 @@ namespace OpenTK.Input
                 }
             }
         }
-
-        #endregion
-
-        #region IEquatable<JoystickState> Members
 
         /// <summary>
         /// Determines whether the specified <see cref="OpenTK.Input.JoystickState"/> is equal to the current <see cref="OpenTK.Input.JoystickState"/>.
@@ -328,7 +303,5 @@ namespace OpenTK.Input
             }
             return equals;
         }
-
-        #endregion
     }
 }

@@ -1,39 +1,22 @@
-﻿#region --- License ---
-/* Copyright (c) 2007 Stefanos Apostolopoulos
+﻿/* Copyright (c) 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
-#endregion
-
-#region --- Using directives ---
 
 using System;
-
-using OpenTK.Input;
-using System.Diagnostics;
-
-#endregion
 
 namespace OpenTK.Input
 {
     /// <summary>
-    /// Represents a keyboard device and provides methods to query its status. 
+    /// Represents a keyboard device and provides methods to query its status.
     /// </summary>
     public sealed class KeyboardDevice : IInputDevice
     {
         //private IKeyboard keyboard;
-        private string description;
-        private int numKeys, numFKeys, numLeds;
+
         private IntPtr devID;
-        private bool repeat;
         private KeyboardState state;
 
-        #region --- Constructors ---
-
         internal KeyboardDevice() { }
-
-        #endregion
-
-        #region --- IKeyboard members ---
 
         /// <summary>
         /// Gets a value indicating the status of the specified Key.
@@ -59,29 +42,17 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets an integer representing the number of keys on this KeyboardDevice.
         /// </summary>
-        public int NumberOfKeys
-        {
-            get { return numKeys; }
-            internal set { numKeys = value; }
-        }
+        public int NumberOfKeys { get; internal set; }
 
         /// <summary>
         /// Gets an integer representing the number of function keys (F-keys) on this KeyboardDevice.
         /// </summary>
-        public int NumberOfFunctionKeys
-        {
-            get { return numFKeys; }
-            internal set { numFKeys = value; }
-        }
+        public int NumberOfFunctionKeys { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating the number of led indicators on this KeyboardDevice.
         /// </summary>
-        public int NumberOfLeds
-        {
-            get { return numLeds; }
-            internal set { numLeds = value; }
-        }
+        public int NumberOfLeds { get; internal set; }
 
         /// <summary>
         /// Gets an IntPtr representing a device dependent ID.
@@ -91,8 +62,6 @@ namespace OpenTK.Input
             get { return devID; }
             internal set { devID = value; }
         }
-
-        #region public bool KeyRepeat
 
         /// <summary>
         /// Gets or sets a System.Boolean indicating key repeat status.
@@ -110,44 +79,22 @@ namespace OpenTK.Input
         /// for game input.
         /// </para>
         /// </remarks>
-        public bool KeyRepeat
-        {
-            get { return repeat; }
-            set { repeat = value; }
-        }
-
-        #endregion
-
-        #region KeyDown
+        public bool KeyRepeat { get; set; }
 
         /// <summary>
         /// Occurs when a key is pressed.
         /// </summary>
         public event EventHandler<KeyboardKeyEventArgs> KeyDown = delegate { };
 
-        #endregion
-
-        #region KeyUp
-
         /// <summary>
         /// Occurs when a key is released.
         /// </summary>
         public event EventHandler<KeyboardKeyEventArgs> KeyUp = delegate { };
 
-        #endregion
-
-        #endregion
-
-        #region --- IInputDevice Members ---
-
         /// <summary>
         /// Gets a <see cref="System.String"/> which describes this instance.
         /// </summary>
-        public string Description
-        {
-            get { return description; }
-            internal set { description = value; }
-        }
+        public string Description { get; internal set; }
 
         /// <summary>
         /// Gets the <see cref="InputDeviceType"/> for this instance.
@@ -156,10 +103,6 @@ namespace OpenTK.Input
         {
             get { return InputDeviceType.Keyboard; }
         }
-
-        #endregion
-
-        #region --- Public Methods ---
 
         /// <summary>
         /// Retrieves the combined <see cref="OpenTK.Input.KeyboardState"/> for all keyboard devices.
@@ -189,7 +132,7 @@ namespace OpenTK.Input
         public override int GetHashCode()
         {
             //return base.GetHashCode();
-            return (int)(numKeys ^ numFKeys ^ numLeds ^ devID.GetHashCode() ^ description.GetHashCode());
+            return (int)(NumberOfKeys ^ NumberOfFunctionKeys ^ NumberOfLeds ^ devID.GetHashCode() ^ Description.GetHashCode());
         }
 
         /// <summary>
@@ -202,10 +145,6 @@ namespace OpenTK.Input
             return String.Format("ID: {0} ({1}). Keys: {2}, Function keys: {3}, Leds: {4}",
                 DeviceID, Description, NumberOfKeys, NumberOfFunctionKeys, NumberOfLeds);
         }
-
-        #endregion
-
-        #region --- Internal Methods ---
 
         internal void HandleKeyDown(object sender, KeyboardKeyEventArgs e)
         {
@@ -226,7 +165,5 @@ namespace OpenTK.Input
             state = e.Keyboard;
             KeyUp(this, e);
         }
-
-        #endregion
     }
 }

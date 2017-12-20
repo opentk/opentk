@@ -1,4 +1,3 @@
-#region License
 //
 // PlatformFactoryBase.cs
 //
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -41,18 +39,16 @@ namespace OpenTK.Platform
     /// for all platform backends. IPlatformFactory implementations
     /// should inherit from this class.
     /// </summary>
-    abstract class PlatformFactoryBase : IPlatformFactory
+    internal abstract class PlatformFactoryBase : IPlatformFactory
     {
-        static readonly object sync = new object();
-        readonly List<IDisposable> Resources = new List<IDisposable>();
+        private static readonly object sync = new object();
+        private readonly List<IDisposable> Resources = new List<IDisposable>();
 
         protected bool IsDisposed;
 
         public PlatformFactoryBase()
         {
         }
-
-        #region IPlatformFactory Members
 
         public abstract INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device);
 
@@ -78,12 +74,6 @@ namespace OpenTK.Platform
 
         public abstract IJoystickDriver2 CreateJoystickDriver();
 
-        [Obsolete]
-        public virtual IJoystickDriver CreateLegacyJoystickDriver()
-        {
-            return new LegacyJoystickDriver();
-        }
-
         public void RegisterResource(IDisposable resource)
         {
             lock (sync)
@@ -91,10 +81,6 @@ namespace OpenTK.Platform
                 Resources.Add(resource);
             }
         }
-
-        #endregion
-
-        #region IDisposable implementation
 
         public void Dispose()
         {
@@ -130,8 +116,6 @@ namespace OpenTK.Platform
         {
             Dispose(false);
         }
-
-        #endregion
     }
 }
 

@@ -1,14 +1,11 @@
-#region --- License ---
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK Team.
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  */
-#endregion
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
@@ -16,21 +13,16 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.X11
 {
-    class X11GraphicsMode
+    internal class X11GraphicsMode
     {
         // Todo: Add custom visual selection algorithm, instead of ChooseFBConfig/ChooseVisual.
         // It seems the Choose* methods do not take multisampling into account (at least on some
         // drivers).
-        
-        #region Constructors
+
 
         public X11GraphicsMode()
         {
         }
-
-        #endregion
-
-        #region IGraphicsMode Members
 
         public GraphicsMode SelectGraphicsMode(GraphicsMode desired_mode, out IntPtr visual, out IntPtr fbconfig)
         {
@@ -46,16 +38,22 @@ namespace OpenTK.Platform.X11
                 // This is only supported on GLX 1.3 - if it fails, fall back to Glx.ChooseVisual.
                 fbconfig = SelectFBConfig(mode);
                 if (fbconfig != IntPtr.Zero)
+                {
                     visual = Glx.GetVisualFromFBConfig(display, fbconfig);
-                
+                }
+
                 if (visual == IntPtr.Zero)
+                {
                     visual = SelectVisual(mode);
-                
+                }
+
                 if (visual == IntPtr.Zero)
                 {
                     // Relax parameters and retry
                     if (!Utilities.RelaxGraphicsMode(ref mode))
+                    {
                         throw new GraphicsModeException("Requested GraphicsMode not available.");
+                    }
                 }
             }
             while (visual == IntPtr.Zero);
@@ -65,11 +63,7 @@ namespace OpenTK.Platform.X11
             return gfx;
         }
 
-        #endregion
-
-        #region Private Members
-
-        static GraphicsMode CreateGraphicsMode(IntPtr display, ref XVisualInfo info)
+        private static GraphicsMode CreateGraphicsMode(IntPtr display, ref XVisualInfo info)
         {
             // See what we *really* got:
             int r, g, b, a;
@@ -97,7 +91,7 @@ namespace OpenTK.Platform.X11
                 new ColorFormat(ar, ag, ab, aa), buffers + 1, st != 0);
         }
 
-        IntPtr SelectFBConfig(GraphicsMode mode)
+        private IntPtr SelectFBConfig(GraphicsMode mode)
         {
             Debug.Print("Selecting FB config for {0}", mode);
 
@@ -205,7 +199,7 @@ namespace OpenTK.Platform.X11
             return result;
         }
 
-        IntPtr SelectVisual(GraphicsMode mode)
+        private IntPtr SelectVisual(GraphicsMode mode)
         {
             Debug.Print("Selecting FB config for {0}", mode);
 
@@ -214,7 +208,9 @@ namespace OpenTK.Platform.X11
             if (mode.ColorFormat.BitsPerPixel > 0)
             {
                 if (!mode.ColorFormat.IsIndexed)
+                {
                     visualAttributes.Add((int)GLXAttribute.RGBA);
+                }
                 visualAttributes.Add((int)GLXAttribute.RED_SIZE);
                 visualAttributes.Add(mode.ColorFormat.Red);
                 visualAttributes.Add((int)GLXAttribute.GREEN_SIZE);
@@ -233,7 +229,9 @@ namespace OpenTK.Platform.X11
             }
 
             if (mode.Buffers > 1)
+            {
                 visualAttributes.Add((int)GLXAttribute.DOUBLEBUFFER);
+            }
 
             if (mode.Stencil > 1)
             {
@@ -262,7 +260,9 @@ namespace OpenTK.Platform.X11
             }
 
             if (mode.Stereo)
+            {
                 visualAttributes.Add((int)GLXAttribute.STEREO);
+            }
 
             visualAttributes.Add(0);
 
@@ -273,7 +273,5 @@ namespace OpenTK.Platform.X11
                 return Glx.ChooseVisual(display, Functions.XDefaultScreen(display), visualAttributes.ToArray());
             }
         }
-
-        #endregion
     }
 }
