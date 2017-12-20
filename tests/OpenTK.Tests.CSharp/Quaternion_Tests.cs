@@ -78,7 +78,7 @@ namespace OpenTK.Tests.CSharp
 		/// </summary>
 		/// <param name="rotationAxis">euler angle values</param>
 		[Test, TestCaseSource(typeof(QuaternionTestData), "SingleAxisTestCases")]
-		public void CtorEulerAngles_SingleEulerAngleSet_RotateCorrectAxis(Vector3 eulerValues, Vector3 expectedResult)
+		public void CtorEulerAnglesFloat_SingleEulerAngleSet_RotateCorrectAxis(Vector3 eulerValues, Vector3 expectedResult)
 		{
 			//Arrange + Act: Create Quaternion with "pitch/yaw/roll"
 			var cut = new Quaternion(eulerValues.X, eulerValues.Y, eulerValues.Z);
@@ -94,10 +94,59 @@ namespace OpenTK.Tests.CSharp
 		/// </summary>
 		/// <param name="rotationAxis">euler angle values</param>
 		[Test, TestCaseSource(typeof(QuaternionTestData), "SingleAxisTestCases")]
-		public void FromEulerAngles_SingleEulerAngleSet_RotateCorrectAxis(Vector3 eulerValues, Vector3 expectedResult)
+		public void CtorEulerAnglesVector3_SingleEulerAngleSet_RotateCorrectAxis(Vector3 eulerValues, Vector3 expectedResult)
+		{
+			//Arrange + Act: Create Quaternion with "pitch/yaw/roll"
+			var cut = new Quaternion(eulerValues.X, eulerValues.Y, eulerValues.Z);
+
+			//Assert: Use helper, to check if part of the two correct axis is zero. I just want check the direction
+			Vector3 resultXYZ = cut.Xyz;
+
+			Assert.IsTrue(QuaternionTestHelper.VerifyEuqalDirection(resultXYZ, expectedResult));
+		}
+
+		/// <summary>
+		/// Checks if a single given value (either pitch, yaw or roll) get converted into correct x,y,z value of quaternion.
+		/// </summary>
+		/// <param name="rotationAxis">euler angle values</param>
+		[Test, TestCaseSource(typeof(QuaternionTestData), "SingleAxisTestCases")]
+		public void FromEulerAnglesFloat_SingleEulerAngleSet_RotateCorrectAxis(Vector3 eulerValues, Vector3 expectedResult)
 		{
 			//Arrange + Act: Create Quaternion with "pitch/yaw/roll"
 			var cut = Quaternion.FromEulerAngles(eulerValues.X, eulerValues.Y, eulerValues.Z);
+
+			//Assert: Use helper, to check if part of the two correct axis is zero. I just want check the direction
+			Vector3 resultXYZ = cut.Xyz;
+
+			Assert.IsTrue(QuaternionTestHelper.VerifyEuqalDirection(resultXYZ, expectedResult));
+		}
+
+		/// <summary>
+		/// Checks if a single given value (either pitch, yaw or roll) get converted into correct x,y,z value of quaternion.
+		/// </summary>
+		/// <param name="rotationAxis">euler angle values</param>
+		[Test, TestCaseSource(typeof(QuaternionTestData), "SingleAxisTestCases")]
+		public void FromEulerAnglesVector3_SingleEulerAngleSet_RotateCorrectAxis(Vector3 eulerValues, Vector3 expectedResult)
+		{
+			//Arrange + Act: Create Quaternion with "pitch/yaw/roll"
+			var cut = Quaternion.FromEulerAngles(eulerValues);
+
+			//Assert: Use helper, to check if part of the two correct axis is zero. I just want check the direction
+			Vector3 resultXYZ = cut.Xyz;
+
+			Assert.IsTrue(QuaternionTestHelper.VerifyEuqalDirection(resultXYZ, expectedResult));
+		}
+
+		/// <summary>
+		/// Checks if a single given value (either pitch, yaw or roll) get converted into correct x,y,z value of quaternion.
+		/// </summary>
+		/// <param name="rotationAxis">euler angle values</param>
+		[Test, TestCaseSource(typeof(QuaternionTestData), "SingleAxisTestCases")]
+		public void FromEulerAnglesOut_SingleEulerAngleSet_RotateCorrectAxis(Vector3 eulerValues, Vector3 expectedResult)
+		{
+			//Arrange + Act: Create Quaternion with "pitch/yaw/roll"
+			var cut = Quaternion.Identity;
+			Quaternion.FromEulerAngles(ref eulerValues, out cut);
 
 			//Assert: Use helper, to check if part of the two correct axis is zero. I just want check the direction
 			Vector3 resultXYZ = cut.Xyz;

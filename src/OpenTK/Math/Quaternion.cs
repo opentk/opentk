@@ -92,9 +92,10 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Construct a new Quaternion from given Euler angles
+        /// Construct a new Quaternion from given Euler angles. The rotations will get applied in following order:
+        /// 1. Around X, 2. Around Y, 3. Around Z
         /// </summary>
-        /// <param name="eulerAngles">The euler angles as a Vector3</param>
+        /// <param name="eulerAngles">The counterclockwise euler angles as a Vector3</param>
         public Quaternion(Vector3 eulerAngles)
             : this(eulerAngles.X, eulerAngles.Y, eulerAngles.Z)
         { }
@@ -432,10 +433,12 @@ namespace OpenTK
 
         /// <summary>
         /// Builds a Quaternion from the given euler angles
+        /// The rotations will get applied in following order:
+        /// 1. pitch, 2. yaw, 3. roll
         /// </summary>
-        /// <param name="pitch">The pitch (attitude), rotation around X axis</param>
-        /// <param name="yaw">The yaw (heading), rotation around Y axis</param>
-        /// <param name="roll">The roll (bank), rotation around Z axis</param>
+        /// <param name="pitch">The pitch (attitude), counterclockwise rotation around X axis</param>
+        /// <param name="yaw">The yaw (heading), counterclockwise rotation around Y axis</param>
+        /// <param name="roll">The roll (bank), counterclockwise rotation around Z axis</param>
         /// <returns></returns>
         public static Quaternion FromEulerAngles(float pitch, float yaw, float roll)
         {
@@ -444,8 +447,10 @@ namespace OpenTK
 
         /// <summary>
         /// Builds a Quaternion from the given euler angles
+        /// The rotations will get applied in following order:
+        /// 1. Around X, 2. Around Y, 3. Around Z
         /// </summary>
-        /// <param name="eulerAngles">The euler angles as a vector</param>
+        /// <param name="eulerAngles">The counterclockwise euler angles as a vector</param>
         /// <returns>The equivalent Quaternion</returns>
         public static Quaternion FromEulerAngles(Vector3 eulerAngles)
         {
@@ -453,23 +458,26 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Builds a Quaternion from the given euler angles
+        /// Builds a Quaternion from the given euler angles in radians.
+        /// The rotations will get applied in following order:
+        /// 1. Around X, 2. Around Y, 3. Around Z
         /// </summary>
-        /// <param name="eulerAngles">The euler angles a vector</param>
+        /// <param name="eulerAngles">The counterclockwise euler angles a vector</param>
         /// <param name="result">The equivalent Quaternion</param>
         public static void FromEulerAngles(ref Vector3 eulerAngles, out Quaternion result)
         {
-            float c1 = (float)Math.Cos(eulerAngles.Y * 0.5f);
-            float c2 = (float)Math.Cos(eulerAngles.X * 0.5f);
+
+            float c1 = (float)Math.Cos(eulerAngles.X * 0.5f);
+            float c2 = (float)Math.Cos(eulerAngles.Y * 0.5f);
             float c3 = (float)Math.Cos(eulerAngles.Z * 0.5f);
-            float s1 = (float)Math.Sin(eulerAngles.Y * 0.5f);
-            float s2 = (float)Math.Sin(eulerAngles.X * 0.5f);
+            float s1 = (float)Math.Sin(eulerAngles.X * 0.5f);
+            float s2 = (float)Math.Sin(eulerAngles.Y * 0.5f);
             float s3 = (float)Math.Sin(eulerAngles.Z * 0.5f);
 
             result.W = c1 * c2 * c3 - s1 * s2 * s3;
-            result.Xyz.X = s1 * s2 * c3 + c1 * c2 * s3;
-            result.Xyz.Y = s1 * c2 * c3 + c1 * s2 * s3;
-            result.Xyz.Z = c1 * s2 * c3 - s1 * c2 * s3;
+            result.Xyz.X = s1 * c2 * c3 + c1 * s2 * s3;
+            result.Xyz.Y = c1 * s2 * c3 - s1 * c2 * s3;
+            result.Xyz.Z = c1 * c2 * s3 + s1 * s2 * c3;
         }
 
         /// <summary>
