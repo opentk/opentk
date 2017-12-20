@@ -66,28 +66,29 @@ namespace OpenTK
         { }
 
         /// <summary>
-        /// Construct a new Quaternion from given Euler angles
+        /// Construct a new Quaternion from given Euler angles. The rotations will get applied in following order:
+        /// 1. Around X, 2. Around Y, 3. Around Z
         /// </summary>
-        /// <param name="pitch">The pitch (attitude), rotation around X axis</param>
-        /// <param name="yaw">The yaw (heading), rotation around Y axis</param>
-        /// <param name="roll">The roll (bank), rotation around Z axis</param>
-        public Quaternion(float pitch, float yaw, float roll)
+        /// <param name="rotationX">Counterclockwise rotation around X axis in radian</param>
+        /// <param name="rotationY">Counterclockwise rotation around Y axis in radian</param>
+        /// <param name="rotationZ">Counterclockwise rotation around Z axis in radian</param>
+        public Quaternion(float rotationX, float rotationY, float rotationZ)
         {
-            yaw *= 0.5f;
-            pitch *= 0.5f;
-            roll *= 0.5f;
+            rotationX *= 0.5f;
+            rotationY *= 0.5f;
+            rotationZ *= 0.5f;
 
-            float c1 = (float)Math.Cos(yaw);
-            float c2 = (float)Math.Cos(pitch);
-            float c3 = (float)Math.Cos(roll);
-            float s1 = (float)Math.Sin(yaw);
-            float s2 = (float)Math.Sin(pitch);
-            float s3 = (float)Math.Sin(roll);
+            float c1 = (float)Math.Cos(rotationX);
+            float c2 = (float)Math.Cos(rotationY);
+            float c3 = (float)Math.Cos(rotationZ);
+            float s1 = (float)Math.Sin(rotationX);
+            float s2 = (float)Math.Sin(rotationY);
+            float s3 = (float)Math.Sin(rotationZ);
 
             W = c1 * c2 * c3 - s1 * s2 * s3;
-            Xyz.X = s1 * s2 * c3 + c1 * c2 * s3;
-            Xyz.Y = s1 * c2 * c3 + c1 * s2 * s3;
-            Xyz.Z = c1 * s2 * c3 - s1 * c2 * s3;
+            Xyz.X = s1 * c2 * c3 + c1 * s2 * s3;
+            Xyz.Y = c1 * s2 * c3 - s1 * c2 * s3;
+            Xyz.Z = c1 * c2 * s3 + s1 * s2 * c3;
         }
 
         /// <summary>
