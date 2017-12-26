@@ -98,6 +98,12 @@ namespace OpenTK.Graphics.ES11
                 103, 108, 67, 111, 112, 121, 84, 101, 120, 116, 117, 114, 101, 76, 101, 118, 101, 108, 115, 65, 80, 80, 76, 69, 0,
                 103, 108, 67, 117, 108, 108, 70, 97, 99, 101, 0,
                 103, 108, 67, 117, 114, 114, 101, 110, 116, 80, 97, 108, 101, 116, 116, 101, 77, 97, 116, 114, 105, 120, 79, 69, 83, 0,
+                103, 108, 68, 101, 98, 117, 103, 77, 101, 115, 115, 97, 103, 101, 67, 97, 108, 108, 98, 97, 99, 107, 0,
+                103, 108, 68, 101, 98, 117, 103, 77, 101, 115, 115, 97, 103, 101, 67, 97, 108, 108, 98, 97, 99, 107, 75, 72, 82, 0,
+                103, 108, 68, 101, 98, 117, 103, 77, 101, 115, 115, 97, 103, 101, 67, 111, 110, 116, 114, 111, 108, 0,
+                103, 108, 68, 101, 98, 117, 103, 77, 101, 115, 115, 97, 103, 101, 67, 111, 110, 116, 114, 111, 108, 75, 72, 82, 0,
+                103, 108, 68, 101, 98, 117, 103, 77, 101, 115, 115, 97, 103, 101, 73, 110, 115, 101, 114, 116, 0,
+                103, 108, 68, 101, 98, 117, 103, 77, 101, 115, 115, 97, 103, 101, 73, 110, 115, 101, 114, 116, 75, 72, 82, 0,
                 103, 108, 68, 101, 108, 101, 116, 101, 66, 117, 102, 102, 101, 114, 115, 0,
                 103, 108, 68, 101, 108, 101, 116, 101, 70, 101, 110, 99, 101, 115, 78, 86, 0,
                 103, 108, 68, 101, 108, 101, 116, 101, 70, 114, 97, 109, 101, 98, 117, 102, 102, 101, 114, 115, 79, 69, 83, 0,
@@ -183,6 +189,8 @@ namespace OpenTK.Graphics.ES11
                 103, 108, 71, 101, 116, 67, 108, 105, 112, 80, 108, 97, 110, 101, 120, 0,
                 103, 108, 71, 101, 116, 67, 108, 105, 112, 80, 108, 97, 110, 101, 120, 79, 69, 83, 0,
                 103, 108, 71, 101, 116, 67, 111, 110, 118, 111, 108, 117, 116, 105, 111, 110, 80, 97, 114, 97, 109, 101, 116, 101, 114, 120, 118, 79, 69, 83, 0,
+                103, 108, 71, 101, 116, 68, 101, 98, 117, 103, 77, 101, 115, 115, 97, 103, 101, 76, 111, 103, 0,
+                103, 108, 71, 101, 116, 68, 101, 98, 117, 103, 77, 101, 115, 115, 97, 103, 101, 76, 111, 103, 75, 72, 82, 0,
                 103, 108, 71, 101, 116, 68, 114, 105, 118, 101, 114, 67, 111, 110, 116, 114, 111, 108, 115, 81, 67, 79, 77, 0,
                 103, 108, 71, 101, 116, 68, 114, 105, 118, 101, 114, 67, 111, 110, 116, 114, 111, 108, 83, 116, 114, 105, 110, 103, 81, 67, 79, 77, 0,
                 103, 108, 71, 101, 116, 69, 114, 114, 111, 114, 0,
@@ -206,8 +214,13 @@ namespace OpenTK.Graphics.ES11
                 103, 108, 71, 101, 116, 77, 97, 116, 101, 114, 105, 97, 108, 120, 118, 79, 69, 83, 0,
                 103, 108, 71, 101, 116, 110, 85, 110, 105, 102, 111, 114, 109, 102, 118, 69, 88, 84, 0,
                 103, 108, 71, 101, 116, 110, 85, 110, 105, 102, 111, 114, 109, 105, 118, 69, 88, 84, 0,
+                103, 108, 71, 101, 116, 79, 98, 106, 101, 99, 116, 76, 97, 98, 101, 108, 0,
+                103, 108, 71, 101, 116, 79, 98, 106, 101, 99, 116, 76, 97, 98, 101, 108, 75, 72, 82, 0,
+                103, 108, 71, 101, 116, 79, 98, 106, 101, 99, 116, 80, 116, 114, 76, 97, 98, 101, 108, 0,
+                103, 108, 71, 101, 116, 79, 98, 106, 101, 99, 116, 80, 116, 114, 76, 97, 98, 101, 108, 75, 72, 82, 0,
                 103, 108, 71, 101, 116, 80, 105, 120, 101, 108, 77, 97, 112, 120, 118, 0,
                 103, 108, 71, 101, 116, 80, 111, 105, 110, 116, 101, 114, 118, 0,
+                103, 108, 71, 101, 116, 80, 111, 105, 110, 116, 101, 114, 118, 75, 72, 82, 0,
                 103, 108, 71, 101, 116, 82, 101, 110, 100, 101, 114, 98, 117, 102, 102, 101, 114, 80, 97, 114, 97, 109, 101, 116, 101, 114, 105, 118, 79, 69, 83, 0,
                 103, 108, 71, 101, 116, 83, 116, 114, 105, 110, 103, 0,
                 103, 108, 71, 101, 116, 83, 121, 110, 99, 105, 118, 65, 80, 80, 76, 69, 0,
@@ -226,6 +239,7 @@ namespace OpenTK.Graphics.ES11
                 103, 108, 72, 105, 110, 116, 0,
                 103, 108, 73, 110, 100, 101, 120, 120, 79, 69, 83, 0,
                 103, 108, 73, 110, 100, 101, 120, 120, 118, 79, 69, 83, 0,
+                103, 108, 73, 110, 115, 101, 114, 116, 69, 118, 101, 110, 116, 77, 97, 114, 107, 101, 114, 69, 88, 84, 0,
                 103, 108, 73, 115, 66, 117, 102, 102, 101, 114, 0,
                 103, 108, 73, 115, 69, 110, 97, 98, 108, 101, 100, 0,
                 103, 108, 73, 115, 70, 101, 110, 99, 101, 78, 86, 0,
@@ -299,6 +313,10 @@ namespace OpenTK.Graphics.ES11
                 103, 108, 78, 111, 114, 109, 97, 108, 51, 120, 79, 69, 83, 0,
                 103, 108, 78, 111, 114, 109, 97, 108, 51, 120, 118, 79, 69, 83, 0,
                 103, 108, 78, 111, 114, 109, 97, 108, 80, 111, 105, 110, 116, 101, 114, 0,
+                103, 108, 79, 98, 106, 101, 99, 116, 76, 97, 98, 101, 108, 0,
+                103, 108, 79, 98, 106, 101, 99, 116, 76, 97, 98, 101, 108, 75, 72, 82, 0,
+                103, 108, 79, 98, 106, 101, 99, 116, 80, 116, 114, 76, 97, 98, 101, 108, 0,
+                103, 108, 79, 98, 106, 101, 99, 116, 80, 116, 114, 76, 97, 98, 101, 108, 75, 72, 82, 0,
                 103, 108, 79, 114, 116, 104, 111, 102, 0,
                 103, 108, 79, 114, 116, 104, 111, 102, 79, 69, 83, 0,
                 103, 108, 79, 114, 116, 104, 111, 120, 0,
@@ -322,8 +340,14 @@ namespace OpenTK.Graphics.ES11
                 103, 108, 80, 111, 108, 121, 103, 111, 110, 79, 102, 102, 115, 101, 116, 0,
                 103, 108, 80, 111, 108, 121, 103, 111, 110, 79, 102, 102, 115, 101, 116, 120, 0,
                 103, 108, 80, 111, 108, 121, 103, 111, 110, 79, 102, 102, 115, 101, 116, 120, 79, 69, 83, 0,
+                103, 108, 80, 111, 112, 68, 101, 98, 117, 103, 71, 114, 111, 117, 112, 0,
+                103, 108, 80, 111, 112, 68, 101, 98, 117, 103, 71, 114, 111, 117, 112, 75, 72, 82, 0,
+                103, 108, 80, 111, 112, 71, 114, 111, 117, 112, 77, 97, 114, 107, 101, 114, 69, 88, 84, 0,
                 103, 108, 80, 111, 112, 77, 97, 116, 114, 105, 120, 0,
                 103, 108, 80, 114, 105, 111, 114, 105, 116, 105, 122, 101, 84, 101, 120, 116, 117, 114, 101, 115, 120, 79, 69, 83, 0,
+                103, 108, 80, 117, 115, 104, 68, 101, 98, 117, 103, 71, 114, 111, 117, 112, 0,
+                103, 108, 80, 117, 115, 104, 68, 101, 98, 117, 103, 71, 114, 111, 117, 112, 75, 72, 82, 0,
+                103, 108, 80, 117, 115, 104, 71, 114, 111, 117, 112, 77, 97, 114, 107, 101, 114, 69, 88, 84, 0,
                 103, 108, 80, 117, 115, 104, 77, 97, 116, 114, 105, 120, 0,
                 103, 108, 81, 117, 101, 114, 121, 77, 97, 116, 114, 105, 120, 120, 79, 69, 83, 0,
                 103, 108, 82, 97, 115, 116, 101, 114, 80, 111, 115, 50, 120, 79, 69, 83, 0,
@@ -485,332 +509,356 @@ namespace OpenTK.Graphics.ES11
                 905,
                 916,
                 942,
-                958,
-                975,
-                999,
-                1024,
-                1042,
+                965,
+                991,
+                1013,
+                1038,
                 1059,
                 1083,
-                1095,
-                1107,
-                1121,
-                1138,
-                1152,
-                1169,
-                1179,
+                1099,
+                1116,
+                1140,
+                1165,
+                1183,
                 1200,
-                1227,
-                1251,
-                1264,
+                1224,
+                1236,
+                1248,
+                1262,
                 1279,
                 1293,
-                1308,
-                1322,
-                1337,
-                1351,
-                1366,
-                1380,
-                1395,
+                1310,
+                1320,
+                1341,
+                1368,
+                1392,
+                1405,
+                1420,
                 1434,
+                1449,
                 1463,
-                1472,
+                1478,
                 1492,
-                1518,
-                1534,
-                1551,
-                1569,
-                1586,
+                1507,
+                1521,
+                1536,
+                1575,
                 1604,
-                1631,
-                1651,
-                1676,
-                1708,
-                1729,
-                1755,
-                1775,
-                1807,
-                1831,
-                1852,
-                1877,
-                1910,
-                1931,
+                1613,
+                1633,
+                1659,
+                1675,
+                1692,
+                1710,
+                1727,
+                1745,
+                1772,
+                1792,
+                1817,
+                1849,
+                1870,
+                1896,
+                1916,
                 1948,
-                1957,
-                1973,
-                1981,
-                2009,
-                2016,
-                2024,
-                2031,
-                2041,
-                2049,
-                2060,
+                1972,
+                1993,
+                2018,
+                2051,
+                2072,
                 2089,
-                2126,
-                2163,
-                2189,
+                2098,
+                2114,
+                2122,
+                2150,
+                2157,
+                2165,
+                2172,
+                2182,
+                2190,
                 2201,
-                2212,
-                2226,
-                2237,
-                2251,
-                2264,
-                2284,
-                2298,
-                2319,
-                2341,
-                2355,
-                2376,
-                2390,
-                2413,
-                2436,
-                2452,
-                2471,
-                2487,
-                2506,
-                2537,
-                2561,
-                2590,
-                2601,
-                2616,
+                2230,
+                2267,
+                2304,
+                2330,
+                2342,
+                2353,
+                2367,
+                2378,
+                2392,
+                2405,
+                2425,
+                2439,
+                2460,
+                2482,
+                2496,
+                2517,
+                2531,
+                2554,
+                2577,
+                2593,
+                2612,
                 2628,
-                2643,
-                2655,
-                2696,
-                2724,
-                2753,
-                2774,
-                2788,
-                2801,
-                2816,
+                2647,
+                2678,
+                2699,
+                2723,
+                2747,
+                2776,
+                2787,
+                2802,
+                2814,
                 2829,
-                2845,
-                2859,
-                2875,
-                2893,
-                2909,
-                2928,
-                2947,
-                2966,
-                2982,
-                2996,
-                3028,
-                3040,
-                3057,
-                3071,
-                3085,
-                3099,
-                3116,
+                2841,
+                2882,
+                2910,
+                2939,
+                2960,
+                2974,
+                2987,
+                3002,
+                3015,
+                3031,
+                3045,
+                3061,
+                3079,
+                3095,
+                3114,
                 3133,
-                3150,
-                3167,
-                3195,
-                3215,
-                3235,
-                3255,
-                3278,
-                3285,
-                3297,
-                3310,
-                3321,
-                3333,
-                3345,
-                3364,
-                3384,
-                3398,
-                3410,
-                3429,
-                3438,
-                3448,
-                3462,
-                3477,
-                3491,
-                3508,
-                3523,
-                3541,
-                3550,
-                3562,
-                3572,
-                3585,
-                3597,
-                3610,
-                3626,
-                3641,
-                3655,
-                3669,
-                3686,
-                3722,
-                3748,
-                3758,
-                3769,
-                3780,
-                3795,
-                3815,
-                3830,
-                3845,
-                3857,
-                3870,
-                3882,
-                3897,
-                3910,
-                3926,
-                3950,
-                3963,
-                3984,
-                4007,
+                3152,
+                3169,
+                3189,
+                3209,
+                3232,
+                3248,
+                3262,
+                3279,
+                3311,
+                3323,
+                3340,
+                3354,
+                3368,
+                3382,
+                3399,
+                3416,
+                3433,
+                3450,
+                3478,
+                3498,
+                3518,
+                3538,
+                3561,
+                3568,
+                3580,
+                3593,
+                3616,
+                3627,
+                3639,
+                3651,
+                3670,
+                3690,
+                3704,
+                3716,
+                3735,
+                3744,
+                3754,
+                3768,
+                3783,
+                3797,
+                3814,
+                3829,
+                3847,
+                3856,
+                3868,
+                3878,
+                3891,
+                3903,
+                3916,
+                3932,
+                3947,
+                3961,
+                3975,
+                3992,
                 4028,
-                4050,
-                4071,
-                4093,
-                4114,
+                4054,
+                4064,
+                4075,
+                4086,
+                4101,
+                4121,
                 4136,
-                4157,
-                4179,
-                4200,
-                4222,
-                4243,
-                4265,
-                4286,
-                4308,
-                4326,
-                4344,
-                4365,
-                4387,
-                4401,
-                4415,
-                4432,
-                4458,
-                4469,
-                4480,
-                4494,
-                4509,
-                4525,
-                4534,
-                4546,
-                4555,
-                4567,
-                4585,
-                4597,
-                4611,
-                4625,
-                4645,
-                4661,
-                4679,
-                4698,
-                4716,
-                4737,
-                4756,
-                4778,
-                4790,
-                4812,
-                4825,
-                4841,
-                4857,
-                4874,
-                4894,
-                4906,
-                4931,
-                4944,
-                4962,
-                4979,
-                4997,
-                5014,
-                5032,
-                5049,
-                5067,
-                5084,
-                5097,
-                5108,
-                5120,
-                5158,
-                5194,
-                5230,
-                5255,
-                5292,
-                5302,
-                5312,
-                5325,
-                5342,
+                4151,
+                4163,
+                4176,
+                4188,
+                4203,
+                4216,
+                4232,
+                4256,
+                4269,
+                4290,
+                4313,
+                4334,
+                4356,
+                4377,
+                4399,
+                4420,
+                4442,
+                4463,
+                4485,
+                4506,
+                4528,
+                4549,
+                4571,
+                4592,
+                4614,
+                4632,
+                4650,
+                4671,
+                4693,
+                4707,
+                4721,
+                4738,
+                4764,
+                4775,
+                4786,
+                4800,
+                4815,
+                4831,
+                4845,
+                4862,
+                4879,
+                4899,
+                4908,
+                4920,
+                4929,
+                4941,
+                4959,
+                4971,
+                4985,
+                4999,
+                5019,
+                5035,
+                5053,
+                5072,
+                5090,
+                5111,
+                5130,
+                5152,
+                5164,
+                5186,
+                5199,
+                5215,
+                5231,
+                5248,
+                5268,
+                5284,
+                5303,
+                5323,
+                5335,
                 5360,
-                5381,
-                5390,
-                5399,
-                5411,
-                5421,
-                5434,
-                5447,
-                5465,
-                5479,
-                5493,
-                5505,
+                5377,
+                5397,
+                5418,
+                5431,
+                5449,
+                5466,
+                5484,
+                5501,
                 5519,
-                5535,
-                5552,
-                5568,
-                5585,
-                5601,
-                5618,
-                5634,
-                5651,
-                5667,
-                5684,
-                5700,
+                5536,
+                5554,
+                5571,
+                5584,
+                5595,
+                5607,
+                5645,
+                5681,
                 5717,
-                5733,
-                5750,
-                5766,
-                5783,
-                5801,
-                5811,
-                5822,
-                5832,
-                5843,
-                5853,
-                5866,
+                5742,
+                5779,
+                5789,
+                5799,
+                5812,
+                5829,
+                5847,
+                5868,
                 5877,
-                5891,
-                5904,
-                5918,
-                5931,
-                5945,
-                5958,
-                5972,
-                5985,
-                6001,
-                6018,
-                6034,
-                6051,
-                6067,
-                6086,
-                6103,
-                6123,
-                6141,
-                6159,
-                6177,
-                6193,
-                6215,
+                5886,
+                5898,
+                5908,
+                5921,
+                5934,
+                5952,
+                5966,
+                5980,
+                5992,
+                6006,
+                6022,
+                6039,
+                6055,
+                6072,
+                6088,
+                6105,
+                6121,
+                6138,
+                6154,
+                6171,
+                6187,
+                6204,
+                6220,
                 6237,
-                6259,
-                6272,
-                6285,
-                6301,
-                6318,
-                6332,
-                6347,
-                6361,
-                6376,
-                6390,
+                6253,
+                6270,
+                6288,
+                6298,
+                6309,
+                6319,
+                6330,
+                6340,
+                6353,
+                6364,
+                6378,
+                6391,
                 6405,
-                6419,
-                6434,
-                6448,
-                6463,
-                6477,
-                6492,
-                6508,
-                6519,
-                6535,
+                6418,
+                6432,
+                6445,
+                6459,
+                6472,
+                6488,
+                6505,
+                6521,
+                6538,
+                6554,
+                6573,
+                6590,
+                6610,
+                6628,
+                6646,
+                6664,
+                6680,
+                6702,
+                6724,
+                6746,
+                6759,
+                6772,
+                6788,
+                6805,
+                6819,
+                6834,
+                6848,
+                6863,
+                6877,
+                6892,
+                6906,
+                6921,
+                6935,
+                6950,
+                6964,
+                6979,
+                6995,
+                7006,
+                7022,
             };
             EntryPoints = new IntPtr[EntryPointNameOffsets.Length];
         }
@@ -829,9 +877,27 @@ namespace OpenTK.Graphics.ES11
             /// <param name="timeout">
             /// The timeout, specified in nanoseconds, for which the implementation should wait for sync to become signaled.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glClientWaitSyncAPPLE")]
             [CLSCompliant(false)]
-            public static OpenTK.Graphics.ES11.All ClientWaitSync(IntPtr sync, Int32 flags, Int64 timeout) { throw new BindingsNotRewrittenException(); }
+            public static OpenTK.Graphics.ES11.SyncStatus ClientWaitSync(IntPtr sync, OpenTK.Graphics.ES11.All flags, Int64 timeout) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: APPLE_sync]
+            /// Block and wait for a sync object to become signaled
+            /// </summary>
+            /// <param name="sync">
+            /// The sync object whose status to wait on.
+            /// </param>
+            /// <param name="flags">
+            /// A bitfield controlling the command flushing behavior. flags may be SyncFlushCommandsBit.
+            /// </param>
+            /// <param name="timeout">
+            /// The timeout, specified in nanoseconds, for which the implementation should wait for sync to become signaled.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glClientWaitSyncAPPLE")]
+            [CLSCompliant(false)]
+            public static OpenTK.Graphics.ES11.SyncStatus ClientWaitSync(IntPtr sync, OpenTK.Graphics.ES11.All flags, UInt64 timeout) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: APPLE_sync]
             /// Block and wait for a sync object to become signaled
@@ -847,7 +913,23 @@ namespace OpenTK.Graphics.ES11
             /// </param>
             [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glClientWaitSyncAPPLE")]
             [CLSCompliant(false)]
-            public static OpenTK.Graphics.ES11.All ClientWaitSync(IntPtr sync, UInt32 flags, UInt64 timeout) { throw new BindingsNotRewrittenException(); }
+            public static OpenTK.Graphics.ES11.SyncStatus ClientWaitSync(IntPtr sync, OpenTK.Graphics.ES11.SyncObjectMask flags, Int64 timeout) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: APPLE_sync]
+            /// Block and wait for a sync object to become signaled
+            /// </summary>
+            /// <param name="sync">
+            /// The sync object whose status to wait on.
+            /// </param>
+            /// <param name="flags">
+            /// A bitfield controlling the command flushing behavior. flags may be SyncFlushCommandsBit.
+            /// </param>
+            /// <param name="timeout">
+            /// The timeout, specified in nanoseconds, for which the implementation should wait for sync to become signaled.
+            /// </param>
+            [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glClientWaitSyncAPPLE")]
+            [CLSCompliant(false)]
+            public static OpenTK.Graphics.ES11.SyncStatus ClientWaitSync(IntPtr sync, OpenTK.Graphics.ES11.SyncObjectMask flags, UInt64 timeout) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: APPLE_copy_texture_levels]</summary>
             /// <param name="destinationTexture"></param>
@@ -885,6 +967,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="flags">
             /// Specifies a bitwise combination of flags controlling the behavior of the sync object. No flags are presently defined for this operation and flags must be zero.flags is a placeholder for anticipated future extensions of fence sync object capabilities.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glFenceSyncAPPLE")]
             [CLSCompliant(false)]
             public static IntPtr FenceSync(OpenTK.Graphics.ES11.All condition, Int32 flags) { throw new BindingsNotRewrittenException(); }
@@ -898,19 +981,54 @@ namespace OpenTK.Graphics.ES11
             /// <param name="flags">
             /// Specifies a bitwise combination of flags controlling the behavior of the sync object. No flags are presently defined for this operation and flags must be zero.flags is a placeholder for anticipated future extensions of fence sync object capabilities.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glFenceSyncAPPLE")]
             [CLSCompliant(false)]
             public static IntPtr FenceSync(OpenTK.Graphics.ES11.All condition, UInt32 flags) { throw new BindingsNotRewrittenException(); }
 
+            /// <summary>[requires: APPLE_sync]
+            /// Create a new sync object and insert it into the GL command stream
+            /// </summary>
+            /// <param name="condition">
+            /// Specifies the condition that must be met to set the sync object's state to signaled. condition must be SyncGpuCommandsComplete.
+            /// </param>
+            /// <param name="flags">
+            /// Specifies a bitwise combination of flags controlling the behavior of the sync object. No flags are presently defined for this operation and flags must be zero.flags is a placeholder for anticipated future extensions of fence sync object capabilities.
+            /// </param>
+            [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glFenceSyncAPPLE")]
+            [CLSCompliant(false)]
+            public static IntPtr FenceSync(OpenTK.Graphics.ES11.SyncCondition condition, Int32 flags) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: APPLE_sync]
+            /// Create a new sync object and insert it into the GL command stream
+            /// </summary>
+            /// <param name="condition">
+            /// Specifies the condition that must be met to set the sync object's state to signaled. condition must be SyncGpuCommandsComplete.
+            /// </param>
+            /// <param name="flags">
+            /// Specifies a bitwise combination of flags controlling the behavior of the sync object. No flags are presently defined for this operation and flags must be zero.flags is a placeholder for anticipated future extensions of fence sync object capabilities.
+            /// </param>
+            [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glFenceSyncAPPLE")]
+            [CLSCompliant(false)]
+            public static IntPtr FenceSync(OpenTK.Graphics.ES11.SyncCondition condition, UInt32 flags) { throw new BindingsNotRewrittenException(); }
+
             /// <summary>[requires: APPLE_sync]</summary>
             /// <param name="pname"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glGetInteger64vAPPLE")]
             [CLSCompliant(false)]
             public static Int64 GetInteger64(OpenTK.Graphics.ES11.All pname) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: APPLE_sync]</summary>
             /// <param name="pname"></param>
+            [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glGetInteger64vAPPLE")]
+            [CLSCompliant(false)]
+            public static Int64 GetInteger64(OpenTK.Graphics.ES11.GetPName pname) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: APPLE_sync]</summary>
+            /// <param name="pname"></param>
             /// <param name="@params"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glGetInteger64vAPPLE")]
             [CLSCompliant(false)]
             public static void GetInteger64(OpenTK.Graphics.ES11.All pname, [OutAttribute] Int64[] @params) { throw new BindingsNotRewrittenException(); }
@@ -918,6 +1036,7 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: APPLE_sync]</summary>
             /// <param name="pname"></param>
             /// <param name="@params"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glGetInteger64vAPPLE")]
             [CLSCompliant(false)]
             public static void GetInteger64(OpenTK.Graphics.ES11.All pname, [OutAttribute] out Int64 @params) { throw new BindingsNotRewrittenException(); }
@@ -925,9 +1044,31 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: APPLE_sync]</summary>
             /// <param name="pname"></param>
             /// <param name="@params"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glGetInteger64vAPPLE")]
             [CLSCompliant(false)]
             public static unsafe void GetInteger64(OpenTK.Graphics.ES11.All pname, [OutAttribute] Int64* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: APPLE_sync]</summary>
+            /// <param name="pname"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glGetInteger64vAPPLE")]
+            [CLSCompliant(false)]
+            public static void GetInteger64(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Int64[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: APPLE_sync]</summary>
+            /// <param name="pname"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glGetInteger64vAPPLE")]
+            [CLSCompliant(false)]
+            public static void GetInteger64(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] out Int64 @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: APPLE_sync]</summary>
+            /// <param name="pname"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glGetInteger64vAPPLE")]
+            [CLSCompliant(false)]
+            public static unsafe void GetInteger64(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Int64* @params) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: APPLE_sync]
             /// Query the properties of a sync object
@@ -947,6 +1088,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="values">[length: bufSize]
             /// Specifies the address of an array to receive the values of the queried parameter.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glGetSyncivAPPLE")]
             [CLSCompliant(false)]
             public static void GetSync(IntPtr sync, OpenTK.Graphics.ES11.All pname, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute, CountAttribute(Parameter = "bufSize")] Int32[] values) { throw new BindingsNotRewrittenException(); }
@@ -969,6 +1111,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="values">[length: bufSize]
             /// Specifies the address of an array to receive the values of the queried parameter.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glGetSyncivAPPLE")]
             [CLSCompliant(false)]
             public static void GetSync(IntPtr sync, OpenTK.Graphics.ES11.All pname, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out Int32 values) { throw new BindingsNotRewrittenException(); }
@@ -991,9 +1134,76 @@ namespace OpenTK.Graphics.ES11
             /// <param name="values">[length: bufSize]
             /// Specifies the address of an array to receive the values of the queried parameter.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glGetSyncivAPPLE")]
             [CLSCompliant(false)]
             public static unsafe void GetSync(IntPtr sync, OpenTK.Graphics.ES11.All pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] Int32* values) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: APPLE_sync]
+            /// Query the properties of a sync object
+            /// </summary>
+            /// <param name="sync">
+            /// Specifies the sync object whose properties to query.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the parameter whose value to retrieve from the sync object specified in sync.
+            /// </param>
+            /// <param name="bufSize">
+            /// Specifies the size of the buffer whose address is given in values.
+            /// </param>
+            /// <param name="length">
+            /// Specifies the address of an variable to receive the number of integers placed in values.
+            /// </param>
+            /// <param name="values">[length: bufSize]
+            /// Specifies the address of an array to receive the values of the queried parameter.
+            /// </param>
+            [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glGetSyncivAPPLE")]
+            [CLSCompliant(false)]
+            public static void GetSync(IntPtr sync, OpenTK.Graphics.ES11.SyncParameterName pname, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute, CountAttribute(Parameter = "bufSize")] Int32[] values) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: APPLE_sync]
+            /// Query the properties of a sync object
+            /// </summary>
+            /// <param name="sync">
+            /// Specifies the sync object whose properties to query.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the parameter whose value to retrieve from the sync object specified in sync.
+            /// </param>
+            /// <param name="bufSize">
+            /// Specifies the size of the buffer whose address is given in values.
+            /// </param>
+            /// <param name="length">
+            /// Specifies the address of an variable to receive the number of integers placed in values.
+            /// </param>
+            /// <param name="values">[length: bufSize]
+            /// Specifies the address of an array to receive the values of the queried parameter.
+            /// </param>
+            [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glGetSyncivAPPLE")]
+            [CLSCompliant(false)]
+            public static void GetSync(IntPtr sync, OpenTK.Graphics.ES11.SyncParameterName pname, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out Int32 values) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: APPLE_sync]
+            /// Query the properties of a sync object
+            /// </summary>
+            /// <param name="sync">
+            /// Specifies the sync object whose properties to query.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the parameter whose value to retrieve from the sync object specified in sync.
+            /// </param>
+            /// <param name="bufSize">
+            /// Specifies the size of the buffer whose address is given in values.
+            /// </param>
+            /// <param name="length">
+            /// Specifies the address of an variable to receive the number of integers placed in values.
+            /// </param>
+            /// <param name="values">[length: bufSize]
+            /// Specifies the address of an array to receive the values of the queried parameter.
+            /// </param>
+            [AutoGenerated(Category = "APPLE_sync", Version = "", EntryPoint = "glGetSyncivAPPLE")]
+            [CLSCompliant(false)]
+            public static unsafe void GetSync(IntPtr sync, OpenTK.Graphics.ES11.SyncParameterName pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] Int32* values) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: APPLE_sync]
             /// Determine if a name corresponds to a sync object
@@ -1022,8 +1232,30 @@ namespace OpenTK.Graphics.ES11
             /// <param name="height">
             /// Specifies the height of the renderbuffer, in pixels.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "APPLE_framebuffer_multisample", Version = "", EntryPoint = "glRenderbufferStorageMultisampleAPPLE")]
             public static void RenderbufferStorageMultisample(OpenTK.Graphics.ES11.All target, Int32 samples, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: APPLE_framebuffer_multisample]
+            /// Establish data storage, format, dimensions and sample count of a renderbuffer object's image
+            /// </summary>
+            /// <param name="target">
+            /// Specifies a binding to which the target of the allocation and must be Renderbuffer.
+            /// </param>
+            /// <param name="samples">
+            /// Specifies the number of samples to be used for the renderbuffer object's storage.
+            /// </param>
+            /// <param name="internalformat">
+            /// Specifies the internal format to use for the renderbuffer object's image.
+            /// </param>
+            /// <param name="width">
+            /// Specifies the width of the renderbuffer, in pixels.
+            /// </param>
+            /// <param name="height">
+            /// Specifies the height of the renderbuffer, in pixels.
+            /// </param>
+            [AutoGenerated(Category = "APPLE_framebuffer_multisample", Version = "", EntryPoint = "glRenderbufferStorageMultisampleAPPLE")]
+            public static void RenderbufferStorageMultisample(OpenTK.Graphics.ES11.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: APPLE_framebuffer_multisample]</summary>
             [AutoGenerated(Category = "APPLE_framebuffer_multisample", Version = "", EntryPoint = "glResolveMultisampleFramebufferAPPLE")]
@@ -1110,8 +1342,15 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]</summary>
         /// <param name="func"></param>
         /// <param name="@ref"></param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glAlphaFuncx")]
         public static void AlphaFuncx(OpenTK.Graphics.ES11.All func, Int32 @ref) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="func"></param>
+        /// <param name="@ref"></param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glAlphaFuncx")]
+        public static void AlphaFuncx(OpenTK.Graphics.ES11.AlphaFunction func, Int32 @ref) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Bind a named buffer object
@@ -1244,7 +1483,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies how the red, green, blue, and alpha destination blending factors are computed. The following symbolic constants are accepted: Zero, One, SrcColor, OneMinusSrcColor, DstColor, OneMinusDstColor, SrcAlpha, OneMinusSrcAlpha, DstAlpha, OneMinusDstAlpha. ConstantColor, OneMinusConstantColor, ConstantAlpha, and OneMinusConstantAlpha. The initial value is Zero.
         /// </param>
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glBlendFunc")]
-        public static void BlendFunc(OpenTK.Graphics.ES11.BlendingFactorSrc sfactor, OpenTK.Graphics.ES11.BlendingFactorDest dfactor) { throw new BindingsNotRewrittenException(); }
+        public static void BlendFunc(OpenTK.Graphics.ES11.BlendingFactor sfactor, OpenTK.Graphics.ES11.BlendingFactor dfactor) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Create and initialize a buffer object's data store
@@ -2192,6 +2431,7 @@ namespace OpenTK.Graphics.ES11
         /// <param name="eqn">[length: 4]
         /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
         /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glClipPlanef")]
         [CLSCompliant(false)]
         public static void ClipPlane(OpenTK.Graphics.ES11.All p, [CountAttribute(Count = 4)] Single[] eqn) { throw new BindingsNotRewrittenException(); }
@@ -2205,6 +2445,7 @@ namespace OpenTK.Graphics.ES11
         /// <param name="eqn">[length: 4]
         /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
         /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glClipPlanef")]
         [CLSCompliant(false)]
         public static void ClipPlane(OpenTK.Graphics.ES11.All p, [CountAttribute(Count = 4)] ref Single eqn) { throw new BindingsNotRewrittenException(); }
@@ -2218,13 +2459,54 @@ namespace OpenTK.Graphics.ES11
         /// <param name="eqn">[length: 4]
         /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
         /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glClipPlanef")]
         [CLSCompliant(false)]
         public static unsafe void ClipPlane(OpenTK.Graphics.ES11.All p, [CountAttribute(Count = 4)] Single* eqn) { throw new BindingsNotRewrittenException(); }
 
+        /// <summary>[requires: v1.0]
+        /// Specify a plane against which all geometry is clipped
+        /// </summary>
+        /// <param name="p">
+        /// Specifies which clipping plane is being positioned. Symbolic names of the form ClipPlanei, where i is an integer between 0 and MaxClipPlanes - 1, are accepted.
+        /// </param>
+        /// <param name="eqn">[length: 4]
+        /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
+        /// </param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glClipPlanef")]
+        [CLSCompliant(false)]
+        public static void ClipPlane(OpenTK.Graphics.ES11.ClipPlaneName p, [CountAttribute(Count = 4)] Single[] eqn) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]
+        /// Specify a plane against which all geometry is clipped
+        /// </summary>
+        /// <param name="p">
+        /// Specifies which clipping plane is being positioned. Symbolic names of the form ClipPlanei, where i is an integer between 0 and MaxClipPlanes - 1, are accepted.
+        /// </param>
+        /// <param name="eqn">[length: 4]
+        /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
+        /// </param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glClipPlanef")]
+        [CLSCompliant(false)]
+        public static void ClipPlane(OpenTK.Graphics.ES11.ClipPlaneName p, [CountAttribute(Count = 4)] ref Single eqn) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]
+        /// Specify a plane against which all geometry is clipped
+        /// </summary>
+        /// <param name="p">
+        /// Specifies which clipping plane is being positioned. Symbolic names of the form ClipPlanei, where i is an integer between 0 and MaxClipPlanes - 1, are accepted.
+        /// </param>
+        /// <param name="eqn">[length: 4]
+        /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
+        /// </param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glClipPlanef")]
+        [CLSCompliant(false)]
+        public static unsafe void ClipPlane(OpenTK.Graphics.ES11.ClipPlaneName p, [CountAttribute(Count = 4)] Single* eqn) { throw new BindingsNotRewrittenException(); }
+
         /// <summary>[requires: v1.0]</summary>
         /// <param name="plane"></param>
         /// <param name="equation">[length: 4]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glClipPlanex")]
         [CLSCompliant(false)]
         public static void ClipPlanex(OpenTK.Graphics.ES11.All plane, [CountAttribute(Count = 4)] Int32[] equation) { throw new BindingsNotRewrittenException(); }
@@ -2232,6 +2514,7 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]</summary>
         /// <param name="plane"></param>
         /// <param name="equation">[length: 4]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glClipPlanex")]
         [CLSCompliant(false)]
         public static void ClipPlanex(OpenTK.Graphics.ES11.All plane, [CountAttribute(Count = 4)] ref Int32 equation) { throw new BindingsNotRewrittenException(); }
@@ -2239,9 +2522,31 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]</summary>
         /// <param name="plane"></param>
         /// <param name="equation">[length: 4]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glClipPlanex")]
         [CLSCompliant(false)]
         public static unsafe void ClipPlanex(OpenTK.Graphics.ES11.All plane, [CountAttribute(Count = 4)] Int32* equation) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="plane"></param>
+        /// <param name="equation">[length: 4]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glClipPlanex")]
+        [CLSCompliant(false)]
+        public static void ClipPlanex(OpenTK.Graphics.ES11.ClipPlaneName plane, [CountAttribute(Count = 4)] Int32[] equation) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="plane"></param>
+        /// <param name="equation">[length: 4]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glClipPlanex")]
+        [CLSCompliant(false)]
+        public static void ClipPlanex(OpenTK.Graphics.ES11.ClipPlaneName plane, [CountAttribute(Count = 4)] ref Int32 equation) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="plane"></param>
+        /// <param name="equation">[length: 4]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glClipPlanex")]
+        [CLSCompliant(false)]
+        public static unsafe void ClipPlanex(OpenTK.Graphics.ES11.ClipPlaneName plane, [CountAttribute(Count = 4)] Int32* equation) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Set the current color
@@ -2706,7 +3011,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies a pointer to the compressed image data in memory.
         /// </param>
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glCompressedTexImage2D")]
-        public static void CompressedTexImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, [CountAttribute(Parameter = "imageSize")] IntPtr data) { throw new BindingsNotRewrittenException(); }
+        public static void CompressedTexImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, [CountAttribute(Parameter = "imageSize")] IntPtr data) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Specify a two-dimensional texture image in a compressed format
@@ -2737,7 +3042,7 @@ namespace OpenTK.Graphics.ES11
         /// </param>
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glCompressedTexImage2D")]
         [CLSCompliant(false)]
-        public static void CompressedTexImage2D<T7>(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, [InAttribute, OutAttribute, CountAttribute(Parameter = "imageSize")] T7[] data)
+        public static void CompressedTexImage2D<T7>(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, [InAttribute, OutAttribute, CountAttribute(Parameter = "imageSize")] T7[] data)
             where T7 : struct
          { throw new BindingsNotRewrittenException(); }
 
@@ -2770,7 +3075,7 @@ namespace OpenTK.Graphics.ES11
         /// </param>
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glCompressedTexImage2D")]
         [CLSCompliant(false)]
-        public static void CompressedTexImage2D<T7>(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, [InAttribute, OutAttribute, CountAttribute(Parameter = "imageSize")] T7[,] data)
+        public static void CompressedTexImage2D<T7>(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, [InAttribute, OutAttribute, CountAttribute(Parameter = "imageSize")] T7[,] data)
             where T7 : struct
          { throw new BindingsNotRewrittenException(); }
 
@@ -2803,7 +3108,7 @@ namespace OpenTK.Graphics.ES11
         /// </param>
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glCompressedTexImage2D")]
         [CLSCompliant(false)]
-        public static void CompressedTexImage2D<T7>(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, [InAttribute, OutAttribute, CountAttribute(Parameter = "imageSize")] T7[,,] data)
+        public static void CompressedTexImage2D<T7>(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, [InAttribute, OutAttribute, CountAttribute(Parameter = "imageSize")] T7[,,] data)
             where T7 : struct
          { throw new BindingsNotRewrittenException(); }
 
@@ -2835,7 +3140,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies a pointer to the compressed image data in memory.
         /// </param>
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glCompressedTexImage2D")]
-        public static void CompressedTexImage2D<T7>(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, [InAttribute, OutAttribute, CountAttribute(Parameter = "imageSize")] ref T7 data)
+        public static void CompressedTexImage2D<T7>(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, [InAttribute, OutAttribute, CountAttribute(Parameter = "imageSize")] ref T7 data)
             where T7 : struct
          { throw new BindingsNotRewrittenException(); }
 
@@ -3255,7 +3560,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies the width of the border. Must be 0.
         /// </param>
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glCopyTexImage2D")]
-        public static void CopyTexImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.All internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border) { throw new BindingsNotRewrittenException(); }
+        public static void CopyTexImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Copy a two-dimensional texture subimage
@@ -3336,6 +3641,485 @@ namespace OpenTK.Graphics.ES11
         /// </param>
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glCullFace")]
         public static void CullFace(OpenTK.Graphics.ES11.CullFaceMode mode) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Specify a callback to receive debugging messages from the GL
+        /// </summary>
+        /// <param name="callback">
+        /// The address of a callback function that will be called when a debug message is generated.
+        /// </param>
+        /// <param name="userParam">
+        /// A user supplied pointer that will be passed on each invocation of callback.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageCallback")]
+        public static void DebugMessageCallback(DebugProc callback, IntPtr userParam) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Specify a callback to receive debugging messages from the GL
+        /// </summary>
+        /// <param name="callback">
+        /// The address of a callback function that will be called when a debug message is generated.
+        /// </param>
+        /// <param name="userParam">
+        /// A user supplied pointer that will be passed on each invocation of callback.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageCallback")]
+        [CLSCompliant(false)]
+        public static void DebugMessageCallback<T1>(DebugProc callback, [InAttribute, OutAttribute] T1[] userParam)
+            where T1 : struct
+         { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Specify a callback to receive debugging messages from the GL
+        /// </summary>
+        /// <param name="callback">
+        /// The address of a callback function that will be called when a debug message is generated.
+        /// </param>
+        /// <param name="userParam">
+        /// A user supplied pointer that will be passed on each invocation of callback.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageCallback")]
+        [CLSCompliant(false)]
+        public static void DebugMessageCallback<T1>(DebugProc callback, [InAttribute, OutAttribute] T1[,] userParam)
+            where T1 : struct
+         { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Specify a callback to receive debugging messages from the GL
+        /// </summary>
+        /// <param name="callback">
+        /// The address of a callback function that will be called when a debug message is generated.
+        /// </param>
+        /// <param name="userParam">
+        /// A user supplied pointer that will be passed on each invocation of callback.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageCallback")]
+        [CLSCompliant(false)]
+        public static void DebugMessageCallback<T1>(DebugProc callback, [InAttribute, OutAttribute] T1[,,] userParam)
+            where T1 : struct
+         { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Specify a callback to receive debugging messages from the GL
+        /// </summary>
+        /// <param name="callback">
+        /// The address of a callback function that will be called when a debug message is generated.
+        /// </param>
+        /// <param name="userParam">
+        /// A user supplied pointer that will be passed on each invocation of callback.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageCallback")]
+        public static void DebugMessageCallback<T1>(DebugProc callback, [InAttribute, OutAttribute] ref T1 userParam)
+            where T1 : struct
+         { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Control the reporting of debug messages in a debug context
+        /// </summary>
+        /// <param name="source">
+        /// The source of debug messages to enable or disable.
+        /// </param>
+        /// <param name="type">
+        /// The type of debug messages to enable or disable.
+        /// </param>
+        /// <param name="severity">
+        /// The severity of debug messages to enable or disable.
+        /// </param>
+        /// <param name="count">
+        /// The length of the array ids.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+        /// </param>
+        /// <param name="enabled">
+        /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControl")]
+        [CLSCompliant(false)]
+        public static void DebugMessageControl(OpenTK.Graphics.ES11.All source, OpenTK.Graphics.ES11.All type, OpenTK.Graphics.ES11.All severity, Int32 count, [CountAttribute(Parameter = "count")] Int32[] ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Control the reporting of debug messages in a debug context
+        /// </summary>
+        /// <param name="source">
+        /// The source of debug messages to enable or disable.
+        /// </param>
+        /// <param name="type">
+        /// The type of debug messages to enable or disable.
+        /// </param>
+        /// <param name="severity">
+        /// The severity of debug messages to enable or disable.
+        /// </param>
+        /// <param name="count">
+        /// The length of the array ids.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+        /// </param>
+        /// <param name="enabled">
+        /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControl")]
+        [CLSCompliant(false)]
+        public static void DebugMessageControl(OpenTK.Graphics.ES11.All source, OpenTK.Graphics.ES11.All type, OpenTK.Graphics.ES11.All severity, Int32 count, [CountAttribute(Parameter = "count")] ref Int32 ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Control the reporting of debug messages in a debug context
+        /// </summary>
+        /// <param name="source">
+        /// The source of debug messages to enable or disable.
+        /// </param>
+        /// <param name="type">
+        /// The type of debug messages to enable or disable.
+        /// </param>
+        /// <param name="severity">
+        /// The severity of debug messages to enable or disable.
+        /// </param>
+        /// <param name="count">
+        /// The length of the array ids.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+        /// </param>
+        /// <param name="enabled">
+        /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControl")]
+        [CLSCompliant(false)]
+        public static unsafe void DebugMessageControl(OpenTK.Graphics.ES11.All source, OpenTK.Graphics.ES11.All type, OpenTK.Graphics.ES11.All severity, Int32 count, [CountAttribute(Parameter = "count")] Int32* ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Control the reporting of debug messages in a debug context
+        /// </summary>
+        /// <param name="source">
+        /// The source of debug messages to enable or disable.
+        /// </param>
+        /// <param name="type">
+        /// The type of debug messages to enable or disable.
+        /// </param>
+        /// <param name="severity">
+        /// The severity of debug messages to enable or disable.
+        /// </param>
+        /// <param name="count">
+        /// The length of the array ids.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+        /// </param>
+        /// <param name="enabled">
+        /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControl")]
+        [CLSCompliant(false)]
+        public static void DebugMessageControl(OpenTK.Graphics.ES11.All source, OpenTK.Graphics.ES11.All type, OpenTK.Graphics.ES11.All severity, Int32 count, [CountAttribute(Parameter = "count")] UInt32[] ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Control the reporting of debug messages in a debug context
+        /// </summary>
+        /// <param name="source">
+        /// The source of debug messages to enable or disable.
+        /// </param>
+        /// <param name="type">
+        /// The type of debug messages to enable or disable.
+        /// </param>
+        /// <param name="severity">
+        /// The severity of debug messages to enable or disable.
+        /// </param>
+        /// <param name="count">
+        /// The length of the array ids.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+        /// </param>
+        /// <param name="enabled">
+        /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControl")]
+        [CLSCompliant(false)]
+        public static void DebugMessageControl(OpenTK.Graphics.ES11.All source, OpenTK.Graphics.ES11.All type, OpenTK.Graphics.ES11.All severity, Int32 count, [CountAttribute(Parameter = "count")] ref UInt32 ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Control the reporting of debug messages in a debug context
+        /// </summary>
+        /// <param name="source">
+        /// The source of debug messages to enable or disable.
+        /// </param>
+        /// <param name="type">
+        /// The type of debug messages to enable or disable.
+        /// </param>
+        /// <param name="severity">
+        /// The severity of debug messages to enable or disable.
+        /// </param>
+        /// <param name="count">
+        /// The length of the array ids.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+        /// </param>
+        /// <param name="enabled">
+        /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControl")]
+        [CLSCompliant(false)]
+        public static unsafe void DebugMessageControl(OpenTK.Graphics.ES11.All source, OpenTK.Graphics.ES11.All type, OpenTK.Graphics.ES11.All severity, Int32 count, [CountAttribute(Parameter = "count")] UInt32* ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Control the reporting of debug messages in a debug context
+        /// </summary>
+        /// <param name="source">
+        /// The source of debug messages to enable or disable.
+        /// </param>
+        /// <param name="type">
+        /// The type of debug messages to enable or disable.
+        /// </param>
+        /// <param name="severity">
+        /// The severity of debug messages to enable or disable.
+        /// </param>
+        /// <param name="count">
+        /// The length of the array ids.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+        /// </param>
+        /// <param name="enabled">
+        /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControl")]
+        [CLSCompliant(false)]
+        public static void DebugMessageControl(OpenTK.Graphics.ES11.DebugSource source, OpenTK.Graphics.ES11.DebugType type, OpenTK.Graphics.ES11.DebugSeverity severity, Int32 count, [CountAttribute(Parameter = "count")] Int32[] ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Control the reporting of debug messages in a debug context
+        /// </summary>
+        /// <param name="source">
+        /// The source of debug messages to enable or disable.
+        /// </param>
+        /// <param name="type">
+        /// The type of debug messages to enable or disable.
+        /// </param>
+        /// <param name="severity">
+        /// The severity of debug messages to enable or disable.
+        /// </param>
+        /// <param name="count">
+        /// The length of the array ids.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+        /// </param>
+        /// <param name="enabled">
+        /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControl")]
+        [CLSCompliant(false)]
+        public static void DebugMessageControl(OpenTK.Graphics.ES11.DebugSource source, OpenTK.Graphics.ES11.DebugType type, OpenTK.Graphics.ES11.DebugSeverity severity, Int32 count, [CountAttribute(Parameter = "count")] ref Int32 ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Control the reporting of debug messages in a debug context
+        /// </summary>
+        /// <param name="source">
+        /// The source of debug messages to enable or disable.
+        /// </param>
+        /// <param name="type">
+        /// The type of debug messages to enable or disable.
+        /// </param>
+        /// <param name="severity">
+        /// The severity of debug messages to enable or disable.
+        /// </param>
+        /// <param name="count">
+        /// The length of the array ids.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+        /// </param>
+        /// <param name="enabled">
+        /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControl")]
+        [CLSCompliant(false)]
+        public static unsafe void DebugMessageControl(OpenTK.Graphics.ES11.DebugSource source, OpenTK.Graphics.ES11.DebugType type, OpenTK.Graphics.ES11.DebugSeverity severity, Int32 count, [CountAttribute(Parameter = "count")] Int32* ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Control the reporting of debug messages in a debug context
+        /// </summary>
+        /// <param name="source">
+        /// The source of debug messages to enable or disable.
+        /// </param>
+        /// <param name="type">
+        /// The type of debug messages to enable or disable.
+        /// </param>
+        /// <param name="severity">
+        /// The severity of debug messages to enable or disable.
+        /// </param>
+        /// <param name="count">
+        /// The length of the array ids.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+        /// </param>
+        /// <param name="enabled">
+        /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControl")]
+        [CLSCompliant(false)]
+        public static void DebugMessageControl(OpenTK.Graphics.ES11.DebugSource source, OpenTK.Graphics.ES11.DebugType type, OpenTK.Graphics.ES11.DebugSeverity severity, Int32 count, [CountAttribute(Parameter = "count")] UInt32[] ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Control the reporting of debug messages in a debug context
+        /// </summary>
+        /// <param name="source">
+        /// The source of debug messages to enable or disable.
+        /// </param>
+        /// <param name="type">
+        /// The type of debug messages to enable or disable.
+        /// </param>
+        /// <param name="severity">
+        /// The severity of debug messages to enable or disable.
+        /// </param>
+        /// <param name="count">
+        /// The length of the array ids.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+        /// </param>
+        /// <param name="enabled">
+        /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControl")]
+        [CLSCompliant(false)]
+        public static void DebugMessageControl(OpenTK.Graphics.ES11.DebugSource source, OpenTK.Graphics.ES11.DebugType type, OpenTK.Graphics.ES11.DebugSeverity severity, Int32 count, [CountAttribute(Parameter = "count")] ref UInt32 ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Control the reporting of debug messages in a debug context
+        /// </summary>
+        /// <param name="source">
+        /// The source of debug messages to enable or disable.
+        /// </param>
+        /// <param name="type">
+        /// The type of debug messages to enable or disable.
+        /// </param>
+        /// <param name="severity">
+        /// The severity of debug messages to enable or disable.
+        /// </param>
+        /// <param name="count">
+        /// The length of the array ids.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+        /// </param>
+        /// <param name="enabled">
+        /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControl")]
+        [CLSCompliant(false)]
+        public static unsafe void DebugMessageControl(OpenTK.Graphics.ES11.DebugSource source, OpenTK.Graphics.ES11.DebugType type, OpenTK.Graphics.ES11.DebugSeverity severity, Int32 count, [CountAttribute(Parameter = "count")] UInt32* ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Inject an application-supplied message into the debug message queue
+        /// </summary>
+        /// <param name="source">
+        /// The source of the debug message to insert.
+        /// </param>
+        /// <param name="type">
+        /// The type of the debug message insert.
+        /// </param>
+        /// <param name="id">
+        /// The user-supplied identifier of the message to insert.
+        /// </param>
+        /// <param name="severity">
+        /// The severity of the debug messages to insert.
+        /// </param>
+        /// <param name="length">
+        /// The length string contained in the character array whose address is given by message.
+        /// </param>
+        /// <param name="buf">[length: COMPSIZE(buf,length)]
+        /// The address of a character array containing the message to insert.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageInsert")]
+        [CLSCompliant(false)]
+        public static void DebugMessageInsert(OpenTK.Graphics.ES11.All source, OpenTK.Graphics.ES11.All type, Int32 id, OpenTK.Graphics.ES11.All severity, Int32 length, [CountAttribute(Computed = "buf,length")] String buf) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Inject an application-supplied message into the debug message queue
+        /// </summary>
+        /// <param name="source">
+        /// The source of the debug message to insert.
+        /// </param>
+        /// <param name="type">
+        /// The type of the debug message insert.
+        /// </param>
+        /// <param name="id">
+        /// The user-supplied identifier of the message to insert.
+        /// </param>
+        /// <param name="severity">
+        /// The severity of the debug messages to insert.
+        /// </param>
+        /// <param name="length">
+        /// The length string contained in the character array whose address is given by message.
+        /// </param>
+        /// <param name="buf">[length: COMPSIZE(buf,length)]
+        /// The address of a character array containing the message to insert.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageInsert")]
+        [CLSCompliant(false)]
+        public static void DebugMessageInsert(OpenTK.Graphics.ES11.All source, OpenTK.Graphics.ES11.All type, UInt32 id, OpenTK.Graphics.ES11.All severity, Int32 length, [CountAttribute(Computed = "buf,length")] String buf) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Inject an application-supplied message into the debug message queue
+        /// </summary>
+        /// <param name="source">
+        /// The source of the debug message to insert.
+        /// </param>
+        /// <param name="type">
+        /// The type of the debug message insert.
+        /// </param>
+        /// <param name="id">
+        /// The user-supplied identifier of the message to insert.
+        /// </param>
+        /// <param name="severity">
+        /// The severity of the debug messages to insert.
+        /// </param>
+        /// <param name="length">
+        /// The length string contained in the character array whose address is given by message.
+        /// </param>
+        /// <param name="buf">[length: COMPSIZE(buf,length)]
+        /// The address of a character array containing the message to insert.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageInsert")]
+        [CLSCompliant(false)]
+        public static void DebugMessageInsert(OpenTK.Graphics.ES11.DebugSource source, OpenTK.Graphics.ES11.DebugType type, Int32 id, OpenTK.Graphics.ES11.DebugSeverity severity, Int32 length, [CountAttribute(Computed = "buf,length")] String buf) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Inject an application-supplied message into the debug message queue
+        /// </summary>
+        /// <param name="source">
+        /// The source of the debug message to insert.
+        /// </param>
+        /// <param name="type">
+        /// The type of the debug message insert.
+        /// </param>
+        /// <param name="id">
+        /// The user-supplied identifier of the message to insert.
+        /// </param>
+        /// <param name="severity">
+        /// The severity of the debug messages to insert.
+        /// </param>
+        /// <param name="length">
+        /// The length string contained in the character array whose address is given by message.
+        /// </param>
+        /// <param name="buf">[length: COMPSIZE(buf,length)]
+        /// The address of a character array containing the message to insert.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageInsert")]
+        [CLSCompliant(false)]
+        public static void DebugMessageInsert(OpenTK.Graphics.ES11.DebugSource source, OpenTK.Graphics.ES11.DebugType type, UInt32 id, OpenTK.Graphics.ES11.DebugSeverity severity, Int32 length, [CountAttribute(Computed = "buf,length")] String buf) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Delete named buffer objects
@@ -4093,12 +4877,20 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]</summary>
         /// <param name="pname"></param>
         /// <param name="param"></param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glFogx")]
         public static void Fogx(OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]</summary>
         /// <param name="pname"></param>
+        /// <param name="param"></param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glFogx")]
+        public static void Fogx(OpenTK.Graphics.ES11.FogPName pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="pname"></param>
         /// <param name="param">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glFogxv")]
         [CLSCompliant(false)]
         public static void Fogx(OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32[] param) { throw new BindingsNotRewrittenException(); }
@@ -4106,9 +4898,24 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]</summary>
         /// <param name="pname"></param>
         /// <param name="param">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glFogxv")]
         [CLSCompliant(false)]
         public static unsafe void Fogx(OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32* param) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="pname"></param>
+        /// <param name="param">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glFogxv")]
+        [CLSCompliant(false)]
+        public static void Fogx(OpenTK.Graphics.ES11.FogPName pname, [CountAttribute(Computed = "pname")] Int32[] param) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="pname"></param>
+        /// <param name="param">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glFogxv")]
+        [CLSCompliant(false)]
+        public static unsafe void Fogx(OpenTK.Graphics.ES11.FogPName pname, [CountAttribute(Computed = "pname")] Int32* param) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Define front- and back-facing polygons
@@ -4499,6 +5306,7 @@ namespace OpenTK.Graphics.ES11
         /// <param name="equation">[length: 4]
         /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
         /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetClipPlanef")]
         [CLSCompliant(false)]
         public static void GetClipPlane(OpenTK.Graphics.ES11.All plane, [OutAttribute, CountAttribute(Count = 4)] Single[] equation) { throw new BindingsNotRewrittenException(); }
@@ -4512,6 +5320,7 @@ namespace OpenTK.Graphics.ES11
         /// <param name="equation">[length: 4]
         /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
         /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetClipPlanef")]
         [CLSCompliant(false)]
         public static void GetClipPlane(OpenTK.Graphics.ES11.All plane, [OutAttribute, CountAttribute(Count = 4)] out Single equation) { throw new BindingsNotRewrittenException(); }
@@ -4525,13 +5334,54 @@ namespace OpenTK.Graphics.ES11
         /// <param name="equation">[length: 4]
         /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
         /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetClipPlanef")]
         [CLSCompliant(false)]
         public static unsafe void GetClipPlane(OpenTK.Graphics.ES11.All plane, [OutAttribute, CountAttribute(Count = 4)] Single* equation) { throw new BindingsNotRewrittenException(); }
 
+        /// <summary>[requires: v1.0]
+        /// Return the coefficients of the specified clipping plane
+        /// </summary>
+        /// <param name="plane">
+        /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form ClipPlane  where i ranges from 0 to the value of MaxClipPlanes - 1.
+        /// </param>
+        /// <param name="equation">[length: 4]
+        /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
+        /// </param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetClipPlanef")]
+        [CLSCompliant(false)]
+        public static void GetClipPlane(OpenTK.Graphics.ES11.ClipPlaneName plane, [OutAttribute, CountAttribute(Count = 4)] Single[] equation) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]
+        /// Return the coefficients of the specified clipping plane
+        /// </summary>
+        /// <param name="plane">
+        /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form ClipPlane  where i ranges from 0 to the value of MaxClipPlanes - 1.
+        /// </param>
+        /// <param name="equation">[length: 4]
+        /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
+        /// </param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetClipPlanef")]
+        [CLSCompliant(false)]
+        public static void GetClipPlane(OpenTK.Graphics.ES11.ClipPlaneName plane, [OutAttribute, CountAttribute(Count = 4)] out Single equation) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]
+        /// Return the coefficients of the specified clipping plane
+        /// </summary>
+        /// <param name="plane">
+        /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form ClipPlane  where i ranges from 0 to the value of MaxClipPlanes - 1.
+        /// </param>
+        /// <param name="equation">[length: 4]
+        /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
+        /// </param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetClipPlanef")]
+        [CLSCompliant(false)]
+        public static unsafe void GetClipPlane(OpenTK.Graphics.ES11.ClipPlaneName plane, [OutAttribute, CountAttribute(Count = 4)] Single* equation) { throw new BindingsNotRewrittenException(); }
+
         /// <summary>[requires: v1.0]</summary>
         /// <param name="plane"></param>
         /// <param name="equation">[length: 4]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetClipPlanex")]
         [CLSCompliant(false)]
         public static void GetClipPlanex(OpenTK.Graphics.ES11.All plane, [OutAttribute, CountAttribute(Count = 4)] Int32[] equation) { throw new BindingsNotRewrittenException(); }
@@ -4539,6 +5389,7 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]</summary>
         /// <param name="plane"></param>
         /// <param name="equation">[length: 4]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetClipPlanex")]
         [CLSCompliant(false)]
         public static void GetClipPlanex(OpenTK.Graphics.ES11.All plane, [OutAttribute, CountAttribute(Count = 4)] out Int32 equation) { throw new BindingsNotRewrittenException(); }
@@ -4546,9 +5397,409 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]</summary>
         /// <param name="plane"></param>
         /// <param name="equation">[length: 4]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetClipPlanex")]
         [CLSCompliant(false)]
         public static unsafe void GetClipPlanex(OpenTK.Graphics.ES11.All plane, [OutAttribute, CountAttribute(Count = 4)] Int32* equation) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="plane"></param>
+        /// <param name="equation">[length: 4]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetClipPlanex")]
+        [CLSCompliant(false)]
+        public static void GetClipPlanex(OpenTK.Graphics.ES11.ClipPlaneName plane, [OutAttribute, CountAttribute(Count = 4)] Int32[] equation) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="plane"></param>
+        /// <param name="equation">[length: 4]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetClipPlanex")]
+        [CLSCompliant(false)]
+        public static void GetClipPlanex(OpenTK.Graphics.ES11.ClipPlaneName plane, [OutAttribute, CountAttribute(Count = 4)] out Int32 equation) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="plane"></param>
+        /// <param name="equation">[length: 4]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetClipPlanex")]
+        [CLSCompliant(false)]
+        public static unsafe void GetClipPlanex(OpenTK.Graphics.ES11.ClipPlaneName plane, [OutAttribute, CountAttribute(Count = 4)] Int32* equation) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve messages from the debug message log
+        /// </summary>
+        /// <param name="count">
+        /// The number of debug messages to retrieve from the log.
+        /// </param>
+        /// <param name="bufSize">
+        /// The size of the buffer whose address is given by messageLog.
+        /// </param>
+        /// <param name="sources">[length: count]
+        /// The address of an array of variables to receive the sources of the retrieved messages.
+        /// </param>
+        /// <param name="types">[length: count]
+        /// The address of an array of variables to receive the types of the retrieved messages.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+        /// </param>
+        /// <param name="severities">[length: count]
+        /// The address of an array of variables to receive the severites of the retrieved messages.
+        /// </param>
+        /// <param name="lengths">[length: count]
+        /// The address of an array of variables to receive the lengths of the received messages.
+        /// </param>
+        /// <param name="messageLog">[length: bufSize]
+        /// The address of an array of characters that will receive the messages.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLog")]
+        [CLSCompliant(false)]
+        public static Int32 GetDebugMessageLog(Int32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All[] sources, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All[] types, [OutAttribute, CountAttribute(Parameter = "count")] Int32[] ids, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All[] severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32[] lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve messages from the debug message log
+        /// </summary>
+        /// <param name="count">
+        /// The number of debug messages to retrieve from the log.
+        /// </param>
+        /// <param name="bufSize">
+        /// The size of the buffer whose address is given by messageLog.
+        /// </param>
+        /// <param name="sources">[length: count]
+        /// The address of an array of variables to receive the sources of the retrieved messages.
+        /// </param>
+        /// <param name="types">[length: count]
+        /// The address of an array of variables to receive the types of the retrieved messages.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+        /// </param>
+        /// <param name="severities">[length: count]
+        /// The address of an array of variables to receive the severites of the retrieved messages.
+        /// </param>
+        /// <param name="lengths">[length: count]
+        /// The address of an array of variables to receive the lengths of the received messages.
+        /// </param>
+        /// <param name="messageLog">[length: bufSize]
+        /// The address of an array of characters that will receive the messages.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLog")]
+        [CLSCompliant(false)]
+        public static Int32 GetDebugMessageLog(Int32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.All sources, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.All types, [OutAttribute, CountAttribute(Parameter = "count")] out Int32 ids, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.All severities, [OutAttribute, CountAttribute(Parameter = "count")] out Int32 lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve messages from the debug message log
+        /// </summary>
+        /// <param name="count">
+        /// The number of debug messages to retrieve from the log.
+        /// </param>
+        /// <param name="bufSize">
+        /// The size of the buffer whose address is given by messageLog.
+        /// </param>
+        /// <param name="sources">[length: count]
+        /// The address of an array of variables to receive the sources of the retrieved messages.
+        /// </param>
+        /// <param name="types">[length: count]
+        /// The address of an array of variables to receive the types of the retrieved messages.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+        /// </param>
+        /// <param name="severities">[length: count]
+        /// The address of an array of variables to receive the severites of the retrieved messages.
+        /// </param>
+        /// <param name="lengths">[length: count]
+        /// The address of an array of variables to receive the lengths of the received messages.
+        /// </param>
+        /// <param name="messageLog">[length: bufSize]
+        /// The address of an array of characters that will receive the messages.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLog")]
+        [CLSCompliant(false)]
+        public static unsafe Int32 GetDebugMessageLog(Int32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All* sources, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All* types, [OutAttribute, CountAttribute(Parameter = "count")] Int32* ids, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All* severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32* lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve messages from the debug message log
+        /// </summary>
+        /// <param name="count">
+        /// The number of debug messages to retrieve from the log.
+        /// </param>
+        /// <param name="bufSize">
+        /// The size of the buffer whose address is given by messageLog.
+        /// </param>
+        /// <param name="sources">[length: count]
+        /// The address of an array of variables to receive the sources of the retrieved messages.
+        /// </param>
+        /// <param name="types">[length: count]
+        /// The address of an array of variables to receive the types of the retrieved messages.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+        /// </param>
+        /// <param name="severities">[length: count]
+        /// The address of an array of variables to receive the severites of the retrieved messages.
+        /// </param>
+        /// <param name="lengths">[length: count]
+        /// The address of an array of variables to receive the lengths of the received messages.
+        /// </param>
+        /// <param name="messageLog">[length: bufSize]
+        /// The address of an array of characters that will receive the messages.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLog")]
+        [CLSCompliant(false)]
+        public static Int32 GetDebugMessageLog(Int32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugSource[] sources, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugType[] types, [OutAttribute, CountAttribute(Parameter = "count")] Int32[] ids, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugSeverity[] severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32[] lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve messages from the debug message log
+        /// </summary>
+        /// <param name="count">
+        /// The number of debug messages to retrieve from the log.
+        /// </param>
+        /// <param name="bufSize">
+        /// The size of the buffer whose address is given by messageLog.
+        /// </param>
+        /// <param name="sources">[length: count]
+        /// The address of an array of variables to receive the sources of the retrieved messages.
+        /// </param>
+        /// <param name="types">[length: count]
+        /// The address of an array of variables to receive the types of the retrieved messages.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+        /// </param>
+        /// <param name="severities">[length: count]
+        /// The address of an array of variables to receive the severites of the retrieved messages.
+        /// </param>
+        /// <param name="lengths">[length: count]
+        /// The address of an array of variables to receive the lengths of the received messages.
+        /// </param>
+        /// <param name="messageLog">[length: bufSize]
+        /// The address of an array of characters that will receive the messages.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLog")]
+        [CLSCompliant(false)]
+        public static Int32 GetDebugMessageLog(Int32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.DebugSource sources, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.DebugType types, [OutAttribute, CountAttribute(Parameter = "count")] out Int32 ids, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.DebugSeverity severities, [OutAttribute, CountAttribute(Parameter = "count")] out Int32 lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve messages from the debug message log
+        /// </summary>
+        /// <param name="count">
+        /// The number of debug messages to retrieve from the log.
+        /// </param>
+        /// <param name="bufSize">
+        /// The size of the buffer whose address is given by messageLog.
+        /// </param>
+        /// <param name="sources">[length: count]
+        /// The address of an array of variables to receive the sources of the retrieved messages.
+        /// </param>
+        /// <param name="types">[length: count]
+        /// The address of an array of variables to receive the types of the retrieved messages.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+        /// </param>
+        /// <param name="severities">[length: count]
+        /// The address of an array of variables to receive the severites of the retrieved messages.
+        /// </param>
+        /// <param name="lengths">[length: count]
+        /// The address of an array of variables to receive the lengths of the received messages.
+        /// </param>
+        /// <param name="messageLog">[length: bufSize]
+        /// The address of an array of characters that will receive the messages.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLog")]
+        [CLSCompliant(false)]
+        public static unsafe Int32 GetDebugMessageLog(Int32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugSource* sources, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugType* types, [OutAttribute, CountAttribute(Parameter = "count")] Int32* ids, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugSeverity* severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32* lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve messages from the debug message log
+        /// </summary>
+        /// <param name="count">
+        /// The number of debug messages to retrieve from the log.
+        /// </param>
+        /// <param name="bufSize">
+        /// The size of the buffer whose address is given by messageLog.
+        /// </param>
+        /// <param name="sources">[length: count]
+        /// The address of an array of variables to receive the sources of the retrieved messages.
+        /// </param>
+        /// <param name="types">[length: count]
+        /// The address of an array of variables to receive the types of the retrieved messages.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+        /// </param>
+        /// <param name="severities">[length: count]
+        /// The address of an array of variables to receive the severites of the retrieved messages.
+        /// </param>
+        /// <param name="lengths">[length: count]
+        /// The address of an array of variables to receive the lengths of the received messages.
+        /// </param>
+        /// <param name="messageLog">[length: bufSize]
+        /// The address of an array of characters that will receive the messages.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLog")]
+        [CLSCompliant(false)]
+        public static Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All[] sources, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All[] types, [OutAttribute, CountAttribute(Parameter = "count")] UInt32[] ids, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All[] severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32[] lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve messages from the debug message log
+        /// </summary>
+        /// <param name="count">
+        /// The number of debug messages to retrieve from the log.
+        /// </param>
+        /// <param name="bufSize">
+        /// The size of the buffer whose address is given by messageLog.
+        /// </param>
+        /// <param name="sources">[length: count]
+        /// The address of an array of variables to receive the sources of the retrieved messages.
+        /// </param>
+        /// <param name="types">[length: count]
+        /// The address of an array of variables to receive the types of the retrieved messages.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+        /// </param>
+        /// <param name="severities">[length: count]
+        /// The address of an array of variables to receive the severites of the retrieved messages.
+        /// </param>
+        /// <param name="lengths">[length: count]
+        /// The address of an array of variables to receive the lengths of the received messages.
+        /// </param>
+        /// <param name="messageLog">[length: bufSize]
+        /// The address of an array of characters that will receive the messages.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLog")]
+        [CLSCompliant(false)]
+        public static Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.All sources, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.All types, [OutAttribute, CountAttribute(Parameter = "count")] out UInt32 ids, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.All severities, [OutAttribute, CountAttribute(Parameter = "count")] out Int32 lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve messages from the debug message log
+        /// </summary>
+        /// <param name="count">
+        /// The number of debug messages to retrieve from the log.
+        /// </param>
+        /// <param name="bufSize">
+        /// The size of the buffer whose address is given by messageLog.
+        /// </param>
+        /// <param name="sources">[length: count]
+        /// The address of an array of variables to receive the sources of the retrieved messages.
+        /// </param>
+        /// <param name="types">[length: count]
+        /// The address of an array of variables to receive the types of the retrieved messages.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+        /// </param>
+        /// <param name="severities">[length: count]
+        /// The address of an array of variables to receive the severites of the retrieved messages.
+        /// </param>
+        /// <param name="lengths">[length: count]
+        /// The address of an array of variables to receive the lengths of the received messages.
+        /// </param>
+        /// <param name="messageLog">[length: bufSize]
+        /// The address of an array of characters that will receive the messages.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLog")]
+        [CLSCompliant(false)]
+        public static unsafe Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All* sources, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All* types, [OutAttribute, CountAttribute(Parameter = "count")] UInt32* ids, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All* severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32* lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve messages from the debug message log
+        /// </summary>
+        /// <param name="count">
+        /// The number of debug messages to retrieve from the log.
+        /// </param>
+        /// <param name="bufSize">
+        /// The size of the buffer whose address is given by messageLog.
+        /// </param>
+        /// <param name="sources">[length: count]
+        /// The address of an array of variables to receive the sources of the retrieved messages.
+        /// </param>
+        /// <param name="types">[length: count]
+        /// The address of an array of variables to receive the types of the retrieved messages.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+        /// </param>
+        /// <param name="severities">[length: count]
+        /// The address of an array of variables to receive the severites of the retrieved messages.
+        /// </param>
+        /// <param name="lengths">[length: count]
+        /// The address of an array of variables to receive the lengths of the received messages.
+        /// </param>
+        /// <param name="messageLog">[length: bufSize]
+        /// The address of an array of characters that will receive the messages.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLog")]
+        [CLSCompliant(false)]
+        public static Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugSource[] sources, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugType[] types, [OutAttribute, CountAttribute(Parameter = "count")] UInt32[] ids, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugSeverity[] severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32[] lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve messages from the debug message log
+        /// </summary>
+        /// <param name="count">
+        /// The number of debug messages to retrieve from the log.
+        /// </param>
+        /// <param name="bufSize">
+        /// The size of the buffer whose address is given by messageLog.
+        /// </param>
+        /// <param name="sources">[length: count]
+        /// The address of an array of variables to receive the sources of the retrieved messages.
+        /// </param>
+        /// <param name="types">[length: count]
+        /// The address of an array of variables to receive the types of the retrieved messages.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+        /// </param>
+        /// <param name="severities">[length: count]
+        /// The address of an array of variables to receive the severites of the retrieved messages.
+        /// </param>
+        /// <param name="lengths">[length: count]
+        /// The address of an array of variables to receive the lengths of the received messages.
+        /// </param>
+        /// <param name="messageLog">[length: bufSize]
+        /// The address of an array of characters that will receive the messages.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLog")]
+        [CLSCompliant(false)]
+        public static Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.DebugSource sources, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.DebugType types, [OutAttribute, CountAttribute(Parameter = "count")] out UInt32 ids, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.DebugSeverity severities, [OutAttribute, CountAttribute(Parameter = "count")] out Int32 lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve messages from the debug message log
+        /// </summary>
+        /// <param name="count">
+        /// The number of debug messages to retrieve from the log.
+        /// </param>
+        /// <param name="bufSize">
+        /// The size of the buffer whose address is given by messageLog.
+        /// </param>
+        /// <param name="sources">[length: count]
+        /// The address of an array of variables to receive the sources of the retrieved messages.
+        /// </param>
+        /// <param name="types">[length: count]
+        /// The address of an array of variables to receive the types of the retrieved messages.
+        /// </param>
+        /// <param name="ids">[length: count]
+        /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+        /// </param>
+        /// <param name="severities">[length: count]
+        /// The address of an array of variables to receive the severites of the retrieved messages.
+        /// </param>
+        /// <param name="lengths">[length: count]
+        /// The address of an array of variables to receive the lengths of the received messages.
+        /// </param>
+        /// <param name="messageLog">[length: bufSize]
+        /// The address of an array of characters that will receive the messages.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLog")]
+        [CLSCompliant(false)]
+        public static unsafe Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugSource* sources, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugType* types, [OutAttribute, CountAttribute(Parameter = "count")] UInt32* ids, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugSeverity* severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32* lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Return error information
@@ -4558,13 +5809,21 @@ namespace OpenTK.Graphics.ES11
 
         /// <summary>[requires: v1.0]</summary>
         /// <param name="pname"></param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetFixedv")]
         [CLSCompliant(false)]
         public static Int32 GetFixed(OpenTK.Graphics.ES11.All pname) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]</summary>
         /// <param name="pname"></param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetFixedv")]
+        [CLSCompliant(false)]
+        public static Int32 GetFixed(OpenTK.Graphics.ES11.GetPName pname) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="pname"></param>
         /// <param name="@params"></param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetFixedv")]
         [CLSCompliant(false)]
         public static void GetFixed(OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -4572,6 +5831,7 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]</summary>
         /// <param name="pname"></param>
         /// <param name="@params"></param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetFixedv")]
         [CLSCompliant(false)]
         public static void GetFixed(OpenTK.Graphics.ES11.All pname, [OutAttribute] out Int32 @params) { throw new BindingsNotRewrittenException(); }
@@ -4579,9 +5839,31 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]</summary>
         /// <param name="pname"></param>
         /// <param name="@params"></param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetFixedv")]
         [CLSCompliant(false)]
         public static unsafe void GetFixed(OpenTK.Graphics.ES11.All pname, [OutAttribute] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="pname"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetFixedv")]
+        [CLSCompliant(false)]
+        public static void GetFixed(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="pname"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetFixedv")]
+        [CLSCompliant(false)]
+        public static void GetFixed(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] out Int32 @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="pname"></param>
+        /// <param name="@params"></param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetFixedv")]
+        [CLSCompliant(false)]
+        public static unsafe void GetFixed(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]</summary>
         /// <param name="pname"></param>
@@ -4802,6 +6084,7 @@ namespace OpenTK.Graphics.ES11
         /// <param name="light"></param>
         /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetLightxv")]
         [CLSCompliant(false)]
         public static void GetLightx(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -4810,6 +6093,7 @@ namespace OpenTK.Graphics.ES11
         /// <param name="light"></param>
         /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetLightxv")]
         [CLSCompliant(false)]
         public static void GetLightx(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
@@ -4818,9 +6102,34 @@ namespace OpenTK.Graphics.ES11
         /// <param name="light"></param>
         /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetLightxv")]
         [CLSCompliant(false)]
         public static unsafe void GetLightx(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="light"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetLightxv")]
+        [CLSCompliant(false)]
+        public static void GetLightx(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="light"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetLightxv")]
+        [CLSCompliant(false)]
+        public static void GetLightx(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="light"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetLightxv")]
+        [CLSCompliant(false)]
+        public static unsafe void GetLightx(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Return material parameters
@@ -4925,6 +6234,7 @@ namespace OpenTK.Graphics.ES11
         /// <param name="face"></param>
         /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetMaterialxv")]
         [CLSCompliant(false)]
         public static void GetMaterialx(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -4933,6 +6243,7 @@ namespace OpenTK.Graphics.ES11
         /// <param name="face"></param>
         /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetMaterialxv")]
         [CLSCompliant(false)]
         public static void GetMaterialx(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
@@ -4941,14 +6252,334 @@ namespace OpenTK.Graphics.ES11
         /// <param name="face"></param>
         /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetMaterialxv")]
         [CLSCompliant(false)]
         public static unsafe void GetMaterialx(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="face"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetMaterialxv")]
+        [CLSCompliant(false)]
+        public static void GetMaterialx(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="face"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetMaterialxv")]
+        [CLSCompliant(false)]
+        public static void GetMaterialx(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="face"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetMaterialxv")]
+        [CLSCompliant(false)]
+        public static unsafe void GetMaterialx(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve the label of a named object identified within a namespace
+        /// </summary>
+        /// <param name="identifier">
+        /// The namespace from which the name of the object is allocated.
+        /// </param>
+        /// <param name="name">
+        /// The name of the object whose label to retrieve.
+        /// </param>
+        /// <param name="bufSize">
+        /// The length of the buffer whose address is in label.
+        /// </param>
+        /// <param name="length">[length: 1]
+        /// The address of a variable to receive the length of the object label.
+        /// </param>
+        /// <param name="label">[length: bufSize]
+        /// The address of a string that will receive the object label.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabel")]
+        [CLSCompliant(false)]
+        public static void GetObjectLabel(OpenTK.Graphics.ES11.All identifier, Int32 name, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] out Int32 length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve the label of a named object identified within a namespace
+        /// </summary>
+        /// <param name="identifier">
+        /// The namespace from which the name of the object is allocated.
+        /// </param>
+        /// <param name="name">
+        /// The name of the object whose label to retrieve.
+        /// </param>
+        /// <param name="bufSize">
+        /// The length of the buffer whose address is in label.
+        /// </param>
+        /// <param name="length">[length: 1]
+        /// The address of a variable to receive the length of the object label.
+        /// </param>
+        /// <param name="label">[length: bufSize]
+        /// The address of a string that will receive the object label.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabel")]
+        [CLSCompliant(false)]
+        public static unsafe void GetObjectLabel(OpenTK.Graphics.ES11.All identifier, Int32 name, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve the label of a named object identified within a namespace
+        /// </summary>
+        /// <param name="identifier">
+        /// The namespace from which the name of the object is allocated.
+        /// </param>
+        /// <param name="name">
+        /// The name of the object whose label to retrieve.
+        /// </param>
+        /// <param name="bufSize">
+        /// The length of the buffer whose address is in label.
+        /// </param>
+        /// <param name="length">[length: 1]
+        /// The address of a variable to receive the length of the object label.
+        /// </param>
+        /// <param name="label">[length: bufSize]
+        /// The address of a string that will receive the object label.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabel")]
+        [CLSCompliant(false)]
+        public static void GetObjectLabel(OpenTK.Graphics.ES11.All identifier, UInt32 name, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] out Int32 length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve the label of a named object identified within a namespace
+        /// </summary>
+        /// <param name="identifier">
+        /// The namespace from which the name of the object is allocated.
+        /// </param>
+        /// <param name="name">
+        /// The name of the object whose label to retrieve.
+        /// </param>
+        /// <param name="bufSize">
+        /// The length of the buffer whose address is in label.
+        /// </param>
+        /// <param name="length">[length: 1]
+        /// The address of a variable to receive the length of the object label.
+        /// </param>
+        /// <param name="label">[length: bufSize]
+        /// The address of a string that will receive the object label.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabel")]
+        [CLSCompliant(false)]
+        public static unsafe void GetObjectLabel(OpenTK.Graphics.ES11.All identifier, UInt32 name, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve the label of a sync object identified by a pointer
+        /// </summary>
+        /// <param name="ptr">
+        /// The name of the sync object whose label to retrieve.
+        /// </param>
+        /// <param name="bufSize">
+        /// The length of the buffer whose address is in label.
+        /// </param>
+        /// <param name="length">[length: 1]
+        /// The address of a variable to receive the length of the object label.
+        /// </param>
+        /// <param name="label">[length: bufSize]
+        /// The address of a string that will receive the object label.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
+        [CLSCompliant(false)]
+        public static void GetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] out Int32 length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve the label of a sync object identified by a pointer
+        /// </summary>
+        /// <param name="ptr">
+        /// The name of the sync object whose label to retrieve.
+        /// </param>
+        /// <param name="bufSize">
+        /// The length of the buffer whose address is in label.
+        /// </param>
+        /// <param name="length">[length: 1]
+        /// The address of a variable to receive the length of the object label.
+        /// </param>
+        /// <param name="label">[length: bufSize]
+        /// The address of a string that will receive the object label.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
+        [CLSCompliant(false)]
+        public static unsafe void GetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve the label of a sync object identified by a pointer
+        /// </summary>
+        /// <param name="ptr">
+        /// The name of the sync object whose label to retrieve.
+        /// </param>
+        /// <param name="bufSize">
+        /// The length of the buffer whose address is in label.
+        /// </param>
+        /// <param name="length">[length: 1]
+        /// The address of a variable to receive the length of the object label.
+        /// </param>
+        /// <param name="label">[length: bufSize]
+        /// The address of a string that will receive the object label.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
+        [CLSCompliant(false)]
+        public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[] ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] out Int32 length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label)
+            where T0 : struct
+         { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve the label of a sync object identified by a pointer
+        /// </summary>
+        /// <param name="ptr">
+        /// The name of the sync object whose label to retrieve.
+        /// </param>
+        /// <param name="bufSize">
+        /// The length of the buffer whose address is in label.
+        /// </param>
+        /// <param name="length">[length: 1]
+        /// The address of a variable to receive the length of the object label.
+        /// </param>
+        /// <param name="label">[length: bufSize]
+        /// The address of a string that will receive the object label.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
+        [CLSCompliant(false)]
+        public static unsafe void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[] ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label)
+            where T0 : struct
+         { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve the label of a sync object identified by a pointer
+        /// </summary>
+        /// <param name="ptr">
+        /// The name of the sync object whose label to retrieve.
+        /// </param>
+        /// <param name="bufSize">
+        /// The length of the buffer whose address is in label.
+        /// </param>
+        /// <param name="length">[length: 1]
+        /// The address of a variable to receive the length of the object label.
+        /// </param>
+        /// <param name="label">[length: bufSize]
+        /// The address of a string that will receive the object label.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
+        [CLSCompliant(false)]
+        public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,] ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] out Int32 length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label)
+            where T0 : struct
+         { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve the label of a sync object identified by a pointer
+        /// </summary>
+        /// <param name="ptr">
+        /// The name of the sync object whose label to retrieve.
+        /// </param>
+        /// <param name="bufSize">
+        /// The length of the buffer whose address is in label.
+        /// </param>
+        /// <param name="length">[length: 1]
+        /// The address of a variable to receive the length of the object label.
+        /// </param>
+        /// <param name="label">[length: bufSize]
+        /// The address of a string that will receive the object label.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
+        [CLSCompliant(false)]
+        public static unsafe void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,] ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label)
+            where T0 : struct
+         { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve the label of a sync object identified by a pointer
+        /// </summary>
+        /// <param name="ptr">
+        /// The name of the sync object whose label to retrieve.
+        /// </param>
+        /// <param name="bufSize">
+        /// The length of the buffer whose address is in label.
+        /// </param>
+        /// <param name="length">[length: 1]
+        /// The address of a variable to receive the length of the object label.
+        /// </param>
+        /// <param name="label">[length: bufSize]
+        /// The address of a string that will receive the object label.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
+        [CLSCompliant(false)]
+        public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,,] ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] out Int32 length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label)
+            where T0 : struct
+         { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve the label of a sync object identified by a pointer
+        /// </summary>
+        /// <param name="ptr">
+        /// The name of the sync object whose label to retrieve.
+        /// </param>
+        /// <param name="bufSize">
+        /// The length of the buffer whose address is in label.
+        /// </param>
+        /// <param name="length">[length: 1]
+        /// The address of a variable to receive the length of the object label.
+        /// </param>
+        /// <param name="label">[length: bufSize]
+        /// The address of a string that will receive the object label.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
+        [CLSCompliant(false)]
+        public static unsafe void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,,] ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label)
+            where T0 : struct
+         { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve the label of a sync object identified by a pointer
+        /// </summary>
+        /// <param name="ptr">
+        /// The name of the sync object whose label to retrieve.
+        /// </param>
+        /// <param name="bufSize">
+        /// The length of the buffer whose address is in label.
+        /// </param>
+        /// <param name="length">[length: 1]
+        /// The address of a variable to receive the length of the object label.
+        /// </param>
+        /// <param name="label">[length: bufSize]
+        /// The address of a string that will receive the object label.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
+        [CLSCompliant(false)]
+        public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] ref T0 ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] out Int32 length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label)
+            where T0 : struct
+         { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Retrieve the label of a sync object identified by a pointer
+        /// </summary>
+        /// <param name="ptr">
+        /// The name of the sync object whose label to retrieve.
+        /// </param>
+        /// <param name="bufSize">
+        /// The length of the buffer whose address is in label.
+        /// </param>
+        /// <param name="length">[length: 1]
+        /// The address of a variable to receive the length of the object label.
+        /// </param>
+        /// <param name="label">[length: bufSize]
+        /// The address of a string that will receive the object label.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabel")]
+        [CLSCompliant(false)]
+        public static unsafe void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] ref T0 ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label)
+            where T0 : struct
+         { throw new BindingsNotRewrittenException(); }
 
         /// <summary></summary>
         /// <param name="map"></param>
         /// <param name="size"></param>
         /// <param name="values">[length: size]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetPixelMapxv")]
         [CLSCompliant(false)]
         public static void GetPixelMapx(OpenTK.Graphics.ES11.All map, Int32 size, [OutAttribute, CountAttribute(Parameter = "size")] Int32[] values) { throw new BindingsNotRewrittenException(); }
@@ -4957,6 +6588,7 @@ namespace OpenTK.Graphics.ES11
         /// <param name="map"></param>
         /// <param name="size"></param>
         /// <param name="values">[length: size]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetPixelMapxv")]
         [CLSCompliant(false)]
         public static void GetPixelMapx(OpenTK.Graphics.ES11.All map, Int32 size, [OutAttribute, CountAttribute(Parameter = "size")] out Int32 values) { throw new BindingsNotRewrittenException(); }
@@ -4965,11 +6597,36 @@ namespace OpenTK.Graphics.ES11
         /// <param name="map"></param>
         /// <param name="size"></param>
         /// <param name="values">[length: size]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetPixelMapxv")]
         [CLSCompliant(false)]
         public static unsafe void GetPixelMapx(OpenTK.Graphics.ES11.All map, Int32 size, [OutAttribute, CountAttribute(Parameter = "size")] Int32* values) { throw new BindingsNotRewrittenException(); }
 
-        /// <summary>[requires: v1.0]
+        /// <summary></summary>
+        /// <param name="map"></param>
+        /// <param name="size"></param>
+        /// <param name="values">[length: size]</param>
+        [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetPixelMapxv")]
+        [CLSCompliant(false)]
+        public static void GetPixelMapx(OpenTK.Graphics.ES11.PixelMap map, Int32 size, [OutAttribute, CountAttribute(Parameter = "size")] Int32[] values) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary></summary>
+        /// <param name="map"></param>
+        /// <param name="size"></param>
+        /// <param name="values">[length: size]</param>
+        [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetPixelMapxv")]
+        [CLSCompliant(false)]
+        public static void GetPixelMapx(OpenTK.Graphics.ES11.PixelMap map, Int32 size, [OutAttribute, CountAttribute(Parameter = "size")] out Int32 values) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary></summary>
+        /// <param name="map"></param>
+        /// <param name="size"></param>
+        /// <param name="values">[length: size]</param>
+        [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetPixelMapxv")]
+        [CLSCompliant(false)]
+        public static unsafe void GetPixelMapx(OpenTK.Graphics.ES11.PixelMap map, Int32 size, [OutAttribute, CountAttribute(Parameter = "size")] Int32* values) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0 or KHR_debug|VERSION_ES_CM_1_0]
         /// Return the address of the specified pointer
         /// </summary>
         /// <param name="pname">
@@ -4979,10 +6636,10 @@ namespace OpenTK.Graphics.ES11
         /// Returns the pointer value specified by pname.
         /// </param>
         [Obsolete("Use strongly-typed overload instead")]
-        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
+        [AutoGenerated(Category = "KHR_debug|VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
         public static void GetPointer(OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Count = 1)] IntPtr @params) { throw new BindingsNotRewrittenException(); }
 
-        /// <summary>[requires: v1.0]
+        /// <summary>[requires: v1.0 or KHR_debug|VERSION_ES_CM_1_0]
         /// Return the address of the specified pointer
         /// </summary>
         /// <param name="pname">
@@ -4992,13 +6649,13 @@ namespace OpenTK.Graphics.ES11
         /// Returns the pointer value specified by pname.
         /// </param>
         [Obsolete("Use strongly-typed overload instead")]
-        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
+        [AutoGenerated(Category = "KHR_debug|VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
         [CLSCompliant(false)]
         public static void GetPointer<T1>(OpenTK.Graphics.ES11.All pname, [InAttribute, OutAttribute, CountAttribute(Count = 1)] T1[] @params)
             where T1 : struct
          { throw new BindingsNotRewrittenException(); }
 
-        /// <summary>[requires: v1.0]
+        /// <summary>[requires: v1.0 or KHR_debug|VERSION_ES_CM_1_0]
         /// Return the address of the specified pointer
         /// </summary>
         /// <param name="pname">
@@ -5008,13 +6665,13 @@ namespace OpenTK.Graphics.ES11
         /// Returns the pointer value specified by pname.
         /// </param>
         [Obsolete("Use strongly-typed overload instead")]
-        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
+        [AutoGenerated(Category = "KHR_debug|VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
         [CLSCompliant(false)]
         public static void GetPointer<T1>(OpenTK.Graphics.ES11.All pname, [InAttribute, OutAttribute, CountAttribute(Count = 1)] T1[,] @params)
             where T1 : struct
          { throw new BindingsNotRewrittenException(); }
 
-        /// <summary>[requires: v1.0]
+        /// <summary>[requires: v1.0 or KHR_debug|VERSION_ES_CM_1_0]
         /// Return the address of the specified pointer
         /// </summary>
         /// <param name="pname">
@@ -5024,13 +6681,13 @@ namespace OpenTK.Graphics.ES11
         /// Returns the pointer value specified by pname.
         /// </param>
         [Obsolete("Use strongly-typed overload instead")]
-        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
+        [AutoGenerated(Category = "KHR_debug|VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
         [CLSCompliant(false)]
         public static void GetPointer<T1>(OpenTK.Graphics.ES11.All pname, [InAttribute, OutAttribute, CountAttribute(Count = 1)] T1[,,] @params)
             where T1 : struct
          { throw new BindingsNotRewrittenException(); }
 
-        /// <summary>[requires: v1.0]
+        /// <summary>[requires: v1.0 or KHR_debug|VERSION_ES_CM_1_0]
         /// Return the address of the specified pointer
         /// </summary>
         /// <param name="pname">
@@ -5040,12 +6697,12 @@ namespace OpenTK.Graphics.ES11
         /// Returns the pointer value specified by pname.
         /// </param>
         [Obsolete("Use strongly-typed overload instead")]
-        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
+        [AutoGenerated(Category = "KHR_debug|VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
         public static void GetPointer<T1>(OpenTK.Graphics.ES11.All pname, [InAttribute, OutAttribute, CountAttribute(Count = 1)] ref T1 @params)
             where T1 : struct
          { throw new BindingsNotRewrittenException(); }
 
-        /// <summary>[requires: v1.0]
+        /// <summary>[requires: v1.0 or KHR_debug|VERSION_ES_CM_1_0]
         /// Return the address of the specified pointer
         /// </summary>
         /// <param name="pname">
@@ -5054,10 +6711,10 @@ namespace OpenTK.Graphics.ES11
         /// <param name="@params">[length: 1]
         /// Returns the pointer value specified by pname.
         /// </param>
-        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
+        [AutoGenerated(Category = "KHR_debug|VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
         public static void GetPointer(OpenTK.Graphics.ES11.GetPointervPName pname, [OutAttribute, CountAttribute(Count = 1)] IntPtr @params) { throw new BindingsNotRewrittenException(); }
 
-        /// <summary>[requires: v1.0]
+        /// <summary>[requires: v1.0 or KHR_debug|VERSION_ES_CM_1_0]
         /// Return the address of the specified pointer
         /// </summary>
         /// <param name="pname">
@@ -5066,13 +6723,13 @@ namespace OpenTK.Graphics.ES11
         /// <param name="@params">[length: 1]
         /// Returns the pointer value specified by pname.
         /// </param>
-        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
+        [AutoGenerated(Category = "KHR_debug|VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
         [CLSCompliant(false)]
         public static void GetPointer<T1>(OpenTK.Graphics.ES11.GetPointervPName pname, [InAttribute, OutAttribute, CountAttribute(Count = 1)] T1[] @params)
             where T1 : struct
          { throw new BindingsNotRewrittenException(); }
 
-        /// <summary>[requires: v1.0]
+        /// <summary>[requires: v1.0 or KHR_debug|VERSION_ES_CM_1_0]
         /// Return the address of the specified pointer
         /// </summary>
         /// <param name="pname">
@@ -5081,13 +6738,13 @@ namespace OpenTK.Graphics.ES11
         /// <param name="@params">[length: 1]
         /// Returns the pointer value specified by pname.
         /// </param>
-        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
+        [AutoGenerated(Category = "KHR_debug|VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
         [CLSCompliant(false)]
         public static void GetPointer<T1>(OpenTK.Graphics.ES11.GetPointervPName pname, [InAttribute, OutAttribute, CountAttribute(Count = 1)] T1[,] @params)
             where T1 : struct
          { throw new BindingsNotRewrittenException(); }
 
-        /// <summary>[requires: v1.0]
+        /// <summary>[requires: v1.0 or KHR_debug|VERSION_ES_CM_1_0]
         /// Return the address of the specified pointer
         /// </summary>
         /// <param name="pname">
@@ -5096,13 +6753,13 @@ namespace OpenTK.Graphics.ES11
         /// <param name="@params">[length: 1]
         /// Returns the pointer value specified by pname.
         /// </param>
-        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
+        [AutoGenerated(Category = "KHR_debug|VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
         [CLSCompliant(false)]
         public static void GetPointer<T1>(OpenTK.Graphics.ES11.GetPointervPName pname, [InAttribute, OutAttribute, CountAttribute(Count = 1)] T1[,,] @params)
             where T1 : struct
          { throw new BindingsNotRewrittenException(); }
 
-        /// <summary>[requires: v1.0]
+        /// <summary>[requires: v1.0 or KHR_debug|VERSION_ES_CM_1_0]
         /// Return the address of the specified pointer
         /// </summary>
         /// <param name="pname">
@@ -5111,7 +6768,7 @@ namespace OpenTK.Graphics.ES11
         /// <param name="@params">[length: 1]
         /// Returns the pointer value specified by pname.
         /// </param>
-        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
+        [AutoGenerated(Category = "KHR_debug|VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetPointerv")]
         public static void GetPointer<T1>(OpenTK.Graphics.ES11.GetPointervPName pname, [InAttribute, OutAttribute, CountAttribute(Count = 1)] ref T1 @params)
             where T1 : struct
          { throw new BindingsNotRewrittenException(); }
@@ -5337,6 +6994,7 @@ namespace OpenTK.Graphics.ES11
         /// <param name="target"></param>
         /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetTexEnvxv")]
         [CLSCompliant(false)]
         public static void GetTexEnvx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -5345,6 +7003,7 @@ namespace OpenTK.Graphics.ES11
         /// <param name="target"></param>
         /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetTexEnvxv")]
         [CLSCompliant(false)]
         public static void GetTexEnvx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
@@ -5353,9 +7012,34 @@ namespace OpenTK.Graphics.ES11
         /// <param name="target"></param>
         /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetTexEnvxv")]
         [CLSCompliant(false)]
         public static unsafe void GetTexEnvx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="target"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetTexEnvxv")]
+        [CLSCompliant(false)]
+        public static void GetTexEnvx(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="target"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetTexEnvxv")]
+        [CLSCompliant(false)]
+        public static void GetTexEnvx(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="target"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetTexEnvxv")]
+        [CLSCompliant(false)]
+        public static unsafe void GetTexEnvx(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Return texture parameter values
@@ -5559,6 +7243,7 @@ namespace OpenTK.Graphics.ES11
         /// <param name="target"></param>
         /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetTexParameterxv")]
         [CLSCompliant(false)]
         public static void GetTexParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -5567,6 +7252,7 @@ namespace OpenTK.Graphics.ES11
         /// <param name="target"></param>
         /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetTexParameterxv")]
         [CLSCompliant(false)]
         public static void GetTexParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
@@ -5575,9 +7261,34 @@ namespace OpenTK.Graphics.ES11
         /// <param name="target"></param>
         /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetTexParameterxv")]
         [CLSCompliant(false)]
         public static unsafe void GetTexParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="target"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetTexParameterxv")]
+        [CLSCompliant(false)]
+        public static void GetTexParameterx(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="target"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetTexParameterxv")]
+        [CLSCompliant(false)]
+        public static void GetTexParameterx(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="target"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glGetTexParameterxv")]
+        [CLSCompliant(false)]
+        public static unsafe void GetTexParameterx(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Specify implementation-specific hints
@@ -5842,12 +7553,20 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]</summary>
         /// <param name="pname"></param>
         /// <param name="param"></param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glLightModelx")]
         public static void LightModelx(OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]</summary>
         /// <param name="pname"></param>
+        /// <param name="param"></param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glLightModelx")]
+        public static void LightModelx(OpenTK.Graphics.ES11.LightModelParameter pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="pname"></param>
         /// <param name="param">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glLightModelxv")]
         [CLSCompliant(false)]
         public static void LightModelx(OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32[] param) { throw new BindingsNotRewrittenException(); }
@@ -5855,21 +7574,45 @@ namespace OpenTK.Graphics.ES11
         /// <summary>[requires: v1.0]</summary>
         /// <param name="pname"></param>
         /// <param name="param">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glLightModelxv")]
         [CLSCompliant(false)]
         public static unsafe void LightModelx(OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32* param) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]</summary>
+        /// <param name="pname"></param>
+        /// <param name="param">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glLightModelxv")]
+        [CLSCompliant(false)]
+        public static void LightModelx(OpenTK.Graphics.ES11.LightModelParameter pname, [CountAttribute(Computed = "pname")] Int32[] param) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="pname"></param>
+        /// <param name="param">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glLightModelxv")]
+        [CLSCompliant(false)]
+        public static unsafe void LightModelx(OpenTK.Graphics.ES11.LightModelParameter pname, [CountAttribute(Computed = "pname")] Int32* param) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
         /// <param name="light"></param>
         /// <param name="pname"></param>
         /// <param name="param"></param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glLightx")]
         public static void Lightx(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]</summary>
         /// <param name="light"></param>
         /// <param name="pname"></param>
+        /// <param name="param"></param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glLightx")]
+        public static void Lightx(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="light"></param>
+        /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glLightxv")]
         [CLSCompliant(false)]
         public static void Lightx(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -5878,9 +7621,26 @@ namespace OpenTK.Graphics.ES11
         /// <param name="light"></param>
         /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glLightxv")]
         [CLSCompliant(false)]
         public static unsafe void Lightx(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="light"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glLightxv")]
+        [CLSCompliant(false)]
+        public static void Lightx(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="light"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glLightxv")]
+        [CLSCompliant(false)]
+        public static unsafe void Lightx(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Specify the width of rasterized lines
@@ -6070,13 +7830,22 @@ namespace OpenTK.Graphics.ES11
         /// <param name="face"></param>
         /// <param name="pname"></param>
         /// <param name="param"></param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glMaterialx")]
         public static void Materialx(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]</summary>
         /// <param name="face"></param>
         /// <param name="pname"></param>
+        /// <param name="param"></param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glMaterialx")]
+        public static void Materialx(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="face"></param>
+        /// <param name="pname"></param>
         /// <param name="param">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glMaterialxv")]
         [CLSCompliant(false)]
         public static void Materialx(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32[] param) { throw new BindingsNotRewrittenException(); }
@@ -6085,9 +7854,26 @@ namespace OpenTK.Graphics.ES11
         /// <param name="face"></param>
         /// <param name="pname"></param>
         /// <param name="param">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glMaterialxv")]
         [CLSCompliant(false)]
         public static unsafe void Materialx(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32* param) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="face"></param>
+        /// <param name="pname"></param>
+        /// <param name="param">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glMaterialxv")]
+        [CLSCompliant(false)]
+        public static void Materialx(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, [CountAttribute(Computed = "pname")] Int32[] param) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="face"></param>
+        /// <param name="pname"></param>
+        /// <param name="param">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glMaterialxv")]
+        [CLSCompliant(false)]
+        public static unsafe void Materialx(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, [CountAttribute(Computed = "pname")] Int32* param) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Specify which matrix is the current matrix
@@ -6157,8 +7943,18 @@ namespace OpenTK.Graphics.ES11
         /// <param name="t"></param>
         /// <param name="r"></param>
         /// <param name="q"></param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glMultiTexCoord4x")]
         public static void MultiTexCoord4x(OpenTK.Graphics.ES11.All texture, Int32 s, Int32 t, Int32 r, Int32 q) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="texture"></param>
+        /// <param name="s"></param>
+        /// <param name="t"></param>
+        /// <param name="r"></param>
+        /// <param name="q"></param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glMultiTexCoord4x")]
+        public static void MultiTexCoord4x(OpenTK.Graphics.ES11.TextureUnit texture, Int32 s, Int32 t, Int32 r, Int32 q) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Multiply the current matrix with the specified matrix
@@ -6407,6 +8203,170 @@ namespace OpenTK.Graphics.ES11
             where T2 : struct
          { throw new BindingsNotRewrittenException(); }
 
+        /// <summary>
+        /// Label a named object identified within a namespace
+        /// </summary>
+        /// <param name="identifier">
+        /// The namespace from which the name of the object is allocated.
+        /// </param>
+        /// <param name="name">
+        /// The name of the object to label.
+        /// </param>
+        /// <param name="length">
+        /// The length of the label to be used for the object.
+        /// </param>
+        /// <param name="label">[length: COMPSIZE(label,length)]
+        /// The address of a string containing the label to assign to the object.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectLabel")]
+        [CLSCompliant(false)]
+        public static void ObjectLabel(OpenTK.Graphics.ES11.All identifier, Int32 name, Int32 length, [CountAttribute(Computed = "label,length")] String label) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Label a named object identified within a namespace
+        /// </summary>
+        /// <param name="identifier">
+        /// The namespace from which the name of the object is allocated.
+        /// </param>
+        /// <param name="name">
+        /// The name of the object to label.
+        /// </param>
+        /// <param name="length">
+        /// The length of the label to be used for the object.
+        /// </param>
+        /// <param name="label">[length: COMPSIZE(label,length)]
+        /// The address of a string containing the label to assign to the object.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectLabel")]
+        [CLSCompliant(false)]
+        public static void ObjectLabel(OpenTK.Graphics.ES11.All identifier, UInt32 name, Int32 length, [CountAttribute(Computed = "label,length")] String label) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Label a named object identified within a namespace
+        /// </summary>
+        /// <param name="identifier">
+        /// The namespace from which the name of the object is allocated.
+        /// </param>
+        /// <param name="name">
+        /// The name of the object to label.
+        /// </param>
+        /// <param name="length">
+        /// The length of the label to be used for the object.
+        /// </param>
+        /// <param name="label">[length: COMPSIZE(label,length)]
+        /// The address of a string containing the label to assign to the object.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectLabel")]
+        [CLSCompliant(false)]
+        public static void ObjectLabel(OpenTK.Graphics.ES11.ObjectIdentifier identifier, Int32 name, Int32 length, [CountAttribute(Computed = "label,length")] String label) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Label a named object identified within a namespace
+        /// </summary>
+        /// <param name="identifier">
+        /// The namespace from which the name of the object is allocated.
+        /// </param>
+        /// <param name="name">
+        /// The name of the object to label.
+        /// </param>
+        /// <param name="length">
+        /// The length of the label to be used for the object.
+        /// </param>
+        /// <param name="label">[length: COMPSIZE(label,length)]
+        /// The address of a string containing the label to assign to the object.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectLabel")]
+        [CLSCompliant(false)]
+        public static void ObjectLabel(OpenTK.Graphics.ES11.ObjectIdentifier identifier, UInt32 name, Int32 length, [CountAttribute(Computed = "label,length")] String label) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Label a a sync object identified by a pointer
+        /// </summary>
+        /// <param name="ptr">
+        /// A pointer identifying a sync object.
+        /// </param>
+        /// <param name="length">
+        /// The length of the label to be used for the object.
+        /// </param>
+        /// <param name="label">[length: COMPSIZE(label,length)]
+        /// The address of a string containing the label to assign to the object.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectPtrLabel")]
+        public static void ObjectPtrLabel(IntPtr ptr, Int32 length, [CountAttribute(Computed = "label,length")] String label) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Label a a sync object identified by a pointer
+        /// </summary>
+        /// <param name="ptr">
+        /// A pointer identifying a sync object.
+        /// </param>
+        /// <param name="length">
+        /// The length of the label to be used for the object.
+        /// </param>
+        /// <param name="label">[length: COMPSIZE(label,length)]
+        /// The address of a string containing the label to assign to the object.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectPtrLabel")]
+        [CLSCompliant(false)]
+        public static void ObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[] ptr, Int32 length, [CountAttribute(Computed = "label,length")] String label)
+            where T0 : struct
+         { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Label a a sync object identified by a pointer
+        /// </summary>
+        /// <param name="ptr">
+        /// A pointer identifying a sync object.
+        /// </param>
+        /// <param name="length">
+        /// The length of the label to be used for the object.
+        /// </param>
+        /// <param name="label">[length: COMPSIZE(label,length)]
+        /// The address of a string containing the label to assign to the object.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectPtrLabel")]
+        [CLSCompliant(false)]
+        public static void ObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,] ptr, Int32 length, [CountAttribute(Computed = "label,length")] String label)
+            where T0 : struct
+         { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Label a a sync object identified by a pointer
+        /// </summary>
+        /// <param name="ptr">
+        /// A pointer identifying a sync object.
+        /// </param>
+        /// <param name="length">
+        /// The length of the label to be used for the object.
+        /// </param>
+        /// <param name="label">[length: COMPSIZE(label,length)]
+        /// The address of a string containing the label to assign to the object.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectPtrLabel")]
+        [CLSCompliant(false)]
+        public static void ObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,,] ptr, Int32 length, [CountAttribute(Computed = "label,length")] String label)
+            where T0 : struct
+         { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Label a a sync object identified by a pointer
+        /// </summary>
+        /// <param name="ptr">
+        /// A pointer identifying a sync object.
+        /// </param>
+        /// <param name="length">
+        /// The length of the label to be used for the object.
+        /// </param>
+        /// <param name="label">[length: COMPSIZE(label,length)]
+        /// The address of a string containing the label to assign to the object.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectPtrLabel")]
+        public static void ObjectPtrLabel<T0>([InAttribute, OutAttribute] ref T0 ptr, Int32 length, [CountAttribute(Computed = "label,length")] String label)
+            where T0 : struct
+         { throw new BindingsNotRewrittenException(); }
+
         /// <summary>[requires: v1.0]
         /// Multiply the current matrix with an orthographic matrix
         /// </summary>
@@ -6445,6 +8405,7 @@ namespace OpenTK.Graphics.ES11
         /// <param name="map"></param>
         /// <param name="size"></param>
         /// <param name="values">[length: size]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glPixelMapx")]
         [CLSCompliant(false)]
         public static void PixelMapx(OpenTK.Graphics.ES11.All map, Int32 size, [CountAttribute(Parameter = "size")] Int32[] values) { throw new BindingsNotRewrittenException(); }
@@ -6453,6 +8414,7 @@ namespace OpenTK.Graphics.ES11
         /// <param name="map"></param>
         /// <param name="size"></param>
         /// <param name="values">[length: size]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glPixelMapx")]
         [CLSCompliant(false)]
         public static void PixelMapx(OpenTK.Graphics.ES11.All map, Int32 size, [CountAttribute(Parameter = "size")] ref Int32 values) { throw new BindingsNotRewrittenException(); }
@@ -6461,9 +8423,34 @@ namespace OpenTK.Graphics.ES11
         /// <param name="map"></param>
         /// <param name="size"></param>
         /// <param name="values">[length: size]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glPixelMapx")]
         [CLSCompliant(false)]
         public static unsafe void PixelMapx(OpenTK.Graphics.ES11.All map, Int32 size, [CountAttribute(Parameter = "size")] Int32* values) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary></summary>
+        /// <param name="map"></param>
+        /// <param name="size"></param>
+        /// <param name="values">[length: size]</param>
+        [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glPixelMapx")]
+        [CLSCompliant(false)]
+        public static void PixelMapx(OpenTK.Graphics.ES11.PixelMap map, Int32 size, [CountAttribute(Parameter = "size")] Int32[] values) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary></summary>
+        /// <param name="map"></param>
+        /// <param name="size"></param>
+        /// <param name="values">[length: size]</param>
+        [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glPixelMapx")]
+        [CLSCompliant(false)]
+        public static void PixelMapx(OpenTK.Graphics.ES11.PixelMap map, Int32 size, [CountAttribute(Parameter = "size")] ref Int32 values) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary></summary>
+        /// <param name="map"></param>
+        /// <param name="size"></param>
+        /// <param name="values">[length: size]</param>
+        [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glPixelMapx")]
+        [CLSCompliant(false)]
+        public static unsafe void PixelMapx(OpenTK.Graphics.ES11.PixelMap map, Int32 size, [CountAttribute(Parameter = "size")] Int32* values) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Set pixel storage modes
@@ -6493,8 +8480,15 @@ namespace OpenTK.Graphics.ES11
         /// <summary></summary>
         /// <param name="pname"></param>
         /// <param name="param"></param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glPixelStorex")]
         public static void PixelStorex(OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary></summary>
+        /// <param name="pname"></param>
+        /// <param name="param"></param>
+        [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glPixelStorex")]
+        public static void PixelStorex(OpenTK.Graphics.ES11.PixelStoreParameter pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Specify point parameters
@@ -6586,9 +8580,93 @@ namespace OpenTK.Graphics.ES11
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glPolygonOffsetx")]
         public static void PolygonOffsetx(Int32 factor, Int32 units) { throw new BindingsNotRewrittenException(); }
 
+        /// <summary>
+        /// Pop the active debug group
+        /// </summary>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glPopDebugGroup")]
+        public static void PopDebugGroup() { throw new BindingsNotRewrittenException(); }
+
         /// <summary>[requires: v1.0]</summary>
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glPopMatrix")]
         public static void PopMatrix() { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Push a named debug group into the command stream
+        /// </summary>
+        /// <param name="source">
+        /// The source of the debug message.
+        /// </param>
+        /// <param name="id">
+        /// The identifier of the message.
+        /// </param>
+        /// <param name="length">
+        /// The length of the message to be sent to the debug output stream.
+        /// </param>
+        /// <param name="message">[length: COMPSIZE(message,length)]
+        /// The a string containing the message to be sent to the debug output stream.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glPushDebugGroup")]
+        [CLSCompliant(false)]
+        public static void PushDebugGroup(OpenTK.Graphics.ES11.All source, Int32 id, Int32 length, [CountAttribute(Computed = "message,length")] String message) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Push a named debug group into the command stream
+        /// </summary>
+        /// <param name="source">
+        /// The source of the debug message.
+        /// </param>
+        /// <param name="id">
+        /// The identifier of the message.
+        /// </param>
+        /// <param name="length">
+        /// The length of the message to be sent to the debug output stream.
+        /// </param>
+        /// <param name="message">[length: COMPSIZE(message,length)]
+        /// The a string containing the message to be sent to the debug output stream.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glPushDebugGroup")]
+        [CLSCompliant(false)]
+        public static void PushDebugGroup(OpenTK.Graphics.ES11.All source, UInt32 id, Int32 length, [CountAttribute(Computed = "message,length")] String message) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Push a named debug group into the command stream
+        /// </summary>
+        /// <param name="source">
+        /// The source of the debug message.
+        /// </param>
+        /// <param name="id">
+        /// The identifier of the message.
+        /// </param>
+        /// <param name="length">
+        /// The length of the message to be sent to the debug output stream.
+        /// </param>
+        /// <param name="message">[length: COMPSIZE(message,length)]
+        /// The a string containing the message to be sent to the debug output stream.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glPushDebugGroup")]
+        [CLSCompliant(false)]
+        public static void PushDebugGroup(OpenTK.Graphics.ES11.DebugSource source, Int32 id, Int32 length, [CountAttribute(Computed = "message,length")] String message) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>
+        /// Push a named debug group into the command stream
+        /// </summary>
+        /// <param name="source">
+        /// The source of the debug message.
+        /// </param>
+        /// <param name="id">
+        /// The identifier of the message.
+        /// </param>
+        /// <param name="length">
+        /// The length of the message to be sent to the debug output stream.
+        /// </param>
+        /// <param name="message">[length: COMPSIZE(message,length)]
+        /// The a string containing the message to be sent to the debug output stream.
+        /// </param>
+        [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glPushDebugGroup")]
+        [CLSCompliant(false)]
+        public static void PushDebugGroup(OpenTK.Graphics.ES11.DebugSource source, UInt32 id, Int32 length, [CountAttribute(Computed = "message,length")] String message) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Push and pop the current matrix stack
@@ -7518,13 +9596,22 @@ namespace OpenTK.Graphics.ES11
         /// <param name="target"></param>
         /// <param name="pname"></param>
         /// <param name="param"></param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexEnvx")]
         public static void TexEnvx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]</summary>
         /// <param name="target"></param>
         /// <param name="pname"></param>
+        /// <param name="param"></param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexEnvx")]
+        public static void TexEnvx(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="target"></param>
+        /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexEnvxv")]
         [CLSCompliant(false)]
         public static void TexEnvx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -7533,10 +9620,27 @@ namespace OpenTK.Graphics.ES11
         /// <param name="target"></param>
         /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexEnvxv")]
         [CLSCompliant(false)]
         public static unsafe void TexEnvx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="target"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexEnvxv")]
+        [CLSCompliant(false)]
+        public static void TexEnvx(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="target"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexEnvxv")]
+        [CLSCompliant(false)]
+        public static unsafe void TexEnvx(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
         /// <summary>[requires: v1.0]
         /// Specify a two-dimensional texture image
         /// </summary>
@@ -7569,7 +9673,7 @@ namespace OpenTK.Graphics.ES11
         /// </param>
         [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexImage2D")]
-        public static void TexImage2D(OpenTK.Graphics.ES11.All target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [CountAttribute(Computed = "format,type,width,height")] IntPtr pixels) { throw new BindingsNotRewrittenException(); }
+        public static void TexImage2D(OpenTK.Graphics.ES11.All target, Int32 level, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [CountAttribute(Computed = "format,type,width,height")] IntPtr pixels) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Specify a two-dimensional texture image
@@ -7604,44 +9708,7 @@ namespace OpenTK.Graphics.ES11
         [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexImage2D")]
         [CLSCompliant(false)]
-        public static void TexImage2D<T8>(OpenTK.Graphics.ES11.All target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[] pixels)
-            where T8 : struct
-         { throw new BindingsNotRewrittenException(); }
-
-        /// <summary>[requires: v1.0]
-        /// Specify a two-dimensional texture image
-        /// </summary>
-        /// <param name="target">
-        /// Specifies the target texture of the active texture unit. Must be Texture2D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, or TextureCubeMapNegativeZ.
-        /// </param>
-        /// <param name="level">
-        /// Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
-        /// </param>
-        /// <param name="internalformat">
-        /// Specifies the internal format of the texture. Must be one of the following symbolic constants: Alpha, Luminance, LuminanceAlpha, Rgb, Rgba.
-        /// </param>
-        /// <param name="width">
-        /// Specifies the width of the texture image. All implementations support 2D texture images that are at least 64 texels wide and cube-mapped texture images that are at least 16 texels wide.
-        /// </param>
-        /// <param name="height">
-        /// Specifies the height of the texture image All implementations support 2D texture images that are at least 64 texels high and cube-mapped texture images that are at least 16 texels high.
-        /// </param>
-        /// <param name="border">
-        /// Specifies the width of the border. Must be 0.
-        /// </param>
-        /// <param name="format">
-        /// Specifies the format of the texel data.  Must match internalformat. The following symbolic values are accepted: Alpha, Rgb, Rgba, Luminance, and LuminanceAlpha.
-        /// </param>
-        /// <param name="type">
-        /// Specifies the data type of the texel data. The following symbolic values are accepted: UnsignedByte, UnsignedShort565, UnsignedShort4444, and UnsignedShort5551.
-        /// </param>
-        /// <param name="pixels">[length: COMPSIZE(format,type,width,height)]
-        /// Specifies a pointer to the image data in memory.
-        /// </param>
-        [Obsolete("Use strongly-typed overload instead")]
-        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexImage2D")]
-        [CLSCompliant(false)]
-        public static void TexImage2D<T8>(OpenTK.Graphics.ES11.All target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[,] pixels)
+        public static void TexImage2D<T8>(OpenTK.Graphics.ES11.All target, Int32 level, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[] pixels)
             where T8 : struct
          { throw new BindingsNotRewrittenException(); }
 
@@ -7678,7 +9745,7 @@ namespace OpenTK.Graphics.ES11
         [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexImage2D")]
         [CLSCompliant(false)]
-        public static void TexImage2D<T8>(OpenTK.Graphics.ES11.All target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[,,] pixels)
+        public static void TexImage2D<T8>(OpenTK.Graphics.ES11.All target, Int32 level, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[,] pixels)
             where T8 : struct
          { throw new BindingsNotRewrittenException(); }
 
@@ -7714,7 +9781,44 @@ namespace OpenTK.Graphics.ES11
         /// </param>
         [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexImage2D")]
-        public static void TexImage2D<T8>(OpenTK.Graphics.ES11.All target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] ref T8 pixels)
+        [CLSCompliant(false)]
+        public static void TexImage2D<T8>(OpenTK.Graphics.ES11.All target, Int32 level, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[,,] pixels)
+            where T8 : struct
+         { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]
+        /// Specify a two-dimensional texture image
+        /// </summary>
+        /// <param name="target">
+        /// Specifies the target texture of the active texture unit. Must be Texture2D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, or TextureCubeMapNegativeZ.
+        /// </param>
+        /// <param name="level">
+        /// Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
+        /// </param>
+        /// <param name="internalformat">
+        /// Specifies the internal format of the texture. Must be one of the following symbolic constants: Alpha, Luminance, LuminanceAlpha, Rgb, Rgba.
+        /// </param>
+        /// <param name="width">
+        /// Specifies the width of the texture image. All implementations support 2D texture images that are at least 64 texels wide and cube-mapped texture images that are at least 16 texels wide.
+        /// </param>
+        /// <param name="height">
+        /// Specifies the height of the texture image All implementations support 2D texture images that are at least 64 texels high and cube-mapped texture images that are at least 16 texels high.
+        /// </param>
+        /// <param name="border">
+        /// Specifies the width of the border. Must be 0.
+        /// </param>
+        /// <param name="format">
+        /// Specifies the format of the texel data.  Must match internalformat. The following symbolic values are accepted: Alpha, Rgb, Rgba, Luminance, and LuminanceAlpha.
+        /// </param>
+        /// <param name="type">
+        /// Specifies the data type of the texel data. The following symbolic values are accepted: UnsignedByte, UnsignedShort565, UnsignedShort4444, and UnsignedShort5551.
+        /// </param>
+        /// <param name="pixels">[length: COMPSIZE(format,type,width,height)]
+        /// Specifies a pointer to the image data in memory.
+        /// </param>
+        [Obsolete("Use strongly-typed overload instead")]
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexImage2D")]
+        public static void TexImage2D<T8>(OpenTK.Graphics.ES11.All target, Int32 level, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] ref T8 pixels)
             where T8 : struct
          { throw new BindingsNotRewrittenException(); }
 
@@ -7749,7 +9853,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies a pointer to the image data in memory.
         /// </param>
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexImage2D")]
-        public static void TexImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [CountAttribute(Computed = "format,type,width,height")] IntPtr pixels) { throw new BindingsNotRewrittenException(); }
+        public static void TexImage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [CountAttribute(Computed = "format,type,width,height")] IntPtr pixels) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Specify a two-dimensional texture image
@@ -7783,7 +9887,7 @@ namespace OpenTK.Graphics.ES11
         /// </param>
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexImage2D")]
         [CLSCompliant(false)]
-        public static void TexImage2D<T8>(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[] pixels)
+        public static void TexImage2D<T8>(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[] pixels)
             where T8 : struct
          { throw new BindingsNotRewrittenException(); }
 
@@ -7819,7 +9923,7 @@ namespace OpenTK.Graphics.ES11
         /// </param>
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexImage2D")]
         [CLSCompliant(false)]
-        public static void TexImage2D<T8>(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[,] pixels)
+        public static void TexImage2D<T8>(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[,] pixels)
             where T8 : struct
          { throw new BindingsNotRewrittenException(); }
 
@@ -7855,7 +9959,7 @@ namespace OpenTK.Graphics.ES11
         /// </param>
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexImage2D")]
         [CLSCompliant(false)]
-        public static void TexImage2D<T8>(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[,,] pixels)
+        public static void TexImage2D<T8>(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[,,] pixels)
             where T8 : struct
          { throw new BindingsNotRewrittenException(); }
 
@@ -7890,7 +9994,7 @@ namespace OpenTK.Graphics.ES11
         /// Specifies a pointer to the image data in memory.
         /// </param>
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexImage2D")]
-        public static void TexImage2D<T8>(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] ref T8 pixels)
+        public static void TexImage2D<T8>(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] ref T8 pixels)
             where T8 : struct
          { throw new BindingsNotRewrittenException(); }
 
@@ -8092,13 +10196,22 @@ namespace OpenTK.Graphics.ES11
         /// <param name="target"></param>
         /// <param name="pname"></param>
         /// <param name="param"></param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexParameterx")]
         public static void TexParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]</summary>
         /// <param name="target"></param>
         /// <param name="pname"></param>
+        /// <param name="param"></param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexParameterx")]
+        public static void TexParameterx(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="target"></param>
+        /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexParameterxv")]
         [CLSCompliant(false)]
         public static void TexParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -8107,9 +10220,26 @@ namespace OpenTK.Graphics.ES11
         /// <param name="target"></param>
         /// <param name="pname"></param>
         /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [Obsolete("Use strongly-typed overload instead")]
         [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexParameterxv")]
         [CLSCompliant(false)]
         public static unsafe void TexParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="target"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexParameterxv")]
+        [CLSCompliant(false)]
+        public static void TexParameterx(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+        /// <summary>[requires: v1.0]</summary>
+        /// <param name="target"></param>
+        /// <param name="pname"></param>
+        /// <param name="@params">[length: COMPSIZE(pname)]</param>
+        [AutoGenerated(Category = "VERSION_ES_CM_1_0", Version = "1.0", EntryPoint = "glTexParameterxv")]
+        [CLSCompliant(false)]
+        public static unsafe void TexParameterx(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
         /// <summary>[requires: v1.0]
         /// Specify a two-dimensional texture subimage
@@ -8772,6 +10902,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="length">
             /// Specifies the length of the buffer subrange, in basic machine units.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glFlushMappedBufferRangeEXT")]
             public static void FlushMappedBufferRange(OpenTK.Graphics.ES11.All target, IntPtr offset, Int32 length) { throw new BindingsNotRewrittenException(); }
 
@@ -8787,8 +10918,39 @@ namespace OpenTK.Graphics.ES11
             /// <param name="length">
             /// Specifies the length of the buffer subrange, in basic machine units.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glFlushMappedBufferRangeEXT")]
             public static void FlushMappedBufferRange(OpenTK.Graphics.ES11.All target, IntPtr offset, IntPtr length) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_map_buffer_range]
+            /// Indicate modifications to a range of a mapped buffer
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the target of the flush operation. target must be ArrayBuffer, CopyReadBuffer, CopyWriteBuffer, DispatchIndirectBuffer, DrawIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
+            /// </param>
+            /// <param name="offset">
+            /// Specifies the start of the buffer subrange, in basic machine units.
+            /// </param>
+            /// <param name="length">
+            /// Specifies the length of the buffer subrange, in basic machine units.
+            /// </param>
+            [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glFlushMappedBufferRangeEXT")]
+            public static void FlushMappedBufferRange(OpenTK.Graphics.ES11.BufferTargetArb target, IntPtr offset, Int32 length) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_map_buffer_range]
+            /// Indicate modifications to a range of a mapped buffer
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the target of the flush operation. target must be ArrayBuffer, CopyReadBuffer, CopyWriteBuffer, DispatchIndirectBuffer, DrawIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
+            /// </param>
+            /// <param name="offset">
+            /// Specifies the start of the buffer subrange, in basic machine units.
+            /// </param>
+            /// <param name="length">
+            /// Specifies the length of the buffer subrange, in basic machine units.
+            /// </param>
+            [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glFlushMappedBufferRangeEXT")]
+            public static void FlushMappedBufferRange(OpenTK.Graphics.ES11.BufferTargetArb target, IntPtr offset, IntPtr length) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: EXT_multisampled_render_to_texture]</summary>
             /// <param name="target"></param>
@@ -8797,6 +10959,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="texture"></param>
             /// <param name="level"></param>
             /// <param name="samples"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_multisampled_render_to_texture", Version = "", EntryPoint = "glFramebufferTexture2DMultisampleEXT")]
             [CLSCompliant(false)]
             public static void FramebufferTexture2DMultisample(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All textarget, Int32 texture, Int32 level, Int32 samples) { throw new BindingsNotRewrittenException(); }
@@ -8808,13 +10971,36 @@ namespace OpenTK.Graphics.ES11
             /// <param name="texture"></param>
             /// <param name="level"></param>
             /// <param name="samples"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_multisampled_render_to_texture", Version = "", EntryPoint = "glFramebufferTexture2DMultisampleEXT")]
             [CLSCompliant(false)]
             public static void FramebufferTexture2DMultisample(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All textarget, UInt32 texture, Int32 level, Int32 samples) { throw new BindingsNotRewrittenException(); }
 
+            /// <summary>[requires: EXT_multisampled_render_to_texture]</summary>
+            /// <param name="target"></param>
+            /// <param name="attachment"></param>
+            /// <param name="textarget"></param>
+            /// <param name="texture"></param>
+            /// <param name="level"></param>
+            /// <param name="samples"></param>
+            [AutoGenerated(Category = "EXT_multisampled_render_to_texture", Version = "", EntryPoint = "glFramebufferTexture2DMultisampleEXT")]
+            [CLSCompliant(false)]
+            public static void FramebufferTexture2DMultisample(OpenTK.Graphics.ES11.FramebufferTarget target, OpenTK.Graphics.ES11.FramebufferAttachment attachment, OpenTK.Graphics.ES11.TextureTarget textarget, Int32 texture, Int32 level, Int32 samples) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_multisampled_render_to_texture]</summary>
+            /// <param name="target"></param>
+            /// <param name="attachment"></param>
+            /// <param name="textarget"></param>
+            /// <param name="texture"></param>
+            /// <param name="level"></param>
+            /// <param name="samples"></param>
+            [AutoGenerated(Category = "EXT_multisampled_render_to_texture", Version = "", EntryPoint = "glFramebufferTexture2DMultisampleEXT")]
+            [CLSCompliant(false)]
+            public static void FramebufferTexture2DMultisample(OpenTK.Graphics.ES11.FramebufferTarget target, OpenTK.Graphics.ES11.FramebufferAttachment attachment, OpenTK.Graphics.ES11.TextureTarget textarget, UInt32 texture, Int32 level, Int32 samples) { throw new BindingsNotRewrittenException(); }
+
             /// <summary>[requires: EXT_robustness]</summary>
             [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glGetGraphicsResetStatusEXT")]
-            public static OpenTK.Graphics.ES11.All GetGraphicsResetStatus() { throw new BindingsNotRewrittenException(); }
+            public static OpenTK.Graphics.ES11.GraphicsResetStatus GetGraphicsResetStatus() { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: EXT_robustness]</summary>
             /// <param name="program"></param>
@@ -8924,6 +11110,12 @@ namespace OpenTK.Graphics.ES11
             [CLSCompliant(false)]
             public static unsafe void GetnUniform(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "bufSize")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
+            /// <summary>[requires: EXT_debug_marker]</summary>
+            /// <param name="length"></param>
+            /// <param name="marker"></param>
+            [AutoGenerated(Category = "EXT_debug_marker", Version = "", EntryPoint = "glInsertEventMarkerEXT")]
+            public static void InsertEventMarker(Int32 length, String marker) { throw new BindingsNotRewrittenException(); }
+
             /// <summary>[requires: EXT_map_buffer_range]
             /// Map a section of a buffer object's data store
             /// </summary>
@@ -8939,9 +11131,28 @@ namespace OpenTK.Graphics.ES11
             /// <param name="access">
             /// Specifies a combination of access flags indicating the desired access to the range.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glMapBufferRangeEXT")]
-            [CLSCompliant(false)]
-            public static IntPtr MapBufferRange(OpenTK.Graphics.ES11.All target, IntPtr offset, Int32 length, Int32 access) { throw new BindingsNotRewrittenException(); }
+            public static IntPtr MapBufferRange(OpenTK.Graphics.ES11.All target, IntPtr offset, Int32 length, OpenTK.Graphics.ES11.All access) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_map_buffer_range]
+            /// Map a section of a buffer object's data store
+            /// </summary>
+            /// <param name="target">
+            /// Specifies a binding to which the target buffer is bound.
+            /// </param>
+            /// <param name="offset">
+            /// Specifies a the starting offset within the buffer of the range to be mapped.
+            /// </param>
+            /// <param name="length">
+            /// Specifies a length of the range to be mapped.
+            /// </param>
+            /// <param name="access">
+            /// Specifies a combination of access flags indicating the desired access to the range.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glMapBufferRangeEXT")]
+            public static IntPtr MapBufferRange(OpenTK.Graphics.ES11.All target, IntPtr offset, IntPtr length, OpenTK.Graphics.ES11.All access) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: EXT_map_buffer_range]
             /// Map a section of a buffer object's data store
@@ -8959,8 +11170,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies a combination of access flags indicating the desired access to the range.
             /// </param>
             [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glMapBufferRangeEXT")]
-            [CLSCompliant(false)]
-            public static IntPtr MapBufferRange(OpenTK.Graphics.ES11.All target, IntPtr offset, Int32 length, UInt32 access) { throw new BindingsNotRewrittenException(); }
+            public static IntPtr MapBufferRange(OpenTK.Graphics.ES11.BufferTargetArb target, IntPtr offset, Int32 length, OpenTK.Graphics.ES11.BufferAccessMask access) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: EXT_map_buffer_range]
             /// Map a section of a buffer object's data store
@@ -8978,27 +11188,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies a combination of access flags indicating the desired access to the range.
             /// </param>
             [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glMapBufferRangeEXT")]
-            [CLSCompliant(false)]
-            public static IntPtr MapBufferRange(OpenTK.Graphics.ES11.All target, IntPtr offset, IntPtr length, Int32 access) { throw new BindingsNotRewrittenException(); }
-
-            /// <summary>[requires: EXT_map_buffer_range]
-            /// Map a section of a buffer object's data store
-            /// </summary>
-            /// <param name="target">
-            /// Specifies a binding to which the target buffer is bound.
-            /// </param>
-            /// <param name="offset">
-            /// Specifies a the starting offset within the buffer of the range to be mapped.
-            /// </param>
-            /// <param name="length">
-            /// Specifies a length of the range to be mapped.
-            /// </param>
-            /// <param name="access">
-            /// Specifies a combination of access flags indicating the desired access to the range.
-            /// </param>
-            [AutoGenerated(Category = "EXT_map_buffer_range", Version = "", EntryPoint = "glMapBufferRangeEXT")]
-            [CLSCompliant(false)]
-            public static IntPtr MapBufferRange(OpenTK.Graphics.ES11.All target, IntPtr offset, IntPtr length, UInt32 access) { throw new BindingsNotRewrittenException(); }
+            public static IntPtr MapBufferRange(OpenTK.Graphics.ES11.BufferTargetArb target, IntPtr offset, IntPtr length, OpenTK.Graphics.ES11.BufferAccessMask access) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: EXT_multi_draw_arrays]
             /// Render multiple sets of primitives from array data
@@ -9840,6 +12030,16 @@ namespace OpenTK.Graphics.ES11
                 where T3 : struct
              { throw new BindingsNotRewrittenException(); }
 
+            /// <summary>[requires: EXT_debug_marker]</summary>
+            [AutoGenerated(Category = "EXT_debug_marker", Version = "", EntryPoint = "glPopGroupMarkerEXT")]
+            public static void PopGroupMarker() { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_debug_marker]</summary>
+            /// <param name="length"></param>
+            /// <param name="marker"></param>
+            [AutoGenerated(Category = "EXT_debug_marker", Version = "", EntryPoint = "glPushGroupMarkerEXT")]
+            public static void PushGroupMarker(Int32 length, String marker) { throw new BindingsNotRewrittenException(); }
+
             /// <summary>[requires: EXT_robustness]</summary>
             /// <param name="x"></param>
             /// <param name="y"></param>
@@ -9849,6 +12049,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="type"></param>
             /// <param name="bufSize"></param>
             /// <param name="data">[length: bufSize]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
             public static void ReadnPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "bufSize")] IntPtr data) { throw new BindingsNotRewrittenException(); }
 
@@ -9861,6 +12062,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="type"></param>
             /// <param name="bufSize"></param>
             /// <param name="data">[length: bufSize]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
             [CLSCompliant(false)]
             public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, Int32 bufSize, [InAttribute, OutAttribute, CountAttribute(Parameter = "bufSize")] T7[] data)
@@ -9876,6 +12078,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="type"></param>
             /// <param name="bufSize"></param>
             /// <param name="data">[length: bufSize]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
             [CLSCompliant(false)]
             public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, Int32 bufSize, [InAttribute, OutAttribute, CountAttribute(Parameter = "bufSize")] T7[,] data)
@@ -9891,6 +12094,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="type"></param>
             /// <param name="bufSize"></param>
             /// <param name="data">[length: bufSize]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
             [CLSCompliant(false)]
             public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, Int32 bufSize, [InAttribute, OutAttribute, CountAttribute(Parameter = "bufSize")] T7[,,] data)
@@ -9906,8 +12110,80 @@ namespace OpenTK.Graphics.ES11
             /// <param name="type"></param>
             /// <param name="bufSize"></param>
             /// <param name="data">[length: bufSize]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
             public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, Int32 bufSize, [InAttribute, OutAttribute, CountAttribute(Parameter = "bufSize")] ref T7 data)
+                where T7 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
+            public static void ReadnPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "bufSize")] IntPtr data) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
+            [CLSCompliant(false)]
+            public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, Int32 bufSize, [InAttribute, OutAttribute, CountAttribute(Parameter = "bufSize")] T7[] data)
+                where T7 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
+            [CLSCompliant(false)]
+            public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, Int32 bufSize, [InAttribute, OutAttribute, CountAttribute(Parameter = "bufSize")] T7[,] data)
+                where T7 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
+            [CLSCompliant(false)]
+            public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, Int32 bufSize, [InAttribute, OutAttribute, CountAttribute(Parameter = "bufSize")] T7[,,] data)
+                where T7 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_robustness]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="bufSize"></param>
+            /// <param name="data">[length: bufSize]</param>
+            [AutoGenerated(Category = "EXT_robustness", Version = "", EntryPoint = "glReadnPixelsEXT")]
+            public static void ReadnPixels<T7>(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, Int32 bufSize, [InAttribute, OutAttribute, CountAttribute(Parameter = "bufSize")] ref T7 data)
                 where T7 : struct
              { throw new BindingsNotRewrittenException(); }
 
@@ -9929,8 +12205,49 @@ namespace OpenTK.Graphics.ES11
             /// <param name="height">
             /// Specifies the height of the renderbuffer, in pixels.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_multisampled_render_to_texture", Version = "", EntryPoint = "glRenderbufferStorageMultisampleEXT")]
             public static void RenderbufferStorageMultisample(OpenTK.Graphics.ES11.All target, Int32 samples, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_multisampled_render_to_texture]
+            /// Establish data storage, format, dimensions and sample count of a renderbuffer object's image
+            /// </summary>
+            /// <param name="target">
+            /// Specifies a binding to which the target of the allocation and must be Renderbuffer.
+            /// </param>
+            /// <param name="samples">
+            /// Specifies the number of samples to be used for the renderbuffer object's storage.
+            /// </param>
+            /// <param name="internalformat">
+            /// Specifies the internal format to use for the renderbuffer object's image.
+            /// </param>
+            /// <param name="width">
+            /// Specifies the width of the renderbuffer, in pixels.
+            /// </param>
+            /// <param name="height">
+            /// Specifies the height of the renderbuffer, in pixels.
+            /// </param>
+            [AutoGenerated(Category = "EXT_multisampled_render_to_texture", Version = "", EntryPoint = "glRenderbufferStorageMultisampleEXT")]
+            public static void RenderbufferStorageMultisample(OpenTK.Graphics.ES11.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_texture_storage]
+            /// Simultaneously specify storage for all levels of a one-dimensional texture
+            /// </summary>
+            /// <param name="target">
+            /// Specify the target of the operation. target must be either Texture1D or ProxyTexture1D.
+            /// </param>
+            /// <param name="levels">
+            /// Specify the number of texture levels.
+            /// </param>
+            /// <param name="internalformat">
+            /// Specifies the sized internal format to be used to store texture image data.
+            /// </param>
+            /// <param name="width">
+            /// Specifies the width of the texture, in texels.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTexStorage1DEXT")]
+            public static void TexStorage1D(OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: EXT_texture_storage]
             /// Simultaneously specify storage for all levels of a one-dimensional texture
@@ -9948,7 +12265,29 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the width of the texture, in texels.
             /// </param>
             [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTexStorage1DEXT")]
-            public static void TexStorage1D(OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width) { throw new BindingsNotRewrittenException(); }
+            public static void TexStorage1D(OpenTK.Graphics.ES11.TextureTarget target, Int32 levels, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_texture_storage]
+            /// Simultaneously specify storage for all levels of a two-dimensional or one-dimensional array texture
+            /// </summary>
+            /// <param name="target">
+            /// Specify the target of the operation. target must be one of Texture2D, ProxyTexture2D, Texture1DArray, ProxyTexture1DArray, TextureRectangle, ProxyTextureRectangle, or ProxyTextureCubeMap.
+            /// </param>
+            /// <param name="levels">
+            /// Specify the number of texture levels.
+            /// </param>
+            /// <param name="internalformat">
+            /// Specifies the sized internal format to be used to store texture image data.
+            /// </param>
+            /// <param name="width">
+            /// Specifies the width of the texture, in texels.
+            /// </param>
+            /// <param name="height">
+            /// Specifies the height of the texture, in texels.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTexStorage2DEXT")]
+            public static void TexStorage2D(OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: EXT_texture_storage]
             /// Simultaneously specify storage for all levels of a two-dimensional or one-dimensional array texture
@@ -9969,7 +12308,32 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the height of the texture, in texels.
             /// </param>
             [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTexStorage2DEXT")]
-            public static void TexStorage2D(OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height) { throw new BindingsNotRewrittenException(); }
+            public static void TexStorage2D(OpenTK.Graphics.ES11.TextureTarget target, Int32 levels, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_texture_storage]
+            /// Simultaneously specify storage for all levels of a three-dimensional, two-dimensional array or cube-map array texture
+            /// </summary>
+            /// <param name="target">
+            /// Specify the target of the operation. target must be one of Texture3D, ProxyTexture3D, Texture2DArray, ProxyTexture2DArray, TextureCubeArray, or ProxyTextureCubeArray.
+            /// </param>
+            /// <param name="levels">
+            /// Specify the number of texture levels.
+            /// </param>
+            /// <param name="internalformat">
+            /// Specifies the sized internal format to be used to store texture image data.
+            /// </param>
+            /// <param name="width">
+            /// Specifies the width of the texture, in texels.
+            /// </param>
+            /// <param name="height">
+            /// Specifies the height of the texture, in texels.
+            /// </param>
+            /// <param name="depth">
+            /// Specifies the depth of the texture, in texels.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTexStorage3DEXT")]
+            public static void TexStorage3D(OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 depth) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: EXT_texture_storage]
             /// Simultaneously specify storage for all levels of a three-dimensional, two-dimensional array or cube-map array texture
@@ -9993,7 +12357,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the depth of the texture, in texels.
             /// </param>
             [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTexStorage3DEXT")]
-            public static void TexStorage3D(OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 depth) { throw new BindingsNotRewrittenException(); }
+            public static void TexStorage3D(OpenTK.Graphics.ES11.TextureTarget target, Int32 levels, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height, Int32 depth) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: EXT_texture_storage]</summary>
             /// <param name="texture"></param>
@@ -10001,6 +12365,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="levels"></param>
             /// <param name="internalformat"></param>
             /// <param name="width"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTextureStorage1DEXT")]
             [CLSCompliant(false)]
             public static void TextureStorage1D(Int32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width) { throw new BindingsNotRewrittenException(); }
@@ -10013,6 +12378,17 @@ namespace OpenTK.Graphics.ES11
             /// <param name="width"></param>
             [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTextureStorage1DEXT")]
             [CLSCompliant(false)]
+            public static void TextureStorage1D(Int32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_texture_storage]</summary>
+            /// <param name="texture"></param>
+            /// <param name="target"></param>
+            /// <param name="levels"></param>
+            /// <param name="internalformat"></param>
+            /// <param name="width"></param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTextureStorage1DEXT")]
+            [CLSCompliant(false)]
             public static void TextureStorage1D(UInt32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: EXT_texture_storage]</summary>
@@ -10021,7 +12397,18 @@ namespace OpenTK.Graphics.ES11
             /// <param name="levels"></param>
             /// <param name="internalformat"></param>
             /// <param name="width"></param>
+            [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTextureStorage1DEXT")]
+            [CLSCompliant(false)]
+            public static void TextureStorage1D(UInt32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_texture_storage]</summary>
+            /// <param name="texture"></param>
+            /// <param name="target"></param>
+            /// <param name="levels"></param>
+            /// <param name="internalformat"></param>
+            /// <param name="width"></param>
             /// <param name="height"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTextureStorage2DEXT")]
             [CLSCompliant(false)]
             public static void TextureStorage2D(Int32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height) { throw new BindingsNotRewrittenException(); }
@@ -10035,6 +12422,18 @@ namespace OpenTK.Graphics.ES11
             /// <param name="height"></param>
             [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTextureStorage2DEXT")]
             [CLSCompliant(false)]
+            public static void TextureStorage2D(Int32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_texture_storage]</summary>
+            /// <param name="texture"></param>
+            /// <param name="target"></param>
+            /// <param name="levels"></param>
+            /// <param name="internalformat"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTextureStorage2DEXT")]
+            [CLSCompliant(false)]
             public static void TextureStorage2D(UInt32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: EXT_texture_storage]</summary>
@@ -10044,7 +12443,19 @@ namespace OpenTK.Graphics.ES11
             /// <param name="internalformat"></param>
             /// <param name="width"></param>
             /// <param name="height"></param>
+            [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTextureStorage2DEXT")]
+            [CLSCompliant(false)]
+            public static void TextureStorage2D(UInt32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_texture_storage]</summary>
+            /// <param name="texture"></param>
+            /// <param name="target"></param>
+            /// <param name="levels"></param>
+            /// <param name="internalformat"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
             /// <param name="depth"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTextureStorage3DEXT")]
             [CLSCompliant(false)]
             public static void TextureStorage3D(Int32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 depth) { throw new BindingsNotRewrittenException(); }
@@ -10059,7 +12470,32 @@ namespace OpenTK.Graphics.ES11
             /// <param name="depth"></param>
             [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTextureStorage3DEXT")]
             [CLSCompliant(false)]
+            public static void TextureStorage3D(Int32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height, Int32 depth) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_texture_storage]</summary>
+            /// <param name="texture"></param>
+            /// <param name="target"></param>
+            /// <param name="levels"></param>
+            /// <param name="internalformat"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="depth"></param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTextureStorage3DEXT")]
+            [CLSCompliant(false)]
             public static void TextureStorage3D(UInt32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height, Int32 depth) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: EXT_texture_storage]</summary>
+            /// <param name="texture"></param>
+            /// <param name="target"></param>
+            /// <param name="levels"></param>
+            /// <param name="internalformat"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="depth"></param>
+            [AutoGenerated(Category = "EXT_texture_storage", Version = "", EntryPoint = "glTextureStorage3DEXT")]
+            [CLSCompliant(false)]
+            public static void TextureStorage3D(UInt32 texture, OpenTK.Graphics.ES11.All target, Int32 levels, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height, Int32 depth) { throw new BindingsNotRewrittenException(); }
 
         }
 
@@ -10074,6 +12510,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="eqn">[length: 4]
             /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "IMG_user_clip_plane", Version = "", EntryPoint = "glClipPlanefIMG")]
             [CLSCompliant(false)]
             public static void ClipPlane(OpenTK.Graphics.ES11.All p, [CountAttribute(Count = 4)] Single[] eqn) { throw new BindingsNotRewrittenException(); }
@@ -10087,6 +12524,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="eqn">[length: 4]
             /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "IMG_user_clip_plane", Version = "", EntryPoint = "glClipPlanefIMG")]
             [CLSCompliant(false)]
             public static void ClipPlane(OpenTK.Graphics.ES11.All p, [CountAttribute(Count = 4)] ref Single eqn) { throw new BindingsNotRewrittenException(); }
@@ -10100,13 +12538,54 @@ namespace OpenTK.Graphics.ES11
             /// <param name="eqn">[length: 4]
             /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "IMG_user_clip_plane", Version = "", EntryPoint = "glClipPlanefIMG")]
             [CLSCompliant(false)]
             public static unsafe void ClipPlane(OpenTK.Graphics.ES11.All p, [CountAttribute(Count = 4)] Single* eqn) { throw new BindingsNotRewrittenException(); }
 
+            /// <summary>[requires: IMG_user_clip_plane]
+            /// Specify a plane against which all geometry is clipped
+            /// </summary>
+            /// <param name="p">
+            /// Specifies which clipping plane is being positioned. Symbolic names of the form ClipPlanei, where i is an integer between 0 and MaxClipPlanes - 1, are accepted.
+            /// </param>
+            /// <param name="eqn">[length: 4]
+            /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
+            /// </param>
+            [AutoGenerated(Category = "IMG_user_clip_plane", Version = "", EntryPoint = "glClipPlanefIMG")]
+            [CLSCompliant(false)]
+            public static void ClipPlane(OpenTK.Graphics.ES11.ClipPlaneName p, [CountAttribute(Count = 4)] Single[] eqn) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: IMG_user_clip_plane]
+            /// Specify a plane against which all geometry is clipped
+            /// </summary>
+            /// <param name="p">
+            /// Specifies which clipping plane is being positioned. Symbolic names of the form ClipPlanei, where i is an integer between 0 and MaxClipPlanes - 1, are accepted.
+            /// </param>
+            /// <param name="eqn">[length: 4]
+            /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
+            /// </param>
+            [AutoGenerated(Category = "IMG_user_clip_plane", Version = "", EntryPoint = "glClipPlanefIMG")]
+            [CLSCompliant(false)]
+            public static void ClipPlane(OpenTK.Graphics.ES11.ClipPlaneName p, [CountAttribute(Count = 4)] ref Single eqn) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: IMG_user_clip_plane]
+            /// Specify a plane against which all geometry is clipped
+            /// </summary>
+            /// <param name="p">
+            /// Specifies which clipping plane is being positioned. Symbolic names of the form ClipPlanei, where i is an integer between 0 and MaxClipPlanes - 1, are accepted.
+            /// </param>
+            /// <param name="eqn">[length: 4]
+            /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
+            /// </param>
+            [AutoGenerated(Category = "IMG_user_clip_plane", Version = "", EntryPoint = "glClipPlanefIMG")]
+            [CLSCompliant(false)]
+            public static unsafe void ClipPlane(OpenTK.Graphics.ES11.ClipPlaneName p, [CountAttribute(Count = 4)] Single* eqn) { throw new BindingsNotRewrittenException(); }
+
             /// <summary>[requires: IMG_user_clip_plane]</summary>
             /// <param name="p"></param>
             /// <param name="eqn">[length: 4]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "IMG_user_clip_plane", Version = "", EntryPoint = "glClipPlanexIMG")]
             [CLSCompliant(false)]
             public static void ClipPlanex(OpenTK.Graphics.ES11.All p, [CountAttribute(Count = 4)] Int32[] eqn) { throw new BindingsNotRewrittenException(); }
@@ -10114,6 +12593,7 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: IMG_user_clip_plane]</summary>
             /// <param name="p"></param>
             /// <param name="eqn">[length: 4]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "IMG_user_clip_plane", Version = "", EntryPoint = "glClipPlanexIMG")]
             [CLSCompliant(false)]
             public static void ClipPlanex(OpenTK.Graphics.ES11.All p, [CountAttribute(Count = 4)] ref Int32 eqn) { throw new BindingsNotRewrittenException(); }
@@ -10121,9 +12601,31 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: IMG_user_clip_plane]</summary>
             /// <param name="p"></param>
             /// <param name="eqn">[length: 4]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "IMG_user_clip_plane", Version = "", EntryPoint = "glClipPlanexIMG")]
             [CLSCompliant(false)]
             public static unsafe void ClipPlanex(OpenTK.Graphics.ES11.All p, [CountAttribute(Count = 4)] Int32* eqn) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: IMG_user_clip_plane]</summary>
+            /// <param name="p"></param>
+            /// <param name="eqn">[length: 4]</param>
+            [AutoGenerated(Category = "IMG_user_clip_plane", Version = "", EntryPoint = "glClipPlanexIMG")]
+            [CLSCompliant(false)]
+            public static void ClipPlanex(OpenTK.Graphics.ES11.ClipPlaneName p, [CountAttribute(Count = 4)] Int32[] eqn) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: IMG_user_clip_plane]</summary>
+            /// <param name="p"></param>
+            /// <param name="eqn">[length: 4]</param>
+            [AutoGenerated(Category = "IMG_user_clip_plane", Version = "", EntryPoint = "glClipPlanexIMG")]
+            [CLSCompliant(false)]
+            public static void ClipPlanex(OpenTK.Graphics.ES11.ClipPlaneName p, [CountAttribute(Count = 4)] ref Int32 eqn) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: IMG_user_clip_plane]</summary>
+            /// <param name="p"></param>
+            /// <param name="eqn">[length: 4]</param>
+            [AutoGenerated(Category = "IMG_user_clip_plane", Version = "", EntryPoint = "glClipPlanexIMG")]
+            [CLSCompliant(false)]
+            public static unsafe void ClipPlanex(OpenTK.Graphics.ES11.ClipPlaneName p, [CountAttribute(Count = 4)] Int32* eqn) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: IMG_multisampled_render_to_texture]</summary>
             /// <param name="target"></param>
@@ -10132,6 +12634,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="texture"></param>
             /// <param name="level"></param>
             /// <param name="samples"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "IMG_multisampled_render_to_texture", Version = "", EntryPoint = "glFramebufferTexture2DMultisampleIMG")]
             [CLSCompliant(false)]
             public static void FramebufferTexture2DMultisample(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All textarget, Int32 texture, Int32 level, Int32 samples) { throw new BindingsNotRewrittenException(); }
@@ -10143,9 +12646,54 @@ namespace OpenTK.Graphics.ES11
             /// <param name="texture"></param>
             /// <param name="level"></param>
             /// <param name="samples"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "IMG_multisampled_render_to_texture", Version = "", EntryPoint = "glFramebufferTexture2DMultisampleIMG")]
             [CLSCompliant(false)]
             public static void FramebufferTexture2DMultisample(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All textarget, UInt32 texture, Int32 level, Int32 samples) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: IMG_multisampled_render_to_texture]</summary>
+            /// <param name="target"></param>
+            /// <param name="attachment"></param>
+            /// <param name="textarget"></param>
+            /// <param name="texture"></param>
+            /// <param name="level"></param>
+            /// <param name="samples"></param>
+            [AutoGenerated(Category = "IMG_multisampled_render_to_texture", Version = "", EntryPoint = "glFramebufferTexture2DMultisampleIMG")]
+            [CLSCompliant(false)]
+            public static void FramebufferTexture2DMultisample(OpenTK.Graphics.ES11.FramebufferTarget target, OpenTK.Graphics.ES11.FramebufferAttachment attachment, OpenTK.Graphics.ES11.TextureTarget textarget, Int32 texture, Int32 level, Int32 samples) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: IMG_multisampled_render_to_texture]</summary>
+            /// <param name="target"></param>
+            /// <param name="attachment"></param>
+            /// <param name="textarget"></param>
+            /// <param name="texture"></param>
+            /// <param name="level"></param>
+            /// <param name="samples"></param>
+            [AutoGenerated(Category = "IMG_multisampled_render_to_texture", Version = "", EntryPoint = "glFramebufferTexture2DMultisampleIMG")]
+            [CLSCompliant(false)]
+            public static void FramebufferTexture2DMultisample(OpenTK.Graphics.ES11.FramebufferTarget target, OpenTK.Graphics.ES11.FramebufferAttachment attachment, OpenTK.Graphics.ES11.TextureTarget textarget, UInt32 texture, Int32 level, Int32 samples) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: IMG_multisampled_render_to_texture]
+            /// Establish data storage, format, dimensions and sample count of a renderbuffer object's image
+            /// </summary>
+            /// <param name="target">
+            /// Specifies a binding to which the target of the allocation and must be Renderbuffer.
+            /// </param>
+            /// <param name="samples">
+            /// Specifies the number of samples to be used for the renderbuffer object's storage.
+            /// </param>
+            /// <param name="internalformat">
+            /// Specifies the internal format to use for the renderbuffer object's image.
+            /// </param>
+            /// <param name="width">
+            /// Specifies the width of the renderbuffer, in pixels.
+            /// </param>
+            /// <param name="height">
+            /// Specifies the height of the renderbuffer, in pixels.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "IMG_multisampled_render_to_texture", Version = "", EntryPoint = "glRenderbufferStorageMultisampleIMG")]
+            public static void RenderbufferStorageMultisample(OpenTK.Graphics.ES11.All target, Int32 samples, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: IMG_multisampled_render_to_texture]
             /// Establish data storage, format, dimensions and sample count of a renderbuffer object's image
@@ -10166,7 +12714,1495 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the height of the renderbuffer, in pixels.
             /// </param>
             [AutoGenerated(Category = "IMG_multisampled_render_to_texture", Version = "", EntryPoint = "glRenderbufferStorageMultisampleIMG")]
-            public static void RenderbufferStorageMultisample(OpenTK.Graphics.ES11.All target, Int32 samples, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height) { throw new BindingsNotRewrittenException(); }
+            public static void RenderbufferStorageMultisample(OpenTK.Graphics.ES11.RenderbufferTarget target, Int32 samples, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height) { throw new BindingsNotRewrittenException(); }
+
+        }
+
+        public static partial class Khr
+        {
+            /// <summary>[requires: KHR_debug]
+            /// Specify a callback to receive debugging messages from the GL
+            /// </summary>
+            /// <param name="callback">
+            /// The address of a callback function that will be called when a debug message is generated.
+            /// </param>
+            /// <param name="userParam">
+            /// A user supplied pointer that will be passed on each invocation of callback.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageCallbackKHR")]
+            public static void DebugMessageCallback(DebugProcKhr callback, IntPtr userParam) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Specify a callback to receive debugging messages from the GL
+            /// </summary>
+            /// <param name="callback">
+            /// The address of a callback function that will be called when a debug message is generated.
+            /// </param>
+            /// <param name="userParam">
+            /// A user supplied pointer that will be passed on each invocation of callback.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageCallbackKHR")]
+            [CLSCompliant(false)]
+            public static void DebugMessageCallback<T1>(DebugProcKhr callback, [InAttribute, OutAttribute] T1[] userParam)
+                where T1 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Specify a callback to receive debugging messages from the GL
+            /// </summary>
+            /// <param name="callback">
+            /// The address of a callback function that will be called when a debug message is generated.
+            /// </param>
+            /// <param name="userParam">
+            /// A user supplied pointer that will be passed on each invocation of callback.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageCallbackKHR")]
+            [CLSCompliant(false)]
+            public static void DebugMessageCallback<T1>(DebugProcKhr callback, [InAttribute, OutAttribute] T1[,] userParam)
+                where T1 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Specify a callback to receive debugging messages from the GL
+            /// </summary>
+            /// <param name="callback">
+            /// The address of a callback function that will be called when a debug message is generated.
+            /// </param>
+            /// <param name="userParam">
+            /// A user supplied pointer that will be passed on each invocation of callback.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageCallbackKHR")]
+            [CLSCompliant(false)]
+            public static void DebugMessageCallback<T1>(DebugProcKhr callback, [InAttribute, OutAttribute] T1[,,] userParam)
+                where T1 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Specify a callback to receive debugging messages from the GL
+            /// </summary>
+            /// <param name="callback">
+            /// The address of a callback function that will be called when a debug message is generated.
+            /// </param>
+            /// <param name="userParam">
+            /// A user supplied pointer that will be passed on each invocation of callback.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageCallbackKHR")]
+            public static void DebugMessageCallback<T1>(DebugProcKhr callback, [InAttribute, OutAttribute] ref T1 userParam)
+                where T1 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Control the reporting of debug messages in a debug context
+            /// </summary>
+            /// <param name="source">
+            /// The source of debug messages to enable or disable.
+            /// </param>
+            /// <param name="type">
+            /// The type of debug messages to enable or disable.
+            /// </param>
+            /// <param name="severity">
+            /// The severity of debug messages to enable or disable.
+            /// </param>
+            /// <param name="count">
+            /// The length of the array ids.
+            /// </param>
+            /// <param name="ids">
+            /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+            /// </param>
+            /// <param name="enabled">
+            /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControlKHR")]
+            [CLSCompliant(false)]
+            public static void DebugMessageControl(OpenTK.Graphics.ES11.All source, OpenTK.Graphics.ES11.All type, OpenTK.Graphics.ES11.All severity, Int32 count, Int32[] ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Control the reporting of debug messages in a debug context
+            /// </summary>
+            /// <param name="source">
+            /// The source of debug messages to enable or disable.
+            /// </param>
+            /// <param name="type">
+            /// The type of debug messages to enable or disable.
+            /// </param>
+            /// <param name="severity">
+            /// The severity of debug messages to enable or disable.
+            /// </param>
+            /// <param name="count">
+            /// The length of the array ids.
+            /// </param>
+            /// <param name="ids">
+            /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+            /// </param>
+            /// <param name="enabled">
+            /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControlKHR")]
+            [CLSCompliant(false)]
+            public static void DebugMessageControl(OpenTK.Graphics.ES11.All source, OpenTK.Graphics.ES11.All type, OpenTK.Graphics.ES11.All severity, Int32 count, ref Int32 ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Control the reporting of debug messages in a debug context
+            /// </summary>
+            /// <param name="source">
+            /// The source of debug messages to enable or disable.
+            /// </param>
+            /// <param name="type">
+            /// The type of debug messages to enable or disable.
+            /// </param>
+            /// <param name="severity">
+            /// The severity of debug messages to enable or disable.
+            /// </param>
+            /// <param name="count">
+            /// The length of the array ids.
+            /// </param>
+            /// <param name="ids">
+            /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+            /// </param>
+            /// <param name="enabled">
+            /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControlKHR")]
+            [CLSCompliant(false)]
+            public static unsafe void DebugMessageControl(OpenTK.Graphics.ES11.All source, OpenTK.Graphics.ES11.All type, OpenTK.Graphics.ES11.All severity, Int32 count, Int32* ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Control the reporting of debug messages in a debug context
+            /// </summary>
+            /// <param name="source">
+            /// The source of debug messages to enable or disable.
+            /// </param>
+            /// <param name="type">
+            /// The type of debug messages to enable or disable.
+            /// </param>
+            /// <param name="severity">
+            /// The severity of debug messages to enable or disable.
+            /// </param>
+            /// <param name="count">
+            /// The length of the array ids.
+            /// </param>
+            /// <param name="ids">
+            /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+            /// </param>
+            /// <param name="enabled">
+            /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControlKHR")]
+            [CLSCompliant(false)]
+            public static void DebugMessageControl(OpenTK.Graphics.ES11.All source, OpenTK.Graphics.ES11.All type, OpenTK.Graphics.ES11.All severity, Int32 count, UInt32[] ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Control the reporting of debug messages in a debug context
+            /// </summary>
+            /// <param name="source">
+            /// The source of debug messages to enable or disable.
+            /// </param>
+            /// <param name="type">
+            /// The type of debug messages to enable or disable.
+            /// </param>
+            /// <param name="severity">
+            /// The severity of debug messages to enable or disable.
+            /// </param>
+            /// <param name="count">
+            /// The length of the array ids.
+            /// </param>
+            /// <param name="ids">
+            /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+            /// </param>
+            /// <param name="enabled">
+            /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControlKHR")]
+            [CLSCompliant(false)]
+            public static void DebugMessageControl(OpenTK.Graphics.ES11.All source, OpenTK.Graphics.ES11.All type, OpenTK.Graphics.ES11.All severity, Int32 count, ref UInt32 ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Control the reporting of debug messages in a debug context
+            /// </summary>
+            /// <param name="source">
+            /// The source of debug messages to enable or disable.
+            /// </param>
+            /// <param name="type">
+            /// The type of debug messages to enable or disable.
+            /// </param>
+            /// <param name="severity">
+            /// The severity of debug messages to enable or disable.
+            /// </param>
+            /// <param name="count">
+            /// The length of the array ids.
+            /// </param>
+            /// <param name="ids">
+            /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+            /// </param>
+            /// <param name="enabled">
+            /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControlKHR")]
+            [CLSCompliant(false)]
+            public static unsafe void DebugMessageControl(OpenTK.Graphics.ES11.All source, OpenTK.Graphics.ES11.All type, OpenTK.Graphics.ES11.All severity, Int32 count, UInt32* ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Control the reporting of debug messages in a debug context
+            /// </summary>
+            /// <param name="source">
+            /// The source of debug messages to enable or disable.
+            /// </param>
+            /// <param name="type">
+            /// The type of debug messages to enable or disable.
+            /// </param>
+            /// <param name="severity">
+            /// The severity of debug messages to enable or disable.
+            /// </param>
+            /// <param name="count">
+            /// The length of the array ids.
+            /// </param>
+            /// <param name="ids">
+            /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+            /// </param>
+            /// <param name="enabled">
+            /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControlKHR")]
+            [CLSCompliant(false)]
+            public static void DebugMessageControl(OpenTK.Graphics.ES11.DebugSource source, OpenTK.Graphics.ES11.DebugType type, OpenTK.Graphics.ES11.DebugSeverity severity, Int32 count, Int32[] ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Control the reporting of debug messages in a debug context
+            /// </summary>
+            /// <param name="source">
+            /// The source of debug messages to enable or disable.
+            /// </param>
+            /// <param name="type">
+            /// The type of debug messages to enable or disable.
+            /// </param>
+            /// <param name="severity">
+            /// The severity of debug messages to enable or disable.
+            /// </param>
+            /// <param name="count">
+            /// The length of the array ids.
+            /// </param>
+            /// <param name="ids">
+            /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+            /// </param>
+            /// <param name="enabled">
+            /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControlKHR")]
+            [CLSCompliant(false)]
+            public static void DebugMessageControl(OpenTK.Graphics.ES11.DebugSource source, OpenTK.Graphics.ES11.DebugType type, OpenTK.Graphics.ES11.DebugSeverity severity, Int32 count, ref Int32 ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Control the reporting of debug messages in a debug context
+            /// </summary>
+            /// <param name="source">
+            /// The source of debug messages to enable or disable.
+            /// </param>
+            /// <param name="type">
+            /// The type of debug messages to enable or disable.
+            /// </param>
+            /// <param name="severity">
+            /// The severity of debug messages to enable or disable.
+            /// </param>
+            /// <param name="count">
+            /// The length of the array ids.
+            /// </param>
+            /// <param name="ids">
+            /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+            /// </param>
+            /// <param name="enabled">
+            /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControlKHR")]
+            [CLSCompliant(false)]
+            public static unsafe void DebugMessageControl(OpenTK.Graphics.ES11.DebugSource source, OpenTK.Graphics.ES11.DebugType type, OpenTK.Graphics.ES11.DebugSeverity severity, Int32 count, Int32* ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Control the reporting of debug messages in a debug context
+            /// </summary>
+            /// <param name="source">
+            /// The source of debug messages to enable or disable.
+            /// </param>
+            /// <param name="type">
+            /// The type of debug messages to enable or disable.
+            /// </param>
+            /// <param name="severity">
+            /// The severity of debug messages to enable or disable.
+            /// </param>
+            /// <param name="count">
+            /// The length of the array ids.
+            /// </param>
+            /// <param name="ids">
+            /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+            /// </param>
+            /// <param name="enabled">
+            /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControlKHR")]
+            [CLSCompliant(false)]
+            public static void DebugMessageControl(OpenTK.Graphics.ES11.DebugSource source, OpenTK.Graphics.ES11.DebugType type, OpenTK.Graphics.ES11.DebugSeverity severity, Int32 count, UInt32[] ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Control the reporting of debug messages in a debug context
+            /// </summary>
+            /// <param name="source">
+            /// The source of debug messages to enable or disable.
+            /// </param>
+            /// <param name="type">
+            /// The type of debug messages to enable or disable.
+            /// </param>
+            /// <param name="severity">
+            /// The severity of debug messages to enable or disable.
+            /// </param>
+            /// <param name="count">
+            /// The length of the array ids.
+            /// </param>
+            /// <param name="ids">
+            /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+            /// </param>
+            /// <param name="enabled">
+            /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControlKHR")]
+            [CLSCompliant(false)]
+            public static void DebugMessageControl(OpenTK.Graphics.ES11.DebugSource source, OpenTK.Graphics.ES11.DebugType type, OpenTK.Graphics.ES11.DebugSeverity severity, Int32 count, ref UInt32 ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Control the reporting of debug messages in a debug context
+            /// </summary>
+            /// <param name="source">
+            /// The source of debug messages to enable or disable.
+            /// </param>
+            /// <param name="type">
+            /// The type of debug messages to enable or disable.
+            /// </param>
+            /// <param name="severity">
+            /// The severity of debug messages to enable or disable.
+            /// </param>
+            /// <param name="count">
+            /// The length of the array ids.
+            /// </param>
+            /// <param name="ids">
+            /// The address of an array of unsigned integers contianing the ids of the messages to enable or disable.
+            /// </param>
+            /// <param name="enabled">
+            /// A Boolean flag determining whether the selected messages should be enabled or disabled.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageControlKHR")]
+            [CLSCompliant(false)]
+            public static unsafe void DebugMessageControl(OpenTK.Graphics.ES11.DebugSource source, OpenTK.Graphics.ES11.DebugType type, OpenTK.Graphics.ES11.DebugSeverity severity, Int32 count, UInt32* ids, bool enabled) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Inject an application-supplied message into the debug message queue
+            /// </summary>
+            /// <param name="source">
+            /// The source of the debug message to insert.
+            /// </param>
+            /// <param name="type">
+            /// The type of the debug message insert.
+            /// </param>
+            /// <param name="id">
+            /// The user-supplied identifier of the message to insert.
+            /// </param>
+            /// <param name="severity">
+            /// The severity of the debug messages to insert.
+            /// </param>
+            /// <param name="length">
+            /// The length string contained in the character array whose address is given by message.
+            /// </param>
+            /// <param name="buf">
+            /// The address of a character array containing the message to insert.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageInsertKHR")]
+            [CLSCompliant(false)]
+            public static void DebugMessageInsert(OpenTK.Graphics.ES11.All source, OpenTK.Graphics.ES11.All type, Int32 id, OpenTK.Graphics.ES11.All severity, Int32 length, String buf) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Inject an application-supplied message into the debug message queue
+            /// </summary>
+            /// <param name="source">
+            /// The source of the debug message to insert.
+            /// </param>
+            /// <param name="type">
+            /// The type of the debug message insert.
+            /// </param>
+            /// <param name="id">
+            /// The user-supplied identifier of the message to insert.
+            /// </param>
+            /// <param name="severity">
+            /// The severity of the debug messages to insert.
+            /// </param>
+            /// <param name="length">
+            /// The length string contained in the character array whose address is given by message.
+            /// </param>
+            /// <param name="buf">
+            /// The address of a character array containing the message to insert.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageInsertKHR")]
+            [CLSCompliant(false)]
+            public static void DebugMessageInsert(OpenTK.Graphics.ES11.All source, OpenTK.Graphics.ES11.All type, UInt32 id, OpenTK.Graphics.ES11.All severity, Int32 length, String buf) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Inject an application-supplied message into the debug message queue
+            /// </summary>
+            /// <param name="source">
+            /// The source of the debug message to insert.
+            /// </param>
+            /// <param name="type">
+            /// The type of the debug message insert.
+            /// </param>
+            /// <param name="id">
+            /// The user-supplied identifier of the message to insert.
+            /// </param>
+            /// <param name="severity">
+            /// The severity of the debug messages to insert.
+            /// </param>
+            /// <param name="length">
+            /// The length string contained in the character array whose address is given by message.
+            /// </param>
+            /// <param name="buf">
+            /// The address of a character array containing the message to insert.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageInsertKHR")]
+            [CLSCompliant(false)]
+            public static void DebugMessageInsert(OpenTK.Graphics.ES11.DebugSource source, OpenTK.Graphics.ES11.DebugType type, Int32 id, OpenTK.Graphics.ES11.DebugSeverity severity, Int32 length, String buf) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Inject an application-supplied message into the debug message queue
+            /// </summary>
+            /// <param name="source">
+            /// The source of the debug message to insert.
+            /// </param>
+            /// <param name="type">
+            /// The type of the debug message insert.
+            /// </param>
+            /// <param name="id">
+            /// The user-supplied identifier of the message to insert.
+            /// </param>
+            /// <param name="severity">
+            /// The severity of the debug messages to insert.
+            /// </param>
+            /// <param name="length">
+            /// The length string contained in the character array whose address is given by message.
+            /// </param>
+            /// <param name="buf">
+            /// The address of a character array containing the message to insert.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glDebugMessageInsertKHR")]
+            [CLSCompliant(false)]
+            public static void DebugMessageInsert(OpenTK.Graphics.ES11.DebugSource source, OpenTK.Graphics.ES11.DebugType type, UInt32 id, OpenTK.Graphics.ES11.DebugSeverity severity, Int32 length, String buf) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve messages from the debug message log
+            /// </summary>
+            /// <param name="count">
+            /// The number of debug messages to retrieve from the log.
+            /// </param>
+            /// <param name="bufSize">
+            /// The size of the buffer whose address is given by messageLog.
+            /// </param>
+            /// <param name="sources">[length: count]
+            /// The address of an array of variables to receive the sources of the retrieved messages.
+            /// </param>
+            /// <param name="types">[length: count]
+            /// The address of an array of variables to receive the types of the retrieved messages.
+            /// </param>
+            /// <param name="ids">[length: count]
+            /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+            /// </param>
+            /// <param name="severities">[length: count]
+            /// The address of an array of variables to receive the severites of the retrieved messages.
+            /// </param>
+            /// <param name="lengths">[length: count]
+            /// The address of an array of variables to receive the lengths of the received messages.
+            /// </param>
+            /// <param name="messageLog">[length: bufSize]
+            /// The address of an array of characters that will receive the messages.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLogKHR")]
+            [CLSCompliant(false)]
+            public static Int32 GetDebugMessageLog(Int32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All[] sources, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All[] types, [OutAttribute, CountAttribute(Parameter = "count")] Int32[] ids, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All[] severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32[] lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve messages from the debug message log
+            /// </summary>
+            /// <param name="count">
+            /// The number of debug messages to retrieve from the log.
+            /// </param>
+            /// <param name="bufSize">
+            /// The size of the buffer whose address is given by messageLog.
+            /// </param>
+            /// <param name="sources">[length: count]
+            /// The address of an array of variables to receive the sources of the retrieved messages.
+            /// </param>
+            /// <param name="types">[length: count]
+            /// The address of an array of variables to receive the types of the retrieved messages.
+            /// </param>
+            /// <param name="ids">[length: count]
+            /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+            /// </param>
+            /// <param name="severities">[length: count]
+            /// The address of an array of variables to receive the severites of the retrieved messages.
+            /// </param>
+            /// <param name="lengths">[length: count]
+            /// The address of an array of variables to receive the lengths of the received messages.
+            /// </param>
+            /// <param name="messageLog">[length: bufSize]
+            /// The address of an array of characters that will receive the messages.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLogKHR")]
+            [CLSCompliant(false)]
+            public static Int32 GetDebugMessageLog(Int32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.All sources, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.All types, [OutAttribute, CountAttribute(Parameter = "count")] out Int32 ids, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.All severities, [OutAttribute, CountAttribute(Parameter = "count")] out Int32 lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve messages from the debug message log
+            /// </summary>
+            /// <param name="count">
+            /// The number of debug messages to retrieve from the log.
+            /// </param>
+            /// <param name="bufSize">
+            /// The size of the buffer whose address is given by messageLog.
+            /// </param>
+            /// <param name="sources">[length: count]
+            /// The address of an array of variables to receive the sources of the retrieved messages.
+            /// </param>
+            /// <param name="types">[length: count]
+            /// The address of an array of variables to receive the types of the retrieved messages.
+            /// </param>
+            /// <param name="ids">[length: count]
+            /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+            /// </param>
+            /// <param name="severities">[length: count]
+            /// The address of an array of variables to receive the severites of the retrieved messages.
+            /// </param>
+            /// <param name="lengths">[length: count]
+            /// The address of an array of variables to receive the lengths of the received messages.
+            /// </param>
+            /// <param name="messageLog">[length: bufSize]
+            /// The address of an array of characters that will receive the messages.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLogKHR")]
+            [CLSCompliant(false)]
+            public static unsafe Int32 GetDebugMessageLog(Int32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All* sources, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All* types, [OutAttribute, CountAttribute(Parameter = "count")] Int32* ids, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All* severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32* lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve messages from the debug message log
+            /// </summary>
+            /// <param name="count">
+            /// The number of debug messages to retrieve from the log.
+            /// </param>
+            /// <param name="bufSize">
+            /// The size of the buffer whose address is given by messageLog.
+            /// </param>
+            /// <param name="sources">[length: count]
+            /// The address of an array of variables to receive the sources of the retrieved messages.
+            /// </param>
+            /// <param name="types">[length: count]
+            /// The address of an array of variables to receive the types of the retrieved messages.
+            /// </param>
+            /// <param name="ids">[length: count]
+            /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+            /// </param>
+            /// <param name="severities">[length: count]
+            /// The address of an array of variables to receive the severites of the retrieved messages.
+            /// </param>
+            /// <param name="lengths">[length: count]
+            /// The address of an array of variables to receive the lengths of the received messages.
+            /// </param>
+            /// <param name="messageLog">[length: bufSize]
+            /// The address of an array of characters that will receive the messages.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLogKHR")]
+            [CLSCompliant(false)]
+            public static Int32 GetDebugMessageLog(Int32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugSource[] sources, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugType[] types, [OutAttribute, CountAttribute(Parameter = "count")] Int32[] ids, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugSeverity[] severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32[] lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve messages from the debug message log
+            /// </summary>
+            /// <param name="count">
+            /// The number of debug messages to retrieve from the log.
+            /// </param>
+            /// <param name="bufSize">
+            /// The size of the buffer whose address is given by messageLog.
+            /// </param>
+            /// <param name="sources">[length: count]
+            /// The address of an array of variables to receive the sources of the retrieved messages.
+            /// </param>
+            /// <param name="types">[length: count]
+            /// The address of an array of variables to receive the types of the retrieved messages.
+            /// </param>
+            /// <param name="ids">[length: count]
+            /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+            /// </param>
+            /// <param name="severities">[length: count]
+            /// The address of an array of variables to receive the severites of the retrieved messages.
+            /// </param>
+            /// <param name="lengths">[length: count]
+            /// The address of an array of variables to receive the lengths of the received messages.
+            /// </param>
+            /// <param name="messageLog">[length: bufSize]
+            /// The address of an array of characters that will receive the messages.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLogKHR")]
+            [CLSCompliant(false)]
+            public static Int32 GetDebugMessageLog(Int32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.DebugSource sources, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.DebugType types, [OutAttribute, CountAttribute(Parameter = "count")] out Int32 ids, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.DebugSeverity severities, [OutAttribute, CountAttribute(Parameter = "count")] out Int32 lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve messages from the debug message log
+            /// </summary>
+            /// <param name="count">
+            /// The number of debug messages to retrieve from the log.
+            /// </param>
+            /// <param name="bufSize">
+            /// The size of the buffer whose address is given by messageLog.
+            /// </param>
+            /// <param name="sources">[length: count]
+            /// The address of an array of variables to receive the sources of the retrieved messages.
+            /// </param>
+            /// <param name="types">[length: count]
+            /// The address of an array of variables to receive the types of the retrieved messages.
+            /// </param>
+            /// <param name="ids">[length: count]
+            /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+            /// </param>
+            /// <param name="severities">[length: count]
+            /// The address of an array of variables to receive the severites of the retrieved messages.
+            /// </param>
+            /// <param name="lengths">[length: count]
+            /// The address of an array of variables to receive the lengths of the received messages.
+            /// </param>
+            /// <param name="messageLog">[length: bufSize]
+            /// The address of an array of characters that will receive the messages.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLogKHR")]
+            [CLSCompliant(false)]
+            public static unsafe Int32 GetDebugMessageLog(Int32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugSource* sources, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugType* types, [OutAttribute, CountAttribute(Parameter = "count")] Int32* ids, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugSeverity* severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32* lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve messages from the debug message log
+            /// </summary>
+            /// <param name="count">
+            /// The number of debug messages to retrieve from the log.
+            /// </param>
+            /// <param name="bufSize">
+            /// The size of the buffer whose address is given by messageLog.
+            /// </param>
+            /// <param name="sources">[length: count]
+            /// The address of an array of variables to receive the sources of the retrieved messages.
+            /// </param>
+            /// <param name="types">[length: count]
+            /// The address of an array of variables to receive the types of the retrieved messages.
+            /// </param>
+            /// <param name="ids">[length: count]
+            /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+            /// </param>
+            /// <param name="severities">[length: count]
+            /// The address of an array of variables to receive the severites of the retrieved messages.
+            /// </param>
+            /// <param name="lengths">[length: count]
+            /// The address of an array of variables to receive the lengths of the received messages.
+            /// </param>
+            /// <param name="messageLog">[length: bufSize]
+            /// The address of an array of characters that will receive the messages.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLogKHR")]
+            [CLSCompliant(false)]
+            public static Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All[] sources, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All[] types, [OutAttribute, CountAttribute(Parameter = "count")] UInt32[] ids, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All[] severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32[] lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve messages from the debug message log
+            /// </summary>
+            /// <param name="count">
+            /// The number of debug messages to retrieve from the log.
+            /// </param>
+            /// <param name="bufSize">
+            /// The size of the buffer whose address is given by messageLog.
+            /// </param>
+            /// <param name="sources">[length: count]
+            /// The address of an array of variables to receive the sources of the retrieved messages.
+            /// </param>
+            /// <param name="types">[length: count]
+            /// The address of an array of variables to receive the types of the retrieved messages.
+            /// </param>
+            /// <param name="ids">[length: count]
+            /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+            /// </param>
+            /// <param name="severities">[length: count]
+            /// The address of an array of variables to receive the severites of the retrieved messages.
+            /// </param>
+            /// <param name="lengths">[length: count]
+            /// The address of an array of variables to receive the lengths of the received messages.
+            /// </param>
+            /// <param name="messageLog">[length: bufSize]
+            /// The address of an array of characters that will receive the messages.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLogKHR")]
+            [CLSCompliant(false)]
+            public static Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.All sources, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.All types, [OutAttribute, CountAttribute(Parameter = "count")] out UInt32 ids, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.All severities, [OutAttribute, CountAttribute(Parameter = "count")] out Int32 lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve messages from the debug message log
+            /// </summary>
+            /// <param name="count">
+            /// The number of debug messages to retrieve from the log.
+            /// </param>
+            /// <param name="bufSize">
+            /// The size of the buffer whose address is given by messageLog.
+            /// </param>
+            /// <param name="sources">[length: count]
+            /// The address of an array of variables to receive the sources of the retrieved messages.
+            /// </param>
+            /// <param name="types">[length: count]
+            /// The address of an array of variables to receive the types of the retrieved messages.
+            /// </param>
+            /// <param name="ids">[length: count]
+            /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+            /// </param>
+            /// <param name="severities">[length: count]
+            /// The address of an array of variables to receive the severites of the retrieved messages.
+            /// </param>
+            /// <param name="lengths">[length: count]
+            /// The address of an array of variables to receive the lengths of the received messages.
+            /// </param>
+            /// <param name="messageLog">[length: bufSize]
+            /// The address of an array of characters that will receive the messages.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLogKHR")]
+            [CLSCompliant(false)]
+            public static unsafe Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All* sources, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All* types, [OutAttribute, CountAttribute(Parameter = "count")] UInt32* ids, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.All* severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32* lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve messages from the debug message log
+            /// </summary>
+            /// <param name="count">
+            /// The number of debug messages to retrieve from the log.
+            /// </param>
+            /// <param name="bufSize">
+            /// The size of the buffer whose address is given by messageLog.
+            /// </param>
+            /// <param name="sources">[length: count]
+            /// The address of an array of variables to receive the sources of the retrieved messages.
+            /// </param>
+            /// <param name="types">[length: count]
+            /// The address of an array of variables to receive the types of the retrieved messages.
+            /// </param>
+            /// <param name="ids">[length: count]
+            /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+            /// </param>
+            /// <param name="severities">[length: count]
+            /// The address of an array of variables to receive the severites of the retrieved messages.
+            /// </param>
+            /// <param name="lengths">[length: count]
+            /// The address of an array of variables to receive the lengths of the received messages.
+            /// </param>
+            /// <param name="messageLog">[length: bufSize]
+            /// The address of an array of characters that will receive the messages.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLogKHR")]
+            [CLSCompliant(false)]
+            public static Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugSource[] sources, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugType[] types, [OutAttribute, CountAttribute(Parameter = "count")] UInt32[] ids, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugSeverity[] severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32[] lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve messages from the debug message log
+            /// </summary>
+            /// <param name="count">
+            /// The number of debug messages to retrieve from the log.
+            /// </param>
+            /// <param name="bufSize">
+            /// The size of the buffer whose address is given by messageLog.
+            /// </param>
+            /// <param name="sources">[length: count]
+            /// The address of an array of variables to receive the sources of the retrieved messages.
+            /// </param>
+            /// <param name="types">[length: count]
+            /// The address of an array of variables to receive the types of the retrieved messages.
+            /// </param>
+            /// <param name="ids">[length: count]
+            /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+            /// </param>
+            /// <param name="severities">[length: count]
+            /// The address of an array of variables to receive the severites of the retrieved messages.
+            /// </param>
+            /// <param name="lengths">[length: count]
+            /// The address of an array of variables to receive the lengths of the received messages.
+            /// </param>
+            /// <param name="messageLog">[length: bufSize]
+            /// The address of an array of characters that will receive the messages.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLogKHR")]
+            [CLSCompliant(false)]
+            public static Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.DebugSource sources, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.DebugType types, [OutAttribute, CountAttribute(Parameter = "count")] out UInt32 ids, [OutAttribute, CountAttribute(Parameter = "count")] out OpenTK.Graphics.ES11.DebugSeverity severities, [OutAttribute, CountAttribute(Parameter = "count")] out Int32 lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve messages from the debug message log
+            /// </summary>
+            /// <param name="count">
+            /// The number of debug messages to retrieve from the log.
+            /// </param>
+            /// <param name="bufSize">
+            /// The size of the buffer whose address is given by messageLog.
+            /// </param>
+            /// <param name="sources">[length: count]
+            /// The address of an array of variables to receive the sources of the retrieved messages.
+            /// </param>
+            /// <param name="types">[length: count]
+            /// The address of an array of variables to receive the types of the retrieved messages.
+            /// </param>
+            /// <param name="ids">[length: count]
+            /// The address of an array of unsigned integers to receive the ids of the retrieved messages.
+            /// </param>
+            /// <param name="severities">[length: count]
+            /// The address of an array of variables to receive the severites of the retrieved messages.
+            /// </param>
+            /// <param name="lengths">[length: count]
+            /// The address of an array of variables to receive the lengths of the received messages.
+            /// </param>
+            /// <param name="messageLog">[length: bufSize]
+            /// The address of an array of characters that will receive the messages.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetDebugMessageLogKHR")]
+            [CLSCompliant(false)]
+            public static unsafe Int32 GetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugSource* sources, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugType* types, [OutAttribute, CountAttribute(Parameter = "count")] UInt32* ids, [OutAttribute, CountAttribute(Parameter = "count")] OpenTK.Graphics.ES11.DebugSeverity* severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32* lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String messageLog) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve the label of a named object identified within a namespace
+            /// </summary>
+            /// <param name="identifier">
+            /// The namespace from which the name of the object is allocated.
+            /// </param>
+            /// <param name="name">
+            /// The name of the object whose label to retrieve.
+            /// </param>
+            /// <param name="bufSize">
+            /// The length of the buffer whose address is in label.
+            /// </param>
+            /// <param name="length">
+            /// The address of a variable to receive the length of the object label.
+            /// </param>
+            /// <param name="label">[length: bufSize]
+            /// The address of a string that will receive the object label.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabelKHR")]
+            [CLSCompliant(false)]
+            public static void GetObjectLabel(OpenTK.Graphics.ES11.All identifier, Int32 name, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve the label of a named object identified within a namespace
+            /// </summary>
+            /// <param name="identifier">
+            /// The namespace from which the name of the object is allocated.
+            /// </param>
+            /// <param name="name">
+            /// The name of the object whose label to retrieve.
+            /// </param>
+            /// <param name="bufSize">
+            /// The length of the buffer whose address is in label.
+            /// </param>
+            /// <param name="length">
+            /// The address of a variable to receive the length of the object label.
+            /// </param>
+            /// <param name="label">[length: bufSize]
+            /// The address of a string that will receive the object label.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabelKHR")]
+            [CLSCompliant(false)]
+            public static void GetObjectLabel(OpenTK.Graphics.ES11.All identifier, Int32 name, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve the label of a named object identified within a namespace
+            /// </summary>
+            /// <param name="identifier">
+            /// The namespace from which the name of the object is allocated.
+            /// </param>
+            /// <param name="name">
+            /// The name of the object whose label to retrieve.
+            /// </param>
+            /// <param name="bufSize">
+            /// The length of the buffer whose address is in label.
+            /// </param>
+            /// <param name="length">
+            /// The address of a variable to receive the length of the object label.
+            /// </param>
+            /// <param name="label">[length: bufSize]
+            /// The address of a string that will receive the object label.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabelKHR")]
+            [CLSCompliant(false)]
+            public static unsafe void GetObjectLabel(OpenTK.Graphics.ES11.All identifier, Int32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve the label of a named object identified within a namespace
+            /// </summary>
+            /// <param name="identifier">
+            /// The namespace from which the name of the object is allocated.
+            /// </param>
+            /// <param name="name">
+            /// The name of the object whose label to retrieve.
+            /// </param>
+            /// <param name="bufSize">
+            /// The length of the buffer whose address is in label.
+            /// </param>
+            /// <param name="length">
+            /// The address of a variable to receive the length of the object label.
+            /// </param>
+            /// <param name="label">[length: bufSize]
+            /// The address of a string that will receive the object label.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabelKHR")]
+            [CLSCompliant(false)]
+            public static void GetObjectLabel(OpenTK.Graphics.ES11.All identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32[] length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve the label of a named object identified within a namespace
+            /// </summary>
+            /// <param name="identifier">
+            /// The namespace from which the name of the object is allocated.
+            /// </param>
+            /// <param name="name">
+            /// The name of the object whose label to retrieve.
+            /// </param>
+            /// <param name="bufSize">
+            /// The length of the buffer whose address is in label.
+            /// </param>
+            /// <param name="length">
+            /// The address of a variable to receive the length of the object label.
+            /// </param>
+            /// <param name="label">[length: bufSize]
+            /// The address of a string that will receive the object label.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabelKHR")]
+            [CLSCompliant(false)]
+            public static void GetObjectLabel(OpenTK.Graphics.ES11.All identifier, UInt32 name, Int32 bufSize, [OutAttribute] out Int32 length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve the label of a named object identified within a namespace
+            /// </summary>
+            /// <param name="identifier">
+            /// The namespace from which the name of the object is allocated.
+            /// </param>
+            /// <param name="name">
+            /// The name of the object whose label to retrieve.
+            /// </param>
+            /// <param name="bufSize">
+            /// The length of the buffer whose address is in label.
+            /// </param>
+            /// <param name="length">
+            /// The address of a variable to receive the length of the object label.
+            /// </param>
+            /// <param name="label">[length: bufSize]
+            /// The address of a string that will receive the object label.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectLabelKHR")]
+            [CLSCompliant(false)]
+            public static unsafe void GetObjectLabel(OpenTK.Graphics.ES11.All identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve the label of a sync object identified by a pointer
+            /// </summary>
+            /// <param name="ptr">
+            /// The name of the sync object whose label to retrieve.
+            /// </param>
+            /// <param name="bufSize">
+            /// The length of the buffer whose address is in label.
+            /// </param>
+            /// <param name="length">[length: 1]
+            /// The address of a variable to receive the length of the object label.
+            /// </param>
+            /// <param name="label">[length: bufSize]
+            /// The address of a string that will receive the object label.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
+            [CLSCompliant(false)]
+            public static void GetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] out Int32 length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve the label of a sync object identified by a pointer
+            /// </summary>
+            /// <param name="ptr">
+            /// The name of the sync object whose label to retrieve.
+            /// </param>
+            /// <param name="bufSize">
+            /// The length of the buffer whose address is in label.
+            /// </param>
+            /// <param name="length">[length: 1]
+            /// The address of a variable to receive the length of the object label.
+            /// </param>
+            /// <param name="label">[length: bufSize]
+            /// The address of a string that will receive the object label.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
+            [CLSCompliant(false)]
+            public static unsafe void GetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve the label of a sync object identified by a pointer
+            /// </summary>
+            /// <param name="ptr">
+            /// The name of the sync object whose label to retrieve.
+            /// </param>
+            /// <param name="bufSize">
+            /// The length of the buffer whose address is in label.
+            /// </param>
+            /// <param name="length">[length: 1]
+            /// The address of a variable to receive the length of the object label.
+            /// </param>
+            /// <param name="label">[length: bufSize]
+            /// The address of a string that will receive the object label.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
+            [CLSCompliant(false)]
+            public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[] ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] out Int32 length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label)
+                where T0 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve the label of a sync object identified by a pointer
+            /// </summary>
+            /// <param name="ptr">
+            /// The name of the sync object whose label to retrieve.
+            /// </param>
+            /// <param name="bufSize">
+            /// The length of the buffer whose address is in label.
+            /// </param>
+            /// <param name="length">[length: 1]
+            /// The address of a variable to receive the length of the object label.
+            /// </param>
+            /// <param name="label">[length: bufSize]
+            /// The address of a string that will receive the object label.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
+            [CLSCompliant(false)]
+            public static unsafe void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[] ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label)
+                where T0 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve the label of a sync object identified by a pointer
+            /// </summary>
+            /// <param name="ptr">
+            /// The name of the sync object whose label to retrieve.
+            /// </param>
+            /// <param name="bufSize">
+            /// The length of the buffer whose address is in label.
+            /// </param>
+            /// <param name="length">[length: 1]
+            /// The address of a variable to receive the length of the object label.
+            /// </param>
+            /// <param name="label">[length: bufSize]
+            /// The address of a string that will receive the object label.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
+            [CLSCompliant(false)]
+            public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,] ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] out Int32 length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label)
+                where T0 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve the label of a sync object identified by a pointer
+            /// </summary>
+            /// <param name="ptr">
+            /// The name of the sync object whose label to retrieve.
+            /// </param>
+            /// <param name="bufSize">
+            /// The length of the buffer whose address is in label.
+            /// </param>
+            /// <param name="length">[length: 1]
+            /// The address of a variable to receive the length of the object label.
+            /// </param>
+            /// <param name="label">[length: bufSize]
+            /// The address of a string that will receive the object label.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
+            [CLSCompliant(false)]
+            public static unsafe void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,] ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label)
+                where T0 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve the label of a sync object identified by a pointer
+            /// </summary>
+            /// <param name="ptr">
+            /// The name of the sync object whose label to retrieve.
+            /// </param>
+            /// <param name="bufSize">
+            /// The length of the buffer whose address is in label.
+            /// </param>
+            /// <param name="length">[length: 1]
+            /// The address of a variable to receive the length of the object label.
+            /// </param>
+            /// <param name="label">[length: bufSize]
+            /// The address of a string that will receive the object label.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
+            [CLSCompliant(false)]
+            public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,,] ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] out Int32 length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label)
+                where T0 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve the label of a sync object identified by a pointer
+            /// </summary>
+            /// <param name="ptr">
+            /// The name of the sync object whose label to retrieve.
+            /// </param>
+            /// <param name="bufSize">
+            /// The length of the buffer whose address is in label.
+            /// </param>
+            /// <param name="length">[length: 1]
+            /// The address of a variable to receive the length of the object label.
+            /// </param>
+            /// <param name="label">[length: bufSize]
+            /// The address of a string that will receive the object label.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
+            [CLSCompliant(false)]
+            public static unsafe void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,,] ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label)
+                where T0 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve the label of a sync object identified by a pointer
+            /// </summary>
+            /// <param name="ptr">
+            /// The name of the sync object whose label to retrieve.
+            /// </param>
+            /// <param name="bufSize">
+            /// The length of the buffer whose address is in label.
+            /// </param>
+            /// <param name="length">[length: 1]
+            /// The address of a variable to receive the length of the object label.
+            /// </param>
+            /// <param name="label">[length: bufSize]
+            /// The address of a string that will receive the object label.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
+            [CLSCompliant(false)]
+            public static void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] ref T0 ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] out Int32 length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label)
+                where T0 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Retrieve the label of a sync object identified by a pointer
+            /// </summary>
+            /// <param name="ptr">
+            /// The name of the sync object whose label to retrieve.
+            /// </param>
+            /// <param name="bufSize">
+            /// The length of the buffer whose address is in label.
+            /// </param>
+            /// <param name="length">[length: 1]
+            /// The address of a variable to receive the length of the object label.
+            /// </param>
+            /// <param name="label">[length: bufSize]
+            /// The address of a string that will receive the object label.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetObjectPtrLabelKHR")]
+            [CLSCompliant(false)]
+            public static unsafe void GetObjectPtrLabel<T0>([InAttribute, OutAttribute] ref T0 ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] out String label)
+                where T0 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]</summary>
+            /// <param name="pname"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetPointervKHR")]
+            public static void GetPointer(OpenTK.Graphics.ES11.All pname, [OutAttribute] IntPtr @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]</summary>
+            /// <param name="pname"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetPointervKHR")]
+            [CLSCompliant(false)]
+            public static void GetPointer<T1>(OpenTK.Graphics.ES11.All pname, [InAttribute, OutAttribute] T1[] @params)
+                where T1 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]</summary>
+            /// <param name="pname"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetPointervKHR")]
+            [CLSCompliant(false)]
+            public static void GetPointer<T1>(OpenTK.Graphics.ES11.All pname, [InAttribute, OutAttribute] T1[,] @params)
+                where T1 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]</summary>
+            /// <param name="pname"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetPointervKHR")]
+            [CLSCompliant(false)]
+            public static void GetPointer<T1>(OpenTK.Graphics.ES11.All pname, [InAttribute, OutAttribute] T1[,,] @params)
+                where T1 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]</summary>
+            /// <param name="pname"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glGetPointervKHR")]
+            public static void GetPointer<T1>(OpenTK.Graphics.ES11.All pname, [InAttribute, OutAttribute] ref T1 @params)
+                where T1 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Label a named object identified within a namespace
+            /// </summary>
+            /// <param name="identifier">
+            /// The namespace from which the name of the object is allocated.
+            /// </param>
+            /// <param name="name">
+            /// The name of the object to label.
+            /// </param>
+            /// <param name="length">
+            /// The length of the label to be used for the object.
+            /// </param>
+            /// <param name="label">
+            /// The address of a string containing the label to assign to the object.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectLabelKHR")]
+            [CLSCompliant(false)]
+            public static void ObjectLabel(OpenTK.Graphics.ES11.All identifier, Int32 name, Int32 length, String label) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Label a named object identified within a namespace
+            /// </summary>
+            /// <param name="identifier">
+            /// The namespace from which the name of the object is allocated.
+            /// </param>
+            /// <param name="name">
+            /// The name of the object to label.
+            /// </param>
+            /// <param name="length">
+            /// The length of the label to be used for the object.
+            /// </param>
+            /// <param name="label">
+            /// The address of a string containing the label to assign to the object.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectLabelKHR")]
+            [CLSCompliant(false)]
+            public static void ObjectLabel(OpenTK.Graphics.ES11.All identifier, UInt32 name, Int32 length, String label) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Label a named object identified within a namespace
+            /// </summary>
+            /// <param name="identifier">
+            /// The namespace from which the name of the object is allocated.
+            /// </param>
+            /// <param name="name">
+            /// The name of the object to label.
+            /// </param>
+            /// <param name="length">
+            /// The length of the label to be used for the object.
+            /// </param>
+            /// <param name="label">
+            /// The address of a string containing the label to assign to the object.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectLabelKHR")]
+            [CLSCompliant(false)]
+            public static void ObjectLabel(OpenTK.Graphics.ES11.ObjectIdentifier identifier, Int32 name, Int32 length, String label) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Label a named object identified within a namespace
+            /// </summary>
+            /// <param name="identifier">
+            /// The namespace from which the name of the object is allocated.
+            /// </param>
+            /// <param name="name">
+            /// The name of the object to label.
+            /// </param>
+            /// <param name="length">
+            /// The length of the label to be used for the object.
+            /// </param>
+            /// <param name="label">
+            /// The address of a string containing the label to assign to the object.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectLabelKHR")]
+            [CLSCompliant(false)]
+            public static void ObjectLabel(OpenTK.Graphics.ES11.ObjectIdentifier identifier, UInt32 name, Int32 length, String label) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Label a a sync object identified by a pointer
+            /// </summary>
+            /// <param name="ptr">
+            /// A pointer identifying a sync object.
+            /// </param>
+            /// <param name="length">
+            /// The length of the label to be used for the object.
+            /// </param>
+            /// <param name="label">
+            /// The address of a string containing the label to assign to the object.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectPtrLabelKHR")]
+            public static void ObjectPtrLabel(IntPtr ptr, Int32 length, String label) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Label a a sync object identified by a pointer
+            /// </summary>
+            /// <param name="ptr">
+            /// A pointer identifying a sync object.
+            /// </param>
+            /// <param name="length">
+            /// The length of the label to be used for the object.
+            /// </param>
+            /// <param name="label">
+            /// The address of a string containing the label to assign to the object.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectPtrLabelKHR")]
+            [CLSCompliant(false)]
+            public static void ObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[] ptr, Int32 length, String label)
+                where T0 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Label a a sync object identified by a pointer
+            /// </summary>
+            /// <param name="ptr">
+            /// A pointer identifying a sync object.
+            /// </param>
+            /// <param name="length">
+            /// The length of the label to be used for the object.
+            /// </param>
+            /// <param name="label">
+            /// The address of a string containing the label to assign to the object.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectPtrLabelKHR")]
+            [CLSCompliant(false)]
+            public static void ObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,] ptr, Int32 length, String label)
+                where T0 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Label a a sync object identified by a pointer
+            /// </summary>
+            /// <param name="ptr">
+            /// A pointer identifying a sync object.
+            /// </param>
+            /// <param name="length">
+            /// The length of the label to be used for the object.
+            /// </param>
+            /// <param name="label">
+            /// The address of a string containing the label to assign to the object.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectPtrLabelKHR")]
+            [CLSCompliant(false)]
+            public static void ObjectPtrLabel<T0>([InAttribute, OutAttribute] T0[,,] ptr, Int32 length, String label)
+                where T0 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Label a a sync object identified by a pointer
+            /// </summary>
+            /// <param name="ptr">
+            /// A pointer identifying a sync object.
+            /// </param>
+            /// <param name="length">
+            /// The length of the label to be used for the object.
+            /// </param>
+            /// <param name="label">
+            /// The address of a string containing the label to assign to the object.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glObjectPtrLabelKHR")]
+            public static void ObjectPtrLabel<T0>([InAttribute, OutAttribute] ref T0 ptr, Int32 length, String label)
+                where T0 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Pop the active debug group
+            /// </summary>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glPopDebugGroupKHR")]
+            public static void PopDebugGroup() { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Push a named debug group into the command stream
+            /// </summary>
+            /// <param name="source">
+            /// The source of the debug message.
+            /// </param>
+            /// <param name="id">
+            /// The identifier of the message.
+            /// </param>
+            /// <param name="length">
+            /// The length of the message to be sent to the debug output stream.
+            /// </param>
+            /// <param name="message">
+            /// The a string containing the message to be sent to the debug output stream.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glPushDebugGroupKHR")]
+            [CLSCompliant(false)]
+            public static void PushDebugGroup(OpenTK.Graphics.ES11.All source, Int32 id, Int32 length, String message) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Push a named debug group into the command stream
+            /// </summary>
+            /// <param name="source">
+            /// The source of the debug message.
+            /// </param>
+            /// <param name="id">
+            /// The identifier of the message.
+            /// </param>
+            /// <param name="length">
+            /// The length of the message to be sent to the debug output stream.
+            /// </param>
+            /// <param name="message">
+            /// The a string containing the message to be sent to the debug output stream.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glPushDebugGroupKHR")]
+            [CLSCompliant(false)]
+            public static void PushDebugGroup(OpenTK.Graphics.ES11.All source, UInt32 id, Int32 length, String message) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Push a named debug group into the command stream
+            /// </summary>
+            /// <param name="source">
+            /// The source of the debug message.
+            /// </param>
+            /// <param name="id">
+            /// The identifier of the message.
+            /// </param>
+            /// <param name="length">
+            /// The length of the message to be sent to the debug output stream.
+            /// </param>
+            /// <param name="message">
+            /// The a string containing the message to be sent to the debug output stream.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glPushDebugGroupKHR")]
+            [CLSCompliant(false)]
+            public static void PushDebugGroup(OpenTK.Graphics.ES11.DebugSource source, Int32 id, Int32 length, String message) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: KHR_debug]
+            /// Push a named debug group into the command stream
+            /// </summary>
+            /// <param name="source">
+            /// The source of the debug message.
+            /// </param>
+            /// <param name="id">
+            /// The identifier of the message.
+            /// </param>
+            /// <param name="length">
+            /// The length of the message to be sent to the debug output stream.
+            /// </param>
+            /// <param name="message">
+            /// The a string containing the message to be sent to the debug output stream.
+            /// </param>
+            [AutoGenerated(Category = "KHR_debug", Version = "", EntryPoint = "glPushDebugGroupKHR")]
+            [CLSCompliant(false)]
+            public static void PushDebugGroup(OpenTK.Graphics.ES11.DebugSource source, UInt32 id, Int32 length, String message) { throw new BindingsNotRewrittenException(); }
 
         }
 
@@ -10384,8 +14420,15 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="func"></param>
             /// <param name="@ref"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glAlphaFuncxOES")]
             public static void AlphaFuncx(OpenTK.Graphics.ES11.All func, Int32 @ref) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="func"></param>
+            /// <param name="@ref"></param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glAlphaFuncxOES")]
+            public static void AlphaFuncx(OpenTK.Graphics.ES11.AlphaFunction func, Int32 @ref) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_framebuffer_object]
             /// Bind a named framebuffer object
@@ -10396,6 +14439,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="framebuffer">
             /// Specifies the name of a framebuffer object.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glBindFramebufferOES")]
             [CLSCompliant(false)]
             public static void BindFramebuffer(OpenTK.Graphics.ES11.All target, Int32 framebuffer) { throw new BindingsNotRewrittenException(); }
@@ -10409,9 +14453,36 @@ namespace OpenTK.Graphics.ES11
             /// <param name="framebuffer">
             /// Specifies the name of a framebuffer object.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glBindFramebufferOES")]
             [CLSCompliant(false)]
             public static void BindFramebuffer(OpenTK.Graphics.ES11.All target, UInt32 framebuffer) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_framebuffer_object]
+            /// Bind a named framebuffer object
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the target to which the framebuffer object is bound. The symbolic constant must be Framebuffer.
+            /// </param>
+            /// <param name="framebuffer">
+            /// Specifies the name of a framebuffer object.
+            /// </param>
+            [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glBindFramebufferOES")]
+            [CLSCompliant(false)]
+            public static void BindFramebuffer(OpenTK.Graphics.ES11.FramebufferTarget target, Int32 framebuffer) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_framebuffer_object]
+            /// Bind a named framebuffer object
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the target to which the framebuffer object is bound. The symbolic constant must be Framebuffer.
+            /// </param>
+            /// <param name="framebuffer">
+            /// Specifies the name of a framebuffer object.
+            /// </param>
+            [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glBindFramebufferOES")]
+            [CLSCompliant(false)]
+            public static void BindFramebuffer(OpenTK.Graphics.ES11.FramebufferTarget target, UInt32 framebuffer) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_framebuffer_object]
             /// Bind a named renderbuffer object
@@ -10422,6 +14493,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="renderbuffer">
             /// Specifies the name of a renderbuffer object.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glBindRenderbufferOES")]
             [CLSCompliant(false)]
             public static void BindRenderbuffer(OpenTK.Graphics.ES11.All target, Int32 renderbuffer) { throw new BindingsNotRewrittenException(); }
@@ -10435,9 +14507,36 @@ namespace OpenTK.Graphics.ES11
             /// <param name="renderbuffer">
             /// Specifies the name of a renderbuffer object.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glBindRenderbufferOES")]
             [CLSCompliant(false)]
             public static void BindRenderbuffer(OpenTK.Graphics.ES11.All target, UInt32 renderbuffer) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_framebuffer_object]
+            /// Bind a named renderbuffer object
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the target to which the renderbuffer object is bound. The symbolic constant must be Renderbuffer.
+            /// </param>
+            /// <param name="renderbuffer">
+            /// Specifies the name of a renderbuffer object.
+            /// </param>
+            [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glBindRenderbufferOES")]
+            [CLSCompliant(false)]
+            public static void BindRenderbuffer(OpenTK.Graphics.ES11.RenderbufferTarget target, Int32 renderbuffer) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_framebuffer_object]
+            /// Bind a named renderbuffer object
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the target to which the renderbuffer object is bound. The symbolic constant must be Renderbuffer.
+            /// </param>
+            /// <param name="renderbuffer">
+            /// Specifies the name of a renderbuffer object.
+            /// </param>
+            [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glBindRenderbufferOES")]
+            [CLSCompliant(false)]
+            public static void BindRenderbuffer(OpenTK.Graphics.ES11.RenderbufferTarget target, UInt32 renderbuffer) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_vertex_array_object]
             /// Bind a vertex array object
@@ -10509,8 +14608,31 @@ namespace OpenTK.Graphics.ES11
             /// <param name="mode">
             /// specifies how source and destination colors are combined. It must be FuncAdd, FuncSubtract, or FuncReverseSubtract.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_blend_subtract", Version = "", EntryPoint = "glBlendEquationOES")]
             public static void BlendEquation(OpenTK.Graphics.ES11.All mode) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_blend_subtract]
+            /// Specify the equation used for both the RGB blend equation and the Alpha blend equation
+            /// </summary>
+            /// <param name="mode">
+            /// specifies how source and destination colors are combined. It must be FuncAdd, FuncSubtract, or FuncReverseSubtract.
+            /// </param>
+            [AutoGenerated(Category = "OES_blend_subtract", Version = "", EntryPoint = "glBlendEquationOES")]
+            public static void BlendEquation(OpenTK.Graphics.ES11.BlendEquationModeExt mode) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_blend_equation_separate]
+            /// Set the RGB blend equation and the alpha blend equation separately
+            /// </summary>
+            /// <param name="modeRGB">
+            /// specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be FuncAdd, FuncSubtract, or FuncReverseSubtract.
+            /// </param>
+            /// <param name="modeAlpha">
+            /// specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be FuncAdd, FuncSubtract, or FuncReverseSubtract.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "OES_blend_equation_separate", Version = "", EntryPoint = "glBlendEquationSeparateOES")]
+            public static void BlendEquationSeparate(OpenTK.Graphics.ES11.All modeRGB, OpenTK.Graphics.ES11.All modeAlpha) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_blend_equation_separate]
             /// Set the RGB blend equation and the alpha blend equation separately
@@ -10522,7 +14644,26 @@ namespace OpenTK.Graphics.ES11
             /// specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be FuncAdd, FuncSubtract, or FuncReverseSubtract.
             /// </param>
             [AutoGenerated(Category = "OES_blend_equation_separate", Version = "", EntryPoint = "glBlendEquationSeparateOES")]
-            public static void BlendEquationSeparate(OpenTK.Graphics.ES11.All modeRGB, OpenTK.Graphics.ES11.All modeAlpha) { throw new BindingsNotRewrittenException(); }
+            public static void BlendEquationSeparate(OpenTK.Graphics.ES11.BlendEquationModeExt modeRGB, OpenTK.Graphics.ES11.BlendEquationModeExt modeAlpha) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_blend_func_separate]
+            /// Specify pixel arithmetic for RGB and alpha components separately
+            /// </summary>
+            /// <param name="srcRGB">
+            /// Specifies how the red, green, and blue blending factors are computed. The following symbolic constants are accepted: Zero, One, SrcColor, OneMinusSrcColor, DstColor, OneMinusDstColor, SrcAlpha, OneMinusSrcAlpha, DstAlpha, OneMinusDstAlpha, ConstantColor, OneMinusConstantColor, ConstantAlpha, OneMinusConstantAlpha, and SrcAlphaSaturate. The initial value is One.
+            /// </param>
+            /// <param name="dstRGB">
+            /// Specifies how the red, green, and blue destination blending factors are computed. The following symbolic constants are accepted: Zero, One, SrcColor, OneMinusSrcColor, DstColor, OneMinusDstColor, SrcAlpha, OneMinusSrcAlpha, DstAlpha, OneMinusDstAlpha. ConstantColor, OneMinusConstantColor, ConstantAlpha, and OneMinusConstantAlpha. The initial value is Zero.
+            /// </param>
+            /// <param name="srcAlpha">
+            /// Specified how the alpha source blending factor is computed.  The same symbolic constants are accepted as for srcRGB. The initial value is One.
+            /// </param>
+            /// <param name="dstAlpha">
+            /// Specified how the alpha destination blending factor is computed.  The same symbolic constants are accepted as for dstRGB. The initial value is Zero.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "OES_blend_func_separate", Version = "", EntryPoint = "glBlendFuncSeparateOES")]
+            public static void BlendFuncSeparate(OpenTK.Graphics.ES11.All srcRGB, OpenTK.Graphics.ES11.All dstRGB, OpenTK.Graphics.ES11.All srcAlpha, OpenTK.Graphics.ES11.All dstAlpha) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_blend_func_separate]
             /// Specify pixel arithmetic for RGB and alpha components separately
@@ -10540,7 +14681,17 @@ namespace OpenTK.Graphics.ES11
             /// Specified how the alpha destination blending factor is computed.  The same symbolic constants are accepted as for dstRGB. The initial value is Zero.
             /// </param>
             [AutoGenerated(Category = "OES_blend_func_separate", Version = "", EntryPoint = "glBlendFuncSeparateOES")]
-            public static void BlendFuncSeparate(OpenTK.Graphics.ES11.All srcRGB, OpenTK.Graphics.ES11.All dstRGB, OpenTK.Graphics.ES11.All srcAlpha, OpenTK.Graphics.ES11.All dstAlpha) { throw new BindingsNotRewrittenException(); }
+            public static void BlendFuncSeparate(OpenTK.Graphics.ES11.BlendingFactor srcRGB, OpenTK.Graphics.ES11.BlendingFactor dstRGB, OpenTK.Graphics.ES11.BlendingFactor srcAlpha, OpenTK.Graphics.ES11.BlendingFactor dstAlpha) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_framebuffer_object]
+            /// Return the framebuffer completeness status of a framebuffer object
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the target framebuffer object. The symbolic constant must be Framebuffer.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glCheckFramebufferStatusOES")]
+            public static OpenTK.Graphics.ES11.FramebufferStatus CheckFramebufferStatus(OpenTK.Graphics.ES11.All target) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_framebuffer_object]
             /// Return the framebuffer completeness status of a framebuffer object
@@ -10549,7 +14700,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies the target framebuffer object. The symbolic constant must be Framebuffer.
             /// </param>
             [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glCheckFramebufferStatusOES")]
-            public static OpenTK.Graphics.ES11.All CheckFramebufferStatus(OpenTK.Graphics.ES11.All target) { throw new BindingsNotRewrittenException(); }
+            public static OpenTK.Graphics.ES11.FramebufferStatus CheckFramebufferStatus(OpenTK.Graphics.ES11.FramebufferTarget target) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="red"></param>
@@ -10590,6 +14741,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="equation">[length: 4]
             /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_single_precision", Version = "", EntryPoint = "glClipPlanefOES")]
             [CLSCompliant(false)]
             public static void ClipPlane(OpenTK.Graphics.ES11.All plane, [CountAttribute(Count = 4)] Single[] equation) { throw new BindingsNotRewrittenException(); }
@@ -10603,6 +14755,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="equation">[length: 4]
             /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_single_precision", Version = "", EntryPoint = "glClipPlanefOES")]
             [CLSCompliant(false)]
             public static void ClipPlane(OpenTK.Graphics.ES11.All plane, [CountAttribute(Count = 4)] ref Single equation) { throw new BindingsNotRewrittenException(); }
@@ -10616,13 +14769,54 @@ namespace OpenTK.Graphics.ES11
             /// <param name="equation">[length: 4]
             /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_single_precision", Version = "", EntryPoint = "glClipPlanefOES")]
             [CLSCompliant(false)]
             public static unsafe void ClipPlane(OpenTK.Graphics.ES11.All plane, [CountAttribute(Count = 4)] Single* equation) { throw new BindingsNotRewrittenException(); }
 
+            /// <summary>[requires: OES_single_precision]
+            /// Specify a plane against which all geometry is clipped
+            /// </summary>
+            /// <param name="plane">
+            /// Specifies which clipping plane is being positioned. Symbolic names of the form ClipPlanei, where i is an integer between 0 and MaxClipPlanes - 1, are accepted.
+            /// </param>
+            /// <param name="equation">[length: 4]
+            /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
+            /// </param>
+            [AutoGenerated(Category = "OES_single_precision", Version = "", EntryPoint = "glClipPlanefOES")]
+            [CLSCompliant(false)]
+            public static void ClipPlane(OpenTK.Graphics.ES11.ClipPlaneName plane, [CountAttribute(Count = 4)] Single[] equation) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_single_precision]
+            /// Specify a plane against which all geometry is clipped
+            /// </summary>
+            /// <param name="plane">
+            /// Specifies which clipping plane is being positioned. Symbolic names of the form ClipPlanei, where i is an integer between 0 and MaxClipPlanes - 1, are accepted.
+            /// </param>
+            /// <param name="equation">[length: 4]
+            /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
+            /// </param>
+            [AutoGenerated(Category = "OES_single_precision", Version = "", EntryPoint = "glClipPlanefOES")]
+            [CLSCompliant(false)]
+            public static void ClipPlane(OpenTK.Graphics.ES11.ClipPlaneName plane, [CountAttribute(Count = 4)] ref Single equation) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_single_precision]
+            /// Specify a plane against which all geometry is clipped
+            /// </summary>
+            /// <param name="plane">
+            /// Specifies which clipping plane is being positioned. Symbolic names of the form ClipPlanei, where i is an integer between 0 and MaxClipPlanes - 1, are accepted.
+            /// </param>
+            /// <param name="equation">[length: 4]
+            /// Specifies the address of an array of four double-precision floating-point values. These values are interpreted as a plane equation.
+            /// </param>
+            [AutoGenerated(Category = "OES_single_precision", Version = "", EntryPoint = "glClipPlanefOES")]
+            [CLSCompliant(false)]
+            public static unsafe void ClipPlane(OpenTK.Graphics.ES11.ClipPlaneName plane, [CountAttribute(Count = 4)] Single* equation) { throw new BindingsNotRewrittenException(); }
+
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="plane"></param>
             /// <param name="equation">[length: 4]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glClipPlanexOES")]
             [CLSCompliant(false)]
             public static void ClipPlanex(OpenTK.Graphics.ES11.All plane, [CountAttribute(Count = 4)] Int32[] equation) { throw new BindingsNotRewrittenException(); }
@@ -10630,6 +14824,7 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="plane"></param>
             /// <param name="equation">[length: 4]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glClipPlanexOES")]
             [CLSCompliant(false)]
             public static void ClipPlanex(OpenTK.Graphics.ES11.All plane, [CountAttribute(Count = 4)] ref Int32 equation) { throw new BindingsNotRewrittenException(); }
@@ -10637,9 +14832,31 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="plane"></param>
             /// <param name="equation">[length: 4]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glClipPlanexOES")]
             [CLSCompliant(false)]
             public static unsafe void ClipPlanex(OpenTK.Graphics.ES11.All plane, [CountAttribute(Count = 4)] Int32* equation) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="plane"></param>
+            /// <param name="equation">[length: 4]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glClipPlanexOES")]
+            [CLSCompliant(false)]
+            public static void ClipPlanex(OpenTK.Graphics.ES11.ClipPlaneName plane, [CountAttribute(Count = 4)] Int32[] equation) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="plane"></param>
+            /// <param name="equation">[length: 4]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glClipPlanexOES")]
+            [CLSCompliant(false)]
+            public static void ClipPlanex(OpenTK.Graphics.ES11.ClipPlaneName plane, [CountAttribute(Count = 4)] ref Int32 equation) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="plane"></param>
+            /// <param name="equation">[length: 4]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glClipPlanexOES")]
+            [CLSCompliant(false)]
+            public static unsafe void ClipPlanex(OpenTK.Graphics.ES11.ClipPlaneName plane, [CountAttribute(Count = 4)] Int32* equation) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="red"></param>
@@ -10696,13 +14913,22 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="param"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glConvolutionParameterxOES")]
             public static void ConvolutionParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="target"></param>
             /// <param name="pname"></param>
+            /// <param name="param"></param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glConvolutionParameterxOES")]
+            public static void ConvolutionParameterx(OpenTK.Graphics.ES11.ConvolutionTargetExt target, OpenTK.Graphics.ES11.ConvolutionParameterExt pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glConvolutionParameterxvOES")]
             [CLSCompliant(false)]
             public static void ConvolutionParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -10711,9 +14937,26 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glConvolutionParameterxvOES")]
             [CLSCompliant(false)]
             public static unsafe void ConvolutionParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glConvolutionParameterxvOES")]
+            [CLSCompliant(false)]
+            public static void ConvolutionParameterx(OpenTK.Graphics.ES11.ConvolutionTargetExt target, OpenTK.Graphics.ES11.ConvolutionParameterExt pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glConvolutionParameterxvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void ConvolutionParameterx(OpenTK.Graphics.ES11.ConvolutionTargetExt target, OpenTK.Graphics.ES11.ConvolutionParameterExt pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_matrix_palette]</summary>
             /// <param name="matrixpaletteindex"></param>
@@ -11221,12 +15464,20 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="pname"></param>
             /// <param name="param"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glFogxOES")]
             public static void Fogx(OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="pname"></param>
+            /// <param name="param"></param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glFogxOES")]
+            public static void Fogx(OpenTK.Graphics.ES11.FogPName pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="pname"></param>
             /// <param name="param">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glFogxvOES")]
             [CLSCompliant(false)]
             public static void Fogx(OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32[] param) { throw new BindingsNotRewrittenException(); }
@@ -11234,9 +15485,24 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="pname"></param>
             /// <param name="param">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glFogxvOES")]
             [CLSCompliant(false)]
             public static unsafe void Fogx(OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32* param) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="pname"></param>
+            /// <param name="param">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glFogxvOES")]
+            [CLSCompliant(false)]
+            public static void Fogx(OpenTK.Graphics.ES11.FogPName pname, [CountAttribute(Computed = "pname")] Int32[] param) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="pname"></param>
+            /// <param name="param">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glFogxvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void Fogx(OpenTK.Graphics.ES11.FogPName pname, [CountAttribute(Computed = "pname")] Int32* param) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_framebuffer_object]
             /// Attach a renderbuffer object to a framebuffer object
@@ -11253,6 +15519,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="renderbuffer">
             /// Specifies the renderbuffer object that is to be attached.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glFramebufferRenderbufferOES")]
             [CLSCompliant(false)]
             public static void FramebufferRenderbuffer(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All renderbuffertarget, Int32 renderbuffer) { throw new BindingsNotRewrittenException(); }
@@ -11272,9 +15539,48 @@ namespace OpenTK.Graphics.ES11
             /// <param name="renderbuffer">
             /// Specifies the renderbuffer object that is to be attached.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glFramebufferRenderbufferOES")]
             [CLSCompliant(false)]
             public static void FramebufferRenderbuffer(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All renderbuffertarget, UInt32 renderbuffer) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_framebuffer_object]
+            /// Attach a renderbuffer object to a framebuffer object
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the framebuffer target. The symbolic constant must be Framebuffer.
+            /// </param>
+            /// <param name="attachment">
+            /// Specifies the attachment point to which renderbuffer should be attached. Must be one of the following symbolic constants: ColorAttachment0, DepthAttachment, or StencilAttachment.
+            /// </param>
+            /// <param name="renderbuffertarget">
+            /// Specifies the renderbuffer target. The symbolic constant must be Renderbuffer.
+            /// </param>
+            /// <param name="renderbuffer">
+            /// Specifies the renderbuffer object that is to be attached.
+            /// </param>
+            [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glFramebufferRenderbufferOES")]
+            [CLSCompliant(false)]
+            public static void FramebufferRenderbuffer(OpenTK.Graphics.ES11.FramebufferTarget target, OpenTK.Graphics.ES11.FramebufferAttachment attachment, OpenTK.Graphics.ES11.RenderbufferTarget renderbuffertarget, Int32 renderbuffer) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_framebuffer_object]
+            /// Attach a renderbuffer object to a framebuffer object
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the framebuffer target. The symbolic constant must be Framebuffer.
+            /// </param>
+            /// <param name="attachment">
+            /// Specifies the attachment point to which renderbuffer should be attached. Must be one of the following symbolic constants: ColorAttachment0, DepthAttachment, or StencilAttachment.
+            /// </param>
+            /// <param name="renderbuffertarget">
+            /// Specifies the renderbuffer target. The symbolic constant must be Renderbuffer.
+            /// </param>
+            /// <param name="renderbuffer">
+            /// Specifies the renderbuffer object that is to be attached.
+            /// </param>
+            [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glFramebufferRenderbufferOES")]
+            [CLSCompliant(false)]
+            public static void FramebufferRenderbuffer(OpenTK.Graphics.ES11.FramebufferTarget target, OpenTK.Graphics.ES11.FramebufferAttachment attachment, OpenTK.Graphics.ES11.RenderbufferTarget renderbuffertarget, UInt32 renderbuffer) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_framebuffer_object]
             /// Attach a texture image to a framebuffer object
@@ -11294,6 +15600,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="level">
             /// Specifies the mipmap level of the texture image to be attached, which must be 0.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glFramebufferTexture2DOES")]
             [CLSCompliant(false)]
             public static void FramebufferTexture2D(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All textarget, Int32 texture, Int32 level) { throw new BindingsNotRewrittenException(); }
@@ -11316,9 +15623,54 @@ namespace OpenTK.Graphics.ES11
             /// <param name="level">
             /// Specifies the mipmap level of the texture image to be attached, which must be 0.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glFramebufferTexture2DOES")]
             [CLSCompliant(false)]
             public static void FramebufferTexture2D(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All textarget, UInt32 texture, Int32 level) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_framebuffer_object]
+            /// Attach a texture image to a framebuffer object
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the framebuffer target. The symbolic constant must be Framebuffer.
+            /// </param>
+            /// <param name="attachment">
+            /// Specifies the attachment point to which an image from texture should be attached. Must be one of the following symbolic constants: ColorAttachment0, DepthAttachment, or StencilAttachment.
+            /// </param>
+            /// <param name="textarget">
+            /// Specifies the texture target. Must be one of the following symbolic constants: Texture2D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, or TextureCubeMapNegativeZ.
+            /// </param>
+            /// <param name="texture">
+            /// Specifies the texture object whose image is to be attached.
+            /// </param>
+            /// <param name="level">
+            /// Specifies the mipmap level of the texture image to be attached, which must be 0.
+            /// </param>
+            [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glFramebufferTexture2DOES")]
+            [CLSCompliant(false)]
+            public static void FramebufferTexture2D(OpenTK.Graphics.ES11.FramebufferTarget target, OpenTK.Graphics.ES11.FramebufferAttachment attachment, OpenTK.Graphics.ES11.TextureTarget textarget, Int32 texture, Int32 level) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_framebuffer_object]
+            /// Attach a texture image to a framebuffer object
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the framebuffer target. The symbolic constant must be Framebuffer.
+            /// </param>
+            /// <param name="attachment">
+            /// Specifies the attachment point to which an image from texture should be attached. Must be one of the following symbolic constants: ColorAttachment0, DepthAttachment, or StencilAttachment.
+            /// </param>
+            /// <param name="textarget">
+            /// Specifies the texture target. Must be one of the following symbolic constants: Texture2D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, or TextureCubeMapNegativeZ.
+            /// </param>
+            /// <param name="texture">
+            /// Specifies the texture object whose image is to be attached.
+            /// </param>
+            /// <param name="level">
+            /// Specifies the mipmap level of the texture image to be attached, which must be 0.
+            /// </param>
+            [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glFramebufferTexture2DOES")]
+            [CLSCompliant(false)]
+            public static void FramebufferTexture2D(OpenTK.Graphics.ES11.FramebufferTarget target, OpenTK.Graphics.ES11.FramebufferAttachment attachment, OpenTK.Graphics.ES11.TextureTarget textarget, UInt32 texture, Int32 level) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_single_precision]
             /// Multiply the current matrix by a perspective matrix
@@ -11360,8 +15712,18 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target">
             /// Specifies the texture target of the active texture unit to which the texture object is bound whose mipmaps will be generated.  Must be one of the following symbolic constants: Texture2D or TextureCubeMap.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glGenerateMipmapOES")]
             public static void GenerateMipmap(OpenTK.Graphics.ES11.All target) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_framebuffer_object]
+            /// Generate a complete set of mipmaps for a texture object
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the texture target of the active texture unit to which the texture object is bound whose mipmaps will be generated.  Must be one of the following symbolic constants: Texture2D or TextureCubeMap.
+            /// </param>
+            [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glGenerateMipmapOES")]
+            public static void GenerateMipmap(OpenTK.Graphics.ES11.TextureTarget target) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_framebuffer_object]
             /// Generate framebuffer object names
@@ -11622,6 +15984,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="@params"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_mapbuffer", Version = "", EntryPoint = "glGetBufferPointervOES")]
             public static void GetBufferPointer(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute] IntPtr @params) { throw new BindingsNotRewrittenException(); }
 
@@ -11629,6 +15992,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="@params"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_mapbuffer", Version = "", EntryPoint = "glGetBufferPointervOES")]
             [CLSCompliant(false)]
             public static void GetBufferPointer<T2>(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [InAttribute, OutAttribute] T2[] @params)
@@ -11639,6 +16003,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="@params"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_mapbuffer", Version = "", EntryPoint = "glGetBufferPointervOES")]
             [CLSCompliant(false)]
             public static void GetBufferPointer<T2>(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [InAttribute, OutAttribute] T2[,] @params)
@@ -11649,6 +16014,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="@params"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_mapbuffer", Version = "", EntryPoint = "glGetBufferPointervOES")]
             [CLSCompliant(false)]
             public static void GetBufferPointer<T2>(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [InAttribute, OutAttribute] T2[,,] @params)
@@ -11659,8 +16025,55 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="@params"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_mapbuffer", Version = "", EntryPoint = "glGetBufferPointervOES")]
             public static void GetBufferPointer<T2>(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [InAttribute, OutAttribute] ref T2 @params)
+                where T2 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_mapbuffer]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "OES_mapbuffer", Version = "", EntryPoint = "glGetBufferPointervOES")]
+            public static void GetBufferPointer(OpenTK.Graphics.ES11.BufferTargetArb target, OpenTK.Graphics.ES11.All pname, [OutAttribute] IntPtr @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_mapbuffer]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "OES_mapbuffer", Version = "", EntryPoint = "glGetBufferPointervOES")]
+            [CLSCompliant(false)]
+            public static void GetBufferPointer<T2>(OpenTK.Graphics.ES11.BufferTargetArb target, OpenTK.Graphics.ES11.All pname, [InAttribute, OutAttribute] T2[] @params)
+                where T2 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_mapbuffer]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "OES_mapbuffer", Version = "", EntryPoint = "glGetBufferPointervOES")]
+            [CLSCompliant(false)]
+            public static void GetBufferPointer<T2>(OpenTK.Graphics.ES11.BufferTargetArb target, OpenTK.Graphics.ES11.All pname, [InAttribute, OutAttribute] T2[,] @params)
+                where T2 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_mapbuffer]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "OES_mapbuffer", Version = "", EntryPoint = "glGetBufferPointervOES")]
+            [CLSCompliant(false)]
+            public static void GetBufferPointer<T2>(OpenTK.Graphics.ES11.BufferTargetArb target, OpenTK.Graphics.ES11.All pname, [InAttribute, OutAttribute] T2[,,] @params)
+                where T2 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_mapbuffer]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params"></param>
+            [AutoGenerated(Category = "OES_mapbuffer", Version = "", EntryPoint = "glGetBufferPointervOES")]
+            public static void GetBufferPointer<T2>(OpenTK.Graphics.ES11.BufferTargetArb target, OpenTK.Graphics.ES11.All pname, [InAttribute, OutAttribute] ref T2 @params)
                 where T2 : struct
              { throw new BindingsNotRewrittenException(); }
 
@@ -11673,6 +16086,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="equation">[length: 4]
             /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_single_precision", Version = "", EntryPoint = "glGetClipPlanefOES")]
             [CLSCompliant(false)]
             public static void GetClipPlane(OpenTK.Graphics.ES11.All plane, [OutAttribute, CountAttribute(Count = 4)] Single[] equation) { throw new BindingsNotRewrittenException(); }
@@ -11686,6 +16100,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="equation">[length: 4]
             /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_single_precision", Version = "", EntryPoint = "glGetClipPlanefOES")]
             [CLSCompliant(false)]
             public static void GetClipPlane(OpenTK.Graphics.ES11.All plane, [OutAttribute, CountAttribute(Count = 4)] out Single equation) { throw new BindingsNotRewrittenException(); }
@@ -11699,13 +16114,54 @@ namespace OpenTK.Graphics.ES11
             /// <param name="equation">[length: 4]
             /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_single_precision", Version = "", EntryPoint = "glGetClipPlanefOES")]
             [CLSCompliant(false)]
             public static unsafe void GetClipPlane(OpenTK.Graphics.ES11.All plane, [OutAttribute, CountAttribute(Count = 4)] Single* equation) { throw new BindingsNotRewrittenException(); }
 
+            /// <summary>[requires: OES_single_precision]
+            /// Return the coefficients of the specified clipping plane
+            /// </summary>
+            /// <param name="plane">
+            /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form ClipPlane  where i ranges from 0 to the value of MaxClipPlanes - 1.
+            /// </param>
+            /// <param name="equation">[length: 4]
+            /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
+            /// </param>
+            [AutoGenerated(Category = "OES_single_precision", Version = "", EntryPoint = "glGetClipPlanefOES")]
+            [CLSCompliant(false)]
+            public static void GetClipPlane(OpenTK.Graphics.ES11.ClipPlaneName plane, [OutAttribute, CountAttribute(Count = 4)] Single[] equation) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_single_precision]
+            /// Return the coefficients of the specified clipping plane
+            /// </summary>
+            /// <param name="plane">
+            /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form ClipPlane  where i ranges from 0 to the value of MaxClipPlanes - 1.
+            /// </param>
+            /// <param name="equation">[length: 4]
+            /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
+            /// </param>
+            [AutoGenerated(Category = "OES_single_precision", Version = "", EntryPoint = "glGetClipPlanefOES")]
+            [CLSCompliant(false)]
+            public static void GetClipPlane(OpenTK.Graphics.ES11.ClipPlaneName plane, [OutAttribute, CountAttribute(Count = 4)] out Single equation) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_single_precision]
+            /// Return the coefficients of the specified clipping plane
+            /// </summary>
+            /// <param name="plane">
+            /// Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form ClipPlane  where i ranges from 0 to the value of MaxClipPlanes - 1.
+            /// </param>
+            /// <param name="equation">[length: 4]
+            /// Returns four double-precision values that are the coefficients of the plane equation of plane in eye coordinates. The initial value is (0, 0, 0, 0).
+            /// </param>
+            [AutoGenerated(Category = "OES_single_precision", Version = "", EntryPoint = "glGetClipPlanefOES")]
+            [CLSCompliant(false)]
+            public static unsafe void GetClipPlane(OpenTK.Graphics.ES11.ClipPlaneName plane, [OutAttribute, CountAttribute(Count = 4)] Single* equation) { throw new BindingsNotRewrittenException(); }
+
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="plane"></param>
             /// <param name="equation">[length: 4]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetClipPlanexOES")]
             [CLSCompliant(false)]
             public static void GetClipPlanex(OpenTK.Graphics.ES11.All plane, [OutAttribute, CountAttribute(Count = 4)] Int32[] equation) { throw new BindingsNotRewrittenException(); }
@@ -11713,6 +16169,7 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="plane"></param>
             /// <param name="equation">[length: 4]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetClipPlanexOES")]
             [CLSCompliant(false)]
             public static void GetClipPlanex(OpenTK.Graphics.ES11.All plane, [OutAttribute, CountAttribute(Count = 4)] out Int32 equation) { throw new BindingsNotRewrittenException(); }
@@ -11720,9 +16177,31 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="plane"></param>
             /// <param name="equation">[length: 4]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetClipPlanexOES")]
             [CLSCompliant(false)]
             public static unsafe void GetClipPlanex(OpenTK.Graphics.ES11.All plane, [OutAttribute, CountAttribute(Count = 4)] Int32* equation) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="plane"></param>
+            /// <param name="equation">[length: 4]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetClipPlanexOES")]
+            [CLSCompliant(false)]
+            public static void GetClipPlanex(OpenTK.Graphics.ES11.ClipPlaneName plane, [OutAttribute, CountAttribute(Count = 4)] Int32[] equation) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="plane"></param>
+            /// <param name="equation">[length: 4]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetClipPlanexOES")]
+            [CLSCompliant(false)]
+            public static void GetClipPlanex(OpenTK.Graphics.ES11.ClipPlaneName plane, [OutAttribute, CountAttribute(Count = 4)] out Int32 equation) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="plane"></param>
+            /// <param name="equation">[length: 4]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetClipPlanexOES")]
+            [CLSCompliant(false)]
+            public static unsafe void GetClipPlanex(OpenTK.Graphics.ES11.ClipPlaneName plane, [OutAttribute, CountAttribute(Count = 4)] Int32* equation) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="target"></param>
@@ -11750,13 +16229,21 @@ namespace OpenTK.Graphics.ES11
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="pname"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetFixedvOES")]
             [CLSCompliant(false)]
             public static Int32 GetFixed(OpenTK.Graphics.ES11.All pname) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="pname"></param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetFixedvOES")]
+            [CLSCompliant(false)]
+            public static Int32 GetFixed(OpenTK.Graphics.ES11.GetPName pname) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetFixedvOES")]
             [CLSCompliant(false)]
             public static void GetFixed(OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -11764,6 +16251,7 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetFixedvOES")]
             [CLSCompliant(false)]
             public static void GetFixed(OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
@@ -11771,9 +16259,31 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetFixedvOES")]
             [CLSCompliant(false)]
             public static unsafe void GetFixed(OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetFixedvOES")]
+            [CLSCompliant(false)]
+            public static void GetFixed(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetFixedvOES")]
+            [CLSCompliant(false)]
+            public static void GetFixed(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetFixedvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void GetFixed(OpenTK.Graphics.ES11.GetPName pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_framebuffer_object]
             /// Retrieve information about attachments of a bound framebuffer object
@@ -11790,6 +16300,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="@params">[length: COMPSIZE(pname)]
             /// Specifies the address of a variable receive the value of pname for attachment.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glGetFramebufferAttachmentParameterivOES")]
             [CLSCompliant(false)]
             public static void GetFramebufferAttachmentParameter(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -11809,6 +16320,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="@params">[length: COMPSIZE(pname)]
             /// Specifies the address of a variable receive the value of pname for attachment.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glGetFramebufferAttachmentParameterivOES")]
             [CLSCompliant(false)]
             public static void GetFramebufferAttachmentParameter(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
@@ -11828,14 +16340,73 @@ namespace OpenTK.Graphics.ES11
             /// <param name="@params">[length: COMPSIZE(pname)]
             /// Specifies the address of a variable receive the value of pname for attachment.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glGetFramebufferAttachmentParameterivOES")]
             [CLSCompliant(false)]
             public static unsafe void GetFramebufferAttachmentParameter(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All attachment, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_framebuffer_object]
+            /// Retrieve information about attachments of a bound framebuffer object
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the target of the query operation.
+            /// </param>
+            /// <param name="attachment">
+            /// Specifies the attachment within target
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the parameter of attachment to query.
+            /// </param>
+            /// <param name="@params">[length: COMPSIZE(pname)]
+            /// Specifies the address of a variable receive the value of pname for attachment.
+            /// </param>
+            [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glGetFramebufferAttachmentParameterivOES")]
+            [CLSCompliant(false)]
+            public static void GetFramebufferAttachmentParameter(OpenTK.Graphics.ES11.FramebufferTarget target, OpenTK.Graphics.ES11.FramebufferAttachment attachment, OpenTK.Graphics.ES11.FramebufferAttachmentParameterName pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_framebuffer_object]
+            /// Retrieve information about attachments of a bound framebuffer object
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the target of the query operation.
+            /// </param>
+            /// <param name="attachment">
+            /// Specifies the attachment within target
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the parameter of attachment to query.
+            /// </param>
+            /// <param name="@params">[length: COMPSIZE(pname)]
+            /// Specifies the address of a variable receive the value of pname for attachment.
+            /// </param>
+            [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glGetFramebufferAttachmentParameterivOES")]
+            [CLSCompliant(false)]
+            public static void GetFramebufferAttachmentParameter(OpenTK.Graphics.ES11.FramebufferTarget target, OpenTK.Graphics.ES11.FramebufferAttachment attachment, OpenTK.Graphics.ES11.FramebufferAttachmentParameterName pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_framebuffer_object]
+            /// Retrieve information about attachments of a bound framebuffer object
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the target of the query operation.
+            /// </param>
+            /// <param name="attachment">
+            /// Specifies the attachment within target
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the parameter of attachment to query.
+            /// </param>
+            /// <param name="@params">[length: COMPSIZE(pname)]
+            /// Specifies the address of a variable receive the value of pname for attachment.
+            /// </param>
+            [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glGetFramebufferAttachmentParameterivOES")]
+            [CLSCompliant(false)]
+            public static unsafe void GetFramebufferAttachmentParameter(OpenTK.Graphics.ES11.FramebufferTarget target, OpenTK.Graphics.ES11.FramebufferAttachment attachment, OpenTK.Graphics.ES11.FramebufferAttachmentParameterName pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetHistogramParameterxvOES")]
             [CLSCompliant(false)]
             public static void GetHistogramParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -11844,6 +16415,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetHistogramParameterxvOES")]
             [CLSCompliant(false)]
             public static void GetHistogramParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
@@ -11852,14 +16424,40 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetHistogramParameterxvOES")]
             [CLSCompliant(false)]
             public static unsafe void GetHistogramParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetHistogramParameterxvOES")]
+            [CLSCompliant(false)]
+            public static void GetHistogramParameterx(OpenTK.Graphics.ES11.HistogramTargetExt target, OpenTK.Graphics.ES11.GetHistogramParameterPNameExt pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetHistogramParameterxvOES")]
+            [CLSCompliant(false)]
+            public static void GetHistogramParameterx(OpenTK.Graphics.ES11.HistogramTargetExt target, OpenTK.Graphics.ES11.GetHistogramParameterPNameExt pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetHistogramParameterxvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void GetHistogramParameterx(OpenTK.Graphics.ES11.HistogramTargetExt target, OpenTK.Graphics.ES11.GetHistogramParameterPNameExt pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="light"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetLightxOES")]
             [CLSCompliant(false)]
             public static void GetLightx(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -11868,6 +16466,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="light"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetLightxOES")]
             [CLSCompliant(false)]
             public static void GetLightx(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
@@ -11876,14 +16475,40 @@ namespace OpenTK.Graphics.ES11
             /// <param name="light"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetLightxOES")]
             [CLSCompliant(false)]
             public static unsafe void GetLightx(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="light"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetLightxOES")]
+            [CLSCompliant(false)]
+            public static void GetLightx(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="light"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetLightxOES")]
+            [CLSCompliant(false)]
+            public static void GetLightx(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="light"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetLightxOES")]
+            [CLSCompliant(false)]
+            public static unsafe void GetLightx(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="target"></param>
             /// <param name="query"></param>
             /// <param name="v">[length: COMPSIZE(query)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetMapxvOES")]
             [CLSCompliant(false)]
             public static void GetMapx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All query, [OutAttribute, CountAttribute(Computed = "query")] Int32[] v) { throw new BindingsNotRewrittenException(); }
@@ -11892,6 +16517,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="query"></param>
             /// <param name="v">[length: COMPSIZE(query)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetMapxvOES")]
             [CLSCompliant(false)]
             public static void GetMapx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All query, [OutAttribute, CountAttribute(Computed = "query")] out Int32 v) { throw new BindingsNotRewrittenException(); }
@@ -11900,21 +16526,55 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="query"></param>
             /// <param name="v">[length: COMPSIZE(query)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetMapxvOES")]
             [CLSCompliant(false)]
             public static unsafe void GetMapx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All query, [OutAttribute, CountAttribute(Computed = "query")] Int32* v) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="query"></param>
+            /// <param name="v">[length: COMPSIZE(query)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetMapxvOES")]
+            [CLSCompliant(false)]
+            public static void GetMapx(OpenTK.Graphics.ES11.MapTarget target, OpenTK.Graphics.ES11.GetMapQuery query, [OutAttribute, CountAttribute(Computed = "query")] Int32[] v) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="query"></param>
+            /// <param name="v">[length: COMPSIZE(query)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetMapxvOES")]
+            [CLSCompliant(false)]
+            public static void GetMapx(OpenTK.Graphics.ES11.MapTarget target, OpenTK.Graphics.ES11.GetMapQuery query, [OutAttribute, CountAttribute(Computed = "query")] out Int32 v) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="query"></param>
+            /// <param name="v">[length: COMPSIZE(query)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetMapxvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void GetMapx(OpenTK.Graphics.ES11.MapTarget target, OpenTK.Graphics.ES11.GetMapQuery query, [OutAttribute, CountAttribute(Computed = "query")] Int32* v) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="face"></param>
             /// <param name="pname"></param>
             /// <param name="param"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetMaterialxOES")]
             public static void GetMaterialx(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="face"></param>
             /// <param name="pname"></param>
+            /// <param name="param"></param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetMaterialxOES")]
+            public static void GetMaterialx(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="face"></param>
+            /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetMaterialxvOES")]
             [CLSCompliant(false)]
             public static void GetMaterialx(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -11923,9 +16583,26 @@ namespace OpenTK.Graphics.ES11
             /// <param name="face"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetMaterialxvOES")]
             [CLSCompliant(false)]
             public static unsafe void GetMaterialx(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="face"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetMaterialxvOES")]
+            [CLSCompliant(false)]
+            public static void GetMaterialx(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="face"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetMaterialxvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void GetMaterialx(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_framebuffer_object]
             /// Retrieve information about a bound renderbuffer object
@@ -11939,6 +16616,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="@params">[length: COMPSIZE(pname)]
             /// Specifies the address of an array to receive the value of the queried parameter.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glGetRenderbufferParameterivOES")]
             [CLSCompliant(false)]
             public static void GetRenderbufferParameter(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -11955,6 +16633,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="@params">[length: COMPSIZE(pname)]
             /// Specifies the address of an array to receive the value of the queried parameter.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glGetRenderbufferParameterivOES")]
             [CLSCompliant(false)]
             public static void GetRenderbufferParameter(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
@@ -11971,14 +16650,64 @@ namespace OpenTK.Graphics.ES11
             /// <param name="@params">[length: COMPSIZE(pname)]
             /// Specifies the address of an array to receive the value of the queried parameter.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glGetRenderbufferParameterivOES")]
             [CLSCompliant(false)]
             public static unsafe void GetRenderbufferParameter(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_framebuffer_object]
+            /// Retrieve information about a bound renderbuffer object
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the target of the query operation. target must be Renderbuffer.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the parameter whose value to retrieve from the renderbuffer bound to target.
+            /// </param>
+            /// <param name="@params">[length: COMPSIZE(pname)]
+            /// Specifies the address of an array to receive the value of the queried parameter.
+            /// </param>
+            [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glGetRenderbufferParameterivOES")]
+            [CLSCompliant(false)]
+            public static void GetRenderbufferParameter(OpenTK.Graphics.ES11.RenderbufferTarget target, OpenTK.Graphics.ES11.RenderbufferParameterName pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_framebuffer_object]
+            /// Retrieve information about a bound renderbuffer object
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the target of the query operation. target must be Renderbuffer.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the parameter whose value to retrieve from the renderbuffer bound to target.
+            /// </param>
+            /// <param name="@params">[length: COMPSIZE(pname)]
+            /// Specifies the address of an array to receive the value of the queried parameter.
+            /// </param>
+            [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glGetRenderbufferParameterivOES")]
+            [CLSCompliant(false)]
+            public static void GetRenderbufferParameter(OpenTK.Graphics.ES11.RenderbufferTarget target, OpenTK.Graphics.ES11.RenderbufferParameterName pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_framebuffer_object]
+            /// Retrieve information about a bound renderbuffer object
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the target of the query operation. target must be Renderbuffer.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the parameter whose value to retrieve from the renderbuffer bound to target.
+            /// </param>
+            /// <param name="@params">[length: COMPSIZE(pname)]
+            /// Specifies the address of an array to receive the value of the queried parameter.
+            /// </param>
+            [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glGetRenderbufferParameterivOES")]
+            [CLSCompliant(false)]
+            public static unsafe void GetRenderbufferParameter(OpenTK.Graphics.ES11.RenderbufferTarget target, OpenTK.Graphics.ES11.RenderbufferParameterName pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexEnvxvOES")]
             [CLSCompliant(false)]
             public static void GetTexEnvx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -11987,6 +16716,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexEnvxvOES")]
             [CLSCompliant(false)]
             public static void GetTexEnvx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
@@ -11995,9 +16725,34 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexEnvxvOES")]
             [CLSCompliant(false)]
             public static unsafe void GetTexEnvx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexEnvxvOES")]
+            [CLSCompliant(false)]
+            public static void GetTexEnvx(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexEnvxvOES")]
+            [CLSCompliant(false)]
+            public static void GetTexEnvx(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexEnvxvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void GetTexEnvx(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_texture_cube_map]
             /// Return texture coordinate generation parameters
@@ -12011,6 +16766,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="@params">[length: COMPSIZE(pname)]
             /// Returns the requested data.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenfvOES")]
             [CLSCompliant(false)]
             public static void GetTexGen(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Single[] @params) { throw new BindingsNotRewrittenException(); }
@@ -12027,6 +16783,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="@params">[length: COMPSIZE(pname)]
             /// Returns the requested data.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenfvOES")]
             [CLSCompliant(false)]
             public static void GetTexGen(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] out Single @params) { throw new BindingsNotRewrittenException(); }
@@ -12043,6 +16800,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="@params">[length: COMPSIZE(pname)]
             /// Returns the requested data.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenfvOES")]
             [CLSCompliant(false)]
             public static unsafe void GetTexGen(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Single* @params) { throw new BindingsNotRewrittenException(); }
@@ -12059,6 +16817,55 @@ namespace OpenTK.Graphics.ES11
             /// <param name="@params">[length: COMPSIZE(pname)]
             /// Returns the requested data.
             /// </param>
+            [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenfvOES")]
+            [CLSCompliant(false)]
+            public static void GetTexGen(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Single[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_texture_cube_map]
+            /// Return texture coordinate generation parameters
+            /// </summary>
+            /// <param name="coord">
+            /// Specifies a texture coordinate. Must be S, T, R, or Q.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the symbolic name of the value(s) to be returned. Must be either TextureGenMode or the name of one of the texture generation plane equations: ObjectPlane or EyePlane.
+            /// </param>
+            /// <param name="@params">[length: COMPSIZE(pname)]
+            /// Returns the requested data.
+            /// </param>
+            [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenfvOES")]
+            [CLSCompliant(false)]
+            public static void GetTexGen(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] out Single @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_texture_cube_map]
+            /// Return texture coordinate generation parameters
+            /// </summary>
+            /// <param name="coord">
+            /// Specifies a texture coordinate. Must be S, T, R, or Q.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the symbolic name of the value(s) to be returned. Must be either TextureGenMode or the name of one of the texture generation plane equations: ObjectPlane or EyePlane.
+            /// </param>
+            /// <param name="@params">[length: COMPSIZE(pname)]
+            /// Returns the requested data.
+            /// </param>
+            [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenfvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void GetTexGen(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Single* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_texture_cube_map]
+            /// Return texture coordinate generation parameters
+            /// </summary>
+            /// <param name="coord">
+            /// Specifies a texture coordinate. Must be S, T, R, or Q.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the symbolic name of the value(s) to be returned. Must be either TextureGenMode or the name of one of the texture generation plane equations: ObjectPlane or EyePlane.
+            /// </param>
+            /// <param name="@params">[length: COMPSIZE(pname)]
+            /// Returns the requested data.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenivOES")]
             [CLSCompliant(false)]
             public static void GetTexGen(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -12075,6 +16882,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="@params">[length: COMPSIZE(pname)]
             /// Returns the requested data.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenivOES")]
             [CLSCompliant(false)]
             public static void GetTexGen(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
@@ -12091,14 +16899,64 @@ namespace OpenTK.Graphics.ES11
             /// <param name="@params">[length: COMPSIZE(pname)]
             /// Returns the requested data.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenivOES")]
             [CLSCompliant(false)]
             public static unsafe void GetTexGen(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_texture_cube_map]
+            /// Return texture coordinate generation parameters
+            /// </summary>
+            /// <param name="coord">
+            /// Specifies a texture coordinate. Must be S, T, R, or Q.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the symbolic name of the value(s) to be returned. Must be either TextureGenMode or the name of one of the texture generation plane equations: ObjectPlane or EyePlane.
+            /// </param>
+            /// <param name="@params">[length: COMPSIZE(pname)]
+            /// Returns the requested data.
+            /// </param>
+            [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenivOES")]
+            [CLSCompliant(false)]
+            public static void GetTexGen(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_texture_cube_map]
+            /// Return texture coordinate generation parameters
+            /// </summary>
+            /// <param name="coord">
+            /// Specifies a texture coordinate. Must be S, T, R, or Q.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the symbolic name of the value(s) to be returned. Must be either TextureGenMode or the name of one of the texture generation plane equations: ObjectPlane or EyePlane.
+            /// </param>
+            /// <param name="@params">[length: COMPSIZE(pname)]
+            /// Returns the requested data.
+            /// </param>
+            [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenivOES")]
+            [CLSCompliant(false)]
+            public static void GetTexGen(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_texture_cube_map]
+            /// Return texture coordinate generation parameters
+            /// </summary>
+            /// <param name="coord">
+            /// Specifies a texture coordinate. Must be S, T, R, or Q.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the symbolic name of the value(s) to be returned. Must be either TextureGenMode or the name of one of the texture generation plane equations: ObjectPlane or EyePlane.
+            /// </param>
+            /// <param name="@params">[length: COMPSIZE(pname)]
+            /// Returns the requested data.
+            /// </param>
+            [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenivOES")]
+            [CLSCompliant(false)]
+            public static unsafe void GetTexGen(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point|OES_texture_cube_map]</summary>
             /// <param name="coord"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point|OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenxvOES")]
             [CLSCompliant(false)]
             public static void GetTexGenx(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -12107,6 +16965,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coord"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point|OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenxvOES")]
             [CLSCompliant(false)]
             public static void GetTexGenx(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
@@ -12115,15 +16974,41 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coord"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point|OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenxvOES")]
             [CLSCompliant(false)]
             public static unsafe void GetTexGenx(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point|OES_texture_cube_map]</summary>
+            /// <param name="coord"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point|OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenxvOES")]
+            [CLSCompliant(false)]
+            public static void GetTexGenx(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point|OES_texture_cube_map]</summary>
+            /// <param name="coord"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point|OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenxvOES")]
+            [CLSCompliant(false)]
+            public static void GetTexGenx(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point|OES_texture_cube_map]</summary>
+            /// <param name="coord"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point|OES_texture_cube_map", Version = "", EntryPoint = "glGetTexGenxvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void GetTexGenx(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="target"></param>
             /// <param name="level"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexLevelParameterxvOES")]
             [CLSCompliant(false)]
             public static void GetTexLevelParameterx(OpenTK.Graphics.ES11.All target, Int32 level, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -12133,6 +17018,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="level"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexLevelParameterxvOES")]
             [CLSCompliant(false)]
             public static void GetTexLevelParameterx(OpenTK.Graphics.ES11.All target, Int32 level, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
@@ -12142,14 +17028,43 @@ namespace OpenTK.Graphics.ES11
             /// <param name="level"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexLevelParameterxvOES")]
             [CLSCompliant(false)]
             public static unsafe void GetTexLevelParameterx(OpenTK.Graphics.ES11.All target, Int32 level, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="target"></param>
+            /// <param name="level"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexLevelParameterxvOES")]
+            [CLSCompliant(false)]
+            public static void GetTexLevelParameterx(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.GetTextureParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="level"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexLevelParameterxvOES")]
+            [CLSCompliant(false)]
+            public static void GetTexLevelParameterx(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.GetTextureParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="level"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexLevelParameterxvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void GetTexLevelParameterx(OpenTK.Graphics.ES11.TextureTarget target, Int32 level, OpenTK.Graphics.ES11.GetTextureParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexParameterxvOES")]
             [CLSCompliant(false)]
             public static void GetTexParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -12158,6 +17073,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexParameterxvOES")]
             [CLSCompliant(false)]
             public static void GetTexParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
@@ -12166,9 +17082,34 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexParameterxvOES")]
             [CLSCompliant(false)]
             public static unsafe void GetTexParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexParameterxvOES")]
+            [CLSCompliant(false)]
+            public static void GetTexParameterx(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexParameterxvOES")]
+            [CLSCompliant(false)]
+            public static void GetTexParameterx(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] out Int32 @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glGetTexParameterxvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void GetTexParameterx(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="component"></param>
@@ -12244,12 +17185,20 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="pname"></param>
             /// <param name="param"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glLightModelxOES")]
             public static void LightModelx(OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="pname"></param>
+            /// <param name="param"></param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glLightModelxOES")]
+            public static void LightModelx(OpenTK.Graphics.ES11.LightModelParameter pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="pname"></param>
             /// <param name="param">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glLightModelxvOES")]
             [CLSCompliant(false)]
             public static void LightModelx(OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32[] param) { throw new BindingsNotRewrittenException(); }
@@ -12257,21 +17206,45 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="pname"></param>
             /// <param name="param">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glLightModelxvOES")]
             [CLSCompliant(false)]
             public static unsafe void LightModelx(OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32* param) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="pname"></param>
+            /// <param name="param">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glLightModelxvOES")]
+            [CLSCompliant(false)]
+            public static void LightModelx(OpenTK.Graphics.ES11.LightModelParameter pname, [CountAttribute(Computed = "pname")] Int32[] param) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="pname"></param>
+            /// <param name="param">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glLightModelxvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void LightModelx(OpenTK.Graphics.ES11.LightModelParameter pname, [CountAttribute(Computed = "pname")] Int32* param) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="light"></param>
             /// <param name="pname"></param>
             /// <param name="param"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glLightxOES")]
             public static void Lightx(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="light"></param>
             /// <param name="pname"></param>
+            /// <param name="param"></param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glLightxOES")]
+            public static void Lightx(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="light"></param>
+            /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glLightxvOES")]
             [CLSCompliant(false)]
             public static void Lightx(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -12280,9 +17253,26 @@ namespace OpenTK.Graphics.ES11
             /// <param name="light"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glLightxvOES")]
             [CLSCompliant(false)]
             public static unsafe void Lightx(OpenTK.Graphics.ES11.All light, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="light"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glLightxvOES")]
+            [CLSCompliant(false)]
+            public static void Lightx(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="light"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glLightxvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void Lightx(OpenTK.Graphics.ES11.LightName light, OpenTK.Graphics.ES11.LightParameter pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="width"></param>
@@ -12336,8 +17326,34 @@ namespace OpenTK.Graphics.ES11
             /// <param name="stride"></param>
             /// <param name="order"></param>
             /// <param name="points"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMap1xOES")]
             public static void Map1x(OpenTK.Graphics.ES11.All target, Int32 u1, Int32 u2, Int32 stride, Int32 order, Int32 points) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="u1"></param>
+            /// <param name="u2"></param>
+            /// <param name="stride"></param>
+            /// <param name="order"></param>
+            /// <param name="points"></param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMap1xOES")]
+            public static void Map1x(OpenTK.Graphics.ES11.MapTarget target, Int32 u1, Int32 u2, Int32 stride, Int32 order, Int32 points) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="u1"></param>
+            /// <param name="u2"></param>
+            /// <param name="ustride"></param>
+            /// <param name="uorder"></param>
+            /// <param name="v1"></param>
+            /// <param name="v2"></param>
+            /// <param name="vstride"></param>
+            /// <param name="vorder"></param>
+            /// <param name="points"></param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMap2xOES")]
+            public static void Map2x(OpenTK.Graphics.ES11.All target, Int32 u1, Int32 u2, Int32 ustride, Int32 uorder, Int32 v1, Int32 v2, Int32 vstride, Int32 vorder, Int32 points) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="target"></param>
@@ -12351,7 +17367,20 @@ namespace OpenTK.Graphics.ES11
             /// <param name="vorder"></param>
             /// <param name="points"></param>
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMap2xOES")]
-            public static void Map2x(OpenTK.Graphics.ES11.All target, Int32 u1, Int32 u2, Int32 ustride, Int32 uorder, Int32 v1, Int32 v2, Int32 vstride, Int32 vorder, Int32 points) { throw new BindingsNotRewrittenException(); }
+            public static void Map2x(OpenTK.Graphics.ES11.MapTarget target, Int32 u1, Int32 u2, Int32 ustride, Int32 uorder, Int32 v1, Int32 v2, Int32 vstride, Int32 vorder, Int32 points) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_mapbuffer]
+            /// Map a buffer object's data store
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the target buffer object being mapped. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer or UniformBuffer.
+            /// </param>
+            /// <param name="access">
+            /// For glMapBuffer only, specifies the access policy, indicating whether it will be possible to read from, write to, or both read from and write to the buffer object's mapped data store. The symbolic constant must be ReadOnly, WriteOnly, or ReadWrite.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "OES_mapbuffer", Version = "", EntryPoint = "glMapBufferOES")]
+            public static IntPtr MapBuffer(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All access) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_mapbuffer]
             /// Map a buffer object's data store
@@ -12363,7 +17392,7 @@ namespace OpenTK.Graphics.ES11
             /// For glMapBuffer only, specifies the access policy, indicating whether it will be possible to read from, write to, or both read from and write to the buffer object's mapped data store. The symbolic constant must be ReadOnly, WriteOnly, or ReadWrite.
             /// </param>
             [AutoGenerated(Category = "OES_mapbuffer", Version = "", EntryPoint = "glMapBufferOES")]
-            public static IntPtr MapBuffer(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All access) { throw new BindingsNotRewrittenException(); }
+            public static IntPtr MapBuffer(OpenTK.Graphics.ES11.BufferTargetArb target, OpenTK.Graphics.ES11.BufferAccessArb access) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="n"></param>
@@ -12385,13 +17414,22 @@ namespace OpenTK.Graphics.ES11
             /// <param name="face"></param>
             /// <param name="pname"></param>
             /// <param name="param"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMaterialxOES")]
             public static void Materialx(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="face"></param>
             /// <param name="pname"></param>
+            /// <param name="param"></param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMaterialxOES")]
+            public static void Materialx(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="face"></param>
+            /// <param name="pname"></param>
             /// <param name="param">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMaterialxvOES")]
             [CLSCompliant(false)]
             public static void Materialx(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32[] param) { throw new BindingsNotRewrittenException(); }
@@ -12400,9 +17438,26 @@ namespace OpenTK.Graphics.ES11
             /// <param name="face"></param>
             /// <param name="pname"></param>
             /// <param name="param">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMaterialxvOES")]
             [CLSCompliant(false)]
             public static unsafe void Materialx(OpenTK.Graphics.ES11.All face, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32* param) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="face"></param>
+            /// <param name="pname"></param>
+            /// <param name="param">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMaterialxvOES")]
+            [CLSCompliant(false)]
+            public static void Materialx(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, [CountAttribute(Computed = "pname")] Int32[] param) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="face"></param>
+            /// <param name="pname"></param>
+            /// <param name="param">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMaterialxvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void Materialx(OpenTK.Graphics.ES11.MaterialFace face, OpenTK.Graphics.ES11.MaterialParameter pname, [CountAttribute(Computed = "pname")] Int32* param) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_matrix_palette]</summary>
             /// <param name="size"></param>
@@ -12464,6 +17519,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="s">
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord1bOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord1(OpenTK.Graphics.ES11.All texture, Byte s) { throw new BindingsNotRewrittenException(); }
@@ -12477,6 +17533,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="s">
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord1bOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord1(OpenTK.Graphics.ES11.All texture, SByte s) { throw new BindingsNotRewrittenException(); }
@@ -12487,9 +17544,36 @@ namespace OpenTK.Graphics.ES11
             /// <param name="texture">
             /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
             /// </param>
+            /// <param name="s">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord1bOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord1(OpenTK.Graphics.ES11.TextureUnit texture, Byte s) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="s">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord1bOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord1(OpenTK.Graphics.ES11.TextureUnit texture, SByte s) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
             /// <param name="coords">[length: 1]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord1bvOES")]
             [CLSCompliant(false)]
             public static unsafe void MultiTexCoord1(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 1)] Byte* coords) { throw new BindingsNotRewrittenException(); }
@@ -12503,22 +17587,64 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coords">[length: 1]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord1bvOES")]
             [CLSCompliant(false)]
             public static unsafe void MultiTexCoord1(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 1)] SByte* coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 1]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord1bvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void MultiTexCoord1(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 1)] Byte* coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 1]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord1bvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void MultiTexCoord1(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 1)] SByte* coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="texture"></param>
+            /// <param name="s"></param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord1xOES")]
+            public static void MultiTexCoord1x(OpenTK.Graphics.ES11.All texture, Int32 s) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="texture"></param>
             /// <param name="s"></param>
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord1xOES")]
-            public static void MultiTexCoord1x(OpenTK.Graphics.ES11.All texture, Int32 s) { throw new BindingsNotRewrittenException(); }
+            public static void MultiTexCoord1x(OpenTK.Graphics.ES11.TextureUnit texture, Int32 s) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="texture"></param>
+            /// <param name="coords">[length: 1]</param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord1xvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void MultiTexCoord1x(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 1)] Int32* coords) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="texture"></param>
             /// <param name="coords">[length: 1]</param>
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord1xvOES")]
             [CLSCompliant(false)]
-            public static unsafe void MultiTexCoord1x(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 1)] Int32* coords) { throw new BindingsNotRewrittenException(); }
+            public static unsafe void MultiTexCoord1x(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 1)] Int32* coords) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_byte_coordinates]
             /// Set the current texture coordinates
@@ -12532,6 +17658,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="t">
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord2bOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord2(OpenTK.Graphics.ES11.All texture, Byte s, Byte t) { throw new BindingsNotRewrittenException(); }
@@ -12548,6 +17675,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="t">
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord2bOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord2(OpenTK.Graphics.ES11.All texture, SByte s, SByte t) { throw new BindingsNotRewrittenException(); }
@@ -12558,9 +17686,42 @@ namespace OpenTK.Graphics.ES11
             /// <param name="texture">
             /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
             /// </param>
+            /// <param name="s">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            /// <param name="t">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord2bOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord2(OpenTK.Graphics.ES11.TextureUnit texture, Byte s, Byte t) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="s">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            /// <param name="t">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord2bOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord2(OpenTK.Graphics.ES11.TextureUnit texture, SByte s, SByte t) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
             /// <param name="coords">[length: 2]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord2bvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord2(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 2)] Byte[] coords) { throw new BindingsNotRewrittenException(); }
@@ -12574,6 +17735,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coords">[length: 2]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord2bvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord2(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 2)] ref Byte coords) { throw new BindingsNotRewrittenException(); }
@@ -12587,6 +17749,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coords">[length: 2]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord2bvOES")]
             [CLSCompliant(false)]
             public static unsafe void MultiTexCoord2(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 2)] Byte* coords) { throw new BindingsNotRewrittenException(); }
@@ -12600,6 +17763,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coords">[length: 2]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord2bvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord2(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 2)] SByte[] coords) { throw new BindingsNotRewrittenException(); }
@@ -12613,6 +17777,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coords">[length: 2]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord2bvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord2(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 2)] ref SByte coords) { throw new BindingsNotRewrittenException(); }
@@ -12626,20 +17791,108 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coords">[length: 2]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord2bvOES")]
             [CLSCompliant(false)]
             public static unsafe void MultiTexCoord2(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 2)] SByte* coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 2]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord2bvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord2(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 2)] Byte[] coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 2]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord2bvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord2(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 2)] ref Byte coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 2]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord2bvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void MultiTexCoord2(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 2)] Byte* coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 2]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord2bvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord2(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 2)] SByte[] coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 2]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord2bvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord2(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 2)] ref SByte coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 2]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord2bvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void MultiTexCoord2(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 2)] SByte* coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="texture"></param>
+            /// <param name="s"></param>
+            /// <param name="t"></param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord2xOES")]
+            public static void MultiTexCoord2x(OpenTK.Graphics.ES11.All texture, Int32 s, Int32 t) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="texture"></param>
             /// <param name="s"></param>
             /// <param name="t"></param>
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord2xOES")]
-            public static void MultiTexCoord2x(OpenTK.Graphics.ES11.All texture, Int32 s, Int32 t) { throw new BindingsNotRewrittenException(); }
+            public static void MultiTexCoord2x(OpenTK.Graphics.ES11.TextureUnit texture, Int32 s, Int32 t) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="texture"></param>
             /// <param name="coords">[length: 2]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord2xvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord2x(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 2)] Int32[] coords) { throw new BindingsNotRewrittenException(); }
@@ -12647,6 +17900,7 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="texture"></param>
             /// <param name="coords">[length: 2]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord2xvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord2x(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 2)] ref Int32 coords) { throw new BindingsNotRewrittenException(); }
@@ -12654,9 +17908,31 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="texture"></param>
             /// <param name="coords">[length: 2]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord2xvOES")]
             [CLSCompliant(false)]
             public static unsafe void MultiTexCoord2x(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 2)] Int32* coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="texture"></param>
+            /// <param name="coords">[length: 2]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord2xvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord2x(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 2)] Int32[] coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="texture"></param>
+            /// <param name="coords">[length: 2]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord2xvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord2x(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 2)] ref Int32 coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="texture"></param>
+            /// <param name="coords">[length: 2]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord2xvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void MultiTexCoord2x(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 2)] Int32* coords) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_byte_coordinates]
             /// Set the current texture coordinates
@@ -12673,6 +17949,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="r">
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord3bOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord3(OpenTK.Graphics.ES11.All texture, Byte s, Byte t, Byte r) { throw new BindingsNotRewrittenException(); }
@@ -12692,6 +17969,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="r">
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord3bOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord3(OpenTK.Graphics.ES11.All texture, SByte s, SByte t, SByte r) { throw new BindingsNotRewrittenException(); }
@@ -12702,9 +17980,48 @@ namespace OpenTK.Graphics.ES11
             /// <param name="texture">
             /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
             /// </param>
+            /// <param name="s">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            /// <param name="t">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            /// <param name="r">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord3bOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord3(OpenTK.Graphics.ES11.TextureUnit texture, Byte s, Byte t, Byte r) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="s">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            /// <param name="t">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            /// <param name="r">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord3bOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord3(OpenTK.Graphics.ES11.TextureUnit texture, SByte s, SByte t, SByte r) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
             /// <param name="coords">[length: 3]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord3bvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord3(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 3)] Byte[] coords) { throw new BindingsNotRewrittenException(); }
@@ -12718,6 +18035,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coords">[length: 3]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord3bvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord3(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 3)] ref Byte coords) { throw new BindingsNotRewrittenException(); }
@@ -12731,6 +18049,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coords">[length: 3]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord3bvOES")]
             [CLSCompliant(false)]
             public static unsafe void MultiTexCoord3(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 3)] Byte* coords) { throw new BindingsNotRewrittenException(); }
@@ -12744,6 +18063,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coords">[length: 3]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord3bvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord3(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 3)] SByte[] coords) { throw new BindingsNotRewrittenException(); }
@@ -12757,6 +18077,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coords">[length: 3]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord3bvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord3(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 3)] ref SByte coords) { throw new BindingsNotRewrittenException(); }
@@ -12770,9 +18091,97 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coords">[length: 3]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord3bvOES")]
             [CLSCompliant(false)]
             public static unsafe void MultiTexCoord3(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 3)] SByte* coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 3]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord3bvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord3(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 3)] Byte[] coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 3]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord3bvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord3(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 3)] ref Byte coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 3]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord3bvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void MultiTexCoord3(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 3)] Byte* coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 3]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord3bvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord3(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 3)] SByte[] coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 3]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord3bvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord3(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 3)] ref SByte coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 3]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord3bvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void MultiTexCoord3(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 3)] SByte* coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="texture"></param>
+            /// <param name="s"></param>
+            /// <param name="t"></param>
+            /// <param name="r"></param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord3xOES")]
+            public static void MultiTexCoord3x(OpenTK.Graphics.ES11.All texture, Int32 s, Int32 t, Int32 r) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="texture"></param>
@@ -12780,11 +18189,12 @@ namespace OpenTK.Graphics.ES11
             /// <param name="t"></param>
             /// <param name="r"></param>
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord3xOES")]
-            public static void MultiTexCoord3x(OpenTK.Graphics.ES11.All texture, Int32 s, Int32 t, Int32 r) { throw new BindingsNotRewrittenException(); }
+            public static void MultiTexCoord3x(OpenTK.Graphics.ES11.TextureUnit texture, Int32 s, Int32 t, Int32 r) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="texture"></param>
             /// <param name="coords">[length: 3]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord3xvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord3x(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 3)] Int32[] coords) { throw new BindingsNotRewrittenException(); }
@@ -12792,6 +18202,7 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="texture"></param>
             /// <param name="coords">[length: 3]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord3xvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord3x(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 3)] ref Int32 coords) { throw new BindingsNotRewrittenException(); }
@@ -12799,9 +18210,31 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="texture"></param>
             /// <param name="coords">[length: 3]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord3xvOES")]
             [CLSCompliant(false)]
             public static unsafe void MultiTexCoord3x(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 3)] Int32* coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="texture"></param>
+            /// <param name="coords">[length: 3]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord3xvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord3x(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 3)] Int32[] coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="texture"></param>
+            /// <param name="coords">[length: 3]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord3xvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord3x(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 3)] ref Int32 coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="texture"></param>
+            /// <param name="coords">[length: 3]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord3xvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void MultiTexCoord3x(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 3)] Int32* coords) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_byte_coordinates]
             /// Set the current texture coordinates
@@ -12821,6 +18254,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="q">
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord4bOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord4(OpenTK.Graphics.ES11.All texture, Byte s, Byte t, Byte r, Byte q) { throw new BindingsNotRewrittenException(); }
@@ -12843,6 +18277,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="q">
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord4bOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord4(OpenTK.Graphics.ES11.All texture, SByte s, SByte t, SByte r, SByte q) { throw new BindingsNotRewrittenException(); }
@@ -12853,9 +18288,54 @@ namespace OpenTK.Graphics.ES11
             /// <param name="texture">
             /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
             /// </param>
+            /// <param name="s">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            /// <param name="t">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            /// <param name="r">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            /// <param name="q">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord4bOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord4(OpenTK.Graphics.ES11.TextureUnit texture, Byte s, Byte t, Byte r, Byte q) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="s">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            /// <param name="t">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            /// <param name="r">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            /// <param name="q">
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord4bOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord4(OpenTK.Graphics.ES11.TextureUnit texture, SByte s, SByte t, SByte r, SByte q) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
             /// <param name="coords">[length: 4]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord4bvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord4(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 4)] Byte[] coords) { throw new BindingsNotRewrittenException(); }
@@ -12869,6 +18349,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coords">[length: 4]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord4bvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord4(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 4)] ref Byte coords) { throw new BindingsNotRewrittenException(); }
@@ -12882,6 +18363,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coords">[length: 4]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord4bvOES")]
             [CLSCompliant(false)]
             public static unsafe void MultiTexCoord4(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 4)] Byte* coords) { throw new BindingsNotRewrittenException(); }
@@ -12895,6 +18377,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coords">[length: 4]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord4bvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord4(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 4)] SByte[] coords) { throw new BindingsNotRewrittenException(); }
@@ -12908,6 +18391,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coords">[length: 4]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord4bvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord4(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 4)] ref SByte coords) { throw new BindingsNotRewrittenException(); }
@@ -12921,9 +18405,98 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coords">[length: 4]
             /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord4bvOES")]
             [CLSCompliant(false)]
             public static unsafe void MultiTexCoord4(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 4)] SByte* coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 4]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord4bvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord4(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 4)] Byte[] coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 4]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord4bvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord4(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 4)] ref Byte coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 4]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord4bvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void MultiTexCoord4(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 4)] Byte* coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 4]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord4bvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord4(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 4)] SByte[] coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 4]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord4bvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord4(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 4)] ref SByte coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_byte_coordinates]
+            /// Set the current texture coordinates
+            /// </summary>
+            /// <param name="texture">
+            /// Specifies the texture unit whose coordinates should be modified. The number of texture units is implementation dependent, but must be at least two. Symbolic constant must be one of Texture, where i ranges from 0 to MaxTextureCoords - 1, which is an implementation-dependent value.
+            /// </param>
+            /// <param name="coords">[length: 4]
+            /// Specify s, t, r, and q texture coordinates for target texture unit. Not all parameters are present in all forms of the command.
+            /// </param>
+            [AutoGenerated(Category = "OES_byte_coordinates", Version = "", EntryPoint = "glMultiTexCoord4bvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void MultiTexCoord4(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 4)] SByte* coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="texture"></param>
+            /// <param name="s"></param>
+            /// <param name="t"></param>
+            /// <param name="r"></param>
+            /// <param name="q"></param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord4xOES")]
+            public static void MultiTexCoord4x(OpenTK.Graphics.ES11.All texture, Int32 s, Int32 t, Int32 r, Int32 q) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="texture"></param>
@@ -12932,11 +18505,12 @@ namespace OpenTK.Graphics.ES11
             /// <param name="r"></param>
             /// <param name="q"></param>
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord4xOES")]
-            public static void MultiTexCoord4x(OpenTK.Graphics.ES11.All texture, Int32 s, Int32 t, Int32 r, Int32 q) { throw new BindingsNotRewrittenException(); }
+            public static void MultiTexCoord4x(OpenTK.Graphics.ES11.TextureUnit texture, Int32 s, Int32 t, Int32 r, Int32 q) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="texture"></param>
             /// <param name="coords">[length: 4]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord4xvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord4x(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 4)] Int32[] coords) { throw new BindingsNotRewrittenException(); }
@@ -12944,6 +18518,7 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="texture"></param>
             /// <param name="coords">[length: 4]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord4xvOES")]
             [CLSCompliant(false)]
             public static void MultiTexCoord4x(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 4)] ref Int32 coords) { throw new BindingsNotRewrittenException(); }
@@ -12951,9 +18526,31 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="texture"></param>
             /// <param name="coords">[length: 4]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord4xvOES")]
             [CLSCompliant(false)]
             public static unsafe void MultiTexCoord4x(OpenTK.Graphics.ES11.All texture, [CountAttribute(Count = 4)] Int32* coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="texture"></param>
+            /// <param name="coords">[length: 4]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord4xvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord4x(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 4)] Int32[] coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="texture"></param>
+            /// <param name="coords">[length: 4]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord4xvOES")]
+            [CLSCompliant(false)]
+            public static void MultiTexCoord4x(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 4)] ref Int32 coords) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="texture"></param>
+            /// <param name="coords">[length: 4]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glMultiTexCoord4xvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void MultiTexCoord4x(OpenTK.Graphics.ES11.TextureUnit texture, [CountAttribute(Count = 4)] Int32* coords) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="m">[length: 16]</param>
@@ -13058,8 +18655,15 @@ namespace OpenTK.Graphics.ES11
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="pname"></param>
             /// <param name="param"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glPixelTransferxOES")]
             public static void PixelTransferx(OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="pname"></param>
+            /// <param name="param"></param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glPixelTransferxOES")]
+            public static void PixelTransferx(OpenTK.Graphics.ES11.PixelTransferParameter pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="xfactor"></param>
@@ -13332,8 +18936,27 @@ namespace OpenTK.Graphics.ES11
             /// <param name="height">
             /// Specifies the height of the renderbuffer in pixels.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glRenderbufferStorageOES")]
             public static void RenderbufferStorage(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All internalformat, Int32 width, Int32 height) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_framebuffer_object]
+            /// Create and initialize a renderbuffer object's data store
+            /// </summary>
+            /// <param name="target">
+            /// Specifies the renderbuffer target.  The symbolic constant must be Renderbuffer.
+            /// </param>
+            /// <param name="internalformat">
+            /// Specifies the color-renderable, depth-renderable, or stencil-renderable format of the renderbuffer. Must be one of the following symbolic constants: Rgba4, Rgb565, Rgb5A1, DepthComponent16, or StencilIndex8.
+            /// </param>
+            /// <param name="width">
+            /// Specifies the width of the renderbuffer in pixels.
+            /// </param>
+            /// <param name="height">
+            /// Specifies the height of the renderbuffer in pixels.
+            /// </param>
+            [AutoGenerated(Category = "OES_framebuffer_object", Version = "", EntryPoint = "glRenderbufferStorageOES")]
+            public static void RenderbufferStorage(OpenTK.Graphics.ES11.RenderbufferTarget target, OpenTK.Graphics.ES11.InternalFormat internalformat, Int32 width, Int32 height) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="angle"></param>
@@ -13762,13 +19385,22 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="param"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glTexEnvxOES")]
             public static void TexEnvx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="target"></param>
             /// <param name="pname"></param>
+            /// <param name="param"></param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glTexEnvxOES")]
+            public static void TexEnvx(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glTexEnvxvOES")]
             [CLSCompliant(false)]
             public static void TexEnvx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -13777,9 +19409,42 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glTexEnvxvOES")]
             [CLSCompliant(false)]
             public static unsafe void TexEnvx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glTexEnvxvOES")]
+            [CLSCompliant(false)]
+            public static void TexEnvx(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glTexEnvxvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void TexEnvx(OpenTK.Graphics.ES11.TextureEnvTarget target, OpenTK.Graphics.ES11.TextureEnvParameter pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_texture_cube_map]
+            /// Control the generation of texture coordinates
+            /// </summary>
+            /// <param name="coord">
+            /// Specifies a texture coordinate. Must be one of S, T, R, or Q.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the symbolic name of the texture-coordinate generation function. Must be TextureGenMode.
+            /// </param>
+            /// <param name="param">
+            /// Specifies a single-valued texture generation parameter, one of ObjectLinear, EyeLinear, SphereMap, NormalMap, or ReflectionMap.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glTexGenfOES")]
+            public static void TexGen(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, Single param) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_texture_cube_map]
             /// Control the generation of texture coordinates
@@ -13794,7 +19459,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies a single-valued texture generation parameter, one of ObjectLinear, EyeLinear, SphereMap, NormalMap, or ReflectionMap.
             /// </param>
             [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glTexGenfOES")]
-            public static void TexGen(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, Single param) { throw new BindingsNotRewrittenException(); }
+            public static void TexGen(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, Single param) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_texture_cube_map]
             /// Control the generation of texture coordinates
@@ -13808,6 +19473,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="@params">[length: COMPSIZE(pname)]
             /// Specifies a single-valued texture generation parameter, one of ObjectLinear, EyeLinear, SphereMap, NormalMap, or ReflectionMap.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glTexGenfvOES")]
             [CLSCompliant(false)]
             public static void TexGen(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Single[] @params) { throw new BindingsNotRewrittenException(); }
@@ -13824,9 +19490,58 @@ namespace OpenTK.Graphics.ES11
             /// <param name="@params">[length: COMPSIZE(pname)]
             /// Specifies a single-valued texture generation parameter, one of ObjectLinear, EyeLinear, SphereMap, NormalMap, or ReflectionMap.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glTexGenfvOES")]
             [CLSCompliant(false)]
             public static unsafe void TexGen(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Single* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_texture_cube_map]
+            /// Control the generation of texture coordinates
+            /// </summary>
+            /// <param name="coord">
+            /// Specifies a texture coordinate. Must be one of S, T, R, or Q.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the symbolic name of the texture-coordinate generation function. Must be TextureGenMode.
+            /// </param>
+            /// <param name="@params">[length: COMPSIZE(pname)]
+            /// Specifies a single-valued texture generation parameter, one of ObjectLinear, EyeLinear, SphereMap, NormalMap, or ReflectionMap.
+            /// </param>
+            [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glTexGenfvOES")]
+            [CLSCompliant(false)]
+            public static void TexGen(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, [CountAttribute(Computed = "pname")] Single[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_texture_cube_map]
+            /// Control the generation of texture coordinates
+            /// </summary>
+            /// <param name="coord">
+            /// Specifies a texture coordinate. Must be one of S, T, R, or Q.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the symbolic name of the texture-coordinate generation function. Must be TextureGenMode.
+            /// </param>
+            /// <param name="@params">[length: COMPSIZE(pname)]
+            /// Specifies a single-valued texture generation parameter, one of ObjectLinear, EyeLinear, SphereMap, NormalMap, or ReflectionMap.
+            /// </param>
+            [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glTexGenfvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void TexGen(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, [CountAttribute(Computed = "pname")] Single* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_texture_cube_map]
+            /// Control the generation of texture coordinates
+            /// </summary>
+            /// <param name="coord">
+            /// Specifies a texture coordinate. Must be one of S, T, R, or Q.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the symbolic name of the texture-coordinate generation function. Must be TextureGenMode.
+            /// </param>
+            /// <param name="param">
+            /// Specifies a single-valued texture generation parameter, one of ObjectLinear, EyeLinear, SphereMap, NormalMap, or ReflectionMap.
+            /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glTexGeniOES")]
+            public static void TexGen(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_texture_cube_map]
             /// Control the generation of texture coordinates
@@ -13841,7 +19556,7 @@ namespace OpenTK.Graphics.ES11
             /// Specifies a single-valued texture generation parameter, one of ObjectLinear, EyeLinear, SphereMap, NormalMap, or ReflectionMap.
             /// </param>
             [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glTexGeniOES")]
-            public static void TexGen(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+            public static void TexGen(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_texture_cube_map]
             /// Control the generation of texture coordinates
@@ -13855,6 +19570,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="@params">[length: COMPSIZE(pname)]
             /// Specifies a single-valued texture generation parameter, one of ObjectLinear, EyeLinear, SphereMap, NormalMap, or ReflectionMap.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glTexGenivOES")]
             [CLSCompliant(false)]
             public static void TexGen(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -13871,21 +19587,63 @@ namespace OpenTK.Graphics.ES11
             /// <param name="@params">[length: COMPSIZE(pname)]
             /// Specifies a single-valued texture generation parameter, one of ObjectLinear, EyeLinear, SphereMap, NormalMap, or ReflectionMap.
             /// </param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glTexGenivOES")]
             [CLSCompliant(false)]
             public static unsafe void TexGen(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_texture_cube_map]
+            /// Control the generation of texture coordinates
+            /// </summary>
+            /// <param name="coord">
+            /// Specifies a texture coordinate. Must be one of S, T, R, or Q.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the symbolic name of the texture-coordinate generation function. Must be TextureGenMode.
+            /// </param>
+            /// <param name="@params">[length: COMPSIZE(pname)]
+            /// Specifies a single-valued texture generation parameter, one of ObjectLinear, EyeLinear, SphereMap, NormalMap, or ReflectionMap.
+            /// </param>
+            [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glTexGenivOES")]
+            [CLSCompliant(false)]
+            public static void TexGen(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_texture_cube_map]
+            /// Control the generation of texture coordinates
+            /// </summary>
+            /// <param name="coord">
+            /// Specifies a texture coordinate. Must be one of S, T, R, or Q.
+            /// </param>
+            /// <param name="pname">
+            /// Specifies the symbolic name of the texture-coordinate generation function. Must be TextureGenMode.
+            /// </param>
+            /// <param name="@params">[length: COMPSIZE(pname)]
+            /// Specifies a single-valued texture generation parameter, one of ObjectLinear, EyeLinear, SphereMap, NormalMap, or ReflectionMap.
+            /// </param>
+            [AutoGenerated(Category = "OES_texture_cube_map", Version = "", EntryPoint = "glTexGenivOES")]
+            [CLSCompliant(false)]
+            public static unsafe void TexGen(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point|OES_texture_cube_map]</summary>
             /// <param name="coord"></param>
             /// <param name="pname"></param>
             /// <param name="param"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point|OES_texture_cube_map", Version = "", EntryPoint = "glTexGenxOES")]
             public static void TexGenx(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point|OES_texture_cube_map]</summary>
             /// <param name="coord"></param>
             /// <param name="pname"></param>
+            /// <param name="param"></param>
+            [AutoGenerated(Category = "OES_fixed_point|OES_texture_cube_map", Version = "", EntryPoint = "glTexGenxOES")]
+            public static void TexGenx(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point|OES_texture_cube_map]</summary>
+            /// <param name="coord"></param>
+            /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point|OES_texture_cube_map", Version = "", EntryPoint = "glTexGenxvOES")]
             [CLSCompliant(false)]
             public static void TexGenx(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -13894,21 +19652,47 @@ namespace OpenTK.Graphics.ES11
             /// <param name="coord"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point|OES_texture_cube_map", Version = "", EntryPoint = "glTexGenxvOES")]
             [CLSCompliant(false)]
             public static unsafe void TexGenx(OpenTK.Graphics.ES11.All coord, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point|OES_texture_cube_map]</summary>
+            /// <param name="coord"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point|OES_texture_cube_map", Version = "", EntryPoint = "glTexGenxvOES")]
+            [CLSCompliant(false)]
+            public static void TexGenx(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point|OES_texture_cube_map]</summary>
+            /// <param name="coord"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point|OES_texture_cube_map", Version = "", EntryPoint = "glTexGenxvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void TexGenx(OpenTK.Graphics.ES11.TextureCoordName coord, OpenTK.Graphics.ES11.TextureGenParameter pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="param"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glTexParameterxOES")]
             public static void TexParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, Int32 param) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="target"></param>
             /// <param name="pname"></param>
+            /// <param name="param"></param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glTexParameterxOES")]
+            public static void TexParameterx(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, Int32 param) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glTexParameterxvOES")]
             [CLSCompliant(false)]
             public static void TexParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
@@ -13917,9 +19701,26 @@ namespace OpenTK.Graphics.ES11
             /// <param name="target"></param>
             /// <param name="pname"></param>
             /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glTexParameterxvOES")]
             [CLSCompliant(false)]
             public static unsafe void TexParameterx(OpenTK.Graphics.ES11.All target, OpenTK.Graphics.ES11.All pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glTexParameterxvOES")]
+            [CLSCompliant(false)]
+            public static void TexParameterx(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, [CountAttribute(Computed = "pname")] Int32[] @params) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: OES_fixed_point]</summary>
+            /// <param name="target"></param>
+            /// <param name="pname"></param>
+            /// <param name="@params">[length: COMPSIZE(pname)]</param>
+            [AutoGenerated(Category = "OES_fixed_point", Version = "", EntryPoint = "glTexParameterxvOES")]
+            [CLSCompliant(false)]
+            public static unsafe void TexParameterx(OpenTK.Graphics.ES11.TextureTarget target, OpenTK.Graphics.ES11.GetTextureParameter pname, [CountAttribute(Computed = "pname")] Int32* @params) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: OES_fixed_point]</summary>
             /// <param name="x"></param>
@@ -14356,15 +20157,14 @@ namespace OpenTK.Graphics.ES11
 
             /// <summary>[requires: QCOM_tiled_rendering]</summary>
             /// <param name="preserveMask"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "QCOM_tiled_rendering", Version = "", EntryPoint = "glEndTilingQCOM")]
-            [CLSCompliant(false)]
-            public static void EndTiling(Int32 preserveMask) { throw new BindingsNotRewrittenException(); }
+            public static void EndTiling(OpenTK.Graphics.ES11.All preserveMask) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: QCOM_tiled_rendering]</summary>
             /// <param name="preserveMask"></param>
             [AutoGenerated(Category = "QCOM_tiled_rendering", Version = "", EntryPoint = "glEndTilingQCOM")]
-            [CLSCompliant(false)]
-            public static void EndTiling(UInt32 preserveMask) { throw new BindingsNotRewrittenException(); }
+            public static void EndTiling(OpenTK.Graphics.ES11.BufferBitQcom preserveMask) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: QCOM_extended_get]</summary>
             /// <param name="target"></param>
@@ -14544,6 +20344,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="shadertype"></param>
             /// <param name="source">[length: *length]</param>
             /// <param name="length"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetProgramBinarySource(Int32 program, OpenTK.Graphics.ES11.All shadertype, [OutAttribute, CountAttribute(Parameter = "*length")] out String source, [OutAttribute] Int32[] length) { throw new BindingsNotRewrittenException(); }
@@ -14553,6 +20354,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="shadertype"></param>
             /// <param name="source">[length: *length]</param>
             /// <param name="length"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetProgramBinarySource(Int32 program, OpenTK.Graphics.ES11.All shadertype, [OutAttribute, CountAttribute(Parameter = "*length")] out String source, [OutAttribute] out Int32 length) { throw new BindingsNotRewrittenException(); }
@@ -14562,6 +20364,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="shadertype"></param>
             /// <param name="source">[length: *length]</param>
             /// <param name="length"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetProgramBinarySource(Int32 program, OpenTK.Graphics.ES11.All shadertype, [OutAttribute, CountAttribute(Parameter = "*length")] out String source, [OutAttribute] Int32* length) { throw new BindingsNotRewrittenException(); }
@@ -14573,6 +20376,34 @@ namespace OpenTK.Graphics.ES11
             /// <param name="length"></param>
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
             [CLSCompliant(false)]
+            public static void ExtGetProgramBinarySource(Int32 program, OpenTK.Graphics.ES11.ShaderType shadertype, [OutAttribute, CountAttribute(Parameter = "*length")] out String source, [OutAttribute] Int32[] length) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: QCOM_extended_get2]</summary>
+            /// <param name="program"></param>
+            /// <param name="shadertype"></param>
+            /// <param name="source">[length: *length]</param>
+            /// <param name="length"></param>
+            [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
+            [CLSCompliant(false)]
+            public static void ExtGetProgramBinarySource(Int32 program, OpenTK.Graphics.ES11.ShaderType shadertype, [OutAttribute, CountAttribute(Parameter = "*length")] out String source, [OutAttribute] out Int32 length) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: QCOM_extended_get2]</summary>
+            /// <param name="program"></param>
+            /// <param name="shadertype"></param>
+            /// <param name="source">[length: *length]</param>
+            /// <param name="length"></param>
+            [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
+            [CLSCompliant(false)]
+            public static unsafe void ExtGetProgramBinarySource(Int32 program, OpenTK.Graphics.ES11.ShaderType shadertype, [OutAttribute, CountAttribute(Parameter = "*length")] out String source, [OutAttribute] Int32* length) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: QCOM_extended_get2]</summary>
+            /// <param name="program"></param>
+            /// <param name="shadertype"></param>
+            /// <param name="source">[length: *length]</param>
+            /// <param name="length"></param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
+            [CLSCompliant(false)]
             public static void ExtGetProgramBinarySource(UInt32 program, OpenTK.Graphics.ES11.All shadertype, [OutAttribute, CountAttribute(Parameter = "*length")] out String source, [OutAttribute] Int32[] length) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
@@ -14580,6 +20411,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="shadertype"></param>
             /// <param name="source">[length: *length]</param>
             /// <param name="length"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetProgramBinarySource(UInt32 program, OpenTK.Graphics.ES11.All shadertype, [OutAttribute, CountAttribute(Parameter = "*length")] out String source, [OutAttribute] out Int32 length) { throw new BindingsNotRewrittenException(); }
@@ -14589,9 +20421,37 @@ namespace OpenTK.Graphics.ES11
             /// <param name="shadertype"></param>
             /// <param name="source">[length: *length]</param>
             /// <param name="length"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
             [CLSCompliant(false)]
             public static unsafe void ExtGetProgramBinarySource(UInt32 program, OpenTK.Graphics.ES11.All shadertype, [OutAttribute, CountAttribute(Parameter = "*length")] out String source, [OutAttribute] Int32* length) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: QCOM_extended_get2]</summary>
+            /// <param name="program"></param>
+            /// <param name="shadertype"></param>
+            /// <param name="source">[length: *length]</param>
+            /// <param name="length"></param>
+            [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
+            [CLSCompliant(false)]
+            public static void ExtGetProgramBinarySource(UInt32 program, OpenTK.Graphics.ES11.ShaderType shadertype, [OutAttribute, CountAttribute(Parameter = "*length")] out String source, [OutAttribute] Int32[] length) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: QCOM_extended_get2]</summary>
+            /// <param name="program"></param>
+            /// <param name="shadertype"></param>
+            /// <param name="source">[length: *length]</param>
+            /// <param name="length"></param>
+            [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
+            [CLSCompliant(false)]
+            public static void ExtGetProgramBinarySource(UInt32 program, OpenTK.Graphics.ES11.ShaderType shadertype, [OutAttribute, CountAttribute(Parameter = "*length")] out String source, [OutAttribute] out Int32 length) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: QCOM_extended_get2]</summary>
+            /// <param name="program"></param>
+            /// <param name="shadertype"></param>
+            /// <param name="source">[length: *length]</param>
+            /// <param name="length"></param>
+            [AutoGenerated(Category = "QCOM_extended_get2", Version = "", EntryPoint = "glExtGetProgramBinarySourceQCOM")]
+            [CLSCompliant(false)]
+            public static unsafe void ExtGetProgramBinarySource(UInt32 program, OpenTK.Graphics.ES11.ShaderType shadertype, [OutAttribute, CountAttribute(Parameter = "*length")] out String source, [OutAttribute] Int32* length) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: QCOM_extended_get2]</summary>
             /// <param name="programs">[length: maxPrograms]</param>
@@ -14863,6 +20723,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="format"></param>
             /// <param name="type"></param>
             /// <param name="texels"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetTexSubImageQCOM")]
             public static void ExtGetTexSubImage(OpenTK.Graphics.ES11.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [OutAttribute] IntPtr texels) { throw new BindingsNotRewrittenException(); }
 
@@ -14878,6 +20739,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="format"></param>
             /// <param name="type"></param>
             /// <param name="texels"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetTexSubImageQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetTexSubImage<T10>(OpenTK.Graphics.ES11.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [InAttribute, OutAttribute] T10[] texels)
@@ -14896,6 +20758,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="format"></param>
             /// <param name="type"></param>
             /// <param name="texels"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetTexSubImageQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetTexSubImage<T10>(OpenTK.Graphics.ES11.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [InAttribute, OutAttribute] T10[,] texels)
@@ -14914,6 +20777,7 @@ namespace OpenTK.Graphics.ES11
             /// <param name="format"></param>
             /// <param name="type"></param>
             /// <param name="texels"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetTexSubImageQCOM")]
             [CLSCompliant(false)]
             public static void ExtGetTexSubImage<T10>(OpenTK.Graphics.ES11.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [InAttribute, OutAttribute] T10[,,] texels)
@@ -14932,8 +20796,95 @@ namespace OpenTK.Graphics.ES11
             /// <param name="format"></param>
             /// <param name="type"></param>
             /// <param name="texels"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetTexSubImageQCOM")]
             public static void ExtGetTexSubImage<T10>(OpenTK.Graphics.ES11.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES11.All format, OpenTK.Graphics.ES11.All type, [InAttribute, OutAttribute] ref T10 texels)
+                where T10 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: QCOM_extended_get]</summary>
+            /// <param name="target"></param>
+            /// <param name="level"></param>
+            /// <param name="xoffset"></param>
+            /// <param name="yoffset"></param>
+            /// <param name="zoffset"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="depth"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="texels"></param>
+            [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetTexSubImageQCOM")]
+            public static void ExtGetTexSubImage(OpenTK.Graphics.ES11.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [OutAttribute] IntPtr texels) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: QCOM_extended_get]</summary>
+            /// <param name="target"></param>
+            /// <param name="level"></param>
+            /// <param name="xoffset"></param>
+            /// <param name="yoffset"></param>
+            /// <param name="zoffset"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="depth"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="texels"></param>
+            [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetTexSubImageQCOM")]
+            [CLSCompliant(false)]
+            public static void ExtGetTexSubImage<T10>(OpenTK.Graphics.ES11.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [InAttribute, OutAttribute] T10[] texels)
+                where T10 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: QCOM_extended_get]</summary>
+            /// <param name="target"></param>
+            /// <param name="level"></param>
+            /// <param name="xoffset"></param>
+            /// <param name="yoffset"></param>
+            /// <param name="zoffset"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="depth"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="texels"></param>
+            [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetTexSubImageQCOM")]
+            [CLSCompliant(false)]
+            public static void ExtGetTexSubImage<T10>(OpenTK.Graphics.ES11.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [InAttribute, OutAttribute] T10[,] texels)
+                where T10 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: QCOM_extended_get]</summary>
+            /// <param name="target"></param>
+            /// <param name="level"></param>
+            /// <param name="xoffset"></param>
+            /// <param name="yoffset"></param>
+            /// <param name="zoffset"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="depth"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="texels"></param>
+            [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetTexSubImageQCOM")]
+            [CLSCompliant(false)]
+            public static void ExtGetTexSubImage<T10>(OpenTK.Graphics.ES11.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [InAttribute, OutAttribute] T10[,,] texels)
+                where T10 : struct
+             { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: QCOM_extended_get]</summary>
+            /// <param name="target"></param>
+            /// <param name="level"></param>
+            /// <param name="xoffset"></param>
+            /// <param name="yoffset"></param>
+            /// <param name="zoffset"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="depth"></param>
+            /// <param name="format"></param>
+            /// <param name="type"></param>
+            /// <param name="texels"></param>
+            [AutoGenerated(Category = "QCOM_extended_get", Version = "", EntryPoint = "glExtGetTexSubImageQCOM")]
+            public static void ExtGetTexSubImage<T10>(OpenTK.Graphics.ES11.All target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.Graphics.ES11.PixelFormat format, OpenTK.Graphics.ES11.PixelType type, [InAttribute, OutAttribute] ref T10 texels)
                 where T10 : struct
              { throw new BindingsNotRewrittenException(); }
 
@@ -15112,9 +21063,10 @@ namespace OpenTK.Graphics.ES11
             /// <param name="width"></param>
             /// <param name="height"></param>
             /// <param name="preserveMask"></param>
+            [Obsolete("Use strongly-typed overload instead")]
             [AutoGenerated(Category = "QCOM_tiled_rendering", Version = "", EntryPoint = "glStartTilingQCOM")]
             [CLSCompliant(false)]
-            public static void StartTiling(Int32 x, Int32 y, Int32 width, Int32 height, Int32 preserveMask) { throw new BindingsNotRewrittenException(); }
+            public static void StartTiling(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.All preserveMask) { throw new BindingsNotRewrittenException(); }
 
             /// <summary>[requires: QCOM_tiled_rendering]</summary>
             /// <param name="x"></param>
@@ -15124,38 +21076,59 @@ namespace OpenTK.Graphics.ES11
             /// <param name="preserveMask"></param>
             [AutoGenerated(Category = "QCOM_tiled_rendering", Version = "", EntryPoint = "glStartTilingQCOM")]
             [CLSCompliant(false)]
-            public static void StartTiling(UInt32 x, UInt32 y, UInt32 width, UInt32 height, UInt32 preserveMask) { throw new BindingsNotRewrittenException(); }
+            public static void StartTiling(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.ES11.BufferBitQcom preserveMask) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: QCOM_tiled_rendering]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="preserveMask"></param>
+            [Obsolete("Use strongly-typed overload instead")]
+            [AutoGenerated(Category = "QCOM_tiled_rendering", Version = "", EntryPoint = "glStartTilingQCOM")]
+            [CLSCompliant(false)]
+            public static void StartTiling(UInt32 x, UInt32 y, UInt32 width, UInt32 height, OpenTK.Graphics.ES11.All preserveMask) { throw new BindingsNotRewrittenException(); }
+
+            /// <summary>[requires: QCOM_tiled_rendering]</summary>
+            /// <param name="x"></param>
+            /// <param name="y"></param>
+            /// <param name="width"></param>
+            /// <param name="height"></param>
+            /// <param name="preserveMask"></param>
+            [AutoGenerated(Category = "QCOM_tiled_rendering", Version = "", EntryPoint = "glStartTilingQCOM")]
+            [CLSCompliant(false)]
+            public static void StartTiling(UInt32 x, UInt32 y, UInt32 width, UInt32 height, OpenTK.Graphics.ES11.BufferBitQcom preserveMask) { throw new BindingsNotRewrittenException(); }
 
         }
 
         [Slot(31)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern System.Int32 glClientWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
+        private static extern System.Int32 glClientWaitSyncAPPLE(IntPtr sync, System.Int32 flags, UInt64 timeout);
         [Slot(53)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glCopyTextureLevelsAPPLE(UInt32 destinationTexture, UInt32 sourceTexture, Int32 sourceBaseLevel, Int32 sourceLevelCount);
-        [Slot(60)]
+        [Slot(66)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glDeleteSyncAPPLE(IntPtr sync);
-        [Slot(106)]
+        [Slot(112)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern IntPtr glFenceSyncAPPLE(System.Int32 condition, UInt32 flags);
-        [Slot(151)]
+        [Slot(159)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGetInteger64vAPPLE(System.Int32 pname, [OutAttribute] Int64* @params);
-        [Slot(168)]
+        [Slot(181)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGetSyncivAPPLE(IntPtr sync, System.Int32 pname, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] Int32* values);
-        [Slot(189)]
+        [Slot(203)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern byte glIsSyncAPPLE(IntPtr sync);
-        [Slot(294)]
+        [Slot(318)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glRenderbufferStorageMultisampleAPPLE(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(298)]
+        [Slot(322)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glResolveMultisampleFramebufferAPPLE();
-        [Slot(381)]
+        [Slot(405)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glWaitSyncAPPLE(IntPtr sync, UInt32 flags, UInt64 timeout);
         [Slot(1)]
@@ -15241,416 +21214,455 @@ namespace OpenTK.Graphics.ES11
         private static extern void glCullFace(System.Int32 mode);
         [Slot(56)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glDebugMessageCallback(DebugProc callback, IntPtr userParam);
+        [Slot(58)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glDebugMessageControl(System.Int32 source, System.Int32 type, System.Int32 severity, Int32 count, [CountAttribute(Parameter = "count")] UInt32* ids, bool enabled);
+        [Slot(60)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glDebugMessageInsert(System.Int32 source, System.Int32 type, UInt32 id, System.Int32 severity, Int32 length, [CountAttribute(Computed = "buf,length")] IntPtr buf);
+        [Slot(62)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glDeleteBuffers(Int32 n, [CountAttribute(Parameter = "n")] UInt32* buffers);
-        [Slot(61)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glDeleteTextures(Int32 n, [CountAttribute(Parameter = "n")] UInt32* textures);
-        [Slot(63)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glDepthFunc(System.Int32 func);
-        [Slot(64)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glDepthMask(bool flag);
-        [Slot(65)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glDepthRangef(Single n, Single f);
         [Slot(67)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glDepthRangex(Int32 n, Int32 f);
+        private static extern unsafe void glDeleteTextures(Int32 n, [CountAttribute(Parameter = "n")] UInt32* textures);
         [Slot(69)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glDisable(System.Int32 cap);
+        private static extern void glDepthFunc(System.Int32 func);
         [Slot(70)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glDisableClientState(System.Int32 array);
+        private static extern void glDepthMask(bool flag);
+        [Slot(71)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glDepthRangef(Single n, Single f);
         [Slot(73)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glDepthRangex(Int32 n, Int32 f);
+        [Slot(75)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glDisable(System.Int32 cap);
+        [Slot(76)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glDisableClientState(System.Int32 array);
+        [Slot(79)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glDrawArrays(System.Int32 mode, Int32 first, Int32 count);
-        [Slot(74)]
+        [Slot(80)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glDrawElements(System.Int32 mode, Int32 count, System.Int32 type, [CountAttribute(Computed = "count,type")] IntPtr indices);
-        [Slot(85)]
+        [Slot(91)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glEnable(System.Int32 cap);
-        [Slot(86)]
+        [Slot(92)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glEnableClientState(System.Int32 array);
-        [Slot(107)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glFinish();
-        [Slot(109)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glFlush();
-        [Slot(111)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glFogf(System.Int32 pname, Single param);
-        [Slot(112)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glFogfv(System.Int32 pname, [CountAttribute(Computed = "pname")] Single* @params);
         [Slot(113)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glFogx(System.Int32 pname, Int32 param);
+        private static extern void glFinish();
         [Slot(115)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glFogxv(System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* param);
+        private static extern void glFlush();
+        [Slot(117)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glFogf(System.Int32 pname, Single param);
+        [Slot(118)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glFogfv(System.Int32 pname, [CountAttribute(Computed = "pname")] Single* @params);
+        [Slot(119)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glFogx(System.Int32 pname, Int32 param);
         [Slot(121)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glFogxv(System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* param);
+        [Slot(127)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glFrontFace(System.Int32 mode);
-        [Slot(122)]
+        [Slot(128)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glFrustumf(Single l, Single r, Single b, Single t, Single n, Single f);
-        [Slot(124)]
+        [Slot(130)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glFrustumx(Int32 l, Int32 r, Int32 b, Int32 t, Int32 n, Int32 f);
-        [Slot(126)]
+        [Slot(132)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGenBuffers(Int32 n, [OutAttribute, CountAttribute(Parameter = "n")] UInt32* buffers);
-        [Slot(131)]
+        [Slot(137)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGenTextures(Int32 n, [OutAttribute, CountAttribute(Parameter = "n")] UInt32* textures);
-        [Slot(133)]
+        [Slot(139)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGetBooleanv(System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] bool* data);
-        [Slot(134)]
+        [Slot(140)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGetBufferParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(136)]
+        [Slot(142)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGetClipPlanef(System.Int32 plane, [OutAttribute, CountAttribute(Count = 4)] Single* equation);
-        [Slot(138)]
+        [Slot(144)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGetClipPlanex(System.Int32 plane, [OutAttribute, CountAttribute(Count = 4)] Int32* equation);
-        [Slot(143)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern System.Int32 glGetError();
-        [Slot(145)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetFixedv(System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(147)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetFloatv(System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Single* data);
-        [Slot(152)]
+        private static extern unsafe Int32 glGetDebugMessageLog(UInt32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] System.Int32* sources, [OutAttribute, CountAttribute(Parameter = "count")] System.Int32* types, [OutAttribute, CountAttribute(Parameter = "count")] UInt32* ids, [OutAttribute, CountAttribute(Parameter = "count")] System.Int32* severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32* lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] IntPtr messageLog);
+        [Slot(151)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetIntegerv(System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* data);
+        private static extern System.Int32 glGetError();
         [Slot(153)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetLightfv(System.Int32 light, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Single* @params);
+        private static extern unsafe void glGetFixedv(System.Int32 pname, [OutAttribute] Int32* @params);
         [Slot(155)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetLightxv(System.Int32 light, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(158)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetMaterialfv(System.Int32 face, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Single* @params);
+        private static extern unsafe void glGetFloatv(System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Single* data);
         [Slot(160)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetIntegerv(System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* data);
+        [Slot(161)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetLightfv(System.Int32 light, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Single* @params);
+        [Slot(163)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetLightxv(System.Int32 light, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(166)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetMaterialfv(System.Int32 face, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Single* @params);
+        [Slot(168)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGetMaterialxv(System.Int32 face, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(164)]
+        [Slot(172)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetObjectLabel(System.Int32 identifier, UInt32 name, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] IntPtr label);
+        [Slot(174)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetObjectPtrLabel(IntPtr ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] IntPtr label);
+        [Slot(176)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGetPixelMapxv(System.Int32 map, Int32 size, [OutAttribute, CountAttribute(Parameter = "size")] Int32* values);
-        [Slot(165)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glGetPointerv(System.Int32 pname, [OutAttribute, CountAttribute(Count = 1)] IntPtr @params);
-        [Slot(167)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern IntPtr glGetString(System.Int32 name);
-        [Slot(169)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetTexEnvfv(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Single* @params);
-        [Slot(170)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetTexEnviv(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(171)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetTexEnvxv(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
         [Slot(177)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetTexParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Single* @params);
-        [Slot(178)]
+        private static extern void glGetPointerv(System.Int32 pname, [OutAttribute, CountAttribute(Count = 1)] IntPtr @params);
+        [Slot(180)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetTexParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(179)]
+        private static extern IntPtr glGetString(System.Int32 name);
+        [Slot(182)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetTexParameterxv(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(181)]
+        private static extern unsafe void glGetTexEnvfv(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Single* @params);
+        [Slot(183)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glHint(System.Int32 target, System.Int32 mode);
+        private static extern unsafe void glGetTexEnviv(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
         [Slot(184)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern byte glIsBuffer(UInt32 buffer);
-        [Slot(185)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern byte glIsEnabled(System.Int32 cap);
+        private static extern unsafe void glGetTexEnvxv(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
         [Slot(190)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern byte glIsTexture(UInt32 texture);
+        private static extern unsafe void glGetTexParameterfv(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Single* @params);
+        [Slot(191)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetTexParameteriv(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
         [Slot(192)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glLightf(System.Int32 light, System.Int32 pname, Single param);
-        [Slot(193)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glLightfv(System.Int32 light, System.Int32 pname, [CountAttribute(Computed = "pname")] Single* @params);
+        private static extern unsafe void glGetTexParameterxv(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
         [Slot(194)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glLightModelf(System.Int32 pname, Single param);
-        [Slot(195)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glLightModelfv(System.Int32 pname, [CountAttribute(Computed = "pname")] Single* @params);
-        [Slot(196)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glLightModelx(System.Int32 pname, Int32 param);
+        private static extern void glHint(System.Int32 target, System.Int32 mode);
         [Slot(198)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glLightModelxv(System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* param);
-        [Slot(200)]
+        private static extern byte glIsBuffer(UInt32 buffer);
+        [Slot(199)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glLightx(System.Int32 light, System.Int32 pname, Int32 param);
-        [Slot(202)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glLightxv(System.Int32 light, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
+        private static extern byte glIsEnabled(System.Int32 cap);
         [Slot(204)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glLineWidth(Single width);
-        [Slot(205)]
+        private static extern byte glIsTexture(UInt32 texture);
+        [Slot(206)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glLineWidthx(Int32 width);
+        private static extern void glLightf(System.Int32 light, System.Int32 pname, Single param);
         [Slot(207)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glLoadIdentity();
+        private static extern unsafe void glLightfv(System.Int32 light, System.Int32 pname, [CountAttribute(Computed = "pname")] Single* @params);
         [Slot(208)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glLoadMatrixf([CountAttribute(Count = 16)] Single* m);
+        private static extern void glLightModelf(System.Int32 pname, Single param);
         [Slot(209)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glLoadMatrixx([CountAttribute(Count = 16)] Int32* m);
-        [Slot(213)]
+        private static extern unsafe void glLightModelfv(System.Int32 pname, [CountAttribute(Computed = "pname")] Single* @params);
+        [Slot(210)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glLogicOp(System.Int32 opcode);
-        [Slot(220)]
+        private static extern void glLightModelx(System.Int32 pname, Int32 param);
+        [Slot(212)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glMaterialf(System.Int32 face, System.Int32 pname, Single param);
+        private static extern unsafe void glLightModelxv(System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* param);
+        [Slot(214)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glLightx(System.Int32 light, System.Int32 pname, Int32 param);
+        [Slot(216)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glLightxv(System.Int32 light, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(218)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glLineWidth(Single width);
+        [Slot(219)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glLineWidthx(Int32 width);
         [Slot(221)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glMaterialfv(System.Int32 face, System.Int32 pname, [CountAttribute(Computed = "pname")] Single* @params);
+        private static extern void glLoadIdentity();
         [Slot(222)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glMaterialx(System.Int32 face, System.Int32 pname, Int32 param);
-        [Slot(224)]
+        private static extern unsafe void glLoadMatrixf([CountAttribute(Count = 16)] Single* m);
+        [Slot(223)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glMaterialxv(System.Int32 face, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* param);
+        private static extern unsafe void glLoadMatrixx([CountAttribute(Count = 16)] Int32* m);
         [Slot(227)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glLogicOp(System.Int32 opcode);
+        [Slot(234)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glMaterialf(System.Int32 face, System.Int32 pname, Single param);
+        [Slot(235)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glMaterialfv(System.Int32 face, System.Int32 pname, [CountAttribute(Computed = "pname")] Single* @params);
+        [Slot(236)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glMaterialx(System.Int32 face, System.Int32 pname, Int32 param);
+        [Slot(238)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glMaterialxv(System.Int32 face, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* param);
+        [Slot(241)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glMatrixMode(System.Int32 mode);
-        [Slot(244)]
+        [Slot(258)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glMultiTexCoord4f(System.Int32 target, Single s, Single t, Single r, Single q);
-        [Slot(245)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glMultiTexCoord4x(System.Int32 texture, Int32 s, Int32 t, Int32 r, Int32 q);
-        [Slot(248)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glMultMatrixf([CountAttribute(Count = 16)] Single* m);
-        [Slot(249)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glMultMatrixx([CountAttribute(Count = 16)] Int32* m);
-        [Slot(252)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glNormal3f(Single nx, Single ny, Single nz);
-        [Slot(253)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glNormal3x(Int32 nx, Int32 ny, Int32 nz);
-        [Slot(256)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glNormalPointer(System.Int32 type, Int32 stride, [CountAttribute(Computed = "type,stride")] IntPtr pointer);
-        [Slot(257)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glOrthof(Single l, Single r, Single b, Single t, Single n, Single f);
         [Slot(259)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glOrthox(Int32 l, Int32 r, Int32 b, Int32 t, Int32 n, Int32 f);
+        private static extern void glMultiTexCoord4x(System.Int32 texture, Int32 s, Int32 t, Int32 r, Int32 q);
         [Slot(262)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glPixelMapx(System.Int32 map, Int32 size, [CountAttribute(Parameter = "size")] Int32* values);
+        private static extern unsafe void glMultMatrixf([CountAttribute(Count = 16)] Single* m);
         [Slot(263)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glPixelStorei(System.Int32 pname, Int32 param);
-        [Slot(264)]
+        private static extern unsafe void glMultMatrixx([CountAttribute(Count = 16)] Int32* m);
+        [Slot(266)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glPixelStorex(System.Int32 pname, Int32 param);
+        private static extern void glNormal3f(Single nx, Single ny, Single nz);
         [Slot(267)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glPointParameterf(System.Int32 pname, Single param);
-        [Slot(268)]
+        private static extern void glNormal3x(Int32 nx, Int32 ny, Int32 nz);
+        [Slot(270)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glPointParameterfv(System.Int32 pname, [CountAttribute(Computed = "pname")] Single* @params);
-        [Slot(269)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glPointParameterx(System.Int32 pname, Int32 param);
+        private static extern void glNormalPointer(System.Int32 type, Int32 stride, [CountAttribute(Computed = "type,stride")] IntPtr pointer);
         [Slot(271)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glPointParameterxv(System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
+        private static extern void glObjectLabel(System.Int32 identifier, UInt32 name, Int32 length, [CountAttribute(Computed = "label,length")] IntPtr label);
         [Slot(273)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glPointSize(Single size);
+        private static extern void glObjectPtrLabel(IntPtr ptr, Int32 length, [CountAttribute(Computed = "label,length")] IntPtr label);
         [Slot(275)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glPointSizex(Int32 size);
+        private static extern void glOrthof(Single l, Single r, Single b, Single t, Single n, Single f);
         [Slot(277)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glPolygonOffset(Single factor, Single units);
-        [Slot(278)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glPolygonOffsetx(Int32 factor, Int32 units);
+        private static extern void glOrthox(Int32 l, Int32 r, Int32 b, Int32 t, Int32 n, Int32 f);
         [Slot(280)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glPopMatrix();
+        private static extern unsafe void glPixelMapx(System.Int32 map, Int32 size, [CountAttribute(Parameter = "size")] Int32* values);
+        [Slot(281)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glPixelStorei(System.Int32 pname, Int32 param);
         [Slot(282)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glPushMatrix();
+        private static extern void glPixelStorex(System.Int32 pname, Int32 param);
+        [Slot(285)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glPointParameterf(System.Int32 pname, Single param);
+        [Slot(286)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glPointParameterfv(System.Int32 pname, [CountAttribute(Computed = "pname")] Single* @params);
+        [Slot(287)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glPointParameterx(System.Int32 pname, Int32 param);
+        [Slot(289)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glPointParameterxv(System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
         [Slot(291)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, [OutAttribute, CountAttribute(Computed = "format,type,width,height")] IntPtr pixels);
-        [Slot(299)]
+        private static extern void glPointSize(Single size);
+        [Slot(293)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glRotatef(Single angle, Single x, Single y, Single z);
-        [Slot(300)]
+        private static extern void glPointSizex(Int32 size);
+        [Slot(295)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glRotatex(Int32 angle, Int32 x, Int32 y, Int32 z);
-        [Slot(302)]
+        private static extern void glPolygonOffset(Single factor, Single units);
+        [Slot(296)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glSampleCoverage(Single value, bool invert);
+        private static extern void glPolygonOffsetx(Int32 factor, Int32 units);
+        [Slot(298)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glPopDebugGroup();
+        [Slot(301)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glPopMatrix();
         [Slot(303)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glSampleCoveragex(Int32 value, bool invert);
-        [Slot(305)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glScalef(Single x, Single y, Single z);
+        private static extern void glPushDebugGroup(System.Int32 source, UInt32 id, Int32 length, [CountAttribute(Computed = "message,length")] IntPtr message);
         [Slot(306)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glPushMatrix();
+        [Slot(315)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, [OutAttribute, CountAttribute(Computed = "format,type,width,height")] IntPtr pixels);
+        [Slot(323)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glRotatef(Single angle, Single x, Single y, Single z);
+        [Slot(324)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glRotatex(Int32 angle, Int32 x, Int32 y, Int32 z);
+        [Slot(326)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glSampleCoverage(Single value, bool invert);
+        [Slot(327)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glSampleCoveragex(Int32 value, bool invert);
+        [Slot(329)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glScalef(Single x, Single y, Single z);
+        [Slot(330)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glScalex(Int32 x, Int32 y, Int32 z);
-        [Slot(308)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glScissor(Int32 x, Int32 y, Int32 width, Int32 height);
-        [Slot(310)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glShadeModel(System.Int32 mode);
-        [Slot(312)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glStencilFunc(System.Int32 func, Int32 @ref, UInt32 mask);
-        [Slot(313)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glStencilMask(UInt32 mask);
-        [Slot(314)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glStencilOp(System.Int32 fail, System.Int32 zfail, System.Int32 zpass);
         [Slot(332)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexCoordPointer(Int32 size, System.Int32 type, Int32 stride, [CountAttribute(Computed = "size,type,stride")] IntPtr pointer);
-        [Slot(333)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexEnvf(System.Int32 target, System.Int32 pname, Single param);
+        private static extern void glScissor(Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(334)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexEnvfv(System.Int32 target, System.Int32 pname, [CountAttribute(Computed = "pname")] Single* @params);
-        [Slot(335)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexEnvi(System.Int32 target, System.Int32 pname, Int32 param);
+        private static extern void glShadeModel(System.Int32 mode);
         [Slot(336)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexEnviv(System.Int32 target, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
+        private static extern void glStencilFunc(System.Int32 func, Int32 @ref, UInt32 mask);
         [Slot(337)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexEnvx(System.Int32 target, System.Int32 pname, Int32 param);
-        [Slot(339)]
+        private static extern void glStencilMask(UInt32 mask);
+        [Slot(338)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexEnvxv(System.Int32 target, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(347)]
+        private static extern void glStencilOp(System.Int32 fail, System.Int32 zfail, System.Int32 zpass);
+        [Slot(356)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexImage2D(System.Int32 target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, System.Int32 format, System.Int32 type, [CountAttribute(Computed = "format,type,width,height")] IntPtr pixels);
-        [Slot(348)]
+        private static extern void glTexCoordPointer(Int32 size, System.Int32 type, Int32 stride, [CountAttribute(Computed = "size,type,stride")] IntPtr pointer);
+        [Slot(357)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexParameterf(System.Int32 target, System.Int32 pname, Single param);
-        [Slot(349)]
+        private static extern void glTexEnvf(System.Int32 target, System.Int32 pname, Single param);
+        [Slot(358)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexParameterfv(System.Int32 target, System.Int32 pname, [CountAttribute(Computed = "pname")] Single* @params);
-        [Slot(350)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexParameteri(System.Int32 target, System.Int32 pname, Int32 param);
-        [Slot(351)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexParameteriv(System.Int32 target, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(352)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexParameterx(System.Int32 target, System.Int32 pname, Int32 param);
-        [Slot(354)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexParameterxv(System.Int32 target, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
+        private static extern unsafe void glTexEnvfv(System.Int32 target, System.Int32 pname, [CountAttribute(Computed = "pname")] Single* @params);
         [Slot(359)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, System.Int32 type, [CountAttribute(Computed = "format,type,width,height")] IntPtr pixels);
+        private static extern void glTexEnvi(System.Int32 target, System.Int32 pname, Int32 param);
+        [Slot(360)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexEnviv(System.Int32 target, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(361)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexEnvx(System.Int32 target, System.Int32 pname, Int32 param);
         [Slot(363)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexEnvxv(System.Int32 target, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(371)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexImage2D(System.Int32 target, Int32 level, System.Int32 internalformat, Int32 width, Int32 height, Int32 border, System.Int32 format, System.Int32 type, [CountAttribute(Computed = "format,type,width,height")] IntPtr pixels);
+        [Slot(372)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexParameterf(System.Int32 target, System.Int32 pname, Single param);
+        [Slot(373)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexParameterfv(System.Int32 target, System.Int32 pname, [CountAttribute(Computed = "pname")] Single* @params);
+        [Slot(374)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexParameteri(System.Int32 target, System.Int32 pname, Int32 param);
+        [Slot(375)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexParameteriv(System.Int32 target, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(376)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexParameterx(System.Int32 target, System.Int32 pname, Int32 param);
+        [Slot(378)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexParameterxv(System.Int32 target, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(383)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexSubImage2D(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, System.Int32 format, System.Int32 type, [CountAttribute(Computed = "format,type,width,height")] IntPtr pixels);
+        [Slot(387)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glTranslatef(Single x, Single y, Single z);
-        [Slot(364)]
+        [Slot(388)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glTranslatex(Int32 x, Int32 y, Int32 z);
-        [Slot(379)]
+        [Slot(403)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glVertexPointer(Int32 size, System.Int32 type, Int32 stride, [CountAttribute(Computed = "size,type,stride")] IntPtr pointer);
-        [Slot(380)]
+        [Slot(404)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glViewport(Int32 x, Int32 y, Int32 width, Int32 height);
         [Slot(12)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glBlendEquationEXT(System.Int32 mode);
-        [Slot(72)]
+        [Slot(78)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glDiscardFramebufferEXT(System.Int32 target, Int32 numAttachments, [CountAttribute(Parameter = "numAttachments")] System.Int32* attachments);
-        [Slot(110)]
+        [Slot(116)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glFlushMappedBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length);
-        [Slot(118)]
+        [Slot(124)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glFramebufferTexture2DMultisampleEXT(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
-        [Slot(149)]
+        [Slot(157)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern System.Int32 glGetGraphicsResetStatusEXT();
-        [Slot(162)]
+        [Slot(170)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGetnUniformfvEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "bufSize")] Single* @params);
-        [Slot(163)]
+        [Slot(171)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGetnUniformivEXT(UInt32 program, Int32 location, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "bufSize")] Int32* @params);
-        [Slot(217)]
+        [Slot(197)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern IntPtr glMapBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length, UInt32 access);
-        [Slot(228)]
+        private static extern void glInsertEventMarkerEXT(Int32 length, IntPtr marker);
+        [Slot(231)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern IntPtr glMapBufferRangeEXT(System.Int32 target, IntPtr offset, IntPtr length, System.Int32 access);
+        [Slot(242)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glMultiDrawArraysEXT(System.Int32 mode, [CountAttribute(Computed = "primcount")] Int32* first, [CountAttribute(Computed = "primcount")] Int32* count, Int32 primcount);
-        [Slot(229)]
+        [Slot(243)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glMultiDrawElementsEXT(System.Int32 mode, [CountAttribute(Computed = "primcount")] Int32* count, System.Int32 type, [CountAttribute(Computed = "primcount")] IntPtr indices, Int32 primcount);
-        [Slot(290)]
+        [Slot(300)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glPopGroupMarkerEXT();
+        [Slot(305)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glPushGroupMarkerEXT(Int32 length, IntPtr marker);
+        [Slot(314)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glReadnPixelsEXT(Int32 x, Int32 y, Int32 width, Int32 height, System.Int32 format, System.Int32 type, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "bufSize")] IntPtr data);
-        [Slot(295)]
+        [Slot(319)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glRenderbufferStorageMultisampleEXT(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(356)]
+        [Slot(380)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glTexStorage1DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
-        [Slot(357)]
+        [Slot(381)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glTexStorage2DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(358)]
+        [Slot(382)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glTexStorage3DEXT(System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
-        [Slot(360)]
+        [Slot(384)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glTextureStorage1DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width);
-        [Slot(361)]
+        [Slot(385)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glTextureStorage2DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(362)]
+        [Slot(386)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glTextureStorage3DEXT(UInt32 texture, System.Int32 target, Int32 levels, System.Int32 internalformat, Int32 width, Int32 height, Int32 depth);
         [Slot(33)]
@@ -15659,31 +21671,64 @@ namespace OpenTK.Graphics.ES11
         [Slot(36)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glClipPlanexIMG(System.Int32 p, [CountAttribute(Count = 4)] Int32* eqn);
-        [Slot(119)]
+        [Slot(125)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glFramebufferTexture2DMultisampleIMG(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level, Int32 samples);
-        [Slot(296)]
+        [Slot(320)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glRenderbufferStorageMultisampleIMG(System.Int32 target, Int32 samples, System.Int32 internalformat, Int32 width, Int32 height);
         [Slot(57)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glDebugMessageCallbackKHR(DebugProcKhr callback, IntPtr userParam);
+        [Slot(59)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glDebugMessageControlKHR(System.Int32 source, System.Int32 type, System.Int32 severity, Int32 count, UInt32* ids, bool enabled);
+        [Slot(61)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glDebugMessageInsertKHR(System.Int32 source, System.Int32 type, UInt32 id, System.Int32 severity, Int32 length, IntPtr buf);
+        [Slot(148)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe Int32 glGetDebugMessageLogKHR(UInt32 count, Int32 bufSize, [OutAttribute, CountAttribute(Parameter = "count")] System.Int32* sources, [OutAttribute, CountAttribute(Parameter = "count")] System.Int32* types, [OutAttribute, CountAttribute(Parameter = "count")] UInt32* ids, [OutAttribute, CountAttribute(Parameter = "count")] System.Int32* severities, [OutAttribute, CountAttribute(Parameter = "count")] Int32* lengths, [OutAttribute, CountAttribute(Parameter = "bufSize")] IntPtr messageLog);
+        [Slot(173)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetObjectLabelKHR(System.Int32 identifier, UInt32 name, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] IntPtr label);
+        [Slot(175)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetObjectPtrLabelKHR(IntPtr ptr, Int32 bufSize, [OutAttribute, CountAttribute(Count = 1)] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] IntPtr label);
+        [Slot(178)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glGetPointervKHR(System.Int32 pname, [OutAttribute] IntPtr @params);
+        [Slot(272)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glObjectLabelKHR(System.Int32 identifier, UInt32 name, Int32 length, IntPtr label);
+        [Slot(274)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glObjectPtrLabelKHR(IntPtr ptr, Int32 length, IntPtr label);
+        [Slot(299)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glPopDebugGroupKHR();
+        [Slot(304)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glPushDebugGroupKHR(System.Int32 source, UInt32 id, Int32 length, IntPtr message);
+        [Slot(63)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glDeleteFencesNV(Int32 n, [CountAttribute(Parameter = "n")] UInt32* fences);
-        [Slot(108)]
+        [Slot(114)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glFinishFenceNV(UInt32 fence);
-        [Slot(128)]
+        [Slot(134)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGenFencesNV(Int32 n, [OutAttribute, CountAttribute(Parameter = "n")] UInt32* fences);
-        [Slot(144)]
+        [Slot(152)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGetFenceivNV(UInt32 fence, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(186)]
+        [Slot(200)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern byte glIsFenceNV(UInt32 fence);
-        [Slot(309)]
+        [Slot(333)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glSetFenceNV(UInt32 fence, System.Int32 condition);
-        [Slot(315)]
+        [Slot(339)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern byte glTestFenceNV(UInt32 fence);
         [Slot(0)]
@@ -15758,521 +21803,521 @@ namespace OpenTK.Graphics.ES11
         [Slot(55)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glCurrentPaletteMatrixOES(UInt32 matrixpaletteindex);
-        [Slot(58)]
+        [Slot(64)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glDeleteFramebuffersOES(Int32 n, [CountAttribute(Parameter = "n")] UInt32* framebuffers);
-        [Slot(59)]
+        [Slot(65)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glDeleteRenderbuffersOES(Int32 n, [CountAttribute(Parameter = "n")] UInt32* renderbuffers);
-        [Slot(62)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glDeleteVertexArraysOES(Int32 n, [CountAttribute(Parameter = "n")] UInt32* arrays);
-        [Slot(66)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glDepthRangefOES(Single n, Single f);
         [Slot(68)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glDeleteVertexArraysOES(Int32 n, [CountAttribute(Parameter = "n")] UInt32* arrays);
+        [Slot(72)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glDepthRangefOES(Single n, Single f);
+        [Slot(74)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glDepthRangexOES(Int32 n, Int32 f);
-        [Slot(75)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glDrawTexfOES(Single x, Single y, Single z, Single width, Single height);
-        [Slot(76)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glDrawTexfvOES(Single* coords);
-        [Slot(77)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glDrawTexiOES(Int32 x, Int32 y, Int32 z, Int32 width, Int32 height);
-        [Slot(78)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glDrawTexivOES(Int32* coords);
-        [Slot(79)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glDrawTexsOES(Int16 x, Int16 y, Int16 z, Int16 width, Int16 height);
-        [Slot(80)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glDrawTexsvOES(Int16* coords);
         [Slot(81)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glDrawTexxOES(Int32 x, Int32 y, Int32 z, Int32 width, Int32 height);
+        private static extern void glDrawTexfOES(Single x, Single y, Single z, Single width, Single height);
         [Slot(82)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glDrawTexxvOES(Int32* coords);
+        private static extern unsafe void glDrawTexfvOES(Single* coords);
         [Slot(83)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glEGLImageTargetRenderbufferStorageOES(System.Int32 target, IntPtr image);
+        private static extern void glDrawTexiOES(Int32 x, Int32 y, Int32 z, Int32 width, Int32 height);
         [Slot(84)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glEGLImageTargetTexture2DOES(System.Int32 target, IntPtr image);
-        [Slot(89)]
+        private static extern unsafe void glDrawTexivOES(Int32* coords);
+        [Slot(85)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glEvalCoord1xOES(Int32 u);
-        [Slot(90)]
+        private static extern void glDrawTexsOES(Int16 x, Int16 y, Int16 z, Int16 width, Int16 height);
+        [Slot(86)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glEvalCoord1xvOES([CountAttribute(Count = 1)] Int32* coords);
-        [Slot(91)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glEvalCoord2xOES(Int32 u, Int32 v);
-        [Slot(92)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glEvalCoord2xvOES([CountAttribute(Count = 2)] Int32* coords);
-        [Slot(105)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glFeedbackBufferxOES(Int32 n, System.Int32 type, [CountAttribute(Parameter = "n")] Int32* buffer);
-        [Slot(114)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glFogxOES(System.Int32 pname, Int32 param);
-        [Slot(116)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glFogxvOES(System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* param);
-        [Slot(117)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glFramebufferRenderbufferOES(System.Int32 target, System.Int32 attachment, System.Int32 renderbuffertarget, UInt32 renderbuffer);
-        [Slot(120)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glFramebufferTexture2DOES(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level);
-        [Slot(123)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glFrustumfOES(Single l, Single r, Single b, Single t, Single n, Single f);
-        [Slot(125)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glFrustumxOES(Int32 l, Int32 r, Int32 b, Int32 t, Int32 n, Int32 f);
-        [Slot(127)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glGenerateMipmapOES(System.Int32 target);
-        [Slot(129)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGenFramebuffersOES(Int32 n, [OutAttribute, CountAttribute(Parameter = "n")] UInt32* framebuffers);
-        [Slot(130)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGenRenderbuffersOES(Int32 n, [OutAttribute, CountAttribute(Parameter = "n")] UInt32* renderbuffers);
-        [Slot(132)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGenVertexArraysOES(Int32 n, [OutAttribute, CountAttribute(Parameter = "n")] UInt32* arrays);
-        [Slot(135)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glGetBufferPointervOES(System.Int32 target, System.Int32 pname, [OutAttribute] IntPtr @params);
-        [Slot(137)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetClipPlanefOES(System.Int32 plane, [OutAttribute, CountAttribute(Count = 4)] Single* equation);
-        [Slot(139)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetClipPlanexOES(System.Int32 plane, [OutAttribute, CountAttribute(Count = 4)] Int32* equation);
-        [Slot(140)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetConvolutionParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(146)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetFixedvOES(System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(148)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetFramebufferAttachmentParameterivOES(System.Int32 target, System.Int32 attachment, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(150)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetHistogramParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(154)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetLightxOES(System.Int32 light, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(157)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetMapxvOES(System.Int32 target, System.Int32 query, [OutAttribute, CountAttribute(Computed = "query")] Int32* v);
-        [Slot(159)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glGetMaterialxOES(System.Int32 face, System.Int32 pname, Int32 param);
-        [Slot(161)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetMaterialxvOES(System.Int32 face, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(166)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetRenderbufferParameterivOES(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(172)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetTexEnvxvOES(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(173)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetTexGenfvOES(System.Int32 coord, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Single* @params);
-        [Slot(174)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetTexGenivOES(System.Int32 coord, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(175)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetTexGenxvOES(System.Int32 coord, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(176)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetTexLevelParameterxvOES(System.Int32 target, Int32 level, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(180)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetTexParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(182)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glIndexxOES(Int32 component);
-        [Slot(183)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glIndexxvOES([CountAttribute(Count = 1)] Int32* component);
-        [Slot(187)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern byte glIsFramebufferOES(UInt32 framebuffer);
-        [Slot(188)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern byte glIsRenderbufferOES(UInt32 renderbuffer);
-        [Slot(191)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern byte glIsVertexArrayOES(UInt32 array);
-        [Slot(197)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glLightModelxOES(System.Int32 pname, Int32 param);
-        [Slot(199)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glLightModelxvOES(System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* param);
-        [Slot(201)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glLightxOES(System.Int32 light, System.Int32 pname, Int32 param);
-        [Slot(203)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glLightxvOES(System.Int32 light, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(206)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glLineWidthxOES(Int32 width);
-        [Slot(210)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glLoadMatrixxOES([CountAttribute(Count = 16)] Int32* m);
-        [Slot(211)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glLoadPaletteFromModelViewMatrixOES();
-        [Slot(212)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glLoadTransposeMatrixxOES([CountAttribute(Count = 16)] Int32* m);
-        [Slot(214)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glMap1xOES(System.Int32 target, Int32 u1, Int32 u2, Int32 stride, Int32 order, Int32 points);
-        [Slot(215)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glMap2xOES(System.Int32 target, Int32 u1, Int32 u2, Int32 ustride, Int32 uorder, Int32 v1, Int32 v2, Int32 vstride, Int32 vorder, Int32 points);
-        [Slot(216)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern IntPtr glMapBufferOES(System.Int32 target, System.Int32 access);
-        [Slot(218)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glMapGrid1xOES(Int32 n, Int32 u1, Int32 u2);
-        [Slot(219)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glMapGrid2xOES(Int32 n, Int32 u1, Int32 u2, Int32 v1, Int32 v2);
-        [Slot(223)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glMaterialxOES(System.Int32 face, System.Int32 pname, Int32 param);
-        [Slot(225)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glMaterialxvOES(System.Int32 face, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* param);
-        [Slot(226)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glMatrixIndexPointerOES(Int32 size, System.Int32 type, Int32 stride, [CountAttribute(Computed = "size,type,stride")] IntPtr pointer);
-        [Slot(230)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glMultiTexCoord1bOES(System.Int32 texture, SByte s);
-        [Slot(231)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glMultiTexCoord1bvOES(System.Int32 texture, [CountAttribute(Count = 1)] SByte* coords);
-        [Slot(232)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glMultiTexCoord1xOES(System.Int32 texture, Int32 s);
-        [Slot(233)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glMultiTexCoord1xvOES(System.Int32 texture, [CountAttribute(Count = 1)] Int32* coords);
-        [Slot(234)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glMultiTexCoord2bOES(System.Int32 texture, SByte s, SByte t);
-        [Slot(235)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glMultiTexCoord2bvOES(System.Int32 texture, [CountAttribute(Count = 2)] SByte* coords);
-        [Slot(236)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glMultiTexCoord2xOES(System.Int32 texture, Int32 s, Int32 t);
-        [Slot(237)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glMultiTexCoord2xvOES(System.Int32 texture, [CountAttribute(Count = 2)] Int32* coords);
-        [Slot(238)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glMultiTexCoord3bOES(System.Int32 texture, SByte s, SByte t, SByte r);
-        [Slot(239)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glMultiTexCoord3bvOES(System.Int32 texture, [CountAttribute(Count = 3)] SByte* coords);
-        [Slot(240)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glMultiTexCoord3xOES(System.Int32 texture, Int32 s, Int32 t, Int32 r);
-        [Slot(241)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glMultiTexCoord3xvOES(System.Int32 texture, [CountAttribute(Count = 3)] Int32* coords);
-        [Slot(242)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glMultiTexCoord4bOES(System.Int32 texture, SByte s, SByte t, SByte r, SByte q);
-        [Slot(243)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glMultiTexCoord4bvOES(System.Int32 texture, [CountAttribute(Count = 4)] SByte* coords);
-        [Slot(246)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glMultiTexCoord4xOES(System.Int32 texture, Int32 s, Int32 t, Int32 r, Int32 q);
-        [Slot(247)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glMultiTexCoord4xvOES(System.Int32 texture, [CountAttribute(Count = 4)] Int32* coords);
-        [Slot(250)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glMultMatrixxOES([CountAttribute(Count = 16)] Int32* m);
-        [Slot(251)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glMultTransposeMatrixxOES([CountAttribute(Count = 16)] Int32* m);
-        [Slot(254)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glNormal3xOES(Int32 nx, Int32 ny, Int32 nz);
-        [Slot(255)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glNormal3xvOES([CountAttribute(Count = 3)] Int32* coords);
-        [Slot(258)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glOrthofOES(Single l, Single r, Single b, Single t, Single n, Single f);
-        [Slot(260)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glOrthoxOES(Int32 l, Int32 r, Int32 b, Int32 t, Int32 n, Int32 f);
-        [Slot(261)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glPassThroughxOES(Int32 token);
-        [Slot(265)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glPixelTransferxOES(System.Int32 pname, Int32 param);
-        [Slot(266)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glPixelZoomxOES(Int32 xfactor, Int32 yfactor);
-        [Slot(270)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glPointParameterxOES(System.Int32 pname, Int32 param);
-        [Slot(272)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glPointParameterxvOES(System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(274)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glPointSizePointerOES(System.Int32 type, Int32 stride, [CountAttribute(Computed = "type,stride")] IntPtr pointer);
-        [Slot(276)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glPointSizexOES(Int32 size);
-        [Slot(279)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glPolygonOffsetxOES(Int32 factor, Int32 units);
-        [Slot(281)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glPrioritizeTexturesxOES(Int32 n, [CountAttribute(Parameter = "n")] UInt32* textures, [CountAttribute(Parameter = "n")] Int32* priorities);
-        [Slot(283)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe Int32 glQueryMatrixxOES([OutAttribute, CountAttribute(Count = 16)] Int32* mantissa, [OutAttribute, CountAttribute(Count = 16)] Int32* exponent);
-        [Slot(284)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glRasterPos2xOES(Int32 x, Int32 y);
-        [Slot(285)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glRasterPos2xvOES([CountAttribute(Count = 2)] Int32* coords);
-        [Slot(286)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glRasterPos3xOES(Int32 x, Int32 y, Int32 z);
-        [Slot(287)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glRasterPos3xvOES([CountAttribute(Count = 3)] Int32* coords);
-        [Slot(288)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glRasterPos4xOES(Int32 x, Int32 y, Int32 z, Int32 w);
-        [Slot(289)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glRasterPos4xvOES([CountAttribute(Count = 4)] Int32* coords);
-        [Slot(292)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glRectxOES(Int32 x1, Int32 y1, Int32 x2, Int32 y2);
-        [Slot(293)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glRectxvOES([CountAttribute(Count = 2)] Int32* v1, [CountAttribute(Count = 2)] Int32* v2);
-        [Slot(297)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glRenderbufferStorageOES(System.Int32 target, System.Int32 internalformat, Int32 width, Int32 height);
-        [Slot(301)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glRotatexOES(Int32 angle, Int32 x, Int32 y, Int32 z);
-        [Slot(304)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glSampleCoveragexOES(Int32 value, bool invert);
-        [Slot(307)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glScalexOES(Int32 x, Int32 y, Int32 z);
-        [Slot(316)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexCoord1bOES(SByte s);
-        [Slot(317)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexCoord1bvOES([CountAttribute(Count = 1)] SByte* coords);
-        [Slot(318)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexCoord1xOES(Int32 s);
-        [Slot(319)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexCoord1xvOES([CountAttribute(Count = 1)] Int32* coords);
-        [Slot(320)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexCoord2bOES(SByte s, SByte t);
-        [Slot(321)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexCoord2bvOES([CountAttribute(Count = 2)] SByte* coords);
-        [Slot(322)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexCoord2xOES(Int32 s, Int32 t);
-        [Slot(323)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexCoord2xvOES([CountAttribute(Count = 2)] Int32* coords);
-        [Slot(324)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexCoord3bOES(SByte s, SByte t, SByte r);
-        [Slot(325)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexCoord3bvOES([CountAttribute(Count = 3)] SByte* coords);
-        [Slot(326)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexCoord3xOES(Int32 s, Int32 t, Int32 r);
-        [Slot(327)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexCoord3xvOES([CountAttribute(Count = 3)] Int32* coords);
-        [Slot(328)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexCoord4bOES(SByte s, SByte t, SByte r, SByte q);
-        [Slot(329)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexCoord4bvOES([CountAttribute(Count = 4)] SByte* coords);
-        [Slot(330)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexCoord4xOES(Int32 s, Int32 t, Int32 r, Int32 q);
-        [Slot(331)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexCoord4xvOES([CountAttribute(Count = 4)] Int32* coords);
-        [Slot(338)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexEnvxOES(System.Int32 target, System.Int32 pname, Int32 param);
-        [Slot(340)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexEnvxvOES(System.Int32 target, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(341)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexGenfOES(System.Int32 coord, System.Int32 pname, Single param);
-        [Slot(342)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexGenfvOES(System.Int32 coord, System.Int32 pname, [CountAttribute(Computed = "pname")] Single* @params);
-        [Slot(343)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexGeniOES(System.Int32 coord, System.Int32 pname, Int32 param);
-        [Slot(344)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexGenivOES(System.Int32 coord, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(345)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexGenxOES(System.Int32 coord, System.Int32 pname, Int32 param);
-        [Slot(346)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexGenxvOES(System.Int32 coord, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(353)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexParameterxOES(System.Int32 target, System.Int32 pname, Int32 param);
-        [Slot(355)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glTexParameterxvOES(System.Int32 target, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
-        [Slot(365)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTranslatexOES(Int32 x, Int32 y, Int32 z);
-        [Slot(366)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern byte glUnmapBufferOES(System.Int32 target);
-        [Slot(367)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glVertex2bOES(SByte x, SByte y);
-        [Slot(368)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glVertex2bvOES([CountAttribute(Count = 2)] SByte* coords);
-        [Slot(369)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glVertex2xOES(Int32 x);
-        [Slot(370)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glVertex2xvOES([CountAttribute(Count = 2)] Int32* coords);
-        [Slot(371)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glVertex3bOES(SByte x, SByte y, SByte z);
-        [Slot(372)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glVertex3bvOES([CountAttribute(Count = 3)] SByte* coords);
-        [Slot(373)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glVertex3xOES(Int32 x, Int32 y);
-        [Slot(374)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glVertex3xvOES([CountAttribute(Count = 3)] Int32* coords);
-        [Slot(375)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glVertex4bOES(SByte x, SByte y, SByte z, SByte w);
-        [Slot(376)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glVertex4bvOES([CountAttribute(Count = 4)] SByte* coords);
-        [Slot(377)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glVertex4xOES(Int32 x, Int32 y, Int32 z);
-        [Slot(378)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glVertex4xvOES([CountAttribute(Count = 4)] Int32* coords);
-        [Slot(382)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glWeightPointerOES(Int32 size, System.Int32 type, Int32 stride, [CountAttribute(Computed = "type,stride")] IntPtr pointer);
-        [Slot(71)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glDisableDriverControlQCOM(UInt32 driverControl);
+        private static extern unsafe void glDrawTexsvOES(Int16* coords);
         [Slot(87)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glEnableDriverControlQCOM(UInt32 driverControl);
+        private static extern void glDrawTexxOES(Int32 x, Int32 y, Int32 z, Int32 width, Int32 height);
         [Slot(88)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glEndTilingQCOM(UInt32 preserveMask);
-        [Slot(93)]
+        private static extern unsafe void glDrawTexxvOES(Int32* coords);
+        [Slot(89)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glExtGetBufferPointervQCOM(System.Int32 target, [OutAttribute] IntPtr @params);
-        [Slot(94)]
+        private static extern void glEGLImageTargetRenderbufferStorageOES(System.Int32 target, IntPtr image);
+        [Slot(90)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glExtGetBuffersQCOM([OutAttribute, CountAttribute(Parameter = "maxBuffers")] UInt32* buffers, Int32 maxBuffers, [OutAttribute, CountAttribute(Count = 1)] Int32* numBuffers);
+        private static extern void glEGLImageTargetTexture2DOES(System.Int32 target, IntPtr image);
         [Slot(95)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glExtGetFramebuffersQCOM([OutAttribute, CountAttribute(Parameter = "maxFramebuffers")] UInt32* framebuffers, Int32 maxFramebuffers, [OutAttribute, CountAttribute(Count = 1)] Int32* numFramebuffers);
+        private static extern void glEvalCoord1xOES(Int32 u);
         [Slot(96)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glExtGetProgramBinarySourceQCOM(UInt32 program, System.Int32 shadertype, [OutAttribute, CountAttribute(Parameter = "*length")] IntPtr source, [OutAttribute] Int32* length);
+        private static extern unsafe void glEvalCoord1xvOES([CountAttribute(Count = 1)] Int32* coords);
         [Slot(97)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glExtGetProgramsQCOM([OutAttribute, CountAttribute(Parameter = "maxPrograms")] UInt32* programs, Int32 maxPrograms, [OutAttribute, CountAttribute(Count = 1)] Int32* numPrograms);
+        private static extern void glEvalCoord2xOES(Int32 u, Int32 v);
         [Slot(98)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glExtGetRenderbuffersQCOM([OutAttribute, CountAttribute(Parameter = "maxRenderbuffers")] UInt32* renderbuffers, Int32 maxRenderbuffers, [OutAttribute, CountAttribute(Count = 1)] Int32* numRenderbuffers);
-        [Slot(99)]
+        private static extern unsafe void glEvalCoord2xvOES([CountAttribute(Count = 2)] Int32* coords);
+        [Slot(111)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glExtGetShadersQCOM([OutAttribute, CountAttribute(Parameter = "maxShaders")] UInt32* shaders, Int32 maxShaders, [OutAttribute, CountAttribute(Count = 1)] Int32* numShaders);
-        [Slot(100)]
+        private static extern unsafe void glFeedbackBufferxOES(Int32 n, System.Int32 type, [CountAttribute(Parameter = "n")] Int32* buffer);
+        [Slot(120)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glExtGetTexLevelParameterivQCOM(UInt32 texture, System.Int32 face, Int32 level, System.Int32 pname, [OutAttribute] Int32* @params);
-        [Slot(101)]
+        private static extern void glFogxOES(System.Int32 pname, Int32 param);
+        [Slot(122)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glExtGetTexSubImageQCOM(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr texels);
-        [Slot(102)]
+        private static extern unsafe void glFogxvOES(System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* param);
+        [Slot(123)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glExtGetTexturesQCOM([OutAttribute] UInt32* textures, Int32 maxTextures, [OutAttribute] Int32* numTextures);
-        [Slot(103)]
+        private static extern void glFramebufferRenderbufferOES(System.Int32 target, System.Int32 attachment, System.Int32 renderbuffertarget, UInt32 renderbuffer);
+        [Slot(126)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern byte glExtIsProgramBinaryQCOM(UInt32 program);
-        [Slot(104)]
+        private static extern void glFramebufferTexture2DOES(System.Int32 target, System.Int32 attachment, System.Int32 textarget, UInt32 texture, Int32 level);
+        [Slot(129)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glExtTexObjectStateOverrideiQCOM(System.Int32 target, System.Int32 pname, Int32 param);
+        private static extern void glFrustumfOES(Single l, Single r, Single b, Single t, Single n, Single f);
+        [Slot(131)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glFrustumxOES(Int32 l, Int32 r, Int32 b, Int32 t, Int32 n, Int32 f);
+        [Slot(133)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glGenerateMipmapOES(System.Int32 target);
+        [Slot(135)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGenFramebuffersOES(Int32 n, [OutAttribute, CountAttribute(Parameter = "n")] UInt32* framebuffers);
+        [Slot(136)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGenRenderbuffersOES(Int32 n, [OutAttribute, CountAttribute(Parameter = "n")] UInt32* renderbuffers);
+        [Slot(138)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGenVertexArraysOES(Int32 n, [OutAttribute, CountAttribute(Parameter = "n")] UInt32* arrays);
         [Slot(141)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute, CountAttribute(Parameter = "size")] UInt32* driverControls);
-        [Slot(142)]
+        private static extern void glGetBufferPointervOES(System.Int32 target, System.Int32 pname, [OutAttribute] IntPtr @params);
+        [Slot(143)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern unsafe void glGetDriverControlStringQCOM(UInt32 driverControl, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] IntPtr driverControlString);
+        private static extern unsafe void glGetClipPlanefOES(System.Int32 plane, [OutAttribute, CountAttribute(Count = 4)] Single* equation);
+        [Slot(145)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetClipPlanexOES(System.Int32 plane, [OutAttribute, CountAttribute(Count = 4)] Int32* equation);
+        [Slot(146)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetConvolutionParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(154)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetFixedvOES(System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(156)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetFramebufferAttachmentParameterivOES(System.Int32 target, System.Int32 attachment, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(158)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetHistogramParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(162)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetLightxOES(System.Int32 light, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(165)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetMapxvOES(System.Int32 target, System.Int32 query, [OutAttribute, CountAttribute(Computed = "query")] Int32* v);
+        [Slot(167)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glGetMaterialxOES(System.Int32 face, System.Int32 pname, Int32 param);
+        [Slot(169)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetMaterialxvOES(System.Int32 face, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(179)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetRenderbufferParameterivOES(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(185)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetTexEnvxvOES(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(186)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetTexGenfvOES(System.Int32 coord, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Single* @params);
+        [Slot(187)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetTexGenivOES(System.Int32 coord, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(188)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetTexGenxvOES(System.Int32 coord, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(189)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetTexLevelParameterxvOES(System.Int32 target, Int32 level, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(193)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetTexParameterxvOES(System.Int32 target, System.Int32 pname, [OutAttribute, CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(195)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glIndexxOES(Int32 component);
+        [Slot(196)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glIndexxvOES([CountAttribute(Count = 1)] Int32* component);
+        [Slot(201)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern byte glIsFramebufferOES(UInt32 framebuffer);
+        [Slot(202)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern byte glIsRenderbufferOES(UInt32 renderbuffer);
+        [Slot(205)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern byte glIsVertexArrayOES(UInt32 array);
+        [Slot(211)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glLightModelxOES(System.Int32 pname, Int32 param);
+        [Slot(213)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glLightModelxvOES(System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* param);
+        [Slot(215)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glLightxOES(System.Int32 light, System.Int32 pname, Int32 param);
+        [Slot(217)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glLightxvOES(System.Int32 light, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(220)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glLineWidthxOES(Int32 width);
+        [Slot(224)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glLoadMatrixxOES([CountAttribute(Count = 16)] Int32* m);
+        [Slot(225)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glLoadPaletteFromModelViewMatrixOES();
+        [Slot(226)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glLoadTransposeMatrixxOES([CountAttribute(Count = 16)] Int32* m);
+        [Slot(228)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glMap1xOES(System.Int32 target, Int32 u1, Int32 u2, Int32 stride, Int32 order, Int32 points);
+        [Slot(229)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glMap2xOES(System.Int32 target, Int32 u1, Int32 u2, Int32 ustride, Int32 uorder, Int32 v1, Int32 v2, Int32 vstride, Int32 vorder, Int32 points);
+        [Slot(230)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern IntPtr glMapBufferOES(System.Int32 target, System.Int32 access);
+        [Slot(232)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glMapGrid1xOES(Int32 n, Int32 u1, Int32 u2);
+        [Slot(233)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glMapGrid2xOES(Int32 n, Int32 u1, Int32 u2, Int32 v1, Int32 v2);
+        [Slot(237)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glMaterialxOES(System.Int32 face, System.Int32 pname, Int32 param);
+        [Slot(239)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glMaterialxvOES(System.Int32 face, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* param);
+        [Slot(240)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glMatrixIndexPointerOES(Int32 size, System.Int32 type, Int32 stride, [CountAttribute(Computed = "size,type,stride")] IntPtr pointer);
+        [Slot(244)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glMultiTexCoord1bOES(System.Int32 texture, SByte s);
+        [Slot(245)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glMultiTexCoord1bvOES(System.Int32 texture, [CountAttribute(Count = 1)] SByte* coords);
+        [Slot(246)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glMultiTexCoord1xOES(System.Int32 texture, Int32 s);
+        [Slot(247)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glMultiTexCoord1xvOES(System.Int32 texture, [CountAttribute(Count = 1)] Int32* coords);
+        [Slot(248)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glMultiTexCoord2bOES(System.Int32 texture, SByte s, SByte t);
+        [Slot(249)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glMultiTexCoord2bvOES(System.Int32 texture, [CountAttribute(Count = 2)] SByte* coords);
+        [Slot(250)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glMultiTexCoord2xOES(System.Int32 texture, Int32 s, Int32 t);
+        [Slot(251)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glMultiTexCoord2xvOES(System.Int32 texture, [CountAttribute(Count = 2)] Int32* coords);
+        [Slot(252)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glMultiTexCoord3bOES(System.Int32 texture, SByte s, SByte t, SByte r);
+        [Slot(253)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glMultiTexCoord3bvOES(System.Int32 texture, [CountAttribute(Count = 3)] SByte* coords);
+        [Slot(254)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glMultiTexCoord3xOES(System.Int32 texture, Int32 s, Int32 t, Int32 r);
+        [Slot(255)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glMultiTexCoord3xvOES(System.Int32 texture, [CountAttribute(Count = 3)] Int32* coords);
+        [Slot(256)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glMultiTexCoord4bOES(System.Int32 texture, SByte s, SByte t, SByte r, SByte q);
+        [Slot(257)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glMultiTexCoord4bvOES(System.Int32 texture, [CountAttribute(Count = 4)] SByte* coords);
+        [Slot(260)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glMultiTexCoord4xOES(System.Int32 texture, Int32 s, Int32 t, Int32 r, Int32 q);
+        [Slot(261)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glMultiTexCoord4xvOES(System.Int32 texture, [CountAttribute(Count = 4)] Int32* coords);
+        [Slot(264)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glMultMatrixxOES([CountAttribute(Count = 16)] Int32* m);
+        [Slot(265)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glMultTransposeMatrixxOES([CountAttribute(Count = 16)] Int32* m);
+        [Slot(268)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glNormal3xOES(Int32 nx, Int32 ny, Int32 nz);
+        [Slot(269)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glNormal3xvOES([CountAttribute(Count = 3)] Int32* coords);
+        [Slot(276)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glOrthofOES(Single l, Single r, Single b, Single t, Single n, Single f);
+        [Slot(278)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glOrthoxOES(Int32 l, Int32 r, Int32 b, Int32 t, Int32 n, Int32 f);
+        [Slot(279)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glPassThroughxOES(Int32 token);
+        [Slot(283)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glPixelTransferxOES(System.Int32 pname, Int32 param);
+        [Slot(284)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glPixelZoomxOES(Int32 xfactor, Int32 yfactor);
+        [Slot(288)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glPointParameterxOES(System.Int32 pname, Int32 param);
+        [Slot(290)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glPointParameterxvOES(System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(292)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glPointSizePointerOES(System.Int32 type, Int32 stride, [CountAttribute(Computed = "type,stride")] IntPtr pointer);
+        [Slot(294)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glPointSizexOES(Int32 size);
+        [Slot(297)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glPolygonOffsetxOES(Int32 factor, Int32 units);
+        [Slot(302)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glPrioritizeTexturesxOES(Int32 n, [CountAttribute(Parameter = "n")] UInt32* textures, [CountAttribute(Parameter = "n")] Int32* priorities);
+        [Slot(307)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe Int32 glQueryMatrixxOES([OutAttribute, CountAttribute(Count = 16)] Int32* mantissa, [OutAttribute, CountAttribute(Count = 16)] Int32* exponent);
+        [Slot(308)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glRasterPos2xOES(Int32 x, Int32 y);
+        [Slot(309)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glRasterPos2xvOES([CountAttribute(Count = 2)] Int32* coords);
+        [Slot(310)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glRasterPos3xOES(Int32 x, Int32 y, Int32 z);
         [Slot(311)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glStartTilingQCOM(UInt32 x, UInt32 y, UInt32 width, UInt32 height, UInt32 preserveMask);
+        private static extern unsafe void glRasterPos3xvOES([CountAttribute(Count = 3)] Int32* coords);
+        [Slot(312)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glRasterPos4xOES(Int32 x, Int32 y, Int32 z, Int32 w);
+        [Slot(313)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glRasterPos4xvOES([CountAttribute(Count = 4)] Int32* coords);
+        [Slot(316)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glRectxOES(Int32 x1, Int32 y1, Int32 x2, Int32 y2);
+        [Slot(317)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glRectxvOES([CountAttribute(Count = 2)] Int32* v1, [CountAttribute(Count = 2)] Int32* v2);
+        [Slot(321)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glRenderbufferStorageOES(System.Int32 target, System.Int32 internalformat, Int32 width, Int32 height);
+        [Slot(325)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glRotatexOES(Int32 angle, Int32 x, Int32 y, Int32 z);
+        [Slot(328)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glSampleCoveragexOES(Int32 value, bool invert);
+        [Slot(331)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glScalexOES(Int32 x, Int32 y, Int32 z);
+        [Slot(340)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexCoord1bOES(SByte s);
+        [Slot(341)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexCoord1bvOES([CountAttribute(Count = 1)] SByte* coords);
+        [Slot(342)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexCoord1xOES(Int32 s);
+        [Slot(343)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexCoord1xvOES([CountAttribute(Count = 1)] Int32* coords);
+        [Slot(344)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexCoord2bOES(SByte s, SByte t);
+        [Slot(345)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexCoord2bvOES([CountAttribute(Count = 2)] SByte* coords);
+        [Slot(346)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexCoord2xOES(Int32 s, Int32 t);
+        [Slot(347)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexCoord2xvOES([CountAttribute(Count = 2)] Int32* coords);
+        [Slot(348)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexCoord3bOES(SByte s, SByte t, SByte r);
+        [Slot(349)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexCoord3bvOES([CountAttribute(Count = 3)] SByte* coords);
+        [Slot(350)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexCoord3xOES(Int32 s, Int32 t, Int32 r);
+        [Slot(351)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexCoord3xvOES([CountAttribute(Count = 3)] Int32* coords);
+        [Slot(352)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexCoord4bOES(SByte s, SByte t, SByte r, SByte q);
+        [Slot(353)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexCoord4bvOES([CountAttribute(Count = 4)] SByte* coords);
+        [Slot(354)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexCoord4xOES(Int32 s, Int32 t, Int32 r, Int32 q);
+        [Slot(355)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexCoord4xvOES([CountAttribute(Count = 4)] Int32* coords);
+        [Slot(362)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexEnvxOES(System.Int32 target, System.Int32 pname, Int32 param);
+        [Slot(364)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexEnvxvOES(System.Int32 target, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(365)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexGenfOES(System.Int32 coord, System.Int32 pname, Single param);
+        [Slot(366)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexGenfvOES(System.Int32 coord, System.Int32 pname, [CountAttribute(Computed = "pname")] Single* @params);
+        [Slot(367)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexGeniOES(System.Int32 coord, System.Int32 pname, Int32 param);
+        [Slot(368)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexGenivOES(System.Int32 coord, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(369)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexGenxOES(System.Int32 coord, System.Int32 pname, Int32 param);
+        [Slot(370)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexGenxvOES(System.Int32 coord, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(377)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTexParameterxOES(System.Int32 target, System.Int32 pname, Int32 param);
+        [Slot(379)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glTexParameterxvOES(System.Int32 target, System.Int32 pname, [CountAttribute(Computed = "pname")] Int32* @params);
+        [Slot(389)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glTranslatexOES(Int32 x, Int32 y, Int32 z);
+        [Slot(390)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern byte glUnmapBufferOES(System.Int32 target);
+        [Slot(391)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glVertex2bOES(SByte x, SByte y);
+        [Slot(392)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glVertex2bvOES([CountAttribute(Count = 2)] SByte* coords);
+        [Slot(393)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glVertex2xOES(Int32 x);
+        [Slot(394)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glVertex2xvOES([CountAttribute(Count = 2)] Int32* coords);
+        [Slot(395)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glVertex3bOES(SByte x, SByte y, SByte z);
+        [Slot(396)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glVertex3bvOES([CountAttribute(Count = 3)] SByte* coords);
+        [Slot(397)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glVertex3xOES(Int32 x, Int32 y);
+        [Slot(398)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glVertex3xvOES([CountAttribute(Count = 3)] Int32* coords);
+        [Slot(399)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glVertex4bOES(SByte x, SByte y, SByte z, SByte w);
+        [Slot(400)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glVertex4bvOES([CountAttribute(Count = 4)] SByte* coords);
+        [Slot(401)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glVertex4xOES(Int32 x, Int32 y, Int32 z);
+        [Slot(402)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glVertex4xvOES([CountAttribute(Count = 4)] Int32* coords);
+        [Slot(406)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glWeightPointerOES(Int32 size, System.Int32 type, Int32 stride, [CountAttribute(Computed = "type,stride")] IntPtr pointer);
+        [Slot(77)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glDisableDriverControlQCOM(UInt32 driverControl);
+        [Slot(93)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glEnableDriverControlQCOM(UInt32 driverControl);
+        [Slot(94)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glEndTilingQCOM(System.Int32 preserveMask);
+        [Slot(99)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glExtGetBufferPointervQCOM(System.Int32 target, [OutAttribute] IntPtr @params);
+        [Slot(100)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glExtGetBuffersQCOM([OutAttribute, CountAttribute(Parameter = "maxBuffers")] UInt32* buffers, Int32 maxBuffers, [OutAttribute, CountAttribute(Count = 1)] Int32* numBuffers);
+        [Slot(101)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glExtGetFramebuffersQCOM([OutAttribute, CountAttribute(Parameter = "maxFramebuffers")] UInt32* framebuffers, Int32 maxFramebuffers, [OutAttribute, CountAttribute(Count = 1)] Int32* numFramebuffers);
+        [Slot(102)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glExtGetProgramBinarySourceQCOM(UInt32 program, System.Int32 shadertype, [OutAttribute, CountAttribute(Parameter = "*length")] IntPtr source, [OutAttribute] Int32* length);
+        [Slot(103)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glExtGetProgramsQCOM([OutAttribute, CountAttribute(Parameter = "maxPrograms")] UInt32* programs, Int32 maxPrograms, [OutAttribute, CountAttribute(Count = 1)] Int32* numPrograms);
+        [Slot(104)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glExtGetRenderbuffersQCOM([OutAttribute, CountAttribute(Parameter = "maxRenderbuffers")] UInt32* renderbuffers, Int32 maxRenderbuffers, [OutAttribute, CountAttribute(Count = 1)] Int32* numRenderbuffers);
+        [Slot(105)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glExtGetShadersQCOM([OutAttribute, CountAttribute(Parameter = "maxShaders")] UInt32* shaders, Int32 maxShaders, [OutAttribute, CountAttribute(Count = 1)] Int32* numShaders);
+        [Slot(106)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glExtGetTexLevelParameterivQCOM(UInt32 texture, System.Int32 face, Int32 level, System.Int32 pname, [OutAttribute] Int32* @params);
+        [Slot(107)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glExtGetTexSubImageQCOM(System.Int32 target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, System.Int32 format, System.Int32 type, [OutAttribute] IntPtr texels);
+        [Slot(108)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glExtGetTexturesQCOM([OutAttribute] UInt32* textures, Int32 maxTextures, [OutAttribute] Int32* numTextures);
+        [Slot(109)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern byte glExtIsProgramBinaryQCOM(UInt32 program);
+        [Slot(110)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glExtTexObjectStateOverrideiQCOM(System.Int32 target, System.Int32 pname, Int32 param);
+        [Slot(149)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetDriverControlsQCOM([OutAttribute] Int32* num, Int32 size, [OutAttribute, CountAttribute(Parameter = "size")] UInt32* driverControls);
+        [Slot(150)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern unsafe void glGetDriverControlStringQCOM(UInt32 driverControl, Int32 bufSize, [OutAttribute] Int32* length, [OutAttribute, CountAttribute(Parameter = "bufSize")] IntPtr driverControlString);
+        [Slot(335)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
+        private static extern void glStartTilingQCOM(UInt32 x, UInt32 y, UInt32 width, UInt32 height, System.Int32 preserveMask);
     }
 }
