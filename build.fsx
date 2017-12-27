@@ -125,7 +125,8 @@ Target "AssemblyInfo" (fun _ ->
           Attribute.Version release.AssemblyVersion
           Attribute.FileVersion release.AssemblyVersion
           Attribute.CLSCompliant true
-          Attribute.Copyright copyright  ]
+          Attribute.Copyright copyright
+        ]
 
     let getProjectDetails projectPath =
         let projectName = System.IO.Path.GetFileNameWithoutExtension(projectPath)

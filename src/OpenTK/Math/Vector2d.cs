@@ -202,7 +202,8 @@ namespace OpenTK
         /// <param name="result">Result of operation.</param>
         public static void Add(ref Vector2d a, ref Vector2d b, out Vector2d result)
         {
-            result = new Vector2d(a.X + b.X, a.Y + b.Y);
+            result.X = a.X + b.X;
+            result.Y = a.Y + b.Y;
         }
 
         /// <summary>
@@ -225,7 +226,8 @@ namespace OpenTK
         /// <param name="result">Result of subtraction</param>
         public static void Subtract(ref Vector2d a, ref Vector2d b, out Vector2d result)
         {
-            result = new Vector2d(a.X - b.X, a.Y - b.Y);
+            result.X = a.X - b.X;
+            result.Y = a.Y - b.Y;
         }
 
         /// <summary>
@@ -248,7 +250,8 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Multiply(ref Vector2d vector, double scale, out Vector2d result)
         {
-            result = new Vector2d(vector.X * scale, vector.Y * scale);
+            result.X = vector.X * scale;
+            result.Y = vector.Y * scale;
         }
 
         /// <summary>
@@ -271,7 +274,8 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Multiply(ref Vector2d vector, ref Vector2d scale, out Vector2d result)
         {
-            result = new Vector2d(vector.X * scale.X, vector.Y * scale.Y);
+            result.X = vector.X * scale.X;
+            result.Y = vector.Y * scale.Y;
         }
 
         /// <summary>
@@ -318,7 +322,8 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector2d vector, ref Vector2d scale, out Vector2d result)
         {
-            result = new Vector2d(vector.X / scale.X, vector.Y / scale.Y);
+            result.X = vector.X / scale.X;
+            result.Y = vector.Y / scale.Y;
         }
 
         /// <summary>
@@ -503,6 +508,54 @@ namespace OpenTK
         }
 
         /// <summary>
+        /// Compute the euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <returns>The distance</returns>
+        public static double Distance(Vector2d vec1, Vector2d vec2)
+        {
+            double result;
+            Distance(ref vec1, ref vec2, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Compute the euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <param name="result">The distance</param>
+        public static void Distance(ref Vector2d vec1, ref Vector2d vec2, out double result)
+        {
+            result = Math.Sqrt((vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y));
+        }
+
+        /// <summary>
+        /// Compute the squared euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <returns>The squared distance</returns>
+        public static double DistanceSquared(Vector2d vec1, Vector2d vec2)
+        {
+            double result;
+            DistanceSquared(ref vec1, ref vec2, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Compute the squared euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <param name="result">The squared distance</param>
+        public static void DistanceSquared(ref Vector2d vec1, ref Vector2d vec2, out double result)
+        {
+            result = (vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y);
+        }
+
+        /// <summary>
         /// Scale a vector to unit length
         /// </summary>
         /// <param name="vec">The input vector</param>
@@ -663,7 +716,8 @@ namespace OpenTK
             Quaterniond.Multiply(ref quat, ref v, out t);
             Quaterniond.Multiply(ref t, ref i, out v);
 
-            result = new Vector2d(v.X, v.Y);
+            result.X = v.X;
+            result.Y = v.Y;
         }
 
         /// <summary>

@@ -381,7 +381,8 @@ namespace OpenTK.Platform.Windows
                 }
                 if (dll == IntPtr.Zero)
                 {
-                    throw new NotSupportedException("XInput was not found on this platform");
+                   Debug.Print("XInput was not found on this platform");
+                   return;
                 }
 
                 // Load the entry points we are interested in from that dll

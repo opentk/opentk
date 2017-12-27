@@ -239,7 +239,8 @@ namespace OpenTK
         /// <param name="result">Result of operation.</param>
         public static void Add(ref Vector2 a, ref Vector2 b, out Vector2 result)
         {
-            result = new Vector2(a.X + b.X, a.Y + b.Y);
+            result.X = a.X + b.X;
+            result.Y = a.Y + b.Y;
         }
 
         /// <summary>
@@ -262,7 +263,8 @@ namespace OpenTK
         /// <param name="result">Result of subtraction</param>
         public static void Subtract(ref Vector2 a, ref Vector2 b, out Vector2 result)
         {
-            result = new Vector2(a.X - b.X, a.Y - b.Y);
+            result.X = a.X - b.X;
+            result.Y = a.Y - b.Y;
         }
 
         /// <summary>
@@ -285,7 +287,8 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Multiply(ref Vector2 vector, float scale, out Vector2 result)
         {
-            result = new Vector2(vector.X * scale, vector.Y * scale);
+            result.X = vector.X * scale;
+            result.Y = vector.Y * scale;
         }
 
         /// <summary>
@@ -308,7 +311,8 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Multiply(ref Vector2 vector, ref Vector2 scale, out Vector2 result)
         {
-            result = new Vector2(vector.X * scale.X, vector.Y * scale.Y);
+            result.X = vector.X * scale.X;
+            result.Y = vector.Y * scale.Y;
         }
 
         /// <summary>
@@ -355,7 +359,8 @@ namespace OpenTK
         /// <param name="result">Result of the operation.</param>
         public static void Divide(ref Vector2 vector, ref Vector2 scale, out Vector2 result)
         {
-            result = new Vector2(vector.X / scale.X, vector.Y / scale.Y);
+            result.X = vector.X / scale.X;
+            result.Y = vector.Y / scale.Y;
         }
 
         /// <summary>
@@ -507,6 +512,54 @@ namespace OpenTK
         {
             result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
             result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
+        }
+
+        /// <summary>
+        /// Compute the euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <returns>The distance</returns>
+        public static float Distance(Vector2 vec1, Vector2 vec2)
+        {
+            float result;
+            Distance(ref vec1, ref vec2, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Compute the euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <param name="result">The distance</param>
+        public static void Distance(ref Vector2 vec1, ref Vector2 vec2, out float result)
+        {
+            result = (float)Math.Sqrt((vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y));
+        }
+
+        /// <summary>
+        /// Compute the squared euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <returns>The squared distance</returns>
+        public static float DistanceSquared(Vector2 vec1, Vector2 vec2)
+        {
+            float result;
+            DistanceSquared(ref vec1, ref vec2, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Compute the squared euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <param name="result">The squared distance</param>
+        public static void DistanceSquared(ref Vector2 vec1, ref Vector2 vec2, out float result)
+        {
+            result = (vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y);
         }
 
         /// <summary>
@@ -692,7 +745,8 @@ namespace OpenTK
             Quaternion.Multiply(ref quat, ref v, out t);
             Quaternion.Multiply(ref t, ref i, out v);
 
-            result = new Vector2(v.X, v.Y);
+            result.X = v.X;
+            result.Y = v.Y;
         }
 
         /// <summary>
