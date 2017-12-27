@@ -127,7 +127,7 @@ namespace OpenTK.Platform.MacOS
 
             dummyContext = new GraphicsContext(Context,
                 GetAddress,
-                delegate()
+                delegate
                 {
                     return new ContextHandle(Agl.aglGetCurrentContext());
                 });
