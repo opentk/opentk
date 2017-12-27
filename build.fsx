@@ -11,6 +11,7 @@ open Fake.UserInputHelper
 open Fake.Testing
 open System
 open System.IO
+open System.Diagnostics
 
 // --------------------------------------------------------------------------------------
 // START TODO: Provide project-specific details below
@@ -78,7 +79,10 @@ let (|Fsproj|Csproj|Vbproj|) (projFileName:string) =
     | _                           -> failwith (sprintf "Project file %s not supported. Unknown project type." projFileName)
 
 
-let activeProjects =
+let buildProjects =
+    !! "src/Generator.*/**.csproj"
+
+let runtimeProjects =
     let xamarinFilter f =
         if isXamarinPlatform then
             f
@@ -89,7 +93,23 @@ let activeProjects =
 
     !! "src/**/*.??proj"
     ++ "tests/**/OpenTK.Tests*.fsproj"
+    -- "src/Generator.*/**.csproj"
     |> xamarinFilter
+
+let activeProjects =
+    Seq.concat [buildProjects; runtimeProjects]
+
+let generateBindings =
+    if not (File.Exists(".bindingsGenerated")) then
+        buildProjects
+            |> MSBuildRelease "" "Build"
+            |> ignore
+        let bindingProcess = new Process()
+        bindingProcess.StartInfo.FileName <- "src/Generator.Bind/bin/Release/Bind.exe"
+        bindingProcess.Start()
+        bindingProcess.WaitForExit()
+        File.Create(".bindingsGenerated").Close();
+
 
 // Generate assembly info files with the right version & up-to-date information
 Target "AssemblyInfo" (fun _ ->
@@ -142,9 +162,17 @@ Target "Clean" (fun _ ->
 )
 
 // --------------------------------------------------------------------------------------
+// Build generator projects, and generate bindings if neccesary
+Target "GenerateBindings" (fun _ ->
+    generateBindings
+    |> ignore
+)
+
+// --------------------------------------------------------------------------------------
 // Build library & test project
 
 Target "Build" (fun _ ->
+    generateBindings
     activeProjects
     |> MSBuildRelease "" "Build"
     |> ignore
