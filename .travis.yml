@@ -8,6 +8,7 @@ before_install:
 before_script:
  # Start a virtual framebuffer as described: https://docs.travis-ci.com/user/gui-and-headless-browsers/
  - "export DISPLAY=:99.0"
+ - "export BuildWithStyleCop=yes"
  - "sh -e /etc/init.d/xvfb start"
  - sleep 3 # give xvfb some time to start
 

@@ -2,6 +2,7 @@ image: Visual Studio 2017
 init:
   - git config --global core.autocrlf input
 build_script:
+  - set BuildWithStyleCop=yes
   - cmd: build.cmd NuGet
 test: off
 version: 0.0.1.{build}
