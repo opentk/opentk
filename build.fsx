@@ -105,7 +105,7 @@ let generateBindings =
             |> MSBuildRelease "" "Build"
             |> ignore
         let bindingProcess = new Process()
-        bindingProcess.StartInfo.FileName <- "src/Generator.Bind/bin/Release/Bind.exe"
+        bindingProcess.StartInfo.FileName <- Path.Combine("src", "Generator.Bind", "bin", "Release", "Bind.exe")
         bindingProcess.Start() |> ignore
         bindingProcess.WaitForExit() |> ignore
         File.Create(".bindingsGenerated").Close() |> ignore
