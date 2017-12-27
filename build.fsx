@@ -106,9 +106,9 @@ let generateBindings =
             |> ignore
         let bindingProcess = new Process()
         bindingProcess.StartInfo.FileName <- "src/Generator.Bind/bin/Release/Bind.exe"
-        bindingProcess.Start()
-        bindingProcess.WaitForExit()
-        File.Create(".bindingsGenerated").Close();
+        bindingProcess.Start() |> ignore
+        bindingProcess.WaitForExit() |> ignore
+        File.Create(".bindingsGenerated").Close() |> ignore
 
 
 // Generate assembly info files with the right version & up-to-date information
