@@ -92,7 +92,7 @@ let runtimeProjects =
             -- "**/OpenTK.iOS.csproj"
 
     !! "src/**/*.??proj"
-    ++ "tests/**/OpenTK.Tests*.fsproj"
+    ++ "tests/**/OpenTK.Tests*.??proj"
     -- "src/Generator.*/**.csproj"
     |> xamarinFilter
 

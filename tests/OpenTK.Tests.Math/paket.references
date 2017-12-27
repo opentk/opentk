@@ -1,0 +1,6 @@
+xunit.core
+xunit.assert
+xunit
+xunit.abstractions
+xunit.extensibility.core
+xunit.extensibility.execution
