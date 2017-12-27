@@ -7,7 +7,7 @@ This is a simple tool to convert Khronos XML to OpenTK XML files.
 Converting local files:
   Convert.exe --input-files gl.xml --output-file signatures.xml --prefix gl
 Converting latest remote specification:
-  Convert.exe --input-files https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/api/gl.xml --output-file signatures.xml --prefix gl
+  Convert.exe --input-files https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml --output-file signatures.xml --prefix gl
 
   -p, --prefix         Required. (Default: gl) The prefix to remove from parsed functions and constants.
 
