@@ -99,17 +99,6 @@ let runtimeProjects =
 let activeProjects =
     Seq.concat [buildProjects; runtimeProjects]
 
-let generateBindings =
-    if not (File.Exists(".bindingsGenerated")) then
-        buildProjects
-            |> MSBuildRelease "" "Build"
-            |> ignore
-        let bindingProcess = new Process()
-        bindingProcess.StartInfo.FileName <- Path.Combine("src", "Generator.Bind", "bin", "Release", "Bind.exe")
-        bindingProcess.Start() |> ignore
-        bindingProcess.WaitForExit() |> ignore
-        File.Create(".bindingsGenerated").Close() |> ignore
-
 
 // Generate assembly info files with the right version & up-to-date information
 Target "AssemblyInfo" (fun _ ->
@@ -165,15 +154,23 @@ Target "Clean" (fun _ ->
 // --------------------------------------------------------------------------------------
 // Build generator projects, and generate bindings if neccesary
 Target "GenerateBindings" (fun _ ->
-    generateBindings
-    |> ignore
+    if not (File.Exists(".bindingsGenerated")) then
+        buildProjects
+            |> MSBuildRelease "" "Build"
+            |> ignore
+        let bindingProcess = new Process()
+        bindingProcess.StartInfo.FileName <- Path.Combine("src", "Generator.Bind", "bin", "Release", "Bind.exe")
+        if bindingProcess.Start() then
+            bindingProcess.WaitForExit()
+            File.Create(".bindingsGenerated").Close()
+        else
+            failwith "Could not start Bind.exe"
 )
 
 // --------------------------------------------------------------------------------------
 // Build library & test project
 
 Target "Build" (fun _ ->
-    generateBindings
     activeProjects
     |> MSBuildRelease "" "Build"
     |> ignore
@@ -221,6 +218,7 @@ Target "All" DoNothing
 
 "Clean"
   ==> "AssemblyInfo"
+  ==> "GenerateBindings"
   ==> "Build"
   ==> "CopyBinaries"
   ==> "RunTests"
