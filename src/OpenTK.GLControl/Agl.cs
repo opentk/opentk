@@ -333,7 +333,7 @@ namespace OpenTK.Platform.MacOS
          ** Context functions
          */
         [DllImport(agl)] internal static extern AGLContext aglCreateContext(AGLPixelFormat pix, AGLContext share);
-        [DllImport(agl,EntryPoint="aglDestroyContext")]
+        [DllImport(agl, EntryPoint="aglDestroyContext")]
         private static extern byte _aglDestroyContext(AGLContext ctx);
         internal static bool aglDestroyContext(AGLContext context)
         {
@@ -348,7 +348,7 @@ namespace OpenTK.Platform.MacOS
          ** Current state functions
          */
 
-        [DllImport(agl,EntryPoint="aglSetCurrentContext")]
+        [DllImport(agl, EntryPoint="aglSetCurrentContext")]
         private static extern byte _aglSetCurrentContext(AGLContext ctx);
         internal static bool aglSetCurrentContext(IntPtr context)
         {
@@ -370,7 +370,7 @@ namespace OpenTK.Platform.MacOS
         /*
          ** Drawable Functions
          */
-        [DllImport(agl,EntryPoint="aglSetDrawable")]
+        [DllImport(agl, EntryPoint="aglSetDrawable")]
         private static extern byte _aglSetDrawable(AGLContext ctx, AGLDrawable draw);
 
         internal static void aglSetDrawable(AGLContext ctx, AGLDrawable draw)
@@ -458,8 +458,8 @@ namespace OpenTK.Platform.MacOS
         /*
          ** Error functions
          */
-        [DllImport(agl,EntryPoint="aglGetError")] internal static extern AglError GetError();
-        [DllImport(agl,EntryPoint="aglErrorString")]
+        [DllImport(agl, EntryPoint="aglGetError")] internal static extern AglError GetError();
+        [DllImport(agl, EntryPoint="aglErrorString")]
         private static extern IntPtr _aglErrorString(AglError code);
         internal static string ErrorString(AglError code)
         {
@@ -476,7 +476,7 @@ namespace OpenTK.Platform.MacOS
          ** Surface texture function
          */
         [DllImport(agl)]
-        private static extern void aglSurfaceTexture (AGLContext context, GLenum target, GLenum internalformat, AGLContext surfacecontext) ;
+        private static extern void aglSurfaceTexture (AGLContext context, GLenum target, GLenum internalformat, AGLContext surfacecontext);
 
         /*
          ** PBuffer functions
@@ -494,15 +494,15 @@ namespace OpenTK.Platform.MacOS
          ** Pbuffer Drawable Functions
          */
         [DllImport(agl)]
-        private static extern byte aglSetPBuffer (AGLContext ctx, AGLPbuffer pbuffer, int face, int level, int screen)    ;
+        private static extern byte aglSetPBuffer (AGLContext ctx, AGLPbuffer pbuffer, int face, int level, int screen);
         [DllImport(agl)]
-        private static extern byte aglGetPBuffer (AGLContext ctx, AGLPbuffer *pbuffer, int *face, int *level, int *screen)  ;
+        private static extern byte aglGetPBuffer (AGLContext ctx, AGLPbuffer *pbuffer, int *face, int *level, int *screen);
 
         /*
          ** CGL functions
          */
         [DllImport(agl)]
-        private static extern byte aglGetCGLContext(AGLContext ctx, void **cgl_ctx) ;
+        private static extern byte aglGetCGLContext(AGLContext ctx, void **cgl_ctx);
         [DllImport(agl)]
         private static extern byte aglGetCGLPixelFormat(AGLPixelFormat pix, void **cgl_pix);
 
