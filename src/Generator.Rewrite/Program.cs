@@ -72,6 +72,7 @@ namespace OpenTK.Rewrite
             var read_params = new ReaderParameters();
             var write_params = new WriterParameters();
 
+            read_params.AssemblyResolver = new OpenTKAssemblyResolver();
             read_params.ReadSymbols = true;
             read_params.ReadWrite = true;
             write_params.WriteSymbols = true;
