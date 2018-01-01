@@ -47,7 +47,6 @@ namespace OpenTK
         private readonly INativeWindow implementation;
 
         private bool events;
-        private bool cursor_visible = true;
         private bool previous_cursor_visible = true;
 
         /// <summary>
@@ -476,10 +475,10 @@ namespace OpenTK
         /// </summary>
         public bool CursorVisible
         {
-            get { return cursor_visible; }
+            get { return implementation.CursorVisible; }
             set
             {
-                cursor_visible = value;
+                if (value == implementation.CursorVisible) return;
                 implementation.CursorVisible = value;
             }
         }
