@@ -66,8 +66,9 @@ namespace OpenTK
         { }
 
         /// <summary>
-        /// Construct a new Quaternion from given Euler angles. The rotations will get applied in following order:
-        /// 1. Around X, 2. Around Y, 3. Around Z
+        /// Construct a new Quaternion from given Euler angles in radians. 
+        /// The rotations will get applied in following order:
+        /// 1. around X axis, 2. around Y axis, 3. around Z axis
         /// </summary>
         /// <param name="rotationX">Counterclockwise rotation around X axis in radian</param>
         /// <param name="rotationY">Counterclockwise rotation around Y axis in radian</param>
@@ -409,7 +410,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Build a quaternion from the given axis and angle
+        /// Build a quaternion from the given axis and angle in radians
         /// </summary>
         /// <param name="axis">The axis to rotate about</param>
         /// <param name="angle">The rotation angle in radians</param>
@@ -432,9 +433,9 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Builds a Quaternion from the given euler angles
+        /// Builds a Quaternion from the given euler angles in radians
         /// The rotations will get applied in following order:
-        /// 1. pitch, 2. yaw, 3. roll
+        /// 1. pitch (X axis), 2. yaw (Y axis), 3. roll (Z axis)
         /// </summary>
         /// <param name="pitch">The pitch (attitude), counterclockwise rotation around X axis</param>
         /// <param name="yaw">The yaw (heading), counterclockwise rotation around Y axis</param>
@@ -446,9 +447,9 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Builds a Quaternion from the given euler angles
+        /// Builds a Quaternion from the given euler angles in radians.
         /// The rotations will get applied in following order:
-        /// 1. Around X, 2. Around Y, 3. Around Z
+        /// 1. X axis, 2. Y axis, 3. Z axis
         /// </summary>
         /// <param name="eulerAngles">The counterclockwise euler angles as a vector</param>
         /// <returns>The equivalent Quaternion</returns>

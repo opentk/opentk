@@ -50,7 +50,7 @@ namespace OpenTK.Tests.Math
 		/// or does not contain 0 when it should be</returns>
 		/// <param name="toTest">To test</param>
 		/// <param name="expected">Expected directions. Values getting only 0 checked</param>
-		public static bool VerifyEuqalSignleDirection(Vector3 toTest, Vector3 expected)
+		public static bool VerifyEqualSingleDirection(Vector3 toTest, Vector3 expected)
 		{
 			//To verify the direction of an vector, just respect the 0 values and check against these.
 			//The length of the vectors are ignored.
@@ -109,7 +109,7 @@ namespace OpenTK.Tests.Math
 			//Assert: Use helper, to check if part of the two correct axis is zero. I just want check the direction
 			Vector3 resultXYZ = cut.Xyz;
 
-			Assert.True(QuaternionTestHelper.VerifyEuqalSignleDirection(resultXYZ, expectedResult));
+			Assert.True(QuaternionTestHelper.VerifyEqualSingleDirection(resultXYZ, expectedResult));
 		}
 
 		/// <summary>
@@ -128,7 +128,7 @@ namespace OpenTK.Tests.Math
 			//Assert: Use helper, to check if part of the two correct axis is zero. I just want check the direction
 			Vector3 resultXYZ = cut.Xyz;
 
-			Assert.True(QuaternionTestHelper.VerifyEuqalSignleDirection(resultXYZ, expectedResult));
+			Assert.True(QuaternionTestHelper.VerifyEqualSingleDirection(resultXYZ, expectedResult));
 		}
 
 		/// <summary>
@@ -147,7 +147,7 @@ namespace OpenTK.Tests.Math
 			//Assert: Use helper, to check if part of the two correct axis is zero. I just want check the direction
 			Vector3 resultXYZ = cut.Xyz;
 
-			Assert.True(QuaternionTestHelper.VerifyEuqalSignleDirection(resultXYZ, expectedResult));
+			Assert.True(QuaternionTestHelper.VerifyEqualSingleDirection(resultXYZ, expectedResult));
 		}
 
 		/// <summary>
@@ -166,7 +166,7 @@ namespace OpenTK.Tests.Math
 			//Assert: Use helper, to check if part of the two correct axis is zero. I just want check the direction
 			Vector3 resultXYZ = cut.Xyz;
 
-			Assert.True(QuaternionTestHelper.VerifyEuqalSignleDirection(resultXYZ, expectedResult));
+			Assert.True(QuaternionTestHelper.VerifyEqualSingleDirection(resultXYZ, expectedResult));
 		}
 
 		/// <summary>
@@ -186,7 +186,7 @@ namespace OpenTK.Tests.Math
 			//Assert: Use helper, to check if part of the two correct axis is zero. I just want check the direction
 			Vector3 resultXYZ = cut.Xyz;
 
-			Assert.True(QuaternionTestHelper.VerifyEuqalSignleDirection(resultXYZ, expectedResult));
+			Assert.True(QuaternionTestHelper.VerifyEqualSingleDirection(resultXYZ, expectedResult));
 		}
 
 		/// <summary>
@@ -205,7 +205,7 @@ namespace OpenTK.Tests.Math
 			cut.ToAxisAngle(out resultXYZ, out dontCare);
 
 			//Assert: Use helper, to check if part of the two correct axis is zero. I just want check the direction
-			Assert.True(QuaternionTestHelper.VerifyEuqalSignleDirection(resultXYZ, expectedResult));
+			Assert.True(QuaternionTestHelper.VerifyEqualSingleDirection(resultXYZ, expectedResult));
 		}
 
 		//TODO: Make also checks with rotation angle
