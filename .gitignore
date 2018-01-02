@@ -266,6 +266,7 @@ _Pvt_Extensions
 
 # Paket dependency manager
 .paket/paket.exe
+.paket/Paket.Restore.targets
 paket-files/
 
 # FAKE - F# Make
@@ -376,12 +377,9 @@ nuget/*.nupkg
 release.cmd
 release.sh
 localpackages/
-paket-files
 *.orig
-.paket/paket.exe
 docs/content/license.md
 docs/content/release-notes.md
-.fake
 docs/tools/FSharp.Formatting.svclog
 
 # ===========
@@ -441,19 +439,15 @@ fabric.properties
 # ============
 
 #User Specific
-*.userprefs
 *.usertasks
 
 #Mono Project Files
-*.pidb
 *.resources
 test-results/
 
 # ================
 # Linux-specific
 # ================
-
-*~
 
 # temporary files which can be created if a process still has a handle open of a deleted file
 .fuse_hidden*
@@ -482,7 +476,6 @@ test-results/
 # ============
 
 # -*- mode: gitignore; -*-
-*~
 \#*\#
 /.emacs.desktop
 /.emacs.desktop.lock
@@ -542,6 +535,20 @@ Session.vim
 
 # Temporary
 .netrwhist
-*~
 # Auto-generated tag files
 tags
+
+# OpenTK Binding files
+.bindingsGenerated
+src/OpenTK/Graphics/ES11/ES11.cs
+src/OpenTK/Graphics/ES11/ES11Enums.cs
+src/OpenTK/Graphics/ES20/ES20.cs
+src/OpenTK/Graphics/ES20/ES20Enums.cs
+src/OpenTK/Graphics/OpenGL/GL.cs
+src/OpenTK/Graphics/OpenGL/GLEnums.cs
+src/OpenTK/Graphics/OpenGL4/GL4.cs
+src/OpenTK/Graphics/OpenGL4/GL4Enums.cs
+
+# OpenTK AssemblyInfo files
+**/Properties/AssemblyInfo.cs
+**/AssemblyInfo.fs

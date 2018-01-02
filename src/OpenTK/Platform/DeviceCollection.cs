@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 //
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -38,23 +39,70 @@ namespace OpenTK.Platform
     //        that is added.
     internal class DeviceCollection<T> : IEnumerable<T>
     {
+        internal struct Enumerator : IEnumerator<T>
+        {
+            private int Index;
+            private DeviceCollection<T> Collection;
+
+            internal Enumerator(DeviceCollection<T> collection)
+            {
+                Collection = collection;
+                Index = -1;
+                Current = default(T);
+            }
+
+            public T Current { get; private set; }
+
+            object IEnumerator.Current
+            {
+                get
+                {
+                    return Current;
+                }
+            }
+
+            public void Dispose()
+            {
+            }
+
+            public bool MoveNext()
+            {
+                do
+                {
+                    ++Index;
+                    if (Index < Collection.Devices.Count)
+                    {
+                        Current = Collection.Devices[Index];
+                    }
+                } while (Index < Collection.Devices.Count && Collection.Devices[Index] == null);
+
+                return Index < Collection.Devices.Count;
+            }
+
+            public void Reset()
+            {
+                Index = -1;
+                Current = default(T);
+            }
+        }
+
         private readonly Dictionary<long, int> Map = new Dictionary<long, int>();
         private readonly List<T> Devices = new List<T>();
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
-            return Devices.GetEnumerator();
+            return new Enumerator(this);
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return new Enumerator(this);
         }
 
         // This avoids boxing when using foreach loops
-        public List<T>.Enumerator GetEnumerator()
+        public Enumerator GetEnumerator()
         {
-            return Devices.GetEnumerator();
+            return new Enumerator(this);
         }
 
         public T this[int index]

@@ -319,14 +319,12 @@ namespace OpenTK.Platform.X11
                         Handle, System.Threading.Thread.CurrentThread.ManagedThreadId, Display));
 
                 bool result;
-                using (new XLock(Display))
+                result = Glx.MakeCurrent(Display, IntPtr.Zero, IntPtr.Zero);
+                if (result)
                 {
-                    result = Glx.MakeCurrent(Display, IntPtr.Zero, IntPtr.Zero);
-                    if (result)
-                    {
-                        currentWindow = null;
-                    }
+                    currentWindow = null;
                 }
+
                 Debug.Print("{0}", result ? "done!" : "failed.");
             }
             else
@@ -342,13 +340,10 @@ namespace OpenTK.Platform.X11
                     throw new InvalidOperationException("Invalid display, window or context.");
                 }
 
-                using (new XLock(Display))
+                result = Glx.MakeCurrent(Display, w.Handle, Handle);
+                if (result)
                 {
-                    result = Glx.MakeCurrent(Display, w.Handle, Handle);
-                    if (result)
-                    {
-                        currentWindow = w;
-                    }
+                    currentWindow = w;
                 }
 
                 if (!result)
@@ -368,10 +363,7 @@ namespace OpenTK.Platform.X11
         {
             get
             {
-                using (new XLock(Display))
-                {
-                    return Glx.GetCurrentContext() == Handle.Handle;
-                }
+                return Glx.GetCurrentContext() == Handle.Handle;
             }
         }
 
@@ -488,10 +480,7 @@ namespace OpenTK.Platform.X11
 
                     if (IsCurrent)
                     {
-                        using (new XLock(display))
-                        {
-                            Glx.MakeCurrent(display, IntPtr.Zero, IntPtr.Zero);
-                        }
+                        Glx.MakeCurrent(display, IntPtr.Zero, IntPtr.Zero);
                     }
                     using (new XLock(display))
                     {
