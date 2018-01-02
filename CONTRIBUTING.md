@@ -4,7 +4,7 @@
 First of all, thank you for considering contributing to the OpenTK project! It's a large codebase
 with a lot of twists and turns, and a helping hand is always welcome.
 
-There are multiple ways to contribue to the project - creating bug reports, opening pull requests,
+There are multiple ways to contribute to the project - creating bug reports, opening pull requests,
 as well as commenting on and engaging in discussions about other contributions, to name a few. This
 document is intented as a set of guidelines to help your contribution get accepted faster, maintain
 a high standard, and to help us (the maintainers) set a few ground rules for working with us.
