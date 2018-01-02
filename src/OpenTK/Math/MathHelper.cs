@@ -322,20 +322,14 @@ namespace OpenTK
         /// <returns></returns>
         public static bool ApproximatelyEqual(float a, float b, int maxDeltaBits)
         {
-            // we use longs here, otherwise we run into a two's complement problem, causing this to fail with -2 and 2.0
-            long aInt = FloatToInt32Bits(a);
-            if (aInt < 0)
+            int aInt = FloatToInt32Bits(a);
+            int bInt = FloatToInt32Bits(b);
+            if ((bInt ^ aInt) < 0)
             {
-                aInt = Int32.MinValue - aInt;
+                return false;
             }
 
-            long bInt = FloatToInt32Bits(b);
-            if (bInt < 0)
-            {
-                bInt = Int32.MinValue - bInt;
-            }
-
-            long intDiff = Math.Abs(aInt - bInt);
+            int intDiff = Math.Abs(aInt - bInt);
             return intDiff <= (1 << maxDeltaBits);
         }
 
