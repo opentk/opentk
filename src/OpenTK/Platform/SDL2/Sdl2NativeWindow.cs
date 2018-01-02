@@ -933,6 +933,7 @@ namespace OpenTK.Platform.SDL2
             }
             set
             {
+                if (value == is_cursor_visible) return;
                 lock (sync)
                 {
                     if (Exists)

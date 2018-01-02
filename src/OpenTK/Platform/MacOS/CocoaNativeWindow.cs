@@ -1239,6 +1239,7 @@ namespace OpenTK.Platform.MacOS
             get { return cursorVisible; }
             set
             {
+                if (value == cursorVisible) return;
                 if (value && !cursorVisible)
                 {
                     SetCursorVisible(true);
