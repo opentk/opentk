@@ -936,6 +936,35 @@ namespace OpenTK
         /// <summary>Transform a Vector by the given Matrix</summary>
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector3 Transform(Vector3 vec, Matrix4 mat)
+        {
+            Vector3 result;
+            Transform(ref vec, ref mat, out result);
+            return result;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix</summary>
+        /// <remarks>
+        /// It is incorrect to call this method passing the same variable for
+        /// <paramref name="result"/> as for <paramref name="left"/> or
+        /// <paramref name="right"/>.
+        /// </remarks>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="result">The transformed vector</param>
+        public static void Transform(ref Vector3 vec, ref Matrix4 mat, out Vector3 result)
+        {
+            Vector4 v4 = new Vector4(vec.X, vec.Y, vec.Z, 1.0f);
+            Vector4.Transform(ref v4, ref mat, out v4);
+            result.X = v4.X;
+            result.Y = v4.Y;
+            result.Z = v4.Z;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix</summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
         /// <param name="result">The transformed vector</param>
         public static void Transform(ref Vector3 vec, ref Matrix3 mat, out Vector3 result)
         {
