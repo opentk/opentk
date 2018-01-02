@@ -305,7 +305,8 @@ namespace OpenTK
             return Math.Max(Math.Min(n, max), min);
         }
 
-        private static unsafe int FloatToInt32Bits(float f) {
+        private static unsafe int FloatToInt32Bits(float f)
+        {
             return *((int*)&f);
         }
 
@@ -319,7 +320,8 @@ namespace OpenTK
         /// <param name="b">>the second value to compare</param>
         /// <param name="maxDeltaBits">the number of floating point bits to check</param>
         /// <returns></returns>
-        public static bool ApproximatelyEqual(float a, float b, int maxDeltaBits) {
+        public static bool ApproximatelyEqual(float a, float b, int maxDeltaBits)
+        {
             // we use longs here, otherwise we run into a two's complement problem, causing this to fail with -2 and 2.0
             long aInt = FloatToInt32Bits(a);
             if (aInt < 0)
@@ -449,7 +451,5 @@ namespace OpenTK
             double diff = Math.Abs(a - b);
             return diff <= tolerance;
         }
-
-
-            }
+    }
 }
