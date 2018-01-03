@@ -165,8 +165,8 @@ the rest of the pull request.
 
 All code changes must follow these rules:
 
-* The [Style Guide](https://www.PLACE.HOLDER/style-guide) should be adhered to religiously. In general, this is
-the same as following the MSDN and CoreFX guidelines with some changes.
+* The style should be adhered to religiously. In general, this is the
+same as following the MSDN and CoreFX guidelines with some changes. A complete style guide is in the works.
 * All new methods, fields, properties, events, classes, structures and enumerations must have appropriate
 XML documentation comments wherein their behaviour is explained. These comments will be visible to the end
 user, and should (in combination with the naming of the element) be sufficient to fully understand what
