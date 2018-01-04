@@ -6,6 +6,7 @@ open FsCheck.Xunit
 open System
 open System.Runtime.InteropServices
 open OpenTK
+open OpenTK.Tests.Generators
 
 module Vector4 =
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]

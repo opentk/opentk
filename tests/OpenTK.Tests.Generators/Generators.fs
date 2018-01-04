@@ -1,8 +1,6 @@
-﻿namespace OpenTK.Tests
+﻿namespace OpenTK.Tests.Generators
 
-open Xunit
 open FsCheck
-open FsCheck.Xunit
 open System
 open OpenTK
 
@@ -66,7 +64,7 @@ module private Generators =
         |> Gen.map Matrix4
         |> Arb.fromGen
 
-type OpenTKGen =
+type public OpenTKGen =
     static member Single() = single
     static member float32() = single
     static member Double() = double

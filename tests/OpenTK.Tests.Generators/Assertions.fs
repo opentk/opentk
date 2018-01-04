@@ -1,4 +1,4 @@
-﻿namespace OpenTK.Tests
+﻿namespace OpenTK.Tests.Generators
 
 open Xunit
 open FsCheck
@@ -7,7 +7,7 @@ open System
 open OpenTK
 
 [<AutoOpen>]
-module private AssertHelpers =
+module public AssertHelpers =
     [<Literal>]
     let private BitAccuracy = 16
 
@@ -30,7 +30,7 @@ module private AssertHelpers =
 
 /// We use a full type here instead of a module, as the overloading semantics are more suitable for our desired goal.
 [<Sealed>]
-type internal Assert =
+type public Assert =
 
     static member ApproximatelyEquivalent(a : Vector2,b : Vector2) =
         if not <| approxEq a.X b.X && approxEq a.Y b.Y then raise <| new Xunit.Sdk.EqualException(a,b)
