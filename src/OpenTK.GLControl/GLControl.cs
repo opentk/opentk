@@ -223,7 +223,7 @@ namespace OpenTK
 
                 if (HasValidContext)
                 {
-                    ((IGraphicsContextInternal) _context).LoadAll();
+                    ((IGraphicsContextInternal)_context).LoadAll();
                 }
 
                 // Deferred setting of vsync mode. See VSync property for more information.
@@ -409,7 +409,7 @@ namespace OpenTK
             get
             {
                 ValidateState();
-                return ClientSize.Width / (float) ClientSize.Height;
+                return ClientSize.Width / (float)ClientSize.Height;
             }
         }
 
