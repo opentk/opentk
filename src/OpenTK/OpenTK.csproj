@@ -41,6 +41,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <Deterministic>true</Deterministic>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\..\stylecop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
@@ -823,5 +825,4 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
-  <Import Project="..\..\build\StyleCop.props" />
 </Project>

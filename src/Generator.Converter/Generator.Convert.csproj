@@ -40,6 +40,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <Deterministic>true</Deterministic>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\..\stylecop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <BaseAddress>285212672</BaseAddress>
@@ -155,7 +157,6 @@
       </ItemGroup>
     </When>
   </Choose>
-  <Import Project="..\..\build\StyleCop.props" />
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v1.1' Or $(TargetFrameworkVersion) == 'v1.2')">
       <ItemGroup>

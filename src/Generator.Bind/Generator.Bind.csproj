@@ -41,6 +41,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <Deterministic>true</Deterministic>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\..\stylecop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <BaseAddress>285212672</BaseAddress>
@@ -273,5 +275,4 @@
   <ItemGroup>
     <Folder Include="Specifications\Docs\" />
   </ItemGroup>
-  <Import Project="..\..\build\StyleCop.props" />
 </Project>
