@@ -41,6 +41,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <Deterministic>true</Deterministic>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\..\stylecop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
@@ -166,7 +168,6 @@
     </AdditionalFiles>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\build\StyleCop.props" />
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>

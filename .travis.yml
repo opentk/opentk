@@ -13,6 +13,8 @@ before_script:
 
 script:
   - travis_wait ./build.sh NuGet
+  - mono .paket/paket.exe install
+  - git diff --exit-code
 
 after_script:
   - mono --debug --profile=log:coverage,covfilter=+OpenTK,covfilter=-OpenTK.Tests,covfilter=-FSharp.Core,covfilter=-FsCheck,covfilter=-xunit.assert "packages/xunit.runner.console/tools/xunit.console.exe"  "tests/OpenTK.Tests/bin/Release/OpenTK.Tests.dll" -parallel none
