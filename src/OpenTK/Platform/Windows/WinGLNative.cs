@@ -1256,7 +1256,7 @@ namespace OpenTK.Platform.Windows
 
         public override bool CursorVisible
         {
-            get { return cursor_visible_count >= 0; } // Not used
+            get { return cursor_visible_count >= 0; }
             set
             {
                 if (value && cursor_visible_count < 0)

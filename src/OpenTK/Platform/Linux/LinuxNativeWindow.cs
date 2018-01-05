@@ -508,7 +508,6 @@ namespace OpenTK.Platform.Linux
             }
             set
             {
-                if (value == is_cursor_visible) return;
                 if (value && !is_cursor_visible)
                 {
                     SetCursor(cursor_current);
