@@ -56,7 +56,7 @@ namespace OpenTK
         private bool _resizeEventSuppressed;
 
         // Indicates whether the control is in design mode. Due to issues
-        // wiith the DesignMode property and nested controls,we need to
+        // with the DesignMode property and nested controls,we need to
         // evaluate this in the constructor.
         private readonly bool _designMode;
 
@@ -145,7 +145,7 @@ namespace OpenTK
         {
             if (!Context.IsCurrent)
             {
-                Debug.Print(@"[GLControl] Attempted to access {0} on a non-current context. Results undefined.", message);
+                Debug.Print("[GLControl] Attempted to access {0} on a non-current context. Results undefined.", message);
             }
         }
 
@@ -168,7 +168,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets the <c>CreateParams</c> instance for this <c>GLControl</c>
+        /// Gets the <c>CreateParams</c> instance for this <c>GLControl</c>
         /// </summary>
         protected override CreateParams CreateParams
         {
@@ -271,7 +271,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Raises the System.Windows.Forms.Control.Paint event.
+        /// Raises the System.Windows.Forms.Control.Paint event.
         /// </summary>
         /// <param name="e">A System.Windows.Forms.PaintEventArgs that contains the event data.</param>
         protected override void OnPaint(PaintEventArgs e)
@@ -328,7 +328,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Raises the ParentChanged event.
+        /// Raises the ParentChanged event.
         /// </summary>
         /// <param name="e">A System.EventArgs that contains the event data.</param>
         protected override void OnParentChanged(EventArgs e)
