@@ -163,4 +163,12 @@
     </When>
   </Choose>
   <Import Project="..\..\packages\gtk-sharp3\build\gtk-sharp3.targets" Condition="Exists('..\..\packages\gtk-sharp3\build\gtk-sharp3.targets')" Label="Paket" />
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll">
+      <Paket>True</Paket>
+    </Analyzer>
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers\analyzers\dotnet\cs\StyleCop.Analyzers.dll">
+      <Paket>True</Paket>
+    </Analyzer>
+  </ItemGroup>
 </Project>
