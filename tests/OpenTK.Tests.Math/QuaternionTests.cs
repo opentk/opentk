@@ -144,9 +144,6 @@ namespace OpenTK.Tests.Math
 
 			//TODO: Make also checks with ccw rotation angle and correct applied rotation order of multiple axis
 		}
-
-
-
 	}
 }
 
