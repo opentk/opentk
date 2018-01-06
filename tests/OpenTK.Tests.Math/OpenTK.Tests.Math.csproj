@@ -47,9 +47,16 @@
   <ItemGroup>
     <Compile Include="BezierCurveTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuaternionTests.cs" />
+    <Compile Include="Helpers\QuaternionTestHelper.cs" />
+    <Compile Include="DataProviders\QuaternionTestDataGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="paket.references" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+    <Folder Include="Generators\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -66,34 +66,37 @@ namespace OpenTK
         { }
 
         /// <summary>
-        /// Construct a new Quaternion from given Euler angles
+        /// Construct a new Quaternion from given Euler angles in radians. 
+        /// The rotations will get applied in following order:
+        /// 1. around X axis, 2. around Y axis, 3. around Z axis
         /// </summary>
-        /// <param name="pitch">The pitch (attitude), rotation around X axis</param>
-        /// <param name="yaw">The yaw (heading), rotation around Y axis</param>
-        /// <param name="roll">The roll (bank), rotation around Z axis</param>
-        public Quaternion(float pitch, float yaw, float roll)
+        /// <param name="rotationX">Counterclockwise rotation around X axis in radian</param>
+        /// <param name="rotationY">Counterclockwise rotation around Y axis in radian</param>
+        /// <param name="rotationZ">Counterclockwise rotation around Z axis in radian</param>
+        public Quaternion(float rotationX, float rotationY, float rotationZ)
         {
-            yaw *= 0.5f;
-            pitch *= 0.5f;
-            roll *= 0.5f;
+            rotationX *= 0.5f;
+            rotationY *= 0.5f;
+            rotationZ *= 0.5f;
 
-            float c1 = (float)Math.Cos(yaw);
-            float c2 = (float)Math.Cos(pitch);
-            float c3 = (float)Math.Cos(roll);
-            float s1 = (float)Math.Sin(yaw);
-            float s2 = (float)Math.Sin(pitch);
-            float s3 = (float)Math.Sin(roll);
+            float c1 = (float)Math.Cos(rotationX);
+            float c2 = (float)Math.Cos(rotationY);
+            float c3 = (float)Math.Cos(rotationZ);
+            float s1 = (float)Math.Sin(rotationX);
+            float s2 = (float)Math.Sin(rotationY);
+            float s3 = (float)Math.Sin(rotationZ);
 
             W = c1 * c2 * c3 - s1 * s2 * s3;
-            Xyz.X = s1 * s2 * c3 + c1 * c2 * s3;
-            Xyz.Y = s1 * c2 * c3 + c1 * s2 * s3;
-            Xyz.Z = c1 * s2 * c3 - s1 * c2 * s3;
+            Xyz.X = s1 * c2 * c3 + c1 * s2 * s3;
+            Xyz.Y = c1 * s2 * c3 - s1 * c2 * s3;
+            Xyz.Z = c1 * c2 * s3 + s1 * s2 * c3;
         }
 
         /// <summary>
-        /// Construct a new Quaternion from given Euler angles
+        /// Construct a new Quaternion from given Euler angles. The rotations will get applied in following order:
+        /// 1. Around X, 2. Around Y, 3. Around Z
         /// </summary>
-        /// <param name="eulerAngles">The euler angles as a Vector3</param>
+        /// <param name="eulerAngles">The counterclockwise euler angles as a Vector3</param>
         public Quaternion(Vector3 eulerAngles)
             : this(eulerAngles.X, eulerAngles.Y, eulerAngles.Z)
         { }
@@ -407,7 +410,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Build a quaternion from the given axis and angle
+        /// Build a quaternion from the given axis and angle in radians
         /// </summary>
         /// <param name="axis">The axis to rotate about</param>
         /// <param name="angle">The rotation angle in radians</param>
@@ -430,11 +433,13 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Builds a Quaternion from the given euler angles
+        /// Builds a Quaternion from the given euler angles in radians
+        /// The rotations will get applied in following order:
+        /// 1. pitch (X axis), 2. yaw (Y axis), 3. roll (Z axis)
         /// </summary>
-        /// <param name="pitch">The pitch (attitude), rotation around X axis</param>
-        /// <param name="yaw">The yaw (heading), rotation around Y axis</param>
-        /// <param name="roll">The roll (bank), rotation around Z axis</param>
+        /// <param name="pitch">The pitch (attitude), counterclockwise rotation around X axis</param>
+        /// <param name="yaw">The yaw (heading), counterclockwise rotation around Y axis</param>
+        /// <param name="roll">The roll (bank), counterclockwise rotation around Z axis</param>
         /// <returns></returns>
         public static Quaternion FromEulerAngles(float pitch, float yaw, float roll)
         {
@@ -442,9 +447,11 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Builds a Quaternion from the given euler angles
+        /// Builds a Quaternion from the given euler angles in radians.
+        /// The rotations will get applied in following order:
+        /// 1. X axis, 2. Y axis, 3. Z axis
         /// </summary>
-        /// <param name="eulerAngles">The euler angles as a vector</param>
+        /// <param name="eulerAngles">The counterclockwise euler angles as a vector</param>
         /// <returns>The equivalent Quaternion</returns>
         public static Quaternion FromEulerAngles(Vector3 eulerAngles)
         {
@@ -452,23 +459,26 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Builds a Quaternion from the given euler angles
+        /// Builds a Quaternion from the given euler angles in radians.
+        /// The rotations will get applied in following order:
+        /// 1. Around X, 2. Around Y, 3. Around Z
         /// </summary>
-        /// <param name="eulerAngles">The euler angles a vector</param>
+        /// <param name="eulerAngles">The counterclockwise euler angles a vector</param>
         /// <param name="result">The equivalent Quaternion</param>
         public static void FromEulerAngles(ref Vector3 eulerAngles, out Quaternion result)
         {
-            float c1 = (float)Math.Cos(eulerAngles.Y * 0.5f);
-            float c2 = (float)Math.Cos(eulerAngles.X * 0.5f);
+
+            float c1 = (float)Math.Cos(eulerAngles.X * 0.5f);
+            float c2 = (float)Math.Cos(eulerAngles.Y * 0.5f);
             float c3 = (float)Math.Cos(eulerAngles.Z * 0.5f);
-            float s1 = (float)Math.Sin(eulerAngles.Y * 0.5f);
-            float s2 = (float)Math.Sin(eulerAngles.X * 0.5f);
+            float s1 = (float)Math.Sin(eulerAngles.X * 0.5f);
+            float s2 = (float)Math.Sin(eulerAngles.Y * 0.5f);
             float s3 = (float)Math.Sin(eulerAngles.Z * 0.5f);
 
             result.W = c1 * c2 * c3 - s1 * s2 * s3;
-            result.Xyz.X = s1 * s2 * c3 + c1 * c2 * s3;
-            result.Xyz.Y = s1 * c2 * c3 + c1 * s2 * s3;
-            result.Xyz.Z = c1 * s2 * c3 - s1 * c2 * s3;
+            result.Xyz.X = s1 * c2 * c3 + c1 * s2 * s3;
+            result.Xyz.Y = c1 * s2 * c3 - s1 * c2 * s3;
+            result.Xyz.Z = c1 * c2 * s3 + s1 * s2 * c3;
         }
 
         /// <summary>
