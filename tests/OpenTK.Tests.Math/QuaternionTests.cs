@@ -4,23 +4,22 @@ using OpenTK.Tests.Math.DataProviders;
 
 namespace OpenTK.Tests.Math
 {
-	public class Quaternion_Tests
+	public class QuaternionTests
 	{
 		/// <summary>
-		/// Contains all tests which cover the ctor of Quaternion.
+		/// Contains all tests which cover the constructor of Quaternion.
 		/// </summary>
-		public class Constructor_Tests
+		public class Constructor
 		{
 			/// <summary>
 			/// Checks if a single given value (either pitch, yaw or roll) get converted into correct x,y,z value of quaternion.
 			/// </summary>
 			/// <param name="eulerValues">euler angle values</param>
 			/// <param name="expectedResult">expected xyz component of quaternion</param>
-			/// <param name="testName">Taken from nUnit test data. Don't know how to name data driven tests for xUnit which actually works.</param>
 			[Theory]
 			[MemberData(nameof(QuaternionTestDataGenerator.SingleAxisTestCases), MemberType = typeof(QuaternionTestDataGenerator))]
-			public void SingleAxisAsEulerAnglesInFloatsIsConvertedToCorrectValueInQuaternion
-			(Vector3 eulerValues, Vector3 expectedResult, string testName)
+			public void SingleAxisAsEulerAnglesInFloatsIsConvertedToCorrectQuaternionComponents
+			(Vector3 eulerValues, Vector3 expectedResult)
 			{
 				//Arrange + Act: Create Quaternion with "pitch/yaw/roll"
 				var cut = new Quaternion(eulerValues.X, eulerValues.Y, eulerValues.Z);
@@ -36,11 +35,10 @@ namespace OpenTK.Tests.Math
 			/// </summary>
 			/// <param name="eulerValues">euler angle values</param>
 			/// <param name="expectedResult">expected xyz component of quaternion</param>
-			/// <param name="testName">Taken from nUnit test data. Don't know how to name data driven tests for xUnit which actually works.</param>
 			[Theory]
 			[MemberData(nameof(QuaternionTestDataGenerator.SingleAxisTestCases), MemberType = typeof(QuaternionTestDataGenerator))]
-			public void SingleAxisAsEulerAnglesInVector3IsConvertedToCorrectValueInQuaternion
-			(Vector3 eulerValues, Vector3 expectedResult, string testName)
+			public void SingleAxisAsEulerAnglesInVector3IsConvertedToCorrectQuaternionComponents
+			(Vector3 eulerValues, Vector3 expectedResult)
 			{
 				//Arrange + Act: Create Quaternion with "pitch/yaw/roll"
 				var cut = new Quaternion(eulerValues);
@@ -57,18 +55,17 @@ namespace OpenTK.Tests.Math
 		/// <summary>
 		/// Contains all tests for FromEulerAngles
 		/// </summary>
-		public class FromEulerAngles_Tests
+		public class FromEulerAngles
 		{
 			/// <summary>
 			/// Checks if a single given value (either pitch, yaw or roll) get converted into correct x,y,z value of quaternion.
 			/// </summary>
 			/// <param name="eulerValues">euler angle values</param>
 			/// <param name="expectedResult">expected xyz component of quaternion</param>
-			/// <param name="testName">Taken from nUnit test data. Don't know how to name data driven tests for xUnit which actually works.</param>
 			[Theory]
 			[MemberData(nameof(QuaternionTestDataGenerator.SingleAxisTestCases), MemberType = typeof(QuaternionTestDataGenerator))]
-			public void SingleAxisAsEulerAnglesInFloatsIsConvertedToCorrectValueInQuaternion
-			(Vector3 eulerValues, Vector3 expectedResult, string testName)
+			public void SingleAxisAsEulerAnglesInFloatsIsConvertedToCorrectQuaternionComponents
+			(Vector3 eulerValues, Vector3 expectedResult)
 			{
 				//Arrange + Act: Create Quaternion with "pitch/yaw/roll"
 				var cut = Quaternion.FromEulerAngles(eulerValues.X, eulerValues.Y, eulerValues.Z);
@@ -84,11 +81,10 @@ namespace OpenTK.Tests.Math
 			/// </summary>
 			/// <param name="eulerValues">euler angle values</param>
 			/// <param name="expectedResult">expected xyz component of quaternion</param>
-			/// <param name="testName">Taken from nUnit test data. Don't know how to name data driven tests for xUnit which actually works.</param>
 			[Theory]
 			[MemberData(nameof(QuaternionTestDataGenerator.SingleAxisTestCases), MemberType = typeof(QuaternionTestDataGenerator))]
-			public void SingleAxisAsEulerAnglesInVector3IsConvertedToCorrectValueInQuaternion
-			(Vector3 eulerValues, Vector3 expectedResult, string testName)
+			public void SingleAxisAsEulerAnglesInVector3IsConvertedToCorrectQuaternionComponents
+			(Vector3 eulerValues, Vector3 expectedResult)
 			{
 				//Arrange + Act: Create Quaternion with "pitch/yaw/roll"
 				var cut = Quaternion.FromEulerAngles(eulerValues);
@@ -104,11 +100,10 @@ namespace OpenTK.Tests.Math
 			/// </summary>
 			/// <param name="eulerValues">euler angle values</param>
 			/// <param name="expectedResult">expected xyz component of quaternion</param>
-			/// <param name="testName">Taken from nUnit test data. Don't know how to name data driven tests for xUnit which actually works.</param>
 			[Theory]
 			[MemberData(nameof(QuaternionTestDataGenerator.SingleAxisTestCases), MemberType = typeof(QuaternionTestDataGenerator))]
-			public void SingleAxisAsEulerAnglesInVector3IsConvertedToCorrectValueInQuaternionAsOutParam
-			(Vector3 eulerValues, Vector3 expectedResult, string testName)
+			public void SingleAxisAsEulerAnglesInVector3IsConvertedToCorrectQuaternionComponentsAsOutParam
+			(Vector3 eulerValues, Vector3 expectedResult)
 			{
 				//Arrange + Act: Create Quaternion with "pitch/yaw/roll"
 				var cut = Quaternion.Identity;
@@ -134,10 +129,9 @@ namespace OpenTK.Tests.Math
 			/// </summary>
 			/// <param name="cut">Prepared Quaternion</param>
 			/// <param name="expectedResult">Expected result.</param>
-			/// <param name="testName">Taken from nUnit test data. Don't know how to name data driven tests for xUnit which actually works.</param>
 			[Theory]
 			[MemberData(nameof(QuaternionTestDataGenerator.ToAxisAngleTestCases), MemberType = typeof(QuaternionTestDataGenerator))]
-			public void PreparedSingleRotationAxisQuaternionConvertsToCorrectAxisAngleRepresentation(Quaternion cut, Vector3 expectedResult, string testName)
+			public void PreparedSingleRotationAxisQuaternionConvertsToCorrectAxisAngleRepresentation(Quaternion cut, Vector3 expectedResult)
 			{
 				//Arrange + Act: Create Quaternion with rotation about X/Y/Z axis
 				Vector3 resultXYZ;
