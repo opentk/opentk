@@ -475,8 +475,14 @@ namespace OpenTK
         /// </summary>
         public bool CursorVisible
         {
-            get { return implementation.CursorVisible; }
-            set { implementation.CursorVisible = value; }
+            get
+            {
+                return implementation.CursorVisible;
+            }
+            set
+            {
+                implementation.CursorVisible = value;
+            }
         }
 
         /// <summary>
