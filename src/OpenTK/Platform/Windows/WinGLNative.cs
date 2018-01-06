@@ -1256,10 +1256,17 @@ namespace OpenTK.Platform.Windows
 
         public override bool CursorVisible
         {
-            get { return cursor_visible_count >= 0; } // Not used
+            get
+            {
+                return cursor_visible_count >= 0;
+            }
             set
             {
-                if (value && cursor_visible_count < 0)
+                if (value == CursorVisible)
+                {
+                    return;
+                }
+                if (value)
                 {
                     do
                     {
@@ -1269,7 +1276,7 @@ namespace OpenTK.Platform.Windows
 
                     UngrabCursor();
                 }
-                else if (!value && cursor_visible_count >= 0)
+                else
                 {
                     do
                     {

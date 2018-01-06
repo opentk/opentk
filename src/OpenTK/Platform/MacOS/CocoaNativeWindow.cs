@@ -1236,18 +1236,17 @@ namespace OpenTK.Platform.MacOS
 
         public override bool CursorVisible
         {
-            get { return cursorVisible; }
+            get
+            {
+                return cursorVisible;
+            }
             set
             {
-                if (value && !cursorVisible)
+                if (value != cursorVisible)
                 {
-                    SetCursorVisible(true);
+                    SetCursorVisible(value);
+                    cursorVisible = value;
                 }
-                else if (!value && cursorVisible)
-                {
-                    SetCursorVisible(false);
-                }
-                cursorVisible = value;
             }
         }
 

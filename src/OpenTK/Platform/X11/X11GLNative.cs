@@ -1684,12 +1684,19 @@ namespace OpenTK.Platform.X11
 
         public override bool CursorVisible
         {
-            get { return cursor_visible; }
+            get
+            {
+                return cursor_visible;
+            }
             set
             {
-                if (value && !cursor_visible)
+                if (value == cursor_visible)
                 {
-                    using (new XLock(window.Display))
+                    return;
+                }
+                using (new XLock(window.Display))
+                {
+                    if (value)
                     {
                         UngrabMouse();
 
@@ -1699,16 +1706,12 @@ namespace OpenTK.Platform.X11
                         // Note: if cursorHandle = IntPtr.Zero, this restores the default cursor
                         // (equivalent to calling XUndefineCursor)
                         Functions.XDefineCursor(window.Display, window.Handle, cursorHandle);
-                        cursor_visible = true;
                     }
-                }
-                else if (!value && cursor_visible)
-                {
-                    using (new XLock(window.Display))
+                    else
                     {
                         GrabMouse();
-                        cursor_visible = false;
                     }
+                    cursor_visible = value;
                 }
             }
         }
