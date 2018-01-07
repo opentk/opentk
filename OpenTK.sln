@@ -32,6 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{5EEE
 		build.fsx = build.fsx
 		README.md = README.md
 		RELEASE_NOTES.md = RELEASE_NOTES.md
+		.gitignore = .gitignore
 	EndProjectSection
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OpenTK.Tests", "tests\OpenTK.Tests\OpenTK.Tests.fsproj", "{6801C263-ADDA-4A7B-979D-649BCB5A1DF7}"
