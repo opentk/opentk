@@ -110,7 +110,6 @@ $tf/
 _ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
-*.DotSettings
 
 # JustCode is a .NET coding add-in
 .JustCode
@@ -177,7 +176,6 @@ PublishScripts/
 # NuGet v3's project.json files produces more ignorable files
 *.nuget.props
 *.nuget.targets
-*.Restore.targets
 
 # Microsoft Azure Build Output
 csx/
@@ -269,6 +267,7 @@ _Pvt_Extensions
 # Paket dependency manager
 .paket/paket.exe
 paket-files/
+*.Restore.targets
 
 # FAKE - F# Make
 .fake/
