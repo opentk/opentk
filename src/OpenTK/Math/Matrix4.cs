@@ -44,19 +44,19 @@ namespace OpenTK
         /// <summary>
         /// 2nd row of the matrix.
         /// </summary>
-        [FieldOffset (4 * sizeof (float))]
+        [FieldOffset (4 * sizeof(float))]
         public Vector4 Row1;
 
         /// <summary>
         /// 3rd row of the matrix.
         /// </summary>
-        [FieldOffset (8 * sizeof (float))]
+        [FieldOffset (8 * sizeof(float))]
         public Vector4 Row2;
 
         /// <summary>
         /// Bottom row of the matrix.
         /// </summary>
-        [FieldOffset (12 * sizeof (float))]
+        [FieldOffset (12 * sizeof(float))]
         public Vector4 Row3;
 
         /// <summary>
