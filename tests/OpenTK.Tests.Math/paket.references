@@ -4,3 +4,4 @@ xunit
 xunit.abstractions
 xunit.extensibility.core
 xunit.extensibility.execution
+FsCheck.XUnit
