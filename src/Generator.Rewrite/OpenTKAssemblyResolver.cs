@@ -93,11 +93,7 @@ namespace OpenTK.Rewrite
                         continue;
                     try
                     {
-                        var assembly = GetAssembly(file, parameters);
-                        if (assembly.Name.Version == name.Version || IsZero(name.Version))
-                        {
-                            return assembly;
-                        }
+                        return GetAssembly(file, parameters);
                     }
                     catch (System.BadImageFormatException)
                     {
@@ -248,11 +244,7 @@ namespace OpenTK.Rewrite
                 var file = GetAssemblyFile(reference, string.Empty, gac_path);
                 if (File.Exists(file))
                 {
-                    var assembly = GetAssembly(file, parameters);
-                    if (assembly.Name.Version == reference.Version || IsZero(reference.Version))
-                    {
-                        return assembly;
-                    }
+                    return GetAssembly(file, parameters);
                 }
             }
 
@@ -272,11 +264,7 @@ namespace OpenTK.Rewrite
                     var file = GetAssemblyFile(reference, prefixes[i], gac);
                     if (Directory.Exists(gac) && File.Exists(file))
                     {
-                        var assembly = GetAssembly(file, parameters);
-                        if (assembly.Name.Version == reference.Version || IsZero(reference.Version))
-                        {
-                            return assembly;
-                        }
+                        return GetAssembly(file, parameters);
                     }
                 }
             }
