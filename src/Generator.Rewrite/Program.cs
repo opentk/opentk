@@ -42,6 +42,7 @@ namespace OpenTK.Rewrite
             {
                 Console.Error.WriteLine($"Target assembly not found. \n" +
                                         $"Please check the given path ({Options.TargetAssembly}).");
+                return;
             }
 
             if (!File.Exists(Path.ChangeExtension(Options.TargetAssembly, "pdb")))
