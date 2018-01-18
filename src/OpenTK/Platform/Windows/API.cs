@@ -354,7 +354,7 @@ namespace OpenTK.Platform.Windows
         /// To get extended error information, call GetLastError.
         /// </returns>
         [System.Security.SuppressUnmanagedCodeSecurity]
-        [DllImport("User32.dll"), CLSCompliant(false)]
+        [DllImport("User32.dll", CharSet = CharSet.Auto), CLSCompliant(false)]
         //[return: MarshalAs(UnmanagedType.Bool)]
         internal static extern INT GetMessage(ref MSG msg,
             IntPtr windowHandle, int messageFilterMin, int messageFilterMax);
@@ -388,11 +388,11 @@ namespace OpenTK.Platform.Windows
         internal static extern void PostQuitMessage(int exitCode);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport("User32.dll"), CLSCompliant(false)]
+        [DllImport("User32.dll", CharSet = CharSet.Auto), CLSCompliant(false)]
         internal static extern LRESULT DispatchMessage(ref MSG msg);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport("User32.dll"), CLSCompliant(false)]
+        [DllImport("User32.dll", CharSet = CharSet.Auto), CLSCompliant(false)]
         internal static extern BOOL TranslateMessage(ref MSG lpMsg);
 
         /// <summary>
