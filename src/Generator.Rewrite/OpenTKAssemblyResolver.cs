@@ -53,7 +53,15 @@ namespace OpenTK.Rewrite
 
             var framework_dir = Path.GetDirectoryName(typeof(object).Module.FullyQualifiedName);
             var framework_dirs = on_mono
-                ? new[] { framework_dir, Path.Combine(framework_dir, "Facades") }
+                ? new[]
+            {
+                framework_dir,
+                Path.Combine(framework_dir, "Facades"),
+                "/Library/Frameworks/Xamarin.Mac.framework/Versions/Current/lib/mono",
+                "/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/2.1",
+                "/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/Xamarin.iOS",
+                "Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/2.1/Facades"
+            }
                 : new[] { framework_dir };
 
             if (IsZero(name.Version))
