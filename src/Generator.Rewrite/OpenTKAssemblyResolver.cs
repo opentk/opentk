@@ -57,7 +57,8 @@ namespace OpenTK.Rewrite
             {
                 framework_dir,
                 Path.Combine(framework_dir, "Facades"),
-                "/Library/Frameworks/Xamarin.Mac.framework/Versions/Current/lib/mono",
+                "/Library/Frameworks/Xamarin.Mac.framework/Versions/Current/lib/mono/Xamarin.Mac",
+                "/Library/Frameworks/Xamarin.Mac.framework/Versions/Current/lib/mono/Xamarin.Mac/Facades",
                 "/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/Xamarin.iOS",
                 "/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/Xamarin.iOS/Facades",
             }
