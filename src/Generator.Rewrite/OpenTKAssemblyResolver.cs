@@ -65,6 +65,7 @@ namespace OpenTK.Rewrite
                 "/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/Xamarin.TVOS/Facades",
                 "/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/Xamarin.WatchOS",
                 "/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/Xamarin.WatchOS/Facades",
+                "/Library/Frameworks/Xamarin.Android.framework/Versions/Current/lib/mono/2.1"
             }
                 : new[] { framework_dir };
 
