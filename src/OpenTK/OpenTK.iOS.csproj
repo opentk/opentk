@@ -247,10 +247,10 @@
   </Target>
   -->
   <Target Name="AfterBuild">
-    <Exec Command="$(OutputPath)..\..\..\..\Generator.Rewrite\bin\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -dllimport -debug" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
-    <Exec Command="$(OutputPath)..\..\..\..\Generator.Rewrite\bin\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -dllimport" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Release'" />
-    <Exec WorkingDirectory="$(SolutionDir)src/Generator.Rewrite/bin/Debug/" Command="mono ./Rewrite.exe $(SolutionDir)src/OpenTK/bin/Debug/iOS/OpenTK.dll $(SolutionDir)OpenTK.snk -dllimport -debug" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" />
-    <Exec WorkingDirectory="$(SolutionDir)src/Generator.Rewrite/bin/Release" Command="mono ./Rewrite.exe $(SolutionDir)src/OpenTK/bin/Release/iOS/OpenTK.dll $(SolutionDir)OpenTK.snk -dllimport" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Release'" />
+    <Exec Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" Command="$(OutputPath)..\..\..\..\Generator.Rewrite\bin\Debug\Rewrite.exe --assembly $(OutputPath)OpenTK.dll --signing-key ..\..\OpenTK.snk --debug" />
+    <Exec Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Release'" Command="$(OutputPath)..\..\..\..\Generator.Rewrite\bin\Release\Rewrite.exe --assembly $(OutputPath)OpenTK.dll --signing-key ..\..\OpenTK.snk" />
+    <Exec Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" Command="mono $(OutputPath)../../../../Generator.Rewrite/bin/Debug/Rewrite.exe --assembly $(OutputPath)OpenTK.dll --signing-key ../../OpenTK.snk --debug" />
+    <Exec Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Release'" Command="mono $(OutputPath)../../../../Generator.Rewrite/bin/Release/Rewrite.exe --assembly $(OutputPath)OpenTK.dll --signing-key ../../OpenTK.snk" />
   </Target>
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll">
