@@ -207,7 +207,7 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-            iif(this == Zero)
+            if(this == Zero)
             {
                 return;
             }
