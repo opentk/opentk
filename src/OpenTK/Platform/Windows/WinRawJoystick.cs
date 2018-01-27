@@ -51,7 +51,7 @@ namespace OpenTK.Platform.Windows
             internal readonly int XInputIndex;
 
             private readonly Dictionary<int, int> axes =
-                new Dictionary<int,int>();
+                new Dictionary<int, int>();
 
             private readonly Dictionary<int, int> buttons =
                 new Dictionary<int, int>();
@@ -426,8 +426,8 @@ namespace OpenTK.Platform.Windows
                 {
                     if (stick.AxisCaps[i].LogicalMin > 0)
                     {
-                        short scaled_value = (short) HidHelper.ScaleValue(
-                            (int) ((long) value + stick.AxisCaps[i].LogicalMin),
+                        short scaled_value = (short)HidHelper.ScaleValue(
+                            (int)((long)value + stick.AxisCaps[i].LogicalMin),
                             stick.AxisCaps[i].LogicalMin, stick.AxisCaps[i].LogicalMax,
                             Int16.MinValue, Int16.MaxValue);
                         stick.SetAxis(collection, page, usage, scaled_value);

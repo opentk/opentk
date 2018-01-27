@@ -149,7 +149,7 @@ namespace OpenTK.Platform.X11
                     deviceToScreen.Add(dev, 0 /*screen.ScreenNumber*/);
                 }
             }
-            return (devices.Count>0);
+            return (devices.Count > 0);
         }
 
         private bool QueryXRandR(List<DisplayDevice> devices)
@@ -171,7 +171,8 @@ namespace OpenTK.Platform.X11
                 int[] depths = FindAvailableDepths(screen);
 
                 int resolution_count = 0;
-                foreach (XRRScreenSize size in FindAvailableResolutions(screen))
+                XRRScreenSize[] sizes = FindAvailableResolutions(screen);
+                foreach (XRRScreenSize size in sizes)
                 {
                     if (size.Width == 0 || size.Height == 0)
                     {
@@ -221,28 +222,17 @@ namespace OpenTK.Platform.X11
                 int current_depth = FindCurrentDepth(screen);
                 IntPtr screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, Functions.XRootWindow(API.DefaultDisplay, screen));
                 ushort current_rotation;  // Not needed.
-                int current_resolution_index = Functions.XRRConfigCurrentConfiguration(screen_config, out current_rotation);
+                int current_sizes_index = Functions.XRRConfigCurrentConfiguration(screen_config, out current_rotation);
 
                 if (dev.Bounds == Rectangle.Empty)
                 {
-                    // We have added depths.Length copies of each resolution
-                    // Adjust the return value of XRRGetScreenInfo to retrieve the correct resolution
-                    int index = current_resolution_index * depths.Length;
-
-                    // Make sure we are within the bounds of the available_res array
-                    if (index >= available_res.Count)
-                    {
-                        // If not, use the return value of XRRGetScreenInfo directly
-                        index = current_resolution_index;
-                    }
-                    DisplayResolution current_resolution = available_res[index];
-                    dev.Bounds = new Rectangle(0, 0, current_resolution.Width, current_resolution.Height);
+                    dev.Bounds = new Rectangle(0, 0, sizes[current_sizes_index].Width, sizes[current_sizes_index].Height);
                 }
                 dev.BitsPerPixel = current_depth;
                 dev.RefreshRate = current_refresh_rate;
                 dev.AvailableResolutions = available_res;
 
-                deviceToDefaultResolution.Add(dev, current_resolution_index);
+                deviceToDefaultResolution.Add(dev, current_sizes_index);
             }
 
             return true;
@@ -356,7 +346,7 @@ namespace OpenTK.Platform.X11
                     screen, current_resolution_index, new_resolution_index);
 
                 int ret = 0;
-                short refresh_rate =(short)(resolution != null ? resolution.RefreshRate : 0);
+                short refresh_rate = (short)(resolution != null ? resolution.RefreshRate : 0);
                 if (refresh_rate > 0)
                 {
                     ret = Functions.XRRSetScreenConfigAndRate(API.DefaultDisplay,

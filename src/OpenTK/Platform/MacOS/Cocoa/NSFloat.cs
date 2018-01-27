@@ -91,7 +91,7 @@ namespace OpenTK.Platform.MacOS
             {
                 if (IntPtr.Size == 4)
                 {
-                    return *(float*)f._value;
+                    return *(float*)&f._value;
                 }
                 else
                 {

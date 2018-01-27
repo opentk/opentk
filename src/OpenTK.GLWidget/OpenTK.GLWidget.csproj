@@ -42,7 +42,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <Deterministic>true</Deterministic>
-    <LangVersion>6</LangVersion>
+    <LangVersion>7</LangVersion>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\..\stylecop.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -98,13 +98,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OSX\OSXWindowInfoInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GLWidget.cs" />
-    <Compile Include="Win\WinWindowsInfoInitializer.cs" />
-    <Compile Include="X11\XWindowInfoInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="paket.references" />
@@ -120,26 +117,15 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Choose>
-    <When
-      Condition="($(DefineConstants.Contains('GTK3')) And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.0.3' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7'))">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.0.3' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1')">
       <ItemGroup>
-        <Reference Include="cairo-sharp">
-          <HintPath>..\..\packages\gtk-sharp3\lib\net40\cairo-sharp.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="gio-sharp">
-          <HintPath>..\..\packages\gtk-sharp3\lib\net40\gio-sharp.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="gtk-dotnet">
-          <HintPath>..\..\packages\gtk-sharp3\lib\net40\gtk-dotnet.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
         <Reference Include="atk-sharp">
           <HintPath>..\..\packages\gtk-sharp3\lib\net40\atk-sharp.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="cairo-sharp">
+          <HintPath>..\..\packages\gtk-sharp3\lib\net40\cairo-sharp.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -148,8 +134,18 @@
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
+        <Reference Include="gio-sharp">
+          <HintPath>..\..\packages\gtk-sharp3\lib\net40\gio-sharp.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="glib-sharp">
           <HintPath>..\..\packages\gtk-sharp3\lib\net40\glib-sharp.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="gtk-dotnet">
+          <HintPath>..\..\packages\gtk-sharp3\lib\net40\gtk-dotnet.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -165,16 +161,6 @@
         </Reference>
       </ItemGroup>
     </When>
-    <Otherwise>
-      <ItemGroup>
-        <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-        <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-        <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-        <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-        <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-        <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-      </ItemGroup>
-    </Otherwise>
   </Choose>
   <Import Project="..\..\packages\gtk-sharp3\build\gtk-sharp3.targets" Condition="Exists('..\..\packages\gtk-sharp3\build\gtk-sharp3.targets')" Label="Paket" />
   <ItemGroup>

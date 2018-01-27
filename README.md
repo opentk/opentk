@@ -5,9 +5,9 @@ OpenTK
 ### MAINTAINERS WANTED
 
 OpenTK is a large project, with a huge number of components. We're looking to add a more maintainers to the team.
-Email [@varon](https://github.com/varon) or message him in Gitter if you'd like to help out. 
+Email [@varon](https://github.com/varon) or message him in Gitter if you'd like to help out.
 
-[![Join the chat at https://gitter.im/opentk/opentk](https://badges.gitter.im/opentk/opentk.svg)](https://gitter.im/opentk/opentk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/opentk/opentk](https://badges.gitter.im/opentk/opentk.svg)](https://gitter.im/opentk/opentk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Join the chat at https://discord.gg/GZTYR4s](https://img.shields.io/badge/chat-on%20discord-green.svg)](https://discord.gg/GZTYR4s)  
 
 The Open Toolkit library is a fast, low-level C# binding for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research.
 
@@ -18,10 +18,19 @@ Project website: https://opentk.github.io/
 Official git repository: https://github.com/opentk/opentk
 
 
+Build Status
+========
+
+| Platform       | Status         |
+| -------------- | -------------- |
+| Windows        | [![Build status](https://ci.appveyor.com/api/projects/status/opentk/branch/develop?svg=true)](https://ci.appveyor.com/project/varon/opentk/branch/develop) |
+| Mono/Linux     | [![Build status](https://travis-ci.org/opentk/opentk.svg?branch=develop)](https://travis-ci.org/opentk/opentk) |
+
+
 Features
 ========
 
-- Create cutting-edge graphics with OpenGL 4.4 and OpenGL ES 3.0
+- Create cutting-edge graphics with OpenGL 4.6 and OpenGL ES 3.0
 - Spice up your GUI with 3d acceleration
 - Improve your code flow with strong types and inline documentation
 - Write once run everywhere
@@ -35,14 +44,13 @@ Instructions
 ============
 
 The simplest way to use OpenTK in your project is to install the [NuGet package](http://www.nuget.org/packages/OpenTK/).
+If you want to try out the latest development build from the `develop` branch, we also have a [MyGet feed](https://www.myget.org/F/opentk-develop/api/v3/index.json).
 
-Note what installing NuGet package will add reference to OpenTK.dll, but OpenTK.dll.config 
-will not be copied to the project output directory automatically, so you need to add it to your project 
+Note what installing NuGet package will add reference to OpenTK.dll, but OpenTK.dll.config
+will not be copied to the project output directory automatically, so you need to add it to your project
 and then enable the "Copy to Output Directory" option (as in step 3 below).
 
-To build OpenTK from source, simply double-click OpenTK.sln and build through your IDE.
-
-Alternatively, open a command prompt and type:
+To build OpenTK from source, do the following once:
 ```
 git clone https://github.com/opentk/opentk   # Download source code from git
 cd opentk                                    # Enter the source directory
@@ -50,6 +58,8 @@ cd opentk                                    # Enter the source directory
 ./build.sh                                   # Build on Mono (Linux / Mac OS X)
 ```
 
+After this is done at least once, you can build OpenTK normally through
+your IDE.
 
 News
 ====
@@ -171,7 +181,7 @@ Requirements
 Documentation
 =============
 
-Your favorite IDE will display inline documentation for all OpenTK APIs. Additional information can be found in the [OpenTK Manual](http://www.opentk.com/doc) and in the [opentk/Documentation/](https://github.com/opentk/opentk/tree/develop/Documentation) folder.
+Your favorite IDE will display inline documentation for all OpenTK APIs. Additional information can be found in the [OpenTK Manual](http://web.archive.org/web/20150325224427/http://www.opentk.com/doc).
 
 Technical documentation about the implementation of OpenTK can be found in the [Technical Wiki](https://github.com/opentk/opentk/wiki).
 
@@ -210,7 +220,7 @@ Change signature:
 - GL.MultiDrawArrays (`out` -> `ref`)
 - GL.Amd.DeletePerfMonitors (`out` -> `ref`)
 
-Change signature (may cause crash): 
+Change signature (may cause crash):
 - GL.Apple.ObjectPurgeable (returns `AppleObjectPurgeable` instead of `IntPtr`)
 - GL.Ext.SeparableFilter2D
 - GL.Ibm.EdgeFlagPointerList (`bool[]` -> `bool*[]`)

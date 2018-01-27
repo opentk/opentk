@@ -41,22 +41,24 @@ namespace OpenTK
     /// </summary>
     public partial class GLControl : UserControl
     {
-        private IGraphicsContext context;
-        private IGLControl implementation;
-        private GraphicsMode format;
-        private int major, minor;
-        private GraphicsContextFlags flags;
+        private IGraphicsContext _context;
+        private IGLControl _implementation;
+        private readonly GraphicsMode _format;
+        private readonly int _major;
+        private readonly int _minor;
+        private readonly GraphicsContextFlags _flags;
+        private bool? _initialVsyncValue;
 
-        private bool? initial_vsync_value;
         // Indicates that OnResize was called before OnHandleCreated.
         // To avoid issues with missing OpenGL contexts, we suppress
         // the premature Resize event and raise it as soon as the handle
         // is ready.
-        private bool resize_event_suppressed;
+        private bool _resizeEventSuppressed;
+
         // Indicates whether the control is in design mode. Due to issues
-        // wiith the DesignMode property and nested controls,we need to
+        // with the DesignMode property and nested controls,we need to
         // evaluate this in the constructor.
-        private readonly bool design_mode;
+        private readonly bool _designMode;
 
         /// <summary>
         /// Constructs a new instance.
@@ -84,7 +86,7 @@ namespace OpenTK
         {
             if (mode == null)
             {
-                throw new ArgumentNullException("mode");
+                throw new ArgumentNullException(nameof(mode));
             }
 
             // SDL does not currently support embedding
@@ -104,20 +106,29 @@ namespace OpenTK
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             DoubleBuffered = false;
 
-            this.format = mode;
-            this.major = major;
-            this.minor = minor;
-            this.flags = flags;
+            _format = mode;
+            _major = major;
+            _minor = minor;
+            _flags = flags;
 
             // Note: the DesignMode property may be incorrect when nesting controls.
             // We use LicenseManager.UsageMode as a workaround (this only works in
             // the constructor).
-            design_mode =
+            _designMode =
                 DesignMode ||
                 LicenseManager.UsageMode == LicenseUsageMode.Designtime;
 
             InitializeComponent();
         }
+
+        /// <summary>
+        /// Gets a value indicating whether [failed to create OpenGL context].
+        /// So that the application stays running and is able to recover.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [failed create context]; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasValidContext { get; private set; }
 
         private IGLControl Implementation
         {
@@ -125,7 +136,7 @@ namespace OpenTK
             {
                 ValidateState();
 
-                return implementation;
+                return _implementation;
             }
         }
 
@@ -150,7 +161,7 @@ namespace OpenTK
                 CreateControl();
             }
 
-            if (implementation == null || context == null || context.IsDisposed)
+            if (_implementation == null || _context == null || _context.IsDisposed)
             {
                 RecreateHandle();
             }
@@ -167,7 +178,7 @@ namespace OpenTK
                 const int CS_HREDRAW = 0x2;
                 const int CS_OWNDC = 0x20;
 
-                CreateParams cp = base.CreateParams;
+                var cp = base.CreateParams;
                 if (Configuration.RunningOnWindows)
                 {
                     // Setup necessary class style for OpenGL on windows
@@ -181,46 +192,54 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected override void OnHandleCreated(EventArgs e)
         {
-            if (context != null)
-            {
-                context.Dispose();
-            }
+            if (!(_implementation is DummyGLControl))
+            { // No need to recreate our DummyGLControl
+                _context?.Dispose();
+                _implementation?.WindowInfo.Dispose();
 
-            if (implementation != null)
-            {
-                implementation.WindowInfo.Dispose();
-            }
+                if (_designMode)
+                {
+                    _implementation = new DummyGLControl();
+                    _context = _implementation.CreateContext(_major, _minor, _flags);
+                    HasValidContext = false;
+                }
+                else
+                {
+                    try
+                    {
+                        _implementation = new GLControlFactory().CreateGLControl(_format, this);
+                        _context = _implementation.CreateContext(_major, _minor, _flags);
+                        HasValidContext = true;
+                    }
+                    catch (GraphicsModeException)
+                    {
+                        _implementation = new DummyGLControl();
+                        _context = _implementation.CreateContext(_major, _minor, _flags);
+                        HasValidContext = false;
+                    }
+                }
 
-            if (design_mode)
-            {
-                implementation = new DummyGLControl();
-            }
-            else
-            {
-                implementation = new GLControlFactory().CreateGLControl(format, this);
-            }
+                MakeCurrent();
 
-            context = implementation.CreateContext(major, minor, flags);
-            MakeCurrent();
+                if (HasValidContext)
+                {
+                    ((IGraphicsContextInternal)_context).LoadAll();
+                }
 
-            if (!design_mode)
-            {
-                ((IGraphicsContextInternal)Context).LoadAll();
-            }
-
-            // Deferred setting of vsync mode. See VSync property for more information.
-            if (initial_vsync_value.HasValue)
-            {
-                Context.SwapInterval = initial_vsync_value.Value ? 1 : 0;
-                initial_vsync_value = null;
+                // Deferred setting of vsync mode. See VSync property for more information.
+                if (_initialVsyncValue.HasValue)
+                {
+                    _context.SwapInterval = _initialVsyncValue.Value ? 1 : 0;
+                    _initialVsyncValue = null;
+                }
             }
 
             base.OnHandleCreated(e);
 
-            if (resize_event_suppressed)
+            if (_resizeEventSuppressed)
             {
                 OnResize(EventArgs.Empty);
-                resize_event_suppressed = false;
+                _resizeEventSuppressed = false;
             }
         }
 
@@ -232,18 +251,23 @@ namespace OpenTK
             // => This allows to perform cleanup operations in OnHandleDestroyed handlers
             base.OnHandleDestroyed(e);
 
-            if (context != null)
+            if (_implementation is DummyGLControl)
             {
-                context.Dispose();
-                context = null;
+                // No need to destroy our DummyGLControl
+                return;
             }
 
-            if (implementation != null)
+            if (_context != null)
             {
-                implementation.WindowInfo.Dispose();
-                implementation = null;
+                _context.Dispose();
+                _context = null;
             }
 
+            if (_implementation != null)
+            {
+                _implementation.WindowInfo.Dispose();
+                _implementation = null;
+            }
         }
 
         /// <summary>
@@ -254,7 +278,7 @@ namespace OpenTK
         {
             ValidateState();
 
-            if (design_mode)
+            if (_designMode)
             {
                 e.Graphics.Clear(BackColor);
             }
@@ -273,7 +297,7 @@ namespace OpenTK
             // Do not raise OnResize event before the handle and context are created.
             if (!IsHandleCreated)
             {
-                resize_event_suppressed = true;
+                _resizeEventSuppressed = true;
                 return;
             }
 
@@ -282,9 +306,9 @@ namespace OpenTK
                 DelayUpdate delay = PerformContextUpdate;
                 BeginInvoke(delay); //Need the native window to resize first otherwise our control will be in the wrong place.
             }
-            else if (context != null)
+            else
             {
-                context.Update (Implementation.WindowInfo);
+                _context?.Update(Implementation.WindowInfo);
             }
 
             base.OnResize(e);
@@ -294,15 +318,13 @@ namespace OpenTK
         /// Needed to delay the invoke on OS X. Also needed because OpenTK is .NET 2, otherwise I'd use an inline Action.
         /// </summary>
         public delegate void DelayUpdate();
+
         /// <summary>
         /// Execute the delayed context update
         /// </summary>
         public void PerformContextUpdate()
         {
-            if (context != null)
-            {
-                context.Update (Implementation.WindowInfo);
-            }
+            _context?.Update(Implementation.WindowInfo);
         }
 
         /// <summary>
@@ -311,10 +333,7 @@ namespace OpenTK
         /// <param name="e">A System.EventArgs that contains the event data.</param>
         protected override void OnParentChanged(EventArgs e)
         {
-            if (context != null)
-            {
-                context.Update(Implementation.WindowInfo);
-            }
+            _context?.Update(Implementation.WindowInfo);
 
             base.OnParentChanged(e);
         }
@@ -377,9 +396,8 @@ namespace OpenTK
             get
             {
                 ValidateState();
-                return context;
+                return _context;
             }
-            private set { context = value; }
         }
 
         /// <summary>
@@ -409,12 +427,12 @@ namespace OpenTK
             {
                 if (!IsHandleCreated)
                 {
-                    return initial_vsync_value.HasValue ?
-                        initial_vsync_value.Value : true;
+                    return !_initialVsyncValue.HasValue || _initialVsyncValue.Value;
                 }
 
                 ValidateState();
-                ValidateContext("VSync");
+                ValidateContext(@"VSync");
+
                 return Context.SwapInterval != 0;
             }
             set
@@ -425,12 +443,12 @@ namespace OpenTK
                 // Work around this issue by deferring VSync mode setting to the HandleCreated event.
                 if (!IsHandleCreated)
                 {
-                    initial_vsync_value = value;
+                    _initialVsyncValue = value;
                     return;
                 }
 
                 ValidateState();
-                ValidateContext("VSync");
+                ValidateContext(@"VSync");
                 Context.SwapInterval = value ? 1 : 0;
             }
         }
@@ -452,9 +470,6 @@ namespace OpenTK
         /// <summary>
         /// Gets the <see cref="OpenTK.Platform.IWindowInfo"/> for this instance.
         /// </summary>
-        public IWindowInfo WindowInfo
-        {
-            get { return implementation.WindowInfo; }
-        }
+        public IWindowInfo WindowInfo => _implementation.WindowInfo;
     }
 }

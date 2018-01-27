@@ -829,8 +829,8 @@ namespace OpenTK
         ///   </para>
         /// </remarks>
         event EventHandler<KeyPressEventArgs> INativeWindow.KeyPress {
-            add { throw new NotSupportedException ();}
-            remove { throw new NotSupportedException ();}
+            add { throw new NotSupportedException (); }
+            remove { throw new NotSupportedException (); }
         }
 
         public virtual int Width {

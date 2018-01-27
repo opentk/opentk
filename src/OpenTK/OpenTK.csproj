@@ -137,6 +137,7 @@
     <Compile Include="Platform\Egl\EglUnixContext.cs" />
     <Compile Include="Platform\Egl\EglWinContext.cs" />
     <Compile Include="Platform\Egl\EglAnglePlatformFactory.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSAutoreleasePool.cs" />
     <Compile Include="Platform\MappedGamePadDriver.cs" />
     <Compile Include="Platform\Windows\Bindings\HidProtocol.cs" />
     <Compile Include="Platform\Windows\WinInputBase.cs" />
@@ -779,6 +780,7 @@
     <None Include="OpenTK.csproj.paket.template" />
     <None Include="paket.references" />
     <Compile Include="Platform\MacOS\Cocoa\NSDragOperation.cs" />
+    <Compile Include="Platform\MacOS\CoreVideo.cs" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="$(SolutionDir)\stylecop.json">
@@ -796,10 +798,10 @@
     </PostBuildEvent>
   </PropertyGroup>
   <Target Name="AfterBuild">
-    <Exec Command="$(OutputPath)..\..\..\Generator.Rewrite\bin\Debug\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk -debug" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
-    <Exec Command="$(OutputPath)..\..\..\Generator.Rewrite\bin\Release\Rewrite.exe $(OutputPath)OpenTK.dll ..\..\OpenTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Release'" />
-    <Exec Command="mono $(OutputPath)../../../Generator.Rewrite/bin/Debug/Rewrite.exe $(OutputPath)OpenTK.dll ../../OpenTK.snk -debug" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" />
-    <Exec Command="mono $(OutputPath)../../../Generator.Rewrite/bin/Release/Rewrite.exe $(OutputPath)OpenTK.dll ../../OpenTK.snk" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Release'" />
+    <Exec Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" Command="$(OutputPath)..\..\..\Generator.Rewrite\bin\Debug\Rewrite.exe --assembly $(OutputPath)OpenTK.dll --signing-key ..\..\OpenTK.snk --debug" />
+    <Exec Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Release'" Command="$(OutputPath)..\..\..\Generator.Rewrite\bin\Release\Rewrite.exe --assembly $(OutputPath)OpenTK.dll --signing-key ..\..\OpenTK.snk" />
+    <Exec Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" Command="mono $(OutputPath)../../../Generator.Rewrite/bin/Debug/Rewrite.exe --assembly $(OutputPath)OpenTK.dll --signing-key ../../OpenTK.snk --debug" />
+    <Exec Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Release'" Command="mono $(OutputPath)../../../Generator.Rewrite/bin/Release/Rewrite.exe --assembly $(OutputPath)OpenTK.dll --signing-key ../../OpenTK.snk" />
   </Target>
   <ProjectExtensions>
     <MonoDevelop>

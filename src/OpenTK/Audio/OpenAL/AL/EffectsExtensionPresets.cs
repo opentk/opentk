@@ -122,7 +122,7 @@ namespace OpenTK.Audio.OpenAL
 
             output.Gain = 0.32f; // todo, currently default
             output.GainHF = 0.89f; // todo, currently default
-            output.GainLF = 1f;// todo, currently default
+            output.GainLF = 1f; // todo, currently default
 
             output.LFReference = input.LFReference;
             output.HFReference = input.HFReference;

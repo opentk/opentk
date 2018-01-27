@@ -25,14 +25,25 @@
 
 namespace Bind.Structures
 {
+    /// <summary>
+    /// Enumarates the possible flows of a parameter (ie. is this parameter
+    /// used as input or as output?)
+    /// </summary>
+    public enum FlowDirection
+    {
         /// <summary>
-        /// Enumarates the possible flows of a parameter (ie. is this parameter
-        /// used as input or as output?)
+        /// No defined flow.
         /// </summary>
-        public enum FlowDirection
-        {
-            Undefined = 0,
-            In,
-            Out
-        }
+        Undefined = 0,
+
+        /// <summary>
+        /// Input parameter.
+        /// </summary>
+        In,
+
+        /// <summary>
+        /// Output parameter, typically decorated with the out keyword.
+        /// </summary>
+        Out
+    }
 }

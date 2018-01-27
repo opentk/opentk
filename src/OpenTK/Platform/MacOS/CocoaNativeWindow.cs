@@ -1,4 +1,4 @@
-//
+z//
 // CocoaNativeWindow.cs
 //
 // Author:
@@ -137,6 +137,7 @@ namespace OpenTK.Platform.MacOS
         }
 
         private CocoaWindowInfo windowInfo;
+
         private IntPtr windowClass;
         private IntPtr trackingArea;
         private IntPtr current_icon_handle;
@@ -1269,7 +1270,10 @@ namespace OpenTK.Platform.MacOS
 
         public override bool CursorVisible
         {
-            get { return cursorVisible; }
+            get
+            {
+                return cursorVisible;
+            }
             set
             {
                 cursorVisible = value;

@@ -693,15 +693,15 @@ namespace OpenTK.Platform.Windows
             for (uint i = 0; i < filesCounter; ++i)
             {
                 // Don't forget about \0 at the end
-                uint fileNameSize = Functions.DragQueryFile(hDrop, i, IntPtr.Zero, 0) + 1;
-                IntPtr str = Marshal.AllocHGlobal((int)fileNameSize);
+                uint filenameChars = Functions.DragQueryFile(hDrop, i, IntPtr.Zero, 0) + 1;
+                int filenameSize = (int)(filenameChars * Marshal.SystemDefaultCharSize);
+                IntPtr str = Marshal.AllocHGlobal(filenameSize);
 
-                Functions.DragQueryFile(hDrop, i, str, fileNameSize);
+                Functions.DragQueryFile(hDrop, i, str, filenameChars);
 
                 string dropString = Marshal.PtrToStringAuto(str);
-                OnFileDrop(dropString);
-
                 Marshal.FreeHGlobal(str);
+                OnFileDrop(dropString);
             }
 
             Functions.DragFinish(hDrop);
@@ -728,7 +728,9 @@ namespace OpenTK.Platform.Windows
                     break;
 
                 case WindowMessage.ERASEBKGND:
-                    return new IntPtr(1);
+                    // This is triggered only when the client area changes.
+                    // As such it does not affect steady-state performance.
+                    break;
 
                 case WindowMessage.WINDOWPOSCHANGED:
                     HandleWindowPositionChanged(handle, message, wParam, lParam);
@@ -935,6 +937,8 @@ namespace OpenTK.Platform.Windows
             {
                 ExtendedWindowClass wc = new ExtendedWindowClass();
                 wc.Size = ExtendedWindowClass.SizeInBytes;
+                // Setting the background here ensures the window doesn't flash gray/white until the first frame is rendered.
+                wc.Background = Functions.GetStockObject(StockObjects.BLACK_BRUSH);
                 wc.Style = DefaultClassStyle;
                 wc.Instance = Instance;
                 wc.WndProc = WindowProcedureDelegate;
@@ -1265,10 +1269,17 @@ namespace OpenTK.Platform.Windows
 
         public override bool CursorVisible
         {
-            get { return cursor_visible_count >= 0; } // Not used
+            get
+            {
+                return cursor_visible_count >= 0;
+            }
             set
             {
-                if (value && cursor_visible_count < 0)
+                if (value == CursorVisible)
+                {
+                    return;
+                }
+                if (value)
                 {
                     do
                     {
@@ -1276,7 +1287,7 @@ namespace OpenTK.Platform.Windows
                     }
                     while (cursor_visible_count < 0);
                 }
-                else if (!value && cursor_visible_count >= 0)
+                else
                 {
                     do
                     {

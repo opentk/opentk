@@ -109,7 +109,8 @@ namespace OpenTK.Platform.X11
         private static readonly IntPtr _atom_toggle = (IntPtr)2;
 
         #pragma warning disable 649 // never assigned, compiler bug in Mono 3.4.0
-        private Rectangle bounds, client_rectangle;
+        private Rectangle bounds;
+        private Size client_size;
         #pragma warning restore 649
         private int border_left, border_right, border_top, border_bottom;
         private Icon icon;
@@ -229,7 +230,7 @@ namespace OpenTK.Platform.X11
             {
                 foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
                 {
-                    if (AppDomain.CurrentDomain.FriendlyName.EndsWith(assembly.ManifestModule.Name))
+                    if (assembly.ManifestModule.Name.Contains(AppDomain.CurrentDomain.FriendlyName))
                     {
                         if (entry_assembly == null || assembly.ManifestModule.Name.Length > entry_assembly.ManifestModule.Name.Length)
                         {
@@ -239,7 +240,11 @@ namespace OpenTK.Platform.X11
                 }
             }
 
-            var name = entry_assembly.GetName().Name;
+            var name = "null";
+            if (entry_assembly != null)
+            {
+                name = entry_assembly.GetName().Name;
+            }
             class_hint.Class = name;
             class_hint.Name = name.ToLower();
 
@@ -794,7 +799,7 @@ namespace OpenTK.Platform.X11
                 // when the window is minimized. Many apps
                 // do not expect this and crash, so clamp
                 // minimum width/height to 1 instead.
-                client_rectangle.Size = new Size(
+                client_size = new Size(
                     Math.Max(e.ConfigureEvent.width, 1),
                     Math.Max(e.ConfigureEvent.height, 1));
                 OnResize(EventArgs.Empty);
@@ -1250,6 +1255,7 @@ namespace OpenTK.Platform.X11
                     }
                 }
 
+                _waitForEvent = XEventName.ConfigureNotify;
                 ProcessEvents();
             }
         }
@@ -1258,11 +1264,11 @@ namespace OpenTK.Platform.X11
         {
             get
             {
-                return client_rectangle.Size;
+                return client_size;
             }
             set
             {
-                bool is_size_changed = client_rectangle.Size != value;
+                bool is_size_changed = client_size != value;
                 if (is_size_changed)
                 {
                     int width = value.Width;
@@ -1679,7 +1685,10 @@ namespace OpenTK.Platform.X11
 
         public override bool CursorVisible
         {
-            get { return cursor_visible; }
+            get
+            {
+                return cursor_visible;
+            }
             set
             {
                 using (new XLock(window.Display))

@@ -310,11 +310,10 @@ namespace OpenTK
         /// <returns>The resulting Vector3.</returns>
         public static explicit operator Vector3(Vector3h h3)
         {
-            Vector3 result = new Vector3();
-            result.X = h3.X.ToSingle();
-            result.Y = h3.Y.ToSingle();
-            result.Z = h3.Z.ToSingle();
-            return result;
+            return new Vector3(
+                h3.X.ToSingle(),
+                h3.Y.ToSingle(),
+                h3.Z.ToSingle());
         }
 
         /// <summary>Converts OpenTK.Half3 to OpenTK.Vector3d.</summary>
@@ -322,11 +321,10 @@ namespace OpenTK
         /// <returns>The resulting Vector3d.</returns>
         public static explicit operator Vector3d(Vector3h h3)
         {
-            Vector3d result = new Vector3d();
-            result.X = h3.X.ToSingle();
-            result.Y = h3.Y.ToSingle();
-            result.Z = h3.Z.ToSingle();
-            return result;
+            return new Vector3d(
+                h3.X.ToSingle(),
+                h3.Y.ToSingle(),
+                h3.Z.ToSingle());
         }
 
         /// <summary>The size in bytes for an instance of the Half3 struct is 6.</summary>
@@ -411,11 +409,10 @@ namespace OpenTK
         /// <returns>A new Half3 instance.</returns>
         public static Vector3h FromBytes(byte[] value, int startIndex)
         {
-            Vector3h h3 = new Vector3h();
-            h3.X = Half.FromBytes(value, startIndex);
-            h3.Y = Half.FromBytes(value, startIndex + 2);
-            h3.Z = Half.FromBytes(value, startIndex + 4);
-            return h3;
+            return new Vector3h(
+                Half.FromBytes(value, startIndex),
+                Half.FromBytes(value, startIndex + 2),
+                Half.FromBytes(value, startIndex + 4));
         }
     }
 }

@@ -59,7 +59,7 @@ namespace OpenTK.Platform.Windows
         public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples,
             ColorFormat accum, int buffers, bool stereo)
         {
-            GraphicsMode mode = new GraphicsMode(color, depth, stencil, samples,accum, buffers, stereo);
+            GraphicsMode mode = new GraphicsMode(color, depth, stencil, samples, accum, buffers, stereo);
             GraphicsMode created_mode = ChoosePixelFormatARB(Device, mode);
 
             // If ChoosePixelFormatARB failed, iterate through all acceleration types in turn (ICD, MCD, None)

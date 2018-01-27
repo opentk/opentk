@@ -72,10 +72,13 @@ namespace OpenTK
         protected abstract object SyncRoot { get; }
 
         /// <summary>
-        /// Marshals a pointer to a null-terminated byte array to the specified <c>StringBuilder</c>.
+        /// Marshals a pointer to a null-terminated byte array to a new <c>System.String</c>.
         /// This method supports OpenTK and is not intended to be called by user code.
         /// </summary>
         /// <param name="ptr">A pointer to a null-terminated byte array.</param>
+        /// <returns>
+        /// A <c>System.String</c> with the data from <paramref name="ptr"/>.
+        /// </returns>
         protected static string MarshalPtrToString(IntPtr ptr)
         {
             if (ptr == IntPtr.Zero)
@@ -85,7 +88,7 @@ namespace OpenTK
 
             unsafe
             {
-                sbyte* str = (sbyte*)ptr.ToPointer();
+                sbyte* str = (sbyte*)ptr;
                 int len = 0;
                 while (*str != 0)
                 {
@@ -93,13 +96,13 @@ namespace OpenTK
                     ++str;
                 }
 
-                return new string(str, 0, len, null);
+                return new string((sbyte*)ptr, 0, len, Encoding.UTF8);
             }
         }
 
         /// <summary>
         /// Marshal a <c>System.String</c> to unmanaged memory.
-        /// The resulting string is encoded in ASCII and must be freed
+        /// The resulting string is encoded in UTF8 and must be freed
         /// with <c>FreeStringPtr</c>.
         /// </summary>
         /// <param name="str">The <c>System.String</c> to marshal.</param>
@@ -118,20 +121,20 @@ namespace OpenTK
             // GetMaxByteCount() appears to allocate space for the final NUL
             // character, but allocate an extra one just in case (who knows
             // what old Mono version would do here.)
-            int max_count = Encoding.ASCII.GetMaxByteCount(str.Length) + 1;
+            int max_count = Encoding.UTF8.GetMaxByteCount(str.Length) + 1;
             IntPtr ptr = Marshal.AllocHGlobal(max_count);
             if (ptr == IntPtr.Zero)
             {
                 throw new OutOfMemoryException();
             }
 
-            // Pin the managed string and convert it to ASCII using
-            // the pointer overload of System.Encoding.ASCII.GetBytes().
+            // Pin the managed string and convert it to UTF8 using
+            // the pointer overload of System.Encoding.UTF8.GetBytes().
             unsafe
             {
                 fixed (char* pstr = str)
                 {
-                    int actual_count = Encoding.ASCII.GetBytes(pstr, str.Length, (byte*)ptr, max_count);
+                    int actual_count = Encoding.UTF8.GetBytes(pstr, str.Length, (byte*)ptr, max_count);
                     Marshal.WriteByte(ptr, actual_count, 0); // Append '\0' at the end of the string
                     return ptr;
                 }

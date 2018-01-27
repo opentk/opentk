@@ -7,9 +7,9 @@
 
     <!-- Spacing rules -->
     <Rule Id="SA1000" Action="Error" /> <!-- Keywords must be spaced correctly -->
-    <Rule Id="SA1001" Action="None" /> <!-- Commas must be spaced correctly -->
-    <Rule Id="SA1002" Action="None" /> <!-- Semicolons must be spaced correctly -->
-    <Rule Id="SA1003" Action="None" /> <!-- Symbols must be spaced correctly -->
+    <Rule Id="SA1001" Action="Error" /> <!-- Commas must be spaced correctly -->
+    <Rule Id="SA1002" Action="Error" /> <!-- Semicolons must be spaced correctly -->
+    <Rule Id="SA1003" Action="Error" /> <!-- Symbols must be spaced correctly -->
     <Rule Id="SA1004" Action="None" /> <!-- Documentation lines must begin with single space -->
     <Rule Id="SA1005" Action="None" /> <!-- Single line comments must begin with single space -->
     <Rule Id="SA1006" Action="Error" /> <!-- Preprocessor keywords must not be preceded by space -->

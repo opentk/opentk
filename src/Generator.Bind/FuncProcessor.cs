@@ -536,10 +536,15 @@ namespace Bind
                                     d.Parameters[i].Flow = Parameter.GetFlowDirection((string)node.TypedValue);
                                     break;
                                 case "count":
+                                    d.Parameters[i].ComputeSize = node.Value.Trim();
                                     int count;
-                                    if (Int32.TryParse(node.Value, out count))
+                                    if (Int32.TryParse(d.Parameters[i].ComputeSize, out count))
                                     {
                                         d.Parameters[i].ElementCount = count;
+                                    }
+                                    else
+                                    {
+                                        d.Parameters[i].ElementCount = 0;
                                     }
                                     break;
                             }
@@ -647,6 +652,22 @@ namespace Bind
                 if (d.Parameters[i].CurrentType == "UInt16" && d.Name.Contains("LineStipple"))
                 {
                     d.Parameters[i].WrapperType |= WrapperTypes.UncheckedParameter;
+                }
+
+                if (function_override != null)
+                {
+                    XPathNavigator param_override = function_override.SelectSingleNode(String.Format(
+                           "param[@name='{0}' or @index='{1}']",
+                           d.Parameters[i].RawName,
+                           i));
+                    if (param_override != null)
+                    {
+                        var legacyArrayParameter = param_override.GetAttribute("legacyArrayParameter", String.Empty);
+                        if (!String.IsNullOrEmpty(legacyArrayParameter))
+                        {
+                            d.Parameters[i].WrapperType |= WrapperTypes.LegacyArrayParameter;
+                        }
+                    }
                 }
             }
         }
@@ -1097,6 +1118,17 @@ namespace Bind
                 // Generics are handled in a second pass.
                 if ((parameter.WrapperType & WrapperTypes.GenericParameter) == 0)
                 {
+                    if ((parameter.WrapperType & WrapperTypes.LegacyArrayParameter) != 0)
+                    {
+                        foreach (var wrapper in GetWrapper(wrappers, WrapperTypes.LegacyArrayParameter, func))
+                        {
+                            wrapper.Obsolete = "Use out overload instead";
+                            var p = wrapper.Parameters[i];
+                            p.Array++;
+                            p.Pointer--;
+                        }
+                    }
+
                     if ((parameter.WrapperType & WrapperTypes.ArrayParameter) != 0)
                     {
                         foreach (var wrapper in GetWrapper(wrappers, WrapperTypes.ArrayParameter, func))

@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
+using CommandLine;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
@@ -29,22 +29,30 @@ namespace OpenTK.Rewrite
     // with the s IL instructions.
     internal class Program
     {
+        private static Options Options;
+
         private static void Main(string[] args)
         {
-            if (args.Length == 0)
+            Parser.Default.ParseArguments<Options>(args)
+                .WithParsed(result => Options = result)
+                .WithNotParsed(error => Environment.Exit(-1));
+
+            // Argument error checking
+            if (!File.Exists(Options.TargetAssembly))
             {
-                Console.WriteLine("Usage: rewrite [file.dll] [file.snk] [options]");
-                Console.WriteLine("[options] is:");
-                Console.WriteLine("    -debug (enable calls to GL.GetError())");
-                Console.WriteLine("    -dllimport (force calls to use DllImport instead of GetProcAddress)");
+                Console.Error.WriteLine($"Target assembly not found. \n" +
+                                        $"Please check the given path ({Options.TargetAssembly}).");
                 return;
             }
 
+            if (!File.Exists(Path.ChangeExtension(Options.TargetAssembly, "pdb")))
+            {
+                Console.Error.WriteLine("Debugging symbols for target assembly not found. \n" +
+                                        "Please make sure that debugging symbols are being generated.");
+            }
+
             var program = new Program();
-            var file = args[0];
-            var key = args[1];
-            var options = args.Where(a => a.StartsWith("-") || a.StartsWith("/"));
-            program.Rewrite(file, key, options);
+            program.Rewrite();
         }
 
         // mscorlib types
@@ -58,27 +66,23 @@ namespace OpenTK.Rewrite
         // OpenTK.BindingsBase
         private static TypeDefinition TypeBindingsBase;
 
-        private static bool dllimport;
-
-        private void Rewrite(string file, string keyfile, IEnumerable<string> options)
+        private void Rewrite()
         {
-            IEnumerable<string> optionsEnumerated = options as IList<string> ?? options.ToList();
-            dllimport = optionsEnumerated.Contains("-dllimport");
-
             // Specify assembly read and write parameters
             // We want to keep a valid symbols file (pdb or mdb)
             var read_params = new ReaderParameters();
             var write_params = new WriterParameters();
 
+            read_params.AssemblyResolver = new OpenTKAssemblyResolver();
             read_params.ReadSymbols = true;
             read_params.ReadWrite = true;
             write_params.WriteSymbols = true;
 
-            if (!String.IsNullOrEmpty(keyfile) && File.Exists(keyfile))
+            if (!String.IsNullOrEmpty(Options.StrongNameKey) && File.Exists(Options.StrongNameKey))
             {
-                keyfile = Path.GetFullPath(keyfile);
+                string absoluteKeyFilePath = Path.GetFullPath(Options.StrongNameKey);
 
-                using (var fs = new FileStream(keyfile, FileMode.Open, FileAccess.Read))
+                using (var fs = new FileStream(absoluteKeyFilePath, FileMode.Open, FileAccess.Read))
                 {
                     var keypair = new System.Reflection.StrongNameKeyPair(fs);
                     write_params.StrongNameKeyPair = keypair;
@@ -92,7 +96,7 @@ namespace OpenTK.Rewrite
             // Load assembly and process all modules
             try
             {
-                using (AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly(file, read_params))
+                using (AssemblyDefinition assembly = AssemblyDefinition.ReadAssembly(Options.TargetAssembly, read_params))
                 {
                     var rewritten = assembly.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "RewrittenAttribute");
                     if (rewritten == null)
@@ -132,7 +136,7 @@ namespace OpenTK.Rewrite
                         {
                             foreach (var type in module.Types)
                             {
-                                Rewrite(type, optionsEnumerated);
+                                Rewrite(type);
                             }
                         }
                     }
@@ -152,7 +156,7 @@ namespace OpenTK.Rewrite
             }
         }
 
-        private void Rewrite(TypeDefinition type, IEnumerable<string> options)
+        private void Rewrite(TypeDefinition type)
         {
             var entry_points = type.Fields.FirstOrDefault(f => f.Name == "EntryPoints");
             if (entry_points != null)
@@ -162,7 +166,7 @@ namespace OpenTK.Rewrite
                 entry_signatures.AddRange(type.Methods
                     .Where(t => t.CustomAttributes.Any(a => a.AttributeType.Name == "SlotAttribute")));
 
-                Rewrite(type, entry_points, entry_signatures, options);
+                Rewrite(type, entry_points, entry_signatures);
 
                 RemoveNativeSignatures(type, entry_signatures);
             }
@@ -180,7 +184,7 @@ namespace OpenTK.Rewrite
         private static int GetSlot(MethodDefinition signature)
         {
             // Pretend there is no slots if we want to force everything to work through DllImport (Android & iOS)
-            if (dllimport)
+            if (Options.UseDLLImport)
             {
                 return -1;
             }
@@ -196,14 +200,13 @@ namespace OpenTK.Rewrite
         }
 
         private void Rewrite(TypeDefinition type, FieldDefinition entry_points,
-            List<MethodDefinition> entry_signatures, IEnumerable<string> options)
+            List<MethodDefinition> entry_signatures)
         {
             // Rewrite all wrapper methods
             var wrapper_signatures = new List<MethodDefinition>();
             wrapper_signatures.AddRange(type.Methods
                 .Where(m => m.IsPublic && m.CustomAttributes.Any(a => a.AttributeType.Name == "AutoGeneratedAttribute")));
 
-            IEnumerable<string> optionsEnumerated = options as IList<string> ?? options.ToList();
             foreach (var wrapper in wrapper_signatures)
             {
                 var autogenerated = wrapper.CustomAttributes
@@ -215,7 +218,7 @@ namespace OpenTK.Rewrite
                     var signature = entry_signatures.FirstOrDefault(s => s.Name == signature_name);
                     int slot = GetSlot(signature);
 
-                    ProcessMethod(wrapper, signature, slot, entry_points, optionsEnumerated);
+                    ProcessMethod(wrapper, signature, slot, entry_points);
                 }
             }
 
@@ -225,7 +228,7 @@ namespace OpenTK.Rewrite
             {
                 foreach (var nested_type in type.NestedTypes)
                 {
-                    Rewrite(nested_type, entry_points, entry_signatures, optionsEnumerated);
+                    Rewrite(nested_type, entry_points, entry_signatures);
                 }
             }
         }
@@ -272,7 +275,7 @@ namespace OpenTK.Rewrite
 
         // Create body for method
         private static void ProcessMethod(MethodDefinition wrapper, MethodDefinition native, int slot,
-                                  FieldDefinition entry_points, IEnumerable<string> options)
+                                  FieldDefinition entry_points)
         {
             var body = wrapper.Body;
             var il = body.GetILProcessor();
@@ -283,8 +286,7 @@ namespace OpenTK.Rewrite
             // and push each parameter on the stack
 
             DebugVariables vars = null;
-            IEnumerable<string> optionsEnumerated = options as IList<string> ?? options.ToList();
-            if (optionsEnumerated.Contains("-debug"))
+            if (Options.EnableDebugCalls)
             {
                 vars = EmitDebugPrologue(wrapper, il);
             }
@@ -301,18 +303,18 @@ namespace OpenTK.Rewrite
                 generatedVariables = EmitConvenienceWrapper(wrapper, native, difference, body, il);
             }
 
-            if (slot != -1)
+            if (slot == -1 || Options.UseDLLImport)
+            {
+                // issue DllImport call
+                EmitCall(il, native);
+            }
+            else
             {
                 // push the entry point address on the stack
                 EmitEntryPoint(entry_points, il, slot);
 
                 // issue calli
                 EmitCalli(il, native);
-            }
-            else
-            {
-                // issue DllImport call
-                EmitCall(il, native);
             }
 
             if (wrapper.ReturnType.Name != "Void")
@@ -322,7 +324,7 @@ namespace OpenTK.Rewrite
 
             EmitParameterEpilogues(wrapper, native, body, il, generatedVariables);
 
-            if (optionsEnumerated.Contains("-debug"))
+            if (Options.EnableDebugCalls)
             {
                 EmitDebugEpilogue(wrapper, il, vars);
             }
@@ -545,14 +547,14 @@ namespace OpenTK.Rewrite
         {
             foreach (var p in wrapper.Parameters)
             {
-                if (!p.ParameterType.IsArray && p.ParameterType.Name == "String" && p.IsOut)
+                if (!p.ParameterType.IsArray && p.ParameterType.Name == "String&")
                 {
                     EmitStringOutEpilogue(wrapper, native, p, body, il, GetGeneratedVariable(generatedVariables, p.Name + "_string_ptr", body));
                 }
 
                 if (!p.ParameterType.IsArray && p.ParameterType.Name == "String")
                 {
-                    EmitStringEpilogue(wrapper, p, body, il,GetGeneratedVariable(generatedVariables, p.Name + "_string_ptr", body));
+                    EmitStringEpilogue(wrapper, p, body, il, GetGeneratedVariable(generatedVariables, p.Name + "_string_ptr", body));
                 }
 
                 if (p.ParameterType.IsArray && p.ParameterType.GetElementType().Name == "String")
@@ -577,8 +579,6 @@ namespace OpenTK.Rewrite
 
         private static GeneratedVariableIdentifier EmitStringOutParameter(MethodDefinition method, ParameterDefinition parameter, MethodBody body, ILProcessor il)
         {
-            var p = parameter.ParameterType;
-
             // void GetShaderInfoLog(..., out String foo)
             // IntPtr foo_string_ptr;
             // try {
@@ -589,6 +589,10 @@ namespace OpenTK.Rewrite
             // finally {
             //  Marshal.FreeHGlobal(foo_string_ptr);
             // }
+
+            // Pop off the string parameter that would of just been loaded
+            il.Emit(OpCodes.Pop);
+
             // Make sure we have imported Marshal::AllocHGlobal
             var alloc_hglobal = method.Module.ImportReference(TypeMarshal.Methods.First(m => m.Name == "AllocHGlobal"));
 
@@ -623,10 +627,17 @@ namespace OpenTK.Rewrite
             }
             else if (count.Computed != null)
             {
-                // We don't handle count.Computed. Computed counts are hard and
-                // require manual reading of the specification for each one.
-                // But currently no string out parameters require it.
-                throw new NotSupportedException(string.Format("{0}({1}) requires a computed count: {2}", method.Name, parameter.Name, count.Computed));
+                if (method.Name == "GetActiveVarying")
+                {
+                    // GetActiveVaryingNV's name parameter has a count of "COMPSIZE(program,index,bufSize)" but really it should be bufSize.
+                    var countVariable = EmitCountVariable(method, body, il, "bufSize");
+                    il.Emit(OpCodes.Ldloc, countVariable.Index);
+                }
+                else
+                {
+                    // Computed counts are hard and require manual reading of the specification for each one.
+                    throw new NotSupportedException(string.Format("{0}({1}) requires a computed count: {2}", method.Name, parameter.Name, count.Computed));
+                }
             }
 
             il.Emit(OpCodes.Ldc_I4, 1);
@@ -667,10 +678,10 @@ namespace OpenTK.Rewrite
             var block = new ExceptionHandler(ExceptionHandlerType.Finally);
             block.TryStart = body.Instructions[0];
 
-            il.Emit(OpCodes.Ldloc, generatedPtrVar.Definition.Index);
             il.Emit(OpCodes.Ldarg, parameter.Index);
+            il.Emit(OpCodes.Ldloc, generatedPtrVar.Definition.Index);
             il.Emit(OpCodes.Call, ptr_to_str);
-            il.Emit(OpCodes.Starg, parameter.Index);
+            il.Emit(OpCodes.Stind_Ref);
 
             block.TryEnd = body.Instructions.Last();
             block.HandlerStart = body.Instructions.Last();
@@ -684,8 +695,6 @@ namespace OpenTK.Rewrite
         private static GeneratedVariableIdentifier EmitStringParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body,
             ILProcessor il)
         {
-            var p = parameter.ParameterType;
-
             // string marshaling:
             // IntPtr ptr = MarshalStringToPtr(str);
             // try { calli }
@@ -711,7 +720,6 @@ namespace OpenTK.Rewrite
         private static void EmitStringEpilogue(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body,
             ILProcessor il, GeneratedVariableIdentifier generatedPtrVar)
         {
-            var p = parameter.ParameterType;
             var free = wrapper.Module.ImportReference(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringPtr"));
 
             // FreeStringPtr(ptr)
@@ -722,8 +730,6 @@ namespace OpenTK.Rewrite
         private static GeneratedVariableIdentifier EmitStringArrayParameter(MethodDefinition wrapper, ParameterDefinition parameter, MethodBody body,
             ILProcessor il)
         {
-            var p = parameter.ParameterType;
-
             // string[] masrhaling:
             // IntPtr ptr = MarshalStringArrayToPtr(strings);
             // try { calli }
@@ -757,7 +763,6 @@ namespace OpenTK.Rewrite
 
             // Note: only works for string vectors (1d arrays).
             // We do not (and will probably never) support 2d or higher string arrays
-            var p = parameter.ParameterType;
             var free = wrapper.Module.ImportReference(TypeBindingsBase.Methods.First(m => m.Name == "FreeStringArrayPtr"));
 
             // FreeStringArrayPtr(string_array_ptr, string_array.Length)
@@ -860,9 +865,10 @@ namespace OpenTK.Rewrite
             var attribute = parameter.CustomAttributes
                         .FirstOrDefault(a => a.AttributeType.Name == "CountAttribute");
 
-            var count = new CountAttribute();
+            CountAttribute count = null;
             if (attribute != null)
             {
+                count = new CountAttribute();
                 count.Count = (int)(GetAttributeField(attribute, "Count") ?? 0);
                 count.Parameter = (string)(GetAttributeField(attribute, "Parameter"));
                 count.Computed = (string)(GetAttributeField(attribute, "Computed"));
@@ -876,14 +882,22 @@ namespace OpenTK.Rewrite
             var countVariable = new VariableDefinition(TypeInt32);
             body.Variables.Add(countVariable);
 
-            // Parameter will either by a simple name or an
-            // expression like "name*5"
+            // Parameter will either by a simple name, a dereference of a name
+            // like "*name" or an expression like "name*5"
             var parameter = method.Parameters.FirstOrDefault(
                 param => param.Name == countParameter);
             if (parameter != null)
             {
                 il.Emit(OpCodes.Ldarg, parameter.Index);
                 il.Emit(OpCodes.Stloc, countVariable.Index);
+            }
+            else if (countParameter[0] == '*')
+            {
+                var pointerParam = method.Parameters.FirstOrDefault(
+                    param => param.Name == countParameter.Substring(1));
+
+                il.Emit(OpCodes.Ldarg, pointerParam.Index);
+                il.Emit(OpCodes.Ldind_I4);
             }
             else
             {
@@ -915,7 +929,7 @@ namespace OpenTK.Rewrite
                     // We need to convert the loaded argument to IntPtr.
                     il.Emit(OpCodes.Conv_I);
                 }
-                else if (p.Name == "String" && !p.IsArray && parameter.IsOut)
+                else if (p.Name == "String&" && !p.IsArray)
                 {
                     generatedVariables.Add(EmitStringOutParameter(method, parameter, body, il));
                 }
@@ -933,7 +947,7 @@ namespace OpenTK.Rewrite
                 }
                 else if (p.IsArray)
                 {
-                    if (p.Name != method.Module.ImportReference(typeof(string[])).Name)
+                    if (p.Name != "String[]")
                     {
                         // .Net treats 1d arrays differently than higher rank arrays.
                         // 1d arrays are directly supported by instructions such as ldlen and ldelema.

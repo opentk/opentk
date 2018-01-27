@@ -1,7 +1,10 @@
+image: Visual Studio 2017
 init:
   - git config --global core.autocrlf input
 build_script:
   - cmd: build.cmd NuGet
+  - cmd: .paket\paket.exe install
+  - cmd: git diff --exit-code
 test: off
 version: 0.0.1.{build}
 artifacts:

@@ -6,6 +6,7 @@ open FsCheck.Xunit
 open System
 open System.Runtime.InteropServices
 open OpenTK
+open OpenTK.Tests.Generators
 
 module Vector2 =
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
@@ -74,6 +75,16 @@ module Vector2 =
             let lsq = a * a + b * b
 
             Assert.Equal(lsq, v.LengthSquared)
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Distance =
+        [<Property>]
+        let ``Distance(a, b) = (b - a).Length`` (a : Vector2, b : Vector2) =
+            Assert.ApproximatelyEqual(Vector2.Distance(a, b), (b - a).Length)
+
+        [<Property>]
+        let ``DistanceSquared(a, b) = (b - a).LengthSquared`` (a : Vector2, b : Vector2) =
+            Assert.ApproximatelyEqual(Vector2.DistanceSquared(a, b), (b - a).LengthSquared)
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Unit vectors and perpendicularity`` =

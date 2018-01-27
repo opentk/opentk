@@ -21,8 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.GLWidget", "src\Open
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1857BB8E-1A35-4EBF-9F6D-685F11DC025B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.API.Desktop", "tests\Test.API.Desktop\Test.API.Desktop.csproj", "{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{F1A57014-71CE-4032-A652-01B7E35E14DB}"
 	ProjectSection(SolutionItems) = preProject
 		paket.dependencies = paket.dependencies
@@ -34,9 +32,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{5EEE
 		build.fsx = build.fsx
 		README.md = README.md
 		RELEASE_NOTES.md = RELEASE_NOTES.md
+		.gitignore = .gitignore
 	EndProjectSection
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OpenTK.Tests", "tests\OpenTK.Tests\OpenTK.Tests.fsproj", "{6801C263-ADDA-4A7B-979D-649BCB5A1DF7}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OpenTK.Tests.Integration", "tests\OpenTK.Tests.Integration\OpenTK.Tests.Integration.fsproj", "{522D9279-3ED6-475F-867A-6AE69A53C24A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Tests.Math", "tests\OpenTK.Tests.Math\OpenTK.Tests.Math.csproj", "{C2B07CD9-B388-4FC3-AF31-C648F7EA904E}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OpenTK.Tests.Generators", "tests\OpenTK.Tests.Generators\OpenTK.Tests.Generators.fsproj", "{2B11AAEB-D8AC-4356-938F-532D720E0C30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,20 +81,30 @@ Global
 		{A625BE87-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A625BE87-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A625BE87-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6801C263-ADDA-4A7B-979D-649BCB5A1DF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6801C263-ADDA-4A7B-979D-649BCB5A1DF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6801C263-ADDA-4A7B-979D-649BCB5A1DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6801C263-ADDA-4A7B-979D-649BCB5A1DF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{522D9279-3ED6-475F-867A-6AE69A53C24A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{522D9279-3ED6-475F-867A-6AE69A53C24A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{522D9279-3ED6-475F-867A-6AE69A53C24A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{522D9279-3ED6-475F-867A-6AE69A53C24A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2B07CD9-B388-4FC3-AF31-C648F7EA904E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2B07CD9-B388-4FC3-AF31-C648F7EA904E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2B07CD9-B388-4FC3-AF31-C648F7EA904E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2B07CD9-B388-4FC3-AF31-C648F7EA904E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B11AAEB-D8AC-4356-938F-532D720E0C30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B11AAEB-D8AC-4356-938F-532D720E0C30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B11AAEB-D8AC-4356-938F-532D720E0C30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B11AAEB-D8AC-4356-938F-532D720E0C30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C4DDD20F-CB4E-43F4-A75C-4A3D668E1F99} = {1857BB8E-1A35-4EBF-9F6D-685F11DC025B}
 		{6801C263-ADDA-4A7B-979D-649BCB5A1DF7} = {1857BB8E-1A35-4EBF-9F6D-685F11DC025B}
+		{522D9279-3ED6-475F-867A-6AE69A53C24A} = {1857BB8E-1A35-4EBF-9F6D-685F11DC025B}
+		{C2B07CD9-B388-4FC3-AF31-C648F7EA904E} = {1857BB8E-1A35-4EBF-9F6D-685F11DC025B}
+		{2B11AAEB-D8AC-4356-938F-532D720E0C30} = {1857BB8E-1A35-4EBF-9F6D-685F11DC025B}
 	EndGlobalSection
 EndGlobal
