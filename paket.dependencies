@@ -1,3 +1,5 @@
+version 5.132.4
+
 source https://nuget.org/api/v2
 
 #Open packages
