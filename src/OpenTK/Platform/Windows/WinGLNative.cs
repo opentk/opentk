@@ -89,8 +89,8 @@ namespace OpenTK.Platform.Windows
 
         private MouseCursor cursor = MouseCursor.Default;
         private IntPtr cursor_handle = Functions.LoadCursor(CursorName.Arrow);
-        private int cursor_visible_count = 0;
         private bool cursor_grabbed = false;
+        private int cursor_visible_count = 0;
 
         private static readonly object SyncRoot = new object();
 
@@ -1259,7 +1259,10 @@ namespace OpenTK.Platform.Windows
 
         public override bool CursorGrabbed
         {
-            get { return cursor_grabbed; }
+            get
+            {
+                return cursor_grabbed;
+            }
             set
             {
                 cursor_grabbed = value;

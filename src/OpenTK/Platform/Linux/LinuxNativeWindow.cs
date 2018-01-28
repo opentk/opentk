@@ -374,18 +374,6 @@ namespace OpenTK.Platform.Linux
             return new Point(point.X + client.X, point.Y + client.Y);
         }
 
-        public override bool CursorGrabbed
-        {
-            get { return true; }
-            set
-            {
-                if (value == false)
-                {
-                    throw new NotImplementedException();
-                }
-            }
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -509,6 +497,21 @@ namespace OpenTK.Platform.Linux
             }
             set
             {
+            }
+        }
+
+        public override bool CursorGrabbed
+        {
+            get
+            {
+                return true;
+            }
+            set
+            {
+                if (value == false)
+                {
+                    throw new NotImplementedException();
+                }
             }
         }
 

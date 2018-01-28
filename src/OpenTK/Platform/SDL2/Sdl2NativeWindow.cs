@@ -48,8 +48,8 @@ namespace OpenTK.Platform.SDL2
         private uint window_id;
         private bool is_visible;
         private bool is_focused;
-        private bool is_cursor_visible = true;
         private bool is_cursor_grabbed = false;
+        private bool is_cursor_visible = true;
         private bool exists;
         private bool must_destroy;
         private bool disposed;

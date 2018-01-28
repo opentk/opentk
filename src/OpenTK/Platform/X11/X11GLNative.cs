@@ -137,8 +137,8 @@ namespace OpenTK.Platform.X11
 
         private MouseCursor cursor = MouseCursor.Default;
         private IntPtr cursorHandle;
-        private bool cursor_visible = true;
         private bool cursor_grabbed = false;
+        private bool cursor_visible = true;
 
         // Keyboard input
         private readonly byte[] ascii = new byte[16];
@@ -1701,7 +1701,10 @@ namespace OpenTK.Platform.X11
 
         public override bool CursorGrabbed
         {
-            get { return cursor_grabbed; }
+            get
+            {
+                return cursor_grabbed;
+            }
             set
             {
                 using (new XLock(window.Display))

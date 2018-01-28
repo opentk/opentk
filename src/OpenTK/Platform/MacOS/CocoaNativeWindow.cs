@@ -143,6 +143,7 @@ namespace OpenTK.Platform.MacOS
         private IntPtr current_icon_handle;
         private bool disposed = false;
         private bool exists;
+        private bool cursorGrabbed = false;
         private bool cursorVisible = true;
         private Icon icon;
         private WindowBorder windowBorder = WindowBorder.Resizable;
@@ -155,7 +156,6 @@ namespace OpenTK.Platform.MacOS
         private bool shouldClose;
         private int suppressResize;
         private MouseCursor selectedCursor = MouseCursor.Default; // user-selected cursor
-        private bool cursorGrabbed = false;
 
         public CocoaNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
@@ -1260,7 +1260,10 @@ namespace OpenTK.Platform.MacOS
 
         public override bool CursorGrabbed
         {
-            get { return cursorGrabbed; }
+            get
+            {
+                return cursorGrabbed;
+            }
             set
             {
                 SetCursorGrab(value);
