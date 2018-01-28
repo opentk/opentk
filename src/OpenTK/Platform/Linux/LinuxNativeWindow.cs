@@ -523,14 +523,11 @@ namespace OpenTK.Platform.Linux
             }
             set
             {
-                if (value && !is_cursor_visible)
+                if (value == is_cursor_visible)
                 {
-                    SetCursor(cursor_current);
+                    return;
                 }
-                else if (!value && is_cursor_visible)
-                {
-                    SetCursor(MouseCursor.Empty);
-                }
+                SetCursor(value ? cursor_current : MouseCursor.Empty);
                 is_cursor_visible = value;
             }
         }
@@ -543,19 +540,19 @@ namespace OpenTK.Platform.Linux
             }
             set
             {
-                if (cursor_current != value)
+                if (value == cursor_current)
                 {
-                    if (cursor_custom != BufferObject.Zero)
-                    {
-                        cursor_custom.Dispose();
-                    }
-
-                    if (CursorVisible)
-                    {
-                        SetCursor(value);
-                    }
-                    cursor_current = value;
+                    return;
                 }
+                if (cursor_custom != BufferObject.Zero)
+                {
+                    cursor_custom.Dispose();
+                }
+                if (CursorVisible)
+                {
+                    SetCursor(value);
+                }
+                cursor_current = value;
             }
         }
     }

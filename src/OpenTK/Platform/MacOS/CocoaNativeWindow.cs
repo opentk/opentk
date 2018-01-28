@@ -1144,6 +1144,10 @@ namespace OpenTK.Platform.MacOS
             }
             set
             {
+                if (value == selectedCursor)
+                {
+                    return;
+                }
                 selectedCursor = value;
                 InvalidateCursorRects();
             }
@@ -1266,6 +1270,10 @@ namespace OpenTK.Platform.MacOS
             }
             set
             {
+                if (value == cursorGrabbed)
+                {
+                    return;
+                }
                 SetCursorGrab(value);
                 cursorGrabbed = value;
             }
@@ -1279,6 +1287,10 @@ namespace OpenTK.Platform.MacOS
             }
             set
             {
+                if (value == cursorVisible)
+                {
+                    return;
+                }
                 cursorVisible = value;
                 // Another approach will be use of hide and unhide methods
                 // of NSCursor

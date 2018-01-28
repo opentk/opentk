@@ -1265,8 +1265,12 @@ namespace OpenTK.Platform.Windows
             }
             set
             {
-                cursor_grabbed = value;
+                if (value == cursor_grabbed)
+                {
+                    return;
+                }
                 SetCursorGrab(value);
+                cursor_grabbed = value;
             }
         }
 

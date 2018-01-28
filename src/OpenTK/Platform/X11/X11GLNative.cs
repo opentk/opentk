@@ -1683,22 +1683,6 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        public override bool CursorVisible
-        {
-            get
-            {
-                return cursor_visible;
-            }
-            set
-            {
-                using (new XLock(window.Display))
-                {
-                    SetCursorVisible(value);
-                    cursor_visible = value;
-                }
-            }
-        }
-
         public override bool CursorGrabbed
         {
             get
@@ -1709,8 +1693,32 @@ namespace OpenTK.Platform.X11
             {
                 using (new XLock(window.Display))
                 {
+                    if (value == cursor_grabbed)
+                    {
+                        return;
+                    }
                     SetCursorGrab(value);
                     cursor_grabbed = value;
+                }
+            }
+        }
+
+        public override bool CursorVisible
+        {
+            get
+            {
+                return cursor_visible;
+            }
+            set
+            {
+                using (new XLock(window.Display))
+                {
+                    if (value == cursor_visible)
+                    {
+                        return;
+                    }
+                    SetCursorVisible(value);
+                    cursor_visible = value;
                 }
             }
         }
