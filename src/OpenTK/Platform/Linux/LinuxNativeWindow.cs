@@ -510,7 +510,11 @@ namespace OpenTK.Platform.Linux
             {
                 if (value == false)
                 {
-                    throw new NotImplementedException();
+                    throw new PlatformNotSupportedException
+                    (
+                        $"{ nameof(LinuxNativeWindow) } doesn't support ungrabbing cursor - " +
+                        $"{ nameof(CursorGrabbed) } is implied to always be true due to missing an actual window"
+                    );
                 }
             }
         }
