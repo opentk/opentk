@@ -30,33 +30,27 @@ namespace OpenTK
     /// </summary>
     /// <seealso cref="Matrix4d"/>
     [Serializable]
-    [StructLayout(LayoutKind.Explicit)]
-    public unsafe struct Matrix4 : IEquatable<Matrix4>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct Matrix4 : IEquatable<Matrix4>
     {
-        [FieldOffset (0)]
-        fixed float vals [16];
         /// <summary>
         /// Top row of the matrix.
         /// </summary>
-        [FieldOffset (0)]
         public Vector4 Row0;
 
         /// <summary>
         /// 2nd row of the matrix.
         /// </summary>
-        [FieldOffset (4 * sizeof(float))]
         public Vector4 Row1;
 
         /// <summary>
         /// 3rd row of the matrix.
         /// </summary>
-        [FieldOffset (8 * sizeof(float))]
         public Vector4 Row2;
 
         /// <summary>
         /// Bottom row of the matrix.
         /// </summary>
-        [FieldOffset (12 * sizeof(float))]
         public Vector4 Row3;
 
         /// <summary>
@@ -1242,11 +1236,14 @@ namespace OpenTK
         /// <param name="mat">The matrix to invert</param>
         /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular</param>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
-        public static void Invert(ref Matrix4 mat, out Matrix4 result)
+        public static unsafe void Invert(ref Matrix4 mat, out Matrix4 result)
         {
             result = mat;
             float* inv = stackalloc float [16];
-            fixed (float* m = mat.vals, invOut = result.vals) {
+
+            fixed (Matrix4* m0 = &mat, m1 = &result) {
+                var m = (float*)m0;
+                var invOut = (float*)m1;
                 float det;
                 inv [0] = m [5] * m [10] * m [15] -
                          m [5] * m [11] * m [14] -
