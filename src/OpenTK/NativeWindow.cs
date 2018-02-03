@@ -489,6 +489,7 @@ namespace OpenTK
         /// <summary>
         /// Gets or sets a value indicating whether the mouse cursor is grabbed.
         /// </summary>
+        /// <exception cref="PlatformNotSupportedException">Throw on native Linux platform when trying to set false value</exception>
         public bool CursorGrabbed
         {
             get
