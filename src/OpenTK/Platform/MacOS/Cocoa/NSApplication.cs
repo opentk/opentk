@@ -57,6 +57,7 @@ namespace OpenTK.Platform.MacOS
 
             // Setup the application
             Cocoa.SendBool(Handle, Selector.Get("setActivationPolicy:"), (int)NSApplicationActivationPolicy.Regular);
+            Cocoa.SendVoid(Handle, Selector.Get("discardEventsMatchingMask:beforeEvent:"), uint.MaxValue, IntPtr.Zero);
             Cocoa.SendVoid(Handle, Selector.Get("activateIgnoringOtherApps:"), true);
 
             if (Cocoa.SendIntPtr(Handle, Selector.Get("mainMenu")) == IntPtr.Zero)
