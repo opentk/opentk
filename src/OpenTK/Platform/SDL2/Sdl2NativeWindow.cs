@@ -179,7 +179,7 @@ namespace OpenTK.Platform.SDL2
 
                     case EventType.MOUSEBUTTONDOWN:
                     case EventType.MOUSEBUTTONUP:
-                        if (windows.TryGetValue(ev.Button.WindowID, out window))
+                        if (windows.TryGetValue(window_id, out window))
                         {
                             ProcessMouseButtonEvent(window, ev.Button);
                             processed = true;
@@ -227,14 +227,6 @@ namespace OpenTK.Platform.SDL2
         private static void ProcessMouseButtonEvent(Sdl2NativeWindow window, MouseButtonEvent ev)
         {
             bool button_pressed = ev.State == State.Pressed;
-
-            // We need MouseUp events to be reported even if they occur
-            // outside the window. SetWindowGrab ensures we get them.
-            if (window.CursorVisible)
-            {
-                SDL.SetWindowGrab(window.window.Handle,
-                    button_pressed ? true : false);
-            }
 
             MouseButton button = Sdl2Mouse.TranslateButton(ev.Button);
             if (button_pressed)
