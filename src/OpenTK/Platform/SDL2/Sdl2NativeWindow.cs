@@ -219,6 +219,7 @@ namespace OpenTK.Platform.SDL2
             catch (Exception ex)
             {
                 Debug.Print(ex.ToString());
+                throw;
             }
 
             return processed ? 0 : 1;
