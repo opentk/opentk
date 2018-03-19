@@ -838,6 +838,73 @@ namespace OpenTK
             return !left.Equals(right);
         }
 
+        /// <summary>
+        /// Transform a Vector by the given Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector2d operator *(Vector2d vec, Matrix2d mat)
+        {
+            Vector2d result;
+            Vector2d.Transform(ref vec, ref mat, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation
+        /// </summary>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="vec">The vector to transform</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector2d operator *(Matrix2d mat, Vector2d vec)
+        {
+            Vector2d result;
+            Vector2d.Transform(ref mat, ref vec, out result);
+            return result;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix</summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector2d Transform(Vector2d vec, Matrix2d mat)
+        {
+            Vector2d result;
+            Transform(ref vec, ref mat, out result);
+            return result;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix</summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="result">The transformed vector</param>
+        public static void Transform(ref Vector2d vec, ref Matrix2d mat, out Vector2d result)
+        {
+            result.X = vec.X * mat.Row0.X + vec.Y * mat.Row1.X;
+            result.Y = vec.X * mat.Row0.Y + vec.Y * mat.Row1.Y;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="vec">The vector to transform</param>
+        public static Vector2d Transform(Matrix2d mat, Vector2d vec)
+        {
+            Vector2d result;
+            Transform(ref mat, ref vec, out result);
+            return result;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="result">The transformed vector</param>
+        public static void Transform(ref Matrix2d mat, ref Vector2d vec, out Vector2d result)
+        {
+            result.X = vec.X * mat.Row0.X + vec.Y * mat.Row0.Y;
+            result.Y = vec.X * mat.Row1.X + vec.Y * mat.Row1.Y;
+        }
+
         /// <summary>Converts OpenTK.Vector2 to OpenTK.Vector2d.</summary>
         /// <param name="v2">The Vector2 to convert.</param>
         /// <returns>The resulting Vector2d.</returns>
