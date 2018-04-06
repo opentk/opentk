@@ -146,79 +146,73 @@ namespace OpenTK.Platform.SDL2
         {
             bool processed = false;
 
-            try
+
+            Sdl2NativeWindow window = null;
+
+            switch (ev.Type)
             {
-                Sdl2NativeWindow window = null;
+                case EventType.WINDOWEVENT:
+                    if (windows.TryGetValue(ev.Window.WindowID, out window))
+                    {
+                        ProcessWindowEvent(window, ev.Window);
+                        processed = true;
+                    }
+                    break;
 
-                switch (ev.Type)
-                {
-                    case EventType.WINDOWEVENT:
-                        if (windows.TryGetValue(ev.Window.WindowID, out window))
-                        {
-                            ProcessWindowEvent(window, ev.Window);
-                            processed = true;
-                        }
-                        break;
+                case EventType.TEXTINPUT:
+                    if (windows.TryGetValue(ev.Text.WindowID, out window))
+                    {
+                        ProcessTextInputEvent(window, ev.Text);
+                        processed = true;
+                    }
+                    break;
 
-                    case EventType.TEXTINPUT:
-                        if (windows.TryGetValue(ev.Text.WindowID, out window))
-                        {
-                            ProcessTextInputEvent(window, ev.Text);
-                            processed = true;
-                        }
-                        break;
+                case EventType.KEYDOWN:
+                case EventType.KEYUP:
+                    if (windows.TryGetValue(ev.Key.WindowID, out window))
+                    {
+                        ProcessKeyEvent(window, ev);
+                        processed = true;
+                    }
+                    break;
 
-                    case EventType.KEYDOWN:
-                    case EventType.KEYUP:
-                        if (windows.TryGetValue(ev.Key.WindowID, out window))
-                        {
-                            ProcessKeyEvent(window, ev);
-                            processed = true;
-                        }
-                        break;
+                case EventType.MOUSEBUTTONDOWN:
+                case EventType.MOUSEBUTTONUP:
+                    if (windows.TryGetValue(ev.Button.WindowID, out window))
+                    {
+                        ProcessMouseButtonEvent(window, ev.Button);
+                        processed = true;
+                    }
+                    break;
 
-                    case EventType.MOUSEBUTTONDOWN:
-                    case EventType.MOUSEBUTTONUP:
-                        if (windows.TryGetValue(ev.Button.WindowID, out window))
-                        {
-                            ProcessMouseButtonEvent(window, ev.Button);
-                            processed = true;
-                        }
-                        break;
+                case EventType.MOUSEMOTION:
+                    if (windows.TryGetValue(ev.Motion.WindowID, out window))
+                    {
+                        ProcessMouseMotionEvent(window, ev.Motion);
+                        processed = true;
+                    }
+                    break;
 
-                    case EventType.MOUSEMOTION:
-                        if (windows.TryGetValue(ev.Motion.WindowID, out window))
-                        {
-                            ProcessMouseMotionEvent(window, ev.Motion);
-                            processed = true;
-                        }
-                        break;
+                case EventType.MOUSEWHEEL:
+                    if (windows.TryGetValue(ev.Wheel.WindowID, out window))
+                    {
+                        ProcessMouseWheelEvent(window, ev.Wheel);
+                        processed = true;
+                    }
+                    break;
 
-                    case EventType.MOUSEWHEEL:
-                        if (windows.TryGetValue(ev.Wheel.WindowID, out window))
-                        {
-                            ProcessMouseWheelEvent(window, ev.Wheel);
-                            processed = true;
-                        }
-                        break;
+                case EventType.DROPFILE:
+                    if (windows.TryGetValue(ev.Drop.WindowID, out window))
+                    {
+                        ProcessDropEvent(window, ev.Drop);
+                        SDL.Free(ev.Drop.File);
+                        processed = true;
+                    }
+                    break;
 
-                    case EventType.DROPFILE:
-                        if (windows.TryGetValue(ev.Drop.WindowID, out window))
-                        {
-                            ProcessDropEvent(window, ev.Drop);
-                            SDL.Free(ev.Drop.File);
-                            processed = true;
-                        }
-                        break;
-
-                    case EventType.QUIT:
-                        Debug.WriteLine("Sdl2 application quit");
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.Print(ex.ToString());
+                case EventType.QUIT:
+                    Debug.WriteLine("Sdl2 application quit");
+                    break;
             }
 
             return processed ? 0 : 1;
