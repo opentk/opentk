@@ -177,6 +177,11 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
+            if (this == Zero)
+            {
+                return;
+            }
+
             double scale = 1.0 / Length;
             X *= scale;
             Y *= scale;
@@ -562,6 +567,11 @@ namespace OpenTK
         /// <returns>The normalized vector</returns>
         public static Vector2d Normalize(Vector2d vec)
         {
+            if (vec == Zero)
+            {
+                return vec;
+            }            
+
             double scale = 1.0 / vec.Length;
             vec.X *= scale;
             vec.Y *= scale;

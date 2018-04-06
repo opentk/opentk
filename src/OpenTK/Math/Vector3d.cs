@@ -207,6 +207,11 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
+            if(this == Zero)
+            {
+                return;
+            }
+
             double scale = 1.0 / this.Length;
             X *= scale;
             Y *= scale;
