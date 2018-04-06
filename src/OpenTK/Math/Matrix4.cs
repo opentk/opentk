@@ -1238,121 +1238,143 @@ namespace OpenTK
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
         public static void Invert(ref Matrix4 mat, out Matrix4 result)
         {
-            int[] colIdx = { 0, 0, 0, 0 };
-            int[] rowIdx = { 0, 0, 0, 0 };
-            int[] pivotIdx = { -1, -1, -1, -1 };
-
-            // convert the matrix to an array for easy looping
-            float[,] inverse = {{mat.Row0.X, mat.Row0.Y, mat.Row0.Z, mat.Row0.W},
-                                {mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W},
-                                {mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W},
-                                {mat.Row3.X, mat.Row3.Y, mat.Row3.Z, mat.Row3.W} };
-            int icol = 0;
-            int irow = 0;
-            for (int i = 0; i < 4; i++)
+            result = mat;
+            unsafe
             {
-                // Find the largest pivot value
-                float maxPivot = 0.0f;
-                for (int j = 0; j < 4; j++)
+                float* inv = stackalloc float[16];
+
+                fixed (Matrix4* m0 = &mat, m1 = &result)
                 {
-                    if (pivotIdx[j] != 0)
+                    var m = (float*)m0;
+                    var invOut = (float*)m1;
+                    float det;
+                    inv[0] = m[5] * m[10] * m[15] -
+                             m[5] * m[11] * m[14] -
+                             m[9] * m[6] * m[15] +
+                             m[9] * m[7] * m[14] +
+                             m[13] * m[6] * m[11] -
+                             m[13] * m[7] * m[10];
+
+                    inv[4] = -m[4] * m[10] * m[15] +
+                              m[4] * m[11] * m[14] +
+                              m[8] * m[6] * m[15] -
+                              m[8] * m[7] * m[14] -
+                              m[12] * m[6] * m[11] +
+                              m[12] * m[7] * m[10];
+
+                    inv[8] = m[4] * m[9] * m[15] -
+                             m[4] * m[11] * m[13] -
+                             m[8] * m[5] * m[15] +
+                             m[8] * m[7] * m[13] +
+                             m[12] * m[5] * m[11] -
+                             m[12] * m[7] * m[9];
+
+                    inv[12] = -m[4] * m[9] * m[14] +
+                               m[4] * m[10] * m[13] +
+                               m[8] * m[5] * m[14] -
+                               m[8] * m[6] * m[13] -
+                               m[12] * m[5] * m[10] +
+                               m[12] * m[6] * m[9];
+
+                    inv[1] = -m[1] * m[10] * m[15] +
+                              m[1] * m[11] * m[14] +
+                              m[9] * m[2] * m[15] -
+                              m[9] * m[3] * m[14] -
+                              m[13] * m[2] * m[11] +
+                              m[13] * m[3] * m[10];
+
+                    inv[5] = m[0] * m[10] * m[15] -
+                             m[0] * m[11] * m[14] -
+                             m[8] * m[2] * m[15] +
+                             m[8] * m[3] * m[14] +
+                             m[12] * m[2] * m[11] -
+                             m[12] * m[3] * m[10];
+
+                    inv[9] = -m[0] * m[9] * m[15] +
+                              m[0] * m[11] * m[13] +
+                              m[8] * m[1] * m[15] -
+                              m[8] * m[3] * m[13] -
+                              m[12] * m[1] * m[11] +
+                              m[12] * m[3] * m[9];
+
+                    inv[13] = m[0] * m[9] * m[14] -
+                              m[0] * m[10] * m[13] -
+                              m[8] * m[1] * m[14] +
+                              m[8] * m[2] * m[13] +
+                              m[12] * m[1] * m[10] -
+                              m[12] * m[2] * m[9];
+
+                    inv[2] = m[1] * m[6] * m[15] -
+                             m[1] * m[7] * m[14] -
+                             m[5] * m[2] * m[15] +
+                             m[5] * m[3] * m[14] +
+                             m[13] * m[2] * m[7] -
+                             m[13] * m[3] * m[6];
+
+                    inv[6] = -m[0] * m[6] * m[15] +
+                              m[0] * m[7] * m[14] +
+                              m[4] * m[2] * m[15] -
+                              m[4] * m[3] * m[14] -
+                              m[12] * m[2] * m[7] +
+                              m[12] * m[3] * m[6];
+
+                    inv[10] = m[0] * m[5] * m[15] -
+                              m[0] * m[7] * m[13] -
+                              m[4] * m[1] * m[15] +
+                              m[4] * m[3] * m[13] +
+                              m[12] * m[1] * m[7] -
+                              m[12] * m[3] * m[5];
+
+                    inv[14] = -m[0] * m[5] * m[14] +
+                               m[0] * m[6] * m[13] +
+                               m[4] * m[1] * m[14] -
+                               m[4] * m[2] * m[13] -
+                               m[12] * m[1] * m[6] +
+                               m[12] * m[2] * m[5];
+
+                    inv[3] = -m[1] * m[6] * m[11] +
+                              m[1] * m[7] * m[10] +
+                              m[5] * m[2] * m[11] -
+                              m[5] * m[3] * m[10] -
+                              m[9] * m[2] * m[7] +
+                              m[9] * m[3] * m[6];
+
+                    inv[7] = m[0] * m[6] * m[11] -
+                             m[0] * m[7] * m[10] -
+                             m[4] * m[2] * m[11] +
+                             m[4] * m[3] * m[10] +
+                             m[8] * m[2] * m[7] -
+                             m[8] * m[3] * m[6];
+
+                    inv[11] = -m[0] * m[5] * m[11] +
+                               m[0] * m[7] * m[9] +
+                               m[4] * m[1] * m[11] -
+                               m[4] * m[3] * m[9] -
+                               m[8] * m[1] * m[7] +
+                               m[8] * m[3] * m[5];
+
+                    inv[15] = m[0] * m[5] * m[10] -
+                              m[0] * m[6] * m[9] -
+                              m[4] * m[1] * m[10] +
+                              m[4] * m[2] * m[9] +
+                              m[8] * m[1] * m[6] -
+                              m[8] * m[2] * m[5];
+
+                    det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
+
+                    if (det == 0)
                     {
-                        for (int k = 0; k < 4; ++k)
-                        {
-                            if (pivotIdx[k] == -1)
-                            {
-                                float absVal = System.Math.Abs(inverse[j, k]);
-                                if (absVal > maxPivot)
-                                {
-                                    maxPivot = absVal;
-                                    irow = j;
-                                    icol = k;
-                                }
-                            }
-                            else if (pivotIdx[k] > 0)
-                            {
-                                result = mat;
-                                return;
-                            }
-                        }
+                        throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
                     }
-                }
-
-                ++(pivotIdx[icol]);
-
-                // Swap rows over so pivot is on diagonal
-                if (irow != icol)
-                {
-                    for (int k = 0; k < 4; ++k)
+                    else
                     {
-                        float f = inverse[irow, k];
-                        inverse[irow, k] = inverse[icol, k];
-                        inverse[icol, k] = f;
-                    }
-                }
+                        det = 1.0f / det;
 
-                rowIdx[i] = irow;
-                colIdx[i] = icol;
-
-                float pivot = inverse[icol, icol];
-                // check for singular matrix
-                if (pivot == 0.0f)
-                {
-                    throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
-                }
-
-                // Scale row so it has a unit diagonal
-                float oneOverPivot = 1.0f / pivot;
-                inverse[icol, icol] = 1.0f;
-                for (int k = 0; k < 4; ++k)
-                {
-                    inverse[icol, k] *= oneOverPivot;
-                }
-
-                // Do elimination of non-diagonal elements
-                for (int j = 0; j < 4; ++j)
-                {
-                    // check this isn't on the diagonal
-                    if (icol != j)
-                    {
-                        float f = inverse[j, icol];
-                        inverse[j, icol] = 0.0f;
-                        for (int k = 0; k < 4; ++k)
-                        {
-                            inverse[j, k] -= inverse[icol, k] * f;
-                        }
+                        for (int i = 0; i < 16; i++)
+                            invOut[i] = inv[i] * det;
                     }
                 }
             }
-
-            for (int j = 3; j >= 0; --j)
-            {
-                int ir = rowIdx[j];
-                int ic = colIdx[j];
-                for (int k = 0; k < 4; ++k)
-                {
-                    float f = inverse[k, ir];
-                    inverse[k, ir] = inverse[k, ic];
-                    inverse[k, ic] = f;
-                }
-            }
-
-            result.Row0.X = inverse[0, 0];
-            result.Row0.Y = inverse[0, 1];
-            result.Row0.Z = inverse[0, 2];
-            result.Row0.W = inverse[0, 3];
-            result.Row1.X = inverse[1, 0];
-            result.Row1.Y = inverse[1, 1];
-            result.Row1.Z = inverse[1, 2];
-            result.Row1.W = inverse[1, 3];
-            result.Row2.X = inverse[2, 0];
-            result.Row2.Y = inverse[2, 1];
-            result.Row2.Z = inverse[2, 2];
-            result.Row2.W = inverse[2, 3];
-            result.Row3.X = inverse[3, 0];
-            result.Row3.Y = inverse[3, 1];
-            result.Row3.Z = inverse[3, 2];
-            result.Row3.W = inverse[3, 3];
         }
 
         /// <summary>
