@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Xml.XPath;
 using Bind.Structures;
@@ -269,7 +270,7 @@ namespace Bind
                 // our current apiversion. Extensions do not have a version,
                 // so we add them anyway (which is desirable).
                 if (!String.IsNullOrEmpty(version) && !String.IsNullOrEmpty(apiversion) &&
-                    Decimal.Parse(version) > Decimal.Parse(apiversion))
+                    Decimal.Parse(version, CultureInfo.InvariantCulture) > Decimal.Parse(apiversion, CultureInfo.InvariantCulture))
                 {
                     continue;
                 }
