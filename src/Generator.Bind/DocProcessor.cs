@@ -13,26 +13,26 @@ namespace Bind
 {
     internal class DocProcessor
     {
-        private static readonly char[] numbers = "0123456789".ToCharArray();
+        private static readonly char[] Numbers = "0123456789".ToCharArray();
 
-        private static readonly Regex remove_mathml = new Regex(
+        private static readonly Regex RemoveMathml = new Regex(
             @"<(mml:math|inlineequation)[^>]*?>(?:.|\n)*?</\s*\1\s*>",
             RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
 
-        private static readonly Regex remove_doctype = new Regex(
+        private static readonly Regex RemoveDoctype = new Regex(
             @"<!DOCTYPE[^>\[]*(\[.*\])?>", RegexOptions.Compiled | RegexOptions.Multiline);
 
-        private static readonly Regex remove_xmlns = new Regex(
+        private static readonly Regex RemoveXmlns = new Regex(
             "xmlns=\".+\"", RegexOptions.Compiled);
 
-        private readonly Dictionary<string, string> DocumentationFiles =
+        private readonly Dictionary<string, string> _documentationFiles =
             new Dictionary<string, string>();
 
-        private readonly Dictionary<string, Documentation> DocumentationCache =
+        private readonly Dictionary<string, Documentation> _documentationCache =
             new Dictionary<string, Documentation>();
 
-        private Documentation Cached;
-        private string LastFile;
+        private Documentation _cached;
+        private string _lastFile;
 
         private IBind Generator { get; set; }
         private Settings Settings => Generator.Settings;
@@ -49,9 +49,9 @@ namespace Bind
                 Directory.GetFiles(Settings.FallbackDocPath)))
             {
                 var name = Path.GetFileName(file);
-                if (!DocumentationFiles.ContainsKey(name))
+                if (!_documentationFiles.ContainsKey(name))
                 {
-                    DocumentationFiles.Add(name, file);
+                    _documentationFiles.Add(name, file);
                 }
             }
         }
@@ -60,24 +60,24 @@ namespace Bind
         {
             Documentation docs = null;
 
-            if (DocumentationCache.ContainsKey(f.WrappedDelegate.Name))
+            if (_documentationCache.ContainsKey(f.WrappedDelegate.Name))
             {
-                return DocumentationCache[f.WrappedDelegate.Name];
+                return _documentationCache[f.WrappedDelegate.Name];
             }
             else
             {
                 var file = Settings.FunctionPrefix + f.WrappedDelegate.Name + ".xml";
-                if (!DocumentationFiles.ContainsKey(file))
+                if (!_documentationFiles.ContainsKey(file))
                 {
                     file = Settings.FunctionPrefix + f.TrimmedName + ".xml";
                 }
-                if (!DocumentationFiles.ContainsKey(file))
+                if (!_documentationFiles.ContainsKey(file))
                 {
-                    file = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
+                    file = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(Numbers) + ".xml";
                 }
 
                 docs = 
-                    (DocumentationFiles.ContainsKey(file) ? ProcessFile(DocumentationFiles[file], processor) : null) ??
+                    (_documentationFiles.ContainsKey(file) ? ProcessFile(_documentationFiles[file], processor) : null) ??
                     new Documentation
                     {
                         Summary = String.Empty,
@@ -85,7 +85,7 @@ namespace Bind
                         new DocumentationParameter(p.Name, String.Empty)).ToList()
                     };
 
-                DocumentationCache.Add(f.WrappedDelegate.Name, docs);
+                _documentationCache.Add(f.WrappedDelegate.Name, docs);
             }
 
             return docs;
@@ -99,21 +99,21 @@ namespace Bind
         {
             string text;
 
-            if (LastFile == file)
+            if (_lastFile == file)
             {
-                return Cached;
+                return _cached;
             }
 
-            LastFile = file;
+            _lastFile = file;
             text = File.ReadAllText(file);
 
             text = text
                 .Replace("&epsi;", "epsilon") // Fix unrecognized &epsi; entities
                 .Replace("xml:", String.Empty); // Remove namespaces
-            text = remove_doctype.Replace(text, String.Empty);
-            text = remove_xmlns.Replace(text, string.Empty);
+            text = RemoveDoctype.Replace(text, String.Empty);
+            text = RemoveXmlns.Replace(text, string.Empty);
 
-            Match m = remove_mathml.Match(text);
+            Match m = RemoveMathml.Match(text);
             while (m.Length > 0)
             {
                 string removed = text.Substring(m.Index, m.Length);
@@ -122,33 +122,33 @@ namespace Bind
                 if (equation > 0)
                 {
                     // Find the start and end of the equation string
-                    int eqn_start = equation + 4;
-                    int eqn_end = removed.IndexOf(":-->") - equation - 4;
-                    if (eqn_end < 0)
+                    int eqnStart = equation + 4;
+                    int eqnEnd = removed.IndexOf(":-->") - equation - 4;
+                    if (eqnEnd < 0)
                     {
                         // Note: a few docs from man4 delimit eqn end with ": -->"
-                        eqn_end = removed.IndexOf(": -->") - equation - 4;
+                        eqnEnd = removed.IndexOf(": -->") - equation - 4;
                     }
-                    if (eqn_end < 0)
+                    if (eqnEnd < 0)
                     {
                         Console.WriteLine("[Warning] Failed to find equation for mml.");
                         goto next;
                     }
 
-                    string eqn_substring = removed.Substring(eqn_start, eqn_end);
-                    text = text.Insert(m.Index, "<![CDATA[" + eqn_substring + "]]>");
+                    string eqnSubstring = removed.Substring(eqnStart, eqnEnd);
+                    text = text.Insert(m.Index, "<![CDATA[" + eqnSubstring + "]]>");
                 }
 
             next:
-                m = remove_mathml.Match(text);
+                m = RemoveMathml.Match(text);
             }
 
             XDocument doc = null;
             try
             {
                 doc = XDocument.Parse(text);
-                Cached = ToInlineDocs(doc, processor);
-                return Cached;
+                _cached = ToInlineDocs(doc, processor);
+                return _cached;
             }
             catch (Exception e)
             {
@@ -158,15 +158,15 @@ namespace Bind
             }
         }
 
-        private Documentation ToInlineDocs(XDocument doc, EnumProcessor enum_processor)
+        private Documentation ToInlineDocs(XDocument doc, EnumProcessor enumProcessor)
         {
-            if (doc == null || enum_processor == null)
+            if (doc == null || enumProcessor == null)
             {
                 throw new ArgumentNullException();
             }
 
-            var no_const_processing = Settings.Legacy.NoAdvancedEnumProcessing | Settings.Legacy.ConstIntEnums;
-            if (!Generator.Settings.IsEnabled(no_const_processing))
+            var noConstProcessing = Settings.Legacy.NoAdvancedEnumProcessing | Settings.Legacy.ConstIntEnums;
+            if (!Generator.Settings.IsEnabled(noConstProcessing))
             {
                 // Translate all GL_FOO_BAR constants according to EnumProcessor
                 foreach (var e in doc.XPathSelectElements("//constant"))
@@ -177,7 +177,7 @@ namespace Bind
                         // Remove "GL_" from the beginning of the string
                         c = c.Replace(Settings.ConstantPrefix, String.Empty);
                     }
-                    e.Value = enum_processor.TranslateConstantName(c, false);
+                    e.Value = enumProcessor.TranslateConstantName(c, false);
                 }
             }
 
@@ -202,14 +202,14 @@ namespace Bind
             return inline;
         }
 
-        private static readonly char[] newline = new char[] { '\n' };
+        private static readonly char[] Newline = new char[] { '\n' };
 
         private static string Cleanup(string text)
         {
             return
                 String.Join(" ", text
                     .Replace("\r", "\n")
-                    .Split(newline, StringSplitOptions.RemoveEmptyEntries)
+                    .Split(Newline, StringSplitOptions.RemoveEmptyEntries)
                     .Select(s => s.Trim()).ToArray())
                     .Trim();
         }

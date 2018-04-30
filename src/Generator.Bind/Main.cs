@@ -31,9 +31,9 @@ namespace Bind
 
     internal static class MainClass
     {
-        private static GeneratorMode mode = GeneratorMode.Default;
+        private static GeneratorMode _mode = GeneratorMode.Default;
         static internal List<IBind> Generators = new List<IBind>();
-        private static Settings Settings = new Settings();
+        private static Settings _settings = new Settings();
 
         private static void Main(string[] arguments)
         {
@@ -71,13 +71,13 @@ namespace Bind
                             case "in":
                             case "input":
                             {
-                                Settings.InputPath = val;
+                                _settings.InputPath = val;
                                 break;
                             }
                             case "out":
                             case "output":
                             {
-                                Settings.OutputPath = val;
+                                _settings.OutputPath = val;
                                 break;
                             }
                             case "mode":
@@ -89,17 +89,17 @@ namespace Bind
                             case "namespace":
                             case "ns":
                             {
-                                Settings.OutputNamespace = val;
+                                _settings.OutputNamespace = val;
                                 break;
                             }
                             case "class":
                             {
-                                Settings.OutputClass = val;
+                                _settings.OutputClass = val;
                                 break;
                             }
                             case "gl":
                             {
-                                Settings.GLClass = val;
+                                _settings.GLClass = val;
                                 break;
                             }
                             case "legacy":
@@ -127,11 +127,11 @@ namespace Bind
 
                                 if (enable)
                                 {
-                                    Settings.Compatibility |= settings;
+                                    _settings.Compatibility |= settings;
                                 }
                                 else
                                 {
-                                    Settings.Compatibility &= ~settings;
+                                    _settings.Compatibility &= ~settings;
                                 }
 
                                 break;
@@ -160,50 +160,50 @@ namespace Bind
 
             try
             {
-                switch (mode)
+                switch (_mode)
                 {
                     case GeneratorMode.All:
                         Console.WriteLine("Using 'all' generator mode.");
                         Console.WriteLine("Use '-mode:all/gl2/gl4/es10/es11/es20/es30/es31' to select a specific mode.");
-                        Generators.Add(new GL2Generator(Settings));
-                        Generators.Add(new GL4Generator(Settings));
-                        Generators.Add(new ESGenerator(Settings));
-                        Generators.Add(new ES2Generator(Settings));
-                        Generators.Add(new ES3Generator(Settings));
-                        Generators.Add(new ES31Generator(Settings));
+                        Generators.Add(new GL2Generator(_settings));
+                        Generators.Add(new GL4Generator(_settings));
+                        Generators.Add(new ESGenerator(_settings));
+                        Generators.Add(new ES2Generator(_settings));
+                        Generators.Add(new ES3Generator(_settings));
+                        Generators.Add(new ES31Generator(_settings));
                         break;
 
                     case GeneratorMode.GL2:
-                        Generators.Add(new GL2Generator(Settings));
+                        Generators.Add(new GL2Generator(_settings));
                         break;
 
                     case GeneratorMode.GL3:
                     case GeneratorMode.GL4:
-                        Generators.Add(new GL4Generator(Settings));
+                        Generators.Add(new GL4Generator(_settings));
                         break;
 
                     case GeneratorMode.ES10:
-                        Generators.Add(new ESGenerator(Settings));
+                        Generators.Add(new ESGenerator(_settings));
                         break;
 
                     case GeneratorMode.ES11:
-                        Generators.Add(new ESGenerator(Settings));
+                        Generators.Add(new ESGenerator(_settings));
                         break;
 
                     case GeneratorMode.ES20:
-                        Generators.Add(new ES2Generator(Settings));
+                        Generators.Add(new ES2Generator(_settings));
                         break;
 
                     case GeneratorMode.ES30:
-                        Generators.Add(new ES3Generator(Settings));
+                        Generators.Add(new ES3Generator(_settings));
                         break;
 
                     case GeneratorMode.ES31:
-                        Generators.Add(new ES31Generator(Settings));
+                        Generators.Add(new ES31Generator(_settings));
                         break;
 
                     case GeneratorMode.CL10:
-                        Generators.Add(new CLGenerator(Settings));
+                        Generators.Add(new CLGenerator(_settings));
                         break;
 
                     default:
@@ -251,39 +251,39 @@ namespace Bind
             {
                 case "gl":
                 case "gl2":
-                    mode = GeneratorMode.GL2;
+                    _mode = GeneratorMode.GL2;
                     break;
 
                 case "gl3":
                 case "gl4":
-                    mode = GeneratorMode.GL4;
+                    _mode = GeneratorMode.GL4;
                     break;
 
                 case "es10":
-                    mode = GeneratorMode.ES10;
+                    _mode = GeneratorMode.ES10;
                     break;
 
                 case "es11":
-                    mode = GeneratorMode.ES11;
+                    _mode = GeneratorMode.ES11;
                     break;
 
                 case "es2":
                 case "es20":
-                    mode = GeneratorMode.ES20;
+                    _mode = GeneratorMode.ES20;
                     break;
 
                 case "es3":
                 case "es30":
-                    mode = GeneratorMode.ES30;
+                    _mode = GeneratorMode.ES30;
                     break;
 
                 case "es31":
-                    mode = GeneratorMode.ES31;
+                    _mode = GeneratorMode.ES31;
                     break;
 
                 case "cl":
                 case "cl10":
-                    mode = GeneratorMode.CL10;
+                    _mode = GeneratorMode.CL10;
                     break;
 
                 default:

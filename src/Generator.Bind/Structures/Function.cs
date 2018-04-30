@@ -111,14 +111,14 @@ namespace Bind.Structures
             }
         }
 
-        private string indent = "";
+        private string _indent = "";
 
         /// <summary>
         /// Indents this <see cref="FunctionBody"/> another level.
         /// </summary>
         public void Indent()
         {
-            indent += "    ";
+            _indent += "    ";
         }
 
         /// <summary>
@@ -126,13 +126,13 @@ namespace Bind.Structures
         /// </summary>
         public void Unindent()
         {
-            if (indent.Length > 4)
+            if (_indent.Length > 4)
             {
-                indent = indent.Substring(4);
+                _indent = _indent.Substring(4);
             }
             else
             {
-                indent = String.Empty;
+                _indent = String.Empty;
             }
         }
 
@@ -142,7 +142,7 @@ namespace Bind.Structures
         /// <param name="s">The line to add.</param>
         new public void Add(string s)
         {
-            base.Add(indent + s.TrimEnd('\r', '\n'));
+            base.Add(_indent + s.TrimEnd('\r', '\n'));
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Bind.Structures
 
     internal class FunctionCollection : SortedDictionary<string, List<Function>>
     {
-        private Regex unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
+        private Regex _unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
 
         private void Add(Function f)
         {
@@ -224,12 +224,12 @@ namespace Bind.Structures
                 {
                     Function existing = list[index];
                     bool replace = existing.Parameters.HasUnsignedParameters &&
-                        !unsignedFunctions.IsMatch(existing.Name) && unsignedFunctions.IsMatch(f.Name);
+                        !_unsignedFunctions.IsMatch(existing.Name) && _unsignedFunctions.IsMatch(f.Name);
                     replace |= !existing.Parameters.HasUnsignedParameters &&
-                        unsignedFunctions.IsMatch(existing.Name) && !unsignedFunctions.IsMatch(f.Name);
+                        _unsignedFunctions.IsMatch(existing.Name) && !_unsignedFunctions.IsMatch(f.Name);
                     replace |=
-                        (from p_old in existing.Parameters
-                                        join p_new in f.Parameters on p_old.Name equals p_new.Name
+                        (from pOld in existing.Parameters
+                                        join pNew in f.Parameters on pOld.Name equals pNew.Name
                                         where p_new.ElementCount == 0 && p_old.ElementCount != 0
                                         select true)
                             .Count() != 0;

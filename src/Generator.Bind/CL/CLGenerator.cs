@@ -5,7 +5,7 @@ namespace Bind.CL
         public CLGenerator(Settings settings)
             : base(settings)
         {
-            glTypemap = null;
+            GLTypemap = null;
 
             Settings.WrappersFile = "CL.cs";
 

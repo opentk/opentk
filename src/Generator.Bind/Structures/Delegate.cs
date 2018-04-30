@@ -18,15 +18,15 @@ namespace Bind.Structures
     {
         //internal static DelegateCollection Delegates;
 
-        private bool? cls_compliance_overriden;
+        private bool? _clsComplianceOverriden;
 
-        protected static Regex endings = new Regex(@"((((d|f|fi)|u?[isb])_?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
-        protected static Regex endingsNotToTrim = new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flag|Tess|Status|Pixels|Instanced|Indexed|Varyings|Boolean|IDs)", RegexOptions.Compiled | RegexOptions.RightToLeft);
+        protected static Regex Endings = new Regex(@"((((d|f|fi)|u?[isb])_?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
+        protected static Regex EndingsNotToTrim = new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flag|Tess|Status|Pixels|Instanced|Indexed|Varyings|Boolean|IDs)", RegexOptions.Compiled | RegexOptions.RightToLeft);
 
         // Add a trailing v to functions matching this regex. Used to differntiate between overloads taking both
         // a 'type' and a 'ref type' (such overloads are not CLS Compliant).
         // The default Regex matches no functions. Create a new Regex in Bind.Generator classes to override the default behavior.
-        internal static Regex endingsAddV = new Regex("^0", RegexOptions.Compiled);
+        internal static Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
 
         public Delegate()
         {
@@ -46,7 +46,7 @@ namespace Bind.Structures
             DeprecatedVersion = d.DeprecatedVersion;
             EntryPoint = d.EntryPoint;
             Obsolete = d.Obsolete;
-            cls_compliance_overriden = d.cls_compliance_overriden;
+            _clsComplianceOverriden = d._clsComplianceOverriden;
             Slot = d.Slot;
         }
 
@@ -57,9 +57,9 @@ namespace Bind.Structures
         {
             get
             {
-                if (cls_compliance_overriden != null)
+                if (_clsComplianceOverriden != null)
                 {
-                    return (bool)cls_compliance_overriden;
+                    return (bool)_clsComplianceOverriden;
                 }
 
                 if (Unsafe)
@@ -81,7 +81,7 @@ namespace Bind.Structures
                 }
                 return true;
             }
-            set => cls_compliance_overriden = value;
+            set => _clsComplianceOverriden = value;
         }
 
         public string Category { get; set; }
@@ -227,7 +227,7 @@ namespace Bind.Structures
 
     internal class DelegateCollection : IDictionary<string, List<Delegate>>
     {
-        private readonly SortedDictionary<string, List<Delegate>> Delegates =
+        private readonly SortedDictionary<string, List<Delegate>> _delegates =
             new SortedDictionary<string, List<Delegate>>();
 
         public void Add(Delegate d)
@@ -238,7 +238,7 @@ namespace Bind.Structures
             }
             else
             {
-                var list = Delegates[d.Name];
+                var list = _delegates[d.Name];
                 var index = list.FindIndex(w => w.CompareTo(d) == 0);
                 if (index < 0)
                 {
@@ -280,71 +280,71 @@ namespace Bind.Structures
 
         public void Add(string key, List<Delegate> value)
         {
-            Delegates.Add(key, value.ToList());
+            _delegates.Add(key, value.ToList());
         }
 
         public bool ContainsKey(string key)
         {
-            return Delegates.ContainsKey(key);
+            return _delegates.ContainsKey(key);
         }
 
         public bool Remove(string key)
         {
-            return Delegates.Remove(key);
+            return _delegates.Remove(key);
         }
 
         public bool TryGetValue(string key, out List<Delegate> value)
         {
-            return Delegates.TryGetValue(key, out value);
+            return _delegates.TryGetValue(key, out value);
         }
 
         public List<Delegate> this[string index]
         {
-            get => Delegates[index];
-            set => Delegates[index] = value;
+            get => _delegates[index];
+            set => _delegates[index] = value;
         }
 
-        public ICollection<string> Keys => Delegates.Keys;
+        public ICollection<string> Keys => _delegates.Keys;
 
-        public ICollection<List<Delegate>> Values => Delegates.Values;
+        public ICollection<List<Delegate>> Values => _delegates.Values;
 
         public void Add(KeyValuePair<string, List<Delegate>> item)
         {
-            Delegates.Add(item.Key, item.Value.ToList());
+            _delegates.Add(item.Key, item.Value.ToList());
         }
 
         public void Clear()
         {
-            Delegates.Clear();
+            _delegates.Clear();
         }
 
         public bool Contains(KeyValuePair<string, List<Delegate>> item)
         {
-            return Delegates.Contains(item);
+            return _delegates.Contains(item);
         }
 
         public void CopyTo(KeyValuePair<string, List<Delegate>>[] array, int arrayIndex)
         {
-            Delegates.CopyTo(array, arrayIndex);
+            _delegates.CopyTo(array, arrayIndex);
         }
 
         public bool Remove(KeyValuePair<string, List<Delegate>> item)
         {
-            return Delegates.Remove(item.Key);
+            return _delegates.Remove(item.Key);
         }
 
-        public int Count => Delegates.Count;
+        public int Count => _delegates.Count;
 
         public bool IsReadOnly => false;
 
         public IEnumerator<KeyValuePair<string, List<Delegate>>> GetEnumerator()
         {
-            return Delegates.GetEnumerator();
+            return _delegates.GetEnumerator();
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return Delegates.GetEnumerator();
+            return _delegates.GetEnumerator();
         }
     }
 }

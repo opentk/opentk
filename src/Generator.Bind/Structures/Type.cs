@@ -8,7 +8,7 @@ namespace Bind.Structures
 {
     internal class Type : IComparable<Type>, IEquatable<Type>
     {
-        private string current_qualifier = String.Empty;
+        private string _currentQualifier = String.Empty;
 
         public Type()
         {
@@ -32,8 +32,8 @@ namespace Bind.Structures
 
         private string CurrentQualifier
         {
-            get => current_qualifier;
-            set { PreviousQualifier = CurrentQualifier; current_qualifier = value; }
+            get => _currentQualifier;
+            set { PreviousQualifier = CurrentQualifier; _currentQualifier = value; }
         }
 
         private string PreviousQualifier { get; set; } = String.Empty;
@@ -50,11 +50,11 @@ namespace Bind.Structures
                     throw new ArgumentNullException();
                 }
 
-                int qualifier_end = value.LastIndexOf('.');
-                if (qualifier_end > -1)
+                int qualifierEnd = value.LastIndexOf('.');
+                if (qualifierEnd > -1)
                 {
-                    CurrentQualifier = value.Substring(0, qualifier_end);
-                    CurrentType = value.Substring(qualifier_end + 1);
+                    CurrentQualifier = value.Substring(0, qualifierEnd);
+                    CurrentType = value.Substring(qualifierEnd + 1);
                 }
                 else
                 {
@@ -64,13 +64,13 @@ namespace Bind.Structures
             }
         }
 
-        private string type;
+        private string _type;
         /// <summary>
         /// Gets the type of the parameter.
         /// </summary>
         public virtual string CurrentType
         {
-            get => type;
+            get => _type;
             set
             {
                 if (String.IsNullOrEmpty(value))
@@ -78,18 +78,18 @@ namespace Bind.Structures
                     throw new ArgumentException();
                 }
 
-                if (!String.IsNullOrEmpty(type))
+                if (!String.IsNullOrEmpty(_type))
                 {
-                    PreviousType = type;
+                    PreviousType = _type;
                 }
                 if (!String.IsNullOrEmpty(value))
                 {
-                    type = value.Trim();
+                    _type = value.Trim();
                 }
 
-                while (type.EndsWith("*"))
+                while (_type.EndsWith("*"))
                 {
-                    type = type.Substring(0, type.Length - 1).Trim();
+                    _type = _type.Substring(0, _type.Length - 1).Trim();
                     Pointer++;
                 }
             }
@@ -99,29 +99,29 @@ namespace Bind.Structures
 
         public bool Reference { get; set; }
 
-        private int array;
+        private int _array;
 
         public int Array
         {
-            get => array;
-            set => array = value > 0 ? value : 0;
+            get => _array;
+            set => _array = value > 0 ? value : 0;
         }
 
-        private int element_count;
+        private int _elementCount;
 
         // If the type is an array and ElementCount > 0, then ElemenCount defines the expected array length.
         public int ElementCount
         {
-            get => element_count;
-            set => element_count = value > 0 ? value : 0;
+            get => _elementCount;
+            set => _elementCount = value > 0 ? value : 0;
         }
 
-        private int pointer;
+        private int _pointer;
 
         public int Pointer
         {
-            get => pointer;
-            set => pointer = value > 0 ? value : 0;
+            get => _pointer;
+            set => _pointer = value > 0 ? value : 0;
         }
 
         // Set to true if parameter is an enum.

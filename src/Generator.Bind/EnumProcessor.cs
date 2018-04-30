@@ -36,7 +36,7 @@ namespace Bind
 {
     internal class EnumProcessor
     {
-        private readonly IEnumerable<string> Overrides;
+        private readonly IEnumerable<string> _overrides;
 
         private IBind Generator { get; set; }
         private Settings Settings => Generator.Settings;
@@ -53,12 +53,12 @@ namespace Bind
             }
 
             Generator = generator;
-            Overrides = overrides;
+            _overrides = overrides;
         }
 
         public EnumCollection Process(EnumCollection enums, string apiname)
         {
-            foreach (var file in Overrides)
+            foreach (var file in _overrides)
             {
                 Console.WriteLine("Processing enums in {0}.", file);
 
@@ -92,7 +92,7 @@ namespace Bind
 
         private EnumCollection ProcessNames(EnumCollection enums, XPathNavigator nav, string apiname)
         {
-            EnumCollection processed_enums = new EnumCollection();
+            EnumCollection processedEnums = new EnumCollection();
             foreach (var e in enums.Values)
             {
                 // Note that we cannot modify a collection while iterating over it,
@@ -102,7 +102,7 @@ namespace Bind
                 name = ReplaceName(nav, apiname, name);
                 name = TranslateEnumName(name);
                 e.Name = name;
-                processed_enums.Add(e.Name, e);
+                processedEnums.Add(e.Name, e);
             }
 
             // Mark enums differing only in case as not CLS-compliant.
@@ -123,18 +123,18 @@ namespace Bind
             {
             }
 
-            return processed_enums;
+            return processedEnums;
         }
 
         private static string ReplaceName(XPathNavigator nav, string apiname, string name)
         {
-            var enum_override = nav.SelectSingleNode(GetOverridesPath(apiname, name));
-            if (enum_override != null)
+            var enumOverride = nav.SelectSingleNode(GetOverridesPath(apiname, name));
+            if (enumOverride != null)
             {
-                var name_override = enum_override.SelectSingleNode("name");
-                if (name_override != null)
+                var nameOverride = enumOverride.SelectSingleNode("name");
+                if (nameOverride != null)
                 {
-                    name = name_override.Value;
+                    name = nameOverride.Value;
                 }
             }
             return name;
@@ -177,8 +177,8 @@ namespace Bind
                 int offset = 0; // Everytime we insert a match, we must increase offset to compensate.
                 while (match.Success)
                 {
-                    int insert_pos = match.Index + match.Length + offset++;
-                    translator.Insert(insert_pos, "_");
+                    int insertPos = match.Index + match.Length + offset++;
+                    translator.Insert(insertPos, "_");
                     match = match.NextMatch();
                 }
                 name = translator.ToString();
@@ -189,38 +189,38 @@ namespace Bind
                 //     2. if current char is  or '0-9' keep it and make next char uppercase.
                 //     3. if current char is uppercase make next char lowercase.
                 //     4. if current char is lowercase, respect next char case.
-                bool is_after_underscore_or_number = true;
-                bool is_previous_uppercase = false;
+                bool isAfterUnderscoreOrNumber = true;
+                bool isPreviousUppercase = false;
                 foreach (char c in name)
                 {
-                    char char_to_add;
+                    char charToAdd;
                     if (c == '_' || c == '-')
                     {
-                        is_after_underscore_or_number = true;
+                        isAfterUnderscoreOrNumber = true;
                         continue; // skip this character
                     }
                     else if (Char.IsDigit(c))
                     {
-                        is_after_underscore_or_number = true;
+                        isAfterUnderscoreOrNumber = true;
                     }
 
-                    if (is_after_underscore_or_number)
+                    if (isAfterUnderscoreOrNumber)
                     {
-                        char_to_add = Char.ToUpper(c);
+                        charToAdd = Char.ToUpper(c);
                     }
-                    else if (is_previous_uppercase)
+                    else if (isPreviousUppercase)
                     {
-                        char_to_add = Char.ToLower(c);
+                        charToAdd = Char.ToLower(c);
                     }
                     else
                     {
-                        char_to_add = c;
+                        charToAdd = c;
                     }
 
-                    translator.Append(char_to_add);
+                    translator.Append(charToAdd);
 
-                    is_previous_uppercase = Char.IsUpper(c);
-                    is_after_underscore_or_number = false;
+                    isPreviousUppercase = Char.IsUpper(c);
+                    isAfterUnderscoreOrNumber = false;
                 }
 
                 // First letter should always be uppercase in order
@@ -248,23 +248,23 @@ namespace Bind
         {
             foreach (var e in enums.Values)
             {
-                var processed_constants = new SortedDictionary<string, Constant>();
+                var processedConstants = new SortedDictionary<string, Constant>();
                 foreach (Constant c in e.ConstantCollection.Values)
                 {
                     c.Name = TranslateConstantName(c.Name, false);
                     c.Value = TranslateConstantValue(c.Value);
                     c.Reference = TranslateEnumName(c.Reference);
-                    if (!processed_constants.ContainsKey(c.Name))
+                    if (!processedConstants.ContainsKey(c.Name))
                     {
-                        processed_constants.Add(c.Name, c);
+                        processedConstants.Add(c.Name, c);
                     }
                 }
-                e.ConstantCollection = processed_constants;
+                e.ConstantCollection = processedConstants;
 
-                var enum_override = nav.SelectSingleNode(GetOverridesPath(apiname, e.Name));
+                var enumOverride = nav.SelectSingleNode(GetOverridesPath(apiname, e.Name));
                 foreach (Constant c in e.ConstantCollection.Values)
                 {
-                    ReplaceConstant(enum_override, c);
+                    ReplaceConstant(enumOverride, c);
                     ResolveBareAlias(c, enums);
                 }
             }
@@ -277,15 +277,15 @@ namespace Bind
             return enums;
         }
 
-        private static void ReplaceConstant(XPathNavigator enum_override, Constant c)
+        private static void ReplaceConstant(XPathNavigator enumOverride, Constant c)
         {
-            if (enum_override != null)
+            if (enumOverride != null)
             {
-                XPathNavigator constant_override = enum_override.SelectSingleNode(String.Format("token[@name='{0}']", c.OriginalName)) ??
-                    enum_override.SelectSingleNode(String.Format("token[@name={0}]", c.Name));
-                if (constant_override != null)
+                XPathNavigator constantOverride = enumOverride.SelectSingleNode(String.Format("token[@name='{0}']", c.OriginalName)) ??
+                    enumOverride.SelectSingleNode(String.Format("token[@name={0}]", c.Name));
+                if (constantOverride != null)
                 {
-                    foreach (XPathNavigator node in constant_override.SelectChildren(XPathNodeType.Element))
+                    foreach (XPathNavigator node in constantOverride.SelectChildren(XPathNodeType.Element))
                     {
                         switch (node.Name)
                         {
@@ -314,13 +314,13 @@ namespace Bind
             else
             {
                 // Translate the constant's name to match .Net naming conventions
-                bool name_is_all_caps = s.AsEnumerable().All(c => Char.IsLetter(c) ? Char.IsUpper(c) : true);
-                bool name_contains_underscore = s.Contains("_");
+                bool nameIsAllCaps = s.AsEnumerable().All(c => Char.IsLetter(c) ? Char.IsUpper(c) : true);
+                bool nameContainsUnderscore = s.Contains("_");
                 if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None &&
-                (name_is_all_caps || name_contains_underscore))
+                (nameIsAllCaps || nameContainsUnderscore))
                 {
-                    bool next_char_uppercase = true;
-                    bool is_after_digit = false;
+                    bool nextCharUppercase = true;
+                    bool isAfterDigit = false;
 
                     if (!isValue && Char.IsDigit(s[0]))
                     {
@@ -331,25 +331,25 @@ namespace Bind
                     {
                         if (c == '_' || c == '-')
                         {
-                            next_char_uppercase = true;
+                            nextCharUppercase = true;
                             continue; // do not add these chars to output
                         }
                         else if (Char.IsDigit(c))
                         {
                             translator.Append(c);
-                            is_after_digit = true;
+                            isAfterDigit = true;
                         }
                         else
                         {
                             // Check for common 'digit'-'letter' abbreviations:
                             // 2D, 3D, R3G3B2, etc. The abbreviated characters
                             // should be made upper case.
-                            if (is_after_digit && (c == 'D' || c == 'R' || c == 'G' || c == 'B' || c == 'A'))
+                            if (isAfterDigit && (c == 'D' || c == 'R' || c == 'G' || c == 'B' || c == 'A'))
                             {
-                                next_char_uppercase = true;
+                                nextCharUppercase = true;
                             }
-                            translator.Append(next_char_uppercase ? Char.ToUpper(c) : Char.ToLower(c));
-                            is_after_digit = next_char_uppercase = false;
+                            translator.Append(nextCharUppercase ? Char.ToUpper(c) : Char.ToLower(c));
+                            isAfterDigit = nextCharUppercase = false;
                         }
                     }
 
@@ -418,10 +418,10 @@ namespace Bind
         {
             // Note that we have the removal must be a separate step, since
             // we cannot modify a collection while iterating with foreach.
-            var broken_references = e.ConstantCollection.Values
+            var brokenReferences = e.ConstantCollection.Values
                 .Where(c => !Constant.TranslateConstantWithReference(c, enums))
                 .Select(c => c).ToList();
-            foreach (var c in broken_references)
+            foreach (var c in brokenReferences)
             {
                 Console.WriteLine("[Warning] Reference {0} not found for token {1}.", c.Reference, c);
                 e.ConstantCollection.Remove(c.Name);
@@ -432,20 +432,20 @@ namespace Bind
         {
             // Check if the result is a number.
             long number;
-            bool is_number = false;
+            bool isNumber = false;
             if (test.ToLower().StartsWith("0x"))
             {
-                is_number = true;
+                isNumber = true;
             }
             else
             {
-                is_number = Int64.TryParse(
+                isNumber = Int64.TryParse(
                     test,
                     NumberStyles.Number,
                     System.Globalization.CultureInfo.InvariantCulture,
                     out number);
             }
-            return is_number;
+            return isNumber;
         }
     }
 }

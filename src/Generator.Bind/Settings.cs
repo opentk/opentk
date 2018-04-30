@@ -32,50 +32,50 @@ namespace Bind
         public string DefaultWrappersFile = "GL.cs";
         public Legacy DefaultCompatibility = Legacy.NoDropMultipleTokens;
 
-        private string inputPath, outputPath, outputNamespace, docPath, fallbackDocPath, licenseFile,
-            languageTypeMapFile, keywordEscapeCharacter, importsFile, delegatesFile, enumsFile,
-            wrappersFile;
+        private string _inputPath, _outputPath, _outputNamespace, _docPath, _fallbackDocPath, _licenseFile,
+            _languageTypeMapFile, _keywordEscapeCharacter, _importsFile, _delegatesFile, _enumsFile,
+            _wrappersFile;
 
-        private Nullable<Legacy> compatibility;
-        public string InputPath { get => inputPath ?? DefaultInputPath;
-            set => inputPath = value;
+        private Nullable<Legacy> _compatibility;
+        public string InputPath { get => _inputPath ?? DefaultInputPath;
+            set => _inputPath = value;
         }
-        public string OutputPath { get => outputPath ?? DefaultOutputPath;
-            set => outputPath = value;
+        public string OutputPath { get => _outputPath ?? DefaultOutputPath;
+            set => _outputPath = value;
         }
-        public string OutputNamespace { get => outputNamespace ?? DefaultOutputNamespace;
-            set => outputNamespace = value;
+        public string OutputNamespace { get => _outputNamespace ?? DefaultOutputNamespace;
+            set => _outputNamespace = value;
         }
-        public string DocPath { get => docPath ?? DefaultDocPath;
-            set => docPath = value;
+        public string DocPath { get => _docPath ?? DefaultDocPath;
+            set => _docPath = value;
         }
-        public string FallbackDocPath { get => fallbackDocPath ?? DefaultFallbackDocPath;
-            set => fallbackDocPath = value;
+        public string FallbackDocPath { get => _fallbackDocPath ?? DefaultFallbackDocPath;
+            set => _fallbackDocPath = value;
         }
-        public string LicenseFile { get => licenseFile ?? DefaultLicenseFile;
-            set => licenseFile = value;
+        public string LicenseFile { get => _licenseFile ?? DefaultLicenseFile;
+            set => _licenseFile = value;
         }
         public List<string> OverridesFiles { get; private set; }
-        public string LanguageTypeMapFile { get => languageTypeMapFile ?? DefaultLanguageTypeMapFile;
-            set => languageTypeMapFile = value;
+        public string LanguageTypeMapFile { get => _languageTypeMapFile ?? DefaultLanguageTypeMapFile;
+            set => _languageTypeMapFile = value;
         }
-        public string KeywordEscapeCharacter { get => keywordEscapeCharacter ?? DefaultKeywordEscapeCharacter;
-            set => keywordEscapeCharacter = value;
+        public string KeywordEscapeCharacter { get => _keywordEscapeCharacter ?? DefaultKeywordEscapeCharacter;
+            set => _keywordEscapeCharacter = value;
         }
-        public string ImportsFile { get => importsFile ?? DefaultImportsFile;
-            set => importsFile = value;
+        public string ImportsFile { get => _importsFile ?? DefaultImportsFile;
+            set => _importsFile = value;
         }
-        public string DelegatesFile { get => delegatesFile ?? DefaultDelegatesFile;
-            set => delegatesFile = value;
+        public string DelegatesFile { get => _delegatesFile ?? DefaultDelegatesFile;
+            set => _delegatesFile = value;
         }
-        public string EnumsFile { get => enumsFile ?? DefaultEnumsFile;
-            set => enumsFile = value;
+        public string EnumsFile { get => _enumsFile ?? DefaultEnumsFile;
+            set => _enumsFile = value;
         }
-        public string WrappersFile { get => wrappersFile ?? DefaultWrappersFile;
-            set => wrappersFile = value;
+        public string WrappersFile { get => _wrappersFile ?? DefaultWrappersFile;
+            set => _wrappersFile = value;
         }
-        public Legacy Compatibility { get => compatibility ?? DefaultCompatibility;
-            set => compatibility = value;
+        public Legacy Compatibility { get => _compatibility ?? DefaultCompatibility;
+            set => _compatibility = value;
         }
 
         public string GLClass = "GL";        // Needed by Glu for the AuxEnumsClass. Can be set through -gl:"xxx".
@@ -87,11 +87,11 @@ namespace Bind
 
         // TODO: This code is too fragile.
         // Old enums code:
-        public string normalEnumsClassOverride = null;
+        public string NormalEnumsClassOverride = null;
         public string NestedEnumsClass = "Enums";
-        public string NormalEnumsClass => normalEnumsClassOverride == null ?
+        public string NormalEnumsClass => NormalEnumsClassOverride == null ?
             String.IsNullOrEmpty(NestedEnumsClass) ? OutputClass : OutputClass + NamespaceSeparator + NestedEnumsClass :
-            normalEnumsClassOverride;
+            NormalEnumsClassOverride;
 
         public string AuxEnumsClass => GLClass + NamespaceSeparator + NestedEnumsClass;
 
@@ -234,7 +234,7 @@ namespace Bind
             }
         }
 
-        public string WindowsGDI = "OpenTK.Platform.Windows.API";
+        public string WindowsGdi = "OpenTK.Platform.Windows.API";
 
         public Settings Clone()
         {

@@ -69,11 +69,11 @@ namespace Bind
                 Directory.CreateDirectory(Settings.OutputPath);
             }
 
-            string temp_enums_file = Path.GetTempFileName();
-            string temp_wrappers_file = Path.GetTempFileName();
+            string tempEnumsFile = Path.GetTempFileName();
+            string tempWrappersFile = Path.GetTempFileName();
 
             // Enums
-            using (BindStreamWriter sw = new BindStreamWriter(temp_enums_file))
+            using (BindStreamWriter sw = new BindStreamWriter(tempEnumsFile))
             {
                 WriteLicense(sw);
 
@@ -108,7 +108,7 @@ namespace Bind
             }
 
             // Wrappers
-            using (BindStreamWriter sw = new BindStreamWriter(temp_wrappers_file))
+            using (BindStreamWriter sw = new BindStreamWriter(tempWrappersFile))
             {
                 WriteLicense(sw);
                 sw.WriteLine("namespace {0}", Settings.OutputNamespace);
@@ -125,35 +125,35 @@ namespace Bind
                 sw.WriteLine("}");
             }
 
-            string output_enums = Path.Combine(Settings.OutputPath, Settings.EnumsFile);
-            string output_delegates = Path.Combine(Settings.OutputPath, Settings.DelegatesFile);
-            string output_core = Path.Combine(Settings.OutputPath, Settings.ImportsFile);
-            string output_wrappers = Path.Combine(Settings.OutputPath, Settings.WrappersFile);
+            string outputEnums = Path.Combine(Settings.OutputPath, Settings.EnumsFile);
+            string outputDelegates = Path.Combine(Settings.OutputPath, Settings.DelegatesFile);
+            string outputCore = Path.Combine(Settings.OutputPath, Settings.ImportsFile);
+            string outputWrappers = Path.Combine(Settings.OutputPath, Settings.WrappersFile);
 
-            if (File.Exists(output_enums))
+            if (File.Exists(outputEnums))
             {
-                File.Delete(output_enums);
+                File.Delete(outputEnums);
             }
-            if (File.Exists(output_delegates))
+            if (File.Exists(outputDelegates))
             {
-                File.Delete(output_delegates);
+                File.Delete(outputDelegates);
             }
-            if (File.Exists(output_core))
+            if (File.Exists(outputCore))
             {
-                File.Delete(output_core);
+                File.Delete(outputCore);
             }
-            if (File.Exists(output_wrappers))
+            if (File.Exists(outputWrappers))
             {
-                File.Delete(output_wrappers);
+                File.Delete(outputWrappers);
             }
 
-            File.Move(temp_enums_file, output_enums);
-            File.Move(temp_wrappers_file, output_wrappers);
+            File.Move(tempEnumsFile, outputEnums);
+            File.Move(tempWrappersFile, outputWrappers);
         }
 
         private void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers,
             DelegateCollection delegates, EnumCollection enums,
-            IDictionary<string, string> CSTypes)
+            IDictionary<string, string> csTypes)
         {
             Trace.WriteLine(String.Format("Writing wrappers to:\t{0}.{1}", Settings.OutputNamespace, Settings.OutputClass));
 
@@ -212,7 +212,7 @@ namespace Bind
             sw.WriteLine("}");
             sw.WriteLine();
 
-            int current_wrapper = 0;
+            int currentWrapper = 0;
             foreach (string key in wrappers.Keys)
             {
                 if (((Settings.Compatibility & Settings.Legacy.NoSeparateFunctionNamespaces) == Settings.Legacy.None) && key != "Core")
@@ -234,7 +234,7 @@ namespace Bind
                 foreach (Function f in wrappers[key])
                 {
                     WriteWrapper(sw, f, enums);
-                    current_wrapper++;
+                    currentWrapper++;
                 }
 
                 if (((Settings.Compatibility & Settings.Legacy.NoSeparateFunctionNamespaces) == Settings.Legacy.None) && key != "Core")
@@ -247,19 +247,19 @@ namespace Bind
 
             // Emit native signatures.
             // These are required by the patcher.
-            int current_signature = 0;
+            int currentSignature = 0;
             foreach (var d in wrappers.Values.SelectMany(e => e).Select(w => w.WrappedDelegate).Distinct())
             {
                 sw.WriteLine("[Slot({0})]", d.Slot);
                 sw.WriteLine("[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
                 sw.WriteLine("private static extern {0};", GetDeclarationString(d, false));
-                current_signature++;
+                currentSignature++;
             }
 
             sw.Unindent();
             sw.WriteLine("}");
 
-            Console.WriteLine("Wrote {0} wrappers for {1} signatures", current_wrapper, current_signature);
+            Console.WriteLine("Wrote {0} wrappers for {1} signatures", currentWrapper, currentSignature);
         }
 
         private void WriteWrapper(BindStreamWriter sw, Function f, EnumCollection enums)
@@ -406,12 +406,12 @@ namespace Bind
             }
         }
 
-        public void WriteTypes(BindStreamWriter sw, Dictionary<string, string> CSTypes)
+        public void WriteTypes(BindStreamWriter sw, Dictionary<string, string> csTypes)
         {
             sw.WriteLine();
-            foreach (string s in CSTypes.Keys)
+            foreach (string s in csTypes.Keys)
             {
-                sw.WriteLine("using {0} = System.{1};", s, CSTypes[s]);
+                sw.WriteLine("using {0} = System.{1};", s, csTypes[s]);
             }
         }
 
@@ -467,11 +467,11 @@ namespace Bind
                 }
 
                 // Build a dictionary of which functions use which enums
-                var enum_counts = new Dictionary<Enum, List<Function>>();
+                var enumCounts = new Dictionary<Enum, List<Function>>();
                 foreach (var e in enums.Values)
                 {
                     // Initialize the dictionary
-                    enum_counts.Add(e, new List<Function>());
+                    enumCounts.Add(e, new List<Function>());
                 }
                 foreach (var wrapper in wrappers.Values.SelectMany(w => w))
                 {
@@ -479,7 +479,7 @@ namespace Bind
                     foreach (var parameter in wrapper.Parameters.Where(p => p.IsEnum))
                     {
                         var e = enums[parameter.CurrentType];
-                        var list = enum_counts[e];
+                        var list = enumCounts[e];
                         list.Add(wrapper);
                     }
                 }
@@ -489,7 +489,7 @@ namespace Bind
                     if (!Settings.IsEnabled(Settings.Legacy.NoDocumentation))
                     {
                         // Document which functions use this enum.
-                        var functions = enum_counts[@enum]
+                        var functions = enumCounts[@enum]
                             .Select(w => Settings.GLClass + (w.Extension != "Core" ? ("." + w.Extension) : "") + "." + w.TrimmedName)
                             .Distinct();
 
@@ -564,9 +564,9 @@ namespace Bind
 
         // For example, if parameter foo has indirection level = 1, then it
         // is consumed as 'foo*' in the fixed_statements and the call string.
-        private readonly static string[] pointer_levels = new string[] { "", "*", "**", "***", "****" };
+        private readonly static string[] PointerLevels = new string[] { "", "*", "**", "***", "****" };
 
-        private readonly static string[] array_levels = new string[] { "", "[]", "[,]", "[,,]", "[,,,]" };
+        private readonly static string[] ArrayLevels = new string[] { "", "[]", "[,]", "[,,]", "[,,,]" };
 
         private static bool IsEnum(string s, EnumCollection enums)
         {
@@ -589,12 +589,12 @@ namespace Bind
                 c.Value);
         }
 
-        private string GetDeclarationString(Delegate d, bool is_delegate)
+        private string GetDeclarationString(Delegate d, bool isDelegate)
         {
             StringBuilder sb = new StringBuilder();
 
             sb.Append(d.Unsafe ? "unsafe " : "");
-            if (is_delegate)
+            if (isDelegate)
             {
                 sb.Append("delegate ");
             }
@@ -686,7 +686,7 @@ namespace Bind
             return sb.ToString();
         }
 
-        private string GetDeclarationString(Parameter p, bool override_unsafe_setting, Settings.Legacy settings)
+        private string GetDeclarationString(Parameter p, bool overrideUnsafeSetting, Settings.Legacy settings)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -743,7 +743,7 @@ namespace Bind
                 }
             }
 
-            if (!override_unsafe_setting && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None))
+            if (!overrideUnsafeSetting && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None))
             {
                 if (p.Pointer != 0)
                 {
@@ -802,8 +802,8 @@ namespace Bind
 
             return String.Format("{0}{1}{2}",
                 t,
-                pointer_levels[type.Pointer],
-                array_levels[type.Array]);
+                PointerLevels[type.Pointer],
+                ArrayLevels[type.Array]);
         }
     }
 }

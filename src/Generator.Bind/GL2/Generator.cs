@@ -13,18 +13,18 @@ namespace Bind.GL2
 {
     internal abstract class Generator : IBind
     {
-        protected string glTypemap = "GL2/gl.tm";
-        protected string csTypemap = "csharp.tm";
-        protected string enumSpec = "GL2/enum.spec";
-        protected string enumSpecExt = "GL2/enumext.spec";
-        protected string glSpec = "GL2/gl.spec";
-        protected string glSpecExt = "";
+        protected string GLTypemap = "GL2/gl.tm";
+        protected string CSTypemap = "csharp.tm";
+        protected string EnumSpec = "GL2/enum.spec";
+        protected string EnumSpecExt = "GL2/enumext.spec";
+        protected string GLSpec = "GL2/gl.spec";
+        protected string GLSpecExt = "";
 
-        protected string loadAllFuncName = "LoadAll";
+        protected string LoadAllFuncName = "LoadAll";
 
-        protected Regex enumToDotNet = new Regex("_[a-z|A-Z]?", RegexOptions.Compiled);
+        protected Regex EnumToDotNet = new Regex("_[a-z|A-Z]?", RegexOptions.Compiled);
 
-        protected readonly char[] numbers = "0123456789".ToCharArray();
+        protected readonly char[] Numbers = "0123456789".ToCharArray();
         //protected static readonly Dictionary<string, string> doc_replacements;
 
         protected ISpecReader SpecReader { get; set; }
@@ -56,13 +56,13 @@ namespace Bind.GL2
 
             Settings = settings.Clone();
 
-            glTypemap = "GL2/gl.tm";
-            csTypemap = Settings.LanguageTypeMapFile;
+            GLTypemap = "GL2/gl.tm";
+            CSTypemap = Settings.LanguageTypeMapFile;
 
-            enumSpec = Path.Combine("GL2", "signatures.xml");
-            enumSpecExt = String.Empty;
-            glSpec = Path.Combine("GL2", "signatures.xml");
-            glSpecExt = String.Empty;
+            EnumSpec = Path.Combine("GL2", "signatures.xml");
+            EnumSpecExt = String.Empty;
+            GLSpec = Path.Combine("GL2", "signatures.xml");
+            GLSpecExt = String.Empty;
 
             Settings.ImportsClass = "Core";
             Settings.DelegatesClass = "Delegates";
@@ -102,29 +102,29 @@ namespace Bind.GL2
         {
             var overrides = Settings.OverridesFiles.SelectMany(GetFiles);
 
-            GLTypes = SpecReader.ReadTypeMap(Path.Combine(Settings.InputPath, glTypemap));
-            CSTypes = SpecReader.ReadCSTypeMap(Path.Combine(Settings.InputPath, csTypemap));
+            GLTypes = SpecReader.ReadTypeMap(Path.Combine(Settings.InputPath, GLTypemap));
+            CSTypes = SpecReader.ReadCSTypeMap(Path.Combine(Settings.InputPath, CSTypemap));
 
             // Read enum signatures
-            SpecReader.ReadEnums(Path.Combine(Settings.InputPath, enumSpec), Enums, Profile, Version);
+            SpecReader.ReadEnums(Path.Combine(Settings.InputPath, EnumSpec), Enums, Profile, Version);
             foreach (var file in overrides)
             {
                 SpecReader.ReadEnums(file, Enums, Profile, Version);
             }
 
             // Read delegate signatures
-            SpecReader.ReadDelegates(Path.Combine(Settings.InputPath, glSpec), Delegates, Profile, Version);
+            SpecReader.ReadDelegates(Path.Combine(Settings.InputPath, GLSpec), Delegates, Profile, Version);
             foreach (var file in overrides)
             {
                 SpecReader.ReadDelegates(file, Delegates, Profile, Version);
             }
 
-            var enum_processor = new EnumProcessor(this, overrides);
-            var func_processor = new FuncProcessor(this, overrides);
-            var doc_processor = new DocProcessor(this);
+            var enumProcessor = new EnumProcessor(this, overrides);
+            var funcProcessor = new FuncProcessor(this, overrides);
+            var docProcessor = new DocProcessor(this);
 
-            Enums = enum_processor.Process(Enums, Profile);
-            Wrappers = func_processor.Process(enum_processor, doc_processor,
+            Enums = enumProcessor.Process(Enums, Profile);
+            Wrappers = funcProcessor.Process(enumProcessor, docProcessor,
                 Delegates, Enums, Profile, Version);
         }
     }

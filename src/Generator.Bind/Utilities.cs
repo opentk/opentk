@@ -111,7 +111,7 @@ namespace Bind
         // Note: REMOVING THESE WILL BREAK BINARY-COMPATIBILITY WITH OPENTK 1.0,
         // WRT THE ES 1.1 API.
         // You have been warned.
-        private static List<string> extension_names = new List<string>
+        private static List<string> _extensionNames = new List<string>
         {
             "SGI", "SGIS", "SGIX", "IBM", "AMD", "INTEL",
         };
@@ -119,20 +119,20 @@ namespace Bind
         public static void AddExtensions(IEnumerable<string> extensions)
         {
             // Merge the new extensions with the current list of extensions
-            int extension_count = extension_names.Count;
-            extension_names.AddRange(
-                extensions.Where(n => !extension_names.Contains(n)));
+            int extensionCount = _extensionNames.Count;
+            _extensionNames.AddRange(
+                extensions.Where(n => !_extensionNames.Contains(n)));
 
             // If any new extensions have been added,
             // recreate the Extensions regex.
-            if (extension_names.Count != extension_count)
+            if (_extensionNames.Count != extensionCount)
             {
                 // Sort longest extensions first, otherwise SGIS may be
                 // incorrectly matched as SGI.
-                extension_names.Sort((a, b) => b.Length.CompareTo(a.Length));
+                _extensionNames.Sort((a, b) => b.Length.CompareTo(a.Length));
 
                 Extensions = new Regex(
-                    String.Join("|", extension_names.ToArray()),
+                    String.Join("|", _extensionNames.ToArray()),
                     RegexOptions.Compiled);
 
                 var acronyms = new string[]
@@ -145,9 +145,9 @@ namespace Bind
                     "ANGLE",  "MESAX", "MESA",
                 };
 
-                var acronym_names = extensions.Concat(acronyms).ToList();
-                acronym_names.Sort((a, b) => b.Length.CompareTo(a.Length));
-                Acronyms = new Regex(String.Join("|", acronym_names.ToArray()), RegexOptions.Compiled);
+                var acronymNames = extensions.Concat(acronyms).ToList();
+                acronymNames.Sort((a, b) => b.Length.CompareTo(a.Length));
+                Acronyms = new Regex(String.Join("|", acronymNames.ToArray()), RegexOptions.Compiled);
             }
         }
 
@@ -192,9 +192,9 @@ namespace Bind
         );
 
         // Merges the specified enum collections.
-        internal static void Merge(EnumCollection enums, EnumCollection new_enums)
+        internal static void Merge(EnumCollection enums, EnumCollection newEnums)
         {
-            foreach (var e in new_enums)
+            foreach (var e in newEnums)
             {
                 Merge(enums, e.Value);
             }
@@ -255,13 +255,13 @@ namespace Bind
             return GetExtension(name, false);
         }
 
-        internal static string GetExtension(string name, bool return_unmodified)
+        internal static string GetExtension(string name, bool returnUnmodified)
         {
             var match = Extensions.Match(name);
             if (match.Success)
             {
                 string ext = match.Value;
-                if (!return_unmodified)
+                if (!returnUnmodified)
                 {
                     if (ext.Length > 2)
                     {

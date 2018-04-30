@@ -37,28 +37,28 @@ namespace Bind
     internal class BindStreamWriter : IDisposable
     {
         private static readonly string[] SplitStrings = new string[] { System.Environment.NewLine };
-        private readonly StreamWriter sw;
+        private readonly StreamWriter _sw;
         public readonly string File;
 
-        private bool newline = true;
-        private int indent_level = 0;
+        private bool _newline = true;
+        private int _indentLevel = 0;
 
         public BindStreamWriter(string file)
         {
             File = file;
-            sw = new StreamWriter(file);
+            _sw = new StreamWriter(file);
         }
 
         public void Indent()
         {
-            ++indent_level;
+            ++_indentLevel;
         }
 
         public void Unindent()
         {
-            if (indent_level > 0)
+            if (_indentLevel > 0)
             {
-                --indent_level;
+                --_indentLevel;
             }
         }
 
@@ -69,19 +69,19 @@ namespace Bind
             {
                 if (lines[i].Length != 0)
                 {
-                    if (newline)
+                    if (_newline)
                     {
                         WriteIndentations(options);
                     }
-                    newline = false;
-                    sw.Write(lines[i]);
+                    _newline = false;
+                    _sw.Write(lines[i]);
                 }
 
                 // if we're going to write another line add a line break string
                 if (i + 1 < lines.Length)
                 {
-                    sw.Write(System.Environment.NewLine);
-                    newline = true;
+                    _sw.Write(System.Environment.NewLine);
+                    _newline = true;
                 }
             }
         }
@@ -130,28 +130,28 @@ namespace Bind
 
         public void Flush()
         {
-            sw.Flush();
+            _sw.Flush();
         }
 
         public void Close()
         {
-            sw.Close();
+            _sw.Close();
         }
 
         private void WriteIndentations(WriteOptions options)
         {
             if (options != WriteOptions.NoIndent)
             {
-                for (int i = indent_level; i > 0; i--)
+                for (int i = _indentLevel; i > 0; i--)
                 {
-                    sw.Write("    ");
+                    _sw.Write("    ");
                 }
             }
         }
 
         public void Dispose()
         {
-            sw.Dispose();
+            _sw.Dispose();
         }
     }
 }
