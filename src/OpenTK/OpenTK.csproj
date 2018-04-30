@@ -33,6 +33,6 @@
     <Exec Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" Command="mono $(OutputPath)../../../Generator.Rewrite/bin/Debug/Rewrite.exe --assembly $(OutputPath)OpenTK.dll --signing-key ../../OpenTK.snk --debug" />
     <Exec Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Release'" Command="mono $(OutputPath)../../../Generator.Rewrite/bin/Release/Rewrite.exe --assembly $(OutputPath)OpenTK.dll --signing-key ../../OpenTK.snk" />
   </Target>
-  <Import Project="..\..\build\targets\netfx-mono.props"/>
-  <Import Project="..\..\build\targets\stylecop.props"/>
+  <Import Project="..\..\build\targets\netfx-mono.props" />
+  <Import Project="..\..\build\targets\stylecop.props" />
 </Project>

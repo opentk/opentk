@@ -343,8 +343,7 @@ namespace Bind
                     // - then by index
                     var docparam =
                         (docs.Parameters
-                            .Where(p => p.Name == param.RawName)
-                            .FirstOrDefault()) ??
+                            .FirstOrDefault(p => p.Name == param.RawName)) ??
                         (docs.Parameters.Count > i ?
                             docs.Parameters[i] : null);
 
@@ -390,15 +389,6 @@ namespace Bind
             catch (Exception e)
             {
                 Console.WriteLine("[Warning] Error documenting function {0}: {1}", f.WrappedDelegate.Name, e.ToString());
-            }
-        }
-
-        public void WriteTypes(BindStreamWriter sw, Dictionary<string, string> csTypes)
-        {
-            sw.WriteLine();
-            foreach (var s in csTypes.Keys)
-            {
-                sw.WriteLine("using {0} = System.{1};", s, csTypes[s]);
             }
         }
 
@@ -508,12 +498,14 @@ namespace Bind
                     sw.WriteLine();
                 }
 
-                if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None &&
-                    !string.IsNullOrEmpty(Settings.NestedEnumsClass))
+                if ((Settings.Compatibility & Settings.Legacy.NestedEnums) == Settings.Legacy.None ||
+                    string.IsNullOrEmpty(Settings.NestedEnumsClass))
                 {
-                    sw.Unindent();
-                    sw.WriteLine("}");
+                    return;
                 }
+
+                sw.Unindent();
+                sw.WriteLine("}");
             }
             else
             {
@@ -528,9 +520,6 @@ namespace Bind
                             c.Name.StartsWith(Settings.ConstantPrefix) ? c.Name : Settings.ConstantPrefix + c.Name,
                             char.IsDigit(c.Value[0]) ? c.Value : c.Value.StartsWith(Settings.ConstantPrefix) ? c.Value : Settings.ConstantPrefix + c.Value,
                             c.Unchecked ? "unchecked" : ""));
-                    }
-                    else
-                    {
                     }
                 }
             }
@@ -578,45 +567,6 @@ namespace Bind
             sb.Append(Settings.FunctionPrefix);
             sb.Append(d.Name);
             sb.Append(GetDeclarationString(d.Parameters, Settings.Legacy.ConstIntEnums));
-
-            return sb.ToString();
-        }
-
-        private string GetDeclarationString(Enum e)
-        {
-            var sb = new StringBuilder();
-            var constants = new List<Constant>(e.ConstantCollection.Values);
-            constants.Sort(delegate(Constant c1, Constant c2)
-            {
-                var ret = string.Compare(c1.Value, c2.Value);
-                if (ret == 0)
-                {
-                    return string.Compare(c1.Name, c2.Name);
-                }
-                return ret;
-            });
-
-            if (e.IsFlagCollection)
-            {
-                sb.AppendLine("[Flags]");
-            }
-            sb.Append("public enum ");
-            sb.Append(e.Name);
-            sb.Append(" : ");
-            sb.AppendLine(e.Type);
-            sb.AppendLine("{");
-
-            foreach (var c in constants)
-            {
-                var declaration = GetDeclarationString(c);
-                sb.Append("    ");
-                sb.Append(declaration);
-                if (!string.IsNullOrEmpty(declaration))
-                {
-                    sb.AppendLine(",");
-                }
-            }
-            sb.Append("}");
 
             return sb.ToString();
         }
