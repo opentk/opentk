@@ -492,41 +492,37 @@ namespace Bind
 
         private static void ApplyParameterReplacement(Delegate d, XPathNavigator functionOverride)
         {
-            if (functionOverride != null)
+            if (functionOverride == null)
             {
-                for (var i = 0; i < d.Parameters.Count; i++)
+                return;
+            }
+
+            for (var i = 0; i < d.Parameters.Count; i++)
+            {
+                var paramOverride = functionOverride.SelectSingleNode(
+                    $"param[@name='{d.Parameters[i].RawName}' or @index='{i}']");
+                if (paramOverride == null)
                 {
-                    var paramOverride = functionOverride.SelectSingleNode(
-                        $"param[@name='{d.Parameters[i].RawName}' or @index='{i}']");
-                    if (paramOverride != null)
+                    continue;
+                }
+
+                foreach (XPathNavigator node in paramOverride.SelectChildren(XPathNodeType.Element))
+                {
+                    switch (node.Name)
                     {
-                        foreach (XPathNavigator node in paramOverride.SelectChildren(XPathNodeType.Element))
-                        {
-                            switch (node.Name)
-                            {
-                                case "type":
-                                    d.Parameters[i].CurrentType = (string)node.TypedValue;
-                                    break;
-                                case "name":
-                                    d.Parameters[i].Name = (string)node.TypedValue;
-                                    break;
-                                case "flow":
-                                    d.Parameters[i].Flow = Parameter.GetFlowDirection((string)node.TypedValue);
-                                    break;
-                                case "count":
-                                    d.Parameters[i].ComputeSize = node.Value.Trim();
-                                    int count;
-                                    if (int.TryParse(d.Parameters[i].ComputeSize, out count))
-                                    {
-                                        d.Parameters[i].ElementCount = count;
-                                    }
-                                    else
-                                    {
-                                        d.Parameters[i].ElementCount = 0;
-                                    }
-                                    break;
-                            }
-                        }
+                        case "type":
+                            d.Parameters[i].CurrentType = (string)node.TypedValue;
+                            break;
+                        case "name":
+                            d.Parameters[i].Name = (string)node.TypedValue;
+                            break;
+                        case "flow":
+                            d.Parameters[i].Flow = Parameter.GetFlowDirection((string)node.TypedValue);
+                            break;
+                        case "count":
+                            d.Parameters[i].ComputeSize = node.Value.Trim();
+                            d.Parameters[i].ElementCount = int.TryParse(d.Parameters[i].ComputeSize, out var count) ? count : 0;
+                            break;
                     }
                 }
             }
@@ -534,13 +530,10 @@ namespace Bind
 
         private static void ApplyReturnTypeReplacement(Delegate d, XPathNavigator functionOverride)
         {
-            if (functionOverride != null)
+            var returnOverride = functionOverride?.SelectSingleNode("returns");
+            if (returnOverride != null)
             {
-                var returnOverride = functionOverride.SelectSingleNode("returns");
-                if (returnOverride != null)
-                {
-                    d.ReturnType.CurrentType = returnOverride.Value;
-                }
+                d.ReturnType.CurrentType = returnOverride.Value;
             }
         }
 
@@ -632,18 +625,17 @@ namespace Bind
                     d.Parameters[i].WrapperType |= WrapperTypes.UncheckedParameter;
                 }
 
-                if (functionOverride != null)
+                var paramOverride = functionOverride?.SelectSingleNode(
+                    $"param[@name='{d.Parameters[i].RawName}' or @index='{i}']");
+                if (paramOverride == null)
                 {
-                    var paramOverride = functionOverride.SelectSingleNode(
-                        $"param[@name='{d.Parameters[i].RawName}' or @index='{i}']");
-                    if (paramOverride != null)
-                    {
-                        var legacyArrayParameter = paramOverride.GetAttribute("legacyArrayParameter", string.Empty);
-                        if (!string.IsNullOrEmpty(legacyArrayParameter))
-                        {
-                            d.Parameters[i].WrapperType |= WrapperTypes.LegacyArrayParameter;
-                        }
-                    }
+                    continue;
+                }
+
+                var legacyArrayParameter = paramOverride.GetAttribute("legacyArrayParameter", string.Empty);
+                if (!string.IsNullOrEmpty(legacyArrayParameter))
+                {
+                    d.Parameters[i].WrapperType |= WrapperTypes.LegacyArrayParameter;
                 }
             }
         }
@@ -727,31 +719,33 @@ namespace Bind
             XPathNavigator functionOverride, XPathNavigator nav,
             string apiname, string apiversion)
         {
-            if (functionOverride != null)
+            if (functionOverride == null)
             {
-                var versionOverride = functionOverride.SelectSingleNode("version");
-                if (versionOverride != null)
-                {
-                    d.Version = versionOverride.Value;
-                }
+                return;
+            }
 
-                var profileOverride = functionOverride.SelectSingleNode("profile");
-                if (profileOverride != null)
-                {
-                    Debug.Print("Profile override not yet implemented");
-                }
+            var versionOverride = functionOverride.SelectSingleNode("version");
+            if (versionOverride != null)
+            {
+                d.Version = versionOverride.Value;
+            }
 
-                var nameOverride = functionOverride.SelectSingleNode("name");
-                if (nameOverride != null)
-                {
-                    d.Name = nameOverride.Value;
-                }
+            var profileOverride = functionOverride.SelectSingleNode("profile");
+            if (profileOverride != null)
+            {
+                Debug.Print("Profile override not yet implemented");
+            }
 
-                var obsolete = functionOverride.GetAttribute("obsolete", string.Empty);
-                if (!string.IsNullOrEmpty(obsolete))
-                {
-                    d.Obsolete = obsolete;
-                }
+            var nameOverride = functionOverride.SelectSingleNode("name");
+            if (nameOverride != null)
+            {
+                d.Name = nameOverride.Value;
+            }
+
+            var obsolete = functionOverride.GetAttribute("obsolete", string.Empty);
+            if (!string.IsNullOrEmpty(obsolete))
+            {
+                d.Obsolete = obsolete;
             }
         }
 
@@ -763,30 +757,32 @@ namespace Bind
                 wrappers.AddRange(CreateNormalWrappers(d, enums));
             }
 
-            if ((Settings.Compatibility & Settings.Legacy.KeepUntypedEnums) != 0)
+            if ((Settings.Compatibility & Settings.Legacy.KeepUntypedEnums) == 0)
             {
-                // Generate an "All" overload for every function that takes strongly-typed enums
-                var overloads = new List<Function>();
-                foreach (var list in wrappers.Values)
-                {
-                    overloads.AddRange(list.Where(f => f.Parameters.Any(p => p.IsEnum)).Select(f =>
-                    {
-                        var fnew = new Function(f);
-                        fnew.Obsolete = "Use strongly-typed overload instead";
-                        // Note that we can only overload parameters, not the return type
-                        foreach (var p in fnew.Parameters)
-                        {
-                            if (p.IsEnum)
-                            {
-                                p.CurrentType = Settings.CompleteEnumName;
-                            }
-                        }
-
-                        return fnew;
-                    }));
-                }
-                wrappers.AddRange(overloads);
+                return wrappers;
             }
+
+            // Generate an "All" overload for every function that takes strongly-typed enums
+            var overloads = new List<Function>();
+            foreach (var list in wrappers.Values)
+            {
+                overloads.AddRange(list.Where(f => f.Parameters.Any(p => p.IsEnum)).Select(f =>
+                {
+                    var fnew = new Function(f);
+                    fnew.Obsolete = "Use strongly-typed overload instead";
+                    // Note that we can only overload parameters, not the return type
+                    foreach (var p in fnew.Parameters)
+                    {
+                        if (p.IsEnum)
+                        {
+                            p.CurrentType = Settings.CompleteEnumName;
+                        }
+                    }
+
+                    return fnew;
+                }));
+            }
+            wrappers.AddRange(overloads);
             return wrappers;
         }
 
@@ -803,30 +799,32 @@ namespace Bind
                 {
                     wrappers.AddChecked(f);
 
-                    if (!f.CLSCompliant)
+                    if (f.CLSCompliant)
                     {
-                        // The return type must always be cls-compliant,
-                        // since we cannot overload on return types alone.
-                        f.ReturnType.CurrentType = GetCLSCompliantType(f.ReturnType);
+                        continue;
+                    }
 
-                        // Create a cls-compliant wrapper for the parameters
-                        var cls = new Function(f);
-                        var modified = false;
-                        for (var i = 0; i < f.Parameters.Count; i++)
-                        {
-                            cls.Parameters[i].CurrentType = GetCLSCompliantType(cls.Parameters[i]);
-                            if (cls.Parameters[i].CurrentType != f.Parameters[i].CurrentType)
-                            {
-                                modified = true;
-                            }
-                        }
+                    // The return type must always be cls-compliant,
+                    // since we cannot overload on return types alone.
+                    f.ReturnType.CurrentType = GetCLSCompliantType(f.ReturnType);
 
-                        // Only add a cls-compliant overload if we have
-                        // changed a parameter.
-                        if (modified)
+                    // Create a cls-compliant wrapper for the parameters
+                    var cls = new Function(f);
+                    var modified = false;
+                    for (var i = 0; i < f.Parameters.Count; i++)
+                    {
+                        cls.Parameters[i].CurrentType = GetCLSCompliantType(cls.Parameters[i]);
+                        if (cls.Parameters[i].CurrentType != f.Parameters[i].CurrentType)
                         {
-                            wrappers.AddChecked(cls);
+                            modified = true;
                         }
+                    }
+
+                    // Only add a cls-compliant overload if we have
+                    // changed a parameter.
+                    if (modified)
+                    {
+                        wrappers.AddChecked(cls);
                     }
                 }
             }
@@ -856,43 +854,50 @@ namespace Bind
                 {
                     for (var j = i + 1; j < wrappers.Count; j++)
                     {
-                        if (wrappers[i].TrimmedName == wrappers[j].TrimmedName && wrappers[i].Parameters.Count == wrappers[j].Parameters.Count)
+                        if (wrappers[i].TrimmedName != wrappers[j].TrimmedName ||
+                            wrappers[i].Parameters.Count != wrappers[j].Parameters.Count)
                         {
-                            var functionIIsProblematic = false;
-                            var functionJIsProblematic = false;
+                            continue;
+                        }
 
-                            int k;
-                            for (k = 0; k < wrappers[i].Parameters.Count; k++)
+                        var functionIIsProblematic = false;
+                        var functionJIsProblematic = false;
+
+                        int k;
+                        for (k = 0; k < wrappers[i].Parameters.Count; k++)
+                        {
+                            if (wrappers[i].Parameters[k].CurrentType != wrappers[j].Parameters[k].CurrentType)
                             {
-                                if (wrappers[i].Parameters[k].CurrentType != wrappers[j].Parameters[k].CurrentType)
-                                {
-                                    break;
-                                }
-
-                                if (wrappers[i].Parameters[k].DiffersOnlyOnReference(wrappers[j].Parameters[k]))
-                                {
-                                    if (wrappers[i].Parameters[k].Reference)
-                                    {
-                                        functionIIsProblematic = true;
-                                    }
-                                    else
-                                    {
-                                        functionJIsProblematic = true;
-                                    }
-                                }
+                                break;
                             }
 
-                            if (k == wrappers[i].Parameters.Count)
+                            if (!wrappers[i].Parameters[k].DiffersOnlyOnReference(wrappers[j].Parameters[k]))
                             {
-                                if (functionIIsProblematic)
-                                {
-                                    mustRemove.Add(i);
-                                }
-                                if (functionJIsProblematic)
-                                {
-                                    mustRemove.Add(j);
-                                }
+                                continue;
                             }
+
+                            if (wrappers[i].Parameters[k].Reference)
+                            {
+                                functionIIsProblematic = true;
+                            }
+                            else
+                            {
+                                functionJIsProblematic = true;
+                            }
+                        }
+
+                        if (k != wrappers[i].Parameters.Count)
+                        {
+                            continue;
+                        }
+
+                        if (functionIIsProblematic)
+                        {
+                            mustRemove.Add(i);
+                        }
+                        if (functionJIsProblematic)
+                        {
+                            mustRemove.Add(j);
                         }
                     }
                 }
@@ -913,30 +918,32 @@ namespace Bind
 
         private string GetCLSCompliantType(Type type)
         {
-            if (!type.CLSCompliant)
+            if (type.CLSCompliant)
             {
-                if (type.Pointer != 0 && Settings.Compatibility == Settings.Legacy.Tao)
-                {
-                    return "IntPtr";
-                }
+                return type.CurrentType;
+            }
 
-                switch (type.CurrentType)
-                {
-                    case "UInt16":
-                    case "ushort":
-                        return "Int16";
-                    case "UInt32":
-                    case "uint":
-                        return "Int32";
-                    case "UInt64":
-                    case "ulong":
-                        return "Int64";
-                    case "SByte":
-                    case "sbyte":
-                        return "Byte";
-                    case "UIntPtr":
-                        return "IntPtr";
-                }
+            if (type.Pointer != 0 && Settings.Compatibility == Settings.Legacy.Tao)
+            {
+                return "IntPtr";
+            }
+
+            switch (type.CurrentType)
+            {
+                case "UInt16":
+                case "ushort":
+                    return "Int16";
+                case "UInt32":
+                case "uint":
+                    return "Int32";
+                case "UInt64":
+                case "ulong":
+                    return "Int64";
+                case "SByte":
+                case "sbyte":
+                    return "Byte";
+                case "UIntPtr":
+                    return "IntPtr";
             }
 
             return type.CurrentType;
@@ -1033,15 +1040,19 @@ namespace Bind
             f.Parameters.RemoveAt(f.Parameters.Count - 1);
             f.ReturnType.WrapperType |= WrapperTypes.ConvenienceReturnType;
 
-            if (f.Parameters.Count > 0)
+            if (f.Parameters.Count <= 0)
             {
-                var pSize = f.Parameters.Last();
-                if (pSize.CurrentType.ToLower().StartsWith("int") && pSize.Pointer == 0)
-                {
-                    f.Parameters.RemoveAt(f.Parameters.Count - 1);
-                    f.ReturnType.WrapperType |= WrapperTypes.ConvenienceArrayReturnType;
-                }
+                return f;
             }
+
+            var pSize = f.Parameters.Last();
+            if (!pSize.CurrentType.ToLower().StartsWith("int") || pSize.Pointer != 0)
+            {
+                return f;
+            }
+
+            f.Parameters.RemoveAt(f.Parameters.Count - 1);
+            f.ReturnType.WrapperType |= WrapperTypes.ConvenienceArrayReturnType;
             return f;
         }
 
