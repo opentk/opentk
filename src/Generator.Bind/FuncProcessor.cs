@@ -35,7 +35,7 @@ using Delegate = Bind.Structures.Delegate;
 
 namespace Bind
 {
-    using Type = Bind.Structures.Type;
+    using Type = Structures.Type;
 
     internal class FuncProcessor
     {
@@ -243,12 +243,12 @@ namespace Bind
             return GetPath("replace", apiname, apiversion, function, extension);
         }
 
-        private void TranslateType(Bind.Structures.Type type,
+        private void TranslateType(Type type,
             XPathNavigator functionOverride, XPathNavigator overrides,
             EnumProcessor enumProcessor, EnumCollection enums,
             string category, string apiname)
         {
-            Bind.Structures.Enum @enum;
+            Structures.Enum @enum;
             string s;
 
             category = enumProcessor.TranslateEnumName(category);
@@ -356,7 +356,7 @@ namespace Bind
 
             if (type.Pointer >= 3)
             {
-                System.Diagnostics.Trace.WriteLine(
+                Trace.WriteLine(
                     $"[Error] Type '{type}' has a high pointer level. Bindings will be incorrect.");
             }
 

@@ -431,7 +431,7 @@ namespace Bind
                 isNumber = long.TryParse(
                     test,
                     NumberStyles.Number,
-                    System.Globalization.CultureInfo.InvariantCulture,
+                    CultureInfo.InvariantCulture,
                     out number);
             }
             return isNumber;

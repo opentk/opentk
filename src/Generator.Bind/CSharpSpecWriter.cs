@@ -33,9 +33,9 @@ using Bind.Structures;
 
 namespace Bind
 {
-    using Delegate = Bind.Structures.Delegate;
-    using Enum = Bind.Structures.Enum;
-    using Type = Bind.Structures.Type;
+    using Delegate = Structures.Delegate;
+    using Enum = Structures.Enum;
+    using Type = Structures.Type;
 
     internal sealed class CSharpSpecWriter
     {
@@ -185,7 +185,7 @@ namespace Bind
                 {
                     var name = Settings.FunctionPrefix + d.Name;
                     sw.WriteLine("{0}, 0,", string.Join(", ",
-                        System.Text.Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()));
+                        Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()));
                 }
             }
             sw.Unindent();

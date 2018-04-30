@@ -31,8 +31,8 @@ using Bind.Structures;
 
 namespace Bind
 {
-    using Delegate = Bind.Structures.Delegate;
-    using Enum = Bind.Structures.Enum;
+    using Delegate = Structures.Delegate;
+    using Enum = Structures.Enum;
 
     internal class XmlSpecReader : ISpecReader
     {

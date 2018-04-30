@@ -36,7 +36,7 @@ namespace Bind
 
     internal class BindStreamWriter : IDisposable
     {
-        private static readonly string[] SplitStrings = new string[] { System.Environment.NewLine };
+        private static readonly string[] SplitStrings = new string[] { Environment.NewLine };
         private readonly StreamWriter _sw;
         public readonly string File;
 
@@ -80,7 +80,7 @@ namespace Bind
                 // if we're going to write another line add a line break string
                 if (i + 1 < lines.Length)
                 {
-                    _sw.Write(System.Environment.NewLine);
+                    _sw.Write(Environment.NewLine);
                     _newline = true;
                 }
             }
@@ -103,7 +103,7 @@ namespace Bind
 
         public void WriteLine()
         {
-            Write(System.Environment.NewLine);
+            Write(Environment.NewLine);
         }
 
         public void WriteLine(WriteOptions options, string value)
