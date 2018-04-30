@@ -48,19 +48,6 @@ namespace Bind
             WriteBindings(generator.Delegates, generator.Wrappers, generator.Enums);
         }
 
-        private static void ConsoleRewrite(string text)
-        {
-            var left = Console.CursorLeft;
-            var top = Console.CursorTop;
-            Console.Write(text);
-            for (var i = text.Length; i < 80; i++)
-            {
-                Console.Write(" ");
-            }
-            Console.WriteLine();
-            Console.SetCursorPosition(left, top);
-        }
-
         private void WriteBindings(DelegateCollection delegates, FunctionCollection wrappers, EnumCollection enums)
         {
             Console.WriteLine("Writing bindings to {0}", Settings.OutputPath);
