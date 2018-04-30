@@ -40,11 +40,7 @@ namespace Bind
 
         public XmlSpecReader(Settings settings)
         {
-            if (settings == null)
-            {
-                throw new ArgumentNullException(nameof(settings));
-            }
-            Settings = settings;
+            Settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
         public void ReadDelegates(string file, DelegateCollection delegates, string apiname, string apiversions)

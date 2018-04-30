@@ -39,12 +39,7 @@ namespace Bind
 
         public DocProcessor(IBind generator)
         {
-            if (generator == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            Generator = generator;
+            Generator = generator ?? throw new ArgumentNullException();
             foreach (string file in Directory.GetFiles(Settings.DocPath).Concat(
                 Directory.GetFiles(Settings.FallbackDocPath)))
             {

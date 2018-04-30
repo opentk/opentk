@@ -43,17 +43,8 @@ namespace Bind
 
         public EnumProcessor(IBind generator, IEnumerable<string> overrides)
         {
-            if (generator == null)
-            {
-                throw new ArgumentNullException(nameof(generator));
-            }
-            if (overrides == null)
-            {
-                throw new ArgumentNullException(nameof(overrides));
-            }
-
-            Generator = generator;
-            _overrides = overrides;
+            Generator = generator ?? throw new ArgumentNullException(nameof(generator));
+            _overrides = overrides ?? throw new ArgumentNullException(nameof(overrides));
         }
 
         public EnumCollection Process(EnumCollection enums, string apiname)
