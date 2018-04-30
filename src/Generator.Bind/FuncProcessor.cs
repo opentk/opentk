@@ -32,6 +32,7 @@ using System.Text.RegularExpressions;
 using System.Xml.XPath;
 using Bind.Structures;
 using Delegate = Bind.Structures.Delegate;
+using Enum = Bind.Structures.Enum;
 
 namespace Bind
 {
@@ -248,16 +249,13 @@ namespace Bind
             EnumProcessor enumProcessor, EnumCollection enums,
             string category, string apiname)
         {
-            Structures.Enum @enum;
-            string s;
-
             category = enumProcessor.TranslateEnumName(category);
 
             // Try to find out if it is an enum. If the type exists in the normal GLEnums list, use this.
             // Special case for Boolean which is there simply because C89 does not support bool types.
             // We don't really need that in C#
             bool normal =
-                enums.TryGetValue(type.CurrentType, out @enum) ||
+                enums.TryGetValue(type.CurrentType, out var @enum) ||
                 enums.TryGetValue(enumProcessor.TranslateEnumName(type.CurrentType), out @enum);
 
             // Translate enum types
@@ -280,7 +278,7 @@ namespace Bind
                     }
                 }
             }
-            else if (Generator.GLTypes.TryGetValue(type.CurrentType, out s))
+            else if (Generator.GLTypes.TryGetValue(type.CurrentType, out var s))
             {
                 // Check if the parameter is a generic GLenum. If it is, search for a better match,
                 // otherwise fallback to Settings.CompleteEnumName (named 'All' by default).
