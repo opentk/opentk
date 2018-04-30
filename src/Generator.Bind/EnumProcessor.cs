@@ -45,11 +45,11 @@ namespace Bind
         {
             if (generator == null)
             {
-                throw new ArgumentNullException("generator");
+                throw new ArgumentNullException(nameof(generator));
             }
             if (overrides == null)
             {
-                throw new ArgumentNullException("overrides");
+                throw new ArgumentNullException(nameof(overrides));
             }
 
             Generator = generator;
@@ -73,7 +73,7 @@ namespace Bind
         {
             if (enumeration == null)
             {
-                throw new ArgumentNullException("enumeration");
+                throw new ArgumentNullException(nameof(enumeration));
             }
 
             var path = new StringBuilder();

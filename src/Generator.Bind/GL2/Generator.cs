@@ -51,7 +51,7 @@ namespace Bind.GL2
         {
             if (settings == null)
             {
-                throw new ArgumentNullException("settings");
+                throw new ArgumentNullException(nameof(settings));
             }
 
             Settings = settings.Clone();

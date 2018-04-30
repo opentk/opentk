@@ -32,7 +32,7 @@ namespace Bind.Structures
             {
                 if (String.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 if (OriginalName == null)
@@ -56,7 +56,7 @@ namespace Bind.Structures
             {
                 if (String.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 _value = value;
@@ -110,11 +110,11 @@ namespace Bind.Structures
         {
             if (c == null)
             {
-                throw new ArgumentNullException("c");
+                throw new ArgumentNullException(nameof(c));
             }
             if (enums == null)
             {
-                throw new ArgumentNullException("enums");
+                throw new ArgumentNullException(nameof(enums));
             }
 
             if (!String.IsNullOrEmpty(c.Reference))
