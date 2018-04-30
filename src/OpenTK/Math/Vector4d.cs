@@ -1355,7 +1355,6 @@ namespace OpenTK
         /// </summary>
         /// <param name="v">The instance.</param>
         /// <returns>A pointer to the first element of v.</returns>
-        [CLSCompliant(false)]
         unsafe public static explicit operator double*(Vector4d v)
         {
             return &v.X;

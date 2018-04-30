@@ -838,7 +838,6 @@ XF86VidModeGetGammaRampSize(
     /// <summary>
     /// Defines LATIN-1 and miscellaneous keys.
     /// </summary>
-    [CLSCompliant(false)]
     internal enum XKey
     {
         /*

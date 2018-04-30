@@ -61,7 +61,6 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets the scancode which generated this event.
         /// </summary>
-        [CLSCompliant(false)]
         public uint ScanCode
         {
             get { return (uint)Key; }

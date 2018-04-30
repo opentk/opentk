@@ -17,7 +17,6 @@ namespace OpenTK.Audio.OpenAL
 
 #pragma warning disable 1591
 
-        [CLSCompliant(false)]
         public struct EaxReverb
         {
             public uint Environment;            // TODO: EAX-EFX conversion
@@ -103,7 +102,6 @@ namespace OpenTK.Audio.OpenAL
         }
 
         // TODO: CLS compliance.
-        [CLSCompliant(false)]
         public static void GetEaxFromEfxEax(ref EaxReverb input, out EfxEaxReverb output)
         {
             output.AirAbsorptionGainHF = 0.995f; // input.AirAbsorptionHF  * somegain?
@@ -206,7 +204,6 @@ namespace OpenTK.Audio.OpenAL
 
         // TODO: CLS compliance.
         ///<summary>EAX Reverb Presets in legacy format - use ConvertReverbParameters() to convert to EFX EAX Reverb Presets for use with the OpenAL Effects Extension.</summary>
-        [CLSCompliant(false)]
         public static class ReverbPresets
         {
             // CASTLE PRESETS

@@ -16,13 +16,11 @@ namespace OpenTK.Audio.OpenAL
     ///The X-Ram Extension is provided on the top-end Sound Blaster X-Fi solutions (Sound Blaster X-Fi Fatal1ty, Sound Blaster X-Fi Elite Pro, or later).
     ///These products feature 64MB of X-Ram that can only be used for audio purposes, which can be controlled by this Extension.
     ///</summary>
-    [CLSCompliant(true)]
     public sealed class XRamExtension
     {
         /// <summary>Returns True if the X-Ram Extension has been found and could be initialized.</summary>
         public bool IsInitialized { get; } = false;
 
-        // [CLSCompliant(false)]
         private delegate bool Delegate_SetBufferMode(int n, ref uint buffers, int value);
         //typedef ALboolean (__cdecl *EAXSetBufferMode)(ALsizei n, ALuint *buffers, ALint value);
 
@@ -30,9 +28,7 @@ namespace OpenTK.Audio.OpenAL
         private delegate int Delegate_GetBufferMode(uint buffer, IntPtr value);
         //typedef ALenum    (__cdecl *EAXGetBufferMode)(ALuint buffer, ALint *value);
 
-        //[CLSCompliant(false)]
         private Delegate_SetBufferMode Imported_SetBufferMode;
-        //[CLSCompliant(false)]
         private Delegate_GetBufferMode Imported_GetBufferMode;
 
         private int AL_EAX_RAM_SIZE, AL_EAX_RAM_FREE,
@@ -117,7 +113,6 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="buffer">An array of OpenAL Buffer handles.</param>
         /// <param name="mode">The storage mode that should be used for all the given buffers. Should be the value of one of the following enum names: XRamStorage.Automatic, XRamStorage.Hardware, XRamStorage.Accessible</param>
         /// <returns>True if all the Buffers were successfully set to the requested storage mode, False otherwise.</returns>
-        [CLSCompliant(false)]
         public bool SetBufferMode(int n, ref uint buffer, XRamStorage mode)
         {
             switch (mode)
@@ -136,7 +131,6 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="buffer">An array of OpenAL Buffer handles.</param>
         /// <param name="mode">The storage mode that should be used for all the given buffers. Should be the value of one of the following enum names: XRamStorage.Automatic, XRamStorage.Hardware, XRamStorage.Accessible</param>
         /// <returns>True if all the Buffers were successfully set to the requested storage mode, False otherwise.</returns>
-        [CLSCompliant(true)]
         public bool SetBufferMode(int n, ref int buffer, XRamStorage mode)
         {
             uint temp = (uint)buffer;
@@ -146,7 +140,6 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>This function is used to retrieve the storage Mode of a single OpenAL Buffer.</summary>
         /// <param name="buffer">The handle of an OpenAL Buffer.</param>
         /// <returns>The current Mode of the Buffer.</returns>
-        [CLSCompliant(false)]
         public XRamStorage GetBufferMode(ref uint buffer)
         {
             int tempresult = Imported_GetBufferMode(buffer, IntPtr.Zero); // IntPtr.Zero due to the parameter being unused/reserved atm
@@ -166,7 +159,6 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>This function is used to retrieve the storage Mode of a single OpenAL Buffer.</summary>
         /// <param name="buffer">The handle of an OpenAL Buffer.</param>
         /// <returns>The current Mode of the Buffer.</returns>
-        [CLSCompliant(true)]
         public XRamStorage GetBufferMode(ref int buffer)
         {
             uint temp = (uint)buffer;

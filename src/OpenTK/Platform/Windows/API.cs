@@ -336,7 +336,7 @@ namespace OpenTK.Platform.Windows
         /// <param name="flags">Not used</param>
         /// <returns>True if there is a message pending.</returns>
         [System.Security.SuppressUnmanagedCodeSecurity]
-        [DllImport("User32.dll"), CLSCompliant(false)]
+        [DllImport("User32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, PeekMessageFlags flags);
 
@@ -354,7 +354,7 @@ namespace OpenTK.Platform.Windows
         /// To get extended error information, call GetLastError.
         /// </returns>
         [System.Security.SuppressUnmanagedCodeSecurity]
-        [DllImport("User32.dll"), CLSCompliant(false)]
+        [DllImport("User32.dll")]
         //[return: MarshalAs(UnmanagedType.Bool)]
         internal static extern INT GetMessage(ref MSG msg,
             IntPtr windowHandle, int messageFilterMin, int messageFilterMax);
@@ -373,7 +373,6 @@ namespace OpenTK.Platform.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         internal static extern LRESULT SendMessage(HWND hWnd, WindowMessage Msg, WPARAM wParam, LPARAM lParam);
 
-        [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -388,11 +387,11 @@ namespace OpenTK.Platform.Windows
         internal static extern void PostQuitMessage(int exitCode);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport("User32.dll"), CLSCompliant(false)]
+        [DllImport("User32.dll")]
         internal static extern LRESULT DispatchMessage(ref MSG msg);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport("User32.dll"), CLSCompliant(false)]
+        [DllImport("User32.dll")]
         internal static extern BOOL TranslateMessage(ref MSG lpMsg);
 
         /// <summary>
@@ -964,17 +963,14 @@ namespace OpenTK.Platform.Windows
         /// <param name="Input">Number of RawInput structures pointed to by paRawInput.</param>
         /// <param name="SizeHeader">Size, in bytes, of the RawInputHeader structure.</param>
         /// <returns>If successful, the function returns S_OK. Otherwise it returns an error value.</returns>
-        [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern LRESULT DefRawInputProc(RawInput[] RawInput, INT Input, UINT SizeHeader);
 
-        [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         unsafe internal static extern LRESULT DefRawInputProc(ref RawInput RawInput, INT Input, UINT SizeHeader);
 
-        [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         unsafe internal static extern LRESULT DefRawInputProc(IntPtr RawInput, INT Input, UINT SizeHeader);
@@ -994,7 +990,6 @@ namespace OpenTK.Platform.Windows
         /// <returns>
         /// TRUE if the function succeeds; otherwise, FALSE. If the function fails, call GetLastError for more information.
         /// </returns>
-        [CLSCompliant(false)]
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern BOOL RegisterRawInputDevices(
@@ -1026,7 +1021,6 @@ namespace OpenTK.Platform.Windows
         /// of RawInput structures written to Data.
         /// If an error occurs, the return value is (UINT)-1. Call GetLastError for the error code.
         /// </returns>
-        [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern UINT GetRawInputBuffer(
@@ -1077,7 +1071,6 @@ namespace OpenTK.Platform.Windows
         /// If the function fails for any other reason, it returns -1. For more details, call GetLastError.
         /// </para>
         /// </returns>
-        [CLSCompliant(false)]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern UINT GetRegisteredRawInputDevices(
             [Out] RawInput[] RawInputDevices,
@@ -1119,7 +1112,6 @@ namespace OpenTK.Platform.Windows
         /// Calling GetLastError returns ERROR_INSUFFICIENT_BUFFER.
         /// On any other error, the function returns (UINT) -1 and GetLastError returns the error indication.
         /// </returns>
-        [CLSCompliant(false)]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern UINT GetRawInputDeviceList(
             [In, Out] RawInputDeviceList[] RawInputDeviceList,
@@ -1161,7 +1153,6 @@ namespace OpenTK.Platform.Windows
         /// Calling GetLastError returns ERROR_INSUFFICIENT_BUFFER.
         /// On any other error, the function returns (UINT) -1 and GetLastError returns the error indication.
         /// </returns>
-        [CLSCompliant(false)]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern UINT GetRawInputDeviceList(
             [In, Out] IntPtr RawInputDeviceList,
@@ -1216,7 +1207,6 @@ namespace OpenTK.Platform.Windows
             [In, Out] ref INT Size
         );
 
-        [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern INT GetRawInputDeviceInfo(
@@ -1257,7 +1247,6 @@ namespace OpenTK.Platform.Windows
         /// <para>If Data is not large enough for the data, the function returns -1. If Data is NULL, the function returns a value of zero. In both of these cases, Size is set to the minimum size required for the Data buffer.</para>
         /// <para>Call GetLastError to identify any other errors.</para>
         /// </returns>
-        [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern UINT GetRawInputDeviceInfo(
@@ -4091,7 +4080,7 @@ namespace OpenTK.Platform.Windows
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     internal delegate IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam);
 
-    [StructLayout(LayoutKind.Sequential), CLSCompliant(false)]
+    [StructLayout(LayoutKind.Sequential)]
     internal struct MSG
     {
         internal IntPtr HWnd;

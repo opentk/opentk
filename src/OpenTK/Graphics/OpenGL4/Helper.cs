@@ -90,19 +90,16 @@ namespace OpenTK.Graphics.OpenGL4
             GL.BlendColor(color.R, color.G, color.B, color.A);
         }
 
-        [CLSCompliant(false)]
         public static void Uniform2(int location, ref Vector2 vector)
         {
             GL.Uniform2(location, vector.X, vector.Y);
         }
 
-        [CLSCompliant(false)]
         public static void Uniform3(int location, ref Vector3 vector)
         {
             GL.Uniform3(location, vector.X, vector.Y, vector.Z);
         }
 
-        [CLSCompliant(false)]
         public static void Uniform4(int location, ref Vector4 vector)
         {
             GL.Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
@@ -166,19 +163,16 @@ namespace OpenTK.Graphics.OpenGL4
             }
         }
 
-        [CLSCompliant(false)]
         public static void ProgramUniform2(int program, int location, ref Vector2 vector)
         {
             GL.ProgramUniform2(program, location, vector.X, vector.Y);
         }
 
-        [CLSCompliant(false)]
         public static void ProgramUniform3(int program, int location, ref Vector3 vector)
         {
             GL.ProgramUniform3(program, location, vector.X, vector.Y, vector.Z);
         }
 
-        [CLSCompliant(false)]
         public static void ProgramUniform4(int program, int location, ref Vector4 vector)
         {
             GL.ProgramUniform4(program, location, vector.X, vector.Y, vector.Z, vector.W);
@@ -314,19 +308,16 @@ namespace OpenTK.Graphics.OpenGL4
             }
         }
 
-        [CLSCompliant(false)]
         public static void VertexAttrib2(Int32 index, ref Vector2 v)
         {
             GL.VertexAttrib2(index, v.X, v.Y);
         }
 
-        [CLSCompliant(false)]
         public static void VertexAttrib3(Int32 index, ref Vector3 v)
         {
             GL.VertexAttrib3(index, v.X, v.Y, v.Z);
         }
 
-        [CLSCompliant(false)]
         public static void VertexAttrib4(Int32 index, ref Vector4 v)
         {
             GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
@@ -352,7 +343,6 @@ namespace OpenTK.Graphics.OpenGL4
             VertexAttribPointer(index, size, type, normalized, stride, (IntPtr)offset);
         }
 
-        [CLSCompliant(false)]
         public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, int offset)
         {
             VertexAttribPointer(index, size, type, normalized, stride, (IntPtr)offset);

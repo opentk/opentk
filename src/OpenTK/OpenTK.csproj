@@ -28,10 +28,10 @@
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" PrivateAssets="all" />
   </ItemGroup>
   <Target Name="Rewrite" AfterTargets="AfterBuild">
-    <Exec Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" Command="$(SolutionDir)\src\Generator.Rewrite\bin\Debug\net461\Rewrite.exe --assembly $(OutputPath)OpenTK.dll --debug" />
-    <Exec Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Release'" Command="$(SolutionDir)\src\Generator.Rewrite\bin\Release\net461\Rewrite.exe --assembly $(OutputPath)OpenTK.dll" />
-    <Exec Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" Command="mono $(SolutionDir)\src\Generator.Rewrite/bin/Debug/net461\Rewrite.exe --assembly $(OutputPath)OpenTK.dll --debug" />
-    <Exec Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Release'" Command="mono $(SolutionDir)\src\Generator.Rewrite/bin/Release/net461\Rewrite.exe --assembly $(OutputPath)OpenTK.dll" />
+    <Exec Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" Command="$(ProjectDir)..\..\src\Generator.Rewrite\bin\Debug\net461\Rewrite.exe --assembly $(OutputPath)OpenTK.dll --debug" />
+    <Exec Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Release'" Command="$(ProjectDir)..\..\src\Generator.Rewrite\bin\Release\net461\Rewrite.exe --assembly $(OutputPath)OpenTK.dll" />
+    <Exec Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" Command="mono $(ProjectDir)..\..\src\Generator.Rewrite/bin/Debug/net461\Rewrite.exe --assembly $(OutputPath)OpenTK.dll --debug" />
+    <Exec Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Release'" Command="mono $(ProjectDir)..\..\src\Generator.Rewrite/bin/Release/net461\Rewrite.exe --assembly $(OutputPath)OpenTK.dll" />
   </Target>
   <Import Project="..\..\build\targets\netfx-mono.props" />
   <Import Project="..\..\build\targets\stylecop.props" />

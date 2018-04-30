@@ -33,7 +33,6 @@ namespace OpenTK.Input
         /// </summary>
         /// <param name="scancode">The scancode to check.</param>
         /// <returns>True if the scancode is pressed, false otherwise.</returns>
-        [CLSCompliant(false)]
         public bool this[uint scancode]
         {
             get { return scancode < (uint)Key.LastKey && state[(Key)scancode]; }
