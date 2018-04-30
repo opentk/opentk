@@ -46,13 +46,7 @@ namespace Bind.Structures
             }
         }
 
-        public override bool Unsafe
-        {
-            get
-            {
-                return base.Unsafe;
-            }
-        }
+        public override bool Unsafe => base.Unsafe;
 
         public FunctionBody Body { get; set; }
 

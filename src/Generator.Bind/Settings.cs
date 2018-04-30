@@ -37,20 +37,46 @@ namespace Bind
             wrappersFile;
 
         private Nullable<Legacy> compatibility;
-        public string InputPath { get { return inputPath ?? DefaultInputPath; } set { inputPath = value; } }
-        public string OutputPath { get { return outputPath ?? DefaultOutputPath; } set { outputPath = value; } }
-        public string OutputNamespace { get { return outputNamespace ?? DefaultOutputNamespace; } set { outputNamespace = value; } }
-        public string DocPath { get { return docPath ?? DefaultDocPath; } set { docPath = value; } }
-        public string FallbackDocPath { get { return fallbackDocPath ?? DefaultFallbackDocPath; } set { fallbackDocPath = value; } }
-        public string LicenseFile { get { return licenseFile ?? DefaultLicenseFile; } set { licenseFile = value; } }
+        public string InputPath { get => inputPath ?? DefaultInputPath;
+            set => inputPath = value;
+        }
+        public string OutputPath { get => outputPath ?? DefaultOutputPath;
+            set => outputPath = value;
+        }
+        public string OutputNamespace { get => outputNamespace ?? DefaultOutputNamespace;
+            set => outputNamespace = value;
+        }
+        public string DocPath { get => docPath ?? DefaultDocPath;
+            set => docPath = value;
+        }
+        public string FallbackDocPath { get => fallbackDocPath ?? DefaultFallbackDocPath;
+            set => fallbackDocPath = value;
+        }
+        public string LicenseFile { get => licenseFile ?? DefaultLicenseFile;
+            set => licenseFile = value;
+        }
         public List<string> OverridesFiles { get; private set; }
-        public string LanguageTypeMapFile { get { return languageTypeMapFile ?? DefaultLanguageTypeMapFile; } set { languageTypeMapFile = value; } }
-        public string KeywordEscapeCharacter { get { return keywordEscapeCharacter ?? DefaultKeywordEscapeCharacter; } set { keywordEscapeCharacter = value; } }
-        public string ImportsFile { get { return importsFile ?? DefaultImportsFile; } set { importsFile = value; } }
-        public string DelegatesFile { get { return delegatesFile ?? DefaultDelegatesFile; } set { delegatesFile = value; } }
-        public string EnumsFile { get { return enumsFile ?? DefaultEnumsFile; } set { enumsFile = value; } }
-        public string WrappersFile { get { return wrappersFile ?? DefaultWrappersFile; } set { wrappersFile = value; } }
-        public Legacy Compatibility { get { return compatibility ?? DefaultCompatibility; } set { compatibility = value; } }
+        public string LanguageTypeMapFile { get => languageTypeMapFile ?? DefaultLanguageTypeMapFile;
+            set => languageTypeMapFile = value;
+        }
+        public string KeywordEscapeCharacter { get => keywordEscapeCharacter ?? DefaultKeywordEscapeCharacter;
+            set => keywordEscapeCharacter = value;
+        }
+        public string ImportsFile { get => importsFile ?? DefaultImportsFile;
+            set => importsFile = value;
+        }
+        public string DelegatesFile { get => delegatesFile ?? DefaultDelegatesFile;
+            set => delegatesFile = value;
+        }
+        public string EnumsFile { get => enumsFile ?? DefaultEnumsFile;
+            set => enumsFile = value;
+        }
+        public string WrappersFile { get => wrappersFile ?? DefaultWrappersFile;
+            set => wrappersFile = value;
+        }
+        public Legacy Compatibility { get => compatibility ?? DefaultCompatibility;
+            set => compatibility = value;
+        }
 
         public string GLClass = "GL";        // Needed by Glu for the AuxEnumsClass. Can be set through -gl:"xxx".
         public string OutputClass = "GL";    // The real output class. Can be set through -class:"xxx".
@@ -63,21 +89,11 @@ namespace Bind
         // Old enums code:
         public string normalEnumsClassOverride = null;
         public string NestedEnumsClass = "Enums";
-        public string NormalEnumsClass
-        {
-            get
-            {
-                return
-                    normalEnumsClassOverride == null ?
-                        String.IsNullOrEmpty(NestedEnumsClass) ? OutputClass : OutputClass + NamespaceSeparator + NestedEnumsClass :
-                        normalEnumsClassOverride;
-            }
-        }
+        public string NormalEnumsClass => normalEnumsClassOverride == null ?
+            String.IsNullOrEmpty(NestedEnumsClass) ? OutputClass : OutputClass + NamespaceSeparator + NestedEnumsClass :
+            normalEnumsClassOverride;
 
-        public string AuxEnumsClass
-        {
-            get { return GLClass + NamespaceSeparator + NestedEnumsClass; }
-        }
+        public string AuxEnumsClass => GLClass + NamespaceSeparator + NestedEnumsClass;
 
         public string EnumsOutput
         {
@@ -206,7 +222,7 @@ namespace Bind
         /// <summary>True if multiple tokens should be dropped (e.g. FooARB, FooEXT and FooSGI).</summary>
         public bool DropMultipleTokens
         {
-            get { return (Compatibility & Legacy.NoDropMultipleTokens) == Legacy.None; }
+            get => (Compatibility & Legacy.NoDropMultipleTokens) == Legacy.None;
             set { if (value)
                 {
                     Compatibility |= Legacy.NoDropMultipleTokens;

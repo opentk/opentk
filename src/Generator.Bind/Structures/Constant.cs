@@ -27,7 +27,7 @@ namespace Bind.Structures
         /// </summary>
         public string Name
         {
-            get { return _name; }
+            get => _name;
             set
             {
                 if (String.IsNullOrEmpty(value))
@@ -51,10 +51,7 @@ namespace Bind.Structures
         /// </summary>
         public string Value
         {
-            get
-            {
-                return _value;
-            }
+            get => _value;
             set
             {
                 if (String.IsNullOrEmpty(value))

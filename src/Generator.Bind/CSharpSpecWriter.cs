@@ -40,7 +40,7 @@ namespace Bind
     internal sealed class CSharpSpecWriter
     {
         private IBind Generator { get; set; }
-        private Settings Settings { get { return Generator.Settings; } }
+        private Settings Settings => Generator.Settings;
 
         public void WriteBindings(IBind generator)
         {

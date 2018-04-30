@@ -35,7 +35,7 @@ namespace Bind
         private string LastFile;
 
         private IBind Generator { get; set; }
-        private Settings Settings { get { return Generator.Settings; } }
+        private Settings Settings => Generator.Settings;
 
         public DocProcessor(IBind generator)
         {

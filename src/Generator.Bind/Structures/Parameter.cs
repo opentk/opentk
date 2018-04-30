@@ -60,10 +60,7 @@ namespace Bind.Structures
         /// </summary>
         public string Name
         {
-            get
-            {
-                return RawName;
-            }
+            get => RawName;
             set
             {
                 if (RawName != value)
@@ -84,7 +81,7 @@ namespace Bind.Structures
         /// </summary>
         private UnmanagedType UnmanagedType
         {
-            get { return _unmanaged_type; }
+            get => _unmanaged_type;
             set
             {
                 if (_unmanaged_type != value)
@@ -101,7 +98,7 @@ namespace Bind.Structures
         /// </summary>
         public FlowDirection Flow
         {
-            get { return _flow; }
+            get => _flow;
             set
             {
                 if (_flow != value)
@@ -111,20 +108,14 @@ namespace Bind.Structures
             }
         }
 
-        public bool NeedsPin
-        {
-            get
-            {
-                return (Array > 0 || Reference || CurrentType == "object") &&
-                        !CurrentType.ToLower().Contains("string");
-            }
-        }
+        public bool NeedsPin => (Array > 0 || Reference || CurrentType == "object") &&
+                                !CurrentType.ToLower().Contains("string");
 
         private bool _unchecked;
 
         public bool Unchecked
         {
-            get { return _unchecked; }
+            get => _unchecked;
             set
             {
                 if (_unchecked != value)
@@ -366,15 +357,9 @@ namespace Bind.Structures
             Parameters.CopyTo(array, arrayIndex);
         }
 
-        public int Count
-        {
-            get { return Parameters.Count; }
-        }
+        public int Count => Parameters.Count;
 
-        public bool IsReadOnly
-        {
-            get { return (Parameters as ICollection<Parameter>).IsReadOnly; }
-        }
+        public bool IsReadOnly => (Parameters as ICollection<Parameter>).IsReadOnly;
 
         public bool Remove(Parameter item)
         {
@@ -415,14 +400,8 @@ namespace Bind.Structures
 
         public Parameter this[int index]
         {
-            get
-            {
-                return Parameters[index];
-            }
-            set
-            {
-                Parameters[index] = value;
-            }
+            get => Parameters[index];
+            set => Parameters[index] = value;
         }
 
         public int CompareTo(ParameterCollection other)

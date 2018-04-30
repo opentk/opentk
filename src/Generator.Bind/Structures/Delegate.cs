@@ -81,10 +81,7 @@ namespace Bind.Structures
                 }
                 return true;
             }
-            set
-            {
-                cls_compliance_overriden = value;
-            }
+            set => cls_compliance_overriden = value;
         }
 
         public string Category { get; set; }
@@ -157,7 +154,7 @@ namespace Bind.Structures
         /// </summary>
         public virtual string Name
         {
-            get { return _name; }
+            get => _name;
             set
             {
                 if (!String.IsNullOrEmpty(value))
@@ -303,31 +300,13 @@ namespace Bind.Structures
 
         public List<Delegate> this[string index]
         {
-            get
-            {
-                return Delegates[index];
-            }
-            set
-            {
-                Delegates[index] = value;
-            }
+            get => Delegates[index];
+            set => Delegates[index] = value;
         }
 
-        public ICollection<string> Keys
-        {
-            get
-            {
-                return Delegates.Keys;
-            }
-        }
+        public ICollection<string> Keys => Delegates.Keys;
 
-        public ICollection<List<Delegate>> Values
-        {
-            get
-            {
-                return Delegates.Values;
-            }
-        }
+        public ICollection<List<Delegate>> Values => Delegates.Values;
 
         public void Add(KeyValuePair<string, List<Delegate>> item)
         {
@@ -354,21 +333,9 @@ namespace Bind.Structures
             return Delegates.Remove(item.Key);
         }
 
-        public int Count
-        {
-            get
-            {
-                return Delegates.Count;
-            }
-        }
+        public int Count => Delegates.Count;
 
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsReadOnly => false;
 
         public IEnumerator<KeyValuePair<string, List<Delegate>>> GetEnumerator()
         {

@@ -55,7 +55,7 @@ namespace Bind
         private readonly IEnumerable<string> Overrides;
 
         private IBind Generator { get; set; }
-        private Settings Settings { get { return Generator.Settings; } }
+        private Settings Settings => Generator.Settings;
 
         public FuncProcessor(IBind generator, IEnumerable<string> overrides)
         {
