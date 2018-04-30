@@ -137,7 +137,7 @@ namespace Bind.Structures
         /// Adds a line of source code to the body at the current indentation level.
         /// </summary>
         /// <param name="s">The line to add.</param>
-        new public void Add(string s)
+        public new void Add(string s)
         {
             base.Add(_indent + s.TrimEnd('\r', '\n'));
         }
@@ -146,7 +146,7 @@ namespace Bind.Structures
         /// Adds a range of source code lines to the body at the current indentation level.
         /// </summary>
         /// <param name="collection"></param>
-        new public void AddRange(IEnumerable<string> collection)
+        public new void AddRange(IEnumerable<string> collection)
         {
             foreach (var t in collection)
             {

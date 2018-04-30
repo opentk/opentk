@@ -188,7 +188,7 @@ namespace Bind.Structures
         // This method should only be used for debugging purposes, not for code generation!
         // Returns a string representing the full delegate declaration without decorations.
         // (ie "(unsafe) void delegate glXxxYyy(int a, float b, IntPtr c)"
-        override public string ToString()
+        public override string ToString()
         {
             var sb = new StringBuilder();
 

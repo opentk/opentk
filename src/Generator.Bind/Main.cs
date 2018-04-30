@@ -32,7 +32,7 @@ namespace Bind
     internal static class MainClass
     {
         private static GeneratorMode _mode = GeneratorMode.Default;
-        static internal List<IBind> Generators = new List<IBind>();
+        internal static List<IBind> Generators = new List<IBind>();
         private static Settings _settings = new Settings();
 
         private static void Main(string[] arguments)
