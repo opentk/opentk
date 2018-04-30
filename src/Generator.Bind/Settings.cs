@@ -90,7 +90,7 @@ namespace Bind
         public string NormalEnumsClassOverride = null;
         public string NestedEnumsClass = "Enums";
         public string NormalEnumsClass => NormalEnumsClassOverride == null ?
-            String.IsNullOrEmpty(NestedEnumsClass) ? OutputClass : OutputClass + NamespaceSeparator + NestedEnumsClass :
+            string.IsNullOrEmpty(NestedEnumsClass) ? OutputClass : OutputClass + NamespaceSeparator + NestedEnumsClass :
             NormalEnumsClassOverride;
 
         public string AuxEnumsClass => GLClass + NamespaceSeparator + NestedEnumsClass;
@@ -105,7 +105,7 @@ namespace Bind
                 }
                 else
                 {
-                    return String.IsNullOrEmpty(EnumsNamespace) ? OutputNamespace : OutputNamespace + NamespaceSeparator + EnumsNamespace;
+                    return string.IsNullOrEmpty(EnumsNamespace) ? OutputNamespace : OutputNamespace + NamespaceSeparator + EnumsNamespace;
                 }
             }
         }

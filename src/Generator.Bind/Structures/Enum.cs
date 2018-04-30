@@ -32,7 +32,7 @@ namespace Bind.Structures
         // Typically 'long' or 'int'. Default is 'int'.
         public string Type
         {
-            get => String.IsNullOrEmpty(_type) ? "int" : _type;
+            get => string.IsNullOrEmpty(_type) ? "int" : _type;
             set => _type = value;
         }
 
@@ -68,7 +68,7 @@ namespace Bind.Structures
         }
 
         public string Obsolete { get; set; }
-        public bool IsObsolete => !String.IsNullOrEmpty(Obsolete);
+        public bool IsObsolete => !string.IsNullOrEmpty(Obsolete);
 
         public bool CLSCompliant { get; set; }
     }
@@ -103,11 +103,11 @@ namespace Bind.Structures
         // Prefer the empty string over the non-empty.
         private int PreferEmpty(string ext1, string ext2)
         {
-            if (String.IsNullOrEmpty(ext1) && !String.IsNullOrEmpty(ext2))
+            if (string.IsNullOrEmpty(ext1) && !string.IsNullOrEmpty(ext2))
             {
                 return -1;
             }
-            else if (String.IsNullOrEmpty(ext2) && !String.IsNullOrEmpty(ext1))
+            else if (string.IsNullOrEmpty(ext2) && !string.IsNullOrEmpty(ext1))
             {
                 return 1;
             }

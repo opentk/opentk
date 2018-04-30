@@ -62,7 +62,7 @@ namespace Bind.Structures
         public bool Equals(Function other)
         {
             bool result =
-                !String.IsNullOrEmpty(TrimmedName) && !String.IsNullOrEmpty(other.TrimmedName) &&
+                !string.IsNullOrEmpty(TrimmedName) && !string.IsNullOrEmpty(other.TrimmedName) &&
                 TrimmedName.Equals(other.TrimmedName) &&
                 Parameters.Equals(other.Parameters);
             return result;
@@ -129,7 +129,7 @@ namespace Bind.Structures
             }
             else
             {
-                _indent = String.Empty;
+                _indent = string.Empty;
             }
         }
 
@@ -162,7 +162,7 @@ namespace Bind.Structures
         {
             if (Count == 0)
             {
-                return String.Empty;
+                return string.Empty;
             }
 
             StringBuilder sb = new StringBuilder(Count);

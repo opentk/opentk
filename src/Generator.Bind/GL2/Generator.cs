@@ -43,7 +43,7 @@ namespace Bind.GL2
         /// If empty, then all elements of a profile will be parsed, and
         /// their version number will be ignored.
         /// </summary>
-        protected string Version = String.Empty;
+        protected string Version = string.Empty;
 
         public Settings Settings { get; protected set; }
 
@@ -60,9 +60,9 @@ namespace Bind.GL2
             CSTypemap = Settings.LanguageTypeMapFile;
 
             EnumSpec = Path.Combine("GL2", "signatures.xml");
-            EnumSpecExt = String.Empty;
+            EnumSpecExt = string.Empty;
             GLSpec = Path.Combine("GL2", "signatures.xml");
-            GLSpecExt = String.Empty;
+            GLSpecExt = string.Empty;
 
             Settings.ImportsClass = "Core";
             Settings.DelegatesClass = "Delegates";

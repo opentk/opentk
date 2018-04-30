@@ -75,9 +75,9 @@ namespace Bind
                     (_documentationFiles.ContainsKey(file) ? ProcessFile(_documentationFiles[file], processor) : null) ??
                     new Documentation
                     {
-                        Summary = String.Empty,
+                        Summary = string.Empty,
                         Parameters = f.Parameters.Select(p =>
-                        new DocumentationParameter(p.Name, String.Empty)).ToList()
+                        new DocumentationParameter(p.Name, string.Empty)).ToList()
                     };
 
                 _documentationCache.Add(f.WrappedDelegate.Name, docs);
@@ -104,8 +104,8 @@ namespace Bind
 
             text = text
                 .Replace("&epsi;", "epsilon") // Fix unrecognized &epsi; entities
-                .Replace("xml:", String.Empty); // Remove namespaces
-            text = RemoveDoctype.Replace(text, String.Empty);
+                .Replace("xml:", string.Empty); // Remove namespaces
+            text = RemoveDoctype.Replace(text, string.Empty);
             text = RemoveXmlns.Replace(text, string.Empty);
 
             Match m = RemoveMathml.Match(text);
@@ -170,7 +170,7 @@ namespace Bind
                     if (c.StartsWith(Settings.ConstantPrefix))
                     {
                         // Remove "GL_" from the beginning of the string
-                        c = c.Replace(Settings.ConstantPrefix, String.Empty);
+                        c = c.Replace(Settings.ConstantPrefix, string.Empty);
                     }
                     e.Value = enumProcessor.TranslateConstantName(c, false);
                 }
@@ -193,7 +193,7 @@ namespace Bind
                     .ToList()
             };
 
-            inline.Summary = Char.ToUpper(inline.Summary[0]) + inline.Summary.Substring(1);
+            inline.Summary = char.ToUpper(inline.Summary[0]) + inline.Summary.Substring(1);
             return inline;
         }
 
@@ -202,7 +202,7 @@ namespace Bind
         private static string Cleanup(string text)
         {
             return
-                String.Join(" ", text
+                string.Join(" ", text
                     .Replace("\r", "\n")
                     .Split(Newline, StringSplitOptions.RemoveEmptyEntries)
                     .Select(s => s.Trim()).ToArray())

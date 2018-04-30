@@ -157,7 +157,7 @@ namespace Bind.Structures
             get => _name;
             set
             {
-                if (!String.IsNullOrEmpty(value))
+                if (!string.IsNullOrEmpty(value))
                 {
                     _name = value.Trim();
                 }
@@ -254,7 +254,7 @@ namespace Bind.Structures
                     {
                         list[index].Category += "|" + d.Category;
                     }
-                    if (String.IsNullOrEmpty(list[index].Version))
+                    if (string.IsNullOrEmpty(list[index].Version))
                     {
                         list[index].Version = d.Version;
                     }

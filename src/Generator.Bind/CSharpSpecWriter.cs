@@ -184,7 +184,7 @@ namespace Bind
                 if (d.RequiresSlot(Settings))
                 {
                     var name = Settings.FunctionPrefix + d.Name;
-                    sw.WriteLine("{0}, 0,", String.Join(", ",
+                    sw.WriteLine("{0}, 0,", string.Join(", ",
                         System.Text.Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()));
                 }
             }
@@ -217,7 +217,7 @@ namespace Bind
             {
                 if (((Settings.Compatibility & Settings.Legacy.NoSeparateFunctionNamespaces) == Settings.Legacy.None) && key != "Core")
                 {
-                    if (!Char.IsDigit(key[0]))
+                    if (!char.IsDigit(key[0]))
                     {
                         sw.WriteLine("public static partial class {0}", key);
                     }
@@ -274,7 +274,7 @@ namespace Bind
 
         private void WriteMethod(BindStreamWriter sw, Function f, EnumCollection enums)
         {
-            if (!String.IsNullOrEmpty(f.Obsolete))
+            if (!string.IsNullOrEmpty(f.Obsolete))
             {
                 sw.WriteLine("[Obsolete(\"{0}\")]", f.Obsolete);
             }
@@ -300,18 +300,18 @@ namespace Bind
 
             try
             {
-                string warning = String.Empty;
-                string category = String.Empty;
+                string warning = string.Empty;
+                string category = string.Empty;
                 if (f.Deprecated)
                 {
                     warning = $"[deprecated: v{f.DeprecatedVersion}]";
                 }
 
-                if (f.Extension != "Core" && !String.IsNullOrEmpty(f.Category))
+                if (f.Extension != "Core" && !string.IsNullOrEmpty(f.Category))
                 {
                     category = $"[requires: {f.Category}]";
                 }
-                else if (!String.IsNullOrEmpty(f.Version))
+                else if (!string.IsNullOrEmpty(f.Version))
                 {
                     if (f.Category.StartsWith("VERSION"))
                     {
@@ -325,11 +325,11 @@ namespace Bind
 
                 // Write function summary
                 sw.Write("/// <summary>");
-                if (!String.IsNullOrEmpty(category) || !String.IsNullOrEmpty(warning))
+                if (!string.IsNullOrEmpty(category) || !string.IsNullOrEmpty(warning))
                 {
                     sw.Write(WriteOptions.NoIndent, "{0}{1}", category, warning);
                 }
-                if (!String.IsNullOrEmpty(docs.Summary))
+                if (!string.IsNullOrEmpty(docs.Summary))
                 {
                     sw.WriteLine();
                     sw.WriteLine("/// {0}", docs.Summary);
@@ -345,8 +345,8 @@ namespace Bind
                 {
                     var param = f.Parameters[i];
 
-                    string length = String.Empty;
-                    if (!String.IsNullOrEmpty(param.ComputeSize))
+                    string length = string.Empty;
+                    if (!string.IsNullOrEmpty(param.ComputeSize))
                     {
                         length = $"[length: {param.ComputeSize}]";
                     }
@@ -374,11 +374,11 @@ namespace Bind
                         // Note: we use param.Name, because the documentation sometimes
                         // uses different names than the specification.
                         sw.Write("/// <param name=\"{0}\">", param.Name);
-                        if (!String.IsNullOrEmpty(length))
+                        if (!string.IsNullOrEmpty(length))
                         {
                             sw.Write(WriteOptions.NoIndent, "{0}", length);
                         }
-                        if (!String.IsNullOrEmpty(docparam.Documentation))
+                        if (!string.IsNullOrEmpty(docparam.Documentation))
                         {
                             sw.WriteLine(WriteOptions.NoIndent, "");
                             sw.WriteLine("/// {0}", docparam.Documentation);
@@ -394,7 +394,7 @@ namespace Bind
                         Console.Error.WriteLine(
                             "[Warning] Parameter '{0}' in function '{1}' not found in documentation '{{{2}}}'",
                             param.Name, f.Name,
-                            String.Join(",", docs.Parameters.Select(p => p.Name).ToArray()));
+                            string.Join(",", docs.Parameters.Select(p => p.Name).ToArray()));
                         sw.WriteLine("/// <param name=\"{0}\">{1}</param>",
                             param.Name, length);
                     }
@@ -431,10 +431,10 @@ namespace Bind
                 }
 
                 var str =
-                    $"{c.Name} = {(c.Unchecked ? "unchecked" : "")}((int){(!String.IsNullOrEmpty(c.Reference) ? c.Reference + Settings.NamespaceSeparator : "")}{c.Value})";
+                    $"{c.Name} = {(c.Unchecked ? "unchecked" : "")}((int){(!string.IsNullOrEmpty(c.Reference) ? c.Reference + Settings.NamespaceSeparator : "")}{c.Value})";
 
                 sw.Write(str);
-                if (!String.IsNullOrEmpty(str))
+                if (!string.IsNullOrEmpty(str))
                 {
                     sw.WriteLine(",");
                 }
@@ -460,7 +460,7 @@ namespace Bind
             if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
             {
                 if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None &&
-                    !String.IsNullOrEmpty(Settings.NestedEnumsClass))
+                    !string.IsNullOrEmpty(Settings.NestedEnumsClass))
                 {
                     sw.WriteLine("public class Enums");
                     sw.WriteLine("{");
@@ -496,7 +496,7 @@ namespace Bind
 
                         sw.WriteLine("/// <summary>");
                         sw.WriteLine(
-                            $"/// {(functions.Count() >= 3 ? $"Used in {String.Join(", ", functions.Take(2).ToArray())} and {functions.Count() - 2} other function{(functions.Count() - 2 > 1 ? "s" : "")}" : functions.Count() >= 1 ? $"Used in {String.Join(", ", functions.ToArray())}" : "Not used directly.")}");
+                            $"/// {(functions.Count() >= 3 ? $"Used in {string.Join(", ", functions.Take(2).ToArray())} and {functions.Count() - 2} other function{(functions.Count() - 2 > 1 ? "s" : "")}" : functions.Count() >= 1 ? $"Used in {string.Join(", ", functions.ToArray())}" : "Not used directly.")}");
                         sw.WriteLine("/// </summary>");
                     }
 
@@ -522,7 +522,7 @@ namespace Bind
                 }
 
                 if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None &&
-                    !String.IsNullOrEmpty(Settings.NestedEnumsClass))
+                    !string.IsNullOrEmpty(Settings.NestedEnumsClass))
                 {
                     sw.Unindent();
                     sw.WriteLine("}");
@@ -536,10 +536,10 @@ namespace Bind
                     // Print constants avoiding circular definitions
                     if (c.Name != c.Value)
                     {
-                        sw.WriteLine(String.Format(
+                        sw.WriteLine(string.Format(
                             "public const int {0} = {2}((int){1});",
                             c.Name.StartsWith(Settings.ConstantPrefix) ? c.Name : Settings.ConstantPrefix + c.Name,
-                            Char.IsDigit(c.Value[0]) ? c.Value : c.Value.StartsWith(Settings.ConstantPrefix) ? c.Value : Settings.ConstantPrefix + c.Value,
+                            char.IsDigit(c.Value[0]) ? c.Value : c.Value.StartsWith(Settings.ConstantPrefix) ? c.Value : Settings.ConstantPrefix + c.Value,
                             c.Unchecked ? "unchecked" : ""));
                     }
                     else
@@ -568,13 +568,13 @@ namespace Bind
 
         private string GetDeclarationString(Constant c)
         {
-            if (String.IsNullOrEmpty(c.Name))
+            if (string.IsNullOrEmpty(c.Name))
             {
                 throw new InvalidOperationException("Invalid Constant: Name is empty");
             }
 
             return
-                $"{c.Name} = {(c.Unchecked ? "unchecked" : String.Empty)}((int){(!String.IsNullOrEmpty(c.Reference) ? c.Reference + Settings.NamespaceSeparator : String.Empty)}{c.Value})";
+                $"{c.Name} = {(c.Unchecked ? "unchecked" : string.Empty)}((int){(!string.IsNullOrEmpty(c.Reference) ? c.Reference + Settings.NamespaceSeparator : string.Empty)}{c.Value})";
         }
 
         private string GetDeclarationString(Delegate d, bool isDelegate)
@@ -601,10 +601,10 @@ namespace Bind
             List<Constant> constants = new List<Constant>(e.ConstantCollection.Values);
             constants.Sort(delegate(Constant c1, Constant c2)
             {
-                int ret = String.Compare(c1.Value, c2.Value);
+                int ret = string.Compare(c1.Value, c2.Value);
                 if (ret == 0)
                 {
-                    return String.Compare(c1.Name, c2.Name);
+                    return string.Compare(c1.Name, c2.Name);
                 }
                 return ret;
             });
@@ -624,7 +624,7 @@ namespace Bind
                 var declaration = GetDeclarationString(c);
                 sb.Append("    ");
                 sb.Append(declaration);
-                if (!String.IsNullOrEmpty(declaration))
+                if (!string.IsNullOrEmpty(declaration))
                 {
                     sb.AppendLine(",");
                 }
@@ -645,7 +645,7 @@ namespace Bind
             {
                 sb.Append(Settings.FunctionPrefix);
             }
-            sb.Append(!String.IsNullOrEmpty(f.TrimmedName) ? f.TrimmedName : f.Name);
+            sb.Append(!string.IsNullOrEmpty(f.TrimmedName) ? f.TrimmedName : f.Name);
 
             if (f.Parameters.HasGenericParameters)
             {
@@ -689,10 +689,10 @@ namespace Bind
                 attributes.Add("OutAttribute");
             }
 
-            if (!String.IsNullOrEmpty(p.ComputeSize))
+            if (!string.IsNullOrEmpty(p.ComputeSize))
             {
                 int count;
-                if (Int32.TryParse(p.ComputeSize, out count))
+                if (int.TryParse(p.ComputeSize, out count))
                 {
                     attributes.Add($"CountAttribute(Count = {count})");
                 }
@@ -746,7 +746,7 @@ namespace Bind
             {
                 sb.Append(GetDeclarationString(p as Type, settings));
             }
-            if (!String.IsNullOrEmpty(p.Name))
+            if (!string.IsNullOrEmpty(p.Name))
             {
                 sb.Append(" ");
                 sb.Append(p.Name);

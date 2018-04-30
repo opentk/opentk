@@ -101,7 +101,7 @@ namespace Bind
                 var e1 = list.Last();
                 list.RemoveAt(list.Count - 1);
 
-                var e2 = list.FirstOrDefault(l => String.Compare(e1.Name, l.Name, true) == 0);
+                var e2 = list.FirstOrDefault(l => string.Compare(e1.Name, l.Name, true) == 0);
                 if (e2 != null)
                 {
                     e1.CLSCompliant = false;
@@ -134,15 +134,15 @@ namespace Bind
             string extension = Utilities.GetExtension(name, true);
             bool unprocessed = false;
             unprocessed |= name.Contains("_") || name.Contains("-");
-            unprocessed |= Char.IsDigit(name[0]);
-            unprocessed |= name.All(c => Char.IsUpper(c));
-            unprocessed |= !String.IsNullOrEmpty(extension) && extension.All(c => Char.IsUpper(c));
+            unprocessed |= char.IsDigit(name[0]);
+            unprocessed |= name.All(c => char.IsUpper(c));
+            unprocessed |= !string.IsNullOrEmpty(extension) && extension.All(c => char.IsUpper(c));
             return !unprocessed;
         }
 
         public string TranslateEnumName(string name)
         {
-            if (String.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name))
             {
                 return name;
             }
@@ -154,7 +154,7 @@ namespace Bind
 
             if (!IsAlreadyProcessed(name))
             {
-                if (Char.IsDigit(name[0]))
+                if (char.IsDigit(name[0]))
                 {
                     name = Settings.ConstantPrefix + name;
                 }
@@ -188,18 +188,18 @@ namespace Bind
                         isAfterUnderscoreOrNumber = true;
                         continue; // skip this character
                     }
-                    else if (Char.IsDigit(c))
+                    else if (char.IsDigit(c))
                     {
                         isAfterUnderscoreOrNumber = true;
                     }
 
                     if (isAfterUnderscoreOrNumber)
                     {
-                        charToAdd = Char.ToUpper(c);
+                        charToAdd = char.ToUpper(c);
                     }
                     else if (isPreviousUppercase)
                     {
-                        charToAdd = Char.ToLower(c);
+                        charToAdd = char.ToLower(c);
                     }
                     else
                     {
@@ -208,13 +208,13 @@ namespace Bind
 
                     translator.Append(charToAdd);
 
-                    isPreviousUppercase = Char.IsUpper(c);
+                    isPreviousUppercase = char.IsUpper(c);
                     isAfterUnderscoreOrNumber = false;
                 }
 
                 // First letter should always be uppercase in order
                 // to conform to .Net style guidelines.
-                translator[0] = Char.ToUpper(translator[0]);
+                translator[0] = char.ToUpper(translator[0]);
 
                 // Replace a number of words that do not play well
                 // with the previous process (i.e. they have two
@@ -289,7 +289,7 @@ namespace Bind
 
         public string TranslateConstantName(string s, bool isValue)
         {
-            if (String.IsNullOrEmpty(s))
+            if (string.IsNullOrEmpty(s))
             {
                 return s;
             }
@@ -303,7 +303,7 @@ namespace Bind
             else
             {
                 // Translate the constant's name to match .Net naming conventions
-                bool nameIsAllCaps = s.AsEnumerable().All(c => Char.IsLetter(c) ? Char.IsUpper(c) : true);
+                bool nameIsAllCaps = s.AsEnumerable().All(c => char.IsLetter(c) ? char.IsUpper(c) : true);
                 bool nameContainsUnderscore = s.Contains("_");
                 if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None &&
                 (nameIsAllCaps || nameContainsUnderscore))
@@ -311,7 +311,7 @@ namespace Bind
                     bool nextCharUppercase = true;
                     bool isAfterDigit = false;
 
-                    if (!isValue && Char.IsDigit(s[0]))
+                    if (!isValue && char.IsDigit(s[0]))
                     {
                         s = Settings.ConstantPrefix + s;
                     }
@@ -323,7 +323,7 @@ namespace Bind
                             nextCharUppercase = true;
                             continue; // do not add these chars to output
                         }
-                        else if (Char.IsDigit(c))
+                        else if (char.IsDigit(c))
                         {
                             translator.Append(c);
                             isAfterDigit = true;
@@ -337,12 +337,12 @@ namespace Bind
                             {
                                 nextCharUppercase = true;
                             }
-                            translator.Append(nextCharUppercase ? Char.ToUpper(c) : Char.ToLower(c));
+                            translator.Append(nextCharUppercase ? char.ToUpper(c) : char.ToLower(c));
                             isAfterDigit = nextCharUppercase = false;
                         }
                     }
 
-                    translator[0] = Char.ToUpper(translator[0]);
+                    translator[0] = char.ToUpper(translator[0]);
                 }
                 else
                 {
@@ -386,7 +386,7 @@ namespace Bind
         {
             // Constants are considered bare aliases when they don't have a reference and
             // their values are non-numeric.
-            if (String.IsNullOrEmpty(c.Reference) && !Char.IsDigit(c.Value[0]))
+            if (string.IsNullOrEmpty(c.Reference) && !char.IsDigit(c.Value[0]))
             {
                 // Skip generic GLenum, as this doesn't help resolve references.
                 foreach (Enum e in enums.Values.Where(e => e.Name != "GLenum"))
@@ -428,7 +428,7 @@ namespace Bind
             }
             else
             {
-                isNumber = Int64.TryParse(
+                isNumber = long.TryParse(
                     test,
                     NumberStyles.Number,
                     System.Globalization.CultureInfo.InvariantCulture,

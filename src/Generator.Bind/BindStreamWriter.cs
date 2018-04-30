@@ -88,7 +88,7 @@ namespace Bind
 
         public void Write(WriteOptions options, string format, params object[] args)
         {
-            Write(options, String.Format(format, args));
+            Write(options, string.Format(format, args));
         }
 
         public void Write(string value)
@@ -114,7 +114,7 @@ namespace Bind
 
         public void WriteLine(WriteOptions options, string format, params object[] args)
         {
-            WriteLine(options, String.Format(format, args));
+            WriteLine(options, string.Format(format, args));
         }
 
 

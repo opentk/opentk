@@ -200,16 +200,16 @@ namespace Bind
             var path = new StringBuilder();
             path.Append("/signatures/");
             path.Append(apipath);
-            if (!String.IsNullOrEmpty(apiname) && !String.IsNullOrEmpty(apiversion))
+            if (!string.IsNullOrEmpty(apiname) && !string.IsNullOrEmpty(apiversion))
             {
                 path.Append($"[contains(concat('|', @name, '|'), '|{apiname}|') and " +
                             $"(contains(concat('|', @version, '|'), '|{apiversion}|') or not(boolean(@version)))]");
             }
-            else if (!String.IsNullOrEmpty(apiname))
+            else if (!string.IsNullOrEmpty(apiname))
             {
                 path.Append($"[contains(concat('|', @name, '|'), '|{apiname}|')]");
             }
-            else if (!String.IsNullOrEmpty(apiversion))
+            else if (!string.IsNullOrEmpty(apiversion))
             {
                 path.Append($"[contains(concat('|', @version, '|'), '|{apiversion}|') or not(boolean(@version))]");
             }
@@ -349,7 +349,7 @@ namespace Bind
                 }
             }
 
-            if (type.CurrentType == "IntPtr" && String.IsNullOrEmpty(type.PreviousType))
+            if (type.CurrentType == "IntPtr" && string.IsNullOrEmpty(type.PreviousType))
             {
                 type.Pointer = 0;
             }
@@ -518,7 +518,7 @@ namespace Bind
                                 case "count":
                                     d.Parameters[i].ComputeSize = node.Value.Trim();
                                     int count;
-                                    if (Int32.TryParse(d.Parameters[i].ComputeSize, out count))
+                                    if (int.TryParse(d.Parameters[i].ComputeSize, out count))
                                     {
                                         d.Parameters[i].ElementCount = count;
                                     }
@@ -640,8 +640,8 @@ namespace Bind
                         $"param[@name='{d.Parameters[i].RawName}' or @index='{i}']");
                     if (paramOverride != null)
                     {
-                        var legacyArrayParameter = paramOverride.GetAttribute("legacyArrayParameter", String.Empty);
-                        if (!String.IsNullOrEmpty(legacyArrayParameter))
+                        var legacyArrayParameter = paramOverride.GetAttribute("legacyArrayParameter", string.Empty);
+                        if (!string.IsNullOrEmpty(legacyArrayParameter))
                         {
                             d.Parameters[i].WrapperType |= WrapperTypes.LegacyArrayParameter;
                         }
@@ -749,8 +749,8 @@ namespace Bind
                     d.Name = nameOverride.Value;
                 }
 
-                var obsolete = functionOverride.GetAttribute("obsolete", String.Empty);
-                if (!String.IsNullOrEmpty(obsolete))
+                var obsolete = functionOverride.GetAttribute("obsolete", string.Empty);
+                if (!string.IsNullOrEmpty(obsolete))
                 {
                     d.Obsolete = obsolete;
                 }

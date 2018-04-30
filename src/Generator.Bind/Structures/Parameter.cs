@@ -163,12 +163,12 @@ namespace Bind.Structures
 
         public override string ToString()
         {
-            return String.Format("{2}{0} {1}",
+            return string.Format("{2}{0} {1}",
                 base.ToString(),
                 Name,
                 Reference ?
                     Flow == FlowDirection.Out ? "out " : "ref " :
-                    String.Empty);
+                    string.Empty);
         }
 
         public bool Equals(Parameter other)
