@@ -1,7 +1,7 @@
 <Project>
     <PropertyGroup>
         <RunCodeAnalysis>true</RunCodeAnalysis>
-        <CodeAnalysisRuleSet>$(SolutionDir)\stylecop.ruleset</CodeAnalysisRuleSet>
+        <CodeAnalysisRuleSet>..\..\stylecop.ruleset</CodeAnalysisRuleSet>
     </PropertyGroup>
     <ItemGroup>
         <AdditionalFiles Include="$(SolutionDir)\stylecop.json">

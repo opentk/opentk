@@ -150,6 +150,23 @@ Target "RunTests" (fun _ ->
         p with
             Configuration = "Release"
             TimeOut = TimeSpan.FromMinutes(2.0)
+            Project = Path.Combine("tests", "OpenTK.Tests", "OpenTK.Tests.fsproj")
+    })
+
+    DotNetCli.Test(fun p ->
+    {
+        p with
+            Configuration = "Release"
+            TimeOut = TimeSpan.FromMinutes(2.0)
+            Project = Path.Combine("tests", "OpenTK.Tests.Integration", "OpenTK.Tests.Integration.fsproj")
+    })
+
+    DotNetCli.Test(fun p ->
+    {
+        p with
+            Configuration = "Release"
+            TimeOut = TimeSpan.FromMinutes(2.0)
+            Project = Path.Combine("tests", "OpenTK.Tests.Math", "OpenTK.Tests.Math.csproj")
     })
 )
 

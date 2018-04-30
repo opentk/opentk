@@ -227,11 +227,6 @@ namespace Bind
                 }
 
                 Console.WriteLine();
-                if (Debugger.IsAttached)
-                {
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadKey(true);
-                }
             }
             catch (SecurityException e)
             {

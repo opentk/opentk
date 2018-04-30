@@ -227,7 +227,7 @@ namespace Bind.Structures
                     replace |=
                         (from pOld in existing.Parameters
                                         join pNew in f.Parameters on pOld.Name equals pNew.Name
-                                        where p_new.ElementCount == 0 && p_old.ElementCount != 0
+                                        where pNew.ElementCount == 0 && pOld.ElementCount != 0
                                         select true)
                             .Count() != 0;
                     if (replace)

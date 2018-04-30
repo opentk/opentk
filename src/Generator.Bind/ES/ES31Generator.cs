@@ -14,7 +14,7 @@ namespace Bind.ES
             Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES31";
             Settings.DefaultImportsFile = "ES31.Core.cs";
             Settings.DefaultDelegatesFile = "ES31.Delegates.cs";
-            Settings.DefaultEnumsFile = "ES31.Enums.cs";
+            Settings.DefaultEnumsFile = "ES31Enums.cs";
             Settings.DefaultWrappersFile = "ES31.cs";
             Settings.DefaultDocPath = Path.Combine(
                 Settings.DefaultDocPath, "ES31");
