@@ -24,38 +24,50 @@ namespace OpenTK.Tests.Math.Helpers
 			if (expected.X == 0)
 			{
 				if (toTest.X != 0)
-					return false;
+				{
+				    return false;
+				}
 			}
 			else
 			{
 				if (toTest.X == 0)
-					return false;
+				{
+				    return false;
+				}
 			}
 
 			if (expected.Y == 0)
 			{
 				if (toTest.Y != 0)
-					return false;
+				{
+				    return false;
+				}
 			}
 			else
 			{
 				if (toTest.Y == 0)
-					return false;
+				{
+				    return false;
+				}
 			}
 
 			if (expected.Z == 0)
 			{
 				if (toTest.Z != 0)
-					return false;
+				{
+				    return false;
+				}
 			}
 			else
 			{
 				if (toTest.Z == 0)
-					return false;
+				{
+				    return false;
+				}
 			}
 
 			return true;
 		}
 	}
-	
+
 }

@@ -91,22 +91,21 @@ namespace OpenTK.Convert
                     apinames = v.Split('|');
                     break;
                 }
-
                 case "extension":
                 {
                     string v = feature.Attribute("supported") != null ? feature.Attribute("supported").Value : "gl|glcore";
                     apinames = v.Split('|');
                     break;
                 }
-
                 case "group":
                 {
                     apinames = new string[] { "gl", "glcore", "gles1", "gles2" };
                     break;
                 }
-
                 default:
+                {
                     throw new NotSupportedException("Unknown feature type");
+                }
             }
             return apinames;
         }

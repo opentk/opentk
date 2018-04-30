@@ -594,3 +594,6 @@ src/OpenTK/Graphics/OpenGL4/GL4Enums.cs
 ### OpenTK AssemblyInfo files ###
 **/AssemblyInfo.cs
 **/AssemblyInfo.fs
+
+### Tooling files ""
+tools/

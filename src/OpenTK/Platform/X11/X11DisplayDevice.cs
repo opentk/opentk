@@ -113,13 +113,13 @@ namespace OpenTK.Platform.X11
 
         private static DisplayDevice FindDefaultDevice(IEnumerable<DisplayDevice> devices)
         {
-                foreach (DisplayDevice dev in devices)
+            foreach (DisplayDevice dev in devices)
+            {
+                if (dev.IsPrimary)
                 {
-                    if (dev.IsPrimary)
-                    {
-                        return dev;
-                    }
+                    return dev;
                 }
+            }
 
             throw new InvalidOperationException("No primary display found. Please file a bug at https://github.com/opentk/opentk/issues");
         }

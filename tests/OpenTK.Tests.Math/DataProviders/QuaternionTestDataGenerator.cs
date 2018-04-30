@@ -13,11 +13,11 @@ namespace OpenTK.Tests.Math.DataProviders
 		/// 2. param: expected result of xyz-component of quaternion
 		/// </summary>
 		/// <value>The single axis test cases.</value>
-		public static IEnumerable<object> SingleAxisTestCases()
+		public static IEnumerable<object[]> SingleAxisTestCases()
 		{
 			yield return new object[] { new Vector3(1, 0, 0), Vector3.UnitX}; //"Rotate around x axis"
-			yield return new object[] { new Vector3(0, 1, 0), Vector3.UnitY}; //"Rotate around y axis" 
-			yield return new object[] { new Vector3(0, 0, 1), Vector3.UnitZ}; //"Rotate around z axis" 
+			yield return new object[] { new Vector3(0, 1, 0), Vector3.UnitY}; //"Rotate around y axis"
+			yield return new object[] { new Vector3(0, 0, 1), Vector3.UnitZ}; //"Rotate around z axis"
 		}
 
 		/// <summary>
@@ -33,5 +33,4 @@ namespace OpenTK.Tests.Math.DataProviders
 			yield return new object[] { new Quaternion(Vector3.UnitZ, 0), Vector3.UnitZ}; //"Rotate around z axis"
 		}
 	}
-	
 }

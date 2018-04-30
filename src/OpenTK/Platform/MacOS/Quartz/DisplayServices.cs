@@ -123,7 +123,7 @@ namespace OpenTK.Platform.MacOS
         [DllImport(lib, EntryPoint = "CGDisplayHideCursor")]
         internal static extern CGError DisplayHideCursor(CGDirectDisplayID display);
 
-         [DllImport(lib, EntryPoint = "CGAssociateMouseAndMouseCursorPosition")]
+        [DllImport(lib, EntryPoint = "CGAssociateMouseAndMouseCursorPosition")]
         internal static extern CGError AssociateMouseAndMouseCursorPosition(bool connected);
 
         [DllImport(lib, EntryPoint="CGSetLocalEventsSuppressionInterval")]

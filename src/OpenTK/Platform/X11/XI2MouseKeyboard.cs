@@ -619,11 +619,11 @@ namespace OpenTK.Platform.X11
                     valid |= extension == 0;
                     break;
                 }
-
                 case XEventName.ClientMessage:
-                    valid =
-                        e.ClientMessageEvent.ptr1 == ExitAtom;
+                {
+                    valid = e.ClientMessageEvent.ptr1 == ExitAtom;
                     break;
+                }
             }
 
             return valid;

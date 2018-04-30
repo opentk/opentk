@@ -73,7 +73,7 @@
     <Rule Id="SA1134" Action="None" /> <!-- Attributes must not share line -->
     <Rule Id="SA1136" Action="Error" /> <!-- Enum values should be on separate lines -->
     <Rule Id="SA1137" Action="Error" /> <!-- Elements should have the same indentation -->
-    <Rule Id="SA1139" Action="Error" /> <!-- Use literals suffix notation instead of casting -->
+    <Rule Id="SA1139" Action="Warning" /> <!-- Use literals suffix notation instead of casting -->
 
     <!-- Ordering rules -->
     <Rule Id="SA1200" Action="None" /> <!-- Using directives must be placed correctly -->

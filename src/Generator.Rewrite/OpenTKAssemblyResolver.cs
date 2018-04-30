@@ -26,7 +26,9 @@ namespace OpenTK.Rewrite
         AssemblyDefinition GetAssembly(string file, ReaderParameters parameters)
         {
             if (parameters.AssemblyResolver == null)
+            {
                 parameters.AssemblyResolver = this;
+            }
 
             return ModuleDefinition.ReadModule(file, parameters).Assembly;
         }
@@ -40,7 +42,9 @@ namespace OpenTK.Rewrite
         {
             var assembly = SearchDirectory(name, directories, parameters);
             if (assembly != null)
+            {
                 return assembly;
+            }
 
             if (name.IsRetargetable)
             {
@@ -60,23 +64,31 @@ namespace OpenTK.Rewrite
             {
                 assembly = SearchDirectory(name, framework_dirs, parameters);
                 if (assembly != null)
+                {
                     return assembly;
+                }
             }
 
             if (name.Name == "mscorlib")
             {
                 assembly = GetCorlib(name, parameters);
                 if (assembly != null)
+                {
                     return assembly;
+                }
             }
 
             assembly = GetAssemblyInGac(name, parameters);
             if (assembly != null)
+            {
                 return assembly;
+            }
 
             assembly = SearchDirectory(name, framework_dirs, parameters);
             if (assembly != null)
+            {
                 return assembly;
+            }
 
             throw new AssemblyResolutionException(name);
         }
@@ -90,7 +102,10 @@ namespace OpenTK.Rewrite
                 {
                     string file = Path.Combine(directory, name.Name + extension);
                     if (!File.Exists(file))
+                    {
                         continue;
+                    }
+
                     try
                     {
                         var assembly = GetAssembly(file, parameters);
@@ -120,7 +135,9 @@ namespace OpenTK.Rewrite
             var corlib = typeof(object).Assembly.GetName();
 
             if (corlib.Version == version || IsZero(version))
+            {
                 return GetAssembly(typeof(object).Module.FullyQualifiedName, parameters);
+            }
 
             var path = Directory.GetParent(
                 Directory.GetParent(
@@ -130,18 +147,28 @@ namespace OpenTK.Rewrite
             if (on_mono)
             {
                 if (version.Major == 1)
+                {
                     path = Path.Combine(path, "1.0");
+                }
                 else if (version.Major == 2)
                 {
                     if (version.MajorRevision == 5)
+                    {
                         path = Path.Combine(path, "2.1");
+                    }
                     else
+                    {
                         path = Path.Combine(path, "2.0");
+                    }
                 }
                 else if (version.Major == 4)
+                {
                     path = Path.Combine(path, "4.0");
+                }
                 else
+                {
                     throw new NotSupportedException("Version not supported: " + version);
+                }
             }
             else
             {
@@ -149,9 +176,14 @@ namespace OpenTK.Rewrite
                 {
                     case 1:
                         if (version.MajorRevision == 3300)
+                        {
                             path = Path.Combine(path, "v1.0.3705");
+                        }
                         else
+                        {
                             path = Path.Combine(path, "v1.0.5000.0");
+                        }
+
                         break;
                     case 2:
                         path = Path.Combine(path, "v2.0.50727");
@@ -166,13 +198,17 @@ namespace OpenTK.Rewrite
 
             var file = Path.Combine(path, "mscorlib.dll");
             if (File.Exists(file))
+            {
                 return GetAssembly(file, parameters);
+            }
             else if (on_mono && Directory.Exists(path + "-api"))
             {
                 path = path + "-api";
                 file = Path.Combine(path, "mscorlib.dll");
                 if (File.Exists(file))
+                {
                     return GetAssembly(file, parameters);
+                }
             }
 
             return null;
@@ -181,12 +217,16 @@ namespace OpenTK.Rewrite
         static List<string> GetGacPaths()
         {
             if (on_mono)
+            {
                 return GetDefaultMonoGacPaths();
+            }
 
             var paths = new List<string>(2);
             var windir = Environment.GetEnvironmentVariable("WINDIR");
             if (windir == null)
+            {
                 return paths;
+            }
 
             paths.Add(Path.Combine(windir, "assembly"));
             paths.Add(Path.Combine(windir, Path.Combine("Microsoft.NET", "assembly")));
@@ -198,21 +238,29 @@ namespace OpenTK.Rewrite
             var paths = new List<string>(1);
             var gac = GetCurrentMonoGac();
             if (gac != null)
+            {
                 paths.Add(gac);
+            }
 
             var gac_paths_env = Environment.GetEnvironmentVariable("MONO_GAC_PREFIX");
             if (string.IsNullOrEmpty(gac_paths_env))
+            {
                 return paths;
+            }
 
             var prefixes = gac_paths_env.Split(Path.PathSeparator);
             foreach (var prefix in prefixes)
             {
                 if (string.IsNullOrEmpty(prefix))
+                {
                     continue;
+                }
 
                 var gac_path = Path.Combine(Path.Combine(Path.Combine(prefix, "lib"), "mono"), "gac");
                 if (Directory.Exists(gac_path) && !paths.Contains(gac))
+                {
                     paths.Add(gac_path);
+                }
             }
 
             return paths;
@@ -229,13 +277,19 @@ namespace OpenTK.Rewrite
         AssemblyDefinition GetAssemblyInGac(AssemblyNameReference reference, ReaderParameters parameters)
         {
             if (reference.PublicKeyToken == null || reference.PublicKeyToken.Length == 0)
+            {
                 return null;
+            }
 
             if (gac_paths == null)
+            {
                 gac_paths = GetGacPaths();
+            }
 
             if (on_mono)
+            {
                 return GetAssemblyInMonoGac(reference, parameters);
+            }
 
             return GetAssemblyInNetGac(reference, parameters);
         }
@@ -292,7 +346,9 @@ namespace OpenTK.Rewrite
                 .Append("__");
 
             for (int i = 0; i < reference.PublicKeyToken.Length; i++)
+            {
                 gac_folder.Append(reference.PublicKeyToken[i].ToString("x2"));
+            }
 
             return Path.Combine(
                 Path.Combine(

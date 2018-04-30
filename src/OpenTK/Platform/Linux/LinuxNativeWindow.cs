@@ -106,7 +106,7 @@ namespace OpenTK.Platform.Linux
             }
 
             window.Handle = gbm_surface;
-                Debug.Print("[KMS] Created GBM surface {0:x}", window.Handle);
+            Debug.Print("[KMS] Created GBM surface {0:x}", window.Handle);
 
             window.CreateWindowSurface(mode.Index.Value);
             Debug.Print("[KMS] Created EGL surface {0:x}", window.Surface);

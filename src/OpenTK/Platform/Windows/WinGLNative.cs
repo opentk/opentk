@@ -139,7 +139,11 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        private enum ScaleDirection { X, Y }
+        private enum ScaleDirection
+        {
+            X,
+            Y
+        }
 
         // Scales a value according according
         // to the DPI of the specified direction

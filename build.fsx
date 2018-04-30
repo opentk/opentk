@@ -2,7 +2,7 @@
 // FAKE build script
 // --------------------------------------------------------------------------------------
 
-#r @"packages/FAKE/tools/FakeLib.dll"
+#r @"tools/FAKE//FAKE.4.64.12/tools/FakeLib.dll"
 open Fake
 open Fake.Git
 open Fake.AssemblyInfoFile
@@ -100,41 +100,6 @@ let activeProjects =
     Seq.concat [buildProjects; runtimeProjects]
 
 
-// Generate assembly info files with the right version & up-to-date information
-Target "AssemblyInfo" (fun _ ->
-    let getAssemblyInfoAttributes (projectName:string) =
-        let projectName =
-            if projectName.Contains(".iOS") || projectName.Contains(".Android") then
-                projectName.Split('.').[0]
-            else
-                projectName
-        [ Attribute.Title (projectName)
-          Attribute.Product project
-          Attribute.Description summary
-          Attribute.Version release.AssemblyVersion
-          Attribute.FileVersion release.AssemblyVersion
-          Attribute.CLSCompliant true
-          Attribute.Copyright copyright
-        ]
-
-    let getProjectDetails projectPath =
-        let projectName = System.IO.Path.GetFileNameWithoutExtension(projectPath)
-        ( projectPath,
-          projectName,
-          System.IO.Path.GetDirectoryName(projectPath),
-          (getAssemblyInfoAttributes projectName)
-        )
-
-    activeProjects
-    |> Seq.map getProjectDetails
-    |> Seq.iter (fun (projFileName, projectName, folderName, attributes) ->
-        match projFileName with
-        | Fsproj -> CreateFSharpAssemblyInfo (folderName @@ "AssemblyInfo.fs") attributes
-        | Csproj -> CreateCSharpAssemblyInfo ((folderName @@ "Properties") @@ "AssemblyInfo.cs") attributes
-        | Vbproj -> CreateVisualBasicAssemblyInfo ((folderName @@ "My Project") @@ "AssemblyInfo.vb") attributes
-        )
-)
-
 // Copies binaries from default VS location to expected bin folder
 // But keeps a subdirectory structure for each project in the
 // src folder to support multiple project outputs
@@ -180,12 +145,12 @@ Target "Build" (fun _ ->
 // Run the unit tests using test runner
 
 Target "RunTests" (fun _ ->
-    !! testAssemblies
-    |> xUnit2 (fun p ->
-        { p with
-            ShadowCopy = true
-            TimeOut = TimeSpan.FromMinutes 2.
-            XmlOutputPath = Some "TestResults.xml" })
+    DotNetCli.Test(fun p ->
+    {
+        p with
+            Configuration = "Release"
+            TimeOut = TimeSpan.FromMinutes(2.0)
+    })
 )
 
 // --------------------------------------------------------------------------------------
@@ -199,13 +164,12 @@ Target "NuGet" (fun _ ->
             [ "OpenTK.Android"
               "OpenTK.iOS" ]
 
-
-    Paket.Pack(fun p ->
-        { p with
-            OutputPath = "bin"
-            ExcludedTemplates = xamExcludes
-            Version = release.NugetVersion
-            ReleaseNotes = toLines release.Notes})
+    DotNetCli.Pack( fun p ->
+    {
+        p with
+          Configuration = "Release"
+          OutputPath = "bin"
+    })
 )
 
 
@@ -217,7 +181,6 @@ Target "BuildPackage" DoNothing
 Target "All" DoNothing
 
 "Clean"
-  ==> "AssemblyInfo"
   ==> "GenerateBindings"
   ==> "Build"
   ==> "CopyBinaries"

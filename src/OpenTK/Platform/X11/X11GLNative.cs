@@ -91,12 +91,12 @@ namespace OpenTK.Platform.X11
 
         private IntPtr _atom_xdnd_primary;
 
-        #pragma warning disable 414 // assigned but never used
+#pragma warning disable 414 // assigned but never used
         private IntPtr _atom_net_wm_allowed_actions;
         private IntPtr _atom_net_wm_action_resize;
         private IntPtr _atom_net_wm_action_maximize_horizontally;
         private IntPtr _atom_net_wm_action_maximize_vertically;
-        #pragma warning restore 414
+#pragma warning restore 414
 
         private IntPtr _atom_net_wm_icon;
 
@@ -108,10 +108,10 @@ namespace OpenTK.Platform.X11
         private static readonly IntPtr _atom_add = (IntPtr)1;
         private static readonly IntPtr _atom_toggle = (IntPtr)2;
 
-        #pragma warning disable 649 // never assigned, compiler bug in Mono 3.4.0
+#pragma warning disable 649 // never assigned, compiler bug in Mono 3.4.0
         private Rectangle bounds;
         private Size client_size;
-        #pragma warning restore 649
+#pragma warning restore 649
         private int border_left, border_right, border_top, border_bottom;
         private Icon icon;
         private bool has_focus;
@@ -139,18 +139,18 @@ namespace OpenTK.Platform.X11
         private IntPtr cursorHandle;
         private bool cursor_visible = true;
 
-         // Keyboard input
+        // Keyboard input
         private readonly byte[] ascii = new byte[16];
 
         private readonly char[] chars = new char[16];
 
         private readonly IntPtr EmptyCursor;
 
-        #pragma warning disable 414 // Field assigned but never used, we do that on purpose
+#pragma warning disable 414 // Field assigned but never used, we do that on purpose
         private readonly bool xi2_supported;
         private readonly int xi2_opcode;
         private readonly int xi2_version;
-        #pragma warning restore 414
+#pragma warning restore 414
 
         // Used to wait for a specific type of event in ProcessEvents.
         // Currently this is just used by ClientSize to wait for a
@@ -333,7 +333,7 @@ namespace OpenTK.Platform.X11
                 }
 
                 Debug.Print("Display: {0}, Screen {1}, Root window: {2}", window.Display, window.Screen,
-                            window.RootWindow);
+                    window.RootWindow);
 
                 RegisterAtoms(window);
             }
@@ -567,7 +567,7 @@ namespace OpenTK.Platform.X11
                     MotifWmHints hints = new MotifWmHints();
                     hints.flags = (IntPtr)MotifFlags.Decorations;
                     Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace,
-                                              ref hints, Marshal.SizeOf(hints) / IntPtr.Size);
+                        ref hints, Marshal.SizeOf(hints) / IntPtr.Size);
                     return true;
                 }
                 return false;
@@ -583,7 +583,7 @@ namespace OpenTK.Platform.X11
                 {
                     IntPtr hints = IntPtr.Zero;
                     Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace,
-                                              ref hints, Marshal.SizeOf(hints) / IntPtr.Size);
+                        ref hints, Marshal.SizeOf(hints) / IntPtr.Size);
                     return true;
                 }
 
@@ -625,7 +625,7 @@ namespace OpenTK.Platform.X11
                     hints.flags = (IntPtr)MotifFlags.Decorations;
                     hints.decorations = (IntPtr)MotifDecorations.All;
                     Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace,
-                                              ref hints, Marshal.SizeOf(hints) / IntPtr.Size);
+                        ref hints, Marshal.SizeOf(hints) / IntPtr.Size);
 
                     return true;
                 }
@@ -855,32 +855,32 @@ namespace OpenTK.Platform.X11
                 switch (e.type)
                 {
                     case XEventName.MapNotify:
+                    {
+                        bool previous_visible = visible;
+                        visible = true;
+                        if (visible != previous_visible)
                         {
-                            bool previous_visible = visible;
-                            visible = true;
-                            if (visible != previous_visible)
-                            {
-                                OnVisibleChanged(EventArgs.Empty);
-                            }
+                            OnVisibleChanged(EventArgs.Empty);
                         }
                         return;
-
+                    }
                     case XEventName.UnmapNotify:
+                    {
+                        bool previous_visible = visible;
+                        visible = false;
+                        if (visible != previous_visible)
                         {
-                            bool previous_visible = visible;
-                            visible = false;
-                            if (visible != previous_visible)
-                            {
-                                OnVisibleChanged(EventArgs.Empty);
-                            }
+                            OnVisibleChanged(EventArgs.Empty);
                         }
                         break;
-
+                    }
                     case XEventName.CreateNotify:
+                    {
                         // A child was was created - nothing to do
                         break;
-
+                    }
                     case XEventName.ClientMessage:
+                    {
                         if (!isExiting && e.ClientMessageEvent.ptr1 == _atom_wm_destroy)
                         {
                             Debug.Print("[X11] Exit message received for window {0:X} on display {1:X}", window.Handle, window.Display);
@@ -1007,18 +1007,21 @@ namespace OpenTK.Platform.X11
                             break;
                         }
                         break;
-
+                    }
                     case XEventName.DestroyNotify:
+                    {
                         Debug.WriteLine("Window destroyed");
                         exists = false;
                         return;
-
+                    }
                     case XEventName.ConfigureNotify:
+                    {
                         RefreshWindowBounds(ref e);
                         break;
-
+                    }
                     case XEventName.KeyPress:
                     case XEventName.KeyRelease:
+                    {
                         bool pressed = e.type == XEventName.KeyPress;
                         Key key;
                         if (KeyMap.TranslateKey(ref e.KeyEvent, out key))
@@ -1054,7 +1057,7 @@ namespace OpenTK.Platform.X11
                             }
                         }
                         break;
-
+                    }
                     case XEventName.MotionNotify:
                     {
                         int x = e.MotionEvent.x;
@@ -1068,76 +1071,72 @@ namespace OpenTK.Platform.X11
                         }
                         break;
                     }
-
                     case XEventName.ButtonPress:
+                    {
+                        float dx, dy;
+                        MouseButton button = X11KeyMap.TranslateButton(e.ButtonEvent.button, out dx, out dy);
+
+                        if (button != MouseButton.LastButton)
                         {
-                            float dx, dy;
-                            MouseButton button = X11KeyMap.TranslateButton(e.ButtonEvent.button, out dx, out dy);
+                            OnMouseDown(button);
+                        }
 
-                            if (button != MouseButton.LastButton)
-                            {
-                                OnMouseDown(button);
-                            }
+                        if (xi2_version >= 210)
+                        {
+                            // High resolution scroll events supported.
+                            // This code is implemented in XI2Mouse.GetCursorState().
+                            // Instead of reimplementing this functionality, just
+                            // use the values from there.
+                            MouseState state = Mouse.GetCursorState();
+                            dx = state.Scroll.X - MouseState.Scroll.X;
+                            dy = state.Scroll.Y - MouseState.Scroll.Y;
+                        }
 
-                            if (xi2_version >= 210)
-                            {
-                                // High resolution scroll events supported.
-                                // This code is implemented in XI2Mouse.GetCursorState().
-                                // Instead of reimplementing this functionality, just
-                                // use the values from there.
-                                MouseState state = Mouse.GetCursorState();
-                                dx = state.Scroll.X - MouseState.Scroll.X;
-                                dy = state.Scroll.Y - MouseState.Scroll.Y;
-                            }
-
-                            if (dx != 0 || dy != 0)
-                            {
-                                // High resolution scroll events not supported
-                                // fallback to the old Button4-7 scroll buttons
-                                OnMouseWheel(dx, dy);
-                            }
+                        if (dx != 0 || dy != 0)
+                        {
+                            // High resolution scroll events not supported
+                            // fallback to the old Button4-7 scroll buttons
+                            OnMouseWheel(dx, dy);
                         }
                         break;
-
+                    }
                     case XEventName.ButtonRelease:
+                    {
+                        float dx, dy;
+                        MouseButton button = X11KeyMap.TranslateButton(e.ButtonEvent.button, out dx, out dy);
+                        if (button != MouseButton.LastButton)
                         {
-                            float dx, dy;
-                            MouseButton button = X11KeyMap.TranslateButton(e.ButtonEvent.button, out dx, out dy);
-                            if (button != MouseButton.LastButton)
-                            {
-                                OnMouseUp(button);
-                            }
+                            OnMouseUp(button);
                         }
                         break;
-
+                    }
                     case XEventName.FocusIn:
+                    {
+                        bool previous_focus = has_focus;
+                        has_focus = true;
+                        if (has_focus != previous_focus)
                         {
-                            bool previous_focus = has_focus;
-                            has_focus = true;
-                            if (has_focus != previous_focus)
-                            {
-                                OnFocusedChanged(EventArgs.Empty);
-                            }
+                            OnFocusedChanged(EventArgs.Empty);
+                        }
 
-                            if (Focused && !CursorVisible)
-                            {
-                                GrabMouse();
-                            }
+                        if (Focused && !CursorVisible)
+                        {
+                            GrabMouse();
                         }
                         break;
-
+                    }
                     case XEventName.FocusOut:
+                    {
+                        bool previous_focus = has_focus;
+                        has_focus = false;
+                        if (has_focus != previous_focus)
                         {
-                            bool previous_focus = has_focus;
-                            has_focus = false;
-                            if (has_focus != previous_focus)
-                            {
-                                OnFocusedChanged(EventArgs.Empty);
-                            }
+                            OnFocusedChanged(EventArgs.Empty);
                         }
                         break;
-
+                    }
                     case XEventName.LeaveNotify:
+                    {
                         if (CursorVisible)
                         {
                             int x = MathHelper.Clamp(e.CrossingEvent.x, 0, Width);
@@ -1147,14 +1146,17 @@ namespace OpenTK.Platform.X11
                                 OnMouseMove(x, y);
                             }
                             OnMouseLeave(EventArgs.Empty);
+
                         }
                         break;
-
+                    }
                     case XEventName.EnterNotify:
+                    {
                         OnMouseEnter(EventArgs.Empty);
                         break;
-
+                    }
                     case XEventName.MappingNotify:
+                    {
                         // 0 == MappingModifier, 1 == MappingKeyboard
                         if (e.MappingEvent.request == 0 || e.MappingEvent.request == 1)
                         {
@@ -1163,8 +1165,9 @@ namespace OpenTK.Platform.X11
                             KeyMap.RefreshKeycodes(window.Display);
                         }
                         break;
-
-                   case XEventName.PropertyNotify:
+                    }
+                    case XEventName.PropertyNotify:
+                    {
                         if (e.PropertyEvent.atom == _atom_net_wm_state)
                         {
                             OnWindowStateChanged(EventArgs.Empty);
@@ -1175,8 +1178,9 @@ namespace OpenTK.Platform.X11
                         //    RefreshWindowBorders();
                         //}
                         break;
-
+                    }
                     case XEventName.SelectionNotify:
+                    {
                         if (e.SelectionEvent.property == _atom_xdnd_primary)
                         {
                             IntPtr data = IntPtr.Zero;
@@ -1206,10 +1210,7 @@ namespace OpenTK.Platform.X11
                             Functions.XSendEvent(this.window.Display, e.ClientMessageEvent.ptr1, false, (IntPtr)EventMask.NoEventMask, ref reply);
                         }
                         break;
-
-                    default:
-                        //Debug.WriteLine(String.Format("{0} event was not handled", e.type));
-                        break;
+                    }
                 }
             }
         }
@@ -1325,16 +1326,16 @@ namespace OpenTK.Platform.X11
                     data[index++] = (IntPtr)bitmap.Height;
 
                     for (int y = 0; y < bitmap.Height; y++)
-                        for (int x = 0; x < bitmap.Width; x++)
-                        {
-                            data[index++] = (IntPtr)bitmap.GetPixel(x, y).ToArgb();
-                        }
+                    for (int x = 0; x < bitmap.Width; x++)
+                    {
+                        data[index++] = (IntPtr)bitmap.GetPixel(x, y).ToArgb();
+                    }
 
                     using (new XLock(window.Display))
                     {
                         Functions.XChangeProperty(window.Display, window.Handle,
-                                      _atom_net_wm_icon, _atom_xa_cardinal, 32,
-                                      PropertyMode.Replace, data, size);
+                            _atom_net_wm_icon, _atom_xa_cardinal, 32,
+                            PropertyMode.Replace, data, size);
                     }
 
                     // Set XWMHints
@@ -1392,9 +1393,9 @@ namespace OpenTK.Platform.X11
                 using (new XLock(window.Display))
                 {
                     Functions.XGetWindowProperty(window.Display, window.Handle,
-                                 _atom_net_wm_state, IntPtr.Zero, new IntPtr(256), false,
-                                 new IntPtr(4) /*XA_ATOM*/, out actual_atom, out actual_format,
-                                 out nitems, out bytes_after, ref prop);
+                        _atom_net_wm_state, IntPtr.Zero, new IntPtr(256), false,
+                        new IntPtr(4) /*XA_ATOM*/, out actual_atom, out actual_format,
+                        out nitems, out bytes_after, ref prop);
                 }
 
                 if ((long)nitems > 0 && prop != IntPtr.Zero)

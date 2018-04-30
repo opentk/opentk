@@ -21,16 +21,18 @@ function run() {
   fi
 }
 
-run .paket/paket.bootstrapper.exe
-
 if [[ "$OS" != "Windows_NT" ]] &&
        [ ! -e ~/.config/.mono/certs ]
 then
   mozroots --import --sync --quiet
 fi
 
-run .paket/paket.exe restore
+dotnet restore
 
-[ ! -e build.fsx ] && run .paket/paket.exe update
-[ ! -e build.fsx ] && run packages/FAKE/tools/FAKE.exe init.fsx
-run packages/FAKE/tools/FAKE.exe "$@" $FSIARGS build.fsx
+FAKE_VERSION="4.64.12"
+FAKE_PATH="tools/FAKE"
+FAKE_EXECUTABLE="${FAKE_PATH}/FAKE.${FAKE_VERSION}/tools/FAKE.exe"
+
+[ ! -e packages/FAKE/tools/FAKE.exe ] && nuget install FAKE -Version ${FAKE_VERSION} -OutputDirectory ${FAKE_PATH}
+[ ! -e build.fsx ] && run ${FAKE_EXECUTABLE} init.fsx
+run ${FAKE_EXECUTABLE} "$@" $FSIARGS build.fsx
