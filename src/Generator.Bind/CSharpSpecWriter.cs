@@ -544,9 +544,9 @@ namespace Bind
 
         // For example, if parameter foo has indirection level = 1, then it
         // is consumed as 'foo*' in the fixed_statements and the call string.
-        private readonly static string[] PointerLevels = new string[] { "", "*", "**", "***", "****" };
+        private readonly static string[] PointerLevels = { "", "*", "**", "***", "****" };
 
-        private readonly static string[] ArrayLevels = new string[] { "", "[]", "[,]", "[,,]", "[,,,]" };
+        private readonly static string[] ArrayLevels = { "", "[]", "[,]", "[,,]", "[,,,]" };
 
         private static bool IsEnum(string s, EnumCollection enums)
         {

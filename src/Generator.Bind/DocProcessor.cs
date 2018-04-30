@@ -197,7 +197,7 @@ namespace Bind
             return inline;
         }
 
-        private static readonly char[] Newline = new char[] { '\n' };
+        private static readonly char[] Newline = { '\n' };
 
         private static string Cleanup(string text)
         {
