@@ -149,7 +149,7 @@ namespace Bind.Structures
                 }
                 else
                 {
-                    Trace.WriteLine(String.Format("[Warning] Failed to resolve token: {0}", c));
+                    Trace.WriteLine($"[Warning] Failed to resolve token: {c}");
                     return false;
                 }
             }
@@ -159,11 +159,7 @@ namespace Bind.Structures
         public override string ToString()
         {
             return
-                String.Format("{0} = {1}((int){2}{3})",
-                Name,
-                Unchecked ? "unchecked" : String.Empty,
-                !String.IsNullOrEmpty(Reference) ? Reference + "." : String.Empty,
-                Value);
+                $"{Name} = {(Unchecked ? "unchecked" : String.Empty)}((int){(!String.IsNullOrEmpty(Reference) ? Reference + "." : String.Empty)}{Value})";
         }
 
         public int CompareTo(Constant other)

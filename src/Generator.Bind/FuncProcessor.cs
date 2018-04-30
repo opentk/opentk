@@ -202,19 +202,16 @@ namespace Bind
             path.Append(apipath);
             if (!String.IsNullOrEmpty(apiname) && !String.IsNullOrEmpty(apiversion))
             {
-                path.Append(String.Format(
-                    "[contains(concat('|', @name, '|'), '|{0}|') and " +
-                    "(contains(concat('|', @version, '|'), '|{1}|') or not(boolean(@version)))]",
-                    apiname,
-                    apiversion));
+                path.Append($"[contains(concat('|', @name, '|'), '|{apiname}|') and " +
+                            $"(contains(concat('|', @version, '|'), '|{apiversion}|') or not(boolean(@version)))]");
             }
             else if (!String.IsNullOrEmpty(apiname))
             {
-                path.Append(String.Format("[contains(concat('|', @name, '|'), '|{0}|')]", apiname));
+                path.Append($"[contains(concat('|', @name, '|'), '|{apiname}|')]");
             }
             else if (!String.IsNullOrEmpty(apiversion))
             {
-                path.Append(String.Format("[contains(concat('|', @version, '|'), '|{0}|') or not(boolean(@version))]", apiversion));
+                path.Append($"[contains(concat('|', @version, '|'), '|{apiversion}|') or not(boolean(@version))]");
             }
 
             if (function != null)
@@ -224,17 +221,12 @@ namespace Bind
                     // match an override that has this specific extension
                     // *or* one that has no extension at all (equivalent
                     // to "match all possible extensions")
-                    path.Append(String.Format(
-                        "/function[contains(concat('|', @name, '|'), '|{0}|') and " +
-                        "(contains(concat('|', @extension, '|'), '|{1}|') or not(boolean(@extension)))]",
-                        function,
-                        extension));
+                    path.Append($"/function[contains(concat('|', @name, '|'), '|{function}|') and " +
+                                $"(contains(concat('|', @extension, '|'), '|{extension}|') or not(boolean(@extension)))]");
                 }
                 else
                 {
-                    path.Append(String.Format(
-                        "/function[contains(concat('|', @name, '|'), '|{0}|')]",
-                        function));
+                    path.Append($"/function[contains(concat('|', @name, '|'), '|{function}|')]");
                 }
             }
 
@@ -284,7 +276,7 @@ namespace Bind
                     // Make sure we reference the enums rather than the functions.
                     if (normal)
                     {
-                        type.QualifiedType = String.Format("{0}.{1}", Settings.EnumsOutput, @enum.Name);
+                        type.QualifiedType = $"{Settings.EnumsOutput}.{@enum.Name}";
                     }
                 }
             }
@@ -307,13 +299,13 @@ namespace Bind
                         // glcore, gles1 and gles2 use the All enum instead.
                         if (apiname == "gl" && enums.ContainsKey(category))
                         {
-                            type.QualifiedType = String.Format("{0}{1}{2}", Settings.EnumsOutput,
-                                Settings.NamespaceSeparator, enumProcessor.TranslateEnumName(category));
+                            type.QualifiedType =
+                                $"{Settings.EnumsOutput}{Settings.NamespaceSeparator}{enumProcessor.TranslateEnumName(category)}";
                         }
                         else
                         {
-                            type.QualifiedType = String.Format("{0}{1}{2}", Settings.EnumsOutput,
-                                Settings.NamespaceSeparator, Settings.CompleteEnumName);
+                            type.QualifiedType =
+                                $"{Settings.EnumsOutput}{Settings.NamespaceSeparator}{Settings.CompleteEnumName}";
                         }
                     }
                 }
@@ -364,9 +356,8 @@ namespace Bind
 
             if (type.Pointer >= 3)
             {
-                System.Diagnostics.Trace.WriteLine(String.Format(
-                    "[Error] Type '{0}' has a high pointer level. Bindings will be incorrect.",
-                    type));
+                System.Diagnostics.Trace.WriteLine(
+                    $"[Error] Type '{type}' has a high pointer level. Bindings will be incorrect.");
             }
 
             if (!type.IsEnum)
@@ -507,10 +498,8 @@ namespace Bind
             {
                 for (int i = 0; i < d.Parameters.Count; i++)
                 {
-                    XPathNavigator paramOverride = functionOverride.SelectSingleNode(String.Format(
-                        "param[@name='{0}' or @index='{1}']",
-                        d.Parameters[i].RawName,
-                        i));
+                    XPathNavigator paramOverride = functionOverride.SelectSingleNode(
+                        $"param[@name='{d.Parameters[i].RawName}' or @index='{i}']");
                     if (paramOverride != null)
                     {
                         foreach (XPathNavigator node in paramOverride.SelectChildren(XPathNodeType.Element))
@@ -598,8 +587,8 @@ namespace Bind
             {
                 if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
                 {
-                    d.ReturnType.QualifiedType = String.Format("{0}{1}{2}",
-                        Settings.EnumsOutput, Settings.NamespaceSeparator, Settings.CompleteEnumName);
+                    d.ReturnType.QualifiedType =
+                        $"{Settings.EnumsOutput}{Settings.NamespaceSeparator}{Settings.CompleteEnumName}";
                 }
                 else
                 {
@@ -647,10 +636,8 @@ namespace Bind
 
                 if (functionOverride != null)
                 {
-                    XPathNavigator paramOverride = functionOverride.SelectSingleNode(String.Format(
-                           "param[@name='{0}' or @index='{1}']",
-                           d.Parameters[i].RawName,
-                           i));
+                    XPathNavigator paramOverride = functionOverride.SelectSingleNode(
+                        $"param[@name='{d.Parameters[i].RawName}' or @index='{i}']");
                     if (paramOverride != null)
                     {
                         var legacyArrayParameter = paramOverride.GetAttribute("legacyArrayParameter", String.Empty);

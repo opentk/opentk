@@ -56,10 +56,7 @@ namespace Bind.Structures
 
         public override string ToString()
         {
-            return String.Format("{0} {1}{2}",
-                ReturnType,
-                TrimmedName,
-                Parameters);
+            return $"{ReturnType} {TrimmedName}{Parameters}";
         }
 
         public bool Equals(Function other)

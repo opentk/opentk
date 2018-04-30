@@ -40,8 +40,8 @@ namespace Bind.Structures
 
         public string QualifiedType
         {
-            get => !String.IsNullOrEmpty(CurrentQualifier) ?
-                String.Format("{0}.{1}", CurrentQualifier, CurrentType) :
+            get => !String.IsNullOrEmpty(CurrentQualifier) ? $"{CurrentQualifier}.{CurrentType}"
+                :
                 CurrentType;
             set
             {
@@ -205,10 +205,7 @@ namespace Bind.Structures
         // Only used for debugging.
         public override string ToString()
         {
-            return String.Format("{0}{1}{2}",
-                CurrentType,
-                PointerLevels[Pointer],
-                ArrayLevels[Array]);
+            return $"{CurrentType}{PointerLevels[Pointer]}{ArrayLevels[Array]}";
         }
 
         public int CompareTo(Type other)

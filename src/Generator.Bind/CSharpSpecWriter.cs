@@ -155,7 +155,7 @@ namespace Bind
             DelegateCollection delegates, EnumCollection enums,
             IDictionary<string, string> csTypes)
         {
-            Trace.WriteLine(String.Format("Writing wrappers to:\t{0}.{1}", Settings.OutputNamespace, Settings.OutputClass));
+            Trace.WriteLine($"Writing wrappers to:\t{Settings.OutputNamespace}.{Settings.OutputClass}");
 
             sw.WriteLine("#pragma warning disable 3019"); // CLSCompliant attribute
             sw.WriteLine("#pragma warning disable 1591"); // Missing doc comments
@@ -304,22 +304,22 @@ namespace Bind
                 string category = String.Empty;
                 if (f.Deprecated)
                 {
-                    warning = String.Format("[deprecated: v{0}]", f.DeprecatedVersion);
+                    warning = $"[deprecated: v{f.DeprecatedVersion}]";
                 }
 
                 if (f.Extension != "Core" && !String.IsNullOrEmpty(f.Category))
                 {
-                    category = String.Format("[requires: {0}]", f.Category);
+                    category = $"[requires: {f.Category}]";
                 }
                 else if (!String.IsNullOrEmpty(f.Version))
                 {
                     if (f.Category.StartsWith("VERSION"))
                     {
-                        category = String.Format("[requires: {0}]", "v" + f.Version);
+                        category = $"[requires: {"v" + f.Version}]";
                     }
                     else
                     {
-                        category = String.Format("[requires: {0}]", "v" + f.Version + " or " + f.Category);
+                        category = $"[requires: {"v" + f.Version + " or " + f.Category}]";
                     }
                 }
 
@@ -348,7 +348,7 @@ namespace Bind
                     string length = String.Empty;
                     if (!String.IsNullOrEmpty(param.ComputeSize))
                     {
-                        length = String.Format("[length: {0}]", param.ComputeSize);
+                        length = $"[length: {param.ComputeSize}]";
                     }
 
                     // Try to match the correct parameter from documentation:
@@ -430,8 +430,8 @@ namespace Bind
                     sw.WriteLine("/// </summary>");
                 }
 
-                var str = String.Format("{0} = {1}((int){2}{3})", c.Name, c.Unchecked ? "unchecked" : "",
-                    !String.IsNullOrEmpty(c.Reference) ? c.Reference + Settings.NamespaceSeparator : "", c.Value);
+                var str =
+                    $"{c.Name} = {(c.Unchecked ? "unchecked" : "")}((int){(!String.IsNullOrEmpty(c.Reference) ? c.Reference + Settings.NamespaceSeparator : "")}{c.Value})";
 
                 sw.Write(str);
                 if (!String.IsNullOrEmpty(str))
@@ -449,11 +449,12 @@ namespace Bind
 
             if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
             {
-                Trace.WriteLine(String.Format("Writing enums to:\t{0}.{1}.{2}", Settings.OutputNamespace, Settings.OutputClass, Settings.NestedEnumsClass));
+                Trace.WriteLine(
+                    $"Writing enums to:\t{Settings.OutputNamespace}.{Settings.OutputClass}.{Settings.NestedEnumsClass}");
             }
             else
             {
-                Trace.WriteLine(String.Format("Writing enums to:\t{0}", Settings.EnumsOutput));
+                Trace.WriteLine($"Writing enums to:\t{Settings.EnumsOutput}");
             }
 
             if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
@@ -494,16 +495,8 @@ namespace Bind
                             .Distinct();
 
                         sw.WriteLine("/// <summary>");
-                        sw.WriteLine(String.Format("/// {0}",
-                            functions.Count() >= 3 ?
-                                String.Format("Used in {0} and {1} other function{2}",
-                                    String.Join(", ", functions.Take(2).ToArray()),
-                                    functions.Count() - 2,
-                                    functions.Count() - 2 > 1 ? "s" : "") :
-                            functions.Count() >= 1 ?
-                                String.Format("Used in {0}",
-                                    String.Join(", ", functions.ToArray())) :
-                                "Not used directly."));
+                        sw.WriteLine(
+                            $"/// {(functions.Count() >= 3 ? $"Used in {String.Join(", ", functions.Take(2).ToArray())} and {functions.Count() - 2} other function{(functions.Count() - 2 > 1 ? "s" : "")}" : functions.Count() >= 1 ? $"Used in {String.Join(", ", functions.ToArray())}" : "Not used directly.")}");
                         sw.WriteLine("/// </summary>");
                     }
 
@@ -580,13 +573,8 @@ namespace Bind
                 throw new InvalidOperationException("Invalid Constant: Name is empty");
             }
 
-            return String.Format("{0} = {1}((int){2}{3})",
-                c.Name,
-                c.Unchecked ? "unchecked" : String.Empty,
-                !String.IsNullOrEmpty(c.Reference) ?
-                    c.Reference + Settings.NamespaceSeparator :
-                    String.Empty,
-                c.Value);
+            return
+                $"{c.Name} = {(c.Unchecked ? "unchecked" : String.Empty)}((int){(!String.IsNullOrEmpty(c.Reference) ? c.Reference + Settings.NamespaceSeparator : String.Empty)}{c.Value})";
         }
 
         private string GetDeclarationString(Delegate d, bool isDelegate)
@@ -679,7 +667,7 @@ namespace Bind
                 sb.AppendLine();
                 foreach (Parameter p in f.Parameters.Where(p => p.Generic))
                 {
-                    sb.AppendLine(String.Format("    where {0} : struct", p.CurrentType));
+                    sb.AppendLine($"    where {p.CurrentType} : struct");
                 }
             }
 
@@ -706,7 +694,7 @@ namespace Bind
                 int count;
                 if (Int32.TryParse(p.ComputeSize, out count))
                 {
-                    attributes.Add(String.Format("CountAttribute(Count = {0})", count));
+                    attributes.Add($"CountAttribute(Count = {count})");
                 }
                 else
                 {
@@ -715,11 +703,11 @@ namespace Bind
                         //remove the compsize hint, just keep comma delimited param names
                         var len = "COMPSIZE(".Length;
                         var computed = p.ComputeSize.Substring(len, (p.ComputeSize.Length - len) - 1);
-                        attributes.Add(String.Format("CountAttribute(Computed = \"{0}\")", computed));
+                        attributes.Add($"CountAttribute(Computed = \"{computed}\")");
                     }
                     else
                     {
-                        attributes.Add(String.Format("CountAttribute(Parameter = \"{0}\")", p.ComputeSize));
+                        attributes.Add($"CountAttribute(Parameter = \"{p.ComputeSize}\")");
                     }
                 }
             }
@@ -800,10 +788,7 @@ namespace Bind
                 }
             }
 
-            return String.Format("{0}{1}{2}",
-                t,
-                PointerLevels[type.Pointer],
-                ArrayLevels[type.Array]);
+            return $"{t}{PointerLevels[type.Pointer]}{ArrayLevels[type.Array]}";
         }
     }
 }

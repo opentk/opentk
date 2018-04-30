@@ -71,12 +71,10 @@ namespace Bind
             path.Append("/signatures/replace");
             if (apiname != null)
             {
-                path.Append(String.Format("[contains(concat('|', @name, '|'), '|{0}|')]", apiname));
+                path.Append($"[contains(concat('|', @name, '|'), '|{apiname}|')]");
             }
 
-            path.Append(String.Format(
-                "/enum[contains(concat('|', @name, '|'), '|{0}|')]",
-                enumeration));
+            path.Append($"/enum[contains(concat('|', @name, '|'), '|{enumeration}|')]");
 
             return path.ToString();
         }
@@ -272,8 +270,8 @@ namespace Bind
         {
             if (enumOverride != null)
             {
-                XPathNavigator constantOverride = enumOverride.SelectSingleNode(String.Format("token[@name='{0}']", c.OriginalName)) ??
-                    enumOverride.SelectSingleNode(String.Format("token[@name={0}]", c.Name));
+                XPathNavigator constantOverride = enumOverride.SelectSingleNode($"token[@name='{c.OriginalName}']") ??
+                    enumOverride.SelectSingleNode($"token[@name={c.Name}]");
                 if (constantOverride != null)
                 {
                     foreach (XPathNavigator node in constantOverride.SelectChildren(XPathNodeType.Element))
