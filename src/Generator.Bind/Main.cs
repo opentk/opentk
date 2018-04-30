@@ -54,12 +54,12 @@ namespace Bind
                 var split = new Regex(@"-\w+", RegexOptions.Compiled);
                 foreach (var argument in arguments)
                 {
-                    string a = argument.Replace("--", "-").Trim();
+                    var a = argument.Replace("--", "-").Trim();
                     var match = split.Match(a);
                     if (match.Success)
                     {
-                        string opt = match.Value.Substring(1).Trim();
-                        string val = a.Substring(match.Value.Length + 1).Trim();
+                        var opt = match.Value.Substring(1).Trim();
+                        var val = a.Substring(match.Value.Length + 1).Trim();
                         switch (opt)
                         {
                             case "?":
@@ -82,7 +82,7 @@ namespace Bind
                             }
                             case "mode":
                             {
-                                string arg = val.ToLower();
+                                var arg = val.ToLower();
                                 SetGeneratorMode(arg);
                                 break;
                             }
@@ -107,7 +107,7 @@ namespace Bind
                             case "option":
                             {
                                 val = val.ToLower();
-                                bool enable = !opt.StartsWith("-");
+                                var enable = !opt.StartsWith("-");
                                 if (val.StartsWith("+") || val.StartsWith("-"))
                                 {
                                     val = val.Substring(1);
@@ -213,7 +213,7 @@ namespace Bind
 
                 foreach (var generator in Generators)
                 {
-                    long ticks = DateTime.Now.Ticks;
+                    var ticks = DateTime.Now.Ticks;
 
                     generator.Process();
 

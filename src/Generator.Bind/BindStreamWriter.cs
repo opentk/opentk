@@ -65,7 +65,7 @@ namespace Bind
         public void Write(WriteOptions options, string value)
         {
             var lines = value.Split(SplitStrings, StringSplitOptions.None);
-            for (int i = 0; i < lines.Length; ++i)
+            for (var i = 0; i < lines.Length; ++i)
             {
                 if (lines[i].Length != 0)
                 {
@@ -142,7 +142,7 @@ namespace Bind
         {
             if (options != WriteOptions.NoIndent)
             {
-                for (int i = _indentLevel; i > 0; i--)
+                for (var i = _indentLevel; i > 0; i--)
                 {
                     _sw.Write("    ");
                 }

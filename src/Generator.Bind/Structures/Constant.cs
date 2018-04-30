@@ -75,7 +75,7 @@ namespace Bind.Structures
             {
                 // Check if the value is a number larger than Int32.MaxValue.
                 ulong number;
-                string test = Value;
+                var test = Value;
                 return ulong.TryParse(test.ToLower().Replace("0x", string.Empty),
                     NumberStyles.AllowHexSpecifier, null, out number) &&
                     number > int.MaxValue;
@@ -121,7 +121,7 @@ namespace Bind.Structures
             {
                 // Resolve the referenced Constant. Be careful
                 // to avoid loops in the definitions.
-                Constant reference = c;
+                var reference = c;
                 do
                 {
                     reference =
@@ -164,7 +164,7 @@ namespace Bind.Structures
 
         public int CompareTo(Constant other)
         {
-            int ret = Value.CompareTo(other.Value);
+            var ret = Value.CompareTo(other.Value);
             if (ret == 0)
             {
                 return Name.CompareTo(other.Name);

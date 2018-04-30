@@ -118,7 +118,7 @@ namespace Bind
             using (var sr = new StreamReader(file))
             {
                 Console.WriteLine("Reading opengl types.");
-                Dictionary<string, string> glTypes = new Dictionary<string, string>();
+                var glTypes = new Dictionary<string, string>();
 
                 if (sr == null)
                 {
@@ -127,14 +127,14 @@ namespace Bind
 
                 do
                 {
-                    string line = sr.ReadLine();
+                    var line = sr.ReadLine();
 
                     if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
                     {
                         continue;
                     }
 
-                    string[] words = line.Split(" ,*\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    var words = line.Split(" ,*\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
                     if (words[0].ToLower() == "void")
                     {
@@ -186,18 +186,18 @@ namespace Bind
         {
             using (var sr = new StreamReader(file))
             {
-                Dictionary<string, string> csTypes = new Dictionary<string, string>();
+                var csTypes = new Dictionary<string, string>();
                 Console.WriteLine("Reading C# types.");
 
                 while (!sr.EndOfStream)
                 {
-                    string line = sr.ReadLine();
+                    var line = sr.ReadLine();
                     if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
                     {
                         continue;
                     }
 
-                    string[] words = line.Split(" ,\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    var words = line.Split(" ,\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                     if (words.Length < 2)
                     {
                         continue;
@@ -249,10 +249,10 @@ namespace Bind
 
         private DelegateCollection ReadDelegates(XPathNavigator specs, string apiversion)
         {
-            DelegateCollection delegates = new DelegateCollection();
+            var delegates = new DelegateCollection();
             var extensions = new List<string>();
 
-            string path = "function";
+            var path = "function";
             foreach (XPathNavigator node in specs.SelectChildren(path, string.Empty))
             {
                 var name = node.GetAttribute("name", string.Empty).Trim();
@@ -293,7 +293,7 @@ namespace Bind
                             break;
 
                         case "param":
-                            Parameter p = new Parameter();
+                            var p = new Parameter();
                             p.CurrentType = param.GetAttribute("type", string.Empty).Trim();
                             p.Name = param.GetAttribute("name", string.Empty).Trim();
 
@@ -321,8 +321,8 @@ namespace Bind
 
         private EnumCollection ReadEnums(XPathNavigator nav)
         {
-            EnumCollection enums = new EnumCollection();
-            Enum all = new Enum() { Name = Settings.CompleteEnumName };
+            var enums = new EnumCollection();
+            var all = new Enum() { Name = Settings.CompleteEnumName };
 
             if (nav != null)
             {
@@ -331,7 +331,7 @@ namespace Bind
                 // First pass: collect all available tokens and enums
                 foreach (XPathNavigator node in nav.SelectChildren("enum", string.Empty))
                 {
-                    Enum e = new Enum()
+                    var e = new Enum()
                     {
                         Name = node.GetAttribute("name", string.Empty).Trim(),
                         Type = node.GetAttribute("type", string.Empty).Trim()

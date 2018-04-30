@@ -81,13 +81,13 @@ namespace Bind
 
         private EnumCollection ProcessNames(EnumCollection enums, XPathNavigator nav, string apiname)
         {
-            EnumCollection processedEnums = new EnumCollection();
+            var processedEnums = new EnumCollection();
             foreach (var e in enums.Values)
             {
                 // Note that we cannot modify a collection while iterating over it,
                 // so we keep a list of modified enums and remove/readd the
                 // modified items to refresh their keys.
-                string name = e.Name;
+                var name = e.Name;
                 name = ReplaceName(nav, apiname, name);
                 name = TranslateEnumName(name);
                 e.Name = name;
@@ -131,8 +131,8 @@ namespace Bind
 
         private static bool IsAlreadyProcessed(string name)
         {
-            string extension = Utilities.GetExtension(name, true);
-            bool unprocessed = false;
+            var extension = Utilities.GetExtension(name, true);
+            var unprocessed = false;
             unprocessed |= name.Contains("_") || name.Contains("-");
             unprocessed |= char.IsDigit(name[0]);
             unprocessed |= name.All(c => char.IsUpper(c));
@@ -159,14 +159,14 @@ namespace Bind
                     name = Settings.ConstantPrefix + name;
                 }
 
-                StringBuilder translator = new StringBuilder(name);
+                var translator = new StringBuilder(name);
 
                 // Split on IHV names and acronyms, to ensure that characters appearing after these name are uppercase.
                 var match = Utilities.Acronyms.Match(name);
-                int offset = 0; // Everytime we insert a match, we must increase offset to compensate.
+                var offset = 0; // Everytime we insert a match, we must increase offset to compensate.
                 while (match.Success)
                 {
-                    int insertPos = match.Index + match.Length + offset++;
+                    var insertPos = match.Index + match.Length + offset++;
                     translator.Insert(insertPos, "_");
                     match = match.NextMatch();
                 }
@@ -178,9 +178,9 @@ namespace Bind
                 //     2. if current char is  or '0-9' keep it and make next char uppercase.
                 //     3. if current char is uppercase make next char lowercase.
                 //     4. if current char is lowercase, respect next char case.
-                bool isAfterUnderscoreOrNumber = true;
-                bool isPreviousUppercase = false;
-                foreach (char c in name)
+                var isAfterUnderscoreOrNumber = true;
+                var isPreviousUppercase = false;
+                foreach (var c in name)
                 {
                     char charToAdd;
                     if (c == '_' || c == '-')
@@ -238,7 +238,7 @@ namespace Bind
             foreach (var e in enums.Values)
             {
                 var processedConstants = new SortedDictionary<string, Constant>();
-                foreach (Constant c in e.ConstantCollection.Values)
+                foreach (var c in e.ConstantCollection.Values)
                 {
                     c.Name = TranslateConstantName(c.Name, false);
                     c.Value = TranslateConstantValue(c.Value);
@@ -251,7 +251,7 @@ namespace Bind
                 e.ConstantCollection = processedConstants;
 
                 var enumOverride = nav.SelectSingleNode(GetOverridesPath(apiname, e.Name));
-                foreach (Constant c in e.ConstantCollection.Values)
+                foreach (var c in e.ConstantCollection.Values)
                 {
                     ReplaceConstant(enumOverride, c);
                     ResolveBareAlias(c, enums);
@@ -270,7 +270,7 @@ namespace Bind
         {
             if (enumOverride != null)
             {
-                XPathNavigator constantOverride = enumOverride.SelectSingleNode($"token[@name='{c.OriginalName}']") ??
+                var constantOverride = enumOverride.SelectSingleNode($"token[@name='{c.OriginalName}']") ??
                     enumOverride.SelectSingleNode($"token[@name={c.Name}]");
                 if (constantOverride != null)
                 {
@@ -294,7 +294,7 @@ namespace Bind
                 return s;
             }
 
-            StringBuilder translator = new StringBuilder(s.Length);
+            var translator = new StringBuilder(s.Length);
 
             if (isValue)
             {
@@ -303,20 +303,20 @@ namespace Bind
             else
             {
                 // Translate the constant's name to match .Net naming conventions
-                bool nameIsAllCaps = s.AsEnumerable().All(c => char.IsLetter(c) ? char.IsUpper(c) : true);
-                bool nameContainsUnderscore = s.Contains("_");
+                var nameIsAllCaps = s.AsEnumerable().All(c => char.IsLetter(c) ? char.IsUpper(c) : true);
+                var nameContainsUnderscore = s.Contains("_");
                 if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None &&
                 (nameIsAllCaps || nameContainsUnderscore))
                 {
-                    bool nextCharUppercase = true;
-                    bool isAfterDigit = false;
+                    var nextCharUppercase = true;
+                    var isAfterDigit = false;
 
                     if (!isValue && char.IsDigit(s[0]))
                     {
                         s = Settings.ConstantPrefix + s;
                     }
 
-                    foreach (char c in s)
+                    foreach (var c in s)
                     {
                         if (c == '_' || c == '-')
                         {
@@ -389,7 +389,7 @@ namespace Bind
             if (string.IsNullOrEmpty(c.Reference) && !char.IsDigit(c.Value[0]))
             {
                 // Skip generic GLenum, as this doesn't help resolve references.
-                foreach (Enum e in enums.Values.Where(e => e.Name != "GLenum"))
+                foreach (var e in enums.Values.Where(e => e.Name != "GLenum"))
                 {
                     if (e.ConstantCollection.ContainsKey(c.Value))
                     {
@@ -421,7 +421,7 @@ namespace Bind
         {
             // Check if the result is a number.
             long number;
-            bool isNumber = false;
+            var isNumber = false;
             if (test.ToLower().StartsWith("0x"))
             {
                 isNumber = true;

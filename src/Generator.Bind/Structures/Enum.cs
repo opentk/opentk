@@ -83,7 +83,7 @@ namespace Bind.Structures
             // If one is empty and the other not, prefer the empty one (empty == core)
             // Otherwise check for Arb and Ext. To reuse the logic for the
             // empty check, let's try to remove first Arb, then Ext from the strings.
-            int ret = PreferEmpty(ext1, ext2);
+            var ret = PreferEmpty(ext1, ext2);
             if (ret != 0)
             {
                 return ret;
@@ -124,7 +124,7 @@ namespace Bind.Structures
 
         public void AddRange(EnumCollection enums)
         {
-            foreach (Enum e in enums.Values)
+            foreach (var e in enums.Values)
             {
                 Add(e);
             }

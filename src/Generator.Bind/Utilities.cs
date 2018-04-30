@@ -119,7 +119,7 @@ namespace Bind
         public static void AddExtensions(IEnumerable<string> extensions)
         {
             // Merge the new extensions with the current list of extensions
-            int extensionCount = _extensionNames.Count;
+            var extensionCount = _extensionNames.Count;
             _extensionNames.AddRange(
                 extensions.Where(n => !_extensionNames.Contains(n)));
 
@@ -160,7 +160,7 @@ namespace Bind
 
             Console.WriteLine(folder);
             Console.WriteLine(file);
-            string path = Path.Combine(folder, file);
+            var path = Path.Combine(folder, file);
             Console.WriteLine(path);
             return new StreamReader(path);
         }
@@ -214,8 +214,8 @@ namespace Bind
             }
             else
             {
-                Enum e = enums[t.Name];
-                foreach (Constant c in t.ConstantCollection.Values)
+                var e = enums[t.Name];
+                foreach (var c in t.ConstantCollection.Values)
                 {
                     Merge(e, c);
                 }
@@ -260,7 +260,7 @@ namespace Bind
             var match = Extensions.Match(name);
             if (match.Success)
             {
-                string ext = match.Value;
+                var ext = match.Value;
                 if (!returnUnmodified)
                 {
                     if (ext.Length > 2)

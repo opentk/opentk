@@ -40,7 +40,7 @@ namespace Bind
         public DocProcessor(IBind generator)
         {
             Generator = generator ?? throw new ArgumentNullException();
-            foreach (string file in Directory.GetFiles(Settings.DocPath).Concat(
+            foreach (var file in Directory.GetFiles(Settings.DocPath).Concat(
                 Directory.GetFiles(Settings.FallbackDocPath)))
             {
                 var name = Path.GetFileName(file);
@@ -108,17 +108,17 @@ namespace Bind
             text = RemoveDoctype.Replace(text, string.Empty);
             text = RemoveXmlns.Replace(text, string.Empty);
 
-            Match m = RemoveMathml.Match(text);
+            var m = RemoveMathml.Match(text);
             while (m.Length > 0)
             {
-                string removed = text.Substring(m.Index, m.Length);
+                var removed = text.Substring(m.Index, m.Length);
                 text = text.Remove(m.Index, m.Length);
-                int equation = removed.IndexOf("eqn");
+                var equation = removed.IndexOf("eqn");
                 if (equation > 0)
                 {
                     // Find the start and end of the equation string
-                    int eqnStart = equation + 4;
-                    int eqnEnd = removed.IndexOf(":-->") - equation - 4;
+                    var eqnStart = equation + 4;
+                    var eqnEnd = removed.IndexOf(":-->") - equation - 4;
                     if (eqnEnd < 0)
                     {
                         // Note: a few docs from man4 delimit eqn end with ": -->"
@@ -130,7 +130,7 @@ namespace Bind
                         goto next;
                     }
 
-                    string eqnSubstring = removed.Substring(eqnStart, eqnEnd);
+                    var eqnSubstring = removed.Substring(eqnStart, eqnEnd);
                     text = text.Insert(m.Index, "<![CDATA[" + eqnSubstring + "]]>");
                 }
 

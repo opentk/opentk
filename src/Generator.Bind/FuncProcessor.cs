@@ -159,7 +159,7 @@ namespace Bind
             // Generator.Rewrite detects this and generates a static DllImport call
             // instead of a calli instruction for these functions.
 
-            int slot = -1;
+            var slot = -1;
             foreach (var list in delegates.Values)
             {
                 var func = list.First();
@@ -254,7 +254,7 @@ namespace Bind
             // Try to find out if it is an enum. If the type exists in the normal GLEnums list, use this.
             // Special case for Boolean which is there simply because C89 does not support bool types.
             // We don't really need that in C#
-            bool normal =
+            var normal =
                 enums.TryGetValue(type.CurrentType, out var @enum) ||
                 enums.TryGetValue(enumProcessor.TranslateEnumName(type.CurrentType), out @enum);
 
@@ -328,7 +328,7 @@ namespace Bind
             // Make sure that enum parameters follow enum overrides, i.e.
             // if enum ErrorCodes is overriden to ErrorCode, then parameters
             // of type ErrorCodes should also be overriden to ErrorCode.
-            XPathNavigator enumOverride = overrides.SelectSingleNode(
+            var enumOverride = overrides.SelectSingleNode(
                 EnumProcessor.GetOverridesPath(apiname, type.CurrentType));
             if (enumOverride != null)
             {
@@ -385,7 +385,7 @@ namespace Bind
         private static string GetTrimmedExtension(string name, string extension)
         {
             // Extensions are always uppercase
-            int index = name.LastIndexOf(extension.ToUpper());
+            var index = name.LastIndexOf(extension.ToUpper());
             if (index >= 0)
             {
                 name = name.Remove(index);
@@ -396,13 +396,13 @@ namespace Bind
         // Trims unecessary suffices from the specified OpenGL function name.
         private static string GetTrimmedName(Delegate d)
         {
-            string name = d.Name;
-            string extension = d.Extension;
-            string trimmedName = GetTrimmedExtension(name, extension);
+            var name = d.Name;
+            var extension = d.Extension;
+            var trimmedName = GetTrimmedExtension(name, extension);
 
             // Note: some endings should not be trimmed, for example: 'b' from Attrib.
             // Check the endingsNotToTrim regex for details.
-            Match m = EndingsNotToTrim.Match(trimmedName);
+            var m = EndingsNotToTrim.Match(trimmedName);
             if ((m.Index + m.Length) != trimmedName.Length)
             {
                 m = Endings.Match(trimmedName);
@@ -437,12 +437,12 @@ namespace Bind
         {
             // Try a few different extension variations that appear in the overrides xml file
             string[] extensions = { d.Extension, TranslateExtension(d.Extension), d.Extension.ToUpper() };
-            string trimmedName = GetTrimmedName(d);
+            var trimmedName = GetTrimmedName(d);
             XPathNodeIterator functionOverload = null;
 
             foreach (var ext in extensions)
             {
-                string extensionlessName = GetTrimmedExtension(d.Name, ext);
+                var extensionlessName = GetTrimmedExtension(d.Name, ext);
                 functionOverload = nav.Select(GetOverloadsPath(apiname, apiversion, d.Name, ext));
                 if (functionOverload.Count != 0)
                 {
@@ -466,12 +466,12 @@ namespace Bind
         {
             // Try a few different extension variations that appear in the overrides xml file
             string[] extensions = { d.Extension, TranslateExtension(d.Extension), d.Extension.ToUpper() };
-            string trimmedName = GetTrimmedName(d);
+            var trimmedName = GetTrimmedName(d);
             XPathNavigator functionOverride = null;
 
             foreach (var ext in extensions)
             {
-                string extensionlessName = GetTrimmedExtension(d.Name, ext);
+                var extensionlessName = GetTrimmedExtension(d.Name, ext);
                 functionOverride =
                     nav.SelectSingleNode(GetOverridesPath(apiname, apiversion, d.Name, ext)) ??
                     nav.SelectSingleNode(GetOverridesPath(apiname, apiversion, extensionlessName, ext)) ??
@@ -494,9 +494,9 @@ namespace Bind
         {
             if (functionOverride != null)
             {
-                for (int i = 0; i < d.Parameters.Count; i++)
+                for (var i = 0; i < d.Parameters.Count; i++)
                 {
-                    XPathNavigator paramOverride = functionOverride.SelectSingleNode(
+                    var paramOverride = functionOverride.SelectSingleNode(
                         $"param[@name='{d.Parameters[i].RawName}' or @index='{i}']");
                     if (paramOverride != null)
                     {
@@ -536,7 +536,7 @@ namespace Bind
         {
             if (functionOverride != null)
             {
-                XPathNavigator returnOverride = functionOverride.SelectSingleNode("returns");
+                var returnOverride = functionOverride.SelectSingleNode("returns");
                 if (returnOverride != null)
                 {
                     d.ReturnType.CurrentType = returnOverride.Value;
@@ -605,9 +605,9 @@ namespace Bind
 
         private Delegate GetCLSCompliantDelegate(Delegate d)
         {
-            Delegate f = new Delegate(d);
+            var f = new Delegate(d);
 
-            for (int i = 0; i < f.Parameters.Count; i++)
+            for (var i = 0; i < f.Parameters.Count; i++)
             {
                 f.Parameters[i].CurrentType = GetCLSCompliantType(f.Parameters[i]);
             }
@@ -624,7 +624,7 @@ namespace Bind
         {
             ApplyParameterReplacement(d, functionOverride);
 
-            for (int i = 0; i < d.Parameters.Count; i++)
+            for (var i = 0; i < d.Parameters.Count; i++)
             {
                 TranslateParameter(d.Parameters[i], functionOverride, nav, enumProcessor, enums, d.Category, apiname);
                 if (d.Parameters[i].CurrentType == "UInt16" && d.Name.Contains("LineStipple"))
@@ -634,7 +634,7 @@ namespace Bind
 
                 if (functionOverride != null)
                 {
-                    XPathNavigator paramOverride = functionOverride.SelectSingleNode(
+                    var paramOverride = functionOverride.SelectSingleNode(
                         $"param[@name='{d.Parameters[i].RawName}' or @index='{i}']");
                     if (paramOverride != null)
                     {
@@ -810,9 +810,9 @@ namespace Bind
                         f.ReturnType.CurrentType = GetCLSCompliantType(f.ReturnType);
 
                         // Create a cls-compliant wrapper for the parameters
-                        Function cls = new Function(f);
-                        bool modified = false;
-                        for (int i = 0; i < f.Parameters.Count; i++)
+                        var cls = new Function(f);
+                        var modified = false;
+                        for (var i = 0; i < f.Parameters.Count; i++)
                         {
                             cls.Parameters[i].CurrentType = GetCLSCompliantType(cls.Parameters[i]);
                             if (cls.Parameters[i].CurrentType != f.Parameters[i].CurrentType)
@@ -848,18 +848,18 @@ namespace Bind
             //        results.Add(w);
             //    }
 
-            foreach (List<Function> wrappers in collection.Values)
+            foreach (var wrappers in collection.Values)
             {
                 var mustRemove = new List<int>();
 
-                for (int i = 0; i < wrappers.Count; i++)
+                for (var i = 0; i < wrappers.Count; i++)
                 {
-                    for (int j = i + 1; j < wrappers.Count; j++)
+                    for (var j = i + 1; j < wrappers.Count; j++)
                     {
                         if (wrappers[i].TrimmedName == wrappers[j].TrimmedName && wrappers[i].Parameters.Count == wrappers[j].Parameters.Count)
                         {
-                            bool functionIIsProblematic = false;
-                            bool functionJIsProblematic = false;
+                            var functionIIsProblematic = false;
+                            var functionJIsProblematic = false;
 
                             int k;
                             for (k = 0; k < wrappers[i].Parameters.Count; k++)
@@ -897,7 +897,7 @@ namespace Bind
                     }
                 }
 
-                int count = 0;
+                var count = 0;
                 mustRemove.Sort();
                 foreach (var i in mustRemove)
                 {
@@ -944,7 +944,7 @@ namespace Bind
 
         private IEnumerable<Function> CreateNormalWrappers(Delegate d, EnumCollection enums)
         {
-            Function f = new Function(d);
+            var f = new Function(d);
             TrimName(f);
 
             WrapReturnType(f);
@@ -966,7 +966,7 @@ namespace Bind
 
                     var name = d.Name;
 
-                    bool isCandidate = true;
+                    var isCandidate = true;
                     isCandidate &=
                         name.StartsWith("Get") || name.StartsWith("Gen") ||
                         name.StartsWith("Delete") || name.StartsWith("New");
@@ -1005,7 +1005,7 @@ namespace Bind
                 // and add Int32 overloads for convenience.
                 {
                     Function f = null;
-                    int i = 0;
+                    var i = 0;
                     foreach (var p in d.Parameters)
                     {
                         if ((p.WrapperType & WrapperTypes.SizeParameter) != 0)
@@ -1086,7 +1086,7 @@ namespace Bind
             }
 
             var wrappers = new Dictionary<WrapperTypes, List<Function>>();
-            for (int i = 0; i < func.Parameters.Count; i++)
+            for (var i = 0; i < func.Parameters.Count; i++)
             {
                 var parameter = func.Parameters[i];
 
@@ -1174,7 +1174,7 @@ namespace Bind
             {
                 // Add generic 'ref T' wrapper
                 Function genericWrapper = null;
-                for (int i = 0; i < wrapper.Parameters.Count; i++)
+                for (var i = 0; i < wrapper.Parameters.Count; i++)
                 {
                     var parameter = wrapper.Parameters[i];
                     if ((parameter.WrapperType & WrapperTypes.GenericParameter) != 0)
@@ -1197,10 +1197,10 @@ namespace Bind
 
                 // Add the following wrappers:
                 // 'IntPtr', 'T[]', 'T[,]' and 'T[,,]'
-                for (int arity = 0; arity < 4; arity++)
+                for (var arity = 0; arity < 4; arity++)
                 {
                     genericWrapper = null;
-                    for (int i = 0; i < wrapper.Parameters.Count; i++)
+                    for (var i = 0; i < wrapper.Parameters.Count; i++)
                     {
                         var parameter = wrapper.Parameters[i];
                         if ((parameter.WrapperType & WrapperTypes.GenericParameter) != 0)
@@ -1240,7 +1240,7 @@ namespace Bind
             // Handle string parameters
             foreach (var wrapper in wrappers.Values.SelectMany(v => v))
             {
-                for (int i = 0; i < wrapper.Parameters.Count; i++)
+                for (var i = 0; i < wrapper.Parameters.Count; i++)
                 {
                     var p = wrapper.Parameters[i];
                     if ((p.WrapperType & WrapperTypes.StringParameter) != 0)

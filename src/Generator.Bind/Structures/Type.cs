@@ -50,7 +50,7 @@ namespace Bind.Structures
                     throw new ArgumentNullException();
                 }
 
-                int qualifierEnd = value.LastIndexOf('.');
+                var qualifierEnd = value.LastIndexOf('.');
                 if (qualifierEnd > -1)
                 {
                     CurrentQualifier = value.Substring(0, qualifierEnd);
@@ -132,7 +132,7 @@ namespace Bind.Structures
         {
             get
             {
-                bool compliant = true;
+                var compliant = true;
 
                 switch (CurrentType.ToLower())
                 {
@@ -214,7 +214,7 @@ namespace Bind.Structures
             // The rest of the comparisons help maintain a stable order (useful for source control).
             // Note that CompareTo is stricter than Equals and that there is code in
             // DelegateCollection.Add that depends on this fact.
-            int result = CurrentType.CompareTo(other.CurrentType);
+            var result = CurrentType.CompareTo(other.CurrentType);
             if (result == 0)
             {
                 result = Pointer.CompareTo(other.Pointer); // Must come after array/ref, see issue [#1098]
@@ -244,7 +244,7 @@ namespace Bind.Structures
 
         public bool Equals(Type other)
         {
-            bool result =
+            var result =
                 CurrentType.Equals(other.CurrentType) &&
                 Pointer.Equals(other.Pointer) &&
                 Reference.Equals(other.Reference) &&

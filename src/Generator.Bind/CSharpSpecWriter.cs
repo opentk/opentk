@@ -50,10 +50,10 @@ namespace Bind
 
         private static void ConsoleRewrite(string text)
         {
-            int left = Console.CursorLeft;
-            int top = Console.CursorTop;
+            var left = Console.CursorLeft;
+            var top = Console.CursorTop;
             Console.Write(text);
-            for (int i = text.Length; i < 80; i++)
+            for (var i = text.Length; i < 80; i++)
             {
                 Console.Write(" ");
             }
@@ -69,11 +69,11 @@ namespace Bind
                 Directory.CreateDirectory(Settings.OutputPath);
             }
 
-            string tempEnumsFile = Path.GetTempFileName();
-            string tempWrappersFile = Path.GetTempFileName();
+            var tempEnumsFile = Path.GetTempFileName();
+            var tempWrappersFile = Path.GetTempFileName();
 
             // Enums
-            using (BindStreamWriter sw = new BindStreamWriter(tempEnumsFile))
+            using (var sw = new BindStreamWriter(tempEnumsFile))
             {
                 WriteLicense(sw);
 
@@ -108,7 +108,7 @@ namespace Bind
             }
 
             // Wrappers
-            using (BindStreamWriter sw = new BindStreamWriter(tempWrappersFile))
+            using (var sw = new BindStreamWriter(tempWrappersFile))
             {
                 WriteLicense(sw);
                 sw.WriteLine("namespace {0}", Settings.OutputNamespace);
@@ -125,10 +125,10 @@ namespace Bind
                 sw.WriteLine("}");
             }
 
-            string outputEnums = Path.Combine(Settings.OutputPath, Settings.EnumsFile);
-            string outputDelegates = Path.Combine(Settings.OutputPath, Settings.DelegatesFile);
-            string outputCore = Path.Combine(Settings.OutputPath, Settings.ImportsFile);
-            string outputWrappers = Path.Combine(Settings.OutputPath, Settings.WrappersFile);
+            var outputEnums = Path.Combine(Settings.OutputPath, Settings.EnumsFile);
+            var outputDelegates = Path.Combine(Settings.OutputPath, Settings.DelegatesFile);
+            var outputCore = Path.Combine(Settings.OutputPath, Settings.ImportsFile);
+            var outputWrappers = Path.Combine(Settings.OutputPath, Settings.WrappersFile);
 
             if (File.Exists(outputEnums))
             {
@@ -195,7 +195,7 @@ namespace Bind
             sw.WriteLine("EntryPointNameOffsets = new int[]", delegates.Count);
             sw.WriteLine("{");
             sw.Indent();
-            int offset = 0;
+            var offset = 0;
             foreach (var d in delegates.Values.Select(d => d.First()))
             {
                 if (d.RequiresSlot(Settings))
@@ -212,8 +212,8 @@ namespace Bind
             sw.WriteLine("}");
             sw.WriteLine();
 
-            int currentWrapper = 0;
-            foreach (string key in wrappers.Keys)
+            var currentWrapper = 0;
+            foreach (var key in wrappers.Keys)
             {
                 if (((Settings.Compatibility & Settings.Legacy.NoSeparateFunctionNamespaces) == Settings.Legacy.None) && key != "Core")
                 {
@@ -231,7 +231,7 @@ namespace Bind
                 }
 
                 wrappers[key].Sort();
-                foreach (Function f in wrappers[key])
+                foreach (var f in wrappers[key])
                 {
                     WriteWrapper(sw, f, enums);
                     currentWrapper++;
@@ -247,7 +247,7 @@ namespace Bind
 
             // Emit native signatures.
             // These are required by the patcher.
-            int currentSignature = 0;
+            var currentSignature = 0;
             foreach (var d in wrappers.Values.SelectMany(e => e).Select(w => w.WrappedDelegate).Distinct())
             {
                 sw.WriteLine("[Slot({0})]", d.Slot);
@@ -300,8 +300,8 @@ namespace Bind
 
             try
             {
-                string warning = string.Empty;
-                string category = string.Empty;
+                var warning = string.Empty;
+                var category = string.Empty;
                 if (f.Deprecated)
                 {
                     warning = $"[deprecated: v{f.DeprecatedVersion}]";
@@ -341,11 +341,11 @@ namespace Bind
                 }
 
                 // Write function parameters
-                for (int i = 0; i < f.Parameters.Count; i++)
+                for (var i = 0; i < f.Parameters.Count; i++)
                 {
                     var param = f.Parameters[i];
 
-                    string length = string.Empty;
+                    var length = string.Empty;
                     if (!string.IsNullOrEmpty(param.ComputeSize))
                     {
                         length = $"[length: {param.ComputeSize}]";
@@ -409,7 +409,7 @@ namespace Bind
         public void WriteTypes(BindStreamWriter sw, Dictionary<string, string> csTypes)
         {
             sw.WriteLine();
-            foreach (string s in csTypes.Keys)
+            foreach (var s in csTypes.Keys)
             {
                 sw.WriteLine("using {0} = System.{1};", s, csTypes[s]);
             }
@@ -485,7 +485,7 @@ namespace Bind
                     }
                 }
 
-                foreach (Enum @enum in enums.Values)
+                foreach (var @enum in enums.Values)
                 {
                     if (!Settings.IsEnabled(Settings.Legacy.NoDocumentation))
                     {
@@ -531,7 +531,7 @@ namespace Bind
             else
             {
                 // Tao legacy mode: dump all enums as constants in GLClass.
-                foreach (Constant c in enums[Settings.CompleteEnumName].ConstantCollection.Values)
+                foreach (var c in enums[Settings.CompleteEnumName].ConstantCollection.Values)
                 {
                     // Print constants avoiding circular definitions
                     if (c.Name != c.Value)
@@ -579,7 +579,7 @@ namespace Bind
 
         private string GetDeclarationString(Delegate d, bool isDelegate)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             sb.Append(d.Unsafe ? "unsafe " : "");
             if (isDelegate)
@@ -597,11 +597,11 @@ namespace Bind
 
         private string GetDeclarationString(Enum e)
         {
-            StringBuilder sb = new StringBuilder();
-            List<Constant> constants = new List<Constant>(e.ConstantCollection.Values);
+            var sb = new StringBuilder();
+            var constants = new List<Constant>(e.ConstantCollection.Values);
             constants.Sort(delegate(Constant c1, Constant c2)
             {
-                int ret = string.Compare(c1.Value, c2.Value);
+                var ret = string.Compare(c1.Value, c2.Value);
                 if (ret == 0)
                 {
                     return string.Compare(c1.Name, c2.Name);
@@ -619,7 +619,7 @@ namespace Bind
             sb.AppendLine(e.Type);
             sb.AppendLine("{");
 
-            foreach (Constant c in constants)
+            foreach (var c in constants)
             {
                 var declaration = GetDeclarationString(c);
                 sb.Append("    ");
@@ -636,7 +636,7 @@ namespace Bind
 
         private string GetDeclarationString(Function f, Settings.Legacy settings)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             sb.Append(f.Unsafe ? "unsafe " : "");
             sb.Append(GetDeclarationString(f.ReturnType, settings));
@@ -650,7 +650,7 @@ namespace Bind
             if (f.Parameters.HasGenericParameters)
             {
                 sb.Append("<");
-                foreach (Parameter p in f.Parameters.Where(p  => p.Generic))
+                foreach (var p in f.Parameters.Where(p  => p.Generic))
                 {
                     sb.Append(p.CurrentType);
                     sb.Append(", ");
@@ -665,7 +665,7 @@ namespace Bind
             if (f.Parameters.HasGenericParameters)
             {
                 sb.AppendLine();
-                foreach (Parameter p in f.Parameters.Where(p => p.Generic))
+                foreach (var p in f.Parameters.Where(p => p.Generic))
                 {
                     sb.AppendLine($"    where {p.CurrentType} : struct");
                 }
@@ -676,9 +676,9 @@ namespace Bind
 
         private string GetDeclarationString(Parameter p, bool overrideUnsafeSetting, Settings.Legacy settings)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
-            List<string> attributes = new List<string>();
+            var attributes = new List<string>();
             if (p.Flow == FlowDirection.Out)
             {
                 attributes.Add("OutAttribute");
@@ -757,12 +757,12 @@ namespace Bind
 
         private string GetDeclarationString(ParameterCollection parameters, Settings.Legacy settings)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             sb.Append("(");
             if (parameters.Count > 0)
             {
-                foreach (Parameter p in parameters)
+                foreach (var p in parameters)
                 {
                     sb.Append(GetDeclarationString(p, false, settings));
                     sb.Append(", ");
