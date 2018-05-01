@@ -18,7 +18,7 @@ namespace OpenTK
         /// <summary>
         /// Gets a System.IntPtr that represents the handle of this ContextHandle.
         /// </summary>
-        public IntPtr Handle { get { return handle; } }
+        public IntPtr Handle => handle;
 
         /// <summary>A read-only field that represents a handle that has been initialized to zero.</summary>
         public static readonly ContextHandle Zero = new ContextHandle(IntPtr.Zero);

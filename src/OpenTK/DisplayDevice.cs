@@ -83,7 +83,7 @@ namespace OpenTK
         /// </summary>
         public Rectangle Bounds
         {
-            get { return bounds; }
+            get => bounds;
             internal set
             {
                 bounds = value;
@@ -93,16 +93,16 @@ namespace OpenTK
         }
 
         /// <summary>Gets a System.Int32 that contains the width of this display in pixels.</summary>
-        public int Width { get { return current_resolution.Width; } }
+        public int Width => current_resolution.Width;
 
         /// <summary>Gets a System.Int32 that contains the height of this display in pixels.</summary>
-        public int Height { get { return current_resolution.Height; } }
+        public int Height => current_resolution.Height;
 
         /// <summary>Gets a System.Int32 that contains number of bits per pixel of this display. Typical values include 8, 16, 24 and 32.</summary>
         public int BitsPerPixel
         {
-            get { return current_resolution.BitsPerPixel; }
-            internal set { current_resolution.BitsPerPixel = value; }
+            get => current_resolution.BitsPerPixel;
+            internal set => current_resolution.BitsPerPixel = value;
         }
 
         /// <summary>
@@ -110,14 +110,14 @@ namespace OpenTK
         /// </summary>
         public float RefreshRate
         {
-            get { return current_resolution.RefreshRate; }
-            internal set { current_resolution.RefreshRate = value; }
+            get => current_resolution.RefreshRate;
+            internal set => current_resolution.RefreshRate = value;
         }
 
         /// <summary>Gets a System.Boolean that indicates whether this Display is the primary Display in systems with multiple Displays.</summary>
         public bool IsPrimary
         {
-            get { return primary; }
+            get => primary;
             internal set
             {
                 if (value && primary_display != null && primary_display != this)
@@ -175,7 +175,7 @@ namespace OpenTK
         /// </summary>
         public IList<DisplayResolution> AvailableResolutions
         {
-            get { return available_resolutions_readonly; }
+            get => available_resolutions_readonly;
             internal set
             {
                 available_resolutions = (List<DisplayResolution>)value;
@@ -252,10 +252,7 @@ namespace OpenTK
         }
 
         /// <summary>Gets the default (primary) display of this system.</summary>
-        public static DisplayDevice Default
-        {
-            get { return implementation.GetDisplay(DisplayIndex.Primary); }
-        }
+        public static DisplayDevice Default => implementation.GetDisplay(DisplayIndex.Primary);
 
         /// <summary>
         /// Gets the <see cref="DisplayDevice"/> for the specified <see cref="DisplayIndex"/>.

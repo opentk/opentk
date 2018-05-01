@@ -48,10 +48,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets a value indicating the InputDeviceType of this InputDevice.
         /// </summary>
-        public InputDeviceType DeviceType
-        {
-            get { return InputDeviceType.Mouse; }
-        }
+        public InputDeviceType DeviceType => InputDeviceType.Mouse;
 
         /// <summary>
         /// Retrieves the combined hardware <see cref="OpenTK.Input.MouseState"/> for all specified mouse devices.
@@ -102,42 +99,30 @@ namespace OpenTK.Input
         /// </summary>
         public IntPtr DeviceID
         {
-            get { return id; }
-            internal set { id = value; }
+            get => id;
+            internal set => id = value;
         }
 
         /// <summary>
         /// Gets the absolute wheel position in integer units.
         /// To support high-precision mice, it is recommended to use <see cref="WheelPrecise"/> instead.
         /// </summary>
-        public int Wheel
-        {
-            get { return state.Wheel; }
-        }
+        public int Wheel => state.Wheel;
 
         /// <summary>
         /// Gets the absolute wheel position in floating-point units.
         /// </summary>
-        public float WheelPrecise
-        {
-            get { return state.WheelPrecise; }
-        }
+        public float WheelPrecise => state.WheelPrecise;
 
         /// <summary>
         /// Gets an integer representing the absolute x position of the pointer, in window pixel coordinates.
         /// </summary>
-        public int X
-        {
-            get { return state.X; }
-        }
+        public int X => state.X;
 
         /// <summary>
         /// Gets an integer representing the absolute y position of the pointer, in window pixel coordinates.
         /// </summary>
-        public int Y
-        {
-            get { return state.Y; }
-        }
+        public int Y => state.Y;
 
         /// <summary>
         /// Gets a System.Boolean indicating the state of the specified MouseButton.
@@ -146,14 +131,8 @@ namespace OpenTK.Input
         /// <returns>True if the MouseButton is pressed, false otherwise.</returns>
         public bool this[MouseButton button]
         {
-            get
-            {
-                return state[button];
-            }
-            internal set
-            {
-                state[button] = value;
-            }
+            get => state[button];
+            internal set => state[button] = value;
         }
 
         internal void HandleMouseDown(object sender, MouseButtonEventArgs e)

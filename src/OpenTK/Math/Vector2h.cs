@@ -183,7 +183,8 @@ namespace OpenTK
         /// Gets or sets an OpenTK.Vector2h with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector2h Yx { get { return new Vector2h(Y, X); } set { Y = value.X; X = value.Y; } }
+        public Vector2h Yx { get => new Vector2h(Y, X);
+            set { Y = value.X; X = value.Y; } }
 
         /// <summary>
         /// Returns this Half2 instance's contents as Vector2.

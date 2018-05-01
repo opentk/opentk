@@ -45,7 +45,7 @@ namespace OpenTK.Input
         /// <returns>True if key is pressed; false otherwise.</returns>
         public bool this[MouseButton button]
         {
-            get { return IsButtonDown(button); }
+            get => IsButtonDown(button);
             internal set
             {
                 if (value)
@@ -81,35 +81,26 @@ namespace OpenTK.Input
         /// Gets the absolute wheel position in integer units.
         /// To support high-precision mice, it is recommended to use <see cref="WheelPrecise"/> instead.
         /// </summary>
-        public int Wheel
-        {
-            get { return (int)Math.Round(scroll.Y, MidpointRounding.AwayFromZero); }
-        }
+        public int Wheel => (int)Math.Round(scroll.Y, MidpointRounding.AwayFromZero);
 
         /// <summary>
         /// Gets the absolute wheel position in floating-point units.
         /// </summary>
-        public float WheelPrecise
-        {
-            get { return scroll.Y; }
-        }
+        public float WheelPrecise => scroll.Y;
 
         /// <summary>
         /// Gets a <see cref="OpenTK.Input.MouseScroll"/> instance,
         /// representing the current state of the mouse scroll wheel.
         /// </summary>
-        public MouseScroll Scroll
-        {
-            get { return scroll; }
-        }
+        public MouseScroll Scroll => scroll;
 
         /// <summary>
         /// Gets an integer representing the absolute x position of the pointer, in window pixel coordinates.
         /// </summary>
         public int X
         {
-            get { return (int)Math.Round(position.X); }
-            internal set { position.X = value; }
+            get => (int)Math.Round(position.X);
+            internal set => position.X = value;
         }
 
         /// <summary>
@@ -117,76 +108,51 @@ namespace OpenTK.Input
         /// </summary>
         public int Y
         {
-            get { return (int)Math.Round(position.Y); }
-            internal set { position.Y = value; }
+            get => (int)Math.Round(position.Y);
+            internal set => position.Y = value;
         }
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the left mouse button is pressed.
         /// This property is intended for XNA compatibility.
         /// </summary>
-        public ButtonState LeftButton
-        {
-            get { return IsButtonDown(MouseButton.Left) ? ButtonState.Pressed : ButtonState.Released; }
-        }
+        public ButtonState LeftButton => IsButtonDown(MouseButton.Left) ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the middle mouse button is pressed.
         /// This property is intended for XNA compatibility.
         /// </summary>
-        public ButtonState MiddleButton
-        {
-            get { return IsButtonDown(MouseButton.Middle) ? ButtonState.Pressed : ButtonState.Released; }
-        }
+        public ButtonState MiddleButton => IsButtonDown(MouseButton.Middle) ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the right mouse button is pressed.
         /// This property is intended for XNA compatibility.
         /// </summary>
-        public ButtonState RightButton
-        {
-            get { return IsButtonDown(MouseButton.Right) ? ButtonState.Pressed : ButtonState.Released; }
-        }
+        public ButtonState RightButton => IsButtonDown(MouseButton.Right) ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the first extra mouse button is pressed.
         /// This property is intended for XNA compatibility.
         /// </summary>
-        public ButtonState XButton1
-        {
-            get { return IsButtonDown(MouseButton.Button1) ? ButtonState.Pressed : ButtonState.Released; }
-        }
+        public ButtonState XButton1 => IsButtonDown(MouseButton.Button1) ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the second extra mouse button is pressed.
         /// This property is intended for XNA compatibility.
         /// </summary>
-        public ButtonState XButton2
-        {
-            get { return IsButtonDown(MouseButton.Button2) ? ButtonState.Pressed : ButtonState.Released; }
-        }
+        public ButtonState XButton2 => IsButtonDown(MouseButton.Button2) ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
         /// Gets a value indicating whether any button is down.
         /// </summary>
         /// <value><c>true</c> if any button is down; otherwise, <c>false</c>.</value>
-        public bool IsAnyButtonDown
-        {
-            get
-            {
-                // If any bit is set then a button is down.
-                return buttons != 0;
-            }
-        }
+        public bool IsAnyButtonDown => buttons != 0;
 
         /// <summary>
         /// Gets the absolute wheel position in integer units. This property is intended for XNA compatibility.
         /// To support high-precision mice, it is recommended to use <see cref="WheelPrecise"/> instead.
         /// </summary>
-        public int ScrollWheelValue
-        {
-            get { return Wheel; }
-        }
+        public int ScrollWheelValue => Wheel;
 
         /// <summary>
         /// Gets a value indicating whether this instance is connected.
@@ -273,8 +239,8 @@ namespace OpenTK.Input
 
         internal Vector2 Position
         {
-            get { return position; }
-            set { position = value; }
+            get => position;
+            set => position = value;
         }
 
         internal bool ReadBit(int offset)

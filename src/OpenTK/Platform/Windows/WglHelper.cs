@@ -89,10 +89,7 @@ namespace OpenTK.Platform.Windows
             return false;
         }
 
-        private object SyncRoot
-        {
-            get { return sync; }
-        }
+        private object SyncRoot => sync;
 
         internal static IntPtr GetAddress(string function_string)
         {

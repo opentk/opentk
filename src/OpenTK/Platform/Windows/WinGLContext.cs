@@ -295,10 +295,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public override bool IsCurrent
-        {
-            get { return Wgl.GetCurrentContext() == Handle.Handle; }
-        }
+        public override bool IsCurrent => Wgl.GetCurrentContext() == Handle.Handle;
 
         public override int SwapInterval
         {

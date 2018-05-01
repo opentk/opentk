@@ -833,7 +833,7 @@ namespace OpenTK.Platform.MacOS
 
         public override Icon Icon
         {
-            get { return icon; }
+            get => icon;
             set
             {
                 if (value != null && value != icon)
@@ -870,30 +870,15 @@ namespace OpenTK.Platform.MacOS
 
         public override string Title
         {
-            get
-            {
-                return Cocoa.FromNSString(Cocoa.SendIntPtr(windowInfo.Handle, selTitle));
-            }
-            set
-            {
-                SetTitle(value, true);
-            }
+            get => Cocoa.FromNSString(Cocoa.SendIntPtr(windowInfo.Handle, selTitle));
+            set => SetTitle(value, true);
         }
 
-        public override bool Focused
-        {
-            get
-            {
-                return Cocoa.SendBool(windowInfo.Handle, selIsKeyWindow);
-            }
-        }
+        public override bool Focused => Cocoa.SendBool(windowInfo.Handle, selIsKeyWindow);
 
         public override bool Visible
         {
-            get
-            {
-                return Cocoa.SendBool(windowInfo.Handle, selIsVisible);
-            }
+            get => Cocoa.SendBool(windowInfo.Handle, selIsVisible);
             set
             {
                 Cocoa.SendVoid(windowInfo.Handle, selSetIsVisible, value);
@@ -901,21 +886,9 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public override bool Exists
-        {
-            get
-            {
-                return exists;
-            }
-        }
+        public override bool Exists => exists;
 
-        public override IWindowInfo WindowInfo
-        {
-            get
-            {
-                return windowInfo;
-            }
-        }
+        public override IWindowInfo WindowInfo => windowInfo;
 
         private void RestoreWindowState()
         {
@@ -970,10 +943,7 @@ namespace OpenTK.Platform.MacOS
 
         public override WindowState WindowState
         {
-            get
-            {
-                return windowState;
-            }
+            get => windowState;
             set
             {
                 var oldState = windowState;
@@ -1024,10 +994,7 @@ namespace OpenTK.Platform.MacOS
 
         public override WindowBorder WindowBorder
         {
-            get
-            {
-                return windowBorder;
-            }
+            get => windowBorder;
             set
             {
                 // Do not allow border changes during fullscreen mode.
@@ -1076,28 +1043,19 @@ namespace OpenTK.Platform.MacOS
                     (int)r.Width,
                     (int)r.Height);
             }
-            set
-            {
-                Cocoa.SendVoid(windowInfo.Handle, selSetFrame,
-                    new RectangleF(
-                        value.X,
-                        GetCurrentScreenFrame().Height - value.Y - value.Height,
-                        value.Width,
-                        value.Height),
-                    true);
-            }
+            set => Cocoa.SendVoid(windowInfo.Handle, selSetFrame,
+                new RectangleF(
+                    value.X,
+                    GetCurrentScreenFrame().Height - value.Y - value.Height,
+                    value.Width,
+                    value.Height),
+                true);
         }
 
         private RectangleF InternalBounds
         {
-            get
-            {
-                return Cocoa.SendRect(windowInfo.Handle, selFrame);
-            }
-            set
-            {
-                Cocoa.SendVoid(windowInfo.Handle, selSetFrame, value, true);
-            }
+            get => Cocoa.SendRect(windowInfo.Handle, selFrame);
+            set => Cocoa.SendVoid(windowInfo.Handle, selSetFrame, value, true);
         }
 
         public override Size ClientSize
@@ -1118,10 +1076,7 @@ namespace OpenTK.Platform.MacOS
 
         public override MouseCursor Cursor
         {
-            get
-            {
-                return selectedCursor;
-            }
+            get => selectedCursor;
             set
             {
                 selectedCursor = value;
@@ -1236,10 +1191,7 @@ namespace OpenTK.Platform.MacOS
 
         public override bool CursorVisible
         {
-            get
-            {
-                return cursorVisible;
-            }
+            get => cursorVisible;
             set
             {
                 if (value != cursorVisible)

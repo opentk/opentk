@@ -205,30 +205,15 @@ namespace OpenTK.Platform.Linux
             Gbm.BOSetUserData(buffer, data, destroyFB);
         }
 
-        public Device Device
-        {
-            get { return Gbm.BOGetDevice(buffer); }
-        }
+        public Device Device => Gbm.BOGetDevice(buffer);
 
-        public int Handle
-        {
-            get { return Gbm.BOGetHandle(buffer).ToInt32(); }
-        }
+        public int Handle => Gbm.BOGetHandle(buffer).ToInt32();
 
-        public int Width
-        {
-            get { return Gbm.BOGetWidth(buffer); }
-        }
+        public int Width => Gbm.BOGetWidth(buffer);
 
-        public int Height
-        {
-            get { return Gbm.BOGetHeight(buffer); }
-        }
+        public int Height => Gbm.BOGetHeight(buffer);
 
-        public int Stride
-        {
-            get { return Gbm.BOGetStride(buffer); }
-        }
+        public int Stride => Gbm.BOGetStride(buffer);
 
         public void Dispose()
         {

@@ -40,31 +40,13 @@ namespace OpenTK.Platform.X11
             Debug.WriteLine("Using XI2 input driver.");
         }
 
-        public IMouseDriver2 MouseDriver
-        {
-            get
-            {
-                return mouse_keyboard;
-            }
-        }
+        public IMouseDriver2 MouseDriver => mouse_keyboard;
 
-        public IKeyboardDriver2 KeyboardDriver
-        {
-            get
-            {
-                return mouse_keyboard;
-            }
-        }
+        public IKeyboardDriver2 KeyboardDriver => mouse_keyboard;
 
         public IGamePadDriver GamePadDriver { get; } = new MappedGamePadDriver();
 
-        public IJoystickDriver2 JoystickDriver
-        {
-            get
-            {
-                return joystick;
-            }
-        }
+        public IJoystickDriver2 JoystickDriver => joystick;
 
         public void Dispose()
         {

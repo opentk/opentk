@@ -1215,10 +1215,7 @@ namespace OpenTK.Platform.X11
 
         public override Rectangle Bounds
         {
-            get
-            {
-                return bounds;
-            }
+            get => bounds;
             set
             {
                 bool is_location_changed = bounds.Location != value.Location;
@@ -1260,10 +1257,7 @@ namespace OpenTK.Platform.X11
 
         public override Size ClientSize
         {
-            get
-            {
-                return client_size;
-            }
+            get => client_size;
             set
             {
                 bool is_size_changed = client_size != value;
@@ -1291,10 +1285,7 @@ namespace OpenTK.Platform.X11
 
         public override Icon Icon
         {
-            get
-            {
-                return icon;
-            }
+            get => icon;
             set
             {
                 if (value == icon)
@@ -1365,13 +1356,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        public override bool Focused
-        {
-            get
-            {
-                return has_focus;
-            }
-        }
+        public override bool Focused => has_focus;
 
         public override OpenTK.WindowState WindowState
         {
@@ -1631,10 +1616,7 @@ namespace OpenTK.Platform.X11
 
         public override MouseCursor Cursor
         {
-            get
-            {
-                return cursor;
-            }
+            get => cursor;
             set
             {
                 unsafe
@@ -1683,10 +1665,7 @@ namespace OpenTK.Platform.X11
 
         public override bool CursorVisible
         {
-            get
-            {
-                return cursor_visible;
-            }
+            get => cursor_visible;
             set
             {
                 if (value == cursor_visible)
@@ -1732,23 +1711,14 @@ namespace OpenTK.Platform.X11
         /// <summary>
         /// Returns true if a render window/context exists.
         /// </summary>
-        public override bool Exists
-        {
-            get { return exists; }
-        }
+        public override bool Exists => exists;
 
-        public bool IsIdle
-        {
-            get { throw new Exception("The method or operation is not implemented."); }
-        }
+        public bool IsIdle => throw new Exception("The method or operation is not implemented.");
 
         /// <summary>
         /// Gets the current window handle.
         /// </summary>
-        public IntPtr Handle
-        {
-            get { return window.Handle; }
-        }
+        public IntPtr Handle => window.Handle;
 
         /// <summary>
         /// TODO: Use atoms for this property.
@@ -1786,10 +1756,7 @@ namespace OpenTK.Platform.X11
 
         public override bool Visible
         {
-            get
-            {
-                return visible;
-            }
+            get => visible;
             set
             {
                 if (value && !visible)
@@ -1813,10 +1780,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        public override IWindowInfo WindowInfo
-        {
-            get { return window; }
-        }
+        public override IWindowInfo WindowInfo => window;
 
         public override void Close() { Exit(); }
 

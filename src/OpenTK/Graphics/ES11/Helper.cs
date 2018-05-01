@@ -33,11 +33,7 @@ namespace OpenTK.Graphics.ES11
         /// <summary>
         /// Returns a synchronization token unique for the GL class.
         /// </summary>
-        protected override object SyncRoot
-        {
-            get { return sync_root; }
-        }
-
+        protected override object SyncRoot => sync_root;
     }
 
     /// <summary>

@@ -279,21 +279,9 @@ namespace OpenTK
             Cocoa.SendVoid(Handle.Handle, selMakeCurrentContext);
         }
 
-        public override bool IsCurrent
-        {
-            get
-            {
-                return Handle.Handle == CurrentContext;
-            }
-        }
+        public override bool IsCurrent => Handle.Handle == CurrentContext;
 
-        public static IntPtr CurrentContext
-        {
-            get
-            {
-                return Cocoa.SendIntPtr(NSOpenGLContext, selCurrentContext);
-            }
-        }
+        public static IntPtr CurrentContext => Cocoa.SendIntPtr(NSOpenGLContext, selCurrentContext);
 
         private unsafe void SetContextValue (int val, NSOpenGLContextParameter par)
         {
@@ -311,10 +299,7 @@ namespace OpenTK
 
         public override int SwapInterval
         {
-            get
-            {
-                return GetContextValue(NSOpenGLContextParameter.SwapInterval);
-            }
+            get => GetContextValue(NSOpenGLContextParameter.SwapInterval);
             set
             {
                 if (value < 0)

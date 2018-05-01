@@ -120,10 +120,7 @@ namespace OpenTK
             return context;
         }
 
-        public bool IsIdle
-        {
-            get { return XPending(display) == 0; }
-        }
+        public bool IsIdle => XPending(display) == 0;
 
         public IWindowInfo WindowInfo { get; }
 

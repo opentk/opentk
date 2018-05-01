@@ -51,64 +51,36 @@ namespace OpenTK.Input
         /// whether this hat lies in the top hemicircle.
         /// </summary>
         /// <value><c>true</c> if this hat lies in the top hemicircle; otherwise, <c>false</c>.</value>
-        public bool IsUp
-        {
-            get
-            {
-                return
-                    Position == HatPosition.Up ||
-                    Position == HatPosition.UpLeft ||
-                    Position == HatPosition.UpRight;
-            }
-        }
+        public bool IsUp => Position == HatPosition.Up ||
+                            Position == HatPosition.UpLeft ||
+                            Position == HatPosition.UpRight;
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating
         /// whether this hat lies in the bottom hemicircle.
         /// </summary>
         /// <value><c>true</c> if this hat lies in the bottom hemicircle; otherwise, <c>false</c>.</value>
-        public bool IsDown
-        {
-            get
-            {
-                return
-                    Position == HatPosition.Down ||
-                    Position == HatPosition.DownLeft ||
-                    Position == HatPosition.DownRight;
-            }
-        }
+        public bool IsDown => Position == HatPosition.Down ||
+                              Position == HatPosition.DownLeft ||
+                              Position == HatPosition.DownRight;
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating
         /// whether this hat lies in the left hemicircle.
         /// </summary>
         /// <value><c>true</c> if this hat lies in the left hemicircle; otherwise, <c>false</c>.</value>
-        public bool IsLeft
-        {
-            get
-            {
-                return
-                    Position == HatPosition.Left ||
-                    Position == HatPosition.UpLeft ||
-                    Position == HatPosition.DownLeft;
-            }
-        }
+        public bool IsLeft => Position == HatPosition.Left ||
+                              Position == HatPosition.UpLeft ||
+                              Position == HatPosition.DownLeft;
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating
         /// whether this hat lies in the right hemicircle.
         /// </summary>
         /// <value><c>true</c> if this hat lies in the right hemicircle; otherwise, <c>false</c>.</value>
-        public bool IsRight
-        {
-            get
-            {
-                return
-                    Position == HatPosition.Right ||
-                    Position == HatPosition.UpRight ||
-                    Position == HatPosition.DownRight;
-            }
-        }
+        public bool IsRight => Position == HatPosition.Right ||
+                               Position == HatPosition.UpRight ||
+                               Position == HatPosition.DownRight;
 
         /// <summary>
         /// Returns a <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.JoystickHatState"/>.

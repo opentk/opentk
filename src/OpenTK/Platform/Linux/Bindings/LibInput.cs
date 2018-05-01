@@ -215,12 +215,12 @@ namespace OpenTK.Platform.Linux
     [StructLayout(LayoutKind.Sequential)]
     internal struct KeyboardEvent
     {
-        public IntPtr BaseEvent { get { return GetBaseEvent(Event); } }
+        public IntPtr BaseEvent => GetBaseEvent(Event);
         public IntPtr Event { get; }
-        public uint Time { get { return GetTime(Event); } }
-        public uint Key { get { return GetKey(Event); } }
-        public uint KeyCount { get { return GetSeatKeyCount(Event); } }
-        public KeyState KeyState { get { return GetKeyState(Event); } }
+        public uint Time => GetTime(Event);
+        public uint Key => GetKey(Event);
+        public uint KeyCount => GetSeatKeyCount(Event);
+        public KeyState KeyState => GetKeyState(Event);
 
         [DllImport(LibInput.lib, EntryPoint = "libinput_event_keyboard_get_time", CallingConvention = CallingConvention.Cdecl)]
         private static extern uint GetTime(IntPtr @event);
@@ -242,18 +242,18 @@ namespace OpenTK.Platform.Linux
     [StructLayout(LayoutKind.Sequential)]
     internal struct PointerEvent
     {
-        public IntPtr BaseEvent { get { return GetBaseEvent(Event); } }
+        public IntPtr BaseEvent => GetBaseEvent(Event);
         public IntPtr Event { get; }
-        public uint Time { get { return GetTime(Event); } }
-        public EvdevButton Button { get { return (EvdevButton)GetButton(Event); } }
-        public uint ButtonCount { get { return GetButtonCount(Event); } }
-        public ButtonState ButtonState { get { return GetButtonState(Event); } }
+        public uint Time => GetTime(Event);
+        public EvdevButton Button => (EvdevButton)GetButton(Event);
+        public uint ButtonCount => GetButtonCount(Event);
+        public ButtonState ButtonState => GetButtonState(Event);
         public bool HasAxis(PointerAxis axis) { return HasAxis(Event, axis) != 0; }
         public double AxisValue(PointerAxis axis) { return GetAxisValue(Event, axis); }
-        public double DeltaX { get { return GetDX(Event); } }
-        public double DeltaY { get { return GetDY(Event); } }
-        public double X { get { return GetAbsX(Event); } }
-        public double Y { get { return GetAbsY(Event); } }
+        public double DeltaX => GetDX(Event);
+        public double DeltaY => GetDY(Event);
+        public double X => GetAbsX(Event);
+        public double Y => GetAbsY(Event);
         public double TransformedX(int width) { return GetAbsXTransformed(Event, width); }
         public double TransformedY(int height) { return GetAbsYTransformed(Event, height); }
 

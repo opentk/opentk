@@ -48,18 +48,12 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets the offset of the left trigger button, between 0.0 and 1.0.
         /// </summary>
-        public float Left
-        {
-            get { return left * ConversionFactor; }
-        }
+        public float Left => left * ConversionFactor;
 
         /// <summary>
         /// Gets the offset of the left trigger button, between 0.0 and 1.0.
         /// </summary>
-        public float Right
-        {
-            get { return right * ConversionFactor; }
-        }
+        public float Right => right * ConversionFactor;
 
         /// <param name="left">A <see cref="GamePadTriggers"/> instance to test for equality.</param>
         /// <param name="right">A <see cref="GamePadTriggers"/> instance to test for equality.</param>

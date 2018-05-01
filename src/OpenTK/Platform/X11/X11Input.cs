@@ -43,31 +43,13 @@ namespace OpenTK.Platform.X11
             Debug.WriteLine("[Warning] Copy OpenTK.dll.config to use the XI2 input driver instead.");
         }
 
-        public IMouseDriver2 MouseDriver
-        {
-            get
-            {
-                return mouse;
-            }
-        }
+        public IMouseDriver2 MouseDriver => mouse;
 
-        public IKeyboardDriver2 KeyboardDriver
-        {
-            get
-            {
-                return keyboard;
-            }
-        }
+        public IKeyboardDriver2 KeyboardDriver => keyboard;
 
         public IGamePadDriver GamePadDriver { get; } = new MappedGamePadDriver();
 
-        public IJoystickDriver2 JoystickDriver
-        {
-            get
-            {
-                return joystick;
-            }
-        }
+        public IJoystickDriver2 JoystickDriver => joystick;
 
         public void Dispose()
         {

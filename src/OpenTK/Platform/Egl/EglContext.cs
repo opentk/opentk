@@ -36,7 +36,9 @@ namespace OpenTK.Platform.Egl
 
         internal GraphicsContextFlags GraphicsContextFlags { get; set; }
 
-        internal IntPtr HandleAsEGLContext { get { return Handle.Handle; } set { Handle = new ContextHandle(value); } }
+        internal IntPtr HandleAsEGLContext { get => Handle.Handle;
+            set => Handle = new ContextHandle(value);
+        }
         private int swap_interval = 1; // Default interval is defined as 1 in EGL.
 
         public EglContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
@@ -172,19 +174,11 @@ namespace OpenTK.Platform.Egl
             }
         }
 
-        public override bool IsCurrent
-        {
-            get { return Egl.GetCurrentContext() == HandleAsEGLContext; }
-        }
+        public override bool IsCurrent => Egl.GetCurrentContext() == HandleAsEGLContext;
 
         public override int SwapInterval
         {
-            get
-            {
-                // Egl.GetSwapInterval does not exist, so store and return the current interval.
-                // The default interval is defined as 1 (true).
-                return swap_interval;
-            }
+            get => swap_interval;
             set
             {
                 if (value < 0)

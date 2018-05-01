@@ -61,37 +61,25 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets the scancode which generated this event.
         /// </summary>
-        public uint ScanCode
-        {
-            get { return (uint)Key; }
-        }
+        public uint ScanCode => (uint)Key;
 
         /// <summary>
         /// Gets a value indicating whether <see cref="OpenTK.Input.KeyModifiers.Alt"/> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
-        public bool Alt
-        {
-            get { return Keyboard[Key.AltLeft] || Keyboard[Key.AltRight]; }
-        }
+        public bool Alt => Keyboard[Key.AltLeft] || Keyboard[Key.AltRight];
 
         /// <summary>
         /// Gets a value indicating whether <see cref="OpenTK.Input.KeyModifiers.Control"/> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
-        public bool Control
-        {
-            get { return Keyboard[Key.ControlLeft] || Keyboard[Key.ControlRight]; }
-        }
+        public bool Control => Keyboard[Key.ControlLeft] || Keyboard[Key.ControlRight];
 
         /// <summary>
         /// Gets a value indicating whether <see cref="OpenTK.Input.KeyModifiers.Shift"/> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
-        public bool Shift
-        {
-            get { return Keyboard[Key.ShiftLeft] || Keyboard[Key.ShiftRight]; }
-        }
+        public bool Shift => Keyboard[Key.ShiftLeft] || Keyboard[Key.ShiftRight];
 
         /// <summary>
         /// Gets a bitwise combination representing the <see cref="OpenTK.Input.KeyModifiers"/>

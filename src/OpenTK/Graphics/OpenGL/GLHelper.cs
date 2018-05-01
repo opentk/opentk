@@ -82,10 +82,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary>
         /// Returns a synchronization token unique for the GL class.
         /// </summary>
-        protected override object SyncRoot
-        {
-            get { return sync_root; }
-        }
+        protected override object SyncRoot => sync_root;
 
         // Note: Mono 1.9.1 truncates StringBuilder results (for 'out string' parameters).
         // We work around this issue by doubling the StringBuilder capacity.

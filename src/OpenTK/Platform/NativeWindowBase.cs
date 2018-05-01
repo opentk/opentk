@@ -357,34 +357,19 @@ namespace OpenTK.Platform
 
         public virtual Point Location
         {
-            get
-            {
-                return Bounds.Location;
-            }
-            set
-            {
-                Bounds = new Rectangle(value, Bounds.Size);
-            }
+            get => Bounds.Location;
+            set => Bounds = new Rectangle(value, Bounds.Size);
         }
 
         public virtual Size Size
         {
-            get
-            {
-                return Bounds.Size;
-            }
-            set
-            {
-                Bounds = new Rectangle(Bounds.Location, value);
-            }
+            get => Bounds.Size;
+            set => Bounds = new Rectangle(Bounds.Location, value);
         }
 
         public int X
         {
-            get
-            {
-                return Bounds.X;
-            }
+            get => Bounds.X;
             set
             {
                 Rectangle old = Bounds;
@@ -394,10 +379,7 @@ namespace OpenTK.Platform
 
         public int Y
         {
-            get
-            {
-                return Bounds.Y;
-            }
+            get => Bounds.Y;
             set
             {
                 Rectangle old = Bounds;
@@ -407,38 +389,20 @@ namespace OpenTK.Platform
 
         public int Width
         {
-            get
-            {
-                return ClientSize.Width;
-            }
-            set
-            {
-                ClientSize = new Size(value, ClientSize.Height);
-            }
+            get => ClientSize.Width;
+            set => ClientSize = new Size(value, ClientSize.Height);
         }
 
         public int Height
         {
-            get
-            {
-                return ClientSize.Height;
-            }
-            set
-            {
-                ClientSize = new Size(ClientSize.Width, value);
-            }
+            get => ClientSize.Height;
+            set => ClientSize = new Size(ClientSize.Width, value);
         }
 
         public Rectangle ClientRectangle
         {
-            get
-            {
-                return new Rectangle(Point.Empty, ClientSize);
-            }
-            set
-            {
-                ClientSize = value.Size;
-            }
+            get => new Rectangle(Point.Empty, ClientSize);
+            set => ClientSize = value.Size;
         }
 
         public abstract Size ClientSize { get; set; }

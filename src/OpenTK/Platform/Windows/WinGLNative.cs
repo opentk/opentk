@@ -1038,40 +1038,25 @@ namespace OpenTK.Platform.Windows
 
         public override Rectangle Bounds
         {
-            get { return bounds; }
-            set
-            {
-                // Note: the bounds variable is updated when the resize/move message arrives.
-                Functions.SetWindowPos(window.Handle, IntPtr.Zero, value.X, value.Y, value.Width, value.Height, 0);
-            }
+            get => bounds;
+            set => Functions.SetWindowPos(window.Handle, IntPtr.Zero, value.X, value.Y, value.Width, value.Height, 0);
         }
 
         public override Point Location
         {
-            get { return Bounds.Location; }
-            set
-            {
-                // Note: the bounds variable is updated when the resize/move message arrives.
-                Functions.SetWindowPos(window.Handle, IntPtr.Zero, value.X, value.Y, 0, 0, SetWindowPosFlags.NOSIZE);
-            }
+            get => Bounds.Location;
+            set => Functions.SetWindowPos(window.Handle, IntPtr.Zero, value.X, value.Y, 0, 0, SetWindowPosFlags.NOSIZE);
         }
 
         public override Size Size
         {
-            get { return Bounds.Size; }
-            set
-            {
-                // Note: the bounds variable is updated when the resize/move message arrives.
-                Functions.SetWindowPos(window.Handle, IntPtr.Zero, 0, 0, value.Width, value.Height, SetWindowPosFlags.NOMOVE);
-            }
+            get => Bounds.Size;
+            set => Functions.SetWindowPos(window.Handle, IntPtr.Zero, 0, 0, value.Width, value.Height, SetWindowPosFlags.NOMOVE);
         }
 
         public override Size ClientSize
         {
-            get
-            {
-                return client_rectangle.Size;
-            }
+            get => client_rectangle.Size;
             set
             {
                 WindowStyle style = (WindowStyle)Functions.GetWindowLong(window.Handle, GetWindowLongOffsets.STYLE);
@@ -1083,10 +1068,7 @@ namespace OpenTK.Platform.Windows
 
         public override Icon Icon
         {
-            get
-            {
-                return icon;
-            }
+            get => icon;
             set
             {
                 if (value != icon)
@@ -1102,10 +1084,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public override bool Focused
-        {
-            get { return focused; }
-        }
+        public override bool Focused => focused;
 
         private StringBuilder sb_title = new StringBuilder(256);
         public override string Title
@@ -1134,10 +1113,7 @@ namespace OpenTK.Platform.Windows
 
         public override bool Visible
         {
-            get
-            {
-                return Functions.IsWindowVisible(window.Handle);
-            }
+            get => Functions.IsWindowVisible(window.Handle);
             set
             {
                 if (value != Visible)
@@ -1161,14 +1137,11 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public override bool Exists { get { return exists; } }
+        public override bool Exists => exists;
 
         public override MouseCursor Cursor
         {
-            get
-            {
-                return cursor;
-            }
+            get => cursor;
             set
             {
                 if (value == null)
@@ -1260,10 +1233,7 @@ namespace OpenTK.Platform.Windows
 
         public override bool CursorVisible
         {
-            get
-            {
-                return cursor_visible_count >= 0;
-            }
+            get => cursor_visible_count >= 0;
             set
             {
                 if (value == CursorVisible)
@@ -1301,10 +1271,7 @@ namespace OpenTK.Platform.Windows
 
         public override WindowState WindowState
         {
-            get
-            {
-                return windowState;
-            }
+            get => windowState;
             set
             {
                 if (WindowState == value)
@@ -1398,10 +1365,7 @@ namespace OpenTK.Platform.Windows
 
         public override WindowBorder WindowBorder
         {
-            get
-            {
-                return windowBorder;
-            }
+            get => windowBorder;
             set
             {
                 // Do not allow border changes during fullscreen mode.
@@ -1527,10 +1491,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public override IWindowInfo WindowInfo
-        {
-            get { return window; }
-        }
+        public override IWindowInfo WindowInfo => window;
 
         protected override void Dispose(bool calledManually)
         {

@@ -36,20 +36,9 @@ namespace OpenTK.Audio
         private static readonly List<string> available_playback_devices = new List<string>();
         private static readonly List<string> available_recording_devices = new List<string>();
 
-        internal static IList<string> AvailablePlaybackDevices
-        {
-            get
-            {
-                return available_playback_devices.AsReadOnly();
-            }
-        }
-        internal static IList<string> AvailableRecordingDevices
-        {
-            get
-            {
-                return available_recording_devices.AsReadOnly();
-            }
-        }
+        internal static IList<string> AvailablePlaybackDevices => available_playback_devices.AsReadOnly();
+
+        internal static IList<string> AvailableRecordingDevices => available_recording_devices.AsReadOnly();
 
         internal static string DefaultPlaybackDevice { get; }
 

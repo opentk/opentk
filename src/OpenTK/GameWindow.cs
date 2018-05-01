@@ -797,10 +797,7 @@ namespace OpenTK
         /// </summary>
         public override WindowState WindowState
         {
-            get
-            {
-                return base.WindowState;
-            }
+            get => base.WindowState;
             set
             {
                 base.WindowState = value;

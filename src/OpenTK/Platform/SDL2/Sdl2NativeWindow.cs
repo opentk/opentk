@@ -476,10 +476,7 @@ namespace OpenTK.Platform.SDL2
 
         public override MouseCursor Cursor
         {
-            get
-            {
-                return cursor;
-            }
+            get => cursor;
             set
             {
                 lock (sync)
@@ -610,10 +607,7 @@ namespace OpenTK.Platform.SDL2
 
         public override Icon Icon
         {
-            get
-            {
-                return icon;
-            }
+            get => icon;
             set
             {
                 lock (sync)
@@ -683,20 +677,11 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public override bool Focused
-        {
-            get
-            {
-                return is_focused;
-            }
-        }
+        public override bool Focused => is_focused;
 
         public override bool Visible
         {
-            get
-            {
-                return is_visible;
-            }
+            get => is_visible;
             set
             {
                 lock (sync)
@@ -716,28 +701,13 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        public override bool Exists
-        {
-            get
-            {
-                return exists;
-            }
-        }
+        public override bool Exists => exists;
 
-        public override IWindowInfo WindowInfo
-        {
-            get
-            {
-                return window;
-            }
-        }
+        public override IWindowInfo WindowInfo => window;
 
         public override WindowState WindowState
         {
-            get
-            {
-                return window_state;
-            }
+            get => window_state;
             set
             {
                 lock (sync)
@@ -794,10 +764,7 @@ namespace OpenTK.Platform.SDL2
 
         public override WindowBorder WindowBorder
         {
-            get
-            {
-                return window_border;
-            }
+            get => window_border;
             set
             {
                 if (WindowBorder != value)
@@ -836,10 +803,7 @@ namespace OpenTK.Platform.SDL2
 
         public override Rectangle Bounds
         {
-            get
-            {
-                return new Rectangle(Location, Size);
-            }
+            get => new Rectangle(Location, Size);
             set
             {
                 Size = value.Size;
@@ -927,10 +891,7 @@ namespace OpenTK.Platform.SDL2
 
         public override bool CursorVisible
         {
-            get
-            {
-                return is_cursor_visible;
-            }
+            get => is_cursor_visible;
             set
             {
                 lock (sync)

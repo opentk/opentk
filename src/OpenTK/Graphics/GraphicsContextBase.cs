@@ -47,7 +47,7 @@ namespace OpenTK.Graphics
 
         public bool VSync
         {
-            get { return SwapInterval > 0; }
+            get => SwapInterval > 0;
             set
             {
                 if (value && SwapInterval <= 0)
@@ -65,19 +65,19 @@ namespace OpenTK.Graphics
 
         public virtual void Update(IWindowInfo window) { }
 
-        public GraphicsMode GraphicsMode { get { return Mode; } }
+        public GraphicsMode GraphicsMode => Mode;
 
         public bool ErrorChecking
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
         }
 
-        public IGraphicsContext Implementation { get { return this; } }
+        public IGraphicsContext Implementation => this;
 
         public abstract void LoadAll();
 
-        public ContextHandle Context { get { return Handle; } }
+        public ContextHandle Context => Handle;
 
         // This function is no longer used.
         // The GraphicsContext facade will

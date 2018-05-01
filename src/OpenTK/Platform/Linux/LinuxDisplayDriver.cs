@@ -42,9 +42,10 @@ namespace OpenTK.Platform.Linux
         public IntPtr Crtc;
         public IntPtr Encoder;
 
-        unsafe public ModeConnector* pConnector { get { return (ModeConnector*)Connector; } }
-        unsafe public ModeCrtc* pCrtc { get { return (ModeCrtc*)Crtc; } }
-        unsafe public ModeEncoder* pEncoder { get { return (ModeEncoder*)Encoder; } }
+        unsafe public ModeConnector* pConnector => (ModeConnector*)Connector;
+        unsafe public ModeCrtc* pCrtc => (ModeCrtc*)Crtc;
+
+        unsafe public ModeEncoder* pEncoder => (ModeEncoder*)Encoder;
         /*
         public ModeInfo Mode
         {

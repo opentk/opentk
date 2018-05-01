@@ -450,7 +450,7 @@ namespace OpenTK.Audio
 
                 return is_processing;
             }
-            private set { is_processing = value; }
+            private set => is_processing = value;
         }
 
         /// <summary>
@@ -469,7 +469,7 @@ namespace OpenTK.Audio
 
                 return is_synchronized;
             }
-            private set { is_synchronized = value; }
+            private set => is_synchronized = value;
         }
 
         /// <summary>
@@ -595,23 +595,12 @@ namespace OpenTK.Audio
         /// <summary>
         /// Returns a list of strings containing all known playback devices.
         /// </summary>
-        public static IList<string> AvailableDevices
-        {
-            get
-            {
-                return AudioDeviceEnumerator.AvailablePlaybackDevices;
-            }
-        }
+        public static IList<string> AvailableDevices => AudioDeviceEnumerator.AvailablePlaybackDevices;
+
         /// <summary>
         /// Returns the name of the device that will be used as playback default.
         /// </summary>
-        public static string DefaultDevice
-        {
-            get
-            {
-                return AudioDeviceEnumerator.DefaultPlaybackDevice;
-            }
-        }
+        public static string DefaultDevice => AudioDeviceEnumerator.DefaultPlaybackDevice;
 
         /// <summary>
         /// Disposes of the AudioContext, cleaning up all resources consumed by it.

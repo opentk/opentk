@@ -1719,10 +1719,7 @@ namespace OpenTK.Platform.SDL2
         public byte Minor;
         public byte Patch;
 
-        public int Number
-        {
-            get { return 1000 * Major + 100 * Minor + Patch; }
-        }
+        public int Number => 1000 * Major + 100 * Minor + Patch;
     }
 
     internal struct WindowEvent

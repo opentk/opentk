@@ -105,19 +105,25 @@ namespace OpenTK
         /// Gets or sets the X component of this instance.
         /// </summary>
         [XmlIgnore]
-        public float X { get { return Xyz.X; } set { Xyz.X = value; } }
+        public float X { get => Xyz.X;
+            set => Xyz.X = value;
+        }
 
         /// <summary>
         /// Gets or sets the Y component of this instance.
         /// </summary>
         [XmlIgnore]
-        public float Y { get { return Xyz.Y; } set { Xyz.Y = value; } }
+        public float Y { get => Xyz.Y;
+            set => Xyz.Y = value;
+        }
 
         /// <summary>
         /// Gets or sets the Z component of this instance.
         /// </summary>
         [XmlIgnore]
-        public float Z { get { return Xyz.Z; } set { Xyz.Z = value; } }
+        public float Z { get => Xyz.Z;
+            set => Xyz.Z = value;
+        }
 
         /// <summary>
         /// Convert the current quaternion to axis angle representation
@@ -165,24 +171,12 @@ namespace OpenTK
         /// Gets the length (magnitude) of the quaternion.
         /// </summary>
         /// <seealso cref="LengthSquared"/>
-        public float Length
-        {
-            get
-            {
-                return (float)Math.Sqrt(W * W + Xyz.LengthSquared);
-            }
-        }
+        public float Length => (float)Math.Sqrt(W * W + Xyz.LengthSquared);
 
         /// <summary>
         /// Gets the square of the quaternion length (magnitude).
         /// </summary>
-        public float LengthSquared
-        {
-            get
-            {
-                return W * W + Xyz.LengthSquared;
-            }
-        }
+        public float LengthSquared => W * W + Xyz.LengthSquared;
 
         /// <summary>
         /// Returns a copy of the Quaternion scaled to unit length.

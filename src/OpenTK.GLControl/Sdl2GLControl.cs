@@ -49,10 +49,7 @@ namespace OpenTK
             return new GraphicsContext(mode, WindowInfo, major, minor, flags);
         }
 
-        public bool IsIdle
-        {
-            get { return NativeMethods.SDL_HasEvents(0, 0xffff); }
-        }
+        public bool IsIdle => NativeMethods.SDL_HasEvents(0, 0xffff);
 
         public IWindowInfo WindowInfo { get; }
 

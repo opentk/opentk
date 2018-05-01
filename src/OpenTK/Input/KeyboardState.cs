@@ -47,8 +47,8 @@ namespace OpenTK.Input
         /// <returns>True if key is pressed; false otherwise.</returns>
         public bool this[Key key]
         {
-            get { return IsKeyDown(key); }
-            internal set { SetKeyState(key, value); }
+            get => IsKeyDown(key);
+            internal set => SetKeyState(key, value);
         }
 
         /// <summary>
@@ -57,10 +57,7 @@ namespace OpenTK.Input
         /// </summary>
         /// <param name="code">The scancode to check.</param>
         /// <returns>True if code is pressed; false otherwise.</returns>
-        public bool this[short code]
-        {
-            get { return IsKeyDown((Key)code); }
-        }
+        public bool this[short code] => IsKeyDown((Key)code);
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether this key is down.

@@ -63,10 +63,7 @@ namespace OpenTK.Platform.Dummy
             }
         }
 
-        public override bool IsCurrent
-        {
-            get { return current_thread != null && current_thread == Thread.CurrentThread; }
-        }
+        public override bool IsCurrent => current_thread != null && current_thread == Thread.CurrentThread;
 
         public override IntPtr GetAddress(IntPtr function)
         {

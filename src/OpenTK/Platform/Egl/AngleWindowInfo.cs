@@ -62,10 +62,7 @@ namespace OpenTK.Platform.Egl
 
         public IWindowInfo PlatformWindow { get; }
 
-        public IWindowInfo WindowInfo
-        {
-            get { return EglWindowInfo; }
-        }
+        public IWindowInfo WindowInfo => EglWindowInfo;
 
         public IntPtr DeviceContext
         {
@@ -83,25 +80,16 @@ namespace OpenTK.Platform.Egl
         public EglContext EglContext { get; set; }
         public EglWindowInfo EglWindowInfo { get; set; }
 
-        public IntPtr Display
-        {
-            get { return EglWindowInfo.Display; }
-        }
+        public IntPtr Display => EglWindowInfo.Display;
 
-        public IntPtr Surface
-        {
-            get { return EglWindowInfo.Surface; }
-        }
+        public IntPtr Surface => EglWindowInfo.Surface;
 
         public void Dispose()
         {
             Dispose(false);
         }
 
-        public IntPtr Handle
-        {
-            get { return PlatformWindow.Handle; }
-        }
+        public IntPtr Handle => PlatformWindow.Handle;
 
         ~AngleWindowInfo()
         {

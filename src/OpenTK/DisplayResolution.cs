@@ -78,23 +78,20 @@ namespace OpenTK
         /// </summary>
         [Obsolete("This property will return invalid results if a monitor changes resolution. Use DisplayDevice.Bounds instead.")]
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public Rectangle Bounds
-        {
-            get { return bounds; }
-        }
+        public Rectangle Bounds => bounds;
 
         /// <summary>Gets a System.Int32 that contains the width of this display in pixels.</summary>
         public int Width
         {
-            get { return bounds.Width; }
-            internal set { bounds.Width = value; }
+            get => bounds.Width;
+            internal set => bounds.Width = value;
         }
 
         /// <summary>Gets a System.Int32 that contains the height of this display in pixels.</summary>
         public int Height
         {
-            get { return bounds.Height; }
-            internal set { bounds.Height = value; }
+            get => bounds.Height;
+            internal set => bounds.Height = value;
         }
 
         /// <summary>Gets a System.Int32 that contains number of bits per pixel of this display. Typical values include 8, 16, 24 and 32.</summary>

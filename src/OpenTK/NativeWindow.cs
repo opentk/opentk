@@ -251,13 +251,7 @@ namespace OpenTK
         /// <summary>
         /// Gets a value indicating whether a render window exists.
         /// </summary>
-        public bool Exists
-        {
-            get
-            {
-                return IsDisposed ? false : implementation.Exists; // TODO: Should disposed be ignored instead?
-            }
-        }
+        public bool Exists => IsDisposed ? false : implementation.Exists;
 
         /// <summary>
         /// Gets a System.Boolean that indicates whether this NativeWindow has input focus.
@@ -397,14 +391,8 @@ namespace OpenTK
         /// </summary>
         public WindowBorder WindowBorder
         {
-            get
-            {
-                return implementation.WindowBorder;
-            }
-            set
-            {
-                implementation.WindowBorder = value;
-            }
+            get => implementation.WindowBorder;
+            set => implementation.WindowBorder = value;
         }
 
         /// <summary>
@@ -424,14 +412,8 @@ namespace OpenTK
         /// </summary>
         public virtual WindowState WindowState
         {
-            get
-            {
-                return implementation.WindowState;
-            }
-            set
-            {
-                implementation.WindowState = value;
-            }
+            get => implementation.WindowState;
+            set => implementation.WindowState = value;
         }
 
         /// <summary>
@@ -475,14 +457,8 @@ namespace OpenTK
         /// </summary>
         public bool CursorVisible
         {
-            get
-            {
-                return implementation.CursorVisible;
-            }
-            set
-            {
-                implementation.CursorVisible = value;
-            }
+            get => implementation.CursorVisible;
+            set => implementation.CursorVisible = value;
         }
 
         /// <summary>

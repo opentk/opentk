@@ -51,18 +51,12 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets a <see cref="Vector2"/> describing the state of the left thumb stick.
         /// </summary>
-        public Vector2 Left
-        {
-            get { return new Vector2(left_x * ConversionFactor, left_y * ConversionFactor); }
-        }
+        public Vector2 Left => new Vector2(left_x * ConversionFactor, left_y * ConversionFactor);
 
         /// <summary>
         /// Gets a <see cref="Vector2"/> describing the state of the right thumb stick.
         /// </summary>
-        public Vector2 Right
-        {
-            get { return new Vector2(right_x * ConversionFactor, right_y * ConversionFactor); }
-        }
+        public Vector2 Right => new Vector2(right_x * ConversionFactor, right_y * ConversionFactor);
 
         /// <param name="left">A <see cref="GamePadThumbSticks"/> instance to test for equality.</param>
         /// <param name="right">A <see cref="GamePadThumbSticks"/> instance to test for equality.</param>

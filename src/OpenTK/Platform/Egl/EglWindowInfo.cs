@@ -63,7 +63,9 @@ namespace OpenTK.Platform.Egl
 
         public IntPtr Display { get; private set; }
 
-        public IntPtr Surface { get { return surface; } private set { surface = value; } }
+        public IntPtr Surface { get => surface;
+            private set => surface = value;
+        }
 
         public void CreateWindowSurface(IntPtr config)
         {

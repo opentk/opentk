@@ -115,13 +115,7 @@ namespace OpenTK
         /// Gets the length (magnitude) of the vector.
         /// </summary>
         /// <seealso cref="LengthSquared"/>
-        public double Length
-        {
-            get
-            {
-                return Math.Sqrt(X * X + Y * Y);
-            }
-        }
+        public double Length => Math.Sqrt(X * X + Y * Y);
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -131,35 +125,17 @@ namespace OpenTK
         /// for comparisons.
         /// </remarks>
         /// <see cref="Length"/>
-        public double LengthSquared
-        {
-            get
-            {
-                return X * X + Y * Y;
-            }
-        }
+        public double LengthSquared => X * X + Y * Y;
 
         /// <summary>
         /// Gets the perpendicular vector on the right side of this vector.
         /// </summary>
-        public Vector2d PerpendicularRight
-        {
-            get
-            {
-                return new Vector2d(Y, -X);
-            }
-        }
+        public Vector2d PerpendicularRight => new Vector2d(Y, -X);
 
         /// <summary>
         /// Gets the perpendicular vector on the left side of this vector.
         /// </summary>
-        public Vector2d PerpendicularLeft
-        {
-            get
-            {
-                return new Vector2d(-Y, X);
-            }
-        }
+        public Vector2d PerpendicularLeft => new Vector2d(-Y, X);
 
         /// <summary>
         /// Returns a copy of the Vector2d scaled to unit length.
@@ -724,7 +700,8 @@ namespace OpenTK
         /// Gets or sets an OpenTK.Vector2d with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector2d Yx { get { return new Vector2d(Y, X); } set { Y = value.X; X = value.Y; } }
+        public Vector2d Yx { get => new Vector2d(Y, X);
+            set { Y = value.X; X = value.Y; } }
 
         /// <summary>
         /// Adds two instances.

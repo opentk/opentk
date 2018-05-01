@@ -27,7 +27,7 @@ namespace OpenTK.Platform
         private static bool throw_on_error;
         internal static bool ThrowOnX11Error
         {
-            get { return throw_on_error; }
+            get => throw_on_error;
             set
             {
                 if (value && !throw_on_error)

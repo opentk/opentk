@@ -46,37 +46,25 @@ namespace OpenTK.Input
         /// Gets a <see cref="GamePadThumbSticks"/> structure describing the
         /// state of the <c>GamePad</c> thumb sticks.
         /// </summary>
-        public GamePadThumbSticks ThumbSticks
-        {
-            get { return new GamePadThumbSticks(left_stick_x, left_stick_y, right_stick_x, right_stick_y); }
-        }
+        public GamePadThumbSticks ThumbSticks => new GamePadThumbSticks(left_stick_x, left_stick_y, right_stick_x, right_stick_y);
 
         /// <summary>
         /// Gets a <see cref="GamePadButtons"/> structure describing the
         /// state of the <c>GamePad</c> buttons.
         /// </summary>
-        public GamePadButtons Buttons
-        {
-            get { return new GamePadButtons(buttons); }
-        }
+        public GamePadButtons Buttons => new GamePadButtons(buttons);
 
         /// <summary>
         /// Gets a <see cref="GamePadDPad"/> structure describing the
         /// state of the <c>GamePad</c> directional pad.
         /// </summary>
-        public GamePadDPad DPad
-        {
-            get { return new GamePadDPad(buttons); }
-        }
+        public GamePadDPad DPad => new GamePadDPad(buttons);
 
         /// <summary>
         /// Gets a <see cref="GamePadTriggers"/> structure describing the
         /// state of the <c>GamePad</c> triggers.
         /// </summary>
-        public GamePadTriggers Triggers
-        {
-            get { return new GamePadTriggers(left_trigger, right_trigger); }
-        }
+        public GamePadTriggers Triggers => new GamePadTriggers(left_trigger, right_trigger);
 
         /// <summary>
         /// Gets a value indicating whether this <c>GamePad</c> instance is connected.

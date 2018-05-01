@@ -57,7 +57,9 @@ namespace OpenTK.Platform.X11
         }
 
         /// <summary>Gets or sets the handle of the window.</summary>
-        public IntPtr Handle { get { return handle; } set { handle = value; } }
+        public IntPtr Handle { get => handle;
+            set => handle = value;
+        }
         /// <summary>Gets or sets the parent of the window.</summary>
         public X11WindowInfo Parent { get; set; }
 
@@ -65,7 +67,9 @@ namespace OpenTK.Platform.X11
         public IntPtr RootWindow { get; set; }
 
         /// <summary>Gets or sets the connection to the X11 display.</summary>
-        public IntPtr Display { get { return display; } set { display = value; } }
+        public IntPtr Display { get => display;
+            set => display = value;
+        }
         /// <summary>Gets or sets the X11 screen.</summary>
         public int Screen { get; set; }
 
@@ -87,7 +91,9 @@ namespace OpenTK.Platform.X11
         // For compatibility with whoever thought it would be
         // a good idea to access internal APIs through reflection
         // (e.g. MonoGame)
-        public IntPtr WindowHandle { get { return Handle; } set { Handle = value; } }
+        public IntPtr WindowHandle { get => Handle;
+            set => Handle = value;
+        }
 
         public IntPtr Visual { get; set; }
         public IntPtr FBConfig { get; set; }

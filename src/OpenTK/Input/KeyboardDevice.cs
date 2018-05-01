@@ -23,20 +23,14 @@ namespace OpenTK.Input
         /// </summary>
         /// <param name="key">The Key to check.</param>
         /// <returns>True if the Key is pressed, false otherwise.</returns>
-        public bool this[Key key]
-        {
-            get { return state[key]; }
-        }
+        public bool this[Key key] => state[key];
 
         /// <summary>
         /// Gets a value indicating the status of the specified Key.
         /// </summary>
         /// <param name="scancode">The scancode to check.</param>
         /// <returns>True if the scancode is pressed, false otherwise.</returns>
-        public bool this[uint scancode]
-        {
-            get { return scancode < (uint)Key.LastKey && state[(Key)scancode]; }
-        }
+        public bool this[uint scancode] => scancode < (uint)Key.LastKey && state[(Key)scancode];
 
         /// <summary>
         /// Gets an integer representing the number of keys on this KeyboardDevice.
@@ -58,8 +52,8 @@ namespace OpenTK.Input
         /// </summary>
         public IntPtr DeviceID
         {
-            get { return devID; }
-            internal set { devID = value; }
+            get => devID;
+            internal set => devID = value;
         }
 
         /// <summary>
@@ -98,10 +92,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets the <see cref="InputDeviceType"/> for this instance.
         /// </summary>
-        public InputDeviceType DeviceType
-        {
-            get { return InputDeviceType.Keyboard; }
-        }
+        public InputDeviceType DeviceType => InputDeviceType.Keyboard;
 
         /// <summary>
         /// Retrieves the combined <see cref="OpenTK.Input.KeyboardState"/> for all keyboard devices.

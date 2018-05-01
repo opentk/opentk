@@ -57,7 +57,9 @@ namespace OpenTK.Platform.Windows
         /// <summary>
         /// Gets or sets the handle of the window.
         /// </summary>
-        public IntPtr Handle { get { return handle; } set { handle = value; } }
+        public IntPtr Handle { get => handle;
+            set => handle = value;
+        }
 
         /// <summary>
         /// Gets or sets the Parent of the window (may be null).
@@ -83,7 +85,9 @@ namespace OpenTK.Platform.Windows
         // For compatibility with whoever thought it would be
         // a good idea to access internal APIs through reflection
         // (e.g. MonoGame)
-        public IntPtr WindowHandle { get { return Handle; } set { Handle = value; } }
+        public IntPtr WindowHandle { get => Handle;
+            set => Handle = value;
+        }
 
         /// <summary>Returns a System.String that represents the current window.</summary>
         /// <returns>A System.String that represents the current window.</returns>

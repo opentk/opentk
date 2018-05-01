@@ -226,7 +226,7 @@ namespace OpenTK.Platform.X11
 
         private IntPtr Display
         {
-            get { return display; }
+            get => display;
             set
             {
                 if (value == IntPtr.Zero)
@@ -359,13 +359,7 @@ namespace OpenTK.Platform.X11
             currentWindow = (X11WindowInfo)window;
         }
 
-        public override bool IsCurrent
-        {
-            get
-            {
-                return Glx.GetCurrentContext() == Handle.Handle;
-            }
-        }
+        public override bool IsCurrent => Glx.GetCurrentContext() == Handle.Handle;
 
         public override int SwapInterval
         {

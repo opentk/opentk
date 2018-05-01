@@ -297,7 +297,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        protected override object SyncRoot { get { return sync_root; } }
+        protected override object SyncRoot => sync_root;
 
         protected override IntPtr GetAddress(string funcname)
         {

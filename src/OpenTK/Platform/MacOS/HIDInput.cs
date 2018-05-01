@@ -976,10 +976,10 @@ namespace OpenTK.Platform.MacOS
             return position;
         }
 
-        public IMouseDriver2 MouseDriver { get { return this; } }
-        public IKeyboardDriver2 KeyboardDriver { get { return this; } }
-        public IGamePadDriver GamePadDriver { get { return mapped_gamepad; } }
-        public IJoystickDriver2 JoystickDriver { get { return this; } }
+        public IMouseDriver2 MouseDriver => this;
+        public IKeyboardDriver2 KeyboardDriver => this;
+        public IGamePadDriver GamePadDriver => mapped_gamepad;
+        public IJoystickDriver2 JoystickDriver => this;
 
         MouseState IMouseDriver2.GetState()
         {

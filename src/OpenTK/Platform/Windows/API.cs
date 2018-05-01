@@ -2566,8 +2566,8 @@ namespace OpenTK.Platform.Windows
         /// </summary>
         internal LONG bottom;
 
-        internal int Width { get { return right - left; } }
-        internal int Height { get { return bottom - top; } }
+        internal int Width => right - left;
+        internal int Height => bottom - top;
 
         public override string ToString()
         {

@@ -45,8 +45,8 @@ namespace OpenTK.Platform.MacOS
 
         public IntPtr Value
         {
-            get { return _value; }
-            set { _value = value; }
+            get => _value;
+            set => _value = value;
         }
 
         public static implicit operator NSFloat(float v)
@@ -164,10 +164,10 @@ namespace OpenTK.Platform.MacOS
         public NSPoint Location;
         public NSSize Size;
 
-        public NSFloat Width { get { return Size.Width; } }
-        public NSFloat Height { get { return Size.Height; } }
-        public NSFloat X { get { return Location.X; } }
-        public NSFloat Y { get { return Location.Y; } }
+        public NSFloat Width => Size.Width;
+        public NSFloat Height => Size.Height;
+        public NSFloat X => Location.X;
+        public NSFloat Y => Location.Y;
 
         public static implicit operator NSRect(RectangleF s)
         {

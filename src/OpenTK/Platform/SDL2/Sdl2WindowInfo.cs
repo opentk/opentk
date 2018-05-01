@@ -46,7 +46,9 @@ namespace OpenTK.Platform.SDL2
         // For compatibility with whoever thought it would be
         // a good idea to access internal APIs through reflection
         // (e.g. MonoGame)
-        public IntPtr WindowHandle { get { return Handle; } set { Handle = value; } }
+        public IntPtr WindowHandle { get => Handle;
+            set => Handle = value;
+        }
 
         public void Dispose()
         {

@@ -336,20 +336,11 @@ namespace OpenTK.Platform.SDL2
             return SDL.GL.GetProcAddress(function);
         }
 
-        public override bool IsCurrent
-        {
-            get
-            {
-                return GraphicsContext.GetCurrentContext() == Context;
-            }
-        }
+        public override bool IsCurrent => GraphicsContext.GetCurrentContext() == Context;
 
         public override int SwapInterval
         {
-            get
-            {
-                return SDL.GL.GetSwapInterval();
-            }
+            get => SDL.GL.GetSwapInterval();
             set
             {
                 if (SDL.GL.SetSwapInterval(value) < 0)

@@ -53,13 +53,7 @@ namespace OpenTK.Platform
 
             public T Current { get; private set; }
 
-            object IEnumerator.Current
-            {
-                get
-                {
-                    return Current;
-                }
-            }
+            object IEnumerator.Current => Current;
 
             public void Dispose()
             {
@@ -105,10 +99,7 @@ namespace OpenTK.Platform
             return new Enumerator(this);
         }
 
-        public T this[int index]
-        {
-            get { return FromIndex(index); }
-        }
+        public T this[int index] => FromIndex(index);
 
         /// \internal
         /// <summary>
@@ -201,10 +192,7 @@ namespace OpenTK.Platform
             }
         }
 
-        public int Count
-        {
-            get { return Map.Count; }
-        }
+        public int Count => Map.Count;
 
         // Return the index of the first empty slot in Devices.
         // If no empty slot exists, append a new one and return

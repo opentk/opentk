@@ -32,13 +32,7 @@ namespace OpenTK
         /// Gets the points of this curve.
         /// </summary>
         /// <remarks>The first point and the last points represent the anchor points.</remarks>
-        public IList<Vector2> Points
-        {
-            get
-            {
-                return points;
-            }
-        }
+        public IList<Vector2> Points => points;
 
         /// <summary>
         /// Constructs a new <see cref="BezierCurve"/>.

@@ -616,7 +616,7 @@ namespace OpenTK.Platform.Linux
         public ushort Code;
         public int Value;
 
-        public EvdevType Type { get { return (EvdevType)type; } }
+        public EvdevType Type => (EvdevType)type;
     }
 
     [StructLayout(LayoutKind.Sequential)]

@@ -75,26 +75,17 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets the number of axes supported by this <see cref="JoystickDevice"/>.
         /// </summary>
-        public int AxisCount
-        {
-            get { return axis_count; }
-        }
+        public int AxisCount => axis_count;
 
         /// <summary>
         /// Gets the number of buttons supported by this <see cref="JoystickDevice"/>.
         /// </summary>
-        public int ButtonCount
-        {
-            get { return button_count; }
-        }
+        public int ButtonCount => button_count;
 
         /// <summary>
         /// Gets the number of hats supported by this <see cref="JoystickDevice"/>.
         /// </summary>
-        public int HatCount
-        {
-            get { return hat_count; }
-        }
+        public int HatCount => hat_count;
 
         /// <summary>
         /// Gets a value indicating whether this <see cref="JoystickDevice"/> is connected.

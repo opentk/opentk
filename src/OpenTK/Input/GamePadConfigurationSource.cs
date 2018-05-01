@@ -74,8 +74,8 @@ namespace OpenTK.Input
         /// </summary>
         public int Axis
         {
-            get { return map_axis.Value; }
-            private set { map_axis = value; }
+            get => map_axis.Value;
+            private set => map_axis = value;
         }
 
         /// <summary>
@@ -83,8 +83,8 @@ namespace OpenTK.Input
         /// </summary>
         public int Button
         {
-            get { return map_button.Value; }
-            private set { map_button = value; }
+            get => map_button.Value;
+            private set => map_button = value;
         }
 
         /// <summary>
@@ -92,8 +92,8 @@ namespace OpenTK.Input
         /// </summary>
         public JoystickHat Hat
         {
-            get { return map_hat.Value; }
-            private set { map_hat = value; }
+            get => map_hat.Value;
+            private set => map_hat = value;
         }
 
         /// <summary>
@@ -101,8 +101,8 @@ namespace OpenTK.Input
         /// </summary>
         public HatPosition HatPosition
         {
-            get { return map_hat_position.Value; }
-            private set { map_hat_position = value; }
+            get => map_hat_position.Value;
+            private set => map_hat_position = value;
         }
     }
 }

@@ -102,19 +102,25 @@ namespace OpenTK
         /// Gets or sets the X component of this instance.
         /// </summary>
         [XmlIgnore]
-        public double X { get { return Xyz.X; } set { Xyz.X = value; } }
+        public double X { get => Xyz.X;
+            set => Xyz.X = value;
+        }
 
         /// <summary>
         /// Gets or sets the Y component of this instance.
         /// </summary>
         [XmlIgnore]
-        public double Y { get { return Xyz.Y; } set { Xyz.Y = value; } }
+        public double Y { get => Xyz.Y;
+            set => Xyz.Y = value;
+        }
 
         /// <summary>
         /// Gets or sets the Z component of this instance.
         /// </summary>
         [XmlIgnore]
-        public double Z { get { return Xyz.Z; } set { Xyz.Z = value; } }
+        public double Z { get => Xyz.Z;
+            set => Xyz.Z = value;
+        }
 
         /// <summary>
         /// Convert the current quaternion to axis angle representation
@@ -162,24 +168,12 @@ namespace OpenTK
         /// Gets the length (magnitude) of the Quaterniond.
         /// </summary>
         /// <seealso cref="LengthSquared"/>
-        public double Length
-        {
-            get
-            {
-                return (double)Math.Sqrt(W * W + Xyz.LengthSquared);
-            }
-        }
+        public double Length => (double)Math.Sqrt(W * W + Xyz.LengthSquared);
 
         /// <summary>
         /// Gets the square of the Quaterniond length (magnitude).
         /// </summary>
-        public double LengthSquared
-        {
-            get
-            {
-                return W * W + Xyz.LengthSquared;
-            }
-        }
+        public double LengthSquared => W * W + Xyz.LengthSquared;
 
         /// <summary>
         /// Returns a copy of the Quaterniond scaled to unit length.

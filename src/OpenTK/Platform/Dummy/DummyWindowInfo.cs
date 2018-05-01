@@ -8,9 +8,6 @@ namespace OpenTK.Platform.Dummy
         {
         }
 
-        public IntPtr Handle
-        {
-            get { return IntPtr.Zero; }
-        }
+        public IntPtr Handle => IntPtr.Zero;
     }
 }

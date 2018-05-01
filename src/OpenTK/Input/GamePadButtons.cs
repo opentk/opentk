@@ -48,106 +48,66 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the A button.
         /// </summary>
-        public ButtonState A
-        {
-            get { return GetButton(Buttons.A); }
-        }
+        public ButtonState A => GetButton(Buttons.A);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the B button.
         /// </summary>
-        public ButtonState B
-        {
-            get { return GetButton(Buttons.B); }
-        }
+        public ButtonState B => GetButton(Buttons.B);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the X button.
         /// </summary>
-        public ButtonState X
-        {
-            get { return GetButton(Buttons.X); }
-        }
+        public ButtonState X => GetButton(Buttons.X);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the Y button.
         /// </summary>
-        public ButtonState Y
-        {
-            get { return GetButton(Buttons.Y); }
-        }
+        public ButtonState Y => GetButton(Buttons.Y);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the Back button.
         /// </summary>
-        public ButtonState Back
-        {
-            get { return GetButton(Buttons.Back); }
-        }
+        public ButtonState Back => GetButton(Buttons.Back);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the big button.
         /// This button is also known as Home or Guide.
         /// </summary>
-        public ButtonState BigButton
-        {
-            get { return GetButton(Buttons.BigButton); }
-        }
+        public ButtonState BigButton => GetButton(Buttons.BigButton);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the left shoulder button.
         /// </summary>
-        public ButtonState LeftShoulder
-        {
-            get { return GetButton(Buttons.LeftShoulder); }
-        }
+        public ButtonState LeftShoulder => GetButton(Buttons.LeftShoulder);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the left stick button.
         /// This button represents a left stick that is pressed in.
         /// </summary>
-        public ButtonState LeftStick
-        {
-            get { return GetButton(Buttons.LeftStick); }
-        }
+        public ButtonState LeftStick => GetButton(Buttons.LeftStick);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the right shoulder button.
         /// </summary>
-        public ButtonState RightShoulder
-        {
-            get { return GetButton(Buttons.RightShoulder); }
-        }
+        public ButtonState RightShoulder => GetButton(Buttons.RightShoulder);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the right stick button.
         /// This button represents a right stick that is pressed in.
         /// </summary>
-        public ButtonState RightStick
-        {
-            get { return GetButton(Buttons.RightStick); }
-        }
+        public ButtonState RightStick => GetButton(Buttons.RightStick);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the starth button.
         /// </summary>
-        public ButtonState Start
-        {
-            get { return GetButton(Buttons.Start); }
-        }
+        public ButtonState Start => GetButton(Buttons.Start);
 
         /// <summary>
         /// Gets a value indicating whether any button is pressed.
         /// </summary>
         /// <value><c>true</c> if any button is pressed; otherwise, <c>false</c>.</value>
-        public bool IsAnyButtonPressed
-        {
-            get
-            {
-                // If any bit is set then a button is down.
-                return buttons != 0;
-            }
-        }
+        public bool IsAnyButtonPressed => buttons != 0;
 
         /// <param name="left">A <see cref="GamePadButtons"/> instance to test for equality.</param>
         /// <param name="right">A <see cref="GamePadButtons"/> instance to test for equality.</param>

@@ -79,7 +79,7 @@ namespace OpenTK
         /// </summary>
         public Vector2 Column0
         {
-            get { return new Vector2(Row0.X, Row1.X); }
+            get => new Vector2(Row0.X, Row1.X);
             set { Row0.X = value.X; Row1.X = value.Y; }
         }
 
@@ -88,7 +88,7 @@ namespace OpenTK
         /// </summary>
         public Vector2 Column1
         {
-            get { return new Vector2(Row0.Y, Row1.Y); }
+            get => new Vector2(Row0.Y, Row1.Y);
             set { Row0.Y = value.X; Row1.Y = value.Y; }
         }
 
@@ -97,7 +97,7 @@ namespace OpenTK
         /// </summary>
         public Vector2 Column2
         {
-            get { return new Vector2(Row0.Z, Row1.Z); }
+            get => new Vector2(Row0.Z, Row1.Z);
             set { Row0.Z = value.X; Row1.Z = value.Y; }
         }
 
@@ -106,59 +106,72 @@ namespace OpenTK
         /// </summary>
         public Vector2 Column3
         {
-            get { return new Vector2(Row0.W, Row1.W); }
+            get => new Vector2(Row0.W, Row1.W);
             set { Row0.W = value.X; Row1.W = value.Y; }
         }
 
         /// <summary>
         /// Gets or sets the value at row 1, column 1 of this instance.
         /// </summary>
-        public float M11 { get { return Row0.X; } set { Row0.X = value; } }
+        public float M11 { get => Row0.X;
+            set => Row0.X = value;
+        }
 
         /// <summary>
         /// Gets or sets the value at row 1, column 2 of this instance.
         /// </summary>
-        public float M12 { get { return Row0.Y; } set { Row0.Y = value; } }
+        public float M12 { get => Row0.Y;
+            set => Row0.Y = value;
+        }
 
         /// <summary>
         /// Gets or sets the value at row 1, column 3 of this instance.
         /// </summary>
-        public float M13 { get { return Row0.Z; } set { Row0.Z = value; } }
+        public float M13 { get => Row0.Z;
+            set => Row0.Z = value;
+        }
 
         /// <summary>
         /// Gets or sets the value at row 1, column 4 of this instance.
         /// </summary>
-        public float M14 { get { return Row0.W; } set { Row0.W = value; } }
+        public float M14 { get => Row0.W;
+            set => Row0.W = value;
+        }
 
         /// <summary>
         /// Gets or sets the value at row 2, column 1 of this instance.
         /// </summary>
-        public float M21 { get { return Row1.X; } set { Row1.X = value; } }
+        public float M21 { get => Row1.X;
+            set => Row1.X = value;
+        }
 
         /// <summary>
         /// Gets or sets the value at row 2, column 2 of this instance.
         /// </summary>
-        public float M22 { get { return Row1.Y; } set { Row1.Y = value; } }
+        public float M22 { get => Row1.Y;
+            set => Row1.Y = value;
+        }
 
         /// <summary>
         /// Gets or sets the value at row 2, column 3 of this instance.
         /// </summary>
-        public float M23 { get { return Row1.Z; } set { Row1.Z = value; } }
+        public float M23 { get => Row1.Z;
+            set => Row1.Z = value;
+        }
 
         /// <summary>
         /// Gets or sets the value at row 2, column 4 of this instance.
         /// </summary>
-        public float M24 { get { return Row1.W; } set { Row1.W = value; } }
+        public float M24 { get => Row1.W;
+            set => Row1.W = value;
+        }
 
         /// <summary>
         /// Gets or sets the values along the main diagonal of the matrix.
         /// </summary>
         public Vector2 Diagonal
         {
-            get
-            {
-                return new Vector2(Row0.X, Row1.Y);
-            }
+            get => new Vector2(Row0.X, Row1.Y);
             set
             {
                 Row0.X = value.X;
@@ -169,7 +182,7 @@ namespace OpenTK
         /// <summary>
         /// Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
-        public float Trace { get { return Row0.X + Row1.Y; } }
+        public float Trace => Row0.X + Row1.Y;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.

@@ -163,19 +163,10 @@ namespace OpenTK.Platform.Windows
             return ridl;
         }
 
-        public override IKeyboardDriver2 KeyboardDriver
-        {
-            get { return keyboard_driver; }
-        }
+        public override IKeyboardDriver2 KeyboardDriver => keyboard_driver;
 
-        public override IMouseDriver2 MouseDriver
-        {
-            get { return mouse_driver; }
-        }
+        public override IMouseDriver2 MouseDriver => mouse_driver;
 
-        public override IJoystickDriver2 JoystickDriver
-        {
-            get { return joystick_driver; }
-        }
+        public override IJoystickDriver2 JoystickDriver => joystick_driver;
     }
 }

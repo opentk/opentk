@@ -391,10 +391,7 @@ namespace OpenTK.Platform.Linux
 
         public override Icon Icon
         {
-            get
-            {
-                return icon;
-            }
+            get => icon;
             set
             {
                 if (icon != value)
@@ -407,10 +404,7 @@ namespace OpenTK.Platform.Linux
 
         public override string Title
         {
-            get
-            {
-                return title;
-            }
+            get => title;
             set
             {
                 if (title != value)
@@ -421,47 +415,23 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        public override bool Focused
-        {
-            get
-            {
-                return is_focused;
-            }
-        }
+        public override bool Focused => is_focused;
 
         public override bool Visible
         {
-            get
-            {
-                return true;
-            }
+            get => true;
             set
             {
             }
         }
 
-        public override bool Exists
-        {
-            get
-            {
-                return exists;
-            }
-        }
+        public override bool Exists => exists;
 
-        public override IWindowInfo WindowInfo
-        {
-            get
-            {
-                return window;
-            }
-        }
+        public override IWindowInfo WindowInfo => window;
 
         public override WindowState WindowState
         {
-            get
-            {
-                return WindowState.Fullscreen;
-            }
+            get => WindowState.Fullscreen;
             set
             {
             }
@@ -469,10 +439,7 @@ namespace OpenTK.Platform.Linux
 
         public override WindowBorder WindowBorder
         {
-            get
-            {
-                return WindowBorder.Hidden;
-            }
+            get => WindowBorder.Hidden;
             set
             {
             }
@@ -480,10 +447,7 @@ namespace OpenTK.Platform.Linux
 
         public override Rectangle Bounds
         {
-            get
-            {
-                return bounds;
-            }
+            get => bounds;
             set
             {
             }
@@ -491,10 +455,7 @@ namespace OpenTK.Platform.Linux
 
         public override Size ClientSize
         {
-            get
-            {
-                return client_size;
-            }
+            get => client_size;
             set
             {
             }
@@ -502,10 +463,7 @@ namespace OpenTK.Platform.Linux
 
         public override bool CursorVisible
         {
-            get
-            {
-                return is_cursor_visible;
-            }
+            get => is_cursor_visible;
             set
             {
                 if (value && !is_cursor_visible)
@@ -522,10 +480,7 @@ namespace OpenTK.Platform.Linux
 
         public override MouseCursor Cursor
         {
-            get
-            {
-                return cursor_current;
-            }
+            get => cursor_current;
             set
             {
                 if (cursor_current != value)

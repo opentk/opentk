@@ -112,13 +112,21 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>Gets the bits per pixel for the Red channel.</summary>
-        public int Red { get { return red; } private set { red = (byte)value; } }
+        public int Red { get => red;
+            private set => red = (byte)value;
+        }
         /// <summary>Gets the bits per pixel for the Green channel.</summary>
-        public int Green { get { return green; } private set { green = (byte)value; } }
+        public int Green { get => green;
+            private set => green = (byte)value;
+        }
         /// <summary>Gets the bits per pixel for the Blue channel.</summary>
-        public int Blue { get { return blue; } private set { blue = (byte)value; } }
+        public int Blue { get => blue;
+            private set => blue = (byte)value;
+        }
         /// <summary>Gets the bits per pixel for the Alpha channel.</summary>
-        public int Alpha { get { return alpha; } private set { alpha = (byte)value; } }
+        public int Alpha { get => alpha;
+            private set => alpha = (byte)value;
+        }
         /// <summary>Gets a System.Boolean indicating whether this ColorFormat is indexed.</summary>
         public bool IsIndexed { get; private set; }
 

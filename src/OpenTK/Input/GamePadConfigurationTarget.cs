@@ -52,14 +52,14 @@ namespace OpenTK.Input
 
         public GamePadAxes Axis
         {
-            get { return map_axis.Value; }
-            private set { map_axis = value; }
+            get => map_axis.Value;
+            private set => map_axis = value;
         }
 
         public Buttons Button
         {
-            get { return map_button.Value; }
-            private set { map_button = value; }
+            get => map_button.Value;
+            private set => map_button = value;
         }
     }
 }

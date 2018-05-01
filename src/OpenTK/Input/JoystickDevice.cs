@@ -70,10 +70,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets a value indicating the InputDeviceType of this InputDevice.
         /// </summary>
-        public InputDeviceType DeviceType
-        {
-            get { return InputDeviceType.Hid; }
-        }
+        public InputDeviceType DeviceType => InputDeviceType.Hid;
 
         /// <summary>
         /// Occurs when an axis of this JoystickDevice instance is moved.
@@ -232,17 +229,14 @@ namespace OpenTK.Input
         /// <returns>True if the JoystickButton is pressed; false otherwise.</returns>
         public bool this[int index]
         {
-            get { return button_state[index]; }
-            internal set { button_state[index] = value; }
+            get => button_state[index];
+            internal set => button_state[index] = value;
         }
 
         /// <summary>
         /// Gets a System.Int32 indicating the available amount of JoystickButtons.
         /// </summary>
-        public int Count
-        {
-            get { return button_state.Length; }
-        }
+        public int Count => button_state.Length;
     }
 
     /// <summary>
@@ -269,16 +263,13 @@ namespace OpenTK.Input
         /// <returns>A System.Single in the range [-1, 1].</returns>
         public float this[int index]
         {
-            get { return axis_state[index]; }
-            internal set { axis_state[index] = value; }
+            get => axis_state[index];
+            internal set => axis_state[index] = value;
         }
 
         /// <summary>
         /// Gets a System.Int32 indicating the available amount of JoystickAxes.
         /// </summary>
-        public int Count
-        {
-            get { return axis_state.Length; }
-        }
+        public int Count => axis_state.Length;
     }
 }

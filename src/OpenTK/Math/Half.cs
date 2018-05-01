@@ -79,16 +79,16 @@ namespace OpenTK
         private UInt16 bits;
 
         /// <summary>Returns true if the Half is zero.</summary>
-        public bool IsZero { get { return (bits == 0) || (bits == 0x8000); } }
+        public bool IsZero => (bits == 0) || (bits == 0x8000);
 
         /// <summary>Returns true if the Half represents Not A Number (NaN)</summary>
-        public bool IsNaN { get { return (((bits & 0x7C00) == 0x7C00) && (bits & 0x03FF) != 0x0000); } }
+        public bool IsNaN => (((bits & 0x7C00) == 0x7C00) && (bits & 0x03FF) != 0x0000);
 
         /// <summary>Returns true if the Half represents positive infinity.</summary>
-        public bool IsPositiveInfinity { get { return (bits == 31744); } }
+        public bool IsPositiveInfinity => (bits == 31744);
 
         /// <summary>Returns true if the Half represents negative infinity.</summary>
-        public bool IsNegativeInfinity { get { return (bits == 64512); } }
+        public bool IsNegativeInfinity => (bits == 64512);
 
         /// <summary>
         /// The new Half instance will convert the parameter into 16-bit half-precision floating-point.

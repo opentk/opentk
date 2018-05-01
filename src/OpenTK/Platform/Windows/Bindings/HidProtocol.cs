@@ -220,21 +220,9 @@ namespace OpenTK.Platform.Windows
         private int bitfield;
         public IntPtr   UserContext;
 
-        public HidProtocolCollectionType CollectionType
-        {
-            get
-            {
-                return (HidProtocolCollectionType)(bitfield & 0xff);
-            }
-        }
+        public HidProtocolCollectionType CollectionType => (HidProtocolCollectionType)(bitfield & 0xff);
 
-        public bool IsAlias
-        {
-            get
-            {
-                return (bitfield & 0x100) == 1;
-            }
-        }
+        public bool IsAlias => (bitfield & 0x100) == 1;
     }
 
     internal struct HidProtocolRange

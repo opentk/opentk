@@ -51,10 +51,7 @@ namespace OpenTK
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether OpenTK is running on a Unix platform.
         /// </summary>
-        public static bool RunningOnUnix
-        {
-            get { return runningOnUnix; }
-        }
+        public static bool RunningOnUnix => runningOnUnix;
 
         /// <summary>
         /// Gets a System.Boolean indicating whether OpenTK is running on the SDL2 backend.
@@ -66,10 +63,10 @@ namespace OpenTK
         }
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on the Linux kernel.</summary>
-        public static bool RunningOnLinux { get { return runningOnLinux; } }
+        public static bool RunningOnLinux => runningOnLinux;
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on a MacOS platform.</summary>
-        public static bool RunningOnMacOS { get { return runningOnMacOS; } }
+        public static bool RunningOnMacOS => runningOnMacOS;
 
         /// <summary>
         /// Gets a System.Boolean indicating whether OpenTK is running on the Mono runtime.

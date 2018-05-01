@@ -90,10 +90,7 @@ namespace OpenTK
             return new GraphicsContext(mode, WindowInfo, major, minor, flags);
         }
 
-        public bool IsIdle
-        {
-            get { return !PeekMessage(ref msg, IntPtr.Zero, 0, 0, 0); }
-        }
+        public bool IsIdle => !PeekMessage(ref msg, IntPtr.Zero, 0, 0, 0);
 
         public IWindowInfo WindowInfo { get; }
     }

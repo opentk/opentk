@@ -147,37 +147,13 @@ namespace OpenTK.Platform.SDL2
             return 0;
         }
 
-        public IMouseDriver2 MouseDriver
-        {
-            get
-            {
-                return mouse_driver;
-            }
-        }
+        public IMouseDriver2 MouseDriver => mouse_driver;
 
-        public IKeyboardDriver2 KeyboardDriver
-        {
-            get
-            {
-                return keyboard_driver;
-            }
-        }
+        public IKeyboardDriver2 KeyboardDriver => keyboard_driver;
 
-        public IGamePadDriver GamePadDriver
-        {
-            get
-            {
-                return joystick_driver;
-            }
-        }
+        public IGamePadDriver GamePadDriver => joystick_driver;
 
-        public IJoystickDriver2 JoystickDriver
-        {
-            get
-            {
-                return joystick_driver;
-            }
-        }
+        public IJoystickDriver2 JoystickDriver => joystick_driver;
 
         private void Dispose(bool manual)
         {

@@ -56,37 +56,25 @@ namespace OpenTK.Input
         /// Gets the <see cref="ButtonState"/> for the up button.
         /// </summary>
         /// <value><c>ButtonState.Pressed</c> if the up button is pressed; otherwise, <c>ButtonState.Released</c>.</value>
-        public ButtonState Up
-        {
-            get { return IsUp ? ButtonState.Pressed : ButtonState.Released; }
-        }
+        public ButtonState Up => IsUp ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the down button.
         /// </summary>
         /// <value><c>ButtonState.Pressed</c> if the down button is pressed; otherwise, <c>ButtonState.Released</c>.</value>
-        public ButtonState Down
-        {
-            get { return IsDown ? ButtonState.Pressed : ButtonState.Released; }
-        }
+        public ButtonState Down => IsDown ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the left button.
         /// </summary>
         /// <value><c>ButtonState.Pressed</c> if the left button is pressed; otherwise, <c>ButtonState.Released</c>.</value>
-        public ButtonState Left
-        {
-            get { return IsLeft ? ButtonState.Pressed : ButtonState.Released; }
-        }
+        public ButtonState Left => IsLeft ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the right button.
         /// </summary>
         /// <value><c>ButtonState.Pressed</c> if the right button is pressed; otherwise, <c>ButtonState.Released</c>.</value>
-        public ButtonState Right
-        {
-            get { return IsRight ? ButtonState.Pressed : ButtonState.Released; }
-        }
+        public ButtonState Right => IsRight ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
         /// Gets a value indicating whether the up button is pressed.
@@ -94,8 +82,8 @@ namespace OpenTK.Input
         /// <value><c>true</c> if the up button is pressed; otherwise, <c>false</c>.</value>
         public bool IsUp
         {
-            get { return (buttons  & DPadButtons.Up) != 0; }
-            internal set { SetButton(DPadButtons.Up, value); }
+            get => (buttons  & DPadButtons.Up) != 0;
+            internal set => SetButton(DPadButtons.Up, value);
         }
 
         /// <summary>
@@ -104,8 +92,8 @@ namespace OpenTK.Input
         /// <value><c>true</c> if the down button is pressed; otherwise, <c>false</c>.</value>
         public bool IsDown
         {
-            get { return (buttons & DPadButtons.Down) != 0; }
-            internal set { SetButton(DPadButtons.Down, value); }
+            get => (buttons & DPadButtons.Down) != 0;
+            internal set => SetButton(DPadButtons.Down, value);
         }
 
         /// <summary>
@@ -114,8 +102,8 @@ namespace OpenTK.Input
         /// <value><c>true</c> if the left button is pressed; otherwise, <c>false</c>.</value>
         public bool IsLeft
         {
-            get { return (buttons & DPadButtons.Left) != 0; }
-            internal set { SetButton(DPadButtons.Left, value); }
+            get => (buttons & DPadButtons.Left) != 0;
+            internal set => SetButton(DPadButtons.Left, value);
         }
 
         /// <summary>
@@ -124,8 +112,8 @@ namespace OpenTK.Input
         /// <value><c>true</c> if the right button is pressed; otherwise, <c>false</c>.</value>
         public bool IsRight
         {
-            get { return (buttons & DPadButtons.Right) != 0; }
-            internal set { SetButton(DPadButtons.Right, value); }
+            get => (buttons & DPadButtons.Right) != 0;
+            internal set => SetButton(DPadButtons.Right, value);
         }
 
         /// <param name="left">A <see cref="GamePadDPad"/> instance to test for equality.</param>

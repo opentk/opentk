@@ -123,24 +123,12 @@ namespace OpenTK.Audio
         /// <summary>
         /// Returns a list of strings containing all known recording devices.
         /// </summary>
-        public static IList<string> AvailableDevices
-        {
-            get
-            {
-                return AudioDeviceEnumerator.AvailableRecordingDevices;
-            }
-        }
+        public static IList<string> AvailableDevices => AudioDeviceEnumerator.AvailableRecordingDevices;
 
         /// <summary>
         /// Returns the name of the device that will be used as recording default.
         /// </summary>
-        public static string DefaultDevice
-        {
-            get
-            {
-                return AudioDeviceEnumerator.DefaultRecordingDevice;
-            }
-        }
+        public static string DefaultDevice => AudioDeviceEnumerator.DefaultRecordingDevice;
 
         /// <summary>
         /// Checks for ALC error conditions.
@@ -155,13 +143,7 @@ namespace OpenTK.Audio
         }
 
         /// <summary>Returns the ALC error code for this device.</summary>
-        public AlcError CurrentError
-        {
-            get
-            {
-                return Alc.GetError(Handle);
-            }
-        }
+        public AlcError CurrentError => Alc.GetError(Handle);
 
         /// <summary>
         /// Start recording samples.

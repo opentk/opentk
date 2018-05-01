@@ -109,19 +109,23 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets the X position of the mouse for the event.
         /// </summary>
-        public int X { get { return state.X; } internal set { state.X = value; } }
+        public int X { get => state.X;
+            internal set => state.X = value;
+        }
 
         /// <summary>
         /// Gets the Y position of the mouse for the event.
         /// </summary>
-        public int Y { get { return state.Y; } internal set { state.Y = value; } }
+        public int Y { get => state.Y;
+            internal set => state.Y = value;
+        }
 
         /// <summary>
         /// Gets a <see cref="System.Drawing.Point"/> representing the location of the mouse for the event.
         /// </summary>
         public Point Position
         {
-            get { return new Point(state.X, state.Y); }
+            get => new Point(state.X, state.Y);
             set
             {
                 X = value.X;
@@ -134,8 +138,8 @@ namespace OpenTK.Input
         /// </summary>
         public MouseState Mouse
         {
-            get { return state; }
-            internal set { state = value; }
+            get => state;
+            internal set => state = value;
         }
     }
 
@@ -240,8 +244,8 @@ namespace OpenTK.Input
         /// </summary>
         public bool IsPressed
         {
-            get { return GetButton(Button) == ButtonState.Pressed; }
-            internal set { SetButton(Button, value ? ButtonState.Pressed : ButtonState.Released); }
+            get => GetButton(Button) == ButtonState.Pressed;
+            internal set => SetButton(Button, value ? ButtonState.Pressed : ButtonState.Released);
         }
     }
 
@@ -289,21 +293,18 @@ namespace OpenTK.Input
         /// Gets the value of the wheel in integer units.
         /// To support high-precision mice, it is recommended to use <see cref="ValuePrecise"/> instead.
         /// </summary>
-        public int Value { get { return (int)Math.Round(Mouse.Scroll.Y, MidpointRounding.AwayFromZero); } }
+        public int Value => (int)Math.Round(Mouse.Scroll.Y, MidpointRounding.AwayFromZero);
 
         /// <summary>
         /// Gets the change in value of the wheel for this event in integer units.
         /// To support high-precision mice, it is recommended to use <see cref="DeltaPrecise"/> instead.
         /// </summary>
-        public int Delta { get { return (int)Math.Round(DeltaPrecise, MidpointRounding.AwayFromZero); } }
+        public int Delta => (int)Math.Round(DeltaPrecise, MidpointRounding.AwayFromZero);
 
         /// <summary>
         /// Gets the precise value of the wheel in floating-point units.
         /// </summary>
-        public float ValuePrecise
-        {
-            get { return Mouse.Scroll.Y; }
-        }
+        public float ValuePrecise => Mouse.Scroll.Y;
 
         /// <summary>
         /// Gets the precise change in value of the wheel for this event in floating-point units.

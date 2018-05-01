@@ -86,7 +86,7 @@ namespace OpenTK
         /// </summary>
         public Vector3 Column0
         {
-            get { return new Vector3(Row0.X, Row1.X, Row2.X); }
+            get => new Vector3(Row0.X, Row1.X, Row2.X);
             set { Row0.X = value.X; Row1.X = value.Y; Row2.X = value.Z; }
         }
 
@@ -95,49 +95,58 @@ namespace OpenTK
         /// </summary>
         public Vector3 Column1
         {
-            get { return new Vector3(Row0.Y, Row1.Y, Row2.Y); }
+            get => new Vector3(Row0.Y, Row1.Y, Row2.Y);
             set { Row0.Y = value.X; Row1.Y = value.Y; Row2.Y = value.Z; }
         }
 
         /// <summary>
         /// Gets or sets the value at row 1, column 1 of this instance.
         /// </summary>
-        public float M11 { get { return Row0.X; } set { Row0.X = value; } }
+        public float M11 { get => Row0.X;
+            set => Row0.X = value;
+        }
 
         /// <summary>
         /// Gets or sets the value at row 1, column 2 of this instance.
         /// </summary>
-        public float M12 { get { return Row0.Y; } set { Row0.Y = value; } }
+        public float M12 { get => Row0.Y;
+            set => Row0.Y = value;
+        }
 
         /// <summary>
         /// Gets or sets the value at row 2, column 1 of this instance.
         /// </summary>
-        public float M21 { get { return Row1.X; } set { Row1.X = value; } }
+        public float M21 { get => Row1.X;
+            set => Row1.X = value;
+        }
 
         /// <summary>
         /// Gets or sets the value at row 2, column 2 of this instance.
         /// </summary>
-        public float M22 { get { return Row1.Y; } set { Row1.Y = value; } }
+        public float M22 { get => Row1.Y;
+            set => Row1.Y = value;
+        }
 
         /// <summary>
         /// Gets or sets the value at row 3, column 1 of this instance.
         /// </summary>
-        public float M31 { get { return Row2.X; } set { Row2.X = value; } }
+        public float M31 { get => Row2.X;
+            set => Row2.X = value;
+        }
 
         /// <summary>
         /// Gets or sets the value at row 3, column 2 of this instance.
         /// </summary>
-        public float M32 { get { return Row2.Y; } set { Row2.Y = value; } }
+        public float M32 { get => Row2.Y;
+            set => Row2.Y = value;
+        }
 
         /// <summary>
         /// Gets or sets the values along the main diagonal of the matrix.
         /// </summary>
         public Vector2 Diagonal
         {
-            get
-            {
-                return new Vector2(Row0.X, Row1.Y);
-            }
+            get => new Vector2(Row0.X, Row1.Y);
             set
             {
                 Row0.X = value.X;
@@ -148,7 +157,7 @@ namespace OpenTK
         /// <summary>
         /// Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
-        public float Trace { get { return Row0.X + Row1.Y; } }
+        public float Trace => Row0.X + Row1.Y;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.

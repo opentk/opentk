@@ -372,10 +372,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets the handle of the current GraphicsContext in the calling thread.
         /// </summary>
-        public static ContextHandle CurrentContextHandle
-        {
-            get { return GetCurrentContext(); }
-        }
+        public static ContextHandle CurrentContextHandle => GetCurrentContext();
 
         /// <summary>
         /// Gets the GraphicsContext that is current in the calling thread.
@@ -455,10 +452,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether this instance is current in the calling thread.
         /// </summary>
-        public bool IsCurrent
-        {
-            get { return implementation.IsCurrent; }
-        }
+        public bool IsCurrent => implementation.IsCurrent;
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether this instance has been disposed.
@@ -466,8 +460,8 @@ namespace OpenTK.Graphics
         /// </summary>
         public bool IsDisposed
         {
-            get { return disposed && implementation.IsDisposed; }
-            private set { disposed = value; }
+            get => disposed && implementation.IsDisposed;
+            private set => disposed = value;
         }
 
         /// <summary>
@@ -479,8 +473,8 @@ namespace OpenTK.Graphics
         /// </summary>
         public int SwapInterval
         {
-            get { return implementation.SwapInterval; }
-            set { implementation.SwapInterval = value; }
+            get => implementation.SwapInterval;
+            set => implementation.SwapInterval = value;
         }
 
         /// <summary>
@@ -512,10 +506,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets the platform-specific implementation of this IGraphicsContext.
         /// </summary>
-        IGraphicsContext IGraphicsContextInternal.Implementation
-        {
-            get { return implementation; }
-        }
+        IGraphicsContext IGraphicsContextInternal.Implementation => implementation;
 
         /// <summary>
         /// Gets a handle to the OpenGL rendering context.
@@ -535,10 +526,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets the GraphicsMode of the context.
         /// </summary>
-        public GraphicsMode GraphicsMode
-        {
-            get { return implementation.GraphicsMode; }
-        }
+        public GraphicsMode GraphicsMode => implementation.GraphicsMode;
 
         /// <summary>
         /// Retrieves the implementation-defined address of an OpenGL function.

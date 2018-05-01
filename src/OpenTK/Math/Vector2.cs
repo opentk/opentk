@@ -100,13 +100,7 @@ namespace OpenTK
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public float Length
-        {
-            get
-            {
-                return (float)Math.Sqrt(X * X + Y * Y);
-            }
-        }
+        public float Length => (float)Math.Sqrt(X * X + Y * Y);
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -117,13 +111,7 @@ namespace OpenTK
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        public float LengthFast
-        {
-            get
-            {
-                return 1.0f / MathHelper.InverseSqrtFast(X * X + Y * Y);
-            }
-        }
+        public float LengthFast => 1.0f / MathHelper.InverseSqrtFast(X * X + Y * Y);
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -134,35 +122,17 @@ namespace OpenTK
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthFast"/>
-        public float LengthSquared
-        {
-            get
-            {
-                return X * X + Y * Y;
-            }
-        }
+        public float LengthSquared => X * X + Y * Y;
 
         /// <summary>
         /// Gets the perpendicular vector on the right side of this vector.
         /// </summary>
-        public Vector2 PerpendicularRight
-        {
-            get
-            {
-                return new Vector2(Y, -X);
-            }
-        }
+        public Vector2 PerpendicularRight => new Vector2(Y, -X);
 
         /// <summary>
         /// Gets the perpendicular vector on the left side of this vector.
         /// </summary>
-        public Vector2 PerpendicularLeft
-        {
-            get
-            {
-                return new Vector2(-Y, X);
-            }
-        }
+        public Vector2 PerpendicularLeft => new Vector2(-Y, X);
 
         /// <summary>
         /// Returns a copy of the Vector2 scaled to unit length.
@@ -753,7 +723,8 @@ namespace OpenTK
         /// Gets or sets an OpenTK.Vector2 with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector2 Yx { get { return new Vector2(Y, X); } set { Y = value.X; X = value.Y; } }
+        public Vector2 Yx { get => new Vector2(Y, X);
+            set { Y = value.X; X = value.Y; } }
 
         /// <summary>
         /// Adds the specified instances.

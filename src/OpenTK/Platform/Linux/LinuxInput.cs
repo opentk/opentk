@@ -54,14 +54,8 @@ namespace OpenTK.Platform.Linux
 
             public int Id
             {
-                get
-                {
-                    return GetId(Device);
-                }
-                set
-                {
-                    LibInput.DeviceSetData(Device, (IntPtr)value);
-                }
+                get => GetId(Device);
+                set => LibInput.DeviceSetData(Device, (IntPtr)value);
             }
 
             public string Name
@@ -73,13 +67,7 @@ namespace OpenTK.Platform.Linux
                 }
             }
 
-            public IntPtr Seat
-            {
-                get
-                {
-                    return LibInput.DeviceGetSeat(Device);
-                }
-            }
+            public IntPtr Seat => LibInput.DeviceGetSeat(Device);
 
             public string LogicalSeatName
             {

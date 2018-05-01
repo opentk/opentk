@@ -41,7 +41,7 @@ namespace OpenTK.Platform.Windows
 
         protected INativeWindow Native { get; private set; }
 
-        protected WinWindowInfo Parent { get { return (WinWindowInfo)Native.WindowInfo; } }
+        protected WinWindowInfo Parent => (WinWindowInfo)Native.WindowInfo;
 
         private static readonly IntPtr Unhandled = new IntPtr(-1);
 

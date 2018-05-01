@@ -88,7 +88,7 @@ namespace OpenTK.Platform.MacOS.Carbon
 
         internal short X
         {
-            get { return left; }
+            get => left;
             set
             {
                 short width = Width;
@@ -99,7 +99,7 @@ namespace OpenTK.Platform.MacOS.Carbon
 
         internal short Y
         {
-            get { return top; }
+            get => top;
             set
             {
                 short height = Height;
@@ -110,14 +110,14 @@ namespace OpenTK.Platform.MacOS.Carbon
 
         internal short Width 
         { 
-            get { return (short)(right - left); } 
-            set { right = (short)(left + value); }
+            get => (short)(right - left);
+            set => right = (short)(left + value);
         }
 
         internal short Height 
         { 
-            get { return (short)(bottom - top); } 
-            set { bottom = (short)(top + value); }
+            get => (short)(bottom - top);
+            set => bottom = (short)(top + value);
         }
 
         public override string ToString()

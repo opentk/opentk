@@ -229,10 +229,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public bool IsCurrent
-        {
-            get { return (Context.Handle == Agl.aglGetCurrentContext()); }
-        }
+        public bool IsCurrent => (Context.Handle == Agl.aglGetCurrentContext());
 
         public int SwapInterval
         {
@@ -269,23 +266,11 @@ namespace OpenTK.Platform.MacOS
 
         public bool VSync
         {
-            get
-            {
-                return SwapInterval != 0;
-            }
-            set
-            {
-                SwapInterval = value ? 1 : 0;
-            }
+            get => SwapInterval != 0;
+            set => SwapInterval = value ? 1 : 0;
         }
 
-        public GraphicsMode GraphicsMode
-        {
-            get
-            {
-                return Mode;
-            }
-        }
+        public GraphicsMode GraphicsMode => Mode;
 
         public bool ErrorChecking { get; set; }
 
@@ -349,13 +334,7 @@ namespace OpenTK.Platform.MacOS
             return NS.GetAddress(function);
         }
 
-        public IGraphicsContext Implementation
-        {
-            get
-            {
-                return this;
-            }
-        }
+        public IGraphicsContext Implementation => this;
 
         public ContextHandle Context { get; private set; }
     }

@@ -99,18 +99,8 @@ namespace OpenTK.Platform.Linux
 
         public override int SwapInterval
         {
-            get
-            {
-                return swap_interval;
-            }
-            set
-            {
-                // We only support a SwapInterval of 0 (immediate)
-                // or 1 (vsynced).
-                // Todo: add support for SwapInterval of -1 (adaptive).
-                // This requires a small change in WaitFlip().
-                swap_interval = MathHelper.Clamp(value, 0, 1);
-            }
+            get => swap_interval;
+            set => swap_interval = MathHelper.Clamp(value, 0, 1);
         }
 
         private void WaitFlip(bool block)

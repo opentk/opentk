@@ -57,10 +57,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Returns a synchronization token unique for the GL class.
         /// </summary>
-        protected override object SyncRoot
-        {
-            get { return sync_root; }
-        }
+        protected override object SyncRoot => sync_root;
 
 #pragma warning disable 3019
 #pragma warning disable 1591

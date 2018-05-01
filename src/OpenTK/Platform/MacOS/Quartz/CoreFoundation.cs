@@ -47,10 +47,8 @@ namespace OpenTK.Platform.MacOS.Carbon
             Ref = reference;
         }
 
-        public int Count
-        {
-            get { return CF.CFArrayGetCount(Ref); }
-        }
+        public int Count => CF.CFArrayGetCount(Ref);
+
         public IntPtr this[int index]
         {
             get
@@ -74,13 +72,7 @@ namespace OpenTK.Platform.MacOS.Carbon
 
         public IntPtr Ref { get; set; }
 
-        public int Count
-        {
-            get
-            {
-                return CF.CFDictionaryGetCount(Ref);
-            }
-        }
+        public int Count => CF.CFDictionaryGetCount(Ref);
 
         public double GetNumberValue(string key)
         {
