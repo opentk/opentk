@@ -8,7 +8,7 @@
 namespace OpenTK.Audio.OpenAL
 {
     ///<summary>A list of valid 32-bit Float Effect/GetEffect parameters</summary>
-    public enum EfxEffectf : int
+    public enum EfxEffectf
     {
         ///<summary>Reverb Modal Density controls the coloration of the late reverb. Lowering the value adds more coloration to the late reverb. Range [0.0f .. 1.0f] Default: 1.0f</summary>
         ReverbDensity = 0x0001,
@@ -159,7 +159,7 @@ namespace OpenTK.Audio.OpenAL
     }
 
     ///<summary>A list of valid Math.Vector3 Effect/GetEffect parameters</summary>
-    public enum EfxEffect3f : int
+    public enum EfxEffect3f
     {
         /// <summary>Reverb Pan does for the Reverb what Reflections Pan does for the Reflections. Unit: Vector3 of length 0f to 1f Default: {0.0f, 0.0f, 0.0f}</summary>
         EaxReverbLateReverbPan = 0x000E,
@@ -168,7 +168,7 @@ namespace OpenTK.Audio.OpenAL
     }
 
     ///<summary>A list of valid Int32 Effect/GetEffect parameters</summary>
-    public enum EfxEffecti : int
+    public enum EfxEffecti
     {
         ///<summary>This property sets the waveform shape of the low-frequency oscillator that controls the delay time of the delayed signals. Unit: (0) Sinusoid, (1) Triangle Range [0 .. 1] Default: 1</summary>
         ChorusWaveform = 0x0001,
@@ -218,7 +218,7 @@ namespace OpenTK.Audio.OpenAL
     }
 
     ///<summary>Vocal morpher effect parameters. If both parameters are set to the same phoneme, that determines the filtering effect that will be heard. If these two parameters are set to different phonemes, the filtering effect will morph between the two settings at a rate specified by EfxEffectf.VocalMorpherRate.</summary>
-    public enum EfxFormantFilterSettings : int
+    public enum EfxFormantFilterSettings
     {
         /// <summary>
         /// The A phoneme of the vocal morpher.
@@ -372,7 +372,7 @@ namespace OpenTK.Audio.OpenAL
     }
 
     ///<summary>Effect type definitions to be used with EfxEffecti.EffectType.</summary>
-    public enum EfxEffectType : int
+    public enum EfxEffectType
     {
         ///<summary>No Effect, disable. This Effect type is used when an Effect object is initially created.</summary>
         Null = 0x0000,
@@ -405,7 +405,7 @@ namespace OpenTK.Audio.OpenAL
     }
 
     ///<summary>A list of valid Int32 AuxiliaryEffectSlot/GetAuxiliaryEffectSlot parameters</summary>
-    public enum EfxAuxiliaryi : int
+    public enum EfxAuxiliaryi
     {
         /// <summary>This property is used to attach an Effect object to the Auxiliary Effect Slot object. After the attachment, the Auxiliary Effect Slot object will contain the effect type and have the same effect parameters that were stored in the Effect object. Any Sources feeding the Auxiliary Effect Slot will immediate feed the new effect type and new effect parameters.</summary>
         EffectslotEffect = 0x0001,
@@ -415,14 +415,14 @@ namespace OpenTK.Audio.OpenAL
     }
 
     ///<summary>A list of valid 32-bits Float AuxiliaryEffectSlot/GetAuxiliaryEffectSlot parameters</summary>
-    public enum EfxAuxiliaryf : int
+    public enum EfxAuxiliaryf
     {
         /// <summary>This property is used to specify an output level for the Auxiliary Effect Slot. Setting the gain to 0.0f mutes the output. Range [0.0f .. 1.0f] Default: 1.0f</summary>
         EffectslotGain = 0x0002,
     }
 
     ///<summary>A list of valid 32-bits Float Filter/GetFilter parameters</summary>
-    public enum EfxFilterf : int
+    public enum EfxFilterf
     {
         ///<summary>Range [0.0f .. 1.0f] Default: 1.0f</summary>
         LowpassGain = 0x0001,
@@ -443,14 +443,14 @@ namespace OpenTK.Audio.OpenAL
     }
 
     ///<summary>A list of valid Int32 Filter/GetFilter parameters</summary>
-    public enum EfxFilteri : int
+    public enum EfxFilteri
     {
         /// <summary>Used with the enum EfxFilterType as Parameter to select a filter logic.</summary>
         FilterType = 0x8001,
     }
 
     ///<summary>Filter type definitions to be used with EfxFilteri.FilterType.</summary>
-    public enum EfxFilterType : int
+    public enum EfxFilterType
     {
         ///<summary>No Filter, disable. This Filter type is used when a Filter object is initially created.</summary>
         Null = 0x0000,

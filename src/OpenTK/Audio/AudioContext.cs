@@ -159,7 +159,7 @@ namespace OpenTK.Audio
         }
 
         /// <summary>May be passed at context construction time to indicate the number of desired auxiliary effect slot sends per source.</summary>
-        public enum MaxAuxiliarySends:int
+        public enum MaxAuxiliarySends
         {
             /// <summary>Will chose a reliably working parameter.</summary>
             UseDriverDefault = 0,

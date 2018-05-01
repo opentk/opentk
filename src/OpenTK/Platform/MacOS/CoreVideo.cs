@@ -17,7 +17,7 @@ namespace OpenTK.Platform.MacOS
     {
         private const string LibPath = "/System/Library/Frameworks/CoreVideo.framework/Versions/Current/CoreVideo";
 
-        internal enum TimeFlags : Int32
+        internal enum TimeFlags
         {
             TimeIsIndefinite = 1 << 0
         }

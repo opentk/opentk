@@ -8,7 +8,7 @@ namespace OpenTK.Platform.MacOS
     /// Values for enum can be found here https://developer.apple.com/documentation/appkit/nsdragoperation?language=objc
     /// or for Mac users /System/Library/Frameworks/AppKit.framework/Headers
     /// </summary>
-    internal enum NSDragOperation : int
+    internal enum NSDragOperation
     {
         None = 0,
         Copy = 1,

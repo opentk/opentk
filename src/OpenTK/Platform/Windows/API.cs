@@ -2006,7 +2006,7 @@ namespace OpenTK.Platform.Windows
     }
 
     [Flags]
-    internal enum SetWindowPosFlags : int
+    internal enum SetWindowPosFlags
     {
         /// <summary>
         /// Retains the current size (ignores the cx and cy parameters).
@@ -2980,7 +2980,7 @@ namespace OpenTK.Platform.Windows
         // #endif /* _WIN32_WINNT >= 0x0500 */
     }
 
-    internal enum GetWindowLongOffsets : int
+    internal enum GetWindowLongOffsets
     {
         WNDPROC       = (-4),
         HINSTANCE     = (-6),
@@ -2991,7 +2991,7 @@ namespace OpenTK.Platform.Windows
         ID            = (-12),
     }
     [Flags]
-    internal enum PixelFormatDescriptorFlags : int
+    internal enum PixelFormatDescriptorFlags
     {
         // PixelFormatDescriptor flags
         DOUBLEBUFFER = 0x01,
@@ -3051,7 +3051,7 @@ namespace OpenTK.Platform.Windows
         // #endif /* _WIN32_WINNT >= 0x0501 */
     }
     [Flags]
-    internal enum RawInputDeviceFlags : int
+    internal enum RawInputDeviceFlags
     {
         /// <summary>
         /// If set, this removes the top level collection from the inclusion list.
@@ -3152,7 +3152,7 @@ namespace OpenTK.Platform.Windows
         TERMSRV_SHADOW  = 0x10
     }
 
-    internal enum RawInputDeviceType : int
+    internal enum RawInputDeviceType
     {
         MOUSE    = 0,
         KEYBOARD = 1,
@@ -3543,7 +3543,7 @@ namespace OpenTK.Platform.Windows
         ALLINPUT       = INPUT | POSTMESSAGE | TIMER | PAINT | HOTKEY | SENDMESSAGE
     }
 
-    internal enum WindowMessage : int
+    internal enum WindowMessage
     {
         NULL = 0x0000,
         CREATE = 0x0001,
@@ -3990,7 +3990,7 @@ namespace OpenTK.Platform.Windows
     }
 
     [Flags]
-    internal enum ShGetFileIconFlags : int
+    internal enum ShGetFileIconFlags
     {
         /// <summary>get icon</summary>
         Icon = 0x000000100,
@@ -4037,7 +4037,7 @@ namespace OpenTK.Platform.Windows
         Nearest = 2,
     }
 
-    internal enum CursorName : int
+    internal enum CursorName
     {
         Arrow = 32512
     }

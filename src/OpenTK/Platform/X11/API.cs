@@ -786,7 +786,7 @@ XF86VidModeGetGammaRampSize(
         DoNotCover = (1 << 5),  /* attempt to not cover this window */
     }
 
-    internal enum ErrorCodes : int
+    internal enum ErrorCodes
     {
         Success = 0,
         BadRequest = 1,
@@ -1231,7 +1231,7 @@ XF86VidModeGetGammaRampSize(
         SunOpen = 0x1005ff73,
     }
 
-    public enum XVisualClass : int
+    public enum XVisualClass
     {
         StaticGray = 0,
         GrayScale = 1,
