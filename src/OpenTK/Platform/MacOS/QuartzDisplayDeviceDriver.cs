@@ -172,7 +172,7 @@ namespace OpenTK.Platform.MacOS
                 int bpp = (int)dict.GetNumberValue("BitsPerPixel");
                 double freq = dict.GetNumberValue("RefreshRate");
 
-                if (width == resolution.Width && height == resolution.Height && bpp == resolution.BitsPerPixel && System.Math.Abs(freq - resolution.RefreshRate) < 1e-6)
+                if (width == resolution.Width && height == resolution.Height && bpp == resolution.BitsPerPixel && Math.Abs(freq - resolution.RefreshRate) < 1e-6)
                 {
 //                    if (displaysCaptured.Contains(display) == false)
 //                    {

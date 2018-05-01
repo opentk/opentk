@@ -36,7 +36,7 @@ namespace OpenTK.Platform.Egl
         {
             WinWindowInfo win_win = (WinWindowInfo)window;
             IntPtr egl_display = GetDisplay(win_win.DeviceContext);
-            EglWindowInfo egl_win = new OpenTK.Platform.Egl.EglWindowInfo(win_win.Handle, egl_display);
+            EglWindowInfo egl_win = new EglWindowInfo(win_win.Handle, egl_display);
             return new EglWinContext(mode, egl_win, shareContext, major, minor, flags);
         }
 
@@ -44,7 +44,7 @@ namespace OpenTK.Platform.Egl
         {
             WinWindowInfo win_win = (WinWindowInfo)window;
             IntPtr egl_display = GetDisplay(win_win.DeviceContext);
-            EglWindowInfo egl_win = new OpenTK.Platform.Egl.EglWindowInfo(win_win.Handle, egl_display);
+            EglWindowInfo egl_win = new EglWindowInfo(win_win.Handle, egl_display);
             return new EglWinContext(handle, egl_win, shareContext, major, minor, flags);
         }
 

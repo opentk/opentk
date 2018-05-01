@@ -153,7 +153,7 @@ namespace OpenTK.Platform.Windows
 
         public static RawInputDeviceList[] GetDeviceList()
         {
-            int count = WinRawInput.DeviceCount;
+            int count = DeviceCount;
             RawInputDeviceList[] ridl = new RawInputDeviceList[count];
             for (int i = 0; i < count; i++)
             {

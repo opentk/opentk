@@ -48,9 +48,9 @@ namespace OpenTK.Rewrite
                 throw new ArgumentException("The name argument cannot be null or empty", nameof(name));
             }
 
-            this.Body = body;
-            this.Definition = definition;
-            this.Name = name;
+            Body = body;
+            Definition = definition;
+            Name = name;
         }
     }
 }

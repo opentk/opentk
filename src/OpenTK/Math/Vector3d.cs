@@ -153,7 +153,7 @@ namespace OpenTK
         {
             get
             {
-                return System.Math.Sqrt(X * X + Y * Y + Z * Z);
+                return Math.Sqrt(X * X + Y * Y + Z * Z);
             }
         }
 
@@ -207,7 +207,7 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-            double scale = 1.0 / this.Length;
+            double scale = 1.0 / Length;
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -841,7 +841,7 @@ namespace OpenTK
         public static void TransformNormal(ref Vector3d norm, ref Matrix4d mat, out Vector3d result)
         {
             Matrix4d Inverse = Matrix4d.Invert(mat);
-            Vector3d.TransformNormalInverse(ref norm, ref Inverse, out result);
+            TransformNormalInverse(ref norm, ref Inverse, out result);
         }
 
         /// <summary>Transform a Normal by the (transpose of the) given Matrix</summary>
@@ -968,12 +968,12 @@ namespace OpenTK
             // Since vec.W == 0, we can optimize quat * vec * quat^-1 as follows:
             // vec + 2.0 * cross(quat.xyz, cross(quat.xyz, vec) + quat.w * vec)
             Vector3d xyz = quat.Xyz, temp, temp2;
-            Vector3d.Cross(ref xyz, ref vec, out temp);
-            Vector3d.Multiply(ref vec, quat.W, out temp2);
-            Vector3d.Add(ref temp, ref temp2, out temp);
-            Vector3d.Cross(ref xyz, ref temp, out temp);
-            Vector3d.Multiply(ref temp, 2, out temp);
-            Vector3d.Add(ref vec, ref temp, out result);
+            Cross(ref xyz, ref vec, out temp);
+            Multiply(ref vec, quat.W, out temp2);
+            Add(ref temp, ref temp2, out temp);
+            Cross(ref xyz, ref temp, out temp);
+            Multiply(ref temp, 2, out temp);
+            Add(ref vec, ref temp, out result);
         }
 
         /// <summary>
@@ -1024,8 +1024,8 @@ namespace OpenTK
         public static void CalculateAngle(ref Vector3d first, ref Vector3d second, out double result)
         {
             double temp;
-            Vector3d.Dot(ref first, ref second, out temp);
-            result = System.Math.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0, 1.0));
+            Dot(ref first, ref second, out temp);
+            result = Math.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0, 1.0));
         }
 
         /// <summary>
@@ -1247,9 +1247,9 @@ namespace OpenTK
         {
             unchecked
             {
-                var hashCode = this.X.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Y.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Z.GetHashCode();
+                var hashCode = X.GetHashCode();
+                hashCode = (hashCode * 397) ^ Y.GetHashCode();
+                hashCode = (hashCode * 397) ^ Z.GetHashCode();
                 return hashCode;
             }
         }
@@ -1266,7 +1266,7 @@ namespace OpenTK
                 return false;
             }
 
-            return this.Equals((Vector3d)obj);
+            return Equals((Vector3d)obj);
         }
 
         /// <summary>Indicates whether the current vector is equal to another vector.</summary>

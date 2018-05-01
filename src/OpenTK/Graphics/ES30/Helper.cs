@@ -188,7 +188,7 @@ namespace OpenTK.Graphics.ES30
             return str;
         }
 
-        public static void ShaderSource(Int32 shader, System.String @string)
+        public static void ShaderSource(Int32 shader, String @string)
         {
             unsafe
             {

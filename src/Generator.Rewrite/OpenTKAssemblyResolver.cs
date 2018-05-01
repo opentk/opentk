@@ -114,7 +114,7 @@ namespace OpenTK.Rewrite
                             return assembly;
                         }
                     }
-                    catch (System.BadImageFormatException)
+                    catch (BadImageFormatException)
                     {
                     }
                 }

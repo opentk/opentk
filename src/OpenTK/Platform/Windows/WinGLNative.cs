@@ -1190,7 +1190,7 @@ namespace OpenTK.Platform.Windows
                     else
                     {
                         var stride = value.Width *
-                            (Bitmap.GetPixelFormatSize(PixelFormat.Format32bppArgb) / 8);
+                            (Image.GetPixelFormatSize(PixelFormat.Format32bppArgb) / 8);
 
                         Bitmap bmp;
                         unsafe

@@ -153,7 +153,7 @@ namespace OpenTK.Input
             // False     True     False
             // True      False    True
             // True      True     True
-            if (this.KeyRepeat || !e.IsRepeat)
+            if (KeyRepeat || !e.IsRepeat)
             {
                 KeyDown(this, e);
             }

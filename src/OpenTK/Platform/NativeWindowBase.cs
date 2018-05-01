@@ -294,7 +294,7 @@ namespace OpenTK.Platform
 
         public event EventHandler<EventArgs> Move = delegate { };
         public event EventHandler<EventArgs> Resize = delegate { };
-        public event EventHandler<System.ComponentModel.CancelEventArgs> Closing = delegate { };
+        public event EventHandler<CancelEventArgs> Closing = delegate { };
         public event EventHandler<EventArgs> Closed = delegate { };
         public event EventHandler<EventArgs> Disposed = delegate { };
         public event EventHandler<EventArgs> IconChanged = delegate { };

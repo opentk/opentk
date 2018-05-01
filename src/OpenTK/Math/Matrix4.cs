@@ -349,7 +349,7 @@ namespace OpenTK
         /// </summary>
         public void Invert()
         {
-            this = Matrix4.Invert(this);
+            this = Invert(this);
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace OpenTK
         /// </summary>
         public void Transpose()
         {
-            this = Matrix4.Transpose(this);
+            this = Transpose(this);
         }
 
         /// <summary>
@@ -375,7 +375,7 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-            var determinant = this.Determinant;
+            var determinant = Determinant;
             Row0 /= determinant;
             Row1 /= determinant;
             Row2 /= determinant;
@@ -534,8 +534,8 @@ namespace OpenTK
             float axisX = axis.X, axisY = axis.Y, axisZ = axis.Z;
 
             // calculate angles
-            float cos = (float)System.Math.Cos(-angle);
-            float sin = (float)System.Math.Sin(-angle);
+            float cos = (float)Math.Cos(-angle);
+            float sin = (float)Math.Sin(-angle);
             float t = 1.0f - cos;
 
             // do the conversion math once
@@ -610,8 +610,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationX(float angle, out Matrix4 result)
         {
-            float cos = (float)System.Math.Cos(angle);
-            float sin = (float)System.Math.Sin(angle);
+            float cos = (float)Math.Cos(angle);
+            float sin = (float)Math.Sin(angle);
 
             result = Identity;
             result.Row1.Y = cos;
@@ -639,8 +639,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationY(float angle, out Matrix4 result)
         {
-            float cos = (float)System.Math.Cos(angle);
-            float sin = (float)System.Math.Sin(angle);
+            float cos = (float)Math.Cos(angle);
+            float sin = (float)Math.Sin(angle);
 
             result = Identity;
             result.Row0.X = cos;
@@ -668,8 +668,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationZ(float angle, out Matrix4 result)
         {
-            float cos = (float)System.Math.Cos(angle);
-            float sin = (float)System.Math.Sin(angle);
+            float cos = (float)Math.Cos(angle);
+            float sin = (float)Math.Sin(angle);
 
             result = Identity;
             result.Row0.X = cos;
@@ -932,7 +932,7 @@ namespace OpenTK
                 throw new ArgumentOutOfRangeException("zFar");
             }
 
-            float yMax = zNear * (float)System.Math.Tan(0.5f * fovy);
+            float yMax = zNear * (float)Math.Tan(0.5f * fovy);
             float yMin = -yMax;
             float xMin = yMin * aspect;
             float xMax = yMax * aspect;
@@ -1261,7 +1261,7 @@ namespace OpenTK
                         {
                             if (pivotIdx[k] == -1)
                             {
-                                float absVal = System.Math.Abs(inverse[j, k]);
+                                float absVal = Math.Abs(inverse[j, k]);
                                 if (absVal > maxPivot)
                                 {
                                     maxPivot = absVal;
@@ -1400,7 +1400,7 @@ namespace OpenTK
         /// <returns>A new Matrix4 which holds the result of the multiplication</returns>
         public static Matrix4 operator *(Matrix4 left, Matrix4 right)
         {
-            return Matrix4.Mult(left, right);
+            return Mult(left, right);
         }
 
         /// <summary>
@@ -1411,7 +1411,7 @@ namespace OpenTK
         /// <returns>A new Matrix4 which holds the result of the multiplication</returns>
         public static Matrix4 operator *(Matrix4 left, float right)
         {
-            return Matrix4.Mult(left, right);
+            return Mult(left, right);
         }
 
         /// <summary>
@@ -1422,7 +1422,7 @@ namespace OpenTK
         /// <returns>A new Matrix4 which holds the result of the addition</returns>
         public static Matrix4 operator +(Matrix4 left, Matrix4 right)
         {
-            return Matrix4.Add(left, right);
+            return Add(left, right);
         }
 
         /// <summary>
@@ -1433,7 +1433,7 @@ namespace OpenTK
         /// <returns>A new Matrix4 which holds the result of the subtraction</returns>
         public static Matrix4 operator -(Matrix4 left, Matrix4 right)
         {
-            return Matrix4.Subtract(left, right);
+            return Subtract(left, right);
         }
 
         /// <summary>
@@ -1475,10 +1475,10 @@ namespace OpenTK
         {
             unchecked
             {
-                var hashCode = this.Row0.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Row1.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Row2.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Row3.GetHashCode();
+                var hashCode = Row0.GetHashCode();
+                hashCode = (hashCode * 397) ^ Row1.GetHashCode();
+                hashCode = (hashCode * 397) ^ Row2.GetHashCode();
+                hashCode = (hashCode * 397) ^ Row3.GetHashCode();
                 return hashCode;
             }
         }
@@ -1495,7 +1495,7 @@ namespace OpenTK
                 return false;
             }
 
-            return this.Equals((Matrix4)obj);
+            return Equals((Matrix4)obj);
         }
 
         /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>

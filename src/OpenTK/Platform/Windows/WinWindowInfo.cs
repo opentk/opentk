@@ -51,7 +51,7 @@ namespace OpenTK.Platform.Windows
         public WinWindowInfo(IntPtr handle, WinWindowInfo parent)
         {
             this.handle = handle;
-            this.Parent = parent;
+            Parent = parent;
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace OpenTK.Platform.Windows
             {
                 if (dc == IntPtr.Zero)
                 {
-                    dc = Functions.GetDC(this.Handle);
+                    dc = Functions.GetDC(Handle);
                 }
 
                 return dc;
@@ -90,7 +90,7 @@ namespace OpenTK.Platform.Windows
         public override string ToString()
         {
             return String.Format("Windows.WindowInfo: Handle {0}, Parent ({1})",
-                this.Handle, this.Parent != null ? this.Parent.ToString() : "null");
+                Handle, Parent != null ? Parent.ToString() : "null");
         }
 
         /// <summary>Checks if <c>this</c> and <c>obj</c> reference the same win32 window.</summary>
@@ -102,7 +102,7 @@ namespace OpenTK.Platform.Windows
             {
                 return false;
             }
-            if (this.GetType() != obj.GetType())
+            if (GetType() != obj.GetType())
             {
                 return false;
             }
@@ -126,7 +126,7 @@ namespace OpenTK.Platform.Windows
         /// <summary>Releases the unmanaged resources consumed by this instance.</summary>
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -134,11 +134,11 @@ namespace OpenTK.Platform.Windows
         {
             if (!disposed)
             {
-                if (this.dc != IntPtr.Zero)
+                if (dc != IntPtr.Zero)
                 {
-                    if (!Functions.ReleaseDC(this.handle, this.dc))
+                    if (!Functions.ReleaseDC(handle, dc))
                     {
-                        Debug.Print("[Warning] Failed to release device context {0}. Windows error: {1}.", this.dc, Marshal.GetLastWin32Error());
+                        Debug.Print("[Warning] Failed to release device context {0}. Windows error: {1}.", dc, Marshal.GetLastWin32Error());
                     }
                 }
 
@@ -156,7 +156,7 @@ namespace OpenTK.Platform.Windows
 
         ~WinWindowInfo()
         {
-            this.Dispose(false);
+            Dispose(false);
         }
     }
 }

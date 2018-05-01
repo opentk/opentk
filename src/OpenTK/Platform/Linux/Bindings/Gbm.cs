@@ -250,7 +250,7 @@ namespace OpenTK.Platform.Linux
         {
             return
                 obj is BufferObject &&
-                this.Equals((BufferObject)obj);
+                Equals((BufferObject)obj);
         }
 
         public override int GetHashCode()

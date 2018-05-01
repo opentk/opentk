@@ -265,7 +265,7 @@ namespace OpenTK.Platform.Windows
                 flags |= PixelFormatDescriptorFlags.STEREO;
             }
 
-            if (System.Environment.OSVersion.Version.Major >= 6 &&
+            if (Environment.OSVersion.Version.Major >= 6 &&
                 requested_acceleration_type != AccelerationType.None)
             {
                 // Request a compositor-capable mode when running on

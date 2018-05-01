@@ -73,9 +73,9 @@ namespace OpenTK
         /// <param name="z">An Half instance of a 16-bit half-precision floating-point number.</param>
         public Vector3h(Half x, Half y, Half z)
         {
-            this.X = x;
-            this.Y = y;
-            this.Z = z;
+            X = x;
+            Y = y;
+            Z = z;
         }
 
         /// <summary>
@@ -328,9 +328,9 @@ namespace OpenTK
         /// <param name="context"></param>
         public Vector3h(SerializationInfo info, StreamingContext context)
         {
-            this.X = (Half)info.GetValue("X", typeof(Half));
-            this.Y = (Half)info.GetValue("Y", typeof(Half));
-            this.Z = (Half)info.GetValue("Z", typeof(Half));
+            X = (Half)info.GetValue("X", typeof(Half));
+            Y = (Half)info.GetValue("Y", typeof(Half));
+            Z = (Half)info.GetValue("Z", typeof(Half));
         }
 
         /// <summary>Used by ISerialize to serialize the object.</summary>
@@ -338,9 +338,9 @@ namespace OpenTK
         /// <param name="context"></param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("X", this.X);
-            info.AddValue("Y", this.Y);
-            info.AddValue("Z", this.Z);
+            info.AddValue("X", X);
+            info.AddValue("Y", Y);
+            info.AddValue("Z", Z);
         }
 
         /// <summary>Updates the X,Y and Z components of this instance by reading from a Stream.</summary>
@@ -366,7 +366,7 @@ namespace OpenTK
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
         public bool Equals(Vector3h other)
         {
-            return (this.X.Equals(other.X) && this.Y.Equals(other.Y) && this.Z.Equals(other.Z));
+            return (X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z));
         }
 
         private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;

@@ -187,7 +187,7 @@ namespace OpenTK
         /// </summary>
         public void Transpose()
         {
-            this = Matrix2.Transpose(this);
+            this = Transpose(this);
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace OpenTK
         /// </summary>
         public void Invert()
         {
-            this = Matrix2.Invert(this);
+            this = Invert(this);
         }
 
         /// <summary>
@@ -205,8 +205,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix2 instance.</param>
         public static void CreateRotation(float angle, out Matrix2 result)
         {
-            float cos = (float)System.Math.Cos(angle);
-            float sin = (float)System.Math.Sin(angle);
+            float cos = (float)Math.Cos(angle);
+            float sin = (float)Math.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;
@@ -664,7 +664,7 @@ namespace OpenTK
         {
             unchecked
             {
-                return (this.Row0.GetHashCode() * 397) ^ this.Row1.GetHashCode();
+                return (Row0.GetHashCode() * 397) ^ Row1.GetHashCode();
             }
         }
 
@@ -680,7 +680,7 @@ namespace OpenTK
                 return false;
             }
 
-            return this.Equals((Matrix2)obj);
+            return Equals((Matrix2)obj);
         }
 
         /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>

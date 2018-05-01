@@ -57,7 +57,7 @@ namespace OpenTK.Audio
         /// Implicitly set parameters are: 22050Hz, 16Bit Mono, 4096 samples ringbuffer.
         /// </summary>
         public AudioCapture()
-            : this(AudioCapture.DefaultDevice, 22050, ALFormat.Mono16, 4096)
+            : this(DefaultDevice, 22050, ALFormat.Mono16, 4096)
         {
         }
 
@@ -319,24 +319,24 @@ namespace OpenTK.Audio
         /// <summary>Closes the device and disposes the instance.</summary>
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
         private void Dispose(bool manual)
         {
-            if (!this.IsDisposed)
+            if (!IsDisposed)
             {
-                if (this.Handle != IntPtr.Zero)
+                if (Handle != IntPtr.Zero)
                 {
-                    if (this.IsRunning)
+                    if (IsRunning)
                     {
-                        this.Stop();
+                        Stop();
                     }
 
-                    Alc.CaptureCloseDevice(this.Handle);
+                    Alc.CaptureCloseDevice(Handle);
                 }
-                this.IsDisposed = true;
+                IsDisposed = true;
             }
         }
     }

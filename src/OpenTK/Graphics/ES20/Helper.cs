@@ -76,62 +76,62 @@ namespace OpenTK.Graphics.ES20
 
         public static void ClearColor(Color color)
         {
-            GL.ClearColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
+            ClearColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
         }
 
         public static void ClearColor(Color4 color)
         {
-            GL.ClearColor(color.R, color.G, color.B, color.A);
+            ClearColor(color.R, color.G, color.B, color.A);
         }
 
         public static void BlendColor(Color color)
         {
-            GL.BlendColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
+            BlendColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
         }
 
         public static void BlendColor(Color4 color)
         {
-            GL.BlendColor(color.R, color.G, color.B, color.A);
+            BlendColor(color.R, color.G, color.B, color.A);
         }
 
         public static void Uniform2(int location, ref Vector2 vector)
         {
-            GL.Uniform2(location, vector.X, vector.Y);
+            Uniform2(location, vector.X, vector.Y);
         }
 
         public static void Uniform3(int location, ref Vector3 vector)
         {
-            GL.Uniform3(location, vector.X, vector.Y, vector.Z);
+            Uniform3(location, vector.X, vector.Y, vector.Z);
         }
 
         public static void Uniform4(int location, ref Vector4 vector)
         {
-            GL.Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
+            Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
         }
 
         public static void Uniform2(int location, Vector2 vector)
         {
-            GL.Uniform2(location, vector.X, vector.Y);
+            Uniform2(location, vector.X, vector.Y);
         }
 
         public static void Uniform3(int location, Vector3 vector)
         {
-            GL.Uniform3(location, vector.X, vector.Y, vector.Z);
+            Uniform3(location, vector.X, vector.Y, vector.Z);
         }
 
         public static void Uniform4(int location, Vector4 vector)
         {
-            GL.Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
+            Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
         }
 
         public static void Uniform4(int location, Color4 color)
         {
-            GL.Uniform4(location, color.R, color.G, color.B, color.A);
+            Uniform4(location, color.R, color.G, color.B, color.A);
         }
 
         public static void Uniform4(int location, Quaternion quaternion)
         {
-            GL.Uniform4(location, quaternion.X, quaternion.Y, quaternion.Z, quaternion.W);
+            Uniform4(location, quaternion.X, quaternion.Y, quaternion.Z, quaternion.W);
         }
 
         public static void UniformMatrix2(int location, bool transpose, ref Matrix2 matrix)
@@ -140,7 +140,7 @@ namespace OpenTK.Graphics.ES20
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix2(location, 1, transpose, matrix_ptr);
+                    UniformMatrix2(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -151,7 +151,7 @@ namespace OpenTK.Graphics.ES20
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix3(location, 1, transpose, matrix_ptr);
+                    UniformMatrix3(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -162,7 +162,7 @@ namespace OpenTK.Graphics.ES20
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix4(location, 1, transpose, matrix_ptr);
+                    UniformMatrix4(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -188,12 +188,12 @@ namespace OpenTK.Graphics.ES20
             return str;
         }
 
-        public static void ShaderSource(Int32 shader, System.String @string)
+        public static void ShaderSource(Int32 shader, String @string)
         {
             unsafe
             {
                 int length = @string.Length;
-                GL.ShaderSource((UInt32)shader, 1, new string[] { @string }, &length);
+                ShaderSource((UInt32)shader, 1, new string[] { @string }, &length);
             }
         }
 
@@ -215,7 +215,7 @@ namespace OpenTK.Graphics.ES20
                     info = String.Empty;
                     return;
                 }
-                GL.GetShaderInfoLog((UInt32)shader, length * 2, &length, out info);
+                GetShaderInfoLog((UInt32)shader, length * 2, &length, out info);
             }
         }
 
@@ -236,38 +236,38 @@ namespace OpenTK.Graphics.ES20
                     info = String.Empty;
                     return;
                 }
-                GL.GetProgramInfoLog((UInt32)program, length * 2, &length, out info);
+                GetProgramInfoLog((UInt32)program, length * 2, &length, out info);
             }
         }
 
         public static void VertexAttrib2(Int32 index, ref Vector2 v)
         {
-            GL.VertexAttrib2(index, v.X, v.Y);
+            VertexAttrib2(index, v.X, v.Y);
         }
 
         public static void VertexAttrib3(Int32 index, ref Vector3 v)
         {
-            GL.VertexAttrib3(index, v.X, v.Y, v.Z);
+            VertexAttrib3(index, v.X, v.Y, v.Z);
         }
 
         public static void VertexAttrib4(Int32 index, ref Vector4 v)
         {
-            GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
+            VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
 
         public static void VertexAttrib2(Int32 index, Vector2 v)
         {
-            GL.VertexAttrib2(index, v.X, v.Y);
+            VertexAttrib2(index, v.X, v.Y);
         }
 
         public static void VertexAttrib3(Int32 index, Vector3 v)
         {
-            GL.VertexAttrib3(index, v.X, v.Y, v.Z);
+            VertexAttrib3(index, v.X, v.Y, v.Z);
         }
 
         public static void VertexAttrib4(Int32 index, Vector4 v)
         {
-            GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
+            VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
 
         public static void VertexAttribPointer(int index, int size, VertexAttribPointerType type, bool normalized, int stride, int offset)
@@ -331,17 +331,17 @@ namespace OpenTK.Graphics.ES20
 
         public static void Viewport(Size size)
         {
-            GL.Viewport(0, 0, size.Width, size.Height);
+            Viewport(0, 0, size.Width, size.Height);
         }
 
         public static void Viewport(Point location, Size size)
         {
-            GL.Viewport(location.X, location.Y, size.Width, size.Height);
+            Viewport(location.X, location.Y, size.Width, size.Height);
         }
 
         public static void Viewport(Rectangle rectangle)
         {
-            GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+            Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
 #if MINIMAL
         public static void Viewport(OpenTK.Point location, OpenTK.Size size)

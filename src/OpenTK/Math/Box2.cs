@@ -99,12 +99,12 @@ namespace OpenTK
         /// <summary>
         /// Gets a float describing the width of the Box2 structure.
         /// </summary>
-        public float Width { get { return (float)System.Math.Abs(Right - Left); } }
+        public float Width { get { return (float)Math.Abs(Right - Left); } }
 
         /// <summary>
         /// Gets a float describing the height of the Box2 structure.
         /// </summary>
-        public float Height { get { return (float)System.Math.Abs(Bottom - Top); } }
+        public float Height { get { return (float)Math.Abs(Bottom - Top); } }
 
         /// <summary>
         /// Returns whether the box contains the specified point on the closed region described by this Box2.
@@ -194,10 +194,10 @@ namespace OpenTK
         {
             unchecked
             {
-                var hashCode = this.Left.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Right.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Top.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Bottom.GetHashCode();
+                var hashCode = Left.GetHashCode();
+                hashCode = (hashCode * 397) ^ Right.GetHashCode();
+                hashCode = (hashCode * 397) ^ Top.GetHashCode();
+                hashCode = (hashCode * 397) ^ Bottom.GetHashCode();
                 return hashCode;
             }
         }

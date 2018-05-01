@@ -263,7 +263,7 @@ namespace OpenTK
         /// </summary>
         public void Invert()
         {
-            this = Matrix3.Invert(this);
+            this = Invert(this);
         }
 
 
@@ -273,7 +273,7 @@ namespace OpenTK
         /// </summary>
         public void Transpose()
         {
-            this = Matrix3.Transpose(this);
+            this = Transpose(this);
         }
 
 
@@ -292,7 +292,7 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-            var determinant = this.Determinant;
+            var determinant = Determinant;
             Row0 /= determinant;
             Row1 /= determinant;
             Row2 /= determinant;
@@ -421,8 +421,8 @@ namespace OpenTK
             float axisX = axis.X, axisY = axis.Y, axisZ = axis.Z;
 
             //calculate angles
-            float cos = (float)System.Math.Cos(-angle);
-            float sin = (float)System.Math.Sin(-angle);
+            float cos = (float)Math.Cos(-angle);
+            float sin = (float)Math.Sin(-angle);
             float t = 1.0f - cos;
 
             //do the conversion math once
@@ -497,8 +497,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix3 instance.</param>
         public static void CreateRotationX(float angle, out Matrix3 result)
         {
-            float cos = (float)System.Math.Cos(angle);
-            float sin = (float)System.Math.Sin(angle);
+            float cos = (float)Math.Cos(angle);
+            float sin = (float)Math.Sin(angle);
 
             result = Identity;
             result.Row1.Y = cos;
@@ -526,8 +526,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix3 instance.</param>
         public static void CreateRotationY(float angle, out Matrix3 result)
         {
-            float cos = (float)System.Math.Cos(angle);
-            float sin = (float)System.Math.Sin(angle);
+            float cos = (float)Math.Cos(angle);
+            float sin = (float)Math.Sin(angle);
 
             result = Identity;
             result.Row0.X = cos;
@@ -555,8 +555,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix3 instance.</param>
         public static void CreateRotationZ(float angle, out Matrix3 result)
         {
-            float cos = (float)System.Math.Cos(angle);
-            float sin = (float)System.Math.Sin(angle);
+            float cos = (float)Math.Cos(angle);
+            float sin = (float)Math.Sin(angle);
 
             result = Identity;
             result.Row0.X = cos;
@@ -755,7 +755,7 @@ namespace OpenTK
                         {
                             if (pivotIdx[k] == -1)
                             {
-                                float absVal = System.Math.Abs(inverse[j, k]);
+                                float absVal = Math.Abs(inverse[j, k]);
                                 if (absVal > maxPivot)
                                 {
                                     maxPivot = absVal;
@@ -892,7 +892,7 @@ namespace OpenTK
         /// <returns>A new Matrix3d which holds the result of the multiplication</returns>
         public static Matrix3 operator *(Matrix3 left, Matrix3 right)
         {
-            return Matrix3.Mult(left, right);
+            return Mult(left, right);
         }
 
         /// <summary>
@@ -939,9 +939,9 @@ namespace OpenTK
         {
             unchecked
             {
-                var hashCode = this.Row0.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Row1.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Row2.GetHashCode();
+                var hashCode = Row0.GetHashCode();
+                hashCode = (hashCode * 397) ^ Row1.GetHashCode();
+                hashCode = (hashCode * 397) ^ Row2.GetHashCode();
                 return hashCode;
             }
         }
@@ -960,7 +960,7 @@ namespace OpenTK
                 return false;
             }
 
-            return this.Equals((Matrix3)obj);
+            return Equals((Matrix3)obj);
         }
 
 

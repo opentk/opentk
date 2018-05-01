@@ -48,7 +48,7 @@ namespace OpenTK.Platform.Windows
             Debug.WriteLine("Using WinRawKeyboard.");
             Debug.Indent();
 
-            this.window = windowHandle;
+            window = windowHandle;
             RefreshDevices();
 
             Debug.Unindent();

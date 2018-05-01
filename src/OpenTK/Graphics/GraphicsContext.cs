@@ -275,7 +275,7 @@ namespace OpenTK.Graphics
         /// <param name="minor">This parameter is reserved.</param>
         /// <param name="flags">This parameter is reserved..</param>
         public GraphicsContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, int major, int minor, GraphicsContextFlags flags)
-            : this(handle, Platform.Utilities.CreateGetAddress(), Factory.Default.CreateGetCurrentGraphicsContext())
+            : this(handle, Utilities.CreateGetAddress(), Factory.Default.CreateGetCurrentGraphicsContext())
         { }
 
         /// <summary>
@@ -337,10 +337,10 @@ namespace OpenTK.Graphics
 
         private static IGraphicsContext FindSharedContext()
         {
-            if (GraphicsContext.ShareContexts)
+            if (ShareContexts)
             {
                 // A small hack to create a shared context with the first available context.
-                foreach (IGraphicsContext target in GraphicsContext.available_contexts.Values)
+                foreach (IGraphicsContext target in available_contexts.Values)
                 {
                     // Fix for bug 1874: if a GraphicsContext gets finalized
                     // (but not disposed), it won't be removed from available_contexts
@@ -361,7 +361,7 @@ namespace OpenTK.Graphics
         /// <exception cref="GraphicsContextMissingException">Generated when no GraphicsContext is current in the calling thread.</exception>
         public static void Assert()
         {
-            if (GraphicsContext.CurrentContext == null)
+            if (CurrentContext == null)
             {
                 throw new GraphicsContextMissingException();
             }
@@ -501,7 +501,7 @@ namespace OpenTK.Graphics
         /// </exception>
         public void LoadAll()
         {
-            if (GraphicsContext.CurrentContext != this)
+            if (CurrentContext != this)
             {
                 throw new GraphicsContextException();
             }
@@ -579,7 +579,7 @@ namespace OpenTK.Graphics
         /// </summary>
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 

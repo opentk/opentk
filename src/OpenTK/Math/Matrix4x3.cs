@@ -260,7 +260,7 @@ namespace OpenTK
         /// </summary>
         public void Invert()
         {
-            this = Matrix4x3.Invert(this);
+            this = Invert(this);
         }
 
         /// <summary>
@@ -274,8 +274,8 @@ namespace OpenTK
             axis.Normalize();
             float axisX = axis.X, axisY = axis.Y, axisZ = axis.Z;
 
-            float cos = (float)System.Math.Cos(-angle);
-            float sin = (float)System.Math.Sin(-angle);
+            float cos = (float)Math.Cos(-angle);
+            float sin = (float)Math.Sin(-angle);
             float t = 1.0f - cos;
 
             float tXX = t * axisX * axisX,
@@ -367,8 +367,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationX(float angle, out Matrix4x3 result)
         {
-            float cos = (float)System.Math.Cos(angle);
-            float sin = (float)System.Math.Sin(angle);
+            float cos = (float)Math.Cos(angle);
+            float sin = (float)Math.Sin(angle);
 
             result.Row0.X = 1;
             result.Row0.Y = 0;
@@ -403,8 +403,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationY(float angle, out Matrix4x3 result)
         {
-            float cos = (float)System.Math.Cos(angle);
-            float sin = (float)System.Math.Sin(angle);
+            float cos = (float)Math.Cos(angle);
+            float sin = (float)Math.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = 0;
@@ -439,8 +439,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationZ(float angle, out Matrix4x3 result)
         {
-            float cos = (float)System.Math.Cos(angle);
-            float sin = (float)System.Math.Sin(angle);
+            float cos = (float)Math.Cos(angle);
+            float sin = (float)Math.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;
@@ -821,7 +821,7 @@ namespace OpenTK
         /// <returns>A new Matrix4 which holds the result of the multiplication</returns>
         public static Matrix4 operator *(Matrix4x3 left, Matrix3x4 right)
         {
-            return Matrix4x3.Mult(left, right);
+            return Mult(left, right);
         }
 
         /// <summary>
@@ -832,7 +832,7 @@ namespace OpenTK
         /// <returns>A new Matrix4x3 which holds the result of the multiplication</returns>
         public static Matrix4x3 operator *(Matrix4x3 left, Matrix4x3 right)
         {
-            return Matrix4x3.Mult(left, right);
+            return Mult(left, right);
         }
 
         /// <summary>
@@ -843,7 +843,7 @@ namespace OpenTK
         /// <returns>A new Matrix4x3 which holds the result of the multiplication</returns>
         public static Matrix4x3 operator *(Matrix4x3 left, float right)
         {
-            return Matrix4x3.Mult(left, right);
+            return Mult(left, right);
         }
 
         /// <summary>
@@ -854,7 +854,7 @@ namespace OpenTK
         /// <returns>A new Matrix4x3 which holds the result of the addition</returns>
         public static Matrix4x3 operator +(Matrix4x3 left, Matrix4x3 right)
         {
-            return Matrix4x3.Add(left, right);
+            return Add(left, right);
         }
 
         /// <summary>
@@ -865,7 +865,7 @@ namespace OpenTK
         /// <returns>A new Matrix4x3 which holds the result of the subtraction</returns>
         public static Matrix4x3 operator -(Matrix4x3 left, Matrix4x3 right)
         {
-            return Matrix4x3.Subtract(left, right);
+            return Subtract(left, right);
         }
 
         /// <summary>
@@ -907,10 +907,10 @@ namespace OpenTK
         {
             unchecked
             {
-                var hashCode = this.Row0.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Row1.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Row2.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Row3.GetHashCode();
+                var hashCode = Row0.GetHashCode();
+                hashCode = (hashCode * 397) ^ Row1.GetHashCode();
+                hashCode = (hashCode * 397) ^ Row2.GetHashCode();
+                hashCode = (hashCode * 397) ^ Row3.GetHashCode();
                 return hashCode;
             }
         }
@@ -927,7 +927,7 @@ namespace OpenTK
                 return false;
             }
 
-            return this.Equals((Matrix4x3)obj);
+            return Equals((Matrix4x3)obj);
         }
 
         /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>

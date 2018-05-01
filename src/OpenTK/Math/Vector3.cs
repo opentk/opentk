@@ -156,7 +156,7 @@ namespace OpenTK
         {
             get
             {
-                return (float)System.Math.Sqrt(X * X + Y * Y + Z * Z);
+                return (float)Math.Sqrt(X * X + Y * Y + Z * Z);
             }
         }
 
@@ -209,7 +209,7 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-            float scale = 1.0f / this.Length;
+            float scale = 1.0f / Length;
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -848,7 +848,7 @@ namespace OpenTK
         public static void TransformNormal(ref Vector3 norm, ref Matrix4 mat, out Vector3 result)
         {
             Matrix4 Inverse = Matrix4.Invert(mat);
-            Vector3.TransformNormalInverse(ref norm, ref Inverse, out result);
+            TransformNormalInverse(ref norm, ref Inverse, out result);
         }
 
         /// <summary>Transform a Normal by the (transpose of the) given Matrix</summary>
@@ -968,12 +968,12 @@ namespace OpenTK
             // Since vec.W == 0, we can optimize quat * vec * quat^-1 as follows:
             // vec + 2.0 * cross(quat.xyz, cross(quat.xyz, vec) + quat.w * vec)
             Vector3 xyz = quat.Xyz, temp, temp2;
-            Vector3.Cross(ref xyz, ref vec, out temp);
-            Vector3.Multiply(ref vec, quat.W, out temp2);
-            Vector3.Add(ref temp, ref temp2, out temp);
-            Vector3.Cross(ref xyz, ref temp, out temp);
-            Vector3.Multiply(ref temp, 2, out temp);
-            Vector3.Add(ref vec, ref temp, out result);
+            Cross(ref xyz, ref vec, out temp);
+            Multiply(ref vec, quat.W, out temp2);
+            Add(ref temp, ref temp2, out temp);
+            Cross(ref xyz, ref temp, out temp);
+            Multiply(ref temp, 2, out temp);
+            Add(ref vec, ref temp, out result);
         }
 
         /// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
@@ -1043,8 +1043,8 @@ namespace OpenTK
         public static void CalculateAngle(ref Vector3 first, ref Vector3 second, out float result)
         {
             float temp;
-            Vector3.Dot(ref first, ref second, out temp);
-            result = (float)System.Math.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0, 1.0));
+            Dot(ref first, ref second, out temp);
+            result = (float)Math.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0, 1.0));
         }
 
         /// <summary>
@@ -1311,7 +1311,7 @@ namespace OpenTK
         public static Vector3 operator *(Vector3 vec, Matrix3 mat)
         {
             Vector3 result;
-            Vector3.Transform(ref vec, ref mat, out result);
+            Transform(ref vec, ref mat, out result);
             return result;
         }
 
@@ -1324,7 +1324,7 @@ namespace OpenTK
         public static Vector3 operator *(Matrix3 mat, Vector3 vec)
         {
             Vector3 result;
-            Vector3.Transform(ref mat, ref vec, out result);
+            Transform(ref mat, ref vec, out result);
             return result;
         }
 
@@ -1337,7 +1337,7 @@ namespace OpenTK
         public static Vector3 operator *(Quaternion quat, Vector3 vec)
         {
             Vector3 result;
-            Vector3.Transform(ref vec, ref quat, out result);
+            Transform(ref vec, ref quat, out result);
             return result;
         }
 
@@ -1395,9 +1395,9 @@ namespace OpenTK
         {
             unchecked
             {
-                var hashCode = this.X.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Y.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Z.GetHashCode();
+                var hashCode = X.GetHashCode();
+                hashCode = (hashCode * 397) ^ Y.GetHashCode();
+                hashCode = (hashCode * 397) ^ Z.GetHashCode();
                 return hashCode;
             }
         }
@@ -1414,7 +1414,7 @@ namespace OpenTK
                 return false;
             }
 
-            return this.Equals((Vector3)obj);
+            return Equals((Vector3)obj);
         }
 
         /// <summary>Indicates whether the current vector is equal to another vector.</summary>

@@ -39,9 +39,9 @@ namespace OpenTK
                 throw new ArgumentOutOfRangeException("refreshRate", "Must be greater than, or equal to zero.");
             }
 
-            this.bounds = new Rectangle(x, y, width, height);
-            this.BitsPerPixel = bitsPerPixel;
-            this.RefreshRate = refreshRate;
+            bounds = new Rectangle(x, y, width, height);
+            BitsPerPixel = bitsPerPixel;
+            RefreshRate = refreshRate;
         }
 
 #if false
@@ -125,7 +125,7 @@ namespace OpenTK
             {
                 return false;
             }
-            if (this.GetType() == obj.GetType())
+            if (GetType() == obj.GetType())
             {
                 DisplayResolution res = (DisplayResolution)obj;
                 return

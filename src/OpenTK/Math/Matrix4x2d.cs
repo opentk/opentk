@@ -229,8 +229,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix3x2 instance.</param>
         public static void CreateRotation(double angle, out Matrix4x2d result)
         {
-            double cos = (double)System.Math.Cos(angle);
-            double sin = (double)System.Math.Sin(angle);
+            double cos = (double)Math.Cos(angle);
+            double sin = (double)Math.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;
@@ -707,10 +707,10 @@ namespace OpenTK
         {
             unchecked
             {
-                var hashCode = this.Row0.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Row1.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Row2.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Row3.GetHashCode();
+                var hashCode = Row0.GetHashCode();
+                hashCode = (hashCode * 397) ^ Row1.GetHashCode();
+                hashCode = (hashCode * 397) ^ Row2.GetHashCode();
+                hashCode = (hashCode * 397) ^ Row3.GetHashCode();
                 return hashCode;
             }
         }
@@ -727,7 +727,7 @@ namespace OpenTK
                 return false;
             }
 
-            return this.Equals((Matrix4x2d)obj);
+            return Equals((Matrix4x2d)obj);
         }
 
         /// <summary>

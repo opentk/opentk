@@ -229,7 +229,7 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        public override OpenTK.Input.IGamePadDriver CreateGamePadDriver()
+        public override IGamePadDriver CreateGamePadDriver()
         {
             return new MappedGamePadDriver();
         }

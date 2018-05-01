@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.MacOS
 {
-    using CGDirectDisplayID = System.IntPtr;
+    using CGDirectDisplayID = IntPtr;
 
     // Quartz Display services used here are available in MacOS X 10.3 and later.
 

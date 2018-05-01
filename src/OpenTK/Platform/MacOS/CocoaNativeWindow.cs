@@ -592,18 +592,18 @@ namespace OpenTK.Platform.MacOS
 
         private KeyModifiers GetModifiers(NSEventModifierMask mask)
         {
-            OpenTK.Input.KeyModifiers modifiers = 0;
+            KeyModifiers modifiers = 0;
             if ((mask & NSEventModifierMask.ControlKeyMask) != 0)
             {
-                modifiers |= OpenTK.Input.KeyModifiers.Control;
+                modifiers |= KeyModifiers.Control;
             }
             if ((mask & NSEventModifierMask.ShiftKeyMask) != 0)
             {
-                modifiers |= OpenTK.Input.KeyModifiers.Shift;
+                modifiers |= KeyModifiers.Shift;
             }
             if ((mask & NSEventModifierMask.AlternateKeyMask) != 0)
             {
-                modifiers |= OpenTK.Input.KeyModifiers.Alt;
+                modifiers |= KeyModifiers.Alt;
             }
             return modifiers;
         }

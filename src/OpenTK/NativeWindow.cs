@@ -103,7 +103,7 @@ namespace OpenTK
             this.options = options;
             this.device = device;
 
-            this.thread_id = System.Threading.Thread.CurrentThread.ManagedThreadId;
+            thread_id = System.Threading.Thread.CurrentThread.ManagedThreadId;
 
             IPlatformFactory factory = Factory.Default;
             implementation = factory.CreateNativeWindow(x, y, width, height, title, mode, options, this.device);
@@ -513,7 +513,7 @@ namespace OpenTK
         /// <summary>
         /// Occurs whenever a keyboard key is pressed.
         /// </summary>
-        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyDown = delegate { };
+        public event EventHandler<KeyboardKeyEventArgs> KeyDown = delegate { };
 
         /// <summary>
         /// Occurs whenever a character is typed.
@@ -523,7 +523,7 @@ namespace OpenTK
         /// <summary>
         /// Occurs whenever a keyboard key is released.
         /// </summary>
-        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyUp = delegate { };
+        public event EventHandler<KeyboardKeyEventArgs> KeyUp = delegate { };
 
         /// <summary>
         /// Occurs whenever the window is moved.
@@ -857,7 +857,7 @@ namespace OpenTK
         protected void ProcessEvents(bool retainEvents)
         {
             EnsureUndisposed();
-            if (this.thread_id != System.Threading.Thread.CurrentThread.ManagedThreadId)
+            if (thread_id != System.Threading.Thread.CurrentThread.ManagedThreadId)
             {
                 throw new InvalidOperationException("ProcessEvents must be called on the same thread that created the window.");
             }

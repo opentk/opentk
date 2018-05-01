@@ -104,7 +104,7 @@ namespace OpenTK
         {
             get
             {
-                return (float)System.Math.Sqrt(X * X + Y * Y);
+                return (float)Math.Sqrt(X * X + Y * Y);
             }
         }
 
@@ -179,7 +179,7 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-            float scale = 1.0f / this.Length;
+            float scale = 1.0f / Length;
             X *= scale;
             Y *= scale;
         }
@@ -885,7 +885,7 @@ namespace OpenTK
         {
             unchecked
             {
-                return (this.X.GetHashCode() * 397) ^ this.Y.GetHashCode();
+                return (X.GetHashCode() * 397) ^ Y.GetHashCode();
             }
         }
 
@@ -901,7 +901,7 @@ namespace OpenTK
                 return false;
             }
 
-            return this.Equals((Vector2)obj);
+            return Equals((Vector2)obj);
         }
 
         /// <summary>Indicates whether the current vector is equal to another vector.</summary>

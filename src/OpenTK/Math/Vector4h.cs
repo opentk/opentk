@@ -79,10 +79,10 @@ namespace OpenTK
         /// <param name="w">An Half instance of a 16-bit half-precision floating-point number.</param>
         public Vector4h(Half x, Half y, Half z, Half w)
         {
-            this.X = x;
-            this.Y = y;
-            this.Z = z;
-            this.W = w;
+            X = x;
+            Y = y;
+            Z = z;
+            W = w;
         }
 
         /// <summary>
@@ -661,10 +661,10 @@ namespace OpenTK
         /// <param name="context"></param>
         public Vector4h(SerializationInfo info, StreamingContext context)
         {
-            this.X = (Half)info.GetValue("X", typeof(Half));
-            this.Y = (Half)info.GetValue("Y", typeof(Half));
-            this.Z = (Half)info.GetValue("Z", typeof(Half));
-            this.W = (Half)info.GetValue("W", typeof(Half));
+            X = (Half)info.GetValue("X", typeof(Half));
+            Y = (Half)info.GetValue("Y", typeof(Half));
+            Z = (Half)info.GetValue("Z", typeof(Half));
+            W = (Half)info.GetValue("W", typeof(Half));
         }
 
         /// <summary>Used by ISerialize to serialize the object.</summary>
@@ -672,10 +672,10 @@ namespace OpenTK
         /// <param name="context"></param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("X", this.X);
-            info.AddValue("Y", this.Y);
-            info.AddValue("Z", this.Z);
-            info.AddValue("W", this.W);
+            info.AddValue("X", X);
+            info.AddValue("Y", Y);
+            info.AddValue("Z", Z);
+            info.AddValue("W", W);
         }
 
         /// <summary>Updates the X,Y,Z and W components of this instance by reading from a Stream.</summary>
@@ -703,7 +703,7 @@ namespace OpenTK
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
         public bool Equals(Vector4h other)
         {
-            return (this.X.Equals(other.X) && this.Y.Equals(other.Y) && this.Z.Equals(other.Z) && this.W.Equals(other.W));
+            return (X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z) && W.Equals(other.W));
         }
 
         private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;

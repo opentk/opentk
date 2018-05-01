@@ -336,7 +336,7 @@ namespace OpenTK
         /// </summary>
         public void Invert()
         {
-            this = Matrix4d.Invert(this);
+            this = Invert(this);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace OpenTK
         /// </summary>
         public void Transpose()
         {
-            this = Matrix4d.Transpose(this);
+            this = Transpose(this);
         }
 
         /// <summary>
@@ -362,7 +362,7 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-            var determinant = this.Determinant;
+            var determinant = Determinant;
             Row0 /= determinant;
             Row1 /= determinant;
             Row2 /= determinant;
@@ -522,8 +522,8 @@ namespace OpenTK
             double axisX = axis.X, axisY = axis.Y, axisZ = axis.Z;
 
             // calculate angles
-            double cos = System.Math.Cos(-angle);
-            double sin = System.Math.Sin(-angle);
+            double cos = Math.Cos(-angle);
+            double sin = Math.Sin(-angle);
             double t = 1.0f - cos;
 
             // do the conversion math once
@@ -573,8 +573,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix4d instance.</param>
         public static void CreateRotationX(double angle, out Matrix4d result)
         {
-            double cos = System.Math.Cos(angle);
-            double sin = System.Math.Sin(angle);
+            double cos = Math.Cos(angle);
+            double sin = Math.Sin(angle);
 
             result.Row0 = Vector4d.UnitX;
             result.Row1 = new Vector4d(0, cos, sin, 0);
@@ -601,8 +601,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix4d instance.</param>
         public static void CreateRotationY(double angle, out Matrix4d result)
         {
-            double cos = System.Math.Cos(angle);
-            double sin = System.Math.Sin(angle);
+            double cos = Math.Cos(angle);
+            double sin = Math.Sin(angle);
 
             result.Row0 = new Vector4d(cos, 0, -sin, 0);
             result.Row1 = Vector4d.UnitY;
@@ -629,8 +629,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix4d instance.</param>
         public static void CreateRotationZ(double angle, out Matrix4d result)
         {
-            double cos = System.Math.Cos(angle);
-            double sin = System.Math.Sin(angle);
+            double cos = Math.Cos(angle);
+            double sin = Math.Sin(angle);
 
             result.Row0 = new Vector4d(cos, sin, 0, 0);
             result.Row1 = new Vector4d(-sin, cos, 0, 0);
@@ -810,7 +810,7 @@ namespace OpenTK
                 throw new ArgumentOutOfRangeException("zFar");
             }
 
-            double yMax = zNear * System.Math.Tan(0.5 * fovy);
+            double yMax = zNear * Math.Tan(0.5 * fovy);
             double yMin = -yMax;
             double xMin = yMin * aspect;
             double xMax = yMax * aspect;
@@ -982,8 +982,8 @@ namespace OpenTK
         /// <returns>A rotation matrix</returns>
         public static Matrix4d RotateX(double angle)
         {
-            double cos = System.Math.Cos(angle);
-            double sin = System.Math.Sin(angle);
+            double cos = Math.Cos(angle);
+            double sin = Math.Sin(angle);
 
             Matrix4d result;
             result.Row0 = Vector4d .UnitX;
@@ -1000,8 +1000,8 @@ namespace OpenTK
         /// <returns>A rotation matrix</returns>
         public static Matrix4d RotateY(double angle)
         {
-            double cos = System.Math.Cos(angle);
-            double sin = System.Math.Sin(angle);
+            double cos = Math.Cos(angle);
+            double sin = Math.Sin(angle);
 
             Matrix4d result;
             result.Row0 = new Vector4d (cos, 0.0, -sin, 0.0);
@@ -1018,8 +1018,8 @@ namespace OpenTK
         /// <returns>A rotation matrix</returns>
         public static Matrix4d RotateZ(double angle)
         {
-            double cos = System.Math.Cos(angle);
-            double sin = System.Math.Sin(angle);
+            double cos = Math.Cos(angle);
+            double sin = Math.Sin(angle);
 
             Matrix4d result;
             result.Row0 = new Vector4d (cos, sin, 0.0, 0.0);
@@ -1037,8 +1037,8 @@ namespace OpenTK
         /// <returns>A rotation matrix</returns>
         public static Matrix4d Rotate(Vector3d axis, double angle)
         {
-            double cos = System.Math.Cos(-angle);
-            double sin = System.Math.Sin(-angle);
+            double cos = Math.Cos(-angle);
+            double sin = Math.Sin(-angle);
             double t = 1.0 - cos;
 
             axis.Normalize();
@@ -1082,7 +1082,7 @@ namespace OpenTK
                                         new Vector4d (x.Z, y.Z, z.Z, 0.0),
                                         Vector4d .UnitW);
 
-            Matrix4d trans = Matrix4d.CreateTranslation(-eye);
+            Matrix4d trans = CreateTranslation(-eye);
 
             return trans * rot;
         }
@@ -1136,7 +1136,7 @@ namespace OpenTK
         /// <returns>A projection matrix that transforms camera space to raster space</returns>
         public static Matrix4d Perspective(double fovy, double aspect, double near, double far)
         {
-            double yMax = near * System.Math.Tan(0.5f * fovy);
+            double yMax = near * Math.Tan(0.5f * fovy);
             double yMin = -yMax;
             double xMin = yMin * aspect;
             double xMax = yMax * aspect;
@@ -1304,7 +1304,7 @@ namespace OpenTK
                         {
                             if (pivotIdx[k] == -1)
                             {
-                                double absVal = System.Math.Abs(inverse[j, k]);
+                                double absVal = Math.Abs(inverse[j, k]);
                                 if (absVal > maxPivot)
                                 {
                                     maxPivot = absVal;
@@ -1419,7 +1419,7 @@ namespace OpenTK
         /// <returns>A new Matrix4d which holds the result of the multiplication</returns>
         public static Matrix4d operator *(Matrix4d left, Matrix4d right)
         {
-            return Matrix4d.Mult(left, right);
+            return Mult(left, right);
         }
 
         /// <summary>
@@ -1430,7 +1430,7 @@ namespace OpenTK
         /// <returns>A new Matrix4d which holds the result of the multiplication</returns>
         public static Matrix4d operator *(Matrix4d left, float right)
         {
-            return Matrix4d.Mult(left, right);
+            return Mult(left, right);
         }
 
         /// <summary>
@@ -1441,7 +1441,7 @@ namespace OpenTK
         /// <returns>A new Matrix4d which holds the result of the addition</returns>
         public static Matrix4d operator +(Matrix4d left, Matrix4d right)
         {
-            return Matrix4d.Add(left, right);
+            return Add(left, right);
         }
 
         /// <summary>
@@ -1452,7 +1452,7 @@ namespace OpenTK
         /// <returns>A new Matrix4d which holds the result of the subtraction</returns>
         public static Matrix4d operator -(Matrix4d left, Matrix4d right)
         {
-            return Matrix4d.Subtract(left, right);
+            return Subtract(left, right);
         }
 
         /// <summary>
@@ -1494,10 +1494,10 @@ namespace OpenTK
         {
             unchecked
             {
-                var hashCode = this.Row0.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Row1.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Row2.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Row3.GetHashCode();
+                var hashCode = Row0.GetHashCode();
+                hashCode = (hashCode * 397) ^ Row1.GetHashCode();
+                hashCode = (hashCode * 397) ^ Row2.GetHashCode();
+                hashCode = (hashCode * 397) ^ Row3.GetHashCode();
                 return hashCode;
             }
         }
@@ -1514,7 +1514,7 @@ namespace OpenTK
                 return false;
             }
 
-            return this.Equals((Matrix4d)obj);
+            return Equals((Matrix4d)obj);
         }
 
         /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>

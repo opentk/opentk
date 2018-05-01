@@ -43,14 +43,14 @@ namespace OpenTK.Graphics
                 throw new ArgumentOutOfRangeException("samples", "Must be greater than, or equal to zero.");
             }
 
-            this.Index = index;
-            this.ColorFormat = color;
-            this.Depth = depth;
-            this.Stencil = stencil;
-            this.Samples = samples;
-            this.AccumulatorFormat = accum;
-            this.Buffers = buffers;
-            this.Stereo = stereo;
+            Index = index;
+            ColorFormat = color;
+            Depth = depth;
+            Stencil = stencil;
+            Samples = samples;
+            AccumulatorFormat = accum;
+            Buffers = buffers;
+            Stereo = stereo;
         }
 
         /// <summary>Constructs a new GraphicsMode with sensible default parameters.</summary>

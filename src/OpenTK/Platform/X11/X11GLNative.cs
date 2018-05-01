@@ -300,7 +300,7 @@ namespace OpenTK.Platform.X11
             IntPtr xdndAware = Functions.XInternAtom(window.Display, "XdndAware", false);
             IntPtr xdndProtocol = new IntPtr(5);
             using (new XLock (window.Display)) {
-                Functions.XChangeProperty(this.window.Display, this.Handle, xdndAware, (IntPtr)AtomName.XA_ATOM, 32, PropertyMode.Replace, ref xdndProtocol, 1);
+                Functions.XChangeProperty(window.Display, Handle, xdndAware, (IntPtr)AtomName.XA_ATOM, 32, PropertyMode.Replace, ref xdndProtocol, 1);
             }
 
             exists = true;
@@ -505,7 +505,7 @@ namespace OpenTK.Platform.X11
                 using (new XLock(window.Display))
                 {
                     // Test if decorations have been disabled through Motif.
-                    IntPtr motif_hints_atom = Functions.XInternAtom(this.window.Display, MOTIF_WM_ATOM, true);
+                    IntPtr motif_hints_atom = Functions.XInternAtom(window.Display, MOTIF_WM_ATOM, true);
                     if (motif_hints_atom != IntPtr.Zero)
                     {
                         // TODO: How to check if MotifWMHints decorations have been really disabled?
@@ -544,12 +544,12 @@ namespace OpenTK.Platform.X11
                 // Functions.XSetTransientForHint(this.window.Display, this.Handle, this.window.RootWindow);
 
                 // Some WMs remove decorations when this hint is set. Doesn't hurt to try.
-                Functions.XSetTransientForHint(this.window.Display, this.Handle, this.window.RootWindow);
+                Functions.XSetTransientForHint(window.Display, Handle, window.RootWindow);
 
                 if (_decorations_hidden)
                 {
-                    Functions.XUnmapWindow(this.window.Display, this.Handle);
-                    Functions.XMapWindow(this.window.Display, this.Handle);
+                    Functions.XUnmapWindow(window.Display, Handle);
+                    Functions.XMapWindow(window.Display, Handle);
                 }
             }
         }
@@ -559,14 +559,14 @@ namespace OpenTK.Platform.X11
         {
             using (new XLock(window.Display))
             {
-                IntPtr atom = Functions.XInternAtom(this.window.Display, MOTIF_WM_ATOM, true);
+                IntPtr atom = Functions.XInternAtom(window.Display, MOTIF_WM_ATOM, true);
                 if (atom != IntPtr.Zero)
                 {
                     //Functions.XGetWindowProperty(window.Display, window.Handle, atom, IntPtr.Zero, IntPtr.Zero, false,
 
                     MotifWmHints hints = new MotifWmHints();
                     hints.flags = (IntPtr)MotifFlags.Decorations;
-                    Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace,
+                    Functions.XChangeProperty(window.Display, Handle, atom, atom, 32, PropertyMode.Replace,
                         ref hints, Marshal.SizeOf(hints) / IntPtr.Size);
                     return true;
                 }
@@ -578,11 +578,11 @@ namespace OpenTK.Platform.X11
         {
             using (new XLock(window.Display))
             {
-                IntPtr atom = Functions.XInternAtom(this.window.Display, Constants.XA_WIN_HINTS, true);
+                IntPtr atom = Functions.XInternAtom(window.Display, Constants.XA_WIN_HINTS, true);
                 if (atom != IntPtr.Zero)
                 {
                     IntPtr hints = IntPtr.Zero;
-                    Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace,
+                    Functions.XChangeProperty(window.Display, Handle, atom, atom, 32, PropertyMode.Replace,
                         ref hints, Marshal.SizeOf(hints) / IntPtr.Size);
                     return true;
                 }
@@ -603,12 +603,12 @@ namespace OpenTK.Platform.X11
 
             using (new XLock(window.Display))
             {
-                Functions.XSetTransientForHint(this.window.Display, this.Handle, IntPtr.Zero);
+                Functions.XSetTransientForHint(window.Display, Handle, IntPtr.Zero);
 
                 if (!_decorations_hidden)
                 {
-                    Functions.XUnmapWindow(this.window.Display, this.Handle);
-                    Functions.XMapWindow(this.window.Display, this.Handle);
+                    Functions.XUnmapWindow(window.Display, Handle);
+                    Functions.XMapWindow(window.Display, Handle);
                 }
             }
         }
@@ -617,14 +617,14 @@ namespace OpenTK.Platform.X11
         {
             using (new XLock(window.Display))
             {
-                IntPtr atom = Functions.XInternAtom(this.window.Display, MOTIF_WM_ATOM, true);
+                IntPtr atom = Functions.XInternAtom(window.Display, MOTIF_WM_ATOM, true);
                 if (atom != IntPtr.Zero)
                 {
                     //Functions.XDeleteProperty(this.window.Display, this.Handle, atom);
                     MotifWmHints hints = new MotifWmHints();
                     hints.flags = (IntPtr)MotifFlags.Decorations;
                     hints.decorations = (IntPtr)MotifDecorations.All;
-                    Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace,
+                    Functions.XChangeProperty(window.Display, Handle, atom, atom, 32, PropertyMode.Replace,
                         ref hints, Marshal.SizeOf(hints) / IntPtr.Size);
 
                     return true;
@@ -646,10 +646,10 @@ namespace OpenTK.Platform.X11
                 //xev.ClientMessageEvent.ptr1 = (IntPtr)WindowLayer.AboveDock;
                 //Functions.XSendEvent(this.window.Display, this.window.RootWindow, false, (IntPtr)EventMask.SubstructureNotifyMask, ref xev);
 
-                IntPtr atom = Functions.XInternAtom(this.window.Display, Constants.XA_WIN_HINTS, true);
+                IntPtr atom = Functions.XInternAtom(window.Display, Constants.XA_WIN_HINTS, true);
                 if (atom != IntPtr.Zero)
                 {
-                    Functions.XDeleteProperty(this.window.Display, this.Handle, atom);
+                    Functions.XDeleteProperty(window.Display, Handle, atom);
                     return true;
                 }
 
@@ -926,7 +926,7 @@ namespace OpenTK.Platform.X11
                             for (int i = 0; i < formatCount && xdndFormat == Consts.None; ++i)
                             {
                                 IntPtr tempAtom = Marshal.ReadIntPtr(formats, IntPtr.Size * i);
-                                IntPtr atomName = Functions.XGetAtomName(this.window.Display, tempAtom);
+                                IntPtr atomName = Functions.XGetAtomName(window.Display, tempAtom);
 
                                 string str = Marshal.PtrToStringAnsi(atomName);
                                 if (str == "text/uri-list")
@@ -951,11 +951,11 @@ namespace OpenTK.Platform.X11
                             XEvent reply = new XEvent ();
 
                             reply.ClientMessageEvent.type = XEventName.ClientMessage;
-                            reply.ClientMessageEvent.display = this.window.Display;
+                            reply.ClientMessageEvent.display = window.Display;
                             reply.ClientMessageEvent.window = sourceHandler;
                             reply.ClientMessageEvent.message_type = _atom_xdnd_status;
                             reply.ClientMessageEvent.format = 32;
-                            reply.ClientMessageEvent.ptr1 = this.window.Handle;
+                            reply.ClientMessageEvent.ptr1 = window.Handle;
                             if (xdndFormat != Consts.None)
                             {
                                 reply.ClientMessageEvent.ptr2 = (IntPtr)1;
@@ -968,8 +968,8 @@ namespace OpenTK.Platform.X11
                             reply.ClientMessageEvent.ptr4 = (IntPtr)0;
                             reply.ClientMessageEvent.ptr5 = _atom_xdnd_action_copy;
 
-                            Functions.XSendEvent(this.window.Display, sourceHandler, false, (IntPtr)EventMask.NoEventMask, ref reply);
-                            Functions.XFlush(this.window.Display);
+                            Functions.XSendEvent(window.Display, sourceHandler, false, (IntPtr)EventMask.NoEventMask, ref reply);
+                            Functions.XFlush(window.Display);
                         }
                         else if (e.ClientMessageEvent.message_type == _atom_xdnd_drop)
                         {
@@ -978,26 +978,26 @@ namespace OpenTK.Platform.X11
                                 XEvent reply = new XEvent ();
 
                                 reply.ClientMessageEvent.type = XEventName.ClientMessage;
-                                reply.ClientMessageEvent.display = this.window.Display;
+                                reply.ClientMessageEvent.display = window.Display;
                                 reply.ClientMessageEvent.window = sourceHandler;
                                 reply.ClientMessageEvent.message_type = _atom_xdnd_finished;
                                 reply.ClientMessageEvent.format = 32;
-                                reply.ClientMessageEvent.ptr1 = this.window.Handle;
+                                reply.ClientMessageEvent.ptr1 = window.Handle;
                                 reply.ClientMessageEvent.ptr2 = (IntPtr)0;
                                 reply.ClientMessageEvent.ptr3 = Consts.None;
 
-                                Functions.XSendEvent(this.window.Display, sourceHandler, false, (IntPtr)EventMask.NoEventMask, ref reply);
-                                Functions.XFlush(this.window.Display);
+                                Functions.XSendEvent(window.Display, sourceHandler, false, (IntPtr)EventMask.NoEventMask, ref reply);
+                                Functions.XFlush(window.Display);
                             }
                             else
                             {
                                 if (sourceXdndVersion >= 1)
                                 {
-                                    Functions.XConvertSelection(this.window.Display, _atom_xdnd_selection, xdndFormat, _atom_xdnd_primary, this.window.Handle, e.ClientMessageEvent.ptr3);
+                                    Functions.XConvertSelection(window.Display, _atom_xdnd_selection, xdndFormat, _atom_xdnd_primary, window.Handle, e.ClientMessageEvent.ptr3);
                                 }
                                 else
                                 {
-                                    Functions.XConvertSelection(this.window.Display, _atom_xdnd_selection, xdndFormat, _atom_xdnd_primary, this.window.Handle, Consts.CurrentTime);
+                                    Functions.XConvertSelection(window.Display, _atom_xdnd_selection, xdndFormat, _atom_xdnd_primary, window.Handle, Consts.CurrentTime);
                                 }
                             }
                         }
@@ -1197,15 +1197,15 @@ namespace OpenTK.Platform.X11
                             XEvent reply = new XEvent ();
 
                             reply.ClientMessageEvent.type = XEventName.ClientMessage;
-                            reply.ClientMessageEvent.display = this.window.Display;
+                            reply.ClientMessageEvent.display = window.Display;
                             reply.ClientMessageEvent.window = sourceHandler;
                             reply.ClientMessageEvent.message_type = _atom_xdnd_finished;
                             reply.ClientMessageEvent.format = 32;
-                            reply.ClientMessageEvent.ptr1 = this.window.Handle;
+                            reply.ClientMessageEvent.ptr1 = window.Handle;
                             reply.ClientMessageEvent.ptr2 = (IntPtr)1;
                             reply.ClientMessageEvent.ptr3 = _atom_xdnd_action_copy;
 
-                            Functions.XSendEvent(this.window.Display, e.ClientMessageEvent.ptr1, false, (IntPtr)EventMask.NoEventMask, ref reply);
+                            Functions.XSendEvent(window.Display, e.ClientMessageEvent.ptr1, false, (IntPtr)EventMask.NoEventMask, ref reply);
                         }
                         break;
                     }
@@ -1444,7 +1444,7 @@ namespace OpenTK.Platform.X11
             }
             set
             {
-                OpenTK.WindowState current_state = this.WindowState;
+                OpenTK.WindowState current_state = WindowState;
 
                 // When switching away from normal state, store
                 // the "normal" border and size. These will be used
@@ -1552,7 +1552,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        public override OpenTK.WindowBorder WindowBorder
+        public override WindowBorder WindowBorder
         {
             get
             {
@@ -1747,7 +1747,7 @@ namespace OpenTK.Platform.X11
         /// </summary>
         public IntPtr Handle
         {
-            get { return this.window.Handle; }
+            get { return window.Handle; }
         }
 
         /// <summary>
@@ -1799,7 +1799,7 @@ namespace OpenTK.Platform.X11
                         Functions.XMapWindow(window.Display, window.Handle);
                     }
 
-                    this.WindowState = _previous_window_state;
+                    WindowState = _previous_window_state;
                 }
                 else if (!value && visible)
                 {
@@ -1808,7 +1808,7 @@ namespace OpenTK.Platform.X11
                         Functions.XUnmapWindow(window.Display, window.Handle);
                     }
 
-                    _previous_window_state = (this.WindowState == OpenTK.WindowState.Fullscreen) ? OpenTK.WindowState.Fullscreen : OpenTK.WindowState.Normal;
+                    _previous_window_state = (WindowState == OpenTK.WindowState.Fullscreen) ? OpenTK.WindowState.Fullscreen : OpenTK.WindowState.Normal;
                 }
             }
         }
@@ -1907,7 +1907,7 @@ namespace OpenTK.Platform.X11
                 }
                 else
                 {
-                    Debug.Print("[Warning] {0} leaked.", this.GetType().Name);
+                    Debug.Print("[Warning] {0} leaked.", GetType().Name);
                 }
                 disposed = true;
             }

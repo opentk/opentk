@@ -35,9 +35,9 @@ using System.Runtime.InteropServices;
 // X11 Version
 namespace OpenTK.Platform.X11
 {
-    using Bool = System.Boolean;
-    using Time = System.IntPtr;
-    using Window = System.IntPtr;
+    using Bool = Boolean;
+    using Time = IntPtr;
+    using Window = IntPtr;
 
     //
     // In the structures below, fields of type long are mapped to IntPtr.

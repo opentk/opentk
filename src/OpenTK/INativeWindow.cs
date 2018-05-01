@@ -230,7 +230,7 @@ namespace OpenTK
         /// <summary>
         /// Occurs whenever a keyboard key is pressed.
         /// </summary>
-        event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyDown;
+        event EventHandler<Input.KeyboardKeyEventArgs> KeyDown;
 
         /// <summary>
         /// Occurs whenever a character is typed.
@@ -240,7 +240,7 @@ namespace OpenTK
         /// <summary>
         /// Occurs whenever a keyboard key is released.
         /// </summary>
-        event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyUp;
+        event EventHandler<Input.KeyboardKeyEventArgs> KeyUp;
 
         /// <summary>
         /// Occurs whenever the mouse cursor leaves the window <see cref="Bounds"/>.
@@ -278,6 +278,6 @@ namespace OpenTK
         /// <summary>
         /// Occurs whenever file dropped on window.
         /// </summary>
-        event EventHandler<OpenTK.Input.FileDropEventArgs> FileDrop;
+        event EventHandler<Input.FileDropEventArgs> FileDrop;
     }
 }

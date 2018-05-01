@@ -18,34 +18,34 @@ using System.Diagnostics;
 namespace OpenTK.Platform.X11
 {
     // using XID = System.Int32;
-    using Window = System.IntPtr;
-    using Drawable = System.IntPtr;
-    using Font = System.IntPtr;
-    using Pixmap = System.IntPtr;
-    using Cursor = System.IntPtr;
-    using Colormap = System.IntPtr;
-    using GContext = System.IntPtr;
-    using KeySym = System.IntPtr;
-    using Mask = System.IntPtr;
-    using Atom = System.IntPtr;
-    using VisualID = System.IntPtr;
-    using Time = System.IntPtr;
-    using KeyCode = System.Byte;    // Or maybe ushort?
+    using Window = IntPtr;
+    using Drawable = IntPtr;
+    using Font = IntPtr;
+    using Pixmap = IntPtr;
+    using Cursor = IntPtr;
+    using Colormap = IntPtr;
+    using GContext = IntPtr;
+    using KeySym = IntPtr;
+    using Mask = IntPtr;
+    using Atom = IntPtr;
+    using VisualID = IntPtr;
+    using Time = IntPtr;
+    using KeyCode = Byte;    // Or maybe ushort?
 
-    using Display = System.IntPtr;
-    using XPointer = System.IntPtr;
+    using Display = IntPtr;
+    using XPointer = IntPtr;
 
-    using XcursorBool = System.Int32;
-    using XcursorUInt = System.UInt32;
-    using XcursorDim = System.UInt32;
-    using XcursorPixel = System.UInt32;
+    using XcursorBool = Int32;
+    using XcursorUInt = UInt32;
+    using XcursorDim = UInt32;
+    using XcursorPixel = UInt32;
 
     // Randr and Xrandr
-    using Bool = System.Boolean;
-    using XRRScreenConfiguration = System.IntPtr; // opaque datatype
-    using Rotation = System.UInt16;
-    using Status = System.Int32;
-    using SizeID = System.UInt16;
+    using Bool = Boolean;
+    using XRRScreenConfiguration = IntPtr; // opaque datatype
+    using Rotation = UInt16;
+    using Status = Int32;
+    using SizeID = UInt16;
 
     /// <summary>
     /// X11 has some defined values they are defined with c's #define in X.h

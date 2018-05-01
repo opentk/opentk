@@ -52,7 +52,7 @@ namespace OpenTK
             }
 
             this.points = new List<Vector2>(points);
-            this.Parallel = 0.0f;
+            Parallel = 0.0f;
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace OpenTK
             }
 
             this.points = new List<Vector2>(points);
-            this.Parallel = 0.0f;
+            Parallel = 0.0f;
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace OpenTK
                 throw new ArgumentNullException("points", "Must point to a valid list of Vector2 structures.");
             }
 
-            this.Parallel = parallel;
+            Parallel = parallel;
             this.points = new List<Vector2>(points);
         }
 
@@ -98,7 +98,7 @@ namespace OpenTK
                 throw new ArgumentNullException("points", "Must point to a valid list of Vector2 structures.");
             }
 
-            this.Parallel = parallel;
+            Parallel = parallel;
             this.points = new List<Vector2>(points);
         }
 
@@ -110,7 +110,7 @@ namespace OpenTK
         /// <returns>Resulting point.</returns>
         public Vector2 CalculatePoint(float t)
         {
-            return BezierCurve.CalculatePoint(points, t, Parallel);
+            return CalculatePoint(points, t, Parallel);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace OpenTK
         /// value gets smaller.</remarks>
         public float CalculateLength(float precision)
         {
-            return BezierCurve.CalculateLength(points, precision, Parallel);
+            return CalculateLength(points, precision, Parallel);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace OpenTK
         /// value gets smaller.</returns>
         public static float CalculateLength(IList<Vector2> points, float precision)
         {
-            return BezierCurve.CalculateLength(points, precision, 0.0f);
+            return CalculateLength(points, precision, 0.0f);
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace OpenTK
         public static float CalculateLength(IList<Vector2> points, float precision, float parallel)
         {
             float length = 0.0f;
-            Vector2 old = BezierCurve.CalculatePoint(points, 0.0f, parallel);
+            Vector2 old = CalculatePoint(points, 0.0f, parallel);
 
             for (float i = precision; i < (1.0f + precision); i += precision)
             {
@@ -173,7 +173,7 @@ namespace OpenTK
         /// <returns>Resulting point.</returns>
         public static Vector2 CalculatePoint(IList<Vector2> points, float t)
         {
-            return BezierCurve.CalculatePoint(points, t, 0.0f);
+            return CalculatePoint(points, t, 0.0f);
         }
 
         /// <summary>
@@ -196,8 +196,8 @@ namespace OpenTK
 
             foreach (Vector2 pt in points)
             {
-                temp = (float)MathHelper.BinomialCoefficient(points.Count - 1, i) * (float)(System.Math.Pow(t, i) *
-                        System.Math.Pow(c, (points.Count - 1) - i));
+                temp = (float)MathHelper.BinomialCoefficient(points.Count - 1, i) * (float)(Math.Pow(t, i) *
+                        Math.Pow(c, (points.Count - 1) - i));
 
                 r.X += temp * pt.X;
                 r.Y += temp * pt.Y;
@@ -213,7 +213,7 @@ namespace OpenTK
 
             if (t != 0.0f)
             {
-                perpendicular = r - BezierCurve.CalculatePointOfDerivative(points, t);
+                perpendicular = r - CalculatePointOfDerivative(points, t);
             }
             else
             {
@@ -238,8 +238,8 @@ namespace OpenTK
 
             foreach (Vector2 pt in points)
             {
-                temp = (float)MathHelper.BinomialCoefficient(points.Count - 2, i) * (float)(System.Math.Pow(t, i) *
-                        System.Math.Pow(c, (points.Count - 2) - i));
+                temp = (float)MathHelper.BinomialCoefficient(points.Count - 2, i) * (float)(Math.Pow(t, i) *
+                        Math.Pow(c, (points.Count - 2) - i));
 
                 r.X += temp * pt.X;
                 r.Y += temp * pt.Y;

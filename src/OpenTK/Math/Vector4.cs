@@ -222,7 +222,7 @@ namespace OpenTK
         {
             get
             {
-                return (float)System.Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
+                return (float)Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
             }
         }
 
@@ -275,7 +275,7 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-            float scale = 1.0f / this.Length;
+            float scale = 1.0f / Length;
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -1353,7 +1353,7 @@ namespace OpenTK
         public static Vector4 operator *(Vector4 vec, Matrix4 mat)
         {
             Vector4 result;
-            Vector4.Transform(ref vec, ref mat, out result);
+            Transform(ref vec, ref mat, out result);
             return result;
         }
 
@@ -1366,7 +1366,7 @@ namespace OpenTK
         public static Vector4 operator *(Matrix4 mat, Vector4 vec)
         {
             Vector4 result;
-            Vector4.Transform(ref mat, ref vec, out result);
+            Transform(ref mat, ref vec, out result);
             return result;
         }
 
@@ -1379,7 +1379,7 @@ namespace OpenTK
         public static Vector4 operator *(Quaternion quat, Vector4 vec)
         {
             Vector4 result;
-            Vector4.Transform(ref vec, ref quat, out result);
+            Transform(ref vec, ref quat, out result);
             return result;
         }
 
@@ -1461,10 +1461,10 @@ namespace OpenTK
         {
             unchecked
             {
-                var hashCode = this.X.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Y.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.Z.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.W.GetHashCode();
+                var hashCode = X.GetHashCode();
+                hashCode = (hashCode * 397) ^ Y.GetHashCode();
+                hashCode = (hashCode * 397) ^ Z.GetHashCode();
+                hashCode = (hashCode * 397) ^ W.GetHashCode();
                 return hashCode;
             }
         }
@@ -1481,7 +1481,7 @@ namespace OpenTK
                 return false;
             }
 
-            return this.Equals((Vector4)obj);
+            return Equals((Vector4)obj);
         }
 
         /// <summary>Indicates whether the current vector is equal to another vector.</summary>

@@ -64,7 +64,7 @@ namespace OpenTK.Input
             this.axis_count = (byte)axis_count;
             this.button_count = (byte)button_count;
             this.hat_count = (byte)hat_count;
-            this.IsConnected = is_connected;
+            IsConnected = is_connected;
         }
 
         internal void SetIsConnected(bool value)

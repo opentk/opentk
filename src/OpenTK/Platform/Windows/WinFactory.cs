@@ -45,7 +45,7 @@ namespace OpenTK.Platform.Windows
 
         public WinFactory()
         {
-            if (System.Environment.OSVersion.Version.Major <= 4)
+            if (Environment.OSVersion.Version.Major <= 4)
             {
                 throw new PlatformNotSupportedException("OpenTK requires Windows XP or higher");
             }
@@ -55,7 +55,7 @@ namespace OpenTK.Platform.Windows
             // (such as "error: 2000" when calling wglSetPixelFormat or slowness/lag on specific GPUs).
             LoadOpenGL();
 
-            if (System.Environment.OSVersion.Version.Major >= 6)
+            if (Environment.OSVersion.Version.Major >= 6)
             {
                 if (Toolkit.Options.EnableHighResolution)
                 {
@@ -106,17 +106,17 @@ namespace OpenTK.Platform.Windows
             };
         }
 
-        public override OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
+        public override IKeyboardDriver2 CreateKeyboardDriver()
         {
             return RawInputDriver.KeyboardDriver;
         }
 
-        public override OpenTK.Input.IMouseDriver2 CreateMouseDriver()
+        public override IMouseDriver2 CreateMouseDriver()
         {
             return RawInputDriver.MouseDriver;
         }
 
-        public override OpenTK.Input.IGamePadDriver CreateGamePadDriver()
+        public override IGamePadDriver CreateGamePadDriver()
         {
             return new MappedGamePadDriver();
         }

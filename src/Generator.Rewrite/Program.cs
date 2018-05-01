@@ -442,7 +442,7 @@ namespace OpenTK.Rewrite
 
                 // Store then reload the result from the call
                 var resultLocal = new VariableDefinition(wrapper.ReturnType);
-                if (resultLocal.VariableType.FullName != Program.TypeVoid.FullName)
+                if (resultLocal.VariableType.FullName != TypeVoid.FullName)
                 {
                     il.Body.Variables.Add(resultLocal);
                     il.Emit(OpCodes.Stloc, resultLocal);
@@ -478,7 +478,7 @@ namespace OpenTK.Rewrite
 
                 il.Body.ExceptionHandlers.Add(finallyHandler);
 
-                if (resultLocal.VariableType.FullName != Program.TypeVoid.FullName)
+                if (resultLocal.VariableType.FullName != TypeVoid.FullName)
                 {
                     il.Emit(OpCodes.Ldloc, resultLocal);
                 }

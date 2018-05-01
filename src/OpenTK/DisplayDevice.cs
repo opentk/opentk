@@ -69,13 +69,13 @@ namespace OpenTK
             : this()
         {
             // Todo: Consolidate current resolution with bounds? Can they fall out of sync right now?
-            this.current_resolution = currentResolution;
+            current_resolution = currentResolution;
             IsPrimary = primary;
-            this.available_resolutions.AddRange(availableResolutions);
+            available_resolutions.AddRange(availableResolutions);
             #pragma warning disable 612,618
             this.bounds = bounds == Rectangle.Empty ? currentResolution.Bounds : bounds;
             #pragma warning restore 612,618
-            this.Id = id;
+            Id = id;
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace OpenTK
         {
             if (resolution == null)
             {
-                this.RestoreResolution();
+                RestoreResolution();
             }
 
             if (resolution == current_resolution)
@@ -226,7 +226,7 @@ namespace OpenTK
         /// <exception cref="Graphics.GraphicsModeException">Thrown if the requested resolution could not be set.</exception>
         public void ChangeResolution(int width, int height, int bitsPerPixel, float refreshRate)
         {
-            this.ChangeResolution(this.SelectResolution(width, height, bitsPerPixel, refreshRate));
+            ChangeResolution(SelectResolution(width, height, bitsPerPixel, refreshRate));
         }
 
         /// <summary>Restores the original resolution of the DisplayDevice.</summary>
@@ -276,7 +276,7 @@ namespace OpenTK
         {
             for (DisplayIndex i = DisplayIndex.First; i < DisplayIndex.Sixth; i++)
             {
-                DisplayDevice display = DisplayDevice.GetDisplay(i);
+                DisplayDevice display = GetDisplay(i);
                 if (display != null)
                 {
                     if (display.Bounds.Contains(x, y))
@@ -296,7 +296,7 @@ namespace OpenTK
                     ((width > 0 && width == test.Width) || width == 0) &&
                     ((height > 0 && height == test.Height) || height == 0) &&
                     ((bitsPerPixel > 0 && bitsPerPixel == test.BitsPerPixel) || bitsPerPixel == 0) &&
-                    ((refreshRate > 0 && System.Math.Abs(refreshRate - test.RefreshRate) < 1.0) || refreshRate == 0);
+                    ((refreshRate > 0 && Math.Abs(refreshRate - test.RefreshRate) < 1.0) || refreshRate == 0);
             });
         }
 

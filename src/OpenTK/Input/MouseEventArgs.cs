@@ -217,8 +217,8 @@ namespace OpenTK.Input
         public MouseButtonEventArgs(int x, int y, MouseButton button, bool pressed)
             : base(x, y)
         {
-            this.Button = button;
-            this.IsPressed = pressed;
+            Button = button;
+            IsPressed = pressed;
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace OpenTK.Input
             : base(x, y)
         {
             Mouse.SetScrollAbsolute(Mouse.Scroll.X, value);
-            this.DeltaPrecise = delta;
+            DeltaPrecise = delta;
         }
 
         /// <summary>

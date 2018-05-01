@@ -103,11 +103,11 @@ namespace OpenTK.Graphics
             this.green = (byte)green;
             this.blue = (byte)blue;
             this.alpha = (byte)alpha;
-            this.BitsPerPixel = red + green + blue + alpha;
-            this.IsIndexed = false;
-            if (this.BitsPerPixel < 15 && this.BitsPerPixel != 0)
+            BitsPerPixel = red + green + blue + alpha;
+            IsIndexed = false;
+            if (BitsPerPixel < 15 && BitsPerPixel != 0)
             {
-                this.IsIndexed = true;
+                IsIndexed = true;
             }
         }
 
@@ -191,7 +191,7 @@ namespace OpenTK.Graphics
         /// <returns>True if this instance is equal to obj; false otherwise.</returns>
         public override bool Equals(object obj)
         {
-            return (obj is ColorFormat) ? this.Equals((ColorFormat)obj) : false;
+            return (obj is ColorFormat) ? Equals((ColorFormat)obj) : false;
         }
 
         /// <summary>

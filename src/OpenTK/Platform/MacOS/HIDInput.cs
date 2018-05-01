@@ -33,21 +33,21 @@ using OpenTK.Platform.Common;
 namespace OpenTK.Platform.MacOS
 {
     using Carbon;
-    using CFAllocatorRef = System.IntPtr;
-    using CFArrayRef = System.IntPtr;
-    using CFDictionaryRef = System.IntPtr;
-    using CFIndex = System.IntPtr;
-    using CFRunLoop = System.IntPtr;
-    using CFString = System.IntPtr;
-    using CFStringRef = System.IntPtr; // Here used interchangeably with the CFString
-    using CFTypeRef = System.IntPtr;
-    using IOHIDDeviceRef = System.IntPtr;
-    using IOHIDElementRef = System.IntPtr;
-    using IOHIDElementCookie = System.IntPtr;
-    using IOHIDManagerRef = System.IntPtr;
-    using IOHIDValueRef = System.IntPtr;
-    using IOOptionBits = System.IntPtr;
-    using IOReturn = System.IntPtr;
+    using CFAllocatorRef = IntPtr;
+    using CFArrayRef = IntPtr;
+    using CFDictionaryRef = IntPtr;
+    using CFIndex = IntPtr;
+    using CFRunLoop = IntPtr;
+    using CFString = IntPtr;
+    using CFStringRef = IntPtr; // Here used interchangeably with the CFString
+    using CFTypeRef = IntPtr;
+    using IOHIDDeviceRef = IntPtr;
+    using IOHIDElementRef = IntPtr;
+    using IOHIDElementCookie = IntPtr;
+    using IOHIDManagerRef = IntPtr;
+    using IOHIDValueRef = IntPtr;
+    using IOOptionBits = IntPtr;
+    using IOReturn = IntPtr;
 
     // Requires Mac OS X 10.5 or higher.
     // Todo: create a driver for older installations. Maybe use CGGetLastMouseDelta for that?
@@ -512,7 +512,7 @@ namespace OpenTK.Platform.MacOS
                     break;
 
                 case HIDPage.Button:
-                    mouse.State[OpenTK.Input.MouseButton.Left + usage - 1] = v_int == 1;
+                    mouse.State[MouseButton.Left + usage - 1] = v_int == 1;
                     break;
 
                 case HIDPage.Consumer:

@@ -48,10 +48,10 @@ namespace OpenTK
         /// <param name="controlPoint">The control point.</param>
         public BezierCurveQuadric(Vector2 startAnchor, Vector2 endAnchor, Vector2 controlPoint)
         {
-            this.StartAnchor = startAnchor;
-            this.EndAnchor = endAnchor;
-            this.ControlPoint = controlPoint;
-            this.Parallel = 0.0f;
+            StartAnchor = startAnchor;
+            EndAnchor = endAnchor;
+            ControlPoint = controlPoint;
+            Parallel = 0.0f;
         }
 
         /// <summary>
@@ -63,10 +63,10 @@ namespace OpenTK
         /// <param name="controlPoint">The control point.</param>
         public BezierCurveQuadric(float parallel, Vector2 startAnchor, Vector2 endAnchor, Vector2 controlPoint)
         {
-            this.Parallel = parallel;
-            this.StartAnchor = startAnchor;
-            this.EndAnchor = endAnchor;
-            this.ControlPoint = controlPoint;
+            Parallel = parallel;
+            StartAnchor = startAnchor;
+            EndAnchor = endAnchor;
+            ControlPoint = controlPoint;
         }
 
         /// <summary>

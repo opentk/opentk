@@ -427,7 +427,7 @@ namespace OpenTK.Platform.X11
                     }
                 }
 
-                if (error_code == X11.ErrorCode.NO_ERROR)
+                if (error_code == ErrorCode.NO_ERROR)
                 {
                     sgi_swap_interval = value;
                 }
@@ -490,7 +490,7 @@ namespace OpenTK.Platform.X11
             }
             else
             {
-                Debug.Print("[Warning] {0} leaked.", this.GetType().Name);
+                Debug.Print("[Warning] {0} leaked.", GetType().Name);
             }
             IsDisposed = true;
         }

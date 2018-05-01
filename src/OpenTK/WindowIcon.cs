@@ -51,8 +51,8 @@ namespace OpenTK
                 throw new ArgumentOutOfRangeException();
             }
 
-            this.Width = width;
-            this.Height = height;
+            Width = width;
+            Height = height;
         }
 
         internal WindowIcon(int width, int height, byte[] data)
@@ -67,7 +67,7 @@ namespace OpenTK
                 throw new ArgumentOutOfRangeException();
             }
 
-            this.Data = data;
+            Data = data;
         }
 
         internal WindowIcon(int width, int height, IntPtr data)
@@ -81,8 +81,8 @@ namespace OpenTK
             // We assume that width and height are correctly set.
             // If they are not, we will read garbage and probably
             // crash.
-            this.Data = new byte[width * height * 4];
-            Marshal.Copy(data, this.Data, 0, this.Data.Length);
+            Data = new byte[width * height * 4];
+            Marshal.Copy(data, Data, 0, Data.Length);
         }
 
         internal byte[] Data { get; }

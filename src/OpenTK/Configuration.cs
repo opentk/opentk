@@ -252,17 +252,17 @@ namespace OpenTK
         private static bool DetectWindows()
         {
             return
-                System.Environment.OSVersion.Platform == PlatformID.Win32NT ||
-                System.Environment.OSVersion.Platform == PlatformID.Win32S ||
-                System.Environment.OSVersion.Platform == PlatformID.Win32Windows ||
-                System.Environment.OSVersion.Platform == PlatformID.WinCE;
+                Environment.OSVersion.Platform == PlatformID.Win32NT ||
+                Environment.OSVersion.Platform == PlatformID.Win32S ||
+                Environment.OSVersion.Platform == PlatformID.Win32Windows ||
+                Environment.OSVersion.Platform == PlatformID.WinCE;
         }
 
         private static bool DetectX11()
         {
             #if X11
             // Detect whether X is present.
-            try { return OpenTK.Platform.X11.API.DefaultDisplay != IntPtr.Zero; }
+            try { return Platform.X11.API.DefaultDisplay != IntPtr.Zero; }
             catch { return false; }
             #else
             return false;

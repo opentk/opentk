@@ -54,11 +54,11 @@ namespace OpenTK
         /// <param name="secondControlPoint">The second control point.</param>
         public BezierCurveCubic(Vector2 startAnchor, Vector2 endAnchor, Vector2 firstControlPoint, Vector2 secondControlPoint)
         {
-            this.StartAnchor = startAnchor;
-            this.EndAnchor = endAnchor;
-            this.FirstControlPoint = firstControlPoint;
-            this.SecondControlPoint = secondControlPoint;
-            this.Parallel = 0.0f;
+            StartAnchor = startAnchor;
+            EndAnchor = endAnchor;
+            FirstControlPoint = firstControlPoint;
+            SecondControlPoint = secondControlPoint;
+            Parallel = 0.0f;
         }
 
         /// <summary>
@@ -71,11 +71,11 @@ namespace OpenTK
         /// <param name="secondControlPoint">The second control point.</param>
         public BezierCurveCubic(float parallel, Vector2 startAnchor, Vector2 endAnchor, Vector2 firstControlPoint, Vector2 secondControlPoint)
         {
-            this.Parallel = parallel;
-            this.StartAnchor = startAnchor;
-            this.EndAnchor = endAnchor;
-            this.FirstControlPoint = firstControlPoint;
-            this.SecondControlPoint = secondControlPoint;
+            Parallel = parallel;
+            StartAnchor = startAnchor;
+            EndAnchor = endAnchor;
+            FirstControlPoint = firstControlPoint;
+            SecondControlPoint = secondControlPoint;
         }
 
         /// <summary>

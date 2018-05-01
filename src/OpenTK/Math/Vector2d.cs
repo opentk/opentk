@@ -77,8 +77,8 @@ namespace OpenTK
         /// <param name="y">The Y coordinate.</param>
         public Vector2d(double x, double y)
         {
-            this.X = x;
-            this.Y = y;
+            X = x;
+            Y = y;
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace OpenTK
         {
             get
             {
-                return System.Math.Sqrt(X * X + Y * Y);
+                return Math.Sqrt(X * X + Y * Y);
             }
         }
 
@@ -872,7 +872,7 @@ namespace OpenTK
         {
             unchecked
             {
-                return (this.X.GetHashCode() * 397) ^ this.Y.GetHashCode();
+                return (X.GetHashCode() * 397) ^ Y.GetHashCode();
             }
         }
 
@@ -888,7 +888,7 @@ namespace OpenTK
                 return false;
             }
 
-            return this.Equals((Vector2d)obj);
+            return Equals((Vector2d)obj);
         }
 
         /// <summary>Indicates whether the current vector is equal to another vector.</summary>

@@ -171,7 +171,7 @@ namespace OpenTK.Graphics.ES31
         public static string GetActiveAttrib(int program, int index, out int size, out AttributeType type)
         {
             int length;
-            GetProgram(program, ES31.ProgramPropertyArb.ActiveAttributeMaxLength, out length);
+            GetProgram(program, ProgramPropertyArb.ActiveAttributeMaxLength, out length);
             string str;
 
             GetActiveAttrib(program, index, length == 0 ? 1 : length * 2, out length, out size, out type, out str);
@@ -181,14 +181,14 @@ namespace OpenTK.Graphics.ES31
         public static string GetActiveUniform(int program, int uniformIndex, out int size, out AttributeType type)
         {
             int length;
-            GetProgram(program, ES31.ProgramPropertyArb.ActiveUniformMaxLength, out length);
+            GetProgram(program, ProgramPropertyArb.ActiveUniformMaxLength, out length);
 
             string str;
             GetActiveUniform(program, uniformIndex, length == 0 ? 1 : length, out length, out size, out type, out str);
             return str;
         }
 
-        public static void ShaderSource(Int32 shader, System.String @string)
+        public static void ShaderSource(Int32 shader, String @string)
         {
             unsafe
             {
@@ -231,7 +231,7 @@ namespace OpenTK.Graphics.ES31
             unsafe
             {
                 int length;
-                GL.GetProgram(program, ES31.ProgramPropertyArb.InfoLogLength, out length); if (length == 0)
+                GL.GetProgram(program, ProgramPropertyArb.InfoLogLength, out length); if (length == 0)
                 {
                     info = String.Empty;
                     return;

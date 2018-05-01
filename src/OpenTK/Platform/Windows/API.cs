@@ -44,54 +44,54 @@ using OpenTK.Platform.Common;
 
 namespace OpenTK.Platform.Windows
 {
-    using HWND = System.IntPtr;
-    using HINSTANCE = System.IntPtr;
-    using HMENU = System.IntPtr;
-    using HICON = System.IntPtr;
-    using HBRUSH = System.IntPtr;
-    using HCURSOR = System.IntPtr;
-    using HKEY = System.IntPtr;
-    using PHKEY = System.IntPtr;
+    using HWND = IntPtr;
+    using HINSTANCE = IntPtr;
+    using HMENU = IntPtr;
+    using HICON = IntPtr;
+    using HBRUSH = IntPtr;
+    using HCURSOR = IntPtr;
+    using HKEY = IntPtr;
+    using PHKEY = IntPtr;
 
-    using HDROP = System.IntPtr;
+    using HDROP = IntPtr;
 
-    using LRESULT = System.IntPtr;
-    using LPVOID = System.IntPtr;
-    using LPCTSTR = System.String;
+    using LRESULT = IntPtr;
+    using LPVOID = IntPtr;
+    using LPCTSTR = String;
 
-    using WPARAM = System.IntPtr;
-    using LPARAM = System.IntPtr;
-    using HANDLE = System.IntPtr;
-    using HRAWINPUT = System.IntPtr;
+    using WPARAM = IntPtr;
+    using LPARAM = IntPtr;
+    using HANDLE = IntPtr;
+    using HRAWINPUT = IntPtr;
 
-    using BYTE = System.Byte;
-    using SHORT = System.Int16;
-    using USHORT = System.UInt16;
-    using LONG = System.Int32;
-    using ULONG = System.UInt32;
-    using WORD = System.Int16;
-    using DWORD = System.Int32;
-    using BOOL = System.Boolean;
-    using INT = System.Int32;
-    using UINT = System.UInt32;
-    using LONG_PTR = System.IntPtr;
-    using ATOM = System.Int32;
+    using BYTE = Byte;
+    using SHORT = Int16;
+    using USHORT = UInt16;
+    using LONG = Int32;
+    using ULONG = UInt32;
+    using WORD = Int16;
+    using DWORD = Int32;
+    using BOOL = Boolean;
+    using INT = Int32;
+    using UINT = UInt32;
+    using LONG_PTR = IntPtr;
+    using ATOM = Int32;
 
-    using COLORREF = System.Int32;
-    using RECT = OpenTK.Platform.Windows.Win32Rectangle;
-    using WNDPROC = System.IntPtr;
+    using COLORREF = Int32;
+    using RECT = Win32Rectangle;
+    using WNDPROC = IntPtr;
     using LPDEVMODE = DeviceMode;
-    using HDEVNOTIFY = System.IntPtr;
+    using HDEVNOTIFY = IntPtr;
 
-    using HRESULT = System.IntPtr;
-    using HMONITOR = System.IntPtr;
+    using HRESULT = IntPtr;
+    using HMONITOR = IntPtr;
 
-    using DWORD_PTR = System.IntPtr;
-    using UINT_PTR = System.UIntPtr;
+    using DWORD_PTR = IntPtr;
+    using UINT_PTR = UIntPtr;
 
     using TIMERPROC = Functions.TimerProc;
 
-    using REGSAM = System.UInt32;
+    using REGSAM = UInt32;
     using System.Diagnostics;
 
     /// \internal
@@ -335,7 +335,7 @@ namespace OpenTK.Platform.Windows
         /// <param name="messageFilterMax">Not used</param>
         /// <param name="flags">Not used</param>
         /// <returns>True if there is a message pending.</returns>
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, PeekMessageFlags flags);
@@ -353,7 +353,7 @@ namespace OpenTK.Platform.Windows
         /// 1 indicates that an error occurred  for example, the function fails if hWnd is an invalid window handle.
         /// To get extended error information, call GetLastError.
         /// </returns>
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll")]
         //[return: MarshalAs(UnmanagedType.Bool)]
         internal static extern INT GetMessage(ref MSG msg,
@@ -373,7 +373,7 @@ namespace OpenTK.Platform.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         internal static extern LRESULT SendMessage(HWND hWnd, WindowMessage Msg, WPARAM wParam, LPARAM lParam);
 
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern BOOL PostMessage(
@@ -417,7 +417,7 @@ namespace OpenTK.Platform.Windows
         /// to get messages in different ranges.
         /// </para>
         /// </remarks>
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         internal static extern DWORD GetQueueStatus([MarshalAs(UnmanagedType.U4)] QueueStatusFlags flags);
 
@@ -429,7 +429,7 @@ namespace OpenTK.Platform.Windows
         /// </summary>
         /// <param name="period">Timing resolution in msec (?)</param>
         /// <returns>(?)</returns>
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("winmm.dll")]
         internal static extern IntPtr TimeBeginPeriod(int period);
 
@@ -438,7 +438,7 @@ namespace OpenTK.Platform.Windows
         /// </summary>
         /// <param name="PerformanceFrequency"></param>
         /// <returns></returns>
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("kernel32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool QueryPerformanceFrequency(ref long PerformanceFrequency);
@@ -448,7 +448,7 @@ namespace OpenTK.Platform.Windows
         /// </summary>
         /// <param name="PerformanceCount"></param>
         /// <returns></returns>
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("kernel32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool QueryPerformanceCounter(ref long PerformanceCount);
@@ -523,19 +523,19 @@ namespace OpenTK.Platform.Windows
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool FreeLibrary(IntPtr handle);
 
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern SHORT GetAsyncKeyState(VirtualKeys vKey);
 
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern SHORT GetKeyState(VirtualKeys vKey);
 
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern UINT MapVirtualKey(UINT uCode, MapVirtualKeyType uMapType);
 
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern UINT MapVirtualKey(VirtualKeys vkey, MapVirtualKeyType uMapType);
 
@@ -963,15 +963,15 @@ namespace OpenTK.Platform.Windows
         /// <param name="Input">Number of RawInput structures pointed to by paRawInput.</param>
         /// <param name="SizeHeader">Size, in bytes, of the RawInputHeader structure.</param>
         /// <returns>If successful, the function returns S_OK. Otherwise it returns an error value.</returns>
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern LRESULT DefRawInputProc(RawInput[] RawInput, INT Input, UINT SizeHeader);
 
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         unsafe internal static extern LRESULT DefRawInputProc(ref RawInput RawInput, INT Input, UINT SizeHeader);
 
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         unsafe internal static extern LRESULT DefRawInputProc(IntPtr RawInput, INT Input, UINT SizeHeader);
 
@@ -1021,7 +1021,7 @@ namespace OpenTK.Platform.Windows
         /// of RawInput structures written to Data.
         /// If an error occurs, the return value is (UINT)-1. Call GetLastError for the error code.
         /// </returns>
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern UINT GetRawInputBuffer(
             [Out] RawInput[] Data,
@@ -1029,7 +1029,7 @@ namespace OpenTK.Platform.Windows
             [In] UINT SizeHeader
         );
 
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern INT GetRawInputBuffer(
             [Out] RawInput[] Data,
@@ -1037,7 +1037,7 @@ namespace OpenTK.Platform.Windows
             [In] INT SizeHeader
         );
 
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern INT GetRawInputBuffer(
             [Out] IntPtr Data,
@@ -1198,7 +1198,7 @@ namespace OpenTK.Platform.Windows
         /// <para>If Data is not large enough for the data, the function returns -1. If Data is NULL, the function returns a value of zero. In both of these cases, Size is set to the minimum size required for the Data buffer.</para>
         /// <para>Call GetLastError to identify any other errors.</para>
         /// </returns>
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern INT GetRawInputDeviceInfo(
             HANDLE Device,
@@ -1207,7 +1207,7 @@ namespace OpenTK.Platform.Windows
             [In, Out] ref INT Size
         );
 
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern INT GetRawInputDeviceInfo(
             HANDLE Device,
@@ -1247,7 +1247,7 @@ namespace OpenTK.Platform.Windows
         /// <para>If Data is not large enough for the data, the function returns -1. If Data is NULL, the function returns a value of zero. In both of these cases, Size is set to the minimum size required for the Data buffer.</para>
         /// <para>Call GetLastError to identify any other errors.</para>
         /// </returns>
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern UINT GetRawInputDeviceInfo(
             HANDLE Device,
@@ -1256,7 +1256,7 @@ namespace OpenTK.Platform.Windows
             [In, Out] ref UINT Size
         );
 
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern INT GetRawInputDeviceInfo(
             HANDLE Device,
@@ -1287,7 +1287,7 @@ namespace OpenTK.Platform.Windows
         /// <remarks>
         /// GetRawInputData gets the raw input one RawInput structure at a time. In contrast, GetRawInputBuffer gets an array of RawInput structures.
         /// </remarks>
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern INT GetRawInputData(
             HRAWINPUT RawInput,
@@ -1318,7 +1318,7 @@ namespace OpenTK.Platform.Windows
         /// <remarks>
         /// GetRawInputData gets the raw input one RawInput structure at a time. In contrast, GetRawInputBuffer gets an array of RawInput structures.
         /// </remarks>
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern INT GetRawInputData(
             HRAWINPUT RawInput,
@@ -1328,7 +1328,7 @@ namespace OpenTK.Platform.Windows
             INT SizeHeader
         );
 
-        [System.Security.SuppressUnmanagedCodeSecurity]
+        [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         unsafe internal static extern INT GetRawInputData(
             HRAWINPUT RawInput,
@@ -4105,8 +4105,8 @@ namespace OpenTK.Platform.Windows
 
         internal POINT(int x, int y)
         {
-            this.X = x;
-            this.Y = y;
+            X = x;
+            Y = y;
         }
 
         internal Point ToPoint()

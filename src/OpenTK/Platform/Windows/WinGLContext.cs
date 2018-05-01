@@ -48,7 +48,7 @@ namespace OpenTK.Platform.Windows
                 // of the temp window
                 WinWindowInfo window = native.WindowInfo as WinWindowInfo;
                 WinGraphicsMode selector = new WinGraphicsMode(window.DeviceContext);
-                WinGLContext.SetGraphicsModePFD(selector, GraphicsMode.Default, window);
+                SetGraphicsModePFD(selector, GraphicsMode.Default, window);
 
                 bool success = false;
 

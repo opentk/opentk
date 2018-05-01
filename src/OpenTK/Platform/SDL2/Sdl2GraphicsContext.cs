@@ -55,7 +55,7 @@ namespace OpenTK.Platform.SDL2
         public Sdl2GraphicsContext(GraphicsMode mode,
             IWindowInfo win, IGraphicsContext shareContext,
             int major, int minor,
-            OpenTK.Graphics.GraphicsContextFlags flags)
+            GraphicsContextFlags flags)
             : this(win)
         {
             lock (SDL.Sync)

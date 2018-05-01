@@ -173,7 +173,7 @@ namespace OpenTK.Platform.Egl
                 }
                 else
                 {
-                    Debug.Print("[Warning] Failed to destroy {0}:{1}.", this.GetType().Name, Handle);
+                    Debug.Print("[Warning] Failed to destroy {0}:{1}.", GetType().Name, Handle);
                 }
             }
         }

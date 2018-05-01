@@ -97,7 +97,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="color">The color to set.</param>
         public static void Color3(Color color)
         {
-            GL.Color3(color.R, color.G, color.B);
+            Color3(color.R, color.G, color.B);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="color">The color to set.</param>
         public static void Color4(Color color)
         {
-            GL.Color4(color.R, color.G, color.B, color.A);
+            Color4(color.R, color.G, color.B, color.A);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="color">The color to set.</param>
         public static void Color3(Vector3 color)
         {
-            GL.Color3(color.X, color.Y, color.Z);
+            Color3(color.X, color.Y, color.Z);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="color">The color to set.</param>
         public static void Color4(Vector4 color)
         {
-            GL.Color4(color.X, color.Y, color.Z, color.W);
+            Color4(color.X, color.Y, color.Z, color.W);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="color">The color to set.</param>
         public static void Color4(Color4 color)
         {
-            GL.Color4(color.R, color.G, color.B, color.A);
+            Color4(color.R, color.G, color.B, color.A);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="color">The color to set as the clear value.</param>
         public static void ClearColor(Color color)
         {
-            GL.ClearColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
+            ClearColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="color">The color to set as the clear value.</param>
         public static void ClearColor(Color4 color)
         {
-            GL.ClearColor(color.R, color.G, color.B, color.A);
+            ClearColor(color.R, color.G, color.B, color.A);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="color">The blend color to set.</param>
         public static void BlendColor(Color color)
         {
-            GL.BlendColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
+            BlendColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="color">The blend color to set.</param>
         public static void BlendColor(Color4 color)
         {
-            GL.BlendColor(color.R, color.G, color.B, color.A);
+            BlendColor(color.R, color.G, color.B, color.A);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Material(MaterialFace face, MaterialParameter pname, Color4 @params)
         {
-            unsafe { GL.Material(face, pname, (float*)&@params); }
+            unsafe { Material(face, pname, (float*)&@params); }
         }
 
         /// <summary>[requires: v1.0][deprecated: v3.2]
@@ -230,7 +230,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Light(LightName name, LightParameter pname, Vector4 @params)
         {
-            unsafe { GL.Light(name, pname, (float*)&@params.X); }
+            unsafe { Light(name, pname, (float*)&@params.X); }
         }
 
         /// <summary>[requires: v1.0][deprecated: v3.2]
@@ -247,7 +247,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Light(LightName name, LightParameter pname, Color4 @params)
         {
-            unsafe { GL.Light(name, pname, (float*)&@params); }
+            unsafe { Light(name, pname, (float*)&@params); }
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Normal3(Vector3 normal)
         {
-            GL.Normal3(normal.X, normal.Y, normal.Z);
+            Normal3(normal.X, normal.Y, normal.Z);
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void RasterPos2(Vector2 pos)
         {
-            GL.RasterPos2(pos.X, pos.Y);
+            RasterPos2(pos.X, pos.Y);
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void RasterPos3(Vector3 pos)
         {
-            GL.RasterPos3(pos.X, pos.Y, pos.Z);
+            RasterPos3(pos.X, pos.Y, pos.Z);
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void RasterPos4(Vector4 pos)
         {
-            GL.RasterPos4(pos.X, pos.Y, pos.Z, pos.W);
+            RasterPos4(pos.X, pos.Y, pos.Z, pos.W);
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Vertex2(Vector2 v)
         {
-            GL.Vertex2(v.X, v.Y);
+            Vertex2(v.X, v.Y);
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Vertex3(Vector3 v)
         {
-            GL.Vertex3(v.X, v.Y, v.Z);
+            Vertex3(v.X, v.Y, v.Z);
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Vertex4(Vector4 v)
         {
-            GL.Vertex4(v.X, v.Y, v.Z, v.W);
+            Vertex4(v.X, v.Y, v.Z, v.W);
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void TexCoord2(Vector2 v)
         {
-            GL.TexCoord2(v.X, v.Y);
+            TexCoord2(v.X, v.Y);
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void TexCoord3(Vector3 v)
         {
-            GL.TexCoord3(v.X, v.Y, v.Z);
+            TexCoord3(v.X, v.Y, v.Z);
         }
 
         /// <summary>
@@ -367,7 +367,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void TexCoord4(Vector4 v)
         {
-            GL.TexCoord4(v.X, v.Y, v.Z, v.W);
+            TexCoord4(v.X, v.Y, v.Z, v.W);
         }
 
         /// <summary>
@@ -382,7 +382,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Rotate(Single angle, Vector3 axis)
         {
-            GL.Rotate((Single)angle, axis.X, axis.Y, axis.Z);
+            Rotate((Single)angle, axis.X, axis.Y, axis.Z);
         }
 
         /// <summary>
@@ -394,7 +394,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Scale(Vector3 scale)
         {
-            GL.Scale(scale.X, scale.Y, scale.Z);
+            Scale(scale.X, scale.Y, scale.Z);
         }
 
         /// <summary>
@@ -406,7 +406,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Translate(Vector3 trans)
         {
-            GL.Translate(trans.X, trans.Y, trans.Z);
+            Translate(trans.X, trans.Y, trans.Z);
         }
 
         /// <summary>
@@ -422,7 +422,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (Single* m_ptr = &mat.Row0.X)
                 {
-                    GL.MultMatrix((Single*)m_ptr);
+                    MultMatrix((Single*)m_ptr);
                 }
             }
         }
@@ -439,7 +439,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (Single* m_ptr = &mat.Row0.X)
                 {
-                    GL.LoadMatrix((Single*)m_ptr);
+                    LoadMatrix((Single*)m_ptr);
                 }
             }
         }
@@ -457,7 +457,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (Single* m_ptr = &mat.Row0.X)
                 {
-                    GL.LoadTransposeMatrix((Single*)m_ptr);
+                    LoadTransposeMatrix((Single*)m_ptr);
                 }
             }
         }
@@ -475,7 +475,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (Single* m_ptr = &mat.Row0.X)
                 {
-                    GL.MultTransposeMatrix((Single*)m_ptr);
+                    MultTransposeMatrix((Single*)m_ptr);
                 }
             }
         }
@@ -489,7 +489,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Normal3(Vector3d normal)
         {
-            GL.Normal3(normal.X, normal.Y, normal.Z);
+            Normal3(normal.X, normal.Y, normal.Z);
         }
 
         /// <summary>
@@ -501,7 +501,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void RasterPos2(Vector2d pos)
         {
-            GL.RasterPos2(pos.X, pos.Y);
+            RasterPos2(pos.X, pos.Y);
         }
 
         /// <summary>
@@ -513,7 +513,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void RasterPos3(Vector3d pos)
         {
-            GL.RasterPos3(pos.X, pos.Y, pos.Z);
+            RasterPos3(pos.X, pos.Y, pos.Z);
         }
 
         /// <summary>
@@ -525,7 +525,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void RasterPos4(Vector4d pos)
         {
-            GL.RasterPos4(pos.X, pos.Y, pos.Z, pos.W);
+            RasterPos4(pos.X, pos.Y, pos.Z, pos.W);
         }
 
         /// <summary>
@@ -537,7 +537,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Vertex2(Vector2d v)
         {
-            GL.Vertex2(v.X, v.Y);
+            Vertex2(v.X, v.Y);
         }
 
         /// <summary>
@@ -549,7 +549,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Vertex3(Vector3d v)
         {
-            GL.Vertex3(v.X, v.Y, v.Z);
+            Vertex3(v.X, v.Y, v.Z);
         }
 
         /// <summary>
@@ -561,7 +561,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Vertex4(Vector4d v)
         {
-            GL.Vertex4(v.X, v.Y, v.Z, v.W);
+            Vertex4(v.X, v.Y, v.Z, v.W);
         }
 
         /// <summary>
@@ -573,7 +573,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void TexCoord2(Vector2d v)
         {
-            GL.TexCoord2(v.X, v.Y);
+            TexCoord2(v.X, v.Y);
         }
 
         /// <summary>
@@ -585,7 +585,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void TexCoord3(Vector3d v)
         {
-            GL.TexCoord3(v.X, v.Y, v.Z);
+            TexCoord3(v.X, v.Y, v.Z);
         }
 
         /// <summary>
@@ -597,7 +597,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void TexCoord4(Vector4d v)
         {
-            GL.TexCoord4(v.X, v.Y, v.Z, v.W);
+            TexCoord4(v.X, v.Y, v.Z, v.W);
         }
 
         /// <summary>
@@ -612,7 +612,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Rotate(double angle, Vector3d axis)
         {
-            GL.Rotate((double)angle, axis.X, axis.Y, axis.Z);
+            Rotate((double)angle, axis.X, axis.Y, axis.Z);
         }
 
         /// <summary>
@@ -624,7 +624,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Scale(Vector3d scale)
         {
-            GL.Scale(scale.X, scale.Y, scale.Z);
+            Scale(scale.X, scale.Y, scale.Z);
         }
 
         /// <summary>
@@ -636,7 +636,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Translate(Vector3d trans)
         {
-            GL.Translate(trans.X, trans.Y, trans.Z);
+            Translate(trans.X, trans.Y, trans.Z);
         }
 
         /// <summary>
@@ -652,7 +652,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (Double* m_ptr = &mat.Row0.X)
                 {
-                    GL.MultMatrix((Double*)m_ptr);
+                    MultMatrix((Double*)m_ptr);
                 }
             }
         }
@@ -669,7 +669,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (Double* m_ptr = &mat.Row0.X)
                 {
-                    GL.LoadMatrix((Double*)m_ptr);
+                    LoadMatrix((Double*)m_ptr);
                 }
             }
         }
@@ -687,7 +687,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (Double* m_ptr = &mat.Row0.X)
                 {
-                    GL.LoadTransposeMatrix((Double*)m_ptr);
+                    LoadTransposeMatrix((Double*)m_ptr);
                 }
             }
         }
@@ -705,7 +705,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (Double* m_ptr = &mat.Row0.X)
                 {
-                    GL.MultTransposeMatrix((Double*)m_ptr);
+                    MultTransposeMatrix((Double*)m_ptr);
                 }
             }
         }
@@ -722,7 +722,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Uniform2(int location, ref Vector2 vector)
         {
-            GL.Uniform2(location, vector.X, vector.Y);
+            Uniform2(location, vector.X, vector.Y);
         }
 
         /// <summary>
@@ -737,7 +737,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Uniform3(int location, ref Vector3 vector)
         {
-            GL.Uniform3(location, vector.X, vector.Y, vector.Z);
+            Uniform3(location, vector.X, vector.Y, vector.Z);
         }
 
         /// <summary>
@@ -752,7 +752,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Uniform4(int location, ref Vector4 vector)
         {
-            GL.Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
+            Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
         }
 
         /// <summary>
@@ -767,7 +767,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Uniform2(int location, Vector2 vector)
         {
-            GL.Uniform2(location, vector.X, vector.Y);
+            Uniform2(location, vector.X, vector.Y);
         }
 
         /// <summary>
@@ -782,7 +782,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Uniform3(int location, Vector3 vector)
         {
-            GL.Uniform3(location, vector.X, vector.Y, vector.Z);
+            Uniform3(location, vector.X, vector.Y, vector.Z);
         }
 
         /// <summary>
@@ -797,7 +797,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Uniform4(int location, Vector4 vector)
         {
-            GL.Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
+            Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
         }
 
         /// <summary>
@@ -813,7 +813,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Uniform4(int location, Color4 color)
         {
-            GL.Uniform4(location, color.R, color.G, color.B, color.A);
+            Uniform4(location, color.R, color.G, color.B, color.A);
         }
 
         /// <summary>
@@ -829,7 +829,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Uniform4(int location, Quaternion quaternion)
         {
-            GL.Uniform4(location, quaternion.X, quaternion.Y, quaternion.Z, quaternion.W);
+            Uniform4(location, quaternion.X, quaternion.Y, quaternion.Z, quaternion.W);
         }
 
         /// <summary>
@@ -850,7 +850,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix2(location, 1, transpose, matrix_ptr);
+                    UniformMatrix2(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -873,7 +873,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix2(location, 1, transpose, matrix_ptr);
+                    UniformMatrix2(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -896,7 +896,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix2x3(location, 1, transpose, matrix_ptr);
+                    UniformMatrix2x3(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -919,7 +919,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix2x3(location, 1, transpose, matrix_ptr);
+                    UniformMatrix2x3(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -942,7 +942,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix2x4(location, 1, transpose, matrix_ptr);
+                    UniformMatrix2x4(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -965,7 +965,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix2x4(location, 1, transpose, matrix_ptr);
+                    UniformMatrix2x4(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -988,7 +988,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix3x2(location, 1, transpose, matrix_ptr);
+                    UniformMatrix3x2(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1011,7 +1011,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix3x2(location, 1, transpose, matrix_ptr);
+                    UniformMatrix3x2(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1034,7 +1034,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix3(location, 1, transpose, matrix_ptr);
+                    UniformMatrix3(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1057,7 +1057,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix3(location, 1, transpose, matrix_ptr);
+                    UniformMatrix3(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1080,7 +1080,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix3x4(location, 1, transpose, matrix_ptr);
+                    UniformMatrix3x4(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1103,7 +1103,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix3x4(location, 1, transpose, matrix_ptr);
+                    UniformMatrix3x4(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1126,7 +1126,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix4x2(location, 1, transpose, matrix_ptr);
+                    UniformMatrix4x2(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1149,7 +1149,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix4x2(location, 1, transpose, matrix_ptr);
+                    UniformMatrix4x2(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1172,7 +1172,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix4x3(location, 1, transpose, matrix_ptr);
+                    UniformMatrix4x3(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1195,7 +1195,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix4x3(location, 1, transpose, matrix_ptr);
+                    UniformMatrix4x3(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1218,7 +1218,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix4(location, 1, transpose, matrix_ptr);
+                    UniformMatrix4(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1241,7 +1241,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix4(location, 1, transpose, matrix_ptr);
+                    UniformMatrix4(location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1261,7 +1261,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void ProgramUniform2(int program, int location, ref Vector2 vector)
         {
-            GL.ProgramUniform2(program, location, vector.X, vector.Y);
+            ProgramUniform2(program, location, vector.X, vector.Y);
         }
 
         /// <summary>
@@ -1279,7 +1279,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void ProgramUniform3(int program, int location, ref Vector3 vector)
         {
-            GL.ProgramUniform3(program, location, vector.X, vector.Y, vector.Z);
+            ProgramUniform3(program, location, vector.X, vector.Y, vector.Z);
         }
 
         /// <summary>
@@ -1297,7 +1297,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void ProgramUniform4(int program, int location, ref Vector4 vector)
         {
-            GL.ProgramUniform4(program, location, vector.X, vector.Y, vector.Z, vector.W);
+            ProgramUniform4(program, location, vector.X, vector.Y, vector.Z, vector.W);
         }
 
         /// <summary>
@@ -1315,7 +1315,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void ProgramUniform2(int program, int location, Vector2 vector)
         {
-            GL.ProgramUniform2(program, location, vector.X, vector.Y);
+            ProgramUniform2(program, location, vector.X, vector.Y);
         }
 
         /// <summary>
@@ -1333,7 +1333,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void ProgramUniform3(int program, int location, Vector3 vector)
         {
-            GL.ProgramUniform3(program, location, vector.X, vector.Y, vector.Z);
+            ProgramUniform3(program, location, vector.X, vector.Y, vector.Z);
         }
 
         /// <summary>
@@ -1351,7 +1351,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void ProgramUniform4(int program, int location, Vector4 vector)
         {
-            GL.ProgramUniform4(program, location, vector.X, vector.Y, vector.Z, vector.W);
+            ProgramUniform4(program, location, vector.X, vector.Y, vector.Z, vector.W);
         }
 
         /// <summary>
@@ -1370,7 +1370,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void ProgramUniform4(int program, int location, Color4 color)
         {
-            GL.ProgramUniform4(program, location, color.R, color.G, color.B, color.A);
+            ProgramUniform4(program, location, color.R, color.G, color.B, color.A);
         }
 
         /// <summary>
@@ -1389,7 +1389,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void ProgramUniform4(int program, int location, Quaternion quaternion)
         {
-            GL.ProgramUniform4(program, location, quaternion.X, quaternion.Y, quaternion.Z, quaternion.W);
+            ProgramUniform4(program, location, quaternion.X, quaternion.Y, quaternion.Z, quaternion.W);
         }
 
         /// <summary>
@@ -1413,7 +1413,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix2(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix2(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1439,7 +1439,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix2(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix2(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1465,7 +1465,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix2x3(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix2x3(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1491,7 +1491,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix2x3(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix2x3(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1517,7 +1517,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix2x4(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix2x4(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1543,7 +1543,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix2x4(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix2x4(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1569,7 +1569,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix3x2(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix3x2(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1595,7 +1595,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix3x2(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix3x2(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1621,7 +1621,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix3(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix3(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1647,7 +1647,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix3(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix3(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1673,7 +1673,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix3x4(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix3x4(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1699,7 +1699,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix3x4(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix3x4(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1725,7 +1725,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix4x2(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix4x2(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1751,7 +1751,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix4x2(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix4x2(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1777,7 +1777,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix4x3(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix4x3(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1803,7 +1803,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix4x3(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix4x3(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1829,7 +1829,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix4(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix4(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1855,7 +1855,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.ProgramUniformMatrix4(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix4(program, location, 1, transpose, matrix_ptr);
                 }
             }
         }
@@ -1882,7 +1882,7 @@ namespace OpenTK.Graphics.OpenGL
         public static string GetActiveAttrib(int program, int index, out int size, out ActiveAttribType type)
         {
             int length;
-            GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.ActiveAttributeMaxLength, out length);
+            GetProgram(program, GetProgramParameterName.ActiveAttributeMaxLength, out length);
             string str;
 
             GetActiveAttrib(program, index, length == 0 ? 1 : length * 2, out length, out size, out type, out str);
@@ -1911,7 +1911,7 @@ namespace OpenTK.Graphics.OpenGL
         public static string GetActiveUniform(int program, int uniformIndex, out int size, out ActiveUniformType type)
         {
             int length;
-            GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.ActiveUniformMaxLength, out length);
+            GetProgram(program, GetProgramParameterName.ActiveUniformMaxLength, out length);
 
             string str;
             GetActiveUniform(program, uniformIndex, length == 0 ? 1 : length, out length, out size, out type, out str);
@@ -1934,7 +1934,7 @@ namespace OpenTK.Graphics.OpenGL
         public static string GetActiveUniformName(int program, int uniformIndex)
         {
             int length;
-            GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.ActiveUniformMaxLength, out length);
+            GetProgram(program, GetProgramParameterName.ActiveUniformMaxLength, out length);
             string str;
 
             GetActiveUniformName(program, uniformIndex, length == 0 ? 1 : length * 2, out length, out str);
@@ -1957,7 +1957,7 @@ namespace OpenTK.Graphics.OpenGL
         public static string GetActiveUniformBlockName(int program, int uniformIndex)
         {
             int length;
-            GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.ActiveUniformBlockMaxNameLength, out length);
+            GetProgram(program, GetProgramParameterName.ActiveUniformBlockMaxNameLength, out length);
             string str;
 
             GetActiveUniformBlockName(program, uniformIndex, length == 0 ? 1 : length * 2, out length, out str);
@@ -1974,12 +1974,12 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="string">
         /// Specifies a string containing the source code to be loaded into the shader.
         /// </param>
-        public static void ShaderSource(Int32 shader, System.String @string)
+        public static void ShaderSource(Int32 shader, String @string)
         {
             unsafe
             {
                 int length = @string.Length;
-                GL.ShaderSource((UInt32)shader, 1, new string[] { @string }, &length);
+                ShaderSource((UInt32)shader, 1, new string[] { @string }, &length);
             }
         }
 
@@ -2015,13 +2015,13 @@ namespace OpenTK.Graphics.OpenGL
             unsafe
             {
                 int length;
-                GL.GetShader(shader, ShaderParameter.InfoLogLength, out length);
+                GetShader(shader, ShaderParameter.InfoLogLength, out length);
                 if (length == 0)
                 {
                     info = String.Empty;
                     return;
                 }
-                GL.GetShaderInfoLog((UInt32)shader, length * 2, &length, out info);
+                GetShaderInfoLog((UInt32)shader, length * 2, &length, out info);
             }
         }
 
@@ -2057,12 +2057,12 @@ namespace OpenTK.Graphics.OpenGL
             unsafe
             {
                 int length;
-                GL.GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.InfoLogLength, out length); if (length == 0)
+                GL.GetProgram(program, GetProgramParameterName.InfoLogLength, out length); if (length == 0)
                 {
                     info = String.Empty;
                     return;
                 }
-                GL.GetProgramInfoLog((UInt32)program, length * 2, &length, out info);
+                GetProgramInfoLog((UInt32)program, length * 2, &length, out info);
             }
         }
 
@@ -2075,7 +2075,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void PointParameter(PointSpriteCoordOriginParameter param)
         {
-            GL.PointParameter(PointParameterName.PointSpriteCoordOrigin, (int)param);
+            PointParameter(PointParameterName.PointSpriteCoordOrigin, (int)param);
         }
 
         /// <summary>
@@ -2090,7 +2090,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void VertexAttrib2(Int32 index, ref Vector2 v)
         {
-            GL.VertexAttrib2(index, v.X, v.Y);
+            VertexAttrib2(index, v.X, v.Y);
         }
 
         /// <summary>
@@ -2105,7 +2105,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void VertexAttrib3(Int32 index, ref Vector3 v)
         {
-            GL.VertexAttrib3(index, v.X, v.Y, v.Z);
+            VertexAttrib3(index, v.X, v.Y, v.Z);
         }
 
         /// <summary>
@@ -2120,7 +2120,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void VertexAttrib4(Int32 index, ref Vector4 v)
         {
-            GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
+            VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
 
         /// <summary>
@@ -2135,7 +2135,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void VertexAttrib2(Int32 index, Vector2 v)
         {
-            GL.VertexAttrib2(index, v.X, v.Y);
+            VertexAttrib2(index, v.X, v.Y);
         }
 
         /// <summary>
@@ -2150,7 +2150,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void VertexAttrib3(Int32 index, Vector3 v)
         {
-            GL.VertexAttrib3(index, v.X, v.Y, v.Z);
+            VertexAttrib3(index, v.X, v.Y, v.Z);
         }
 
         /// <summary>
@@ -2165,7 +2165,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void VertexAttrib4(Int32 index, Vector4 v)
         {
-            GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
+            VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
 
         /// <summary>
@@ -2182,7 +2182,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void MultiTexCoord2(TextureUnit target, ref Vector2 v)
         {
-            GL.MultiTexCoord2(target, v.X, v.Y);
+            MultiTexCoord2(target, v.X, v.Y);
         }
 
         /// <summary>
@@ -2199,7 +2199,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void MultiTexCoord3(TextureUnit target, ref Vector3 v)
         {
-            GL.MultiTexCoord3(target, v.X, v.Y, v.Z);
+            MultiTexCoord3(target, v.X, v.Y, v.Z);
         }
 
         /// <summary>
@@ -2216,7 +2216,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void MultiTexCoord4(TextureUnit target, ref Vector4 v)
         {
-            GL.MultiTexCoord4(target, v.X, v.Y, v.Z, v.W);
+            MultiTexCoord4(target, v.X, v.Y, v.Z, v.W);
         }
 
         /// <summary>
@@ -2231,7 +2231,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void VertexAttrib2(Int32 index, ref Vector2d v)
         {
-            GL.VertexAttrib2(index, v.X, v.Y);
+            VertexAttrib2(index, v.X, v.Y);
         }
 
         /// <summary>
@@ -2246,7 +2246,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void VertexAttrib3(Int32 index, ref Vector3d v)
         {
-            GL.VertexAttrib3(index, v.X, v.Y, v.Z);
+            VertexAttrib3(index, v.X, v.Y, v.Z);
         }
 
         /// <summary>
@@ -2261,7 +2261,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void VertexAttrib4(Int32 index, ref Vector4d v)
         {
-            GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
+            VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
 
         /// <summary>
@@ -2276,7 +2276,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void VertexAttrib2(Int32 index, Vector2d v)
         {
-            GL.VertexAttrib2(index, v.X, v.Y);
+            VertexAttrib2(index, v.X, v.Y);
         }
 
         /// <summary>
@@ -2291,7 +2291,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void VertexAttrib3(Int32 index, Vector3d v)
         {
-            GL.VertexAttrib3(index, v.X, v.Y, v.Z);
+            VertexAttrib3(index, v.X, v.Y, v.Z);
         }
 
         /// <summary>
@@ -2306,7 +2306,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void VertexAttrib4(Int32 index, Vector4d v)
         {
-            GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
+            VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
 
         /// <summary>
@@ -2323,7 +2323,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void MultiTexCoord2(TextureUnit target, ref Vector2d v)
         {
-            GL.MultiTexCoord2(target, v.X, v.Y);
+            MultiTexCoord2(target, v.X, v.Y);
         }
 
         /// <summary>
@@ -2340,7 +2340,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void MultiTexCoord3(TextureUnit target, ref Vector3d v)
         {
-            GL.MultiTexCoord3(target, v.X, v.Y, v.Z);
+            MultiTexCoord3(target, v.X, v.Y, v.Z);
         }
 
         /// <summary>
@@ -2357,7 +2357,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void MultiTexCoord4(TextureUnit target, ref Vector4d v)
         {
-            GL.MultiTexCoord4(target, v.X, v.Y, v.Z, v.W);
+            MultiTexCoord4(target, v.X, v.Y, v.Z, v.W);
         }
 
         /// <summary>
@@ -2369,7 +2369,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Rect(RectangleF rect)
         {
-            GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
+            Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
         }
 
         /// <summary>
@@ -2381,7 +2381,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Rect(Rectangle rect)
         {
-            GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
+            Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
         }
 
         /// <summary>
@@ -2393,7 +2393,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Rect(ref RectangleF rect)
         {
-            GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
+            Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
         }
 
         /// <summary>
@@ -2405,7 +2405,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Rect(ref Rectangle rect)
         {
-            GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
+            Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
         }
 
         /// <summary>
@@ -2767,7 +2767,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Viewport(Size size)
         {
-            GL.Viewport(0, 0, size.Width, size.Height);
+            Viewport(0, 0, size.Width, size.Height);
         }
 
         /// <summary>
@@ -2783,7 +2783,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Viewport(Point location, Size size)
         {
-            GL.Viewport(location.X, location.Y, size.Width, size.Height);
+            Viewport(location.X, location.Y, size.Width, size.Height);
         }
 
         /// <summary>
@@ -2796,7 +2796,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void Viewport(Rectangle rectangle)
         {
-            GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+            Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
 #if MINIMAL
         /// <summary>

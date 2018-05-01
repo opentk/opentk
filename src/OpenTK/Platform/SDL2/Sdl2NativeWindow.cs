@@ -282,7 +282,7 @@ namespace OpenTK.Platform.SDL2
             // Decode the string from UTF8 to .Net UTF16
             fixed (char* pBuffer = window.DecodeTextBuffer)
             {
-                decoded_length = System.Text.Encoding.UTF8.GetChars(
+                decoded_length = Encoding.UTF8.GetChars(
                     ev.Text,
                     length,
                     pBuffer,

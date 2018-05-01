@@ -145,8 +145,8 @@ namespace OpenTK
 
             Vector4 result = new Vector4();
 
-            result.W = 2.0f * (float)System.Math.Acos(q.W); // angle
-            float den = (float)System.Math.Sqrt(1.0 - q.W * q.W);
+            result.W = 2.0f * (float)Math.Acos(q.W); // angle
+            float den = (float)Math.Sqrt(1.0 - q.W * q.W);
             if (den > 0.0001f)
             {
                 result.Xyz = q.Xyz / den;
@@ -169,7 +169,7 @@ namespace OpenTK
         {
             get
             {
-                return (float)System.Math.Sqrt(W * W + Xyz.LengthSquared);
+                return (float)Math.Sqrt(W * W + Xyz.LengthSquared);
             }
         }
 
@@ -217,7 +217,7 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-            float scale = 1.0f / this.Length;
+            float scale = 1.0f / Length;
             Xyz *= scale;
             W *= scale;
         }
@@ -426,8 +426,8 @@ namespace OpenTK
 
             angle *= 0.5f;
             axis.Normalize();
-            result.Xyz = axis * (float)System.Math.Sin(angle);
-            result.W = (float)System.Math.Cos(angle);
+            result.Xyz = axis * (float)Math.Sin(angle);
+            result.W = (float)Math.Cos(angle);
 
             return Normalize(result);
         }
@@ -592,11 +592,11 @@ namespace OpenTK
             if (cosHalfAngle < 0.99f)
             {
                 // do proper slerp for big angles
-                float halfAngle = (float)System.Math.Acos(cosHalfAngle);
-                float sinHalfAngle = (float)System.Math.Sin(halfAngle);
+                float halfAngle = (float)Math.Acos(cosHalfAngle);
+                float sinHalfAngle = (float)Math.Sin(halfAngle);
                 float oneOverSinHalfAngle = 1.0f / sinHalfAngle;
-                blendA = (float)System.Math.Sin(halfAngle * (1.0f - blend)) * oneOverSinHalfAngle;
-                blendB = (float)System.Math.Sin(halfAngle * blend) * oneOverSinHalfAngle;
+                blendA = (float)Math.Sin(halfAngle * (1.0f - blend)) * oneOverSinHalfAngle;
+                blendB = (float)Math.Sin(halfAngle * blend) * oneOverSinHalfAngle;
             }
             else
             {
@@ -730,7 +730,7 @@ namespace OpenTK
         {
             unchecked
             {
-                return (this.Xyz.GetHashCode() * 397) ^ this.W.GetHashCode();
+                return (Xyz.GetHashCode() * 397) ^ W.GetHashCode();
             }
         }
 

@@ -56,8 +56,8 @@ namespace OpenTK
 
             public POINT(int x, int y)
             {
-                this.X = x;
-                this.Y = y;
+                X = x;
+                Y = y;
             }
 
             public System.Drawing.Point ToPoint()

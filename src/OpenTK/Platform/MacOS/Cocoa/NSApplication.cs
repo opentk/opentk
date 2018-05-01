@@ -40,7 +40,7 @@ namespace OpenTK.Platform.MacOS
         private static readonly IntPtr selQuit = Selector.Get("quit");
 
         private static readonly int ThreadId =
-            System.Threading.Thread.CurrentThread.ManagedThreadId;
+            Thread.CurrentThread.ManagedThreadId;
 
         internal static void Initialize() { }
 
@@ -107,11 +107,11 @@ namespace OpenTK.Platform.MacOS
             get
             {
                 int thread_id = Thread.CurrentThread.ManagedThreadId;
-                bool is_ui_thread = thread_id == NSApplication.ThreadId;
+                bool is_ui_thread = thread_id == ThreadId;
                 if (!is_ui_thread)
                 {
                     Debug.Print("[Warning] UI resources must be disposed in the UI thread #{0}, not #{1}.",
-                        NSApplication.ThreadId, thread_id);
+                        ThreadId, thread_id);
                 }
                 return is_ui_thread;
             }

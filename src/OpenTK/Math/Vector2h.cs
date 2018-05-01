@@ -242,8 +242,8 @@ namespace OpenTK
         /// <param name="context"></param>
         public Vector2h(SerializationInfo info, StreamingContext context)
         {
-            this.X = (Half)info.GetValue("X", typeof(Half));
-            this.Y = (Half)info.GetValue("Y", typeof(Half));
+            X = (Half)info.GetValue("X", typeof(Half));
+            Y = (Half)info.GetValue("Y", typeof(Half));
         }
 
         /// <summary>Used by ISerialize to serialize the object.</summary>
@@ -251,8 +251,8 @@ namespace OpenTK
         /// <param name="context"></param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("X", this.X);
-            info.AddValue("Y", this.Y);
+            info.AddValue("X", X);
+            info.AddValue("Y", Y);
         }
 
         /// <summary>Updates the X and Y components of this instance by reading from a Stream.</summary>
@@ -276,7 +276,7 @@ namespace OpenTK
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
         public bool Equals(Vector2h other)
         {
-            return (this.X.Equals(other.X) && this.Y.Equals(other.Y));
+            return (X.Equals(other.X) && Y.Equals(other.Y));
         }
 
         private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;

@@ -490,7 +490,7 @@ namespace OpenTK
         public void SwapBuffers()
         {
             EnsureUndisposed();
-            this.Context.SwapBuffers();
+            Context.SwapBuffers();
         }
 
         /// <summary>
@@ -886,7 +886,7 @@ namespace OpenTK
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            glContext.Update(base.WindowInfo);
+            glContext.Update(WindowInfo);
         }
 
         private void OnLoadInternal(EventArgs e)

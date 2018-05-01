@@ -39,7 +39,7 @@ namespace OpenTK
         internal CarbonGLControl(GraphicsMode mode, Control owner)
         {
             this.mode = mode;
-            this.control = owner;
+            control = owner;
 
             WindowInfo = Utilities.CreateMacOSCarbonWindowInfo(control.Handle, false, true);
         }

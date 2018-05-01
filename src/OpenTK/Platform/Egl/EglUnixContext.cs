@@ -33,9 +33,9 @@ namespace OpenTK.Platform.Egl
 {
     internal class EglUnixContext : EglContext
     {
-        private IntPtr ES1 = OpenTK.Platform.X11.DL.Open("libGLESv1_CM", X11.DLOpenFlags.Lazy);
-        private IntPtr ES2 = OpenTK.Platform.X11.DL.Open("libGLESv2", X11.DLOpenFlags.Lazy);
-        private IntPtr GL = OpenTK.Platform.X11.DL.Open("libGL", X11.DLOpenFlags.Lazy);
+        private IntPtr ES1 = X11.DL.Open("libGLESv1_CM", X11.DLOpenFlags.Lazy);
+        private IntPtr ES2 = X11.DL.Open("libGLESv2", X11.DLOpenFlags.Lazy);
+        private IntPtr GL = X11.DL.Open("libGL", X11.DLOpenFlags.Lazy);
 
         public EglUnixContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
@@ -95,11 +95,11 @@ namespace OpenTK.Platform.Egl
 
             Stopwatch time = Stopwatch.StartNew();
 
-            new OpenTK.Graphics.OpenGL.GL().LoadEntryPoints();
-            new OpenTK.Graphics.OpenGL4.GL().LoadEntryPoints();
-            new OpenTK.Graphics.ES11.GL().LoadEntryPoints();
-            new OpenTK.Graphics.ES20.GL().LoadEntryPoints();
-            new OpenTK.Graphics.ES30.GL().LoadEntryPoints();
+            new Graphics.OpenGL.GL().LoadEntryPoints();
+            new Graphics.OpenGL4.GL().LoadEntryPoints();
+            new Graphics.ES11.GL().LoadEntryPoints();
+            new Graphics.ES20.GL().LoadEntryPoints();
+            new Graphics.ES30.GL().LoadEntryPoints();
 
             Debug.Print("Bindings loaded in {0} ms.", time.Elapsed.TotalMilliseconds);
         }

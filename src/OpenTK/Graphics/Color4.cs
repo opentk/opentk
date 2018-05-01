@@ -1381,10 +1381,10 @@ namespace OpenTK.Graphics
         public bool Equals(Color4 other)
         {
             return
-                this.R == other.R &&
-                this.G == other.G &&
-                this.B == other.B &&
-                this.A == other.A;
+                R == other.R &&
+                G == other.G &&
+                B == other.B &&
+                A == other.A;
         }
     }
 }

@@ -32,8 +32,8 @@ namespace OpenTK.Platform.Egl
 {
     internal class EglWinContext : EglContext
     {
-        private IntPtr ES1 = OpenTK.Platform.Windows.Functions.LoadLibrary("libGLESv1_CM");
-        private IntPtr ES2 = OpenTK.Platform.Windows.Functions.LoadLibrary("libGLESv2");
+        private IntPtr ES1 = Windows.Functions.LoadLibrary("libGLESv1_CM");
+        private IntPtr ES2 = Windows.Functions.LoadLibrary("libGLESv2");
 
         public EglWinContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)

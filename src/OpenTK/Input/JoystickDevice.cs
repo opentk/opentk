@@ -158,8 +158,8 @@ namespace OpenTK.Input
         /// <param name="pressed">The current state of the button.</param>
         internal JoystickButtonEventArgs(int button, bool pressed)
         {
-            this.Button = button;
-            this.Pressed = pressed;
+            Button = button;
+            Pressed = pressed;
         }
 
         /// <summary>
@@ -187,9 +187,9 @@ namespace OpenTK.Input
         /// <param name="delta">The relative change in value of the joystick axis.</param>
         public JoystickMoveEventArgs(int axis, float value, float delta)
         {
-            this.Axis = axis;
-            this.Value = value;
-            this.Delta = delta;
+            Axis = axis;
+            Value = value;
+            Delta = delta;
         }
 
         /// <summary>

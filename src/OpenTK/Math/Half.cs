@@ -114,11 +114,11 @@ namespace OpenTK
             if (throwOnError)
             {
                 // handle cases that cause overflow rather than silently ignoring it
-                if (f > Half.MaxValue)
+                if (f > MaxValue)
                 {
                     throw new ArithmeticException("Half: Positive maximum value exceeded.");
                 }
-                if (f < -Half.MaxValue)
+                if (f < -MaxValue)
                 {
                     throw new ArithmeticException("Half: Negative minimum value exceeded.");
                 }
@@ -389,7 +389,7 @@ namespace OpenTK
         /// <param name="context"></param>
         public Half(SerializationInfo info, StreamingContext context)
         {
-            this.bits = (ushort)info.GetValue("bits", typeof(ushort));
+            bits = (ushort)info.GetValue("bits", typeof(ushort));
         }
 
         /// <summary>Used by ISerialize to serialize the object.</summary>
@@ -397,14 +397,14 @@ namespace OpenTK
         /// <param name="context"></param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("bits", this.bits);
+            info.AddValue("bits", bits);
         }
 
         /// <summary>Updates the Half by reading from a Stream.</summary>
         /// <param name="bin">A BinaryReader instance associated with an open Stream.</param>
         public void FromBinaryStream(BinaryReader bin)
         {
-            this.bits = bin.ReadUInt16();
+            bits = bin.ReadUInt16();
 
         }
 
@@ -412,7 +412,7 @@ namespace OpenTK
         /// <param name="bin">A BinaryWriter instance associated with an open Stream.</param>
         public void ToBinaryStream(BinaryWriter bin)
         {
-            bin.Write(this.bits);
+            bin.Write(bits);
         }
 
         private const int maxUlps = 1;
@@ -426,7 +426,7 @@ namespace OpenTK
         {
             short aInt, bInt;
             unchecked { aInt = (short)other.bits; }
-            unchecked { bInt = (short)this.bits; }
+            unchecked { bInt = (short)bits; }
 
             // Make aInt lexicographically ordered as a twos-complement int
             if (aInt < 0)
@@ -440,7 +440,7 @@ namespace OpenTK
                 bInt = (short)(0x8000 - bInt);
             }
 
-            short intDiff = System.Math.Abs((short)(aInt - bInt));
+            short intDiff = Math.Abs((short)(aInt - bInt));
 
             if (intDiff <= maxUlps)
             {
@@ -476,7 +476,7 @@ namespace OpenTK
         /// <returns>The string representation of this instance.</returns>
         public override string ToString()
         {
-            return this.ToSingle().ToString();
+            return ToSingle().ToString();
         }
 
         /// <summary>Converts this Half into a human-legible string representation.</summary>
@@ -485,7 +485,7 @@ namespace OpenTK
         /// <returns>The string representation of this instance.</returns>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            return this.ToSingle().ToString(format, formatProvider);
+            return ToSingle().ToString(format, formatProvider);
         }
 
         /// <summary>Converts the string representation of a number to a half-precision floating-point equivalent.</summary>

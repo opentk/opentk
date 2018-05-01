@@ -44,15 +44,15 @@ namespace OpenTK.Platform.MacOS
         /// <param name="isControl"></param>
         public CarbonWindowInfo(IntPtr windowRef, bool ownHandle, bool isControl)
         {
-            this.Handle = windowRef;
+            Handle = windowRef;
             this.ownHandle = ownHandle;
-            this.IsControl = isControl;
+            IsControl = isControl;
         }
 
         public CarbonWindowInfo(IntPtr windowRef, bool ownHandle, bool isControl, GetInt getX, GetInt getY) : this(windowRef, ownHandle, isControl)
         {
-            this.XOffset = getX;
-            this.YOffset = getY;
+            XOffset = getX;
+            YOffset = getY;
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace OpenTK.Platform.MacOS
         /// <returns>A System.String that represents the current window.</returns>
         public override string ToString()
         {
-            return String.Format("MacOS.CarbonWindowInfo: Handle {0}", this.Handle);
+            return String.Format("MacOS.CarbonWindowInfo: Handle {0}", Handle);
         }
 
         // For compatibility with whoever thought it would be

@@ -33,16 +33,16 @@ namespace OpenTK.Platform
                 if (value && !throw_on_error)
                 {
                     Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms")
-                        .GetField("ErrorExceptions", System.Reflection.BindingFlags.Static |
-                            System.Reflection.BindingFlags.NonPublic)
+                        .GetField("ErrorExceptions", BindingFlags.Static |
+                            BindingFlags.NonPublic)
                         .SetValue(null, true);
                     throw_on_error = true;
                 }
                 else if (!value && throw_on_error)
                 {
                     Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms")
-                        .GetField("ErrorExceptions", System.Reflection.BindingFlags.Static |
-                            System.Reflection.BindingFlags.NonPublic)
+                        .GetField("ErrorExceptions", BindingFlags.Static |
+                            BindingFlags.NonPublic)
                         .SetValue(null, false);
                     throw_on_error = false;
                 }
@@ -93,7 +93,7 @@ namespace OpenTK.Platform
 
             Debug.Write("Load extensions for " + type + "... ");
 
-            System.Diagnostics.Stopwatch time = new System.Diagnostics.Stopwatch();
+            Stopwatch time = new Stopwatch();
             time.Reset();
             time.Start();
 
@@ -176,7 +176,7 @@ namespace OpenTK.Platform
             #if SDL2
             if (Configuration.RunningOnSdl2)
             {
-                return Platform.SDL2.SDL.GL.GetProcAddress;
+                return SDL2.SDL.GL.GetProcAddress;
             }
             #endif
             #if WIN32
@@ -188,7 +188,7 @@ namespace OpenTK.Platform
             #if X11
             if (Configuration.RunningOnX11)
             {
-                return Platform.X11.Glx.GetProcAddress;
+                return X11.Glx.GetProcAddress;
             }
             #endif
             #if CARBON
@@ -219,7 +219,7 @@ namespace OpenTK.Platform
         public static IWindowInfo CreateX11WindowInfo(IntPtr display, int screen, IntPtr windowHandle, IntPtr rootWindow, IntPtr visualInfo)
         {
             #if X11
-            Platform.X11.X11WindowInfo window = new OpenTK.Platform.X11.X11WindowInfo();
+            X11.X11WindowInfo window = new X11.X11WindowInfo();
             window.Display = display;
             window.Screen = screen;
             window.Handle = windowHandle;
@@ -325,7 +325,7 @@ namespace OpenTK.Platform
         public static IWindowInfo CreateSdl2WindowInfo(IntPtr windowHandle)
         {
             #if SDL2
-            return new OpenTK.Platform.SDL2.Sdl2WindowInfo(
+            return new SDL2.Sdl2WindowInfo(
                 windowHandle, null);
             #else
             return new Dummy.DummyWindowInfo();

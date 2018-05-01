@@ -28,7 +28,7 @@ namespace OpenTK.Platform.Windows
 
         public static bool SupportsExtension(string name)
         {
-            return SupportsExtension(Wgl.GetCurrentDC(), name);
+            return SupportsExtension(GetCurrentDC(), name);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace OpenTK.Platform.Windows
 
         internal static IntPtr GetAddress(string function_string)
         {
-            IntPtr address = Wgl.GetProcAddress(function_string);
+            IntPtr address = GetProcAddress(function_string);
             if (!IsValid(address))
             {
                 address = Functions.GetProcAddress(WinFactory.OpenGLHandle, function_string);
@@ -116,7 +116,7 @@ namespace OpenTK.Platform.Windows
         {
             lock (SyncRoot)
             {
-                if (Wgl.GetCurrentContext() != IntPtr.Zero)
+                if (GetCurrentContext() != IntPtr.Zero)
                 {
                     for (int i = 0; i < EntryPointNames.Length; i++)
                     {

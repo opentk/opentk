@@ -101,7 +101,7 @@ namespace OpenTK
 
         public IGraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
         {
-            GraphicsContext context =  new GraphicsContext(mode, this.WindowInfo, major, minor, flags);
+            GraphicsContext context =  new GraphicsContext(mode, WindowInfo, major, minor, flags);
             mode = context.GraphicsMode;
 
             // get the XVisualInfo for this GraphicsMode

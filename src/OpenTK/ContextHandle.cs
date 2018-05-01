@@ -47,7 +47,7 @@ namespace OpenTK
         {
             if (obj is ContextHandle)
             {
-                return this.Equals((ContextHandle)obj);
+                return Equals((ContextHandle)obj);
             }
             return false;
         }
@@ -68,7 +68,7 @@ namespace OpenTK
         /// <returns>A System.IntPtr equivalent to the specified ContextHandle.</returns>
         public static explicit operator IntPtr(ContextHandle c)
         {
-            return c != ContextHandle.Zero ? c.handle : IntPtr.Zero;
+            return c != Zero ? c.handle : IntPtr.Zero;
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace OpenTK
         /// <returns>Less than 0, if this instance is less than other; 0 if both are equal; Greater than 0 if other is greater than this instance.</returns>
         public int CompareTo(ContextHandle other)
         {
-            unsafe { return (int)((int*)other.handle.ToPointer() - (int*)this.handle.ToPointer()); }
+            unsafe { return (int)((int*)other.handle.ToPointer() - (int*)handle.ToPointer()); }
         }
 
         /// <summary>

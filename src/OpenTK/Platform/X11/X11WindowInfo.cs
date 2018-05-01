@@ -46,13 +46,13 @@ namespace OpenTK.Platform.X11
         public X11WindowInfo(IntPtr handle, X11WindowInfo parent)
         {
             this.handle = handle;
-            this.Parent = parent;
+            Parent = parent;
             if (parent != null)
             {
-                this.RootWindow = parent.RootWindow;
-                this.display = parent.display;
-                this.Screen = parent.Screen;
-                this.visualInfo = parent.visualInfo;
+                RootWindow = parent.RootWindow;
+                display = parent.display;
+                Screen = parent.Screen;
+                visualInfo = parent.visualInfo;
             }
         }
 
@@ -105,7 +105,7 @@ namespace OpenTK.Platform.X11
         public override string ToString()
         {
             return String.Format("X11.WindowInfo: Display {0}, Screen {1}, Handle {2}, Parent: ({3})",
-                this.Display, this.Screen, this.Handle, this.Parent != null ? this.Parent.ToString() : "null");
+                Display, Screen, Handle, Parent != null ? Parent.ToString() : "null");
         }
 
         /// <summary>Checks if <c>this</c> and <c>obj</c> reference the same win32 window.</summary>
@@ -117,7 +117,7 @@ namespace OpenTK.Platform.X11
             {
                 return false;
             }
-            if (this.GetType() != obj.GetType())
+            if (GetType() != obj.GetType())
             {
                 return false;
             }
@@ -128,7 +128,7 @@ namespace OpenTK.Platform.X11
                 return false;
             }
             // TODO: Assumes windows will have unique handles per X11 display.
-            return object.Equals(display, info.display) &&
+            return Equals(display, info.display) &&
                    handle.Equals(info.handle);
         }
 

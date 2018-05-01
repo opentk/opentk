@@ -44,8 +44,8 @@ namespace OpenTK.Input
             gamepad_type = (byte)type;
             this.axes = axes;
             this.buttons = buttons;
-            this.IsConnected = is_connected;
-            this.IsMapped = is_mapped;
+            IsConnected = is_connected;
+            IsMapped = is_mapped;
         }
 
         /// <summary>

@@ -30,7 +30,7 @@ namespace OpenTK.Platform.Egl
 {
     internal class EglSdl2PlatformFactory : Sdl2Factory
     {
-        public override OpenTK.Graphics.IGraphicsContext CreateGLContext(
+        public override IGraphicsContext CreateGLContext(
             GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering,
             int major, int minor, GraphicsContextFlags flags)
         {

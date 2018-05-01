@@ -626,10 +626,10 @@ namespace OpenTK.Platform.X11
         {
             XKey keysym = (XKey)API.LookupKeysym(ref e, 0);
             XKey keysym2 = (XKey)API.LookupKeysym(ref e, 1);
-            key = X11KeyMap.TranslateXKey(keysym);
+            key = TranslateXKey(keysym);
             if (key == Key.Unknown)
             {
-                key = X11KeyMap.TranslateXKey(keysym2);
+                key = TranslateXKey(keysym2);
             }
             if (key == Key.Unknown)
             {

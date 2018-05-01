@@ -30,12 +30,12 @@ using System.Text;
 namespace OpenTK.Platform.MacOS.Carbon
 {
     using CFAllocatorRef = IntPtr;
-    using CFIndex = System.IntPtr;
-    using CFRunLoop = System.IntPtr;
+    using CFIndex = IntPtr;
+    using CFRunLoop = IntPtr;
     using CFRunLoopRef = IntPtr;
     using CFRunLoopSourceRef = IntPtr;
-    using CFStringRef = System.IntPtr;
-    using CFTypeRef = System.IntPtr;
+    using CFStringRef = IntPtr;
+    using CFTypeRef = IntPtr;
     using CFMachPortRef = IntPtr;
 
     internal struct CFArray
@@ -211,7 +211,7 @@ namespace OpenTK.Platform.MacOS.Carbon
             UTF32LE = 0x1c000100
         }
 
-        public static readonly IntPtr RunLoopModeDefault = CF.CFSTR("kCFRunLoopDefaultMode");
+        public static readonly IntPtr RunLoopModeDefault = CFSTR("kCFRunLoopDefaultMode");
 
         [DllImport(appServices)]
         internal static extern CFRunLoop CFRunLoopGetCurrent();
