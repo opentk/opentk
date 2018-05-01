@@ -892,7 +892,6 @@ namespace OpenTK.Platform.X11
                                 isExiting = true;
                                 DestroyWindow();
                                 OnClosed(EventArgs.Empty);
-                                break;
                             }
                         }
                         // For X11 drag and drop handling use https://freedesktop.org/wiki/Specifications/XDND/#index9h2
@@ -1004,7 +1003,6 @@ namespace OpenTK.Platform.X11
                         }
                         else if (e.ClientMessageEvent.message_type == _atom_xdnd_leave)
                         {
-                            break;
                         }
                         break;
                     }

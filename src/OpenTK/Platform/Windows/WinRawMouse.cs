@@ -92,7 +92,6 @@ namespace OpenTK.Platform.Windows
                     if (name.ToLower().Contains("root"))
                     {
                         // This is a terminal services device, skip it.
-                        continue;
                     }
                     else if (dev.Type == RawInputDeviceType.MOUSE || dev.Type == RawInputDeviceType.HID)
                     {

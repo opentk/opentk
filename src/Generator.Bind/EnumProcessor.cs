@@ -321,7 +321,6 @@ namespace Bind
                         if (c == '_' || c == '-')
                         {
                             nextCharUppercase = true;
-                            continue; // do not add these chars to output
                         }
                         else if (char.IsDigit(c))
                         {
