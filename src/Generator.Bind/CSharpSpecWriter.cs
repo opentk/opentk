@@ -390,7 +390,7 @@ namespace Bind
             }
             catch (Exception e)
             {
-                Console.WriteLine("[Warning] Error documenting function {0}: {1}", f.WrappedDelegate.Name, e.ToString());
+                Console.WriteLine("[Warning] Error documenting function {0}: {1}", f.WrappedDelegate.Name, e);
             }
         }
 

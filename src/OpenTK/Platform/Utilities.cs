@@ -86,12 +86,12 @@ namespace OpenTK.Platform
             MethodInfo load_delegate_method_info = type.GetMethod("LoadDelegate", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (load_delegate_method_info == null)
             {
-                throw new InvalidOperationException(type.ToString() + " does not contain a static LoadDelegate method.");
+                throw new InvalidOperationException(type + " does not contain a static LoadDelegate method.");
             }
             LoadDelegateFunction LoadDelegate = (LoadDelegateFunction)Delegate.CreateDelegate(
                 typeof(LoadDelegateFunction), load_delegate_method_info);
 
-            Debug.Write("Load extensions for " + type.ToString() + "... ");
+            Debug.Write("Load extensions for " + type + "... ");
 
             System.Diagnostics.Stopwatch time = new System.Diagnostics.Stopwatch();
             time.Reset();
@@ -153,7 +153,7 @@ namespace OpenTK.Platform
             FieldInfo f = extensions_class.GetField(extension, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (f == null)
             {
-                Debug.Print("Extension \"", extension, "\" not found in ", type.ToString());
+                Debug.Print("Extension \"", extension, "\" not found in ", type);
                 return false;
             }
 

@@ -151,7 +151,7 @@ namespace OpenTK
             Debug.WriteLine(uts.machine);
             Debug.Unindent();
 
-            return uts.sysname.ToString();
+            return uts.sysname;
         }
 
         [DllImport("libc")]

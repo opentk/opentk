@@ -72,7 +72,7 @@ namespace OpenTK.Audio.OpenAL
             }
             catch (Exception e)
             {
-                Debug.WriteLine("X-Ram: Attempt to marshal function pointers with AL.GetProcAddress failed. " + e.ToString());
+                Debug.WriteLine("X-Ram: Attempt to marshal function pointers with AL.GetProcAddress failed. " + e);
                 return;
             }
 

@@ -103,8 +103,8 @@ namespace OpenTK.Platform.Windows
 
                     // The second function should only be executed when the first one fails
                     // (e.g. when the monitor is disabled)
-                    if (Functions.EnumDisplaySettingsEx(dev1.DeviceName.ToString(), DisplayModeSettingsEnum.CurrentSettings, monitor_mode, 0) ||
-                        Functions.EnumDisplaySettingsEx(dev1.DeviceName.ToString(), DisplayModeSettingsEnum.RegistrySettings, monitor_mode, 0))
+                    if (Functions.EnumDisplaySettingsEx(dev1.DeviceName, DisplayModeSettingsEnum.CurrentSettings, monitor_mode, 0) ||
+                        Functions.EnumDisplaySettingsEx(dev1.DeviceName, DisplayModeSettingsEnum.RegistrySettings, monitor_mode, 0))
                     {
                         VerifyMode(dev1, monitor_mode);
 
@@ -120,7 +120,7 @@ namespace OpenTK.Platform.Windows
 
                     opentk_dev_available_res.Clear();
                     mode_count = 0;
-                    while (Functions.EnumDisplaySettingsEx(dev1.DeviceName.ToString(), mode_count++, monitor_mode, 0))
+                    while (Functions.EnumDisplaySettingsEx(dev1.DeviceName, mode_count++, monitor_mode, 0))
                     {
                         VerifyMode(dev1, monitor_mode);
 
@@ -183,7 +183,7 @@ namespace OpenTK.Platform.Windows
             {
                 Debug.Print(
                     "[Warning] DisplayDevice '{0}' reported a mode with 0 bpp. Please create a bug report at https://github.com/opentk/opentk/issues",
-                    device.DeviceName.ToString());
+                    device.DeviceName);
                 mode.BitsPerPel = 32;
             }
         }

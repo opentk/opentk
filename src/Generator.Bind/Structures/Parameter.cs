@@ -310,7 +310,7 @@ namespace Bind.Structures
             {
                 foreach (var p in this)
                 {
-                    sb.Append(p.ToString());
+                    sb.Append(p);
                     sb.Append(", ");
                 }
                 sb.Replace(", ", ")", sb.Length - 2, 2);

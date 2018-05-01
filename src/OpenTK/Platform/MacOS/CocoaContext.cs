@@ -217,7 +217,7 @@ namespace OpenTK
             Debug.Write("Attribute array:  ");
             for (int i = 0; i < attributes.Count; i++)
             {
-                Debug.Write(attributes[i].ToString() + "  ");
+                Debug.Write(attributes[i] + "  ");
             }
             Debug.WriteLine("");
 

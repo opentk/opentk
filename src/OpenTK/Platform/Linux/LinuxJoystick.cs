@@ -322,7 +322,7 @@ namespace OpenTK.Platform.Linux
                 }
                 catch (Exception e)
                 {
-                    Debug.Print("Error opening joystick: {0}", e.ToString());
+                    Debug.Print("Error opening joystick: {0}", e);
                 }
                 finally
                 {

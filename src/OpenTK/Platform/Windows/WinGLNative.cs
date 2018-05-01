@@ -981,7 +981,7 @@ namespace OpenTK.Platform.Windows
         {
             if (Exists)
             {
-                Debug.Print("Destroying window: {0}", window.ToString());
+                Debug.Print("Destroying window: {0}", window);
                 Functions.DestroyWindow(window.Handle);
                 exists = false;
             }

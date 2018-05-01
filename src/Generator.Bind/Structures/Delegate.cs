@@ -197,7 +197,7 @@ namespace Bind.Structures
             sb.Append(ReturnType);
             sb.Append(" ");
             sb.Append(Name);
-            sb.Append(Parameters.ToString());
+            sb.Append(Parameters);
 
             return sb.ToString();
         }

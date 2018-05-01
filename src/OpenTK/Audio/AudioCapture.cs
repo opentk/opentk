@@ -289,10 +289,10 @@ namespace OpenTK.Audio
             switch (alcerrcode)
             {
                 case AlcError.OutOfMemory:
-                    alcerrmsg = alcerrcode.ToString() + ": The specified device is invalid, or can not capture audio.";
+                    alcerrmsg = alcerrcode + ": The specified device is invalid, or can not capture audio.";
                     break;
                 case AlcError.InvalidValue:
-                    alcerrmsg = alcerrcode.ToString() + ": One of the parameters has an invalid value.";
+                    alcerrmsg = alcerrcode + ": One of the parameters has an invalid value.";
                     break;
                 default:
                     alcerrmsg = alcerrcode.ToString();

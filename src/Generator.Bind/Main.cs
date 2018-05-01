@@ -45,7 +45,7 @@ namespace Bind
             Trace.AutoFlush = true;
 
             Console.WriteLine("OpenGL binding generator {0} for OpenTK.",
-                Assembly.GetExecutingAssembly().GetName().Version.ToString());
+                Assembly.GetExecutingAssembly().GetName().Version);
             Console.WriteLine("For comments, bugs and suggestions visit http://github.com/opentk/opentk");
             Console.WriteLine();
 
@@ -149,12 +149,12 @@ namespace Bind
             }
             catch (NullReferenceException e)
             {
-                Console.WriteLine("Argument error ({0}). Please use the '-?' switch for help.", e.ToString());
+                Console.WriteLine("Argument error ({0}). Please use the '-?' switch for help.", e);
                 return;
             }
             catch (ArgumentException e)
             {
-                Console.WriteLine("Argument error ({0}). Please use the '-?' switch for help.", e.ToString());
+                Console.WriteLine("Argument error ({0}). Please use the '-?' switch for help.", e);
                 return;
             }
 

@@ -341,7 +341,7 @@ namespace Bind
 
                     if (string.IsNullOrEmpty(e.Name))
                     {
-                        throw new InvalidOperationException($"Empty name for enum element {node.ToString()}");
+                        throw new InvalidOperationException($"Empty name for enum element {node}");
                     }
 
                     // It seems that all flag collections contain "Mask" in their names.

@@ -150,7 +150,7 @@ namespace OpenTK.Input
             }
             return String.Format(
                 "{{Axes:{0}; Buttons: {1}; Hat: {2}; IsConnected: {3}}}",
-                sb.ToString(),
+                sb,
                 Convert.ToString(buttons, 2).PadLeft(16, '0'),
                 hat0,
                 IsConnected);

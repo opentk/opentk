@@ -34,7 +34,7 @@ namespace OpenTK.Platform.MacOS
         public MacOSException()
         {}
         public MacOSException(OSStatus errorCode)
-            : base("Error Code " + ((int)errorCode).ToString() + ": " + errorCode.ToString())
+            : base("Error Code " + ((int)errorCode) + ": " + errorCode)
         {
             this.ErrorCode = errorCode;
         }

@@ -283,7 +283,7 @@ namespace OpenTK.Platform.Linux
             {
                 current = GetDisplayResolution(display.pConnector->modes);
             }
-            Debug.Print("Current mode: {0}", current.ToString());
+            Debug.Print("Current mode: {0}", current);
         }
 
         private Rectangle GetBounds(DisplayResolution current)

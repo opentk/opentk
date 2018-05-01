@@ -83,10 +83,10 @@ namespace OpenTK.Audio
                 AlcError dummy_error = Alc.GetError(dummy_device);
                 if (!dummy_success || dummy_error != AlcError.NoError)
                 {
-                    throw new AudioContextException("Failed to create dummy Context. Device (" + dummy_device.ToString() +
-                                                    ") Context (" + dummy_context.Handle.ToString() +
+                    throw new AudioContextException("Failed to create dummy Context. Device (" + dummy_device +
+                                                    ") Context (" + dummy_context.Handle +
                                                     ") MakeContextCurrent " + (dummy_success ? "succeeded" : "failed") +
-                                                    ", Alc Error (" + dummy_error.ToString() + ") " + Alc.GetString(IntPtr.Zero, (AlcGetString)dummy_error));
+                                                    ", Alc Error (" + dummy_error + ") " + Alc.GetString(IntPtr.Zero, (AlcGetString)dummy_error));
                 }
 
                 // Get a list of all known playback devices, using best extension available
@@ -112,7 +112,7 @@ namespace OpenTK.Audio
                 AlcError playback_err = Alc.GetError(dummy_device);
                 if (playback_err != AlcError.NoError)
                 {
-                    throw new AudioContextException("Alc Error occured when querying available playback devices. " + playback_err.ToString());
+                    throw new AudioContextException("Alc Error occured when querying available playback devices. " + playback_err);
                 }
 
                 // Get a list of all known recording devices, at least ALC_ENUMERATION_EXT is needed too
@@ -128,7 +128,7 @@ namespace OpenTK.Audio
                 AlcError record_err = Alc.GetError(dummy_device);
                 if (record_err != AlcError.NoError)
                 {
-                    throw new AudioContextException("Alc Error occured when querying available recording devices. " + record_err.ToString());
+                    throw new AudioContextException("Alc Error occured when querying available recording devices. " + record_err);
                 }
 
 #if DEBUG

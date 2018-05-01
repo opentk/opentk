@@ -1197,7 +1197,7 @@ namespace Bind
                         p.Pointer = 0;
                         p.Array = 0;
                         p.Generic = true;
-                        p.QualifiedType = "T" + i.ToString();
+                        p.QualifiedType = "T" + i;
                         p.Flow = FlowDirection.Undefined;
                     }
                 }
@@ -1234,7 +1234,7 @@ namespace Bind
                             else
                             {
                                 p.Generic = true;
-                                p.QualifiedType = "T" + i.ToString();
+                                p.QualifiedType = "T" + i;
                                 p.Flow = FlowDirection.Undefined;
                             }
                         }

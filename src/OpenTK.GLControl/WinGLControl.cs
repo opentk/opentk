@@ -67,7 +67,7 @@ namespace OpenTK
 
             public override string ToString()
             {
-                return "Point {" + X.ToString() + ", " + Y.ToString() + ")";
+                return "Point {" + X + ", " + Y + ")";
             }
         }
 

@@ -256,7 +256,7 @@ namespace OpenTK.Platform.X11
             }
 
             int currentScreen = 0;
-            Debug.Print("Using XF86 v" + major.ToString() + "." + minor.ToString());
+            Debug.Print("Using XF86 v" + major + "." + minor);
 
             foreach (DisplayDevice dev in devices)
             {
@@ -264,7 +264,7 @@ namespace OpenTK.Platform.X11
 
                 IntPtr srcArray;
                 API.XF86VidModeGetAllModeLines(API.DefaultDisplay, currentScreen, out count, out srcArray);
-                Debug.Print(count.ToString() + " modes detected on screen " + currentScreen.ToString());
+                Debug.Print(count + " modes detected on screen " + currentScreen);
                 IntPtr[] array = new IntPtr[count];
                 Marshal.Copy(srcArray, array, 0, count);
                 API.XF86VidModeModeInfo Mode = new API.XF86VidModeModeInfo();
