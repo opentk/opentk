@@ -113,8 +113,8 @@ namespace OpenTK.Graphics
 
         public override string ToString()
         {
-            return string.Format("[{0}: IsCurrent={1}, IsDisposed={2}, VSync={3}, SwapInterval={4}, GraphicsMode={5}, Context={6}]",
-                GetType().Name, IsCurrent, IsDisposed, VSync, SwapInterval, GraphicsMode, Context);
+            return
+                $"[{GetType().Name}: IsCurrent={IsCurrent}, IsDisposed={IsDisposed}, VSync={VSync}, SwapInterval={SwapInterval}, GraphicsMode={GraphicsMode}, Context={Context}]";
         }
 
         public override int GetHashCode()

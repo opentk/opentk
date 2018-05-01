@@ -72,10 +72,10 @@ namespace OpenTK.Platform.Windows
             OpenGLHandle = Functions.LoadLibrary(OpenGLName);
             if (OpenGLHandle == IntPtr.Zero)
             {
-                throw new ApplicationException(String.Format("LoadLibrary(\"{0}\") call failed with code {1}",
-                    OpenGLName, Marshal.GetLastWin32Error()));
+                throw new ApplicationException(
+                    $"LoadLibrary(\"{OpenGLName}\") call failed with code {Marshal.GetLastWin32Error()}");
             }
-            Debug.WriteLine(String.Format("Loaded opengl32.dll: {0}", OpenGLHandle));
+            Debug.WriteLine($"Loaded opengl32.dll: {OpenGLHandle}");
         }
 
         public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)

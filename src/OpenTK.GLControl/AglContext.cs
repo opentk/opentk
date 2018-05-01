@@ -198,9 +198,7 @@ namespace OpenTK.Platform.MacOS
 
             if (err != Agl.AglError.NoError)
             {
-                throw new Exception(String.Format(
-                    "AGL Error from function {0}: {1}  {2}",
-                    function, err, Agl.ErrorString(err)));
+                throw new Exception($"AGL Error from function {function}: {err}  {Agl.ErrorString(err)}");
             }
         }
 

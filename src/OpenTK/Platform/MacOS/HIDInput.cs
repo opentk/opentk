@@ -1062,7 +1062,7 @@ namespace OpenTK.Platform.MacOS
                 IntPtr vendor_id = NativeMethods.IOHIDDeviceGetProperty(keyboard.Id, NativeMethods.IOHIDVendorIDKey);
                 IntPtr product_id = NativeMethods.IOHIDDeviceGetProperty(keyboard.Id, NativeMethods.IOHIDProductIDKey);
                 // Todo: find out the real vendor/product name from the relevant ids.
-                return String.Format("{0}:{1}", vendor_id, product_id);
+                return $"{vendor_id}:{product_id}";
             }
             return String.Empty;
         }

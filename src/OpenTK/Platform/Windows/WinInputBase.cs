@@ -91,9 +91,8 @@ namespace OpenTK.Platform.Windows
                 int ret = Functions.GetMessage(ref msg, Parent.Handle, 0, 0);
                 if (ret == -1)
                 {
-                    throw new PlatformException(String.Format(
-                        "An error happened while processing the message queue. Windows error: {0}",
-                        Marshal.GetLastWin32Error()));
+                    throw new PlatformException(
+                        $"An error happened while processing the message queue. Windows error: {Marshal.GetLastWin32Error()}");
                 }
 
                 Functions.TranslateMessage(ref msg);

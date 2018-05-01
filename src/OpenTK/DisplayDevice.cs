@@ -211,8 +211,7 @@ namespace OpenTK
             }
             else
             {
-                throw new Graphics.GraphicsModeException(String.Format("Device {0}: Failed to change resolution to {1}.",
-                    this, resolution));
+                throw new Graphics.GraphicsModeException($"Device {this}: Failed to change resolution to {resolution}.");
             }
 
             //effect.FadeIn();
@@ -244,7 +243,7 @@ namespace OpenTK
                 }
                 else
                 {
-                    throw new Graphics.GraphicsModeException(String.Format("Device {0}: Failed to restore resolution.", this));
+                    throw new Graphics.GraphicsModeException($"Device {this}: Failed to restore resolution.");
                 }
 
                 //effect.FadeIn();
@@ -303,8 +302,8 @@ namespace OpenTK
         /// <returns>A System.String representing this DisplayDevice.</returns>
         public override string ToString()
         {
-            return String.Format("{0}: {1} ({2} modes available)", IsPrimary ? "Primary" : "Secondary",
-                Bounds.ToString(), available_resolutions.Count);
+            return
+                $"{(IsPrimary ? "Primary" : "Secondary")}: {Bounds.ToString()} ({available_resolutions.Count} modes available)";
         }
 
         ///// <summary>Determines whether the specified DisplayDevices are equal.</summary>

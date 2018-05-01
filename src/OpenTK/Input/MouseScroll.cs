@@ -68,7 +68,7 @@ namespace OpenTK.Input
         /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.MouseScroll"/>.</returns>
         public override string ToString()
         {
-            return string.Format("[X={0:0.00}, Y={1:0.00}]", X, Y);
+            return $"[X={X:0.00}, Y={Y:0.00}]";
         }
 
         /// <summary>

@@ -85,9 +85,8 @@ namespace OpenTK.Input
         /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.GamePadState"/>.</returns>
         public override string ToString()
         {
-            return String.Format(
-                "{{Sticks: {0}; Triggers: {1}; Buttons: {2}; DPad: {3}; IsConnected: {4}}}",
-                ThumbSticks, Triggers, Buttons, DPad, IsConnected);
+            return
+                $"{{Sticks: {ThumbSticks}; Triggers: {Triggers}; Buttons: {Buttons}; DPad: {DPad}; IsConnected: {IsConnected}}}";
         }
 
         /// <summary>

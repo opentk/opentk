@@ -122,9 +122,8 @@ namespace OpenTK.Platform.MacOS
 
                 if (i >= max - 1)
                 {
-                    throw new NotSupportedException(String.Format(
-                        "Function {0} is too long. Please report a bug at https://github.com/opentk/issues/issues",
-                        Marshal.PtrToStringAnsi(function)));
+                    throw new NotSupportedException(
+                        $"Function {Marshal.PtrToStringAnsi(function)} is too long. Please report a bug at https://github.com/opentk/issues/issues");
                 }
 
                 return GetAddressInternal(new IntPtr(symbol));

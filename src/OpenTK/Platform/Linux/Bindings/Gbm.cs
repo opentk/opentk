@@ -245,7 +245,7 @@ namespace OpenTK.Platform.Linux
 
         public override string ToString()
         {
-            return string.Format("[BufferObject: {0}]", buffer);
+            return $"[BufferObject: {buffer}]";
         }
 
         public bool Equals(BufferObject other)

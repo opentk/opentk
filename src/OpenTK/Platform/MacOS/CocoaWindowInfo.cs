@@ -76,7 +76,7 @@ namespace OpenTK.Platform.MacOS
         /// <returns>A System.String that represents the current window.</returns>
         public override string ToString()
         {
-            return String.Format("MacOS.CocoaWindowInfo: NSWindow {0}, NSView {1}", Handle, ViewHandle);
+            return $"MacOS.CocoaWindowInfo: NSWindow {Handle}, NSView {ViewHandle}";
         }
 
         public void Dispose()

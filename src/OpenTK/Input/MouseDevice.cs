@@ -194,8 +194,7 @@ namespace OpenTK.Input
         /// <returns>A <see cref="System.String"/> that describes this instance.</returns>
         public override string ToString()
         {
-            return String.Format("ID: {0} ({1}). Buttons: {2}, Wheels: {3}",
-                DeviceID, Description, NumberOfButtons, NumberOfWheels);
+            return $"ID: {DeviceID} ({Description}). Buttons: {NumberOfButtons}, Wheels: {NumberOfWheels}";
         }
     }
 }

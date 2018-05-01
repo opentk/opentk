@@ -283,7 +283,7 @@ namespace OpenTK.Graphics
         /// <returns>A <see cref="System.String"/> that describes this instance.</returns>
         public override string ToString()
         {
-            return string.Format("{0} ({1})", BitsPerPixel, (IsIndexed ? " indexed" : Red + Green.ToString() + Blue + Alpha));
+            return $"{BitsPerPixel} ({(IsIndexed ? " indexed" : Red + Green.ToString() + Blue + Alpha)})";
         }
     }
 }

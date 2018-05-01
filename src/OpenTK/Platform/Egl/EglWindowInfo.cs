@@ -55,7 +55,7 @@ namespace OpenTK.Platform.Egl
             int dummyMajor, dummyMinor;
             if (!Egl.Initialize(Display, out dummyMajor, out dummyMinor))
             {
-                throw new GraphicsContextException(String.Format("Failed to initialize EGL, error {0}.", Egl.GetError()));
+                throw new GraphicsContextException($"Failed to initialize EGL, error {Egl.GetError()}.");
             }
         }
 
@@ -72,8 +72,7 @@ namespace OpenTK.Platform.Egl
             Surface = Egl.CreateWindowSurface(Display, config, Handle, IntPtr.Zero);
             if (Surface == IntPtr.Zero)
             {
-                throw new GraphicsContextException(String.Format(
-                    "[EGL] Failed to create window surface, error {0}.", Egl.GetError()));
+                throw new GraphicsContextException($"[EGL] Failed to create window surface, error {Egl.GetError()}.");
             }
         }
 
@@ -88,8 +87,7 @@ namespace OpenTK.Platform.Egl
             Surface = Egl.CreatePbufferSurface(Display, config, attribs);
             if (Surface == IntPtr.Zero)
             {
-                throw new GraphicsContextException(String.Format(
-                    "[EGL] Failed to create pbuffer surface, error {0}.", Egl.GetError()));
+                throw new GraphicsContextException($"[EGL] Failed to create pbuffer surface, error {Egl.GetError()}.");
             }
         }
 
@@ -115,8 +113,7 @@ namespace OpenTK.Platform.Egl
             bufferSurface = Egl.CreatePbufferSurface(Display, config, attribs);
             if (bufferSurface == IntPtr.Zero)
             {
-                throw new GraphicsContextException(String.Format(
-                    "[EGL] Failed to create pbuffer surface, error {0}.", Egl.GetError()));
+                throw new GraphicsContextException($"[EGL] Failed to create pbuffer surface, error {Egl.GetError()}.");
             }
         }
 

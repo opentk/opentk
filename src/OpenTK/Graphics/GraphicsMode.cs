@@ -188,8 +188,8 @@ namespace OpenTK.Graphics
         /// <returns>! System.String describing the current GraphicsFormat.</returns>
         public override string ToString()
         {
-            return String.Format("Index: {0}, Color: {1}, Depth: {2}, Stencil: {3}, Samples: {4}, Accum: {5}, Buffers: {6}, Stereo: {7}",
-                Index, ColorFormat, Depth, Stencil, Samples, AccumulatorFormat, Buffers, Stereo);
+            return
+                $"Index: {Index}, Color: {ColorFormat}, Depth: {Depth}, Stencil: {Stencil}, Samples: {Samples}, Accum: {AccumulatorFormat}, Buffers: {Buffers}, Stereo: {Stereo}";
         }
 
         /// <summary>

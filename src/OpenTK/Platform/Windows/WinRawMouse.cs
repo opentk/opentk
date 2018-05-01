@@ -295,9 +295,7 @@ namespace OpenTK.Platform.Windows
             string id_03 = split[2];    // 3&13c0b0c5&0 (Protocol code)
             // The final part is the class GUID and is not needed here
 
-            string findme = string.Format(
-                @"System\CurrentControlSet\Enum\{0}\{1}\{2}",
-                id_01, id_02, id_03);
+            string findme = $@"System\CurrentControlSet\Enum\{id_01}\{id_02}\{id_03}";
 
             RegistryKey regkey = Registry.LocalMachine.OpenSubKey(findme);
             return regkey;

@@ -183,12 +183,11 @@ namespace OpenTK.Platform.Windows
                         if (Handle == ContextHandle.Zero)
                         {
                             throw new GraphicsContextException(
-                                String.Format("Context creation failed. Wgl.CreateContext() error: {0}.",
-                                    Marshal.GetLastWin32Error()));
+                                $"Context creation failed. Wgl.CreateContext() error: {Marshal.GetLastWin32Error()}.");
                         }
                     }
 
-                    Debug.WriteLine(String.Format("success! (id: {0})", Handle));
+                    Debug.WriteLine($"success! (id: {Handle})");
                 }
                 finally
                 {
@@ -219,7 +218,7 @@ namespace OpenTK.Platform.Windows
             if (sharedContext != null)
             {
                 Marshal.GetLastWin32Error();
-                Debug.Write(String.Format("Sharing state with context {0}: ", sharedContext));
+                Debug.Write($"Sharing state with context {sharedContext}: ");
                 bool result = Wgl.ShareLists((sharedContext as IGraphicsContextInternal).Context.Handle, Handle.Handle);
                 Debug.WriteLine(result ? "success!" : "failed with win32 error " + Marshal.GetLastWin32Error());
             }
@@ -259,8 +258,8 @@ namespace OpenTK.Platform.Windows
         {
             if (!Functions.SwapBuffers(DeviceContext))
             {
-                throw new GraphicsContextException(String.Format(
-                    "Failed to swap buffers for context {0} current. Error: {1}", this, Marshal.GetLastWin32Error()));
+                throw new GraphicsContextException(
+                    $"Failed to swap buffers for context {this} current. Error: {Marshal.GetLastWin32Error()}");
             }
         }
 
@@ -289,8 +288,8 @@ namespace OpenTK.Platform.Windows
 
                 if (!success)
                 {
-                    throw new GraphicsContextException(String.Format(
-                        "Failed to make context {0} current. Error: {1}", this, Marshal.GetLastWin32Error()));
+                    throw new GraphicsContextException(
+                        $"Failed to make context {this} current. Error: {Marshal.GetLastWin32Error()}");
                 }
             }
         }
@@ -399,9 +398,8 @@ namespace OpenTK.Platform.Windows
 
             if (!Functions.SetPixelFormat(window.DeviceContext, (int)mode.Index.Value, ref pfd))
             {
-                throw new GraphicsContextException(String.Format(
-                    "Requested GraphicsMode not available. SetPixelFormat error: {0}",
-                    Marshal.GetLastWin32Error()));
+                throw new GraphicsContextException(
+                    $"Requested GraphicsMode not available. SetPixelFormat error: {Marshal.GetLastWin32Error()}");
             }
 
             return mode;

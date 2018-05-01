@@ -54,8 +54,7 @@ namespace OpenTK.Convert
             }
             else
             {
-                throw new InvalidOperationException(String.Format(
-                    "Unknown element type: {0}", e));
+                throw new InvalidOperationException($"Unknown element type: {e}");
             }
         }
     }

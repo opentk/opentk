@@ -110,8 +110,8 @@ namespace OpenTK.Platform.X11
         /// <returns>A System.String that represents the current window.</returns>
         public override string ToString()
         {
-            return String.Format("X11.WindowInfo: Display {0}, Screen {1}, Handle {2}, Parent: ({3})",
-                Display, Screen, Handle, Parent != null ? Parent.ToString() : "null");
+            return
+                $"X11.WindowInfo: Display {Display}, Screen {Screen}, Handle {Handle}, Parent: ({(Parent != null ? Parent.ToString() : "null")})";
         }
 
         /// <summary>Checks if <c>this</c> and <c>obj</c> reference the same win32 window.</summary>

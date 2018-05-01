@@ -190,7 +190,7 @@ namespace OpenTK.Convert
                         }
                         else
                         {
-                            Trace.WriteLine(String.Format("Token {0} is not defined.", token_name));
+                            Trace.WriteLine($"Token {token_name} is not defined.");
                         }
                     }
 

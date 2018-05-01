@@ -75,9 +75,7 @@ namespace OpenTK.Input
         /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.GamePadTriggers"/>.</returns>
         public override string ToString()
         {
-            return String.Format(
-                "({0:f2}; {1:f2})",
-                Left, Right);
+            return $"({Left:f2}; {Right:f2})";
         }
 
         /// <summary>

@@ -178,7 +178,7 @@ namespace OpenTK.Graphics
         /// <returns>A System.String that describes this Color4 structure.</returns>
         public override string ToString()
         {
-            return String.Format("{{(R, G, B, A) = ({0}, {1}, {2}, {3})}}", R.ToString(), G.ToString(), B.ToString(), A.ToString());
+            return $"{{(R, G, B, A) = ({R.ToString()}, {G.ToString()}, {B.ToString()}, {A.ToString()})}}";
         }
 
         /// <summary>

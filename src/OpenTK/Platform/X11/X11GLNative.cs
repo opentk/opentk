@@ -271,7 +271,7 @@ namespace OpenTK.Platform.X11
 
             EmptyCursor = CreateEmptyCursor(window);
 
-            Debug.WriteLine(String.Format("X11GLNative window created successfully (id: {0}).", Handle));
+            Debug.WriteLine($"X11GLNative window created successfully (id: {Handle}).");
             Debug.Unindent();
 
             using (new XLock(window.Display))

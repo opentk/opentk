@@ -954,7 +954,8 @@ namespace OpenTK.Platform.Windows
 
                 if (atom == 0)
                 {
-                    throw new PlatformException(String.Format("Failed to register window class. Error: {0}", Marshal.GetLastWin32Error()));
+                    throw new PlatformException(
+                        $"Failed to register window class. Error: {Marshal.GetLastWin32Error()}");
                 }
 
                 class_registered = true;
@@ -968,7 +969,7 @@ namespace OpenTK.Platform.Windows
 
             if (handle == IntPtr.Zero)
             {
-                throw new PlatformException(String.Format("Failed to create window. Error: {0}", Marshal.GetLastWin32Error()));
+                throw new PlatformException($"Failed to create window. Error: {Marshal.GetLastWin32Error()}");
             }
 
             return handle;
@@ -1022,8 +1023,7 @@ namespace OpenTK.Platform.Windows
             rect.bottom = pos.Y + ClientRectangle.Height;
             if (!Functions.ClipCursor(ref rect))
             {
-                Debug.WriteLine(String.Format("Failed to grab cursor. Error: {0}",
-                    Marshal.GetLastWin32Error()));
+                Debug.WriteLine($"Failed to grab cursor. Error: {Marshal.GetLastWin32Error()}");
             }
         }
 
@@ -1031,8 +1031,7 @@ namespace OpenTK.Platform.Windows
         {
             if (!Functions.ClipCursor(IntPtr.Zero))
             {
-                Debug.WriteLine(String.Format("Failed to ungrab cursor. Error: {0}",
-                    Marshal.GetLastWin32Error()));
+                Debug.WriteLine($"Failed to ungrab cursor. Error: {Marshal.GetLastWin32Error()}");
             }
         }
 
@@ -1460,9 +1459,8 @@ namespace OpenTK.Platform.Windows
         {
             if (!Functions.ScreenToClient(window.Handle, ref point))
             {
-                throw new InvalidOperationException(String.Format(
-                    "Could not convert point {0} from screen to client coordinates. Windows error: {1}",
-                    point.ToString(), Marshal.GetLastWin32Error()));
+                throw new InvalidOperationException(
+                    $"Could not convert point {point.ToString()} from screen to client coordinates. Windows error: {Marshal.GetLastWin32Error()}");
             }
 
             return point;
@@ -1472,9 +1470,8 @@ namespace OpenTK.Platform.Windows
         {
             if (!Functions.ClientToScreen(window.Handle, ref point))
             {
-                throw new InvalidOperationException(String.Format(
-                    "Could not convert point {0} from screen to client coordinates. Windows error: {1}",
-                    point.ToString(), Marshal.GetLastWin32Error()));
+                throw new InvalidOperationException(
+                    $"Could not convert point {point.ToString()} from screen to client coordinates. Windows error: {Marshal.GetLastWin32Error()}");
             }
 
             return point;

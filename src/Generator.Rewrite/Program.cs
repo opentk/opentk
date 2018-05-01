@@ -394,10 +394,7 @@ namespace OpenTK.Rewrite
                         if (ctor == null)
                         {
                             throw new InvalidOperationException(
-                                String.Format(
-                                    "{0} does needs a constructor taking {1}",
-                                    errorHelperType,
-                                    graphicsContext));
+                                $"{errorHelperType} does needs a constructor taking {graphicsContext}");
                         }
 
                         // GraphicsContext.CurrentContext property getter
@@ -610,7 +607,7 @@ namespace OpenTK.Rewrite
                 // string buffer. Currently every string out parameter has a
                 // count attribute but this check is in place to make things
                 // clearer if this case is ever hit.
-                throw new InvalidOperationException(string.Format("{0}({1}) doesn't have a count attribute", method.Name, parameter.Name));
+                throw new InvalidOperationException($"{method.Name}({parameter.Name}) doesn't have a count attribute");
             }
 
             if (count.Count != 0)
@@ -635,7 +632,8 @@ namespace OpenTK.Rewrite
                 else
                 {
                     // Computed counts are hard and require manual reading of the specification for each one.
-                    throw new NotSupportedException(string.Format("{0}({1}) requires a computed count: {2}", method.Name, parameter.Name, count.Computed));
+                    throw new NotSupportedException(
+                        $"{method.Name}({parameter.Name}) requires a computed count: {count.Computed}");
                 }
             }
 

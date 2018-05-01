@@ -242,8 +242,8 @@ namespace OpenTK.Audio
             if (Device == IntPtr.Zero)
             {
                 device_name = "None";
-                throw new AudioDeviceException(String.Format("Audio device '{0}' does not exist or is tied up by another application.",
-                    String.IsNullOrEmpty(device) ? "default" : device));
+                throw new AudioDeviceException(
+                    $"Audio device '{(String.IsNullOrEmpty(device) ? "default" : device)}' does not exist or is tied up by another application.");
             }
 
             CheckErrors();
@@ -333,9 +333,8 @@ namespace OpenTK.Audio
             {
                 if (!Alc.MakeContextCurrent(context != null ? context.context_handle : ContextHandle.Zero))
                 {
-                    throw new AudioContextException(String.Format("ALC {0} error detected at {1}.",
-                        Alc.GetError(context != null ? (IntPtr)context.context_handle : IntPtr.Zero).ToString(),
-                        context != null ? context.ToString() : "null"));
+                    throw new AudioContextException(
+                        $"ALC {Alc.GetError(context != null ? (IntPtr) context.context_handle : IntPtr.Zero).ToString()} error detected at {(context != null ? context.ToString() : "null")}.");
                 }
             }
         }
@@ -671,8 +670,7 @@ namespace OpenTK.Audio
         /// <returns>A <see cref="System.String"/> that desrcibes this instance.</returns>
         public override string ToString()
         {
-            return String.Format("{0} (handle: {1}, device: {2})",
-                                 device_name, context_handle, Device);
+            return $"{device_name} (handle: {context_handle}, device: {Device})";
         }
     }
 }

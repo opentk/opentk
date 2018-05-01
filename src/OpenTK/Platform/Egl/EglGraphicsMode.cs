@@ -78,7 +78,7 @@ namespace OpenTK.Platform.Egl
             int numConfigs;
             if (!Egl.ChooseConfig(display, attribList, configs, configs.Length, out numConfigs) || numConfigs == 0)
             {
-                throw new GraphicsModeException(String.Format("Failed to retrieve GraphicsMode, error {0}", Egl.GetError()));
+                throw new GraphicsModeException($"Failed to retrieve GraphicsMode, error {Egl.GetError()}");
             }
 
             // See what we really got

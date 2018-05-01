@@ -73,7 +73,7 @@ namespace OpenTK.Platform.MacOS
         /// <returns>A System.String that represents the current window.</returns>
         public override string ToString()
         {
-            return String.Format("MacOS.CarbonWindowInfo: Handle {0}", Handle);
+            return $"MacOS.CarbonWindowInfo: Handle {Handle}";
         }
 
         // For compatibility with whoever thought it would be

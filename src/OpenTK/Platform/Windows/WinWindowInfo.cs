@@ -93,8 +93,7 @@ namespace OpenTK.Platform.Windows
         /// <returns>A System.String that represents the current window.</returns>
         public override string ToString()
         {
-            return String.Format("Windows.WindowInfo: Handle {0}, Parent ({1})",
-                Handle, Parent != null ? Parent.ToString() : "null");
+            return $"Windows.WindowInfo: Handle {Handle}, Parent ({(Parent != null ? Parent.ToString() : "null")})";
         }
 
         /// <summary>Checks if <c>this</c> and <c>obj</c> reference the same win32 window.</summary>

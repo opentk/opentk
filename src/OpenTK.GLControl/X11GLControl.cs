@@ -45,8 +45,7 @@ namespace OpenTK
 
             public override string ToString()
             {
-                return String.Format("id ({0}), screen ({1}), depth ({2}), class ({3})",
-                    VisualID, Screen, Depth, Class);
+                return $"id ({VisualID}), screen ({Screen}), depth ({Depth}), class ({Class})";
             }
         }
 

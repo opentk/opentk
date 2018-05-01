@@ -121,9 +121,7 @@ namespace OpenTK
             IntPtr pixelFormat = SelectPixelFormat(mode, majorVersion, minorVersion);
             if (pixelFormat == IntPtr.Zero)
             {
-                throw new GraphicsException(String.Format(
-                    "Failed to contruct NSOpenGLPixelFormat for GraphicsMode '{0}'",
-                    mode));
+                throw new GraphicsException($"Failed to contruct NSOpenGLPixelFormat for GraphicsMode '{mode}'");
             }
 
             // Create context

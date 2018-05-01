@@ -257,13 +257,8 @@ namespace OpenTK.Input
         /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.GamePadCapabilities"/>.</returns>
         public override string ToString()
         {
-            return String.Format(
-                "{{Type: {0}; Axes: {1}; Buttons: {2}; {3}; {4}}}",
-                GamePadType,
-                Convert.ToString((int)axes, 2),
-                Convert.ToString((int)buttons, 2),
-                IsMapped ? "Mapped" : "Unmapped",
-                IsConnected ? "Connected" : "Disconnected");
+            return
+                $"{{Type: {GamePadType}; Axes: {Convert.ToString((int) axes, 2)}; Buttons: {Convert.ToString((int) buttons, 2)}; {(IsMapped ? "Mapped" : "Unmapped")}; {(IsConnected ? "Connected" : "Disconnected")}}}";
         }
 
         /// <summary>

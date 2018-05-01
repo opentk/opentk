@@ -99,9 +99,7 @@ namespace OpenTK.Input
         /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.JoystickCapabilities"/>.</returns>
         public override string ToString()
         {
-            return String.Format(
-                "{{Axes: {0}; Buttons: {1}; Hats: {2}; IsConnected: {3}}}",
-                AxisCount, ButtonCount, HatCount, IsConnected);
+            return $"{{Axes: {AxisCount}; Buttons: {ButtonCount}; Hats: {HatCount}; IsConnected: {IsConnected}}}";
         }
 
         /// <summary>

@@ -109,7 +109,7 @@ namespace OpenTK
         public override string ToString()
         {
             #pragma warning disable 612,618
-            return String.Format("{0}x{1}@{2}Hz", Bounds, BitsPerPixel, RefreshRate);
+            return $"{Bounds}x{BitsPerPixel}@{RefreshRate}Hz";
             #pragma warning restore 612,618
         }
 

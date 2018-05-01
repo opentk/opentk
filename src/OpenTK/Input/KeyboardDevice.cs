@@ -132,8 +132,8 @@ namespace OpenTK.Input
         public override string ToString()
         {
             //return base.ToString();
-            return String.Format("ID: {0} ({1}). Keys: {2}, Function keys: {3}, Leds: {4}",
-                DeviceID, Description, NumberOfKeys, NumberOfFunctionKeys, NumberOfLeds);
+            return
+                $"ID: {DeviceID} ({Description}). Keys: {NumberOfKeys}, Function keys: {NumberOfFunctionKeys}, Leds: {NumberOfLeds}";
         }
 
         internal void HandleKeyDown(object sender, KeyboardKeyEventArgs e)

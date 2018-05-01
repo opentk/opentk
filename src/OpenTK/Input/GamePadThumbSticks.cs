@@ -78,9 +78,7 @@ namespace OpenTK.Input
         /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.GamePadThumbSticks"/>.</returns>
         public override string ToString()
         {
-            return String.Format(
-                "{{Left: ({0:f4}; {1:f4}); Right: ({2:f4}; {3:f4})}}",
-                Left.X, Left.Y, Right.X, Right.Y);
+            return $"{{Left: ({Left.X:f4}; {Left.Y:f4}); Right: ({Right.X:f4}; {Right.Y:f4})}}";
         }
 
         /// <summary>

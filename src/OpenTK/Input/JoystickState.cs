@@ -139,14 +139,10 @@ namespace OpenTK.Input
             for (int i = 0; i < MaxAxes; i++)
             {
                 sb.Append(" ");
-                sb.Append(String.Format("{0:f4}", GetAxis(i)));
+                sb.Append($"{GetAxis(i):f4}");
             }
-            return String.Format(
-                "{{Axes:{0}; Buttons: {1}; Hat: {2}; IsConnected: {3}}}",
-                sb,
-                Convert.ToString(buttons, 2).PadLeft(16, '0'),
-                hat0,
-                IsConnected);
+            return
+                $"{{Axes:{sb}; Buttons: {Convert.ToString(buttons, 2).PadLeft(16, '0')}; Hat: {hat0}; IsConnected: {IsConnected}}}";
         }
 
         /// <summary>

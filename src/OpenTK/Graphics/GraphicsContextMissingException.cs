@@ -12,9 +12,8 @@ namespace OpenTK.Graphics
         /// Constructs a new GraphicsContextMissingException.
         /// </summary>
         public GraphicsContextMissingException()
-            : base(String.Format(
-                "No context is current in the calling thread (ThreadId: {0}).",
-                System.Threading.Thread.CurrentThread.ManagedThreadId))
+            : base(
+                $"No context is current in the calling thread (ThreadId: {System.Threading.Thread.CurrentThread.ManagedThreadId}).")
         { }
     }
 }

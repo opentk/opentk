@@ -658,7 +658,7 @@ namespace OpenTK
         /// <returns>The string representation of the matrix.</returns>
         public override string ToString()
         {
-            return String.Format("{0}\n{1}", Row0, Row1);
+            return $"{Row0}\n{Row1}";
         }
 
         /// <summary>

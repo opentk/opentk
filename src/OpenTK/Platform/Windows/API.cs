@@ -278,7 +278,7 @@ namespace OpenTK.Platform.Windows
                 int error = Marshal.GetLastWin32Error();
                 if (error != 0)
                 {
-                    throw new PlatformException(String.Format("Failed to modify window border. Error: {0}", error));
+                    throw new PlatformException($"Failed to modify window border. Error: {error}");
                 }
             }
 
@@ -2132,7 +2132,7 @@ namespace OpenTK.Platform.Windows
 
         public override string ToString()
         {
-            return String.Format("{0}/{1}, flags: {2}, window: {3}", UsagePage, Usage, Flags, Target);
+            return $"{UsagePage}/{Usage}, flags: {Flags}, window: {Target}";
         }
     }
 
@@ -2154,7 +2154,7 @@ namespace OpenTK.Platform.Windows
 
         public override string ToString()
         {
-            return String.Format("{0}, Handle: {1}", Type, Device);
+            return $"{Type}, Handle: {Device}";
         }
     }
 
@@ -2571,7 +2571,7 @@ namespace OpenTK.Platform.Windows
 
         public override string ToString()
         {
-            return String.Format("({0},{1})-({2},{3})", left, top, right, bottom);
+            return $"({left},{top})-({right},{bottom})";
         }
 
         internal Rectangle ToRectangle()
@@ -4093,7 +4093,8 @@ namespace OpenTK.Platform.Windows
 
         public override string ToString()
         {
-            return String.Format("msg=0x{0:x} ({1}) hwnd=0x{2:x} wparam=0x{3:x} lparam=0x{4:x} pt=0x{5:x}", (int)Message, Message.ToString(), HWnd.ToInt32(), WParam.ToInt32(), LParam.ToInt32(), Point);
+            return
+                $"msg=0x{(int) Message:x} ({Message.ToString()}) hwnd=0x{HWnd.ToInt32():x} wparam=0x{WParam.ToInt32():x} lparam=0x{LParam.ToInt32():x} pt=0x{Point:x}";
         }
     }
 

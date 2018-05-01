@@ -98,8 +98,7 @@ namespace OpenTK.Platform.X11
 
             Debug.Write("Creating X11GLContext context: ");
             Debug.Write(direct ? "direct, " : "indirect, ");
-            Debug.WriteLine(shareHandle.Handle == IntPtr.Zero ? "not shared... " :
-                String.Format("shared with ({0})... ", shareHandle));
+            Debug.WriteLine(shareHandle.Handle == IntPtr.Zero ? "not shared... " : $"shared with ({shareHandle})... ");
 
             // Try using the new context creation method. If it fails, fall back to the old one.
             // For each of these methods, we try two times to create a context:
@@ -187,7 +186,7 @@ namespace OpenTK.Platform.X11
                     context = Glx.Arb.CreateContextAttribs(display, fbconfig, shareContext.Handle, direct, attributes.ToArray());
                     if (context == IntPtr.Zero)
                     {
-                        Debug.Write(String.Format("failed. Trying direct: {0}... ", !direct));
+                        Debug.Write($"failed. Trying direct: {!direct}... ");
                         context = Glx.Arb.CreateContextAttribs(display, fbconfig, shareContext.Handle, !direct, attributes.ToArray());
                     }
                 }
@@ -216,7 +215,7 @@ namespace OpenTK.Platform.X11
                 context = Glx.CreateContext(display, info, shareContext.Handle, direct);
                 if (context == IntPtr.Zero)
                 {
-                    Debug.WriteLine(String.Format("failed. Trying direct: {0}... ", !direct));
+                    Debug.WriteLine($"failed. Trying direct: {!direct}... ");
                     context = Glx.CreateContext(display, info, shareContext.Handle, !direct);
                 }
             }
@@ -293,7 +292,7 @@ namespace OpenTK.Platform.X11
             if (Display == IntPtr.Zero || currentWindow.Handle == IntPtr.Zero)
             {
                 throw new InvalidOperationException(
-                    String.Format("Window is invalid. Display ({0}), Handle ({1}).", Display, currentWindow.Handle));
+                    $"Window is invalid. Display ({Display}), Handle ({currentWindow.Handle}).");
             }
             using (new XLock(Display))
             {
@@ -315,8 +314,8 @@ namespace OpenTK.Platform.X11
 
             if (window == null)
             {
-                Debug.Write(String.Format("Releasing context {0} from thread {1} (Display: {2})... ",
-                        Handle, System.Threading.Thread.CurrentThread.ManagedThreadId, Display));
+                Debug.Write(
+                    $"Releasing context {Handle} from thread {System.Threading.Thread.CurrentThread.ManagedThreadId} (Display: {Display})... ");
 
                 bool result;
                 result = Glx.MakeCurrent(Display, IntPtr.Zero, IntPtr.Zero);
@@ -332,8 +331,8 @@ namespace OpenTK.Platform.X11
                 X11WindowInfo w = (X11WindowInfo)window;
                 bool result;
 
-                Debug.Write(String.Format("Making context {0} current on thread {1} (Display: {2}, Screen: {3}, Window: {4})... ",
-                        Handle, System.Threading.Thread.CurrentThread.ManagedThreadId, Display, w.Screen, w.Handle));
+                Debug.Write(
+                    $"Making context {Handle} current on thread {System.Threading.Thread.CurrentThread.ManagedThreadId} (Display: {Display}, Screen: {w.Screen}, Window: {w.Handle})... ");
 
                 if (Display == IntPtr.Zero || w.Handle == IntPtr.Zero || Handle == ContextHandle.Zero)
                 {

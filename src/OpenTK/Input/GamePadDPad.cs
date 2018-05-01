@@ -136,12 +136,8 @@ namespace OpenTK.Input
         /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.GamePadDPad"/>.</returns>
         public override string ToString()
         {
-            return String.Format(
-                "{{{0}{1}{2}{3}}}",
-                IsUp ? "U" : String.Empty,
-                IsLeft ? "L" : String.Empty,
-                IsDown ? "D" : String.Empty,
-                IsRight ? "R" : String.Empty);
+            return
+                $"{{{(IsUp ? "U" : String.Empty)}{(IsLeft ? "L" : String.Empty)}{(IsDown ? "D" : String.Empty)}{(IsRight ? "R" : String.Empty)}}}";
         }
 
         /// <summary>

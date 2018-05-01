@@ -598,8 +598,7 @@ XF86VidModeGetGammaRampSize(
 
         public override string ToString()
         {
-            return String.Format("id ({0}), screen ({1}), depth ({2}), class ({3})",
-                VisualID, Screen, Depth, Class);
+            return $"id ({VisualID}), screen ({Screen}), depth ({Depth}), class ({Class})";
         }
     }
 
@@ -677,7 +676,8 @@ XF86VidModeGetGammaRampSize(
 
         public override string ToString ()
         {
-            return string.Format("MotifWmHints <flags={0}, functions={1}, decorations={2}, input_mode={3}, status={4}", (MotifFlags)flags.ToInt32 (), (MotifFunctions)functions.ToInt32 (), (MotifDecorations)decorations.ToInt32 (), (MotifInputMode)input_mode.ToInt32 (), status.ToInt32 ());
+            return
+                $"MotifWmHints <flags={(MotifFlags) flags.ToInt32()}, functions={(MotifFunctions) functions.ToInt32()}, decorations={(MotifDecorations) decorations.ToInt32()}, input_mode={(MotifInputMode) input_mode.ToInt32()}, status={status.ToInt32()}";
         }
     }
 

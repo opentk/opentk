@@ -122,8 +122,7 @@ namespace OpenTK.Platform.MacOS.Carbon
 
         public override string ToString()
         {
-            return string.Format(
-                "Rect: [{0}, {1}, {2}, {3}]", X, Y, Width, Height);
+            return $"Rect: [{X}, {Y}, {Width}, {Height}]";
         }
 
         public Rectangle ToRectangle()

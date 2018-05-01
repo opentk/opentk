@@ -699,7 +699,7 @@ namespace OpenTK
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("V: {0}, W: {1}", Xyz, W);
+            return $"V: {Xyz}, W: {W}";
         }
 
         /// <summary>
