@@ -700,12 +700,12 @@ namespace Bind
                 }
                 else
                 {
-                    sb.Append(GetDeclarationString(p as Type, settings));
+                    sb.Append(GetDeclarationString(p, settings));
                 }
             }
             else
             {
-                sb.Append(GetDeclarationString(p as Type, settings));
+                sb.Append(GetDeclarationString(p, settings));
             }
             if (!string.IsNullOrEmpty(p.Name))
             {

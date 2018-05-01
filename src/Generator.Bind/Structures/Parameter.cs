@@ -174,7 +174,7 @@ namespace Bind.Structures
         public bool Equals(Parameter other)
         {
             var result =
-                base.Equals(other as Type) &&
+                base.Equals(other) &&
                 Name.Equals(other.Name);
 
             return result;

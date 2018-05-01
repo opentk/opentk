@@ -109,7 +109,7 @@ namespace OpenTK.Platform.X11
             {
                 if (input_driver is IDisposable)
                 {
-                    (input_driver as IDisposable).Dispose();
+                    input_driver.Dispose();
                     input_driver = null;
                 }
             }
