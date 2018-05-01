@@ -30,6 +30,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\OpenTK\OpenTK.csproj" />
   </ItemGroup>
-  <Import Project="..\..\build\targets\netfx-mono.props"/>
-  <Import Project="..\..\build\targets\stylecop.props"/>
+  <Import Project="..\..\build\targets\netfx-mono.props" />
+  <Import Project="..\..\build\targets\stylecop.props" />
 </Project>

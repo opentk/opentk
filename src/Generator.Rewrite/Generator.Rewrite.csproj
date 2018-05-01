@@ -13,6 +13,6 @@
     <PackageReference Include="Mono.Cecil" Version="0.10.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" PrivateAssets="all" />
   </ItemGroup>
-  <Import Project="..\..\build\targets\netfx-mono.props"/>
-  <Import Project="..\..\build\targets\stylecop.props"/>
+  <Import Project="..\..\build\targets\netfx-mono.props" />
+  <Import Project="..\..\build\targets\stylecop.props" />
 </Project>
