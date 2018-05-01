@@ -1,3 +1,5 @@
+using OpenTK.Mathemathics;
+
 namespace OpenTK.Tests.Math.Helpers
 {
     /// <summary>

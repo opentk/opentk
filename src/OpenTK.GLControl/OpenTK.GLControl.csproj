@@ -14,7 +14,6 @@
     <Description>OpenGL control for Windows.Forms.</Description>
   </PropertyGroup>
   <PropertyGroup>
-    <PackageId>OpenTK.GLControl</PackageId>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageReleaseNotes>Initial 4.0 release.</PackageReleaseNotes>
     <PackageTags>opentk;opengl;forms;windows</PackageTags>

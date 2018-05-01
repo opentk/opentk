@@ -1,12 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <DefineConstants>X11;SDL2;</DefineConstants>
-    <TargetFramework>net20</TargetFramework>
-    <OutputType>Library</OutputType>
+    <TargetFramework>net461</TargetFramework>
     <Deterministic>true</Deterministic>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup>
     <Version>4.0.0</Version>
@@ -15,7 +13,6 @@
     <Description>A set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL.</Description>
   </PropertyGroup>
   <PropertyGroup>
-    <PackageId>OpenTK</PackageId>
     <PackageIconUrl>https://raw.githubusercontent.com/opentk/opentk/master/docs/files/img/logo.png</PackageIconUrl>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageReleaseNotes>Initial 4.0 release.</PackageReleaseNotes>
@@ -26,6 +23,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenTK.Mathemathics\OpenTK.Mathemathics.csproj" />
   </ItemGroup>
   <Target Name="Rewrite" AfterTargets="AfterBuild">
     <Exec Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" Command="$(ProjectDir)..\..\src\Generator.Rewrite\bin\Debug\net461\Rewrite.exe --assembly $(OutputPath)OpenTK.dll --debug" />

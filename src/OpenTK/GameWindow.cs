@@ -28,6 +28,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using OpenTK.Graphics;
+using OpenTK.Mathemathics;
 using OpenTK.Platform;
 
 namespace OpenTK

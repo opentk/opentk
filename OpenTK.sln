@@ -48,6 +48,10 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OpenTK.Tests.Integration", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Tests.Math", "tests\OpenTK.Tests.Math\OpenTK.Tests.Math.csproj", "{F36AAEB5-8861-47C6-80D6-4E77B7F56C6A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Mathemathics", "src\OpenTK.Mathemathics\OpenTK.Mathemathics.csproj", "{517AC4BF-6AF5-415D-B11C-FC6FE6710336}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.OpenAL", "src\OpenTK.OpenAL\OpenTK.OpenAL.csproj", "{6E833F6A-F48D-444C-A44B-FB489137E233}"
+EndProject
 
 
 Global
@@ -100,6 +104,14 @@ Global
 		{F36AAEB5-8861-47C6-80D6-4E77B7F56C6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F36AAEB5-8861-47C6-80D6-4E77B7F56C6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F36AAEB5-8861-47C6-80D6-4E77B7F56C6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{517AC4BF-6AF5-415D-B11C-FC6FE6710336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{517AC4BF-6AF5-415D-B11C-FC6FE6710336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{517AC4BF-6AF5-415D-B11C-FC6FE6710336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{517AC4BF-6AF5-415D-B11C-FC6FE6710336}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E833F6A-F48D-444C-A44B-FB489137E233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E833F6A-F48D-444C-A44B-FB489137E233}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E833F6A-F48D-444C-A44B-FB489137E233}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E833F6A-F48D-444C-A44B-FB489137E233}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D4E8E132-A698-41CC-B101-0FC17C0470DC} = {45E6173C-631D-459C-BB8C-31C44BCB9B61}

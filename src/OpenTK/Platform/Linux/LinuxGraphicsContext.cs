@@ -29,6 +29,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
+using OpenTK.Mathemathics;
 using OpenTK.Platform.Egl;
 
 namespace OpenTK.Platform.Linux

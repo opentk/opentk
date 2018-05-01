@@ -29,6 +29,7 @@ using System;
 using System.Diagnostics;
 using OpenTK.Graphics;
 using OpenTK.Input;
+using OpenTK.Mathemathics;
 using OpenTK.Platform.Egl;
 #if !MINIMAL
 using System.Drawing;

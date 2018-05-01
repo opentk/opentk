@@ -14,7 +14,6 @@
     <Description>OpenGL control for GtkSharp.</Description>
   </PropertyGroup>
   <PropertyGroup>
-    <PackageId>OpenTK.GLWidget</PackageId>
     <PackageIconUrl>https://raw.githubusercontent.com/opentk/opentk/master/docs/files/img/logo.png</PackageIconUrl>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageReleaseNotes>Initial 4.0 release.</PackageReleaseNotes>

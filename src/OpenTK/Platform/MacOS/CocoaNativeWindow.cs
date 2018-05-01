@@ -32,6 +32,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Graphics;
 using OpenTK.Input;
+using OpenTK.Mathemathics;
 #if !MINIMAL
 using System.Drawing;
 

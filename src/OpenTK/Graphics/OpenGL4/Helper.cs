@@ -25,6 +25,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using OpenTK.Mathemathics;
 #if !MINIMAL
 using System.Drawing;
 

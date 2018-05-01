@@ -30,6 +30,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
 using OpenTK.Input;
+using OpenTK.Mathemathics;
 using OpenTK.Platform.Common;
 
 namespace OpenTK.Platform.Windows

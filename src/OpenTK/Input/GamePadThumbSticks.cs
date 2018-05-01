@@ -26,6 +26,7 @@
 //
 
 using System;
+using OpenTK.Mathemathics;
 
 namespace OpenTK.Input
 {

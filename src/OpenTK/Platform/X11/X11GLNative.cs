@@ -31,6 +31,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Graphics;
 using OpenTK.Input;
+using OpenTK.Mathemathics;
 #if !MINIMAL
 using System.Drawing;
 

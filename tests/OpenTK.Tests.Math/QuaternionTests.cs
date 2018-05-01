@@ -1,4 +1,5 @@
-﻿using OpenTK.Tests.Math.DataProviders;
+﻿using OpenTK.Mathemathics;
+using OpenTK.Tests.Math.DataProviders;
 using OpenTK.Tests.Math.Helpers;
 using Xunit;
 

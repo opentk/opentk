@@ -27,6 +27,7 @@
 
 using System;
 using System.Diagnostics;
+using OpenTK.Mathemathics;
 
 namespace OpenTK.Platform.Common
 {
