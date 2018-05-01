@@ -28,48 +28,51 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using OpenTK.Graphics;
-using OpenTK.Mathemathics;
+using OpenTK.Mathematics;
 using OpenTK.Platform;
 
 namespace OpenTK
 {
     /// <summary>
-    ///     The GameWindow class contains cross-platform methods to create and render on an OpenGL
-    ///     window, handle input and load resources.
+    /// The GameWindow class contains cross-platform methods to create and render on an OpenGL
+    /// window, handle input and load resources.
     /// </summary>
     /// <remarks>
-    ///     GameWindow contains several events you can hook or override to add your custom logic:
-    ///     <list>
-    ///         <item>
-    ///             OnLoad: Occurs after creating the OpenGL context, but before entering the main loop.
-    ///             Override to load resources.
-    ///         </item>
-    ///         <item>
-    ///             OnUnload: Occurs after exiting the main loop, but before deleting the OpenGL context.
-    ///             Override to unload resources.
-    ///         </item>
-    ///         <item>
-    ///             OnResize: Occurs whenever GameWindow is resized. You should update the OpenGL Viewport
-    ///             and Projection Matrix here.
-    ///         </item>
-    ///         <item>
-    ///             OnUpdateFrame: Occurs at the specified logic update rate. Override to add your game
-    ///             logic.
-    ///         </item>
-    ///         <item>
-    ///             OnRenderFrame: Occurs at the specified frame render rate. Override to add your
-    ///             rendering code.
-    ///         </item>
-    ///     </list>
-    ///     Call the Run() method to start the application's main loop. Run(double, double) takes two
-    ///     parameters that
-    ///     specify the logic update rate, and the render update rate.
+    /// GameWindow contains several events you can hook or override to add your custom logic:
+    ///  <list>
+    ///  <item>
+    /// OnLoad: Occurs after creating the OpenGL context, but before entering the main loop.
+    /// Override to load resources.
+    ///  </item>
+    ///  <item>
+    /// OnUnload: Occurs after exiting the main loop, but before deleting the OpenGL context.
+    /// Override to unload resources.
+    ///  </item>
+    ///  <item>
+    /// OnResize: Occurs whenever GameWindow is resized. You should update the OpenGL Viewport
+    /// and Projection Matrix here.
+    ///  </item>
+    ///  <item>
+    /// OnUpdateFrame: Occurs at the specified logic update rate. Override to add your game
+    /// logic.
+    ///  </item>
+    ///  <item>
+    /// OnRenderFrame: Occurs at the specified frame render rate. Override to add your
+    /// rendering code.
+    ///  </item>
+    ///  </list>
+    /// Call the Run() method to start the application's main loop. Run(double, double) takes two
+    /// parameters that
+    /// specify the logic update rate, and the render update rate.
     /// </remarks>
     public class GameWindow : NativeWindow, IGameWindow, IDisposable
     {
         private const double MaxFrequency = 500.0; // Frequency cap for Update/RenderFrame events
 
         private readonly bool isSingleThreaded;
+        private readonly FrameEventArgs render_args = new FrameEventArgs();
+
+        private readonly FrameEventArgs update_args = new FrameEventArgs();
 
         private readonly Stopwatch watchRender = new Stopwatch();
         private readonly Stopwatch watchUpdate = new Stopwatch();
@@ -79,12 +82,9 @@ namespace OpenTK
         private bool is_running_slowly; // true, when UpdatePeriod cannot reach TargetUpdatePeriod
 
         private bool isExiting;
-        private readonly FrameEventArgs render_args = new FrameEventArgs();
         private double render_time; // length of last RenderFrame event
         private double render_timestamp; // timestamp of last RenderFrame event
         private double target_update_period, target_render_period;
-
-        private readonly FrameEventArgs update_args = new FrameEventArgs();
 
         private double update_epsilon; // quantization error for UpdateFrame events
 
@@ -95,13 +95,17 @@ namespace OpenTK
         private double update_timestamp; // timestamp of last UpdateFrame event
         private Thread updateThread;
 
-        /// <summary>Constructs a new GameWindow with sensible default attributes.</summary>
+        /// <summary>
+        /// Constructs a new GameWindow with sensible default attributes.
+        /// </summary>
         public GameWindow()
             : this(640, 480, GraphicsMode.Default, "OpenTK Game Window", 0, DisplayDevice.Default)
         {
         }
 
-        /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
+        /// <summary>
+        /// Constructs a new GameWindow with the specified attributes.
+        /// </summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
         /// <param name="height">The height of the GameWindow in pixels.</param>
         public GameWindow(int width, int height)
@@ -109,7 +113,9 @@ namespace OpenTK
         {
         }
 
-        /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
+        /// <summary>
+        /// Constructs a new GameWindow with the specified attributes.
+        /// </summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
         /// <param name="height">The height of the GameWindow in pixels.</param>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GameWindow.</param>
@@ -118,7 +124,9 @@ namespace OpenTK
         {
         }
 
-        /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
+        /// <summary>
+        /// Constructs a new GameWindow with the specified attributes.
+        /// </summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
         /// <param name="height">The height of the GameWindow in pixels.</param>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GameWindow.</param>
@@ -128,7 +136,9 @@ namespace OpenTK
         {
         }
 
-        /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
+        /// <summary>
+        /// Constructs a new GameWindow with the specified attributes.
+        /// </summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
         /// <param name="height">The height of the GameWindow in pixels.</param>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GameWindow.</param>
@@ -139,7 +149,9 @@ namespace OpenTK
         {
         }
 
-        /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
+        /// <summary>
+        /// Constructs a new GameWindow with the specified attributes.
+        /// </summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
         /// <param name="height">The height of the GameWindow in pixels.</param>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GameWindow.</param>
@@ -152,7 +164,9 @@ namespace OpenTK
         {
         }
 
-        /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
+        /// <summary>
+        /// Constructs a new GameWindow with the specified attributes.
+        /// </summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
         /// <param name="height">The height of the GameWindow in pixels.</param>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GameWindow.</param>
@@ -169,7 +183,9 @@ namespace OpenTK
         {
         }
 
-        /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
+        /// <summary>
+        /// Constructs a new GameWindow with the specified attributes.
+        /// </summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
         /// <param name="height">The height of the GameWindow in pixels.</param>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GameWindow.</param>
@@ -187,7 +203,9 @@ namespace OpenTK
         {
         }
 
-        /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
+        /// <summary>
+        /// Constructs a new GameWindow with the specified attributes.
+        /// </summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
         /// <param name="height">The height of the GameWindow in pixels.</param>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GameWindow.</param>
@@ -199,8 +217,8 @@ namespace OpenTK
         /// <param name="flags">The GraphicsContextFlags version for the OpenGL GraphicsContext.</param>
         /// <param name="sharedContext">An IGraphicsContext to share resources with.</param>
         /// <param name="isSingleThreaded">
-        ///     Should the update and render frames be fired on the same thread? If false, render and
-        ///     update events will be fired from separate threads.
+        /// Should the update and render frames be fired on the same thread? If false, render and
+        /// update events will be fired from separate threads.
         /// </param>
         public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options,
             DisplayDevice device,
@@ -230,7 +248,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Returns the opengl IGraphicsContext associated with the current GameWindow.
+        /// Returns the opengl IGraphicsContext associated with the current GameWindow.
         /// </summary>
         public IGraphicsContext Context
         {
@@ -242,10 +260,10 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets a value indicating whether the shutdown sequence has been initiated
-        ///     for this window, by calling GameWindow.Exit() or hitting the 'close' button.
-        ///     If this property is true, it is no longer safe to use any OpenTK.Input or
-        ///     OpenTK.Graphics.OpenGL functions or properties.
+        /// Gets a value indicating whether the shutdown sequence has been initiated
+        /// for this window, by calling GameWindow.Exit() or hitting the 'close' button.
+        /// If this property is true, it is no longer safe to use any OpenTK.Input or
+        /// OpenTK.Graphics.OpenGL functions or properties.
         /// </summary>
         public bool IsExiting
         {
@@ -265,7 +283,7 @@ namespace OpenTK
         //}
 
         /// <summary>
-        ///     Gets a double representing the actual frequency of RenderFrame events, in hertz (i.e. fps or frames per second).
+        /// Gets a double representing the actual frequency of RenderFrame events, in hertz (i.e. fps or frames per second).
         /// </summary>
         public double RenderFrequency
         {
@@ -282,7 +300,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets a double representing the period of RenderFrame events, in seconds.
+        /// Gets a double representing the period of RenderFrame events, in seconds.
         /// </summary>
         public double RenderPeriod
         {
@@ -294,7 +312,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets a double representing the time spent in the RenderFrame function, in seconds.
+        /// Gets a double representing the time spent in the RenderFrame function, in seconds.
         /// </summary>
         public double RenderTime
         {
@@ -311,14 +329,14 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets a double representing the target render frequency, in hertz.
+        /// Gets or sets a double representing the target render frequency, in hertz.
         /// </summary>
         /// <remarks>
-        ///     <para>
-        ///         A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only
-        ///         limited by the hardware's capabilities).
-        ///     </para>
-        ///     <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 200.0Hz.</para>
+        ///  <para>
+        /// A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only
+        /// limited by the hardware's capabilities).
+        ///  </para>
+        ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 200.0Hz.</para>
         /// </remarks>
         public double TargetRenderFrequency
         {
@@ -351,17 +369,17 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets a double representing the target render period, in seconds.
+        /// Gets or sets a double representing the target render period, in seconds.
         /// </summary>
         /// <remarks>
-        ///     <para>
-        ///         A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only
-        ///         limited by the hardware's capabilities).
-        ///     </para>
-        ///     <para>
-        ///         Values lower than 0.002 seconds (500Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped
-        ///         to 1.0.
-        ///     </para>
+        ///  <para>
+        /// A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only
+        /// limited by the hardware's capabilities).
+        ///  </para>
+        ///  <para>
+        /// Values lower than 0.002 seconds (500Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped
+        /// to 1.0.
+        ///  </para>
         /// </remarks>
         public double TargetRenderPeriod
         {
@@ -389,14 +407,14 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets a double representing the target update frequency, in hertz.
+        /// Gets or sets a double representing the target update frequency, in hertz.
         /// </summary>
         /// <remarks>
-        ///     <para>
-        ///         A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only
-        ///         limited by the hardware's capabilities).
-        ///     </para>
-        ///     <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 500.0Hz.</para>
+        ///  <para>
+        /// A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only
+        /// limited by the hardware's capabilities).
+        ///  </para>
+        ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 500.0Hz.</para>
         /// </remarks>
         public double TargetUpdateFrequency
         {
@@ -429,17 +447,17 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets a double representing the target update period, in seconds.
+        /// Gets or sets a double representing the target update period, in seconds.
         /// </summary>
         /// <remarks>
-        ///     <para>
-        ///         A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only
-        ///         limited by the hardware's capabilities).
-        ///     </para>
-        ///     <para>
-        ///         Values lower than 0.002 seconds (500Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped
-        ///         to 1.0.
-        ///     </para>
+        ///  <para>
+        /// A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only
+        /// limited by the hardware's capabilities).
+        ///  </para>
+        ///  <para>
+        /// Values lower than 0.002 seconds (500Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped
+        /// to 1.0.
+        ///  </para>
         /// </remarks>
         public double TargetUpdatePeriod
         {
@@ -467,7 +485,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets a double representing the frequency of UpdateFrame events, in hertz.
+        /// Gets a double representing the frequency of UpdateFrame events, in hertz.
         /// </summary>
         public double UpdateFrequency
         {
@@ -484,7 +502,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets a double representing the period of UpdateFrame events, in seconds.
+        /// Gets a double representing the period of UpdateFrame events, in seconds.
         /// </summary>
         public double UpdatePeriod
         {
@@ -496,7 +514,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets a double representing the time spent in the UpdateFrame function, in seconds.
+        /// Gets a double representing the time spent in the UpdateFrame function, in seconds.
         /// </summary>
         public double UpdateTime
         {
@@ -508,7 +526,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets the VSyncMode.
+        /// Gets or sets the VSyncMode.
         /// </summary>
         public VSyncMode VSync
         {
@@ -550,7 +568,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Disposes of the GameWindow, releasing all resources consumed by it.
+        /// Disposes of the GameWindow, releasing all resources consumed by it.
         /// </summary>
         public override void Dispose()
         {
@@ -578,7 +596,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Makes the GraphicsContext current on the calling thread.
+        /// Makes the GraphicsContext current on the calling thread.
         /// </summary>
         public void MakeCurrent()
         {
@@ -587,7 +605,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Enters the game loop of the GameWindow using the maximum update rate.
+        /// Enters the game loop of the GameWindow using the maximum update rate.
         /// </summary>
         /// <seealso cref="Run(double)" />
         public void Run()
@@ -596,8 +614,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Enters the game loop of the GameWindow using the specified update rate.
-        ///     maximum possible render frequency.
+        /// Enters the game loop of the GameWindow using the specified update rate.
+        /// maximum possible render frequency.
         /// </summary>
         public void Run(double updateRate)
         {
@@ -605,7 +623,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Swaps the front and back buffer, presenting the rendered scene to the user.
+        /// Swaps the front and back buffer, presenting the rendered scene to the user.
         /// </summary>
         public void SwapBuffers()
         {
@@ -614,7 +632,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or states the state of the NativeWindow.
+        /// Gets or states the state of the NativeWindow.
         /// </summary>
         public override WindowState WindowState
         {
@@ -632,31 +650,31 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Occurs before the window is displayed for the first time.
+        /// Occurs before the window is displayed for the first time.
         /// </summary>
         public event EventHandler<EventArgs> Load = delegate { };
 
         /// <summary>
-        ///     Occurs when it is time to render a frame.
+        /// Occurs when it is time to render a frame.
         /// </summary>
         public event EventHandler<FrameEventArgs> RenderFrame = delegate { };
 
         /// <summary>
-        ///     Occurs before the window is destroyed.
+        /// Occurs before the window is destroyed.
         /// </summary>
         public event EventHandler<EventArgs> Unload = delegate { };
 
         /// <summary>
-        ///     Occurs when it is time to update a frame.
+        /// Occurs when it is time to update a frame.
         /// </summary>
         public event EventHandler<FrameEventArgs> UpdateFrame = delegate { };
 
         /// <summary>
-        ///     Closes the GameWindow. Equivalent to <see cref="NativeWindow.Close" /> method.
+        /// Closes the GameWindow. Equivalent to <see cref="NativeWindow.Close" /> method.
         /// </summary>
         /// <remarks>
-        ///     <para>Override if you are not using <see cref="GameWindow.Run()" />.</para>
-        ///     <para>If you override this method, place a call to base.Exit(), to ensure proper OpenTK shutdown.</para>
+        ///  <para>Override if you are not using <see cref="GameWindow.Run()" />.</para>
+        ///  <para>If you override this method, place a call to base.Exit(), to ensure proper OpenTK shutdown.</para>
         /// </remarks>
         public virtual void Exit()
         {
@@ -664,11 +682,11 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called when the NativeWindow is about to close.
+        /// Called when the NativeWindow is about to close.
         /// </summary>
         /// <param name="e">
-        ///     The <see cref="System.ComponentModel.CancelEventArgs" /> for this event.
-        ///     Set e.Cancel to true in order to stop the GameWindow from closing.
+        /// The <see cref="System.ComponentModel.CancelEventArgs" /> for this event.
+        /// Set e.Cancel to true in order to stop the GameWindow from closing.
         /// </param>
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -682,7 +700,7 @@ namespace OpenTK
 
 
         /// <summary>
-        ///     Called after an OpenGL context has been established, but before entering the main loop.
+        /// Called after an OpenGL context has been established, but before entering the main loop.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnLoad(EventArgs e)
@@ -691,7 +709,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called after GameWindow.Exit was called, but before destroying the OpenGL context.
+        /// Called after GameWindow.Exit was called, but before destroying the OpenGL context.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnUnload(EventArgs e)
@@ -700,14 +718,14 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Enters the game loop of the GameWindow updating and rendering at the specified frequency.
+        /// Enters the game loop of the GameWindow updating and rendering at the specified frequency.
         /// </summary>
         /// <remarks>
-        ///     When overriding the default game loop you should call ProcessEvents()
-        ///     to ensure that your GameWindow responds to operating system events.
-        ///     <para>
-        ///         Once ProcessEvents() returns, it is time to call update and render the next frame.
-        ///     </para>
+        /// When overriding the default game loop you should call ProcessEvents()
+        /// to ensure that your GameWindow responds to operating system events.
+        ///  <para>
+        /// Once ProcessEvents() returns, it is time to call update and render the next frame.
+        ///  </para>
         /// </remarks>
         /// <param name="updates_per_second">The frequency of UpdateFrame events.</param>
         /// <param name="frames_per_second">The frequency of RenderFrame events.</param>
@@ -881,30 +899,30 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     If game window is configured to run with a dedicated update thread (by passing isSingleThreaded = false in the
-        ///     constructor),
-        ///     occurs when the update thread has started. This would be a good place to initialize thread specific stuff (like
-        ///     setting a synchronization context).
+        /// If game window is configured to run with a dedicated update thread (by passing isSingleThreaded = false in the
+        /// constructor),
+        /// occurs when the update thread has started. This would be a good place to initialize thread specific stuff (like
+        /// setting a synchronization context).
         /// </summary>
         public event EventHandler OnUpdateThreadStarted = delegate { };
 
         /// <summary>
-        ///     Override to add custom cleanup logic.
+        /// Override to add custom cleanup logic.
         /// </summary>
         /// <param name="manual">
-        ///     True, if this method was called by the application; false if this was called by the finalizer
-        ///     thread.
+        /// True, if this method was called by the application; false if this was called by the finalizer
+        /// thread.
         /// </param>
         protected virtual void Dispose(bool manual)
         {
         }
 
         /// <summary>
-        ///     Called when the frame is rendered.
+        /// Called when the frame is rendered.
         /// </summary>
         /// <param name="e">Contains information necessary for frame rendering.</param>
         /// <remarks>
-        ///     Subscribe to the <see cref="RenderFrame" /> event instead of overriding this method.
+        /// Subscribe to the <see cref="RenderFrame" /> event instead of overriding this method.
         /// </remarks>
         protected virtual void OnRenderFrame(FrameEventArgs e)
         {
@@ -912,11 +930,11 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called when the frame is updated.
+        /// Called when the frame is updated.
         /// </summary>
         /// <param name="e">Contains information necessary for frame updating.</param>
         /// <remarks>
-        ///     Subscribe to the <see cref="UpdateFrame" /> event instead of overriding this method.
+        /// Subscribe to the <see cref="UpdateFrame" /> event instead of overriding this method.
         /// </remarks>
         protected virtual void OnUpdateFrame(FrameEventArgs e)
         {
@@ -924,7 +942,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called when the WindowInfo for this GameWindow has changed.
+        /// Called when the WindowInfo for this GameWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnWindowInfoChanged(EventArgs e)
@@ -932,13 +950,13 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called when this window is resized.
+        /// Called when this window is resized.
         /// </summary>
         /// <param name="e">Not used.</param>
         /// <remarks>
-        ///     You will typically wish to update your viewport whenever
-        ///     the window is resized. See the
-        ///     <see cref="OpenTK.Graphics.OpenGL.GL.Viewport(int, int, int, int)" /> method.
+        /// You will typically wish to update your viewport whenever
+        /// the window is resized. See the
+        ///  <see cref="OpenTK.Graphics.OpenGL.GL.Viewport(int, int, int, int)" /> method.
         /// </remarks>
         protected override void OnResize(EventArgs e)
         {
@@ -981,23 +999,23 @@ namespace OpenTK
     }
 
     /// <summary>
-    ///     Enumerates available VSync modes.
+    /// Enumerates available VSync modes.
     /// </summary>
     public enum VSyncMode
     {
         /// <summary>
-        ///     Vsync disabled.
+        /// Vsync disabled.
         /// </summary>
         Off = 0,
 
         /// <summary>
-        ///     VSync enabled.
+        /// VSync enabled.
         /// </summary>
         On,
 
         /// <summary>
-        ///     VSync enabled, unless framerate falls below one half of target framerate.
-        ///     If no target framerate is specified, this behaves exactly like <see cref="VSyncMode.On" />.
+        /// VSync enabled, unless framerate falls below one half of target framerate.
+        /// If no target framerate is specified, this behaves exactly like <see cref="VSyncMode.On" />.
         /// </summary>
         Adaptive
     }

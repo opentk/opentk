@@ -7,19 +7,19 @@ namespace OpenTK.Platform.Egl
     using EGLSurface = IntPtr;
 
     /// <summary>
-    ///     A window info for angle.
+    /// A window info for angle.
     /// </summary>
     public interface IAngleWindowInfo : IWindowInfo
     {
         /// <summary>
-        ///     Query the underlying platform pointer / handle for this window's
-        ///     default surface or IntPtr.Zero
+        /// Query the underlying platform pointer / handle for this window's
+        /// default surface or IntPtr.Zero
         /// </summary>
         IntPtr QuerySurfacePointer();
 
         /// <summary>
-        ///     Create an additional rendering surface that shares the display
-        ///     of this window.
+        /// Create an additional rendering surface that shares the display
+        /// of this window.
         /// </summary>
         /// <param name="width">width in pixels</param>
         /// <param name="height">height in pixels</param>
@@ -27,20 +27,20 @@ namespace OpenTK.Platform.Egl
         EGLSurface CreateSurface(int width, int height);
 
         /// <summary>
-        ///     Destroy a surface created with CreateSurface and clears the passed reference.
+        /// Destroy a surface created with CreateSurface and clears the passed reference.
         /// </summary>
         /// <param name="surface">Reference to the surface.</param>
         void DestroySurface(ref EGLSurface surface);
 
         /// <summary>
-        ///     MakeCurrent the custom surface created with CreateSurface.
+        /// MakeCurrent the custom surface created with CreateSurface.
         /// </summary>
         /// <param name="surface">Reference to the surface.</param>
         void MakeCurrent(EGLSurface surface);
 
         /// <summary>
-        ///     Query the underlying platform pointer / handle for an EGLSurface
-        ///     created with CreateSurface.
+        /// Query the underlying platform pointer / handle for an EGLSurface
+        /// created with CreateSurface.
         /// </summary>
         /// <param name="surface"></param>
         IntPtr QuerySurfacePointer(EGLSurface surface);

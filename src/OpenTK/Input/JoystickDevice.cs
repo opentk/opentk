@@ -28,31 +28,31 @@ using System;
 namespace OpenTK.Input
 {
     /// <summary>
-    ///     Represents a joystick device and provides methods to query its status.
+    /// Represents a joystick device and provides methods to query its status.
     /// </summary>
     public abstract class JoystickDevice : IInputDevice
     {
         private readonly JoystickButtonEventArgs button_args = new JoystickButtonEventArgs(0, false);
 
+        private readonly JoystickMoveEventArgs move_args = new JoystickMoveEventArgs(0, 0, 0);
+
         /// <summary>
-        ///     Occurs when a button of this JoystickDevice instance is pressed.
+        /// Occurs when a button of this JoystickDevice instance is pressed.
         /// </summary>
         public EventHandler<JoystickButtonEventArgs> ButtonDown =
             delegate { };
 
         /// <summary>
-        ///     Occurs when a button of this JoystickDevice is released.
+        /// Occurs when a button of this JoystickDevice is released.
         /// </summary>
         public EventHandler<JoystickButtonEventArgs> ButtonUp =
             delegate { };
 
         /// <summary>
-        ///     Occurs when an axis of this JoystickDevice instance is moved.
+        /// Occurs when an axis of this JoystickDevice instance is moved.
         /// </summary>
         public EventHandler<JoystickMoveEventArgs> Move =
             delegate { };
-
-        private readonly JoystickMoveEventArgs move_args = new JoystickMoveEventArgs(0, 0, 0);
 
         internal JoystickDevice(int id, int axes, int buttons)
         {
@@ -72,26 +72,26 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a JoystickAxisCollection containing the state of each axis on this instance. Values are normalized in the [-1,
-        ///     1] range.
+        /// Gets a JoystickAxisCollection containing the state of each axis on this instance. Values are normalized in the [-1,
+        /// 1] range.
         /// </summary>
         public JoystickAxisCollection Axis { get; }
 
         /// <summary>
-        ///     Gets JoystickButtonCollection containing the state of each button on this instance. True indicates that the button
-        ///     is pressed.
+        /// Gets JoystickButtonCollection containing the state of each button on this instance. True indicates that the button
+        /// is pressed.
         /// </summary>
         public JoystickButtonCollection Button { get; }
 
         internal int Id { get; set; }
 
         /// <summary>
-        ///     Gets a System.String containing a unique description for this instance.
+        /// Gets a System.String containing a unique description for this instance.
         /// </summary>
         public string Description { get; internal set; }
 
         /// <summary>
-        ///     Gets a value indicating the InputDeviceType of this InputDevice.
+        /// Gets a value indicating the InputDeviceType of this InputDevice.
         /// </summary>
         public InputDeviceType DeviceType => InputDeviceType.Hid;
 
@@ -140,20 +140,20 @@ namespace OpenTK.Input
     }
 
     /// <summary>
-    ///     The base class for JoystickDevice event arguments.
+    /// The base class for JoystickDevice event arguments.
     /// </summary>
     public class JoystickEventArgs : EventArgs
     {
     }
 
     /// <summary>
-    ///     Provides data for the <see cref="JoystickDevice.ButtonDown" /> and <see cref="JoystickDevice.ButtonUp" /> events.
-    ///     This class is cached for performance reasons - avoid storing references outside the scope of the event.
+    /// Provides data for the <see cref="JoystickDevice.ButtonDown" /> and <see cref="JoystickDevice.ButtonUp" /> events.
+    /// This class is cached for performance reasons - avoid storing references outside the scope of the event.
     /// </summary>
     public class JoystickButtonEventArgs : EventArgs
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="JoystickButtonEventArgs" /> class.
+        /// Initializes a new instance of the <see cref="JoystickButtonEventArgs" /> class.
         /// </summary>
         /// <param name="button">The index of the joystick button for the event.</param>
         /// <param name="pressed">The current state of the button.</param>
@@ -164,24 +164,24 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     The index of the joystick button for the event.
+        /// The index of the joystick button for the event.
         /// </summary>
         public int Button { get; internal set; }
 
         /// <summary>
-        ///     Gets a System.Boolean representing the state of the button for the event.
+        /// Gets a System.Boolean representing the state of the button for the event.
         /// </summary>
         public bool Pressed { get; internal set; }
     }
 
     /// <summary>
-    ///     Provides data for the <see cref="JoystickDevice.Move" /> event.
-    ///     This class is cached for performance reasons - avoid storing references outside the scope of the event.
+    /// Provides data for the <see cref="JoystickDevice.Move" /> event.
+    /// This class is cached for performance reasons - avoid storing references outside the scope of the event.
     /// </summary>
     public class JoystickMoveEventArgs : JoystickEventArgs
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="JoystickMoveEventArgs" /> class.
+        /// Initializes a new instance of the <see cref="JoystickMoveEventArgs" /> class.
         /// </summary>
         /// <param name="axis">The index of the joystick axis that was moved.</param>
         /// <param name="value">The absolute value of the joystick axis.</param>
@@ -194,23 +194,23 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a System.Int32 representing the index of the axis that was moved.
+        /// Gets a System.Int32 representing the index of the axis that was moved.
         /// </summary>
         public int Axis { get; internal set; }
 
         /// <summary>
-        ///     Gets a System.Single representing the absolute position of the axis.
+        /// Gets a System.Single representing the absolute position of the axis.
         /// </summary>
         public float Value { get; internal set; }
 
         /// <summary>
-        ///     Gets a System.Single representing the relative change in the position of the axis.
+        /// Gets a System.Single representing the relative change in the position of the axis.
         /// </summary>
         public float Delta { get; internal set; }
     }
 
     /// <summary>
-    ///     Defines a collection of JoystickButtons.
+    /// Defines a collection of JoystickButtons.
     /// </summary>
     public sealed class JoystickButtonCollection
     {
@@ -227,7 +227,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a System.Boolean indicating whether the JoystickButton with the specified index is pressed.
+        /// Gets a System.Boolean indicating whether the JoystickButton with the specified index is pressed.
         /// </summary>
         /// <param name="index">The index of the JoystickButton to check.</param>
         /// <returns>True if the JoystickButton is pressed; false otherwise.</returns>
@@ -238,13 +238,13 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a System.Int32 indicating the available amount of JoystickButtons.
+        /// Gets a System.Int32 indicating the available amount of JoystickButtons.
         /// </summary>
         public int Count => button_state.Length;
     }
 
     /// <summary>
-    ///     Defines a collection of JoystickAxes.
+    /// Defines a collection of JoystickAxes.
     /// </summary>
     public sealed class JoystickAxisCollection
     {
@@ -261,7 +261,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a System.Single indicating the absolute position of the JoystickAxis with the specified index.
+        /// Gets a System.Single indicating the absolute position of the JoystickAxis with the specified index.
         /// </summary>
         /// <param name="index">The index of the JoystickAxis to check.</param>
         /// <returns>A System.Single in the range [-1, 1].</returns>
@@ -272,7 +272,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a System.Int32 indicating the available amount of JoystickAxes.
+        /// Gets a System.Int32 indicating the available amount of JoystickAxes.
         /// </summary>
         public int Count => axis_state.Length;
     }

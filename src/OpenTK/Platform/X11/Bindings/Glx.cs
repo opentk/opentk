@@ -251,7 +251,7 @@ namespace OpenTK.Platform.X11
 
     /// \internal
     /// <summary>
-    ///     Provides access to GLX functions.
+    /// Provides access to GLX functions.
     /// </summary>
     internal class Glx : GraphicsBindingsBase
     {

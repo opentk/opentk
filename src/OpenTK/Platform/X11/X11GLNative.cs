@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Graphics;
 using OpenTK.Input;
-using OpenTK.Mathemathics;
+using OpenTK.Mathematics;
 #if !MINIMAL
 using System.Drawing;
 
@@ -41,8 +41,8 @@ namespace OpenTK.Platform.X11
 {
     /// \internal
     /// <summary>
-    ///     Drives GameWindow on X11.
-    ///     This class supports OpenTK, and is not intended for use by OpenTK programs.
+    /// Drives GameWindow on X11.
+    /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
     internal sealed class X11GLNative : NativeWindowBase
     {
@@ -251,7 +251,7 @@ namespace OpenTK.Platform.X11
                 Functions.XSetWMNormalHints(window.Display, window.Handle, ref hints);
 
                 // Register for window destroy notification
-                Functions.XSetWMProtocols(window.Display, window.Handle, new[] {_atom_wm_destroy}, 1);
+                Functions.XSetWMProtocols(window.Display, window.Handle, new[] { _atom_wm_destroy }, 1);
 
                 // Set the window class hints
                 Functions.XSetClassHint(window.Display, window.Handle, ref class_hint);
@@ -308,8 +308,8 @@ namespace OpenTK.Platform.X11
         }
 
         /// <summary>
-        ///     Constructs and initializes a new X11GLNative window.
-        ///     Call CreateWindow to create the actual render window.
+        /// Constructs and initializes a new X11GLNative window.
+        /// Call CreateWindow to create the actual render window.
         /// </summary>
         public X11GLNative()
         {
@@ -358,7 +358,7 @@ namespace OpenTK.Platform.X11
 
         private string[] parseUriList(string rawString)
         {
-            var separator = new[] {"\r", "\n"};
+            var separator = new[] { "\r", "\n" };
             var splitted = rawString.Split(separator, StringSplitOptions.RemoveEmptyEntries);
 
             var fileNames = new string[splitted.Length];
@@ -372,8 +372,8 @@ namespace OpenTK.Platform.X11
         }
 
         /// <summary>
-        ///     Not used yet.
-        ///     Registers the necessary atoms for GameWindow.
+        /// Not used yet.
+        /// Registers the necessary atoms for GameWindow.
         /// </summary>
         private void RegisterAtoms(X11WindowInfo window)
         {
@@ -821,7 +821,7 @@ namespace OpenTK.Platform.X11
                 var cmap = Functions.XDefaultColormap(window.Display, window.Screen);
                 Functions.XAllocNamedColor(window.Display, cmap, "black", out black, out dummy);
                 var bmp_empty = Functions.XCreateBitmapFromData(window.Display,
-                    window.Handle, new byte[,] {{0}});
+                    window.Handle, new byte[,] { { 0 } });
                 cursor = Functions.XCreatePixmapCursor(window.Display,
                     bmp_empty, bmp_empty, ref black, ref black, 0, 0);
             }
@@ -1745,20 +1745,20 @@ namespace OpenTK.Platform.X11
         }
 
         /// <summary>
-        ///     Returns true if a render window/context exists.
+        /// Returns true if a render window/context exists.
         /// </summary>
         public override bool Exists => exists;
 
         public bool IsIdle => throw new Exception("The method or operation is not implemented.");
 
         /// <summary>
-        ///     Gets the current window handle.
+        /// Gets the current window handle.
         /// </summary>
         public IntPtr Handle => window.Handle;
 
         /// <summary>
-        ///     TODO: Use atoms for this property.
-        ///     Gets or sets the GameWindow title.
+        /// TODO: Use atoms for this property.
+        /// Gets or sets the GameWindow title.
         /// </summary>
         public override string Title
         {

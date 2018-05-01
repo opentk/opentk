@@ -160,7 +160,7 @@ namespace OpenTK.Platform.SDL2
         public static extern short GameControllerGetAxis(IntPtr gamecontroller, GameControllerAxis axis);
 
         /// <summary>
-        ///     Gets the SDL joystick layer binding for the specified game controller axis
+        /// Gets the SDL joystick layer binding for the specified game controller axis
         /// </summary>
         /// <param name="gamecontroller">Pointer to a game controller instance returned by <c>GameControllerOpen</c>.</param>
         /// <param name="axis">A value from the <c>GameControllerAxis</c> enumeration</param>
@@ -172,7 +172,7 @@ namespace OpenTK.Platform.SDL2
             GameControllerAxis axis);
 
         /// <summary>
-        ///     Gets the SDL joystick layer binding for the specified game controller button
+        /// Gets the SDL joystick layer binding for the specified game controller button
         /// </summary>
         /// <param name="gamecontroller">Pointer to a game controller instance returned by <c>GameControllerOpen</c>.</param>
         /// <param name="button">A value from the <c>GameControllerButton</c> enumeration</param>
@@ -184,7 +184,7 @@ namespace OpenTK.Platform.SDL2
             IntPtr gamecontroller, GameControllerButton button);
 
         /// <summary>
-        ///     Gets the current state of a button on a game controller.
+        /// Gets the current state of a button on a game controller.
         /// </summary>
         /// <param name="gamecontroller">A game controller handle previously opened with <c>GameControllerOpen</c>.</param>
         /// <param name="button">A zero-based <c>GameControllerButton</c> value.</param>
@@ -195,12 +195,12 @@ namespace OpenTK.Platform.SDL2
         public static extern bool GameControllerGetButton(IntPtr gamecontroller, GameControllerButton button);
 
         /// <summary>
-        ///     Retrieve the joystick handle that corresponds to the specified game controller.
+        /// Retrieve the joystick handle that corresponds to the specified game controller.
         /// </summary>
         /// <param name="gamecontroller">A game controller handle previously opened with <c>GameControllerOpen</c>.</param>
         /// <returns>
-        ///     A handle to a joystick, or IntPtr.Zero in case of error. The pointer is owned by the callee. Use
-        ///     <c>SDL.GetError</c> to retrieve error information
+        /// A handle to a joystick, or IntPtr.Zero in case of error. The pointer is owned by the callee. Use
+        ///  <c>SDL.GetError</c> to retrieve error information
         /// </returns>
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetJoystick",
@@ -218,7 +218,7 @@ namespace OpenTK.Platform.SDL2
         private static extern IntPtr GameControllerNameInternal(IntPtr gamecontroller);
 
         /// <summary>
-        ///     Return the name for an openend game controller instance.
+        /// Return the name for an openend game controller instance.
         /// </summary>
         /// <returns>The name of the game controller name.</returns>
         /// <param name="gamecontroller">Pointer to a game controller instance returned by <c>GameControllerOpen</c>.</param>
@@ -231,11 +231,11 @@ namespace OpenTK.Platform.SDL2
         }
 
         /// <summary>
-        ///     Opens a game controller for use.
+        /// Opens a game controller for use.
         /// </summary>
         /// <param name="joystick_index">
-        ///     A zero-based index for the game controller.
-        ///     This index is the value which will identify this controller in future controller events.
+        /// A zero-based index for the game controller.
+        /// This index is the value which will identify this controller in future controller events.
         /// </param>
         /// <returns>A handle to the game controller instance, or IntPtr.Zero in case of error.</returns>
         [SuppressUnmanagedCodeSecurity]
@@ -349,7 +349,7 @@ namespace OpenTK.Platform.SDL2
         public static extern int InitSubSystem(SystemFlags flags);
 
         /// <summary>
-        ///     Determines if the specified joystick is supported by the GameController API.
+        /// Determines if the specified joystick is supported by the GameController API.
         /// </summary>
         /// <returns><c>true</c> if joystick_index is supported by the GameController API; <c>false</c> otherwise.</returns>
         /// <param name="joystick_index">The index of the joystick to check.</param>
@@ -581,17 +581,17 @@ namespace OpenTK.Platform.SDL2
         public static extern void WarpMouseGlobal(int x, int y);
 
         /// <summary>
-        ///     Retrieves driver-dependent window information.
+        /// Retrieves driver-dependent window information.
         /// </summary>
         /// <param name="window">
-        ///     The window about which information is being requested.
+        /// The window about which information is being requested.
         /// </param>
         /// <param name="info">
-        ///     Returns driver-dependent information about the specified window.
+        /// Returns driver-dependent information about the specified window.
         /// </param>
         /// <returns>
-        ///     True, if the function is implemented and the version number of the info struct is valid;
-        ///     false, otherwise.
+        /// True, if the function is implemented and the version number of the info struct is valid;
+        /// false, otherwise.
         /// </returns>
         public static bool GetWindowWMInfo(IntPtr window, out SysWMInfo info)
         {
@@ -1482,7 +1482,7 @@ namespace OpenTK.Platform.SDL2
         public uint Timestamp;
 
         /// <summary>
-        ///     The joystick device index for the ADDED event, instance id for the REMOVED or REMAPPED event
+        /// The joystick device index for the ADDED event, instance id for the REMOVED or REMAPPED event
         /// </summary>
         public int Which;
     }
@@ -1812,7 +1812,7 @@ namespace OpenTK.Platform.SDL2
     }
 
     /// <summary>
-    ///     Drop event for SDL2 interop. For detailed info look: https://wiki.libsdl.org/SDL_DropEvent
+    /// Drop event for SDL2 interop. For detailed info look: https://wiki.libsdl.org/SDL_DropEvent
     /// </summary>
     internal struct DropEvent
     {

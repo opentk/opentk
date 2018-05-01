@@ -11,7 +11,7 @@ using System.Text;
 namespace Bind.Structures
 {
     /// <summary>
-    ///     Represents a single parameter of an opengl function.
+    /// Represents a single parameter of an opengl function.
     /// </summary>
     internal class Parameter : Type, IComparable<Parameter>, IEquatable<Parameter>
     {
@@ -24,14 +24,14 @@ namespace Bind.Structures
         private UnmanagedType _unmanagedType;
 
         /// <summary>
-        ///     Creates a new Parameter without type and name.
+        /// Creates a new Parameter without type and name.
         /// </summary>
         public Parameter()
         {
         }
 
         /// <summary>
-        ///     Creates a new parameter from the parameters passed (deep copy).
+        /// Creates a new parameter from the parameters passed (deep copy).
         /// </summary>
         /// <param name="p">The parameter to copy from.</param>
         public Parameter(Parameter p)
@@ -53,13 +53,13 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        ///     Gets or sets the raw name of the parameter.
+        /// Gets or sets the raw name of the parameter.
         /// </summary>
         public string RawName { get; private set; }
 
         /// <summary>
-        ///     Gets the name of the parameter. If the name matches a keyword of the current language,
-        ///     then it is escaped with <see cref="Settings.KeywordEscapeCharacter" />.
+        /// Gets the name of the parameter. If the name matches a keyword of the current language,
+        /// then it is escaped with <see cref="Settings.KeywordEscapeCharacter" />.
         /// </summary>
         public string Name
         {
@@ -80,7 +80,7 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        ///     Gets or sets the name of the parameter.
+        /// Gets or sets the name of the parameter.
         /// </summary>
         private UnmanagedType UnmanagedType
         {
@@ -95,7 +95,7 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        ///     Gets or sets the flow of the parameter.
+        /// Gets or sets the flow of the parameter.
         /// </summary>
         public FlowDirection Flow
         {
@@ -181,7 +181,7 @@ namespace Bind.Structures
     }
 
     /// <summary>
-    ///     Holds the parameter list of an opengl function.
+    /// Holds the parameter list of an opengl function.
     /// </summary>
     internal class ParameterCollection : IList<Parameter>, IComparable<ParameterCollection>,
         IEquatable<ParameterCollection>

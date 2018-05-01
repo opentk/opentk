@@ -96,7 +96,7 @@ namespace OpenTK.Convert
                 }
                 case "group":
                 {
-                    apinames = new[] {"gl", "glcore", "gles1", "gles2"};
+                    apinames = new[] { "gl", "glcore", "gles1", "gles2" };
                     break;
                 }
                 default:
@@ -175,13 +175,10 @@ namespace OpenTK.Convert
                         var token_name = TrimName(token.Attribute("name").Value);
                         var token_value =
                             enums.ContainsKey(apiname) && enums[apiname].ContainsKey(token_name)
-                                ?
-                                enums[apiname][token_name]
-                                :
-                                enums["default"].ContainsKey(token_name)
+                                ? enums[apiname][token_name]
+                                : enums["default"].ContainsKey(token_name)
                                     ? enums["default"][token_name]
-                                    :
-                                    string.Empty;
+                                    : string.Empty;
 
                         if (!string.IsNullOrEmpty(token_value))
                         {

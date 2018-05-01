@@ -91,7 +91,7 @@ namespace OpenTK.Platform.Egl
 
         public void CreatePbufferSurface(IntPtr config)
         {
-            var attribs = new[] {Egl.NONE};
+            var attribs = new[] { Egl.NONE };
             Surface = Egl.CreatePbufferSurface(Display, config, attribs);
             if (Surface == IntPtr.Zero)
             {

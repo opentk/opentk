@@ -30,50 +30,50 @@ using System.Text;
 namespace OpenTK
 {
     /// <summary>
-    ///     Provides a common foundation for all flat API bindings and implements the extension loading interface.
+    /// Provides a common foundation for all flat API bindings and implements the extension loading interface.
     /// </summary>
     public abstract class BindingsBase
     {
         /// <summary>
-        ///     Gets or sets a <see cref="System.Boolean" /> that indicates whether the list of supported extensions may have
-        ///     changed.
+        /// Gets or sets a <see cref="System.Boolean" /> that indicates whether the list of supported extensions may have
+        /// changed.
         /// </summary>
         protected bool RebuildExtensionList { get; set; } = true;
 
         /// <summary>
-        ///     Gets an object that can be used to synchronize access to the bindings implementation.
+        /// Gets an object that can be used to synchronize access to the bindings implementation.
         /// </summary>
         /// <remarks>
-        ///     This object should be unique across bindings but consistent between bindings
-        ///     of the same type. For example, ES10.GL, OpenGL.GL and CL10.CL should all return
-        ///     unique objects, but all instances of ES10.GL should return the same object.
+        /// This object should be unique across bindings but consistent between bindings
+        /// of the same type. For example, ES10.GL, OpenGL.GL and CL10.CL should all return
+        /// unique objects, but all instances of ES10.GL should return the same object.
         /// </remarks>
         protected abstract object SyncRoot { get; }
 
         /// <summary>
-        ///     Retrieves an unmanaged function pointer to the specified function.
+        /// Retrieves an unmanaged function pointer to the specified function.
         /// </summary>
         /// <param name="funcname">
-        ///     A <see cref="System.String" /> that defines the name of the function.
+        /// A <see cref="System.String" /> that defines the name of the function.
         /// </param>
         /// <returns>
-        ///     A <see cref="IntPtr" /> that contains the address of funcname or IntPtr.Zero,
-        ///     if the function is not supported by the drivers.
+        /// A <see cref="IntPtr" /> that contains the address of funcname or IntPtr.Zero,
+        /// if the function is not supported by the drivers.
         /// </returns>
         /// <remarks>
-        ///     Note: some drivers are known to return non-zero values for unsupported functions.
-        ///     Typical values include 1 and 2 - inheritors are advised to check for and ignore these
-        ///     values.
+        /// Note: some drivers are known to return non-zero values for unsupported functions.
+        /// Typical values include 1 and 2 - inheritors are advised to check for and ignore these
+        /// values.
         /// </remarks>
         protected abstract IntPtr GetAddress(string funcname);
 
         /// <summary>
-        ///     Marshals a pointer to a null-terminated byte array to a new <c>System.String</c>.
-        ///     This method supports OpenTK and is not intended to be called by user code.
+        /// Marshals a pointer to a null-terminated byte array to a new <c>System.String</c>.
+        /// This method supports OpenTK and is not intended to be called by user code.
         /// </summary>
         /// <param name="ptr">A pointer to a null-terminated byte array.</param>
         /// <returns>
-        ///     A <c>System.String</c> with the data from <paramref name="ptr" />.
+        /// A <c>System.String</c> with the data from <paramref name="ptr" />.
         /// </returns>
         protected static string MarshalPtrToString(IntPtr ptr)
         {
@@ -97,14 +97,14 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Marshal a <c>System.String</c> to unmanaged memory.
-        ///     The resulting string is encoded in UTF8 and must be freed
-        ///     with <c>FreeStringPtr</c>.
+        /// Marshal a <c>System.String</c> to unmanaged memory.
+        /// The resulting string is encoded in UTF8 and must be freed
+        /// with <c>FreeStringPtr</c>.
         /// </summary>
         /// <param name="str">The <c>System.String</c> to marshal.</param>
         /// <returns>
-        ///     An unmanaged pointer containing the marshalled string.
-        ///     This pointer must be freed with <c>FreeStringPtr</c>
+        /// An unmanaged pointer containing the marshalled string.
+        /// This pointer must be freed with <c>FreeStringPtr</c>
         /// </returns>
         protected static IntPtr MarshalStringToPtr(string str)
         {
@@ -138,7 +138,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Frees a marshalled string that allocated by <c>MarshalStringToPtr</c>.
+        /// Frees a marshalled string that allocated by <c>MarshalStringToPtr</c>.
         /// </summary>
         /// <param name="ptr">An unmanaged pointer allocated with <c>MarshalStringToPtr</c></param>
         protected static void FreeStringPtr(IntPtr ptr)
@@ -147,8 +147,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Marshals a <c>System.String</c> array to unmanaged memory by calling
-        ///     Marshal.AllocHGlobal for each element.
+        /// Marshals a <c>System.String</c> array to unmanaged memory by calling
+        /// Marshal.AllocHGlobal for each element.
         /// </summary>
         /// <returns>An unmanaged pointer to an array of null-terminated strings</returns>
         /// <param name="str_array">The string array to marshal.</param>
@@ -189,7 +189,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Frees a marshalled string that allocated by <c>MarshalStringArrayToPtr</c>.
+        /// Frees a marshalled string that allocated by <c>MarshalStringArrayToPtr</c>.
         /// </summary>
         /// <param name="ptr">An unmanaged pointer allocated with <c>MarshalStringArrayToPtr</c></param>
         /// <param name="length">The length of the string array.</param>

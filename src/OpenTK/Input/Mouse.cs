@@ -29,7 +29,7 @@ using OpenTK.Platform;
 namespace OpenTK.Input
 {
     /// <summary>
-    ///     Provides access to mouse devices. Note: this API is not implemented yet.
+    /// Provides access to mouse devices. Note: this API is not implemented yet.
     /// </summary>
     public static class Mouse
     {
@@ -39,13 +39,13 @@ namespace OpenTK.Input
         private static readonly object SyncRoot = new object();
 
         /// <summary>
-        ///     Retrieves the combined <see cref="OpenTK.Input.MouseState" /> for all specified mouse devices.
-        ///     The X, Y and wheel values are defined in a hardware-specific coordinate system.
-        ///     Pointer ballistics (acceleration) are NOT applied. Resolution is hardware-specific,
-        ///     typically between 200 and 2000 DPI.
-        ///     Use <see cref="OpenTK.Input.Mouse.GetState(int)" /> to retrieve the state of a specific mouse device.
-        ///     Use <see cref="OpenTK.Input.Mouse.GetCursorState()" /> to retrieve the absolute coordinates of the mouse cursor.
-        ///     Use <see cref="OpenTK.INativeWindow.MouseMove" /> for event-based mouse input.
+        /// Retrieves the combined <see cref="OpenTK.Input.MouseState" /> for all specified mouse devices.
+        /// The X, Y and wheel values are defined in a hardware-specific coordinate system.
+        /// Pointer ballistics (acceleration) are NOT applied. Resolution is hardware-specific,
+        /// typically between 200 and 2000 DPI.
+        /// Use <see cref="OpenTK.Input.Mouse.GetState(int)" /> to retrieve the state of a specific mouse device.
+        /// Use <see cref="OpenTK.Input.Mouse.GetCursorState()" /> to retrieve the absolute coordinates of the mouse cursor.
+        /// Use <see cref="OpenTK.INativeWindow.MouseMove" /> for event-based mouse input.
         /// </summary>
         /// <returns>A <see cref="OpenTK.Input.MouseState" /> structure representing the combined state of all mouse devices.</returns>
         public static MouseState GetState()
@@ -57,13 +57,13 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Retrieves the <see cref="OpenTK.Input.MouseState" /> for the specified mouse device.
-        ///     The X, Y and wheel values are defined in a hardware-specific coordinate system.
-        ///     Pointer ballistics (acceleration) are NOT applied. Resolution is hardware-specific,
-        ///     typically between 200 and 2000 DPI.
-        ///     Use <see cref="OpenTK.Input.Mouse.GetState()" /> to retrieve the combined state of all mouse devices.
-        ///     Use <see cref="OpenTK.Input.Mouse.GetCursorState()" /> to retrieve the absolute coordinates of the mouse cursor.
-        ///     Use <see cref="OpenTK.INativeWindow.MouseMove" /> for event-based mouse input.
+        /// Retrieves the <see cref="OpenTK.Input.MouseState" /> for the specified mouse device.
+        /// The X, Y and wheel values are defined in a hardware-specific coordinate system.
+        /// Pointer ballistics (acceleration) are NOT applied. Resolution is hardware-specific,
+        /// typically between 200 and 2000 DPI.
+        /// Use <see cref="OpenTK.Input.Mouse.GetState()" /> to retrieve the combined state of all mouse devices.
+        /// Use <see cref="OpenTK.Input.Mouse.GetCursorState()" /> to retrieve the absolute coordinates of the mouse cursor.
+        /// Use <see cref="OpenTK.INativeWindow.MouseMove" /> for event-based mouse input.
         /// </summary>
         /// <param name="index">The index of the mouse device.</param>
         /// <returns>A <see cref="OpenTK.Input.MouseState" /> structure representing the state for the specified mouse device.</returns>
@@ -81,12 +81,12 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Retreves the <see cref="OpenTK.Input.MouseState" /> for the mouse cursor.
-        ///     The X and Y coordinates are defined in absolute desktop points, with the origin
-        ///     placed at the top-left corner of <see cref="OpenTK.DisplayDevice.Default" />.
-        ///     Pointer ballistics (acceleration) are applied. Resolution is limited to the
-        ///     resolution of the <see cref="OpenTK.DisplayDevice" /> containing the cursor,
-        ///     typically between 96 and 120 DPI.
+        /// Retreves the <see cref="OpenTK.Input.MouseState" /> for the mouse cursor.
+        /// The X and Y coordinates are defined in absolute desktop points, with the origin
+        /// placed at the top-left corner of <see cref="OpenTK.DisplayDevice.Default" />.
+        /// Pointer ballistics (acceleration) are applied. Resolution is limited to the
+        /// resolution of the <see cref="OpenTK.DisplayDevice" /> containing the cursor,
+        /// typically between 96 and 120 DPI.
         /// </summary>
         /// <returns>A <see cref="OpenTK.Input.MouseState" /> structure representing the state of the mouse cursor.</returns>
         public static MouseState GetCursorState()
@@ -98,13 +98,13 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Moves the mouse cursor to the specified screen position.
+        /// Moves the mouse cursor to the specified screen position.
         /// </summary>
         /// <param name="x">
-        ///     A <see cref="System.Double" /> that represents the absolute x position of the cursor in screen coordinates.
+        /// A <see cref="System.Double" /> that represents the absolute x position of the cursor in screen coordinates.
         /// </param>
         /// <param name="y">
-        ///     A <see cref="System.Double" /> that represents the absolute y position of the cursor in screen coordinates.
+        /// A <see cref="System.Double" /> that represents the absolute y position of the cursor in screen coordinates.
         /// </param>
         public static void SetPosition(double x, double y)
         {

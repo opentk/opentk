@@ -30,7 +30,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
 using OpenTK.Input;
-using OpenTK.Mathemathics;
+using OpenTK.Mathematics;
 using OpenTK.Platform.Common;
 
 namespace OpenTK.Platform.Windows
@@ -369,11 +369,10 @@ namespace OpenTK.Platform.Windows
 
         private class XInput : IDisposable
         {
-            private IntPtr dll;
-
             internal readonly XInputGetCapabilities GetCapabilities;
             internal readonly XInputGetState GetState;
             internal readonly XInputSetState SetState;
+            private IntPtr dll;
 
             internal XInput()
             {

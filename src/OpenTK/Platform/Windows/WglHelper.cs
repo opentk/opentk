@@ -29,7 +29,7 @@ namespace OpenTK.Platform.Windows
         }
 
         /// <summary>
-        ///     Checks if a Wgl extension is supported by the given context.
+        /// Checks if a Wgl extension is supported by the given context.
         /// </summary>
         /// <param name="dc">The device context.</param>
         /// <param name="name">The extension to check.</param>
@@ -71,9 +71,9 @@ namespace OpenTK.Platform.Windows
         }
 
         /// <summary>
-        ///     Checks whether an extension function is supported.
-        ///     Do not use with core WGL functions, as this function
-        ///     will incorrectly return false.
+        /// Checks whether an extension function is supported.
+        /// Do not use with core WGL functions, as this function
+        /// will incorrectly return false.
         /// </summary>
         /// <param name="name">The extension function to check (e.g. "wglGetExtensionsStringARB"</param>
         /// <returns>True if the extension function is supported; otherwise, false.</returns>

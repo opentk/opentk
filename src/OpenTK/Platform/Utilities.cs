@@ -16,15 +16,15 @@ namespace OpenTK.Platform
     namespace MacOS
     {
         /// <summary>
-        ///     This delegate represents any method that takes no arguments and returns an int.
-        ///     I would have used Func but that requires .NET 4
+        /// This delegate represents any method that takes no arguments and returns an int.
+        /// I would have used Func but that requires .NET 4
         /// </summary>
         /// <returns>The int value that your method returns</returns>
         public delegate int GetInt();
     }
 
     /// <summary>
-    ///     Provides cross-platform utilities to help interact with the underlying platform.
+    /// Provides cross-platform utilities to help interact with the underlying platform.
     /// </summary>
     public static class Utilities
     {
@@ -58,18 +58,18 @@ namespace OpenTK.Platform
 
         /// <internal />
         /// <summary>
-        ///     Loads all extensions for the specified class. This function is intended
-        ///     for OpenGL, Wgl, Glx, OpenAL etc.
+        /// Loads all extensions for the specified class. This function is intended
+        /// for OpenGL, Wgl, Glx, OpenAL etc.
         /// </summary>
         /// <param name="type">The class to load extensions for.</param>
         /// <remarks>
-        ///     <para>The Type must contain a nested class called "Delegates".</para>
-        ///     <para>
-        ///         The Type must also implement a static function called LoadDelegate with the
-        ///         following signature:
-        ///         <code>static Delegate LoadDelegate(string name, Type signature)</code>
-        ///     </para>
-        ///     <para>This function allocates memory.</para>
+        ///  <para>The Type must contain a nested class called "Delegates".</para>
+        ///  <para>
+        /// The Type must also implement a static function called LoadDelegate with the
+        /// following signature:
+        ///  <code>static Delegate LoadDelegate(string name, Type signature)</code>
+        ///  </para>
+        ///  <para>This function allocates memory.</para>
         /// </remarks>
         internal static void LoadExtensions(Type type)
         {
@@ -133,19 +133,19 @@ namespace OpenTK.Platform
 
         /// <internal />
         /// <summary>
-        ///     Loads the specified extension for the specified class. This function is intended
-        ///     for OpenGL, Wgl, Glx, OpenAL etc.
+        /// Loads the specified extension for the specified class. This function is intended
+        /// for OpenGL, Wgl, Glx, OpenAL etc.
         /// </summary>
         /// <param name="type">The class to load extensions for.</param>
         /// <param name="extension">The extension to load.</param>
         /// <remarks>
-        ///     <para>The Type must contain a nested class called "Delegates".</para>
-        ///     <para>
-        ///         The Type must also implement a static function called LoadDelegate with the
-        ///         following signature:
-        ///         <code>static Delegate LoadDelegate(string name, Type signature)</code>
-        ///     </para>
-        ///     <para>This function allocates memory.</para>
+        ///  <para>The Type must contain a nested class called "Delegates".</para>
+        ///  <para>
+        /// The Type must also implement a static function called LoadDelegate with the
+        /// following signature:
+        ///  <code>static Delegate LoadDelegate(string name, Type signature)</code>
+        ///  </para>
+        ///  <para>This function allocates memory.</para>
         /// </remarks>
         internal static bool TryLoadExtension(Type type, string extension)
         {
@@ -226,7 +226,7 @@ namespace OpenTK.Platform
         }
 
         /// <summary>
-        ///     Constructs a new IWindowInfo instance for the X11 platform.
+        /// Constructs a new IWindowInfo instance for the X11 platform.
         /// </summary>
         /// <param name="display">The display connection.</param>
         /// <param name="screen">The screen.</param>
@@ -251,7 +251,7 @@ namespace OpenTK.Platform
         }
 
         /// <summary>
-        ///     Creates an IWindowInfo instance for the windows platform.
+        /// Creates an IWindowInfo instance for the windows platform.
         /// </summary>
         /// <param name="windowHandle">The handle of the window.</param>
         /// <returns>A new IWindowInfo instance.</returns>
@@ -265,7 +265,7 @@ namespace OpenTK.Platform
         }
 
         /// <summary>
-        ///     Creates an IWindowInfo instance for the Mac OS X platform.
+        /// Creates an IWindowInfo instance for the Mac OS X platform.
         /// </summary>
         /// <param name="windowHandle">The handle of the window.</param>
         /// <param name="ownHandle">Ignored. This is reserved for future use.</param>
@@ -298,7 +298,7 @@ namespace OpenTK.Platform
         #endif
 
         /// <summary>
-        ///     Creates an IWindowInfo instance for the Mac OS X platform.
+        /// Creates an IWindowInfo instance for the Mac OS X platform.
         /// </summary>
         /// <param name="windowHandle">The handle of the NSWindow.</param>
         /// <remarks>Assumes that the NSWindow's contentView is the NSView we want to attach to our context.</remarks>
@@ -313,7 +313,7 @@ namespace OpenTK.Platform
         }
 
         /// <summary>
-        ///     Creates an IWindowInfo instance for the Mac OS X platform.
+        /// Creates an IWindowInfo instance for the Mac OS X platform.
         /// </summary>
         /// <param name="windowHandle">The handle of the NSWindow.</param>
         /// <param name="viewHandle">The handle of the NSView.</param>
@@ -328,7 +328,7 @@ namespace OpenTK.Platform
         }
 
         /// <summary>
-        ///     Creates an IWindowInfo instance for the dummy platform.
+        /// Creates an IWindowInfo instance for the dummy platform.
         /// </summary>
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateDummyWindowInfo()
@@ -337,7 +337,7 @@ namespace OpenTK.Platform
         }
 
         /// <summary>
-        ///     Creates an IWindowInfo instance for the windows platform.
+        /// Creates an IWindowInfo instance for the windows platform.
         /// </summary>
         /// <param name="windowHandle">The handle of the window.</param>
         /// <returns>A new IWindowInfo instance.</returns>
@@ -353,9 +353,9 @@ namespace OpenTK.Platform
 
 #if !__MOBILE__
         /// <summary>
-        ///     Creates an IWindowInfo instance for Angle rendering, based on
-        ///     supplied platform window (e.g. a window created with
-        ///     CreateWindowsWindowInfo, or CreateDummyWindowInfo).
+        /// Creates an IWindowInfo instance for Angle rendering, based on
+        /// supplied platform window (e.g. a window created with
+        /// CreateWindowsWindowInfo, or CreateDummyWindowInfo).
         /// </summary>
         /// <param name="platformWindow"></param>
         /// <returns></returns>
@@ -388,10 +388,10 @@ namespace OpenTK.Platform
 
         /// \internal
         /// <summary>
-        ///     Relaxes graphics mode parameters. Use this function to increase compatibility
-        ///     on systems that do not directly support a requested GraphicsMode. For example:
-        ///     - user requested stereoscopic rendering, but GPU does not support stereo
-        ///     - user requseted 16x antialiasing, but GPU only supports 4x
+        /// Relaxes graphics mode parameters. Use this function to increase compatibility
+        /// on systems that do not directly support a requested GraphicsMode. For example:
+        /// - user requested stereoscopic rendering, but GPU does not support stereo
+        /// - user requseted 16x antialiasing, but GPU only supports 4x
         /// </summary>
         /// <returns><c>true</c>, if a graphics mode parameter was relaxed, <c>false</c> otherwise.</returns>
         /// <param name="color">Color bits.</param>

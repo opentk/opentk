@@ -33,19 +33,19 @@ using OpenTK.Platform.Dummy;
 namespace OpenTK.Graphics
 {
     /// <summary>
-    ///     Represents and provides methods to manipulate an OpenGL render context.
+    /// Represents and provides methods to manipulate an OpenGL render context.
     /// </summary>
     public sealed class GraphicsContext : IGraphicsContext, IGraphicsContextInternal
     {
         /// <summary>
-        ///     Used to retrive function pointers by name.
+        /// Used to retrive function pointers by name.
         /// </summary>
         /// <param name="function">The function name.</param>
         /// <returns>A function pointer to <paramref name="function" />, or <c>IntPtr.Zero</c></returns>
         public delegate IntPtr GetAddressDelegate(string function);
 
         /// <summary>
-        ///     Used to return the handel of the current OpenGL context.
+        /// Used to return the handel of the current OpenGL context.
         /// </summary>
         /// <returns>The current OpenGL context, or <c>IntPtr.Zero</c> if no context is on the calling thread.</returns>
         public delegate ContextHandle GetCurrentContextDelegate();
@@ -57,6 +57,10 @@ namespace OpenTK.Graphics
             new Dictionary<ContextHandle, IGraphicsContext>();
 
         internal static GetCurrentContextDelegate GetCurrentContext;
+
+        private readonly IGraphicsContext
+            implementation; // The actual render context implementation for the underlying platform.
+
         private bool disposed;
 
         // Cache for the context handle. We need this for RemoveContext()
@@ -67,11 +71,8 @@ namespace OpenTK.Graphics
         // the handle.)
         private ContextHandle handle_cached;
 
-        private readonly IGraphicsContext
-            implementation; // The actual render context implementation for the underlying platform.
-
         /// <summary>
-        ///     Constructs a new GraphicsContext with the specified GraphicsMode and attaches it to the specified window.
+        /// Constructs a new GraphicsContext with the specified GraphicsMode and attaches it to the specified window.
         /// </summary>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GraphicsContext.</param>
         /// <param name="window">The OpenTK.Platform.IWindowInfo to attach the GraphicsContext to.</param>
@@ -81,8 +82,8 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Constructs a new GraphicsContext with the specified GraphicsMode, version and flags,  and attaches it to the
-        ///     specified window.
+        /// Constructs a new GraphicsContext with the specified GraphicsMode, version and flags,  and attaches it to the
+        /// specified window.
         /// </summary>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GraphicsContext.</param>
         /// <param name="window">The OpenTK.Platform.IWindowInfo to attach the GraphicsContext to.</param>
@@ -90,7 +91,7 @@ namespace OpenTK.Graphics
         /// <param name="minor">The minor version of the new GraphicsContext.</param>
         /// <param name="flags">The GraphicsContextFlags for the GraphicsContext.</param>
         /// <remarks>
-        ///     Different hardware supports different flags, major and minor versions. Invalid parameters will be silently ignored.
+        /// Different hardware supports different flags, major and minor versions. Invalid parameters will be silently ignored.
         /// </remarks>
         public GraphicsContext(GraphicsMode mode, IWindowInfo window, int major, int minor, GraphicsContextFlags flags)
             : this(mode, window, FindSharedContext(), major, minor, flags)
@@ -98,9 +99,9 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Constructs a new GraphicsContext with the specified GraphicsMode, version and flags, and attaches it to the
-        ///     specified window. A dummy context will be created if both
-        ///     the handle and the window are null.
+        /// Constructs a new GraphicsContext with the specified GraphicsMode, version and flags, and attaches it to the
+        /// specified window. A dummy context will be created if both
+        /// the handle and the window are null.
         /// </summary>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GraphicsContext.</param>
         /// <param name="window">The OpenTK.Platform.IWindowInfo to attach the GraphicsContext to.</param>
@@ -109,7 +110,7 @@ namespace OpenTK.Graphics
         /// <param name="minor">The minor version of the new GraphicsContext.</param>
         /// <param name="flags">The GraphicsContextFlags for the GraphicsContext.</param>
         /// <remarks>
-        ///     Different hardware supports different flags, major and minor versions. Invalid parameters will be silently ignored.
+        /// Different hardware supports different flags, major and minor versions. Invalid parameters will be silently ignored.
         /// </remarks>
         public GraphicsContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, int major,
             int minor, GraphicsContextFlags flags)
@@ -207,26 +208,26 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="OpenTK.Graphics.GraphicsContext" /> class using
-        ///     an external context handle that was created by a third-party library.
+        /// Initializes a new instance of the <see cref="OpenTK.Graphics.GraphicsContext" /> class using
+        /// an external context handle that was created by a third-party library.
         /// </summary>
         /// <param name="handle">
-        ///     A valid, unique handle for an external OpenGL context, or <c>ContextHandle.Zero</c> to use the current context.
-        ///     It is an error to specify a handle that has been created through OpenTK or that has been passed to OpenTK before.
+        /// A valid, unique handle for an external OpenGL context, or <c>ContextHandle.Zero</c> to use the current context.
+        /// It is an error to specify a handle that has been created through OpenTK or that has been passed to OpenTK before.
         /// </param>
         /// <param name="getAddress">
-        ///     A <c>GetAddressDelegate</c> instance that accepts the name of an OpenGL function and returns
-        ///     a valid function pointer, or <c>IntPtr.Zero</c> if that function is not supported. This delegate should be
-        ///     implemented using the same toolkit that created the OpenGL context (i.e. if the context was created with
-        ///     SDL_GL_CreateContext(), then this delegate should use SDL_GL_GetProcAddress() to retrieve function
-        ///     pointers.)
+        /// A <c>GetAddressDelegate</c> instance that accepts the name of an OpenGL function and returns
+        /// a valid function pointer, or <c>IntPtr.Zero</c> if that function is not supported. This delegate should be
+        /// implemented using the same toolkit that created the OpenGL context (i.e. if the context was created with
+        /// SDL_GL_CreateContext(), then this delegate should use SDL_GL_GetProcAddress() to retrieve function
+        /// pointers.)
         /// </param>
         /// <param name="getCurrent">
-        ///     A <c>GetCurrentContextDelegate</c> instance that returns the handle of the current OpenGL context,
-        ///     or <c>IntPtr.Zero</c> if no context is current on the calling thread. This delegate should be implemented
-        ///     using the same toolkit that created the OpenGL context (i.e. if the context was created with
-        ///     SDL_GL_CreateContext(), then this delegate should use SDL_GL_GetCurrentContext() to retrieve
-        ///     the current context.)
+        /// A <c>GetCurrentContextDelegate</c> instance that returns the handle of the current OpenGL context,
+        /// or <c>IntPtr.Zero</c> if no context is current on the calling thread. This delegate should be implemented
+        /// using the same toolkit that created the OpenGL context (i.e. if the context was created with
+        /// SDL_GL_CreateContext(), then this delegate should use SDL_GL_GetCurrentContext() to retrieve
+        /// the current context.)
         /// </param>
         public GraphicsContext(ContextHandle handle, GetAddressDelegate getAddress,
             GetCurrentContextDelegate getCurrent)
@@ -270,13 +271,13 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Constructs a new GraphicsContext from a pre-existing context created outside of OpenTK. A dummy context will be
-        ///     created if both
-        ///     the handle and the window are null.
+        /// Constructs a new GraphicsContext from a pre-existing context created outside of OpenTK. A dummy context will be
+        /// created if both
+        /// the handle and the window are null.
         /// </summary>
         /// <param name="handle">
-        ///     The handle of the existing context. This must be a valid, unique handle that is not known to
-        ///     OpenTK.
+        /// The handle of the existing context. This must be a valid, unique handle that is not known to
+        /// OpenTK.
         /// </param>
         /// <param name="window">This parameter is reserved.</param>
         public GraphicsContext(ContextHandle handle, IWindowInfo window)
@@ -285,11 +286,11 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Constructs a new GraphicsContext from a pre-existing context created outside of OpenTK.
+        /// Constructs a new GraphicsContext from a pre-existing context created outside of OpenTK.
         /// </summary>
         /// <param name="handle">
-        ///     The handle of the existing context. This must be a valid, unique handle that is not known to
-        ///     OpenTK.
+        /// The handle of the existing context. This must be a valid, unique handle that is not known to
+        /// OpenTK.
         /// </param>
         /// <param name="window">This parameter is reserved.</param>
         /// <param name="shareContext">This parameter is reserved.</param>
@@ -303,16 +304,16 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Gets the handle of the current GraphicsContext in the calling thread.
+        /// Gets the handle of the current GraphicsContext in the calling thread.
         /// </summary>
         public static ContextHandle CurrentContextHandle => GetCurrentContext();
 
         /// <summary>
-        ///     Gets the GraphicsContext that is current in the calling thread.
+        /// Gets the GraphicsContext that is current in the calling thread.
         /// </summary>
         /// <remarks>
-        ///     Note: this property will not function correctly when both desktop and EGL contexts are
-        ///     available in the same process. This scenario is very unlikely to appear in practice.
+        /// Note: this property will not function correctly when both desktop and EGL contexts are
+        /// available in the same process. This scenario is very unlikely to appear in practice.
         /// </remarks>
         public static IGraphicsContext CurrentContext
         {
@@ -334,41 +335,45 @@ namespace OpenTK.Graphics
             }
         }
 
-        /// <summary>Gets or sets a System.Boolean, indicating whether GraphicsContext resources are shared</summary>
+        /// <summary>
+        /// Gets or sets a System.Boolean, indicating whether GraphicsContext resources are shared
+        /// </summary>
         /// <remarks>
-        ///     <para>
-        ///         If ShareContexts is true, new GLContexts will share resources. If this value is
-        ///         false, new GLContexts will not share resources.
-        ///     </para>
-        ///     <para>Changing this value will not affect already created GLContexts.</para>
+        ///  <para>
+        /// If ShareContexts is true, new GLContexts will share resources. If this value is
+        /// false, new GLContexts will not share resources.
+        ///  </para>
+        ///  <para>Changing this value will not affect already created GLContexts.</para>
         /// </remarks>
         public static bool ShareContexts { get; set; } = true;
 
-        /// <summary>Gets or sets a System.Boolean, indicating whether GraphicsContexts will perform direct rendering.</summary>
+        /// <summary>
+        /// Gets or sets a System.Boolean, indicating whether GraphicsContexts will perform direct rendering.
+        /// </summary>
         /// <remarks>
-        ///     <para>
-        ///         If DirectRendering is true, new contexts will be constructed with direct rendering capabilities, if possible.
-        ///         If DirectRendering is false, new contexts will be constructed with indirect rendering capabilities.
-        ///     </para>
-        ///     <para>This property does not affect existing GraphicsContexts, unless they are recreated.</para>
-        ///     <para>
-        ///         This property is ignored on Operating Systems without support for indirect rendering, like Windows and OS X.
-        ///     </para>
+        ///  <para>
+        /// If DirectRendering is true, new contexts will be constructed with direct rendering capabilities, if possible.
+        /// If DirectRendering is false, new contexts will be constructed with indirect rendering capabilities.
+        ///  </para>
+        ///  <para>This property does not affect existing GraphicsContexts, unless they are recreated.</para>
+        ///  <para>
+        /// This property is ignored on Operating Systems without support for indirect rendering, like Windows and OS X.
+        ///  </para>
         /// </remarks>
         public static bool DirectRendering { get; set; } = true;
 
         /// <summary>
-        ///     Gets or sets a System.Boolean, indicating whether automatic error checking should be performed.
-        ///     Influences the debug version of OpenTK.dll, only.
+        /// Gets or sets a System.Boolean, indicating whether automatic error checking should be performed.
+        /// Influences the debug version of OpenTK.dll, only.
         /// </summary>
         /// <remarks>
-        ///     Automatic error checking will clear the OpenGL error state. Set CheckErrors to false if you use
-        ///     the OpenGL error state in your code flow (e.g. for checking supported texture formats).
+        /// Automatic error checking will clear the OpenGL error state. Set CheckErrors to false if you use
+        /// the OpenGL error state in your code flow (e.g. for checking supported texture formats).
         /// </remarks>
         public bool ErrorChecking { get; set; } = true;
 
         /// <summary>
-        ///     Swaps buffers on a context. This presents the rendered scene to the user.
+        /// Swaps buffers on a context. This presents the rendered scene to the user.
         /// </summary>
         public void SwapBuffers()
         {
@@ -376,11 +381,11 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Makes the GraphicsContext the current rendering target.
+        /// Makes the GraphicsContext the current rendering target.
         /// </summary>
         /// <param name="window">A valid <see cref="OpenTK.Platform.IWindowInfo" /> structure.</param>
         /// <remarks>
-        ///     You can use this method to bind the GraphicsContext to a different window than the one it was created from.
+        /// You can use this method to bind the GraphicsContext to a different window than the one it was created from.
         /// </remarks>
         public void MakeCurrent(IWindowInfo window)
         {
@@ -388,13 +393,13 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether this instance is current in the calling thread.
+        /// Gets a <see cref="System.Boolean" /> indicating whether this instance is current in the calling thread.
         /// </summary>
         public bool IsCurrent => implementation.IsCurrent;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether this instance has been disposed.
-        ///     It is an error to access any instance methods if this property returns true.
+        /// Gets a <see cref="System.Boolean" /> indicating whether this instance has been disposed.
+        /// It is an error to access any instance methods if this property returns true.
         /// </summary>
         public bool IsDisposed
         {
@@ -403,11 +408,11 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Gets or sets a positive integer in the range [1, n), indicating the number of
-        ///     <see cref="DisplayDevice" /> refreshes between consecutive
-        ///     <see cref="SwapBuffers()" /> calls. The maximum value for n is
-        ///     implementation-dependent. The default value is 1.
-        ///     Invalid values will be clamped to the valid range.
+        /// Gets or sets a positive integer in the range [1, n), indicating the number of
+        ///  <see cref="DisplayDevice" /> refreshes between consecutive
+        ///  <see cref="SwapBuffers()" /> calls. The maximum value for n is
+        /// implementation-dependent. The default value is 1.
+        /// Invalid values will be clamped to the valid range.
         /// </summary>
         public int SwapInterval
         {
@@ -416,8 +421,8 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Updates the graphics context.  This must be called when the render target
-        ///     is resized for proper behavior on Mac OS X.
+        /// Updates the graphics context.  This must be called when the render target
+        /// is resized for proper behavior on Mac OS X.
         /// </summary>
         /// <param name="window"></param>
         public void Update(IWindowInfo window)
@@ -426,10 +431,10 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Loads all OpenGL entry points.
+        /// Loads all OpenGL entry points.
         /// </summary>
         /// <exception cref="OpenTK.Graphics.GraphicsContextException">
-        ///     Occurs when this instance is not current on the calling thread.
+        /// Occurs when this instance is not current on the calling thread.
         /// </exception>
         public void LoadAll()
         {
@@ -442,12 +447,12 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Gets the GraphicsMode of the context.
+        /// Gets the GraphicsMode of the context.
         /// </summary>
         public GraphicsMode GraphicsMode => implementation.GraphicsMode;
 
         /// <summary>
-        ///     Disposes of the GraphicsContext.
+        /// Disposes of the GraphicsContext.
         /// </summary>
         public void Dispose()
         {
@@ -456,12 +461,12 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Gets the platform-specific implementation of this IGraphicsContext.
+        /// Gets the platform-specific implementation of this IGraphicsContext.
         /// </summary>
         IGraphicsContext IGraphicsContextInternal.Implementation => implementation;
 
         /// <summary>
-        ///     Gets a handle to the OpenGL rendering context.
+        /// Gets a handle to the OpenGL rendering context.
         /// </summary>
         ContextHandle IGraphicsContextInternal.Context
         {
@@ -477,13 +482,13 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Retrieves the implementation-defined address of an OpenGL function.
+        /// Retrieves the implementation-defined address of an OpenGL function.
         /// </summary>
         /// <param name="function">The name of the OpenGL function (e.g. "glGetString")</param>
         /// <returns>
-        ///     A pointer to the specified function or an invalid pointer if the function is not
-        ///     available in the current OpenGL context. The return value and calling convention
-        ///     depends on the underlying platform.
+        /// A pointer to the specified function or an invalid pointer if the function is not
+        /// available in the current OpenGL context. The return value and calling convention
+        /// depends on the underlying platform.
         /// </returns>
         IntPtr IGraphicsContextInternal.GetAddress(string function)
         {
@@ -494,16 +499,16 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Retrieves the implementation-defined address of an OpenGL function.
+        /// Retrieves the implementation-defined address of an OpenGL function.
         /// </summary>
         /// <param name="function">
-        ///     A pointer to a null-terminated buffer
-        ///     containing the name of the OpenGL function.
+        /// A pointer to a null-terminated buffer
+        /// containing the name of the OpenGL function.
         /// </param>
         /// <returns>
-        ///     A pointer to the specified function or an invalid pointer if the function is not
-        ///     available in the current OpenGL context. The return value and calling convention
-        ///     depends on the underlying platform.
+        /// A pointer to the specified function or an invalid pointer if the function is not
+        /// available in the current OpenGL context. The return value and calling convention
+        /// depends on the underlying platform.
         /// </returns>
         IntPtr IGraphicsContextInternal.GetAddress(IntPtr function)
         {
@@ -511,7 +516,7 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Returns a <see cref="System.String" /> representing this instance.
+        /// Returns a <see cref="System.String" /> representing this instance.
         /// </summary>
         /// <returns>A <see cref="System.String" />  that contains a string representation of this instance.</returns>
         public override string ToString()
@@ -520,7 +525,7 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Returns the hash code for this instance.
+        /// Returns the hash code for this instance.
         /// </summary>
         /// <returns>A System.Int32 with the hash code of this instance.</returns>
         public override int GetHashCode()
@@ -529,7 +534,7 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Compares two instances.
+        /// Compares two instances.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True, if obj is equal to this instance; false otherwise.</returns>
@@ -591,8 +596,8 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Checks if a GraphicsContext exists in the calling thread and throws a GraphicsContextMissingException if it
-        ///     doesn't.
+        /// Checks if a GraphicsContext exists in the calling thread and throws a GraphicsContextMissingException if it
+        /// doesn't.
         /// </summary>
         /// <exception cref="GraphicsContextMissingException">Generated when no GraphicsContext is current in the calling thread.</exception>
         public static void Assert()
@@ -633,9 +638,9 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Marks this context as deleted, but does not actually release unmanaged resources
-        ///     due to the threading requirements of OpenGL. Use <see cref="GraphicsContext.Dispose()" />
-        ///     instead.
+        /// Marks this context as deleted, but does not actually release unmanaged resources
+        /// due to the threading requirements of OpenGL. Use <see cref="GraphicsContext.Dispose()" />
+        /// instead.
         /// </summary>
         ~GraphicsContext()
         {

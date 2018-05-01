@@ -93,7 +93,7 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        ///     Gets the type of the parameter.
+        /// Gets the type of the parameter.
         /// </summary>
         public virtual string CurrentType
         {

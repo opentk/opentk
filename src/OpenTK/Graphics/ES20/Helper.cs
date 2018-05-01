@@ -25,7 +25,7 @@
 
 using System;
 using System.Runtime.InteropServices;
-using OpenTK.Mathemathics;
+using OpenTK.Mathematics;
 #if !MINIMAL
 using System.Drawing;
 
@@ -34,7 +34,7 @@ using System.Drawing;
 namespace OpenTK.Graphics.ES20
 {
     /// <summary>
-    ///     Provides access to OpenGL ES 2.0 methods.
+    /// Provides access to OpenGL ES 2.0 methods.
     /// </summary>
     public sealed partial class GL : GraphicsBindingsBase
     {
@@ -50,7 +50,7 @@ namespace OpenTK.Graphics.ES20
         private static readonly int[] EntryPointNameOffsets;
 
         /// <summary>
-        ///     Constructs a new instance.
+        /// Constructs a new instance.
         /// </summary>
         public GL()
         {
@@ -60,7 +60,7 @@ namespace OpenTK.Graphics.ES20
         }
 
         /// <summary>
-        ///     Returns a synchronization token unique for the GL class.
+        /// Returns a synchronization token unique for the GL class.
         /// </summary>
         protected override object SyncRoot => sync_root;
 
@@ -191,7 +191,7 @@ namespace OpenTK.Graphics.ES20
             unsafe
             {
                 var length = @string.Length;
-                ShaderSource((uint)shader, 1, new[] {@string}, &length);
+                ShaderSource((uint)shader, 1, new[] { @string }, &length);
             }
         }
 
@@ -207,7 +207,7 @@ namespace OpenTK.Graphics.ES20
             unsafe
             {
                 int length;
-                GL.GetShader(shader, ShaderParameter.InfoLogLength, out length);
+                GetShader(shader, ShaderParameter.InfoLogLength, out length);
                 if (length == 0)
                 {
                     info = string.Empty;
@@ -230,7 +230,7 @@ namespace OpenTK.Graphics.ES20
             unsafe
             {
                 int length;
-                GL.GetProgram(program, GetProgramParameterName.InfoLogLength, out length);
+                GetProgram(program, GetProgramParameterName.InfoLogLength, out length);
                 if (length == 0)
                 {
                     info = string.Empty;
@@ -367,8 +367,8 @@ namespace OpenTK.Graphics.ES20
 #pragma warning disable 1574 // XML comment cref attribute could not be resolved, compiler bug in Mono 3.4.0
 
     /// <summary>
-    ///     Defines the signature of a debug callback for
-    ///     <see cref="GL.DebugMessageCallback" />.
+    /// Defines the signature of a debug callback for
+    ///  <see cref="GL.DebugMessageCallback" />.
     /// </summary>
     /// <param name="source">The <see cref="DebugSource" /> for this debug message.</param>
     /// <param name="type">The <see cref="DebugType" /> for this debug message.</param>
@@ -384,8 +384,8 @@ namespace OpenTK.Graphics.ES20
         IntPtr userParam);
 
     /// <summary>
-    ///     Defines the signature of a debug callback for
-    ///     <see cref="GL.Khr.DebugMessageCallback" />.
+    /// Defines the signature of a debug callback for
+    ///  <see cref="GL.Khr.DebugMessageCallback" />.
     /// </summary>
     /// <param name="source">The <see cref="DebugSource" /> for this debug message.</param>
     /// <param name="type">The <see cref="DebugType" /> for this debug message.</param>

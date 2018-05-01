@@ -33,9 +33,9 @@ using Version = OpenTK.Platform.SDL2.Version;
 namespace OpenTK
 {
     /// <summary>
-    ///     Provides information about the underlying OS and runtime.
-    ///     You must call <c>Toolkit.Init</c> before accessing members
-    ///     of this class.
+    /// Provides information about the underlying OS and runtime.
+    /// You must call <c>Toolkit.Init</c> before accessing members
+    /// of this class.
     /// </summary>
     public sealed class Configuration
     {
@@ -47,36 +47,44 @@ namespace OpenTK
         {
         }
 
-        /// <summary>Gets a System.Boolean indicating whether OpenTK is running on a Windows platform.</summary>
+        /// <summary>
+        /// Gets a System.Boolean indicating whether OpenTK is running on a Windows platform.
+        /// </summary>
         public static bool RunningOnWindows { get; private set; }
 
-        /// <summary>Gets a System.Boolean indicating whether OpenTK is running on an X11 platform.</summary>
+        /// <summary>
+        /// Gets a System.Boolean indicating whether OpenTK is running on an X11 platform.
+        /// </summary>
         public static bool RunningOnX11 { get; private set; }
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether OpenTK is running on a Unix platform.
+        /// Gets a <see cref="System.Boolean" /> indicating whether OpenTK is running on a Unix platform.
         /// </summary>
         public static bool RunningOnUnix => runningOnUnix;
 
         /// <summary>
-        ///     Gets a System.Boolean indicating whether OpenTK is running on the SDL2 backend.
+        /// Gets a System.Boolean indicating whether OpenTK is running on the SDL2 backend.
         /// </summary>
         public static bool RunningOnSdl2 { get; private set; }
 
-        /// <summary>Gets a System.Boolean indicating whether OpenTK is running on the Linux kernel.</summary>
+        /// <summary>
+        /// Gets a System.Boolean indicating whether OpenTK is running on the Linux kernel.
+        /// </summary>
         public static bool RunningOnLinux => runningOnLinux;
 
-        /// <summary>Gets a System.Boolean indicating whether OpenTK is running on a MacOS platform.</summary>
+        /// <summary>
+        /// Gets a System.Boolean indicating whether OpenTK is running on a MacOS platform.
+        /// </summary>
         public static bool RunningOnMacOS => runningOnMacOS;
 
         /// <summary>
-        ///     Gets a System.Boolean indicating whether OpenTK is running on the Mono runtime.
+        /// Gets a System.Boolean indicating whether OpenTK is running on the Mono runtime.
         /// </summary>
         public static bool RunningOnMono { get; private set; }
 
         /// <summary>
-        ///     Gets a <c>System.Boolean</c> indicating whether
-        ///     OpenTK is running on an Android device.
+        /// Gets a <c>System.Boolean</c> indicating whether
+        /// OpenTK is running on an Android device.
         /// </summary>
         public static bool RunningOnAndroid
         {
@@ -91,8 +99,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets a <c>System.Boolean</c> indicating whether
-        ///     OpenTK is running on an Android device.
+        /// Gets a <c>System.Boolean</c> indicating whether
+        /// OpenTK is running on an Android device.
         /// </summary>
         public static bool RunningOnIOS
         {
@@ -107,7 +115,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Detects the unix kernel by p/invoking uname (libc).
+        /// Detects the unix kernel by p/invoking uname (libc).
         /// </summary>
         /// <returns></returns>
         private static string DetectUnixKernel()

@@ -25,15 +25,21 @@
 
 namespace OpenTK.OpenAL
 {
-    /// <summary>Represents exceptions related to invalid values.</summary>
+    /// <summary>
+    /// Represents exceptions related to invalid values.
+    /// </summary>
     public class AudioValueException : AudioException
     {
-        /// <summary>Constructs a new instance.</summary>
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
         public AudioValueException()
         {
         }
 
-        /// <summary>Constructs a new instance with the specified error message.</summary>
+        /// <summary>
+        /// Constructs a new instance with the specified error message.
+        /// </summary>
         /// <param name="message">The error message of the AudioContextException.</param>
         public AudioValueException(string message) : base(message)
         {

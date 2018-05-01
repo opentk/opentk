@@ -8,15 +8,21 @@ using System;
 
 namespace OpenTK
 {
-    /// <summary>Represents errors related to Graphics operations.</summary>
+    /// <summary>
+    /// Represents errors related to Graphics operations.
+    /// </summary>
     public class GraphicsException : Exception
     {
-        /// <summary>Constructs a new GraphicsException.</summary>
+        /// <summary>
+        /// Constructs a new GraphicsException.
+        /// </summary>
         public GraphicsException()
         {
         }
 
-        /// <summary>Constructs a new GraphicsException with the specified excpetion message.</summary>
+        /// <summary>
+        /// Constructs a new GraphicsException with the specified excpetion message.
+        /// </summary>
         /// <param name="message"></param>
         public GraphicsException(string message) : base(message)
         {

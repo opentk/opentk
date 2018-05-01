@@ -52,10 +52,10 @@ namespace OpenTK.Platform.Linux
 
         internal int[,] hatStates =
         {
-            {0, 0},
-            {0, 0},
-            {0, 0},
-            {0, 0}
+            { 0, 0 },
+            { 0, 0 },
+            { 0, 0 },
+            { 0, 0 }
         };
 
         public string Name;
@@ -67,9 +67,9 @@ namespace OpenTK.Platform.Linux
     {
         private static readonly HatPosition[,] HatPositions =
         {
-            {HatPosition.UpLeft, HatPosition.Up, HatPosition.UpRight},
-            {HatPosition.Left, HatPosition.Centered, HatPosition.Right},
-            {HatPosition.DownLeft, HatPosition.Down, HatPosition.DownRight}
+            { HatPosition.UpLeft, HatPosition.Up, HatPosition.UpRight },
+            { HatPosition.Left, HatPosition.Centered, HatPosition.Right },
+            { HatPosition.DownLeft, HatPosition.Down, HatPosition.DownRight }
         };
 
         private static readonly string JoystickPath = "/dev/input";

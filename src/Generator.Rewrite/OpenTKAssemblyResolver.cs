@@ -21,7 +21,7 @@ namespace OpenTK.Rewrite
 
         public OpenTKAssemblyResolver()
         {
-            directories = new List<string>(2) {".", "bin"};
+            directories = new List<string>(2) { ".", "bin" };
         }
 
         public AssemblyDefinition Resolve(AssemblyNameReference name)
@@ -48,8 +48,8 @@ namespace OpenTK.Rewrite
 
             var framework_dir = Path.GetDirectoryName(typeof(object).Module.FullyQualifiedName);
             var framework_dirs = on_mono
-                ? new[] {framework_dir, Path.Combine(framework_dir, "Facades")}
-                : new[] {framework_dir};
+                ? new[] { framework_dir, Path.Combine(framework_dir, "Facades") }
+                : new[] { framework_dir };
 
             if (IsZero(name.Version))
             {
@@ -101,7 +101,7 @@ namespace OpenTK.Rewrite
         private AssemblyDefinition SearchDirectory(AssemblyNameReference name, IEnumerable<string> directories,
             ReaderParameters parameters)
         {
-            var extensions = name.IsWindowsRuntime ? new[] {".winmd", ".dll"} : new[] {".exe", ".dll"};
+            var extensions = name.IsWindowsRuntime ? new[] { ".winmd", ".dll" } : new[] { ".exe", ".dll" };
             foreach (var directory in directories)
             {
                 foreach (var extension in extensions)
@@ -321,8 +321,8 @@ namespace OpenTK.Rewrite
 
         private AssemblyDefinition GetAssemblyInNetGac(AssemblyNameReference reference, ReaderParameters parameters)
         {
-            var gacs = new[] {"GAC_MSIL", "GAC_32", "GAC_64", "GAC"};
-            var prefixes = new[] {string.Empty, "v4.0_"};
+            var gacs = new[] { "GAC_MSIL", "GAC_32", "GAC_64", "GAC" };
+            var prefixes = new[] { string.Empty, "v4.0_" };
 
             for (var i = 0; i < 2; i++)
             {

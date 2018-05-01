@@ -71,7 +71,7 @@ namespace OpenTK.Convert
 
             try
             {
-                XmlParser xmlParser = new GLXmlParser {Prefix = CLIOptions.Prefix};
+                XmlParser xmlParser = new GLXmlParser { Prefix = CLIOptions.Prefix };
 
                 var sigs = CLIOptions.InputFiles.Select(h => xmlParser.Parse(h)).ToList();
 

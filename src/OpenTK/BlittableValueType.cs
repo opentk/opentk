@@ -31,11 +31,11 @@ using System.Runtime.InteropServices;
 namespace OpenTK
 {
     /// <summary>
-    ///     Checks whether the specified type parameter is a blittable value type.
+    /// Checks whether the specified type parameter is a blittable value type.
     /// </summary>
     /// <remarks>
-    ///     A blittable value type is a struct that only references other value types recursively,
-    ///     which allows it to be passed to unmanaged code directly.
+    /// A blittable value type is a struct that only references other value types recursively,
+    /// which allows it to be passed to unmanaged code directly.
     /// </remarks>
     public static class BlittableValueType<T>
     {
@@ -54,15 +54,15 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets the size of the type in bytes or 0 for non-blittable types.
+        /// Gets the size of the type in bytes or 0 for non-blittable types.
         /// </summary>
         /// <remarks>
-        ///     This property returns 0 for non-blittable types.
+        /// This property returns 0 for non-blittable types.
         /// </remarks>
         public static int Stride { get; }
 
         /// <summary>
-        ///     Checks whether the current typename T is blittable.
+        /// Checks whether the current typename T is blittable.
         /// </summary>
         /// <returns>True if T is blittable; false otherwise.</returns>
         public static bool Check()
@@ -71,7 +71,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Checks whether type is a blittable value type.
+        /// Checks whether type is a blittable value type.
         /// </summary>
         /// <param name="type">A System.Type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
@@ -135,16 +135,16 @@ namespace OpenTK
     }
 
     /// <summary>
-    ///     Checks whether the specified type parameter is a blittable value type.
+    /// Checks whether the specified type parameter is a blittable value type.
     /// </summary>
     /// <remarks>
-    ///     A blittable value type is a struct that only references other value types recursively,
-    ///     which allows it to be passed to unmanaged code directly.
+    /// A blittable value type is a struct that only references other value types recursively,
+    /// which allows it to be passed to unmanaged code directly.
     /// </remarks>
     public static class BlittableValueType
     {
         /// <summary>
-        ///     Checks whether type is a blittable value type.
+        /// Checks whether type is a blittable value type.
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
@@ -154,7 +154,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Checks whether type is a blittable value type.
+        /// Checks whether type is a blittable value type.
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
@@ -164,7 +164,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Checks whether type is a blittable value type.
+        /// Checks whether type is a blittable value type.
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
@@ -174,7 +174,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Checks whether type is a blittable value type.
+        /// Checks whether type is a blittable value type.
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
@@ -184,7 +184,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Checks whether type is a blittable value type.
+        /// Checks whether type is a blittable value type.
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
@@ -194,7 +194,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Returns the size of the specified value type in bytes or 0 if the type is not blittable.
+        /// Returns the size of the specified value type in bytes or 0 if the type is not blittable.
         /// </summary>
         /// <typeparam name="T">The value type. Must be blittable.</typeparam>
         /// <param name="type">An instance of the value type.</param>
@@ -211,7 +211,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Returns the size of a single array element in bytes  or 0 if the element is not blittable.
+        /// Returns the size of a single array element in bytes  or 0 if the element is not blittable.
         /// </summary>
         /// <typeparam name="T">The value type.</typeparam>
         /// <param name="type">An instance of the value type.</param>
@@ -228,7 +228,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Returns the size of a single array element in bytes or 0 if the element is not blittable.
+        /// Returns the size of a single array element in bytes or 0 if the element is not blittable.
         /// </summary>
         /// <typeparam name="T">The value type.</typeparam>
         /// <param name="type">An instance of the value type.</param>
@@ -245,7 +245,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Returns the size of a single array element in bytes or 0 if the element is not blittable.
+        /// Returns the size of a single array element in bytes or 0 if the element is not blittable.
         /// </summary>
         /// <typeparam name="T">The value type.</typeparam>
         /// <param name="type">An instance of the value type.</param>

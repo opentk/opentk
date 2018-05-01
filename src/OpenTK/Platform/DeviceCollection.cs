@@ -65,9 +65,9 @@ namespace OpenTK.Platform
 
         /// \internal
         /// <summary>
-        ///     Adds or replaces a device based on its hardware id.
-        ///     A zero-based device index will be generated automatically
-        ///     for the first available device slot.
+        /// Adds or replaces a device based on its hardware id.
+        /// A zero-based device index will be generated automatically
+        /// for the first available device slot.
         /// </summary>
         /// <param name="id">The hardware id for the device.</param>
         /// <param name="device">The device instance.</param>

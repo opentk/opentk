@@ -25,7 +25,7 @@
 
 using System;
 using System.Runtime.InteropServices;
-using OpenTK.Mathemathics;
+using OpenTK.Mathematics;
 #if !MINIMAL
 using System.Drawing;
 
@@ -34,7 +34,7 @@ using System.Drawing;
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    ///     Provides access to OpenGL 4.x methods for the core profile.
+    /// Provides access to OpenGL 4.x methods for the core profile.
     /// </summary>
     public sealed partial class GL : GraphicsBindingsBase
     {
@@ -46,7 +46,7 @@ namespace OpenTK.Graphics.OpenGL4
         private static readonly int[] EntryPointNameOffsets;
 
         /// <summary>
-        ///     Constructs a new instance.
+        /// Constructs a new instance.
         /// </summary>
         public GL()
         {
@@ -56,7 +56,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        ///     Returns a synchronization token unique for the GL class.
+        /// Returns a synchronization token unique for the GL class.
         /// </summary>
         protected override object SyncRoot => sync_root;
 
@@ -259,7 +259,7 @@ namespace OpenTK.Graphics.OpenGL4
             unsafe
             {
                 var length = @string.Length;
-                ShaderSource((uint)shader, 1, new[] {@string}, &length);
+                ShaderSource((uint)shader, 1, new[] { @string }, &length);
             }
         }
 
@@ -435,8 +435,8 @@ namespace OpenTK.Graphics.OpenGL4
 #pragma warning disable 1574 // XML comment cref attribute could not be resolved, compiler bug in Mono 3.4.0
 
     /// <summary>
-    ///     Defines the signature of a debug callback for
-    ///     <see cref="GL.Arb.DebugMessageCallback" />.
+    /// Defines the signature of a debug callback for
+    ///  <see cref="GL.Arb.DebugMessageCallback" />.
     /// </summary>
     /// <param name="source">The <see cref="DebugSource" /> for this debug message.</param>
     /// <param name="type">The <see cref="DebugType" /> for this debug message.</param>
@@ -452,8 +452,8 @@ namespace OpenTK.Graphics.OpenGL4
         IntPtr userParam);
 
     /// <summary>
-    ///     Defines the signature of a debug callback for
-    ///     <see cref="GL.DebugMessageCallback" />.
+    /// Defines the signature of a debug callback for
+    ///  <see cref="GL.DebugMessageCallback" />.
     /// </summary>
     /// <param name="source">The <see cref="DebugSource" /> for this debug message.</param>
     /// <param name="type">The <see cref="DebugType" /> for this debug message.</param>
@@ -469,8 +469,8 @@ namespace OpenTK.Graphics.OpenGL4
         IntPtr userParam);
 
     /// <summary>
-    ///     Defines the signature of a debug callback for
-    ///     <see cref="GL.Khr.DebugMessageCallback" />.
+    /// Defines the signature of a debug callback for
+    ///  <see cref="GL.Khr.DebugMessageCallback" />.
     /// </summary>
     /// <param name="source">The <see cref="DebugSource" /> for this debug message.</param>
     /// <param name="type">The <see cref="DebugType" /> for this debug message.</param>

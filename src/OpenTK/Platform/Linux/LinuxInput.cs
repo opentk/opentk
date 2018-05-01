@@ -30,7 +30,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Input;
-using OpenTK.Mathemathics;
+using OpenTK.Mathematics;
 #if !MINIMAL
 using System.Drawing;
 
@@ -48,22 +48,6 @@ namespace OpenTK.Platform.Linux
 
         private static readonly OpenRestrictedCallback OpenRestricted = OpenRestrictedHandler;
 
-        // Todo: do we need to maintain the geometry of each display separately?
-        private Rectangle bounds;
-
-        // Global mouse cursor offset (used for emulating SetPosition)
-        private Vector2 CursorOffset = Vector2.Zero;
-
-        // Global mouse cursor state
-        private Vector2 CursorPosition = Vector2.Zero;
-        private long exit;
-
-        private int fd;
-        private IntPtr input_context;
-
-        private InputInterface input_interface = new InputInterface(
-            OpenRestricted, CloseRestricted);
-
         private readonly Thread input_thread;
 
         // libinput returns various devices with keyboard/pointer even though
@@ -79,6 +63,22 @@ namespace OpenTK.Platform.Linux
         private readonly DeviceCollection<MouseDevice> Mice = new DeviceCollection<MouseDevice>();
 
         private readonly DeviceCollection<MouseDevice> MouseCandidates = new DeviceCollection<MouseDevice>();
+
+        // Todo: do we need to maintain the geometry of each display separately?
+        private Rectangle bounds;
+
+        // Global mouse cursor offset (used for emulating SetPosition)
+        private Vector2 CursorOffset = Vector2.Zero;
+
+        // Global mouse cursor state
+        private Vector2 CursorPosition = Vector2.Zero;
+        private long exit;
+
+        private int fd;
+        private IntPtr input_context;
+
+        private InputInterface input_interface = new InputInterface(
+            OpenRestricted, CloseRestricted);
 
         private IntPtr udev;
 

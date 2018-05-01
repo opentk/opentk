@@ -16,12 +16,12 @@ namespace OpenTK
     internal class X11GLControl : IGLControl
     {
         private readonly IntPtr display;
-
-        private GraphicsMode mode;
         private readonly IntPtr rootWindow;
 
         // Use reflection to retrieve the necessary values from Mono's Windows.Forms implementation.
         private readonly Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
+
+        private GraphicsMode mode;
 
         internal X11GLControl(GraphicsMode mode, Control control)
         {

@@ -16,69 +16,99 @@ namespace Bind
         [Flags]
         public enum Legacy
         {
-            /// <summary>Default value.</summary>
+            /// <summary>
+            /// Default value.
+            /// </summary>
             None = 0x00,
 
-            /// <summary>Leave enums as plain const ints.</summary>
+            /// <summary>
+            /// Leave enums as plain const ints.
+            /// </summary>
             ConstIntEnums = 0x01,
 
-            /// <summary>Leave enums in the default STRANGE_capitalization.ALL_CAPS form.</summary>
+            /// <summary>
+            /// Leave enums in the default STRANGE_capitalization.ALL_CAPS form.
+            /// </summary>
             NoAdvancedEnumProcessing = 0x02,
 
-            /// <summary>Don't allow unsafe wrappers in the interface.</summary>
+            /// <summary>
+            /// Don't allow unsafe wrappers in the interface.
+            /// </summary>
             NoPublicUnsafeFunctions = 0x04,
 
-            /// <summary>Don't trim the [fdisub]v? endings from functions.</summary>
+            /// <summary>
+            /// Don't trim the [fdisub]v? endings from functions.
+            /// </summary>
             NoTrimFunctionEnding = NoPublicUnsafeFunctions,
 
-            /// <summary>Don't trim the [gl|wgl|glx|glu] prefixes from functions.</summary>
+            /// <summary>
+            /// Don't trim the [gl|wgl|glx|glu] prefixes from functions.
+            /// </summary>
             NoTrimFunctionPrefix = 0x08,
 
             /// <summary>
-            ///     Don't spearate functions in different namespaces, according to their extension category
-            ///     (e.g. GL.Arb, GL.Ext etc).
+            /// Don't spearate functions in different namespaces, according to their extension category
+            /// (e.g. GL.Arb, GL.Ext etc).
             /// </summary>
             NoSeparateFunctionNamespaces = 0x10,
 
             /// <summary>
-            ///     No public void* parameters (should always be enabled. Disable at your own risk. Disabling
-            ///     means that BitmapData.Scan0 and other .Net properties/functions must be cast to (void*)
-            ///     explicitly, to avoid the 'object' overload from being called.)
+            /// No public void* parameters (should always be enabled. Disable at your own risk. Disabling
+            /// means that BitmapData.Scan0 and other .Net properties/functions must be cast to (void*)
+            /// explicitly, to avoid the 'object' overload from being called.)
             /// </summary>
             TurnVoidPointersToIntPtr = 0x20,
 
-            /// <summary>Generate all possible permutations for ref/array/pointer parameters.</summary>
+            /// <summary>
+            /// Generate all possible permutations for ref/array/pointer parameters.
+            /// </summary>
             GenerateAllPermutations = 0x40,
 
-            /// <summary>Nest enums inside the GL class.</summary>
+            /// <summary>
+            /// Nest enums inside the GL class.
+            /// </summary>
             NestedEnums = 0x80,
 
-            /// <summary>Turn GLboolean to int (Boolean enum), not bool.</summary>
+            /// <summary>
+            /// Turn GLboolean to int (Boolean enum), not bool.
+            /// </summary>
             NoBoolParameters = 0x100,
 
-            /// <summary>Keep all enum tokens, even if same value (e.g. FooARB, FooEXT and FooSGI).</summary>
+            /// <summary>
+            /// Keep all enum tokens, even if same value (e.g. FooARB, FooEXT and FooSGI).
+            /// </summary>
             NoDropMultipleTokens = 0x200,
 
-            /// <summary>Do not emit inline documentation.</summary>
+            /// <summary>
+            /// Do not emit inline documentation.
+            /// </summary>
             NoDocumentation = 0x400,
 
-            /// <summary>Disables ErrorHelper generation.</summary>
+            /// <summary>
+            /// Disables ErrorHelper generation.
+            /// </summary>
             NoDebugHelpers = 0x800,
 
-            /// <summary>Generate both typed and untyped ("All") signatures for enum parameters.</summary>
+            /// <summary>
+            /// Generate both typed and untyped ("All") signatures for enum parameters.
+            /// </summary>
             KeepUntypedEnums = 0x1000,
 
-            /// <summary>Marks deprecated functions as [Obsolete]</summary>
+            /// <summary>
+            /// Marks deprecated functions as [Obsolete]
+            /// </summary>
             AddDeprecationWarnings = 0x2000,
 
-            /// <summary>Use DllImport declaration for core functions (do not generate entry point slots)</summary>
+            /// <summary>
+            /// Use DllImport declaration for core functions (do not generate entry point slots)
+            /// </summary>
             UseDllImports = 0x4000,
 
             /// <summary>
-            ///     Use in conjuction with UseDllImports, to create
-            ///     bindings that are compatible with opengl32.dll on Windows.
-            ///     This uses DllImports up to GL 1.1 and function pointers
-            ///     for higher versions.
+            /// Use in conjuction with UseDllImports, to create
+            /// bindings that are compatible with opengl32.dll on Windows.
+            /// This uses DllImports up to GL 1.1 and function pointers
+            /// for higher versions.
             /// </summary>
             UseWindowsCompatibleGL = 0x8000,
 
@@ -114,7 +144,7 @@ namespace Bind
             _wrappersFile;
 
         /// <summary>
-        ///     The name of the C# enum which holds every single OpenGL enum (for compatibility purposes).
+        /// The name of the C# enum which holds every single OpenGL enum (for compatibility purposes).
         /// </summary>
         public string CompleteEnumName = "All";
 
@@ -272,7 +302,9 @@ namespace Bind
             }
         }
 
-        /// <summary>True if multiple tokens should be dropped (e.g. FooARB, FooEXT and FooSGI).</summary>
+        /// <summary>
+        /// True if multiple tokens should be dropped (e.g. FooARB, FooEXT and FooSGI).
+        /// </summary>
         public bool DropMultipleTokens
         {
             get => (Compatibility & Legacy.NoDropMultipleTokens) == Legacy.None;

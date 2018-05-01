@@ -26,12 +26,12 @@
 //
 
 using System;
-using OpenTK.Mathemathics;
+using OpenTK.Mathematics;
 
 namespace OpenTK.Input
 {
     /// <summary>
-    ///     Describes the current thumb stick state of a <see cref="GamePad" /> device
+    /// Describes the current thumb stick state of a <see cref="GamePad" /> device
     /// </summary>
     public struct GamePadThumbSticks : IEquatable<GamePadThumbSticks>
     {
@@ -52,12 +52,12 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a <see cref="Vector2" /> describing the state of the left thumb stick.
+        /// Gets a <see cref="Vector2" /> describing the state of the left thumb stick.
         /// </summary>
         public Vector2 Left => new Vector2(left_x * ConversionFactor, left_y * ConversionFactor);
 
         /// <summary>
-        ///     Gets a <see cref="Vector2" /> describing the state of the right thumb stick.
+        /// Gets a <see cref="Vector2" /> describing the state of the right thumb stick.
         /// </summary>
         public Vector2 Right => new Vector2(right_x * ConversionFactor, right_y * ConversionFactor);
 
@@ -76,7 +76,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.GamePadThumbSticks" />.
+        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.GamePadThumbSticks" />.
         /// </summary>
         /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.GamePadThumbSticks" />.</returns>
         public override string ToString()
@@ -85,11 +85,11 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Serves as a hash function for a <see cref="OpenTK.Input.GamePadThumbSticks" /> object.
+        /// Serves as a hash function for a <see cref="OpenTK.Input.GamePadThumbSticks" /> object.
         /// </summary>
         /// <returns>
-        ///     A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
-        ///     hash table.
+        /// A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
+        /// hash table.
         /// </returns>
         public override int GetHashCode()
         {
@@ -99,16 +99,16 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Determines whether the specified <see cref="System.Object" /> is equal to the current
-        ///     <see cref="OpenTK.Input.GamePadThumbSticks" />.
+        /// Determines whether the specified <see cref="System.Object" /> is equal to the current
+        ///  <see cref="OpenTK.Input.GamePadThumbSticks" />.
         /// </summary>
         /// <param name="obj">
-        ///     The <see cref="System.Object" /> to compare with the current
-        ///     <see cref="OpenTK.Input.GamePadThumbSticks" />.
+        /// The <see cref="System.Object" /> to compare with the current
+        ///  <see cref="OpenTK.Input.GamePadThumbSticks" />.
         /// </param>
         /// <returns>
-        ///     <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
-        ///     <see cref="OpenTK.Input.GamePadThumbSticks" />; otherwise, <c>false</c>.
+        ///  <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
+        ///  <see cref="OpenTK.Input.GamePadThumbSticks" />; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -118,16 +118,16 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Determines whether the specified <see cref="OpenTK.Input.GamePadThumbSticks" /> is equal to the current
-        ///     <see cref="OpenTK.Input.GamePadThumbSticks" />.
+        /// Determines whether the specified <see cref="OpenTK.Input.GamePadThumbSticks" /> is equal to the current
+        ///  <see cref="OpenTK.Input.GamePadThumbSticks" />.
         /// </summary>
         /// <param name="other">
-        ///     The <see cref="OpenTK.Input.GamePadThumbSticks" /> to compare with the current
-        ///     <see cref="OpenTK.Input.GamePadThumbSticks" />.
+        /// The <see cref="OpenTK.Input.GamePadThumbSticks" /> to compare with the current
+        ///  <see cref="OpenTK.Input.GamePadThumbSticks" />.
         /// </param>
         /// <returns>
-        ///     <c>true</c> if the specified <see cref="OpenTK.Input.GamePadThumbSticks" /> is equal to the current
-        ///     <see cref="OpenTK.Input.GamePadThumbSticks" />; otherwise, <c>false</c>.
+        ///  <c>true</c> if the specified <see cref="OpenTK.Input.GamePadThumbSticks" /> is equal to the current
+        ///  <see cref="OpenTK.Input.GamePadThumbSticks" />; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(GamePadThumbSticks other)
         {

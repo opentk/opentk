@@ -25,7 +25,7 @@
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenTK.Mathemathics\OpenTK.Mathemathics.csproj" />
+    <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
   </ItemGroup>
   <Target Name="Rewrite" AfterTargets="AfterBuild">
     <Exec Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" Command="$(ProjectDir)..\..\src\Generator.Rewrite\bin\Debug\net461\Rewrite.exe --assembly $(OutputPath)OpenTK.dll --debug" />

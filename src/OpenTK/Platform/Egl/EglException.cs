@@ -6,7 +6,7 @@ using OpenTK.Graphics;
 namespace OpenTK.Platform.Egl
 {
     /// <summary>
-    ///     Represents an Egl exception.
+    /// Represents an Egl exception.
     /// </summary>
     public class EglException : GraphicsContextException
     {
@@ -16,7 +16,7 @@ namespace OpenTK.Platform.Egl
         }
 
         /// <summary>
-        ///     Gets the EGL error code.
+        /// Gets the EGL error code.
         /// </summary>
         public ErrorCode ErrorCode { get; }
     }

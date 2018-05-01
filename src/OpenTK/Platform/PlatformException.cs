@@ -9,19 +9,19 @@ using System;
 namespace OpenTK
 {
     /// <summary>
-    ///     Defines a plaftorm-specific exception.
+    /// Defines a plaftorm-specific exception.
     /// </summary>
     public class PlatformException : Exception
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="OpenTK.PlatformException" /> class.
+        /// Initializes a new instance of the <see cref="OpenTK.PlatformException" /> class.
         /// </summary>
         public PlatformException()
         {
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="OpenTK.PlatformException" /> class.
+        /// Initializes a new instance of the <see cref="OpenTK.PlatformException" /> class.
         /// </summary>
         /// <param name="message">A message explaining the cause for this exception.</param>
         public PlatformException(string message) : base(message)

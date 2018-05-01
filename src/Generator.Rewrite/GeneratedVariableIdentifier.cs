@@ -4,13 +4,13 @@ using Mono.Cecil.Cil;
 namespace OpenTK.Rewrite
 {
     /// <summary>
-    ///     Acts as a unique identifier for a generated named variable that can be passed between methods. Replaces uses of
-    ///     variable names from Mono.Cecil.
+    /// Acts as a unique identifier for a generated named variable that can be passed between methods. Replaces uses of
+    /// variable names from Mono.Cecil.
     /// </summary>
     internal sealed class GeneratedVariableIdentifier
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="GeneratedVariableIdentifier" /> class.
+        /// Initializes a new instance of the <see cref="GeneratedVariableIdentifier" /> class.
         /// </summary>
         /// <param name="body">The method body which the variable is in.</param>
         /// <param name="definition">The definition of the generated variable.</param>
@@ -39,17 +39,17 @@ namespace OpenTK.Rewrite
         }
 
         /// <summary>
-        ///     The <see cref="MethodBody" /> which the variable is in.
+        /// The <see cref="MethodBody" /> which the variable is in.
         /// </summary>
         public MethodBody Body { get; }
 
         /// <summary>
-        ///     The <see cref="VariableDefinition" /> which the variable idetifier maps to.
+        /// The <see cref="VariableDefinition" /> which the variable idetifier maps to.
         /// </summary>
         public VariableDefinition Definition { get; }
 
         /// <summary>
-        ///     The name of the generated variable.
+        /// The name of the generated variable.
         /// </summary>
         public string Name { get; }
     }

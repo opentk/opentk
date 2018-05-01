@@ -33,19 +33,19 @@ namespace OpenTK.Platform
 {
     /// \internal
     /// <summary>
-    ///     Implements IGamePadDriver using OpenTK.Input.Joystick
-    ///     and a gamepad-specific axis/button mapping.
+    /// Implements IGamePadDriver using OpenTK.Input.Joystick
+    /// and a gamepad-specific axis/button mapping.
     /// </summary>
     /// <remarks>
-    ///     <para>
-    ///         This class supports OpenTK and is not meant to be accessed by user code.
-    ///     </para>
-    ///     <para>
-    ///         To support gamepads on platforms that do not offer a gamepad-optimized API,
-    ///         we need to use the generic OpenTK.Input.Joystick and implement a custom
-    ///         mapping scheme to provide a stable mapping to OpenTK.Input.GamePad. This
-    ///         class implements this mapping scheme.
-    ///     </para>
+    ///  <para>
+    /// This class supports OpenTK and is not meant to be accessed by user code.
+    ///  </para>
+    ///  <para>
+    /// To support gamepads on platforms that do not offer a gamepad-optimized API,
+    /// we need to use the generic OpenTK.Input.Joystick and implement a custom
+    /// mapping scheme to provide a stable mapping to OpenTK.Input.GamePad. This
+    /// class implements this mapping scheme.
+    ///  </para>
     /// </remarks>
     internal class MappedGamePadDriver : IGamePadDriver
     {
@@ -91,6 +91,7 @@ namespace OpenTK.Platform
                                     pad.SetButton(map.Target.Button, Math.Abs(value) >= short.MaxValue >> 1);
                                     break;
                             }
+
                             break;
                         }
                         case ConfigurationType.Button:
@@ -117,6 +118,7 @@ namespace OpenTK.Platform
                                     pad.SetButton(map.Target.Button, pressed);
                                     break;
                             }
+
                             break;
                         }
                         case ConfigurationType.Hat:
@@ -163,6 +165,7 @@ namespace OpenTK.Platform
                                     pad.SetButton(map.Target.Button, pressed);
                                     break;
                             }
+
                             break;
                         }
                     }

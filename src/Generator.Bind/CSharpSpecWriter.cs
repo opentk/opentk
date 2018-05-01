@@ -40,20 +40,20 @@ namespace Bind
     {
         // For example, if parameter foo has indirection level = 1, then it
         // is consumed as 'foo*' in the fixed_statements and the call string.
-        private static readonly string[] PointerLevels = {"", "*", "**", "***", "****"};
+        private static readonly string[] PointerLevels = { "", "*", "**", "***", "****" };
 
-        private static readonly string[] ArrayLevels = {"", "[]", "[,]", "[,,]", "[,,,]"};
+        private static readonly string[] ArrayLevels = { "", "[]", "[,]", "[,,]", "[,,,]" };
 
         private static readonly Dictionary<string, string> Aliases = new Dictionary<string, string>
         {
-            {nameof(Int16), "short"},
-            {nameof(UInt16), "ushort"},
-            {nameof(Int32), "int"},
-            {nameof(UInt32), "uint"},
-            {nameof(Int64), "long"},
-            {nameof(UInt64), "ulong"},
-            {nameof(Single), "float"},
-            {nameof(Double), "double"}
+            { nameof(Int16), "short" },
+            { nameof(UInt16), "ushort" },
+            { nameof(Int32), "int" },
+            { nameof(UInt32), "uint" },
+            { nameof(Int64), "long" },
+            { nameof(UInt64), "ulong" },
+            { nameof(Single), "float" },
+            { nameof(Double), "double" }
         };
 
         private IBind Generator { get; set; }
@@ -122,6 +122,7 @@ namespace Bind
                 sw.WriteLine("using System;");
                 sw.WriteLine("using System.Text;");
                 sw.WriteLine("using System.Runtime.InteropServices;");
+                sw.WriteLine("using OpenTK.Mathematics;");
 
                 WriteWrappers(sw, wrappers, delegates, enums, Generator.CSTypes);
 
@@ -340,22 +341,18 @@ namespace Bind
                 }
 
                 // Write function summary
-                sw.Write("/// <summary>");
+                sw.WriteLine("/// <summary>");
                 if (!string.IsNullOrEmpty(category) || !string.IsNullOrEmpty(warning))
                 {
-                    sw.Write(WriteOptions.NoIndent, "{0}{1}", category, warning);
+                    sw.WriteLine("/// {0}{1}", category, warning);
                 }
 
                 if (!string.IsNullOrEmpty(docs.Summary))
                 {
-                    sw.WriteLine();
                     sw.WriteLine("/// {0}", docs.Summary);
-                    sw.WriteLine("/// </summary>");
                 }
-                else
-                {
-                    sw.WriteLine(WriteOptions.NoIndent, "</summary>");
-                }
+
+                sw.WriteLine("/// </summary>");
 
                 // Write function parameters
                 for (var i = 0; i < f.Parameters.Count; i++)
@@ -388,22 +385,18 @@ namespace Bind
 
                         // Note: we use param.Name, because the documentation sometimes
                         // uses different names than the specification.
-                        sw.Write("/// <param name=\"{0}\">", param.Name);
+                        sw.WriteLine("/// <param name=\"{0}\">", param.Name);
                         if (!string.IsNullOrEmpty(length))
                         {
-                            sw.Write(WriteOptions.NoIndent, "{0}", length);
+                            sw.WriteLine("/// {0}", length);
                         }
 
                         if (!string.IsNullOrEmpty(docparam.Documentation))
                         {
-                            sw.WriteLine(WriteOptions.NoIndent, "");
                             sw.WriteLine("/// {0}", docparam.Documentation);
-                            sw.WriteLine("/// </param>");
                         }
-                        else
-                        {
-                            sw.WriteLine(WriteOptions.NoIndent, "</param>");
-                        }
+
+                        sw.WriteLine("/// </param>");
                     }
                     else
                     {

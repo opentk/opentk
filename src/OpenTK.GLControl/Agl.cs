@@ -319,7 +319,7 @@ namespace OpenTK.Platform.MacOS
         internal static extern AGLPixelFormat aglChoosePixelFormat(ref AGLDevice gdevs, int ndev, int[] attribs);
 
         /// <summary>
-        ///     Use this overload only with IntPtr.Zero for the first argument.
+        /// Use this overload only with IntPtr.Zero for the first argument.
         /// </summary>
         /// <param name="gdevs">
         /// </param>

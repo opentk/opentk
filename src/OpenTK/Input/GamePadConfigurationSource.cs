@@ -35,7 +35,7 @@ namespace OpenTK.Input
         private HatPosition? map_hat_position;
 
         /// <summary>
-        ///     Creates a new gamepad configuration source from an axis or a button
+        /// Creates a new gamepad configuration source from an axis or a button
         /// </summary>
         /// <param name="isAxis">Whether this source is an axis or a button</param>
         /// <param name="index">The index of this source</param>
@@ -55,7 +55,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Creates a new gamepad configuration source from a hat
+        /// Creates a new gamepad configuration source from a hat
         /// </summary>
         /// <param name="hat">The hat</param>
         /// <param name="pos">The starting hat position</param>
@@ -70,7 +70,7 @@ namespace OpenTK.Input
         public ConfigurationType Type { get; }
 
         /// <summary>
-        ///     Represents a gamepad axis
+        /// Represents a gamepad axis
         /// </summary>
         public int Axis
         {
@@ -79,7 +79,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Represents a gamepad button
+        /// Represents a gamepad button
         /// </summary>
         public int Button
         {
@@ -88,7 +88,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Represents a gamepad hat
+        /// Represents a gamepad hat
         /// </summary>
         public JoystickHat Hat
         {
@@ -97,7 +97,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Represents the position of a gamepad hat
+        /// Represents the position of a gamepad hat
         /// </summary>
         public HatPosition HatPosition
         {

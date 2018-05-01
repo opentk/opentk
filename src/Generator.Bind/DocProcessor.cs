@@ -24,7 +24,7 @@ namespace Bind
         private static readonly Regex RemoveXmlns = new Regex(
             "xmlns=\".+\"", RegexOptions.Compiled);
 
-        private static readonly char[] Newline = {'\n'};
+        private static readonly char[] Newline = { '\n' };
 
         private readonly Dictionary<string, Documentation> _documentationCache =
             new Dictionary<string, Documentation>();

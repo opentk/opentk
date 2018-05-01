@@ -32,7 +32,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Graphics;
 using OpenTK.Input;
-using OpenTK.Mathemathics;
+using OpenTK.Mathematics;
 #if !MINIMAL
 using System.Drawing;
 
@@ -135,24 +135,9 @@ namespace OpenTK.Platform.MacOS
         private readonly AcceptsFirstResponderDelegate AcceptsFirstResponderHandler;
         private readonly CanBecomeKeyWindowDelegate CanBecomeKeyWindowHandler;
         private readonly CanBecomeMainWindowDelegate CanBecomeMainWindowHandler;
-        private IntPtr current_icon_handle;
-        private bool cursorVisible = true;
-        private WindowBorder? deferredWindowBorder;
-        private bool disposed;
         private readonly DraggingEnteredDelegate DraggingEnteredHandler;
-        private bool exists;
-        private Icon icon;
-        private int normalLevel;
         private readonly PerformDragOperationDelegate PerformDragOperationHandler;
-        private RectangleF previousBounds;
-        private WindowBorder? previousWindowBorder;
         private readonly ResetCursorRectsDelegate ResetCursorRectsHandler;
-        private MouseCursor selectedCursor = MouseCursor.Default; // user-selected cursor
-        private bool shouldClose;
-        private int suppressResize;
-        private string title;
-        private IntPtr trackingArea;
-        private WindowBorder windowBorder = WindowBorder.Resizable;
 
         private readonly IntPtr windowClass;
         private readonly WindowDidBecomeKeyDelegate WindowDidBecomeKeyHandler;
@@ -167,8 +152,23 @@ namespace OpenTK.Platform.MacOS
         private readonly WindowKeyDownDelegate WindowKeyDownHandler;
         private readonly WindowShouldCloseDelegate WindowShouldCloseHandler;
         private readonly WindowShouldZoomToFrameDelegate WindowShouldZoomToFrameHandler;
-        private WindowState windowState = WindowState.Normal;
         private readonly WindowWillMiniaturizeDelegate WindowWillMiniaturizeHandler;
+        private IntPtr current_icon_handle;
+        private bool cursorVisible = true;
+        private WindowBorder? deferredWindowBorder;
+        private bool disposed;
+        private bool exists;
+        private Icon icon;
+        private int normalLevel;
+        private RectangleF previousBounds;
+        private WindowBorder? previousWindowBorder;
+        private MouseCursor selectedCursor = MouseCursor.Default; // user-selected cursor
+        private bool shouldClose;
+        private int suppressResize;
+        private string title;
+        private IntPtr trackingArea;
+        private WindowBorder windowBorder = WindowBorder.Resizable;
+        private WindowState windowState = WindowState.Normal;
 
         static CocoaNativeWindow()
         {
@@ -850,6 +850,7 @@ namespace OpenTK.Platform.MacOS
                                 OnKeyPress(c);
                             }
                         }
+
                         break;
                     }
                     case NSEventType.KeyUp:
@@ -878,6 +879,7 @@ namespace OpenTK.Platform.MacOS
 
                             OnMouseEnter(EventArgs.Empty);
                         }
+
                         break;
                     }
                     case NSEventType.MouseExited:
@@ -893,6 +895,7 @@ namespace OpenTK.Platform.MacOS
 
                             OnMouseLeave(EventArgs.Empty);
                         }
+
                         break;
                     }
                     case NSEventType.LeftMouseDragged:
@@ -932,6 +935,7 @@ namespace OpenTK.Platform.MacOS
                         {
                             OnMouseMove(p.X, p.Y);
                         }
+
                         break;
                     }
                     case NSEventType.CursorUpdate:
@@ -960,6 +964,7 @@ namespace OpenTK.Platform.MacOS
                             // so we need to flip the horizontal scroll direction.
                             OnMouseWheel(-dx, dy);
                         }
+
                         break;
                     }
                     case NSEventType.LeftMouseDown:

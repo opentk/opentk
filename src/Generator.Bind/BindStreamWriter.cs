@@ -36,7 +36,7 @@ namespace Bind
 
     internal class BindStreamWriter : IDisposable
     {
-        private static readonly string[] SplitStrings = {Environment.NewLine};
+        private static readonly string[] SplitStrings = { Environment.NewLine };
         private readonly StreamWriter _sw;
         public readonly string File;
         private int _indentLevel;

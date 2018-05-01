@@ -30,7 +30,7 @@ using System;
 namespace OpenTK.Input
 {
     /// <summary>
-    ///     Describes the capabilities of a <c>GamePad</c> input device.
+    /// Describes the capabilities of a <c>GamePad</c> input device.
     /// </summary>
     public struct GamePadCapabilities : IEquatable<GamePadCapabilities>
     {
@@ -50,191 +50,191 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a <see cref="GamePadType" />  value describing the type of a <see cref="GamePad" /> input device.
-        ///     This value depends on the connected device and the drivers in use. If <c>IsConnected</c>
-        ///     is false, then this value will be <c>GamePadType.Unknown</c>.
+        /// Gets a <see cref="GamePadType" />  value describing the type of a <see cref="GamePad" /> input device.
+        /// This value depends on the connected device and the drivers in use. If <c>IsConnected</c>
+        /// is false, then this value will be <c>GamePadType.Unknown</c>.
         /// </summary>
         /// <value>The <c>GamePadType</c> of the connected input device.</value>
         public GamePadType GamePadType => (GamePadType)gamepad_type;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     an up digital pad button.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// an up digital pad button.
         /// </summary>
         /// <value><c>true</c> if this instance has an up digital pad button; otherwise, <c>false</c>.</value>
         public bool HasDPadUpButton => (buttons & Buttons.DPadUp) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a down digital pad button.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a down digital pad button.
         /// </summary>
         /// <value><c>true</c> if this instance has a down digital pad button; otherwise, <c>false</c>.</value>
         public bool HasDPadDownButton => (buttons & Buttons.DPadDown) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a left digital pad button.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a left digital pad button.
         /// </summary>
         /// <value><c>true</c> if this instance has a left digital pad button; otherwise, <c>false</c>.</value>
         public bool HasDPadLeftButton => (buttons & Buttons.DPadLeft) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a right digital pad button.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a right digital pad button.
         /// </summary>
         /// <value><c>true</c> if this instance has a right digital pad button; otherwise, <c>false</c>.</value>
         public bool HasDPadRightButton => (buttons & Buttons.DPadRight) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     an A button.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// an A button.
         /// </summary>
         /// <value><c>true</c> if this instance has an A button; otherwise, <c>false</c>.</value>
         public bool HasAButton => (buttons & Buttons.A) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a B button.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a B button.
         /// </summary>
         /// <value><c>true</c> if this instance has a B button; otherwise, <c>false</c>.</value>
         public bool HasBButton => (buttons & Buttons.B) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a X button.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a X button.
         /// </summary>
         /// <value><c>true</c> if this instance has a X button; otherwise, <c>false</c>.</value>
         public bool HasXButton => (buttons & Buttons.X) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a Y button.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a Y button.
         /// </summary>
         /// <value><c>true</c> if this instance has a Y button; otherwise, <c>false</c>.</value>
         public bool HasYButton => (buttons & Buttons.Y) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a left stick button.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a left stick button.
         /// </summary>
         /// <value><c>true</c> if this instance has a left stick button; otherwise, <c>false</c>.</value>
         public bool HasLeftStickButton => (buttons & Buttons.LeftStick) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a right stick button.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a right stick button.
         /// </summary>
         /// <value><c>true</c> if this instance has a right stick button; otherwise, <c>false</c>.</value>
         public bool HasRightStickButton => (buttons & Buttons.RightStick) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a left shoulder button.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a left shoulder button.
         /// </summary>
         /// <value><c>true</c> if this instance has a left shoulder button; otherwise, <c>false</c>.</value>
         public bool HasLeftShoulderButton => (buttons & Buttons.LeftShoulder) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a right shoulder button.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a right shoulder button.
         /// </summary>
         /// <value><c>true</c> if this instance has a right shoulder button; otherwise, <c>false</c>.</value>
         public bool HasRightShoulderButton => (buttons & Buttons.RightShoulder) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a back button.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a back button.
         /// </summary>
         /// <value><c>true</c> if this instance has a back button; otherwise, <c>false</c>.</value>
         public bool HasBackButton => (buttons & Buttons.Back) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a big button. (also known as "guide" or "home" button).
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a big button. (also known as "guide" or "home" button).
         /// </summary>
         /// <value><c>true</c> if this instance has a big button; otherwise, <c>false</c>.</value>
         public bool HasBigButton => (buttons & Buttons.BigButton) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a start button.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a start button.
         /// </summary>
         /// <value><c>true</c> if this instance has a start button; otherwise, <c>false</c>.</value>
         public bool HasStartButton => (buttons & Buttons.Start) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a left thumbstick with a x-axis.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a left thumbstick with a x-axis.
         /// </summary>
         /// <value><c>true</c> if this instance has a left thumbstick with a x-axis; otherwise, <c>false</c>.</value>
         public bool HasLeftXThumbStick => (axes & GamePadAxes.LeftX) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a left thumbstick with a y-axis.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a left thumbstick with a y-axis.
         /// </summary>
         /// <value><c>true</c> if this instance has a left thumbstick with a y-axis; otherwise, <c>false</c>.</value>
         public bool HasLeftYThumbStick => (axes & GamePadAxes.LeftY) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a right thumbstick with a x-axis.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a right thumbstick with a x-axis.
         /// </summary>
         /// <value><c>true</c> if this instance has a right thumbstick with a x-axis; otherwise, <c>false</c>.</value>
         public bool HasRightXThumbStick => (axes & GamePadAxes.RightX) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a right thumbstick with a y-axis.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a right thumbstick with a y-axis.
         /// </summary>
         /// <value><c>true</c> if this instance has a right thumbstick with a y-axis; otherwise, <c>false</c>.</value>
         public bool HasRightYThumbStick => (axes & GamePadAxes.RightY) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a left trigger.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a left trigger.
         /// </summary>
         /// <value><c>true</c> if this instance has a left trigger; otherwise, <c>false</c>.</value>
         public bool HasLeftTrigger => (axes & GamePadAxes.LeftTrigger) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a right trigger.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a right trigger.
         /// </summary>
         /// <value><c>true</c> if this instance has a right trigger; otherwise, <c>false</c>.</value>
         public bool HasRightTrigger => (axes & GamePadAxes.RightTrigger) != 0;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a low-frequency vibration motor.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a low-frequency vibration motor.
         /// </summary>
         /// <value><c>true</c> if this instance has a low-frequency vibration motor; otherwise, <c>false</c>.</value>
         public bool HasLeftVibrationMotor => false;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a high-frequency vibration motor.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a high-frequency vibration motor.
         /// </summary>
         /// <value><c>true</c> if this instance has a high frequency vibration motor; otherwise, <c>false</c>.</value>
         public bool HasRightVibrationMotor => false;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
-        ///     a microphone input.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> has
+        /// a microphone input.
         /// </summary>
         /// <value><c>true</c> if this instance has a microphone input; otherwise, <c>false</c>.</value>
         public bool HasVoiceSupport => false;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> is
-        ///     currently connected.
+        /// Gets a <see cref="System.Boolean" /> value describing whether this <c>GamePad</c> is
+        /// currently connected.
         /// </summary>
         /// <value><c>true</c> if this instance is currently connected; otherwise, <c>false</c>.</value>
         public bool IsConnected { get; }
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> value describing whether a valid button configuration
-        ///     exists for this <c>GamePad</c> in the GamePad configuration database.
+        /// Gets a <see cref="System.Boolean" /> value describing whether a valid button configuration
+        /// exists for this <c>GamePad</c> in the GamePad configuration database.
         /// </summary>
         public bool IsMapped { get; }
 
@@ -253,7 +253,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.GamePadCapabilities" />.
+        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.GamePadCapabilities" />.
         /// </summary>
         /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.GamePadCapabilities" />.</returns>
         public override string ToString()
@@ -263,11 +263,11 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Serves as a hash function for a <see cref="OpenTK.Input.GamePadCapabilities" /> object.
+        /// Serves as a hash function for a <see cref="OpenTK.Input.GamePadCapabilities" /> object.
         /// </summary>
         /// <returns>
-        ///     A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
-        ///     hash table.
+        /// A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
+        /// hash table.
         /// </returns>
         public override int GetHashCode()
         {
@@ -279,16 +279,16 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Determines whether the specified <see cref="System.Object" /> is equal to the current
-        ///     <see cref="OpenTK.Input.GamePadCapabilities" />.
+        /// Determines whether the specified <see cref="System.Object" /> is equal to the current
+        ///  <see cref="OpenTK.Input.GamePadCapabilities" />.
         /// </summary>
         /// <param name="obj">
-        ///     The <see cref="System.Object" /> to compare with the current
-        ///     <see cref="OpenTK.Input.GamePadCapabilities" />.
+        /// The <see cref="System.Object" /> to compare with the current
+        ///  <see cref="OpenTK.Input.GamePadCapabilities" />.
         /// </param>
         /// <returns>
-        ///     <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
-        ///     <see cref="OpenTK.Input.GamePadCapabilities" />; otherwise, <c>false</c>.
+        ///  <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
+        ///  <see cref="OpenTK.Input.GamePadCapabilities" />; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -298,16 +298,16 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Determines whether the specified <see cref="OpenTK.Input.GamePadCapabilities" /> is equal to the current
-        ///     <see cref="OpenTK.Input.GamePadCapabilities" />.
+        /// Determines whether the specified <see cref="OpenTK.Input.GamePadCapabilities" /> is equal to the current
+        ///  <see cref="OpenTK.Input.GamePadCapabilities" />.
         /// </summary>
         /// <param name="other">
-        ///     The <see cref="OpenTK.Input.GamePadCapabilities" /> to compare with the current
-        ///     <see cref="OpenTK.Input.GamePadCapabilities" />.
+        /// The <see cref="OpenTK.Input.GamePadCapabilities" /> to compare with the current
+        ///  <see cref="OpenTK.Input.GamePadCapabilities" />.
         /// </param>
         /// <returns>
-        ///     <c>true</c> if the specified <see cref="OpenTK.Input.GamePadCapabilities" /> is equal to the current
-        ///     <see cref="OpenTK.Input.GamePadCapabilities" />; otherwise, <c>false</c>.
+        ///  <c>true</c> if the specified <see cref="OpenTK.Input.GamePadCapabilities" /> is equal to the current
+        ///  <see cref="OpenTK.Input.GamePadCapabilities" />; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(GamePadCapabilities other)
         {

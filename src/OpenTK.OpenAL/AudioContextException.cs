@@ -26,15 +26,21 @@
 
 namespace OpenTK.OpenAL
 {
-    /// <summary>Represents exceptions related to an OpenTK.Audio.AudioContext.</summary>
+    /// <summary>
+    /// Represents exceptions related to an OpenTK.Audio.AudioContext.
+    /// </summary>
     public class AudioContextException : AudioException
     {
-        /// <summary>Constructs a new AudioContextException.</summary>
+        /// <summary>
+        /// Constructs a new AudioContextException.
+        /// </summary>
         public AudioContextException()
         {
         }
 
-        /// <summary>Constructs a new AudioContextException with the specified error message.</summary>
+        /// <summary>
+        /// Constructs a new AudioContextException with the specified error message.
+        /// </summary>
         /// <param name="message">The error message of the AudioContextException.</param>
         public AudioContextException(string message) : base(message)
         {

@@ -13,7 +13,9 @@ using System.Drawing;
 
 namespace OpenTK
 {
-    /// <summary>Contains information regarding a monitor's display resolution.</summary>
+    /// <summary>
+    /// Contains information regarding a monitor's display resolution.
+    /// </summary>
     public class DisplayResolution
     {
         private Rectangle bounds;
@@ -80,21 +82,25 @@ namespace OpenTK
 #endif
 
         /// <summary>
-        ///     Gets a System.Drawing.Rectangle that contains the bounds of this display device.
+        /// Gets a System.Drawing.Rectangle that contains the bounds of this display device.
         /// </summary>
         [Obsolete(
             "This property will return invalid results if a monitor changes resolution. Use DisplayDevice.Bounds instead.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public Rectangle Bounds => bounds;
 
-        /// <summary>Gets a System.Int32 that contains the width of this display in pixels.</summary>
+        /// <summary>
+        /// Gets a System.Int32 that contains the width of this display in pixels.
+        /// </summary>
         public int Width
         {
             get => bounds.Width;
             internal set => bounds.Width = value;
         }
 
-        /// <summary>Gets a System.Int32 that contains the height of this display in pixels.</summary>
+        /// <summary>
+        /// Gets a System.Int32 that contains the height of this display in pixels.
+        /// </summary>
         public int Height
         {
             get => bounds.Height;
@@ -102,18 +108,18 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets a System.Int32 that contains number of bits per pixel of this display. Typical values include 8, 16, 24
-        ///     and 32.
+        /// Gets a System.Int32 that contains number of bits per pixel of this display. Typical values include 8, 16, 24
+        /// and 32.
         /// </summary>
         public int BitsPerPixel { get; internal set; }
 
         /// <summary>
-        ///     Gets a System.Single representing the vertical refresh rate of this display.
+        /// Gets a System.Single representing the vertical refresh rate of this display.
         /// </summary>
         public float RefreshRate { get; internal set; }
 
         /// <summary>
-        ///     Returns a System.String representing this DisplayResolution.
+        /// Returns a System.String representing this DisplayResolution.
         /// </summary>
         /// <returns>A System.String representing this DisplayResolution.</returns>
         public override string ToString()
@@ -123,7 +129,9 @@ namespace OpenTK
 #pragma warning restore 612,618
         }
 
-        /// <summary>Determines whether the specified resolutions are equal.</summary>
+        /// <summary>
+        /// Determines whether the specified resolutions are equal.
+        /// </summary>
         /// <param name="obj">The System.Object to check against.</param>
         /// <returns>True if the System.Object is an equal DisplayResolution; false otherwise.</returns>
         public override bool Equals(object obj)
@@ -146,7 +154,9 @@ namespace OpenTK
             return false;
         }
 
-        /// <summary>Returns a unique hash representing this resolution.</summary>
+        /// <summary>
+        /// Returns a unique hash representing this resolution.
+        /// </summary>
         /// <returns>A System.Int32 that may serve as a hash code for this resolution.</returns>
         public override int GetHashCode()
         {
@@ -156,7 +166,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Compares two instances for equality.
+        /// Compares two instances for equality.
         /// </summary>
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
@@ -178,7 +188,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Compares two instances for inequality.
+        /// Compares two instances for inequality.
         /// </summary>
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>

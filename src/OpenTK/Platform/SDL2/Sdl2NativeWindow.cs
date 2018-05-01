@@ -48,6 +48,8 @@ namespace OpenTK.Platform.SDL2
             new Dictionary<uint, Sdl2NativeWindow>();
 
         private readonly object sync = new object();
+
+        private readonly Sdl2WindowInfo window;
         private MouseCursor cursor = MouseCursor.Default;
 
         // Used in KeyPress event to decode SDL UTF8 text strings
@@ -63,8 +65,6 @@ namespace OpenTK.Platform.SDL2
         private bool must_destroy;
         private WindowState previous_window_state = WindowState.Normal;
         private IntPtr sdl_cursor = IntPtr.Zero;
-
-        private readonly Sdl2WindowInfo window;
         private WindowBorder window_border = WindowBorder.Resizable;
         private uint window_id;
         private WindowState window_state = WindowState.Normal;

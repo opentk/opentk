@@ -243,6 +243,10 @@ namespace OpenTK.Platform.MacOS
 
         private readonly List<JoystickElement> button_elements = new List<JoystickElement>();
         private readonly CFDictionary DeviceTypes = new CFDictionary();
+
+        private readonly NativeMethods.IOHIDDeviceCallback HandleDeviceAdded;
+        private readonly NativeMethods.IOHIDDeviceCallback HandleDeviceRemoved;
+        private readonly NativeMethods.IOHIDValueCallback HandleDeviceValueReceived;
         private readonly List<JoystickElement> hat_elements = new List<JoystickElement>();
         private readonly CFString InputLoopMode = CF.RunLoopModeDefault;
 
@@ -262,10 +266,6 @@ namespace OpenTK.Platform.MacOS
         private MouseState CursorState;
 
         private bool disposed;
-
-        private readonly NativeMethods.IOHIDDeviceCallback HandleDeviceAdded;
-        private readonly NativeMethods.IOHIDDeviceCallback HandleDeviceRemoved;
-        private readonly NativeMethods.IOHIDValueCallback HandleDeviceValueReceived;
 
         private IOHIDManagerRef hidmanager;
 
@@ -1141,6 +1141,7 @@ namespace OpenTK.Platform.MacOS
                     {
                         joy.State.SetButton(button, pressed);
                     }
+
                     break;
                 }
             }
@@ -1315,9 +1316,10 @@ namespace OpenTK.Platform.MacOS
             public readonly Dictionary<IOHIDElementCookie, JoystickElement> Elements =
                 new Dictionary<IOHIDElementCookie, JoystickElement>();
 
+            public readonly IntPtr Id;
+
             public JoystickCapabilities Capabilities;
             public Guid Guid;
-            public readonly IntPtr Id;
             public string Name;
             public JoystickState State;
 
@@ -1345,6 +1347,8 @@ namespace OpenTK.Platform.MacOS
         private class JoystickElement : IComparable<JoystickElement>, IEquatable<JoystickElement>
         {
             public readonly IntPtr Cookie;
+            public readonly HIDPage Page;
+            public readonly int Usage;
             public IntPtr Element;
 
             // Order in which this element was reported
@@ -1358,8 +1362,6 @@ namespace OpenTK.Platform.MacOS
 
             // Reported axis range (can sometimes be larger than hardware range)
             public int MinReported;
-            public readonly HIDPage Page;
-            public readonly int Usage;
 
             public JoystickElement(
                 IntPtr element, IntPtr cookie,

@@ -5,7 +5,7 @@
  * See license.txt for license details
  * http://www.OpenTK.net */
 
-using OpenTK.Mathemathics;
+using OpenTK.Mathematics;
 
 namespace OpenTK.OpenAL.Native
 {
@@ -202,8 +202,8 @@ namespace OpenTK.OpenAL.Native
 
         // TODO: CLS compliance.
         /// <summary>
-        ///     EAX Reverb Presets in legacy format - use ConvertReverbParameters() to convert to EFX EAX Reverb Presets for
-        ///     use with the OpenAL Effects Extension.
+        /// EAX Reverb Presets in legacy format - use ConvertReverbParameters() to convert to EFX EAX Reverb Presets for
+        /// use with the OpenAL Effects Extension.
         /// </summary>
         public static class ReverbPresets
         {

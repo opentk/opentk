@@ -37,24 +37,25 @@ namespace OpenTK.Platform.X11
         private static readonly IntPtr ExitAtom;
 
         private static readonly Functions.EventPredicate PredicateImpl = IsEventValid;
-        private readonly X11KeyMap KeyMap;
-        private readonly IntPtr Predicate = Marshal.GetFunctionPointerForDelegate(PredicateImpl);
-        private readonly Thread ProcessingThread;
-        private readonly object Sync = new object();
-
-        internal readonly X11WindowInfo window;
-
-        private long cursor_x, cursor_y; // For GetCursorState()
         private readonly List<XIMouse> devices = new List<XIMouse>(); // list of connected mice
-        private bool disposed;
 
         private readonly Dictionary<int, int>
             keyboard_ids = new Dictionary<int, int>(); // maps hardware device ids to XIKeyboard ids
 
         private readonly List<XIKeyboard> keyboards = new List<XIKeyboard>(); // list of connected keybords
+        private readonly X11KeyMap KeyMap;
+        private readonly IntPtr Predicate = Marshal.GetFunctionPointerForDelegate(PredicateImpl);
+        private readonly Thread ProcessingThread;
 
         private readonly Dictionary<int, int>
             rawids = new Dictionary<int, int>(); // maps hardware device ids to XIMouse ids
+
+        private readonly object Sync = new object();
+
+        internal readonly X11WindowInfo window;
+
+        private long cursor_x, cursor_y; // For GetCursorState()
+        private bool disposed;
 
         static XI2MouseKeyboard()
         {
@@ -687,11 +688,11 @@ namespace OpenTK.Platform.X11
         private class XIMouse
         {
             public XIDeviceInfo DeviceInfo;
-            public XIValuatorClassInfo MotionX = new XIValuatorClassInfo {number = -1};
-            public XIValuatorClassInfo MotionY = new XIValuatorClassInfo {number = -1};
+            public XIValuatorClassInfo MotionX = new XIValuatorClassInfo { number = -1 };
+            public XIValuatorClassInfo MotionY = new XIValuatorClassInfo { number = -1 };
             public string Name;
-            public XIScrollClassInfo ScrollX = new XIScrollClassInfo {number = -1};
-            public XIScrollClassInfo ScrollY = new XIScrollClassInfo {number = -1};
+            public XIScrollClassInfo ScrollX = new XIScrollClassInfo { number = -1 };
+            public XIScrollClassInfo ScrollY = new XIScrollClassInfo { number = -1 };
             public MouseState State;
         }
 

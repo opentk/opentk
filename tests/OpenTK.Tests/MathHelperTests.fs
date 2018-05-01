@@ -5,7 +5,7 @@ open FsCheck
 open FsCheck.Xunit
 open System
 open OpenTK
-open OpenTK.Mathemathics
+open OpenTK.Mathematics
 
 module MathHelper =
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]

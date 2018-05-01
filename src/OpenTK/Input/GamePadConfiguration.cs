@@ -32,7 +32,7 @@ namespace OpenTK.Input
 {
     internal sealed class GamePadConfiguration
     {
-        private static readonly char[] ConfigurationSeparator = {','};
+        private static readonly char[] ConfigurationSeparator = { ',' };
 
         private readonly List<GamePadConfigurationItem> configuration_items =
             new List<GamePadConfigurationItem>();
@@ -52,10 +52,10 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Parses a GamePad configuration string.
-        ///     This string must follow the rules for SDL2
-        ///     GameController outlined here:
-        ///     http://wiki.libsdl.org/SDL_GameControllerAddMapping
+        /// Parses a GamePad configuration string.
+        /// This string must follow the rules for SDL2
+        /// GameController outlined here:
+        /// http://wiki.libsdl.org/SDL_GameControllerAddMapping
         /// </summary>
         /// <param name="configuration"></param>
         private void ParseConfiguration(string configuration)
@@ -89,7 +89,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Parses a gamepad configuration target string
+        /// Parses a gamepad configuration target string
         /// </summary>
         /// <param name="target">The string to parse</param>
         /// <returns>The configuration target (Button index, axis index etc.)</returns>
@@ -153,7 +153,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Creates a new gamepad configuration source from the given string
+        /// Creates a new gamepad configuration source from the given string
         /// </summary>
         /// <param name="item">The string to parse</param>
         /// <returns>The new gamepad configuration source</returns>
@@ -187,8 +187,8 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Parses a string in the format a#" where:
-        ///     - # is a zero-based integer number
+        /// Parses a string in the format a#" where:
+        /// - # is a zero-based integer number
         /// </summary>
         /// <param name="item">The string to parse</param>
         /// <returns>The index of the axis or button</returns>
@@ -199,9 +199,9 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Parses a string in the format "h#.#" where:
-        ///     - the 1st # is the zero-based hat id
-        ///     - the 2nd # is a bit-flag defining the hat position
+        /// Parses a string in the format "h#.#" where:
+        /// - the 1st # is the zero-based hat id
+        /// - the 2nd # is a bit-flag defining the hat position
         /// </summary>
         /// <param name="item">The string to parse</param>
         /// <param name="position">The hat position assigned via 'out'</param>

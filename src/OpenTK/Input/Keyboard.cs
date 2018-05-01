@@ -29,7 +29,7 @@ using OpenTK.Platform;
 namespace OpenTK.Input
 {
     /// <summary>
-    ///     Provides access to keyboard devices. Note: this API is not implemented yet.
+    /// Provides access to keyboard devices. Note: this API is not implemented yet.
     /// </summary>
     public static class Keyboard
     {
@@ -39,7 +39,7 @@ namespace OpenTK.Input
         private static readonly object SyncRoot = new object();
 
         /// <summary>
-        ///     Retrieves the combined <see cref="OpenTK.Input.KeyboardState" /> for all keyboard devices.
+        /// Retrieves the combined <see cref="OpenTK.Input.KeyboardState" /> for all keyboard devices.
         /// </summary>
         /// <returns>An <see cref="OpenTK.Input.KeyboardState" /> structure containing the combined state for all keyboard devices.</returns>
         public static KeyboardState GetState()
@@ -51,7 +51,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Retrieves the <see cref="OpenTK.Input.KeyboardState" /> for the specified keyboard device.
+        /// Retrieves the <see cref="OpenTK.Input.KeyboardState" /> for the specified keyboard device.
         /// </summary>
         /// <param name="index">The index of the keyboard device.</param>
         /// <returns>An <see cref="OpenTK.Input.KeyboardState" /> structure containing the state of the keyboard device.</returns>

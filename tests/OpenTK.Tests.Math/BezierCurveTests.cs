@@ -1,4 +1,4 @@
-﻿using OpenTK.Mathemathics;
+﻿using OpenTK.Mathematics;
 using Xunit;
 
 namespace OpenTK.Tests.Unit

@@ -88,8 +88,8 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     For internal use by OpenTK only!
-    ///     Exposes useful native WINAPI methods and structures.
+    /// For internal use by OpenTK only!
+    /// Exposes useful native WINAPI methods and structures.
     /// </summary>
     internal static class API
     {
@@ -156,30 +156,30 @@ namespace OpenTK.Platform.Windows
         );
 
         /// <summary>
-        ///     Calculates the required size of the window rectangle, based on the desired client-rectangle size. The window
-        ///     rectangle can then be passed to the CreateWindow function to create a window whose client area is the desired size.
+        /// Calculates the required size of the window rectangle, based on the desired client-rectangle size. The window
+        /// rectangle can then be passed to the CreateWindow function to create a window whose client area is the desired size.
         /// </summary>
         /// <param name="lpRect">
-        ///     [in, out] Pointer to a RECT structure that contains the coordinates of the top-left and
-        ///     bottom-right corners of the desired client area. When the function returns, the structure contains the coordinates
-        ///     of the top-left and bottom-right corners of the window to accommodate the desired client area.
+        /// [in, out] Pointer to a RECT structure that contains the coordinates of the top-left and
+        /// bottom-right corners of the desired client area. When the function returns, the structure contains the coordinates
+        /// of the top-left and bottom-right corners of the window to accommodate the desired client area.
         /// </param>
         /// <param name="dwStyle">
-        ///     [in] Specifies the window style of the window whose required size is to be calculated. Note that
-        ///     you cannot specify the WS_OVERLAPPED style.
+        /// [in] Specifies the window style of the window whose required size is to be calculated. Note that
+        /// you cannot specify the WS_OVERLAPPED style.
         /// </param>
         /// <param name="bMenu">[in] Specifies whether the window has a menu.</param>
         /// <returns>
-        ///     If the function succeeds, the return value is nonzero.
-        ///     If the function fails, the return value is zero. To get extended error information, call GetLastError.
+        /// If the function succeeds, the return value is nonzero.
+        /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
         /// </returns>
         /// <remarks>
-        ///     A client rectangle is the smallest rectangle that completely encloses a client area. A window rectangle is the
-        ///     smallest rectangle that completely encloses the window, which includes the client area and the nonclient area.
-        ///     The AdjustWindowRect function does not add extra space when a menu bar wraps to two or more rows.
-        ///     The AdjustWindowRect function does not take the WS_VSCROLL or WS_HSCROLL styles into account. To account for the
-        ///     scroll bars, call the GetSystemMetrics function with SM_CXVSCROLL or SM_CYHSCROLL.
-        ///     Found Winuser.h, user32.dll
+        /// A client rectangle is the smallest rectangle that completely encloses a client area. A window rectangle is the
+        /// smallest rectangle that completely encloses the window, which includes the client area and the nonclient area.
+        /// The AdjustWindowRect function does not add extra space when a menu bar wraps to two or more rows.
+        /// The AdjustWindowRect function does not take the WS_VSCROLL or WS_HSCROLL styles into account. To account for the
+        /// scroll bars, call the GetSystemMetrics function with SM_CXVSCROLL or SM_CYHSCROLL.
+        /// Found Winuser.h, user32.dll
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
@@ -340,7 +340,7 @@ namespace OpenTK.Platform.Windows
         private static extern UIntPtr GetWindowLongPtrInternal(HWND hWnd, GetWindowLongOffsets nIndex);
 
         /// <summary>
-        ///     Low-level WINAPI function that checks the next message in the queue.
+        /// Low-level WINAPI function that checks the next message in the queue.
         /// </summary>
         /// <param name="msg">The pending message (if any) is stored here.</param>
         /// <param name="hWnd">Not used</param>
@@ -355,17 +355,17 @@ namespace OpenTK.Platform.Windows
             PeekMessageFlags flags);
 
         /// <summary>
-        ///     Low-level WINAPI function that retrieves the next message in the queue.
+        /// Low-level WINAPI function that retrieves the next message in the queue.
         /// </summary>
         /// <param name="msg">The pending message (if any) is stored here.</param>
         /// <param name="windowHandle">Not used</param>
         /// <param name="messageFilterMin">Not used</param>
         /// <param name="messageFilterMax">Not used</param>
         /// <returns>
-        ///     Nonzero indicates that the function retrieves a message other than WM_QUIT.
-        ///     Zero indicates that the function retrieves the WM_QUIT message, or that lpMsg is an invalid pointer.
-        ///     1 indicates that an error occurred  for example, the function fails if hWnd is an invalid window handle.
-        ///     To get extended error information, call GetLastError.
+        /// Nonzero indicates that the function retrieves a message other than WM_QUIT.
+        /// Zero indicates that the function retrieves the WM_QUIT message, or that lpMsg is an invalid pointer.
+        /// 1 indicates that an error occurred  for example, the function fails if hWnd is an invalid window handle.
+        /// To get extended error information, call GetLastError.
         /// </returns>
         [SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll")]
@@ -374,11 +374,11 @@ namespace OpenTK.Platform.Windows
             IntPtr windowHandle, int messageFilterMin, int messageFilterMax);
 
         /// <summary>
-        ///     Retrieves the message time for the last message retrieved by the
-        ///     GetMessage function. The time is a long integer that specifies the
-        ///     elapsed time, in milliseconds, from the time the system was started
-        ///     to the time the message was created (that is, placed in the thread's
-        ///     message queue).
+        /// Retrieves the message time for the last message retrieved by the
+        /// GetMessage function. The time is a long integer that specifies the
+        /// elapsed time, in milliseconds, from the time the system was started
+        /// to the time the message was created (that is, placed in the thread's
+        /// message queue).
         /// </summary>
         /// <returns>The return value specifies the message time.</returns>
         [DllImport("User32.dll")]
@@ -409,27 +409,27 @@ namespace OpenTK.Platform.Windows
         internal static extern bool TranslateMessage(ref MSG lpMsg);
 
         /// <summary>
-        ///     Indicates the type of messages found in the calling thread's message queue.
+        /// Indicates the type of messages found in the calling thread's message queue.
         /// </summary>
         /// <param name="flags"></param>
         /// <returns>
-        ///     The high-order word of the return value indicates the types of messages currently in the queue.
-        ///     The low-order word indicates the types of messages that have been added to the queue and that are still
-        ///     in the queue since the last call to the GetQueueStatus, GetMessage, or PeekMessage function.
+        /// The high-order word of the return value indicates the types of messages currently in the queue.
+        /// The low-order word indicates the types of messages that have been added to the queue and that are still
+        /// in the queue since the last call to the GetQueueStatus, GetMessage, or PeekMessage function.
         /// </returns>
         /// <remarks>
-        ///     The presence of a QS_ flag in the return value does not guarantee that
-        ///     a subsequent call to the GetMessage or PeekMessage function will return a message.
-        ///     GetMessage and PeekMessage perform some internal filtering that may cause the message
-        ///     to be processed internally. For this reason, the return value from GetQueueStatus
-        ///     should be considered only a hint as to whether GetMessage or PeekMessage should be called.
-        ///     <para>
-        ///         The QS_ALLPOSTMESSAGE and QS_POSTMESSAGE flags differ in when they are cleared.
-        ///         QS_POSTMESSAGE is cleared when you call GetMessage or PeekMessage, whether or not you are filtering messages.
-        ///         QS_ALLPOSTMESSAGE is cleared when you call GetMessage or PeekMessage without filtering messages
-        ///         (wMsgFilterMin and wMsgFilterMax are 0). This can be useful when you call PeekMessage multiple times
-        ///         to get messages in different ranges.
-        ///     </para>
+        /// The presence of a QS_ flag in the return value does not guarantee that
+        /// a subsequent call to the GetMessage or PeekMessage function will return a message.
+        /// GetMessage and PeekMessage perform some internal filtering that may cause the message
+        /// to be processed internally. For this reason, the return value from GetQueueStatus
+        /// should be considered only a hint as to whether GetMessage or PeekMessage should be called.
+        ///  <para>
+        /// The QS_ALLPOSTMESSAGE and QS_POSTMESSAGE flags differ in when they are cleared.
+        /// QS_POSTMESSAGE is cleared when you call GetMessage or PeekMessage, whether or not you are filtering messages.
+        /// QS_ALLPOSTMESSAGE is cleared when you call GetMessage or PeekMessage without filtering messages
+        /// (wMsgFilterMin and wMsgFilterMax are 0). This can be useful when you call PeekMessage multiple times
+        /// to get messages in different ranges.
+        ///  </para>
         /// </remarks>
         [SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
@@ -439,7 +439,7 @@ namespace OpenTK.Platform.Windows
         public static extern IntPtr DefWindowProc(HWND hWnd, WindowMessage msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
-        ///     Sets the timing resolution of the GetTime (?) method.
+        /// Sets the timing resolution of the GetTime (?) method.
         /// </summary>
         /// <param name="period">Timing resolution in msec (?)</param>
         /// <returns>(?)</returns>
@@ -548,141 +548,141 @@ namespace OpenTK.Platform.Windows
         internal static extern uint MapVirtualKey(VirtualKeys vkey, MapVirtualKeyType uMapType);
 
         /// <summary>
-        ///     The ShowWindow function sets the specified window's show state.
+        /// The ShowWindow function sets the specified window's show state.
         /// </summary>
         /// <param name="hWnd">[in] Handle to the window.</param>
         /// <param name="nCmdShow">
-        ///     [in] Specifies how the window is to be shown. This parameter is ignored the first time an
-        ///     application calls ShowWindow, if the program that launched the application provides a STARTUPINFO structure.
-        ///     Otherwise, the first time ShowWindow is called, the value should be the value obtained by the WinMain function in
-        ///     its nCmdShow parameter. In subsequent calls, this parameter can be one of the ShowWindowEnum values.
+        /// [in] Specifies how the window is to be shown. This parameter is ignored the first time an
+        /// application calls ShowWindow, if the program that launched the application provides a STARTUPINFO structure.
+        /// Otherwise, the first time ShowWindow is called, the value should be the value obtained by the WinMain function in
+        /// its nCmdShow parameter. In subsequent calls, this parameter can be one of the ShowWindowEnum values.
         /// </param>
         /// <returns>If the window was previously visible, the return value is true. Otherwise false.</returns>
         /// <remarks>
-        ///     <para>To perform certain special effects when showing or hiding a window, use AnimateWindow.</para>
-        ///     <para>
-        ///         The first time an application calls ShowWindow, it should use the WinMain function's nCmdShow parameter as
-        ///         its nCmdShow parameter. Subsequent calls to ShowWindow must use one of the values in the given list, instead of
-        ///         the one specified by the WinMain function's nCmdShow parameter.
-        ///     </para>
-        ///     <para>
-        ///         As noted in the discussion of the nCmdShow parameter, the nCmdShow value is ignored in the first call to
-        ///         ShowWindow if the program that launched the application specifies startup information in the structure. In this
-        ///         case, ShowWindow uses the information specified in the STARTUPINFO structure to show the window. On subsequent
-        ///         calls, the application must call ShowWindow with nCmdShow set to SW_SHOWDEFAULT to use the startup information
-        ///         provided by the program that launched the application. This behavior is designed for the following situations:
-        ///     </para>
-        ///     <list type="">
-        ///         <item>Applications create their main window by calling CreateWindow with the WS_VISIBLE flag set.</item>
-        ///         <item>
-        ///             Applications create their main window by calling CreateWindow with the WS_VISIBLE flag cleared, and later
-        ///             call ShowWindow with the SW_SHOW flag set to make it visible.
-        ///         </item>
-        ///     </list>
+        ///  <para>To perform certain special effects when showing or hiding a window, use AnimateWindow.</para>
+        ///  <para>
+        /// The first time an application calls ShowWindow, it should use the WinMain function's nCmdShow parameter as
+        /// its nCmdShow parameter. Subsequent calls to ShowWindow must use one of the values in the given list, instead of
+        /// the one specified by the WinMain function's nCmdShow parameter.
+        ///  </para>
+        ///  <para>
+        /// As noted in the discussion of the nCmdShow parameter, the nCmdShow value is ignored in the first call to
+        /// ShowWindow if the program that launched the application specifies startup information in the structure. In this
+        /// case, ShowWindow uses the information specified in the STARTUPINFO structure to show the window. On subsequent
+        /// calls, the application must call ShowWindow with nCmdShow set to SW_SHOWDEFAULT to use the startup information
+        /// provided by the program that launched the application. This behavior is designed for the following situations:
+        ///  </para>
+        ///  <list type="">
+        ///  <item>Applications create their main window by calling CreateWindow with the WS_VISIBLE flag set.</item>
+        ///  <item>
+        /// Applications create their main window by calling CreateWindow with the WS_VISIBLE flag cleared, and later
+        /// call ShowWindow with the SW_SHOW flag set to make it visible.
+        ///  </item>
+        ///  </list>
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
         internal static extern bool ShowWindow(HWND hWnd, ShowWindowCommand nCmdShow);
 
         /// <summary>
-        ///     The SetWindowText function changes the text of the specified window's title bar (if it has one). If the specified
-        ///     window is a control, the text of the control is changed. However, SetWindowText cannot change the text of a control
-        ///     in another application.
+        /// The SetWindowText function changes the text of the specified window's title bar (if it has one). If the specified
+        /// window is a control, the text of the control is changed. However, SetWindowText cannot change the text of a control
+        /// in another application.
         /// </summary>
         /// <param name="hWnd">[in] Handle to the window or control whose text is to be changed.</param>
         /// <param name="lpString">[in] Pointer to a null-terminated string to be used as the new title or control text.</param>
         /// <returns>
-        ///     <para>If the function succeeds, the return value is nonzero.</para>
-        ///     <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
+        ///  <para>If the function succeeds, the return value is nonzero.</para>
+        ///  <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
         /// </returns>
         /// <remarks>
-        ///     <para>
-        ///         If the target window is owned by the current process, SetWindowText causes a WM_SETTEXT message to be sent to
-        ///         the specified window or control. If the control is a list box control created with the WS_CAPTION style,
-        ///         however, SetWindowText sets the text for the control, not for the list box entries.
-        ///     </para>
-        ///     <para>
-        ///         To set the text of a control in another process, send the WM_SETTEXT message directly instead of calling
-        ///         SetWindowText.
-        ///     </para>
-        ///     <para>
-        ///         The SetWindowText function does not expand tab characters (ASCII code 0x09). Tab characters are displayed as
-        ///         vertical bar (|) characters.
-        ///     </para>
-        ///     <para>
-        ///         Windows 95/98/Me: SetWindowTextW is supported by the Microsoft Layer for Unicode (MSLU). To use this, you
-        ///         must add certain files to your application, as outlined in Microsoft Layer for Unicode on Windows 95/98/Me
-        ///         Systems .
-        ///     </para>
+        ///  <para>
+        /// If the target window is owned by the current process, SetWindowText causes a WM_SETTEXT message to be sent to
+        /// the specified window or control. If the control is a list box control created with the WS_CAPTION style,
+        /// however, SetWindowText sets the text for the control, not for the list box entries.
+        ///  </para>
+        ///  <para>
+        /// To set the text of a control in another process, send the WM_SETTEXT message directly instead of calling
+        /// SetWindowText.
+        ///  </para>
+        ///  <para>
+        /// The SetWindowText function does not expand tab characters (ASCII code 0x09). Tab characters are displayed as
+        /// vertical bar (|) characters.
+        ///  </para>
+        ///  <para>
+        /// Windows 95/98/Me: SetWindowTextW is supported by the Microsoft Layer for Unicode (MSLU). To use this, you
+        /// must add certain files to your application, as outlined in Microsoft Layer for Unicode on Windows 95/98/Me
+        /// Systems .
+        ///  </para>
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         internal static extern bool SetWindowText(HWND hWnd, [MarshalAs(UnmanagedType.LPTStr)] string lpString);
 
         /// <summary>
-        ///     The GetWindowText function copies the text of the specified window's title bar (if it has one) into a buffer. If
-        ///     the specified window is a control, the text of the control is copied. However, GetWindowText cannot retrieve the
-        ///     text of a control in another application.
+        /// The GetWindowText function copies the text of the specified window's title bar (if it has one) into a buffer. If
+        /// the specified window is a control, the text of the control is copied. However, GetWindowText cannot retrieve the
+        /// text of a control in another application.
         /// </summary>
         /// <param name="hWnd">[in] Handle to the window or control containing the text.</param>
         /// <param name="lpString">
-        ///     [out] Pointer to the buffer that will receive the text. If the string is as long or longer than
-        ///     the buffer, the string is truncated and terminated with a NULL character.
+        /// [out] Pointer to the buffer that will receive the text. If the string is as long or longer than
+        /// the buffer, the string is truncated and terminated with a NULL character.
         /// </param>
         /// <param name="nMaxCount">
-        ///     [in] Specifies the maximum number of characters to copy to the buffer, including the NULL
-        ///     character. If the text exceeds this limit, it is truncated.
+        /// [in] Specifies the maximum number of characters to copy to the buffer, including the NULL
+        /// character. If the text exceeds this limit, it is truncated.
         /// </param>
         /// <returns>
-        ///     If the function succeeds, the return value is the length, in characters, of the copied string, not including the
-        ///     terminating NULL character. If the window has no title bar or text, if the title bar is empty, or if the window or
-        ///     control handle is invalid, the return value is zero. To get extended error information, call GetLastError.
-        ///     <para>This function cannot retrieve the text of an edit control in another application.</para>
+        /// If the function succeeds, the return value is the length, in characters, of the copied string, not including the
+        /// terminating NULL character. If the window has no title bar or text, if the title bar is empty, or if the window or
+        /// control handle is invalid, the return value is zero. To get extended error information, call GetLastError.
+        ///  <para>This function cannot retrieve the text of an edit control in another application.</para>
         /// </returns>
         /// <remarks>
-        ///     <para>
-        ///         If the target window is owned by the current process, GetWindowText causes a WM_GETTEXT message to be sent to
-        ///         the specified window or control. If the target window is owned by another process and has a caption,
-        ///         GetWindowText retrieves the window caption text. If the window does not have a caption, the return value is a
-        ///         null string. This behavior is by design. It allows applications to call GetWindowText without becoming
-        ///         unresponsive if the process that owns the target window is not responding. However, if the target window is not
-        ///         responding and it belongs to the calling application, GetWindowText will cause the calling application to
-        ///         become unresponsive.
-        ///     </para>
-        ///     <para>
-        ///         To retrieve the text of a control in another process, send a WM_GETTEXT message directly instead of calling
-        ///         GetWindowText.
-        ///     </para>
-        ///     <para>
-        ///         Windows 95/98/Me: GetWindowTextW is supported by the Microsoft Layer for Unicode (MSLU). To use this, you
-        ///         must add certain files to your application, as outlined in Microsoft Layer for Unicode on Windows 95/98/Me
-        ///     </para>
+        ///  <para>
+        /// If the target window is owned by the current process, GetWindowText causes a WM_GETTEXT message to be sent to
+        /// the specified window or control. If the target window is owned by another process and has a caption,
+        /// GetWindowText retrieves the window caption text. If the window does not have a caption, the return value is a
+        /// null string. This behavior is by design. It allows applications to call GetWindowText without becoming
+        /// unresponsive if the process that owns the target window is not responding. However, if the target window is not
+        /// responding and it belongs to the calling application, GetWindowText will cause the calling application to
+        /// become unresponsive.
+        ///  </para>
+        ///  <para>
+        /// To retrieve the text of a control in another process, send a WM_GETTEXT message directly instead of calling
+        /// GetWindowText.
+        ///  </para>
+        ///  <para>
+        /// Windows 95/98/Me: GetWindowTextW is supported by the Microsoft Layer for Unicode (MSLU). To use this, you
+        /// must add certain files to your application, as outlined in Microsoft Layer for Unicode on Windows 95/98/Me
+        ///  </para>
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         internal static extern int GetWindowText(HWND hWnd, [MarshalAs(UnmanagedType.LPTStr)] [In] [Out]
             StringBuilder lpString, int nMaxCount);
 
         /// <summary>
-        ///     Converts the screen coordinates of a specified point on the screen to client-area coordinates.
+        /// Converts the screen coordinates of a specified point on the screen to client-area coordinates.
         /// </summary>
         /// <param name="hWnd">Handle to the window whose client area will be used for the conversion.</param>
         /// <param name="point">Pointer to a POINT structure that specifies the screen coordinates to be converted.</param>
         /// <returns>
-        ///     If the function succeeds, the return value is nonzero. If the function fails, the return value is zero.
-        ///     Windows NT/2000/XP: To get extended error information, call GetLastError.
+        /// If the function succeeds, the return value is nonzero. If the function fails, the return value is zero.
+        /// Windows NT/2000/XP: To get extended error information, call GetLastError.
         /// </returns>
         /// <remarks>
-        ///     <para>
-        ///         The function uses the window identified by the hWnd parameter and the screen coordinates given in the POINT
-        ///         structure to compute client coordinates. It then replaces the screen coordinates with the client coordinates.
-        ///         The new coordinates are relative to the upper-left corner of the specified window's client area.
-        ///     </para>
-        ///     <para>The ScreenToClient function assumes the specified point is in screen coordinates. </para>
-        ///     <para>All coordinates are in device units.</para>
-        ///     <para>
-        ///         Do not use ScreenToClient when in a mirroring situation, that is, when changing from left-to-right layout to
-        ///         right-to-left layout. Instead, use MapWindowPoints. For more information, see "Window Layout and Mirroring" in
-        ///         Window Features.
-        ///     </para>
+        ///  <para>
+        /// The function uses the window identified by the hWnd parameter and the screen coordinates given in the POINT
+        /// structure to compute client coordinates. It then replaces the screen coordinates with the client coordinates.
+        /// The new coordinates are relative to the upper-left corner of the specified window's client area.
+        ///  </para>
+        ///  <para>The ScreenToClient function assumes the specified point is in screen coordinates. </para>
+        ///  <para>All coordinates are in device units.</para>
+        ///  <para>
+        /// Do not use ScreenToClient when in a mirroring situation, that is, when changing from left-to-right layout to
+        /// right-to-left layout. Instead, use MapWindowPoints. For more information, see "Window Layout and Mirroring" in
+        /// Window Features.
+        ///  </para>
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
@@ -690,68 +690,68 @@ namespace OpenTK.Platform.Windows
         internal static extern bool ScreenToClient(HWND hWnd, ref Point point);
 
         /// <summary>
-        ///     Converts the client-area coordinates of a specified point to screen coordinates.
+        /// Converts the client-area coordinates of a specified point to screen coordinates.
         /// </summary>
         /// <param name="hWnd">Handle to the window whose client area will be used for the conversion.</param>
         /// <param name="point">
-        ///     Pointer to a POINT structure that contains the client coordinates to be converted. The new screen
-        ///     coordinates are copied into this structure if the function succeeds.
+        /// Pointer to a POINT structure that contains the client coordinates to be converted. The new screen
+        /// coordinates are copied into this structure if the function succeeds.
         /// </param>
         /// <returns>
-        ///     If the function succeeds, the return value is nonzero. If the function fails, the return value is zero.
-        ///     Windows NT/2000/XP: To get extended error information, call GetLastError.
+        /// If the function succeeds, the return value is nonzero. If the function fails, the return value is zero.
+        /// Windows NT/2000/XP: To get extended error information, call GetLastError.
         /// </returns>
         /// <remarks>
-        ///     <para>
-        ///         The ClientToScreen function replaces the client-area coordinates in the POINT structure with the screen
-        ///         coordinates. The screen coordinates are relative to the upper-left corner of the screen. Note, a
-        ///         screen-coordinate point that is above the window's client area has a negative y-coordinate. Similarly, a screen
-        ///         coordinate to the left of a client area has a negative x-coordinate.
-        ///     </para>
-        ///     <para>All coordinates are device coordinates.</para>
+        ///  <para>
+        /// The ClientToScreen function replaces the client-area coordinates in the POINT structure with the screen
+        /// coordinates. The screen coordinates are relative to the upper-left corner of the screen. Note, a
+        /// screen-coordinate point that is above the window's client area has a negative y-coordinate. Similarly, a screen
+        /// coordinate to the left of a client area has a negative x-coordinate.
+        ///  </para>
+        ///  <para>All coordinates are device coordinates.</para>
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
         internal static extern bool ClientToScreen(HWND hWnd, ref Point point);
 
         /// <summary>
-        ///     The GetClientRect function retrieves the coordinates of a window's client area. The client coordinates specify the
-        ///     upper-left and lower-right corners of the client area. Because client coordinates are relative to the upper-left
-        ///     corner of a window's client area, the coordinates of the upper-left corner are (0,0).
+        /// The GetClientRect function retrieves the coordinates of a window's client area. The client coordinates specify the
+        /// upper-left and lower-right corners of the client area. Because client coordinates are relative to the upper-left
+        /// corner of a window's client area, the coordinates of the upper-left corner are (0,0).
         /// </summary>
         /// <param name="windowHandle">Handle to the window whose client coordinates are to be retrieved.</param>
         /// <param name="clientRectangle">
-        ///     Pointer to a RECT structure that receives the client coordinates. The left and top
-        ///     members are zero. The right and bottom members contain the width and height of the window.
+        /// Pointer to a RECT structure that receives the client coordinates. The left and top
+        /// members are zero. The right and bottom members contain the width and height of the window.
         /// </param>
         /// <returns>
-        ///     <para>If the function succeeds, the return value is nonzero.</para>
-        ///     <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
+        ///  <para>If the function succeeds, the return value is nonzero.</para>
+        ///  <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
         /// </returns>
         /// <remarks>
-        ///     In conformance with conventions for the RECT structure, the bottom-right coordinates of the returned rectangle
-        ///     are exclusive. In other words, the pixel at (right, bottom) lies immediately outside the rectangle.
+        /// In conformance with conventions for the RECT structure, the bottom-right coordinates of the returned rectangle
+        /// are exclusive. In other words, the pixel at (right, bottom) lies immediately outside the rectangle.
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
         internal static extern bool GetClientRect(HWND windowHandle, out Win32Rectangle clientRectangle);
 
         /// <summary>
-        ///     The GetWindowRect function retrieves the dimensions of the bounding rectangle of the specified window. The
-        ///     dimensions are given in screen coordinates that are relative to the upper-left corner of the screen.
+        /// The GetWindowRect function retrieves the dimensions of the bounding rectangle of the specified window. The
+        /// dimensions are given in screen coordinates that are relative to the upper-left corner of the screen.
         /// </summary>
         /// <param name="windowHandle">Handle to the window whose client coordinates are to be retrieved.</param>
         /// <param name="windowRectangle">
-        ///     Pointer to a structure that receives the screen coordinates of the upper-left and
-        ///     lower-right corners of the window.
+        /// Pointer to a structure that receives the screen coordinates of the upper-left and
+        /// lower-right corners of the window.
         /// </param>
         /// <returns>
-        ///     <para>If the function succeeds, the return value is nonzero.</para>
-        ///     <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
+        ///  <para>If the function succeeds, the return value is nonzero.</para>
+        ///  <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
         /// </returns>
         /// <remarks>
-        ///     In conformance with conventions for the RECT structure, the bottom-right coordinates of the returned rectangle
-        ///     are exclusive. In other words, the pixel at (right, bottom) lies immediately outside the rectangle.
+        /// In conformance with conventions for the RECT structure, the bottom-right coordinates of the returned rectangle
+        /// are exclusive. In other words, the pixel at (right, bottom) lies immediately outside the rectangle.
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
@@ -786,76 +786,76 @@ namespace OpenTK.Platform.Windows
         }
 
         /// <summary>
-        ///     Creates an icon or cursor from an IconInfo structure.
+        /// Creates an icon or cursor from an IconInfo structure.
         /// </summary>
         /// <param name="iconInfo">
-        ///     A pointer to an IconInfo structure the function uses to create the
-        ///     icon or cursor.
+        /// A pointer to an IconInfo structure the function uses to create the
+        /// icon or cursor.
         /// </param>
         /// <returns>
-        ///     If the function succeeds, the return value is a handle to the icon
-        ///     or cursor that is created.
-        ///     If the function fails, the return value is null. To get extended
-        ///     error information, call Marshal.GetLastWin32Error.
+        /// If the function succeeds, the return value is a handle to the icon
+        /// or cursor that is created.
+        /// If the function fails, the return value is null. To get extended
+        /// error information, call Marshal.GetLastWin32Error.
         /// </returns>
         /// <remarks>
-        ///     The system copies the bitmaps in the IconInfo structure before
-        ///     creating the icon or cursor. Because the system may temporarily
-        ///     select the bitmaps in a device context, the hbmMask and hbmColor
-        ///     members of the IconInfo structure should not already be selected
-        ///     into a device context. The application must continue to manage the
-        ///     original bitmaps and delete them when they are no longer necessary.
-        ///     When you are finished using the icon, destroy it using the
-        ///     DestroyIcon function.
+        /// The system copies the bitmaps in the IconInfo structure before
+        /// creating the icon or cursor. Because the system may temporarily
+        /// select the bitmaps in a device context, the hbmMask and hbmColor
+        /// members of the IconInfo structure should not already be selected
+        /// into a device context. The application must continue to manage the
+        /// original bitmaps and delete them when they are no longer necessary.
+        /// When you are finished using the icon, destroy it using the
+        /// DestroyIcon function.
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true)]
         public static extern HICON CreateIconIndirect(ref IconInfo iconInfo);
 
         /// <summary>
-        ///     Retrieves information about the specified icon or cursor.
+        /// Retrieves information about the specified icon or cursor.
         /// </summary>
         /// <param name="hIcon">A handle to the icon or cursor.</param>
         /// <param name="pIconInfo">
-        ///     A pointer to an IconInfo structure. The function fills in the
-        ///     structure's members.
+        /// A pointer to an IconInfo structure. The function fills in the
+        /// structure's members.
         /// </param>
         /// <returns>
-        ///     If the function succeeds, the return value is nonzero and the
-        ///     function fills in the members of the specified IconInfo structure.
-        ///     If the function fails, the return value is zero. To get extended
-        ///     error information, call Marshal.GetLastWin32Error.
+        /// If the function succeeds, the return value is nonzero and the
+        /// function fills in the members of the specified IconInfo structure.
+        /// If the function fails, the return value is zero. To get extended
+        /// error information, call Marshal.GetLastWin32Error.
         /// </returns>
         /// <remarks>
-        ///     GetIconInfo creates bitmaps for the hbmMask and hbmColor members
-        ///     of IconInfo. The calling application must manage these bitmaps and
-        ///     delete them when they are no longer necessary.
+        /// GetIconInfo creates bitmaps for the hbmMask and hbmColor members
+        /// of IconInfo. The calling application must manage these bitmaps and
+        /// delete them when they are no longer necessary.
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool GetIconInfo(HICON hIcon, out IconInfo pIconInfo);
 
         /// <summary>
-        ///     Destroys an icon and frees any memory the icon occupied.
+        /// Destroys an icon and frees any memory the icon occupied.
         /// </summary>
         /// <param name="hIcon">
-        ///     A handle to the icon to be destroyed. The icon must not be in use.
+        /// A handle to the icon to be destroyed. The icon must not be in use.
         /// </param>
         /// <returns>
-        ///     If the function succeeds, the return value is nonzero.
-        ///     If the function fails, the return value is zero. To get extended
-        ///     error information, call Marshal.GetLastWin32Error.
+        /// If the function succeeds, the return value is nonzero.
+        /// If the function fails, the return value is zero. To get extended
+        /// error information, call Marshal.GetLastWin32Error.
         /// </returns>
         /// <remarks>
-        ///     It is only necessary to call DestroyIcon for icons and cursors
-        ///     created with the following functions: CreateIconFromResourceEx
-        ///     (if called without the LR_SHARED flag), CreateIconIndirect, and
-        ///     CopyIcon. Do not use this function to destroy a shared icon. A
-        ///     shared icon is valid as long as the module from which it was loaded
-        ///     remains in memory. The following functions obtain a shared icon.
-        ///     LoadIcon
-        ///     LoadImage (if you use the LR_SHARED flag)
-        ///     CopyImage (if you use the LR_COPYRETURNORG flag and the hImage parameter is a shared icon)
-        ///     CreateIconFromResource
-        ///     CreateIconFromResourceEx (if you use the LR_SHARED flag)
+        /// It is only necessary to call DestroyIcon for icons and cursors
+        /// created with the following functions: CreateIconFromResourceEx
+        /// (if called without the LR_SHARED flag), CreateIconIndirect, and
+        /// CopyIcon. Do not use this function to destroy a shared icon. A
+        /// shared icon is valid as long as the module from which it was loaded
+        /// remains in memory. The following functions obtain a shared icon.
+        /// LoadIcon
+        /// LoadImage (if you use the LR_SHARED flag)
+        /// CopyImage (if you use the LR_COPYRETURNORG flag and the hImage parameter is a shared icon)
+        /// CreateIconFromResource
+        /// CreateIconFromResourceEx (if you use the LR_SHARED flag)
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool DestroyIcon(HICON hIcon);
@@ -878,27 +878,27 @@ namespace OpenTK.Platform.Windows
         public static extern bool UnregisterDeviceNotification(HDEVNOTIFY Handle);
 
         /// <summary>
-        ///     The ChangeDisplaySettings function changes the settings of the default display device to the specified graphics
-        ///     mode.
+        /// The ChangeDisplaySettings function changes the settings of the default display device to the specified graphics
+        /// mode.
         /// </summary>
         /// <param name="device_mode">
-        ///     [in] Pointer to a DEVMODE structure that describes the new graphics mode. If lpDevMode is
-        ///     NULL, all the values currently in the registry will be used for the display setting. Passing NULL for the lpDevMode
-        ///     parameter and 0 for the dwFlags parameter is the easiest way to return to the default mode after a dynamic mode
-        ///     change.
+        /// [in] Pointer to a DEVMODE structure that describes the new graphics mode. If lpDevMode is
+        /// NULL, all the values currently in the registry will be used for the display setting. Passing NULL for the lpDevMode
+        /// parameter and 0 for the dwFlags parameter is the easiest way to return to the default mode after a dynamic mode
+        /// change.
         /// </param>
         /// <param name="flags">[in] Indicates how the graphics mode should be changed.</param>
         /// <returns></returns>
         /// <remarks>
-        ///     To change the settings of a specified display device, use the ChangeDisplaySettingsEx function.
-        ///     <para>
-        ///         To ensure that the DEVMODE structure passed to ChangeDisplaySettings is valid and contains only values
-        ///         supported by the display driver, use the DEVMODE returned by the EnumDisplaySettings function.
-        ///     </para>
-        ///     <para>
-        ///         When the display mode is changed dynamically, the WM_DISPLAYCHANGE message is sent to all running
-        ///         applications.
-        ///     </para>
+        /// To change the settings of a specified display device, use the ChangeDisplaySettingsEx function.
+        ///  <para>
+        /// To ensure that the DEVMODE structure passed to ChangeDisplaySettings is valid and contains only values
+        /// supported by the display driver, use the DEVMODE returned by the EnumDisplaySettings function.
+        ///  </para>
+        ///  <para>
+        /// When the display mode is changed dynamically, the WM_DISPLAYCHANGE message is sent to all running
+        /// applications.
+        ///  </para>
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern int ChangeDisplaySettings(DeviceMode device_mode, ChangeDisplaySettingsEnum flags);
@@ -942,21 +942,21 @@ namespace OpenTK.Platform.Windows
         public static extern HMONITOR MonitorFromWindow(HWND hwnd, MonitorFrom dwFlags);
 
         /// <summary>
-        ///     Sets the current process as dots per inch (dpi) aware.
-        ///     Note: SetProcessDPIAware is subject to a possible race condition
-        ///     if a DLL caches dpi settings during initialization.
-        ///     For this reason, it is recommended that dpi-aware be set through
-        ///     the application (.exe) manifest rather than by calling SetProcessDPIAware.
+        /// Sets the current process as dots per inch (dpi) aware.
+        /// Note: SetProcessDPIAware is subject to a possible race condition
+        /// if a DLL caches dpi settings during initialization.
+        /// For this reason, it is recommended that dpi-aware be set through
+        /// the application (.exe) manifest rather than by calling SetProcessDPIAware.
         /// </summary>
         /// <returns>
-        ///     If the function succeeds, the return value is true.
-        ///     Otherwise, the return value is false.
+        /// If the function succeeds, the return value is true.
+        /// Otherwise, the return value is false.
         /// </returns>
         /// <remarks>
-        ///     DLLs should accept the dpi setting of the host process
-        ///     rather than call SetProcessDPIAware themselves.
-        ///     To be set properly, dpiAware should be specified as part
-        ///     of the application (.exe) manifest.
+        /// DLLs should accept the dpi setting of the host process
+        /// rather than call SetProcessDPIAware themselves.
+        /// To be set properly, dpiAware should be specified as part
+        /// of the application (.exe) manifest.
         /// </remarks>
         [DllImport("user32.dll")]
         internal static extern bool SetProcessDPIAware();
@@ -992,22 +992,22 @@ namespace OpenTK.Platform.Windows
         public static extern bool SetCursorPos(int X, int Y);
 
         /// <summary>
-        ///     Retrieves a history of up to 64 previous coordinates of the mouse or pen.
+        /// Retrieves a history of up to 64 previous coordinates of the mouse or pen.
         /// </summary>
         /// <param name="cbSize">The size, in bytes, of the MouseMovePoint structure.</param>
         /// <param name="pointsIn">
-        ///     A pointer to a MOUSEMOVEPOINT structure containing valid mouse
-        ///     coordinates (in screen coordinates). It may also contain a time
-        ///     stamp.
+        /// A pointer to a MOUSEMOVEPOINT structure containing valid mouse
+        /// coordinates (in screen coordinates). It may also contain a time
+        /// stamp.
         /// </param>
         /// <param name="pointsBufferOut">
-        ///     A pointer to a buffer that will receive the points. It should be at
-        ///     least cbSize * nBufPoints in size.
+        /// A pointer to a buffer that will receive the points. It should be at
+        /// least cbSize * nBufPoints in size.
         /// </param>
         /// <param name="nBufPoints">The number of points to be retrieved.</param>
         /// <param name="resolution">
-        ///     The resolution desired. This parameter can GMMP_USE_DISPLAY_POINTS
-        ///     or GMMP_USE_HIGH_RESOLUTION_POINTS.
+        /// The resolution desired. This parameter can GMMP_USE_DISPLAY_POINTS
+        /// or GMMP_USE_HIGH_RESOLUTION_POINTS.
         /// </param>
         /// <returns></returns>
         [DllImport("user32", ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
@@ -1016,74 +1016,74 @@ namespace OpenTK.Platform.Windows
             MouseMovePoint* pointsBufferOut, int nBufPoints, uint resolution);
 
         /// <summary>
-        ///     Sets the cursor shape.
+        /// Sets the cursor shape.
         /// </summary>
         /// <param name="hCursor">
-        ///     A handle to the cursor. The cursor must have been created by the
-        ///     CreateCursor function or loaded by the LoadCursor or LoadImage
-        ///     function. If this parameter is IntPtr.Zero, the cursor is removed
-        ///     from the screen.
+        /// A handle to the cursor. The cursor must have been created by the
+        /// CreateCursor function or loaded by the LoadCursor or LoadImage
+        /// function. If this parameter is IntPtr.Zero, the cursor is removed
+        /// from the screen.
         /// </param>
         /// <returns>
-        ///     The return value is the handle to the previous cursor, if there was one.
-        ///     If there was no previous cursor, the return value is null.
+        /// The return value is the handle to the previous cursor, if there was one.
+        /// If there was no previous cursor, the return value is null.
         /// </returns>
         /// <remarks>
-        ///     The cursor is set only if the new cursor is different from the
-        ///     previous cursor; otherwise, the function returns immediately.
-        ///     The cursor is a shared resource. A window should set the cursor
-        ///     shape only when the cursor is in its client area or when the window
-        ///     is capturing mouse input. In systems without a mouse, the window
-        ///     should restore the previous cursor before the cursor leaves the
-        ///     client area or before it relinquishes control to another window.
-        ///     If your application must set the cursor while it is in a window,
-        ///     make sure the class cursor for the specified window's class is set
-        ///     to NULL. If the class cursor is not NULL, the system restores the
-        ///     class cursor each time the mouse is moved.
-        ///     The cursor is not shown on the screen if the internal cursor
-        ///     display count is less than zero. This occurs if the application
-        ///     uses the ShowCursor function to hide the cursor more times than to
-        ///     show the cursor.
+        /// The cursor is set only if the new cursor is different from the
+        /// previous cursor; otherwise, the function returns immediately.
+        /// The cursor is a shared resource. A window should set the cursor
+        /// shape only when the cursor is in its client area or when the window
+        /// is capturing mouse input. In systems without a mouse, the window
+        /// should restore the previous cursor before the cursor leaves the
+        /// client area or before it relinquishes control to another window.
+        /// If your application must set the cursor while it is in a window,
+        /// make sure the class cursor for the specified window's class is set
+        /// to NULL. If the class cursor is not NULL, the system restores the
+        /// class cursor each time the mouse is moved.
+        /// The cursor is not shown on the screen if the internal cursor
+        /// display count is less than zero. This occurs if the application
+        /// uses the ShowCursor function to hide the cursor more times than to
+        /// show the cursor.
         /// </remarks>
         [DllImport("user32.dll")]
         public static extern HCURSOR SetCursor(HCURSOR hCursor);
 
         /// <summary>
-        ///     Retrieves a handle to the current cursor.
+        /// Retrieves a handle to the current cursor.
         /// </summary>
         /// <returns>
-        ///     The return value is the handle to the current cursor. If there is
-        ///     no cursor, the return value is null.
+        /// The return value is the handle to the current cursor. If there is
+        /// no cursor, the return value is null.
         /// </returns>
         [DllImport("user32.dll")]
         public static extern HCURSOR GetCursor();
 
         /// <summary>
-        ///     Retrieves the cursor's position, in screen coordinates.
+        /// Retrieves the cursor's position, in screen coordinates.
         /// </summary>
         /// <param name="point">Pointer to a POINT structure that receives the screen coordinates of the cursor.</param>
         /// <returns>Returns nonzero if successful or zero otherwise. To get extended error information, call GetLastError.</returns>
         /// <remarks>
-        ///     <para>
-        ///         The cursor position is always specified in screen coordinates and is not affected by the mapping mode of the
-        ///         window that contains the cursor.
-        ///     </para>
-        ///     <para>The calling process must have WINSTA_READATTRIBUTES access to the window station.</para>
-        ///     <para>
-        ///         The input desktop must be the current desktop when you call GetCursorPos. Call OpenInputDesktop to determine
-        ///         whether the current desktop is the input desktop. If it is not, call SetThreadDesktop with the HDESK returned
-        ///         by OpenInputDesktop to switch to that desktop.
-        ///     </para>
+        ///  <para>
+        /// The cursor position is always specified in screen coordinates and is not affected by the mapping mode of the
+        /// window that contains the cursor.
+        ///  </para>
+        ///  <para>The calling process must have WINSTA_READATTRIBUTES access to the window station.</para>
+        ///  <para>
+        /// The input desktop must be the current desktop when you call GetCursorPos. Call OpenInputDesktop to determine
+        /// whether the current desktop is the input desktop. If it is not, call SetThreadDesktop with the HDESK returned
+        /// by OpenInputDesktop to switch to that desktop.
+        ///  </para>
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true)]
         [SuppressUnmanagedCodeSecurity]
         internal static extern bool GetCursorPos(ref POINT point);
 
         /// <summary>
-        ///     calls the default raw input procedure to provide default processing for
-        ///     any raw input messages that an application does not process.
-        ///     This function ensures that every message is processed.
-        ///     DefRawInputProc is called with the same parameters received by the window procedure.
+        /// calls the default raw input procedure to provide default processing for
+        /// any raw input messages that an application does not process.
+        /// This function ensures that every message is processed.
+        /// DefRawInputProc is called with the same parameters received by the window procedure.
         /// </summary>
         /// <param name="RawInput">Pointer to an array of RawInput structures.</param>
         /// <param name="Input">Number of RawInput structures pointed to by paRawInput.</param>
@@ -1102,19 +1102,19 @@ namespace OpenTK.Platform.Windows
         internal static extern LRESULT DefRawInputProc(IntPtr RawInput, int Input, uint SizeHeader);
 
         /// <summary>
-        ///     Registers the devices that supply the raw input data.
+        /// Registers the devices that supply the raw input data.
         /// </summary>
         /// <param name="RawInputDevices">
-        ///     Pointer to an array of RawInputDevice structures that represent the devices that supply the raw input.
+        /// Pointer to an array of RawInputDevice structures that represent the devices that supply the raw input.
         /// </param>
         /// <param name="NumDevices">
-        ///     Number of RawInputDevice structures pointed to by RawInputDevices.
+        /// Number of RawInputDevice structures pointed to by RawInputDevices.
         /// </param>
         /// <param name="Size">
-        ///     Size, in bytes, of a RAWINPUTDEVICE structure.
+        /// Size, in bytes, of a RAWINPUTDEVICE structure.
         /// </param>
         /// <returns>
-        ///     TRUE if the function succeeds; otherwise, FALSE. If the function fails, call GetLastError for more information.
+        /// TRUE if the function succeeds; otherwise, FALSE. If the function fails, call GetLastError for more information.
         /// </returns>
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -1133,19 +1133,19 @@ namespace OpenTK.Platform.Windows
         );
 
         /// <summary>
-        ///     Does a buffered read of the raw input data.
+        /// Does a buffered read of the raw input data.
         /// </summary>
         /// <param name="Data">
-        ///     Pointer to a buffer of RawInput structures that contain the raw input data.
-        ///     If NULL, the minimum required buffer, in bytes, is returned in Size.
+        /// Pointer to a buffer of RawInput structures that contain the raw input data.
+        /// If NULL, the minimum required buffer, in bytes, is returned in Size.
         /// </param>
         /// <param name="Size">Pointer to a variable that specifies the size, in bytes, of a RawInput structure.</param>
         /// <param name="SizeHeader">Size, in bytes, of RawInputHeader.</param>
         /// <returns>
-        ///     If Data is NULL and the function is successful, the return value is zero.
-        ///     If Data is not NULL and the function is successful, the return value is the number
-        ///     of RawInput structures written to Data.
-        ///     If an error occurs, the return value is (UINT)-1. Call GetLastError for the error code.
+        /// If Data is NULL and the function is successful, the return value is zero.
+        /// If Data is not NULL and the function is successful, the return value is the number
+        /// of RawInput structures written to Data.
+        /// If an error occurs, the return value is (UINT)-1. Call GetLastError for the error code.
         /// </returns>
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
@@ -1172,30 +1172,30 @@ namespace OpenTK.Platform.Windows
         );
 
         /// <summary>
-        ///     Gets the information about the raw input devices for the current application.
+        /// Gets the information about the raw input devices for the current application.
         /// </summary>
         /// <param name="RawInputDevices">
-        ///     Pointer to an array of RawInputDevice structures for the application.
+        /// Pointer to an array of RawInputDevice structures for the application.
         /// </param>
         /// <param name="NumDevices">
-        ///     Number of RawInputDevice structures in RawInputDevices.
+        /// Number of RawInputDevice structures in RawInputDevices.
         /// </param>
         /// <param name="cbSize">
-        ///     Size, in bytes, of a RawInputDevice structure.
+        /// Size, in bytes, of a RawInputDevice structure.
         /// </param>
         /// <returns>
-        ///     <para>
-        ///         If successful, the function returns a non-negative number that is
-        ///         the number of RawInputDevice structures written to the buffer.
-        ///     </para>
-        ///     <para>
-        ///         If the pRawInputDevices buffer is too small or NULL, the function sets
-        ///         the last error as ERROR_INSUFFICIENT_BUFFER, returns -1,
-        ///         and sets NumDevices to the required number of devices.
-        ///     </para>
-        ///     <para>
-        ///         If the function fails for any other reason, it returns -1. For more details, call GetLastError.
-        ///     </para>
+        ///  <para>
+        /// If successful, the function returns a non-negative number that is
+        /// the number of RawInputDevice structures written to the buffer.
+        ///  </para>
+        ///  <para>
+        /// If the pRawInputDevices buffer is too small or NULL, the function sets
+        /// the last error as ERROR_INSUFFICIENT_BUFFER, returns -1,
+        /// and sets NumDevices to the required number of devices.
+        ///  </para>
+        ///  <para>
+        /// If the function fails for any other reason, it returns -1. For more details, call GetLastError.
+        ///  </para>
         /// </returns>
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern uint GetRegisteredRawInputDevices(
@@ -1212,31 +1212,31 @@ namespace OpenTK.Platform.Windows
         );
 
         /// <summary>
-        ///     Enumerates the raw input devices attached to the system.
+        /// Enumerates the raw input devices attached to the system.
         /// </summary>
         /// <param name="RawInputDeviceList">
-        ///     ointer to buffer that holds an array of RawInputDeviceList structures
-        ///     for the devices attached to the system.
-        ///     If NULL, the number of devices are returned in NumDevices.
+        /// ointer to buffer that holds an array of RawInputDeviceList structures
+        /// for the devices attached to the system.
+        /// If NULL, the number of devices are returned in NumDevices.
         /// </param>
         /// <param name="NumDevices">
-        ///     Pointer to a variable. If RawInputDeviceList is NULL, it specifies the number
-        ///     of devices attached to the system. Otherwise, it contains the size, in bytes,
-        ///     of the preallocated buffer pointed to by pRawInputDeviceList.
-        ///     However, if NumDevices is smaller than needed to contain RawInputDeviceList structures,
-        ///     the required buffer size is returned here.
+        /// Pointer to a variable. If RawInputDeviceList is NULL, it specifies the number
+        /// of devices attached to the system. Otherwise, it contains the size, in bytes,
+        /// of the preallocated buffer pointed to by pRawInputDeviceList.
+        /// However, if NumDevices is smaller than needed to contain RawInputDeviceList structures,
+        /// the required buffer size is returned here.
         /// </param>
         /// <param name="Size">
-        ///     Size of a RawInputDeviceList structure.
+        /// Size of a RawInputDeviceList structure.
         /// </param>
         /// <returns>
-        ///     If the function is successful, the return value is the number of devices stored in the buffer
-        ///     pointed to by RawInputDeviceList.
-        ///     If RawInputDeviceList is NULL, the return value is zero.
-        ///     If NumDevices is smaller than needed to contain all the RawInputDeviceList structures,
-        ///     the return value is (UINT) -1 and the required buffer is returned in NumDevices.
-        ///     Calling GetLastError returns ERROR_INSUFFICIENT_BUFFER.
-        ///     On any other error, the function returns (UINT) -1 and GetLastError returns the error indication.
+        /// If the function is successful, the return value is the number of devices stored in the buffer
+        /// pointed to by RawInputDeviceList.
+        /// If RawInputDeviceList is NULL, the return value is zero.
+        /// If NumDevices is smaller than needed to contain all the RawInputDeviceList structures,
+        /// the return value is (UINT) -1 and the required buffer is returned in NumDevices.
+        /// Calling GetLastError returns ERROR_INSUFFICIENT_BUFFER.
+        /// On any other error, the function returns (UINT) -1 and GetLastError returns the error indication.
         /// </returns>
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern uint GetRawInputDeviceList(
@@ -1253,31 +1253,31 @@ namespace OpenTK.Platform.Windows
         );
 
         /// <summary>
-        ///     Enumerates the raw input devices attached to the system.
+        /// Enumerates the raw input devices attached to the system.
         /// </summary>
         /// <param name="RawInputDeviceList">
-        ///     ointer to buffer that holds an array of RawInputDeviceList structures
-        ///     for the devices attached to the system.
-        ///     If NULL, the number of devices are returned in NumDevices.
+        /// ointer to buffer that holds an array of RawInputDeviceList structures
+        /// for the devices attached to the system.
+        /// If NULL, the number of devices are returned in NumDevices.
         /// </param>
         /// <param name="NumDevices">
-        ///     Pointer to a variable. If RawInputDeviceList is NULL, it specifies the number
-        ///     of devices attached to the system. Otherwise, it contains the size, in bytes,
-        ///     of the preallocated buffer pointed to by pRawInputDeviceList.
-        ///     However, if NumDevices is smaller than needed to contain RawInputDeviceList structures,
-        ///     the required buffer size is returned here.
+        /// Pointer to a variable. If RawInputDeviceList is NULL, it specifies the number
+        /// of devices attached to the system. Otherwise, it contains the size, in bytes,
+        /// of the preallocated buffer pointed to by pRawInputDeviceList.
+        /// However, if NumDevices is smaller than needed to contain RawInputDeviceList structures,
+        /// the required buffer size is returned here.
         /// </param>
         /// <param name="Size">
-        ///     Size of a RawInputDeviceList structure.
+        /// Size of a RawInputDeviceList structure.
         /// </param>
         /// <returns>
-        ///     If the function is successful, the return value is the number of devices stored in the buffer
-        ///     pointed to by RawInputDeviceList.
-        ///     If RawInputDeviceList is NULL, the return value is zero.
-        ///     If NumDevices is smaller than needed to contain all the RawInputDeviceList structures,
-        ///     the return value is (UINT) -1 and the required buffer is returned in NumDevices.
-        ///     Calling GetLastError returns ERROR_INSUFFICIENT_BUFFER.
-        ///     On any other error, the function returns (UINT) -1 and GetLastError returns the error indication.
+        /// If the function is successful, the return value is the number of devices stored in the buffer
+        /// pointed to by RawInputDeviceList.
+        /// If RawInputDeviceList is NULL, the return value is zero.
+        /// If NumDevices is smaller than needed to contain all the RawInputDeviceList structures,
+        /// the return value is (UINT) -1 and the required buffer is returned in NumDevices.
+        /// Calling GetLastError returns ERROR_INSUFFICIENT_BUFFER.
+        /// On any other error, the function returns (UINT) -1 and GetLastError returns the error indication.
         /// </returns>
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern uint GetRawInputDeviceList(
@@ -1294,38 +1294,38 @@ namespace OpenTK.Platform.Windows
         );
 
         /// <summary>
-        ///     Gets information about the raw input device.
+        /// Gets information about the raw input device.
         /// </summary>
         /// <param name="Device">
-        ///     Handle to the raw input device. This comes from the lParam of the WM_INPUT message,
-        ///     from RawInputHeader.Device, or from GetRawInputDeviceList.
-        ///     It can also be NULL if an application inserts input data, for example, by using SendInput.
+        /// Handle to the raw input device. This comes from the lParam of the WM_INPUT message,
+        /// from RawInputHeader.Device, or from GetRawInputDeviceList.
+        /// It can also be NULL if an application inserts input data, for example, by using SendInput.
         /// </param>
         /// <param name="Command">
-        ///     Specifies what data will be returned in pData. It can be one of the following values.
-        ///     RawInputDeviceInfoEnum.PREPARSEDDATA
-        ///     Data points to the previously parsed data.
-        ///     RawInputDeviceInfoEnum.DEVICENAME
-        ///     Data points to a string that contains the device name.
-        ///     For this Command only, the value in Size is the character count (not the byte count).
-        ///     RawInputDeviceInfoEnum.DEVICEINFO
-        ///     Data points to an RawInputDeviceInfo structure.
+        /// Specifies what data will be returned in pData. It can be one of the following values.
+        /// RawInputDeviceInfoEnum.PREPARSEDDATA
+        /// Data points to the previously parsed data.
+        /// RawInputDeviceInfoEnum.DEVICENAME
+        /// Data points to a string that contains the device name.
+        /// For this Command only, the value in Size is the character count (not the byte count).
+        /// RawInputDeviceInfoEnum.DEVICEINFO
+        /// Data points to an RawInputDeviceInfo structure.
         /// </param>
         /// <param name="Data">
-        ///     ointer to a buffer that contains the information specified by Command.
-        ///     If Command is RawInputDeviceInfoEnum.DEVICEINFO, set RawInputDeviceInfo.Size to sizeof(RawInputDeviceInfo)
-        ///     before calling GetRawInputDeviceInfo. (This is done automatically in OpenTK)
+        /// ointer to a buffer that contains the information specified by Command.
+        /// If Command is RawInputDeviceInfoEnum.DEVICEINFO, set RawInputDeviceInfo.Size to sizeof(RawInputDeviceInfo)
+        /// before calling GetRawInputDeviceInfo. (This is done automatically in OpenTK)
         /// </param>
         /// <param name="Size">
-        ///     Pointer to a variable that contains the size, in bytes, of the data in Data.
+        /// Pointer to a variable that contains the size, in bytes, of the data in Data.
         /// </param>
         /// <returns>
-        ///     <para>If successful, this function returns a non-negative number indicating the number of bytes copied to Data.</para>
-        ///     <para>
-        ///         If Data is not large enough for the data, the function returns -1. If Data is NULL, the function returns a
-        ///         value of zero. In both of these cases, Size is set to the minimum size required for the Data buffer.
-        ///     </para>
-        ///     <para>Call GetLastError to identify any other errors.</para>
+        ///  <para>If successful, this function returns a non-negative number indicating the number of bytes copied to Data.</para>
+        ///  <para>
+        /// If Data is not large enough for the data, the function returns -1. If Data is NULL, the function returns a
+        /// value of zero. In both of these cases, Size is set to the minimum size required for the Data buffer.
+        ///  </para>
+        ///  <para>Call GetLastError to identify any other errors.</para>
         /// </returns>
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
@@ -1346,38 +1346,38 @@ namespace OpenTK.Platform.Windows
         );
 
         /// <summary>
-        ///     Gets information about the raw input device.
+        /// Gets information about the raw input device.
         /// </summary>
         /// <param name="Device">
-        ///     Handle to the raw input device. This comes from the lParam of the WM_INPUT message,
-        ///     from RawInputHeader.Device, or from GetRawInputDeviceList.
-        ///     It can also be NULL if an application inserts input data, for example, by using SendInput.
+        /// Handle to the raw input device. This comes from the lParam of the WM_INPUT message,
+        /// from RawInputHeader.Device, or from GetRawInputDeviceList.
+        /// It can also be NULL if an application inserts input data, for example, by using SendInput.
         /// </param>
         /// <param name="Command">
-        ///     Specifies what data will be returned in pData. It can be one of the following values.
-        ///     RawInputDeviceInfoEnum.PREPARSEDDATA
-        ///     Data points to the previously parsed data.
-        ///     RawInputDeviceInfoEnum.DEVICENAME
-        ///     Data points to a string that contains the device name.
-        ///     For this Command only, the value in Size is the character count (not the byte count).
-        ///     RawInputDeviceInfoEnum.DEVICEINFO
-        ///     Data points to an RawInputDeviceInfo structure.
+        /// Specifies what data will be returned in pData. It can be one of the following values.
+        /// RawInputDeviceInfoEnum.PREPARSEDDATA
+        /// Data points to the previously parsed data.
+        /// RawInputDeviceInfoEnum.DEVICENAME
+        /// Data points to a string that contains the device name.
+        /// For this Command only, the value in Size is the character count (not the byte count).
+        /// RawInputDeviceInfoEnum.DEVICEINFO
+        /// Data points to an RawInputDeviceInfo structure.
         /// </param>
         /// <param name="Data">
-        ///     ointer to a buffer that contains the information specified by Command.
-        ///     If Command is RawInputDeviceInfoEnum.DEVICEINFO, set RawInputDeviceInfo.Size to sizeof(RawInputDeviceInfo)
-        ///     before calling GetRawInputDeviceInfo. (This is done automatically in OpenTK)
+        /// ointer to a buffer that contains the information specified by Command.
+        /// If Command is RawInputDeviceInfoEnum.DEVICEINFO, set RawInputDeviceInfo.Size to sizeof(RawInputDeviceInfo)
+        /// before calling GetRawInputDeviceInfo. (This is done automatically in OpenTK)
         /// </param>
         /// <param name="Size">
-        ///     Pointer to a variable that contains the size, in bytes, of the data in Data.
+        /// Pointer to a variable that contains the size, in bytes, of the data in Data.
         /// </param>
         /// <returns>
-        ///     <para>If successful, this function returns a non-negative number indicating the number of bytes copied to Data.</para>
-        ///     <para>
-        ///         If Data is not large enough for the data, the function returns -1. If Data is NULL, the function returns a
-        ///         value of zero. In both of these cases, Size is set to the minimum size required for the Data buffer.
-        ///     </para>
-        ///     <para>Call GetLastError to identify any other errors.</para>
+        ///  <para>If successful, this function returns a non-negative number indicating the number of bytes copied to Data.</para>
+        ///  <para>
+        /// If Data is not large enough for the data, the function returns -1. If Data is NULL, the function returns a
+        /// value of zero. In both of these cases, Size is set to the minimum size required for the Data buffer.
+        ///  </para>
+        ///  <para>Call GetLastError to identify any other errors.</para>
         /// </returns>
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
@@ -1399,32 +1399,32 @@ namespace OpenTK.Platform.Windows
 
 
         /// <summary>
-        ///     Gets the raw input from the specified device.
+        /// Gets the raw input from the specified device.
         /// </summary>
         /// <param name="RawInput">Handle to the RawInput structure. This comes from the lParam in WM_INPUT.</param>
         /// <param name="Command">
-        ///     Command flag. This parameter can be one of the following values.
-        ///     RawInputDateEnum.INPUT
-        ///     Get the raw data from the RawInput structure.
-        ///     RawInputDateEnum.HEADER
-        ///     Get the header information from the RawInput structure.
+        /// Command flag. This parameter can be one of the following values.
+        /// RawInputDateEnum.INPUT
+        /// Get the raw data from the RawInput structure.
+        /// RawInputDateEnum.HEADER
+        /// Get the header information from the RawInput structure.
         /// </param>
         /// <param name="Data">
-        ///     Pointer to the data that comes from the RawInput structure. This depends on the value of uiCommand.
-        ///     If Data is NULL, the required size of the buffer is returned in Size.
+        /// Pointer to the data that comes from the RawInput structure. This depends on the value of uiCommand.
+        /// If Data is NULL, the required size of the buffer is returned in Size.
         /// </param>
         /// <param name="Size">Pointer to a variable that specifies the size, in bytes, of the data in Data.</param>
         /// <param name="SizeHeader">Size, in bytes, of RawInputHeader.</param>
         /// <returns>
-        ///     <para>
-        ///         If Data is NULL and the function is successful, the return value is 0. If Data is not NULL and the function
-        ///         is successful, the return value is the number of bytes copied into Data.
-        ///     </para>
-        ///     <para>If there is an error, the return value is (UINT)-1.</para>
+        ///  <para>
+        /// If Data is NULL and the function is successful, the return value is 0. If Data is not NULL and the function
+        /// is successful, the return value is the number of bytes copied into Data.
+        ///  </para>
+        ///  <para>If there is an error, the return value is (UINT)-1.</para>
         /// </returns>
         /// <remarks>
-        ///     GetRawInputData gets the raw input one RawInput structure at a time. In contrast, GetRawInputBuffer gets an array
-        ///     of RawInput structures.
+        /// GetRawInputData gets the raw input one RawInput structure at a time. In contrast, GetRawInputBuffer gets an array
+        /// of RawInput structures.
         /// </remarks>
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
@@ -1437,32 +1437,32 @@ namespace OpenTK.Platform.Windows
         );
 
         /// <summary>
-        ///     Gets the raw input from the specified device.
+        /// Gets the raw input from the specified device.
         /// </summary>
         /// <param name="RawInput">Handle to the RawInput structure. This comes from the lParam in WM_INPUT.</param>
         /// <param name="Command">
-        ///     Command flag. This parameter can be one of the following values.
-        ///     RawInputDateEnum.INPUT
-        ///     Get the raw data from the RawInput structure.
-        ///     RawInputDateEnum.HEADER
-        ///     Get the header information from the RawInput structure.
+        /// Command flag. This parameter can be one of the following values.
+        /// RawInputDateEnum.INPUT
+        /// Get the raw data from the RawInput structure.
+        /// RawInputDateEnum.HEADER
+        /// Get the header information from the RawInput structure.
         /// </param>
         /// <param name="Data">
-        ///     Pointer to the data that comes from the RawInput structure. This depends on the value of uiCommand.
-        ///     If Data is NULL, the required size of the buffer is returned in Size.
+        /// Pointer to the data that comes from the RawInput structure. This depends on the value of uiCommand.
+        /// If Data is NULL, the required size of the buffer is returned in Size.
         /// </param>
         /// <param name="Size">Pointer to a variable that specifies the size, in bytes, of the data in Data.</param>
         /// <param name="SizeHeader">Size, in bytes, of RawInputHeader.</param>
         /// <returns>
-        ///     <para>
-        ///         If Data is NULL and the function is successful, the return value is 0. If Data is not NULL and the function
-        ///         is successful, the return value is the number of bytes copied into Data.
-        ///     </para>
-        ///     <para>If there is an error, the return value is (UINT)-1.</para>
+        ///  <para>
+        /// If Data is NULL and the function is successful, the return value is 0. If Data is not NULL and the function
+        /// is successful, the return value is the number of bytes copied into Data.
+        ///  </para>
+        ///  <para>If there is an error, the return value is (UINT)-1.</para>
         /// </returns>
         /// <remarks>
-        ///     GetRawInputData gets the raw input one RawInput structure at a time. In contrast, GetRawInputBuffer gets an array
-        ///     of RawInput structures.
+        /// GetRawInputData gets the raw input one RawInput structure at a time. In contrast, GetRawInputBuffer gets an array
+        /// of RawInput structures.
         /// </remarks>
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
@@ -1692,20 +1692,20 @@ namespace OpenTK.Platform.Windows
         // http://msdn.microsoft.com/en-us/library/windows/desktop/ms681381(v=vs.85).aspx
 
         /// <summary>
-        ///     The point passed to GetMouseMovePoints is not in the buffer.
+        /// The point passed to GetMouseMovePoints is not in the buffer.
         /// </summary>
         internal const int ERROR_POINT_NOT_FOUND = 1171;
 
         /// <summary>
-        ///     Retrieves the points using the display resolution.
+        /// Retrieves the points using the display resolution.
         /// </summary>
         internal const int GMMP_USE_DISPLAY_POINTS = 1;
 
         /// <summary>
-        ///     Retrieves high resolution points. Points can range from zero to
-        ///     65,535 (0xFFFF) in both x and y coordinates. This is the resolution
-        ///     provided by absolute coordinate pointing devices such as drawing
-        ///     tablets.
+        /// Retrieves high resolution points. Points can range from zero to
+        /// 65,535 (0xFFFF) in both x and y coordinates. This is the resolution
+        /// provided by absolute coordinate pointing devices such as drawing
+        /// tablets.
         /// </summary>
         internal const int GMMP_USE_HIGH_RESOLUTION_POINTS = 2;
 
@@ -1717,94 +1717,94 @@ namespace OpenTK.Platform.Windows
     internal struct CreateStruct
     {
         /// <summary>
-        ///     Contains additional data which may be used to create the window.
+        /// Contains additional data which may be used to create the window.
         /// </summary>
         /// <remarks>
-        ///     If the window is being created as a result of a call to the CreateWindow
-        ///     or CreateWindowEx function, this member contains the value of the lpParam
-        ///     parameter specified in the function call.
-        ///     <para>
-        ///         If the window being created is a multiple-document interface (MDI) client window,
-        ///         this member contains a pointer to a CLIENTCREATESTRUCT structure. If the window
-        ///         being created is a MDI child window, this member contains a pointer to an
-        ///         MDICREATESTRUCT structure.
-        ///     </para>
-        ///     <para>
-        ///         Windows NT/2000/XP: If the window is being created from a dialog template,
-        ///         this member is the address of a SHORT value that specifies the size, in bytes,
-        ///         of the window creation data. The value is immediately followed by the creation data.
-        ///     </para>
-        ///     <para>
-        ///         Windows NT/2000/XP: You should access the data represented by the lpCreateParams member
-        ///         using a pointer that has been declared using the UNALIGNED type, because the pointer
-        ///         may not be DWORD aligned.
-        ///     </para>
+        /// If the window is being created as a result of a call to the CreateWindow
+        /// or CreateWindowEx function, this member contains the value of the lpParam
+        /// parameter specified in the function call.
+        ///  <para>
+        /// If the window being created is a multiple-document interface (MDI) client window,
+        /// this member contains a pointer to a CLIENTCREATESTRUCT structure. If the window
+        /// being created is a MDI child window, this member contains a pointer to an
+        /// MDICREATESTRUCT structure.
+        ///  </para>
+        ///  <para>
+        /// Windows NT/2000/XP: If the window is being created from a dialog template,
+        /// this member is the address of a SHORT value that specifies the size, in bytes,
+        /// of the window creation data. The value is immediately followed by the creation data.
+        ///  </para>
+        ///  <para>
+        /// Windows NT/2000/XP: You should access the data represented by the lpCreateParams member
+        /// using a pointer that has been declared using the UNALIGNED type, because the pointer
+        /// may not be DWORD aligned.
+        ///  </para>
         /// </remarks>
         internal LPVOID lpCreateParams;
 
         /// <summary>
-        ///     Handle to the module that owns the new window.
+        /// Handle to the module that owns the new window.
         /// </summary>
         internal HINSTANCE hInstance;
 
         /// <summary>
-        ///     Handle to the menu to be used by the new window.
+        /// Handle to the menu to be used by the new window.
         /// </summary>
         internal HMENU hMenu;
 
         /// <summary>
-        ///     Handle to the parent window, if the window is a child window.
-        ///     If the window is owned, this member identifies the owner window.
-        ///     If the window is not a child or owned window, this member is NULL.
+        /// Handle to the parent window, if the window is a child window.
+        /// If the window is owned, this member identifies the owner window.
+        /// If the window is not a child or owned window, this member is NULL.
         /// </summary>
         internal HWND hwndParent;
 
         /// <summary>
-        ///     Specifies the height of the new window, in pixels.
+        /// Specifies the height of the new window, in pixels.
         /// </summary>
         internal int cy;
 
         /// <summary>
-        ///     Specifies the width of the new window, in pixels.
+        /// Specifies the width of the new window, in pixels.
         /// </summary>
         internal int cx;
 
         /// <summary>
-        ///     Specifies the y-coordinate of the upper left corner of the new window.
-        ///     If the new window is a child window, coordinates are relative to the parent window.
-        ///     Otherwise, the coordinates are relative to the screen origin.
+        /// Specifies the y-coordinate of the upper left corner of the new window.
+        /// If the new window is a child window, coordinates are relative to the parent window.
+        /// Otherwise, the coordinates are relative to the screen origin.
         /// </summary>
         internal int y;
 
         /// <summary>
-        ///     Specifies the x-coordinate of the upper left corner of the new window.
-        ///     If the new window is a child window, coordinates are relative to the parent window.
-        ///     Otherwise, the coordinates are relative to the screen origin.
+        /// Specifies the x-coordinate of the upper left corner of the new window.
+        /// If the new window is a child window, coordinates are relative to the parent window.
+        /// Otherwise, the coordinates are relative to the screen origin.
         /// </summary>
         internal int x;
 
         /// <summary>
-        ///     Specifies the style for the new window.
+        /// Specifies the style for the new window.
         /// </summary>
         internal int style;
 
         /// <summary>
-        ///     Pointer to a null-terminated string that specifies the name of the new window.
+        /// Pointer to a null-terminated string that specifies the name of the new window.
         /// </summary>
         [MarshalAs(UnmanagedType.LPTStr)] internal string lpszName;
 
         /// <summary>
-        ///     Either a pointer to a null-terminated string or an atom that specifies the class name
-        ///     of the new window.
-        ///     <remarks>
-        ///         Note  Because the lpszClass member can contain a pointer to a local (and thus inaccessable) atom,
-        ///         do not obtain the class name by using this member. Use the GetClassName function instead.
-        ///     </remarks>
+        /// Either a pointer to a null-terminated string or an atom that specifies the class name
+        /// of the new window.
+        ///  <remarks>
+        /// Note  Because the lpszClass member can contain a pointer to a local (and thus inaccessable) atom,
+        /// do not obtain the class name by using this member. Use the GetClassName function instead.
+        ///  </remarks>
         /// </summary>
         [MarshalAs(UnmanagedType.LPTStr)] internal string lpszClass;
 
         /// <summary>
-        ///     Specifies the extended window style for the new window.
+        /// Specifies the extended window style for the new window.
         /// </summary>
         internal int dwExStyle;
     }
@@ -1823,8 +1823,8 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     Describes a pixel format. It is used when interfacing with the WINAPI to create a new Context.
-    ///     Found in WinGDI.h
+    /// Describes a pixel format. It is used when interfacing with the WINAPI to create a new Context.
+    /// Found in WinGDI.h
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct PixelFormatDescriptor
@@ -1860,7 +1860,7 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     Describes the pixel format of a drawing surface.
+    /// Describes the pixel format of a drawing surface.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct LayerPlaneDescriptor
@@ -1893,8 +1893,8 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     The <b>GlyphMetricsFloat</b> structure contains information about the placement and orientation of a glyph in a
-    ///     character cell.
+    /// The <b>GlyphMetricsFloat</b> structure contains information about the placement and orientation of a glyph in a
+    /// character cell.
     /// </summary>
     /// <remarks>The values of <b>GlyphMetricsFloat</b> are specified as notional units.</remarks>
     /// <seealso cref="PointFloat" />
@@ -1902,49 +1902,49 @@ namespace OpenTK.Platform.Windows
     internal struct GlyphMetricsFloat
     {
         /// <summary>
-        ///     Specifies the width of the smallest rectangle (the glyph's black box) that completely encloses the glyph.
+        /// Specifies the width of the smallest rectangle (the glyph's black box) that completely encloses the glyph.
         /// </summary>
         internal float BlackBoxX;
 
         /// <summary>
-        ///     Specifies the height of the smallest rectangle (the glyph's black box) that completely encloses the glyph.
+        /// Specifies the height of the smallest rectangle (the glyph's black box) that completely encloses the glyph.
         /// </summary>
         internal float BlackBoxY;
 
         /// <summary>
-        ///     Specifies the x and y coordinates of the upper-left corner of the smallest rectangle that completely encloses the
-        ///     glyph.
+        /// Specifies the x and y coordinates of the upper-left corner of the smallest rectangle that completely encloses the
+        /// glyph.
         /// </summary>
         internal PointFloat GlyphOrigin;
 
         /// <summary>
-        ///     Specifies the horizontal distance from the origin of the current character cell to the origin of the next character
-        ///     cell.
+        /// Specifies the horizontal distance from the origin of the current character cell to the origin of the next character
+        /// cell.
         /// </summary>
         internal float CellIncX;
 
         /// <summary>
-        ///     Specifies the vertical distance from the origin of the current character cell to the origin of the next character
-        ///     cell.
+        /// Specifies the vertical distance from the origin of the current character cell to the origin of the next character
+        /// cell.
         /// </summary>
         internal float CellIncY;
     }
 
     /// \internal
     /// <summary>
-    ///     The <b>PointFloat</b> structure contains the x and y coordinates of a point.
+    /// The <b>PointFloat</b> structure contains the x and y coordinates of a point.
     /// </summary>
     /// <seealso cref="GlyphMetricsFloat" />
     [StructLayout(LayoutKind.Sequential)]
     internal struct PointFloat
     {
         /// <summary>
-        ///     Specifies the horizontal (x) coordinate of a point.
+        /// Specifies the horizontal (x) coordinate of a point.
         /// </summary>
         internal float X;
 
         /// <summary>
-        ///     Specifies the vertical (y) coordinate of a point.
+        /// Specifies the vertical (y) coordinate of a point.
         /// </summary>
         internal float Y;
     }
@@ -2060,8 +2060,8 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     The DISPLAY_DEVICE structure receives information about the display device specified by the iDevNum parameter of
-    ///     the EnumDisplayDevices function.
+    /// The DISPLAY_DEVICE structure receives information about the display device specified by the iDevNum parameter of
+    /// the EnumDisplayDevices function.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     internal class WindowsDisplayDevice
@@ -2137,7 +2137,7 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     Struct pointed to by WM_GETMINMAXINFO lParam
+    /// Struct pointed to by WM_GETMINMAXINFO lParam
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct MINMAXINFO
@@ -2151,45 +2151,45 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     The WindowPosition structure contains information about the size and position of a window.
+    /// The WindowPosition structure contains information about the size and position of a window.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct WindowPosition
     {
         /// <summary>
-        ///     Handle to the window.
+        /// Handle to the window.
         /// </summary>
         internal HWND hwnd;
 
         /// <summary>
-        ///     Specifies the position of the window in Z order (front-to-back position).
-        ///     This member can be a handle to the window behind which this window is placed,
-        ///     or can be one of the special values listed with the SetWindowPos function.
+        /// Specifies the position of the window in Z order (front-to-back position).
+        /// This member can be a handle to the window behind which this window is placed,
+        /// or can be one of the special values listed with the SetWindowPos function.
         /// </summary>
         internal HWND hwndInsertAfter;
 
         /// <summary>
-        ///     Specifies the position of the left edge of the window.
+        /// Specifies the position of the left edge of the window.
         /// </summary>
         internal int x;
 
         /// <summary>
-        ///     Specifies the position of the top edge of the window.
+        /// Specifies the position of the top edge of the window.
         /// </summary>
         internal int y;
 
         /// <summary>
-        ///     Specifies the window width, in pixels.
+        /// Specifies the window width, in pixels.
         /// </summary>
         internal int cx;
 
         /// <summary>
-        ///     Specifies the window height, in pixels.
+        /// Specifies the window height, in pixels.
         /// </summary>
         internal int cy;
 
         /// <summary>
-        ///     Specifies the window position.
+        /// Specifies the window position.
         /// </summary>
         [MarshalAs(UnmanagedType.U4)] internal SetWindowPosFlags flags;
     }
@@ -2198,76 +2198,76 @@ namespace OpenTK.Platform.Windows
     internal enum SetWindowPosFlags
     {
         /// <summary>
-        ///     Retains the current size (ignores the cx and cy parameters).
+        /// Retains the current size (ignores the cx and cy parameters).
         /// </summary>
         NOSIZE = 0x0001,
 
         /// <summary>
-        ///     Retains the current position (ignores the x and y parameters).
+        /// Retains the current position (ignores the x and y parameters).
         /// </summary>
         NOMOVE = 0x0002,
 
         /// <summary>
-        ///     Retains the current Z order (ignores the hwndInsertAfter parameter).
+        /// Retains the current Z order (ignores the hwndInsertAfter parameter).
         /// </summary>
         NOZORDER = 0x0004,
 
         /// <summary>
-        ///     Does not redraw changes. If this flag is set, no repainting of any kind occurs.
-        ///     This applies to the client area, the nonclient area (including the title bar and scroll bars),
-        ///     and any part of the parent window uncovered as a result of the window being moved.
-        ///     When this flag is set, the application must explicitly invalidate or redraw any parts
-        ///     of the window and parent window that need redrawing.
+        /// Does not redraw changes. If this flag is set, no repainting of any kind occurs.
+        /// This applies to the client area, the nonclient area (including the title bar and scroll bars),
+        /// and any part of the parent window uncovered as a result of the window being moved.
+        /// When this flag is set, the application must explicitly invalidate or redraw any parts
+        /// of the window and parent window that need redrawing.
         /// </summary>
         NOREDRAW = 0x0008,
 
         /// <summary>
-        ///     Does not activate the window. If this flag is not set,
-        ///     the window is activated and moved to the top of either the topmost or non-topmost group
-        ///     (depending on the setting of the hwndInsertAfter member).
+        /// Does not activate the window. If this flag is not set,
+        /// the window is activated and moved to the top of either the topmost or non-topmost group
+        /// (depending on the setting of the hwndInsertAfter member).
         /// </summary>
         NOACTIVATE = 0x0010,
 
         /// <summary>
-        ///     Sends a WM_NCCALCSIZE message to the window, even if the window's size is not being changed.
-        ///     If this flag is not specified, WM_NCCALCSIZE is sent only when the window's size is being changed.
+        /// Sends a WM_NCCALCSIZE message to the window, even if the window's size is not being changed.
+        /// If this flag is not specified, WM_NCCALCSIZE is sent only when the window's size is being changed.
         /// </summary>
         FRAMECHANGED = 0x0020, /* The frame changed: send WM_NCCALCSIZE */
 
         /// <summary>
-        ///     Displays the window.
+        /// Displays the window.
         /// </summary>
         SHOWWINDOW = 0x0040,
 
         /// <summary>
-        ///     Hides the window.
+        /// Hides the window.
         /// </summary>
         HIDEWINDOW = 0x0080,
 
         /// <summary>
-        ///     Discards the entire contents of the client area. If this flag is not specified,
-        ///     the valid contents of the client area are saved and copied back into the client area
-        ///     after the window is sized or repositioned.
+        /// Discards the entire contents of the client area. If this flag is not specified,
+        /// the valid contents of the client area are saved and copied back into the client area
+        /// after the window is sized or repositioned.
         /// </summary>
         NOCOPYBITS = 0x0100,
 
         /// <summary>
-        ///     Does not change the owner window's position in the Z order.
+        /// Does not change the owner window's position in the Z order.
         /// </summary>
         NOOWNERZORDER = 0x0200, /* Don't do owner Z ordering */
 
         /// <summary>
-        ///     Prevents the window from receiving the WM_WINDOWPOSCHANGING message.
+        /// Prevents the window from receiving the WM_WINDOWPOSCHANGING message.
         /// </summary>
         NOSENDCHANGING = 0x0400, /* Don't send WM_WINDOWPOSCHANGING */
 
         /// <summary>
-        ///     Draws a frame (defined in the window's class description) around the window.
+        /// Draws a frame (defined in the window's class description) around the window.
         /// </summary>
         DRAWFRAME = FRAMECHANGED,
 
         /// <summary>
-        ///     Same as the NOOWNERZORDER flag.
+        /// Same as the NOOWNERZORDER flag.
         /// </summary>
         NOREPOSITION = NOOWNERZORDER,
 
@@ -2277,38 +2277,38 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     Defines information for the raw input devices.
+    /// Defines information for the raw input devices.
     /// </summary>
     /// <remarks>
-    ///     If RIDEV_NOLEGACY is set for a mouse or a keyboard, the system does not generate any legacy message for that device
-    ///     for the application. For example, if the mouse TLC is set with RIDEV_NOLEGACY, WM_LBUTTONDOWN and related legacy
-    ///     mouse messages are not generated. Likewise, if the keyboard TLC is set with RIDEV_NOLEGACY, WM_KEYDOWN and related
-    ///     legacy keyboard messages are not generated.
+    /// If RIDEV_NOLEGACY is set for a mouse or a keyboard, the system does not generate any legacy message for that device
+    /// for the application. For example, if the mouse TLC is set with RIDEV_NOLEGACY, WM_LBUTTONDOWN and related legacy
+    /// mouse messages are not generated. Likewise, if the keyboard TLC is set with RIDEV_NOLEGACY, WM_KEYDOWN and related
+    /// legacy keyboard messages are not generated.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
     internal struct RawInputDevice
     {
         /// <summary>
-        ///     Top level collection Usage page for the raw input device.
+        /// Top level collection Usage page for the raw input device.
         /// </summary>
         internal HIDPage UsagePage;
 
         /// <summary>
-        ///     Top level collection Usage for the raw input device.
+        /// Top level collection Usage for the raw input device.
         /// </summary>
         //internal USHORT Usage;
         internal short Usage;
 
         /// <summary>
-        ///     Mode flag that specifies how to interpret the information provided by UsagePage and Usage.
-        ///     It can be zero (the default) or one of the following values.
-        ///     By default, the operating system sends raw input from devices with the specified top level collection (TLC)
-        ///     to the registered application as long as it has the window focus.
+        /// Mode flag that specifies how to interpret the information provided by UsagePage and Usage.
+        /// It can be zero (the default) or one of the following values.
+        /// By default, the operating system sends raw input from devices with the specified top level collection (TLC)
+        /// to the registered application as long as it has the window focus.
         /// </summary>
         internal RawInputDeviceFlags Flags;
 
         /// <summary>
-        ///     Handle to the target window. If NULL it follows the keyboard focus.
+        /// Handle to the target window. If NULL it follows the keyboard focus.
         /// </summary>
         internal HWND Target;
 
@@ -2344,18 +2344,18 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     Contains information about a raw input device.
+    /// Contains information about a raw input device.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct RawInputDeviceList
     {
         /// <summary>
-        ///     Handle to the raw input device.
+        /// Handle to the raw input device.
         /// </summary>
         internal HANDLE Device;
 
         /// <summary>
-        ///     Type of device.
+        /// Type of device.
         /// </summary>
         internal RawInputDeviceType Type;
 
@@ -2367,16 +2367,16 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     Contains the raw input from a device.
+    /// Contains the raw input from a device.
     /// </summary>
     /// <remarks>
-    ///     <para>The handle to this structure is passed in the lParam parameter of WM_INPUT.</para>
-    ///     <para>To get detailed information -- such as the header and the content of the raw input -- call GetRawInputData.</para>
-    ///     <para>To get device specific information, call GetRawInputDeviceInfo with the hDevice from RAWINPUTHEADER.</para>
-    ///     <para>
-    ///         Raw input is available only when the application calls RegisterRawInputDevices with valid device
-    ///         specifications.
-    ///     </para>
+    ///  <para>The handle to this structure is passed in the lParam parameter of WM_INPUT.</para>
+    ///  <para>To get detailed information -- such as the header and the content of the raw input -- call GetRawInputData.</para>
+    ///  <para>To get device specific information, call GetRawInputDeviceInfo with the hDevice from RAWINPUTHEADER.</para>
+    ///  <para>
+    /// Raw input is available only when the application calls RegisterRawInputDevices with valid device
+    /// specifications.
+    ///  </para>
     /// </remarks>
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     internal struct RawInput
@@ -2401,32 +2401,32 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     Contains the header information that is part of the raw input data.
+    /// Contains the header information that is part of the raw input data.
     /// </summary>
     /// <remarks>
-    ///     To get more information on the device, use hDevice in a call to GetRawInputDeviceInfo.
+    /// To get more information on the device, use hDevice in a call to GetRawInputDeviceInfo.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
     internal struct RawInputHeader
     {
         /// <summary>
-        ///     Type of raw input.
+        /// Type of raw input.
         /// </summary>
         internal RawInputDeviceType Type;
 
         /// <summary>
-        ///     Size, in bytes, of the entire input packet of data. This includes the RawInput struct plus possible extra input
-        ///     reports in the RAWHID variable length array.
+        /// Size, in bytes, of the entire input packet of data. This includes the RawInput struct plus possible extra input
+        /// reports in the RAWHID variable length array.
         /// </summary>
         internal int Size;
 
         /// <summary>
-        ///     Handle to the device generating the raw input data.
+        /// Handle to the device generating the raw input data.
         /// </summary>
         internal HANDLE Device;
 
         /// <summary>
-        ///     Value passed in the wParam parameter of the WM_INPUT message.
+        /// Value passed in the wParam parameter of the WM_INPUT message.
         /// </summary>
         internal WPARAM Param;
 
@@ -2436,47 +2436,47 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     Contains information about the state of the keyboard.
+    /// Contains information about the state of the keyboard.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct RawKeyboard
     {
         /// <summary>
-        ///     Scan code from the key depression. The scan code for keyboard overrun is KEYBOARD_OVERRUN_MAKE_CODE.
+        /// Scan code from the key depression. The scan code for keyboard overrun is KEYBOARD_OVERRUN_MAKE_CODE.
         /// </summary>
         //internal USHORT MakeCode;
         internal short MakeCode;
 
         /// <summary>
-        ///     Flags for scan code information. It can be one or more of the following.
-        ///     RI_KEY_MAKE
-        ///     RI_KEY_BREAK
-        ///     RI_KEY_E0
-        ///     RI_KEY_E1
-        ///     RI_KEY_TERMSRV_SET_LED
-        ///     RI_KEY_TERMSRV_SHADOW
+        /// Flags for scan code information. It can be one or more of the following.
+        /// RI_KEY_MAKE
+        /// RI_KEY_BREAK
+        /// RI_KEY_E0
+        /// RI_KEY_E1
+        /// RI_KEY_TERMSRV_SET_LED
+        /// RI_KEY_TERMSRV_SHADOW
         /// </summary>
         internal RawInputKeyboardDataFlags Flags;
 
         /// <summary>
-        ///     Reserved; must be zero.
+        /// Reserved; must be zero.
         /// </summary>
         private readonly ushort Reserved;
 
         /// <summary>
-        ///     Microsoft Windows message compatible virtual-key code. For more information, see Virtual-Key Codes.
+        /// Microsoft Windows message compatible virtual-key code. For more information, see Virtual-Key Codes.
         /// </summary>
         //internal USHORT VKey;
         internal VirtualKeys VKey;
 
         /// <summary>
-        ///     Corresponding window message, for example WM_KEYDOWN, WM_SYSKEYDOWN, and so forth.
+        /// Corresponding window message, for example WM_KEYDOWN, WM_SYSKEYDOWN, and so forth.
         /// </summary>
         //internal UINT Message;
         internal int Message;
 
         /// <summary>
-        ///     Device-specific additional information for the event.
+        /// Device-specific additional information for the event.
         /// </summary>
         //internal ULONG ExtraInformation;
         internal int ExtraInformation;
@@ -2484,48 +2484,48 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     Contains information about the state of the mouse.
+    /// Contains information about the state of the mouse.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     internal struct RawMouse
     {
         /// <summary>
-        ///     Mouse state. This member can be any reasonable combination of the following.
-        ///     MOUSE_ATTRIBUTES_CHANGED
-        ///     Mouse attributes changed; application needs to query the mouse attributes.
-        ///     MOUSE_MOVE_RELATIVE
-        ///     Mouse movement data is relative to the last mouse position.
-        ///     MOUSE_MOVE_ABSOLUTE
-        ///     Mouse movement data is based on absolute position.
-        ///     MOUSE_VIRTUAL_DESKTOP
-        ///     Mouse coordinates are mapped to the virtual desktop (for a multiple monitor system).
+        /// Mouse state. This member can be any reasonable combination of the following.
+        /// MOUSE_ATTRIBUTES_CHANGED
+        /// Mouse attributes changed; application needs to query the mouse attributes.
+        /// MOUSE_MOVE_RELATIVE
+        /// Mouse movement data is relative to the last mouse position.
+        /// MOUSE_MOVE_ABSOLUTE
+        /// Mouse movement data is based on absolute position.
+        /// MOUSE_VIRTUAL_DESKTOP
+        /// Mouse coordinates are mapped to the virtual desktop (for a multiple monitor system).
         /// </summary>
         [FieldOffset(0)] public RawMouseFlags Flags; // USHORT in winuser.h, but only INT works -- USHORT returns 0.
 
         [FieldOffset(4)] public RawInputMouseState ButtonFlags;
 
         /// <summary>
-        ///     If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed value that specifies the wheel delta.
+        /// If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed value that specifies the wheel delta.
         /// </summary>
         [FieldOffset(6)] public ushort ButtonData;
 
         /// <summary>
-        ///     Raw state of the mouse buttons.
+        /// Raw state of the mouse buttons.
         /// </summary>
         [FieldOffset(8)] public uint RawButtons;
 
         /// <summary>
-        ///     Motion in the X direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
+        /// Motion in the X direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
         /// </summary>
         [FieldOffset(12)] public int LastX;
 
         /// <summary>
-        ///     Motion in the Y direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
+        /// Motion in the Y direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
         /// </summary>
         [FieldOffset(16)] public int LastY;
 
         /// <summary>
-        ///     Device-specific additional information for the event.
+        /// Device-specific additional information for the event.
         /// </summary>
         [FieldOffset(20)] public uint ExtraInformation;
     }
@@ -2586,29 +2586,29 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     The RawHID structure describes the format of the raw input
-    ///     from a Human Interface Device (HID).
+    /// The RawHID structure describes the format of the raw input
+    /// from a Human Interface Device (HID).
     /// </summary>
     /// <remarks>
-    ///     Each WM_INPUT can indicate several inputs, but all of the inputs
-    ///     come from the same HID. The size of the bRawData array is
-    ///     dwSizeHid * dwCount.
+    /// Each WM_INPUT can indicate several inputs, but all of the inputs
+    /// come from the same HID. The size of the bRawData array is
+    /// dwSizeHid * dwCount.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
     internal struct RawHID
     {
         /// <summary>
-        ///     Size, in bytes, of each HID input in bRawData.
+        /// Size, in bytes, of each HID input in bRawData.
         /// </summary>
         internal int Size;
 
         /// <summary>
-        ///     Number of HID inputs in bRawData.
+        /// Number of HID inputs in bRawData.
         /// </summary>
         internal int Count;
 
         /// <summary>
-        ///     Raw input data as an array of bytes.
+        /// Raw input data as an array of bytes.
         /// </summary>
         internal byte RawData;
 
@@ -2634,7 +2634,7 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     Defines the raw input data coming from any device.
+    /// Defines the raw input data coming from any device.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal class RawInputDeviceInfo
@@ -2642,12 +2642,12 @@ namespace OpenTK.Platform.Windows
         internal DeviceStruct Device;
 
         /// <summary>
-        ///     Size, in bytes, of the RawInputDeviceInfo structure.
+        /// Size, in bytes, of the RawInputDeviceInfo structure.
         /// </summary>
         internal int Size = Marshal.SizeOf(typeof(RawInputDeviceInfo));
 
         /// <summary>
-        ///     Type of raw input data.
+        /// Type of raw input data.
         /// </summary>
         internal RawInputDeviceType Type;
 
@@ -2662,34 +2662,34 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     Defines the raw input data coming from the specified Human Interface Device (HID).
+    /// Defines the raw input data coming from the specified Human Interface Device (HID).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct RawInputHIDDeviceInfo
     {
         /// <summary>
-        ///     Vendor ID for the HID.
+        /// Vendor ID for the HID.
         /// </summary>
         internal int VendorId;
 
         /// <summary>
-        ///     Product ID for the HID.
+        /// Product ID for the HID.
         /// </summary>
         internal int ProductId;
 
         /// <summary>
-        ///     Version number for the HID.
+        /// Version number for the HID.
         /// </summary>
         internal int VersionNumber;
 
         /// <summary>
-        ///     Top-level collection Usage Page for the device.
+        /// Top-level collection Usage Page for the device.
         /// </summary>
         //internal USHORT UsagePage;
         internal short UsagePage;
 
         /// <summary>
-        ///     Top-level collection Usage for the device.
+        /// Top-level collection Usage for the device.
         /// </summary>
         //internal USHORT Usage;
         internal short Usage;
@@ -2697,109 +2697,109 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     Defines the raw input data coming from the specified keyboard.
+    /// Defines the raw input data coming from the specified keyboard.
     /// </summary>
     /// <remarks>
-    ///     For the keyboard, the Usage Page is 1 and the Usage is 6.
+    /// For the keyboard, the Usage Page is 1 and the Usage is 6.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
     internal struct RawInputKeyboardDeviceInfo
     {
         /// <summary>
-        ///     Type of the keyboard.
+        /// Type of the keyboard.
         /// </summary>
         internal int Type;
 
         /// <summary>
-        ///     Subtype of the keyboard.
+        /// Subtype of the keyboard.
         /// </summary>
         internal int SubType;
 
         /// <summary>
-        ///     Scan code mode.
+        /// Scan code mode.
         /// </summary>
         internal int KeyboardMode;
 
         /// <summary>
-        ///     Number of function keys on the keyboard.
+        /// Number of function keys on the keyboard.
         /// </summary>
         internal int NumberOfFunctionKeys;
 
         /// <summary>
-        ///     Number of LED indicators on the keyboard.
+        /// Number of LED indicators on the keyboard.
         /// </summary>
         internal int NumberOfIndicators;
 
         /// <summary>
-        ///     Total number of keys on the keyboard.
+        /// Total number of keys on the keyboard.
         /// </summary>
         internal int NumberOfKeysTotal;
     }
 
     /// \internal
     /// <summary>
-    ///     Defines the raw input data coming from the specified mouse.
+    /// Defines the raw input data coming from the specified mouse.
     /// </summary>
     /// <remarks>
-    ///     For the keyboard, the Usage Page is 1 and the Usage is 2.
+    /// For the keyboard, the Usage Page is 1 and the Usage is 2.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
     internal struct RawInputMouseDeviceInfo
     {
         /// <summary>
-        ///     ID for the mouse device.
+        /// ID for the mouse device.
         /// </summary>
         internal int Id;
 
         /// <summary>
-        ///     Number of buttons for the mouse.
+        /// Number of buttons for the mouse.
         /// </summary>
         internal int NumberOfButtons;
 
         /// <summary>
-        ///     Number of data points per second. This information may not be applicable for every mouse device.
+        /// Number of data points per second. This information may not be applicable for every mouse device.
         /// </summary>
         internal int SampleRate;
 
         /// <summary>
-        ///     TRUE if the mouse has a wheel for horizontal scrolling; otherwise, FALSE.
+        /// TRUE if the mouse has a wheel for horizontal scrolling; otherwise, FALSE.
         /// </summary>
         /// <remarks>
-        ///     This member is only supported under Microsoft Windows Vista and later versions.
+        /// This member is only supported under Microsoft Windows Vista and later versions.
         /// </remarks>
         internal bool HasHorizontalWheel;
     }
 
     /// \internal
     /// <summary>
-    ///     Defines the coordinates of the upper-left and lower-right corners of a rectangle.
+    /// Defines the coordinates of the upper-left and lower-right corners of a rectangle.
     /// </summary>
     /// <remarks>
-    ///     By convention, the right and bottom edges of the rectangle are normally considered exclusive. In other words, the
-    ///     pixel whose coordinates are (right, bottom) lies immediately outside of the the rectangle. For example, when RECT
-    ///     is passed to the FillRect function, the rectangle is filled up to, but not including, the right column and bottom
-    ///     row of pixels. This structure is identical to the RECTL structure.
+    /// By convention, the right and bottom edges of the rectangle are normally considered exclusive. In other words, the
+    /// pixel whose coordinates are (right, bottom) lies immediately outside of the the rectangle. For example, when RECT
+    /// is passed to the FillRect function, the rectangle is filled up to, but not including, the right column and bottom
+    /// row of pixels. This structure is identical to the RECTL structure.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
     internal struct Win32Rectangle
     {
         /// <summary>
-        ///     Specifies the x-coordinate of the upper-left corner of the rectangle.
+        /// Specifies the x-coordinate of the upper-left corner of the rectangle.
         /// </summary>
         internal int left;
 
         /// <summary>
-        ///     Specifies the y-coordinate of the upper-left corner of the rectangle.
+        /// Specifies the y-coordinate of the upper-left corner of the rectangle.
         /// </summary>
         internal int top;
 
         /// <summary>
-        ///     Specifies the x-coordinate of the lower-right corner of the rectangle.
+        /// Specifies the x-coordinate of the lower-right corner of the rectangle.
         /// </summary>
         internal int right;
 
         /// <summary>
-        ///     Specifies the y-coordinate of the lower-right corner of the rectangle.
+        /// Specifies the y-coordinate of the lower-right corner of the rectangle.
         /// </summary>
         internal int bottom;
 
@@ -2839,58 +2839,58 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     Contains window information.
+    /// Contains window information.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct WindowInfo
     {
         /// <summary>
-        ///     The size of the structure, in bytes.
+        /// The size of the structure, in bytes.
         /// </summary>
         public int Size;
 
         /// <summary>
-        ///     Pointer to a RECT structure that specifies the coordinates of the window.
+        /// Pointer to a RECT structure that specifies the coordinates of the window.
         /// </summary>
         public RECT Window;
 
         /// <summary>
-        ///     Pointer to a RECT structure that specifies the coordinates of the client area.
+        /// Pointer to a RECT structure that specifies the coordinates of the client area.
         /// </summary>
         public RECT Client;
 
         /// <summary>
-        ///     The window styles. For a table of window styles, see CreateWindowEx.
+        /// The window styles. For a table of window styles, see CreateWindowEx.
         /// </summary>
         public WindowStyle Style;
 
         /// <summary>
-        ///     The extended window styles. For a table of extended window styles, see CreateWindowEx.
+        /// The extended window styles. For a table of extended window styles, see CreateWindowEx.
         /// </summary>
         public ExtendedWindowStyle ExStyle;
 
         /// <summary>
-        ///     The window status. If this member is WS_ACTIVECAPTION, the window is active. Otherwise, this member is zero.
+        /// The window status. If this member is WS_ACTIVECAPTION, the window is active. Otherwise, this member is zero.
         /// </summary>
         public int WindowStatus;
 
         /// <summary>
-        ///     The width of the window border, in pixels.
+        /// The width of the window border, in pixels.
         /// </summary>
         public uint WindowBordersX;
 
         /// <summary>
-        ///     The height of the window border, in pixels.
+        /// The height of the window border, in pixels.
         /// </summary>
         public uint WindowBordersY;
 
         /// <summary>
-        ///     The window class atom (see RegisterClass).
+        /// The window class atom (see RegisterClass).
         /// </summary>
         public int WindowType;
 
         /// <summary>
-        ///     The Microsoft Windows version of the application that created the window.
+        /// The Microsoft Windows version of the application that created the window.
         /// </summary>
         public short CreatorVersion;
     }
@@ -2990,86 +2990,86 @@ namespace OpenTK.Platform.Windows
 #endif
 
     /// <summary>
-    ///     Contains information about the mouse's location in screen coordinates.
+    /// Contains information about the mouse's location in screen coordinates.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct MouseMovePoint
     {
         /// <summary>
-        ///     The x-coordinate of the mouse.
+        /// The x-coordinate of the mouse.
         /// </summary>
         public int X;
 
         /// <summary>
-        ///     The y-coordinate of the mouse.
+        /// The y-coordinate of the mouse.
         /// </summary>
         public int Y;
 
         /// <summary>
-        ///     The time stamp of the mouse coordinate.
+        /// The time stamp of the mouse coordinate.
         /// </summary>
         public int Time;
 
         /// <summary>
-        ///     Additional information associated with this coordinate.
+        /// Additional information associated with this coordinate.
         /// </summary>
         public IntPtr ExtraInfo;
 
         /// <summary>
-        ///     Returns the size of a MouseMovePoint in bytes.
+        /// Returns the size of a MouseMovePoint in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Marshal.SizeOf(default(MouseMovePoint));
     }
 
     /// \internal
     /// <summary>
-    ///     Contains information about an icon or a cursor.
+    /// Contains information about an icon or a cursor.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct IconInfo
     {
         /// <summary>
-        ///     Specifies whether this structure defines an icon or a cursor. A
-        ///     value of TRUE specifies an icon; FALSE specifies a cursor
+        /// Specifies whether this structure defines an icon or a cursor. A
+        /// value of TRUE specifies an icon; FALSE specifies a cursor
         /// </summary>
         public bool fIcon;
 
         /// <summary>
-        ///     The x-coordinate of a cursor's hot spot. If this structure defines
-        ///     an icon, the hot spot is always in the center of the icon, and
-        ///     this member is ignored.
+        /// The x-coordinate of a cursor's hot spot. If this structure defines
+        /// an icon, the hot spot is always in the center of the icon, and
+        /// this member is ignored.
         /// </summary>
         public int xHotspot;
 
         /// <summary>
-        ///     The y-coordinate of a cursor's hot spot. If this structure defines
-        ///     an icon, the hot spot is always in the center of the icon, and
-        ///     this member is ignored.
+        /// The y-coordinate of a cursor's hot spot. If this structure defines
+        /// an icon, the hot spot is always in the center of the icon, and
+        /// this member is ignored.
         /// </summary>
         public int yHotspot;
 
         /// <summary>
-        ///     The icon bitmask bitmap. If this structure defines a black and
-        ///     white icon, this bitmask is formatted so that the upper half is
-        ///     the icon AND bitmask and the lower half is the icon XOR bitmask.
-        ///     Under this condition, the height should be an even multiple of
-        ///     two. If this structure defines a color icon, this mask only
-        ///     defines the AND bitmask of the icon.
+        /// The icon bitmask bitmap. If this structure defines a black and
+        /// white icon, this bitmask is formatted so that the upper half is
+        /// the icon AND bitmask and the lower half is the icon XOR bitmask.
+        /// Under this condition, the height should be an even multiple of
+        /// two. If this structure defines a color icon, this mask only
+        /// defines the AND bitmask of the icon.
         /// </summary>
         public IntPtr hbmMask;
 
         /// <summary>
-        ///     A handle to the icon color bitmap. This member can be optional if
-        ///     this structure defines a black and white icon. The AND bitmask of
-        ///     hbmMask is applied with the SRCAND flag to the destination;
-        ///     subsequently, the color bitmap is applied (using XOR) to the
-        ///     destination by using the SRCINVERT flag.
+        /// A handle to the icon color bitmap. This member can be optional if
+        /// this structure defines a black and white icon. The AND bitmask of
+        /// hbmMask is applied with the SRCAND flag to the destination;
+        /// subsequently, the color bitmap is applied (using XOR) to the
+        /// destination by using the SRCINVERT flag.
         /// </summary>
         public IntPtr hbmColor;
     }
 
     /// <summary>
-    ///     Window field offsets for GetWindowLong() and GetWindowLongPtr().
+    /// Window field offsets for GetWindowLong() and GetWindowLongPtr().
     /// </summary>
     internal enum GWL
     {
@@ -3308,58 +3308,58 @@ namespace OpenTK.Platform.Windows
     internal enum RawInputDeviceFlags
     {
         /// <summary>
-        ///     If set, this removes the top level collection from the inclusion list.
-        ///     This tells the operating system to stop reading from a device which matches the top level collection.
+        /// If set, this removes the top level collection from the inclusion list.
+        /// This tells the operating system to stop reading from a device which matches the top level collection.
         /// </summary>
         REMOVE = 0x00000001,
 
         /// <summary>
-        ///     If set, this specifies the top level collections to exclude when reading a complete usage page.
-        ///     This flag only affects a TLC whose usage page is already specified with RawInputDeviceEnum.PAGEONLY.
+        /// If set, this specifies the top level collections to exclude when reading a complete usage page.
+        /// This flag only affects a TLC whose usage page is already specified with RawInputDeviceEnum.PAGEONLY.
         /// </summary>
         EXCLUDE = 0x00000010,
 
         /// <summary>
-        ///     If set, this specifies all devices whose top level collection is from the specified UsagePage.
-        ///     Note that usUsage must be zero. To exclude a particular top level collection, use EXCLUDE.
+        /// If set, this specifies all devices whose top level collection is from the specified UsagePage.
+        /// Note that usUsage must be zero. To exclude a particular top level collection, use EXCLUDE.
         /// </summary>
         PAGEONLY = 0x00000020,
 
         /// <summary>
-        ///     If set, this prevents any devices specified by UsagePage or Usage from generating legacy messages.
-        ///     This is only for the mouse and keyboard. See RawInputDevice Remarks.
+        /// If set, this prevents any devices specified by UsagePage or Usage from generating legacy messages.
+        /// This is only for the mouse and keyboard. See RawInputDevice Remarks.
         /// </summary>
         NOLEGACY = 0x00000030,
 
         /// <summary>
-        ///     If set, this enables the caller to receive the input even when the caller is not in the foreground.
-        ///     Note that Target must be specified in RawInputDevice.
+        /// If set, this enables the caller to receive the input even when the caller is not in the foreground.
+        /// Note that Target must be specified in RawInputDevice.
         /// </summary>
         INPUTSINK = 0x00000100,
 
         /// <summary>
-        ///     If set, the mouse button click does not activate the other window.
+        /// If set, the mouse button click does not activate the other window.
         /// </summary>
         CAPTUREMOUSE = 0x00000200, // effective when mouse nolegacy is specified, otherwise it would be an error
 
         /// <summary>
-        ///     If set, the application-defined keyboard device hotkeys are not handled.
-        ///     However, the system hotkeys; for example, ALT+TAB and CTRL+ALT+DEL, are still handled.
-        ///     By default, all keyboard hotkeys are handled.
-        ///     NOHOTKEYS can be specified even if NOLEGACY is not specified and Target is NULL in RawInputDevice.
+        /// If set, the application-defined keyboard device hotkeys are not handled.
+        /// However, the system hotkeys; for example, ALT+TAB and CTRL+ALT+DEL, are still handled.
+        /// By default, all keyboard hotkeys are handled.
+        /// NOHOTKEYS can be specified even if NOLEGACY is not specified and Target is NULL in RawInputDevice.
         /// </summary>
         NOHOTKEYS = 0x00000200, // effective for keyboard.
 
         /// <summary>
-        ///     Microsoft Windows XP Service Pack 1 (SP1): If set, the application command keys are handled. APPKEYS can be
-        ///     specified only if NOLEGACY is specified for a keyboard device.
+        /// Microsoft Windows XP Service Pack 1 (SP1): If set, the application command keys are handled. APPKEYS can be
+        /// specified only if NOLEGACY is specified for a keyboard device.
         /// </summary>
         APPKEYS = 0x00000400, // effective for keyboard.
 
         /// <summary>
-        ///     If set, this enables the caller to receive input in the background only if the foreground application
-        ///     does not process it. In other words, if the foreground application is not registered for raw input,
-        ///     then the background application that is registered will receive the input.
+        /// If set, this enables the caller to receive input in the background only if the foreground application
+        /// does not process it. In other words, if the foreground application is not registered for raw input,
+        /// then the background application that is registered will receive the input.
         /// </summary>
         EXINPUTSINK = 0x00001000,
 
@@ -3424,28 +3424,28 @@ namespace OpenTK.Platform.Windows
     }
 
     /// <summary>
-    ///     Mouse indicator flags (found in winuser.h).
+    /// Mouse indicator flags (found in winuser.h).
     /// </summary>
     [Flags]
     internal enum RawMouseFlags : ushort
     {
         /// <summary>
-        ///     LastX/Y indicate relative motion.
+        /// LastX/Y indicate relative motion.
         /// </summary>
         MOUSE_MOVE_RELATIVE = 0x00,
 
         /// <summary>
-        ///     LastX/Y indicate absolute motion.
+        /// LastX/Y indicate absolute motion.
         /// </summary>
         MOUSE_MOVE_ABSOLUTE = 0x01,
 
         /// <summary>
-        ///     The coordinates are mapped to the virtual desktop.
+        /// The coordinates are mapped to the virtual desktop.
         /// </summary>
         MOUSE_VIRTUAL_DESKTOP = 0x02,
 
         /// <summary>
-        ///     Requery for mouse attributes.
+        /// Requery for mouse attributes.
         /// </summary>
         MOUSE_ATTRIBUTES_CHANGED = 0x04
     }
@@ -3709,7 +3709,7 @@ namespace OpenTK.Platform.Windows
     }
 
     /// <summary>
-    ///     Enumerates available mouse keys (suitable for use in WM_MOUSEMOVE messages).
+    /// Enumerates available mouse keys (suitable for use in WM_MOUSEMOVE messages).
     /// </summary>
     internal enum MouseKeys
     {
@@ -3745,86 +3745,86 @@ namespace OpenTK.Platform.Windows
 
     /// \internal
     /// <summary>
-    ///     Queue status flags for GetQueueStatus() and MsgWaitForMultipleObjects()
+    /// Queue status flags for GetQueueStatus() and MsgWaitForMultipleObjects()
     /// </summary>
     [Flags]
     internal enum QueueStatusFlags
     {
         /// <summary>
-        ///     A WM_KEYUP, WM_KEYDOWN, WM_SYSKEYUP, or WM_SYSKEYDOWN message is in the queue.
+        /// A WM_KEYUP, WM_KEYDOWN, WM_SYSKEYUP, or WM_SYSKEYDOWN message is in the queue.
         /// </summary>
         KEY = 0x0001,
 
         /// <summary>
-        ///     A WM_MOUSEMOVE message is in the queue.
+        /// A WM_MOUSEMOVE message is in the queue.
         /// </summary>
         MOUSEMOVE = 0x0002,
 
         /// <summary>
-        ///     A mouse-button message (WM_LBUTTONUP, WM_RBUTTONDOWN, and so on).
+        /// A mouse-button message (WM_LBUTTONUP, WM_RBUTTONDOWN, and so on).
         /// </summary>
         MOUSEBUTTON = 0x0004,
 
         /// <summary>
-        ///     A posted message (other than those listed here) is in the queue.
+        /// A posted message (other than those listed here) is in the queue.
         /// </summary>
         POSTMESSAGE = 0x0008,
 
         /// <summary>
-        ///     A WM_TIMER message is in the queue.
+        /// A WM_TIMER message is in the queue.
         /// </summary>
         TIMER = 0x0010,
 
         /// <summary>
-        ///     A WM_PAINT message is in the queue.
+        /// A WM_PAINT message is in the queue.
         /// </summary>
         PAINT = 0x0020,
 
         /// <summary>
-        ///     A message sent by another thread or application is in the queue.
+        /// A message sent by another thread or application is in the queue.
         /// </summary>
         SENDMESSAGE = 0x0040,
 
         /// <summary>
-        ///     A WM_HOTKEY message is in the queue.
+        /// A WM_HOTKEY message is in the queue.
         /// </summary>
         HOTKEY = 0x0080,
 
         /// <summary>
-        ///     A posted message (other than those listed here) is in the queue.
+        /// A posted message (other than those listed here) is in the queue.
         /// </summary>
         ALLPOSTMESSAGE = 0x0100,
 
         /// <summary>
-        ///     A raw input message is in the queue. For more information, see Raw Input.
-        ///     Windows XP and higher only.
+        /// A raw input message is in the queue. For more information, see Raw Input.
+        /// Windows XP and higher only.
         /// </summary>
         RAWINPUT = 0x0400,
 
         /// <summary>
-        ///     A WM_MOUSEMOVE message or mouse-button message (WM_LBUTTONUP, WM_RBUTTONDOWN, and so on).
+        /// A WM_MOUSEMOVE message or mouse-button message (WM_LBUTTONUP, WM_RBUTTONDOWN, and so on).
         /// </summary>
         MOUSE = MOUSEMOVE | MOUSEBUTTON,
 
         /// <summary>
-        ///     An input message is in the queue. This is composed of KEY, MOUSE and RAWINPUT.
-        ///     Windows XP and higher only.
+        /// An input message is in the queue. This is composed of KEY, MOUSE and RAWINPUT.
+        /// Windows XP and higher only.
         /// </summary>
         INPUT = MOUSE | KEY | RAWINPUT,
 
         /// <summary>
-        ///     An input message is in the queue. This is composed of QS_KEY and QS_MOUSE.
-        ///     Windows 2000 and earlier.
+        /// An input message is in the queue. This is composed of QS_KEY and QS_MOUSE.
+        /// Windows 2000 and earlier.
         /// </summary>
         INPUT_LEGACY = MOUSE | KEY,
 
         /// <summary>
-        ///     An input, WM_TIMER, WM_PAINT, WM_HOTKEY, or posted message is in the queue.
+        /// An input, WM_TIMER, WM_PAINT, WM_HOTKEY, or posted message is in the queue.
         /// </summary>
         ALLEVENTS = INPUT | POSTMESSAGE | TIMER | PAINT | HOTKEY,
 
         /// <summary>
-        ///     Any message is in the queue.
+        /// Any message is in the queue.
         /// </summary>
         ALLINPUT = INPUT | POSTMESSAGE | TIMER | PAINT | HOTKEY | SENDMESSAGE
     }
@@ -3941,17 +3941,17 @@ namespace OpenTK.Platform.Windows
         NCMBUTTONDBLCLK = 0x00A9,
 
         /// <summary>
-        ///     Windows 2000 and higher only.
+        /// Windows 2000 and higher only.
         /// </summary>
         NCXBUTTONDOWN = 0x00ab,
 
         /// <summary>
-        ///     Windows 2000 and higher only.
+        /// Windows 2000 and higher only.
         /// </summary>
         NCXBUTTONUP = 0x00ac,
 
         /// <summary>
-        ///     Windows 2000 and higher only.
+        /// Windows 2000 and higher only.
         /// </summary>
         NCXBUTTONDBLCLK = 0x00ad,
 
@@ -4016,22 +4016,22 @@ namespace OpenTK.Platform.Windows
         MOUSEWHEEL = 0x020A,
 
         /// <summary>
-        ///     Windows 2000 and higher only.
+        /// Windows 2000 and higher only.
         /// </summary>
         XBUTTONDOWN = 0x020B,
 
         /// <summary>
-        ///     Windows 2000 and higher only.
+        /// Windows 2000 and higher only.
         /// </summary>
         XBUTTONUP = 0x020C,
 
         /// <summary>
-        ///     Windows 2000 and higher only.
+        /// Windows 2000 and higher only.
         /// </summary>
         XBUTTONDBLCLK = 0x020D,
 
         /// <summary>
-        ///     Windows Vista and higher only.
+        /// Windows Vista and higher only.
         /// </summary>
         MOUSEHWHEEL = 0x020E,
         PARENTNOTIFY = 0x0210,
@@ -4132,76 +4132,76 @@ namespace OpenTK.Platform.Windows
     }
 
     /// <summary>
-    ///     ShowWindow() Commands
+    /// ShowWindow() Commands
     /// </summary>
     internal enum ShowWindowCommand
     {
         /// <summary>
-        ///     Hides the window and activates another window.
+        /// Hides the window and activates another window.
         /// </summary>
         HIDE = 0,
 
         /// <summary>
-        ///     Activates and displays a window. If the window is minimized or maximized, the system restores it to its original
-        ///     size and position. An application should specify this flag when displaying the window for the first time.
+        /// Activates and displays a window. If the window is minimized or maximized, the system restores it to its original
+        /// size and position. An application should specify this flag when displaying the window for the first time.
         /// </summary>
         SHOWNORMAL = 1,
         NORMAL = 1,
 
         /// <summary>
-        ///     Activates the window and displays it as a minimized window.
+        /// Activates the window and displays it as a minimized window.
         /// </summary>
         SHOWMINIMIZED = 2,
 
         /// <summary>
-        ///     Activates the window and displays it as a maximized window.
+        /// Activates the window and displays it as a maximized window.
         /// </summary>
         SHOWMAXIMIZED = 3,
         MAXIMIZE = 3,
 
         /// <summary>
-        ///     Displays the window as a minimized window. This value is similar to SW_SHOWMINIMIZED, except the window is not
-        ///     activated.
+        /// Displays the window as a minimized window. This value is similar to SW_SHOWMINIMIZED, except the window is not
+        /// activated.
         /// </summary>
         SHOWNOACTIVATE = 4,
 
         /// <summary>
-        ///     Activates the window and displays it in its current size and position.
+        /// Activates the window and displays it in its current size and position.
         /// </summary>
         SHOW = 5,
 
         /// <summary>
-        ///     Minimizes the specified window and activates the next top-level window in the Z order.
+        /// Minimizes the specified window and activates the next top-level window in the Z order.
         /// </summary>
         MINIMIZE = 6,
 
         /// <summary>
-        ///     Displays the window as a minimized window. This value is similar to SW_SHOWMINIMIZED, except the window is not
-        ///     activated.
+        /// Displays the window as a minimized window. This value is similar to SW_SHOWMINIMIZED, except the window is not
+        /// activated.
         /// </summary>
         SHOWMINNOACTIVE = 7,
 
         /// <summary>
-        ///     Displays the window in its current size and position. This value is similar to SW_SHOW, except the window is not
-        ///     activated.
+        /// Displays the window in its current size and position. This value is similar to SW_SHOW, except the window is not
+        /// activated.
         /// </summary>
         SHOWNA = 8,
 
         /// <summary>
-        ///     Activates and displays the window. If the window is minimized or maximized, the system restores it to its original
-        ///     size and position. An application should specify this flag when restoring a minimized window.
+        /// Activates and displays the window. If the window is minimized or maximized, the system restores it to its original
+        /// size and position. An application should specify this flag when restoring a minimized window.
         /// </summary>
         RESTORE = 9,
 
         /// <summary>
-        ///     Sets the show state based on the SW_ value specified in the STARTUPINFO structure passed to the CreateProcess
-        ///     function by the program that started the application.
+        /// Sets the show state based on the SW_ value specified in the STARTUPINFO structure passed to the CreateProcess
+        /// function by the program that started the application.
         /// </summary>
         SHOWDEFAULT = 10,
 
         /// <summary>
-        ///     Windows 2000/XP: Minimizes a window, even if the thread that owns the window is not responding. This flag should
-        ///     only be used when minimizing windows from a different thread.
+        /// Windows 2000/XP: Minimizes a window, even if the thread that owns the window is not responding. This flag should
+        /// only be used when minimizing windows from a different thread.
         /// </summary>
         FORCEMINIMIZE = 11
         //MAX             = 11,
@@ -4215,7 +4215,7 @@ namespace OpenTK.Platform.Windows
     }
 
     /// <summary>
-    ///     Identifiers for the WM_SHOWWINDOW message
+    /// Identifiers for the WM_SHOWWINDOW message
     /// </summary>
     internal enum ShowWindowMessageIdentifiers
     {
@@ -4226,7 +4226,7 @@ namespace OpenTK.Platform.Windows
     }
 
     /// <summary>
-    ///     Enumerates the available character sets.
+    /// Enumerates the available character sets.
     /// </summary>
     internal enum GdiCharset
     {
@@ -4255,7 +4255,7 @@ namespace OpenTK.Platform.Windows
     }
 
     /// <summary>
-    ///     Identifiers for the GetStockObject method.
+    /// Identifiers for the GetStockObject method.
     /// </summary>
     internal enum StockObjects
     {
@@ -4284,28 +4284,28 @@ namespace OpenTK.Platform.Windows
     internal enum MapVirtualKeyType
     {
         /// <summary>
-        ///     uCode is a virtual-key code and is translated into a scan code. If it is a virtual-key code that does not
-        ///     distinguish between left- and right-hand keys, the left-hand scan code is returned. If there is no translation, the
-        ///     function returns 0.
+        /// uCode is a virtual-key code and is translated into a scan code. If it is a virtual-key code that does not
+        /// distinguish between left- and right-hand keys, the left-hand scan code is returned. If there is no translation, the
+        /// function returns 0.
         /// </summary>
         VirtualKeyToScanCode = 0,
 
         /// <summary>
-        ///     uCode is a scan code and is translated into a virtual-key code that does not distinguish between left- and
-        ///     right-hand keys. If there is no translation, the function returns 0.
+        /// uCode is a scan code and is translated into a virtual-key code that does not distinguish between left- and
+        /// right-hand keys. If there is no translation, the function returns 0.
         /// </summary>
         ScanCodeToVirtualKey = 1,
 
         /// <summary>
-        ///     uCode is a virtual-key code and is translated into an unshifted character value in the low-order word of the
-        ///     return value. Dead keys (diacritics) are indicated by setting the top bit of the return value. If there is no
-        ///     translation, the function returns 0.
+        /// uCode is a virtual-key code and is translated into an unshifted character value in the low-order word of the
+        /// return value. Dead keys (diacritics) are indicated by setting the top bit of the return value. If there is no
+        /// translation, the function returns 0.
         /// </summary>
         VirtualKeyToCharacter = 2,
 
         /// <summary>
-        ///     Windows NT/2000/XP: uCode is a scan code and is translated into a virtual-key code that distinguishes between
-        ///     left- and right-hand keys. If there is no translation, the function returns 0.
+        /// Windows NT/2000/XP: uCode is a scan code and is translated into a virtual-key code that distinguishes between
+        /// left- and right-hand keys. If there is no translation, the function returns 0.
         /// </summary>
         ScanCodeToVirtualKeyExtended = 3,
         VirtualKeyToScanCodeExtended = 4
@@ -4331,58 +4331,94 @@ namespace OpenTK.Platform.Windows
     [Flags]
     internal enum ShGetFileIconFlags
     {
-        /// <summary>get icon</summary>
+        /// <summary>
+        /// get icon
+        /// </summary>
         Icon = 0x000000100,
 
-        /// <summary>get display name</summary>
+        /// <summary>
+        /// get display name
+        /// </summary>
         DisplayName = 0x000000200,
 
-        /// <summary>get type name</summary>
+        /// <summary>
+        /// get type name
+        /// </summary>
         TypeName = 0x000000400,
 
-        /// <summary>get attributes</summary>
+        /// <summary>
+        /// get attributes
+        /// </summary>
         Attributes = 0x000000800,
 
-        /// <summary>get icon location</summary>
+        /// <summary>
+        /// get icon location
+        /// </summary>
         IconLocation = 0x000001000,
 
-        /// <summary>return exe type</summary>
+        /// <summary>
+        /// return exe type
+        /// </summary>
         ExeType = 0x000002000,
 
-        /// <summary>get system icon index</summary>
+        /// <summary>
+        /// get system icon index
+        /// </summary>
         SysIconIndex = 0x000004000,
 
-        /// <summary>put a link overlay on icon</summary>
+        /// <summary>
+        /// put a link overlay on icon
+        /// </summary>
         LinkOverlay = 0x000008000,
 
-        /// <summary>show icon in selected state</summary>
+        /// <summary>
+        /// show icon in selected state
+        /// </summary>
         Selected = 0x000010000,
 
-        /// <summary>get only specified attributes</summary>
+        /// <summary>
+        /// get only specified attributes
+        /// </summary>
         Attr_Specified = 0x000020000,
 
-        /// <summary>get large icon</summary>
+        /// <summary>
+        /// get large icon
+        /// </summary>
         LargeIcon = 0x000000000,
 
-        /// <summary>get small icon</summary>
+        /// <summary>
+        /// get small icon
+        /// </summary>
         SmallIcon = 0x000000001,
 
-        /// <summary>get open icon</summary>
+        /// <summary>
+        /// get open icon
+        /// </summary>
         OpenIcon = 0x000000002,
 
-        /// <summary>get shell size icon</summary>
+        /// <summary>
+        /// get shell size icon
+        /// </summary>
         ShellIconSize = 0x000000004,
 
-        /// <summary>pszPath is a pidl</summary>
+        /// <summary>
+        /// pszPath is a pidl
+        /// </summary>
         PIDL = 0x000000008,
 
-        /// <summary>use passed dwFileAttribute</summary>
+        /// <summary>
+        /// use passed dwFileAttribute
+        /// </summary>
         UseFileAttributes = 0x000000010,
 
-        /// <summary>apply the appropriate overlays</summary>
+        /// <summary>
+        /// apply the appropriate overlays
+        /// </summary>
         AddOverlays = 0x000000020,
 
-        /// <summary>Get the index of the overlay in the upper 8 bits of the iIcon</summary>
+        /// <summary>
+        /// Get the index of the overlay in the upper 8 bits of the iIcon
+        /// </summary>
         OverlayIndex = 0x000000040
     }
 

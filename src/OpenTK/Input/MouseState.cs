@@ -24,12 +24,12 @@
 //
 
 using System;
-using OpenTK.Mathemathics;
+using OpenTK.Mathematics;
 
 namespace OpenTK.Input
 {
     /// <summary>
-    ///     Encapsulates the state of a mouse device.
+    /// Encapsulates the state of a mouse device.
     /// </summary>
     public struct MouseState : IEquatable<MouseState>
     {
@@ -39,8 +39,8 @@ namespace OpenTK.Input
         private ushort buttons;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether the specified
-        ///     <see cref="OpenTK.Input.MouseButton" /> is pressed.
+        /// Gets a <see cref="System.Boolean" /> indicating whether the specified
+        ///  <see cref="OpenTK.Input.MouseButton" /> is pressed.
         /// </summary>
         /// <param name="button">The <see cref="OpenTK.Input.MouseButton" /> to check.</param>
         /// <returns>True if key is pressed; false otherwise.</returns>
@@ -61,7 +61,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether this button is down.
+        /// Gets a <see cref="System.Boolean" /> indicating whether this button is down.
         /// </summary>
         /// <param name="button">The <see cref="OpenTK.Input.MouseButton" /> to check.</param>
         public bool IsButtonDown(MouseButton button)
@@ -70,7 +70,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether this button is up.
+        /// Gets a <see cref="System.Boolean" /> indicating whether this button is up.
         /// </summary>
         /// <param name="button">The <see cref="OpenTK.Input.MouseButton" /> to check.</param>
         public bool IsButtonUp(MouseButton button)
@@ -79,24 +79,24 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets the absolute wheel position in integer units.
-        ///     To support high-precision mice, it is recommended to use <see cref="WheelPrecise" /> instead.
+        /// Gets the absolute wheel position in integer units.
+        /// To support high-precision mice, it is recommended to use <see cref="WheelPrecise" /> instead.
         /// </summary>
         public int Wheel => (int)Math.Round(scroll.Y, MidpointRounding.AwayFromZero);
 
         /// <summary>
-        ///     Gets the absolute wheel position in floating-point units.
+        /// Gets the absolute wheel position in floating-point units.
         /// </summary>
         public float WheelPrecise => scroll.Y;
 
         /// <summary>
-        ///     Gets a <see cref="OpenTK.Input.MouseScroll" /> instance,
-        ///     representing the current state of the mouse scroll wheel.
+        /// Gets a <see cref="OpenTK.Input.MouseScroll" /> instance,
+        /// representing the current state of the mouse scroll wheel.
         /// </summary>
         public MouseScroll Scroll => scroll;
 
         /// <summary>
-        ///     Gets an integer representing the absolute x position of the pointer, in window pixel coordinates.
+        /// Gets an integer representing the absolute x position of the pointer, in window pixel coordinates.
         /// </summary>
         public int X
         {
@@ -105,7 +105,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets an integer representing the absolute y position of the pointer, in window pixel coordinates.
+        /// Gets an integer representing the absolute y position of the pointer, in window pixel coordinates.
         /// </summary>
         public int Y
         {
@@ -114,65 +114,65 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether the left mouse button is pressed.
-        ///     This property is intended for XNA compatibility.
+        /// Gets a <see cref="System.Boolean" /> indicating whether the left mouse button is pressed.
+        /// This property is intended for XNA compatibility.
         /// </summary>
         public ButtonState LeftButton => IsButtonDown(MouseButton.Left) ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether the middle mouse button is pressed.
-        ///     This property is intended for XNA compatibility.
+        /// Gets a <see cref="System.Boolean" /> indicating whether the middle mouse button is pressed.
+        /// This property is intended for XNA compatibility.
         /// </summary>
         public ButtonState MiddleButton =>
             IsButtonDown(MouseButton.Middle) ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether the right mouse button is pressed.
-        ///     This property is intended for XNA compatibility.
+        /// Gets a <see cref="System.Boolean" /> indicating whether the right mouse button is pressed.
+        /// This property is intended for XNA compatibility.
         /// </summary>
         public ButtonState RightButton => IsButtonDown(MouseButton.Right) ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether the first extra mouse button is pressed.
-        ///     This property is intended for XNA compatibility.
+        /// Gets a <see cref="System.Boolean" /> indicating whether the first extra mouse button is pressed.
+        /// This property is intended for XNA compatibility.
         /// </summary>
         public ButtonState XButton1 => IsButtonDown(MouseButton.Button1) ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether the second extra mouse button is pressed.
-        ///     This property is intended for XNA compatibility.
+        /// Gets a <see cref="System.Boolean" /> indicating whether the second extra mouse button is pressed.
+        /// This property is intended for XNA compatibility.
         /// </summary>
         public ButtonState XButton2 => IsButtonDown(MouseButton.Button2) ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
-        ///     Gets a value indicating whether any button is down.
+        /// Gets a value indicating whether any button is down.
         /// </summary>
         /// <value><c>true</c> if any button is down; otherwise, <c>false</c>.</value>
         public bool IsAnyButtonDown => buttons != 0;
 
         /// <summary>
-        ///     Gets the absolute wheel position in integer units. This property is intended for XNA compatibility.
-        ///     To support high-precision mice, it is recommended to use <see cref="WheelPrecise" /> instead.
+        /// Gets the absolute wheel position in integer units. This property is intended for XNA compatibility.
+        /// To support high-precision mice, it is recommended to use <see cref="WheelPrecise" /> instead.
         /// </summary>
         public int ScrollWheelValue => Wheel;
 
         /// <summary>
-        ///     Gets a value indicating whether this instance is connected.
+        /// Gets a value indicating whether this instance is connected.
         /// </summary>
         /// <value><c>true</c> if this instance is connected; otherwise, <c>false</c>.</value>
         public bool IsConnected { get; internal set; }
 
         /// <summary>
-        ///     Checks whether two <see cref="MouseState" /> instances are equal.
+        /// Checks whether two <see cref="MouseState" /> instances are equal.
         /// </summary>
         /// <param name="left">
-        ///     A <see cref="MouseState" /> instance.
+        /// A <see cref="MouseState" /> instance.
         /// </param>
         /// <param name="right">
-        ///     A <see cref="MouseState" /> instance.
+        /// A <see cref="MouseState" /> instance.
         /// </param>
         /// <returns>
-        ///     True if both left is equal to right; false otherwise.
+        /// True if both left is equal to right; false otherwise.
         /// </returns>
         public static bool operator ==(MouseState left, MouseState right)
         {
@@ -180,16 +180,16 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Checks whether two <see cref="MouseState" /> instances are not equal.
+        /// Checks whether two <see cref="MouseState" /> instances are not equal.
         /// </summary>
         /// <param name="left">
-        ///     A <see cref="MouseState" /> instance.
+        /// A <see cref="MouseState" /> instance.
         /// </param>
         /// <param name="right">
-        ///     A <see cref="MouseState" /> instance.
+        /// A <see cref="MouseState" /> instance.
         /// </param>
         /// <returns>
-        ///     True if both left is not equal to right; false otherwise.
+        /// True if both left is not equal to right; false otherwise.
         /// </returns>
         public static bool operator !=(MouseState left, MouseState right)
         {
@@ -197,13 +197,13 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Compares to an object instance for equality.
+        /// Compares to an object instance for equality.
         /// </summary>
         /// <param name="obj">
-        ///     The <see cref="System.Object" /> to compare to.
+        /// The <see cref="System.Object" /> to compare to.
         /// </param>
         /// <returns>
-        ///     True if this instance is equal to obj; false otherwise.
+        /// True if this instance is equal to obj; false otherwise.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -216,10 +216,10 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Generates a hashcode for the current instance.
+        /// Generates a hashcode for the current instance.
         /// </summary>
         /// <returns>
-        ///     A <see cref="System.Int32" /> represting the hashcode for this instance.
+        /// A <see cref="System.Int32" /> represting the hashcode for this instance.
         /// </returns>
         public override int GetHashCode()
         {
@@ -227,7 +227,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.MouseState" />.
+        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.MouseState" />.
         /// </summary>
         /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.MouseState" />.</returns>
         public override string ToString()
@@ -295,7 +295,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Compares two MouseState instances.
+        /// Compares two MouseState instances.
         /// </summary>
         /// <param name="other">The instance to compare two.</param>
         /// <returns>True, if both instances are equal; false otherwise.</returns>

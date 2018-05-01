@@ -26,7 +26,7 @@
 namespace OpenTK.Graphics
 {
     /// <summary>
-    ///     Defines the version information of a GraphicsContext.
+    /// Defines the version information of a GraphicsContext.
     /// </summary>
     public sealed class GraphicsContextVersion
     {
@@ -39,22 +39,22 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        ///     Gets a System.Int32 indicating the minor version of a GraphicsContext instance.
+        /// Gets a System.Int32 indicating the minor version of a GraphicsContext instance.
         /// </summary>
         public int Minor { get; }
 
         /// <summary>
-        ///     Gets a System.Int32 indicating the major version of a GraphicsContext instance.
+        /// Gets a System.Int32 indicating the major version of a GraphicsContext instance.
         /// </summary>
         public int Major { get; }
 
         /// <summary>
-        ///     Gets a System.String indicating the vendor of a GraphicsContext instance.
+        /// Gets a System.String indicating the vendor of a GraphicsContext instance.
         /// </summary>
         public string Vendor { get; } = string.Empty;
 
         /// <summary>
-        ///     Gets a System.String indicating the renderer of a GraphicsContext instance.
+        /// Gets a System.String indicating the renderer of a GraphicsContext instance.
         /// </summary>
         public string Renderer { get; } = string.Empty;
     }

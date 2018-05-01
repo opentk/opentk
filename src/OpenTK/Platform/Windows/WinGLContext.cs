@@ -14,8 +14,8 @@ namespace OpenTK.Platform.Windows
 {
     /// \internal
     /// <summary>
-    ///     Provides methods to create and control an opengl context on the Windows platform.
-    ///     This class supports OpenTK, and is not intended for use by OpenTK programs.
+    /// Provides methods to create and control an opengl context on the Windows platform.
+    /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
     internal sealed class WinGLContext : DesktopGraphicsContext
     {
@@ -351,7 +351,9 @@ namespace OpenTK.Platform.Windows
             return mode;
         }
 
-        /// <summary>Returns a System.String describing this OpenGL context.</summary>
+        /// <summary>
+        /// Returns a System.String describing this OpenGL context.
+        /// </summary>
         /// <returns>A System.String describing this OpenGL context.</returns>
         public override string ToString()
         {

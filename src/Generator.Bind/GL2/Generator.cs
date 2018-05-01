@@ -26,18 +26,18 @@ namespace Bind.GL2
         protected string LoadAllFuncName = "LoadAll";
 
         /// <summary>
-        ///     The Profile field corresponds to the "profile" attribute
-        ///     in the OpenGL registry. We use this to distinguish between
-        ///     different profiles (e.g. "gl", "glcore", "gles1", "gles2").
+        /// The Profile field corresponds to the "profile" attribute
+        /// in the OpenGL registry. We use this to distinguish between
+        /// different profiles (e.g. "gl", "glcore", "gles1", "gles2").
         /// </summary>
         protected string Profile = "gl";
 
         /// <summary>
-        ///     The Version field corresponds to the "number" attribute
-        ///     in the OpenGL registry. We use this to distinguish between
-        ///     OpenGL ES 2.0 and 3.0, which share the same profile "gles2".
-        ///     If empty, then all elements of a profile will be parsed, and
-        ///     their version number will be ignored.
+        /// The Version field corresponds to the "number" attribute
+        /// in the OpenGL registry. We use this to distinguish between
+        /// OpenGL ES 2.0 and 3.0, which share the same profile "gles2".
+        /// If empty, then all elements of a profile will be parsed, and
+        /// their version number will be ignored.
         /// </summary>
         protected string Version = string.Empty;
 

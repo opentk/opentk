@@ -26,15 +26,21 @@
 
 namespace OpenTK.OpenAL
 {
-    /// <summary>Represents exceptions related to an OpenTK.Audio device.</summary>
+    /// <summary>
+    /// Represents exceptions related to an OpenTK.Audio device.
+    /// </summary>
     public class AudioDeviceException : AudioException
     {
-        /// <summary>Constructs a new AudioDeviceException.</summary>
+        /// <summary>
+        /// Constructs a new AudioDeviceException.
+        /// </summary>
         public AudioDeviceException()
         {
         }
 
-        /// <summary>Constructs a new AudioDeviceException with the specified error message.</summary>
+        /// <summary>
+        /// Constructs a new AudioDeviceException with the specified error message.
+        /// </summary>
         /// <param name="message">The error message of the AudioDeviceException.</param>
         public AudioDeviceException(string message) : base(message)
         {

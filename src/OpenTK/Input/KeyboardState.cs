@@ -28,7 +28,7 @@ using System;
 namespace OpenTK.Input
 {
     /// <summary>
-    ///     Encapsulates the state of a Keyboard device.
+    /// Encapsulates the state of a Keyboard device.
     /// </summary>
     public struct KeyboardState : IEquatable<KeyboardState>
     {
@@ -41,8 +41,8 @@ namespace OpenTK.Input
         private unsafe fixed int Keys[NumInts];
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether the specified
-        ///     <see cref="OpenTK.Input.Key" /> is pressed.
+        /// Gets a <see cref="System.Boolean" /> indicating whether the specified
+        ///  <see cref="OpenTK.Input.Key" /> is pressed.
         /// </summary>
         /// <param name="key">The <see cref="OpenTK.Input.Key" /> to check.</param>
         /// <returns>True if key is pressed; false otherwise.</returns>
@@ -53,15 +53,15 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether the specified
-        ///     <see cref="OpenTK.Input.Key" /> is pressed.
+        /// Gets a <see cref="System.Boolean" /> indicating whether the specified
+        ///  <see cref="OpenTK.Input.Key" /> is pressed.
         /// </summary>
         /// <param name="code">The scancode to check.</param>
         /// <returns>True if code is pressed; false otherwise.</returns>
         public bool this[short code] => IsKeyDown((Key)code);
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether this key is down.
+        /// Gets a <see cref="System.Boolean" /> indicating whether this key is down.
         /// </summary>
         /// <param name="key">The <see cref="OpenTK.Input.Key" /> to check.</param>
         public bool IsKeyDown(Key key)
@@ -70,7 +70,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether this scan code is down.
+        /// Gets a <see cref="System.Boolean" /> indicating whether this scan code is down.
         /// </summary>
         /// <param name="code">The scan code to check.</param>
         public bool IsKeyDown(short code)
@@ -79,7 +79,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether this key is up.
+        /// Gets a <see cref="System.Boolean" /> indicating whether this key is up.
         /// </summary>
         /// <param name="key">The <see cref="OpenTK.Input.Key" /> to check.</param>
         public bool IsKeyUp(Key key)
@@ -88,7 +88,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether this scan code is down.
+        /// Gets a <see cref="System.Boolean" /> indicating whether this scan code is down.
         /// </summary>
         /// <param name="code">The scan code to check.</param>
         public bool IsKeyUp(short code)
@@ -97,7 +97,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a value indicating whether any key is down.
+        /// Gets a value indicating whether any key is down.
         /// </summary>
         /// <value><c>true</c> if any key is down; otherwise, <c>false</c>.</value>
         public bool IsAnyKeyDown
@@ -124,8 +124,8 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating whether this keyboard
-        ///     is connected.
+        /// Gets a <see cref="System.Boolean" /> indicating whether this keyboard
+        /// is connected.
         /// </summary>
         public bool IsConnected { get; internal set; }
 
@@ -143,16 +143,16 @@ namespace OpenTK.Input
 #endif
 
         /// <summary>
-        ///     Checks whether two <see cref="KeyboardState" /> instances are equal.
+        /// Checks whether two <see cref="KeyboardState" /> instances are equal.
         /// </summary>
         /// <param name="left">
-        ///     A <see cref="KeyboardState" /> instance.
+        /// A <see cref="KeyboardState" /> instance.
         /// </param>
         /// <param name="right">
-        ///     A <see cref="KeyboardState" /> instance.
+        /// A <see cref="KeyboardState" /> instance.
         /// </param>
         /// <returns>
-        ///     True if both left is equal to right; false otherwise.
+        /// True if both left is equal to right; false otherwise.
         /// </returns>
         public static bool operator ==(KeyboardState left, KeyboardState right)
         {
@@ -160,16 +160,16 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Checks whether two <see cref="KeyboardState" /> instances are not equal.
+        /// Checks whether two <see cref="KeyboardState" /> instances are not equal.
         /// </summary>
         /// <param name="left">
-        ///     A <see cref="KeyboardState" /> instance.
+        /// A <see cref="KeyboardState" /> instance.
         /// </param>
         /// <param name="right">
-        ///     A <see cref="KeyboardState" /> instance.
+        /// A <see cref="KeyboardState" /> instance.
         /// </param>
         /// <returns>
-        ///     True if both left is not equal to right; false otherwise.
+        /// True if both left is not equal to right; false otherwise.
         /// </returns>
         public static bool operator !=(KeyboardState left, KeyboardState right)
         {
@@ -177,13 +177,13 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Compares to an object instance for equality.
+        /// Compares to an object instance for equality.
         /// </summary>
         /// <param name="obj">
-        ///     The <see cref="System.Object" /> to compare to.
+        /// The <see cref="System.Object" /> to compare to.
         /// </param>
         /// <returns>
-        ///     True if this instance is equal to obj; false otherwise.
+        /// True if this instance is equal to obj; false otherwise.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -196,10 +196,10 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Generates a hashcode for the current instance.
+        /// Generates a hashcode for the current instance.
         /// </summary>
         /// <returns>
-        ///     A <see cref="System.Int32" /> represting the hashcode for this instance.
+        /// A <see cref="System.Int32" /> represting the hashcode for this instance.
         /// </returns>
         public override int GetHashCode()
         {
@@ -306,7 +306,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Compares two KeyboardState instances.
+        /// Compares two KeyboardState instances.
         /// </summary>
         /// <param name="other">The instance to compare two.</param>
         /// <returns>True, if both instances are equal; false otherwise.</returns>

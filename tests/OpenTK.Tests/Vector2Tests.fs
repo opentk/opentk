@@ -6,7 +6,7 @@ open FsCheck.Xunit
 open System
 open System.Runtime.InteropServices
 open OpenTK
-open OpenTK.Mathemathics
+open OpenTK.Mathematics
 
 module Vector2 =
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]

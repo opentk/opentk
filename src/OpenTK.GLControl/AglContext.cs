@@ -39,13 +39,13 @@ namespace OpenTK.Platform.MacOS
     using AGLPbuffer = IntPtr;
 
     /// <summary>
-    ///     AGL context implementation for WinForms compatibility.
+    /// AGL context implementation for WinForms compatibility.
     /// </summary>
     internal class AglContext : IGraphicsContext, IGraphicsContextInternal
     {
+        private readonly IWindowInfo carbonWindow;
         private readonly GetInt XOffset;
         private readonly GetInt YOffset;
-        private readonly IWindowInfo carbonWindow;
         private IGraphicsContext dummyContext; // for extension loading
 
         private bool firstSwap = true;

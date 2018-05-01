@@ -10,9 +10,9 @@ using System.Linq;
 namespace Bind.Structures
 {
     /// <summary>
-    ///     Represents an opengl constant in C# format. Both the constant name and value
-    ///     can be retrieved or set. The value can be either a number, another constant
-    ///     or an alias to a constant
+    /// Represents an opengl constant in C# format. Both the constant name and value
+    /// can be retrieved or set. The value can be either a number, another constant
+    /// or an alias to a constant
     /// </summary>
     internal class Constant : IComparable<Constant>
     {
@@ -21,14 +21,14 @@ namespace Bind.Structures
         private string _value;
 
         /// <summary>
-        ///     Creates an empty Constant.
+        /// Creates an empty Constant.
         /// </summary>
         public Constant()
         {
         }
 
         /// <summary>
-        ///     Creates a Constant with the given name and value.
+        /// Creates a Constant with the given name and value.
         /// </summary>
         /// <param name="name">The Name of the Constant.</param>
         /// <param name="value">The Type of the Constant.</param>
@@ -42,8 +42,8 @@ namespace Bind.Structures
         public string OriginalName { get; private set; }
 
         /// <summary>
-        ///     Gets or sets the name of the opengl constant (eg. GL_LINES).
-        ///     Undergoes processing unless the Settings.Legacy.NoAdvancedEnumProcessing flag is set.
+        /// Gets or sets the name of the opengl constant (eg. GL_LINES).
+        /// Undergoes processing unless the Settings.Legacy.NoAdvancedEnumProcessing flag is set.
         /// </summary>
         public string Name
         {
@@ -65,7 +65,7 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        ///     Gets or sets the value of the opengl constant (eg. 0x00000001).
+        /// Gets or sets the value of the opengl constant (eg. 0x00000001).
         /// </summary>
         public string Value
         {
@@ -82,8 +82,8 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        ///     Gets or sets a string indicating the OpenGL enum reference by this constant.
-        ///     Can be null.
+        /// Gets or sets a string indicating the OpenGL enum reference by this constant.
+        /// Can be null.
         /// </summary>
         public string Reference { get; set; }
 
@@ -112,7 +112,7 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        ///     Replces the Value of the given constant with the value referenced by the [c.Reference, c.Value] pair.
+        /// Replces the Value of the given constant with the value referenced by the [c.Reference, c.Value] pair.
         /// </summary>
         /// <param name="c">The Constant to translate</param>
         /// <param name="enums">The list of enums to check.</param>

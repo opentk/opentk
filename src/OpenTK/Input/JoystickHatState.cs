@@ -30,7 +30,7 @@ using System;
 namespace OpenTK.Input
 {
     /// <summary>
-    ///     Describes the state of a joystick hat.
+    /// Describes the state of a joystick hat.
     /// </summary>
     public struct JoystickHatState : IEquatable<JoystickHatState>
     {
@@ -40,15 +40,15 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a <see cref="HatPosition" /> value indicating
-        ///     the position of this hat.
+        /// Gets a <see cref="HatPosition" /> value indicating
+        /// the position of this hat.
         /// </summary>
         /// <value>The position.</value>
         public HatPosition Position { get; }
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating
-        ///     whether this hat lies in the top hemicircle.
+        /// Gets a <see cref="System.Boolean" /> indicating
+        /// whether this hat lies in the top hemicircle.
         /// </summary>
         /// <value><c>true</c> if this hat lies in the top hemicircle; otherwise, <c>false</c>.</value>
         public bool IsUp => Position == HatPosition.Up ||
@@ -56,8 +56,8 @@ namespace OpenTK.Input
                             Position == HatPosition.UpRight;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating
-        ///     whether this hat lies in the bottom hemicircle.
+        /// Gets a <see cref="System.Boolean" /> indicating
+        /// whether this hat lies in the bottom hemicircle.
         /// </summary>
         /// <value><c>true</c> if this hat lies in the bottom hemicircle; otherwise, <c>false</c>.</value>
         public bool IsDown => Position == HatPosition.Down ||
@@ -65,8 +65,8 @@ namespace OpenTK.Input
                               Position == HatPosition.DownRight;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating
-        ///     whether this hat lies in the left hemicircle.
+        /// Gets a <see cref="System.Boolean" /> indicating
+        /// whether this hat lies in the left hemicircle.
         /// </summary>
         /// <value><c>true</c> if this hat lies in the left hemicircle; otherwise, <c>false</c>.</value>
         public bool IsLeft => Position == HatPosition.Left ||
@@ -74,8 +74,8 @@ namespace OpenTK.Input
                               Position == HatPosition.DownLeft;
 
         /// <summary>
-        ///     Gets a <see cref="System.Boolean" /> indicating
-        ///     whether this hat lies in the right hemicircle.
+        /// Gets a <see cref="System.Boolean" /> indicating
+        /// whether this hat lies in the right hemicircle.
         /// </summary>
         /// <value><c>true</c> if this hat lies in the right hemicircle; otherwise, <c>false</c>.</value>
         public bool IsRight => Position == HatPosition.Right ||
@@ -83,7 +83,7 @@ namespace OpenTK.Input
                                Position == HatPosition.DownRight;
 
         /// <summary>
-        ///     Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.JoystickHatState" />.
+        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.JoystickHatState" />.
         /// </summary>
         /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.JoystickHatState" />.</returns>
         public override string ToString()
@@ -93,11 +93,11 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Serves as a hash function for a <see cref="OpenTK.Input.JoystickHatState" /> object.
+        /// Serves as a hash function for a <see cref="OpenTK.Input.JoystickHatState" /> object.
         /// </summary>
         /// <returns>
-        ///     A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
-        ///     hash table.
+        /// A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
+        /// hash table.
         /// </returns>
         public override int GetHashCode()
         {
@@ -105,16 +105,16 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Determines whether the specified <see cref="System.Object" /> is equal to the current
-        ///     <see cref="OpenTK.Input.JoystickHatState" />.
+        /// Determines whether the specified <see cref="System.Object" /> is equal to the current
+        ///  <see cref="OpenTK.Input.JoystickHatState" />.
         /// </summary>
         /// <param name="obj">
-        ///     The <see cref="System.Object" /> to compare with the current
-        ///     <see cref="OpenTK.Input.JoystickHatState" />.
+        /// The <see cref="System.Object" /> to compare with the current
+        ///  <see cref="OpenTK.Input.JoystickHatState" />.
         /// </param>
         /// <returns>
-        ///     <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
-        ///     <see cref="OpenTK.Input.JoystickHatState" />; otherwise, <c>false</c>.
+        ///  <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
+        ///  <see cref="OpenTK.Input.JoystickHatState" />; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -124,16 +124,16 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Determines whether the specified <see cref="OpenTK.Input.JoystickHatState" /> is equal to the current
-        ///     <see cref="OpenTK.Input.JoystickHatState" />.
+        /// Determines whether the specified <see cref="OpenTK.Input.JoystickHatState" /> is equal to the current
+        ///  <see cref="OpenTK.Input.JoystickHatState" />.
         /// </summary>
         /// <param name="other">
-        ///     The <see cref="OpenTK.Input.JoystickHatState" /> to compare with the current
-        ///     <see cref="OpenTK.Input.JoystickHatState" />.
+        /// The <see cref="OpenTK.Input.JoystickHatState" /> to compare with the current
+        ///  <see cref="OpenTK.Input.JoystickHatState" />.
         /// </param>
         /// <returns>
-        ///     <c>true</c> if the specified <see cref="OpenTK.Input.JoystickHatState" /> is equal to the current
-        ///     <see cref="OpenTK.Input.JoystickHatState" />; otherwise, <c>false</c>.
+        ///  <c>true</c> if the specified <see cref="OpenTK.Input.JoystickHatState" /> is equal to the current
+        ///  <see cref="OpenTK.Input.JoystickHatState" />; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(JoystickHatState other)
         {

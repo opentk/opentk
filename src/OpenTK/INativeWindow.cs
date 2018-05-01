@@ -29,113 +29,114 @@ using OpenTK.Input;
 using OpenTK.Platform;
 #if !MINIMAL
 using System.Drawing;
+
 #endif
 
 namespace OpenTK
 {
     /// <summary>
-    ///     Defines the interface for a native window.
+    /// Defines the interface for a native window.
     /// </summary>
     public interface INativeWindow : IDisposable
     {
         /// <summary>
-        ///     Gets or sets the <see cref="System.Drawing.Icon" /> of the window.
+        /// Gets or sets the <see cref="System.Drawing.Icon" /> of the window.
         /// </summary>
         Icon Icon { get; set; }
 
         /// <summary>
-        ///     Gets or sets the title of the window.
+        /// Gets or sets the title of the window.
         /// </summary>
         string Title { get; set; }
 
         /// <summary>
-        ///     Gets a System.Boolean that indicates whether this window has input focus.
+        /// Gets a System.Boolean that indicates whether this window has input focus.
         /// </summary>
         bool Focused { get; }
 
         /// <summary>
-        ///     Gets or sets a System.Boolean that indicates whether the window is visible.
+        /// Gets or sets a System.Boolean that indicates whether the window is visible.
         /// </summary>
         bool Visible { get; set; }
 
         /// <summary>
-        ///     Gets a System.Boolean that indicates whether the window has been created and has not been destroyed.
+        /// Gets a System.Boolean that indicates whether the window has been created and has not been destroyed.
         /// </summary>
         bool Exists { get; }
 
         /// <summary>
-        ///     Gets the <see cref="OpenTK.Platform.IWindowInfo" /> for this window.
+        /// Gets the <see cref="OpenTK.Platform.IWindowInfo" /> for this window.
         /// </summary>
         IWindowInfo WindowInfo { get; }
 
         /// <summary>
-        ///     Gets or sets the <see cref="OpenTK.WindowState" /> for this window.
+        /// Gets or sets the <see cref="OpenTK.WindowState" /> for this window.
         /// </summary>
         WindowState WindowState { get; set; }
 
         /// <summary>
-        ///     Gets or sets the <see cref="OpenTK.WindowBorder" /> for this window.
+        /// Gets or sets the <see cref="OpenTK.WindowBorder" /> for this window.
         /// </summary>
         WindowBorder WindowBorder { get; set; }
 
         /// <summary>
-        ///     Gets or sets a <see cref="System.Drawing.Rectangle" /> structure the contains the external bounds of this window,
-        ///     in screen coordinates.
-        ///     External bounds include the title bar, borders and drawing area of the window.
+        /// Gets or sets a <see cref="System.Drawing.Rectangle" /> structure the contains the external bounds of this window,
+        /// in screen coordinates.
+        /// External bounds include the title bar, borders and drawing area of the window.
         /// </summary>
         Rectangle Bounds { get; set; }
 
         /// <summary>
-        ///     Gets or sets a <see cref="System.Drawing.Point" /> structure that contains the location of this window on the
-        ///     desktop.
+        /// Gets or sets a <see cref="System.Drawing.Point" /> structure that contains the location of this window on the
+        /// desktop.
         /// </summary>
         Point Location { get; set; }
 
         /// <summary>
-        ///     Gets or sets a <see cref="System.Drawing.Size" /> structure that contains the external size of this window.
+        /// Gets or sets a <see cref="System.Drawing.Size" /> structure that contains the external size of this window.
         /// </summary>
         Size Size { get; set; }
 
         /// <summary>
-        ///     Gets or sets the horizontal location of this window on the desktop.
+        /// Gets or sets the horizontal location of this window on the desktop.
         /// </summary>
         int X { get; set; }
 
         /// <summary>
-        ///     Gets or sets the vertical location of this window on the desktop.
+        /// Gets or sets the vertical location of this window on the desktop.
         /// </summary>
         int Y { get; set; }
 
         /// <summary>
-        ///     Gets or sets the external width of this window.
+        /// Gets or sets the external width of this window.
         /// </summary>
         int Width { get; set; }
 
         /// <summary>
-        ///     Gets or sets the external height of this window.
+        /// Gets or sets the external height of this window.
         /// </summary>
         int Height { get; set; }
 
         /// <summary>
-        ///     Gets or sets a <see cref="System.Drawing.Rectangle" /> structure that contains the internal bounds of this window,
-        ///     in client coordinates.
-        ///     The internal bounds include the drawing area of the window, but exclude the titlebar and window borders.
+        /// Gets or sets a <see cref="System.Drawing.Rectangle" /> structure that contains the internal bounds of this window,
+        /// in client coordinates.
+        /// The internal bounds include the drawing area of the window, but exclude the titlebar and window borders.
         /// </summary>
         Rectangle ClientRectangle { get; set; }
 
         /// <summary>
-        ///     Gets or sets a <see cref="System.Drawing.Size" /> structure that contains the internal size this window.
+        /// Gets or sets a <see cref="System.Drawing.Size" /> structure that contains the internal size this window.
         /// </summary>
         Size ClientSize { get; set; }
 
         /// <summary>
-        ///     Gets or sets the <see cref="OpenTK.MouseCursor" /> for this window.
+        /// Gets or sets the <see cref="OpenTK.MouseCursor" /> for this window.
         /// </summary>
         /// <value>The cursor.</value>
         MouseCursor Cursor { get; set; }
 
         /// <summary>
-        ///     Gets or sets a value, indicating whether the mouse cursor is visible.
+        /// Gets or sets a value, indicating whether the mouse cursor is visible.
         /// </summary>
         bool CursorVisible { get; set; }
 
@@ -145,134 +146,134 @@ namespace OpenTK
 //        bool CursorGrabbed { get; set; }
 
         /// <summary>
-        ///     Closes this window.
+        /// Closes this window.
         /// </summary>
         void Close();
 
         /// <summary>
-        ///     Processes pending window events.
+        /// Processes pending window events.
         /// </summary>
         void ProcessEvents();
 
         /// <summary>
-        ///     Transforms the specified point from screen to client coordinates.
+        /// Transforms the specified point from screen to client coordinates.
         /// </summary>
         /// <param name="point">
-        ///     A <see cref="System.Drawing.Point" /> to transform.
+        /// A <see cref="System.Drawing.Point" /> to transform.
         /// </param>
         /// <returns>
-        ///     The point transformed to client coordinates.
+        /// The point transformed to client coordinates.
         /// </returns>
         Point PointToClient(Point point);
 
         /// <summary>
-        ///     Transforms the specified point from client to screen coordinates.
+        /// Transforms the specified point from client to screen coordinates.
         /// </summary>
         /// <param name="point">
-        ///     A <see cref="System.Drawing.Point" /> to transform.
+        /// A <see cref="System.Drawing.Point" /> to transform.
         /// </param>
         /// <returns>
-        ///     The point transformed to screen coordinates.
+        /// The point transformed to screen coordinates.
         /// </returns>
         Point PointToScreen(Point point);
 
         /// <summary>
-        ///     Occurs whenever the window is moved.
+        /// Occurs whenever the window is moved.
         /// </summary>
         event EventHandler<EventArgs> Move;
 
         /// <summary>
-        ///     Occurs whenever the window is resized.
+        /// Occurs whenever the window is resized.
         /// </summary>
         event EventHandler<EventArgs> Resize;
 
         /// <summary>
-        ///     Occurs when the window is about to close.
+        /// Occurs when the window is about to close.
         /// </summary>
         event EventHandler<CancelEventArgs> Closing;
 
         /// <summary>
-        ///     Occurs after the window has closed.
+        /// Occurs after the window has closed.
         /// </summary>
         event EventHandler<EventArgs> Closed;
 
         /// <summary>
-        ///     Occurs when the window is disposed.
+        /// Occurs when the window is disposed.
         /// </summary>
         event EventHandler<EventArgs> Disposed;
 
         /// <summary>
-        ///     Occurs when the <see cref="Icon" /> property of the window changes.
+        /// Occurs when the <see cref="Icon" /> property of the window changes.
         /// </summary>
         event EventHandler<EventArgs> IconChanged;
 
         /// <summary>
-        ///     Occurs when the <see cref="Title" /> property of the window changes.
+        /// Occurs when the <see cref="Title" /> property of the window changes.
         /// </summary>
         event EventHandler<EventArgs> TitleChanged;
 
         /// <summary>
-        ///     Occurs when the <see cref="Visible" /> property of the window changes.
+        /// Occurs when the <see cref="Visible" /> property of the window changes.
         /// </summary>
         event EventHandler<EventArgs> VisibleChanged;
 
         /// <summary>
-        ///     Occurs when the <see cref="Focused" /> property of the window changes.
+        /// Occurs when the <see cref="Focused" /> property of the window changes.
         /// </summary>
         event EventHandler<EventArgs> FocusedChanged;
 
         /// <summary>
-        ///     Occurs when the <see cref="WindowBorder" /> property of the window changes.
+        /// Occurs when the <see cref="WindowBorder" /> property of the window changes.
         /// </summary>
         event EventHandler<EventArgs> WindowBorderChanged;
 
         /// <summary>
-        ///     Occurs when the <see cref="WindowState" /> property of the window changes.
+        /// Occurs when the <see cref="WindowState" /> property of the window changes.
         /// </summary>
         event EventHandler<EventArgs> WindowStateChanged;
 
         /// <summary>
-        ///     Occurs whenever a keyboard key is pressed.
+        /// Occurs whenever a keyboard key is pressed.
         /// </summary>
         event EventHandler<KeyboardKeyEventArgs> KeyDown;
 
         /// <summary>
-        ///     Occurs whenever a character is typed.
+        /// Occurs whenever a character is typed.
         /// </summary>
         event EventHandler<KeyPressEventArgs> KeyPress;
 
         /// <summary>
-        ///     Occurs whenever a keyboard key is released.
+        /// Occurs whenever a keyboard key is released.
         /// </summary>
         event EventHandler<KeyboardKeyEventArgs> KeyUp;
 
         /// <summary>
-        ///     Occurs whenever the mouse cursor leaves the window <see cref="Bounds" />.
+        /// Occurs whenever the mouse cursor leaves the window <see cref="Bounds" />.
         /// </summary>
         event EventHandler<EventArgs> MouseLeave;
 
         /// <summary>
-        ///     Occurs whenever the mouse cursor enters the window <see cref="Bounds" />.
+        /// Occurs whenever the mouse cursor enters the window <see cref="Bounds" />.
         /// </summary>
         event EventHandler<EventArgs> MouseEnter;
 
         /// <summary>
-        ///     Occurs whenever a <see cref="OpenTK.Input.MouseButton" /> is clicked.
+        /// Occurs whenever a <see cref="OpenTK.Input.MouseButton" /> is clicked.
         /// </summary>
         event EventHandler<MouseButtonEventArgs> MouseDown;
 
         /// <summary>
-        ///     Occurs whenever a <see cref="OpenTK.Input.MouseButton" /> is released.
+        /// Occurs whenever a <see cref="OpenTK.Input.MouseButton" /> is released.
         /// </summary>
         event EventHandler<MouseButtonEventArgs> MouseUp;
 
         /// <summary>
-        ///     Occurs whenever the mouse cursor is moved;
+        /// Occurs whenever the mouse cursor is moved;
         /// </summary>
         event EventHandler<MouseMoveEventArgs> MouseMove;
 
         /// <summary>
-        ///     Occurs whenever a mouse wheel is moved;
+        /// Occurs whenever a mouse wheel is moved;
         /// </summary>
         event EventHandler<MouseWheelEventArgs> MouseWheel;
 
@@ -280,7 +281,7 @@ namespace OpenTK
         //event EventHandler<MouseEventArgs> MouseDoubleClick;
 
         /// <summary>
-        ///     Occurs whenever file dropped on window.
+        /// Occurs whenever file dropped on window.
         /// </summary>
         event EventHandler<FileDropEventArgs> FileDrop;
     }

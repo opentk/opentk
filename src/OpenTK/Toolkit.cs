@@ -30,7 +30,7 @@ using OpenTK.Platform;
 namespace OpenTK
 {
     /// <summary>
-    ///     Provides static methods to manage an OpenTK application.
+    /// Provides static methods to manage an OpenTK application.
     /// </summary>
     public sealed class Toolkit : IDisposable
     {
@@ -53,7 +53,7 @@ namespace OpenTK
         internal static ToolkitOptions Options { get; private set; }
 
         /// <summary>
-        ///     Disposes of the resources consumed by this instance.
+        /// Disposes of the resources consumed by this instance.
         /// </summary>
         public void Dispose()
         {
@@ -62,33 +62,33 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Initializes OpenTK with default options.
+        /// Initializes OpenTK with default options.
         /// </summary>
         /// <remarks>
-        ///     <para>
-        ///         You *must* call this method if you are combining OpenTK with a
-        ///         third-party windowing toolkit (e.g. GTK#). In this case, this should be the
-        ///         first method called by your application:
-        ///         <code>
+        ///  <para>
+        /// You *must* call this method if you are combining OpenTK with a
+        /// third-party windowing toolkit (e.g. GTK#). In this case, this should be the
+        /// first method called by your application:
+        ///  <code>
         /// static void Main()
         /// {
-        ///     using (OpenTK.Toolkit.Init())
-        ///     {
-        ///      ...
-        ///     }
+        /// using (OpenTK.Toolkit.Init())
+        /// {
+        /// ...
+        /// }
         /// }
         /// </code>
-        ///     </para>
-        ///     <para>
-        ///         The reason is that some toolkits do not configure the underlying platform
-        ///         correctly or configure it in a way that is incompatible with OpenTK.
-        ///         Calling this method first ensures that OpenTK is given the chance to
-        ///         initialize itself and configure the platform correctly.
-        ///     </para>
+        ///  </para>
+        ///  <para>
+        /// The reason is that some toolkits do not configure the underlying platform
+        /// correctly or configure it in a way that is incompatible with OpenTK.
+        /// Calling this method first ensures that OpenTK is given the chance to
+        /// initialize itself and configure the platform correctly.
+        ///  </para>
         /// </remarks>
         /// <returns>
-        ///     An IDisposable instance that you can use to dispose of the resources
-        ///     consumed by OpenTK.
+        /// An IDisposable instance that you can use to dispose of the resources
+        /// consumed by OpenTK.
         /// </returns>
         public static Toolkit Init()
         {
@@ -96,38 +96,38 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Initializes OpenTK with the specified options. Use this method
-        ///     to influence the OpenTK.Platform implementation that will be used.
+        /// Initializes OpenTK with the specified options. Use this method
+        /// to influence the OpenTK.Platform implementation that will be used.
         /// </summary>
         /// <remarks>
-        ///     <para>
-        ///         You *must* call this method if you are combining OpenTK with a
-        ///         third-party windowing toolkit (e.g. GTK#). In this case, this should be the
-        ///         first method called by your application:
-        ///         <code>
+        ///  <para>
+        /// You *must* call this method if you are combining OpenTK with a
+        /// third-party windowing toolkit (e.g. GTK#). In this case, this should be the
+        /// first method called by your application:
+        ///  <code>
         /// static void Main()
         /// {
-        ///     using (OpenTK.Toolkit.Init())
-        ///     {
-        ///      ...
-        ///     }
+        /// using (OpenTK.Toolkit.Init())
+        /// {
+        /// ...
+        /// }
         /// }
         /// </code>
-        ///     </para>
-        ///     <para>
-        ///         The reason is that some toolkits do not configure the underlying platform
-        ///         correctly or configure it in a way that is incompatible with OpenTK.
-        ///         Calling this method first ensures that OpenTK is given the chance to
-        ///         initialize itself and configure the platform correctly.
-        ///     </para>
+        ///  </para>
+        ///  <para>
+        /// The reason is that some toolkits do not configure the underlying platform
+        /// correctly or configure it in a way that is incompatible with OpenTK.
+        /// Calling this method first ensures that OpenTK is given the chance to
+        /// initialize itself and configure the platform correctly.
+        ///  </para>
         /// </remarks>
         /// <param name="options">
-        ///     A <c>ToolkitOptions</c> instance
-        ///     containing the desired options.
+        /// A <c>ToolkitOptions</c> instance
+        /// containing the desired options.
         /// </param>
         /// <returns>
-        ///     An IDisposable instance that you can use to dispose of the resources
-        ///     consumed by OpenTK.
+        /// An IDisposable instance that you can use to dispose of the resources
+        /// consumed by OpenTK.
         /// </returns>
         public static Toolkit Init(ToolkitOptions options)
         {
@@ -172,7 +172,7 @@ namespace OpenTK
 
 #if DEBUG
         /// <summary>
-        ///     Finalizes this instance.
+        /// Finalizes this instance.
         /// </summary>
         ~Toolkit()
         {

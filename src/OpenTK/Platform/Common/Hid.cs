@@ -27,14 +27,14 @@
 
 using System;
 using System.Diagnostics;
-using OpenTK.Mathemathics;
+using OpenTK.Mathematics;
 
 namespace OpenTK.Platform.Common
 {
     internal class HidHelper
     {
         /// <summary>
-        ///     Scales the specified value linearly between min and max.
+        /// Scales the specified value linearly between min and max.
         /// </summary>
         /// <param name="value">The value to scale</param>
         /// <param name="value_min">The minimum expected value (inclusive)</param>

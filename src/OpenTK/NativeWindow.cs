@@ -31,12 +31,13 @@ using OpenTK.Input;
 using OpenTK.Platform;
 #if !MINIMAL
 using System.Drawing;
+
 #endif
 
 namespace OpenTK
 {
     /// <summary>
-    ///     Instances of this class implement the <see cref="OpenTK.INativeWindow" /> interface on the current platform.
+    /// Instances of this class implement the <see cref="OpenTK.INativeWindow" /> interface on the current platform.
     /// </summary>
     public class NativeWindow : INativeWindow
     {
@@ -45,16 +46,18 @@ namespace OpenTK
         private readonly INativeWindow implementation;
         private readonly GameWindowFlags options;
 
+        /// <summary>
+        /// System.Threading.Thread.CurrentThread.ManagedThreadId of the thread that created this
+        ///  <see cref="OpenTK.NativeWindow" />.
+        /// </summary>
+        private readonly int thread_id;
+
         private bool events;
         private bool previous_cursor_visible = true;
 
         /// <summary>
-        ///     System.Threading.Thread.CurrentThread.ManagedThreadId of the thread that created this
-        ///     <see cref="OpenTK.NativeWindow" />.
+        /// Constructs a new NativeWindow with default attributes without enabling events.
         /// </summary>
-        private readonly int thread_id;
-
-        /// <summary>Constructs a new NativeWindow with default attributes without enabling events.</summary>
         public NativeWindow()
             : this(640, 480, "OpenTK Native Window", GameWindowFlags.Default, GraphicsMode.Default,
                 DisplayDevice.Default)
@@ -63,7 +66,9 @@ namespace OpenTK
 
         // TODO: Remaining constructors.
 
-        /// <summary>Constructs a new centered NativeWindow with the specified attributes.</summary>
+        /// <summary>
+        /// Constructs a new centered NativeWindow with the specified attributes.
+        /// </summary>
         /// <param name="width">The width of the NativeWindow in pixels.</param>
         /// <param name="height">The height of the NativeWindow in pixels.</param>
         /// <param name="title">The title of the NativeWindow.</param>
@@ -80,7 +85,9 @@ namespace OpenTK
         {
         }
 
-        /// <summary>Constructs a new NativeWindow with the specified attributes.</summary>
+        /// <summary>
+        /// Constructs a new NativeWindow with the specified attributes.
+        /// </summary>
         /// <param name="x">Horizontal screen space coordinate of the NativeWindow's origin.</param>
         /// <param name="y">Vertical screen space coordinate of the NativeWindow's origin.</param>
         /// <param name="width">The width of the NativeWindow in pixels.</param>
@@ -136,8 +143,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets a <see cref="System.Boolean" />, which indicates whether
-        ///     this instance has been disposed.
+        /// Gets or sets a <see cref="System.Boolean" />, which indicates whether
+        /// this instance has been disposed.
         /// </summary>
         protected bool IsDisposed { get; set; }
 
@@ -208,7 +215,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Closes the NativeWindow.
+        /// Closes the NativeWindow.
         /// </summary>
         public void Close()
         {
@@ -217,13 +224,13 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Transforms the specified point from screen to client coordinates.
+        /// Transforms the specified point from screen to client coordinates.
         /// </summary>
         /// <param name="point">
-        ///     A <see cref="System.Drawing.Point" /> to transform.
+        /// A <see cref="System.Drawing.Point" /> to transform.
         /// </param>
         /// <returns>
-        ///     The point transformed to client coordinates.
+        /// The point transformed to client coordinates.
         /// </returns>
         public Point PointToClient(Point point)
         {
@@ -231,13 +238,13 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Transforms the specified point from client to screen coordinates.
+        /// Transforms the specified point from client to screen coordinates.
         /// </summary>
         /// <param name="point">
-        ///     A <see cref="System.Drawing.Point" /> to transform.
+        /// A <see cref="System.Drawing.Point" /> to transform.
         /// </param>
         /// <returns>
-        ///     The point transformed to screen coordinates.
+        /// The point transformed to screen coordinates.
         /// </returns>
         public Point PointToScreen(Point point)
         {
@@ -245,7 +252,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Processes operating system events until the NativeWindow becomes idle.
+        /// Processes operating system events until the NativeWindow becomes idle.
         /// </summary>
         public void ProcessEvents()
         {
@@ -253,10 +260,10 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets a <see cref="System.Drawing.Rectangle" /> structure
-        ///     that specifies the external bounds of this window, in screen coordinates.
-        ///     The coordinates are specified in device-independent points and
-        ///     include the title bar, borders and drawing area of the window.
+        /// Gets or sets a <see cref="System.Drawing.Rectangle" /> structure
+        /// that specifies the external bounds of this window, in screen coordinates.
+        /// The coordinates are specified in device-independent points and
+        /// include the title bar, borders and drawing area of the window.
         /// </summary>
         public Rectangle Bounds
         {
@@ -273,9 +280,9 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets a <see cref="System.Drawing.Rectangle" /> structure
-        ///     that defines the bounds of the OpenGL surface, in window coordinates.
-        ///     The coordinates are specified in device-dependent pixels.
+        /// Gets or sets a <see cref="System.Drawing.Rectangle" /> structure
+        /// that defines the bounds of the OpenGL surface, in window coordinates.
+        /// The coordinates are specified in device-dependent pixels.
         /// </summary>
         public Rectangle ClientRectangle
         {
@@ -292,9 +299,9 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets a <see cref="System.Drawing.Size" /> structure
-        ///     that defines the size of the OpenGL surface in window coordinates.
-        ///     The coordinates are specified in device-dependent pixels.
+        /// Gets or sets a <see cref="System.Drawing.Size" /> structure
+        /// that defines the size of the OpenGL surface in window coordinates.
+        /// The coordinates are specified in device-dependent pixels.
         /// </summary>
         public Size ClientSize
         {
@@ -311,7 +318,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets the <see cref="OpenTK.MouseCursor" /> for this window.
+        /// Gets or sets the <see cref="OpenTK.MouseCursor" /> for this window.
         /// </summary>
         public MouseCursor Cursor
         {
@@ -333,12 +340,12 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets a value indicating whether a render window exists.
+        /// Gets a value indicating whether a render window exists.
         /// </summary>
         public bool Exists => IsDisposed ? false : implementation.Exists;
 
         /// <summary>
-        ///     Gets a System.Boolean that indicates whether this NativeWindow has input focus.
+        /// Gets a System.Boolean that indicates whether this NativeWindow has input focus.
         /// </summary>
         public bool Focused
         {
@@ -350,8 +357,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets the height of the OpenGL surface in window coordinates.
-        ///     The coordinates are specified in device-dependent pixels.
+        /// Gets or sets the height of the OpenGL surface in window coordinates.
+        /// The coordinates are specified in device-dependent pixels.
         /// </summary>
         public int Height
         {
@@ -368,7 +375,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets the System.Drawing.Icon for this GameWindow.
+        /// Gets or sets the System.Drawing.Icon for this GameWindow.
         /// </summary>
         public Icon Icon
         {
@@ -385,8 +392,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets a <see cref="System.Drawing.Point" /> structure that contains the location of this window on the
-        ///     desktop.
+        /// Gets or sets a <see cref="System.Drawing.Point" /> structure that contains the location of this window on the
+        /// desktop.
         /// </summary>
         public Point Location
         {
@@ -403,7 +410,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets a <see cref="System.Drawing.Size" /> structure that contains the external size of this window.
+        /// Gets or sets a <see cref="System.Drawing.Size" /> structure that contains the external size of this window.
         /// </summary>
         public Size Size
         {
@@ -420,7 +427,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets the NativeWindow title.
+        /// Gets or sets the NativeWindow title.
         /// </summary>
         public string Title
         {
@@ -437,7 +444,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets a System.Boolean that indicates whether this NativeWindow is visible.
+        /// Gets or sets a System.Boolean that indicates whether this NativeWindow is visible.
         /// </summary>
         public bool Visible
         {
@@ -454,8 +461,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets the width of the OpenGL surface in window coordinates.
-        ///     The coordinates are specified in device-dependent pixels.
+        /// Gets or sets the width of the OpenGL surface in window coordinates.
+        /// The coordinates are specified in device-dependent pixels.
         /// </summary>
         public int Width
         {
@@ -472,7 +479,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets the border of the NativeWindow.
+        /// Gets or sets the border of the NativeWindow.
         /// </summary>
         public WindowBorder WindowBorder
         {
@@ -481,7 +488,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets the <see cref="OpenTK.Platform.IWindowInfo" /> of this window.
+        /// Gets the <see cref="OpenTK.Platform.IWindowInfo" /> of this window.
         /// </summary>
         public IWindowInfo WindowInfo
         {
@@ -493,7 +500,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets the state of the NativeWindow.
+        /// Gets or sets the state of the NativeWindow.
         /// </summary>
         public virtual WindowState WindowState
         {
@@ -502,8 +509,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets the horizontal location of this window in screen coordinates.
-        ///     The coordinates are specified in device-independent points.
+        /// Gets or sets the horizontal location of this window in screen coordinates.
+        /// The coordinates are specified in device-independent points.
         /// </summary>
         public int X
         {
@@ -520,8 +527,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets the vertical location of this window in screen coordinates.
-        ///     The coordinates are specified in device-independent points.
+        /// Gets or sets the vertical location of this window in screen coordinates.
+        /// The coordinates are specified in device-independent points.
         /// </summary>
         public int Y
         {
@@ -538,7 +545,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the mouse cursor is visible.
+        /// Gets or sets a value indicating whether the mouse cursor is visible.
         /// </summary>
         public bool CursorVisible
         {
@@ -547,112 +554,112 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Occurs after the window has closed.
+        /// Occurs after the window has closed.
         /// </summary>
         public event EventHandler<EventArgs> Closed = delegate { };
 
         /// <summary>
-        ///     Occurs when the window is about to close.
+        /// Occurs when the window is about to close.
         /// </summary>
         public event EventHandler<CancelEventArgs> Closing = delegate { };
 
         /// <summary>
-        ///     Occurs when the window is disposed.
+        /// Occurs when the window is disposed.
         /// </summary>
         public event EventHandler<EventArgs> Disposed = delegate { };
 
         /// <summary>
-        ///     Occurs when the <see cref="Focused" /> property of the window changes.
+        /// Occurs when the <see cref="Focused" /> property of the window changes.
         /// </summary>
         public event EventHandler<EventArgs> FocusedChanged = delegate { };
 
         /// <summary>
-        ///     Occurs when the <see cref="Icon" /> property of the window changes.
+        /// Occurs when the <see cref="Icon" /> property of the window changes.
         /// </summary>
         public event EventHandler<EventArgs> IconChanged = delegate { };
 
         /// <summary>
-        ///     Occurs whenever a keyboard key is pressed.
+        /// Occurs whenever a keyboard key is pressed.
         /// </summary>
         public event EventHandler<KeyboardKeyEventArgs> KeyDown = delegate { };
 
         /// <summary>
-        ///     Occurs whenever a character is typed.
+        /// Occurs whenever a character is typed.
         /// </summary>
         public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
 
         /// <summary>
-        ///     Occurs whenever a keyboard key is released.
+        /// Occurs whenever a keyboard key is released.
         /// </summary>
         public event EventHandler<KeyboardKeyEventArgs> KeyUp = delegate { };
 
         /// <summary>
-        ///     Occurs whenever the window is moved.
+        /// Occurs whenever the window is moved.
         /// </summary>
         public event EventHandler<EventArgs> Move = delegate { };
 
         /// <summary>
-        ///     Occurs whenever the mouse cursor enters the window <see cref="Bounds" />.
+        /// Occurs whenever the mouse cursor enters the window <see cref="Bounds" />.
         /// </summary>
         public event EventHandler<EventArgs> MouseEnter = delegate { };
 
         /// <summary>
-        ///     Occurs whenever the mouse cursor leaves the window <see cref="Bounds" />.
+        /// Occurs whenever the mouse cursor leaves the window <see cref="Bounds" />.
         /// </summary>
         public event EventHandler<EventArgs> MouseLeave = delegate { };
 
         /// <summary>
-        ///     Occurs whenever the window is resized.
+        /// Occurs whenever the window is resized.
         /// </summary>
         public event EventHandler<EventArgs> Resize = delegate { };
 
         /// <summary>
-        ///     Occurs when the <see cref="Title" /> property of the window changes.
+        /// Occurs when the <see cref="Title" /> property of the window changes.
         /// </summary>
         public event EventHandler<EventArgs> TitleChanged = delegate { };
 
         /// <summary>
-        ///     Occurs when the <see cref="Visible" /> property of the window changes.
+        /// Occurs when the <see cref="Visible" /> property of the window changes.
         /// </summary>
         public event EventHandler<EventArgs> VisibleChanged = delegate { };
 
         /// <summary>
-        ///     Occurs when the <see cref="WindowBorder" /> property of the window changes.
+        /// Occurs when the <see cref="WindowBorder" /> property of the window changes.
         /// </summary>
         public event EventHandler<EventArgs> WindowBorderChanged = delegate { };
 
         /// <summary>
-        ///     Occurs when the <see cref="WindowState" /> property of the window changes.
+        /// Occurs when the <see cref="WindowState" /> property of the window changes.
         /// </summary>
         public event EventHandler<EventArgs> WindowStateChanged = delegate { };
 
         /// <summary>
-        ///     Occurs when a <see cref="MouseButton" /> is pressed.
+        /// Occurs when a <see cref="MouseButton" /> is pressed.
         /// </summary>
         public event EventHandler<MouseButtonEventArgs> MouseDown = delegate { };
 
         /// <summary>
-        ///     Occurs when a <see cref="MouseButton" /> is released.
+        /// Occurs when a <see cref="MouseButton" /> is released.
         /// </summary>
         public event EventHandler<MouseButtonEventArgs> MouseUp = delegate { };
 
         /// <summary>
-        ///     Occurs whenever the mouse is moved.
+        /// Occurs whenever the mouse is moved.
         /// </summary>
         public event EventHandler<MouseMoveEventArgs> MouseMove = delegate { };
 
         /// <summary>
-        ///     Occurs whenever a mouse wheel is moved;
+        /// Occurs whenever a mouse wheel is moved;
         /// </summary>
         public event EventHandler<MouseWheelEventArgs> MouseWheel = delegate { };
 
         /// <summary>
-        ///     Occurs whenever a file dropped on window;
+        /// Occurs whenever a file dropped on window;
         /// </summary>
         public event EventHandler<FileDropEventArgs> FileDrop = delegate { };
 
         /// <summary>
-        ///     Releases all non-managed resources belonging to this NativeWindow.
+        /// Releases all non-managed resources belonging to this NativeWindow.
         /// </summary>
         public virtual void Dispose()
         {
@@ -674,10 +681,10 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Ensures that this NativeWindow has not been disposed.
+        /// Ensures that this NativeWindow has not been disposed.
         /// </summary>
         /// <exception cref="System.ObjectDisposedException">
-        ///     If this NativeWindow has been disposed.
+        /// If this NativeWindow has been disposed.
         /// </exception>
         protected void EnsureUndisposed()
         {
@@ -688,7 +695,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called when the NativeWindow has closed.
+        /// Called when the NativeWindow has closed.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnClosed(EventArgs e)
@@ -697,11 +704,11 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called when the NativeWindow is about to close.
+        /// Called when the NativeWindow is about to close.
         /// </summary>
         /// <param name="e">
-        ///     The <see cref="System.ComponentModel.CancelEventArgs" /> for this event.
-        ///     Set e.Cancel to true in order to stop the NativeWindow from closing.
+        /// The <see cref="System.ComponentModel.CancelEventArgs" /> for this event.
+        /// Set e.Cancel to true in order to stop the NativeWindow from closing.
         /// </param>
         protected virtual void OnClosing(CancelEventArgs e)
         {
@@ -709,7 +716,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called when the NativeWindow is disposed.
+        /// Called when the NativeWindow is disposed.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnDisposed(EventArgs e)
@@ -718,7 +725,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called when the <see cref="OpenTK.INativeWindow.Focused" /> property of the NativeWindow has changed.
+        /// Called when the <see cref="OpenTK.INativeWindow.Focused" /> property of the NativeWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnFocusedChanged(EventArgs e)
@@ -742,7 +749,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called when the <see cref="OpenTK.INativeWindow.Icon" /> property of the NativeWindow has changed.
+        /// Called when the <see cref="OpenTK.INativeWindow.Icon" /> property of the NativeWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnIconChanged(EventArgs e)
@@ -751,7 +758,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Occurs whenever a keyboard key is pressed.
+        /// Occurs whenever a keyboard key is pressed.
         /// </summary>
         protected virtual void OnKeyDown(KeyboardKeyEventArgs e)
         {
@@ -759,7 +766,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called when a character is typed.
+        /// Called when a character is typed.
         /// </summary>
         /// <param name="e">The <see cref="OpenTK.KeyPressEventArgs" /> for this event.</param>
         protected virtual void OnKeyPress(KeyPressEventArgs e)
@@ -768,7 +775,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called when a keyboard key is released.
+        /// Called when a keyboard key is released.
         /// </summary>
         /// <param name="e">The <see cref="OpenTK.Input.KeyboardKeyEventArgs" /> for this event.</param>
         protected virtual void OnKeyUp(KeyboardKeyEventArgs e)
@@ -777,7 +784,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called when the NativeWindow is moved.
+        /// Called when the NativeWindow is moved.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnMove(EventArgs e)
@@ -786,7 +793,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called whenever the mouse cursor reenters the window <see cref="Bounds" />.
+        /// Called whenever the mouse cursor reenters the window <see cref="Bounds" />.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnMouseEnter(EventArgs e)
@@ -795,7 +802,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called whenever the mouse cursor leaves the window <see cref="Bounds" />.
+        /// Called whenever the mouse cursor leaves the window <see cref="Bounds" />.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnMouseLeave(EventArgs e)
@@ -804,11 +811,11 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Raises the <see cref="MouseDown" /> event.
+        /// Raises the <see cref="MouseDown" /> event.
         /// </summary>
         /// <param name="e">
-        ///     A <see cref="MouseButtonEventArgs" /> instance carrying mouse state information.
-        ///     The information carried by this instance is only valid within this method body.
+        /// A <see cref="MouseButtonEventArgs" /> instance carrying mouse state information.
+        /// The information carried by this instance is only valid within this method body.
         /// </param>
         protected virtual void OnMouseDown(MouseButtonEventArgs e)
         {
@@ -816,11 +823,11 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Raises the <see cref="MouseUp" /> event.
+        /// Raises the <see cref="MouseUp" /> event.
         /// </summary>
         /// <param name="e">
-        ///     A <see cref="MouseButtonEventArgs" /> instance carrying mouse state information.
-        ///     The information carried by this instance is only valid within this method body.
+        /// A <see cref="MouseButtonEventArgs" /> instance carrying mouse state information.
+        /// The information carried by this instance is only valid within this method body.
         /// </param>
         protected virtual void OnMouseUp(MouseButtonEventArgs e)
         {
@@ -828,11 +835,11 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Raises the <see cref="MouseMove" /> event.
+        /// Raises the <see cref="MouseMove" /> event.
         /// </summary>
         /// <param name="e">
-        ///     A <see cref="MouseMoveEventArgs" /> instance carrying mouse state information.
-        ///     The information carried by this instance is only valid within this method body.
+        /// A <see cref="MouseMoveEventArgs" /> instance carrying mouse state information.
+        /// The information carried by this instance is only valid within this method body.
         /// </param>
         protected virtual void OnMouseMove(MouseMoveEventArgs e)
         {
@@ -840,11 +847,11 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Raises the <see cref="MouseWheel" /> event.
+        /// Raises the <see cref="MouseWheel" /> event.
         /// </summary>
         /// <param name="e">
-        ///     A <see cref="MouseWheelEventArgs" /> instance carrying mouse state information.
-        ///     The information carried by this instance is only valid within this method body.
+        /// A <see cref="MouseWheelEventArgs" /> instance carrying mouse state information.
+        /// The information carried by this instance is only valid within this method body.
         /// </param>
         protected virtual void OnMouseWheel(MouseWheelEventArgs e)
         {
@@ -852,11 +859,11 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Raises the <see cref="FileDrop" /> event.
+        /// Raises the <see cref="FileDrop" /> event.
         /// </summary>
         /// <param name="e">
-        ///     A <see cref="FileDropEventArgs" /> instance carrying file name.
-        ///     The information carried by this instance is only valid within this method body.
+        /// A <see cref="FileDropEventArgs" /> instance carrying file name.
+        /// The information carried by this instance is only valid within this method body.
         /// </param>
         protected virtual void OnFileDrop(FileDropEventArgs e)
         {
@@ -864,7 +871,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called when the NativeWindow is resized.
+        /// Called when the NativeWindow is resized.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnResize(EventArgs e)
@@ -873,7 +880,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called when the <see cref="OpenTK.INativeWindow.Title" /> property of the NativeWindow has changed.
+        /// Called when the <see cref="OpenTK.INativeWindow.Title" /> property of the NativeWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnTitleChanged(EventArgs e)
@@ -882,7 +889,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called when the <see cref="OpenTK.INativeWindow.Visible" /> property of the NativeWindow has changed.
+        /// Called when the <see cref="OpenTK.INativeWindow.Visible" /> property of the NativeWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnVisibleChanged(EventArgs e)
@@ -891,7 +898,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called when the WindowBorder of this NativeWindow has changed.
+        /// Called when the WindowBorder of this NativeWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnWindowBorderChanged(EventArgs e)
@@ -900,7 +907,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Called when the WindowState of this NativeWindow has changed.
+        /// Called when the WindowState of this NativeWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnWindowStateChanged(EventArgs e)
@@ -909,11 +916,11 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Processes operating system events until the NativeWindow becomes idle.
+        /// Processes operating system events until the NativeWindow becomes idle.
         /// </summary>
         /// <param name="retainEvents">
-        ///     If true, the state of underlying system event propagation will be preserved, otherwise event
-        ///     propagation will be enabled if it has not been already.
+        /// If true, the state of underlying system event propagation will be preserved, otherwise event
+        /// propagation will be enabled if it has not been already.
         /// </param>
         protected void ProcessEvents(bool retainEvents)
         {

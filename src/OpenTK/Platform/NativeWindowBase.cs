@@ -281,11 +281,11 @@ namespace OpenTK.Platform
 
         /// \internal
         /// <summary>
-        ///     Call this method to simulate KeyDown/KeyUp events
-        ///     on platforms that do not generate key events for
-        ///     modifier flags (e.g. Mac/Cocoa).
-        ///     Note: this method does not distinguish between the
-        ///     left and right variants of modifier keys.
+        /// Call this method to simulate KeyDown/KeyUp events
+        /// on platforms that do not generate key events for
+        /// modifier flags (e.g. Mac/Cocoa).
+        /// Note: this method does not distinguish between the
+        /// left and right variants of modifier keys.
         /// </summary>
         /// <param name="mods">Mods.</param>
         protected void UpdateModifierFlags(KeyModifiers mods)

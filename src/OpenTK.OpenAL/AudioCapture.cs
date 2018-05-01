@@ -32,8 +32,8 @@ using OpenTK.OpenAL.Native;
 namespace OpenTK.OpenAL
 {
     /// <summary>
-    ///     Provides methods to instantiate, use and destroy an audio device for recording.
-    ///     Static methods are provided to list available devices known by the driver.
+    /// Provides methods to instantiate, use and destroy an audio device for recording.
+    /// Static methods are provided to list available devices known by the driver.
     /// </summary>
     public sealed class AudioCapture : IDisposable
     {
@@ -53,21 +53,23 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>
-        ///     Opens the default device for audio recording.
-        ///     Implicitly set parameters are: 22050Hz, 16Bit Mono, 4096 samples ringbuffer.
+        /// Opens the default device for audio recording.
+        /// Implicitly set parameters are: 22050Hz, 16Bit Mono, 4096 samples ringbuffer.
         /// </summary>
         public AudioCapture()
             : this(DefaultDevice, 22050, ALFormat.Mono16, 4096)
         {
         }
 
-        /// <summary>Opens a device for audio recording.</summary>
+        /// <summary>
+        /// Opens a device for audio recording.
+        /// </summary>
         /// <param name="deviceName">The device name.</param>
         /// <param name="frequency">The frequency that the data should be captured at.</param>
         /// <param name="sampleFormat">The requested capture buffer format.</param>
         /// <param name="bufferSize">
-        ///     The size of OpenAL's capture internal ring-buffer. This value expects number of samples, not
-        ///     bytes.
+        /// The size of OpenAL's capture internal ring-buffer. This value expects number of samples, not
+        /// bytes.
         /// </param>
         public AudioCapture(string deviceName, int frequency, ALFormat sampleFormat, int bufferSize)
         {
@@ -124,24 +126,28 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>
-        ///     The name of the device associated with this instance.
+        /// The name of the device associated with this instance.
         /// </summary>
         public string CurrentDevice { get; }
 
         /// <summary>
-        ///     Returns a list of strings containing all known recording devices.
+        /// Returns a list of strings containing all known recording devices.
         /// </summary>
         public static IList<string> AvailableDevices => AudioDeviceEnumerator.AvailableRecordingDevices;
 
         /// <summary>
-        ///     Returns the name of the device that will be used as recording default.
+        /// Returns the name of the device that will be used as recording default.
         /// </summary>
         public static string DefaultDevice => AudioDeviceEnumerator.DefaultRecordingDevice;
 
-        /// <summary>Returns the ALC error code for this device.</summary>
+        /// <summary>
+        /// Returns the ALC error code for this device.
+        /// </summary>
         public AlcError CurrentError => Alc.GetError(Handle);
 
-        /// <summary>Returns the number of available samples for capture.</summary>
+        /// <summary>
+        /// Returns the number of available samples for capture.
+        /// </summary>
         public int AvailableSamples
         {
             get
@@ -155,21 +161,23 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>
-        ///     Gets the OpenTK.Audio.ALFormat for this instance.
+        /// Gets the OpenTK.Audio.ALFormat for this instance.
         /// </summary>
         public ALFormat SampleFormat { get; }
 
         /// <summary>
-        ///     Gets the sampling rate for this instance.
+        /// Gets the sampling rate for this instance.
         /// </summary>
         public int SampleFrequency { get; }
 
         /// <summary>
-        ///     Gets a value indicating whether this instance is currently capturing samples.
+        /// Gets a value indicating whether this instance is currently capturing samples.
         /// </summary>
         public bool IsRunning { get; private set; }
 
-        /// <summary>Closes the device and disposes the instance.</summary>
+        /// <summary>
+        /// Closes the device and disposes the instance.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
@@ -177,7 +185,7 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>
-        ///     Checks for ALC error conditions.
+        /// Checks for ALC error conditions.
         /// </summary>
         /// <exception cref="OutOfMemoryException">Raised when an out of memory error is detected.</exception>
         /// <exception cref="AudioValueException">Raised when an invalid value is detected.</exception>
@@ -189,9 +197,9 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>
-        ///     Start recording samples.
-        ///     The number of available samples can be obtained through the <see cref="AvailableSamples" /> property.
-        ///     The data can be queried with any <see cref="ReadSamples(IntPtr, int)" /> method.
+        /// Start recording samples.
+        /// The number of available samples can be obtained through the <see cref="AvailableSamples" /> property.
+        /// The data can be queried with any <see cref="ReadSamples(IntPtr, int)" /> method.
         /// </summary>
         public void Start()
         {
@@ -199,7 +207,9 @@ namespace OpenTK.OpenAL
             IsRunning = true;
         }
 
-        /// <summary>Stop recording samples. This will not clear previously recorded samples.</summary>
+        /// <summary>
+        /// Stop recording samples. This will not clear previously recorded samples.
+        /// </summary>
         public void Stop()
         {
             Alc.CaptureStop(Handle);
@@ -207,8 +217,8 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>
-        ///     Fills the specified buffer with samples from the internal capture ring-buffer. This method does not block: it
-        ///     is an error to specify a sampleCount larger than AvailableSamples.
+        /// Fills the specified buffer with samples from the internal capture ring-buffer. This method does not block: it
+        /// is an error to specify a sampleCount larger than AvailableSamples.
         /// </summary>
         /// <param name="buffer">A pointer to a previously initialized and pinned array.</param>
         /// <param name="sampleCount">The number of samples to be written to the buffer.</param>
@@ -218,8 +228,8 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>
-        ///     Fills the specified buffer with samples from the internal capture ring-buffer. This method does not block: it
-        ///     is an error to specify a sampleCount larger than AvailableSamples.
+        /// Fills the specified buffer with samples from the internal capture ring-buffer. This method does not block: it
+        /// is an error to specify a sampleCount larger than AvailableSamples.
         /// </summary>
         /// <param name="buffer">The buffer to fill.</param>
         /// <param name="sampleCount">The number of samples to be written to the buffer.</param>
@@ -317,7 +327,7 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>
-        ///     Finalizes this instance.
+        /// Finalizes this instance.
         /// </summary>
         ~AudioCapture()
         {

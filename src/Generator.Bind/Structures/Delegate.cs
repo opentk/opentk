@@ -12,8 +12,8 @@ using System.Text.RegularExpressions;
 namespace Bind.Structures
 {
     /// <summary>
-    ///     Represents an opengl function.
-    ///     The return value, function name, function parameters and opengl version can be retrieved or set.
+    /// Represents an opengl function.
+    /// The return value, function name, function parameters and opengl version can be retrieved or set.
     /// </summary>
     internal class Delegate : IComparable<Delegate>, IEquatable<Delegate>
     {
@@ -57,7 +57,7 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        ///     Gets the CLSCompliant property. True if the delegate is not CLSCompliant.
+        /// Gets the CLSCompliant property. True if the delegate is not CLSCompliant.
         /// </summary>
         public virtual bool CLSCompliant
         {
@@ -94,9 +94,9 @@ namespace Bind.Structures
         public string Category { get; set; }
 
         /// <summary>
-        ///     Gets a value that indicates whether this function needs to be wrapped with a Marshaling function.
-        ///     This flag is set if a function contains an Array parameter, or returns
-        ///     an Array or string.
+        /// Gets a value that indicates whether this function needs to be wrapped with a Marshaling function.
+        /// This flag is set if a function contains an Array parameter, or returns
+        /// an Array or string.
         /// </summary>
         public bool NeedsWrapper
         {
@@ -122,7 +122,7 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        ///     True if the delegate must be declared as 'unsafe'.
+        /// True if the delegate must be declared as 'unsafe'.
         /// </summary>
         public virtual bool Unsafe
         {
@@ -151,12 +151,12 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        ///     Gets or sets the return value of the opengl function.
+        /// Gets or sets the return value of the opengl function.
         /// </summary>
         public Type ReturnType { get; set; } = new Type();
 
         /// <summary>
-        ///     Gets or sets the name of the opengl function.
+        /// Gets or sets the name of the opengl function.
         /// </summary>
         public virtual string Name
         {
@@ -173,7 +173,7 @@ namespace Bind.Structures
         public ParameterCollection Parameters { get; set; }
 
         /// <summary>
-        ///     Defines the opengl version that introduced this function.
+        /// Defines the opengl version that introduced this function.
         /// </summary>
         public string Version { get; set; }
 
@@ -307,7 +307,7 @@ namespace Bind.Structures
         {
             if (!ContainsKey(d.Name))
             {
-                Add(d.Name, new List<Delegate> {d});
+                Add(d.Name, new List<Delegate> { d });
             }
             else
             {

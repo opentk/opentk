@@ -40,15 +40,15 @@ namespace OpenTK.Platform.SDL2
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether to use SDL2 fullscreen-desktop mode
-        ///     for fullscreen windows. When true, then GameWindow instances will not change
-        ///     DisplayDevice resolutions when going fullscreen. When false, fullscreen GameWindows
-        ///     will change the device resolution to match their size.
+        /// Gets or sets a value indicating whether to use SDL2 fullscreen-desktop mode
+        /// for fullscreen windows. When true, then GameWindow instances will not change
+        /// DisplayDevice resolutions when going fullscreen. When false, fullscreen GameWindows
+        /// will change the device resolution to match their size.
         /// </summary>
         /// <remarks>
-        ///     >
-        ///     This is a workaround for the lack of ChangeResolution support in SDL2.
-        ///     When and if this changes upstream, we should remove this code.
+        /// >
+        /// This is a workaround for the lack of ChangeResolution support in SDL2.
+        /// When and if this changes upstream, we should remove this code.
         /// </remarks>
         public static bool UseFullscreenDesktop { get; set; }
 

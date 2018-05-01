@@ -8,12 +8,12 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using OpenTK.Mathemathics;
+using OpenTK.Mathematics;
 
 namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    ///     Provides access to the OpenAL effects extension.
+    /// Provides access to the OpenAL effects extension.
     /// </summary>
     public partial class EffectsExtension
     {
@@ -88,7 +88,7 @@ namespace OpenTK.OpenAL.Native
         private readonly Delegate_alIsFilter Imported_alIsFilter;
 
         /// <summary>
-        ///     Constructs a new EffectsExtension instance.
+        /// Constructs a new EffectsExtension instance.
         /// </summary>
         public EffectsExtension()
         {
@@ -217,10 +217,14 @@ namespace OpenTK.OpenAL.Native
         // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTIV)( ALuint asid, ALenum pname, ALint* values );
         // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTFV)( ALuint asid, ALenum pname, ALfloat* values );
 
-        /// <summary>Returns True if the EFX Extension has been found and could be initialized.</summary>
+        /// <summary>
+        /// Returns True if the EFX Extension has been found and could be initialized.
+        /// </summary>
         public bool IsInitialized { get; }
 
-        /// <summary>(Helper) Selects the Effect type used by this Effect handle.</summary>
+        /// <summary>
+        /// (Helper) Selects the Effect type used by this Effect handle.
+        /// </summary>
         /// <param name="eid">Effect id returned from a successful call to GenEffects.</param>
         /// <param name="type">Effect type.</param>
         public void BindEffect(uint eid, EfxEffectType type)
@@ -228,7 +232,9 @@ namespace OpenTK.OpenAL.Native
             Imported_alEffecti(eid, EfxEffecti.EffectType, (int)type);
         }
 
-        /// <summary>(Helper) Selects the Effect type used by this Effect handle.</summary>
+        /// <summary>
+        /// (Helper) Selects the Effect type used by this Effect handle.
+        /// </summary>
         /// <param name="eid">Effect id returned from a successful call to GenEffects.</param>
         /// <param name="type">Effect type.</param>
         public void BindEffect(int eid, EfxEffectType type)
@@ -236,7 +242,9 @@ namespace OpenTK.OpenAL.Native
             Imported_alEffecti((uint)eid, EfxEffecti.EffectType, (int)type);
         }
 
-        /// <summary>(Helper) reroutes the output of a Source through a Filter.</summary>
+        /// <summary>
+        /// (Helper) reroutes the output of a Source through a Filter.
+        /// </summary>
         /// <param name="source">A valid Source handle.</param>
         /// <param name="filter">A valid Filter handle.</param>
         public void BindFilterToSource(uint source, uint filter)
@@ -244,7 +252,9 @@ namespace OpenTK.OpenAL.Native
             AL.Source(source, ALSourcei.EfxDirectFilter, (int)filter);
         }
 
-        /// <summary>(Helper) reroutes the output of a Source through a Filter.</summary>
+        /// <summary>
+        /// (Helper) reroutes the output of a Source through a Filter.
+        /// </summary>
         /// <param name="source">A valid Source handle.</param>
         /// <param name="filter">A valid Filter handle.</param>
         public void BindFilterToSource(int source, int filter)
@@ -252,7 +262,9 @@ namespace OpenTK.OpenAL.Native
             AL.Source((uint)source, ALSourcei.EfxDirectFilter, filter);
         }
 
-        /// <summary>(Helper) Attaches an Effect to an Auxiliary Effect Slot.</summary>
+        /// <summary>
+        /// (Helper) Attaches an Effect to an Auxiliary Effect Slot.
+        /// </summary>
         /// <param name="auxiliaryeffectslot">The slot handle to attach the Effect to.</param>
         /// <param name="effect">The Effect handle that is being attached.</param>
         public void BindEffectToAuxiliarySlot(uint auxiliaryeffectslot, uint effect)
@@ -260,7 +272,9 @@ namespace OpenTK.OpenAL.Native
             AuxiliaryEffectSlot(auxiliaryeffectslot, EfxAuxiliaryi.EffectslotEffect, (int)effect);
         }
 
-        /// <summary>(Helper) Attaches an Effect to an Auxiliary Effect Slot.</summary>
+        /// <summary>
+        /// (Helper) Attaches an Effect to an Auxiliary Effect Slot.
+        /// </summary>
         /// <param name="auxiliaryeffectslot">The slot handle to attach the Effect to.</param>
         /// <param name="effect">The Effect handle that is being attached.</param>
         public void BindEffectToAuxiliarySlot(int auxiliaryeffectslot, int effect)
@@ -268,32 +282,36 @@ namespace OpenTK.OpenAL.Native
             AuxiliaryEffectSlot((uint)auxiliaryeffectslot, EfxAuxiliaryi.EffectslotEffect, effect);
         }
 
-        /// <summary>(Helper) Reroutes a Source's output into an Auxiliary Effect Slot.</summary>
+        /// <summary>
+        /// (Helper) Reroutes a Source's output into an Auxiliary Effect Slot.
+        /// </summary>
         /// <param name="source">The Source handle who's output is forwarded.</param>
         /// <param name="slot">The Auxiliary Effect Slot handle that receives input from the Source.</param>
         /// <param name="slotnumber">
-        ///     Every Source has only a limited number of slots it can feed buffer to. The number must stay
-        ///     below AlcContextAttributes.EfxMaxAuxiliarySends
+        /// Every Source has only a limited number of slots it can feed buffer to. The number must stay
+        /// below AlcContextAttributes.EfxMaxAuxiliarySends
         /// </param>
         /// <param name="filter">
-        ///     Filter handle to be attached between Source ouput and Auxiliary Slot input. Use 0 or
-        ///     EfxFilterType.FilterNull for no filter.
+        /// Filter handle to be attached between Source ouput and Auxiliary Slot input. Use 0 or
+        /// EfxFilterType.FilterNull for no filter.
         /// </param>
         public void BindSourceToAuxiliarySlot(uint source, uint slot, int slotnumber, uint filter)
         {
             AL.Source(source, ALSource3i.EfxAuxiliarySendFilter, (int)slot, slotnumber, (int)filter);
         }
 
-        /// <summary>(Helper) Reroutes a Source's output into an Auxiliary Effect Slot.</summary>
+        /// <summary>
+        /// (Helper) Reroutes a Source's output into an Auxiliary Effect Slot.
+        /// </summary>
         /// <param name="source">The Source handle who's output is forwarded.</param>
         /// <param name="slot">The Auxiliary Effect Slot handle that receives input from the Source.</param>
         /// <param name="slotnumber">
-        ///     Every Source has only a limited number of slots it can feed buffer to. The number must stay
-        ///     below AlcContextAttributes.EfxMaxAuxiliarySends
+        /// Every Source has only a limited number of slots it can feed buffer to. The number must stay
+        /// below AlcContextAttributes.EfxMaxAuxiliarySends
         /// </param>
         /// <param name="filter">
-        ///     Filter handle to be attached between Source ouput and Auxiliary Slot input. Use 0 or
-        ///     EfxFilterType.FilterNull for no filter.
+        /// Filter handle to be attached between Source ouput and Auxiliary Slot input. Use 0 or
+        /// EfxFilterType.FilterNull for no filter.
         /// </param>
         public void BindSourceToAuxiliarySlot(int source, int slot, int slotnumber, int filter)
         {
@@ -301,14 +319,14 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The GenEffects function is used to create one or more Effect objects. An Effect object stores an effect type
-        ///     and a set of parameter values to control that Effect. In order to use an Effect it must be attached to an Auxiliary
-        ///     Effect Slot object
+        /// The GenEffects function is used to create one or more Effect objects. An Effect object stores an effect type
+        /// and a set of parameter values to control that Effect. In order to use an Effect it must be attached to an Auxiliary
+        /// Effect Slot object
         /// </summary>
         /// <remarks>
-        ///     After creation an Effect has no type (EfxEffectType.Null), so before it can be used to store a set of
-        ///     parameters, the application must specify what type of effect should be stored in the object, using Effect() with
-        ///     EfxEffecti.
+        /// After creation an Effect has no type (EfxEffectType.Null), so before it can be used to store a set of
+        /// parameters, the application must specify what type of effect should be stored in the object, using Effect() with
+        /// EfxEffecti.
         /// </remarks>
         /// <param name="n">Number of Effects to be created.</param>
         /// <param name="effects">Pointer addressing sufficient memory to store n Effect object identifiers.</param>
@@ -325,14 +343,14 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The GenEffects function is used to create one or more Effect objects. An Effect object stores an effect type
-        ///     and a set of parameter values to control that Effect. In order to use an Effect it must be attached to an Auxiliary
-        ///     Effect Slot object
+        /// The GenEffects function is used to create one or more Effect objects. An Effect object stores an effect type
+        /// and a set of parameter values to control that Effect. In order to use an Effect it must be attached to an Auxiliary
+        /// Effect Slot object
         /// </summary>
         /// <remarks>
-        ///     After creation an Effect has no type (EfxEffectType.Null), so before it can be used to store a set of
-        ///     parameters, the application must specify what type of effect should be stored in the object, using Effect() with
-        ///     EfxEffecti.
+        /// After creation an Effect has no type (EfxEffectType.Null), so before it can be used to store a set of
+        /// parameters, the application must specify what type of effect should be stored in the object, using Effect() with
+        /// EfxEffecti.
         /// </remarks>
         /// <param name="n">Number of Effects to be created.</param>
         /// <param name="effects">Pointer addressing sufficient memory to store n Effect object identifiers.</param>
@@ -348,19 +366,21 @@ namespace OpenTK.OpenAL.Native
             }
         }
 
-        /// <summary>Generates one or more effect objects.</summary>
+        /// <summary>
+        /// Generates one or more effect objects.
+        /// </summary>
         /// <param name="n">Number of Effect object identifiers to generate.</param>
         /// <remarks>
-        ///     <para>
-        ///         The GenEffects function is used to create one or more Effect objects. An Effect object stores an effect type
-        ///         and a set of parameter values to control that Effect. In order to use an Effect it must be attached to an
-        ///         Auxiliary Effect Slot object.
-        ///     </para>
-        ///     <para>
-        ///         After creation an Effect has no type (EfxEffectType.Null), so before it can be used to store a set of
-        ///         parameters, the application must specify what type of effect should be stored in the object, using Effect()
-        ///         with EfxEffecti.
-        ///     </para>
+        ///  <para>
+        /// The GenEffects function is used to create one or more Effect objects. An Effect object stores an effect type
+        /// and a set of parameter values to control that Effect. In order to use an Effect it must be attached to an
+        /// Auxiliary Effect Slot object.
+        ///  </para>
+        ///  <para>
+        /// After creation an Effect has no type (EfxEffectType.Null), so before it can be used to store a set of
+        /// parameters, the application must specify what type of effect should be stored in the object, using Effect()
+        /// with EfxEffecti.
+        ///  </para>
         /// </remarks>
         public int[] GenEffects(int n)
         {
@@ -374,19 +394,21 @@ namespace OpenTK.OpenAL.Native
             return effects;
         }
 
-        /// <summary>Generates a single effect object.</summary>
+        /// <summary>
+        /// Generates a single effect object.
+        /// </summary>
         /// <returns>A handle to the generated effect object.</returns>
         /// <remarks>
-        ///     <para>
-        ///         The GenEffects function is used to create one or more Effect objects. An Effect object stores an effect type
-        ///         and a set of parameter values to control that Effect. In order to use an Effect it must be attached to an
-        ///         Auxiliary Effect Slot object.
-        ///     </para>
-        ///     <para>
-        ///         After creation an Effect has no type (EfxEffectType.Null), so before it can be used to store a set of
-        ///         parameters, the application must specify what type of effect should be stored in the object, using Effect()
-        ///         with EfxEffecti.
-        ///     </para>
+        ///  <para>
+        /// The GenEffects function is used to create one or more Effect objects. An Effect object stores an effect type
+        /// and a set of parameter values to control that Effect. In order to use an Effect it must be attached to an
+        /// Auxiliary Effect Slot object.
+        ///  </para>
+        ///  <para>
+        /// After creation an Effect has no type (EfxEffectType.Null), so before it can be used to store a set of
+        /// parameters, the application must specify what type of effect should be stored in the object, using Effect()
+        /// with EfxEffecti.
+        ///  </para>
         /// </remarks>
         public int GenEffect()
         {
@@ -395,7 +417,9 @@ namespace OpenTK.OpenAL.Native
             return temp;
         }
 
-        /// <summary>Generates a single effect object.</summary>
+        /// <summary>
+        /// Generates a single effect object.
+        /// </summary>
         /// <param name="effect">A handle to the generated effect object.</param>
         public void GenEffect(out uint effect)
         {
@@ -410,8 +434,8 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The DeleteEffects function is used to delete and free resources for Effect objects previously created with
-        ///     GenEffects.
+        /// The DeleteEffects function is used to delete and free resources for Effect objects previously created with
+        /// GenEffects.
         /// </summary>
         /// <param name="n">Number of Effects to be deleted.</param>
         /// <param name="effects">Pointer to n Effect object identifiers.</param>
@@ -427,8 +451,8 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The DeleteEffects function is used to delete and free resources for Effect objects previously created with
-        ///     GenEffects.
+        /// The DeleteEffects function is used to delete and free resources for Effect objects previously created with
+        /// GenEffects.
         /// </summary>
         /// <param name="n">Number of Effects to be deleted.</param>
         /// <param name="effects">Pointer to n Effect object identifiers.</param>
@@ -444,8 +468,8 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The DeleteEffects function is used to delete and free resources for Effect objects previously created with
-        ///     GenEffects.
+        /// The DeleteEffects function is used to delete and free resources for Effect objects previously created with
+        /// GenEffects.
         /// </summary>
         /// <param name="effects">Pointer to n Effect object identifiers.</param>
         public void DeleteEffects(int[] effects)
@@ -459,8 +483,8 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The DeleteEffects function is used to delete and free resources for Effect objects previously created with
-        ///     GenEffects.
+        /// The DeleteEffects function is used to delete and free resources for Effect objects previously created with
+        /// GenEffects.
         /// </summary>
         /// <param name="effects">Pointer to n Effect object identifiers.</param>
         public void DeleteEffects(uint[] effects)
@@ -473,14 +497,18 @@ namespace OpenTK.OpenAL.Native
             DeleteEffects(effects.Length, ref effects[0]);
         }
 
-        /// <summary>This function deletes one Effect only.</summary>
+        /// <summary>
+        /// This function deletes one Effect only.
+        /// </summary>
         /// <param name="effect">Pointer to an effect name/handle identifying the Effect Object to be deleted.</param>
         public void DeleteEffect(int effect)
         {
             DeleteEffects(1, ref effect);
         }
 
-        /// <summary>This function deletes one Effect only.</summary>
+        /// <summary>
+        /// This function deletes one Effect only.
+        /// </summary>
         /// <param name="effect">Pointer to an effect name/handle identifying the Effect Object to be deleted.</param>
         public void DeleteEffect(ref uint effect)
         {
@@ -493,7 +521,9 @@ namespace OpenTK.OpenAL.Native
             }
         }
 
-        /// <summary>The IsEffect function is used to determine if an object identifier is a valid Effect object.</summary>
+        /// <summary>
+        /// The IsEffect function is used to determine if an object identifier is a valid Effect object.
+        /// </summary>
         /// <param name="eid">Effect identifier to validate.</param>
         /// <returns>True if the identifier is a valid Effect, False otherwise.</returns>
         public bool IsEffect(uint eid)
@@ -501,7 +531,9 @@ namespace OpenTK.OpenAL.Native
             return Imported_alIsEffect(eid);
         }
 
-        /// <summary>The IsEffect function is used to determine if an object identifier is a valid Effect object.</summary>
+        /// <summary>
+        /// The IsEffect function is used to determine if an object identifier is a valid Effect object.
+        /// </summary>
         /// <param name="eid">Effect identifier to validate.</param>
         /// <returns>True if the identifier is a valid Effect, False otherwise.</returns>
         public bool IsEffect(int eid)
@@ -509,7 +541,9 @@ namespace OpenTK.OpenAL.Native
             return Imported_alIsEffect((uint)eid);
         }
 
-        /// <summary>This function is used to set integer properties on Effect objects.</summary>
+        /// <summary>
+        /// This function is used to set integer properties on Effect objects.
+        /// </summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Integer value.</param>
@@ -518,7 +552,9 @@ namespace OpenTK.OpenAL.Native
             Imported_alEffecti(eid, param, value);
         }
 
-        /// <summary>This function is used to set integer properties on Effect objects.</summary>
+        /// <summary>
+        /// This function is used to set integer properties on Effect objects.
+        /// </summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Integer value.</param>
@@ -527,7 +563,9 @@ namespace OpenTK.OpenAL.Native
             Imported_alEffecti((uint)eid, param, value);
         }
 
-        /// <summary>This function is used to set floating-point properties on Effect objects.</summary>
+        /// <summary>
+        /// This function is used to set floating-point properties on Effect objects.
+        /// </summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Floating-point value.</param>
@@ -536,7 +574,9 @@ namespace OpenTK.OpenAL.Native
             Imported_alEffectf(eid, param, value);
         }
 
-        /// <summary>This function is used to set floating-point properties on Effect objects.</summary>
+        /// <summary>
+        /// This function is used to set floating-point properties on Effect objects.
+        /// </summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Floating-point value.</param>
@@ -545,7 +585,9 @@ namespace OpenTK.OpenAL.Native
             Imported_alEffectf((uint)eid, param, value);
         }
 
-        /// <summary>This function is used to set 3 floating-point properties on Effect objects.</summary>
+        /// <summary>
+        /// This function is used to set 3 floating-point properties on Effect objects.
+        /// </summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="values">Pointer to Math.Vector3.</param>
@@ -560,7 +602,9 @@ namespace OpenTK.OpenAL.Native
             }
         }
 
-        /// <summary>This function is used to set 3 floating-point properties on Effect objects.</summary>
+        /// <summary>
+        /// This function is used to set 3 floating-point properties on Effect objects.
+        /// </summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="values">Pointer to Math.Vector3.</param>
@@ -569,7 +613,9 @@ namespace OpenTK.OpenAL.Native
             Effect((uint)eid, param, ref values);
         }
 
-        /// <summary>This function is used to retrieve integer properties from Effect objects.</summary>
+        /// <summary>
+        /// This function is used to retrieve integer properties from Effect objects.
+        /// </summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where integer value will be stored.</param>
@@ -584,7 +630,9 @@ namespace OpenTK.OpenAL.Native
             }
         }
 
-        /// <summary>This function is used to retrieve integer properties from Effect objects.</summary>
+        /// <summary>
+        /// This function is used to retrieve integer properties from Effect objects.
+        /// </summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where integer value will be stored.</param>
@@ -593,7 +641,9 @@ namespace OpenTK.OpenAL.Native
             GetEffect((uint)eid, pname, out value);
         }
 
-        /// <summary>This function is used to retrieve floating-point properties from Effect objects.</summary>
+        /// <summary>
+        /// This function is used to retrieve floating-point properties from Effect objects.
+        /// </summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where floating-point value will be stored.</param>
@@ -608,7 +658,9 @@ namespace OpenTK.OpenAL.Native
             }
         }
 
-        /// <summary>This function is used to retrieve floating-point properties from Effect objects.</summary>
+        /// <summary>
+        /// This function is used to retrieve floating-point properties from Effect objects.
+        /// </summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where floating-point value will be stored.</param>
@@ -617,7 +669,9 @@ namespace OpenTK.OpenAL.Native
             GetEffect((uint)eid, pname, out value);
         }
 
-        /// <summary>This function is used to retrieve 3 floating-point properties from Effect objects.</summary>
+        /// <summary>
+        /// This function is used to retrieve 3 floating-point properties from Effect objects.
+        /// </summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to retrieve.</param>
         /// <param name="values">A Math.Vector3 to hold the values.</param>
@@ -635,7 +689,9 @@ namespace OpenTK.OpenAL.Native
             }
         }
 
-        /// <summary>This function is used to retrieve 3 floating-point properties from Effect objects.</summary>
+        /// <summary>
+        /// This function is used to retrieve 3 floating-point properties from Effect objects.
+        /// </summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to retrieve.</param>
         /// <param name="values">A Math.Vector3 to hold the values.</param>
@@ -645,14 +701,14 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The GenFilters function is used to create one or more Filter objects. A Filter object stores a filter type and
-        ///     a set of parameter values to control that Filter. Filter objects can be attached to Sources as Direct Filters or
-        ///     Auxiliary Send Filters.
+        /// The GenFilters function is used to create one or more Filter objects. A Filter object stores a filter type and
+        /// a set of parameter values to control that Filter. Filter objects can be attached to Sources as Direct Filters or
+        /// Auxiliary Send Filters.
         /// </summary>
         /// <remarks>
-        ///     After creation a Filter has no type (EfxFilterType.Null), so before it can be used to store a set of
-        ///     parameters, the application must specify what type of filter should be stored in the object, using Filter() with
-        ///     EfxFilteri.
+        /// After creation a Filter has no type (EfxFilterType.Null), so before it can be used to store a set of
+        /// parameters, the application must specify what type of filter should be stored in the object, using Filter() with
+        /// EfxFilteri.
         /// </remarks>
         /// <param name="n">Number of Filters to be created.</param>
         /// <param name="filters">Pointer addressing sufficient memory to store n Filter object identifiers.</param>
@@ -669,14 +725,14 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The GenFilters function is used to create one or more Filter objects. A Filter object stores a filter type and
-        ///     a set of parameter values to control that Filter. Filter objects can be attached to Sources as Direct Filters or
-        ///     Auxiliary Send Filters.
+        /// The GenFilters function is used to create one or more Filter objects. A Filter object stores a filter type and
+        /// a set of parameter values to control that Filter. Filter objects can be attached to Sources as Direct Filters or
+        /// Auxiliary Send Filters.
         /// </summary>
         /// <remarks>
-        ///     After creation a Filter has no type (EfxFilterType.Null), so before it can be used to store a set of
-        ///     parameters, the application must specify what type of filter should be stored in the object, using Filter() with
-        ///     EfxFilteri.
+        /// After creation a Filter has no type (EfxFilterType.Null), so before it can be used to store a set of
+        /// parameters, the application must specify what type of filter should be stored in the object, using Filter() with
+        /// EfxFilteri.
         /// </remarks>
         /// <param name="n">Number of Filters to be created.</param>
         /// <param name="filters">Pointer addressing sufficient memory to store n Filter object identifiers.</param>
@@ -694,14 +750,14 @@ namespace OpenTK.OpenAL.Native
 
 
         /// <summary>
-        ///     The GenFilters function is used to create one or more Filter objects. A Filter object stores a filter type and
-        ///     a set of parameter values to control that Filter. Filter objects can be attached to Sources as Direct Filters or
-        ///     Auxiliary Send Filters.
+        /// The GenFilters function is used to create one or more Filter objects. A Filter object stores a filter type and
+        /// a set of parameter values to control that Filter. Filter objects can be attached to Sources as Direct Filters or
+        /// Auxiliary Send Filters.
         /// </summary>
         /// <remarks>
-        ///     After creation a Filter has no type (EfxFilterType.Null), so before it can be used to store a set of
-        ///     parameters, the application must specify what type of filter should be stored in the object, using Filter() with
-        ///     EfxFilteri.
+        /// After creation a Filter has no type (EfxFilterType.Null), so before it can be used to store a set of
+        /// parameters, the application must specify what type of filter should be stored in the object, using Filter() with
+        /// EfxFilteri.
         /// </remarks>
         /// <param name="n">Number of Filters to be created.</param>
         /// <returns>Pointer addressing sufficient memory to store n Filter object identifiers.</returns>
@@ -717,7 +773,9 @@ namespace OpenTK.OpenAL.Native
             return filters;
         }
 
-        /// <summary>This function generates only one Filter.</summary>
+        /// <summary>
+        /// This function generates only one Filter.
+        /// </summary>
         /// <returns>Storage Int32 for the new filter name/handle.</returns>
         public int GenFilter()
         {
@@ -726,7 +784,9 @@ namespace OpenTK.OpenAL.Native
             return filter;
         }
 
-        /// <summary>This function generates only one Filter.</summary>
+        /// <summary>
+        /// This function generates only one Filter.
+        /// </summary>
         /// <param name="filter">Storage UInt32 for the new filter name/handle.</param>
         public unsafe void GenFilter(out uint filter)
         {
@@ -738,8 +798,8 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The DeleteFilters function is used to delete and free resources for Filter objects previously created with
-        ///     GenFilters.
+        /// The DeleteFilters function is used to delete and free resources for Filter objects previously created with
+        /// GenFilters.
         /// </summary>
         /// <param name="n">Number of Filters to be deleted.</param>
         /// <param name="filters">Pointer to n Filter object identifiers.</param>
@@ -755,8 +815,8 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The DeleteFilters function is used to delete and free resources for Filter objects previously created with
-        ///     GenFilters.
+        /// The DeleteFilters function is used to delete and free resources for Filter objects previously created with
+        /// GenFilters.
         /// </summary>
         /// <param name="n">Number of Filters to be deleted.</param>
         /// <param name="filters">Pointer to n Filter object identifiers.</param>
@@ -771,7 +831,9 @@ namespace OpenTK.OpenAL.Native
             }
         }
 
-        /// <summary>This function deletes one Filter only.</summary>
+        /// <summary>
+        /// This function deletes one Filter only.
+        /// </summary>
         /// <param name="filters">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
         public void DeleteFilters(uint[] filters)
         {
@@ -783,7 +845,9 @@ namespace OpenTK.OpenAL.Native
             DeleteFilters(filters.Length, ref filters[0]);
         }
 
-        /// <summary>This function deletes one Filter only.</summary>
+        /// <summary>
+        /// This function deletes one Filter only.
+        /// </summary>
         /// <param name="filters">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
         public void DeleteFilters(int[] filters)
         {
@@ -795,14 +859,18 @@ namespace OpenTK.OpenAL.Native
             DeleteFilters(filters.Length, ref filters[0]);
         }
 
-        /// <summary>This function deletes one Filter only.</summary>
+        /// <summary>
+        /// This function deletes one Filter only.
+        /// </summary>
         /// <param name="filter">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
         public void DeleteFilter(int filter)
         {
             DeleteFilters(1, ref filter);
         }
 
-        /// <summary>This function deletes one Filter only.</summary>
+        /// <summary>
+        /// This function deletes one Filter only.
+        /// </summary>
         /// <param name="filter">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
         public void DeleteFilter(ref uint filter)
         {
@@ -815,7 +883,9 @@ namespace OpenTK.OpenAL.Native
             }
         }
 
-        /// <summary>The IsFilter function is used to determine if an object identifier is a valid Filter object.</summary>
+        /// <summary>
+        /// The IsFilter function is used to determine if an object identifier is a valid Filter object.
+        /// </summary>
         /// <param name="fid">Effect identifier to validate.</param>
         /// <returns>True if the identifier is a valid Filter, False otherwise.</returns>
         public bool IsFilter(uint fid)
@@ -823,7 +893,9 @@ namespace OpenTK.OpenAL.Native
             return Imported_alIsFilter(fid);
         }
 
-        /// <summary>The IsFilter function is used to determine if an object identifier is a valid Filter object.</summary>
+        /// <summary>
+        /// The IsFilter function is used to determine if an object identifier is a valid Filter object.
+        /// </summary>
         /// <param name="fid">Effect identifier to validate.</param>
         /// <returns>True if the identifier is a valid Filter, False otherwise.</returns>
         public bool IsFilter(int fid)
@@ -831,7 +903,9 @@ namespace OpenTK.OpenAL.Native
             return Imported_alIsFilter((uint)fid);
         }
 
-        /// <summary>This function is used to set integer properties on Filter objects.</summary>
+        /// <summary>
+        /// This function is used to set integer properties on Filter objects.
+        /// </summary>
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Integer value.</param>
@@ -840,7 +914,9 @@ namespace OpenTK.OpenAL.Native
             Imported_alFilteri(fid, param, value);
         }
 
-        /// <summary>This function is used to set integer properties on Filter objects.</summary>
+        /// <summary>
+        /// This function is used to set integer properties on Filter objects.
+        /// </summary>
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Integer value.</param>
@@ -849,7 +925,9 @@ namespace OpenTK.OpenAL.Native
             Imported_alFilteri((uint)fid, param, value);
         }
 
-        /// <summary>This function is used to set floating-point properties on Filter objects.</summary>
+        /// <summary>
+        /// This function is used to set floating-point properties on Filter objects.
+        /// </summary>
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Floating-point value.</param>
@@ -858,7 +936,9 @@ namespace OpenTK.OpenAL.Native
             Imported_alFilterf(fid, param, value);
         }
 
-        /// <summary>This function is used to set floating-point properties on Filter objects.</summary>
+        /// <summary>
+        /// This function is used to set floating-point properties on Filter objects.
+        /// </summary>
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Floating-point value.</param>
@@ -867,7 +947,9 @@ namespace OpenTK.OpenAL.Native
             Imported_alFilterf((uint)fid, param, value);
         }
 
-        /// <summary>This function is used to retrieve integer properties from Filter objects.</summary>
+        /// <summary>
+        /// This function is used to retrieve integer properties from Filter objects.
+        /// </summary>
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where integer value will be stored.</param>
@@ -882,7 +964,9 @@ namespace OpenTK.OpenAL.Native
             }
         }
 
-        /// <summary>This function is used to retrieve integer properties from Filter objects.</summary>
+        /// <summary>
+        /// This function is used to retrieve integer properties from Filter objects.
+        /// </summary>
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where integer value will be stored.</param>
@@ -891,7 +975,9 @@ namespace OpenTK.OpenAL.Native
             GetFilter((uint)fid, pname, out value);
         }
 
-        /// <summary>This function is used to retrieve floating-point properties from Filter objects.</summary>
+        /// <summary>
+        /// This function is used to retrieve floating-point properties from Filter objects.
+        /// </summary>
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where floating-point value will be stored.</param>
@@ -906,7 +992,9 @@ namespace OpenTK.OpenAL.Native
             }
         }
 
-        /// <summary>This function is used to retrieve floating-point properties from Filter objects.</summary>
+        /// <summary>
+        /// This function is used to retrieve floating-point properties from Filter objects.
+        /// </summary>
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where floating-point value will be stored.</param>
@@ -916,15 +1004,15 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The GenAuxiliaryEffectSlots function is used to create one or more Auxiliary Effect Slots. The number of slots
-        ///     that can be created will be dependant upon the Open AL device used.
+        /// The GenAuxiliaryEffectSlots function is used to create one or more Auxiliary Effect Slots. The number of slots
+        /// that can be created will be dependant upon the Open AL device used.
         /// </summary>
         /// <remarks>
-        ///     An application should check the OpenAL error state after making this call to determine if the Effect Slot was
-        ///     successfully created. If the function call fails then none of the requested Effect Slots are created. A good
-        ///     strategy for creating any OpenAL object is to use a for-loop and generate one object each loop iteration and then
-        ///     check for an error condition. If an error is set then the loop can be broken and the application can determine if
-        ///     sufficient resources are available.
+        /// An application should check the OpenAL error state after making this call to determine if the Effect Slot was
+        /// successfully created. If the function call fails then none of the requested Effect Slots are created. A good
+        /// strategy for creating any OpenAL object is to use a for-loop and generate one object each loop iteration and then
+        /// check for an error condition. If an error is set then the loop can be broken and the application can determine if
+        /// sufficient resources are available.
         /// </remarks>
         /// <param name="n">Number of Auxiliary Effect Slots to be created.</param>
         /// <param name="slots">Pointer addressing sufficient memory to store n Effect Slot object identifiers.</param>
@@ -941,15 +1029,15 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The GenAuxiliaryEffectSlots function is used to create one or more Auxiliary Effect Slots. The number of slots
-        ///     that can be created will be dependant upon the Open AL device used.
+        /// The GenAuxiliaryEffectSlots function is used to create one or more Auxiliary Effect Slots. The number of slots
+        /// that can be created will be dependant upon the Open AL device used.
         /// </summary>
         /// <remarks>
-        ///     An application should check the OpenAL error state after making this call to determine if the Effect Slot was
-        ///     successfully created. If the function call fails then none of the requested Effect Slots are created. A good
-        ///     strategy for creating any OpenAL object is to use a for-loop and generate one object each loop iteration and then
-        ///     check for an error condition. If an error is set then the loop can be broken and the application can determine if
-        ///     sufficient resources are available.
+        /// An application should check the OpenAL error state after making this call to determine if the Effect Slot was
+        /// successfully created. If the function call fails then none of the requested Effect Slots are created. A good
+        /// strategy for creating any OpenAL object is to use a for-loop and generate one object each loop iteration and then
+        /// check for an error condition. If an error is set then the loop can be broken and the application can determine if
+        /// sufficient resources are available.
         /// </remarks>
         /// <param name="n">Number of Auxiliary Effect Slots to be created.</param>
         /// <param name="slots">Pointer addressing sufficient memory to store n Effect Slot object identifiers.</param>
@@ -966,15 +1054,15 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The GenAuxiliaryEffectSlots function is used to create one or more Auxiliary Effect Slots. The number of slots
-        ///     that can be created will be dependant upon the Open AL device used.
+        /// The GenAuxiliaryEffectSlots function is used to create one or more Auxiliary Effect Slots. The number of slots
+        /// that can be created will be dependant upon the Open AL device used.
         /// </summary>
         /// <remarks>
-        ///     An application should check the OpenAL error state after making this call to determine if the Effect Slot was
-        ///     successfully created. If the function call fails then none of the requested Effect Slots are created. A good
-        ///     strategy for creating any OpenAL object is to use a for-loop and generate one object each loop iteration and then
-        ///     check for an error condition. If an error is set then the loop can be broken and the application can determine if
-        ///     sufficient resources are available.
+        /// An application should check the OpenAL error state after making this call to determine if the Effect Slot was
+        /// successfully created. If the function call fails then none of the requested Effect Slots are created. A good
+        /// strategy for creating any OpenAL object is to use a for-loop and generate one object each loop iteration and then
+        /// check for an error condition. If an error is set then the loop can be broken and the application can determine if
+        /// sufficient resources are available.
         /// </remarks>
         /// <param name="n">Number of Auxiliary Effect Slots to be created.</param>
         /// <returns>Pointer addressing sufficient memory to store n Effect Slot object identifiers.</returns>
@@ -990,7 +1078,9 @@ namespace OpenTK.OpenAL.Native
             return slots;
         }
 
-        /// <summary>This function generates only one Auxiliary Effect Slot.</summary>
+        /// <summary>
+        /// This function generates only one Auxiliary Effect Slot.
+        /// </summary>
         /// <returns>Storage Int32 for the new auxiliary effect slot name/handle.</returns>
         public int GenAuxiliaryEffectSlot()
         {
@@ -999,7 +1089,9 @@ namespace OpenTK.OpenAL.Native
             return temp;
         }
 
-        /// <summary>This function generates only one Auxiliary Effect Slot.</summary>
+        /// <summary>
+        /// This function generates only one Auxiliary Effect Slot.
+        /// </summary>
         /// <returns>Storage UInt32 for the new auxiliary effect slot name/handle.</returns>
         public void GenAuxiliaryEffectSlot(out uint slot)
         {
@@ -1014,8 +1106,8 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The DeleteAuxiliaryEffectSlots function is used to delete and free resources for Auxiliary Effect Slots
-        ///     previously created with GenAuxiliaryEffectSlots.
+        /// The DeleteAuxiliaryEffectSlots function is used to delete and free resources for Auxiliary Effect Slots
+        /// previously created with GenAuxiliaryEffectSlots.
         /// </summary>
         /// <param name="n">Number of Auxiliary Effect Slots to be deleted.</param>
         /// <param name="slots">Pointer to n Effect Slot object identifiers.</param>
@@ -1031,8 +1123,8 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The DeleteAuxiliaryEffectSlots function is used to delete and free resources for Auxiliary Effect Slots
-        ///     previously created with GenAuxiliaryEffectSlots.
+        /// The DeleteAuxiliaryEffectSlots function is used to delete and free resources for Auxiliary Effect Slots
+        /// previously created with GenAuxiliaryEffectSlots.
         /// </summary>
         /// <param name="n">Number of Auxiliary Effect Slots to be deleted.</param>
         /// <param name="slots">Pointer to n Effect Slot object identifiers.</param>
@@ -1048,8 +1140,8 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The DeleteAuxiliaryEffectSlots function is used to delete and free resources for Auxiliary Effect Slots
-        ///     previously created with GenAuxiliaryEffectSlots.
+        /// The DeleteAuxiliaryEffectSlots function is used to delete and free resources for Auxiliary Effect Slots
+        /// previously created with GenAuxiliaryEffectSlots.
         /// </summary>
         /// <param name="slots">Pointer to n Effect Slot object identifiers.</param>
         public void DeleteAuxiliaryEffectSlots(int[] slots)
@@ -1062,10 +1154,12 @@ namespace OpenTK.OpenAL.Native
             DeleteAuxiliaryEffectSlots(slots.Length, ref slots[0]);
         }
 
-        /// <summary>This function deletes one AuxiliaryEffectSlot only.</summary>
+        /// <summary>
+        /// This function deletes one AuxiliaryEffectSlot only.
+        /// </summary>
         /// <param name="slots">
-        ///     Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be
-        ///     deleted.
+        /// Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be
+        /// deleted.
         /// </param>
         public void DeleteAuxiliaryEffectSlots(uint[] slots)
         {
@@ -1077,20 +1171,24 @@ namespace OpenTK.OpenAL.Native
             DeleteAuxiliaryEffectSlots(slots.Length, ref slots[0]);
         }
 
-        /// <summary>This function deletes one AuxiliaryEffectSlot only.</summary>
+        /// <summary>
+        /// This function deletes one AuxiliaryEffectSlot only.
+        /// </summary>
         /// <param name="slot">
-        ///     Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be
-        ///     deleted.
+        /// Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be
+        /// deleted.
         /// </param>
         public void DeleteAuxiliaryEffectSlot(int slot)
         {
             DeleteAuxiliaryEffectSlots(1, ref slot);
         }
 
-        /// <summary>This function deletes one AuxiliaryEffectSlot only.</summary>
+        /// <summary>
+        /// This function deletes one AuxiliaryEffectSlot only.
+        /// </summary>
         /// <param name="slot">
-        ///     Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be
-        ///     deleted.
+        /// Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be
+        /// deleted.
         /// </param>
         public void DeleteAuxiliaryEffectSlot(ref uint slot)
         {
@@ -1104,8 +1202,8 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The IsAuxiliaryEffectSlot function is used to determine if an object identifier is a valid Auxiliary Effect
-        ///     Slot object.
+        /// The IsAuxiliaryEffectSlot function is used to determine if an object identifier is a valid Auxiliary Effect
+        /// Slot object.
         /// </summary>
         /// <param name="slot">Effect Slot object identifier to validate.</param>
         /// <returns>True if the identifier is a valid Auxiliary Effect Slot, False otherwise.</returns>
@@ -1115,8 +1213,8 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        ///     The IsAuxiliaryEffectSlot function is used to determine if an object identifier is a valid Auxiliary Effect
-        ///     Slot object.
+        /// The IsAuxiliaryEffectSlot function is used to determine if an object identifier is a valid Auxiliary Effect
+        /// Slot object.
         /// </summary>
         /// <param name="slot">Effect Slot object identifier to validate.</param>
         /// <returns>True if the identifier is a valid Auxiliary Effect Slot, False otherwise.</returns>
@@ -1125,7 +1223,9 @@ namespace OpenTK.OpenAL.Native
             return Imported_alIsAuxiliaryEffectSlot((uint)slot);
         }
 
-        /// <summary>This function is used to set integer properties on Auxiliary Effect Slot objects.</summary>
+        /// <summary>
+        /// This function is used to set integer properties on Auxiliary Effect Slot objects.
+        /// </summary>
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="param">Auxiliary Effect Slot property to set.</param>
         /// <param name="value">Integer value.</param>
@@ -1134,7 +1234,9 @@ namespace OpenTK.OpenAL.Native
             Imported_alAuxiliaryEffectSloti(asid, param, value);
         }
 
-        /// <summary>This function is used to set integer properties on Auxiliary Effect Slot objects.</summary>
+        /// <summary>
+        /// This function is used to set integer properties on Auxiliary Effect Slot objects.
+        /// </summary>
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="param">Auxiliary Effect Slot property to set.</param>
         /// <param name="value">Integer value.</param>
@@ -1143,7 +1245,9 @@ namespace OpenTK.OpenAL.Native
             Imported_alAuxiliaryEffectSloti((uint)asid, param, value);
         }
 
-        /// <summary>This function is used to set floating-point properties on Auxiliary Effect Slot objects.</summary>
+        /// <summary>
+        /// This function is used to set floating-point properties on Auxiliary Effect Slot objects.
+        /// </summary>
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="param">Auxiliary Effect Slot property to set.</param>
         /// <param name="value">Floating-point value.</param>
@@ -1152,7 +1256,9 @@ namespace OpenTK.OpenAL.Native
             Imported_alAuxiliaryEffectSlotf(asid, param, value);
         }
 
-        /// <summary>This function is used to set floating-point properties on Auxiliary Effect Slot objects.</summary>
+        /// <summary>
+        /// This function is used to set floating-point properties on Auxiliary Effect Slot objects.
+        /// </summary>
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="param">Auxiliary Effect Slot property to set.</param>
         /// <param name="value">Floating-point value.</param>
@@ -1161,7 +1267,9 @@ namespace OpenTK.OpenAL.Native
             Imported_alAuxiliaryEffectSlotf((uint)asid, param, value);
         }
 
-        /// <summary>This function is used to retrieve integer properties on Auxiliary Effect Slot objects.</summary>
+        /// <summary>
+        /// This function is used to retrieve integer properties on Auxiliary Effect Slot objects.
+        /// </summary>
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="pname">Auxiliary Effect Slot property to retrieve.</param>
         /// <param name="value">Address where integer value will be stored.</param>
@@ -1176,7 +1284,9 @@ namespace OpenTK.OpenAL.Native
             }
         }
 
-        /// <summary>This function is used to retrieve integer properties on Auxiliary Effect Slot objects.</summary>
+        /// <summary>
+        /// This function is used to retrieve integer properties on Auxiliary Effect Slot objects.
+        /// </summary>
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="pname">Auxiliary Effect Slot property to retrieve.</param>
         /// <param name="value">Address where integer value will be stored.</param>
@@ -1185,7 +1295,9 @@ namespace OpenTK.OpenAL.Native
             GetAuxiliaryEffectSlot((uint)asid, pname, out value);
         }
 
-        /// <summary>This function is used to retrieve floating properties on Auxiliary Effect Slot objects.</summary>
+        /// <summary>
+        /// This function is used to retrieve floating properties on Auxiliary Effect Slot objects.
+        /// </summary>
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="pname">Auxiliary Effect Slot property to retrieve.</param>
         /// <param name="value">Address where floating-point value will be stored.</param>
@@ -1200,7 +1312,9 @@ namespace OpenTK.OpenAL.Native
             }
         }
 
-        /// <summary>This function is used to retrieve floating properties on Auxiliary Effect Slot objects.</summary>
+        /// <summary>
+        /// This function is used to retrieve floating properties on Auxiliary Effect Slot objects.
+        /// </summary>
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="pname">Auxiliary Effect Slot property to retrieve.</param>
         /// <param name="value">Address where floating-point value will be stored.</param>

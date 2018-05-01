@@ -559,7 +559,7 @@ namespace OpenTK.Rewrite
         }
 
         /// <summary>
-        ///     Retrieves a generated variable by searching the given list by the variable's name and associated method body.
+        /// Retrieves a generated variable by searching the given list by the variable's name and associated method body.
         /// </summary>
         /// <param name="variableIdentifiers"></param>
         /// <param name="name"></param>

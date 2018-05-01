@@ -33,15 +33,15 @@ using OpenTK.Platform;
 namespace OpenTK
 {
     /// <summary>
-    ///     OpenGL-aware WinForms control.
-    ///     The WinForms designer will always call the default constructor.
-    ///     Inherit from this class and call one of its specialized constructors
-    ///     to enable antialiasing or custom <see cref="GraphicsMode" />s.
+    /// OpenGL-aware WinForms control.
+    /// The WinForms designer will always call the default constructor.
+    /// Inherit from this class and call one of its specialized constructors
+    /// to enable antialiasing or custom <see cref="GraphicsMode" />s.
     /// </summary>
     public partial class GLControl : UserControl
     {
         /// <summary>
-        ///     Needed to delay the invoke on OS X. Also needed because OpenTK is .NET 2, otherwise I'd use an inline Action.
+        /// Needed to delay the invoke on OS X. Also needed because OpenTK is .NET 2, otherwise I'd use an inline Action.
         /// </summary>
         public delegate void DelayUpdate();
 
@@ -64,7 +64,7 @@ namespace OpenTK
         private bool _resizeEventSuppressed;
 
         /// <summary>
-        ///     Constructs a new instance.
+        /// Constructs a new instance.
         /// </summary>
         public GLControl()
             : this(GraphicsMode.Default)
@@ -72,7 +72,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Constructs a new instance with the specified GraphicsMode.
+        /// Constructs a new instance with the specified GraphicsMode.
         /// </summary>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the control.</param>
         public GLControl(GraphicsMode mode)
@@ -81,7 +81,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Constructs a new instance with the specified GraphicsMode.
+        /// Constructs a new instance with the specified GraphicsMode.
         /// </summary>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the control.</param>
         /// <param name="major">The major version for the OpenGL GraphicsContext.</param>
@@ -127,11 +127,11 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets a value indicating whether [failed to create OpenGL context].
-        ///     So that the application stays running and is able to recover.
+        /// Gets a value indicating whether [failed to create OpenGL context].
+        /// So that the application stays running and is able to recover.
         /// </summary>
         /// <value>
-        ///     <c>true</c> if [failed create context]; otherwise, <c>false</c>.
+        ///  <c>true</c> if [failed create context]; otherwise, <c>false</c>.
         /// </value>
         public bool HasValidContext { get; private set; }
 
@@ -146,7 +146,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets the <c>CreateParams</c> instance for this <c>GLControl</c>
+        /// Gets the <c>CreateParams</c> instance for this <c>GLControl</c>
         /// </summary>
         protected override CreateParams CreateParams
         {
@@ -168,7 +168,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets a value indicating whether the current thread contains pending system messages.
+        /// Gets a value indicating whether the current thread contains pending system messages.
         /// </summary>
         [Browsable(false)]
         public bool IsIdle
@@ -181,12 +181,12 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets the <c>IGraphicsContext</c> instance that is associated with the <c>GLControl</c>.
-        ///     The associated <c>IGraphicsContext</c> is updated whenever the <c>GLControl</c>
-        ///     handle is created or recreated.
-        ///     When using multiple <c>GLControl</c>s, ensure that <c>Context</c>
-        ///     is current before performing any OpenGL operations.
-        ///     <seealso cref="MakeCurrent" />
+        /// Gets the <c>IGraphicsContext</c> instance that is associated with the <c>GLControl</c>.
+        /// The associated <c>IGraphicsContext</c> is updated whenever the <c>GLControl</c>
+        /// handle is created or recreated.
+        /// When using multiple <c>GLControl</c>s, ensure that <c>Context</c>
+        /// is current before performing any OpenGL operations.
+        ///  <seealso cref="MakeCurrent" />
         /// </summary>
         [Browsable(false)]
         public IGraphicsContext Context
@@ -199,7 +199,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets the aspect ratio of this GLControl.
+        /// Gets the aspect ratio of this GLControl.
         /// </summary>
         [Description("The aspect ratio of the client area of this GLControl.")]
         public float AspectRatio
@@ -212,11 +212,11 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether vsync is active for this <c>GLControl</c>.
-        ///     When using multiple <c>GLControl</c>s, ensure that <see cref="Context" />
-        ///     is current before accessing this property.
-        ///     <seealso cref="Context" />
-        ///     <seealso cref="MakeCurrent" />
+        /// Gets or sets a value indicating whether vsync is active for this <c>GLControl</c>.
+        /// When using multiple <c>GLControl</c>s, ensure that <see cref="Context" />
+        /// is current before accessing this property.
+        ///  <seealso cref="Context" />
+        ///  <seealso cref="MakeCurrent" />
         /// </summary>
         [Description("Indicates whether GLControl updates are synced to the monitor's refresh rate.")]
         public bool VSync
@@ -252,9 +252,9 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets the <c>GraphicsMode</c> of the <c>IGraphicsContext</c> associated with
-        ///     this <c>GLControl</c>. If you wish to change <c>GraphicsMode</c>, you must
-        ///     destroy and recreate the <c>GLControl</c>.
+        /// Gets the <c>GraphicsMode</c> of the <c>IGraphicsContext</c> associated with
+        /// this <c>GLControl</c>. If you wish to change <c>GraphicsMode</c>, you must
+        /// destroy and recreate the <c>GLControl</c>.
         /// </summary>
         public GraphicsMode GraphicsMode
         {
@@ -266,7 +266,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets the <see cref="OpenTK.Platform.IWindowInfo" /> for this instance.
+        /// Gets the <see cref="OpenTK.Platform.IWindowInfo" /> for this instance.
         /// </summary>
         public IWindowInfo WindowInfo => _implementation.WindowInfo;
 
@@ -298,7 +298,9 @@ namespace OpenTK
             }
         }
 
-        /// <summary>Raises the HandleCreated event.</summary>
+        /// <summary>
+        /// Raises the HandleCreated event.
+        /// </summary>
         /// <param name="e">Not used.</param>
         protected override void OnHandleCreated(EventArgs e)
         {
@@ -354,7 +356,9 @@ namespace OpenTK
             }
         }
 
-        /// <summary>Raises the HandleDestroyed event.</summary>
+        /// <summary>
+        /// Raises the HandleDestroyed event.
+        /// </summary>
         /// <param name="e">Not used.</param>
         protected override void OnHandleDestroyed(EventArgs e)
         {
@@ -382,7 +386,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Raises the System.Windows.Forms.Control.Paint event.
+        /// Raises the System.Windows.Forms.Control.Paint event.
         /// </summary>
         /// <param name="e">A System.Windows.Forms.PaintEventArgs that contains the event data.</param>
         protected override void OnPaint(PaintEventArgs e)
@@ -398,9 +402,9 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Raises the Resize event.
-        ///     Note: this method may be called before the OpenGL context is ready.
-        ///     Check that IsHandleCreated is true before using any OpenGL methods.
+        /// Raises the Resize event.
+        /// Note: this method may be called before the OpenGL context is ready.
+        /// Check that IsHandleCreated is true before using any OpenGL methods.
         /// </summary>
         /// <param name="e">A System.EventArgs that contains the event data.</param>
         protected override void OnResize(EventArgs e)
@@ -427,7 +431,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Execute the delayed context update
+        /// Execute the delayed context update
         /// </summary>
         public void PerformContextUpdate()
         {
@@ -435,7 +439,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Raises the ParentChanged event.
+        /// Raises the ParentChanged event.
         /// </summary>
         /// <param name="e">A System.EventArgs that contains the event data.</param>
         protected override void OnParentChanged(EventArgs e)
@@ -446,8 +450,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Swaps the front and back buffers, presenting the rendered scene to the screen.
-        ///     This method will have no effect on a single-buffered <c>GraphicsMode</c>.
+        /// Swaps the front and back buffers, presenting the rendered scene to the screen.
+        /// This method will have no effect on a single-buffered <c>GraphicsMode</c>.
         /// </summary>
         public void SwapBuffers()
         {
@@ -456,19 +460,19 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     <para>
-        ///         Makes <see cref="GLControl.Context" /> current in the calling thread.
-        ///         All OpenGL commands issued are hereafter interpreted by this context.
-        ///     </para>
-        ///     <para>
-        ///         When using multiple <c>GLControl</c>s, calling <c>MakeCurrent</c> on
-        ///         one control will make all other controls non-current in the calling thread.
-        ///     </para>
-        ///     <seealso cref="Context" />
-        ///     <para>
-        ///         A <c>GLControl</c> can only be current in one thread at a time.
-        ///         To make a control non-current, call <c>GLControl.Context.MakeCurrent(null)</c>.
-        ///     </para>
+        ///  <para>
+        /// Makes <see cref="GLControl.Context" /> current in the calling thread.
+        /// All OpenGL commands issued are hereafter interpreted by this context.
+        ///  </para>
+        ///  <para>
+        /// When using multiple <c>GLControl</c>s, calling <c>MakeCurrent</c> on
+        /// one control will make all other controls non-current in the calling thread.
+        ///  </para>
+        ///  <seealso cref="Context" />
+        ///  <para>
+        /// A <c>GLControl</c> can only be current in one thread at a time.
+        /// To make a control non-current, call <c>GLControl.Context.MakeCurrent(null)</c>.
+        ///  </para>
         /// </summary>
         public void MakeCurrent()
         {

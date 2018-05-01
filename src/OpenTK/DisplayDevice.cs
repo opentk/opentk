@@ -35,8 +35,8 @@ using System.Drawing;
 namespace OpenTK
 {
     /// <summary>
-    ///     Defines a display device on the underlying system, and provides
-    ///     methods to query and change its display parameters.
+    /// Defines a display device on the underlying system, and provides
+    /// methods to query and change its display parameters.
     /// </summary>
     public class DisplayDevice
     {
@@ -81,7 +81,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets the bounds of this instance in pixel coordinates..
+        /// Gets the bounds of this instance in pixel coordinates..
         /// </summary>
         public Rectangle Bounds
         {
@@ -94,15 +94,19 @@ namespace OpenTK
             }
         }
 
-        /// <summary>Gets a System.Int32 that contains the width of this display in pixels.</summary>
+        /// <summary>
+        /// Gets a System.Int32 that contains the width of this display in pixels.
+        /// </summary>
         public int Width => current_resolution.Width;
 
-        /// <summary>Gets a System.Int32 that contains the height of this display in pixels.</summary>
+        /// <summary>
+        /// Gets a System.Int32 that contains the height of this display in pixels.
+        /// </summary>
         public int Height => current_resolution.Height;
 
         /// <summary>
-        ///     Gets a System.Int32 that contains number of bits per pixel of this display. Typical values include 8, 16, 24
-        ///     and 32.
+        /// Gets a System.Int32 that contains number of bits per pixel of this display. Typical values include 8, 16, 24
+        /// and 32.
         /// </summary>
         public int BitsPerPixel
         {
@@ -111,7 +115,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets a System.Single representing the vertical refresh rate of this display.
+        /// Gets a System.Single representing the vertical refresh rate of this display.
         /// </summary>
         public float RefreshRate
         {
@@ -120,8 +124,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets a System.Boolean that indicates whether this Display is the primary Display in systems with multiple
-        ///     Displays.
+        /// Gets a System.Boolean that indicates whether this Display is the primary Display in systems with multiple
+        /// Displays.
         /// </summary>
         public bool IsPrimary
         {
@@ -145,7 +149,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets the list of <see cref="DisplayResolution" /> objects available on this device.
+        /// Gets the list of <see cref="DisplayResolution" /> objects available on this device.
         /// </summary>
         public IList<DisplayResolution> AvailableResolutions
         {
@@ -157,16 +161,18 @@ namespace OpenTK
             }
         }
 
-        /// <summary>Gets the default (primary) display of this system.</summary>
+        /// <summary>
+        /// Gets the default (primary) display of this system.
+        /// </summary>
         public static DisplayDevice Default => implementation.GetDisplay(DisplayIndex.Primary);
 
         /// <summary>
-        ///     Gets the original resolution of this instance.
+        /// Gets the original resolution of this instance.
         /// </summary>
         internal DisplayResolution OriginalResolution { get; set; }
 
         /// <summary>
-        ///     Selects an available resolution that matches the specified parameters.
+        /// Selects an available resolution that matches the specified parameters.
         /// </summary>
         /// <param name="width">The width of the requested resolution in pixels.</param>
         /// <param name="height">The height of the requested resolution in pixels.</param>
@@ -174,16 +180,16 @@ namespace OpenTK
         /// <param name="refreshRate">The refresh rate of the requested resolution in hertz.</param>
         /// <returns>The requested DisplayResolution or null if the parameters cannot be met.</returns>
         /// <remarks>
-        ///     <para>
-        ///         If a matching resolution is not found, this function will retry ignoring the specified refresh rate,
-        ///         bits per pixel and resolution, in this order. If a matching resolution still doesn't exist, this function will
-        ///         return the current resolution.
-        ///     </para>
-        ///     <para>
-        ///         A parameter set to 0 or negative numbers will not be used in the search (e.g. if refreshRate is 0,
-        ///         any refresh rate will be considered valid).
-        ///     </para>
-        ///     <para>This function allocates memory.</para>
+        ///  <para>
+        /// If a matching resolution is not found, this function will retry ignoring the specified refresh rate,
+        /// bits per pixel and resolution, in this order. If a matching resolution still doesn't exist, this function will
+        /// return the current resolution.
+        ///  </para>
+        ///  <para>
+        /// A parameter set to 0 or negative numbers will not be used in the search (e.g. if refreshRate is 0,
+        /// any refresh rate will be considered valid).
+        ///  </para>
+        ///  <para>This function allocates memory.</para>
         /// </remarks>
         public DisplayResolution SelectResolution(int width, int height, int bitsPerPixel, float refreshRate)
         {
@@ -206,7 +212,9 @@ namespace OpenTK
             return resolution;
         }
 
-        /// <summary>Changes the resolution of the DisplayDevice.</summary>
+        /// <summary>
+        /// Changes the resolution of the DisplayDevice.
+        /// </summary>
         /// <param name="resolution">The resolution to set. <see cref="DisplayDevice.SelectResolution" /></param>
         /// <exception cref="Graphics.GraphicsModeException">Thrown if the requested resolution could not be set.</exception>
         /// <remarks>If the specified resolution is null, this function will restore the original DisplayResolution.</remarks>
@@ -241,7 +249,9 @@ namespace OpenTK
             //effect.FadeIn();
         }
 
-        /// <summary>Changes the resolution of the DisplayDevice.</summary>
+        /// <summary>
+        /// Changes the resolution of the DisplayDevice.
+        /// </summary>
         /// <param name="width">The new width of the DisplayDevice.</param>
         /// <param name="height">The new height of the DisplayDevice.</param>
         /// <param name="bitsPerPixel">The new bits per pixel of the DisplayDevice.</param>
@@ -252,7 +262,9 @@ namespace OpenTK
             ChangeResolution(SelectResolution(width, height, bitsPerPixel, refreshRate));
         }
 
-        /// <summary>Restores the original resolution of the DisplayDevice.</summary>
+        /// <summary>
+        /// Restores the original resolution of the DisplayDevice.
+        /// </summary>
         /// <exception cref="Graphics.GraphicsModeException">Thrown if the original resolution could not be restored.</exception>
         public void RestoreResolution()
         {
@@ -275,7 +287,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Gets the <see cref="DisplayDevice" /> for the specified <see cref="DisplayIndex" />.
+        /// Gets the <see cref="DisplayDevice" /> for the specified <see cref="DisplayIndex" />.
         /// </summary>
         /// <param name="index">The <see cref="DisplayIndex" /> that defines the desired display.</param>
         /// <returns>A <see cref="DisplayDevice" /> or null, if no device corresponds to the specified index.</returns>
@@ -314,7 +326,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        ///     Returns a System.String representing this DisplayDevice.
+        /// Returns a System.String representing this DisplayDevice.
         /// </summary>
         /// <returns>A System.String representing this DisplayDevice.</returns>
         public override string ToString()
@@ -322,139 +334,5 @@ namespace OpenTK
             return
                 $"{(IsPrimary ? "Primary" : "Secondary")}: {Bounds.ToString()} ({available_resolutions.Count} modes available)";
         }
-
-        ///// <summary>Determines whether the specified DisplayDevices are equal.</summary>
-        ///// <param name="obj">The System.Object to check against.</param>
-        ///// <returns>True if the System.Object is an equal DisplayDevice; false otherwise.</returns>
-        //public override bool Equals(object obj)
-        //{
-        //    if (obj is DisplayDevice)
-        //    {
-        //        DisplayDevice dev = (DisplayDevice)obj;
-        //        return
-        //            IsPrimary == dev.IsPrimary &&
-        //            current_resolution == dev.current_resolution &&
-        //            available_resolutions.Count == dev.available_resolutions.Count;
-        //    }
-
-        //    return false;
-        //}
-
-        ///// <summary>Returns a unique hash representing this DisplayDevice.</summary>
-        ///// <returns>A System.Int32 that may serve as a hash code for this DisplayDevice.</returns>
-        ////public override int GetHashCode()
-        //{
-        //    return current_resolution.GetHashCode() ^ IsPrimary.GetHashCode() ^ available_resolutions.Count;
-        //}
     }
-#if false
-    class FadeEffect : IDisposable
-    {
-        List<Form> forms = new List<Form>();
-        double opacity_step = 0.04;
-        int sleep_step;
-
-        internal FadeEffect()
-        {
-            foreach (Screen s in Screen.AllScreens)
-            {
-                Form form = new Form();
-                form.ShowInTaskbar = false;
-                form.StartPosition = FormStartPosition.Manual;
-                form.WindowState = FormWindowState.Maximized;
-                form.FormBorderStyle = FormBorderStyle.None;
-                form.TopMost = true;
-
-                form.BackColor = System.Drawing.Color.Black;
-                forms.Add(form);
-            }
-
-            sleep_step = 10 / forms.Count;
-            MoveToStartPositions();
-        }
-
-        void MoveToStartPositions()
-        {
-            int count = 0;
-            foreach (Screen s in Screen.AllScreens)
-            {
-            //    forms[count++].Location = new System.Drawing.Point(s.Bounds.X, s.Bounds.Y);
-                //forms[count].Size = new System.Drawing.Size(4096, 4096);
-                count++;
-            }
-        }
-
-        bool FadedOut
-        {
-            get
-            {
-                bool ready = true;
-                foreach (Form form in forms)
-                    ready = ready && form.Opacity >= 1.0;
-
-                return ready;
-            }
-        }
-
-        bool FadedIn
-        {
-            get
-            {
-                bool ready = true;
-                foreach (Form form in forms)
-                    ready = ready && form.Opacity <= 0.0;
-
-                return ready;
-            }
-        }
-
-        internal void FadeOut()
-        {
-            MoveToStartPositions();
-
-            foreach (Form form in forms)
-            {
-                form.Opacity = 0.0;
-                form.Visible = true;
-            }
-
-            while (!FadedOut)
-            {
-                foreach (Form form in forms)
-                {
-                    form.Opacity += opacity_step;
-                    form.Refresh();
-                }
-                Thread.Sleep(sleep_step);
-            }
-        }
-
-        internal void FadeIn()
-        {
-            MoveToStartPositions();
-
-            foreach (Form form in forms)
-                form.Opacity = 1.0;
-
-            while (!FadedIn)
-            {
-                foreach (Form form in forms)
-                {
-                    form.Opacity -= opacity_step;
-                    form.Refresh();
-                }
-                Thread.Sleep(sleep_step);
-            }
-
-            foreach (Form form in forms)
-                form.Visible = false;
-        }
-
-        public void Dispose()
-        {
-            foreach (Form form in forms)
-                form.Dispose();
-        }
-    }
-#endif
 }

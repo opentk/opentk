@@ -75,7 +75,7 @@ namespace OpenTK.Graphics.ES30
         {
             if (Context.ErrorChecking)
             {
-                while ((ErrorCode)GL.GetError() != ErrorCode.NoError)
+                while (GL.GetError() != ErrorCode.NoError)
                 {
                 }
             }
@@ -87,19 +87,19 @@ namespace OpenTK.Graphics.ES30
         {
             if (Context.ErrorChecking)
             {
-                List<ErrorCode> error_list = ContextErrors[Context];
+                var error_list = ContextErrors[Context];
                 error_list.Clear();
                 ErrorCode error;
                 do
                 {
-                    error = (ErrorCode)GL.GetError();
+                    error = GL.GetError();
                     error_list.Add(error);
                 } while (error != ErrorCode.NoError);
 
                 if (error_list.Count != 1)
                 {
                     var sb = new StringBuilder();
-                    foreach (ErrorCode e in error_list)
+                    foreach (var e in error_list)
                     {
                         if (e != ErrorCode.NoError)
                         {

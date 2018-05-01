@@ -40,7 +40,9 @@ namespace OpenTK.Compute
         /// </summary>
         public IntPtr Value { get { return handle; } }
 
-        /// <summary>A read-only field that represents a handle that has been initialized to zero.</summary>
+        /// <summary>
+ /// A read-only field that represents a handle that has been initialized to zero.
+/// </summary>
         public static readonly Handle<T> Zero = new Handle<T>(IntPtr.Zero);
 
         /// <summary>

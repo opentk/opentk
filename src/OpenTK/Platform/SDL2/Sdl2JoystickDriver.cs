@@ -343,6 +343,7 @@ namespace OpenTK.Platform.SDL2
                             sdl_instanceid_to_joysticks.Add(instance_id, device_id);
                         }
                     }
+
                     break;
                 }
                 case EventType.JOYDEVICEREMOVED:

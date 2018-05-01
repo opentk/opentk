@@ -30,21 +30,23 @@ using System.Runtime.InteropServices;
 namespace OpenTK.Platform.Windows
 {
     /// \internal
-    /// <summary>Describes a win32 window.</summary>
+    /// <summary>
+    /// Describes a win32 window.
+    /// </summary>
     internal sealed class WinWindowInfo : IWindowInfo
     {
-        private bool disposed;
         private IntPtr dc;
+        private bool disposed;
 
         /// <summary>
-        ///     Constructs a new instance.
+        /// Constructs a new instance.
         /// </summary>
         public WinWindowInfo()
         {
         }
 
         /// <summary>
-        ///     Constructs a new instance with the specified window handle and paren.t
+        /// Constructs a new instance with the specified window handle and paren.t
         /// </summary>
         /// <param name="handle">The window handle for this instance.</param>
         /// <param name="parent">The parent window of this instance (may be null).</param>
@@ -55,12 +57,12 @@ namespace OpenTK.Platform.Windows
         }
 
         /// <summary>
-        ///     Gets or sets the Parent of the window (may be null).
+        /// Gets or sets the Parent of the window (may be null).
         /// </summary>
         public WinWindowInfo Parent { get; set; }
 
         /// <summary>
-        ///     Gets the device context for this window instance.
+        /// Gets the device context for this window instance.
         /// </summary>
         public IntPtr DeviceContext
         {
@@ -85,25 +87,31 @@ namespace OpenTK.Platform.Windows
         }
 
         /// <summary>
-        ///     Gets or sets the handle of the window.
+        /// Gets or sets the handle of the window.
         /// </summary>
         public IntPtr Handle { get; set; }
 
-        /// <summary>Releases the unmanaged resources consumed by this instance.</summary>
+        /// <summary>
+        /// Releases the unmanaged resources consumed by this instance.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>Returns a System.String that represents the current window.</summary>
+        /// <summary>
+        /// Returns a System.String that represents the current window.
+        /// </summary>
         /// <returns>A System.String that represents the current window.</returns>
         public override string ToString()
         {
             return $"Windows.WindowInfo: Handle {Handle}, Parent ({(Parent != null ? Parent.ToString() : "null")})";
         }
 
-        /// <summary>Checks if <c>this</c> and <c>obj</c> reference the same win32 window.</summary>
+        /// <summary>
+        /// Checks if <c>this</c> and <c>obj</c> reference the same win32 window.
+        /// </summary>
         /// <param name="obj">The object to check against.</param>
         /// <returns>True if <c>this</c> and <c>obj</c> reference the same win32 window; false otherwise.</returns>
         public override bool Equals(object obj)
@@ -129,7 +137,9 @@ namespace OpenTK.Platform.Windows
             return Handle.Equals(info.Handle);
         }
 
-        /// <summary>Returns the hash code for this instance.</summary>
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
         /// <returns>A hash code for the current <c>WinWindowInfo</c>.</returns>
         public override int GetHashCode()
         {

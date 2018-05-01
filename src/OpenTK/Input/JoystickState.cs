@@ -32,7 +32,7 @@ using System.Text;
 namespace OpenTK.Input
 {
     /// <summary>
-    ///     Describes the current state of a <see cref="JoystickDevice" />.
+    /// Describes the current state of a <see cref="JoystickDevice" />.
     /// </summary>
     public struct JoystickState : IEquatable<JoystickState>
     {
@@ -52,12 +52,12 @@ namespace OpenTK.Input
         private JoystickHatState hat3;
 
         /// <summary>
-        ///     Gets a value between -1.0 and 1.0 representing the current offset of the specified axis.
+        /// Gets a value between -1.0 and 1.0 representing the current offset of the specified axis.
         /// </summary>
         /// <returns>
-        ///     A value between -1.0 and 1.0 representing offset of the specified axis.
-        ///     If the specified axis does not exist, then the return value is 0.0. Use <see cref="Joystick.GetCapabilities" />
-        ///     to query the number of available axes.
+        /// A value between -1.0 and 1.0 representing offset of the specified axis.
+        /// If the specified axis does not exist, then the return value is 0.0. Use <see cref="Joystick.GetCapabilities" />
+        /// to query the number of available axes.
         /// </returns>
         /// <param name="axis">The axis to query.</param>
         public float GetAxis(int axis)
@@ -66,11 +66,11 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets the current <see cref="ButtonState" /> of the specified button.
+        /// Gets the current <see cref="ButtonState" /> of the specified button.
         /// </summary>
         /// <returns>
-        ///     <see cref="ButtonState.Pressed" /> if the specified button is pressed; otherwise,
-        ///     <see cref="ButtonState.Released" />.
+        ///  <see cref="ButtonState.Pressed" /> if the specified button is pressed; otherwise,
+        ///  <see cref="ButtonState.Released" />.
         /// </returns>
         /// <param name="button">The button to query.</param>
         public ButtonState GetButton(int button)
@@ -79,7 +79,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets the hat.
+        /// Gets the hat.
         /// </summary>
         /// <returns>The hat.</returns>
         /// <param name="hat">Hat.</param>
@@ -101,7 +101,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a value indicating whether the specified button is currently pressed.
+        /// Gets a value indicating whether the specified button is currently pressed.
         /// </summary>
         /// <returns>true if the specified button is pressed; otherwise, false.</returns>
         /// <param name="button">The button to query.</param>
@@ -111,7 +111,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a value indicating whether the specified button is currently released.
+        /// Gets a value indicating whether the specified button is currently released.
         /// </summary>
         /// <returns>true if the specified button is released; otherwise, false.</returns>
         /// <param name="button">The button to query.</param>
@@ -121,19 +121,19 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets a value indicating whether any button is down.
+        /// Gets a value indicating whether any button is down.
         /// </summary>
         /// <value><c>true</c> if any button is down; otherwise, <c>false</c>.</value>
         public bool IsAnyButtonDown => buttons != 0;
 
         /// <summary>
-        ///     Gets a value indicating whether this instance is connected.
+        /// Gets a value indicating whether this instance is connected.
         /// </summary>
         /// <value><c>true</c> if this instance is connected; otherwise, <c>false</c>.</value>
         public bool IsConnected { get; private set; }
 
         /// <summary>
-        ///     Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.JoystickState" />.
+        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.JoystickState" />.
         /// </summary>
         /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.JoystickState" />.</returns>
         public override string ToString()
@@ -150,11 +150,11 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Serves as a hash function for a <see cref="OpenTK.Input.JoystickState" /> object.
+        /// Serves as a hash function for a <see cref="OpenTK.Input.JoystickState" /> object.
         /// </summary>
         /// <returns>
-        ///     A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
-        ///     hash table.
+        /// A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
+        /// hash table.
         /// </returns>
         public override int GetHashCode()
         {
@@ -168,16 +168,16 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Determines whether the specified <see cref="System.Object" /> is equal to the current
-        ///     <see cref="OpenTK.Input.JoystickState" />.
+        /// Determines whether the specified <see cref="System.Object" /> is equal to the current
+        ///  <see cref="OpenTK.Input.JoystickState" />.
         /// </summary>
         /// <param name="obj">
-        ///     The <see cref="System.Object" /> to compare with the current
-        ///     <see cref="OpenTK.Input.JoystickState" />.
+        /// The <see cref="System.Object" /> to compare with the current
+        ///  <see cref="OpenTK.Input.JoystickState" />.
         /// </param>
         /// <returns>
-        ///     <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
-        ///     <see cref="OpenTK.Input.JoystickState" />; otherwise, <c>false</c>.
+        ///  <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
+        ///  <see cref="OpenTK.Input.JoystickState" />; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -285,16 +285,16 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Determines whether the specified <see cref="OpenTK.Input.JoystickState" /> is equal to the current
-        ///     <see cref="OpenTK.Input.JoystickState" />.
+        /// Determines whether the specified <see cref="OpenTK.Input.JoystickState" /> is equal to the current
+        ///  <see cref="OpenTK.Input.JoystickState" />.
         /// </summary>
         /// <param name="other">
-        ///     The <see cref="OpenTK.Input.JoystickState" /> to compare with the current
-        ///     <see cref="OpenTK.Input.JoystickState" />.
+        /// The <see cref="OpenTK.Input.JoystickState" /> to compare with the current
+        ///  <see cref="OpenTK.Input.JoystickState" />.
         /// </param>
         /// <returns>
-        ///     <c>true</c> if the specified <see cref="OpenTK.Input.JoystickState" /> is equal to the current
-        ///     <see cref="OpenTK.Input.JoystickState" />; otherwise, <c>false</c>.
+        ///  <c>true</c> if the specified <see cref="OpenTK.Input.JoystickState" /> is equal to the current
+        ///  <see cref="OpenTK.Input.JoystickState" />; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(JoystickState other)
         {

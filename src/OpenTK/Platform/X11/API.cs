@@ -47,18 +47,18 @@ namespace OpenTK.Platform.X11
     using SizeID = UInt16;
 
     /// <summary>
-    ///     X11 has some defined values they are defined with c's #define in X.h
+    /// X11 has some defined values they are defined with c's #define in X.h
     /// </summary>
     internal static class Consts
     {
         /// <summary>
-        ///     Universal null resource or null atom. From header: #define None 0L
+        /// Universal null resource or null atom. From header: #define None 0L
         /// </summary>
         public static readonly IntPtr None = IntPtr.Zero;
 
         //
         /// <summary>
-        ///     Special time value. From header: #define CurrentTime 0L
+        /// Special time value. From header: #define CurrentTime 0L
         /// </summary>
         public static readonly IntPtr CurrentTime = IntPtr.Zero; //
     }
@@ -152,7 +152,7 @@ namespace OpenTK.Platform.X11
         public static extern IntPtr DefaultVisual(Display display, int screen_number);
 
         /// <summary>
-        ///     Frees the memory used by an X structure. Only use on unmanaged structures!
+        /// Frees the memory used by an X structure. Only use on unmanaged structures!
         /// </summary>
         /// <param name="buffer">A pointer to the structure that will be freed.</param>
         [DllImport(_dll_name, EntryPoint = "XFree")]
@@ -192,53 +192,53 @@ namespace OpenTK.Platform.X11
             [MarshalAs(UnmanagedType.SysInt)] EventMask event_mask, ref XEvent event_send);
 
         /// <summary>
-        ///     The XSelectInput() function requests that the X server report the events associated
-        ///     with the specified event mask.
+        /// The XSelectInput() function requests that the X server report the events associated
+        /// with the specified event mask.
         /// </summary>
         /// <param name="display">Specifies the connection to the X server.</param>
         /// <param name="w">Specifies the window whose events you are interested in.</param>
         /// <param name="event_mask">Specifies the event mask.</param>
         /// <remarks>
-        ///     Initially, X will not report any of these events.
-        ///     Events are reported relative to a window.
-        ///     If a window is not interested in a device event,
-        ///     it usually propagates to the closest ancestor that is interested,
-        ///     unless the do_not_propagate mask prohibits it.
-        ///     Setting the event-mask attribute of a window overrides any previous call for the same window but not for other
-        ///     clients. Multiple clients can select for the same events on the same window with the following restrictions:
-        ///     <para>
-        ///         Multiple clients can select events on the same window because their event masks are disjoint. When the X
-        ///         server generates an event, it reports it to all interested clients.
-        ///     </para>
-        ///     <para>
-        ///         Only one client at a time can select CirculateRequest, ConfigureRequest, or MapRequest events, which are
-        ///         associated with the event mask SubstructureRedirectMask.
-        ///     </para>
-        ///     <para>
-        ///         Only one client at a time can select a ResizeRequest event, which is associated with the event mask
-        ///         ResizeRedirectMask.
-        ///     </para>
-        ///     <para>
-        ///         Only one client at a time can select a ButtonPress event, which is associated with the event mask
-        ///         ButtonPressMask.
-        ///     </para>
-        ///     <para>The server reports the event to all interested clients. </para>
-        ///     <para>XSelectInput() can generate a BadWindow error.</para>
+        /// Initially, X will not report any of these events.
+        /// Events are reported relative to a window.
+        /// If a window is not interested in a device event,
+        /// it usually propagates to the closest ancestor that is interested,
+        /// unless the do_not_propagate mask prohibits it.
+        /// Setting the event-mask attribute of a window overrides any previous call for the same window but not for other
+        /// clients. Multiple clients can select for the same events on the same window with the following restrictions:
+        ///  <para>
+        /// Multiple clients can select events on the same window because their event masks are disjoint. When the X
+        /// server generates an event, it reports it to all interested clients.
+        ///  </para>
+        ///  <para>
+        /// Only one client at a time can select CirculateRequest, ConfigureRequest, or MapRequest events, which are
+        /// associated with the event mask SubstructureRedirectMask.
+        ///  </para>
+        ///  <para>
+        /// Only one client at a time can select a ResizeRequest event, which is associated with the event mask
+        /// ResizeRedirectMask.
+        ///  </para>
+        ///  <para>
+        /// Only one client at a time can select a ButtonPress event, which is associated with the event mask
+        /// ButtonPressMask.
+        ///  </para>
+        ///  <para>The server reports the event to all interested clients. </para>
+        ///  <para>XSelectInput() can generate a BadWindow error.</para>
         /// </remarks>
         [DllImport(_dll_name, EntryPoint = "XSelectInput")]
         public static extern void SelectInput(Display display, Window w, EventMask event_mask);
 
         /// <summary>
-        ///     When the predicate procedure finds a match, XCheckIfEvent() copies the matched event into the client-supplied
-        ///     XEvent structure and returns True. (This event is removed from the queue.) If the predicate procedure finds no
-        ///     match, XCheckIfEvent() returns False, and the output buffer will have been flushed. All earlier events stored in
-        ///     the queue are not discarded.
+        /// When the predicate procedure finds a match, XCheckIfEvent() copies the matched event into the client-supplied
+        /// XEvent structure and returns True. (This event is removed from the queue.) If the predicate procedure finds no
+        /// match, XCheckIfEvent() returns False, and the output buffer will have been flushed. All earlier events stored in
+        /// the queue are not discarded.
         /// </summary>
         /// <param name="display">Specifies the connection to the X server.</param>
         /// <param name="event_return">Returns a copy of the matched event's associated structure.</param>
         /// <param name="predicate">
-        ///     Specifies the procedure that is to be called to determine if the next event in the queue
-        ///     matches what you want
+        /// Specifies the procedure that is to be called to determine if the next event in the queue
+        /// matches what you want
         /// </param>
         /// <param name="arg">Specifies the user-supplied argument that will be passed to the predicate procedure.</param>
         /// <returns>true if the predicate returns true for some event, false otherwise</returns>
@@ -272,8 +272,8 @@ namespace OpenTK.Platform.X11
         public static extern void UngrabKeyboard(Display display, int time);
 
         /// <summary>
-        ///     The XGetKeyboardMapping() function returns the symbols for the specified number of KeyCodes starting with
-        ///     first_keycode.
+        /// The XGetKeyboardMapping() function returns the symbols for the specified number of KeyCodes starting with
+        /// first_keycode.
         /// </summary>
         /// <param name="display">Specifies the connection to the X server.</param>
         /// <param name="first_keycode">Specifies the first KeyCode that is to be returned.</param>
@@ -281,42 +281,42 @@ namespace OpenTK.Platform.X11
         /// <param name="keysyms_per_keycode_return">Returns the number of KeySyms per KeyCode.</param>
         /// <returns></returns>
         /// <remarks>
-        ///     <para>
-        ///         The value specified in first_keycode must be greater than or equal to min_keycode as returned by
-        ///         XDisplayKeycodes(), or a BadValue error results. In addition, the following expression must be less than or
-        ///         equal to max_keycode as returned by XDisplayKeycodes():
-        ///     </para>
-        ///     <para>first_keycode + keycode_count - 1 </para>
-        ///     <para>If this is not the case, a BadValue error results. The number of elements in the KeySyms list is: </para>
-        ///     <para>keycode_count * keysyms_per_keycode_return </para>
-        ///     <para>KeySym number N, counting from zero, for KeyCode K has the following index in the list, counting from zero: </para>
-        ///     <para> (K - first_code) * keysyms_per_code_return + N </para>
-        ///     <para>
-        ///         The X server arbitrarily chooses the keysyms_per_keycode_return value to be large enough to report all
-        ///         requested symbols. A special KeySym value of NoSymbol is used to fill in unused elements for individual
-        ///         KeyCodes. To free the storage returned by XGetKeyboardMapping(), use XFree().
-        ///     </para>
-        ///     <para>XGetKeyboardMapping() can generate a BadValue error.</para>
-        ///     <para>Diagnostics:</para>
-        ///     <para>
-        ///         BadValue:    Some numeric value falls outside the range of values accepted by the request. Unless a specific
-        ///         range is specified for an argument, the full range defined by the argument's type is accepted. Any argument
-        ///         defined as a set of alternatives can generate this error.
-        ///     </para>
+        ///  <para>
+        /// The value specified in first_keycode must be greater than or equal to min_keycode as returned by
+        /// XDisplayKeycodes(), or a BadValue error results. In addition, the following expression must be less than or
+        /// equal to max_keycode as returned by XDisplayKeycodes():
+        ///  </para>
+        ///  <para>first_keycode + keycode_count - 1 </para>
+        ///  <para>If this is not the case, a BadValue error results. The number of elements in the KeySyms list is: </para>
+        ///  <para>keycode_count * keysyms_per_keycode_return </para>
+        ///  <para>KeySym number N, counting from zero, for KeyCode K has the following index in the list, counting from zero: </para>
+        ///  <para> (K - first_code) * keysyms_per_code_return + N </para>
+        ///  <para>
+        /// The X server arbitrarily chooses the keysyms_per_keycode_return value to be large enough to report all
+        /// requested symbols. A special KeySym value of NoSymbol is used to fill in unused elements for individual
+        /// KeyCodes. To free the storage returned by XGetKeyboardMapping(), use XFree().
+        ///  </para>
+        ///  <para>XGetKeyboardMapping() can generate a BadValue error.</para>
+        ///  <para>Diagnostics:</para>
+        ///  <para>
+        /// BadValue:    Some numeric value falls outside the range of values accepted by the request. Unless a specific
+        /// range is specified for an argument, the full range defined by the argument's type is accepted. Any argument
+        /// defined as a set of alternatives can generate this error.
+        ///  </para>
         /// </remarks>
         [DllImport(_dll_name, EntryPoint = "XGetKeyboardMapping")]
         public static extern KeySym GetKeyboardMapping(Display display, byte first_keycode, int keycode_count,
             ref int keysyms_per_keycode_return);
 
         /// <summary>
-        ///     The XDisplayKeycodes() function returns the min-keycodes and max-keycodes supported by the specified display.
+        /// The XDisplayKeycodes() function returns the min-keycodes and max-keycodes supported by the specified display.
         /// </summary>
         /// <param name="display">Specifies the connection to the X server.</param>
         /// <param name="min_keycodes_return">Returns the minimum number of KeyCodes</param>
         /// <param name="max_keycodes_return">Returns the maximum number of KeyCodes.</param>
         /// <remarks>
-        ///     The minimum number of KeyCodes returned is never less than 8, and the maximum number of KeyCodes returned is
-        ///     never greater than 255. Not all KeyCodes in this range are required to have corresponding keys.
+        /// The minimum number of KeyCodes returned is never less than 8, and the maximum number of KeyCodes returned is
+        /// never greater than 255. Not all KeyCodes in this range are required to have corresponding keys.
         /// </remarks>
         [DllImport(_dll_name, EntryPoint = "XDisplayKeycodes")]
         public static extern void DisplayKeycodes(Display display, ref int min_keycodes_return,
@@ -467,33 +467,33 @@ XF86VidModeGetGammaRampSize(
         }
 
         /// <summary>
-        ///     Specifies an XF86 display mode.
+        /// Specifies an XF86 display mode.
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         internal struct XF86VidModeModeInfo
         {
             /// <summary>
-            ///     Pixel clock.
+            /// Pixel clock.
             /// </summary>
             public int dotclock;
 
             /// <summary>
-            ///     Number of display pixels horizontally
+            /// Number of display pixels horizontally
             /// </summary>
             public short hdisplay;
 
             /// <summary>
-            ///     Horizontal sync start
+            /// Horizontal sync start
             /// </summary>
             public short hsyncstart;
 
             /// <summary>
-            ///     Horizontal sync end
+            /// Horizontal sync end
             /// </summary>
             public short hsyncend;
 
             /// <summary>
-            ///     Total horizontal pixel
+            /// Total horizontal pixel
             /// </summary>
             public short htotal;
 
@@ -502,22 +502,22 @@ XF86VidModeGetGammaRampSize(
             public short hskew;
 
             /// <summary>
-            ///     Number of display pixels vertically
+            /// Number of display pixels vertically
             /// </summary>
             public short vdisplay;
 
             /// <summary>
-            ///     Vertical sync start
+            /// Vertical sync start
             /// </summary>
             public short vsyncstart;
 
             /// <summary>
-            ///     Vertical sync end
+            /// Vertical sync end
             /// </summary>
             public short vsyncend;
 
             /// <summary>
-            ///     Total vertical pixels
+            /// Total vertical pixels
             /// </summary>
             public short vtotal;
 
@@ -526,7 +526,7 @@ XF86VidModeGetGammaRampSize(
             public short vskew;
 
             /// <summary>
-            ///     Mode flags
+            /// Mode flags
             /// </summary>
             public int flags;
 
@@ -883,7 +883,7 @@ XF86VidModeGetGammaRampSize(
     }
 
     /// <summary>
-    ///     Defines LATIN-1 and miscellaneous keys.
+    /// Defines LATIN-1 and miscellaneous keys.
     /// </summary>
     internal enum XKey
     {
@@ -1336,77 +1336,77 @@ XF86VidModeGetGammaRampSize(
         private const string XrandrLibrary = "libXrandr.so.2";
 
         /// <summary>
-        ///     The XCreateWindow function creates an unmapped subwindow for a specified parent window, returns the window ID of
-        ///     the created window, and causes the X server to generate a CreateNotify event. The created window is placed on top
-        ///     in the stacking order with respect to siblings.
+        /// The XCreateWindow function creates an unmapped subwindow for a specified parent window, returns the window ID of
+        /// the created window, and causes the X server to generate a CreateNotify event. The created window is placed on top
+        /// in the stacking order with respect to siblings.
         /// </summary>
         /// <param name="display">Specifies the connection to the X server.</param>
         /// <param name="parent">Specifies the parent window.</param>
         /// <param name="x">
-        ///     Specify the x coordinates, which are the top-left outside corner of the window's borders and are
-        ///     relative to the inside of the parent window's borders.
+        /// Specify the x coordinates, which are the top-left outside corner of the window's borders and are
+        /// relative to the inside of the parent window's borders.
         /// </param>
         /// <param name="y">
-        ///     Specify the y coordinates, which are the top-left outside corner of the window's borders and are
-        ///     relative to the inside of the parent window's borders.
+        /// Specify the y coordinates, which are the top-left outside corner of the window's borders and are
+        /// relative to the inside of the parent window's borders.
         /// </param>
         /// <param name="width">
-        ///     Specify the width, which is the created window's inside dimensions and do not include the created
-        ///     window's borders.
+        /// Specify the width, which is the created window's inside dimensions and do not include the created
+        /// window's borders.
         /// </param>
         /// <param name="height">
-        ///     Specify the height, which is the created window's inside dimensions and do not include the created
-        ///     window's borders.
+        /// Specify the height, which is the created window's inside dimensions and do not include the created
+        /// window's borders.
         /// </param>
         /// <param name="border_width">Specifies the width of the created window's border in pixels.</param>
         /// <param name="depth">Specifies the window's depth. A depth of CopyFromParent means the depth is taken from the parent.</param>
         /// <param name="class">
-        ///     Specifies the created window's class. You can pass InputOutput, InputOnly, or CopyFromParent. A
-        ///     class of CopyFromParent means the class is taken from the parent.
+        /// Specifies the created window's class. You can pass InputOutput, InputOnly, or CopyFromParent. A
+        /// class of CopyFromParent means the class is taken from the parent.
         /// </param>
         /// <param name="visual">
-        ///     Specifies the visual type. A visual of CopyFromParent means the visual type is taken from the
-        ///     parent.
+        /// Specifies the visual type. A visual of CopyFromParent means the visual type is taken from the
+        /// parent.
         /// </param>
         /// <param name="valuemask">
-        ///     Specifies which window attributes are defined in the attributes argument. This mask is the
-        ///     bitwise inclusive OR of the valid attribute mask bits. If valuemask is zero, the attributes are ignored and are not
-        ///     referenced.
+        /// Specifies which window attributes are defined in the attributes argument. This mask is the
+        /// bitwise inclusive OR of the valid attribute mask bits. If valuemask is zero, the attributes are ignored and are not
+        /// referenced.
         /// </param>
         /// <param name="attributes">
-        ///     Specifies the structure from which the values (as specified by the value mask) are to be
-        ///     taken. The value mask should have the appropriate bits set to indicate which attributes have been set in the
-        ///     structure.
+        /// Specifies the structure from which the values (as specified by the value mask) are to be
+        /// taken. The value mask should have the appropriate bits set to indicate which attributes have been set in the
+        /// structure.
         /// </param>
         /// <returns>The window ID of the created window.</returns>
         /// <remarks>
-        ///     The coordinate system has the X axis horizontal and the Y axis vertical with the origin [0, 0] at the upper-left
-        ///     corner. Coordinates are integral, in terms of pixels, and coincide with pixel centers. Each window and pixmap has
-        ///     its own coordinate system. For a window, the origin is inside the border at the inside, upper-left corner.
-        ///     <para>
-        ///         The border_width for an InputOnly window must be zero, or a BadMatch error results. For class InputOutput,
-        ///         the visual type and depth must be a combination supported for the screen, or a BadMatch error results. The
-        ///         depth need not be the same as the parent, but the parent must not be a window of class InputOnly, or a BadMatch
-        ///         error results. For an InputOnly window, the depth must be zero, and the visual must be one supported by the
-        ///         screen. If either condition is not met, a BadMatch error results. The parent window, however, may have any
-        ///         depth and class. If you specify any invalid window attribute for a window, a BadMatch error results.
-        ///     </para>
-        ///     <para>
-        ///         The created window is not yet displayed (mapped) on the user's display. To display the window, call
-        ///         XMapWindow(). The new window initially uses the same cursor as its parent. A new cursor can be defined for the
-        ///         new window by calling XDefineCursor(). The window will not be visible on the screen unless it and all of its
-        ///         ancestors are mapped and it is not obscured by any of its ancestors.
-        ///     </para>
-        ///     <para>XCreateWindow can generate BadAlloc BadColor, BadCursor, BadMatch, BadPixmap, BadValue, and BadWindow errors. </para>
-        ///     <para>
-        ///         The XCreateSimpleWindow function creates an unmapped InputOutput subwindow for a specified parent window,
-        ///         returns the window ID of the created window, and causes the X server to generate a CreateNotify event. The
-        ///         created window is placed on top in the stacking order with respect to siblings. Any part of the window that
-        ///         extends outside its parent window is clipped. The border_width for an InputOnly window must be zero, or a
-        ///         BadMatch error results. XCreateSimpleWindow inherits its depth, class, and visual from its parent. All other
-        ///         window attributes, except background and border, have their default values.
-        ///     </para>
-        ///     <para>XCreateSimpleWindow can generate BadAlloc, BadMatch, BadValue, and BadWindow errors.</para>
+        /// The coordinate system has the X axis horizontal and the Y axis vertical with the origin [0, 0] at the upper-left
+        /// corner. Coordinates are integral, in terms of pixels, and coincide with pixel centers. Each window and pixmap has
+        /// its own coordinate system. For a window, the origin is inside the border at the inside, upper-left corner.
+        ///  <para>
+        /// The border_width for an InputOnly window must be zero, or a BadMatch error results. For class InputOutput,
+        /// the visual type and depth must be a combination supported for the screen, or a BadMatch error results. The
+        /// depth need not be the same as the parent, but the parent must not be a window of class InputOnly, or a BadMatch
+        /// error results. For an InputOnly window, the depth must be zero, and the visual must be one supported by the
+        /// screen. If either condition is not met, a BadMatch error results. The parent window, however, may have any
+        /// depth and class. If you specify any invalid window attribute for a window, a BadMatch error results.
+        ///  </para>
+        ///  <para>
+        /// The created window is not yet displayed (mapped) on the user's display. To display the window, call
+        /// XMapWindow(). The new window initially uses the same cursor as its parent. A new cursor can be defined for the
+        /// new window by calling XDefineCursor(). The window will not be visible on the screen unless it and all of its
+        /// ancestors are mapped and it is not obscured by any of its ancestors.
+        ///  </para>
+        ///  <para>XCreateWindow can generate BadAlloc BadColor, BadCursor, BadMatch, BadPixmap, BadValue, and BadWindow errors. </para>
+        ///  <para>
+        /// The XCreateSimpleWindow function creates an unmapped InputOutput subwindow for a specified parent window,
+        /// returns the window ID of the created window, and causes the X server to generate a CreateNotify event. The
+        /// created window is placed on top in the stacking order with respect to siblings. Any part of the window that
+        /// extends outside its parent window is clipped. The border_width for an InputOnly window must be zero, or a
+        /// BadMatch error results. XCreateSimpleWindow inherits its depth, class, and visual from its parent. All other
+        /// window attributes, except background and border, have their default values.
+        ///  </para>
+        ///  <para>XCreateSimpleWindow can generate BadAlloc, BadMatch, BadValue, and BadWindow errors.</para>
         /// </remarks>
         public static Window XCreateWindow(Display display, Window parent,
             int x, int y, int width, int height, int border_width, int depth,
@@ -1458,27 +1458,27 @@ XF86VidModeGetGammaRampSize(
         */
 
         /// <summary>
-        ///     The XQueryKeymap() function returns a bit vector for the logical state of the keyboard, where each bit set to 1
-        ///     indicates that the corresponding key is currently pressed down. The vector is represented as 32 bytes. Byte N (from
-        ///     0) contains the bits for keys 8N to 8N + 7 with the least-significant bit in the byte representing key 8N.
+        /// The XQueryKeymap() function returns a bit vector for the logical state of the keyboard, where each bit set to 1
+        /// indicates that the corresponding key is currently pressed down. The vector is represented as 32 bytes. Byte N (from
+        /// 0) contains the bits for keys 8N to 8N + 7 with the least-significant bit in the byte representing key 8N.
         /// </summary>
         /// <param name="display">Specifies the connection to the X server.</param>
         /// <param name="keys">
-        ///     Returns an array of bytes that identifies which keys are pressed down. Each bit represents one key
-        ///     of the keyboard.
+        /// Returns an array of bytes that identifies which keys are pressed down. Each bit represents one key
+        /// of the keyboard.
         /// </param>
         /// <remarks>
-        ///     Note that the logical state of a device (as seen by client applications) may lag the physical state if device
-        ///     event processing is frozen.
+        /// Note that the logical state of a device (as seen by client applications) may lag the physical state if device
+        /// event processing is frozen.
         /// </remarks>
         [DllImport(X11Library, EntryPoint = "XQueryKeymap")]
         public static extern void XQueryKeymap(IntPtr display, byte[] keys);
 
         /// <summary>
-        ///     The XMaskEvent() function searches the event queue for the events associated with the specified mask. When it finds
-        ///     a match, XMaskEvent() removes that event and copies it into the specified XEvent structure. The other events stored
-        ///     in the queue are not discarded. If the event you requested is not in the queue, XMaskEvent() flushes the output
-        ///     buffer and blocks until one is received.
+        /// The XMaskEvent() function searches the event queue for the events associated with the specified mask. When it finds
+        /// a match, XMaskEvent() removes that event and copies it into the specified XEvent structure. The other events stored
+        /// in the queue are not discarded. If the event you requested is not in the queue, XMaskEvent() flushes the output
+        /// buffer and blocks until one is received.
         /// </summary>
         /// <param name="display">Specifies the connection to the X server.</param>
         /// <param name="event_mask">Specifies the event mask.</param>
@@ -1487,9 +1487,9 @@ XF86VidModeGetGammaRampSize(
         public static extern void XMaskEvent(IntPtr display, EventMask event_mask, ref XEvent e);
 
         /// <summary>
-        ///     The XPutBackEvent() function pushes an event back onto the head of the display's event queue by copying the event
-        ///     into the queue. This can be useful if you read an event and then decide that you would rather deal with it later.
-        ///     There is no limit to the number of times in succession that you can call XPutBackEvent().
+        /// The XPutBackEvent() function pushes an event back onto the head of the display's event queue by copying the event
+        /// into the queue. This can be useful if you read an event and then decide that you would rather deal with it later.
+        /// There is no limit to the number of times in succession that you can call XPutBackEvent().
         /// </summary>
         /// <param name="display">Specifies the connection to the X server.</param>
         /// <param name="event">Specifies the event.</param>

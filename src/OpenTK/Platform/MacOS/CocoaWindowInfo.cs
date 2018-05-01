@@ -32,7 +32,7 @@ namespace OpenTK.Platform.MacOS
 {
     /// \internal
     /// <summary>
-    ///     Describes a Cocoa window.
+    /// Describes a Cocoa window.
     /// </summary>
     internal sealed class CocoaWindowInfo : IWindowInfo
     {
@@ -41,7 +41,7 @@ namespace OpenTK.Platform.MacOS
         private bool disposed;
 
         /// <summary>
-        ///     Constructs a new instance with the specified parameters.
+        /// Constructs a new instance with the specified parameters.
         /// </summary>
         /// <remarks>This constructor assumes that the NSWindow's contentView is the NSView we want to attach to our context.</remarks>
         /// <param name="nsWindowRef">A valid NSWindow reference.</param>
@@ -50,7 +50,7 @@ namespace OpenTK.Platform.MacOS
         }
 
         /// <summary>
-        ///     Constructs a new instance with the specified parameters.
+        /// Constructs a new instance with the specified parameters.
         /// </summary>
         /// <param name="nsWindowRef">A valid NSWindow reference.</param>
         /// <param name="nsViewRef">A valid NSView reference.</param>
@@ -62,12 +62,12 @@ namespace OpenTK.Platform.MacOS
         }
 
         /// <summary>
-        ///     Gets the view reference for this instance.
+        /// Gets the view reference for this instance.
         /// </summary>
         public IntPtr ViewHandle { get; }
 
         /// <summary>
-        ///     Gets the window reference for this instance.
+        /// Gets the window reference for this instance.
         /// </summary>
         public IntPtr Handle { get; }
 
@@ -76,7 +76,9 @@ namespace OpenTK.Platform.MacOS
             Dispose(true);
         }
 
-        /// <summary>Returns a System.String that represents the current window.</summary>
+        /// <summary>
+        /// Returns a System.String that represents the current window.
+        /// </summary>
         /// <returns>A System.String that represents the current window.</returns>
         public override string ToString()
         {

@@ -42,13 +42,7 @@ namespace OpenTK.Platform.MacOS
     // However, NSFloat is used internally in places where this precision loss does not matter.
     internal struct NSFloat
     {
-        private IntPtr _value;
-
-        public IntPtr Value
-        {
-            get => _value;
-            set => _value = value;
-        }
+        public IntPtr Value;
 
         public static implicit operator NSFloat(float v)
         {
@@ -94,10 +88,10 @@ namespace OpenTK.Platform.MacOS
             {
                 if (IntPtr.Size == 4)
                 {
-                    return *(float*)&f._value;
+                    return *(float*)&f.Value;
                 }
 
-                return (float)*(double*)&f._value;
+                return (float)*(double*)&f.Value;
             }
         }
 
@@ -107,10 +101,10 @@ namespace OpenTK.Platform.MacOS
             {
                 if (IntPtr.Size == 4)
                 {
-                    return *(float*)&f._value;
+                    return *(float*)&f.Value;
                 }
 
-                return *(double*)&f._value;
+                return *(double*)&f.Value;
             }
         }
     }

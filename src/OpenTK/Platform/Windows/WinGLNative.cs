@@ -39,8 +39,8 @@ namespace OpenTK.Platform.Windows
 {
     /// \internal
     /// <summary>
-    ///     Drives GameWindow on Windows.
-    ///     This class supports OpenTK, and is not intended for use by OpenTK programs.
+    /// Drives GameWindow on Windows.
+    /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
     internal sealed class WinGLNative : NativeWindowBase
     {
@@ -66,6 +66,9 @@ namespace OpenTK.Platform.Windows
         private readonly IntPtr Instance = Marshal.GetHINSTANCE(typeof(WinGLNative).Module);
 
         private readonly uint ModalLoopTimerPeriod = 1;
+
+        private readonly StringBuilder sb_title = new StringBuilder(256);
+        private readonly WinWindowInfo window;
         private readonly WindowProcedure WindowProcedureDelegate;
 
         private bool
@@ -99,13 +102,10 @@ namespace OpenTK.Platform.Windows
         private MSG msg;
         private WindowBorder? previous_window_border; // Set when changing to fullscreen state.
 
-        private readonly StringBuilder sb_title = new StringBuilder(256);
-
         private int
             suppress_resize; // Used in WindowBorder and WindowState in order to avoid rapid, consecutive resize events.
 
         private UIntPtr timer_handle;
-        private readonly WinWindowInfo window;
         private WindowBorder windowBorder = WindowBorder.Resizable;
         private WindowState windowState = WindowState.Normal;
 
@@ -1422,7 +1422,7 @@ namespace OpenTK.Platform.Windows
         }
 
         /// <summary>
-        ///     Starts the teardown sequence for the current window.
+        /// Starts the teardown sequence for the current window.
         /// </summary>
         private void DestroyWindow()
         {

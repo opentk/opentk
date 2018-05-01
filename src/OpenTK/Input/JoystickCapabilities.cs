@@ -27,12 +27,12 @@
 
 using System;
 using System.Diagnostics;
-using OpenTK.Mathemathics;
+using OpenTK.Mathematics;
 
 namespace OpenTK.Input
 {
     /// <summary>
-    ///     Describes the <c>JoystickCapabilities</c> of a <see cref="JoystickDevice" />.
+    /// Describes the <c>JoystickCapabilities</c> of a <see cref="JoystickDevice" />.
     /// </summary>
     public struct JoystickCapabilities : IEquatable<JoystickCapabilities>
     {
@@ -76,29 +76,29 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Gets the number of axes supported by this <see cref="JoystickDevice" />.
+        /// Gets the number of axes supported by this <see cref="JoystickDevice" />.
         /// </summary>
         public int AxisCount => axis_count;
 
         /// <summary>
-        ///     Gets the number of buttons supported by this <see cref="JoystickDevice" />.
+        /// Gets the number of buttons supported by this <see cref="JoystickDevice" />.
         /// </summary>
         public int ButtonCount => button_count;
 
         /// <summary>
-        ///     Gets the number of hats supported by this <see cref="JoystickDevice" />.
+        /// Gets the number of hats supported by this <see cref="JoystickDevice" />.
         /// </summary>
         public int HatCount => hat_count;
 
         /// <summary>
-        ///     Gets a value indicating whether this <see cref="JoystickDevice" /> is connected.
+        /// Gets a value indicating whether this <see cref="JoystickDevice" /> is connected.
         /// </summary>
         /// <value><c>true</c> if this instance is connected; otherwise, <c>false</c>.</value>
         public bool IsConnected { get; private set; }
 
         /// <summary>
-        ///     Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.JoystickCapabilities" />
-        ///     .
+        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.JoystickCapabilities" />
+        /// .
         /// </summary>
         /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.JoystickCapabilities" />.</returns>
         public override string ToString()
@@ -107,11 +107,11 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Serves as a hash function for a <see cref="OpenTK.Input.JoystickCapabilities" /> object.
+        /// Serves as a hash function for a <see cref="OpenTK.Input.JoystickCapabilities" /> object.
         /// </summary>
         /// <returns>
-        ///     A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
-        ///     hash table.
+        /// A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
+        /// hash table.
         /// </returns>
         public override int GetHashCode()
         {
@@ -123,16 +123,16 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Determines whether the specified <see cref="System.Object" /> is equal to the current
-        ///     <see cref="OpenTK.Input.JoystickCapabilities" />.
+        /// Determines whether the specified <see cref="System.Object" /> is equal to the current
+        ///  <see cref="OpenTK.Input.JoystickCapabilities" />.
         /// </summary>
         /// <param name="obj">
-        ///     The <see cref="System.Object" /> to compare with the current
-        ///     <see cref="OpenTK.Input.JoystickCapabilities" />.
+        /// The <see cref="System.Object" /> to compare with the current
+        ///  <see cref="OpenTK.Input.JoystickCapabilities" />.
         /// </param>
         /// <returns>
-        ///     <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
-        ///     <see cref="OpenTK.Input.JoystickCapabilities" />; otherwise, <c>false</c>.
+        ///  <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
+        ///  <see cref="OpenTK.Input.JoystickCapabilities" />; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -142,16 +142,16 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Determines whether the specified <see cref="OpenTK.Input.JoystickCapabilities" /> is equal to the current
-        ///     <see cref="OpenTK.Input.JoystickCapabilities" />.
+        /// Determines whether the specified <see cref="OpenTK.Input.JoystickCapabilities" /> is equal to the current
+        ///  <see cref="OpenTK.Input.JoystickCapabilities" />.
         /// </summary>
         /// <param name="other">
-        ///     The <see cref="OpenTK.Input.JoystickCapabilities" /> to compare with the current
-        ///     <see cref="OpenTK.Input.JoystickCapabilities" />.
+        /// The <see cref="OpenTK.Input.JoystickCapabilities" /> to compare with the current
+        ///  <see cref="OpenTK.Input.JoystickCapabilities" />.
         /// </param>
         /// <returns>
-        ///     <c>true</c> if the specified <see cref="OpenTK.Input.JoystickCapabilities" /> is equal to the current
-        ///     <see cref="OpenTK.Input.JoystickCapabilities" />; otherwise, <c>false</c>.
+        ///  <c>true</c> if the specified <see cref="OpenTK.Input.JoystickCapabilities" /> is equal to the current
+        ///  <see cref="OpenTK.Input.JoystickCapabilities" />; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(JoystickCapabilities other)
         {

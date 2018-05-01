@@ -35,7 +35,7 @@ namespace OpenTK.Platform.Windows
 {
     /// \internal
     /// <summary>
-    ///     Contains methods to register for and process mouse WM_INPUT messages.
+    /// Contains methods to register for and process mouse WM_INPUT messages.
     /// </summary>
     internal sealed class WinRawMouse : IMouseDriver2
     {

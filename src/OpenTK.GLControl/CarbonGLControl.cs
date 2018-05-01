@@ -34,10 +34,10 @@ namespace OpenTK
     internal class CarbonGLControl : IGLControl
     {
         private readonly Control control;
+        private readonly GraphicsMode mode;
 
         // TODO: Fix this
         private bool lastIsIdle;
-        private readonly GraphicsMode mode;
 
         internal CarbonGLControl(GraphicsMode mode, Control owner)
         {

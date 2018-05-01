@@ -127,6 +127,7 @@ namespace OpenTK.Platform.Windows
                                     break;
                             }
                         }
+
                         break;
                     }
                     case WindowMessage.DEVICECHANGE:

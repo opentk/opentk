@@ -172,8 +172,8 @@ namespace OpenTK.Platform.Linux
 
         /// \internal
         /// <summary>
-        ///     Signals the end of a set of touchpoints at one device sample
-        ///     time. This event has no coordinate information attached.
+        /// Signals the end of a set of touchpoints at one device sample
+        /// time. This event has no coordinate information attached.
         /// </summary>
         TouchFrame
     }

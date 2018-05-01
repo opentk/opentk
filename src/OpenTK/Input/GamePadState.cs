@@ -28,7 +28,7 @@ using System;
 namespace OpenTK.Input
 {
     /// <summary>
-    ///     Describes the current state of a <see cref="GamePad" /> device.
+    /// Describes the current state of a <see cref="GamePad" /> device.
     /// </summary>
     public struct GamePadState : IEquatable<GamePadState>
     {
@@ -43,45 +43,45 @@ namespace OpenTK.Input
         private byte right_trigger;
 
         /// <summary>
-        ///     Gets a <see cref="GamePadThumbSticks" /> structure describing the
-        ///     state of the <c>GamePad</c> thumb sticks.
+        /// Gets a <see cref="GamePadThumbSticks" /> structure describing the
+        /// state of the <c>GamePad</c> thumb sticks.
         /// </summary>
         public GamePadThumbSticks ThumbSticks =>
             new GamePadThumbSticks(left_stick_x, left_stick_y, right_stick_x, right_stick_y);
 
         /// <summary>
-        ///     Gets a <see cref="GamePadButtons" /> structure describing the
-        ///     state of the <c>GamePad</c> buttons.
+        /// Gets a <see cref="GamePadButtons" /> structure describing the
+        /// state of the <c>GamePad</c> buttons.
         /// </summary>
         public GamePadButtons Buttons => new GamePadButtons(buttons);
 
         /// <summary>
-        ///     Gets a <see cref="GamePadDPad" /> structure describing the
-        ///     state of the <c>GamePad</c> directional pad.
+        /// Gets a <see cref="GamePadDPad" /> structure describing the
+        /// state of the <c>GamePad</c> directional pad.
         /// </summary>
         public GamePadDPad DPad => new GamePadDPad(buttons);
 
         /// <summary>
-        ///     Gets a <see cref="GamePadTriggers" /> structure describing the
-        ///     state of the <c>GamePad</c> triggers.
+        /// Gets a <see cref="GamePadTriggers" /> structure describing the
+        /// state of the <c>GamePad</c> triggers.
         /// </summary>
         public GamePadTriggers Triggers => new GamePadTriggers(left_trigger, right_trigger);
 
         /// <summary>
-        ///     Gets a value indicating whether this <c>GamePad</c> instance is connected.
+        /// Gets a value indicating whether this <c>GamePad</c> instance is connected.
         /// </summary>
         /// <value><c>true</c> if this instance is connected; otherwise, <c>false</c>.</value>
         public bool IsConnected { get; private set; }
 
         /// <summary>
-        ///     Gets the packet number for this <c>GamePadState</c> instance.
-        ///     Use the packet number to determine whether the state of a
-        ///     <c>GamePad</c> device has changed.
+        /// Gets the packet number for this <c>GamePadState</c> instance.
+        /// Use the packet number to determine whether the state of a
+        ///  <c>GamePad</c> device has changed.
         /// </summary>
         public int PacketNumber { get; private set; }
 
         /// <summary>
-        ///     Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.GamePadState" />.
+        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.GamePadState" />.
         /// </summary>
         /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.GamePadState" />.</returns>
         public override string ToString()
@@ -91,11 +91,11 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Serves as a hash function for a <see cref="OpenTK.Input.GamePadState" /> object.
+        /// Serves as a hash function for a <see cref="OpenTK.Input.GamePadState" /> object.
         /// </summary>
         /// <returns>
-        ///     A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
-        ///     hash table.
+        /// A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
+        /// hash table.
         /// </returns>
         public override int GetHashCode()
         {
@@ -105,16 +105,16 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Determines whether the specified <see cref="System.Object" /> is equal to the current
-        ///     <see cref="OpenTK.Input.GamePadState" />.
+        /// Determines whether the specified <see cref="System.Object" /> is equal to the current
+        ///  <see cref="OpenTK.Input.GamePadState" />.
         /// </summary>
         /// <param name="obj">
-        ///     The <see cref="System.Object" /> to compare with the current <see cref="OpenTK.Input.GamePadState" />
-        ///     .
+        /// The <see cref="System.Object" /> to compare with the current <see cref="OpenTK.Input.GamePadState" />
+        /// .
         /// </param>
         /// <returns>
-        ///     <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
-        ///     <see cref="OpenTK.Input.GamePadState" />; otherwise, <c>false</c>.
+        ///  <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
+        ///  <see cref="OpenTK.Input.GamePadState" />; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -124,16 +124,16 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        ///     Determines whether the specified <see cref="OpenTK.Input.GamePadState" /> is equal to the current
-        ///     <see cref="OpenTK.Input.GamePadState" />.
+        /// Determines whether the specified <see cref="OpenTK.Input.GamePadState" /> is equal to the current
+        ///  <see cref="OpenTK.Input.GamePadState" />.
         /// </summary>
         /// <param name="other">
-        ///     The <see cref="OpenTK.Input.GamePadState" /> to compare with the current
-        ///     <see cref="OpenTK.Input.GamePadState" />.
+        /// The <see cref="OpenTK.Input.GamePadState" /> to compare with the current
+        ///  <see cref="OpenTK.Input.GamePadState" />.
         /// </param>
         /// <returns>
-        ///     <c>true</c> if the specified <see cref="OpenTK.Input.GamePadState" /> is equal to the current
-        ///     <see cref="OpenTK.Input.GamePadState" />; otherwise, <c>false</c>.
+        ///  <c>true</c> if the specified <see cref="OpenTK.Input.GamePadState" /> is equal to the current
+        ///  <see cref="OpenTK.Input.GamePadState" />; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(GamePadState other)
         {

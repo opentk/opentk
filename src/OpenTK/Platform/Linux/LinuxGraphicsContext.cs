@@ -29,29 +29,29 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
-using OpenTK.Mathemathics;
+using OpenTK.Mathematics;
 using OpenTK.Platform.Egl;
 
 namespace OpenTK.Platform.Linux
 {
     /// \internal
     /// <summary>
-    ///     Defines an IGraphicsContext implementation for the Linux KMS framebuffer.
-    ///     For Linux/X11 and other Unix operating systems, use the more generic
-    ///     <see cref="OpenTK.Platform.Egl.EglUnixContext" /> instead.
+    /// Defines an IGraphicsContext implementation for the Linux KMS framebuffer.
+    /// For Linux/X11 and other Unix operating systems, use the more generic
+    ///  <see cref="OpenTK.Platform.Egl.EglUnixContext" /> instead.
     /// </summary>
     /// <remarks>
-    ///     Note: to display our results, we need to allocate a GBM framebuffer
-    ///     and point the scanout address to that via Drm.ModeSetCrtc.
+    /// Note: to display our results, we need to allocate a GBM framebuffer
+    /// and point the scanout address to that via Drm.ModeSetCrtc.
     /// </remarks>
     internal class LinuxGraphicsContext : EglUnixContext
     {
         private static readonly DestroyUserDataCallback DestroyFB = HandleDestroyFB;
+        private readonly int fd;
         private readonly PageFlipCallback PageFlip;
 
         private readonly IntPtr PageFlipPtr;
         private BufferObject bo, bo_next;
-        private readonly int fd;
         private bool is_flip_queued;
         private int swap_interval;
 

@@ -325,7 +325,7 @@ namespace Bind
         private EnumCollection ReadEnums(XPathNavigator nav)
         {
             var enums = new EnumCollection();
-            var all = new Enum {Name = Settings.CompleteEnumName};
+            var all = new Enum { Name = Settings.CompleteEnumName };
 
             if (nav != null)
             {

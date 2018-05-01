@@ -119,14 +119,14 @@ namespace OpenTK.Platform.Linux
 
         /// \internal
         /// <summary>
-        ///     Queries the specified GPU for connected displays and, optionally,
-        ///     returns the list of displays.
+        /// Queries the specified GPU for connected displays and, optionally,
+        /// returns the list of displays.
         /// </summary>
         /// <returns><c>true</c>, if at least one display is connected, <c>false</c> otherwise.</returns>
         /// <param name="fd">The fd for the GPU to query, obtained through open("/dev/dri/card0").</param>
         /// <param name="displays">
-        ///     If not null, this will contain a list <see cref="LinuxDisplay" /> instances,
-        ///     one for each connected display.
+        /// If not null, this will contain a list <see cref="LinuxDisplay" /> instances,
+        /// one for each connected display.
         /// </param>
         internal static bool QueryDisplays(int fd, List<LinuxDisplay> displays)
         {

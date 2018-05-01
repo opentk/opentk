@@ -43,12 +43,12 @@ namespace OpenTK.Platform.Windows
         private readonly RawInputDevice[] DeviceTypes;
 
         private readonly object UpdateLock = new object();
+
+        private readonly XInputJoystick XInput = new XInputJoystick();
         private HidProtocolData[] DataBuffer = new HidProtocolData[16];
 
         private byte[] HIDData = new byte[1024];
         private byte[] PreparsedData = new byte[1024];
-
-        private readonly XInputJoystick XInput = new XInputJoystick();
 
         public WinRawJoystick(IntPtr window)
         {
@@ -760,14 +760,15 @@ namespace OpenTK.Platform.Windows
             private readonly Dictionary<int, int> buttons =
                 new Dictionary<int, int>();
 
+            private readonly Guid Guid;
+            public readonly IntPtr Handle;
+
             private readonly Dictionary<int, JoystickHat> hats =
                 new Dictionary<int, JoystickHat>();
 
             internal readonly bool IsXInput;
             internal readonly int XInputIndex;
             private JoystickCapabilities Capabilities;
-            private readonly Guid Guid;
-            public readonly IntPtr Handle;
             private JoystickState State;
 
             public Device(IntPtr handle, Guid guid, bool is_xinput, int xinput_index)

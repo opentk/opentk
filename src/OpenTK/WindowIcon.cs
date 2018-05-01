@@ -31,14 +31,14 @@ using System.Runtime.InteropServices;
 namespace OpenTK
 {
     /// <summary>
-    ///     Stores a window icon. A window icon is defined
-    ///     as a 2-dimensional buffer of RGBA values.
+    /// Stores a window icon. A window icon is defined
+    /// as a 2-dimensional buffer of RGBA values.
     /// </summary>
     public class WindowIcon
     {
         /// \internal
         /// <summary>
-        ///     Initializes a new instance of the <see cref="OpenTK.WindowIcon" /> class.
+        /// Initializes a new instance of the <see cref="OpenTK.WindowIcon" /> class.
         /// </summary>
         protected internal WindowIcon()
         {

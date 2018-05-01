@@ -30,18 +30,22 @@ using OpenTK.Graphics;
 namespace OpenTK.Platform.X11
 {
     /// \internal
-    /// <summary>Describes an X11 window.</summary>
+    /// <summary>
+    /// Describes an X11 window.
+    /// </summary>
     internal sealed class X11WindowInfo : IWindowInfo
     {
         private readonly XVisualInfo visualInfo;
 
-        /// <summary>Constructs a new X11WindowInfo class.</summary>
+        /// <summary>
+        /// Constructs a new X11WindowInfo class.
+        /// </summary>
         public X11WindowInfo()
         {
         }
 
         /// <summary>
-        ///     Constructs a new X11WindowInfo class from the specified window handle and parent.
+        /// Constructs a new X11WindowInfo class from the specified window handle and parent.
         /// </summary>
         /// <param name="handle">The handle of the window.</param>
         /// <param name="parent">The parent of the window.</param>
@@ -58,19 +62,29 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        /// <summary>Gets or sets the parent of the window.</summary>
+        /// <summary>
+        /// Gets or sets the parent of the window.
+        /// </summary>
         public X11WindowInfo Parent { get; set; }
 
-        /// <summary>Gets or sets the X11 root window.</summary>
+        /// <summary>
+        /// Gets or sets the X11 root window.
+        /// </summary>
         public IntPtr RootWindow { get; set; }
 
-        /// <summary>Gets or sets the connection to the X11 display.</summary>
+        /// <summary>
+        /// Gets or sets the connection to the X11 display.
+        /// </summary>
         public IntPtr Display { get; set; }
 
-        /// <summary>Gets or sets the X11 screen.</summary>
+        /// <summary>
+        /// Gets or sets the X11 screen.
+        /// </summary>
         public int Screen { get; set; }
 
-        /// <summary>Gets or sets the X11 VisualInfo.</summary>
+        /// <summary>
+        /// Gets or sets the X11 VisualInfo.
+        /// </summary>
         public XVisualInfo VisualInfo
         {
             get
@@ -84,7 +98,9 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        /// <summary>Gets or sets the X11 EventMask.</summary>
+        /// <summary>
+        /// Gets or sets the X11 EventMask.
+        /// </summary>
         public EventMask EventMask { get; set; }
 
         // For compatibility with whoever thought it would be
@@ -100,17 +116,21 @@ namespace OpenTK.Platform.X11
         public IntPtr FBConfig { get; set; }
         public GraphicsMode GraphicsMode { get; set; }
 
-        /// <summary>Gets or sets the handle of the window.</summary>
+        /// <summary>
+        /// Gets or sets the handle of the window.
+        /// </summary>
         public IntPtr Handle { get; set; }
 
         /// <summary>
-        ///     Disposes of this X11WindowInfo instance.
+        /// Disposes of this X11WindowInfo instance.
         /// </summary>
         public void Dispose()
         {
         }
 
-        /// <summary>Returns a System.String that represents the current window.</summary>
+        /// <summary>
+        /// Returns a System.String that represents the current window.
+        /// </summary>
         /// <returns>A System.String that represents the current window.</returns>
         public override string ToString()
         {
@@ -118,7 +138,9 @@ namespace OpenTK.Platform.X11
                 $"X11.WindowInfo: Display {Display}, Screen {Screen}, Handle {Handle}, Parent: ({(Parent != null ? Parent.ToString() : "null")})";
         }
 
-        /// <summary>Checks if <c>this</c> and <c>obj</c> reference the same win32 window.</summary>
+        /// <summary>
+        /// Checks if <c>this</c> and <c>obj</c> reference the same win32 window.
+        /// </summary>
         /// <param name="obj">The object to check against.</param>
         /// <returns>True if <c>this</c> and <c>obj</c> reference the same win32 window; false otherwise.</returns>
         public override bool Equals(object obj)
@@ -145,7 +167,9 @@ namespace OpenTK.Platform.X11
                    Handle.Equals(info.Handle);
         }
 
-        /// <summary>Returns the hash code for this instance.</summary>
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
         /// <returns>A hash code for the current <c>X11WindowInfo</c>.</returns>
         public override int GetHashCode()
         {

@@ -28,24 +28,24 @@ using System;
 namespace OpenTK
 {
     /// <summary>
-    ///     Used to indicate how to calculate the count/length of a parameter.
-    ///     Only one of Parameter, Count, or Computed should be set.
+    /// Used to indicate how to calculate the count/length of a parameter.
+    /// Only one of Parameter, Count, or Computed should be set.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter)]
     public sealed class CountAttribute : Attribute
     {
         /// <summary>
-        ///     Specifies a computed count based on other parameters.
+        /// Specifies a computed count based on other parameters.
         /// </summary>
         public string Computed;
 
         /// <summary>
-        ///     Specifies a fixed count.
+        /// Specifies a fixed count.
         /// </summary>
         public int Count;
 
         /// <summary>
-        ///     Specifies another parameter to look at for the count of this parameter.
+        /// Specifies another parameter to look at for the count of this parameter.
         /// </summary>
         public string Parameter;
     }

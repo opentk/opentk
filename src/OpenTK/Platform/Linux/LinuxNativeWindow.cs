@@ -29,7 +29,7 @@ using System;
 using System.Diagnostics;
 using OpenTK.Graphics;
 using OpenTK.Input;
-using OpenTK.Mathemathics;
+using OpenTK.Mathematics;
 using OpenTK.Platform.Egl;
 #if !MINIMAL
 using System.Drawing;
@@ -42,11 +42,12 @@ namespace OpenTK.Platform.Linux
     {
         private readonly Rectangle bounds;
         private readonly Size client_size;
+        private readonly BufferObject cursor_default;
+        private readonly BufferObject cursor_empty;
+        private readonly LinuxWindowInfo window;
 
         private MouseCursor cursor_current;
         private BufferObject cursor_custom;
-        private readonly BufferObject cursor_default;
-        private readonly BufferObject cursor_empty;
         private bool exists;
         private Icon icon;
         private bool is_cursor_visible = true;
@@ -55,7 +56,6 @@ namespace OpenTK.Platform.Linux
         private KeyboardState previous_keyboard;
         private MouseState previous_mouse;
         private string title;
-        private readonly LinuxWindowInfo window;
 
         public LinuxNativeWindow(IntPtr display, IntPtr gbm, int fd,
             int x, int y, int width, int height, string title,

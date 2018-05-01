@@ -35,9 +35,9 @@ namespace OpenTK.Platform
 {
     /// \internal
     /// <summary>
-    ///     Implements IPlatformFactory functionality that is common
-    ///     for all platform backends. IPlatformFactory implementations
-    ///     should inherit from this class.
+    /// Implements IPlatformFactory functionality that is common
+    /// for all platform backends. IPlatformFactory implementations
+    /// should inherit from this class.
     /// </summary>
     internal abstract class PlatformFactoryBase : IPlatformFactory
     {
