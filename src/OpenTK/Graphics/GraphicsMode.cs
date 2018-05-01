@@ -123,7 +123,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets a nullable <see cref="System.IntPtr"/> value, indicating the platform-specific index for this GraphicsMode.
         /// </summary>
-        public IntPtr? Index { get; set; } = null;
+        public IntPtr? Index { get; set; }
 
         /// <summary>
         /// Gets an OpenTK.Graphics.ColorFormat that describes the color format for this GraphicsFormat.

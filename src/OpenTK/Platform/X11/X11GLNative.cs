@@ -118,13 +118,13 @@ namespace OpenTK.Platform.X11
         private bool visible;
 
         // Used for event loop.
-        private XEvent e = new XEvent();
+        private XEvent e;
 
         private bool disposed;
         private bool exists;
         private bool isExiting;
 
-        private bool _decorations_hidden = false;
+        private bool _decorations_hidden;
 
         // Store previous border and bounds
         // when switching from WindowState.Normal

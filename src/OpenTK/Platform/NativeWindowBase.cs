@@ -51,10 +51,10 @@ namespace OpenTK.Platform
 
         // In order to simplify mouse event implementation,
         // we can store the current mouse state here.
-        protected MouseState MouseState = new MouseState();
+        protected MouseState MouseState;
         protected KeyboardState KeyboardState = new KeyboardState();
 
-        private MouseState PreviousMouseState = new MouseState();
+        private MouseState PreviousMouseState;
 
         internal NativeWindowBase()
         {

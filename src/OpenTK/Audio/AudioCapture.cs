@@ -244,7 +244,7 @@ namespace OpenTK.Audio
         /// <summary>
         /// Gets a value indicating whether this instance is currently capturing samples.
         /// </summary>
-        public bool IsRunning { get; private set; } = false;
+        public bool IsRunning { get; private set; }
 
         // Retrieves the sample size in bytes for various ALFormats.
         // Compressed formats always return 1.

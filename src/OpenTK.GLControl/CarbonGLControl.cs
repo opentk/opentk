@@ -68,7 +68,7 @@ namespace OpenTK
         }
 
         // TODO: Fix this
-        private bool lastIsIdle = false;
+        private bool lastIsIdle;
         public bool IsIdle
         {
             get

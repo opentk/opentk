@@ -75,7 +75,7 @@ namespace OpenTK
 
         private IGraphicsContext glContext;
 
-        private bool isExiting = false;
+        private bool isExiting;
 
         private double update_period, render_period;
         private double target_update_period, target_render_period;

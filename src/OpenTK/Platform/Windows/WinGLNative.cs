@@ -60,19 +60,19 @@ namespace OpenTK.Platform.Windows
         private Nullable<WindowBorder> previous_window_border; // Set when changing to fullscreen state.
         private Nullable<WindowBorder> deferred_window_border; // Set to avoid changing borders during fullscreen state.
         private WindowState windowState = WindowState.Normal;
-        private bool borderless_maximized_window_state = false; // Hack to get maximized mode with hidden border (not normally possible).
+        private bool borderless_maximized_window_state; // Hack to get maximized mode with hidden border (not normally possible).
         private bool focused;
         private bool mouse_outside_window = true;
-        private int mouse_capture_count = 0;
-        private int mouse_last_timestamp = 0;
+        private int mouse_capture_count;
+        private int mouse_last_timestamp;
         private bool invisible_since_creation; // Set by WindowsMessage.CREATE and consumed by Visible = true (calls BringWindowToFront).
         private int suppress_resize; // Used in WindowBorder and WindowState in order to avoid rapid, consecutive resize events.
         private bool is_in_modal_loop; // set to true whenever we enter the modal resize/move event loop
 
         private Rectangle
-            bounds = new Rectangle(),
-            client_rectangle = new Rectangle(),
-            previous_bounds = new Rectangle(); // Used to restore previous size when leaving fullscreen mode.
+            bounds,
+            client_rectangle,
+            previous_bounds; // Used to restore previous size when leaving fullscreen mode.
 
         private Icon icon;
 
@@ -89,7 +89,7 @@ namespace OpenTK.Platform.Windows
 
         private MouseCursor cursor = MouseCursor.Default;
         private IntPtr cursor_handle = Functions.LoadCursor(CursorName.Arrow);
-        private int cursor_visible_count = 0;
+        private int cursor_visible_count;
 
         private static readonly object SyncRoot = new object();
 

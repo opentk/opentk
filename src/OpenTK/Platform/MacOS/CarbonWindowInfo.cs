@@ -33,8 +33,8 @@ namespace OpenTK.Platform.MacOS
     /// </summary>
     internal sealed class CarbonWindowInfo : IWindowInfo
     {
-        private bool ownHandle = false;
-        private bool disposed = false;
+        private bool ownHandle;
+        private bool disposed;
 
         /// <summary>
         /// Constructs a new instance with the specified parameters.

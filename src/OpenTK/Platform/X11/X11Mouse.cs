@@ -44,8 +44,8 @@ namespace OpenTK.Platform.X11
     {
         private readonly IntPtr display;
         private readonly IntPtr root_window;
-        private MouseState mouse = new MouseState();
-        private MouseState cursor = new MouseState();
+        private MouseState mouse;
+        private MouseState cursor;
 
         // When the mouse warps, "detach" the current location
         // from the pointer.

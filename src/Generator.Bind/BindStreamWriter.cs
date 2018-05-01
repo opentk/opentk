@@ -41,7 +41,7 @@ namespace Bind
         public readonly string File;
 
         private bool _newline = true;
-        private int _indentLevel = 0;
+        private int _indentLevel;
 
         public BindStreamWriter(string file)
         {

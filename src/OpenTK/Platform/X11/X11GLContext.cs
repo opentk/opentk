@@ -30,7 +30,7 @@ namespace OpenTK.Platform.X11
         private bool vsync_tear_supported;
         private int sgi_swap_interval = 1; // As defined in GLX_SGI_swap_control
         private readonly X11GraphicsMode ModeSelector = new X11GraphicsMode();
-        private string extensions = null;
+        private string extensions;
 
         static X11GLContext()
         {

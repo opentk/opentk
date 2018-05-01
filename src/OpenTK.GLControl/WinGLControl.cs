@@ -75,7 +75,7 @@ namespace OpenTK
         [System.Runtime.InteropServices.DllImport("User32.dll")]
         private static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, int flags);
 
-        private MSG msg = new MSG();
+        private MSG msg;
         private GraphicsMode mode;
 
         public WinGLControl(GraphicsMode mode, Control control)

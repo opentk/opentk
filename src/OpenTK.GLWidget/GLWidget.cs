@@ -14,10 +14,10 @@ namespace OpenTK
     public class GLWidget : GLArea
     {
         private static int _GraphicsContextCount;
-        private static bool _SharedContextInitialized = false;
+        private static bool _SharedContextInitialized;
 
         private IGraphicsContext _GraphicsContext;
-        private bool _Initialized = false;
+        private bool _Initialized;
 
         /// <summary>
         /// The previous frame time reported by GTK.

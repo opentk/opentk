@@ -141,7 +141,7 @@ namespace OpenTK.Platform.MacOS
         private IntPtr windowClass;
         private IntPtr trackingArea;
         private IntPtr current_icon_handle;
-        private bool disposed = false;
+        private bool disposed;
         private bool exists;
         private bool cursorVisible = true;
         private Icon icon;

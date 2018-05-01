@@ -38,7 +38,7 @@ namespace OpenTK.Platform.MacOS
     {
         private static readonly IntPtr selContentView = Selector.Get("contentView");
 
-        private bool disposed = false;
+        private bool disposed;
 
         /// <summary>
         /// Constructs a new instance with the specified parameters.

@@ -19,7 +19,7 @@ namespace OpenTK.Audio.OpenAL
     public sealed class XRamExtension
     {
         /// <summary>Returns True if the X-Ram Extension has been found and could be initialized.</summary>
-        public bool IsInitialized { get; } = false;
+        public bool IsInitialized { get; }
 
         private delegate bool Delegate_SetBufferMode(int n, ref uint buffers, int value);
         //typedef ALboolean (__cdecl *EAXSetBufferMode)(ALsizei n, ALuint *buffers, ALint value);

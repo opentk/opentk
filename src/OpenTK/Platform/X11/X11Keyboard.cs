@@ -37,7 +37,7 @@ namespace OpenTK.Platform.X11
         private readonly byte[] keys = new byte[32];
         private readonly int KeysymsPerKeycode;
         private readonly X11KeyMap KeyMap;
-        private KeyboardState state = new KeyboardState();
+        private KeyboardState state;
 
         public X11Keyboard()
         {
