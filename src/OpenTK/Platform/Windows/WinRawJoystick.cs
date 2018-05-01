@@ -187,7 +187,7 @@ namespace OpenTK.Platform.Windows
 
             if (window == IntPtr.Zero)
             {
-                throw new ArgumentNullException("window");
+                throw new ArgumentNullException(nameof(window));
             }
 
             DeviceTypes = new RawInputDevice[]

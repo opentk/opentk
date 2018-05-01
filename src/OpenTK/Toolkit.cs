@@ -44,7 +44,7 @@ namespace OpenTK
         {
             if (factory == null)
             {
-                throw new ArgumentNullException("factory");
+                throw new ArgumentNullException(nameof(factory));
             }
             platform_factory = factory;
         }
@@ -119,7 +119,7 @@ namespace OpenTK
         {
             if (options == null)
             {
-                throw new ArgumentNullException("options");
+                throw new ArgumentNullException(nameof(options));
             }
 
             lock (InitLock)

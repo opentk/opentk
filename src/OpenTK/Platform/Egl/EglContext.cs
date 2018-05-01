@@ -46,11 +46,11 @@ namespace OpenTK.Platform.Egl
         {
             if (mode == null)
             {
-                throw new ArgumentNullException("mode");
+                throw new ArgumentNullException(nameof(mode));
             }
             if (window == null)
             {
-                throw new ArgumentNullException("window");
+                throw new ArgumentNullException(nameof(window));
             }
 
             EglContext shared = GetSharedEglContext(sharedContext);
@@ -130,7 +130,7 @@ namespace OpenTK.Platform.Egl
             }
             if (window == null)
             {
-                throw new ArgumentNullException("window");
+                throw new ArgumentNullException(nameof(window));
             }
 
             Handle = handle;

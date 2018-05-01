@@ -164,11 +164,11 @@ namespace OpenTK.Platform.X11
         {
             if (width <= 0)
             {
-                throw new ArgumentOutOfRangeException("width", "Must be higher than zero.");
+                throw new ArgumentOutOfRangeException(nameof(width), "Must be higher than zero.");
             }
             if (height <= 0)
             {
-                throw new ArgumentOutOfRangeException("height", "Must be higher than zero.");
+                throw new ArgumentOutOfRangeException(nameof(height), "Must be higher than zero.");
             }
 
             Debug.Indent();

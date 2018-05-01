@@ -44,7 +44,7 @@ namespace OpenTK.Graphics
         {
             if (bpp < 0)
             {
-                throw new ArgumentOutOfRangeException("bpp", "Must be greater or equal to zero.");
+                throw new ArgumentOutOfRangeException(nameof(bpp), "Must be greater or equal to zero.");
             }
             red = green = blue = alpha = 0;
             BitsPerPixel = bpp;

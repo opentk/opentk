@@ -216,11 +216,11 @@ namespace OpenTK.Audio
             }
             if (freq < 0)
             {
-                throw new ArgumentOutOfRangeException("freq", freq, "Should be greater than zero.");
+                throw new ArgumentOutOfRangeException(nameof(freq), freq, "Should be greater than zero.");
             }
             if (refresh < 0)
             {
-                throw new ArgumentOutOfRangeException("refresh", refresh, "Should be greater than zero.");
+                throw new ArgumentOutOfRangeException(nameof(refresh), refresh, "Should be greater than zero.");
             }
 
 

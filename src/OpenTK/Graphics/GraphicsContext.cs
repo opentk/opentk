@@ -114,11 +114,11 @@ namespace OpenTK.Graphics
                 }
                 else if (mode == null)
                 {
-                    throw new ArgumentNullException("mode", "Must be a valid GraphicsMode.");
+                    throw new ArgumentNullException(nameof(mode), "Must be a valid GraphicsMode.");
                 }
                 else if (window == null)
                 {
-                    throw new ArgumentNullException("window", "Must point to a valid window.");
+                    throw new ArgumentNullException(nameof(window), "Must point to a valid window.");
                 }
 
                 // Silently ignore invalid major and minor versions.

@@ -103,7 +103,7 @@ namespace OpenTK.Platform.Windows
             {
                 if (window == null)
                 {
-                    throw new ArgumentNullException("window", "Must point to a valid window.");
+                    throw new ArgumentNullException(nameof(window), "Must point to a valid window.");
                 }
                 if (window.Handle == IntPtr.Zero)
                 {
@@ -248,7 +248,7 @@ namespace OpenTK.Platform.Windows
             }
             if (window == null)
             {
-                throw new ArgumentNullException("window");
+                throw new ArgumentNullException(nameof(window));
             }
 
             Handle = handle;
@@ -378,7 +378,7 @@ namespace OpenTK.Platform.Windows
             Debug.Write("Setting pixel format... ");
             if (window == null)
             {
-                throw new ArgumentNullException("window", "Must point to a valid window.");
+                throw new ArgumentNullException(nameof(window), "Must point to a valid window.");
             }
 
             if (!mode.Index.HasValue)

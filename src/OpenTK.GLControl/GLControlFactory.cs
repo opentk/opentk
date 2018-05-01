@@ -36,11 +36,11 @@ namespace OpenTK
         {
             if (mode == null)
             {
-                throw new ArgumentNullException("mode");
+                throw new ArgumentNullException(nameof(mode));
             }
             if (control == null)
             {
-                throw new ArgumentNullException("control");
+                throw new ArgumentNullException(nameof(control));
             }
 
             if (Configuration.RunningOnSdl2)

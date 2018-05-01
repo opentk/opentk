@@ -74,11 +74,11 @@ namespace OpenTK.Audio
             }
             if (frequency <= 0)
             {
-                throw new ArgumentOutOfRangeException("frequency");
+                throw new ArgumentOutOfRangeException(nameof(frequency));
             }
             if (bufferSize <= 0)
             {
-                throw new ArgumentOutOfRangeException("bufferSize");
+                throw new ArgumentOutOfRangeException(nameof(bufferSize));
             }
 
             // Try to open specified device. If it fails, try to open default device.
@@ -194,7 +194,7 @@ namespace OpenTK.Audio
         {
             if (buffer == null)
             {
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             }
 
             int buffer_size = BlittableValueType<TBuffer>.Stride * buffer.Length;
@@ -205,7 +205,7 @@ namespace OpenTK.Audio
             // Still, this is better than no check at all.
             if (sampleCount * GetSampleSize(SampleFormat) > buffer_size)
             {
-                throw new ArgumentOutOfRangeException("sampleCount");
+                throw new ArgumentOutOfRangeException(nameof(sampleCount));
             }
 
             GCHandle buffer_ptr = GCHandle.Alloc(buffer, GCHandleType.Pinned);

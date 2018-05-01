@@ -327,12 +327,12 @@ namespace OpenTK
             {
                 if (updates_per_second < 0.0 || updates_per_second > 200.0)
                 {
-                    throw new ArgumentOutOfRangeException("updates_per_second", updates_per_second,
+                    throw new ArgumentOutOfRangeException(nameof(updates_per_second), updates_per_second,
                         "Parameter should be inside the range [0.0, 200.0]");
                 }
                 if (frames_per_second < 0.0 || frames_per_second > 200.0)
                 {
-                    throw new ArgumentOutOfRangeException("frames_per_second", frames_per_second,
+                    throw new ArgumentOutOfRangeException(nameof(frames_per_second), frames_per_second,
                         "Parameter should be inside the range [0.0, 200.0]");
                 }
 

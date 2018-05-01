@@ -290,7 +290,7 @@ namespace OpenTK.Input
         {
             if (offset < 0 || offset >= 16)
             {
-                throw new ArgumentOutOfRangeException("offset");
+                throw new ArgumentOutOfRangeException(nameof(offset));
             }
         }
 

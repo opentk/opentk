@@ -89,15 +89,15 @@ namespace OpenTK
             // TODO: Should a constraint be added for the position?
             if (width < 1)
             {
-                throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
+                throw new ArgumentOutOfRangeException(nameof(width), "Must be greater than zero.");
             }
             if (height < 1)
             {
-                throw new ArgumentOutOfRangeException("height", "Must be greater than zero.");
+                throw new ArgumentOutOfRangeException(nameof(height), "Must be greater than zero.");
             }
             if (mode == null)
             {
-                throw new ArgumentNullException("mode");
+                throw new ArgumentNullException(nameof(mode));
             }
 
             this.options = options;

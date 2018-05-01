@@ -194,7 +194,7 @@ namespace OpenTK.Input
             int index = axis;
             if (index < 0 || index >= MaxAxes)
             {
-                throw new ArgumentOutOfRangeException("axis");
+                throw new ArgumentOutOfRangeException(nameof(axis));
             }
 
             unsafe
@@ -215,7 +215,7 @@ namespace OpenTK.Input
         {
             if (button < 0 || button >= MaxButtons)
             {
-                throw new ArgumentOutOfRangeException("button");
+                throw new ArgumentOutOfRangeException(nameof(button));
             }
 
             if (value)
@@ -245,7 +245,7 @@ namespace OpenTK.Input
                     hat3 = value;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("hat");
+                    throw new ArgumentOutOfRangeException(nameof(hat));
             }
         }
 

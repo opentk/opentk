@@ -93,7 +93,7 @@ namespace OpenTK
             }
             if (window == null)
             {
-                throw new ArgumentNullException("window");
+                throw new ArgumentNullException(nameof(window));
             }
 
             Handle = handle;

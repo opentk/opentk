@@ -39,12 +39,12 @@ namespace OpenTK.Input
         {
             if (axes < 0)
             {
-                throw new ArgumentOutOfRangeException("axes");
+                throw new ArgumentOutOfRangeException(nameof(axes));
             }
 
             if (buttons < 0)
             {
-                throw new ArgumentOutOfRangeException("buttons");
+                throw new ArgumentOutOfRangeException(nameof(buttons));
             }
 
             Id = id;
@@ -216,7 +216,7 @@ namespace OpenTK.Input
         {
             if (numButtons < 0)
             {
-                throw new ArgumentOutOfRangeException("numButtons");
+                throw new ArgumentOutOfRangeException(nameof(numButtons));
             }
 
             button_state = new bool[numButtons];
@@ -250,7 +250,7 @@ namespace OpenTK.Input
         {
             if (numAxes < 0)
             {
-                throw new ArgumentOutOfRangeException("numAxes");
+                throw new ArgumentOutOfRangeException(nameof(numAxes));
             }
 
             axis_state = new float[numAxes];

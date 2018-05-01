@@ -60,11 +60,11 @@ namespace OpenTK
         {
             if (mode == null)
             {
-                throw new ArgumentNullException("mode");
+                throw new ArgumentNullException(nameof(mode));
             }
             if (control == null)
             {
-                throw new ArgumentNullException("control");
+                throw new ArgumentNullException(nameof(control));
             }
 
             // Note: the X11 window is created with a default XVisualInfo,

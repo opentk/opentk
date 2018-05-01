@@ -42,7 +42,7 @@ namespace OpenTK
         {
             if (points == null)
             {
-                throw new ArgumentNullException("points", "Must point to a valid list of Vector2 structures.");
+                throw new ArgumentNullException(nameof(points), "Must point to a valid list of Vector2 structures.");
             }
 
             this.points = new List<Vector2>(points);
@@ -57,7 +57,7 @@ namespace OpenTK
         {
             if (points == null)
             {
-                throw new ArgumentNullException("points", "Must point to a valid list of Vector2 structures.");
+                throw new ArgumentNullException(nameof(points), "Must point to a valid list of Vector2 structures.");
             }
 
             this.points = new List<Vector2>(points);
@@ -73,7 +73,7 @@ namespace OpenTK
         {
             if (points == null)
             {
-                throw new ArgumentNullException("points", "Must point to a valid list of Vector2 structures.");
+                throw new ArgumentNullException(nameof(points), "Must point to a valid list of Vector2 structures.");
             }
 
             Parallel = parallel;
@@ -89,7 +89,7 @@ namespace OpenTK
         {
             if (points == null)
             {
-                throw new ArgumentNullException("points", "Must point to a valid list of Vector2 structures.");
+                throw new ArgumentNullException(nameof(points), "Must point to a valid list of Vector2 structures.");
             }
 
             Parallel = parallel;

@@ -946,19 +946,19 @@ namespace OpenTK
         {
             if (fovy <= 0 || fovy > Math.PI)
             {
-                throw new ArgumentOutOfRangeException("fovy");
+                throw new ArgumentOutOfRangeException(nameof(fovy));
             }
             if (aspect <= 0)
             {
-                throw new ArgumentOutOfRangeException("aspect");
+                throw new ArgumentOutOfRangeException(nameof(aspect));
             }
             if (zNear <= 0)
             {
-                throw new ArgumentOutOfRangeException("zNear");
+                throw new ArgumentOutOfRangeException(nameof(zNear));
             }
             if (zFar <= 0)
             {
-                throw new ArgumentOutOfRangeException("zFar");
+                throw new ArgumentOutOfRangeException(nameof(zFar));
             }
 
             float yMax = zNear * (float)Math.Tan(0.5f * fovy);
@@ -1016,15 +1016,15 @@ namespace OpenTK
         {
             if (zNear <= 0)
             {
-                throw new ArgumentOutOfRangeException("zNear");
+                throw new ArgumentOutOfRangeException(nameof(zNear));
             }
             if (zFar <= 0)
             {
-                throw new ArgumentOutOfRangeException("zFar");
+                throw new ArgumentOutOfRangeException(nameof(zFar));
             }
             if (zNear >= zFar)
             {
-                throw new ArgumentOutOfRangeException("zNear");
+                throw new ArgumentOutOfRangeException(nameof(zNear));
             }
 
             float x = (2.0f * zNear) / (right - left);

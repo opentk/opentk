@@ -24,19 +24,19 @@ namespace OpenTK
             // Refresh rate may be zero, since this information may not be available on some platforms.
             if (width <= 0)
             {
-                throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
+                throw new ArgumentOutOfRangeException(nameof(width), "Must be greater than zero.");
             }
             if (height <= 0)
             {
-                throw new ArgumentOutOfRangeException("height", "Must be greater than zero.");
+                throw new ArgumentOutOfRangeException(nameof(height), "Must be greater than zero.");
             }
             if (bitsPerPixel <= 0)
             {
-                throw new ArgumentOutOfRangeException("bitsPerPixel", "Must be greater than zero.");
+                throw new ArgumentOutOfRangeException(nameof(bitsPerPixel), "Must be greater than zero.");
             }
             if (refreshRate < 0)
             {
-                throw new ArgumentOutOfRangeException("refreshRate", "Must be greater than, or equal to zero.");
+                throw new ArgumentOutOfRangeException(nameof(refreshRate), "Must be greater than, or equal to zero.");
             }
 
             bounds = new Rectangle(x, y, width, height);

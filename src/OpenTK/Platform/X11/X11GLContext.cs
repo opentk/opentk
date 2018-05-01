@@ -42,11 +42,11 @@ namespace OpenTK.Platform.X11
         {
             if (mode == null)
             {
-                throw new ArgumentNullException("mode");
+                throw new ArgumentNullException(nameof(mode));
             }
             if (window == null)
             {
-                throw new ArgumentNullException("window");
+                throw new ArgumentNullException(nameof(window));
             }
 
             // Do not move this lower, as almost everything requires the Display
@@ -144,7 +144,7 @@ namespace OpenTK.Platform.X11
             }
             if (window == null)
             {
-                throw new ArgumentNullException("window");
+                throw new ArgumentNullException(nameof(window));
             }
 
             Handle = handle;
@@ -259,11 +259,11 @@ namespace OpenTK.Platform.X11
         {
             if (window == null)
             {
-                throw new ArgumentNullException("window");
+                throw new ArgumentNullException(nameof(window));
             }
             if (e == null)
             {
-                throw new ArgumentNullException("e");
+                throw new ArgumentNullException(nameof(e));
             }
             if (window.Display != display)
             {

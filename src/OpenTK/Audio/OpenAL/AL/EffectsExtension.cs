@@ -136,7 +136,7 @@ namespace OpenTK.Audio.OpenAL
         {
             if (n <= 0)
             {
-                throw new ArgumentOutOfRangeException("n", "Must be higher than 0.");
+                throw new ArgumentOutOfRangeException(nameof(n), "Must be higher than 0.");
             }
             int[] effects = new int[n];
             GenEffects(n, out effects[0]);
@@ -210,7 +210,7 @@ namespace OpenTK.Audio.OpenAL
         {
             if (effects == null)
             {
-                throw new ArgumentNullException("effects");
+                throw new ArgumentNullException(nameof(effects));
             }
             DeleteEffects(effects.Length, ref effects[0]);
         }
@@ -221,7 +221,7 @@ namespace OpenTK.Audio.OpenAL
         {
             if (effects == null)
             {
-                throw new ArgumentNullException("effects");
+                throw new ArgumentNullException(nameof(effects));
             }
             DeleteEffects(effects.Length, ref effects[0]);
         }
@@ -490,7 +490,7 @@ namespace OpenTK.Audio.OpenAL
 
             if (n <= 0)
             {
-                throw new ArgumentOutOfRangeException("n", "Must be higher than 0.");
+                throw new ArgumentOutOfRangeException(nameof(n), "Must be higher than 0.");
             }
             int[] filters = new int[n];
             GenFilters(filters.Length, out filters[0]);
@@ -559,7 +559,7 @@ namespace OpenTK.Audio.OpenAL
         {
             if (filters == null)
             {
-                throw new ArgumentNullException("filters");
+                throw new ArgumentNullException(nameof(filters));
             }
             DeleteFilters(filters.Length, ref filters[0]);
         }
@@ -570,7 +570,7 @@ namespace OpenTK.Audio.OpenAL
         {
             if (filters == null)
             {
-                throw new ArgumentNullException("filters");
+                throw new ArgumentNullException(nameof(filters));
             }
             DeleteFilters(filters.Length, ref filters[0]);
         }
@@ -776,7 +776,7 @@ namespace OpenTK.Audio.OpenAL
         {
             if (n <= 0)
             {
-                throw new ArgumentOutOfRangeException("n", "Must be higher than 0.");
+                throw new ArgumentOutOfRangeException(nameof(n), "Must be higher than 0.");
             }
             int[] slots = new int[n];
             GenAuxiliaryEffectSlots(slots.Length, out slots[0]);
@@ -845,7 +845,7 @@ namespace OpenTK.Audio.OpenAL
         {
             if (slots == null)
             {
-                throw new ArgumentNullException("slots");
+                throw new ArgumentNullException(nameof(slots));
             }
             DeleteAuxiliaryEffectSlots(slots.Length, ref slots[0]);
         }
@@ -856,7 +856,7 @@ namespace OpenTK.Audio.OpenAL
         {
             if (slots == null)
             {
-                throw new ArgumentNullException("slots");
+                throw new ArgumentNullException(nameof(slots));
             }
             DeleteAuxiliaryEffectSlots(slots.Length, ref slots[0]);
         }

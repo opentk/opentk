@@ -2400,7 +2400,7 @@ namespace OpenTK.Platform.Windows
             {
                 if (index < 0 || index > Size * Count)
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
                 unsafe
                 {
