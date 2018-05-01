@@ -236,8 +236,8 @@ namespace OpenTK.Audio
             }
             if (Device == IntPtr.Zero)
             {
-                device_name = AudioContext.DefaultDevice;
-                Device = Alc.OpenDevice(AudioContext.DefaultDevice); // try to open named default device
+                device_name = DefaultDevice;
+                Device = Alc.OpenDevice(DefaultDevice); // try to open named default device
             }
             if (Device == IntPtr.Zero)
             {
@@ -313,7 +313,7 @@ namespace OpenTK.Audio
 
             lock (audio_context_lock)
             {
-                available_contexts.Add(this.context_handle, this);
+                available_contexts.Add(context_handle, this);
                 context_exists = true;
             }
         }
@@ -360,7 +360,7 @@ namespace OpenTK.Audio
                     }
                     else
                     {
-                        return AudioContext.CurrentContext == this;
+                        return CurrentContext == this;
                     }
                 }
             }
@@ -368,11 +368,11 @@ namespace OpenTK.Audio
             {
                 if (value)
                 {
-                    AudioContext.MakeCurrent(this);
+                    MakeCurrent(this);
                 }
                 else
                 {
-                    AudioContext.MakeCurrent(null);
+                    MakeCurrent(null);
                 }
             }
         }
@@ -390,7 +390,7 @@ namespace OpenTK.Audio
         {
             if (disposed)
             {
-                throw new ObjectDisposedException(this.GetType().FullName);
+                throw new ObjectDisposedException(GetType().FullName);
             }
 
             new AudioDeviceErrorChecker(Device).Dispose();
@@ -405,7 +405,7 @@ namespace OpenTK.Audio
             {
                 if (disposed)
                 {
-                    throw new ObjectDisposedException(this.GetType().FullName);
+                    throw new ObjectDisposedException(GetType().FullName);
                 }
 
                 return Alc.GetError(Device);
@@ -427,10 +427,10 @@ namespace OpenTK.Audio
         {
             if (disposed)
             {
-                throw new ObjectDisposedException(this.GetType().FullName);
+                throw new ObjectDisposedException(GetType().FullName);
             }
 
-            AudioContext.MakeCurrent(this);
+            MakeCurrent(this);
         }
 
         /// <summary>
@@ -445,7 +445,7 @@ namespace OpenTK.Audio
             {
                 if (disposed)
                 {
-                    throw new ObjectDisposedException(this.GetType().FullName);
+                    throw new ObjectDisposedException(GetType().FullName);
                 }
 
                 return is_processing;
@@ -464,7 +464,7 @@ namespace OpenTK.Audio
             {
                 if (disposed)
                 {
-                    throw new ObjectDisposedException(this.GetType().FullName);
+                    throw new ObjectDisposedException(GetType().FullName);
                 }
 
                 return is_synchronized;
@@ -494,10 +494,10 @@ namespace OpenTK.Audio
         {
             if (disposed)
             {
-                throw new ObjectDisposedException(this.GetType().FullName);
+                throw new ObjectDisposedException(GetType().FullName);
             }
 
-            Alc.ProcessContext(this.context_handle);
+            Alc.ProcessContext(context_handle);
             IsProcessing = true;
         }
 
@@ -525,10 +525,10 @@ namespace OpenTK.Audio
         {
             if (disposed)
             {
-                throw new ObjectDisposedException(this.GetType().FullName);
+                throw new ObjectDisposedException(GetType().FullName);
             }
 
-            Alc.SuspendContext(this.context_handle);
+            Alc.SuspendContext(context_handle);
             IsProcessing = false;
         }
 
@@ -541,10 +541,10 @@ namespace OpenTK.Audio
         {
             if (disposed)
             {
-                throw new ObjectDisposedException(this.GetType().FullName);
+                throw new ObjectDisposedException(GetType().FullName);
             }
 
-            return Alc.IsExtensionPresent(this.Device, extension);
+            return Alc.IsExtensionPresent(Device, extension);
         }
 
         /// <summary>
@@ -556,7 +556,7 @@ namespace OpenTK.Audio
             {
                 if (disposed)
                 {
-                    throw new ObjectDisposedException(this.GetType().FullName);
+                    throw new ObjectDisposedException(GetType().FullName);
                 }
 
                 return device_name;
@@ -583,7 +583,7 @@ namespace OpenTK.Audio
                     else
                     {
                         AudioContext context;
-                        AudioContext.available_contexts.TryGetValue(
+                        available_contexts.TryGetValue(
                             (ContextHandle)Alc.GetCurrentContext(),
                             out context);
                         return context;
@@ -607,7 +607,7 @@ namespace OpenTK.Audio
         /// </summary>
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -615,9 +615,9 @@ namespace OpenTK.Audio
         {
             if (!disposed)
             {
-                if (this.IsCurrent)
+                if (IsCurrent)
                 {
-                    this.IsCurrent = false;
+                    IsCurrent = false;
                 }
 
                 if (context_handle != ContextHandle.Zero)
@@ -643,7 +643,7 @@ namespace OpenTK.Audio
         /// </summary>
         ~AudioContext()
         {
-            this.Dispose(false);
+            Dispose(false);
         }
 
         /// <summary>
@@ -672,7 +672,7 @@ namespace OpenTK.Audio
         public override string ToString()
         {
             return String.Format("{0} (handle: {1}, device: {2})",
-                                 this.device_name, this.context_handle, this.Device);
+                                 device_name, context_handle, Device);
         }
     }
 }
