@@ -93,21 +93,21 @@ namespace OpenTK
             // get the required handles from the X11 API.
             display = (IntPtr)GetStaticFieldValue(xplatui, "DisplayHandle");
             rootWindow = (IntPtr)GetStaticFieldValue(xplatui, "RootWindow");
-            int screen = (int)GetStaticFieldValue(xplatui, "ScreenNo");
+            var screen = (int)GetStaticFieldValue(xplatui, "ScreenNo");
 
             WindowInfo = Utilities.CreateX11WindowInfo(display, screen, control.Handle, rootWindow, IntPtr.Zero);
         }
 
         public IGraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
         {
-            GraphicsContext context =  new GraphicsContext(mode, WindowInfo, major, minor, flags);
+            var context =  new GraphicsContext(mode, WindowInfo, major, minor, flags);
             mode = context.GraphicsMode;
 
             // get the XVisualInfo for this GraphicsMode
-            XVisualInfo info = new XVisualInfo();
+            var info = new XVisualInfo();
             info.VisualID = mode.Index.Value;
             int dummy;
-            IntPtr infoPtr = XGetVisualInfo(display, 1 /* VisualInfoMask.ID */, ref info, out dummy);
+            var infoPtr = XGetVisualInfo(display, 1 /* VisualInfoMask.ID */, ref info, out dummy);
             info = (XVisualInfo)Marshal.PtrToStructure(infoPtr, typeof(XVisualInfo));
 
             // set the X11 colormap.

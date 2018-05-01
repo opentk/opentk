@@ -87,7 +87,7 @@ namespace OpenTK.Platform.X11
             window.Display = Functions.XOpenDisplay(IntPtr.Zero);
             using (new XLock(window.Display))
             {
-                XSetWindowAttributes attr = new XSetWindowAttributes();
+                var attr = new XSetWindowAttributes();
 
                 window.Screen = Functions.XDefaultScreen(window.Display);
                 window.RootWindow = Functions.XRootWindow(window.Display, window.Screen);
@@ -109,7 +109,7 @@ namespace OpenTK.Platform.X11
             // *or* a custom ClientMessage event that instructs us to exit.
             // See SendExitEvent() below.
             using (new XLock(window.Display))
-            using (XIEventMask mask = new XIEventMask(1,
+            using (var mask = new XIEventMask(1,
                 XIEventMasks.RawKeyPressMask |
                 XIEventMasks.RawKeyReleaseMask |
                 XIEventMasks.RawButtonPressMask |
@@ -145,7 +145,7 @@ namespace OpenTK.Platform.X11
                     {
                         XIOpCode = major;
 
-                        int minor = 2;
+                        var minor = 2;
                         while (minor >= 0)
                         {
                             if (XI.QueryVersion(display, ref major, ref minor) == ErrorCodes.Success)
@@ -171,8 +171,8 @@ namespace OpenTK.Platform.X11
         {
             lock (Sync)
             {
-                KeyboardState state = new KeyboardState();
-                foreach (XIKeyboard k in keyboards)
+                var state = new KeyboardState();
+                foreach (var k in keyboards)
                 {
                     state.MergeBits(k.State);
                 }
@@ -208,7 +208,7 @@ namespace OpenTK.Platform.X11
         {
             lock (Sync)
             {
-                MouseState master = new MouseState();
+                var master = new MouseState();
                 foreach (var d in devices)
                 {
                     master.MergeBits(d.State);
@@ -233,7 +233,7 @@ namespace OpenTK.Platform.X11
         {
             lock (Sync)
             {
-                MouseState master = (this as IMouseDriver2).GetState();
+                var master = (this as IMouseDriver2).GetState();
                 master.X = (int)Interlocked.Read(ref cursor_x);
                 master.Y = (int)Interlocked.Read(ref cursor_y);
                 return master;
@@ -265,24 +265,24 @@ namespace OpenTK.Platform.X11
                 int count;
                 unsafe
                 {
-                    XIDeviceInfo* list = (XIDeviceInfo*)XI.QueryDevice(window.Display,
+                    var list = (XIDeviceInfo*)XI.QueryDevice(window.Display,
                         XI.XIAllDevices, out count);
 
                     Debug.Print("Refreshing input device list");
                     Debug.Print("{0} input devices detected", count);
 
-                    for (int i = 0; i < count; i++)
+                    for (var i = 0; i < count; i++)
                     {
                         switch ((list + i)->use)
                         {
                             case XIDeviceType.MasterKeyboard:
                             //case XIDeviceType.SlaveKeyboard:
                                 {
-                                    XIKeyboard k = new XIKeyboard();
+                                    var k = new XIKeyboard();
                                     k.DeviceInfo = *(list + i);
                                     k.State.SetIsConnected(k.DeviceInfo.enabled);
                                     k.Name = Marshal.PtrToStringAnsi(k.DeviceInfo.name);
-                                    int id = k.DeviceInfo.deviceid;
+                                    var id = k.DeviceInfo.deviceid;
                                     if (!keyboard_ids.ContainsKey(id))
                                     {
                                         keyboard_ids.Add(k.DeviceInfo.deviceid, 0);
@@ -296,7 +296,7 @@ namespace OpenTK.Platform.X11
                             //case XIDeviceType.SlavePointer:
                             case XIDeviceType.FloatingSlave:
                                 {
-                                    XIMouse d = new XIMouse();
+                                    var d = new XIMouse();
                                     d.DeviceInfo = *(list + i);
 
                                     d.State.SetIsConnected(d.DeviceInfo.enabled);
@@ -305,21 +305,21 @@ namespace OpenTK.Platform.X11
                                         i, d.Name, d.DeviceInfo.enabled ? "enabled" : "disabled");
 
                                     // Decode the XIDeviceInfo to axes, buttons and scroll types
-                                    for (int j = 0; j < d.DeviceInfo.num_classes; j++)
+                                    for (var j = 0; j < d.DeviceInfo.num_classes; j++)
                                     {
-                                        XIAnyClassInfo* class_info = *((XIAnyClassInfo**)d.DeviceInfo.classes + j);
+                                        var class_info = *((XIAnyClassInfo**)d.DeviceInfo.classes + j);
                                         switch (class_info->type)
                                         {
                                             case XIClassType.Button:
                                                 {
-                                                    XIButtonClassInfo* button = (XIButtonClassInfo*)class_info;
+                                                    var button = (XIButtonClassInfo*)class_info;
                                                     Debug.Print("\t{0} buttons", button->num_buttons);
                                                 }
                                                 break;
 
                                             case XIClassType.Scroll:
                                                 {
-                                                    XIScrollClassInfo* scroll = (XIScrollClassInfo*)class_info;
+                                                    var scroll = (XIScrollClassInfo*)class_info;
                                                     switch (scroll->scroll_type)
                                                     {
                                                         case XIScrollType.Vertical:
@@ -344,7 +344,7 @@ namespace OpenTK.Platform.X11
                                                     // We use relative x/y valuators for mouse movement.
                                                     // Iff these are not available, we fall back to
                                                     // absolute x/y valuators.
-                                                    XIValuatorClassInfo* valuator = (XIValuatorClassInfo*)class_info;
+                                                    var valuator = (XIValuatorClassInfo*)class_info;
                                                     if (valuator->label == XI.RelativeX)
                                                     {
                                                         Debug.WriteLine("\tRelative X movement");
@@ -373,7 +373,7 @@ namespace OpenTK.Platform.X11
                                                     }
                                                     else
                                                     {
-                                                        IntPtr label = Functions.XGetAtomName(window.Display, valuator->label);
+                                                        var label = Functions.XGetAtomName(window.Display, valuator->label);
                                                         Debug.Print("\tUnknown valuator {0}",
                                                             Marshal.PtrToStringAnsi(label));
                                                         Functions.XFree(label);
@@ -384,7 +384,7 @@ namespace OpenTK.Platform.X11
                                     }
 
                                     // Map the hardware device id to the current XIMouse id
-                                    int id = d.DeviceInfo.deviceid;
+                                    var id = d.DeviceInfo.deviceid;
                                     if (!rawids.ContainsKey(id))
                                     {
                                         rawids.Add(id, 0);
@@ -404,7 +404,7 @@ namespace OpenTK.Platform.X11
         {
             while (!disposed)
             {
-                XEvent e = new XEvent();
+                var e = new XEvent();
                 XGenericEventCookie cookie;
 
                 using (new XLock(window.Display))
@@ -464,7 +464,7 @@ namespace OpenTK.Platform.X11
             {
                 unsafe
                 {
-                    XIRawEvent raw = *(XIRawEvent*)cookie.data;
+                    var raw = *(XIRawEvent*)cookie.data;
                     XIMouse mouse;
                     XIKeyboard keyboard;
 
@@ -482,7 +482,7 @@ namespace OpenTK.Platform.X11
                             if (GetMouseDevice(raw.deviceid, out mouse))
                             {
                                 float dx, dy;
-                                MouseButton button = X11KeyMap.TranslateButton(raw.detail, out dx, out dy);
+                                var button = X11KeyMap.TranslateButton(raw.detail, out dx, out dy);
                                 mouse.State[button] = raw.evtype == XIEventType.RawButtonPress;
                                 if (mouse.ScrollX.number == -1 && mouse.ScrollY.number == -1)
                                 {
@@ -587,8 +587,8 @@ namespace OpenTK.Platform.X11
                 // Find the offset where this value is stored.
                 // The offset is equal to the number of bits
                 // set in raw.valuators.mask between [0, bit)
-                int offset = 0;
-                for (int i = 0; i < bit; i++)
+                var offset = 0;
+                for (var i = 0; i < bit; i++)
                 {
                     if (IsBitSet(raw.valuators.mask, i))
                     {
@@ -602,12 +602,12 @@ namespace OpenTK.Platform.X11
 
         private static bool IsEventValid(IntPtr display, ref XEvent e, IntPtr arg)
         {
-            bool valid = false;
+            var valid = false;
             switch (e.type)
             {
                 case XEventName.GenericEvent:
                 {
-                    long extension = (long)e.GenericEventCookie.extension;
+                    var extension = (long)e.GenericEventCookie.extension;
                     valid =
                         extension == arg.ToInt64() &&
                         (e.GenericEventCookie.evtype == (int)XIEventType.RawKeyPress ||
@@ -643,7 +643,7 @@ namespace OpenTK.Platform.X11
             // and exit the input event loop.
             using (new XLock(API.DefaultDisplay))
             {
-                XEvent ev = new XEvent();
+                var ev = new XEvent();
                 ev.type = XEventName.ClientMessage;
                 ev.ClientMessageEvent.display = window.Display;
                 ev.ClientMessageEvent.window = window.Handle;

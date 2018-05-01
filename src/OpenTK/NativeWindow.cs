@@ -105,7 +105,7 @@ namespace OpenTK
 
             thread_id = System.Threading.Thread.CurrentThread.ManagedThreadId;
 
-            IPlatformFactory factory = Factory.Default;
+            var factory = Factory.Default;
             implementation = factory.CreateNativeWindow(x, y, width, height, title, mode, options, this.device);
             factory.RegisterResource(this);
 

@@ -25,7 +25,7 @@ namespace OpenTK.Tests.Math
 				var cut = new Quaternion(eulerValues.X, eulerValues.Y, eulerValues.Z);
 
 				//Assert: Use helper, to check if part of the two correct axis is zero. I just want check the direction
-				Vector3 resultXYZ = cut.Xyz;
+				var resultXYZ = cut.Xyz;
 
 				Assert.True(QuaternionTestHelper.VerifyEqualSingleDirection(resultXYZ, expectedResult));
 			}
@@ -44,7 +44,7 @@ namespace OpenTK.Tests.Math
 				var cut = new Quaternion(eulerValues);
 
 				//Assert: Use helper, to check if part of the two correct axis is zero. I just want check the direction
-				Vector3 resultXYZ = cut.Xyz;
+				var resultXYZ = cut.Xyz;
 
 				Assert.True(QuaternionTestHelper.VerifyEqualSingleDirection(resultXYZ, expectedResult));
 			}
@@ -71,7 +71,7 @@ namespace OpenTK.Tests.Math
 				var cut = Quaternion.FromEulerAngles(eulerValues.X, eulerValues.Y, eulerValues.Z);
 
 				//Assert: Use helper, to check if part of the two correct axis is zero. I just want check the direction
-				Vector3 resultXYZ = cut.Xyz;
+				var resultXYZ = cut.Xyz;
 
 				Assert.True(QuaternionTestHelper.VerifyEqualSingleDirection(resultXYZ, expectedResult));
 			}
@@ -90,7 +90,7 @@ namespace OpenTK.Tests.Math
 				var cut = Quaternion.FromEulerAngles(eulerValues);
 
 				//Assert: Use helper, to check if part of the two correct axis is zero. I just want check the direction
-				Vector3 resultXYZ = cut.Xyz;
+				var resultXYZ = cut.Xyz;
 
 				Assert.True(QuaternionTestHelper.VerifyEqualSingleDirection(resultXYZ, expectedResult));
 			}
@@ -110,7 +110,7 @@ namespace OpenTK.Tests.Math
 				Quaternion.FromEulerAngles(ref eulerValues, out cut);
 
 				//Assert: Use helper, to check if part of the two correct axis is zero. I just want check the direction
-				Vector3 resultXYZ = cut.Xyz;
+				var resultXYZ = cut.Xyz;
 
 				Assert.True(QuaternionTestHelper.VerifyEqualSingleDirection(resultXYZ, expectedResult));
 			}

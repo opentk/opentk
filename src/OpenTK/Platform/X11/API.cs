@@ -81,7 +81,7 @@ namespace OpenTK.Platform.X11
 
         static API()
         {
-            int has_threaded_x = Functions.XInitThreads();
+            var has_threaded_x = Functions.XInitThreads();
             Debug.Print("Initializing threaded X11: {0}.", has_threaded_x.ToString());
 
             DefaultDisplay = Functions.XOpenDisplay(IntPtr.Zero);
@@ -1320,7 +1320,7 @@ XF86VidModeGetGammaRampSize(
             {
                 if (attributes.HasValue)
                 {
-                    XSetWindowAttributes attr = attributes.Value;
+                    var attr = attributes.Value;
                     return XCreateWindow(display, parent, x, y, width, height, border_width, depth,
                         (int)@class, visual, (IntPtr)valuemask, &attr);
                 }
@@ -1466,13 +1466,13 @@ XF86VidModeGetGammaRampSize(
             {
                 //ptr = XRRSizes(dpy, screen, &nsizes);
 
-                byte* data = (byte*)XRRSizes(dpy, screen, &count); //(byte*)ptr;
+                var data = (byte*)XRRSizes(dpy, screen, &count); //(byte*)ptr;
                 if (count == 0)
                 {
                     return null;
                 }
                 sizes = new XRRScreenSize[count];
-                for (int i = 0; i < count; i++)
+                for (var i = 0; i < count; i++)
                 {
                     sizes[i] = new XRRScreenSize();
                     sizes[i] = (XRRScreenSize)Marshal.PtrToStructure((IntPtr)data, typeof(XRRScreenSize));
@@ -1492,13 +1492,13 @@ XF86VidModeGetGammaRampSize(
             int count;
             unsafe
             {
-                short* data = (short*)XRRRates(dpy, screen, size_index, &count);
+                var data = (short*)XRRRates(dpy, screen, size_index, &count);
                 if (count == 0)
                 {
                     return null;
                 }
                 rates = new short[count];
-                for (int i = 0; i < count; i++)
+                for (var i = 0; i < count; i++)
                 {
                     rates[i] = *(data + i);
                 }
@@ -1520,13 +1520,13 @@ XF86VidModeGetGammaRampSize(
             unsafe
             {
                 int count;
-                int* data = XListDepths(display, screen_number, &count);
+                var data = XListDepths(display, screen_number, &count);
                 if (count == 0)
                 {
                     return null;
                 }
-                int[] depths = new int[count];
-                for (int i = 0; i < count; i++)
+                var depths = new int[count];
+                for (var i = 0; i < count; i++)
                 {
                     depths[i] = *(data + i);
                 }

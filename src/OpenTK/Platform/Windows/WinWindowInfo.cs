@@ -109,7 +109,7 @@ namespace OpenTK.Platform.Windows
             {
                 return false;
             }
-            WinWindowInfo info = (WinWindowInfo)obj;
+            var info = (WinWindowInfo)obj;
 
             if (info == null)
             {

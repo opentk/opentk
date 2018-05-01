@@ -374,7 +374,7 @@ namespace OpenTK
         /// </summary>
         public Matrix4d Normalized()
         {
-            Matrix4d m = this;
+            var m = this;
             m.Normalize();
             return m;
         }
@@ -396,7 +396,7 @@ namespace OpenTK
         /// </summary>
         public Matrix4d Inverted()
         {
-            Matrix4d m = this;
+            var m = this;
             if (m.Determinant != 0)
             {
                 m.Invert();
@@ -409,7 +409,7 @@ namespace OpenTK
         /// </summary>
         public Matrix4d ClearTranslation()
         {
-            Matrix4d m = this;
+            var m = this;
             m.Row3.Xyz = Vector3d.Zero;
             return m;
         }
@@ -418,7 +418,7 @@ namespace OpenTK
         /// </summary>
         public Matrix4d ClearScale()
         {
-            Matrix4d m = this;
+            var m = this;
             m.Row0.Xyz = m.Row0.Xyz.Normalized();
             m.Row1.Xyz = m.Row1.Xyz.Normalized();
             m.Row2.Xyz = m.Row2.Xyz.Normalized();
@@ -429,7 +429,7 @@ namespace OpenTK
         /// </summary>
         public Matrix4d ClearRotation()
         {
-            Matrix4d m = this;
+            var m = this;
             m.Row0.Xyz = new Vector3d(m.Row0.Xyz.Length, 0, 0);
             m.Row1.Xyz = new Vector3d(0, m.Row1.Xyz.Length, 0);
             m.Row2.Xyz = new Vector3d(0, 0, m.Row2.Xyz.Length);
@@ -440,7 +440,7 @@ namespace OpenTK
         /// </summary>
         public Matrix4d ClearProjection()
         {
-            Matrix4d m = this;
+            var m = this;
             m.Column3 = Vector4d.Zero;
             return m;
         }
@@ -474,12 +474,12 @@ namespace OpenTK
 
             // code below adapted from Blender
 
-            Quaterniond q = new Quaterniond();
-            double trace = 0.25 * (row0[0] + row1[1] + row2[2] + 1.0);
+            var q = new Quaterniond();
+            var trace = 0.25 * (row0[0] + row1[1] + row2[2] + 1.0);
 
             if (trace > 0)
             {
-                double sq = Math.Sqrt(trace);
+                var sq = Math.Sqrt(trace);
 
                 q.W = sq;
                 sq = 1.0 / (4.0 * sq);
@@ -489,7 +489,7 @@ namespace OpenTK
             }
             else if (row0[0] > row1[1] && row0[0] > row2[2])
             {
-                double sq = 2.0 * Math.Sqrt(1.0 + row0[0] - row1[1] - row2[2]);
+                var sq = 2.0 * Math.Sqrt(1.0 + row0[0] - row1[1] - row2[2]);
 
                 q.X = 0.25 * sq;
                 sq = 1.0 / sq;
@@ -499,7 +499,7 @@ namespace OpenTK
             }
             else if (row1[1] > row2[2])
             {
-                double sq = 2.0 * Math.Sqrt(1.0 + row1[1] - row0[0] - row2[2]);
+                var sq = 2.0 * Math.Sqrt(1.0 + row1[1] - row0[0] - row2[2]);
 
                 q.Y = 0.25 * sq;
                 sq = 1.0 / sq;
@@ -509,7 +509,7 @@ namespace OpenTK
             }
             else
             {
-                double sq = 2.0 * Math.Sqrt(1.0 + row2[2] - row0[0] - row1[1]);
+                var sq = 2.0 * Math.Sqrt(1.0 + row2[2] - row0[0] - row1[1]);
 
                 q.Z = 0.25 * sq;
                 sq = 1.0 / sq;
@@ -544,9 +544,9 @@ namespace OpenTK
             double axisX = axis.X, axisY = axis.Y, axisZ = axis.Z;
 
             // calculate angles
-            double cos = Math.Cos(-angle);
-            double sin = Math.Sin(-angle);
-            double t = 1.0f - cos;
+            var cos = Math.Cos(-angle);
+            var sin = Math.Sin(-angle);
+            var t = 1.0f - cos;
 
             // do the conversion math once
             double tXX = t * axisX * axisX,
@@ -595,8 +595,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix4d instance.</param>
         public static void CreateRotationX(double angle, out Matrix4d result)
         {
-            double cos = Math.Cos(angle);
-            double sin = Math.Sin(angle);
+            var cos = Math.Cos(angle);
+            var sin = Math.Sin(angle);
 
             result.Row0 = Vector4d.UnitX;
             result.Row1 = new Vector4d(0, cos, sin, 0);
@@ -623,8 +623,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix4d instance.</param>
         public static void CreateRotationY(double angle, out Matrix4d result)
         {
-            double cos = Math.Cos(angle);
-            double sin = Math.Sin(angle);
+            var cos = Math.Cos(angle);
+            var sin = Math.Sin(angle);
 
             result.Row0 = new Vector4d(cos, 0, -sin, 0);
             result.Row1 = Vector4d.UnitY;
@@ -651,8 +651,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix4d instance.</param>
         public static void CreateRotationZ(double angle, out Matrix4d result)
         {
-            double cos = Math.Cos(angle);
-            double sin = Math.Sin(angle);
+            var cos = Math.Cos(angle);
+            var sin = Math.Sin(angle);
 
             result.Row0 = new Vector4d(cos, sin, 0, 0);
             result.Row1 = new Vector4d(-sin, cos, 0, 0);
@@ -764,9 +764,9 @@ namespace OpenTK
         {
             result = new Matrix4d();
 
-            double invRL = 1 / (right - left);
-            double invTB = 1 / (top - bottom);
-            double invFN = 1 / (zFar - zNear);
+            var invRL = 1 / (right - left);
+            var invTB = 1 / (top - bottom);
+            var invFN = 1 / (zFar - zNear);
 
             result.M11 = 2 * invRL;
             result.M22 = 2 * invTB;
@@ -832,10 +832,10 @@ namespace OpenTK
                 throw new ArgumentOutOfRangeException(nameof(zFar));
             }
 
-            double yMax = zNear * Math.Tan(0.5 * fovy);
-            double yMin = -yMax;
-            double xMin = yMin * aspect;
-            double xMax = yMax * aspect;
+            var yMax = zNear * Math.Tan(0.5 * fovy);
+            var yMin = -yMax;
+            var xMin = yMin * aspect;
+            var xMax = yMax * aspect;
 
             CreatePerspectiveOffCenter(xMin, xMax, yMin, yMax, zNear, zFar, out result);
         }
@@ -898,12 +898,12 @@ namespace OpenTK
                 throw new ArgumentOutOfRangeException(nameof(zNear));
             }
 
-            double x = (2.0 * zNear) / (right - left);
-            double y = (2.0 * zNear) / (top - bottom);
-            double a = (right + left) / (right - left);
-            double b = (top + bottom) / (top - bottom);
-            double c = -(zFar + zNear) / (zFar - zNear);
-            double d = -(2.0 * zFar * zNear) / (zFar - zNear);
+            var x = (2.0 * zNear) / (right - left);
+            var y = (2.0 * zNear) / (top - bottom);
+            var a = (right + left) / (right - left);
+            var b = (top + bottom) / (top - bottom);
+            var c = -(zFar + zNear) / (zFar - zNear);
+            var d = -(2.0 * zFar * zNear) / (zFar - zNear);
 
             result = new Matrix4d(x, 0, 0, 0,
                                  0, y, 0, 0,
@@ -1004,8 +1004,8 @@ namespace OpenTK
         /// <returns>A rotation matrix</returns>
         public static Matrix4d RotateX(double angle)
         {
-            double cos = Math.Cos(angle);
-            double sin = Math.Sin(angle);
+            var cos = Math.Cos(angle);
+            var sin = Math.Sin(angle);
 
             Matrix4d result;
             result.Row0 = Vector4d .UnitX;
@@ -1022,8 +1022,8 @@ namespace OpenTK
         /// <returns>A rotation matrix</returns>
         public static Matrix4d RotateY(double angle)
         {
-            double cos = Math.Cos(angle);
-            double sin = Math.Sin(angle);
+            var cos = Math.Cos(angle);
+            var sin = Math.Sin(angle);
 
             Matrix4d result;
             result.Row0 = new Vector4d (cos, 0.0, -sin, 0.0);
@@ -1040,8 +1040,8 @@ namespace OpenTK
         /// <returns>A rotation matrix</returns>
         public static Matrix4d RotateZ(double angle)
         {
-            double cos = Math.Cos(angle);
-            double sin = Math.Sin(angle);
+            var cos = Math.Cos(angle);
+            var sin = Math.Sin(angle);
 
             Matrix4d result;
             result.Row0 = new Vector4d (cos, sin, 0.0, 0.0);
@@ -1059,9 +1059,9 @@ namespace OpenTK
         /// <returns>A rotation matrix</returns>
         public static Matrix4d Rotate(Vector3d axis, double angle)
         {
-            double cos = Math.Cos(-angle);
-            double sin = Math.Sin(-angle);
-            double t = 1.0 - cos;
+            var cos = Math.Cos(-angle);
+            var sin = Math.Sin(-angle);
+            var t = 1.0 - cos;
 
             axis.Normalize();
 
@@ -1095,16 +1095,16 @@ namespace OpenTK
         /// <returns>A Matrix that transforms world space to camera space</returns>
         public static Matrix4d LookAt(Vector3d eye, Vector3d target, Vector3d up)
         {
-            Vector3d z = Vector3d.Normalize(eye - target);
-            Vector3d x = Vector3d.Normalize(Vector3d.Cross(up, z));
-            Vector3d y = Vector3d.Normalize(Vector3d.Cross(z, x));
+            var z = Vector3d.Normalize(eye - target);
+            var x = Vector3d.Normalize(Vector3d.Cross(up, z));
+            var y = Vector3d.Normalize(Vector3d.Cross(z, x));
 
-            Matrix4d rot = new Matrix4d(new Vector4d (x.X, y.X, z.X, 0.0),
+            var rot = new Matrix4d(new Vector4d (x.X, y.X, z.X, 0.0),
                                         new Vector4d (x.Y, y.Y, z.Y, 0.0),
                                         new Vector4d (x.Z, y.Z, z.Z, 0.0),
                                         Vector4d .UnitW);
 
-            Matrix4d trans = CreateTranslation(-eye);
+            var trans = CreateTranslation(-eye);
 
             return trans * rot;
         }
@@ -1139,9 +1139,9 @@ namespace OpenTK
         /// <returns>A projection matrix that transforms camera space to raster space</returns>
         public static Matrix4d Frustum(double left, double right, double bottom, double top, double near, double far)
         {
-            double invRL = 1.0 / (right - left);
-            double invTB = 1.0 / (top - bottom);
-            double invFN = 1.0 / (far - near);
+            var invRL = 1.0 / (right - left);
+            var invTB = 1.0 / (top - bottom);
+            var invFN = 1.0 / (far - near);
             return new Matrix4d(new Vector4d (2.0 * near * invRL, 0.0, 0.0, 0.0),
                                new Vector4d (0.0, 2.0 * near * invTB, 0.0, 0.0),
                                new Vector4d ((right + left) * invRL, (top + bottom) * invTB, -(far + near) * invFN, -1.0),
@@ -1158,10 +1158,10 @@ namespace OpenTK
         /// <returns>A projection matrix that transforms camera space to raster space</returns>
         public static Matrix4d Perspective(double fovy, double aspect, double near, double far)
         {
-            double yMax = near * Math.Tan(0.5f * fovy);
-            double yMin = -yMax;
-            double xMin = yMin * aspect;
-            double xMax = yMax * aspect;
+            var yMax = near * Math.Tan(0.5f * fovy);
+            var yMin = -yMax;
+            var xMin = yMin * aspect;
+            var xMax = yMax * aspect;
 
             return Frustum(xMin, xMax, yMin, yMax, near, far);
         }
@@ -1312,21 +1312,21 @@ namespace OpenTK
                                 {mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W},
                                 {mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W},
                                 {mat.Row3.X, mat.Row3.Y, mat.Row3.Z, mat.Row3.W} };
-            int icol = 0;
-            int irow = 0;
-            for (int i = 0; i < 4; i++)
+            var icol = 0;
+            var irow = 0;
+            for (var i = 0; i < 4; i++)
             {
                 // Find the largest pivot value
-                double maxPivot = 0.0;
-                for (int j = 0; j < 4; j++)
+                var maxPivot = 0.0;
+                for (var j = 0; j < 4; j++)
                 {
                     if (pivotIdx[j] != 0)
                     {
-                        for (int k = 0; k < 4; ++k)
+                        for (var k = 0; k < 4; ++k)
                         {
                             if (pivotIdx[k] == -1)
                             {
-                                double absVal = Math.Abs(inverse[j, k]);
+                                var absVal = Math.Abs(inverse[j, k]);
                                 if (absVal > maxPivot)
                                 {
                                     maxPivot = absVal;
@@ -1347,9 +1347,9 @@ namespace OpenTK
                 // Swap rows over so pivot is on diagonal
                 if (irow != icol)
                 {
-                    for (int k = 0; k < 4; ++k)
+                    for (var k = 0; k < 4; ++k)
                     {
-                        double f = inverse[irow, k];
+                        var f = inverse[irow, k];
                         inverse[irow, k] = inverse[icol, k];
                         inverse[icol, k] = f;
                     }
@@ -1358,7 +1358,7 @@ namespace OpenTK
                 rowIdx[i] = irow;
                 colIdx[i] = icol;
 
-                double pivot = inverse[icol, icol];
+                var pivot = inverse[icol, icol];
                 // check for singular matrix
                 if (pivot == 0.0)
                 {
@@ -1367,22 +1367,22 @@ namespace OpenTK
                 }
 
                 // Scale row so it has a unit diagonal
-                double oneOverPivot = 1.0 / pivot;
+                var oneOverPivot = 1.0 / pivot;
                 inverse[icol, icol] = 1.0;
-                for (int k = 0; k < 4; ++k)
+                for (var k = 0; k < 4; ++k)
                 {
                     inverse[icol, k] *= oneOverPivot;
                 }
 
                 // Do elimination of non-diagonal elements
-                for (int j = 0; j < 4; ++j)
+                for (var j = 0; j < 4; ++j)
                 {
                     // check this isn't on the diagonal
                     if (icol != j)
                     {
-                        double f = inverse[j, icol];
+                        var f = inverse[j, icol];
                         inverse[j, icol] = 0.0;
-                        for (int k = 0; k < 4; ++k)
+                        for (var k = 0; k < 4; ++k)
                         {
                             inverse[j, k] -= inverse[icol, k] * f;
                         }
@@ -1390,13 +1390,13 @@ namespace OpenTK
                 }
             }
 
-            for (int j = 3; j >= 0; --j)
+            for (var j = 3; j >= 0; --j)
             {
-                int ir = rowIdx[j];
-                int ic = colIdx[j];
-                for (int k = 0; k < 4; ++k)
+                var ir = rowIdx[j];
+                var ic = colIdx[j];
+                for (var k = 0; k < 4; ++k)
                 {
-                    double f = inverse[k, ir];
+                    var f = inverse[k, ir];
                     inverse[k, ir] = inverse[k, ic];
                     inverse[k, ic] = f;
                 }

@@ -79,12 +79,12 @@ namespace OpenTK.Platform.SDL2
         private JoystickDevice<Sdl2JoystickDetails> OpenJoystick(int id)
         {
             JoystickDevice<Sdl2JoystickDetails> joystick = null;
-            int num_axes = 0;
-            int num_buttons = 0;
-            int num_hats = 0;
-            int num_balls = 0;
+            var num_axes = 0;
+            var num_buttons = 0;
+            var num_hats = 0;
+            var num_balls = 0;
 
-            IntPtr handle = SDL.JoystickOpen(id);
+            var handle = SDL.JoystickOpen(id);
             if (handle != IntPtr.Zero)
             {
                 num_axes = SDL.JoystickNumAxes(handle);
@@ -312,7 +312,7 @@ namespace OpenTK.Platform.SDL2
 
         public void ProcessJoystickEvent(JoyDeviceEvent ev)
         {
-            int id = ev.Which;
+            var id = ev.Which;
             if (id < 0)
             {
                 Debug.Print("[SDL2] Invalid joystick id {0} in {1}", id, ev.Type);
@@ -323,13 +323,13 @@ namespace OpenTK.Platform.SDL2
             {
                 case EventType.JOYDEVICEADDED:
                     {
-                        IntPtr handle = SDL.JoystickOpen(id);
+                        var handle = SDL.JoystickOpen(id);
                         if (handle != IntPtr.Zero)
                         {
-                            JoystickDevice<Sdl2JoystickDetails> joystick = OpenJoystick(id);
+                            var joystick = OpenJoystick(id);
 
-                            int instance_id = joystick.Details.InstanceId;
-                            int device_id = id;
+                            var instance_id = joystick.Details.InstanceId;
+                            var device_id = id;
 
                             if (joystick != null)
                             {
@@ -352,10 +352,10 @@ namespace OpenTK.Platform.SDL2
                 case EventType.JOYDEVICEREMOVED:
                     if (IsJoystickInstanceValid(id))
                     {
-                        int instance_id = id;
-                        int device_id = sdl_instanceid_to_joysticks[instance_id];
+                        var instance_id = id;
+                        var device_id = sdl_instanceid_to_joysticks[instance_id];
 
-                        JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[device_id];
+                        var joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[device_id];
                         joystick.Details.IsConnected = false;
 
                         sdl_instanceid_to_joysticks.Remove(instance_id);
@@ -370,12 +370,12 @@ namespace OpenTK.Platform.SDL2
 
         public void ProcessJoystickEvent(JoyAxisEvent ev)
         {
-            int id = ev.Which;
+            var id = ev.Which;
             if (IsJoystickInstanceValid(id))
             {
-                int index = sdl_instanceid_to_joysticks[id];
-                JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
-                float value = ev.Value * RangeMultiplier;
+                var index = sdl_instanceid_to_joysticks[id];
+                var joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
+                var value = ev.Value * RangeMultiplier;
                 joystick.SetAxis(ev.Axis, value);
                 joystick.Details.PacketNumber = Math.Max(0, unchecked(joystick.Details.PacketNumber + 1));
             }
@@ -387,11 +387,11 @@ namespace OpenTK.Platform.SDL2
 
         public void ProcessJoystickEvent(JoyBallEvent ev)
         {
-            int id = ev.Which;
+            var id = ev.Which;
             if (IsJoystickInstanceValid(id))
             {
-                int index = sdl_instanceid_to_joysticks[id];
-                JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
+                var index = sdl_instanceid_to_joysticks[id];
+                var joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
                 // Todo: does it make sense to support balls?
                 joystick.Details.PacketNumber = Math.Max(0, unchecked(joystick.Details.PacketNumber + 1));
             }
@@ -403,11 +403,11 @@ namespace OpenTK.Platform.SDL2
 
         public void ProcessJoystickEvent(JoyButtonEvent ev)
         {
-            int id = ev.Which;
+            var id = ev.Which;
             if (IsJoystickInstanceValid(id))
             {
-                int index = sdl_instanceid_to_joysticks[id];
-                JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
+                var index = sdl_instanceid_to_joysticks[id];
+                var joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
                 joystick.SetButton(ev.Button, ev.State == State.Pressed);
                 joystick.Details.PacketNumber = Math.Max(0, unchecked(joystick.Details.PacketNumber + 1));
             }
@@ -419,11 +419,11 @@ namespace OpenTK.Platform.SDL2
 
         public void ProcessJoystickEvent(JoyHatEvent ev)
         {
-            int id = ev.Which;
+            var id = ev.Which;
             if (IsJoystickInstanceValid(id))
             {
-                int index = sdl_instanceid_to_joysticks[id];
-                JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
+                var index = sdl_instanceid_to_joysticks[id];
+                var joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
                 if (ev.Hat >= 0 && ev.Hat < JoystickState.MaxHats)
                 {
                     joystick.Details.Hat[ev.Hat] = new JoystickHatState(TranslateHat(ev.Value));
@@ -600,23 +600,23 @@ namespace OpenTK.Platform.SDL2
 
         JoystickState IJoystickDriver2.GetState(int index)
         {
-            JoystickState state = new JoystickState();
+            var state = new JoystickState();
             if (IsJoystickValid(index))
             {
-                JoystickDevice<Sdl2JoystickDetails> joystick =
+                var joystick =
                     (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
 
-                for (int i = 0; i < joystick.Axis.Count; i++)
+                for (var i = 0; i < joystick.Axis.Count; i++)
                 {
                     state.SetAxis(i, (short)(joystick.Axis[i] * short.MaxValue + 0.5f));
                 }
 
-                for (int i = 0; i < joystick.Button.Count; i++)
+                for (var i = 0; i < joystick.Button.Count; i++)
                 {
                     state.SetButton(i, joystick.Button[i]);
                 }
 
-                for (int i = 0; i < joystick.Details.HatCount; i++)
+                for (var i = 0; i < joystick.Details.HatCount; i++)
                 {
                     state.SetHat(JoystickHat.Hat0 + i, joystick.Details.Hat[i]);
                 }
@@ -632,7 +632,7 @@ namespace OpenTK.Platform.SDL2
         {
             if (IsJoystickValid(index))
             {
-                JoystickDevice<Sdl2JoystickDetails> joystick =
+                var joystick =
                     (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
 
                 return new JoystickCapabilities(
@@ -646,10 +646,10 @@ namespace OpenTK.Platform.SDL2
 
         Guid IJoystickDriver2.GetGuid(int index)
         {
-            Guid guid = new Guid();
+            var guid = new Guid();
             if (IsJoystickValid(index))
             {
-                JoystickDevice<Sdl2JoystickDetails> joystick =
+                var joystick =
                     (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
 
                 return joystick.Details.Guid;
@@ -668,7 +668,7 @@ namespace OpenTK.Platform.SDL2
                     foreach (var j in joysticks)
                     {
                         var joystick = (JoystickDevice<Sdl2JoystickDetails>)j;
-                        IntPtr handle = joystick.Details.Handle;
+                        var handle = joystick.Details.Handle;
                         SDL.JoystickClose(handle);
                     }
 

@@ -77,7 +77,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         public double GetNumberValue(string key)
         {
             double retval;
-            IntPtr cfnum = CF.CFDictionaryGetValue(Ref,
+            var cfnum = CF.CFDictionaryGetValue(Ref,
                 CF.CFSTR(key));
 
             CF.CFNumberGetValue(cfnum, CF.CFNumberType.kCFNumberDoubleType, out retval);
@@ -131,10 +131,10 @@ namespace OpenTK.Platform.MacOS.Carbon
 
         internal static string CFStringGetCString(IntPtr cfstr)
         {
-            CFIndex length = CFStringGetLength(cfstr);
+            var length = CFStringGetLength(cfstr);
             if (length != IntPtr.Zero)
             {
-                byte[] utf8_chars = new byte[length.ToInt32() + 1];
+                var utf8_chars = new byte[length.ToInt32() + 1];
                 if (CFStringGetCString(cfstr, utf8_chars, new IntPtr(utf8_chars.Length), CFStringEncoding.UTF8))
                 {
                     return Encoding.UTF8.GetString(utf8_chars);

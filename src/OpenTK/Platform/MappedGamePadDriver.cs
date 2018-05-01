@@ -57,25 +57,25 @@ namespace OpenTK.Platform
 
         public GamePadState GetState(int index)
         {
-            JoystickState joy = Joystick.GetState(index);
-            GamePadState pad = new GamePadState();
+            var joy = Joystick.GetState(index);
+            var pad = new GamePadState();
 
             if (joy.IsConnected)
             {
                 pad.SetConnected(true);
                 pad.SetPacketNumber(joy.PacketNumber);
 
-                GamePadConfiguration configuration = GetConfiguration(Joystick.GetGuid(index));
+                var configuration = GetConfiguration(Joystick.GetGuid(index));
 
-                foreach (GamePadConfigurationItem map in configuration)
+                foreach (var map in configuration)
                 {
                     switch (map.Source.Type)
                     {
                         case ConfigurationType.Axis:
                             {
                                 // JoystickAxis -> Buttons/GamePadAxes mapping
-                                int source_axis = map.Source.Axis;
-                                short value = joy.GetAxisRaw(source_axis);
+                                var source_axis = map.Source.Axis;
+                                var value = joy.GetAxisRaw(source_axis);
 
                                 switch (map.Target.Type)
                                 {
@@ -97,8 +97,8 @@ namespace OpenTK.Platform
                         case ConfigurationType.Button:
                             {
                                 // JoystickButton -> Buttons/GamePadAxes mapping
-                                int source_button = map.Source.Button;
-                                bool pressed = joy.GetButton(source_button) == ButtonState.Pressed;
+                                var source_button = map.Source.Button;
+                                var pressed = joy.GetButton(source_button) == ButtonState.Pressed;
 
                                 switch (map.Target.Type)
                                 {
@@ -106,7 +106,7 @@ namespace OpenTK.Platform
                                         // Todo: if SDL2 GameController config is ever updated to
                                         // distinguish between negative/positive axes, then update
                                         // the following line to support both.
-                                        short value = pressed ?
+                                        var value = pressed ?
                                             short.MaxValue :
                                             (map.Target.Axis & (GamePadAxes.LeftTrigger | GamePadAxes.RightTrigger)) != 0 ?
                                                 short.MinValue :
@@ -124,10 +124,10 @@ namespace OpenTK.Platform
                         case ConfigurationType.Hat:
                             {
                                 // JoystickHat -> Buttons/GamePadAxes mapping
-                                JoystickHat source_hat = map.Source.Hat;
-                                JoystickHatState state = joy.GetHat(source_hat);
+                                var source_hat = map.Source.Hat;
+                                var state = joy.GetHat(source_hat);
 
-                                bool pressed = false;
+                                var pressed = false;
                                 switch (map.Source.HatPosition)
                                 {
                                     case HatPosition.Down:
@@ -153,7 +153,7 @@ namespace OpenTK.Platform
                                         // Todo: if SDL2 GameController config is ever updated to
                                         // distinguish between negative/positive axes, then update
                                         // the following line to support both.
-                                        short value = pressed ?
+                                        var value = pressed ?
                                             short.MaxValue :
                                             (map.Target.Axis & (GamePadAxes.LeftTrigger | GamePadAxes.RightTrigger)) != 0 ?
                                                 short.MinValue :
@@ -176,15 +176,15 @@ namespace OpenTK.Platform
 
         public GamePadCapabilities GetCapabilities(int index)
         {
-            JoystickCapabilities joy = Joystick.GetCapabilities(index);
+            var joy = Joystick.GetCapabilities(index);
             GamePadCapabilities pad;
             if (joy.IsConnected)
             {
-                GamePadConfiguration configuration = GetConfiguration(Joystick.GetGuid(index));
+                var configuration = GetConfiguration(Joystick.GetGuid(index));
                 GamePadAxes mapped_axes = 0;
                 Buttons mapped_buttons = 0;
 
-                foreach (GamePadConfigurationItem map in configuration)
+                foreach (var map in configuration)
                 {
                     switch (map.Target.Type)
                     {
@@ -214,11 +214,11 @@ namespace OpenTK.Platform
 
         public string GetName(int index)
         {
-            JoystickCapabilities joy = Joystick.GetCapabilities(index);
-            string name = String.Empty;
+            var joy = Joystick.GetCapabilities(index);
+            var name = String.Empty;
             if (joy.IsConnected)
             {
-                GamePadConfiguration map = GetConfiguration(Joystick.GetGuid(index));
+                var map = GetConfiguration(Joystick.GetGuid(index));
                 name = map.Name;
             }
             return name;
@@ -233,8 +233,8 @@ namespace OpenTK.Platform
         {
             if (!configurations.ContainsKey(guid))
             {
-                string config = database[guid];
-                GamePadConfiguration map = new GamePadConfiguration(config);
+                var config = database[guid];
+                var map = new GamePadConfiguration(config);
                 configurations.Add(guid, map);
             }
             return configurations[guid];

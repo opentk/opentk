@@ -50,7 +50,7 @@ namespace OpenTK.Platform.Common
             }
             MathHelper.Clamp(value, value_min, value_max);
 
-            int range = result_max - result_min;
+            var range = result_max - result_min;
             long temp = (value - value_min) * range; // need long to avoid overflow
             return (int)(temp / (value_max - value_min) + result_min);
         }

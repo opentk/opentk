@@ -76,7 +76,7 @@ namespace OpenTK.Platform.Windows
             {
                 // Store an array of the current available DisplayDevice objects.
                 // This is needed to preserve the original resolution.
-                DisplayDevice[] previousDevices = AvailableDevices.ToArray();
+                var previousDevices = AvailableDevices.ToArray();
 
                 AvailableDevices.Clear();
 
@@ -86,12 +86,12 @@ namespace OpenTK.Platform.Windows
                 // to the list of available devices.
                 DisplayDevice opentk_dev;
                 DisplayResolution opentk_dev_current_res = null;
-                List<DisplayResolution> opentk_dev_available_res = new List<DisplayResolution>();
-                bool opentk_dev_primary = false;
+                var opentk_dev_available_res = new List<DisplayResolution>();
+                var opentk_dev_primary = false;
                 int device_count = 0, mode_count = 0;
 
                 // Get available video adapters and enumerate all monitors
-                WindowsDisplayDevice dev1 = new WindowsDisplayDevice();
+                var dev1 = new WindowsDisplayDevice();
                 while (Functions.EnumDisplayDevices(null, device_count++, dev1, 0))
                 {
                     if ((dev1.StateFlags & DisplayDeviceStateFlags.AttachedToDesktop) == DisplayDeviceStateFlags.None)
@@ -99,7 +99,7 @@ namespace OpenTK.Platform.Windows
                         continue;
                     }
 
-                    DeviceMode monitor_mode = new DeviceMode();
+                    var monitor_mode = new DeviceMode();
 
                     // The second function should only be executed when the first one fails
                     // (e.g. when the monitor is disabled)
@@ -108,7 +108,7 @@ namespace OpenTK.Platform.Windows
                     {
                         VerifyMode(dev1, monitor_mode);
 
-                        float scale = GetScale(ref monitor_mode);
+                        var scale = GetScale(ref monitor_mode);
                         opentk_dev_current_res = new DisplayResolution(
                             (int)(monitor_mode.Position.X / scale), (int)(monitor_mode.Position.Y / scale),
                             (int)(monitor_mode.PelsWidth / scale), (int)(monitor_mode.PelsHeight / scale),
@@ -124,8 +124,8 @@ namespace OpenTK.Platform.Windows
                     {
                         VerifyMode(dev1, monitor_mode);
 
-                        float scale = GetScale(ref monitor_mode);
-                        DisplayResolution res = new DisplayResolution(
+                        var scale = GetScale(ref monitor_mode);
+                        var res = new DisplayResolution(
                             (int)(monitor_mode.Position.X / scale), (int)(monitor_mode.Position.Y / scale),
                             (int)(monitor_mode.PelsWidth / scale), (int)(monitor_mode.PelsHeight / scale),
                             monitor_mode.BitsPerPel, monitor_mode.DisplayFrequency);
@@ -146,7 +146,7 @@ namespace OpenTK.Platform.Windows
                     #pragma warning restore 612,618
 
                     // Set the original resolution if the DisplayDevice was previously available.
-                    foreach (DisplayDevice existingDevice in previousDevices)
+                    foreach (var existingDevice in previousDevices)
                     {
                         if ((string)existingDevice.Id == (string)opentk_dev.Id)
                         {
@@ -169,7 +169,7 @@ namespace OpenTK.Platform.Windows
 
         private float GetScale(ref DeviceMode monitor_mode)
         {
-            float scale = 1.0f;
+            var scale = 1.0f;
             if ((monitor_mode.Fields & Constants.DM_LOGPIXELS) != 0)
             {
                 scale = monitor_mode.LogPixels / 96.0f;

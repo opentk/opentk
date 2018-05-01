@@ -77,12 +77,12 @@ namespace OpenTK
             pitch *= 0.5;
             roll *= 0.5;
 
-            double c1 = Math.Cos(yaw);
-            double c2 = Math.Cos(pitch);
-            double c3 = Math.Cos(roll);
-            double s1 = Math.Sin(yaw);
-            double s2 = Math.Sin(pitch);
-            double s3 = Math.Sin(roll);
+            var c1 = Math.Cos(yaw);
+            var c2 = Math.Cos(pitch);
+            var c3 = Math.Cos(roll);
+            var s1 = Math.Sin(yaw);
+            var s2 = Math.Sin(pitch);
+            var s3 = Math.Sin(roll);
 
             W = c1 * c2 * c3 - s1 * s2 * s3;
             Xyz.X = s1 * s2 * c3 + c1 * c2 * s3;
@@ -129,7 +129,7 @@ namespace OpenTK
         /// <param name="angle">The resultant angle</param>
         public void ToAxisAngle(out Vector3d axis, out double angle)
         {
-            Vector4d result = ToAxisAngle();
+            var result = ToAxisAngle();
             axis = result.Xyz;
             angle = result.W;
         }
@@ -140,16 +140,16 @@ namespace OpenTK
         /// <returns>A Vector4 that is the axis-angle representation of this quaternion.</returns>
         public Vector4d ToAxisAngle()
         {
-            Quaterniond q = this;
+            var q = this;
             if (Math.Abs(q.W) > 1.0f)
             {
                 q.Normalize();
             }
 
-            Vector4d result = new Vector4d();
+            var result = new Vector4d();
 
             result.W = 2.0f * (float)Math.Acos(q.W); // angle
-            float den = (float)Math.Sqrt(1.0 - q.W * q.W);
+            var den = (float)Math.Sqrt(1.0 - q.W * q.W);
             if (den > 0.0001f)
             {
                 result.Xyz = q.Xyz / den;
@@ -180,7 +180,7 @@ namespace OpenTK
         /// </summary>
         public Quaterniond Normalized()
         {
-            Quaterniond q = this;
+            var q = this;
             q.Normalize();
             return q;
         }
@@ -208,7 +208,7 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-            double scale = 1.0f / Length;
+            var scale = 1.0f / Length;
             Xyz *= scale;
             W *= scale;
         }
@@ -365,10 +365,10 @@ namespace OpenTK
         /// <param name="result">The inverse of the given Quaterniond</param>
         public static void Invert(ref Quaterniond q, out Quaterniond result)
         {
-            double lengthSq = q.LengthSquared;
+            var lengthSq = q.LengthSquared;
             if (lengthSq != 0.0)
             {
-                double i = 1.0f / lengthSq;
+                var i = 1.0f / lengthSq;
                 result = new Quaterniond(q.Xyz * -i, q.W * i);
             }
             else
@@ -396,7 +396,7 @@ namespace OpenTK
         /// <param name="result">The normalized Quaterniond</param>
         public static void Normalize(ref Quaterniond q, out Quaterniond result)
         {
-            double scale = 1.0f / q.Length;
+            var scale = 1.0f / q.Length;
             result = new Quaterniond(q.Xyz * scale, q.W * scale);
         }
 
@@ -413,7 +413,7 @@ namespace OpenTK
                 return Identity;
             }
 
-            Quaterniond result = Identity;
+            var result = Identity;
 
             angle *= 0.5f;
             axis.Normalize();
@@ -452,12 +452,12 @@ namespace OpenTK
         /// <param name="result">The equivalent Quaterniond</param>
         public static void FromEulerAngles(ref Vector3d eulerAngles, out Quaterniond result)
         {
-            double c1 = Math.Cos(eulerAngles.Y * 0.5);
-            double c2 = Math.Cos(eulerAngles.X * 0.5);
-            double c3 = Math.Cos(eulerAngles.Z * 0.5);
-            double s1 = Math.Sin(eulerAngles.Y * 0.5);
-            double s2 = Math.Sin(eulerAngles.X * 0.5);
-            double s3 = Math.Sin(eulerAngles.Z * 0.5);
+            var c1 = Math.Cos(eulerAngles.Y * 0.5);
+            var c2 = Math.Cos(eulerAngles.X * 0.5);
+            var c3 = Math.Cos(eulerAngles.Z * 0.5);
+            var s1 = Math.Sin(eulerAngles.Y * 0.5);
+            var s2 = Math.Sin(eulerAngles.X * 0.5);
+            var s3 = Math.Sin(eulerAngles.Z * 0.5);
 
             result.W = c1 * c2 * c3 - s1 * s2 * s3;
             result.Xyz.X = s1 * s2 * c3 + c1 * c2 * s3;
@@ -484,12 +484,12 @@ namespace OpenTK
         /// <param name="result">The equivalent quaternion</param>
         public static void FromMatrix(ref Matrix3d matrix, out Quaterniond result)
         {
-            double trace = matrix.Trace;
+            var trace = matrix.Trace;
 
             if (trace > 0)
             {
-                double s = Math.Sqrt(trace + 1) * 2;
-                double invS = 1.0 / s;
+                var s = Math.Sqrt(trace + 1) * 2;
+                var invS = 1.0 / s;
 
                 result.W = s * 0.25;
                 result.Xyz.X = (matrix.Row2.Y - matrix.Row1.Z) * invS;
@@ -502,8 +502,8 @@ namespace OpenTK
 
                 if (m00 > m11 && m00 > m22)
                 {
-                    double s = Math.Sqrt(1 + m00 - m11 - m22) * 2;
-                    double invS = 1.0 / s;
+                    var s = Math.Sqrt(1 + m00 - m11 - m22) * 2;
+                    var invS = 1.0 / s;
 
                     result.W = (matrix.Row2.Y - matrix.Row1.Z) * invS;
                     result.Xyz.X = s * 0.25;
@@ -512,8 +512,8 @@ namespace OpenTK
                 }
                 else if (m11 > m22)
                 {
-                    double s = Math.Sqrt(1 + m11 - m00 - m22) * 2;
-                    double invS = 1.0 / s;
+                    var s = Math.Sqrt(1 + m11 - m00 - m22) * 2;
+                    var invS = 1.0 / s;
 
                     result.W = (matrix.Row0.Z - matrix.Row2.X) * invS;
                     result.Xyz.X = (matrix.Row0.Y + matrix.Row1.X) * invS;
@@ -522,8 +522,8 @@ namespace OpenTK
                 }
                 else
                 {
-                    double s = Math.Sqrt(1 + m22 - m00 - m11) * 2;
-                    double invS = 1.0 / s;
+                    var s = Math.Sqrt(1 + m22 - m00 - m11) * 2;
+                    var invS = 1.0 / s;
 
                     result.W = (matrix.Row1.X - matrix.Row0.Y) * invS;
                     result.Xyz.X = (matrix.Row0.Z + matrix.Row2.X) * invS;
@@ -557,7 +557,7 @@ namespace OpenTK
             }
 
 
-            double cosHalfAngle = q1.W * q2.W + Vector3d.Dot(q1.Xyz, q2.Xyz);
+            var cosHalfAngle = q1.W * q2.W + Vector3d.Dot(q1.Xyz, q2.Xyz);
 
             if (cosHalfAngle >= 1.0f || cosHalfAngle <= -1.0f)
             {
@@ -576,9 +576,9 @@ namespace OpenTK
             if (cosHalfAngle < 0.99f)
             {
                 // do proper slerp for big angles
-                double halfAngle = (double)Math.Acos(cosHalfAngle);
-                double sinHalfAngle = (double)Math.Sin(halfAngle);
-                double oneOverSinHalfAngle = 1.0f / sinHalfAngle;
+                var halfAngle = (double)Math.Acos(cosHalfAngle);
+                var sinHalfAngle = (double)Math.Sin(halfAngle);
+                var oneOverSinHalfAngle = 1.0f / sinHalfAngle;
                 blendA = (double)Math.Sin(halfAngle * (1.0f - blend)) * oneOverSinHalfAngle;
                 blendB = (double)Math.Sin(halfAngle * blend) * oneOverSinHalfAngle;
             }
@@ -589,7 +589,7 @@ namespace OpenTK
                 blendB = blend;
             }
 
-            Quaterniond result = new Quaterniond(blendA * q1.Xyz + blendB * q2.Xyz, blendA * q1.W + blendB * q2.W);
+            var result = new Quaterniond(blendA * q1.Xyz + blendB * q2.Xyz, blendA * q1.W + blendB * q2.W);
             if (result.LengthSquared > 0.0f)
             {
                 return Normalize(result);

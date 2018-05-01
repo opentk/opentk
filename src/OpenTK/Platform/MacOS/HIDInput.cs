@@ -259,7 +259,7 @@ namespace OpenTK.Platform.MacOS
                     case CGEventType.RightMouseDragged:
                     case CGEventType.OtherMouseDragged:
                         {
-                            NSPoint p = CG.EventGetLocation(@event);
+                            var p = CG.EventGetLocation(@event);
                             CursorState.X = (int)Math.Round(p.X);
                             CursorState.Y = (int)Math.Round(p.Y);
                         }
@@ -270,8 +270,8 @@ namespace OpenTK.Platform.MacOS
                             // Note: OpenTK follows the win32 convention, where
                             // (+h, +v) = (right, up). MacOS reports (+h, +v) = (left, up)
                             // so we need to flip the horizontal scroll direction.
-                            double h = CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis2) * MacOSFactory.ScrollFactor;
-                            double v = CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis1) * MacOSFactory.ScrollFactor;
+                            var h = CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis2) * MacOSFactory.ScrollFactor;
+                            var v = CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis1) * MacOSFactory.ScrollFactor;
                             CursorState.SetScrollRelative((float)(-h), (float)v);
                         }
                         break;
@@ -280,9 +280,9 @@ namespace OpenTK.Platform.MacOS
                     case CGEventType.RightMouseDown:
                     case CGEventType.OtherMouseDown:
                         {
-                            int n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
+                            var n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
                             n = n == 1 ? 2 : n == 2 ? 1 : n; // flip middle and right button numbers to match OpenTK
-                            MouseButton b = MouseButton.Left + n;
+                            var b = MouseButton.Left + n;
                             CursorState[b] = true;
                         }
                         break;
@@ -291,9 +291,9 @@ namespace OpenTK.Platform.MacOS
                     case CGEventType.RightMouseUp:
                     case CGEventType.OtherMouseUp:
                         {
-                            int n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
+                            var n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
                             n = n == 1 ? 2 : n == 2 ? 1 : n; // flip middle and right button numbers to match OpenTK
-                            MouseButton b = MouseButton.Left + n;
+                            var b = MouseButton.Left + n;
                             CursorState[b] = false;
                         }
                         break;
@@ -332,7 +332,7 @@ namespace OpenTK.Platform.MacOS
         {
             try
             {
-                bool recognized = false;
+                var recognized = false;
 
                 if (NativeMethods.IOHIDDeviceOpen(device, IOOptionBits.Zero) == IOReturn.Zero)
                 {
@@ -350,7 +350,7 @@ namespace OpenTK.Platform.MacOS
                         recognized = true;
                     }
 
-                    bool is_joystick = false;
+                    var is_joystick = false;
                     is_joystick |= NativeMethods.IOHIDDeviceConformsTo(device,
                         HIDPage.GenericDesktop, (int)HIDUsageGD.Joystick);
                     is_joystick |= NativeMethods.IOHIDDeviceConformsTo(device,
@@ -388,8 +388,8 @@ namespace OpenTK.Platform.MacOS
         {
             try
             {
-                bool recognized = false;
-                long id = device.ToInt64();
+                var recognized = false;
+                var id = device.ToInt64();
 
                 MouseData mouse;
                 KeyboardData keyboard;
@@ -440,7 +440,7 @@ namespace OpenTK.Platform.MacOS
                 MouseData mouse;
                 KeyboardData keyboard;
                 JoystickData joystick;
-                long id = context.ToInt64();
+                var id = context.ToInt64();
                 if (MouseDevices.FromHardwareId(id, out mouse))
                 {
                     UpdateMouse(mouse, val);
@@ -467,7 +467,7 @@ namespace OpenTK.Platform.MacOS
         private void AddMouse(CFAllocatorRef sender, CFAllocatorRef device)
         {
             Debug.Print("Mouse device {0:x} discovered, sender is {1:x}", device, sender);
-            MouseData mouse = new MouseData(device);
+            var mouse = new MouseData(device);
             mouse.State.SetIsConnected(true);
             MouseDevices.Add(device.ToInt64(), mouse);
         }
@@ -480,12 +480,12 @@ namespace OpenTK.Platform.MacOS
 
         private static void UpdateMouse(MouseData mouse, IOHIDValueRef val)
         {
-            IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
-            int v_int = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
+            var elem = NativeMethods.IOHIDValueGetElement(val);
+            var v_int = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
             //double v_physical = NativeMethods.IOHIDValueGetScaledValue(val, IOHIDValueScaleType.Physical);
             //double v_calbrated = NativeMethods.IOHIDValueGetScaledValue(val, IOHIDValueScaleType.Calibrated);
-            HIDPage page = NativeMethods.IOHIDElementGetUsagePage(elem);
-            int usage = NativeMethods.IOHIDElementGetUsage(elem);
+            var page = NativeMethods.IOHIDElementGetUsagePage(elem);
+            var usage = NativeMethods.IOHIDElementGetUsage(elem);
 
             switch (page)
             {
@@ -529,7 +529,7 @@ namespace OpenTK.Platform.MacOS
         private void AddKeyboard(CFAllocatorRef sender, CFAllocatorRef device)
         {
             Debug.Print("Keyboard device {0:x} discovered, sender is {1:x}", device, sender);
-            KeyboardData keyboard = new KeyboardData(device);
+            var keyboard = new KeyboardData(device);
             keyboard.State.SetIsConnected(true);
             KeyboardDevices.Add(device.ToInt64(), keyboard);
         }
@@ -542,10 +542,10 @@ namespace OpenTK.Platform.MacOS
 
         private static void UpdateKeyboard(KeyboardData keyboard, IOHIDValueRef val)
         {
-            IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
-            int v_int = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
-            HIDPage page = NativeMethods.IOHIDElementGetUsagePage(elem);
-            int usage = NativeMethods.IOHIDElementGetUsage(elem);
+            var elem = NativeMethods.IOHIDValueGetElement(val);
+            var v_int = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
+            var page = NativeMethods.IOHIDElementGetUsagePage(elem);
+            var usage = NativeMethods.IOHIDElementGetUsage(elem);
 
             // This will supress the debug printing below. Seems like it generates a lot of -1s.
             // Couldn't find any details in USB spec or Apple docs for this behavior.
@@ -570,12 +570,12 @@ namespace OpenTK.Platform.MacOS
         private Guid CreateJoystickGuid(IntPtr device, string name)
         {
             // Create a device guid from the product and vendor id keys
-            List<byte> guid_bytes = new List<byte>();
+            var guid_bytes = new List<byte>();
             long vendor_id = 0;
             long product_id = 0;
 
-            IntPtr vendor_id_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDVendorIDKey);
-            IntPtr product_id_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDProductIDKey);
+            var vendor_id_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDVendorIDKey);
+            var product_id_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDProductIDKey);
             if (vendor_id_ref != IntPtr.Zero)
             {
                 CF.CFNumberGetValue(vendor_id_ref, CF.CFNumberType.kCFNumberLongType, out vendor_id);
@@ -600,7 +600,7 @@ namespace OpenTK.Platform.MacOS
                 guid_bytes.Add(0x00);
 
                 // Copy the first 12 bytes of the product name
-                byte[] name_bytes = new byte[12];
+                var name_bytes = new byte[12];
                 Array.Copy(System.Text.Encoding.UTF8.GetBytes(name), name_bytes, name_bytes.Length);
                 guid_bytes.AddRange(name_bytes);
             }
@@ -609,7 +609,7 @@ namespace OpenTK.Platform.MacOS
             // the Guid(string) constructor does not. Since our database is using the string
             // constructor, we need to compensate for this difference or the database lookups
             // will fail.
-            byte[] guid_array = guid_bytes.ToArray();
+            var guid_array = guid_bytes.ToArray();
             if (BitConverter.IsLittleEndian)
             {
                 Array.Reverse(guid_array, 0, 4);
@@ -624,15 +624,15 @@ namespace OpenTK.Platform.MacOS
             JoystickData joy = null;
 
             // Retrieve all elements of this device
-            CFArrayRef element_array_ref = NativeMethods.IOHIDDeviceCopyMatchingElements(device, IntPtr.Zero, IntPtr.Zero);
+            var element_array_ref = NativeMethods.IOHIDDeviceCopyMatchingElements(device, IntPtr.Zero, IntPtr.Zero);
             if (element_array_ref != IntPtr.Zero)
             {
                 joy = new JoystickData(device);
 
-                CFStringRef name_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDProductKey);
-                string name = CF.CFStringGetCString(name_ref);
+                var name_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDProductKey);
+                var name = CF.CFStringGetCString(name_ref);
 
-                Guid guid = CreateJoystickGuid(device, name);
+                var guid = CreateJoystickGuid(device, name);
 
                 axis_elements.Clear();
                 button_elements.Clear();
@@ -648,30 +648,30 @@ namespace OpenTK.Platform.MacOS
                 vendor_elements.Sort();
 
                 // Store all discovered elements in JoystickData
-                for (int i = 0; i < Math.Min(axis_elements.Count, JoystickState.MaxAxes); i++)
+                for (var i = 0; i < Math.Min(axis_elements.Count, JoystickState.MaxAxes); i++)
                 {
-                    JoystickElement e = axis_elements[i];
+                    var e = axis_elements[i];
                     e.Index = i;
                     joy.AddElement(e);
                 }
 
-                for (int i = 0; i < Math.Min(button_elements.Count, JoystickState.MaxButtons); i++)
+                for (var i = 0; i < Math.Min(button_elements.Count, JoystickState.MaxButtons); i++)
                 {
-                    JoystickElement e = button_elements[i];
+                    var e = button_elements[i];
                     e.Index = i;
                     joy.AddElement(e);
                 }
 
-                for (int i = 0; i < Math.Min(hat_elements.Count, JoystickState.MaxHats); i++)
+                for (var i = 0; i < Math.Min(hat_elements.Count, JoystickState.MaxHats); i++)
                 {
-                    JoystickElement e = hat_elements[i];
+                    var e = hat_elements[i];
                     e.Index = i;
                     joy.AddElement(e);
                 }
 
-                for (int i = 0; i < vendor_elements.Count; i++)
+                for (var i = 0; i < vendor_elements.Count; i++)
                 {
-                    JoystickElement e = vendor_elements[i];
+                    var e = vendor_elements[i];
                     e.Index = i;
                     joy.AddElement(e);
                 }
@@ -705,16 +705,16 @@ namespace OpenTK.Platform.MacOS
 
         private void AddElements(JoystickData joy, CFArrayRef element_array_ref)
         {
-            CFArray element_array = new CFArray(element_array_ref);
-            for (int i = 0; i < element_array.Count; i++)
+            var element_array = new CFArray(element_array_ref);
+            for (var i = 0; i < element_array.Count; i++)
             {
-                IOHIDElementRef element_ref = element_array[i];
+                var element_ref = element_array[i];
 
                 if (element_ref != IntPtr.Zero && CF.CFGetTypeID(element_ref) == NativeMethods.IOHIDElementGetTypeID())
                 {
-                    IOHIDElementCookie cookie = NativeMethods.IOHIDElementGetCookie(element_ref);
-                    HIDPage page = NativeMethods.IOHIDElementGetUsagePage(element_ref);
-                    int usage = NativeMethods.IOHIDElementGetUsage(element_ref);
+                    var cookie = NativeMethods.IOHIDElementGetCookie(element_ref);
+                    var page = NativeMethods.IOHIDElementGetUsagePage(element_ref);
+                    var usage = NativeMethods.IOHIDElementGetUsage(element_ref);
                     JoystickElement e = null;
 
                     switch (NativeMethods.IOHIDElementGetType(element_ref))
@@ -786,7 +786,7 @@ namespace OpenTK.Platform.MacOS
                             break;
 
                         case IOHIDElementType.Collection:
-                            CFArrayRef children_array_ref = NativeMethods.IOHIDElementGetChildren(element_ref);
+                            var children_array_ref = NativeMethods.IOHIDElementGetChildren(element_ref);
                             if (children_array_ref != IntPtr.Zero)
                             {
                                 AddElements(joy, children_array_ref);
@@ -809,7 +809,7 @@ namespace OpenTK.Platform.MacOS
 
             try
             {
-                JoystickData joy = CreateJoystick(sender, device);
+                var joy = CreateJoystick(sender, device);
                 if (joy != null)
                 {
                     JoystickDevices.Add(device.ToInt64(), joy);
@@ -829,10 +829,10 @@ namespace OpenTK.Platform.MacOS
 
         private static void UpdateJoystick(JoystickData joy, IOHIDValueRef val)
         {
-            IOHIDElementRef elem = NativeMethods.IOHIDValueGetElement(val);
-            IOHIDElementCookie cookie = NativeMethods.IOHIDElementGetCookie(elem);
-            HIDPage page = NativeMethods.IOHIDElementGetUsagePage(elem);
-            int usage = NativeMethods.IOHIDElementGetUsage(elem);
+            var elem = NativeMethods.IOHIDValueGetElement(val);
+            var cookie = NativeMethods.IOHIDElementGetCookie(elem);
+            var page = NativeMethods.IOHIDElementGetUsagePage(elem);
+            var usage = NativeMethods.IOHIDElementGetUsage(elem);
 
             if (!joy.Elements.ContainsKey(cookie))
             {
@@ -855,8 +855,8 @@ namespace OpenTK.Platform.MacOS
                         case HIDUsageGD.Slider:
                         case HIDUsageGD.Dial:
                         case HIDUsageGD.Wheel:
-                            short offset = GetJoystickAxis(val, elem);
-                            int axis = joy.Elements[cookie].Index;
+                            var offset = GetJoystickAxis(val, elem);
+                            var axis = joy.Elements[cookie].Index;
                             if (axis >= 0 && axis <= JoystickState.MaxAxes)
                             {
                                 joy.State.SetAxis(axis, offset);
@@ -864,8 +864,8 @@ namespace OpenTK.Platform.MacOS
                             break;
 
                         case HIDUsageGD.Hatswitch:
-                            HatPosition position = GetJoystickHat(val, elem);
-                            JoystickHat hat = JoystickHat.Hat0 + joy.Elements[cookie].Index;
+                            var position = GetJoystickHat(val, elem);
+                            var hat = JoystickHat.Hat0 + joy.Elements[cookie].Index;
                             if (hat >= JoystickHat.Hat0 && hat <= JoystickHat.Last)
                             {
                                 joy.State.SetHat(hat, new JoystickHatState(position));
@@ -879,8 +879,8 @@ namespace OpenTK.Platform.MacOS
                     {
                         case HIDUsageSim.Rudder:
                         case HIDUsageSim.Throttle:
-                            short offset = GetJoystickAxis(val, elem);
-                            int axis = joy.Elements[cookie].Index;
+                            var offset = GetJoystickAxis(val, elem);
+                            var axis = joy.Elements[cookie].Index;
                             if (axis >= 0 && axis <= JoystickState.MaxAxes)
                             {
                                 joy.State.SetAxis(axis, offset);
@@ -891,8 +891,8 @@ namespace OpenTK.Platform.MacOS
 
                 case HIDPage.Button:
                     {
-                        bool pressed = GetJoystickButton(val, elem);
-                        int button = joy.Elements[cookie].Index;
+                        var pressed = GetJoystickButton(val, elem);
+                        var button = joy.Elements[cookie].Index;
                         if (button >= 0 && button <= JoystickState.MaxButtons)
                         {
                             joy.State.SetButton(button, pressed);
@@ -904,26 +904,26 @@ namespace OpenTK.Platform.MacOS
 
         private static short GetJoystickAxis(IOHIDValueRef val, IOHIDElementRef element)
         {
-            int max = NativeMethods.IOHIDElementGetLogicalMax(element).ToInt32();
-            int min = NativeMethods.IOHIDElementGetLogicalMin(element).ToInt32();
-            int offset = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
+            var max = NativeMethods.IOHIDElementGetLogicalMax(element).ToInt32();
+            var min = NativeMethods.IOHIDElementGetLogicalMin(element).ToInt32();
+            var offset = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
             return (short)HidHelper.ScaleValue(offset, min, max, short.MinValue, short.MaxValue);
         }
 
         private static bool GetJoystickButton(IOHIDValueRef val, IOHIDElementRef element)
         {
             // Todo: analogue buttons are transformed to digital
-            int value = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
+            var value = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
             return value >= 1;
         }
 
         private static HatPosition GetJoystickHat(IOHIDValueRef val, IOHIDElementRef element)
         {
-            HatPosition position = HatPosition.Centered;
-            int max = NativeMethods.IOHIDElementGetLogicalMax(element).ToInt32();
-            int min = NativeMethods.IOHIDElementGetLogicalMin(element).ToInt32();
-            int value = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32() - min;
-            int range = Math.Abs(max - min + 1);
+            var position = HatPosition.Centered;
+            var max = NativeMethods.IOHIDElementGetLogicalMax(element).ToInt32();
+            var min = NativeMethods.IOHIDElementGetLogicalMin(element).ToInt32();
+            var value = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32() - min;
+            var range = Math.Abs(max - min + 1);
 
             if (value >= 0)
             {
@@ -983,8 +983,8 @@ namespace OpenTK.Platform.MacOS
 
         MouseState IMouseDriver2.GetState()
         {
-            MouseState master = new MouseState();
-            foreach (MouseData item in MouseDevices)
+            var master = new MouseState();
+            foreach (var item in MouseDevices)
             {
                 master.MergeBits(item.State);
             }
@@ -1012,7 +1012,7 @@ namespace OpenTK.Platform.MacOS
         {
             CG.SetLocalEventsSuppressionInterval(0.0);
 
-            NSPoint p = new NSPoint();
+            var p = new NSPoint();
             unsafe
             {
                 if (IntPtr.Size == 8)
@@ -1022,8 +1022,8 @@ namespace OpenTK.Platform.MacOS
                 }
                 else
                 {
-                    float f1 = (float)x;
-                    float f2 = (float)y;
+                    var f1 = (float)x;
+                    var f2 = (float)y;
                     p.X.Value = *(IntPtr *)&f1;
                     p.Y.Value = *(IntPtr *)&f2;
                 }
@@ -1034,8 +1034,8 @@ namespace OpenTK.Platform.MacOS
 
         KeyboardState IKeyboardDriver2.GetState()
         {
-            KeyboardState master = new KeyboardState();
-            foreach (KeyboardData item in KeyboardDevices)
+            var master = new KeyboardState();
+            foreach (var item in KeyboardDevices)
             {
                 master.MergeBits(item.State);
             }
@@ -1059,8 +1059,8 @@ namespace OpenTK.Platform.MacOS
             KeyboardData keyboard;
             if (KeyboardDevices.FromIndex(index, out keyboard))
             {
-                IntPtr vendor_id = NativeMethods.IOHIDDeviceGetProperty(keyboard.Id, NativeMethods.IOHIDVendorIDKey);
-                IntPtr product_id = NativeMethods.IOHIDDeviceGetProperty(keyboard.Id, NativeMethods.IOHIDProductIDKey);
+                var vendor_id = NativeMethods.IOHIDDeviceGetProperty(keyboard.Id, NativeMethods.IOHIDVendorIDKey);
+                var product_id = NativeMethods.IOHIDDeviceGetProperty(keyboard.Id, NativeMethods.IOHIDProductIDKey);
                 // Todo: find out the real vendor/product name from the relevant ids.
                 return $"{vendor_id}:{product_id}";
             }
@@ -1069,7 +1069,7 @@ namespace OpenTK.Platform.MacOS
 
         JoystickState IJoystickDriver2.GetState(int index)
         {
-            JoystickData joystick = GetJoystick(index);
+            var joystick = GetJoystick(index);
             if (joystick != null)
             {
                 return joystick.State;
@@ -1079,7 +1079,7 @@ namespace OpenTK.Platform.MacOS
 
         JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)
         {
-            JoystickData joystick = GetJoystick(index);
+            var joystick = GetJoystick(index);
             if (joystick != null)
             {
                 return joystick.Capabilities;
@@ -1089,7 +1089,7 @@ namespace OpenTK.Platform.MacOS
 
         Guid IJoystickDriver2.GetGuid(int index)
         {
-            JoystickData joystick = GetJoystick(index);
+            var joystick = GetJoystick(index);
             if (joystick != null)
             {
                 return joystick.Guid;
@@ -1672,7 +1672,7 @@ namespace OpenTK.Platform.MacOS
                     NativeMethods.IOHIDManagerUnscheduleFromRunLoop(
                         hidmanager, RunLoop, InputLoopMode);
 
-                    for (int i = 0; i < Math.Max(MouseDevices.Count, 4); i++)
+                    for (var i = 0; i < Math.Max(MouseDevices.Count, 4); i++)
                     {
                         if (MouseDevices[i] != null)
                         {
@@ -1680,7 +1680,7 @@ namespace OpenTK.Platform.MacOS
                         }
                     }
 
-                    for (int i = 0; i < Math.Max(KeyboardDevices.Count, 4); i++)
+                    for (var i = 0; i < Math.Max(KeyboardDevices.Count, 4); i++)
                     {
                         if (KeyboardDevices[i] != null)
                         {
@@ -1688,7 +1688,7 @@ namespace OpenTK.Platform.MacOS
                         }
                     }
 
-                    for (int i = 0; i < Math.Max(JoystickDevices.Count, 4); i++)
+                    for (var i = 0; i < Math.Max(JoystickDevices.Count, 4); i++)
                     {
                         if (JoystickDevices[i] != null)
                         {

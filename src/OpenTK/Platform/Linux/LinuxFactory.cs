@@ -76,7 +76,7 @@ namespace OpenTK.Platform.Linux
             // Todo: allow OpenTK to drive multiple GPUs
             // Todo: allow OpenTK to run on an offscreen GPU
             // Todo: allow the user to pick a GPU
-            int fd = 0;
+            var fd = 0;
             gbm_device = IntPtr.Zero;
             egl_display = IntPtr.Zero;
 
@@ -85,7 +85,7 @@ namespace OpenTK.Platform.Linux
             {
                 if (Path.GetFileName(gpu).StartsWith("card"))
                 {
-                    int test_fd = SetupDisplay(gpu, out gbm_device, out egl_display);
+                    var test_fd = SetupDisplay(gpu, out gbm_device, out egl_display);
                     if (test_fd >= 0)
                     {
                         try
@@ -123,7 +123,7 @@ namespace OpenTK.Platform.Linux
             gbm_device = IntPtr.Zero;
             egl_display = IntPtr.Zero;
 
-            int fd = Libc.open(gpu, OpenFlags.ReadWrite | OpenFlags.CloseOnExec);
+            var fd = Libc.open(gpu, OpenFlags.ReadWrite | OpenFlags.CloseOnExec);
             if (fd < 0)
             {
                 Debug.Print("[KMS] Failed to open gpu");
@@ -148,7 +148,7 @@ namespace OpenTK.Platform.Linux
             int major, minor;
             if (!Egl.Initialize(egl_display, out major, out minor))
             {
-                ErrorCode error = Egl.GetError();
+                var error = Egl.GetError();
                 throw new NotSupportedException("[KMS] Failed to initialize EGL display. Error code: " + error);
             }
             Debug.Print("[KMS] EGL {0}.{1} initialized successfully on display {2:x}", major, minor, egl_display);

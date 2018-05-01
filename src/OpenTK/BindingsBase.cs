@@ -88,8 +88,8 @@ namespace OpenTK
 
             unsafe
             {
-                sbyte* str = (sbyte*)ptr;
-                int len = 0;
+                var str = (sbyte*)ptr;
+                var len = 0;
                 while (*str != 0)
                 {
                     ++len;
@@ -121,8 +121,8 @@ namespace OpenTK
             // GetMaxByteCount() appears to allocate space for the final NUL
             // character, but allocate an extra one just in case (who knows
             // what old Mono version would do here.)
-            int max_count = Encoding.UTF8.GetMaxByteCount(str.Length) + 1;
-            IntPtr ptr = Marshal.AllocHGlobal(max_count);
+            var max_count = Encoding.UTF8.GetMaxByteCount(str.Length) + 1;
+            var ptr = Marshal.AllocHGlobal(max_count);
             if (ptr == IntPtr.Zero)
             {
                 throw new OutOfMemoryException();
@@ -134,7 +134,7 @@ namespace OpenTK
             {
                 fixed (char* pstr = str)
                 {
-                    int actual_count = Encoding.UTF8.GetBytes(pstr, str.Length, (byte*)ptr, max_count);
+                    var actual_count = Encoding.UTF8.GetBytes(pstr, str.Length, (byte*)ptr, max_count);
                     Marshal.WriteByte(ptr, actual_count, 0); // Append '\0' at the end of the string
                     return ptr;
                 }
@@ -158,7 +158,7 @@ namespace OpenTK
         /// <param name="str_array">The string array to marshal.</param>
         protected static IntPtr MarshalStringArrayToPtr(string[] str_array)
         {
-            IntPtr ptr = IntPtr.Zero;
+            var ptr = IntPtr.Zero;
             if (str_array != null && str_array.Length != 0)
             {
                 ptr = Marshal.AllocHGlobal(str_array.Length * IntPtr.Size);
@@ -167,12 +167,12 @@ namespace OpenTK
                     throw new OutOfMemoryException();
                 }
 
-                int i = 0;
+                var i = 0;
                 try
                 {
                     for (i = 0; i < str_array.Length; i++)
                     {
-                        IntPtr str = MarshalStringToPtr(str_array[i]);
+                        var str = MarshalStringToPtr(str_array[i]);
                         Marshal.WriteIntPtr(ptr, i * IntPtr.Size, str);
                     }
                 }
@@ -198,7 +198,7 @@ namespace OpenTK
         /// <param name="length">The length of the string array.</param>
         protected static void FreeStringArrayPtr(IntPtr ptr, int length)
         {
-            for (int i = 0; i < length; i++)
+            for (var i = 0; i < length; i++)
             {
                 Marshal.FreeHGlobal(Marshal.ReadIntPtr(ptr, i * IntPtr.Size));
             }

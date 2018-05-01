@@ -80,7 +80,7 @@ namespace OpenTK.Platform.Linux
 
         public LinuxJoystick()
         {
-            string path =
+            var path =
                 Directory.Exists(JoystickPath) ? JoystickPath :
                 Directory.Exists(JoystickPathLegacy) ? JoystickPathLegacy :
                 String.Empty;
@@ -101,9 +101,9 @@ namespace OpenTK.Platform.Linux
         {
             lock (sync)
             {
-                foreach (string file in Directory.GetFiles(path))
+                foreach (var file in Directory.GetFiles(path))
                 {
-                    LinuxJoystickDetails stick = OpenJoystick(file);
+                    var stick = OpenJoystick(file);
                     if (stick != null)
                     {
                         Sticks.Add(stick.PathIndex, stick);
@@ -138,8 +138,8 @@ namespace OpenTK.Platform.Linux
         {
             lock (sync)
             {
-                string file = Path.GetFileName(e.FullPath);
-                int number = GetJoystickNumber(file);
+                var file = Path.GetFileName(e.FullPath);
+                var number = GetJoystickNumber(file);
                 if (number != -1)
                 {
                     var stick = Sticks.FromHardwareId(number);
@@ -159,10 +159,10 @@ namespace OpenTK.Platform.Linux
             // We need to take that into account to match the expected
             // Guid in the database. Ugh.
 
-            byte[] bytes = new byte[16];
+            var bytes = new byte[16];
 
-            int i = 0;
-            byte[] bus = BitConverter.GetBytes((int)id.BusType);
+            var i = 0;
+            var bus = BitConverter.GetBytes((int)id.BusType);
             bytes[i++] = bus[3];
             bytes[i++] = bus[2];
             bytes[i++] = bus[1];
@@ -170,9 +170,9 @@ namespace OpenTK.Platform.Linux
 
             if (id.Vendor != 0 && id.Product != 0 && id.Version != 0)
             {
-                byte[] vendor = BitConverter.GetBytes(id.Vendor);
-                byte[] product = BitConverter.GetBytes(id.Product);
-                byte[] version = BitConverter.GetBytes(id.Version);
+                var vendor = BitConverter.GetBytes(id.Vendor);
+                var product = BitConverter.GetBytes(id.Product);
+                var version = BitConverter.GetBytes(id.Version);
                 bytes[i++] = vendor[1];
                 bytes[i++] = vendor[0];
                 bytes[i++] = 0;
@@ -188,7 +188,7 @@ namespace OpenTK.Platform.Linux
             }
             else
             {
-                for (int j = 0; j < bytes.Length - i; j++)
+                for (var j = 0; j < bytes.Length - i; j++)
                 {
                     bytes[i + j] = (byte)name[j];
                 }
@@ -199,8 +199,8 @@ namespace OpenTK.Platform.Linux
 
         private unsafe static bool TestBit(byte* ptr, int bit)
         {
-            int byte_offset = bit / 8;
-            int bit_offset = bit % 8;
+            var byte_offset = bit / 8;
+            var bit_offset = bit % 8;
             return (*(ptr + byte_offset) & (1 << bit_offset)) != 0;
         }
 
@@ -218,7 +218,7 @@ namespace OpenTK.Platform.Linux
             for (EvdevAxis axis = 0; axis < EvdevAxis.CNT && (int)axis < axisbytes * 8; axis++)
             {
                 InputAbsInfo info;
-                bool is_valid = true;
+                var is_valid = true;
                 is_valid &= TestBit(axisbit, (int)axis);
                 is_valid &= Evdev.GetAbs(stick.FileDescriptor, axis, out info) >= 0;
                 if (is_valid)
@@ -257,10 +257,10 @@ namespace OpenTK.Platform.Linux
         {
             LinuxJoystickDetails stick = null;
 
-            int number = GetJoystickNumber(Path.GetFileName(path));
+            var number = GetJoystickNumber(Path.GetFileName(path));
             if (number >= 0)
             {
-                int fd = -1;
+                var fd = -1;
                 try
                 {
                     fd = Libc.open(path, OpenFlags.NonBlock);
@@ -282,7 +282,7 @@ namespace OpenTK.Platform.Linux
                         EvdevInputId id;
 
                         // Ensure this is a joystick device
-                        bool is_valid = true;
+                        var is_valid = true;
 
                         is_valid &= Evdev.GetBit(fd, 0, evsize, new IntPtr(evbit)) >= 0;
                         is_valid &= Evdev.GetBit(fd, EvdevType.ABS, axissize, new IntPtr(axisbit)) >= 0;
@@ -375,9 +375,9 @@ namespace OpenTK.Platform.Linux
                     js.State.SetIsConnected(true);
 
                     length /= sizeof(InputEvent);
-                    for (int i = 0; i < length; i++)
+                    for (var i = 0; i < length; i++)
                     {
-                        InputEvent *e = events + i;
+                        var e = events + i;
                         switch (e->Type)
                         {
                             case EvdevType.ABS:
@@ -392,9 +392,9 @@ namespace OpenTK.Platform.Linux
                                                 // We currently treat analogue hats as digital hats
                                                 // to maintain compatibility with SDL2. We can do
                                                 // better than this, however.
-                                                int hat = (e->Code - (int)EvdevAxis.HAT0X) / 2;
-                                                int xy_axis = (int)axis.Axis & 0x1;
-                                                int value = e->Value.CompareTo(0) + 1;
+                                                var hat = (e->Code - (int)EvdevAxis.HAT0X) / 2;
+                                                var xy_axis = (int)axis.Axis & 0x1;
+                                                var value = e->Value.CompareTo(0) + 1;
                                                 switch (xy_axis)
                                                 {
                                                     case 0:
@@ -435,9 +435,9 @@ namespace OpenTK.Platform.Linux
                         }
 
                         // Create a serial number (total seconds in 24.8 fixed point format)
-                        int sec = (int)((long)e->Time.Seconds & 0xffffffff);
-                        int msec = (int)e->Time.MicroSeconds / 1000;
-                        int packet =
+                        var sec = (int)((long)e->Time.Seconds & 0xffffffff);
+                        var msec = (int)e->Time.MicroSeconds / 1000;
+                        var packet =
                             ((sec & 0x00ffffff) << 24) |
                             Common.HidHelper.ScaleValue(msec, 0, 1000, 0, 255);
                         js.State.SetPacketNumber(packet);
@@ -464,7 +464,7 @@ namespace OpenTK.Platform.Linux
                 }
 
                 watcher.Dispose();
-                foreach (LinuxJoystickDetails js in Sticks)
+                foreach (var js in Sticks)
                 {
                     CloseJoystick(js);
                 }
@@ -480,7 +480,7 @@ namespace OpenTK.Platform.Linux
 
         JoystickState IJoystickDriver2.GetState(int index)
         {
-            LinuxJoystickDetails js = Sticks.FromIndex(index);
+            var js = Sticks.FromIndex(index);
             if (js != null)
             {
                 PollJoystick(js);
@@ -491,7 +491,7 @@ namespace OpenTK.Platform.Linux
 
         JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)
         {
-            LinuxJoystickDetails js = Sticks.FromIndex(index);
+            var js = Sticks.FromIndex(index);
             if (js != null)
             {
                 return js.Caps;
@@ -501,7 +501,7 @@ namespace OpenTK.Platform.Linux
 
         Guid IJoystickDriver2.GetGuid(int index)
         {
-            LinuxJoystickDetails js = Sticks.FromIndex(index);
+            var js = Sticks.FromIndex(index);
             if (js != null)
             {
                 return js.Guid;

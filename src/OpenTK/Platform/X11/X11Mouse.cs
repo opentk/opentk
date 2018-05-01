@@ -115,7 +115,7 @@ namespace OpenTK.Platform.X11
 
             using (new XLock(display))
             {
-                IntPtr window = root_window;
+                var window = root_window;
                 Functions.XQueryPointer(display, window, out root, out child,
                     out root_x, out root_y, out win_x, out win_y, out buttons);
 

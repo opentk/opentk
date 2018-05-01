@@ -73,7 +73,7 @@ namespace OpenTK
 
             if (shareContext is GraphicsContext)
             {
-                ContextHandle shareHandle = shareContext != null ? (shareContext as IGraphicsContextInternal).Context : (ContextHandle)IntPtr.Zero;
+                var shareHandle = shareContext != null ? (shareContext as IGraphicsContextInternal).Context : (ContextHandle)IntPtr.Zero;
                 shareContextRef = shareHandle.Handle;
             }
 
@@ -118,7 +118,7 @@ namespace OpenTK
         private void CreateContext(GraphicsMode mode, CocoaWindowInfo cocoaWindow, IntPtr shareContextRef, int majorVersion, int minorVersion, bool fullscreen)
         {
             // Prepare attributes
-            IntPtr pixelFormat = SelectPixelFormat(mode, majorVersion, minorVersion);
+            var pixelFormat = SelectPixelFormat(mode, majorVersion, minorVersion);
             if (pixelFormat == IntPtr.Zero)
             {
                 throw new GraphicsException($"Failed to contruct NSOpenGLPixelFormat for GraphicsMode '{mode}'");
@@ -151,7 +151,7 @@ namespace OpenTK
 
         private IntPtr SelectPixelFormat(GraphicsMode mode, int majorVersion, int minorVersion)
         {
-            List<NSOpenGLPixelFormatAttribute> attributes = new List<NSOpenGLPixelFormatAttribute>();
+            var attributes = new List<NSOpenGLPixelFormatAttribute>();
 
             var profile = NSOpenGLProfile.VersionLegacy;
             if (majorVersion > 3 || (majorVersion == 3 && minorVersion >= 2))
@@ -213,7 +213,7 @@ namespace OpenTK
             Debug.Unindent();
 
             Debug.Write("Attribute array:  ");
-            for (int i = 0; i < attributes.Count; i++)
+            for (var i = 0; i < attributes.Count; i++)
             {
                 Debug.Write(attributes[i] + "  ");
             }
@@ -235,8 +235,8 @@ namespace OpenTK
 
         private bool IsAccelerationSupported()
         {
-            IntPtr pf = IntPtr.Zero;
-            int count = 0;
+            var pf = IntPtr.Zero;
+            var count = 0;
             Cgl.ChoosePixelFormat(new int[] { (int)Cgl.PixelFormatBool.Accelerated, 0 },
                 ref pf, ref count);
 
@@ -250,10 +250,10 @@ namespace OpenTK
 
         private GraphicsMode GetGraphicsMode(IntPtr context)
         {
-            IntPtr cgl_context = Cocoa.SendIntPtr(context, Selector.Get("CGLContextObj"));
-            IntPtr cgl_format = Cgl.GetPixelFormat(cgl_context);
+            var cgl_context = Cocoa.SendIntPtr(context, Selector.Get("CGLContextObj"));
+            var cgl_format = Cgl.GetPixelFormat(cgl_context);
 
-            int id = 0; // CGL does not support the concept of a pixel format id
+            var id = 0; // CGL does not support the concept of a pixel format id
             int color, depth, stencil, samples, accum;
             bool doublebuffer, stereo;
             Cgl.DescribePixelFormat(cgl_format, 0, Cgl.PixelFormatInt.ColorSize, out color);
@@ -283,14 +283,14 @@ namespace OpenTK
 
         private unsafe void SetContextValue (int val, NSOpenGLContextParameter par)
         {
-            int* p = &val;
+            var p = &val;
             Cocoa.SendVoid(Handle.Handle, Selector.Get("setValues:forParameter:"), (IntPtr)p, (int)par);
         }
 
         private unsafe int GetContextValue (NSOpenGLContextParameter par)
         {
             int ret;
-            int* p = &ret;
+            var p = &ret;
             Cocoa.SendVoid(Handle.Handle, Selector.Get("getValues:forParameter:"), (IntPtr)p, (int)par);
             return ret;
         }
@@ -353,9 +353,9 @@ namespace OpenTK
                 // in length. Double that just to be sure.
                 const int max = 128;
                 byte* fun = stackalloc byte[max];
-                byte* ptr = fun;
-                byte* cur = (byte*)function.ToPointer();
-                int i = 0;
+                var ptr = fun;
+                var cur = (byte*)function.ToPointer();
+                var i = 0;
 
                 *ptr++ = (byte)'_';
                 while (*cur != 0 && ++i < max)
@@ -369,8 +369,8 @@ namespace OpenTK
                         Marshal.PtrToStringAnsi(function));
                 }
 
-                IntPtr address = IntPtr.Zero;
-                IntPtr symbol = IntPtr.Zero;
+                var address = IntPtr.Zero;
+                var symbol = IntPtr.Zero;
                 if (opengl != IntPtr.Zero)
                 {
                     symbol = NS.LookupSymbolInImage(opengl, new IntPtr(fun),

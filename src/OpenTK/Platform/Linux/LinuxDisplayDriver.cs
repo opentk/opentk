@@ -130,13 +130,13 @@ namespace OpenTK.Platform.Linux
         {
             unsafe
             {
-                bool has_displays = false;
+                var has_displays = false;
                 if (displays != null)
                 {
                     displays.Clear();
                 }
 
-                ModeRes* resources = (ModeRes*)Drm.ModeGetResources(fd);
+                var resources = (ModeRes*)Drm.ModeGetResources(fd);
                 if (resources == null)
                 {
                     Debug.Print("[KMS] Drm.ModeGetResources failed.");
@@ -146,13 +146,13 @@ namespace OpenTK.Platform.Linux
 
                 // Search for a valid connector
                 ModeConnector* connector = null;
-                for (int i = 0; i < resources->count_connectors; i++)
+                for (var i = 0; i < resources->count_connectors; i++)
                 {
                     connector = (ModeConnector*)Drm.ModeGetConnector(fd,
                         *(resources->connectors + i));
                     if (connector != null)
                     {
-                        bool success = false;
+                        var success = false;
                         LinuxDisplay display = null;
                         try
                         {
@@ -193,10 +193,10 @@ namespace OpenTK.Platform.Linux
                     AvailableDevices.Clear();
                     DisplayIds.Clear();
 
-                    List<LinuxDisplay> displays = new List<LinuxDisplay>();
+                    var displays = new List<LinuxDisplay>();
                     if (QueryDisplays(fd, displays))
                     {
-                        foreach (LinuxDisplay display in displays)
+                        foreach (var display in displays)
                         {
                             AddDisplay(display);
                         }
@@ -213,9 +213,9 @@ namespace OpenTK.Platform.Linux
         private unsafe static ModeEncoder* GetEncoder(int fd, ModeConnector* c)
         {
             ModeEncoder* encoder = null;
-            for (int i = 0; i < c->count_encoders && encoder == null; i++)
+            for (var i = 0; i < c->count_encoders && encoder == null; i++)
             {
-                ModeEncoder* e = (ModeEncoder*)Drm.ModeGetEncoder(
+                var e = (ModeEncoder*)Drm.ModeGetEncoder(
                     fd, *(c->encoders + i));
                 if (e != null)
                 {
@@ -245,7 +245,7 @@ namespace OpenTK.Platform.Linux
 
         private unsafe static ModeCrtc* GetCrtc(int fd, ModeEncoder* encoder)
         {
-            ModeCrtc* crtc = (ModeCrtc*)Drm.ModeGetCrtc(fd, encoder->crtc_id);
+            var crtc = (ModeCrtc*)Drm.ModeGetCrtc(fd, encoder->crtc_id);
             if (crtc != null)
             {
                 Debug.Print("[KMS] CRTC {0} found for encoder {1}",
@@ -261,23 +261,23 @@ namespace OpenTK.Platform.Linux
 
         private unsafe static void GetModes(LinuxDisplay display, DisplayResolution[] modes, out DisplayResolution current)
         {
-            int mode_count = display.pConnector->count_modes;
+            var mode_count = display.pConnector->count_modes;
             Debug.Print("[KMS] Display supports {0} mode(s)", mode_count);
-            for (int i = 0; i < mode_count; i++)
+            for (var i = 0; i < mode_count; i++)
             {
-                ModeInfo* mode = display.pConnector->modes + i;
+                var mode = display.pConnector->modes + i;
                 if (mode != null)
                 {
                     Debug.Print("Mode {0}: {1}x{2} @{3}", i,
                         mode->hdisplay, mode->vdisplay, mode->vrefresh);
-                    DisplayResolution res = GetDisplayResolution(mode);
+                    var res = GetDisplayResolution(mode);
                     modes[i] = res;
                 }
             }
 
             if (display.pCrtc->mode_valid != 0)
             {
-                ModeInfo cmode = display.pCrtc->mode;
+                var cmode = display.pCrtc->mode;
                 current = GetDisplayResolution(&cmode);
             }
             else
@@ -293,9 +293,9 @@ namespace OpenTK.Platform.Linux
             // to choose the display layout for multiple displays ourselves.
             // We choose the simplest layout: displays are laid out side-by-side
             // from left to right. Primary display is the first display we encounter.
-            int x = AvailableDevices.Count == 0 ?
+            var x = AvailableDevices.Count == 0 ?
                 0 : AvailableDevices[AvailableDevices.Count - 1].Bounds.Right;
-            int y = 0;
+            var y = 0;
 
             return new Rectangle(
                 x, y, current.Width, current.Height);
@@ -308,7 +308,7 @@ namespace OpenTK.Platform.Linux
                 Debug.Print("[KMS] Adding display {0} as {1}", display.Id, AvailableDevices.Count);
                 DisplayIds.Add(display.Id, AvailableDevices.Count);
             }
-            int index = DisplayIds[display.Id];
+            var index = DisplayIds[display.Id];
             if (index >= AvailableDevices.Count)
             {
                 AvailableDevices.Add(device);
@@ -324,13 +324,13 @@ namespace OpenTK.Platform.Linux
             display = null;
 
             // Find corresponding encoder
-            ModeEncoder* encoder = GetEncoder(fd, c);
+            var encoder = GetEncoder(fd, c);
             if (encoder == null)
             {
                 return false;
             }
 
-            ModeCrtc* crtc = GetCrtc(fd, encoder);
+            var crtc = GetCrtc(fd, encoder);
             if (crtc == null)
             {
                 return false;
@@ -342,12 +342,12 @@ namespace OpenTK.Platform.Linux
 
         private unsafe void AddDisplay(LinuxDisplay display)
         {
-            DisplayResolution[] modes = new DisplayResolution[display.pConnector->count_modes];
+            var modes = new DisplayResolution[display.pConnector->count_modes];
             DisplayResolution current;
             GetModes(display, modes, out current);
 
-            bool is_primary = AvailableDevices.Count == 0;
-            DisplayDevice device = new DisplayDevice(current, is_primary,
+            var is_primary = AvailableDevices.Count == 0;
+            var device = new DisplayDevice(current, is_primary,
                 modes, GetBounds(current), display);
 
             if (is_primary)
@@ -371,9 +371,9 @@ namespace OpenTK.Platform.Linux
 
         private unsafe static ModeInfo* GetModeInfo(LinuxDisplay display, DisplayResolution resolution)
         {
-            for (int i = 0; i < display.pConnector->count_modes; i++)
+            for (var i = 0; i < display.pConnector->count_modes; i++)
             {
-                ModeInfo* mode = display.pConnector->modes + i;
+                var mode = display.pConnector->modes + i;
                 if (mode != null &&
                     mode->hdisplay == resolution.Width &&
                     mode->vdisplay == resolution.Height)
@@ -388,9 +388,9 @@ namespace OpenTK.Platform.Linux
         {
             unsafe
             {
-                LinuxDisplay display = (LinuxDisplay)device.Id;
-                ModeInfo* mode = GetModeInfo(display, resolution);
-                int connector_id = display.pConnector->connector_id;
+                var display = (LinuxDisplay)device.Id;
+                var mode = GetModeInfo(display, resolution);
+                var connector_id = display.pConnector->connector_id;
                 if (mode != null)
                 {
                     return Drm.ModeSetCrtc(FD, display.Id, 0, 0, 0,
@@ -404,9 +404,9 @@ namespace OpenTK.Platform.Linux
         {
             unsafe
             {
-                LinuxDisplay display = (LinuxDisplay)device.Id;
-                ModeInfo mode = display.OriginalMode;
-                int connector_id = display.pConnector->connector_id;
+                var display = (LinuxDisplay)device.Id;
+                var mode = display.OriginalMode;
+                var connector_id = display.pConnector->connector_id;
                 return Drm.ModeSetCrtc(FD, display.Id, 0, 0, 0,
                     &connector_id, 1, &mode) == 0;
             }

@@ -53,7 +53,7 @@ namespace OpenTK.Platform.Egl
                 throw new ArgumentNullException(nameof(window));
             }
 
-            EglContext shared = GetSharedEglContext(sharedContext);
+            var shared = GetSharedEglContext(sharedContext);
 
             WindowInfo = window;
 
@@ -78,16 +78,16 @@ namespace OpenTK.Platform.Egl
                 }
             }
 
-            RenderApi api = (Renderable & RenderableFlags.GL) != 0 ? RenderApi.GL : RenderApi.ES;
+            var api = (Renderable & RenderableFlags.GL) != 0 ? RenderApi.GL : RenderApi.ES;
             Debug.Print("[EGL] Binding {0} rendering API.", api);
             if (!Egl.BindAPI(api))
             {
                 Debug.Print("[EGL] Failed to bind rendering API. Error: {0}", Egl.GetError());
             }
 
-            bool offscreen = (flags & GraphicsContextFlags.Offscreen) != 0;
+            var offscreen = (flags & GraphicsContextFlags.Offscreen) != 0;
 
-            SurfaceType surfaceType = offscreen
+            var surfaceType = offscreen
                 ? SurfaceType.PBUFFER_BIT
                 : SurfaceType.WINDOW_BIT;
 
@@ -100,7 +100,7 @@ namespace OpenTK.Platform.Egl
             {
                 throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
             }
-            IntPtr config = Mode.Index.Value;
+            var config = Mode.Index.Value;
 
             if (window.Surface == IntPtr.Zero)
             {
@@ -217,7 +217,7 @@ namespace OpenTK.Platform.Egl
         public override IntPtr GetAddress(IntPtr function)
         {
             // Try loading a static export from ES1 or ES2
-            IntPtr address = GetStaticAddress(function, Renderable);
+            var address = GetStaticAddress(function, Renderable);
 
             // If a static export is not available, try retrieving an extension
             // function pointer with eglGetProcAddress

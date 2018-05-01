@@ -70,18 +70,18 @@ namespace OpenTK.Graphics
         {
             Debug.Print("Loading entry points for {0}", GetType().FullName);
 
-            IGraphicsContext context = GraphicsContext.CurrentContext;
+            var context = GraphicsContext.CurrentContext;
             if (context == null)
             {
                 throw new GraphicsContextMissingException();
             }
 
-            IGraphicsContextInternal context_internal = context as IGraphicsContextInternal;
+            var context_internal = context as IGraphicsContextInternal;
             unsafe
             {
                 fixed (byte* name = _EntryPointNamesInstance)
                 {
-                    for (int i = 0; i < _EntryPointsInstance.Length; i++)
+                    for (var i = 0; i < _EntryPointsInstance.Length; i++)
                     {
                         _EntryPointsInstance[i] = context_internal.GetAddress(
                             new IntPtr(name + _EntryPointNameOffsetsInstance[i]));

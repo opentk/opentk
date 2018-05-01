@@ -60,7 +60,7 @@ namespace OpenTK.Platform.X11
         {
             using (new XLock(API.DefaultDisplay))
             {
-                List<DisplayDevice> devices = new List<DisplayDevice>();
+                var devices = new List<DisplayDevice>();
                 xinerama_supported = false;
                 try
                 {
@@ -75,9 +75,9 @@ namespace OpenTK.Platform.X11
                 {
                     // We assume that devices are equivalent to the number of available screens.
                     // Note: this won't work correctly in the case of distinct X servers.
-                    for (int i = 0; i < API.ScreenCount; i++)
+                    for (var i = 0; i < API.ScreenCount; i++)
                     {
-                        DisplayDevice dev = new DisplayDevice();
+                        var dev = new DisplayDevice();
                         dev.IsPrimary = i == Functions.XDefaultScreen(API.DefaultDisplay);
                         devices.Add(dev);
                         deviceToScreen.Add(dev, i);
@@ -113,7 +113,7 @@ namespace OpenTK.Platform.X11
 
         private static DisplayDevice FindDefaultDevice(IEnumerable<DisplayDevice> devices)
         {
-            foreach (DisplayDevice dev in devices)
+            foreach (var dev in devices)
             {
                 if (dev.IsPrimary)
                 {
@@ -131,11 +131,11 @@ namespace OpenTK.Platform.X11
             if (NativeMethods.XineramaQueryExtension(API.DefaultDisplay, out event_base, out error_base) &&
                 NativeMethods.XineramaIsActive(API.DefaultDisplay))
             {
-                IList<XineramaScreenInfo> screens = NativeMethods.XineramaQueryScreens(API.DefaultDisplay);
-                bool first = true;
-                foreach (XineramaScreenInfo screen in screens)
+                var screens = NativeMethods.XineramaQueryScreens(API.DefaultDisplay);
+                var first = true;
+                foreach (var screen in screens)
                 {
-                    DisplayDevice dev = new DisplayDevice();
+                    var dev = new DisplayDevice();
                     dev.Bounds = new Rectangle(screen.X, screen.Y, screen.Width, screen.Height);
                     if (first)
                     {
@@ -155,24 +155,24 @@ namespace OpenTK.Platform.X11
         private bool QueryXRandR(List<DisplayDevice> devices)
         {
             // Get available resolutions. Then, for each resolution get all available rates.
-            foreach (DisplayDevice dev in devices)
+            foreach (var dev in devices)
             {
-                int screen = deviceToScreen[dev];
+                var screen = deviceToScreen[dev];
 
                 IntPtr timestamp_of_last_update;
                 Functions.XRRTimes(API.DefaultDisplay, screen, out timestamp_of_last_update);
                 lastConfigUpdate.Add(timestamp_of_last_update);
 
-                List<DisplayResolution> available_res = new List<DisplayResolution>();
+                var available_res = new List<DisplayResolution>();
 
                 // Add info for a new screen.
                 screenResolutionToIndex.Add(new Dictionary<DisplayResolution, int>());
 
-                int[] depths = FindAvailableDepths(screen);
+                var depths = FindAvailableDepths(screen);
 
-                int resolution_count = 0;
-                XRRScreenSize[] sizes = FindAvailableResolutions(screen);
-                foreach (XRRScreenSize size in sizes)
+                var resolution_count = 0;
+                var sizes = FindAvailableResolutions(screen);
+                foreach (var size in sizes)
                 {
                     if (size.Width == 0 || size.Height == 0)
                     {
@@ -185,26 +185,26 @@ namespace OpenTK.Platform.X11
                     // It seems that XRRRates returns 0 for modes that are larger than the screen
                     // can support, as well as for all supported modes. On Ubuntu 7.10 the tool
                     // "Screens and Graphics" does report these modes, though.
-                    foreach (short rate in rates)
+                    foreach (var rate in rates)
                     {
                         // Note: some X servers (like Xming on Windows) do not report any rates other than 0.
                         // If we only have 1 rate, add it even if it is 0.
                         if (rate != 0 || rates.Length == 1)
                         {
-                            foreach (int depth in depths)
+                            foreach (var depth in depths)
                             {
                                 available_res.Add(new DisplayResolution(0, 0, size.Width, size.Height, depth, (float)rate));
                             }
                         }
                     }
                     // Keep the index of this resolution - we will need it for resolution changes later.
-                    foreach (int depth in depths)
+                    foreach (var depth in depths)
                     {
                         // Note that Xinerama may return multiple devices for a single screen. XRandR will
                         // not distinguish between the two as far as resolutions are supported (since XRandR
                         // operates on X screens, not display devices) - we need to be careful not to add the
                         // same resolution twice!
-                        DisplayResolution res = new DisplayResolution(0, 0, size.Width, size.Height, depth, 0);
+                        var res = new DisplayResolution(0, 0, size.Width, size.Height, depth, 0);
                         if (!screenResolutionToIndex[screen].ContainsKey(res))
                         {
                             screenResolutionToIndex[screen].Add(res, resolution_count);
@@ -218,9 +218,9 @@ namespace OpenTK.Platform.X11
                 // The resolution of the current DisplayDevice is discovered through XRRConfigCurrentConfiguration.
                 // Its refresh rate is discovered by the FindCurrentRefreshRate call.
                 // Its depth is discovered by the FindCurrentDepth call.
-                float current_refresh_rate = FindCurrentRefreshRate(screen);
-                int current_depth = FindCurrentDepth(screen);
-                IntPtr screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, Functions.XRootWindow(API.DefaultDisplay, screen));
+                var current_refresh_rate = FindCurrentRefreshRate(screen);
+                var current_depth = FindCurrentDepth(screen);
+                var screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, Functions.XRootWindow(API.DefaultDisplay, screen));
                 ushort current_rotation;  // Not needed.
                 int current_sizes_index = Functions.XRRConfigCurrentConfiguration(screen_config, out current_rotation);
 
@@ -255,25 +255,25 @@ namespace OpenTK.Platform.X11
                 return false;
             }
 
-            int currentScreen = 0;
+            var currentScreen = 0;
             Debug.Print("Using XF86 v" + major + "." + minor);
 
-            foreach (DisplayDevice dev in devices)
+            foreach (var dev in devices)
             {
                 int count;
 
                 IntPtr srcArray;
                 API.XF86VidModeGetAllModeLines(API.DefaultDisplay, currentScreen, out count, out srcArray);
                 Debug.Print(count + " modes detected on screen " + currentScreen);
-                IntPtr[] array = new IntPtr[count];
+                var array = new IntPtr[count];
                 Marshal.Copy(srcArray, array, 0, count);
-                API.XF86VidModeModeInfo Mode = new API.XF86VidModeModeInfo();
+                var Mode = new API.XF86VidModeModeInfo();
 
                 int x;
                 int y;
                 API.XF86VidModeGetViewPort(API.DefaultDisplay, currentScreen, out x, out y);
-                List<DisplayResolution> resolutions = new List<DisplayResolution>();
-                for (int i = 0; i < count; i++)
+                var resolutions = new List<DisplayResolution>();
+                for (var i = 0; i < count; i++)
                 {
                     Mode = (API.XF86VidModeModeInfo)Marshal.PtrToStructure(array[i], typeof(API.XF86VidModeModeInfo));
                     resolutions.Add(new DisplayResolution(x, y, Mode.hdisplay, Mode.vdisplay, 24, (Mode.dotclock * 1000F) / (Mode.vtotal * Mode.htotal)));
@@ -310,7 +310,7 @@ namespace OpenTK.Platform.X11
         private static float FindCurrentRefreshRate(int screen)
         {
             short rate = 0;
-            IntPtr screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, Functions.XRootWindow(API.DefaultDisplay, screen));
+            var screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, Functions.XRootWindow(API.DefaultDisplay, screen));
             rate = Functions.XRRConfigCurrentRate(screen_config);
             Functions.XRRFreeScreenConfigInfo(screen_config);
             return (float)rate;
@@ -325,9 +325,9 @@ namespace OpenTK.Platform.X11
         {
             using (new XLock(API.DefaultDisplay))
             {
-                int screen = deviceToScreen[device];
-                IntPtr root = Functions.XRootWindow(API.DefaultDisplay, screen);
-                IntPtr screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, root);
+                var screen = deviceToScreen[device];
+                var root = Functions.XRootWindow(API.DefaultDisplay, screen);
+                var screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, root);
 
                 ushort current_rotation;
                 int current_resolution_index = Functions.XRRConfigCurrentConfiguration(screen_config, out current_rotation);
@@ -345,8 +345,8 @@ namespace OpenTK.Platform.X11
                 Debug.Print("Changing size of screen {0} from {1} to {2}",
                     screen, current_resolution_index, new_resolution_index);
 
-                int ret = 0;
-                short refresh_rate = (short)(resolution != null ? resolution.RefreshRate : 0);
+                var ret = 0;
+                var refresh_rate = (short)(resolution != null ? resolution.RefreshRate : 0);
                 if (refresh_rate > 0)
                 {
                     ret = Functions.XRRSetScreenConfigAndRate(API.DefaultDisplay,
@@ -417,12 +417,12 @@ namespace OpenTK.Platform.X11
             public static IList<XineramaScreenInfo> XineramaQueryScreens(IntPtr dpy)
             {
                 int number;
-                IntPtr screen_ptr = XineramaQueryScreens(dpy, out number);
-                List<XineramaScreenInfo> screens = new List<XineramaScreenInfo>(number);
+                var screen_ptr = XineramaQueryScreens(dpy, out number);
+                var screens = new List<XineramaScreenInfo>(number);
 
                 unsafe
                 {
-                    XineramaScreenInfo* ptr = (XineramaScreenInfo*)screen_ptr;
+                    var ptr = (XineramaScreenInfo*)screen_ptr;
                     while (--number >= 0)
                     {
                         screens.Add(*ptr);

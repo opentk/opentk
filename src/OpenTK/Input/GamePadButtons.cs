@@ -129,7 +129,7 @@ namespace OpenTK.Input
         /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.GamePadButtons"/>.</returns>
         public override string ToString()
         {
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            var sb = new System.Text.StringBuilder();
             if (A == ButtonState.Pressed)
             {
                 sb.Append("A");

@@ -59,12 +59,12 @@ namespace OpenTK.Platform.X11
                 {
                     // Xkb.GetKeyboard appears to be broken (multiple bug reports across distros)
                     // so use Xkb.AllocKeyboard with Xkb.GetNames instead.
-                    XkbDesc* keyboard = Xkb.AllocKeyboard(display);
+                    var keyboard = Xkb.AllocKeyboard(display);
                     if (keyboard != null)
                     {
                         Xkb.GetNames(display, XkbNamesMask.All, keyboard);
 
-                        for (int i = 0; i < keycodes.Length; i++)
+                        for (var i = 0; i < keycodes.Length; i++)
                         {
                             keycodes[i] = Key.Unknown;
                         }
@@ -73,9 +73,9 @@ namespace OpenTK.Platform.X11
                         // Symbols are handled in GetKey() instead.
                         for (int i = keyboard->min_key_code; i <= keyboard->max_key_code; ++i)
                         {
-                            string name = new string((sbyte*)keyboard->names->keys[i].name, 0, Xkb.KeyNameLength);
+                            var name = new string((sbyte*)keyboard->names->keys[i].name, 0, Xkb.KeyNameLength);
 
-                            Key key = Key.Unknown;
+                            var key = Key.Unknown;
                             switch (name)
                             {
                                 case "TLDE":
@@ -237,16 +237,16 @@ namespace OpenTK.Platform.X11
 
             // Translate unknown keys (and symbols) using
             // regular layout-dependent GetKey()
-            for (int i = 0; i < 256; i++)
+            for (var i = 0; i < 256; i++)
             {
                 if (keycodes[i] == Key.Unknown)
                 {
                     // TranslateKeyCode expects a XKeyEvent structure
                     // Make one up
-                    XKeyEvent e = new XKeyEvent();
+                    var e = new XKeyEvent();
                     e.display = display;
                     e.keycode = i;
-                    Key key = Key.Unknown;
+                    var key = Key.Unknown;
                     if (TranslateKeyEvent(ref e, out key))
                     {
                         keycodes[i] = key;
@@ -624,8 +624,8 @@ namespace OpenTK.Platform.X11
 
         private bool TranslateKeyX11(ref XKeyEvent e, out Key key)
         {
-            XKey keysym = (XKey)API.LookupKeysym(ref e, 0);
-            XKey keysym2 = (XKey)API.LookupKeysym(ref e, 1);
+            var keysym = (XKey)API.LookupKeysym(ref e, 0);
+            var keysym2 = (XKey)API.LookupKeysym(ref e, 1);
             key = TranslateXKey(keysym);
             if (key == Key.Unknown)
             {
@@ -649,7 +649,7 @@ namespace OpenTK.Platform.X11
 
             // Translate the numeric keypad using the secondary group
             // (equivalent to NumLock = on)
-            XKey keysym = Xkb.KeycodeToKeysym(display, keycode, 0, 1);
+            var keysym = Xkb.KeycodeToKeysym(display, keycode, 0, 1);
             switch (keysym)
             {
                 case XKey.KP_0: key = Key.Keypad0; return true;

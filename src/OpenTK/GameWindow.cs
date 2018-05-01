@@ -408,9 +408,9 @@ namespace OpenTK
 
         private void DispatchUpdateFrame(Stopwatch watch)
         {
-            int is_running_slowly_retries = 4;
-            double timestamp = watch.Elapsed.TotalSeconds;
-            double elapsed = ClampElapsed(timestamp - update_timestamp);
+            var is_running_slowly_retries = 4;
+            var timestamp = watch.Elapsed.TotalSeconds;
+            var elapsed = ClampElapsed(timestamp - update_timestamp);
 
             while (elapsed > 0 && elapsed + update_epsilon >= TargetUpdatePeriod)
             {
@@ -445,8 +445,8 @@ namespace OpenTK
 
         private void DispatchRenderFrame()
         {
-            double timestamp = watchRender.Elapsed.TotalSeconds;
-            double elapsed = ClampElapsed(timestamp - render_timestamp);
+            var timestamp = watchRender.Elapsed.TotalSeconds;
+            var elapsed = ClampElapsed(timestamp - render_timestamp);
             if (elapsed > 0 && elapsed >= TargetRenderPeriod)
             {
                 RaiseRenderFrame(elapsed, ref timestamp);

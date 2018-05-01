@@ -194,7 +194,7 @@ namespace OpenTK.Input
 
         private bool IsAxisValid(GamePadAxes axis)
         {
-            int index = (int)axis;
+            var index = (int)axis;
             return index >= 0 && index < GamePad.MaxAxisCount;
         }
 

@@ -46,11 +46,11 @@ namespace OpenTK.Platform.Windows
                 // Create temporary context and load WGL entry points
                 // First, set a compatible pixel format to the device context
                 // of the temp window
-                WinWindowInfo window = native.WindowInfo as WinWindowInfo;
-                WinGraphicsMode selector = new WinGraphicsMode(window.DeviceContext);
+                var window = native.WindowInfo as WinWindowInfo;
+                var selector = new WinGraphicsMode(window.DeviceContext);
                 SetGraphicsModePFD(selector, GraphicsMode.Default, window);
 
-                bool success = false;
+                var success = false;
 
                 // Then, construct a temporary context and load all wgl extensions
                 Context = new ContextHandle(Wgl.CreateContext(window.DeviceContext));
@@ -62,7 +62,7 @@ namespace OpenTK.Platform.Windows
                     // is to call wglMakeCurrent in a loop until it succeeds.
                     // See https://www.opengl.org/discussion_boards/showthread.php/171058-nVidia-wglMakeCurrent()-multiple-threads
                     // Sigh...
-                    for (int retry = 0; retry < 5 && !success; retry++)
+                    for (var retry = 0; retry < 5 && !success; retry++)
                     {
                         success = Wgl.MakeCurrent(window.DeviceContext, Context.Handle);
                         if (!success)
@@ -110,7 +110,7 @@ namespace OpenTK.Platform.Windows
                     throw new ArgumentException("window", "Must be a valid window.");
                 }
 
-                IntPtr current_context = Wgl.GetCurrentContext();
+                var current_context = Wgl.GetCurrentContext();
                 INativeWindow temp_window = null;
                 TemporaryContext temp_context = null;
                 try
@@ -139,7 +139,7 @@ namespace OpenTK.Platform.Windows
                         {
                             Debug.Write("Using WGL_ARB_create_context... ");
 
-                            List<int> attributes = new List<int>();
+                            var attributes = new List<int>();
                             attributes.Add((int)ArbCreateContext.MajorVersion);
                             attributes.Add(major);
                             attributes.Add((int)ArbCreateContext.MinorVersion);
@@ -219,7 +219,7 @@ namespace OpenTK.Platform.Windows
             {
                 Marshal.GetLastWin32Error();
                 Debug.Write($"Sharing state with context {sharedContext}: ");
-                bool result = Wgl.ShareLists((sharedContext as IGraphicsContextInternal).Context.Handle, Handle.Handle);
+                var result = Wgl.ShareLists((sharedContext as IGraphicsContextInternal).Context.Handle, Handle.Handle);
                 Debug.WriteLine(result ? "success!" : "failed with win32 error " + Marshal.GetLastWin32Error());
             }
         }
@@ -269,7 +269,7 @@ namespace OpenTK.Platform.Windows
             {
                 bool success;
 
-                WinWindowInfo wnd = window as WinWindowInfo;
+                var wnd = window as WinWindowInfo;
                 if (wnd != null)
                 {
                     if (wnd.Handle == IntPtr.Zero)
@@ -355,7 +355,7 @@ namespace OpenTK.Platform.Windows
 
         public override IntPtr GetAddress(IntPtr function_string)
         {
-            IntPtr address = Wgl.GetProcAddress(function_string);
+            var address = Wgl.GetProcAddress(function_string);
             if (!IsValid(address))
             {
                 address = Functions.GetProcAddress(WinFactory.OpenGLHandle, function_string);
@@ -366,8 +366,8 @@ namespace OpenTK.Platform.Windows
         private static bool IsValid(IntPtr address)
         {
             // See https://www.opengl.org/wiki/Load_OpenGL_Functions
-            long a = address.ToInt64();
-            bool is_valid = (a < -1) || (a > 3);
+            var a = address.ToInt64();
+            var is_valid = (a < -1) || (a > 3);
             return is_valid;
         }
 
@@ -389,7 +389,7 @@ namespace OpenTK.Platform.Windows
                     mode.Buffers, mode.Stereo);
             }
 
-            PixelFormatDescriptor pfd = new PixelFormatDescriptor();
+            var pfd = new PixelFormatDescriptor();
             Functions.DescribePixelFormat(
                 window.DeviceContext, (int)mode.Index.Value,
                 API.PixelFormatDescriptorSize, ref pfd);

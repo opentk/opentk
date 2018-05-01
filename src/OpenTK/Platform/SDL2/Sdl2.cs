@@ -545,7 +545,7 @@ namespace OpenTK.Platform.SDL2
             public static extern IntPtr GetProcAddress(IntPtr proc);
             public static IntPtr GetProcAddress(string proc)
             {
-                IntPtr p = Marshal.StringToHGlobalAnsi(proc);
+                var p = Marshal.StringToHGlobalAnsi(proc);
                 try
                 {
                     return GetProcAddress(p);
@@ -1527,7 +1527,7 @@ namespace OpenTK.Platform.SDL2
 
         public Guid ToGuid()
         {
-            byte[] data = new byte[16];
+            var data = new byte[16];
 
             unsafe
             {

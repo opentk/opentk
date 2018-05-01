@@ -165,9 +165,9 @@ namespace OpenTK.Platform
         /// <param name="mods">Mods.</param>
         protected void UpdateModifierFlags(KeyModifiers mods)
         {
-            bool alt = (mods & KeyModifiers.Alt) != 0;
-            bool control = (mods & KeyModifiers.Control) != 0;
-            bool shift = (mods & KeyModifiers.Shift) != 0;
+            var alt = (mods & KeyModifiers.Alt) != 0;
+            var control = (mods & KeyModifiers.Control) != 0;
+            var shift = (mods & KeyModifiers.Shift) != 0;
 
             if (alt)
             {
@@ -372,7 +372,7 @@ namespace OpenTK.Platform
             get => Bounds.X;
             set
             {
-                Rectangle old = Bounds;
+                var old = Bounds;
                 Bounds = new Rectangle(value, old.Y, old.Width, old.Height);
             }
         }
@@ -382,7 +382,7 @@ namespace OpenTK.Platform
             get => Bounds.Y;
             set
             {
-                Rectangle old = Bounds;
+                var old = Bounds;
                 Bounds = new Rectangle(old.X, value, old.Width, old.Height);
             }
         }

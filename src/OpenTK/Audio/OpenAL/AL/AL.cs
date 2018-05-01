@@ -235,7 +235,7 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="up">A Math.Vector3 for the Up-Vector.</param>
         public static void Listener(ALListenerfv param, ref Vector3 at, ref Vector3 up)
         {
-            float[] temp = new float[6];
+            var temp = new float[6];
 
             temp[0] = at.X;
             temp[1] = at.Y;
@@ -296,7 +296,7 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="up">A Math.Vector3 for the Up-Vector.</param>
         public static void GetListener(ALListenerfv param, out Vector3 at, out Vector3 up)
         {
-            float[] pinned = new float[6]; // should lose scope when the function exits
+            var pinned = new float[6]; // should lose scope when the function exits
             unsafe
             {
                 fixed (float* ptr = &pinned[0])
@@ -392,9 +392,9 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="sources">Pointer to an array of int values which will store the names of the new sources.</param>
         public static void GenSources(int[] sources)
         {
-            uint[] temp = new uint[sources.Length];
+            var temp = new uint[sources.Length];
             GenSources(temp.Length, out temp[0]);
-            for (int i = 0; i < temp.Length; i++)
+            for (var i = 0; i < temp.Length; i++)
             {
                 sources[i] = (int)temp[i];
             }
@@ -405,10 +405,10 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>Pointer to an array of int values which will store the names of the new sources.</returns>
         public static int[] GenSources(int n)
         {
-            uint[] temp = new uint[n];
+            var temp = new uint[n];
             GenSources(temp.Length, out temp[0]);
-            int[] sources = new int[n];
-            for (int i = 0; i < temp.Length; i++)
+            var sources = new int[n];
+            for (var i = 0; i < temp.Length; i++)
             {
                 sources[i] = (int)temp[i];
             }
@@ -767,8 +767,8 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="sids">A pointer to an array of sources to be played.</param>
         public static void SourcePlay(int ns, int[] sids)
         {
-            uint[] temp = new uint[ns];
-            for (int i = 0; i < ns; i++)
+            var temp = new uint[ns];
+            for (var i = 0; i < ns; i++)
             {
                 temp[i] = (uint)sids[i];
             }
@@ -815,8 +815,8 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="sids">A pointer to an array of sources to be stopped.</param>
         public static void SourceStop(int ns, int[] sids)
         {
-            uint[] temp = new uint[ns];
-            for (int i = 0; i < ns; i++)
+            var temp = new uint[ns];
+            for (var i = 0; i < ns; i++)
             {
                 temp[i] = (uint)sids[i];
             }
@@ -863,8 +863,8 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="sids">A pointer to an array of sources to be rewound.</param>
         public static void SourceRewind(int ns, int[] sids)
         {
-            uint[] temp = new uint[ns];
-            for (int i = 0; i < ns; i++)
+            var temp = new uint[ns];
+            for (var i = 0; i < ns; i++)
             {
                 temp[i] = (uint)sids[i];
             }
@@ -910,8 +910,8 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="sids">A pointer to an array of sources to be paused.</param>
         public static void SourcePause(int ns, int[] sids)
         {
-            uint[] temp = new uint[ns];
-            for (int i = 0; i < ns; i++)
+            var temp = new uint[ns];
+            for (var i = 0; i < ns; i++)
             {
                 temp[i] = (uint)sids[i];
             }
@@ -1013,8 +1013,8 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="bids">A pointer to an array of buffer names to be queued.</param>
         public static void SourceQueueBuffers(int sid, int numEntries, int[] bids)
         {
-            uint[] temp = new uint[numEntries];
-            for (int i = 0; i < numEntries; i++)
+            var temp = new uint[numEntries];
+            for (var i = 0; i < numEntries; i++)
             {
                 temp[i] = (uint)bids[i];
             }
@@ -1098,7 +1098,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentOutOfRangeException(nameof(numEntries), "Must be greater than zero.");
             }
-            int[] buf = new int[numEntries];
+            var buf = new int[numEntries];
             SourceUnqueueBuffers(sid, numEntries, buf);
             return buf;
         }
@@ -1163,7 +1163,7 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>Pointer to an array of uint values which will store the names of the new buffers.</returns>
         public static int[] GenBuffers(int n)
         {
-            int[] buffers = new int[n];
+            var buffers = new int[n];
             GenBuffers(buffers.Length, out buffers[0]);
             return buffers;
         }
@@ -1281,7 +1281,7 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>Success.</returns>
         public static bool IsBuffer(int bid)
         {
-            uint temp = (uint)bid;
+            var temp = (uint)bid;
             return IsBuffer(temp);
         }
 
@@ -1320,7 +1320,7 @@ namespace OpenTK.Audio.OpenAL
                 throw new ArgumentException("buffer");
             }
 
-            GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+            var handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
             try { BufferData(bid, format, handle.AddrOfPinnedObject(), size, freq); }
             finally { handle.Free(); }
         }

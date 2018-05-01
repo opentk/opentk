@@ -96,7 +96,7 @@ namespace OpenTK.Graphics.ES30
 
                 if (error_list.Count != 1)
                 {
-                    StringBuilder sb = new StringBuilder();
+                    var sb = new StringBuilder();
                     foreach (ErrorCode e in error_list)
                     {
                         if (e != ErrorCode.NoError)

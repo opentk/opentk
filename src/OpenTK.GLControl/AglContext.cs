@@ -55,7 +55,7 @@ namespace OpenTK.Platform.MacOS
         {
             Debug.Print("Share context: {0}", shareContext);
             Debug.Print("Window info: {0}", window);
-            IntPtr shareContextRef = IntPtr.Zero;
+            var shareContextRef = IntPtr.Zero;
 
             XOffset = xoffset;
             YOffset = yoffset;
@@ -68,7 +68,7 @@ namespace OpenTK.Platform.MacOS
             }
             else if (shareContext is GraphicsContext)
             {
-                ContextHandle shareHandle = shareContext != null ? (shareContext as IGraphicsContextInternal).Context : (ContextHandle)IntPtr.Zero;
+                var shareHandle = shareContext != null ? (shareContext as IGraphicsContextInternal).Context : (ContextHandle)IntPtr.Zero;
                 shareContextRef = shareHandle.Handle;
             }
 
@@ -102,7 +102,7 @@ namespace OpenTK.Platform.MacOS
 
             // Choose a pixel format with the attributes we specified.
             AGLPixelFormat pixelformat;
-            AglGraphicsMode selector = new AglGraphicsMode();
+            var selector = new AglGraphicsMode();
             Mode = selector.SelectGraphicsMode(
                 mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
                 mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
@@ -135,11 +135,11 @@ namespace OpenTK.Platform.MacOS
 
         private void SetBufferRect(IWindowInfo carbonWindow)
         {
-            Rect rect = API.GetControlBounds(carbonWindow.Handle);
+            var rect = API.GetControlBounds(carbonWindow.Handle);
 
             Debug.Print("Setting buffer_rect for control.");
             Debug.Print("MacOS Coordinate Rect:   {0}", rect);
-            int[] glrect = new int[4];
+            var glrect = new int[4];
 
             if (XOffset != null)
             {
@@ -169,7 +169,7 @@ namespace OpenTK.Platform.MacOS
 
         private void SetDrawable(IWindowInfo carbonWindow)
         {
-            IntPtr windowPort = GetWindowPortForWindowInfo(carbonWindow);
+            var windowPort = GetWindowPortForWindowInfo(carbonWindow);
             //Debug.Print("Setting drawable for context {0} to window port: {1}", Handle.Handle, windowPort);
             Agl.aglSetDrawable(Context.Handle, windowPort);
             MyAGLReportError("aglSetDrawable");
@@ -178,7 +178,7 @@ namespace OpenTK.Platform.MacOS
         private static IntPtr GetWindowPortForWindowInfo(IWindowInfo carbonWindow)
         {
             IntPtr windowPort;
-            IntPtr controlOwner = API.GetControlOwner(carbonWindow.Handle);
+            var controlOwner = API.GetControlOwner(carbonWindow.Handle);
             windowPort = API.GetWindowPort(controlOwner);
 
             return windowPort;
@@ -194,7 +194,7 @@ namespace OpenTK.Platform.MacOS
 
         private void MyAGLReportError(string function)
         {
-            Agl.AglError err = Agl.GetError();
+            var err = Agl.GetError();
 
             if (err != Agl.AglError.NoError)
             {
@@ -233,7 +233,7 @@ namespace OpenTK.Platform.MacOS
         {
             get
             {
-                int swap_interval = 0;
+                var swap_interval = 0;
                 if (Agl.aglGetInteger(Context.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, out swap_interval))
                 {
                     return swap_interval;

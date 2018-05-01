@@ -45,9 +45,9 @@ namespace OpenTK.Platform.Windows
         public JoystickState GetState(int index)
         {
             XInputState xstate;
-            XInputErrorCode error = xinput.GetState((XInputUserIndex)index, out xstate);
+            var error = xinput.GetState((XInputUserIndex)index, out xstate);
 
-            JoystickState state = new JoystickState();
+            var state = new JoystickState();
             if (error == XInputErrorCode.Success)
             {
                 state.SetIsConnected(true);
@@ -129,7 +129,7 @@ namespace OpenTK.Platform.Windows
         public JoystickCapabilities GetCapabilities(int index)
         {
             XInputDeviceCapabilities xcaps;
-            XInputErrorCode error = xinput.GetCapabilities(
+            var error = xinput.GetCapabilities(
                 (XInputUserIndex)index,
                 XInputCapabilitiesFlags.Default,
                 out xcaps);
@@ -137,8 +137,8 @@ namespace OpenTK.Platform.Windows
             if (error == XInputErrorCode.Success)
             {
                 //GamePadType type = TranslateSubType(xcaps.SubType);
-                int buttons = TranslateButtons(xcaps.GamePad.Buttons);
-                int axes = TranslateAxes(ref xcaps.GamePad);
+                var buttons = TranslateButtons(xcaps.GamePad.Buttons);
+                var axes = TranslateAxes(ref xcaps.GamePad);
 
                 return new JoystickCapabilities(axes, buttons, 1, true);
             }
@@ -160,7 +160,7 @@ namespace OpenTK.Platform.Windows
             left = MathHelper.Clamp(left, 0.0f, 1.0f);
             right = MathHelper.Clamp(right, 0.0f, 1.0f);
 
-            XInputVibration vibration = new XInputVibration(
+            var vibration = new XInputVibration(
                 (ushort)(left * UInt16.MaxValue),
                 (ushort)(right * UInt16.MaxValue));
 
@@ -169,7 +169,7 @@ namespace OpenTK.Platform.Windows
 
         private int TranslateAxes(ref XInputGamePad pad)
         {
-            int count = 0;
+            var count = 0;
             count += pad.ThumbLX != 0 ? 1 : 0;
             count += pad.ThumbLY != 0 ? 1 : 0;
             count += pad.ThumbRX != 0 ? 1 : 0;
@@ -397,7 +397,7 @@ namespace OpenTK.Platform.Windows
 
             private Delegate Load(ushort ordinal, Type type)
             {
-                IntPtr pfunc = Functions.GetProcAddress(dll, (IntPtr)ordinal);
+                var pfunc = Functions.GetProcAddress(dll, (IntPtr)ordinal);
                 if (pfunc != IntPtr.Zero)
                 {
                     return Marshal.GetDelegateForFunctionPointer(pfunc, type);
@@ -407,7 +407,7 @@ namespace OpenTK.Platform.Windows
 
             private Delegate Load(string name, Type type)
             {
-                IntPtr pfunc = Functions.GetProcAddress(dll, name);
+                var pfunc = Functions.GetProcAddress(dll, name);
                 if (pfunc != IntPtr.Zero)
                 {
                     return Marshal.GetDelegateForFunctionPointer(pfunc, type);

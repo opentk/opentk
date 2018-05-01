@@ -109,7 +109,7 @@ namespace OpenTK.Platform.SDL2
 
         private static WindowFlags TranslateFlags(GameWindowFlags flags)
         {
-            WindowFlags windowFlags = WindowFlags.Default;
+            var windowFlags = WindowFlags.Default;
 
             if ((flags & GameWindowFlags.Fullscreen) != 0)
             {
@@ -138,13 +138,13 @@ namespace OpenTK.Platform.SDL2
 
         private static Key TranslateKey(Keycode key)
         {
-            Scancode scan = SDL.GetScancodeFromKey(key);
+            var scan = SDL.GetScancodeFromKey(key);
             return TranslateKey(scan);
         }
 
         private int ProcessEvent(ref Event ev)
         {
-            bool processed = false;
+            var processed = false;
 
             try
             {
@@ -226,7 +226,7 @@ namespace OpenTK.Platform.SDL2
 
         private static void ProcessMouseButtonEvent(Sdl2NativeWindow window, MouseButtonEvent ev)
         {
-            bool button_pressed = ev.State == State.Pressed;
+            var button_pressed = ev.State == State.Pressed;
 
             // We need MouseUp events to be reported even if they occur
             // outside the window. SetWindowGrab ensures we get them.
@@ -236,7 +236,7 @@ namespace OpenTK.Platform.SDL2
                     button_pressed ? true : false);
             }
 
-            MouseButton button = Sdl2Mouse.TranslateButton(ev.Button);
+            var button = Sdl2Mouse.TranslateButton(ev.Button);
             if (button_pressed)
             {
                 window.OnMouseDown(button);
@@ -249,8 +249,8 @@ namespace OpenTK.Platform.SDL2
 
         private static void ProcessKeyEvent(Sdl2NativeWindow window, Event ev)
         {
-            bool key_pressed = ev.Key.State == State.Pressed;
-            Key key = TranslateKey(ev.Key.Keysym.Scancode);
+            var key_pressed = ev.Key.State == State.Pressed;
+            var key = TranslateKey(ev.Key.Keysym.Scancode);
             if (key_pressed)
             {
                 window.OnKeyDown(key, ev.Key.Repeat > 0);
@@ -271,7 +271,7 @@ namespace OpenTK.Platform.SDL2
             }
 
             // Make sure we have enough space to decode this string
-            int decoded_length = Encoding.UTF8.GetCharCount(ev.Text, length);
+            var decoded_length = Encoding.UTF8.GetCharCount(ev.Text, length);
             if (window.DecodeTextBuffer.Length < decoded_length)
             {
                 Array.Resize(
@@ -289,7 +289,7 @@ namespace OpenTK.Platform.SDL2
                     window.DecodeTextBuffer.Length);
             }
 
-            for (int i = 0; i < decoded_length; i++)
+            for (var i = 0; i < decoded_length; i++)
             {
                 window.OnKeyPress(window.DecodeTextBuffer[i]);
             }
@@ -297,7 +297,7 @@ namespace OpenTK.Platform.SDL2
 
         private static void ProcessMouseMotionEvent(Sdl2NativeWindow window, MouseMotionEvent ev)
         {
-            float scale = window.ClientSize.Width / (float)window.Size.Width;
+            var scale = window.ClientSize.Width / (float)window.Size.Width;
             window.OnMouseMove(
                 (int)Math.Round(ev.X * scale),
                 (int)Math.Round(ev.Y * scale));
@@ -311,7 +311,7 @@ namespace OpenTK.Platform.SDL2
 
         private static unsafe void ProcessDropEvent(Sdl2NativeWindow window, DropEvent ev)
         {
-            string dropString = Marshal.PtrToStringAuto(ev.File);
+            var dropString = Marshal.PtrToStringAuto(ev.File);
             window.OnFileDrop(dropString);
         }
 
@@ -432,7 +432,7 @@ namespace OpenTK.Platform.SDL2
                 // Move the cursor to the current position
                 // in order to avoid a sudden jump when it
                 // becomes visible again
-                float scale = Width / (float)Size.Width;
+                var scale = Width / (float)Size.Width;
                 SDL.WarpMouseInWindow(window.Handle,
                     (int)Math.Round(MouseState.X / scale),
                     (int)Math.Round(MouseState.Y / scale));
@@ -451,7 +451,7 @@ namespace OpenTK.Platform.SDL2
         // Revert to WindowState.Normal if necessary
         private void RestoreWindow()
         {
-            WindowState state = WindowState;
+            var state = WindowState;
 
             switch (state)
             {
@@ -506,7 +506,7 @@ namespace OpenTK.Platform.SDL2
                             {
                                 fixed (byte* pixels = value.Data)
                                 {
-                                    IntPtr cursor_surface =
+                                    var cursor_surface =
                                         SDL.CreateRGBSurfaceFrom(
                                             new IntPtr(pixels),
                                             value.Width,
@@ -559,7 +559,7 @@ namespace OpenTK.Platform.SDL2
                 {
                     Debug.Print("SDL2 closing window {0}", window.Handle);
 
-                    Event e = new Event();
+                    var e = new Event();
                     e.Type = EventType.WINDOWEVENT;
                     e.Window.Event = WindowEventID.CLOSE;
                     e.Window.WindowID = window_id;
@@ -618,7 +618,7 @@ namespace OpenTK.Platform.SDL2
                         // icon if null
                         if (value != null)
                         {
-                            using (Bitmap bmp = value.ToBitmap())
+                            using (var bmp = value.ToBitmap())
                             {
                                 // Decode the icon into a SDL surface
                                 var data = bmp.LockBits(
@@ -626,7 +626,7 @@ namespace OpenTK.Platform.SDL2
                                     ImageLockMode.ReadWrite,
                                     PixelFormat.Format32bppArgb);
 
-                                IntPtr surface = SDL.CreateRGBSurfaceFrom(
+                                var surface = SDL.CreateRGBSurfaceFrom(
                                     data.Scan0, data.Width, data.Height, 32, data.Stride,
                                     0x00ff0000u, 0x0000ff00u, 0x000000ffu, 0xff000000u);
 
@@ -721,7 +721,7 @@ namespace OpenTK.Platform.SDL2
                             {
                                 case WindowState.Fullscreen:
                                     RestoreWindow();
-                                    bool success = Sdl2Factory.UseFullscreenDesktop ?
+                                    var success = Sdl2Factory.UseFullscreenDesktop ?
                                         SDL.SetWindowFullscreen(window.Handle, (uint)WindowFlags.FULLSCREEN_DESKTOP) < 0 :
                                         SDL.SetWindowFullscreen(window.Handle, (uint)WindowFlags.FULLSCREEN) < 0;
 
@@ -884,7 +884,7 @@ namespace OpenTK.Platform.SDL2
             }
             set
             {
-                float scale = Size.Width / (float)ClientSize.Width;
+                var scale = Size.Width / (float)ClientSize.Width;
                 Size = new Size((int)(value.Width * scale), (int)(value.Height * scale));
             }
         }

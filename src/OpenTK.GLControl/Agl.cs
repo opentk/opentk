@@ -352,7 +352,7 @@ namespace OpenTK.Platform.MacOS
         private static extern byte _aglSetCurrentContext(AGLContext ctx);
         internal static bool aglSetCurrentContext(IntPtr context)
         {
-            byte retval = _aglSetCurrentContext(context);
+            var retval = _aglSetCurrentContext(context);
 
             if (retval != 0)
             {
@@ -375,11 +375,11 @@ namespace OpenTK.Platform.MacOS
 
         internal static void aglSetDrawable(AGLContext ctx, AGLDrawable draw)
         {
-            byte retval = _aglSetDrawable(ctx, draw);
+            var retval = _aglSetDrawable(ctx, draw);
 
             if (retval == 0)
             {
-                AglError err = GetError();
+                var err = GetError();
                 throw new Exception(ErrorString(err));
             }
         }
@@ -392,11 +392,11 @@ namespace OpenTK.Platform.MacOS
         private static extern byte _aglSetFullScreen(AGLContext ctx, int width, int height, int freq, int device);
         internal static void aglSetFullScreen(AGLContext ctx, int width, int height, int freq, int device)
         {
-            byte retval = _aglSetFullScreen(ctx, width, height, freq, device);
+            var retval = _aglSetFullScreen(ctx, width, height, freq, device);
 
             if (retval == 0)
             {
-                AglError err = GetError();
+                var err = GetError();
                 Debug.Print("AGL Error: {0}", err);
                 Debug.Indent();
                 Debug.Print(ErrorString(err));

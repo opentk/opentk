@@ -70,18 +70,18 @@ namespace OpenTK.Platform.MacOS
 
         internal static NSPoint EventGetLocation(CGEventRef @event)
         {
-            NSPoint r = new NSPoint();
+            var r = new NSPoint();
 
             unsafe {
                 if (IntPtr.Size == 4)
                 {
-                    NSPointF pf = EventGetLocationF(@event);
+                    var pf = EventGetLocationF(@event);
                     r.X.Value = *(IntPtr *)&pf.X;
                     r.Y.Value = *(IntPtr *)&pf.Y;
                 }
                 else
                 {
-                    NSPointD pd = EventGetLocationD(@event);
+                    var pd = EventGetLocationD(@event);
                     r.X.Value = *(IntPtr *)&pd.X;
                     r.Y.Value = *(IntPtr *)&pd.Y;
                 }

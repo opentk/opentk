@@ -53,9 +53,9 @@ namespace OpenTK
         {
             if (control.TopLevelControl != null)
             {
-                System.Drawing.Point offset = control.PointToScreen (control.Location);
-                System.Drawing.Point windowOffset = control.TopLevelControl.PointToScreen (System.Drawing.Point.Empty);
-                int relativeY = offset.Y - windowOffset.Y; //control.TopLevelControl.Location.Y is not the same as windowOffset.Y for some reason.
+                var offset = control.PointToScreen (control.Location);
+                var windowOffset = control.TopLevelControl.PointToScreen (System.Drawing.Point.Empty);
+                var relativeY = offset.Y - windowOffset.Y; //control.TopLevelControl.Location.Y is not the same as windowOffset.Y for some reason.
                 return control.TopLevelControl.ClientSize.Height - control.Bottom - relativeY;
             }
             return control.Location.Y;

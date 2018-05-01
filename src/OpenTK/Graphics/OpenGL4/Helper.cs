@@ -257,7 +257,7 @@ namespace OpenTK.Graphics.OpenGL4
         {
             unsafe
             {
-                int length = @string.Length;
+                var length = @string.Length;
                 ShaderSource((UInt32)shader, 1, new string[] { @string }, &length);
             }
         }

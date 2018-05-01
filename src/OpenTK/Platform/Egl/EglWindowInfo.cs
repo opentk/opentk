@@ -83,7 +83,7 @@ namespace OpenTK.Platform.Egl
 
         public void CreatePbufferSurface(IntPtr config)
         {
-            int[] attribs = new int[]{Egl.NONE};
+            var attribs = new int[]{Egl.NONE};
             Surface = Egl.CreatePbufferSurface(Display, config, attribs);
             if (Surface == IntPtr.Zero)
             {
@@ -102,7 +102,7 @@ namespace OpenTK.Platform.Egl
 
         public void CreatePbufferSurface(IntPtr config, int width, int height, out IntPtr bufferSurface)
         {
-            int[] attribs = new int[]
+            var attribs = new int[]
             {
                 Egl.WIDTH, width,
                 Egl.HEIGHT, height,

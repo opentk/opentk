@@ -664,16 +664,16 @@ namespace OpenTK.Platform.X11
 
         public static string ToString(object ev)
         {
-            string result = string.Empty;
-            Type type = ev.GetType();
-            System.Reflection.FieldInfo[] fields = type.GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Instance);
-            for (int i = 0; i < fields.Length; i++)
+            var result = string.Empty;
+            var type = ev.GetType();
+            var fields = type.GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Instance);
+            for (var i = 0; i < fields.Length; i++)
             {
                 if (result != string.Empty)
                 {
                     result += ", ";
                 }
-                object value = fields[i].GetValue(ev);
+                var value = fields[i].GetValue(ev);
                 result += fields[i].Name + "=" + (value == null ? "<null>" : value.ToString());
             }
             return type.Name + " (" + result + ")";
@@ -1814,7 +1814,7 @@ namespace OpenTK.Platform.X11
             unsafe
             {
                 mask = (byte*)Marshal.AllocHGlobal(mask_len);
-                for (int i = 0; i < mask_len; i++)
+                for (var i = 0; i < mask_len; i++)
                 {
                     mask[i] = (byte)((uint)m >> i * 8);
                 }

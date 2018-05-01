@@ -384,8 +384,8 @@ namespace OpenTK.Platform.Linux
                 fixed (InputAbsInfo* pinfo = &info)
                 {
                     // EVIOCGABS(abs) = _IOR('E', 0x40 + (abs), struct input_absinfo)
-                    uint ioctl = IOCreate(DirectionFlags.Read, (int)axis + 0x40, BlittableValueType<InputAbsInfo>.Stride);
-                    int retval = Libc.ioctl(fd, ioctl, new IntPtr(pinfo));
+                    var ioctl = IOCreate(DirectionFlags.Read, (int)axis + 0x40, BlittableValueType<InputAbsInfo>.Stride);
+                    var retval = Libc.ioctl(fd, ioctl, new IntPtr(pinfo));
                     return retval;
                 }
             }
@@ -395,8 +395,8 @@ namespace OpenTK.Platform.Linux
         public static int GetBit(int fd, EvdevType ev, int length, IntPtr data)
         {
             // EVIOCGBIT = _IOC(_IOC_READ, 'E', 0x20 + (ev), len)
-            uint ioctl = IOCreate(DirectionFlags.Read, (int)ev + 0x20, length);
-            int retval = Libc.ioctl(fd, ioctl, data);
+            var ioctl = IOCreate(DirectionFlags.Read, (int)ev + 0x20, length);
+            var retval = Libc.ioctl(fd, ioctl, data);
             return retval;
         }
 
@@ -405,7 +405,7 @@ namespace OpenTK.Platform.Linux
             unsafe
             {
                 sbyte* pname = stackalloc sbyte[129];
-                int ret = Libc.ioctl(fd, EvdevIoctl.Name128, new IntPtr(pname));
+                var ret = Libc.ioctl(fd, EvdevIoctl.Name128, new IntPtr(pname));
                 name = new string(pname);
                 return ret;
             }

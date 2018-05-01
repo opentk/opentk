@@ -113,7 +113,7 @@ namespace OpenTK.Platform
         {
             if (!Map.ContainsKey(id))
             {
-                int index = GetIndex();
+                var index = GetIndex();
                 Map.Add(id, index);
             }
 
@@ -199,7 +199,7 @@ namespace OpenTK.Platform
         // that index.
         private int GetIndex()
         {
-            for (int i = 0; i < Devices.Count; i++)
+            for (var i = 0; i < Devices.Count; i++)
             {
                 if (Devices[i] == null)
                 {

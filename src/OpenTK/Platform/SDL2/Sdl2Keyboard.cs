@@ -48,7 +48,7 @@ namespace OpenTK.Platform.SDL2
         // Fixme: this does not appear to work as expected.
         private void UpdateModifiers()
         {
-            Keymod mod = SDL.GetModState();
+            var mod = SDL.GetModState();
 
             state[Key.LAlt] = (mod & Keymod.LALT) != 0;
             state[Key.RAlt] = (mod & Keymod.RALT) != 0;
@@ -64,9 +64,9 @@ namespace OpenTK.Platform.SDL2
 
         internal void ProcessKeyboardEvent(KeyboardEvent e)
         {
-            bool pressed = e.State != 0;
+            var pressed = e.State != 0;
             var scancode = e.Keysym.Scancode;
-            Key key = Sdl2KeyMap.GetKey(scancode);
+            var key = Sdl2KeyMap.GetKey(scancode);
 
             if (key != Key.Unknown)
             {

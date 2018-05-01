@@ -168,19 +168,19 @@ namespace OpenTK.Platform.MacOS
 
         public static NSPoint SendPoint(IntPtr receiver, IntPtr selector)
         {
-            NSPoint r = new NSPoint();
+            var r = new NSPoint();
 
             unsafe
             {
                 if (IntPtr.Size == 4)
                 {
-                    NSPointF pf = SendPointF(receiver, selector);
+                    var pf = SendPointF(receiver, selector);
                     r.X.Value = *(IntPtr *)&pf.X;
                     r.Y.Value = *(IntPtr *)&pf.Y;
                 }
                 else
                 {
-                    NSPointD pd = SendPointD(receiver, selector);
+                    var pd = SendPointD(receiver, selector);
                     r.X.Value = *(IntPtr *)&pd.X;
                     r.Y.Value = *(IntPtr *)&pd.Y;
                 }
@@ -234,17 +234,17 @@ namespace OpenTK.Platform.MacOS
 
         public static unsafe IntPtr ToNSImage(Image img)
         {
-            using (System.IO.MemoryStream s = new System.IO.MemoryStream())
+            using (var s = new System.IO.MemoryStream())
             {
                 img.Save(s, ImageFormat.Png);
-                byte[] b = s.ToArray();
+                var b = s.ToArray();
 
                 fixed (byte* pBytes = b)
                 {
-                    IntPtr nsData = SendIntPtr(SendIntPtr(Class.Get("NSData"), Selector.Alloc),
+                    var nsData = SendIntPtr(SendIntPtr(Class.Get("NSData"), Selector.Alloc),
                         Selector.Get("initWithBytes:length:"), (IntPtr)pBytes, b.Length);
 
-                    IntPtr nsImage = SendIntPtr(SendIntPtr(Class.Get("NSImage"), Selector.Alloc),
+                    var nsImage = SendIntPtr(SendIntPtr(Class.Get("NSImage"), Selector.Alloc),
                         Selector.Get("initWithData:"), nsData);
 
                     SendVoid(nsData, Selector.Release);

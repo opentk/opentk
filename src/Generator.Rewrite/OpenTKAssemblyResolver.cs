@@ -100,7 +100,7 @@ namespace OpenTK.Rewrite
             {
                 foreach (var extension in extensions)
                 {
-                    string file = Path.Combine(directory, name.Name + extension);
+                    var file = Path.Combine(directory, name.Name + extension);
                     if (!File.Exists(file))
                     {
                         continue;
@@ -295,7 +295,7 @@ namespace OpenTK.Rewrite
 
         AssemblyDefinition GetAssemblyInMonoGac(AssemblyNameReference reference, ReaderParameters parameters)
         {
-            for (int i = 0; i < gac_paths.Count; i++)
+            for (var i = 0; i < gac_paths.Count; i++)
             {
                 var gac_path = gac_paths[i];
                 var file = GetAssemblyFile(reference, string.Empty, gac_path);
@@ -317,9 +317,9 @@ namespace OpenTK.Rewrite
             var gacs = new[] { "GAC_MSIL", "GAC_32", "GAC_64", "GAC" };
             var prefixes = new[] { string.Empty, "v4.0_" };
 
-            for (int i = 0; i < 2; i++)
+            for (var i = 0; i < 2; i++)
             {
-                for (int j = 0; j < gacs.Length; j++)
+                for (var j = 0; j < gacs.Length; j++)
                 {
                     var gac = Path.Combine(gac_paths[i], gacs[j]);
                     var file = GetAssemblyFile(reference, prefixes[i], gac);
@@ -344,7 +344,7 @@ namespace OpenTK.Rewrite
                 .Append(reference.Version)
                 .Append("__");
 
-            for (int i = 0; i < reference.PublicKeyToken.Length; i++)
+            for (var i = 0; i < reference.PublicKeyToken.Length; i++)
             {
                 gac_folder.Append(reference.PublicKeyToken[i].ToString("x2"));
             }

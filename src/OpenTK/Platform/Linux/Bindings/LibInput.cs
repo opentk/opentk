@@ -77,7 +77,7 @@ namespace OpenTK.Platform.Linux
         {
             unsafe
             {
-                sbyte* pname = (sbyte*)DeviceGetOutputNameInternal(device);
+                var pname = (sbyte*)DeviceGetOutputNameInternal(device);
                 return pname == null ? String.Empty : new string(pname);
             }
         }

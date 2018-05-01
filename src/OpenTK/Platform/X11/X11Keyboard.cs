@@ -44,13 +44,13 @@ namespace OpenTK.Platform.X11
             Debug.WriteLine("Using X11Keyboard.");
             state.IsConnected = true;
 
-            IntPtr display = API.DefaultDisplay;
+            var display = API.DefaultDisplay;
             using (new XLock(display))
             {
                 // Find the number of keysyms per keycode.
                 int first = 0, last = 0;
                 API.DisplayKeycodes(display, ref first, ref last);
-                IntPtr keysym_ptr =
+                var keysym_ptr =
                     API.GetKeyboardMapping(display,
                         (byte)first,
                         last - first + 1,
@@ -104,13 +104,13 @@ namespace OpenTK.Platform.X11
 
         private void ProcessEvents()
         {
-            IntPtr display = API.DefaultDisplay;
+            var display = API.DefaultDisplay;
             using (new XLock(display))
             {
                 Functions.XQueryKeymap(display, keys);
-                for (int keycode = 0; keycode < 256; keycode++)
+                for (var keycode = 0; keycode < 256; keycode++)
                 {
-                    bool pressed = (keys[keycode >> 3] >> (keycode & 0x07) & 0x01) != 0;
+                    var pressed = (keys[keycode >> 3] >> (keycode & 0x07) & 0x01) != 0;
                     Key key;
                     if (KeyMap.TranslateKey(keycode, out key))
                     {

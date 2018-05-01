@@ -286,9 +286,9 @@ namespace OpenTK
             axis.Normalize();
             float axisX = axis.X, axisY = axis.Y, axisZ = axis.Z;
 
-            float cos = (float)Math.Cos(-angle);
-            float sin = (float)Math.Sin(-angle);
-            float t = 1.0f - cos;
+            var cos = (float)Math.Cos(-angle);
+            var sin = (float)Math.Sin(-angle);
+            var t = 1.0f - cos;
 
             float tXX = t * axisX * axisX,
                 tXY = t * axisX * axisY,
@@ -379,8 +379,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationX(float angle, out Matrix4x3 result)
         {
-            float cos = (float)Math.Cos(angle);
-            float sin = (float)Math.Sin(angle);
+            var cos = (float)Math.Cos(angle);
+            var sin = (float)Math.Sin(angle);
 
             result.Row0.X = 1;
             result.Row0.Y = 0;
@@ -415,8 +415,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationY(float angle, out Matrix4x3 result)
         {
-            float cos = (float)Math.Cos(angle);
-            float sin = (float)Math.Sin(angle);
+            var cos = (float)Math.Cos(angle);
+            var sin = (float)Math.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = 0;
@@ -451,8 +451,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationZ(float angle, out Matrix4x3 result)
         {
-            float cos = (float)Math.Cos(angle);
-            float sin = (float)Math.Sin(angle);
+            var cos = (float)Math.Cos(angle);
+            var sin = (float)Math.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;
@@ -791,12 +791,12 @@ namespace OpenTK
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
         public static void Invert(ref Matrix4x3 mat, out Matrix4x3 result)
         {
-            Matrix3 inverseRotation = new Matrix3(mat.Column0.Xyz, mat.Column1.Xyz, mat.Column2.Xyz);
+            var inverseRotation = new Matrix3(mat.Column0.Xyz, mat.Column1.Xyz, mat.Column2.Xyz);
             inverseRotation.Row0 /= inverseRotation.Row0.LengthSquared;
             inverseRotation.Row1 /= inverseRotation.Row1.LengthSquared;
             inverseRotation.Row2 /= inverseRotation.Row2.LengthSquared;
 
-            Vector3 translation = mat.Row3;
+            var translation = mat.Row3;
 
             result.Row0 = inverseRotation.Row0;
             result.Row1 = inverseRotation.Row1;

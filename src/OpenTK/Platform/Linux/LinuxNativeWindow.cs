@@ -88,8 +88,8 @@ namespace OpenTK.Platform.Linux
             }
             Debug.Print("[KMS] Selected EGL mode {0}", mode);
 
-            SurfaceFormat format = GetSurfaceFormat(display, mode);
-            SurfaceFlags usage = SurfaceFlags.Rendering | SurfaceFlags.Scanout;
+            var format = GetSurfaceFormat(display, mode);
+            var usage = SurfaceFlags.Rendering | SurfaceFlags.Scanout;
             if (!Gbm.IsFormatSupported(gbm, format, usage))
             {
                 Debug.Print("[KMS] Failed to find suitable surface format, using XRGB8888");
@@ -98,7 +98,7 @@ namespace OpenTK.Platform.Linux
 
             Debug.Print("[KMS] Creating GBM surface on {0:x} with {1}x{2} {3} [{4}]",
                 gbm, width, height, format, usage);
-            IntPtr gbm_surface =  Gbm.CreateSurface(gbm,
+            var gbm_surface =  Gbm.CreateSurface(gbm,
                     width, height, format, usage);
             if (gbm_surface == IntPtr.Zero)
             {
@@ -126,15 +126,15 @@ namespace OpenTK.Platform.Linux
                 return default(BufferObject);
             }
 
-            int width = 64;
-            int height = 64;
-            SurfaceFormat format = SurfaceFormat.ARGB8888;
-            SurfaceFlags usage = SurfaceFlags.Cursor64x64 | SurfaceFlags.Write;
+            var width = 64;
+            var height = 64;
+            var format = SurfaceFormat.ARGB8888;
+            var usage = SurfaceFlags.Cursor64x64 | SurfaceFlags.Write;
 
             Debug.Print("[KMS] Gbm.CreateBuffer({0:X}, {1}, {2}, {3}, {4}).",
                 gbm, width, height, format, usage);
 
-            BufferObject bo = Gbm.CreateBuffer(
+            var bo = Gbm.CreateBuffer(
                 gbm, width, height, format, usage);
 
             if (bo == BufferObject.Zero)
@@ -144,12 +144,12 @@ namespace OpenTK.Platform.Linux
             }
 
             // Copy cursor.Data into a new buffer of the correct size
-            byte[] cursor_data = new byte[width * height * 4];
-            for (int y = 0; y < cursor.Height; y++)
+            var cursor_data = new byte[width * height * 4];
+            for (var y = 0; y < cursor.Height; y++)
             {
-                int dst_offset = y * width * 4;
-                int src_offset = y * cursor.Width * 4;
-                int src_length = cursor.Width * 4;
+                var dst_offset = y * width * 4;
+                var src_offset = y * cursor.Width * 4;
+                var src_length = cursor.Width * 4;
                 Array.Copy(
                     cursor.Data, src_offset,
                     cursor_data, dst_offset,
@@ -162,7 +162,7 @@ namespace OpenTK.Platform.Linux
 
         private void SetCursor(MouseCursor cursor)
         {
-            BufferObject bo = default(BufferObject);
+            var bo = default(BufferObject);
             if (cursor == MouseCursor.Default)
             {
                 bo = cursor_default;
@@ -212,10 +212,10 @@ namespace OpenTK.Platform.Linux
                 Egl.GetError());
             Debug.Print("[KMS] Falling back to hardcoded formats.");
 
-            int r = mode.ColorFormat.Red;
-            int g = mode.ColorFormat.Green;
-            int b = mode.ColorFormat.Blue;
-            int a = mode.ColorFormat.Alpha;
+            var r = mode.ColorFormat.Red;
+            var g = mode.ColorFormat.Green;
+            var b = mode.ColorFormat.Blue;
+            var a = mode.ColorFormat.Alpha;
 
             if (mode.ColorFormat.IsIndexed)
             {
@@ -293,8 +293,8 @@ namespace OpenTK.Platform.Linux
 
             // Handle mouse movement
             {
-                int x = mouse.X;
-                int y = mouse.Y;
+                var x = mouse.X;
+                var y = mouse.Y;
 
                 // Make sure the mouse cannot leave the GameWindow when captured
                 if (!CursorVisible)
@@ -316,14 +316,14 @@ namespace OpenTK.Platform.Linux
             // Handle mouse scroll
             if (mouse.Scroll != previous_mouse.Scroll)
             {
-                float dx = mouse.Scroll.X - previous_mouse.Scroll.X;
-                float dy = mouse.Scroll.Y - previous_mouse.Scroll.Y;
+                var dx = mouse.Scroll.X - previous_mouse.Scroll.X;
+                var dy = mouse.Scroll.Y - previous_mouse.Scroll.Y;
                 OnMouseWheel(dx, dy);
             }
 
             // Handle mouse focus
             // Note: focus follows mouse. Literally.
-            bool cursor_in = Bounds.Contains(new Point(mouse.X, mouse.Y));
+            var cursor_in = Bounds.Contains(new Point(mouse.X, mouse.Y));
             if (!cursor_in && Focused)
             {
                 OnMouseLeave(EventArgs.Empty);

@@ -27,10 +27,10 @@ namespace OpenTK.Platform.X11
         public GraphicsMode SelectGraphicsMode(GraphicsMode desired_mode, out IntPtr visual, out IntPtr fbconfig)
         {
             GraphicsMode gfx;
-            GraphicsMode mode = new GraphicsMode(desired_mode);
+            var mode = new GraphicsMode(desired_mode);
             visual = IntPtr.Zero;
             fbconfig = IntPtr.Zero;
-            IntPtr display = API.DefaultDisplay;
+            var display = API.DefaultDisplay;
 
             do
             {
@@ -58,7 +58,7 @@ namespace OpenTK.Platform.X11
             }
             while (visual == IntPtr.Zero);
 
-            XVisualInfo info = (XVisualInfo)Marshal.PtrToStructure(visual, typeof(XVisualInfo));
+            var info = (XVisualInfo)Marshal.PtrToStructure(visual, typeof(XVisualInfo));
             gfx = CreateGraphicsMode(display, ref info);
             return gfx;
         }
@@ -95,7 +95,7 @@ namespace OpenTK.Platform.X11
         {
             Debug.Print("Selecting FB config for {0}", mode);
 
-            List<int> visualAttributes = new List<int>();
+            var visualAttributes = new List<int>();
 
             if (mode.ColorFormat.BitsPerPixel > 0)
             {
@@ -161,14 +161,14 @@ namespace OpenTK.Platform.X11
             visualAttributes.Add(0);
 
             // Select a visual that matches the parameters set by the user.
-            IntPtr display = API.DefaultDisplay;
-            IntPtr result = IntPtr.Zero;
+            var display = API.DefaultDisplay;
+            var result = IntPtr.Zero;
             using (new XLock(display))
             {
                 try
                 {
-                    int screen = Functions.XDefaultScreen(display);
-                    IntPtr root = Functions.XRootWindow(display, screen);
+                    var screen = Functions.XDefaultScreen(display);
+                    var root = Functions.XRootWindow(display, screen);
                     Debug.Print("Display: {0}, Screen: {1}, RootWindow: {2}", display, screen, root);
 
                     unsafe
@@ -176,7 +176,7 @@ namespace OpenTK.Platform.X11
                         Debug.Print("Getting FB config.");
                         int fbcount;
                         // Note that ChooseFBConfig returns an array of GLXFBConfig opaque structures (i.e. mapped to IntPtrs).
-                        IntPtr* fbconfigs = Glx.ChooseFBConfig(display, screen, visualAttributes.ToArray(), out fbcount);
+                        var fbconfigs = Glx.ChooseFBConfig(display, screen, visualAttributes.ToArray(), out fbcount);
                         if (fbcount > 0 && fbconfigs != null)
                         {
                             // We want to use the first GLXFBConfig from the fbconfigs array (the first one is the best match).
@@ -203,7 +203,7 @@ namespace OpenTK.Platform.X11
         {
             Debug.Print("Selecting FB config for {0}", mode);
 
-            List<int> visualAttributes = new List<int>();
+            var visualAttributes = new List<int>();
 
             if (mode.ColorFormat.BitsPerPixel > 0)
             {
@@ -267,7 +267,7 @@ namespace OpenTK.Platform.X11
             visualAttributes.Add(0);
 
             Debug.Print("Falling back to glXChooseVisual.");
-            IntPtr display = API.DefaultDisplay;
+            var display = API.DefaultDisplay;
             using (new XLock(display))
             {
                 return Glx.ChooseVisual(display, Functions.XDefaultScreen(display), visualAttributes.ToArray());

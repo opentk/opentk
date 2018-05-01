@@ -138,7 +138,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentOutOfRangeException(nameof(n), "Must be higher than 0.");
             }
-            int[] effects = new int[n];
+            var effects = new int[n];
             GenEffects(n, out effects[0]);
             return effects;
         }
@@ -492,7 +492,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentOutOfRangeException(nameof(n), "Must be higher than 0.");
             }
-            int[] filters = new int[n];
+            var filters = new int[n];
             GenFilters(filters.Length, out filters[0]);
             return filters;
         }
@@ -778,7 +778,7 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentOutOfRangeException(nameof(n), "Must be higher than 0.");
             }
-            int[] slots = new int[n];
+            var slots = new int[n];
             GenAuxiliaryEffectSlots(slots.Length, out slots[0]);
             return slots;
         }

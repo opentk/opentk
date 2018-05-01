@@ -55,8 +55,8 @@ namespace OpenTK.Platform.Egl
             int samples, ColorFormat accum, int buffers, bool stereo,
             RenderableFlags renderableFlags)
         {
-            IntPtr[] configs = new IntPtr[1];
-            int[] attribList = new int[]
+            var configs = new IntPtr[1];
+            var attribList = new int[]
             {
                 Egl.SURFACE_TYPE, (int)surfaceType,
                 Egl.RENDERABLE_TYPE, (int)renderableFlags,
@@ -82,7 +82,7 @@ namespace OpenTK.Platform.Egl
             }
 
             // See what we really got
-            IntPtr activeConfig = configs[0];
+            var activeConfig = configs[0];
             int r, g, b, a;
             Egl.GetConfigAttrib(display, activeConfig, Egl.RED_SIZE, out r);
             Egl.GetConfigAttrib(display, activeConfig, Egl.GREEN_SIZE, out g);

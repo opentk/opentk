@@ -59,8 +59,8 @@ namespace OpenTK.Platform.Windows
         public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples,
             ColorFormat accum, int buffers, bool stereo)
         {
-            GraphicsMode mode = new GraphicsMode(color, depth, stencil, samples, accum, buffers, stereo);
-            GraphicsMode created_mode = ChoosePixelFormatARB(Device, mode);
+            var mode = new GraphicsMode(color, depth, stencil, samples, accum, buffers, stereo);
+            var created_mode = ChoosePixelFormatARB(Device, mode);
 
             // If ChoosePixelFormatARB failed, iterate through all acceleration types in turn (ICD, MCD, None)
             // This should fix issue #2224, which causes OpenTK to fail on VMs without hardware acceleration.
@@ -84,14 +84,14 @@ namespace OpenTK.Platform.Windows
         private GraphicsMode ChoosePixelFormatARB(IntPtr device, GraphicsMode desired_mode)
         {
             GraphicsMode created_mode = null;
-            GraphicsMode mode = new GraphicsMode(desired_mode);
+            var mode = new GraphicsMode(desired_mode);
             if (Wgl.SupportsExtension("WGL_ARB_pixel_format") &&
                 Wgl.SupportsFunction("wglChoosePixelFormatARB"))
             {
-                int[] format = new int[1];
+                var format = new int[1];
                 int count;
-                List<int> attributes = new List<int>();
-                bool retry = false;
+                var attributes = new List<int>();
+                var retry = false;
 
                 do
                 {
@@ -209,7 +209,7 @@ namespace OpenTK.Platform.Windows
 
         private static bool Compare(int got, int requested, ref int distance)
         {
-            bool valid = true;
+            var valid = true;
             if (got == 0 && requested != 0)
             {
                 // mode does not support the requested feature.
@@ -238,7 +238,7 @@ namespace OpenTK.Platform.Windows
 
         private static AccelerationType GetAccelerationType(ref PixelFormatDescriptor pfd)
         {
-            AccelerationType type = AccelerationType.ICD;
+            var type = AccelerationType.ICD;
             if ((pfd.Flags & PixelFormatDescriptorFlags.GENERIC_FORMAT) != 0)
             {
                 if ((pfd.Flags & PixelFormatDescriptorFlags.GENERIC_ACCELERATED) != 0)
@@ -255,7 +255,7 @@ namespace OpenTK.Platform.Windows
 
         private GraphicsMode ChoosePixelFormatPFD(IntPtr device, GraphicsMode mode, AccelerationType requested_acceleration_type)
         {
-            PixelFormatDescriptor pfd = new PixelFormatDescriptor();
+            var pfd = new PixelFormatDescriptor();
             PixelFormatDescriptorFlags flags = 0;
             flags |= PixelFormatDescriptorFlags.DRAW_TO_WINDOW;
             flags |= PixelFormatDescriptorFlags.SUPPORT_OPENGL;
@@ -279,14 +279,14 @@ namespace OpenTK.Platform.Windows
                 flags |= PixelFormatDescriptorFlags.SUPPORT_COMPOSITION;
             }
 
-            int count = Functions.DescribePixelFormat(device, 1, API.PixelFormatDescriptorSize, ref pfd);
+            var count = Functions.DescribePixelFormat(device, 1, API.PixelFormatDescriptorSize, ref pfd);
 
-            int best = 0;
-            int best_dist = int.MaxValue;
-            for (int index = 1; index <= count; index++)
+            var best = 0;
+            var best_dist = int.MaxValue;
+            for (var index = 1; index <= count; index++)
             {
-                int dist = 0;
-                bool valid = Functions.DescribePixelFormat(device, index, API.PixelFormatDescriptorSize, ref pfd) != 0;
+                var dist = 0;
+                var valid = Functions.DescribePixelFormat(device, index, API.PixelFormatDescriptorSize, ref pfd) != 0;
                 valid &= GetAccelerationType(ref pfd) == requested_acceleration_type;
                 valid &= (pfd.Flags & flags) == flags;
                 valid &= pfd.PixelType == PixelType.RGBA; // indexed modes not currently supported
@@ -345,7 +345,7 @@ namespace OpenTK.Platform.Windows
             {
                 // Define the list of attributes we are interested in.
                 // The results will be stored in the 'values' array below.
-                int[] attribs = new int[]
+                var attribs = new int[]
                 {
                     (int)WGL_ARB_pixel_format.AccelerationArb,
 
@@ -373,7 +373,7 @@ namespace OpenTK.Platform.Windows
                 };
 
                 // Allocate storage for the results of GetPixelFormatAttrib queries
-                int[] values = new int[attribs.Length];
+                var values = new int[attribs.Length];
 
                 // Get the format attributes for this pixel format
                 if (!Wgl.Arb.GetPixelFormatAttrib(device, pixelformat, 0, attribs.Length - 1, attribs, values))
@@ -382,7 +382,7 @@ namespace OpenTK.Platform.Windows
                 }
 
                 // Skip formats that don't offer full hardware acceleration
-                WGL_ARB_pixel_format acceleration = (WGL_ARB_pixel_format)values[0];
+                var acceleration = (WGL_ARB_pixel_format)values[0];
                 if (acceleration == WGL_ARB_pixel_format.FullAccelerationArb)
                 {
                     // Construct a new GraphicsMode to describe this format

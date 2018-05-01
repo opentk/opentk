@@ -59,17 +59,17 @@ namespace OpenTK.Platform.MacOS
 
             // must add a '_' prefix and null-terminate the function name,
             // hence we allocate +2 bytes
-            IntPtr ptr = Marshal.AllocHGlobal(function.Length + 2);
+            var ptr = Marshal.AllocHGlobal(function.Length + 2);
             try
             {
                 Marshal.WriteByte(ptr, (byte)'_');
-                for (int i = 0; i < function.Length; i++)
+                for (var i = 0; i < function.Length; i++)
                 {
                     Marshal.WriteByte(ptr, i + 1, (byte)function[i]);
                 }
                 Marshal.WriteByte(ptr, function.Length + 1, 0); // null-terminate
 
-                IntPtr symbol = GetAddress(ptr);
+                var symbol = GetAddress(ptr);
                 return symbol;
             }
             finally
@@ -80,7 +80,7 @@ namespace OpenTK.Platform.MacOS
 
         public static IntPtr GetAddress(IntPtr function)
         {
-            IntPtr symbol = IntPtr.Zero;
+            var symbol = IntPtr.Zero;
             if (NSIsSymbolNameDefined(function))
             {
                 symbol = NSLookupAndBindSymbol(function);

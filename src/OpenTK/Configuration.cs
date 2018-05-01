@@ -136,7 +136,7 @@ namespace OpenTK
         {
             Debug.Print("Size: {0}", Marshal.SizeOf(typeof(utsname)).ToString());
             Debug.Flush();
-            utsname uts = new utsname();
+            var uts = new utsname();
             uname(out uts);
 
             Debug.WriteLine("System:");
@@ -157,14 +157,14 @@ namespace OpenTK
         private static bool DetectMono()
         {
             // Detect the Mono runtime (code taken from http://mono.wikia.com/wiki/Detecting_if_program_is_running_in_Mono).
-            Type t = Type.GetType("Mono.Runtime");
+            var t = Type.GetType("Mono.Runtime");
             return t != null;
         }
 
         #if SDL2
         private static bool DetectSdl2()
         {
-            bool supported = false;
+            var supported = false;
 
             // Detect whether SDL2 is supported
             // We require:
@@ -224,7 +224,7 @@ namespace OpenTK
         {
             unix = linux = macos = false;
 
-            string kernel_name = DetectUnixKernel();
+            var kernel_name = DetectUnixKernel();
             switch (kernel_name)
             {
                 case null:

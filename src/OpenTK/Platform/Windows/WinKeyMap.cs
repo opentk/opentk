@@ -162,7 +162,7 @@ namespace OpenTK.Platform.Windows
         {
             is_valid = true;
 
-            Key key = GetKey(scancode);
+            var key = GetKey(scancode);
 
             if (!extended0)
             {

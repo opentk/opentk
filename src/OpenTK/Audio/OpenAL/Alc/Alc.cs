@@ -234,8 +234,8 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>A string containing the name of the Device.</returns>
         public static string GetString(IntPtr device, AlcGetString param)
         {
-            IntPtr pstr = GetStringPrivate(device, param);
-            string str = String.Empty;
+            var pstr = GetStringPrivate(device, param);
+            var str = String.Empty;
             if (pstr != IntPtr.Zero)
             {
                 str = Marshal.PtrToStringAnsi(pstr);
@@ -254,7 +254,7 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>A List of strings containing the names of the Devices.</returns>
         public static IList<string> GetString(IntPtr device, AlcGetStringList param)
         {
-            List<string> result = new List<string>();
+            var result = new List<string>();
 
             // We cannot use Marshal.PtrToStringAnsi(),
             //  because alcGetString is defined to return either a nul-terminated string,
@@ -262,12 +262,12 @@ namespace OpenTK.Audio.OpenAL
             // Marshal.PtrToStringAnsi() will fail in the latter case (it will only
             // return the very first string in the array.)
             // We'll have to marshal this ourselves.
-            IntPtr t = GetStringPrivate(device, (AlcGetString)param);
+            var t = GetStringPrivate(device, (AlcGetString)param);
             if (t != IntPtr.Zero)
             {
-                System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                var sb = new System.Text.StringBuilder();
                 byte b;
-                int offset = 0;
+                var offset = 0;
                 do
                 {
                     b = Marshal.ReadByte(t, offset++);
@@ -396,7 +396,7 @@ namespace OpenTK.Audio.OpenAL
         public static void CaptureSamples<T>(IntPtr device, ref T buffer, int samples)
             where T : struct
         {
-            GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+            var handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
             try
             {
                 CaptureSamples(device, handle.AddrOfPinnedObject(), samples);

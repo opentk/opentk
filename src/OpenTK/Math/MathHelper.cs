@@ -164,8 +164,8 @@ namespace OpenTK
         {
             unsafe
             {
-                float xhalf = 0.5f * x;
-                int i = *(int*)&x;              // Read bits as integer.
+                var xhalf = 0.5f * x;
+                var i = *(int*)&x;              // Read bits as integer.
                 i = 0x5f375a86 - (i >> 1);      // Make an initial guess for Newton-Raphson approximation
                 x = *(float*)&i;                // Convert bits back to float
                 x = x * (1.5f - xhalf * x * x); // Perform left single Newton-Raphson step.
@@ -252,7 +252,7 @@ namespace OpenTK
         /// <param name="b">The second value.</param>
         public static void Swap(ref double a, ref double b)
         {
-            double temp = a;
+            var temp = a;
             a = b;
             b = temp;
         }
@@ -264,7 +264,7 @@ namespace OpenTK
         /// <param name="b">The second value.</param>
         public static void Swap(ref float a, ref float b)
         {
-            float temp = a;
+            var temp = a;
             a = b;
             b = temp;
         }
@@ -335,7 +335,7 @@ namespace OpenTK
                 bInt = Int32.MinValue - bInt;
             }
 
-            long intDiff = Math.Abs(aInt - bInt);
+            var intDiff = Math.Abs(aInt - bInt);
             return intDiff <= (1 << maxDeltaBits);
         }
 
@@ -351,9 +351,9 @@ namespace OpenTK
         public static bool ApproximatelyEqualEpsilon(double a, double b, double epsilon)
         {
             const double doubleNormal = (1L << 52) * double.Epsilon;
-            double absA = Math.Abs(a);
-            double absB = Math.Abs(b);
-            double diff = Math.Abs(a - b);
+            var absA = Math.Abs(a);
+            var absB = Math.Abs(b);
+            var diff = Math.Abs(a - b);
 
             if (a == b)
             {
@@ -384,9 +384,9 @@ namespace OpenTK
         public static bool ApproximatelyEqualEpsilon(float a, float b, float epsilon)
         {
             const float floatNormal = (1 << 23) * float.Epsilon;
-            float absA = Math.Abs(a);
-            float absB = Math.Abs(b);
-            float diff = Math.Abs(a - b);
+            var absA = Math.Abs(a);
+            var absB = Math.Abs(b);
+            var diff = Math.Abs(a - b);
 
             if (a == b)
             {
@@ -402,7 +402,7 @@ namespace OpenTK
             }
 
             // use relative error
-            float relativeError = diff / Math.Min((absA + absB), float.MaxValue);
+            var relativeError = diff / Math.Min((absA + absB), float.MaxValue);
             return relativeError < epsilon;
         }
 
@@ -425,7 +425,7 @@ namespace OpenTK
                 return true;
             }
 
-            float diff = Math.Abs(a - b);
+            var diff = Math.Abs(a - b);
             return diff <= tolerance;
         }
 
@@ -448,7 +448,7 @@ namespace OpenTK
                 return true;
             }
 
-            double diff = Math.Abs(a - b);
+            var diff = Math.Abs(a - b);
             return diff <= tolerance;
         }
     }

@@ -31,7 +31,7 @@ namespace OpenTK.Graphics
     {
         public int Compare(GraphicsMode x, GraphicsMode y)
         {
-            int result = x.ColorFormat.CompareTo(y.ColorFormat);
+            var result = x.ColorFormat.CompareTo(y.ColorFormat);
             if (result != 0)
             {
                 return result;

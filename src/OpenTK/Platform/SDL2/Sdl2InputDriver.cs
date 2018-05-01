@@ -74,7 +74,7 @@ namespace OpenTK.Platform.SDL2
         {
             try
             {
-                Event ev = *(Event*)e;
+                var ev = *(Event*)e;
 
                 Sdl2InputDriver driver;
                 if (DriverHandles.TryGetValue(driver_handle, out driver))

@@ -197,7 +197,7 @@ namespace OpenTK.Audio
                 throw new ArgumentNullException(nameof(buffer));
             }
 
-            int buffer_size = BlittableValueType<TBuffer>.Stride * buffer.Length;
+            var buffer_size = BlittableValueType<TBuffer>.Stride * buffer.Length;
             // This is more of a heuristic than a 100% valid check. However, it will work
             // correctly for 99.9% of all use cases.
             // This should never produce a false positive, but a false negative might
@@ -208,7 +208,7 @@ namespace OpenTK.Audio
                 throw new ArgumentOutOfRangeException(nameof(sampleCount));
             }
 
-            GCHandle buffer_ptr = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+            var buffer_ptr = GCHandle.Alloc(buffer, GCHandleType.Pinned);
             try { ReadSamples(buffer_ptr.AddrOfPinnedObject(), sampleCount); }
             finally { buffer_ptr.Free(); }
         }
@@ -267,7 +267,7 @@ namespace OpenTK.Audio
         private string ErrorMessage(string devicename, int frequency, ALFormat bufferformat, int buffersize)
         {
             string alcerrmsg;
-            AlcError alcerrcode = CurrentError;
+            var alcerrcode = CurrentError;
             switch (alcerrcode)
             {
                 case AlcError.OutOfMemory:

@@ -85,8 +85,8 @@ namespace OpenTK
         /// <returns>Resulting point.</returns>
         public Vector2 CalculatePoint(float t)
         {
-            Vector2 r = new Vector2();
-            float c = 1.0f - t;
+            var r = new Vector2();
+            var c = 1.0f - t;
 
             r.X = (StartAnchor.X * c * c * c) + (FirstControlPoint.X * 3 * t * c * c) + (SecondControlPoint.X * 3 * t * t * c)
                 + EndAnchor.X * t * t * t;
@@ -98,7 +98,7 @@ namespace OpenTK
                 return r;
             }
 
-            Vector2 perpendicular = new Vector2();
+            var perpendicular = new Vector2();
 
             if (t == 0.0f)
             {
@@ -119,8 +119,8 @@ namespace OpenTK
         /// <returns>Resulting point.</returns>
         private Vector2 CalculatePointOfDerivative(float t)
         {
-            Vector2 r = new Vector2();
-            float c = 1.0f - t;
+            var r = new Vector2();
+            var c = 1.0f - t;
 
             r.X = (c * c * StartAnchor.X) + (2 * t * c * FirstControlPoint.X) + (t * t * SecondControlPoint.X);
             r.Y = (c * c * StartAnchor.Y) + (2 * t * c * FirstControlPoint.Y) + (t * t * SecondControlPoint.Y);
@@ -137,12 +137,12 @@ namespace OpenTK
         /// value gets smaller.</remarks>
         public float CalculateLength(float precision)
         {
-            float length = 0.0f;
-            Vector2 old = CalculatePoint(0.0f);
+            var length = 0.0f;
+            var old = CalculatePoint(0.0f);
 
-            for (float i = precision; i < (1.0f + precision); i += precision)
+            for (var i = precision; i < (1.0f + precision); i += precision)
             {
-                Vector2 n = CalculatePoint(i);
+                var n = CalculatePoint(i);
                 length += (n - old).Length;
                 old = n;
             }

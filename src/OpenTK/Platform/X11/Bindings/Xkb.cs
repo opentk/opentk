@@ -83,9 +83,9 @@ namespace OpenTK.Platform.X11
             // The XkbQueryExtension manpage says that we cannot
             // use XQueryExtension with XKB.
             int opcode, error, ev;
-            int major = 1;
-            int minor = 0;
-            bool supported = QueryExtension(display, out opcode, out ev, out error, ref major, ref minor);
+            var major = 1;
+            var minor = 0;
+            var supported = QueryExtension(display, out opcode, out ev, out error, ref major, ref minor);
             Debug.Print("XKB extension is {0}.", supported ? "supported" : "not supported");
             if (supported)
             {

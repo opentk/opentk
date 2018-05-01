@@ -91,7 +91,7 @@ namespace OpenTK.Platform.MacOS.Carbon
             get => left;
             set
             {
-                short width = Width;
+                var width = Width;
                 left = value;
                 right = (short)(left + width);
             }
@@ -102,7 +102,7 @@ namespace OpenTK.Platform.MacOS.Carbon
             get => top;
             set
             {
-                short height = Height;
+                var height = Height;
                 top = value;
                 bottom = (short)(top + height);
             }

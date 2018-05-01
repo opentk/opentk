@@ -135,8 +135,8 @@ namespace OpenTK.Input
         /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.JoystickState"/>.</returns>
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < MaxAxes; i++)
+            var sb = new StringBuilder();
+            for (var i = 0; i < MaxAxes; i++)
             {
                 sb.Append(" ");
                 sb.Append($"{GetAxis(i):f4}");
@@ -152,8 +152,8 @@ namespace OpenTK.Input
         /// hash table.</returns>
         public override int GetHashCode()
         {
-            int hash = buttons.GetHashCode() ^ IsConnected.GetHashCode();
-            for (int i = 0; i < MaxAxes; i++)
+            var hash = buttons.GetHashCode() ^ IsConnected.GetHashCode();
+            for (var i = 0; i < MaxAxes; i++)
             {
                 hash ^= GetAxisUnsafe(i).GetHashCode();
             }
@@ -191,7 +191,7 @@ namespace OpenTK.Input
 
         internal void SetAxis(int axis, short value)
         {
-            int index = axis;
+            var index = axis;
             if (index < 0 || index >= MaxAxes)
             {
                 throw new ArgumentOutOfRangeException(nameof(axis));
@@ -278,16 +278,16 @@ namespace OpenTK.Input
         /// <see cref="OpenTK.Input.JoystickState"/>; otherwise, <c>false</c>.</returns>
         public bool Equals(JoystickState other)
         {
-            bool equals =
+            var equals =
                 buttons == other.buttons &&
                 IsConnected == other.IsConnected;
-            for (int i = 0; equals && i < MaxAxes; i++)
+            for (var i = 0; equals && i < MaxAxes; i++)
             {
                 equals &= GetAxisUnsafe(i) == other.GetAxisUnsafe(i);
             }
-            for (int i = 0; equals && i < MaxHats; i++)
+            for (var i = 0; equals && i < MaxHats; i++)
             {
-                JoystickHat hat = JoystickHat.Hat0 + i;
+                var hat = JoystickHat.Hat0 + i;
                 equals &= GetHat(hat).Equals(other.GetHat(hat));
             }
             return equals;

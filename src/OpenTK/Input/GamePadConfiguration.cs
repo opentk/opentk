@@ -70,20 +70,20 @@ namespace OpenTK.Input
             // - name is a human-readable name for the controller
             // - config is a comma-separated list of configurations as follows:
             //   - [gamepad axis or button name]:[joystick axis, button or hat number]
-            string[] items = configuration.Split(ConfigurationSeparator, StringSplitOptions.RemoveEmptyEntries);
+            var items = configuration.Split(ConfigurationSeparator, StringSplitOptions.RemoveEmptyEntries);
             if (items.Length < 3)
             {
                 throw new ArgumentException();
             }
 
-            GamePadConfiguration map = this;
+            var map = this;
             map.Guid = new Guid(items[0]);
             map.Name = items[1];
-            for (int i = 2; i < items.Length; i++)
+            for (var i = 2; i < items.Length; i++)
             {
-                string[] config = items[i].Split(':');
-                GamePadConfigurationTarget target = ParseTarget(config[0]);
-                GamePadConfigurationSource source = ParseSource(config[1]);
+                var config = items[i].Split(':');
+                var target = ParseTarget(config[0]);
+                var source = ParseSource(config[1]);
                 configuration_items.Add(new GamePadConfigurationItem(source, target));
             }
         }
@@ -175,7 +175,7 @@ namespace OpenTK.Input
                 case 'h':
                     {
                         HatPosition position;
-                        JoystickHat hat = ParseHat(item, out position);
+                        var hat = ParseHat(item, out position);
                         return new GamePadConfigurationSource(hat, position);
                     }
 
@@ -206,9 +206,9 @@ namespace OpenTK.Input
         /// <returns>The new joystick hat</returns>
         private static JoystickHat ParseHat(string item, out HatPosition position)
         {
-            JoystickHat hat = JoystickHat.Hat0;
-            int id = Int32.Parse(item.Substring(1, 1));
-            int pos = Int32.Parse(item.Substring(3));
+            var hat = JoystickHat.Hat0;
+            var id = Int32.Parse(item.Substring(1, 1));
+            var pos = Int32.Parse(item.Substring(3));
 
             position = HatPosition.Centered;
             switch (pos)

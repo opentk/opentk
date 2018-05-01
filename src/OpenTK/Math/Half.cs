@@ -160,9 +160,9 @@ namespace OpenTK
             // Shift S into the position where it will go in in the resulting half number.
             // Adjust E, accounting for the different exponent bias of float and half (127 versus 15).
 
-            Int32 sign = (si32 >> 16) & 0x00008000;
-            Int32 exponent = ((si32 >> 23) & 0x000000ff) - (127 - 15);
-            Int32 mantissa = si32 & 0x007fffff;
+            var sign = (si32 >> 16) & 0x00008000;
+            var exponent = ((si32 >> 23) & 0x000000ff) - (127 - 15);
+            var mantissa = si32 & 0x007fffff;
 
             // Now reassemble S, E and M into a half:
 
@@ -191,9 +191,9 @@ namespace OpenTK
                 // Rounding may cause the significand to overflow and make our number normalized. Because of the way a half's bits
                 // are laid out, we don't have to treat this case separately; the code below will handle it correctly.
 
-                Int32 t = 14 - exponent;
-                Int32 a = (1 << (t - 1)) - 1;
-                Int32 b = (mantissa >> t) & 1;
+                var t = 14 - exponent;
+                var a = (1 << (t - 1)) - 1;
+                var b = (mantissa >> t) & 1;
 
                 mantissa = (mantissa + a + b) >> t;
 
@@ -249,7 +249,7 @@ namespace OpenTK
         /// <returns>A single-precision floating-point number.</returns>
         public Single ToSingle()
         {
-            int i = HalfToFloat(bits);
+            var i = HalfToFloat(bits);
 
             unsafe
             {
@@ -261,9 +261,9 @@ namespace OpenTK
         private Int32 HalfToFloat(UInt16 ui16)
         {
 
-            Int32 sign = (ui16 >> 15) & 0x00000001;
-            Int32 exponent = (ui16 >> 10) & 0x0000001f;
-            Int32 mantissa = ui16 & 0x000003ff;
+            var sign = (ui16 >> 15) & 0x00000001;
+            var exponent = (ui16 >> 10) & 0x0000001f;
+            var mantissa = ui16 & 0x000003ff;
 
             if (exponent == 0)
             {
@@ -440,7 +440,7 @@ namespace OpenTK
                 bInt = (short)(0x8000 - bInt);
             }
 
-            short intDiff = Math.Abs((short)(aInt - bInt));
+            var intDiff = Math.Abs((short)(aInt - bInt));
 
             if (intDiff <= maxUlps)
             {
@@ -513,7 +513,7 @@ namespace OpenTK
         public static bool TryParse(string s, out Half result)
         {
             float f;
-            bool b = Single.TryParse(s, out f);
+            var b = Single.TryParse(s, out f);
             result = (Half)f;
             return b;
         }
@@ -527,7 +527,7 @@ namespace OpenTK
         public static bool TryParse(string s, System.Globalization.NumberStyles style, IFormatProvider provider, out Half result)
         {
             float f;
-            bool b = Single.TryParse(s, style, provider, out f);
+            var b = Single.TryParse(s, style, provider, out f);
             result = (Half)f;
             return b;
         }

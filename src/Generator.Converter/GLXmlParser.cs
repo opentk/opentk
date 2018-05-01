@@ -80,7 +80,7 @@ namespace OpenTK.Convert
             {
                 case "feature":
                 {
-                    string v = feature.Attribute("api") != null ? feature.Attribute("api").Value : "gl|glcore";
+                    var v = feature.Attribute("api") != null ? feature.Attribute("api").Value : "gl|glcore";
                     if (v == "gl")
                     {
                         // Add all gl features to both compatibility (gl) and core (glcore) profiles.
@@ -93,7 +93,7 @@ namespace OpenTK.Convert
                 }
                 case "extension":
                 {
-                    string v = feature.Attribute("supported") != null ? feature.Attribute("supported").Value : "gl|glcore";
+                    var v = feature.Attribute("supported") != null ? feature.Attribute("supported").Value : "gl|glcore";
                     apinames = v.Split('|');
                     break;
                 }
@@ -264,7 +264,7 @@ namespace OpenTK.Convert
                     (feature.Attribute("number") != null ? feature.Attribute("number").Value : "")
                     .Split('|');
 
-                int i = -1;
+                var i = -1;
                 foreach (var apiname in apinames)
                 {
                     i++;
@@ -295,7 +295,7 @@ namespace OpenTK.Convert
                             cmd_extension = "Core";
                         }
 
-                        XElement function = TranslateCommand(commands[cmd_name]);
+                        var function = TranslateCommand(commands[cmd_name]);
                         function.Add(new XAttribute("category", cmd_category));
                         function.Add(new XAttribute("extension", cmd_extension));
                         if (!String.IsNullOrEmpty(cmd_version))
@@ -370,7 +370,7 @@ namespace OpenTK.Convert
 
         private XElement TranslateCommand(XElement command)
         {
-            XElement function = new XElement("function");
+            var function = new XElement("function");
 
             var cmd_name = FunctionName(command);
             var name = new XAttribute("name", cmd_name);

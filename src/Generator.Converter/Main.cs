@@ -43,7 +43,7 @@ namespace OpenTK.Convert
 
         public int GetHashCode(XNode a)
         {
-            XElement e = (XElement)a;
+            var e = (XElement)a;
             if (e.Name == "enum" || e.Name == "token" || e.Name == "function")
             {
                 return ((XElement)a).Attribute("name").Value.GetHashCode() ^ e.Name.LocalName.GetHashCode();

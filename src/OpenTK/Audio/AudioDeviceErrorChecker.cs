@@ -45,7 +45,7 @@ namespace OpenTK.Audio
 
         public void Dispose()
         {
-            AlcError err = Alc.GetError(Device);
+            var err = Alc.GetError(Device);
             switch (err)
             {
                 case AlcError.OutOfMemory:

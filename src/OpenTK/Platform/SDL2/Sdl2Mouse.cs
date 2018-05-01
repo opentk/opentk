@@ -92,13 +92,13 @@ namespace OpenTK.Platform.SDL2
 
         public void ProcessMouseEvent(MouseButtonEvent button)
         {
-            bool pressed = button.State == State.Pressed;
+            var pressed = button.State == State.Pressed;
             SetButtonState(TranslateButton(button.Button), pressed);
         }
 
         public MouseState GetState()
         {
-            MouseState scaledState = state;
+            var scaledState = state;
             if (Configuration.RunningOnMacOS)
             {
                 scaledState.X = (int)Math.Round(scaledState.X * Scale);

@@ -140,7 +140,7 @@ namespace OpenTK
         /// <returns></returns>
         public Vector2 Normalized()
         {
-            Vector2 v = this;
+            var v = this;
             v.Normalize();
             return v;
         }
@@ -149,7 +149,7 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-            float scale = 1.0f / Length;
+            var scale = 1.0f / Length;
             X *= scale;
             Y *= scale;
         }
@@ -159,7 +159,7 @@ namespace OpenTK
         /// </summary>
         public void NormalizeFast()
         {
-            float scale = MathHelper.InverseSqrtFast(X * X + Y * Y);
+            var scale = MathHelper.InverseSqrtFast(X * X + Y * Y);
             X *= scale;
             Y *= scale;
         }
@@ -539,7 +539,7 @@ namespace OpenTK
         /// <returns>The normalized vector</returns>
         public static Vector2 Normalize(Vector2 vec)
         {
-            float scale = 1.0f / vec.Length;
+            var scale = 1.0f / vec.Length;
             vec.X *= scale;
             vec.Y *= scale;
             return vec;
@@ -552,7 +552,7 @@ namespace OpenTK
         /// <param name="result">The normalized vector</param>
         public static void Normalize(ref Vector2 vec, out Vector2 result)
         {
-            float scale = 1.0f / vec.Length;
+            var scale = 1.0f / vec.Length;
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }
@@ -564,7 +564,7 @@ namespace OpenTK
         /// <returns>The normalized vector</returns>
         public static Vector2 NormalizeFast(Vector2 vec)
         {
-            float scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y);
+            var scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y);
             vec.X *= scale;
             vec.Y *= scale;
             return vec;
@@ -577,7 +577,7 @@ namespace OpenTK
         /// <param name="result">The normalized vector</param>
         public static void NormalizeFast(ref Vector2 vec, out Vector2 result)
         {
-            float scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y);
+            var scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y);
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }
@@ -678,7 +678,7 @@ namespace OpenTK
         {
             result = a; // copy
 
-            Vector2 temp = b; // copy
+            var temp = b; // copy
             Subtract(ref temp, ref a, out temp);
             Multiply(ref temp, u, out temp);
             Add(ref result, ref temp, out result);

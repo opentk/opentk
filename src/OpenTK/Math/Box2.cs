@@ -124,11 +124,11 @@ namespace OpenTK
         /// <returns>Whether this box contains the point.</returns>
         public bool Contains(Vector2 point, bool closedRegion)
         {
-            bool xOK = (closedRegion == Left <= Right) ?
+            var xOK = (closedRegion == Left <= Right) ?
                 (point.X >= Left != point.X > Right) :
                 (point.X > Left != point.X >= Right);
 
-            bool yOK = (closedRegion == Top <= Bottom) ?
+            var yOK = (closedRegion == Top <= Bottom) ?
                 (point.Y >= Top != point.Y > Bottom) :
                 (point.Y > Top != point.Y >= Bottom);
 

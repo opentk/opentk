@@ -121,7 +121,7 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>True if all the Buffers were successfully set to the requested storage mode, False otherwise.</returns>
         public bool SetBufferMode(int n, ref int buffer, XRamStorage mode)
         {
-            uint temp = (uint)buffer;
+            var temp = (uint)buffer;
             return SetBufferMode(n, ref temp, mode);
         }
 
@@ -130,7 +130,7 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>The current Mode of the Buffer.</returns>
         public XRamStorage GetBufferMode(ref uint buffer)
         {
-            int tempresult = Imported_GetBufferMode(buffer, IntPtr.Zero); // IntPtr.Zero due to the parameter being unused/reserved atm
+            var tempresult = Imported_GetBufferMode(buffer, IntPtr.Zero); // IntPtr.Zero due to the parameter being unused/reserved atm
 
             if (tempresult == AL_STORAGE_ACCESSIBLE)
             {
@@ -149,7 +149,7 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>The current Mode of the Buffer.</returns>
         public XRamStorage GetBufferMode(ref int buffer)
         {
-            uint temp = (uint)buffer;
+            var temp = (uint)buffer;
             return GetBufferMode(ref temp);
         }
     }

@@ -93,7 +93,7 @@ namespace OpenTK.Platform.Egl
             // to load all entry points. This is
             // especially true on KMS, Wayland and Mir.
 
-            Stopwatch time = Stopwatch.StartNew();
+            var time = Stopwatch.StartNew();
 
             new Graphics.OpenGL.GL().LoadEntryPoints();
             new Graphics.OpenGL4.GL().LoadEntryPoints();

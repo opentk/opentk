@@ -49,7 +49,7 @@ namespace OpenTK.Platform.MacOS
             Cocoa.Initialize();
 
             // Register a Quit method to be called on cmd-q
-            IntPtr nsapp = Class.Get("NSApplication");
+            var nsapp = Class.Get("NSApplication");
             Class.RegisterMethod(nsapp, OnQuitHandler, "quit", "v@:");
 
             // Fetch the application handle
@@ -85,9 +85,9 @@ namespace OpenTK.Platform.MacOS
             }
 
             // Disable momentum scrolling and long-press key pop-ups
-            IntPtr settings = Cocoa.SendIntPtr(Class.NSDictionary, Selector.Alloc);
+            var settings = Cocoa.SendIntPtr(Class.NSDictionary, Selector.Alloc);
             //IntPtr momentum_scrolling = Cocoa.SendIntPtr(Class.NSNumber, Selector.Get("numberWithBool:"), false);
-            IntPtr press_and_hold = Cocoa.SendIntPtr(Class.NSNumber, Selector.Get("numberWithBool:"), false);
+            var press_and_hold = Cocoa.SendIntPtr(Class.NSNumber, Selector.Get("numberWithBool:"), false);
 
             // Initialize and register the settings dictionary
             settings =
@@ -106,8 +106,8 @@ namespace OpenTK.Platform.MacOS
         {
             get
             {
-                int thread_id = Thread.CurrentThread.ManagedThreadId;
-                bool is_ui_thread = thread_id == ThreadId;
+                var thread_id = Thread.CurrentThread.ManagedThreadId;
+                var is_ui_thread = thread_id == ThreadId;
                 if (!is_ui_thread)
                 {
                     Debug.Print("[Warning] UI resources must be disposed in the UI thread #{0}, not #{1}.",

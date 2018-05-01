@@ -186,7 +186,7 @@ namespace OpenTK.Platform.X11
                 // Create a window on this display using the visual above
                 Debug.Write("Opening render window... ");
 
-                XSetWindowAttributes attributes = new XSetWindowAttributes();
+                var attributes = new XSetWindowAttributes();
                 attributes.background_pixel = IntPtr.Zero;
                 attributes.border_pixel = IntPtr.Zero;
                 attributes.colormap = Functions.XCreateColormap(window.Display, window.RootWindow, window.VisualInfo.Visual, 0/*AllocNone*/);
@@ -198,7 +198,7 @@ namespace OpenTK.Platform.X11
                                    EventMask.PropertyChangeMask;
                 attributes.event_mask = (IntPtr)window.EventMask;
 
-                SetWindowValuemask mask =
+                var mask =
                     SetWindowValuemask.ColorMap | SetWindowValuemask.EventMask |
                     SetWindowValuemask.BackPixel | SetWindowValuemask.BorderPixel;
 
@@ -217,12 +217,12 @@ namespace OpenTK.Platform.X11
                 }
             }
 
-            XSizeHints hints = new XSizeHints();
+            var hints = new XSizeHints();
             hints.base_width = width;
             hints.base_height = height;
             hints.flags = (IntPtr)(XSizeHintsFlags.PSize | XSizeHintsFlags.PPosition);
 
-            XClassHint class_hint = new XClassHint();
+            var class_hint = new XClassHint();
             var entry_assembly = Assembly.GetEntryAssembly();
             // May not have an entry assembly, try to find a "matching" assembly in the AppDomain
             if (entry_assembly == null)
@@ -262,7 +262,7 @@ namespace OpenTK.Platform.X11
 
             // Set the initial window size to ensure X, Y, Width, Height and the rest
             // return the correct values inside the constructor and the Load event.
-            XEvent e = new XEvent();
+            var e = new XEvent();
             e.ConfigureEvent.x = x;
             e.ConfigureEvent.y = y;
             e.ConfigureEvent.width = width;
@@ -297,8 +297,8 @@ namespace OpenTK.Platform.X11
             }
 
             // Alow window recive Xdnd Events
-            IntPtr xdndAware = Functions.XInternAtom(window.Display, "XdndAware", false);
-            IntPtr xdndProtocol = new IntPtr(5);
+            var xdndAware = Functions.XInternAtom(window.Display, "XdndAware", false);
+            var xdndProtocol = new IntPtr(5);
             using (new XLock (window.Display)) {
                 Functions.XChangeProperty(window.Display, Handle, xdndAware, (IntPtr)AtomName.XA_ATOM, 32, PropertyMode.Replace, ref xdndProtocol, 1);
             }
@@ -346,7 +346,7 @@ namespace OpenTK.Platform.X11
         private void ReadProperty(IntPtr window, IntPtr property, IntPtr type, ref IntPtr data, ref IntPtr itemsCount)
         {
             int format;
-            IntPtr length = new IntPtr(int.MaxValue);
+            var length = new IntPtr(int.MaxValue);
             IntPtr actualType;
             IntPtr bytesLeft;
 
@@ -357,11 +357,11 @@ namespace OpenTK.Platform.X11
 
         private string[] parseUriList(string rawString)
         {
-            string[] separator = new string[] {"\r", "\n"};
-            string[] splitted = rawString.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            var separator = new string[] {"\r", "\n"};
+            var splitted = rawString.Split(separator, StringSplitOptions.RemoveEmptyEntries);
 
-            string[] fileNames = new string[splitted.Length];
-            for (int i = 0; i < splitted.Length; i++)
+            var fileNames = new string[splitted.Length];
+            for (var i = 0; i < splitted.Length; i++)
             {
                 // Delete starting file://, filename data is URI-encoded
                 fileNames[i] = Uri.UnescapeDataString(splitted[i].Substring(7));
@@ -439,7 +439,7 @@ namespace OpenTK.Platform.X11
         private void SetWindowMinMax(short min_width, short min_height, short max_width, short max_height)
         {
             IntPtr dummy;
-            XSizeHints hints = new XSizeHints();
+            var hints = new XSizeHints();
 
             using (new XLock(window.Display))
             {
@@ -486,7 +486,7 @@ namespace OpenTK.Platform.X11
             {
                 using (new XLock(window.Display))
                 {
-                    XSizeHints hints = new XSizeHints();
+                    var hints = new XSizeHints();
                     IntPtr dummy;
                     if (Functions.XGetWMNormalHints(window.Display, window.Handle, ref hints, out dummy) != 0)
                     {
@@ -505,7 +505,7 @@ namespace OpenTK.Platform.X11
                 using (new XLock(window.Display))
                 {
                     // Test if decorations have been disabled through Motif.
-                    IntPtr motif_hints_atom = Functions.XInternAtom(window.Display, MOTIF_WM_ATOM, true);
+                    var motif_hints_atom = Functions.XInternAtom(window.Display, MOTIF_WM_ATOM, true);
                     if (motif_hints_atom != IntPtr.Zero)
                     {
                         // TODO: How to check if MotifWMHints decorations have been really disabled?
@@ -559,12 +559,12 @@ namespace OpenTK.Platform.X11
         {
             using (new XLock(window.Display))
             {
-                IntPtr atom = Functions.XInternAtom(window.Display, MOTIF_WM_ATOM, true);
+                var atom = Functions.XInternAtom(window.Display, MOTIF_WM_ATOM, true);
                 if (atom != IntPtr.Zero)
                 {
                     //Functions.XGetWindowProperty(window.Display, window.Handle, atom, IntPtr.Zero, IntPtr.Zero, false,
 
-                    MotifWmHints hints = new MotifWmHints();
+                    var hints = new MotifWmHints();
                     hints.flags = (IntPtr)MotifFlags.Decorations;
                     Functions.XChangeProperty(window.Display, Handle, atom, atom, 32, PropertyMode.Replace,
                         ref hints, Marshal.SizeOf(hints) / IntPtr.Size);
@@ -578,10 +578,10 @@ namespace OpenTK.Platform.X11
         {
             using (new XLock(window.Display))
             {
-                IntPtr atom = Functions.XInternAtom(window.Display, Constants.XA_WIN_HINTS, true);
+                var atom = Functions.XInternAtom(window.Display, Constants.XA_WIN_HINTS, true);
                 if (atom != IntPtr.Zero)
                 {
-                    IntPtr hints = IntPtr.Zero;
+                    var hints = IntPtr.Zero;
                     Functions.XChangeProperty(window.Display, Handle, atom, atom, 32, PropertyMode.Replace,
                         ref hints, Marshal.SizeOf(hints) / IntPtr.Size);
                     return true;
@@ -617,11 +617,11 @@ namespace OpenTK.Platform.X11
         {
             using (new XLock(window.Display))
             {
-                IntPtr atom = Functions.XInternAtom(window.Display, MOTIF_WM_ATOM, true);
+                var atom = Functions.XInternAtom(window.Display, MOTIF_WM_ATOM, true);
                 if (atom != IntPtr.Zero)
                 {
                     //Functions.XDeleteProperty(this.window.Display, this.Handle, atom);
-                    MotifWmHints hints = new MotifWmHints();
+                    var hints = new MotifWmHints();
                     hints.flags = (IntPtr)MotifFlags.Decorations;
                     hints.decorations = (IntPtr)MotifDecorations.All;
                     Functions.XChangeProperty(window.Display, Handle, atom, atom, 32, PropertyMode.Replace,
@@ -646,7 +646,7 @@ namespace OpenTK.Platform.X11
                 //xev.ClientMessageEvent.ptr1 = (IntPtr)WindowLayer.AboveDock;
                 //Functions.XSendEvent(this.window.Display, this.window.RootWindow, false, (IntPtr)EventMask.SubstructureNotifyMask, ref xev);
 
-                IntPtr atom = Functions.XInternAtom(window.Display, Constants.XA_WIN_HINTS, true);
+                var atom = Functions.XInternAtom(window.Display, Constants.XA_WIN_HINTS, true);
                 if (atom != IntPtr.Zero)
                 {
                     Functions.XDeleteProperty(window.Display, Handle, atom);
@@ -661,12 +661,12 @@ namespace OpenTK.Platform.X11
         {
             using (new XLock(display))
             {
-                IntPtr wmHints_ptr = Functions.XGetWMHints(display, window);
+                var wmHints_ptr = Functions.XGetWMHints(display, window);
 
                 if (wmHints_ptr != IntPtr.Zero)
                 {
-                    XWMHints wmHints = (XWMHints)Marshal.PtrToStructure(wmHints_ptr, typeof(XWMHints));
-                    XWMHintsFlags flags = (XWMHintsFlags)wmHints.flags.ToInt32();
+                    var wmHints = (XWMHints)Marshal.PtrToStructure(wmHints_ptr, typeof(XWMHints));
+                    var flags = (XWMHintsFlags)wmHints.flags.ToInt32();
 
                     if ((flags & XWMHintsFlags.IconPixmapHint) != 0)
                     {
@@ -688,7 +688,7 @@ namespace OpenTK.Platform.X11
 
         private bool RefreshWindowBorders()
         {
-            bool borders_changed = false;
+            var borders_changed = false;
 
             if (IsWindowBorderHidden)
             {
@@ -719,10 +719,10 @@ namespace OpenTK.Platform.X11
                 {
                     if ((long)nitems == 4)
                     {
-                        int new_border_left = Marshal.ReadIntPtr(prop, 0).ToInt32();
-                        int new_border_right = Marshal.ReadIntPtr(prop, IntPtr.Size).ToInt32();
-                        int new_border_top = Marshal.ReadIntPtr(prop, IntPtr.Size * 2).ToInt32();
-                        int new_border_bottom = Marshal.ReadIntPtr(prop, IntPtr.Size * 3).ToInt32();
+                        var new_border_left = Marshal.ReadIntPtr(prop, 0).ToInt32();
+                        var new_border_right = Marshal.ReadIntPtr(prop, IntPtr.Size).ToInt32();
+                        var new_border_top = Marshal.ReadIntPtr(prop, IntPtr.Size * 2).ToInt32();
+                        var new_border_bottom = Marshal.ReadIntPtr(prop, IntPtr.Size * 3).ToInt32();
 
                         borders_changed =
                             new_border_left != border_left ||
@@ -775,7 +775,7 @@ namespace OpenTK.Platform.X11
                 y = e.ConfigureEvent.y;
             }
 
-            Point new_location = new Point(
+            var new_location = new Point(
                 x - border_left,
                 y - border_top);
 
@@ -787,7 +787,7 @@ namespace OpenTK.Platform.X11
 
             // Note: width and height denote the internal (client) size.
             // To get the external (window) size, we need to add the border size.
-            Size new_size = new Size(
+            var new_size = new Size(
                 e.ConfigureEvent.width + border_left + border_right,
                 e.ConfigureEvent.height + border_top + border_bottom);
             if (Bounds.Size != new_size)
@@ -809,13 +809,13 @@ namespace OpenTK.Platform.X11
 
         private static IntPtr CreateEmptyCursor(X11WindowInfo window)
         {
-            IntPtr cursor = IntPtr.Zero;
+            var cursor = IntPtr.Zero;
             using (new XLock(window.Display))
             {
                 XColor black, dummy;
-                IntPtr cmap = Functions.XDefaultColormap(window.Display, window.Screen);
+                var cmap = Functions.XDefaultColormap(window.Display, window.Screen);
                 Functions.XAllocNamedColor(window.Display, cmap, "black", out black, out dummy);
-                IntPtr bmp_empty = Functions.XCreateBitmapFromData(window.Display,
+                var bmp_empty = Functions.XCreateBitmapFromData(window.Display,
                     window.Handle, new byte[,] { { 0 } });
                 cursor = Functions.XCreatePixmapCursor(window.Display,
                     bmp_empty, bmp_empty, ref black, ref black, 0, 0);
@@ -856,7 +856,7 @@ namespace OpenTK.Platform.X11
                 {
                     case XEventName.MapNotify:
                     {
-                        bool previous_visible = visible;
+                        var previous_visible = visible;
                         visible = true;
                         if (visible != previous_visible)
                         {
@@ -866,7 +866,7 @@ namespace OpenTK.Platform.X11
                     }
                     case XEventName.UnmapNotify:
                     {
-                        bool previous_visible = visible;
+                        var previous_visible = visible;
                         visible = false;
                         if (visible != previous_visible)
                         {
@@ -884,7 +884,7 @@ namespace OpenTK.Platform.X11
                         if (!isExiting && e.ClientMessageEvent.ptr1 == _atom_wm_destroy)
                         {
                             Debug.Print("[X11] Exit message received for window {0:X} on display {1:X}", window.Handle, window.Display);
-                            CancelEventArgs ce = new CancelEventArgs();
+                            var ce = new CancelEventArgs();
                             OnClosing(ce);
 
                             if (!ce.Cancel)
@@ -901,15 +901,15 @@ namespace OpenTK.Platform.X11
                             // ptr1 -> source window handler
                             // ptr2 bit 0 -> set to 1 if source support more than three data formats
                             // ptr2 third byte contains Xdnd version that source supports
-                            bool useList = ((e.ClientMessageEvent.ptr2.ToInt64() & 1) == 1);
+                            var useList = ((e.ClientMessageEvent.ptr2.ToInt64() & 1) == 1);
                             sourceHandler = e.ClientMessageEvent.ptr1;
                             sourceXdndVersion = e.ClientMessageEvent.ptr2.ToInt64() >> 24;
 
-                            IntPtr formats = IntPtr.Zero;
+                            var formats = IntPtr.Zero;
                             int formatCount;
                             if (useList)
                             {
-                                IntPtr count = IntPtr.Zero;
+                                var count = IntPtr.Zero;
                                 ReadProperty(sourceHandler, _atom_xdnd_type_list, (IntPtr)AtomName.XA_ATOM, ref formats, ref count);
                                 formatCount = count.ToInt32();
                             }
@@ -923,12 +923,12 @@ namespace OpenTK.Platform.X11
                             }
 
                             xdndFormat = Consts.None;
-                            for (int i = 0; i < formatCount && xdndFormat == Consts.None; ++i)
+                            for (var i = 0; i < formatCount && xdndFormat == Consts.None; ++i)
                             {
-                                IntPtr tempAtom = Marshal.ReadIntPtr(formats, IntPtr.Size * i);
-                                IntPtr atomName = Functions.XGetAtomName(window.Display, tempAtom);
+                                var tempAtom = Marshal.ReadIntPtr(formats, IntPtr.Size * i);
+                                var atomName = Functions.XGetAtomName(window.Display, tempAtom);
 
-                                string str = Marshal.PtrToStringAnsi(atomName);
+                                var str = Marshal.PtrToStringAnsi(atomName);
                                 if (str == "text/uri-list")
                                 {
                                     xdndFormat = tempAtom;
@@ -948,7 +948,7 @@ namespace OpenTK.Platform.X11
                         }
                         else if (e.ClientMessageEvent.message_type == _atom_xdnd_position)
                         {
-                            XEvent reply = new XEvent ();
+                            var reply = new XEvent ();
 
                             reply.ClientMessageEvent.type = XEventName.ClientMessage;
                             reply.ClientMessageEvent.display = window.Display;
@@ -975,7 +975,7 @@ namespace OpenTK.Platform.X11
                         {
                             if (xdndFormat == Consts.None)
                             {
-                                XEvent reply = new XEvent ();
+                                var reply = new XEvent ();
 
                                 reply.ClientMessageEvent.type = XEventName.ClientMessage;
                                 reply.ClientMessageEvent.display = window.Display;
@@ -1020,14 +1020,14 @@ namespace OpenTK.Platform.X11
                     case XEventName.KeyPress:
                     case XEventName.KeyRelease:
                     {
-                        bool pressed = e.type == XEventName.KeyPress;
+                        var pressed = e.type == XEventName.KeyPress;
                         Key key;
                         if (KeyMap.TranslateKey(ref e.KeyEvent, out key))
                         {
                             if (pressed)
                             {
                                 // Raise KeyDown event
-                                bool is_repeat = KeyboardState[key];
+                                var is_repeat = KeyboardState[key];
                                 OnKeyDown(key, is_repeat);
                             }
                             else
@@ -1040,12 +1040,12 @@ namespace OpenTK.Platform.X11
                             {
                                 // Translate XKeyPress to characters and
                                 // raise KeyPress events
-                                int status = 0;
+                                var status = 0;
                                 status = Functions.XLookupString(
                                     ref e.KeyEvent, ascii, ascii.Length, null, IntPtr.Zero);
                                 Encoding.Default.GetChars(ascii, 0, status, chars, 0);
 
-                                for (int i = 0; i < status; i++)
+                                for (var i = 0; i < status; i++)
                                 {
                                     if (!Char.IsControl(chars[i]))
                                     {
@@ -1058,8 +1058,8 @@ namespace OpenTK.Platform.X11
                     }
                     case XEventName.MotionNotify:
                     {
-                        int x = e.MotionEvent.x;
-                        int y = e.MotionEvent.y;
+                        var x = e.MotionEvent.x;
+                        var y = e.MotionEvent.y;
 
                         if (x != MouseState.X || y != MouseState.Y)
                         {
@@ -1072,7 +1072,7 @@ namespace OpenTK.Platform.X11
                     case XEventName.ButtonPress:
                     {
                         float dx, dy;
-                        MouseButton button = X11KeyMap.TranslateButton(e.ButtonEvent.button, out dx, out dy);
+                        var button = X11KeyMap.TranslateButton(e.ButtonEvent.button, out dx, out dy);
 
                         if (button != MouseButton.LastButton)
                         {
@@ -1085,7 +1085,7 @@ namespace OpenTK.Platform.X11
                             // This code is implemented in XI2Mouse.GetCursorState().
                             // Instead of reimplementing this functionality, just
                             // use the values from there.
-                            MouseState state = Mouse.GetCursorState();
+                            var state = Mouse.GetCursorState();
                             dx = state.Scroll.X - MouseState.Scroll.X;
                             dy = state.Scroll.Y - MouseState.Scroll.Y;
                         }
@@ -1101,7 +1101,7 @@ namespace OpenTK.Platform.X11
                     case XEventName.ButtonRelease:
                     {
                         float dx, dy;
-                        MouseButton button = X11KeyMap.TranslateButton(e.ButtonEvent.button, out dx, out dy);
+                        var button = X11KeyMap.TranslateButton(e.ButtonEvent.button, out dx, out dy);
                         if (button != MouseButton.LastButton)
                         {
                             OnMouseUp(button);
@@ -1110,7 +1110,7 @@ namespace OpenTK.Platform.X11
                     }
                     case XEventName.FocusIn:
                     {
-                        bool previous_focus = has_focus;
+                        var previous_focus = has_focus;
                         has_focus = true;
                         if (has_focus != previous_focus)
                         {
@@ -1125,7 +1125,7 @@ namespace OpenTK.Platform.X11
                     }
                     case XEventName.FocusOut:
                     {
-                        bool previous_focus = has_focus;
+                        var previous_focus = has_focus;
                         has_focus = false;
                         if (has_focus != previous_focus)
                         {
@@ -1137,8 +1137,8 @@ namespace OpenTK.Platform.X11
                     {
                         if (CursorVisible)
                         {
-                            int x = MathHelper.Clamp(e.CrossingEvent.x, 0, Width);
-                            int y = MathHelper.Clamp(e.CrossingEvent.y, 0, Height);
+                            var x = MathHelper.Clamp(e.CrossingEvent.x, 0, Width);
+                            var y = MathHelper.Clamp(e.CrossingEvent.y, 0, Height);
                             if (x != MouseState.X || y != MouseState.Y)
                             {
                                 OnMouseMove(x, y);
@@ -1181,20 +1181,20 @@ namespace OpenTK.Platform.X11
                     {
                         if (e.SelectionEvent.property == _atom_xdnd_primary)
                         {
-                            IntPtr data = IntPtr.Zero;
-                            IntPtr count = IntPtr.Zero;
+                            var data = IntPtr.Zero;
+                            var count = IntPtr.Zero;
                             ReadProperty(e.SelectionEvent.requestor, e.SelectionEvent.property, e.SelectionEvent.target, ref data, ref count);
 
-                            string rawString = Marshal.PtrToStringAnsi(data);
+                            var rawString = Marshal.PtrToStringAnsi(data);
                             Functions.XFree(data);
-                            string[] fileNames = parseUriList(rawString);
+                            var fileNames = parseUriList(rawString);
 
-                            for (int i = 0; i < fileNames.Length; i++)
+                            for (var i = 0; i < fileNames.Length; i++)
                             {
                                 OnFileDrop(fileNames[i]);
                             }
 
-                            XEvent reply = new XEvent ();
+                            var reply = new XEvent ();
 
                             reply.ClientMessageEvent.type = XEventName.ClientMessage;
                             reply.ClientMessageEvent.display = window.Display;
@@ -1218,13 +1218,13 @@ namespace OpenTK.Platform.X11
             get => bounds;
             set
             {
-                bool is_location_changed = bounds.Location != value.Location;
-                bool is_size_changed = bounds.Size != value.Size;
+                var is_location_changed = bounds.Location != value.Location;
+                var is_size_changed = bounds.Size != value.Size;
 
-                int x = value.X;
-                int y = value.Y;
-                int width = value.Width - border_left - border_right;
-                int height = value.Height - border_top - border_bottom;
+                var x = value.X;
+                var y = value.Y;
+                var width = value.Width - border_left - border_right;
+                var height = value.Height - border_top - border_bottom;
 
                 if (WindowBorder != WindowBorder.Resizable)
                 {
@@ -1260,11 +1260,11 @@ namespace OpenTK.Platform.X11
             get => client_size;
             set
             {
-                bool is_size_changed = client_size != value;
+                var is_size_changed = client_size != value;
                 if (is_size_changed)
                 {
-                    int width = value.Width;
-                    int height = value.Height;
+                    var width = value.Width;
+                    var height = value.Height;
 
                     if (WindowBorder != WindowBorder.Resizable)
                     {
@@ -1306,16 +1306,16 @@ namespace OpenTK.Platform.X11
                 else
                 {
                     // Set _NET_WM_ICON
-                    Bitmap bitmap = value.ToBitmap();
-                    int size = bitmap.Width * bitmap.Height + 2;
-                    IntPtr[] data = new IntPtr[size];
-                    int index = 0;
+                    var bitmap = value.ToBitmap();
+                    var size = bitmap.Width * bitmap.Height + 2;
+                    var data = new IntPtr[size];
+                    var index = 0;
 
                     data[index++] = (IntPtr)bitmap.Width;
                     data[index++] = (IntPtr)bitmap.Height;
 
-                    for (int y = 0; y < bitmap.Height; y++)
-                    for (int x = 0; x < bitmap.Width; x++)
+                    for (var y = 0; y < bitmap.Height; y++)
+                    for (var x = 0; x < bitmap.Width; x++)
                     {
                         data[index++] = (IntPtr)bitmap.GetPixel(x, y).ToArgb();
                     }
@@ -1331,14 +1331,14 @@ namespace OpenTK.Platform.X11
                     DeleteIconPixmaps(window.Display, window.Handle);
                     using (new XLock(window.Display))
                     {
-                        IntPtr wmHints_ptr = Functions.XGetWMHints(window.Display, window.Handle);
+                        var wmHints_ptr = Functions.XGetWMHints(window.Display, window.Handle);
 
                         if (wmHints_ptr == IntPtr.Zero)
                         {
                             wmHints_ptr = Functions.XAllocWMHints();
                         }
 
-                        XWMHints wmHints = (XWMHints)Marshal.PtrToStructure(wmHints_ptr, typeof(XWMHints));
+                        var wmHints = (XWMHints)Marshal.PtrToStructure(wmHints_ptr, typeof(XWMHints));
 
                         wmHints.flags = new IntPtr(wmHints.flags.ToInt32() | (int)(XWMHintsFlags.IconPixmapHint | XWMHintsFlags.IconMaskHint));
                         wmHints.icon_pixmap = Functions.CreatePixmapFromImage(window.Display, bitmap);
@@ -1366,12 +1366,12 @@ namespace OpenTK.Platform.X11
                 int actual_format;
                 IntPtr nitems;
                 IntPtr bytes_after;
-                IntPtr prop = IntPtr.Zero;
+                var prop = IntPtr.Zero;
                 IntPtr atom;
                 //XWindowAttributes attributes;
-                bool fullscreen = false;
-                int maximized = 0;
-                bool minimized = false;
+                var fullscreen = false;
+                var maximized = 0;
+                var minimized = false;
 
                 using (new XLock(window.Display))
                 {
@@ -1383,7 +1383,7 @@ namespace OpenTK.Platform.X11
 
                 if ((long)nitems > 0 && prop != IntPtr.Zero)
                 {
-                    for (int i = 0; i < (long)nitems; i++)
+                    for (var i = 0; i < (long)nitems; i++)
                     {
                         atom = (IntPtr)Marshal.ReadIntPtr(prop, i * IntPtr.Size);
 
@@ -1429,7 +1429,7 @@ namespace OpenTK.Platform.X11
             }
             set
             {
-                OpenTK.WindowState current_state = WindowState;
+                var current_state = WindowState;
 
                 // When switching away from normal state, store
                 // the "normal" border and size. These will be used
@@ -1678,7 +1678,7 @@ namespace OpenTK.Platform.X11
                     {
                         UngrabMouse();
 
-                        Point p = PointToScreen(new Point(MouseState.X, MouseState.Y));
+                        var p = PointToScreen(new Point(MouseState.X, MouseState.Y));
                         Mouse.SetPosition(p.X, p.Y);
 
                         // Note: if cursorHandle = IntPtr.Zero, this restores the default cursor
@@ -1728,7 +1728,7 @@ namespace OpenTK.Platform.X11
         {
             get
             {
-                IntPtr name = IntPtr.Zero;
+                var name = IntPtr.Zero;
                 using (new XLock(window.Display))
                 {
                     Functions.XFetchName(window.Display, window.Handle, ref name);
@@ -1788,7 +1788,7 @@ namespace OpenTK.Platform.X11
         {
             Debug.Print("[X11] Sending exit message window {0:X} on display {1:X}", window.Handle, window.Display);
 
-            XEvent ev = new XEvent();
+            var ev = new XEvent();
             ev.type = XEventName.ClientMessage;
             ev.ClientMessageEvent.format = 32;
             ev.ClientMessageEvent.display = window.Display;

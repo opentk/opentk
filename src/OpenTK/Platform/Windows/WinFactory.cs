@@ -61,7 +61,7 @@ namespace OpenTK.Platform.Windows
                 {
                     // Enable high-dpi support
                     // Only available on Windows Vista and higher
-                    bool result = Functions.SetProcessDPIAware();
+                    var result = Functions.SetProcessDPIAware();
                     Debug.Print("SetProcessDPIAware() returned {0}", result);
                 }
             }
@@ -147,7 +147,7 @@ namespace OpenTK.Platform.Windows
             {
                 if (manual)
                 {
-                    WinRawInput raw = rawinput_driver;
+                    var raw = rawinput_driver;
                     if (raw != null)
                     {
                         raw.Dispose();

@@ -85,8 +85,8 @@ namespace OpenTK.Platform.MacOS
             // TypeString info:
             // https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
 
-            IntPtr p = Marshal.GetFunctionPointerForDelegate(d);
-            bool r = class_addMethod(handle, Selector.Get(selector), p, typeString);
+            var p = Marshal.GetFunctionPointerForDelegate(d);
+            var r = class_addMethod(handle, Selector.Get(selector), p, typeString);
 
             if (!r)
             {

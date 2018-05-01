@@ -261,7 +261,7 @@ namespace OpenTK.Platform.Windows
             // SetWindowPos defines its error condition as an IntPtr.Zero retval and a non-0 GetLastError.
             // We need to SetLastError(0) to ensure we are not detecting on older error condition (from another function).
 
-            IntPtr retval = IntPtr.Zero;
+            var retval = IntPtr.Zero;
             SetLastError(0);
 
             if (IntPtr.Size == 4)
@@ -275,7 +275,7 @@ namespace OpenTK.Platform.Windows
 
             if (retval == IntPtr.Zero)
             {
-                int error = Marshal.GetLastWin32Error();
+                var error = Marshal.GetLastWin32Error();
                 if (error != 0)
                 {
                     throw new PlatformException($"Failed to modify window border. Error: {error}");
@@ -1340,7 +1340,7 @@ namespace OpenTK.Platform.Windows
 
         internal static int GetRawInputData(IntPtr raw, out RawInputHeader header)
         {
-            int size = RawInputHeader.SizeInBytes;
+            var size = RawInputHeader.SizeInBytes;
             unsafe
             {
                 fixed (RawInputHeader* pheader = &header)
@@ -1358,7 +1358,7 @@ namespace OpenTK.Platform.Windows
 
         internal static int GetRawInputData(IntPtr raw, out RawInput data)
         {
-            int size = RawInput.SizeInBytes;
+            var size = RawInput.SizeInBytes;
             unsafe
             {
                 fixed (RawInput* pdata = &data)
@@ -1372,7 +1372,7 @@ namespace OpenTK.Platform.Windows
 
         internal static int GetRawInputData(IntPtr raw, byte[] data)
         {
-            int size = data.Length;
+            var size = data.Length;
             unsafe
             {
                 fixed (byte* pdata = data)
@@ -2581,7 +2581,7 @@ namespace OpenTK.Platform.Windows
 
         internal static Win32Rectangle From(Rectangle value)
         {
-            Win32Rectangle rect = new Win32Rectangle();
+            var rect = new Win32Rectangle();
             rect.left = value.Left;
             rect.right = value.Right;
             rect.top = value.Top;
@@ -2591,7 +2591,7 @@ namespace OpenTK.Platform.Windows
 
         internal static Win32Rectangle From(Size value)
         {
-            Win32Rectangle rect = new Win32Rectangle();
+            var rect = new Win32Rectangle();
             rect.left = 0;
             rect.right = value.Width;
             rect.top = 0;

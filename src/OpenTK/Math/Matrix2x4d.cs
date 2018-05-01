@@ -225,8 +225,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix2x4d instance.</param>
         public static void CreateRotation(double angle, out Matrix2x4d result)
         {
-            double cos = Math.Cos(angle);
-            double sin = Math.Sin(angle);
+            var cos = Math.Cos(angle);
+            var sin = Math.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;

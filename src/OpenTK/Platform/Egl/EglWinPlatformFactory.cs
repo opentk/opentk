@@ -34,17 +34,17 @@ namespace OpenTK.Platform.Egl
     {
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            WinWindowInfo win_win = (WinWindowInfo)window;
-            IntPtr egl_display = GetDisplay(win_win.DeviceContext);
-            EglWindowInfo egl_win = new EglWindowInfo(win_win.Handle, egl_display);
+            var win_win = (WinWindowInfo)window;
+            var egl_display = GetDisplay(win_win.DeviceContext);
+            var egl_win = new EglWindowInfo(win_win.Handle, egl_display);
             return new EglWinContext(mode, egl_win, shareContext, major, minor, flags);
         }
 
         public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            WinWindowInfo win_win = (WinWindowInfo)window;
-            IntPtr egl_display = GetDisplay(win_win.DeviceContext);
-            EglWindowInfo egl_win = new EglWindowInfo(win_win.Handle, egl_display);
+            var win_win = (WinWindowInfo)window;
+            var egl_display = GetDisplay(win_win.DeviceContext);
+            var egl_win = new EglWindowInfo(win_win.Handle, egl_display);
             return new EglWinContext(handle, egl_win, shareContext, major, minor, flags);
         }
 
@@ -58,7 +58,7 @@ namespace OpenTK.Platform.Egl
 
         private IntPtr GetDisplay(IntPtr dc)
         {
-            IntPtr display = Egl.GetDisplay(dc);
+            var display = Egl.GetDisplay(dc);
             if (display == IntPtr.Zero)
             {
                 display = Egl.GetDisplay(IntPtr.Zero);

@@ -51,7 +51,7 @@ namespace OpenTK.Platform.MacOS
 
         public static implicit operator NSFloat(float v)
         {
-            NSFloat f = new NSFloat();
+            var f = new NSFloat();
             unsafe
             {
                 if (IntPtr.Size == 4)
@@ -69,12 +69,12 @@ namespace OpenTK.Platform.MacOS
 
         public static implicit operator NSFloat(double v)
         {
-            NSFloat f = new NSFloat();
+            var f = new NSFloat();
             unsafe
             {
                 if (IntPtr.Size == 4)
                 {
-                    float fv = (float)v;
+                    var fv = (float)v;
                     f.Value = *(IntPtr*)&fv;
                 }
                 else

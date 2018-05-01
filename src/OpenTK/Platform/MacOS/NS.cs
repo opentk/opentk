@@ -85,17 +85,17 @@ namespace OpenTK.Platform.MacOS
 
             // must add a '_' prefix and null-terminate the function name,
             // hence we allocate +2 bytes
-            IntPtr ptr = Marshal.AllocHGlobal(function.Length + 2);
+            var ptr = Marshal.AllocHGlobal(function.Length + 2);
             try
             {
                 Marshal.WriteByte(ptr, (byte)'_');
-                for (int i = 0; i < function.Length; i++)
+                for (var i = 0; i < function.Length; i++)
                 {
                     Marshal.WriteByte(ptr, i + 1, (byte)function[i]);
                 }
                 Marshal.WriteByte(ptr, function.Length + 1, 0); // null-terminate
 
-                IntPtr symbol = GetAddressInternal(ptr);
+                var symbol = GetAddressInternal(ptr);
                 return symbol;
             }
             finally
@@ -110,9 +110,9 @@ namespace OpenTK.Platform.MacOS
             {
                 const int max = 64;
                 byte* symbol = stackalloc byte[max];
-                byte* ptr = symbol;
-                byte* cur = (byte*)function.ToPointer();
-                int i = 0;
+                var ptr = symbol;
+                var cur = (byte*)function.ToPointer();
+                var i = 0;
 
                 *ptr++ = (byte)'_';
                 while (*cur != 0 && ++i < max)
@@ -132,7 +132,7 @@ namespace OpenTK.Platform.MacOS
 
         private static IntPtr GetAddressInternal(IntPtr function)
         {
-            IntPtr symbol = IntPtr.Zero;
+            var symbol = IntPtr.Zero;
             if (IsSymbolNameDefined(function))
             {
                 symbol = LookupAndBindSymbol(function);

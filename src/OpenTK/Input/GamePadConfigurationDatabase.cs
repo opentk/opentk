@@ -189,7 +189,7 @@ namespace OpenTK.Input
 
         internal void Add(string config)
         {
-            Guid guid = new Guid(config.Substring(0, 32));
+            var guid = new Guid(config.Substring(0, 32));
             if (!Configurations.ContainsKey(guid))
             {
                 Configurations.Add(guid, config);

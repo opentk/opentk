@@ -61,7 +61,7 @@ namespace OpenTK.Platform.X11
             int glx_minor;
             using (new XLock(Display))
             {
-                bool supported = Glx.QueryExtension(Display, out error_base, out event_base);
+                var supported = Glx.QueryExtension(Display, out error_base, out event_base);
                 supported &= Glx.QueryVersion(Display, out glx_major, out glx_minor);
                 if (supported)
                 {
@@ -73,8 +73,8 @@ namespace OpenTK.Platform.X11
                 }
             }
 
-            IntPtr visual = IntPtr.Zero;
-            IntPtr fbconfig = IntPtr.Zero;
+            var visual = IntPtr.Zero;
+            var fbconfig = IntPtr.Zero;
 
             // Once a window has a visual, we cannot use a different
             // visual on the OpenGL context, or glXMakeCurrent might fail.
@@ -93,7 +93,7 @@ namespace OpenTK.Platform.X11
                 Mode = ModeSelector.SelectGraphicsMode(mode, out visual, out fbconfig);
             }
 
-            ContextHandle shareHandle = shared != null ?
+            var shareHandle = shared != null ?
                 (shared as IGraphicsContextInternal).Context : (ContextHandle)IntPtr.Zero;
 
             Debug.Write("Creating X11GLContext context: ");
@@ -158,11 +158,11 @@ namespace OpenTK.Platform.X11
             GraphicsContextFlags flags, ContextHandle shareContext)
         {
             Debug.Write("Using GLX_ARB_create_context... ");
-            IntPtr context = IntPtr.Zero;
+            var context = IntPtr.Zero;
 
             {
                 // We need the FB config for the current GraphicsMode.
-                List<int> attributes = new List<int>();
+                var attributes = new List<int>();
                 attributes.Add((int)ArbCreateContext.MajorVersion);
                 attributes.Add(major);
                 attributes.Add((int)ArbCreateContext.MinorVersion);
@@ -328,7 +328,7 @@ namespace OpenTK.Platform.X11
             }
             else
             {
-                X11WindowInfo w = (X11WindowInfo)window;
+                var w = (X11WindowInfo)window;
                 bool result;
 
                 Debug.Write(
@@ -469,7 +469,7 @@ namespace OpenTK.Platform.X11
             {
                 if (manuallyCalled)
                 {
-                    IntPtr display = Display;
+                    var display = Display;
 
                     if (IsCurrent)
                     {

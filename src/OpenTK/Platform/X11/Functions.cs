@@ -569,18 +569,18 @@ namespace OpenTK.Platform.X11
         }
         public static IntPtr CreatePixmapFromImage(Display display, Bitmap image)
         {
-            int width = image.Width;
-            int height = image.Height;
+            var width = image.Width;
+            var height = image.Height;
 
-            BitmapData data = image.LockBits(new Rectangle(0, 0, width, height),
+            var data = image.LockBits(new Rectangle(0, 0, width, height),
                 ImageLockMode.ReadOnly,
                 PixelFormat.Format32bppArgb);
 
-            IntPtr ximage = XCreateImage(display, CopyFromParent, 24, ImageFormat.ZPixmap,
+            var ximage = XCreateImage(display, CopyFromParent, 24, ImageFormat.ZPixmap,
                 0, data.Scan0, (uint)width, (uint)height, 32, 0);
-            IntPtr pixmap = XCreatePixmap(display, XDefaultRootWindow(display),
+            var pixmap = XCreatePixmap(display, XDefaultRootWindow(display),
                 width, height, 24);
-            IntPtr gc = XCreateGC(display, pixmap, IntPtr.Zero, null);
+            var gc = XCreateGC(display, pixmap, IntPtr.Zero, null);
 
             XPutImage(display, pixmap, gc, ximage, 0, 0, 0, 0, (uint)width, (uint)height);
 
@@ -592,18 +592,18 @@ namespace OpenTK.Platform.X11
 
         public static IntPtr CreateMaskFromImage(Display display, Bitmap image)
         {
-            int width = image.Width;
-            int height = image.Height;
-            int stride = (width + 7) >> 3;
-            byte[] mask = new byte[stride * height];
-            bool msbfirst = (XBitmapBitOrder(display) == 1); // 1 = MSBFirst
+            var width = image.Width;
+            var height = image.Height;
+            var stride = (width + 7) >> 3;
+            var mask = new byte[stride * height];
+            var msbfirst = (XBitmapBitOrder(display) == 1); // 1 = MSBFirst
 
-            for (int y = 0; y < height; ++y)
+            for (var y = 0; y < height; ++y)
             {
-                for (int x = 0; x < width; ++x)
+                for (var x = 0; x < width; ++x)
                 {
-                    byte bit = (byte)(1 << (msbfirst ? (7 - (x & 7)) : (x & 7)));
-                    int offset = y * stride + (x >> 3);
+                    var bit = (byte)(1 << (msbfirst ? (7 - (x & 7)) : (x & 7)));
+                    var offset = y * stride + (x >> 3);
 
                     if (image.GetPixel(x, y).A >= 128)
                     {
@@ -612,7 +612,7 @@ namespace OpenTK.Platform.X11
                 }
             }
 
-            Pixmap pixmap = XCreatePixmapFromBitmapData(display, XDefaultRootWindow(display),
+            var pixmap = XCreatePixmapFromBitmapData(display, XDefaultRootWindow(display),
                 mask, width, height, new IntPtr(1), IntPtr.Zero, 1);
 
             return pixmap;

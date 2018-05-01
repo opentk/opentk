@@ -67,28 +67,28 @@ namespace OpenTK.Platform.Windows
             {
                 // Mark all devices as disconnected. We will check which of those
                 // are connected later on.
-                for (int i = 0; i < mice.Count; i++)
+                for (var i = 0; i < mice.Count; i++)
                 {
-                    MouseState state = mice[i];
+                    var state = mice[i];
                     state.IsConnected = false;
                     mice[i] = state;
                 }
 
                 // Discover mouse devices
-                foreach (RawInputDeviceList dev in WinRawInput.GetDeviceList())
+                foreach (var dev in WinRawInput.GetDeviceList())
                 {
-                    ContextHandle id = new ContextHandle(dev.Device);
+                    var id = new ContextHandle(dev.Device);
                     if (rawids.ContainsKey(id))
                     {
                         // Device already registered, mark as connected
-                        MouseState state = mice[rawids[id]];
+                        var state = mice[rawids[id]];
                         state.IsConnected = true;
                         mice[rawids[id]] = state;
                         continue;
                     }
 
                     // Unregistered device, find what it is
-                    string name = GetDeviceName(dev);
+                    var name = GetDeviceName(dev);
                     if (name.ToLower().Contains("root"))
                     {
                         // This is a terminal services device, skip it.
@@ -97,19 +97,19 @@ namespace OpenTK.Platform.Windows
                     {
                         // This is a mouse or a USB mouse device. In the latter case, discover if it really is a
                         // mouse device by qeurying the registry.
-                        RegistryKey regkey = FindRegistryKey(name);
+                        var regkey = FindRegistryKey(name);
                         if (regkey == null)
                         {
                             continue;
                         }
 
-                        string deviceDesc = (string)regkey.GetValue("DeviceDesc");
-                        string deviceClass = (string)regkey.GetValue("Class");
+                        var deviceDesc = (string)regkey.GetValue("DeviceDesc");
+                        var deviceClass = (string)regkey.GetValue("Class");
                         if (deviceClass == null)
                         {
                             // Added to address OpenTK issue 3198 with mouse on Windows 8
-                            string deviceClassGUID = (string)regkey.GetValue("ClassGUID");
-                            RegistryKey classGUIDKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Class\" + deviceClassGUID);
+                            var deviceClassGUID = (string)regkey.GetValue("ClassGUID");
+                            var classGUIDKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Class\" + deviceClassGUID);
                             deviceClass = classGUIDKey != null ? (string)classGUIDKey.GetValue("Class") : string.Empty;
                         }
 
@@ -130,13 +130,13 @@ namespace OpenTK.Platform.Windows
                             if (!rawids.ContainsKey(new ContextHandle(dev.Device)))
                             {
                                 // Register the device:
-                                RawInputDeviceInfo info = new RawInputDeviceInfo();
-                                int devInfoSize = API.RawInputDeviceInfoSize;
+                                var info = new RawInputDeviceInfo();
+                                var devInfoSize = API.RawInputDeviceInfoSize;
                                 Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICEINFO,
                                         info, ref devInfoSize);
 
                                 RegisterRawDevice(Window, deviceDesc);
-                                MouseState state = new MouseState();
+                                var state = new MouseState();
                                 state.IsConnected = true;
                                 mice.Add(state);
                                 names.Add(deviceDesc);
@@ -150,13 +150,13 @@ namespace OpenTK.Platform.Windows
 
         public bool ProcessMouseEvent(IntPtr raw_buffer)
         {
-            bool processed = false;
+            var processed = false;
 
             RawInput rin;
             if (Functions.GetRawInputData(raw_buffer, out rin) > 0)
             {
-                RawMouse raw = rin.Data.Mouse;
-                ContextHandle handle = new ContextHandle(rin.Header.Device);
+                var raw = rin.Data.Mouse;
+                var handle = new ContextHandle(rin.Header.Device);
 
                 MouseState mouse;
                 if (!rawids.ContainsKey(handle))
@@ -173,7 +173,7 @@ namespace OpenTK.Platform.Windows
                 // as rin.Header.Device for the "zoom-in/zoom-out" buttons.
                 // That's problematic, because no device has a "0" id.
                 // As a workaround, we'll add those buttons to the first device (if any).
-                int mouse_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
+                var mouse_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
                 mouse = mice[mouse_handle];
 
                 // Set and release capture of the mouse to fix http://www.opentk.com/node/2133, Patch by Artfunkel
@@ -262,13 +262,13 @@ namespace OpenTK.Platform.Windows
         private static string GetDeviceName(RawInputDeviceList dev)
         {
             // get name size
-            int size = 0;
+            var size = 0;
             Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size);
 
             // get actual name
-            IntPtr name_ptr = Marshal.AllocHGlobal((IntPtr)size);
+            var name_ptr = Marshal.AllocHGlobal((IntPtr)size);
             Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, name_ptr, ref size);
-            string name = Marshal.PtrToStringAnsi(name_ptr);
+            var name = Marshal.PtrToStringAnsi(name_ptr);
             Marshal.FreeHGlobal(name_ptr);
 
             return name;
@@ -284,26 +284,26 @@ namespace OpenTK.Platform.Windows
             // remove the \??\
             name = name.Substring(4);
 
-            string[] split = name.Split('#');
+            var split = name.Split('#');
             if (split.Length < 3)
             {
                 return null;
             }
 
-            string id_01 = split[0];    // ACPI (Class code)
-            string id_02 = split[1];    // PNP0303 (SubClass code)
-            string id_03 = split[2];    // 3&13c0b0c5&0 (Protocol code)
+            var id_01 = split[0];    // ACPI (Class code)
+            var id_02 = split[1];    // PNP0303 (SubClass code)
+            var id_03 = split[2];    // 3&13c0b0c5&0 (Protocol code)
             // The final part is the class GUID and is not needed here
 
-            string findme = $@"System\CurrentControlSet\Enum\{id_01}\{id_02}\{id_03}";
+            var findme = $@"System\CurrentControlSet\Enum\{id_01}\{id_02}\{id_03}";
 
-            RegistryKey regkey = Registry.LocalMachine.OpenSubKey(findme);
+            var regkey = Registry.LocalMachine.OpenSubKey(findme);
             return regkey;
         }
 
         private static void RegisterRawDevice(IntPtr window, string device)
         {
-            RawInputDevice[] rid = new RawInputDevice[]
+            var rid = new RawInputDevice[]
             {
                 new RawInputDevice(HIDUsageGD.Mouse, RawInputDeviceFlags.INPUTSINK, window)
             };
@@ -323,8 +323,8 @@ namespace OpenTK.Platform.Windows
         {
             lock (UpdateLock)
             {
-                MouseState master = new MouseState();
-                foreach (MouseState ms in mice)
+                var master = new MouseState();
+                foreach (var ms in mice)
                 {
                     master.MergeBits(ms);
                 }
@@ -356,7 +356,7 @@ namespace OpenTK.Platform.Windows
         {
             // For simplicity, get hardware state
             // and simply overwrite its x and y location
-            POINT p = new POINT();
+            var p = new POINT();
             Functions.GetCursorPos(ref p);
 
             var state = GetState();

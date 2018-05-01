@@ -108,7 +108,7 @@ namespace OpenTK.Input
                 {
                     fixed (int* k = Keys)
                     {
-                        for (int i = 0; i < NumInts; ++i)
+                        for (var i = 0; i < NumInts; ++i)
                         {
                             if (k[i] != 0)
                             {
@@ -208,8 +208,8 @@ namespace OpenTK.Input
             {
                 fixed (int* k = Keys)
                 {
-                    int hashcode = 0;
-                    for (int i = 0; i < NumInts; i++)
+                    var hashcode = 0;
+                    for (var i = 0; i < NumInts; i++)
                     {
                         hashcode ^= (k + i)->GetHashCode();
                     }
@@ -234,8 +234,8 @@ namespace OpenTK.Input
         {
             ValidateOffset(offset);
 
-            int int_offset = offset / IntSize;
-            int bit_offset = offset % IntSize;
+            var int_offset = offset / IntSize;
+            var bit_offset = offset % IntSize;
             unsafe
             {
                 fixed (int* k = Keys) { return (*(k + int_offset) & (1 << bit_offset)) != 0u; }
@@ -246,8 +246,8 @@ namespace OpenTK.Input
         {
             ValidateOffset(offset);
 
-            int int_offset = offset / IntSize;
-            int bit_offset = offset % IntSize;
+            var int_offset = offset / IntSize;
+            var bit_offset = offset % IntSize;
             unsafe
             {
                 fixed (int* k = Keys) { *(k + int_offset) |= 1 << bit_offset; }
@@ -258,8 +258,8 @@ namespace OpenTK.Input
         {
             ValidateOffset(offset);
 
-            int int_offset = offset / IntSize;
-            int bit_offset = offset % IntSize;
+            var int_offset = offset / IntSize;
+            var bit_offset = offset % IntSize;
             unsafe
             {
                 fixed (int* k = Keys) { *(k + int_offset) &= ~(1 << bit_offset); }
@@ -270,10 +270,10 @@ namespace OpenTK.Input
         {
             unsafe
             {
-                int* k2 = other.Keys;
+                var k2 = other.Keys;
                 fixed (int* k1 = Keys)
                 {
-                    for (int i = 0; i < NumInts; i++)
+                    for (var i = 0; i < NumInts; i++)
                     {
                         *(k1 + i) |= *(k2 + i);
                     }
@@ -302,13 +302,13 @@ namespace OpenTK.Input
         /// <returns>True, if both instances are equal; false otherwise.</returns>
         public bool Equals(KeyboardState other)
         {
-            bool equal = true;
+            var equal = true;
             unsafe
             {
-                int* k2 = other.Keys;
+                var k2 = other.Keys;
                 fixed (int* k1 = Keys)
                 {
-                    for (int i = 0; equal && i < NumInts; i++)
+                    for (var i = 0; equal && i < NumInts; i++)
                     {
                         equal &= *(k1 + i) == *(k2 + i);
                     }

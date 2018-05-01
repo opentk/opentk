@@ -179,7 +179,7 @@ namespace OpenTK.Platform.MacOS
             DraggingEnteredHandler = DraggingEntered;
 
             // Create the window class
-            int unique_id = Interlocked.Increment(ref UniqueId);
+            var unique_id = Interlocked.Increment(ref UniqueId);
             windowClass = Class.AllocateClass("OpenTK_GameWindow" + unique_id, "NSWindow");
             Class.RegisterMethod(windowClass, WindowKeyDownHandler, "keyDown:", "v@:@");
             Class.RegisterMethod(windowClass, WindowDidResizeHandler, "windowDidResize:", "v@:@");
@@ -199,7 +199,7 @@ namespace OpenTK.Platform.MacOS
 
             Class.RegisterClass(windowClass);
 
-            IntPtr viewClass = Class.AllocateClass("OpenTK_NSView" + unique_id, "NSView");
+            var viewClass = Class.AllocateClass("OpenTK_NSView" + unique_id, "NSView");
             Class.RegisterMethod(viewClass, ResetCursorRectsHandler, "resetCursorRects", "v@:");
             Class.RegisterClass(viewClass);
 
@@ -226,8 +226,8 @@ namespace OpenTK.Platform.MacOS
                 throw new PlatformException();
             }
 
-            bool defer = false;
-            IntPtr windowPtr = Cocoa.SendIntPtr(classPtr, Selector.Get("initWithContentRect:styleMask:backing:defer:"), contentRect, (int)style, (int)bufferingType, defer);
+            var defer = false;
+            var windowPtr = Cocoa.SendIntPtr(classPtr, Selector.Get("initWithContentRect:styleMask:backing:defer:"), contentRect, (int)style, (int)bufferingType, defer);
             if (windowPtr == IntPtr.Zero)
             {
                 Debug.Print("[Error] Failed to initialize window with ({0}, {1}, {2}, {3}).",
@@ -239,7 +239,7 @@ namespace OpenTK.Platform.MacOS
             // that overrides resetCursorRects (maybe there is
             // a better way to implement this override?)
             // Existing view:
-            IntPtr viewPtr = Cocoa.SendIntPtr(windowPtr, Selector.Get("contentView"));
+            var viewPtr = Cocoa.SendIntPtr(windowPtr, Selector.Get("contentView"));
             if (viewPtr == IntPtr.Zero)
             {
                 Debug.Print("[Error] Failed to retrieve content view for window {0}.", windowPtr);
@@ -336,7 +336,7 @@ namespace OpenTK.Platform.MacOS
 
         private IntPtr DraggingEntered(IntPtr self, IntPtr cmd, IntPtr sender)
         {
-            int mask = Cocoa.SendInt(sender, Selector.Get("draggingSourceOperationMask"));
+            var mask = Cocoa.SendInt(sender, Selector.Get("draggingSourceOperationMask"));
 
             if ((mask & (int)NSDragOperation.Generic) == (int)NSDragOperation.Generic)
             {
@@ -348,15 +348,15 @@ namespace OpenTK.Platform.MacOS
 
         private bool PerformDragOperation(IntPtr self, IntPtr cmd, IntPtr sender)
         {
-            IntPtr pboard = Cocoa.SendIntPtr(sender, Selector.Get("draggingPasteboard"));
+            var pboard = Cocoa.SendIntPtr(sender, Selector.Get("draggingPasteboard"));
             
-            IntPtr files = Cocoa.SendIntPtr(pboard, Selector.Get("propertyListForType:"), NSFilenamesPboardType);
+            var files = Cocoa.SendIntPtr(pboard, Selector.Get("propertyListForType:"), NSFilenamesPboardType);
 
-            int count = Cocoa.SendInt(files, Selector.Get("count"));
-            for (int i = 0; i < count; ++i)
+            var count = Cocoa.SendInt(files, Selector.Get("count"));
+            for (var i = 0; i < count; ++i)
             {
-                IntPtr obj = Cocoa.SendIntPtr(files, Selector.Get("objectAtIndex:"), new IntPtr(i));
-                IntPtr str = Cocoa.SendIntPtr(obj, Selector.Get("cStringUsingEncoding:"), new IntPtr(1));
+                var obj = Cocoa.SendIntPtr(files, Selector.Get("objectAtIndex:"), new IntPtr(i));
+                var str = Cocoa.SendIntPtr(obj, Selector.Get("cStringUsingEncoding:"), new IntPtr(1));
                 OnFileDrop(Marshal.PtrToStringAuto(str));
             }
             
@@ -403,7 +403,7 @@ namespace OpenTK.Platform.MacOS
         {
             try
             {
-                bool close = WindowShouldClose(windowInfo.Handle, IntPtr.Zero, IntPtr.Zero);
+                var close = WindowShouldClose(windowInfo.Handle, IntPtr.Zero, IntPtr.Zero);
                 e.Cancel |= !close;
             }
             catch (Exception ex)
@@ -648,16 +648,16 @@ namespace OpenTK.Platform.MacOS
                 {
                     case NSEventType.KeyDown:
                         {
-                            MacOSKeyCode keyCode = (MacOSKeyCode)Cocoa.SendUshort(e, selKeyCode);
+                            var keyCode = (MacOSKeyCode)Cocoa.SendUshort(e, selKeyCode);
                             var isARepeat = Cocoa.SendBool(e, selIsARepeat);
-                            Key key = MacOSKeyMap.GetKey(keyCode);
+                            var key = MacOSKeyMap.GetKey(keyCode);
 
                             OnKeyDown(key, isARepeat);
 
                             var s = Cocoa.FromNSString(Cocoa.SendIntPtr(e, selCharactersIgnoringModifiers));
                             foreach (var c in s)
                             {
-                                int intVal = (int)c;
+                                var intVal = (int)c;
                                 if (!Char.IsControl(c) && (intVal < 63232 || intVal > 63235))
                                 {
                                     // For some reason, arrow keys (mapped 63232-63235)
@@ -670,8 +670,8 @@ namespace OpenTK.Platform.MacOS
 
                     case NSEventType.KeyUp:
                         {
-                            MacOSKeyCode keyCode = (MacOSKeyCode)Cocoa.SendUshort(e, selKeyCode);
-                            Key key = MacOSKeyMap.GetKey(keyCode);
+                            var keyCode = (MacOSKeyCode)Cocoa.SendUshort(e, selKeyCode);
+                            var key = MacOSKeyMap.GetKey(keyCode);
                             OnKeyUp(key);
                         }
                         break;
@@ -720,7 +720,7 @@ namespace OpenTK.Platform.MacOS
                     case NSEventType.OtherMouseDragged:
                     case NSEventType.MouseMoved:
                         {
-                            Point p = new Point(MouseState.X, MouseState.Y);
+                            var p = new Point(MouseState.X, MouseState.Y);
                             if (CursorVisible)
                             {
                                 // Use absolute coordinates
@@ -839,7 +839,7 @@ namespace OpenTK.Platform.MacOS
                 if (value != null && value != icon)
                 {
                     // Create and set new icon
-                    IntPtr nsimg = IntPtr.Zero;
+                    var nsimg = IntPtr.Zero;
                     using (Image img = value.ToBitmap())
                     {
                         nsimg = Cocoa.ToNSImage(img);
@@ -1091,7 +1091,7 @@ namespace OpenTK.Platform.MacOS
             // According to the documentation, alpha-enabled formats should
             // premultiply alpha, even though that "generally has negligible
             // effect on output quality."
-            IntPtr imgdata =
+            var imgdata =
                 Cocoa.SendIntPtr(
                     Cocoa.SendIntPtr(NSBitmapImageRep, Selector.Alloc),
                     selInitWithBitmapDataPlanes,
@@ -1114,13 +1114,13 @@ namespace OpenTK.Platform.MacOS
             }
 
             // Copy the cursor data
-            int i = 0;
-            IntPtr data = Cocoa.SendIntPtr(imgdata, selBitmapData);
-            for (int y = 0; y < cursor.Height; y++)
+            var i = 0;
+            var data = Cocoa.SendIntPtr(imgdata, selBitmapData);
+            for (var y = 0; y < cursor.Height; y++)
             {
-                for (int x = 0; x < cursor.Width; x++)
+                for (var x = 0; x < cursor.Width; x++)
                 {
-                    uint argb = unchecked((uint)BitConverter.ToInt32(cursor.Data, i));
+                    var argb = unchecked((uint)BitConverter.ToInt32(cursor.Data, i));
                     if (BitConverter.IsLittleEndian)
                     {
                         argb =
@@ -1135,7 +1135,7 @@ namespace OpenTK.Platform.MacOS
             }
 
             // Construct the actual NSImage
-            IntPtr img =
+            var img =
                 Cocoa.SendIntPtr(
                     Cocoa.SendIntPtr(NSImage, Selector.Alloc),
                     selInitWithSize,
@@ -1149,7 +1149,7 @@ namespace OpenTK.Platform.MacOS
             Cocoa.SendVoid(img, selAddRepresentation, imgdata);
 
             // Convert the NSImage to a NSCursor
-            IntPtr nscursor =
+            var nscursor =
                 Cocoa.SendIntPtr(
                     Cocoa.SendIntPtr(NSCursor, Selector.Alloc),
                     selInitWithImageHotSpot,

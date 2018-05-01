@@ -288,7 +288,7 @@ namespace OpenTK
         /// </summary>
         public Matrix3 Normalized()
         {
-            Matrix3 m = this;
+            var m = this;
             m.Normalize();
             return m;
         }
@@ -309,7 +309,7 @@ namespace OpenTK
         /// </summary>
         public Matrix3 Inverted()
         {
-            Matrix3 m = this;
+            var m = this;
             if (m.Determinant != 0)
             {
                 m.Invert();
@@ -322,7 +322,7 @@ namespace OpenTK
         /// </summary>
         public Matrix3 ClearScale()
         {
-            Matrix3 m = this;
+            var m = this;
             m.Row0 = m.Row0.Normalized();
             m.Row1 = m.Row1.Normalized();
             m.Row2 = m.Row2.Normalized();
@@ -333,7 +333,7 @@ namespace OpenTK
         /// </summary>
         public Matrix3 ClearRotation()
         {
-            Matrix3 m = this;
+            var m = this;
             m.Row0 = new Vector3(m.Row0.Length, 0, 0);
             m.Row1 = new Vector3(0, m.Row1.Length, 0);
             m.Row2 = new Vector3(0, 0, m.Row2.Length);
@@ -364,12 +364,12 @@ namespace OpenTK
 
             // code below adapted from Blender
 
-            Quaternion q = new Quaternion();
-            double trace = 0.25 * (row0[0] + row1[1] + row2[2] + 1.0);
+            var q = new Quaternion();
+            var trace = 0.25 * (row0[0] + row1[1] + row2[2] + 1.0);
 
             if (trace > 0)
             {
-                double sq = Math.Sqrt(trace);
+                var sq = Math.Sqrt(trace);
 
                 q.W = (float)sq;
                 sq = 1.0 / (4.0 * sq);
@@ -379,7 +379,7 @@ namespace OpenTK
             }
             else if (row0[0] > row1[1] && row0[0] > row2[2])
             {
-                double sq = 2.0 * Math.Sqrt(1.0 + row0[0] - row1[1] - row2[2]);
+                var sq = 2.0 * Math.Sqrt(1.0 + row0[0] - row1[1] - row2[2]);
 
                 q.X = (float)(0.25 * sq);
                 sq = 1.0 / sq;
@@ -389,7 +389,7 @@ namespace OpenTK
             }
             else if (row1[1] > row2[2])
             {
-                double sq = 2.0 * Math.Sqrt(1.0 + row1[1] - row0[0] - row2[2]);
+                var sq = 2.0 * Math.Sqrt(1.0 + row1[1] - row0[0] - row2[2]);
 
                 q.Y = (float)(0.25 * sq);
                 sq = 1.0 / sq;
@@ -399,7 +399,7 @@ namespace OpenTK
             }
             else
             {
-                double sq = 2.0 * Math.Sqrt(1.0 + row2[2] - row0[0] - row1[1]);
+                var sq = 2.0 * Math.Sqrt(1.0 + row2[2] - row0[0] - row1[1]);
 
                 q.Z = (float)(0.25 * sq);
                 sq = 1.0 / sq;
@@ -427,9 +427,9 @@ namespace OpenTK
             float axisX = axis.X, axisY = axis.Y, axisZ = axis.Z;
 
             //calculate angles
-            float cos = (float)Math.Cos(-angle);
-            float sin = (float)Math.Sin(-angle);
-            float t = 1.0f - cos;
+            var cos = (float)Math.Cos(-angle);
+            var sin = (float)Math.Sin(-angle);
+            var t = 1.0f - cos;
 
             //do the conversion math once
             float tXX = t * axisX * axisX,
@@ -503,8 +503,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix3 instance.</param>
         public static void CreateRotationX(float angle, out Matrix3 result)
         {
-            float cos = (float)Math.Cos(angle);
-            float sin = (float)Math.Sin(angle);
+            var cos = (float)Math.Cos(angle);
+            var sin = (float)Math.Sin(angle);
 
             result = Identity;
             result.Row1.Y = cos;
@@ -532,8 +532,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix3 instance.</param>
         public static void CreateRotationY(float angle, out Matrix3 result)
         {
-            float cos = (float)Math.Cos(angle);
-            float sin = (float)Math.Sin(angle);
+            var cos = (float)Math.Cos(angle);
+            var sin = (float)Math.Sin(angle);
 
             result = Identity;
             result.Row0.X = cos;
@@ -561,8 +561,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix3 instance.</param>
         public static void CreateRotationZ(float angle, out Matrix3 result)
         {
-            float cos = (float)Math.Cos(angle);
-            float sin = (float)Math.Sin(angle);
+            var cos = (float)Math.Cos(angle);
+            var sin = (float)Math.Sin(angle);
 
             result = Identity;
             result.Row0.X = cos;
@@ -748,20 +748,20 @@ namespace OpenTK
                 {mat.Row1.X, mat.Row1.Y, mat.Row1.Z},
                 {mat.Row2.X, mat.Row2.Y, mat.Row2.Z}};
 
-            int icol = 0;
-            int irow = 0;
-            for (int i = 0; i < 3; i++)
+            var icol = 0;
+            var irow = 0;
+            for (var i = 0; i < 3; i++)
             {
-                float maxPivot = 0.0f;
-                for (int j = 0; j < 3; j++)
+                var maxPivot = 0.0f;
+                for (var j = 0; j < 3; j++)
                 {
                     if (pivotIdx[j] != 0)
                     {
-                        for (int k = 0; k < 3; ++k)
+                        for (var k = 0; k < 3; ++k)
                         {
                             if (pivotIdx[k] == -1)
                             {
-                                float absVal = Math.Abs(inverse[j, k]);
+                                var absVal = Math.Abs(inverse[j, k]);
                                 if (absVal > maxPivot)
                                 {
                                     maxPivot = absVal;
@@ -782,9 +782,9 @@ namespace OpenTK
 
                 if (irow != icol)
                 {
-                    for (int k = 0; k < 3; ++k)
+                    for (var k = 0; k < 3; ++k)
                     {
-                        float f = inverse[irow, k];
+                        var f = inverse[irow, k];
                         inverse[irow, k] = inverse[icol, k];
                         inverse[icol, k] = f;
                     }
@@ -793,27 +793,27 @@ namespace OpenTK
                 rowIdx[i] = irow;
                 colIdx[i] = icol;
 
-                float pivot = inverse[icol, icol];
+                var pivot = inverse[icol, icol];
 
                 if (pivot == 0.0f)
                 {
                     throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
                 }
 
-                float oneOverPivot = 1.0f / pivot;
+                var oneOverPivot = 1.0f / pivot;
                 inverse[icol, icol] = 1.0f;
-                for (int k = 0; k < 3; ++k)
+                for (var k = 0; k < 3; ++k)
                 {
                     inverse[icol, k] *= oneOverPivot;
                 }
 
-                for (int j = 0; j < 3; ++j)
+                for (var j = 0; j < 3; ++j)
                 {
                     if (icol != j)
                     {
-                        float f = inverse[j, icol];
+                        var f = inverse[j, icol];
                         inverse[j, icol] = 0.0f;
-                        for (int k = 0; k < 3; ++k)
+                        for (var k = 0; k < 3; ++k)
                         {
                             inverse[j, k] -= inverse[icol, k] * f;
                         }
@@ -821,13 +821,13 @@ namespace OpenTK
                 }
             }
 
-            for (int j = 2; j >= 0; --j)
+            for (var j = 2; j >= 0; --j)
             {
-                int ir = rowIdx[j];
-                int ic = colIdx[j];
-                for (int k = 0; k < 3; ++k)
+                var ir = rowIdx[j];
+                var ic = colIdx[j];
+                for (var k = 0; k < 3; ++k)
                 {
-                    float f = inverse[k, ir];
+                    var f = inverse[k, ir];
                     inverse[k, ir] = inverse[k, ic];
                     inverse[k, ic] = f;
                 }

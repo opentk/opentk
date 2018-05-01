@@ -70,36 +70,36 @@ namespace OpenTK.Platform
             // run, probably due to code generation overhead. Subsequent runs are faster with direct loading
             // than with reflection, but the first time is more significant.
 
-            int supported = 0;
-            Type extensions_class = type.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            var supported = 0;
+            var extensions_class = type.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (extensions_class == null)
             {
                 throw new InvalidOperationException("The specified type does not have any loadable extensions.");
             }
 
-            FieldInfo[] delegates = extensions_class.GetFields(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            var delegates = extensions_class.GetFields(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (delegates == null)
             {
                 throw new InvalidOperationException("The specified type does not have any loadable extensions.");
             }
 
-            MethodInfo load_delegate_method_info = type.GetMethod("LoadDelegate", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            var load_delegate_method_info = type.GetMethod("LoadDelegate", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (load_delegate_method_info == null)
             {
                 throw new InvalidOperationException(type + " does not contain a static LoadDelegate method.");
             }
-            LoadDelegateFunction LoadDelegate = (LoadDelegateFunction)Delegate.CreateDelegate(
+            var LoadDelegate = (LoadDelegateFunction)Delegate.CreateDelegate(
                 typeof(LoadDelegateFunction), load_delegate_method_info);
 
             Debug.Write("Load extensions for " + type + "... ");
 
-            Stopwatch time = new Stopwatch();
+            var time = new Stopwatch();
             time.Reset();
             time.Start();
 
-            foreach (FieldInfo f in delegates)
+            foreach (var f in delegates)
             {
-                Delegate d = LoadDelegate(f.Name, f.FieldType);
+                var d = LoadDelegate(f.Name, f.FieldType);
                 if (d != null)
                 {
                     ++supported;
@@ -108,7 +108,7 @@ namespace OpenTK.Platform
                 f.SetValue(null, d);
             }
 
-            FieldInfo rebuildExtensionList = type.GetField("rebuildExtensionList", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            var rebuildExtensionList = type.GetField("rebuildExtensionList", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (rebuildExtensionList != null)
             {
                 rebuildExtensionList.SetValue(null, true);
@@ -135,14 +135,14 @@ namespace OpenTK.Platform
         /// </remarks>
         internal static bool TryLoadExtension(Type type, string extension)
         {
-            Type extensions_class = type.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            var extensions_class = type.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (extensions_class == null)
             {
                 Debug.Print(type.ToString(), " does not contain extensions.");
                 return false;
             }
 
-            LoadDelegateFunction LoadDelegate = (LoadDelegateFunction)Delegate.CreateDelegate(typeof(LoadDelegateFunction),
+            var LoadDelegate = (LoadDelegateFunction)Delegate.CreateDelegate(typeof(LoadDelegateFunction),
                 type.GetMethod("LoadDelegate", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public));
             if (LoadDelegate == null)
             {
@@ -150,19 +150,19 @@ namespace OpenTK.Platform
                 return false;
             }
 
-            FieldInfo f = extensions_class.GetField(extension, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            var f = extensions_class.GetField(extension, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (f == null)
             {
                 Debug.Print("Extension \"", extension, "\" not found in ", type);
                 return false;
             }
 
-            Delegate old = f.GetValue(null) as Delegate;
-            Delegate @new = LoadDelegate(f.Name, f.FieldType);
+            var old = f.GetValue(null) as Delegate;
+            var @new = LoadDelegate(f.Name, f.FieldType);
             if ((old != null ? old.Target : null) != (@new != null ? @new.Target : null))
             {
                 f.SetValue(null, @new);
-                FieldInfo rebuildExtensionList = type.GetField("rebuildExtensionList", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+                var rebuildExtensionList = type.GetField("rebuildExtensionList", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
                 if (rebuildExtensionList != null)
                 {
                     rebuildExtensionList.SetValue(null, true);
@@ -219,7 +219,7 @@ namespace OpenTK.Platform
         public static IWindowInfo CreateX11WindowInfo(IntPtr display, int screen, IntPtr windowHandle, IntPtr rootWindow, IntPtr visualInfo)
         {
             #if X11
-            X11.X11WindowInfo window = new X11.X11WindowInfo();
+            var window = new X11.X11WindowInfo();
             window.Display = display;
             window.Screen = screen;
             window.Handle = windowHandle;
@@ -348,15 +348,15 @@ namespace OpenTK.Platform
 
         internal static bool RelaxGraphicsMode(ref GraphicsMode mode)
         {
-            ColorFormat color = mode.ColorFormat;
-            int depth = mode.Depth;
-            int stencil = mode.Stencil;
-            int samples = mode.Samples;
-            ColorFormat accum = mode.AccumulatorFormat;
-            int buffers = mode.Buffers;
-            bool stereo = mode.Stereo;
+            var color = mode.ColorFormat;
+            var depth = mode.Depth;
+            var stencil = mode.Stencil;
+            var samples = mode.Samples;
+            var accum = mode.AccumulatorFormat;
+            var buffers = mode.Buffers;
+            var stereo = mode.Stereo;
 
-            bool success = RelaxGraphicsMode(
+            var success = RelaxGraphicsMode(
                 ref color, ref depth, ref stencil, ref samples,
                 ref accum, ref buffers, ref stereo);
 

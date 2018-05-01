@@ -1975,7 +1975,7 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                int length = @string.Length;
+                var length = @string.Length;
                 ShaderSource((UInt32)shader, 1, new string[] { @string }, &length);
             }
         }
@@ -2844,7 +2844,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </param>
         public static void TexEnv(TextureEnvTarget target, TextureEnvParameter pname, Color color)
         {
-            Color4 c = new Color4(color.R, color.G, color.B, color.A);
+            var c = new Color4(color.R, color.G, color.B, color.A);
             unsafe
             {
                 TexEnv(target, pname, &c.R);

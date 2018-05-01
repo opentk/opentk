@@ -50,7 +50,7 @@ namespace OpenTK.Platform.Windows
         private static IntPtr RegisterForDeviceNotifications(WinWindowInfo parent)
         {
             IntPtr dev_notify_handle;
-            BroadcastDeviceInterface bdi = new BroadcastDeviceInterface();
+            var bdi = new BroadcastDeviceInterface();
             bdi.Size = BlittableValueType.StrideOf(bdi);
             bdi.DeviceType = DeviceBroadcastType.INTERFACE;
             bdi.ClassGuid = DeviceInterfaceHid;
@@ -145,7 +145,7 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                int deviceCount = 0;
+                var deviceCount = 0;
                 Functions.GetRawInputDeviceList(null, ref deviceCount, API.RawInputDeviceListSize);
                 return deviceCount;
             }
@@ -153,9 +153,9 @@ namespace OpenTK.Platform.Windows
 
         public static RawInputDeviceList[] GetDeviceList()
         {
-            int count = DeviceCount;
-            RawInputDeviceList[] ridl = new RawInputDeviceList[count];
-            for (int i = 0; i < count; i++)
+            var count = DeviceCount;
+            var ridl = new RawInputDeviceList[count];
+            for (var i = 0; i < count; i++)
             {
                 ridl[i] = new RawInputDeviceList();
             }

@@ -210,8 +210,8 @@ namespace OpenTK
         /// <param name="result">The resulting Matrix2 instance.</param>
         public static void CreateRotation(float angle, out Matrix2 result)
         {
-            float cos = (float)Math.Cos(angle);
-            float sin = (float)Math.Sin(angle);
+            var cos = (float)Math.Cos(angle);
+            var sin = (float)Math.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;
@@ -499,14 +499,14 @@ namespace OpenTK
         /// <exception cref="InvalidOperationException">Thrown if the Matrix2 is singular.</exception>
         public static void Invert(ref Matrix2 mat, out Matrix2 result)
         {
-            float det = mat.Determinant;
+            var det = mat.Determinant;
 
             if (det == 0)
             {
                 throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
             }
 
-            float invDet = 1f / det;
+            var invDet = 1f / det;
 
             result.Row0.X = mat.Row1.Y * invDet;
             result.Row0.Y = -mat.Row0.Y * invDet;

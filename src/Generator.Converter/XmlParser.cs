@@ -47,7 +47,7 @@ namespace OpenTK.Convert
                 // Download from the specified url into a temporary file
                 using (var wb = new WebClient())
                 {
-                    string filename = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
+                    var filename = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
 
                     try
                     {
@@ -59,9 +59,9 @@ namespace OpenTK.Convert
                         {
                             System.Console.WriteLine(e.Message);
                             System.Console.Write("Username: ");
-                            string username = System.Console.ReadLine();
+                            var username = System.Console.ReadLine();
                             System.Console.Write("Password: ");
-                            string password = System.Console.ReadLine();
+                            var password = System.Console.ReadLine();
 
                             wb.UseDefaultCredentials = true;
                             wb.Credentials = new NetworkCredential(username, password);

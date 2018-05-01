@@ -328,7 +328,7 @@ namespace OpenTK.Platform.Egl
 
         public static EGLContext CreateContext(EGLDisplay dpy, EGLConfig config, EGLContext share_context, int[] attrib_list)
         {
-            IntPtr ptr = eglCreateContext(dpy, config, share_context, attrib_list);
+            var ptr = eglCreateContext(dpy, config, share_context, attrib_list);
             if (ptr == IntPtr.Zero)
             {
                 throw new GraphicsContextException($"Failed to create EGL context, error: {GetError()}.");

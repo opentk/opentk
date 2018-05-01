@@ -82,7 +82,7 @@ namespace OpenTK.Platform.Linux
             }
 
             bo_next = LockSurface();
-            int fb = GetFramebuffer(bo_next);
+            var fb = GetFramebuffer(bo_next);
             QueueFlip(fb);
         }
 
@@ -93,7 +93,7 @@ namespace OpenTK.Platform.Linux
             base.SwapBuffers();
 
             bo = LockSurface();
-            int fb = GetFramebuffer(bo);
+            var fb = GetFramebuffer(bo);
             SetScanoutRegion(fb);
         }
 
@@ -105,15 +105,15 @@ namespace OpenTK.Platform.Linux
 
         private void WaitFlip(bool block)
         {
-            PollFD fds = new PollFD();
+            var fds = new PollFD();
             fds.fd = fd;
             fds.events = PollFlags.In;
 
-            EventContext evctx = new EventContext();
+            var evctx = new EventContext();
             evctx.version = EventContext.Version;
             evctx.page_flip_handler = PageFlipPtr;
 
-            int timeout = block ? -1 : 0;
+            var timeout = block ? -1 : 0;
 
             while (is_flip_queued)
             {
@@ -141,7 +141,7 @@ namespace OpenTK.Platform.Linux
             // Page flip has taken place, update buffer objects
             if (!is_flip_queued)
             {
-                IntPtr gbm_surface = WindowInfo.Handle;
+                var gbm_surface = WindowInfo.Handle;
                 Gbm.ReleaseBuffer(gbm_surface, bo);
                 bo = bo_next;
             }
@@ -149,7 +149,7 @@ namespace OpenTK.Platform.Linux
 
         private void QueueFlip(int buffer)
         {
-            LinuxWindowInfo wnd = WindowInfo as LinuxWindowInfo;
+            var wnd = WindowInfo as LinuxWindowInfo;
             if (wnd == null)
             {
                 throw new InvalidOperationException();
@@ -157,7 +157,7 @@ namespace OpenTK.Platform.Linux
 
             unsafe
             {
-                int ret = Drm.ModePageFlip(fd, wnd.DisplayDevice.Id, buffer,
+                var ret = Drm.ModePageFlip(fd, wnd.DisplayDevice.Id, buffer,
                     PageFlipFlags.FlipEvent, IntPtr.Zero);
 
                 if (ret < 0)
@@ -171,7 +171,7 @@ namespace OpenTK.Platform.Linux
 
         private void SetScanoutRegion(int buffer)
         {
-            LinuxWindowInfo wnd = WindowInfo as LinuxWindowInfo;
+            var wnd = WindowInfo as LinuxWindowInfo;
             if (wnd == null)
             {
                 throw new InvalidOperationException();
@@ -179,14 +179,14 @@ namespace OpenTK.Platform.Linux
 
             unsafe
             {
-                ModeInfo* mode = wnd.DisplayDevice.pConnector->modes;
-                int connector_id = wnd.DisplayDevice.pConnector->connector_id;
-                int crtc_id = wnd.DisplayDevice.Id;
+                var mode = wnd.DisplayDevice.pConnector->modes;
+                var connector_id = wnd.DisplayDevice.pConnector->connector_id;
+                var crtc_id = wnd.DisplayDevice.Id;
 
-                int x = 0;
-                int y = 0;
-                int connector_count = 1;
-                int ret = Drm.ModeSetCrtc(fd, crtc_id, buffer, x, y,
+                var x = 0;
+                var y = 0;
+                var connector_count = 1;
+                var ret = Drm.ModeSetCrtc(fd, crtc_id, buffer, x, y,
                     &connector_id, connector_count, mode);
 
                 if (ret != 0)
@@ -199,7 +199,7 @@ namespace OpenTK.Platform.Linux
 
         private BufferObject LockSurface()
         {
-            IntPtr gbm_surface = WindowInfo.Handle;
+            var gbm_surface = WindowInfo.Handle;
             return Gbm.LockFrontBuffer(gbm_surface);
         }
 
@@ -210,18 +210,18 @@ namespace OpenTK.Platform.Linux
                 goto fail;
             }
 
-            int bo_handle = bo.Handle;
+            var bo_handle = bo.Handle;
             if (bo_handle == 0)
             {
                 Debug.Print("[KMS] Gbm.BOGetHandle({0:x}) failed.", bo);
                 goto fail;
             }
 
-            int width = bo.Width;
-            int height = bo.Height;
-            int bpp = Mode.ColorFormat.BitsPerPixel;
-            int depth = Mode.Depth;
-            int stride = bo.Stride;
+            var width = bo.Width;
+            var height = bo.Height;
+            var bpp = Mode.ColorFormat.BitsPerPixel;
+            var depth = Mode.Depth;
+            var stride = bo.Stride;
 
             if (width == 0 || height == 0 || bpp == 0)
             {
@@ -231,7 +231,7 @@ namespace OpenTK.Platform.Linux
             }
 
             int buffer;
-            int ret = Drm.ModeAddFB(
+            var ret = Drm.ModeAddFB(
                 fd, width, height,
                 (byte)depth, (byte)bpp, stride, bo_handle,
                 out buffer);
@@ -266,8 +266,8 @@ namespace OpenTK.Platform.Linux
 
         private static void HandleDestroyFB(BufferObject bo, IntPtr data)
         {
-            IntPtr gbm = bo.Device;
-            int fb = data.ToInt32();
+            var gbm = bo.Device;
+            var fb = data.ToInt32();
             Debug.Print("[KMS] Destroying framebuffer {0}", fb);
 
             if (fb != 0)
@@ -281,13 +281,13 @@ namespace OpenTK.Platform.Linux
             if (manual)
             {
                 // Reset the scanout region
-                LinuxWindowInfo wnd = WindowInfo as LinuxWindowInfo;
+                var wnd = WindowInfo as LinuxWindowInfo;
                 if (wnd != null)
                 {
                     unsafe
                     {
-                        int connector_id = wnd.DisplayDevice.pConnector->connector_id;
-                        ModeInfo mode = wnd.DisplayDevice.OriginalMode;
+                        var connector_id = wnd.DisplayDevice.pConnector->connector_id;
+                        var mode = wnd.DisplayDevice.OriginalMode;
                         Drm.ModeSetCrtc(fd,
                             wnd.DisplayDevice.pCrtc->crtc_id,
                             wnd.DisplayDevice.pCrtc->buffer_id,

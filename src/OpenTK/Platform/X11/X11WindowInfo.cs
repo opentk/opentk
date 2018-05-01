@@ -127,7 +127,7 @@ namespace OpenTK.Platform.X11
             {
                 return false;
             }
-            X11WindowInfo info = (X11WindowInfo)obj;
+            var info = (X11WindowInfo)obj;
 
             if (info == null)
             {

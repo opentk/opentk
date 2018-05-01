@@ -149,7 +149,7 @@ namespace OpenTK.Platform.MacOS
         private IntPtr SelectPixelFormat(ColorFormat color, int depth, int stencil, int samples,
             ColorFormat accum, int buffers, bool stereo)
         {
-            List<int> attribs = new List<int>();
+            var attribs = new List<int>();
 
             Debug.Print("Bits per pixel: {0}", color.BitsPerPixel);
 
@@ -216,7 +216,7 @@ namespace OpenTK.Platform.MacOS
             attribs.Add(0);
             attribs.Add(0);
 
-            IntPtr pixelformat = Agl.aglChoosePixelFormat(IntPtr.Zero, 0, attribs.ToArray());
+            var pixelformat = Agl.aglChoosePixelFormat(IntPtr.Zero, 0, attribs.ToArray());
             return pixelformat;
         }
     }

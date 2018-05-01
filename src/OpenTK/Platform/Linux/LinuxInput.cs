@@ -159,7 +159,7 @@ namespace OpenTK.Platform.Linux
             Debug.Indent();
             try
             {
-                Semaphore ready = new Semaphore(0, 1);
+                var ready = new Semaphore(0, 1);
                 input_thread = new Thread(InputThreadLoop);
                 input_thread.IsBackground = true;
                 input_thread.Start(ready);
@@ -190,7 +190,7 @@ namespace OpenTK.Platform.Linux
         private static void CloseRestrictedHandler(int fd, IntPtr data)
         {
             Debug.Print("[Input] Closing fd {0}", fd);
-            int ret = Libc.close(fd);
+            var ret = Libc.close(fd);
 
             if (ret < 0)
             {
@@ -206,7 +206,7 @@ namespace OpenTK.Platform.Linux
 
         private static int OpenRestrictedHandler(IntPtr path, int flags, IntPtr data)
         {
-            int fd = Libc.open(path, (OpenFlags)flags);
+            var fd = Libc.open(path, (OpenFlags)flags);
             Debug.Print("[Input] Opening '{0}' with flags {1}. fd:{2}",
                 Marshal.PtrToStringAnsi(path), (OpenFlags)flags, fd);
 
@@ -228,7 +228,7 @@ namespace OpenTK.Platform.Linux
             Debug.Print("[Input] Released main thread.", input_context);
 
             // Use a blocking poll for input messages, in order to reduce CPU usage
-            PollFD poll_fd = new PollFD();
+            var poll_fd = new PollFD();
             poll_fd.fd = fd;
             poll_fd.events = PollFlags.In;
             Debug.Print("[Input] Created PollFD({0}, {1})", poll_fd.fd, poll_fd.events);
@@ -236,9 +236,9 @@ namespace OpenTK.Platform.Linux
             Debug.Print("[Input] Entering input loop.", poll_fd.fd, poll_fd.events);
             while (Interlocked.Read(ref exit) == 0)
             {
-                int ret = Libc.poll(ref poll_fd, 1, -1);
-                ErrorNumber error = (ErrorNumber)Marshal.GetLastWin32Error();
-                bool is_error =
+                var ret = Libc.poll(ref poll_fd, 1, -1);
+                var error = (ErrorNumber)Marshal.GetLastWin32Error();
+                var is_error =
                     ret < 0 && !(error == ErrorNumber.Again || error == ErrorNumber.Interrupted) ||
                     (poll_fd.revents & (PollFlags.Hup | PollFlags.Error | PollFlags.Invalid)) != 0;
 
@@ -266,9 +266,9 @@ namespace OpenTK.Platform.Linux
         private void UpdateDisplayBounds()
         {
             bounds = Rectangle.Empty;
-            for (DisplayIndex i = DisplayIndex.First; i < DisplayIndex.Sixth; i++)
+            for (var i = DisplayIndex.First; i < DisplayIndex.Sixth; i++)
             {
-                DisplayDevice display = DisplayDevice.GetDisplay(i);
+                var display = DisplayDevice.GetDisplay(i);
                 if (display != null)
                 {
                     bounds = Rectangle.Union(bounds, display.Bounds);
@@ -278,14 +278,14 @@ namespace OpenTK.Platform.Linux
 
         private void UpdateCursor()
         {
-            Point p = new Point(
+            var p = new Point(
                 (int)Math.Round(CursorPosition.X + CursorOffset.X),
                 (int)Math.Round(CursorPosition.Y + CursorOffset.Y));
 
-            DisplayDevice display = DisplayDevice.FromPoint(p.X, p.Y) ?? DisplayDevice.Default;
+            var display = DisplayDevice.FromPoint(p.X, p.Y) ?? DisplayDevice.Default;
             if (display != null)
             {
-                LinuxDisplay d = (LinuxDisplay)display.Id;
+                var d = (LinuxDisplay)display.Id;
                 Drm.MoveCursor(d.FD, d.Id, p.X, p.Y);
             }
         }
@@ -311,8 +311,8 @@ namespace OpenTK.Platform.Linux
             }
             Debug.Print("[Input] LibInput.CreateContext({0:x}) = {1:x}", udev, input_context);
 
-            string seat_id = "seat0";
-            int seat_assignment = LibInput.AssignSeat(input_context, seat_id);
+            var seat_id = "seat0";
+            var seat_assignment = LibInput.AssignSeat(input_context, seat_id);
             if (seat_assignment == -1)
             {
                 Debug.Print("[Input] LibInput.AssignSeat({0:x}) = {1} failed.", input_context, seat_id);
@@ -348,7 +348,7 @@ namespace OpenTK.Platform.Linux
             while (true)
             {
                 // Data available
-                int ret = LibInput.Dispatch(input_context);
+                var ret = LibInput.Dispatch(input_context);
                 if (ret != 0)
                 {
                     Debug.Print("[Input] LibInput.Dispatch({0:x}) failed. Error: {1}",
@@ -356,14 +356,14 @@ namespace OpenTK.Platform.Linux
                     break;
                 }
 
-                IntPtr pevent = LibInput.GetEvent(input_context);
+                var pevent = LibInput.GetEvent(input_context);
                 if (pevent == IntPtr.Zero)
                 {
                     break;
                 }
 
-                IntPtr device = LibInput.GetDevice(pevent);
-                InputEventType type = LibInput.GetEventType(pevent);
+                var device = LibInput.GetDevice(pevent);
+                var type = LibInput.GetEventType(pevent);
 
                 lock (Sync)
                 {
@@ -407,7 +407,7 @@ namespace OpenTK.Platform.Linux
         {
             if (LibInput.DeviceHasCapability(device, DeviceCapability.Keyboard))
             {
-                KeyboardDevice keyboard = new KeyboardDevice(device, Keyboards.Count);
+                var keyboard = new KeyboardDevice(device, Keyboards.Count);
                 KeyboardCandidates.Add(keyboard.Id, keyboard);
                 Debug.Print("[Input] Added keyboard device {0} '{1}' on '{2}' ('{3}')",
                     keyboard.Id, keyboard.Name, keyboard.LogicalSeatName, keyboard.PhysicalSeatName);
@@ -415,7 +415,7 @@ namespace OpenTK.Platform.Linux
 
             if (LibInput.DeviceHasCapability(device, DeviceCapability.Mouse))
             {
-                MouseDevice mouse = new MouseDevice(device, Mice.Count);
+                var mouse = new MouseDevice(device, Mice.Count);
                 MouseCandidates.Add(mouse.Id, mouse);
                 Debug.Print("[Input] Added mouse device {0} '{1}' on '{2}' ('{3}')",
                     mouse.Id, mouse.Name, mouse.LogicalSeatName, mouse.PhysicalSeatName);
@@ -431,14 +431,14 @@ namespace OpenTK.Platform.Linux
         {
             if (LibInput.DeviceHasCapability(device, DeviceCapability.Keyboard))
             {
-                int id = GetId(device);
+                var id = GetId(device);
                 Keyboards.TryRemove(id);
                 KeyboardCandidates.TryRemove(id);
             }
 
             if (LibInput.DeviceHasCapability(device, DeviceCapability.Mouse))
             {
-                int id = GetId(device);
+                var id = GetId(device);
                 Mice.TryRemove(id);
                 MouseCandidates.TryRemove(id);
             }
@@ -451,8 +451,8 @@ namespace OpenTK.Platform.Linux
                 device.State.SetIsConnected(true);
                 Debug.Print("[Input] Added keyboard {0}", device.Id);
 
-                Key key = Key.Unknown;
-                uint raw = e.Key;
+                var key = Key.Unknown;
+                var raw = e.Key;
                 if (raw >= 0 && raw < KeyMap.Length)
                 {
                     key = KeyMap[raw];
@@ -490,15 +490,15 @@ namespace OpenTK.Platform.Linux
             {
                 mouse.State.SetIsConnected(true);
 
-                MouseButton button = Evdev.GetMouseButton(e.Button);
-                ButtonState state = e.ButtonState;
+                var button = Evdev.GetMouseButton(e.Button);
+                var state = e.ButtonState;
                 mouse.State[(MouseButton)button] = state == ButtonState.Pressed;
             }
         }
 
         private void HandlePointerMotion(MouseDevice mouse, PointerEvent e)
         {
-            Vector2 delta = new Vector2((float)e.DeltaX, (float)e.DeltaY);
+            var delta = new Vector2((float)e.DeltaX, (float)e.DeltaY);
             if (mouse != null)
             {
                 mouse.State.SetIsConnected(true);
@@ -532,8 +532,8 @@ namespace OpenTK.Platform.Linux
 
         private KeyboardDevice GetKeyboard(IntPtr device)
         {
-            int id = GetId(device);
-            KeyboardDevice keyboard = KeyboardCandidates.FromHardwareId(id);
+            var id = GetId(device);
+            var keyboard = KeyboardCandidates.FromHardwareId(id);
             if (keyboard != null)
             {
                 Keyboards.Add(id, keyboard);
@@ -547,8 +547,8 @@ namespace OpenTK.Platform.Linux
 
         private MouseDevice GetMouse(IntPtr device)
         {
-            int id = GetId(device);
-            MouseDevice mouse = MouseCandidates.FromHardwareId(id);
+            var id = GetId(device);
+            var mouse = MouseCandidates.FromHardwareId(id);
             if (mouse != null)
             {
                 Mice.Add(id, mouse);
@@ -564,8 +564,8 @@ namespace OpenTK.Platform.Linux
         {
             lock (Sync)
             {
-                KeyboardState state = new KeyboardState();
-                foreach (KeyboardDevice keyboard in Keyboards)
+                var state = new KeyboardState();
+                foreach (var keyboard in Keyboards)
                 {
                     state.MergeBits(keyboard.State);
                 }
@@ -577,7 +577,7 @@ namespace OpenTK.Platform.Linux
         {
             lock (Sync)
             {
-                KeyboardDevice device = Keyboards.FromIndex(index);
+                var device = Keyboards.FromIndex(index);
                 if (device != null)
                 {
                     return device.State;
@@ -593,7 +593,7 @@ namespace OpenTK.Platform.Linux
         {
             lock (Sync)
             {
-                KeyboardDevice device = Keyboards.FromIndex(index);
+                var device = Keyboards.FromIndex(index);
                 if (device != null)
                 {
                     return device.Name;
@@ -609,8 +609,8 @@ namespace OpenTK.Platform.Linux
         {
             lock (Sync)
             {
-                MouseState state = new MouseState();
-                foreach (MouseDevice mouse in Mice)
+                var state = new MouseState();
+                foreach (var mouse in Mice)
                 {
                     state.MergeBits(mouse.State);
                 }
@@ -622,7 +622,7 @@ namespace OpenTK.Platform.Linux
         {
             lock (Sync)
             {
-                MouseDevice device = Mice.FromIndex(index);
+                var device = Mice.FromIndex(index);
                 if (device != null)
                 {
                     return device.State;
@@ -646,7 +646,7 @@ namespace OpenTK.Platform.Linux
 
         MouseState IMouseDriver2.GetCursorState()
         {
-            MouseState state = (this as IMouseDriver2).GetState();
+            var state = (this as IMouseDriver2).GetState();
             state.Position = CursorPosition + CursorOffset;
             return state;
         }

@@ -164,7 +164,7 @@ namespace OpenTK.Graphics
         /// </returns>
         public int CompareTo(ColorFormat other)
         {
-            int result = BitsPerPixel.CompareTo(other.BitsPerPixel);
+            var result = BitsPerPixel.CompareTo(other.BitsPerPixel);
             if (result != 0)
             {
                 return result;

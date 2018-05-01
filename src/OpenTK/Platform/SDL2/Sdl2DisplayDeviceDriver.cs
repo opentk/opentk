@@ -34,8 +34,8 @@ namespace OpenTK.Platform.SDL2
     {
         public Sdl2DisplayDeviceDriver()
         {
-            int displays = SDL.GetNumVideoDisplays();
-            for (int d = 0; d < displays; d++)
+            var displays = SDL.GetNumVideoDisplays();
+            for (var d = 0; d < displays; d++)
             {
                 Rect bounds;
                 SDL.GetDisplayBounds(d, out bounds);
@@ -44,8 +44,8 @@ namespace OpenTK.Platform.SDL2
                 SDL.GetCurrentDisplayMode(d, out current_mode);
 
                 var mode_list = new List<DisplayResolution>();
-                int num_modes = SDL.GetNumDisplayModes(d);
-                for (int m = 0; m < num_modes; m++)
+                var num_modes = SDL.GetNumDisplayModes(d);
+                for (var m = 0; m < num_modes; m++)
                 {
                     DisplayMode sdl_mode;
                     SDL.GetDisplayMode(d, m, out sdl_mode);

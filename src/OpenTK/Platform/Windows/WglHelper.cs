@@ -48,16 +48,16 @@ namespace OpenTK.Platform.Windows
                     // static WGL/GL classes. Fortunately, this issue is extremely unlikely to arise in practice, as you'd
                     // have to create one accelerated and one non-accelerated context in the same application, with the
                     // non-accelerated context coming second.
-                    bool get_arb = SupportsFunction("wglGetExtensionsStringARB");
-                    bool get_ext = SupportsFunction("wglGetExtensionsStringEXT");
-                    string str =
+                    var get_arb = SupportsFunction("wglGetExtensionsStringARB");
+                    var get_ext = SupportsFunction("wglGetExtensionsStringEXT");
+                    var str =
                         get_arb ? Arb.GetExtensionsString(dc) :
                         get_ext ? Ext.GetExtensionsString() :
                         String.Empty;
 
                     if (!String.IsNullOrEmpty(str))
                     {
-                        foreach (string ext in str.Split(' '))
+                        foreach (var ext in str.Split(' '))
                         {
                             extensions.Add(ext, true);
                         }
@@ -81,7 +81,7 @@ namespace OpenTK.Platform.Windows
         /// <returns>True if the extension function is supported; otherwise, false.</returns>
         public static bool SupportsFunction(string name)
         {
-            int index = Array.IndexOf(EntryPointNames, name);
+            var index = Array.IndexOf(EntryPointNames, name);
             if (index >= 0)
             {
                 return EntryPoints[index] != IntPtr.Zero;
@@ -93,7 +93,7 @@ namespace OpenTK.Platform.Windows
 
         internal static IntPtr GetAddress(string function_string)
         {
-            IntPtr address = GetProcAddress(function_string);
+            var address = GetProcAddress(function_string);
             if (!IsValid(address))
             {
                 address = Functions.GetProcAddress(WinFactory.OpenGLHandle, function_string);
@@ -104,8 +104,8 @@ namespace OpenTK.Platform.Windows
         private static bool IsValid(IntPtr address)
         {
             // See https://www.opengl.org/wiki/Load_OpenGL_Functions
-            long a = address.ToInt64();
-            bool is_valid = (a < -1) || (a > 3);
+            var a = address.ToInt64();
+            var is_valid = (a < -1) || (a > 3);
             return is_valid;
         }
 
@@ -115,7 +115,7 @@ namespace OpenTK.Platform.Windows
             {
                 if (GetCurrentContext() != IntPtr.Zero)
                 {
-                    for (int i = 0; i < EntryPointNames.Length; i++)
+                    for (var i = 0; i < EntryPointNames.Length; i++)
                     {
                         EntryPoints[i] = GetAddress(EntryPointNames[i]);
                     }

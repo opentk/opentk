@@ -45,7 +45,7 @@ namespace OpenTK.Platform.Dummy
 
         public override void MakeCurrent(IWindowInfo info)
         {
-            Thread new_thread = Thread.CurrentThread;
+            var new_thread = Thread.CurrentThread;
             // A context may be current only on one thread at a time.
             if (current_thread != null && new_thread != current_thread)
             {
@@ -67,7 +67,7 @@ namespace OpenTK.Platform.Dummy
 
         public override IntPtr GetAddress(IntPtr function)
         {
-            string str = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(function);
+            var str = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(function);
             return Loader(str);
         }
 

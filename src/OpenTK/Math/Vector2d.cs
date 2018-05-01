@@ -143,7 +143,7 @@ namespace OpenTK
         /// <returns></returns>
         public Vector2d Normalized()
         {
-            Vector2d v = this;
+            var v = this;
             v.Normalize();
             return v;
         }
@@ -153,7 +153,7 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-            double scale = 1.0 / Length;
+            var scale = 1.0 / Length;
             X *= scale;
             Y *= scale;
         }
@@ -538,7 +538,7 @@ namespace OpenTK
         /// <returns>The normalized vector</returns>
         public static Vector2d Normalize(Vector2d vec)
         {
-            double scale = 1.0 / vec.Length;
+            var scale = 1.0 / vec.Length;
             vec.X *= scale;
             vec.Y *= scale;
             return vec;
@@ -551,7 +551,7 @@ namespace OpenTK
         /// <param name="result">The normalized vector</param>
         public static void Normalize(ref Vector2d vec, out Vector2d result)
         {
-            double scale = 1.0 / vec.Length;
+            var scale = 1.0 / vec.Length;
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }
@@ -563,7 +563,7 @@ namespace OpenTK
         /// <returns>The normalized vector</returns>
         public static Vector2d NormalizeFast(Vector2d vec)
         {
-            double scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y);
+            var scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y);
             vec.X *= scale;
             vec.Y *= scale;
             return vec;
@@ -576,7 +576,7 @@ namespace OpenTK
         /// <param name="result">The normalized vector</param>
         public static void NormalizeFast(ref Vector2d vec, out Vector2d result)
         {
-            double scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y);
+            var scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y);
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }
@@ -655,7 +655,7 @@ namespace OpenTK
         {
             result = a; // copy
 
-            Vector2d temp = b; // copy
+            var temp = b; // copy
             Subtract(ref temp, ref a, out temp);
             Multiply(ref temp, u, out temp);
             Add(ref result, ref temp, out result);

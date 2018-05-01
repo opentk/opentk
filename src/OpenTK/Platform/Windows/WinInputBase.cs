@@ -65,7 +65,7 @@ namespace OpenTK.Platform.Windows
             // Create a new message-only window to retrieve WM_INPUT messages.
             INativeWindow native = new NativeWindow();
             native.ProcessEvents();
-            WinWindowInfo parent = native.WindowInfo as WinWindowInfo;
+            var parent = native.WindowInfo as WinWindowInfo;
             Functions.SetParent(parent.Handle, Constants.MESSAGE_ONLY);
             native.ProcessEvents();
 
@@ -85,10 +85,10 @@ namespace OpenTK.Platform.Windows
 
             InputReady.Set();
 
-            MSG msg = new MSG();
+            var msg = new MSG();
             while (Native.Exists)
             {
-                int ret = Functions.GetMessage(ref msg, Parent.Handle, 0, 0);
+                var ret = Functions.GetMessage(ref msg, Parent.Handle, 0, 0);
                 if (ret == -1)
                 {
                     throw new PlatformException(
@@ -103,7 +103,7 @@ namespace OpenTK.Platform.Windows
         private IntPtr WndProcHandler(
             IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            IntPtr ret =  WindowProcedure(handle, message, wParam, lParam);
+            var ret =  WindowProcedure(handle, message, wParam, lParam);
             if (ret == Unhandled)
             {
                 return Functions.CallWindowProc(OldWndProc, handle, message, wParam, lParam);

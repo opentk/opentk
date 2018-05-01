@@ -286,7 +286,7 @@ namespace OpenTK.Platform.X11
             // Writing the entry point name offsets
             // by hand is error prone. Do it in code
             // instead:
-            int offset = 0;
+            var offset = 0;
             for (int i = 0, j = 0; i < EntryPointNames.Length; i++)
             {
                 if (EntryPointNames[i] == 0)
@@ -310,7 +310,7 @@ namespace OpenTK.Platform.X11
             {
                 fixed (byte* name = _EntryPointNamesInstance)
                 {
-                    for (int i = 0; i < _EntryPointsInstance.Length; i++)
+                    for (var i = 0; i < _EntryPointsInstance.Length; i++)
                     {
                         _EntryPointsInstance[i] = Arb.GetProcAddress(
                             new IntPtr(name + _EntryPointNameOffsetsInstance[i]));
@@ -321,7 +321,7 @@ namespace OpenTK.Platform.X11
 
         internal static bool SupportsFunction(string name)
         {
-            int index = Array.IndexOf(EntryPointNames, name);
+            var index = Array.IndexOf(EntryPointNames, name);
             if (index >= 0)
             {
                 return EntryPoints[index] != IntPtr.Zero;

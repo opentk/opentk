@@ -189,7 +189,7 @@ namespace OpenTK.Graphics.ES20
         {
             unsafe
             {
-                int length = @string.Length;
+                var length = @string.Length;
                 ShaderSource((UInt32)shader, 1, new string[] { @string }, &length);
             }
         }

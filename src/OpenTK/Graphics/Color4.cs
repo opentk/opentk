@@ -93,7 +93,7 @@ namespace OpenTK.Graphics
         /// <remarks>This method is intended only for compatibility with System.Drawing. It compresses the color into 8 bits per channel, which means color information is lost.</remarks>
         public int ToArgb()
         {
-            uint value =
+            var value =
                 (uint)(A * Byte.MaxValue) << 24 |
                 (uint)(R * Byte.MaxValue) << 16 |
                 (uint)(G * Byte.MaxValue) << 8 |
@@ -1055,7 +1055,7 @@ namespace OpenTK.Graphics
             var m = Math.Min(rgb.R, Math.Min(rgb.G, rgb.B));
             var C = M - m;
 
-            float h = 0.0f;
+            var h = 0.0f;
             if (M == rgb.R)
             {
                 h = ((rgb.G - rgb.B) / C);
@@ -1171,7 +1171,7 @@ namespace OpenTK.Graphics
             var m = Math.Min(rgb.R, Math.Min(rgb.G, rgb.B));
             var C = M - m;
 
-            float h = 0.0f;
+            var h = 0.0f;
             if (M == rgb.R)
             {
                 h = ((rgb.G - rgb.B) / C) % 6.0f;
@@ -1352,7 +1352,7 @@ namespace OpenTK.Graphics
             var m = Math.Min(rgb.R, Math.Min(rgb.G, rgb.B));
             var C = M - m;
 
-            float h = 0.0f;
+            var h = 0.0f;
             if (M == rgb.R)
             {
                 h = ((rgb.G - rgb.B) / C) % 6.0f;

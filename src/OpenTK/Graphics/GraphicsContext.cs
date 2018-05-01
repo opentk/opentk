@@ -107,7 +107,7 @@ namespace OpenTK.Graphics
         {
             lock (SyncRoot)
             {
-                bool designMode = false;
+                var designMode = false;
                 if (mode == null && window == null)
                 {
                     designMode = true;
@@ -309,7 +309,7 @@ namespace OpenTK.Graphics
 
         private static void AddContext(IGraphicsContextInternal context)
         {
-            ContextHandle ctx = context.Context;
+            var ctx = context.Context;
             if (!available_contexts.ContainsKey(ctx))
             {
                 available_contexts.Add(ctx, (IGraphicsContext)context);
@@ -324,7 +324,7 @@ namespace OpenTK.Graphics
 
         private static void RemoveContext(IGraphicsContextInternal context)
         {
-            ContextHandle ctx = context.Context;
+            var ctx = context.Context;
             if (available_contexts.ContainsKey(ctx))
             {
                 available_contexts.Remove(ctx);
@@ -340,7 +340,7 @@ namespace OpenTK.Graphics
             if (ShareContexts)
             {
                 // A small hack to create a shared context with the first available context.
-                foreach (IGraphicsContext target in available_contexts.Values)
+                foreach (var target in available_contexts.Values)
                 {
                     // Fix for bug 1874: if a GraphicsContext gets finalized
                     // (but not disposed), it won't be removed from available_contexts
@@ -389,7 +389,7 @@ namespace OpenTK.Graphics
                 {
                     if (available_contexts.Count > 0)
                     {
-                        ContextHandle handle = CurrentContextHandle;
+                        var handle = CurrentContextHandle;
                         if (handle.Handle != IntPtr.Zero)
                         {
                             return (IGraphicsContext)available_contexts[handle];
@@ -539,8 +539,8 @@ namespace OpenTK.Graphics
         /// </returns>
         IntPtr IGraphicsContextInternal.GetAddress(string function)
         {
-            IntPtr name = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(function);
-            IntPtr address = (implementation as IGraphicsContextInternal).GetAddress(name);
+            var name = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(function);
+            var address = (implementation as IGraphicsContextInternal).GetAddress(name);
             System.Runtime.InteropServices.Marshal.FreeHGlobal(name);
             return address;
         }

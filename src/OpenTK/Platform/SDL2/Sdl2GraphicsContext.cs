@@ -60,7 +60,7 @@ namespace OpenTK.Platform.SDL2
         {
             lock (SDL.Sync)
             {
-                bool retry = false;
+                var retry = false;
                 do
                 {
                     SetGLAttributes(mode, shareContext, major, minor, flags);
@@ -315,7 +315,7 @@ namespace OpenTK.Platform.SDL2
 
         public override void MakeCurrent(IWindowInfo window)
         {
-            int result = 0;
+            var result = 0;
             if (window != null)
             {
                 result = SDL.GL.MakeCurrent(window.Handle, SdlContext.Handle);

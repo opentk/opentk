@@ -181,7 +181,7 @@ namespace OpenTK
         /// </summary>
         public Vector3 Normalized()
         {
-            Vector3 v = this;
+            var v = this;
             v.Normalize();
             return v;
         }
@@ -191,7 +191,7 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-            float scale = 1.0f / Length;
+            var scale = 1.0f / Length;
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -202,7 +202,7 @@ namespace OpenTK
         /// </summary>
         public void NormalizeFast()
         {
-            float scale = MathHelper.InverseSqrtFast(X * X + Y * Y + Z * Z);
+            var scale = MathHelper.InverseSqrtFast(X * X + Y * Y + Z * Z);
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -600,7 +600,7 @@ namespace OpenTK
         /// <returns>The normalized vector</returns>
         public static Vector3 Normalize(Vector3 vec)
         {
-            float scale = 1.0f / vec.Length;
+            var scale = 1.0f / vec.Length;
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -614,7 +614,7 @@ namespace OpenTK
         /// <param name="result">The normalized vector</param>
         public static void Normalize(ref Vector3 vec, out Vector3 result)
         {
-            float scale = 1.0f / vec.Length;
+            var scale = 1.0f / vec.Length;
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
@@ -627,7 +627,7 @@ namespace OpenTK
         /// <returns>The normalized vector</returns>
         public static Vector3 NormalizeFast(Vector3 vec)
         {
-            float scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y + vec.Z * vec.Z);
+            var scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y + vec.Z * vec.Z);
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -641,7 +641,7 @@ namespace OpenTK
         /// <param name="result">The normalized vector</param>
         public static void NormalizeFast(ref Vector3 vec, out Vector3 result)
         {
-            float scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y + vec.Z * vec.Z);
+            var scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y + vec.Z * vec.Z);
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
@@ -755,7 +755,7 @@ namespace OpenTK
         {
             result = a; // copy
 
-            Vector3 temp = b; // copy
+            var temp = b; // copy
             Subtract(ref temp, ref a, out temp);
             Multiply(ref temp, u, out temp);
             Add(ref result, ref temp, out result);
@@ -829,7 +829,7 @@ namespace OpenTK
         /// <param name="result">The transformed normal</param>
         public static void TransformNormal(ref Vector3 norm, ref Matrix4 mat, out Vector3 result)
         {
-            Matrix4 Inverse = Matrix4.Invert(mat);
+            var Inverse = Matrix4.Invert(mat);
             TransformNormalInverse(ref norm, ref Inverse, out result);
         }
 
@@ -996,7 +996,7 @@ namespace OpenTK
         /// <param name="result">The transformed vector</param>
         public static void TransformPerspective(ref Vector3 vec, ref Matrix4 mat, out Vector3 result)
         {
-            Vector4 v = new Vector4(vec.X, vec.Y, vec.Z, 1);
+            var v = new Vector4(vec.X, vec.Y, vec.Z, 1);
             Vector4.Transform(ref v, ref mat, out v);
             result.X = v.X / v.W;
             result.Y = v.Y / v.W;

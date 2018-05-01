@@ -292,9 +292,9 @@ namespace OpenTK
         /// <returns>The input as byte array.</returns>
         public static byte[] GetBytes(Vector2h h)
         {
-            byte[] result = new byte[SizeInBytes];
+            var result = new byte[SizeInBytes];
 
-            byte[] temp = Half.GetBytes(h.X);
+            var temp = Half.GetBytes(h.X);
             result[0] = temp[0];
             result[1] = temp[1];
             temp = Half.GetBytes(h.Y);
