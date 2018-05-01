@@ -36,20 +36,27 @@ namespace OpenTK.Platform.MacOS
 
         [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
         private static extern bool NSIsSymbolNameDefined(string s);
+
         [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
         private static extern bool NSIsSymbolNameDefined(IntPtr s);
+
         [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
         private static extern IntPtr NSLookupAndBindSymbol(string s);
+
         [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
         private static extern IntPtr NSLookupAndBindSymbol(IntPtr s);
+
         [DllImport(Library, EntryPoint = "NSAddressOfSymbol")]
         private static extern IntPtr NSAddressOfSymbol(IntPtr symbol);
+
         [DllImport(Library)]
-        private static extern IntPtr dlopen(String fileName, int flags);
+        private static extern IntPtr dlopen(string fileName, int flags);
+
         [DllImport(Library)]
         private static extern int dlclose(IntPtr handle);
-        [DllImport (Library)]
-        private static extern IntPtr dlsym (IntPtr handle, string symbol);
+
+        [DllImport(Library)]
+        private static extern IntPtr dlsym(IntPtr handle, string symbol);
 
         public static IntPtr GetAddress(string function)
         {
@@ -67,6 +74,7 @@ namespace OpenTK.Platform.MacOS
                 {
                     Marshal.WriteByte(ptr, i + 1, (byte)function[i]);
                 }
+
                 Marshal.WriteByte(ptr, function.Length + 1, 0); // null-terminate
 
                 var symbol = GetAddress(ptr);
@@ -89,6 +97,7 @@ namespace OpenTK.Platform.MacOS
                     symbol = NSAddressOfSymbol(symbol);
                 }
             }
+
             return symbol;
         }
 
@@ -109,4 +118,3 @@ namespace OpenTK.Platform.MacOS
         }
     }
 }
-

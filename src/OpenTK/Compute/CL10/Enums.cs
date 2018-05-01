@@ -24,7 +24,6 @@
 //
 
 #if EXPERIMENTAL
-
 using System;
 
 namespace OpenTK.Compute.CL10

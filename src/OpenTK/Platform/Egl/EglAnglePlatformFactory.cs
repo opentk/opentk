@@ -1,5 +1,4 @@
-﻿
-//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2015 the Open Toolkit library.
@@ -33,12 +32,14 @@ namespace OpenTK.Platform.Egl
     internal class EglAnglePlatformFactory : PlatformFactoryBase
     {
         private readonly IPlatformFactory _platform_factory;
+
         public EglAnglePlatformFactory(IPlatformFactory platform_factory)
         {
             _platform_factory = platform_factory;
         }
 
-        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode,
+        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title,
+            GraphicsMode mode,
             GameWindowFlags options, DisplayDevice device)
         {
             return _platform_factory.CreateNativeWindow(x, y, width, height, title,
@@ -72,10 +73,7 @@ namespace OpenTK.Platform.Egl
 
         public override GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
-            return (GraphicsContext.GetCurrentContextDelegate)delegate
-            {
-                return new ContextHandle(Egl.GetCurrentContext());
-            };
+            return delegate { return new ContextHandle(Egl.GetCurrentContext()); };
         }
 
         public override IKeyboardDriver2 CreateKeyboardDriver()
@@ -155,7 +153,7 @@ namespace OpenTK.Platform.Egl
                 Egl.PLATFORM_ANGLE_ANGLE,
                 dc,
                 attribs
-                );
+            );
         }
     }
 }

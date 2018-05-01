@@ -42,7 +42,7 @@ namespace OpenTK.Platform.MacOS
         private static readonly int ThreadId =
             Thread.CurrentThread.ManagedThreadId;
 
-        internal static void Initialize() { }
+        private static readonly OnQuitDelegate OnQuitHandler = OnQuit;
 
         static NSApplication()
         {
@@ -72,7 +72,8 @@ namespace OpenTK.Platform.MacOS
                 // Add a "Quit" menu item and bind the button.
                 var appMenu = Cocoa.SendIntPtr(Class.Get("NSMenu"), Selector.Alloc);
                 var quitMenuItem = Cocoa.SendIntPtr(Cocoa.SendIntPtr(Class.Get("NSMenuItem"), Selector.Alloc),
-                                   Selector.Get("initWithTitle:action:keyEquivalent:"), Cocoa.ToNSString("Quit"), selQuit, Cocoa.ToNSString("q"));
+                    Selector.Get("initWithTitle:action:keyEquivalent:"), Cocoa.ToNSString("Quit"), selQuit,
+                    Cocoa.ToNSString("q"));
 
                 Cocoa.SendIntPtr(appMenu, Selector.Get("addItem:"), quitMenuItem);
                 Cocoa.SendIntPtr(menuItem, Selector.Get("setSubmenu:"), appMenu);
@@ -113,16 +114,16 @@ namespace OpenTK.Platform.MacOS
                     Debug.Print("[Warning] UI resources must be disposed in the UI thread #{0}, not #{1}.",
                         ThreadId, thread_id);
                 }
+
                 return is_ui_thread;
             }
         }
 
+        internal static void Initialize()
+        {
+        }
+
         internal static event EventHandler<CancelEventArgs> Quit = delegate { };
-
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        private delegate void OnQuitDelegate(IntPtr self, IntPtr cmd);
-
-        private static OnQuitDelegate OnQuitHandler = OnQuit;
 
         private static void OnQuit(IntPtr self, IntPtr cmd)
         {
@@ -133,5 +134,8 @@ namespace OpenTK.Platform.MacOS
                 Cocoa.SendVoid(Handle, Selector.Get("terminate:"), Handle);
             }
         }
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate void OnQuitDelegate(IntPtr self, IntPtr cmd);
     }
 }

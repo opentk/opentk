@@ -28,14 +28,16 @@
 using System;
 using System.Diagnostics;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Platform.X11;
 
 namespace OpenTK.Platform.Egl
 {
     internal class EglUnixContext : EglContext
     {
-        private IntPtr ES1 = X11.DL.Open("libGLESv1_CM", X11.DLOpenFlags.Lazy);
-        private IntPtr ES2 = X11.DL.Open("libGLESv2", X11.DLOpenFlags.Lazy);
-        private IntPtr GL = X11.DL.Open("libGL", X11.DLOpenFlags.Lazy);
+        private IntPtr ES1 = DL.Open("libGLESv1_CM", DLOpenFlags.Lazy);
+        private IntPtr ES2 = DL.Open("libGLESv2", DLOpenFlags.Lazy);
+        private IntPtr GL = DL.Open("libGL", DLOpenFlags.Lazy);
 
         public EglUnixContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
@@ -53,16 +55,19 @@ namespace OpenTK.Platform.Egl
         {
             if ((renderable & (RenderableFlags.ES2 | RenderableFlags.ES3)) != 0 && ES2 != IntPtr.Zero)
             {
-                return X11.DL.Symbol(ES2, function);
+                return DL.Symbol(ES2, function);
             }
-            else if ((renderable & RenderableFlags.ES) != 0 && ES1 != IntPtr.Zero)
+
+            if ((renderable & RenderableFlags.ES) != 0 && ES1 != IntPtr.Zero)
             {
-                return X11.DL.Symbol(ES1, function);
+                return DL.Symbol(ES1, function);
             }
-            else if ((renderable & RenderableFlags.GL) != 0 && GL != IntPtr.Zero)
+
+            if ((renderable & RenderableFlags.GL) != 0 && GL != IntPtr.Zero)
             {
-                return X11.DL.Symbol(GL, function);
+                return DL.Symbol(GL, function);
             }
+
             return IntPtr.Zero;
         }
 
@@ -70,15 +75,17 @@ namespace OpenTK.Platform.Egl
         {
             if (ES1 != IntPtr.Zero)
             {
-                X11.DL.Close(ES1);
+                DL.Close(ES1);
             }
+
             if (ES2 != IntPtr.Zero)
             {
-                X11.DL.Close(ES2);
+                DL.Close(ES2);
             }
+
             if (GL != IntPtr.Zero)
             {
-                X11.DL.Close(GL);
+                DL.Close(GL);
             }
 
             GL = ES1 = ES2 = IntPtr.Zero;
@@ -95,7 +102,7 @@ namespace OpenTK.Platform.Egl
 
             var time = Stopwatch.StartNew();
 
-            new Graphics.OpenGL.GL().LoadEntryPoints();
+            new GL().LoadEntryPoints();
             new Graphics.OpenGL4.GL().LoadEntryPoints();
             new Graphics.ES11.GL().LoadEntryPoints();
             new Graphics.ES20.GL().LoadEntryPoints();

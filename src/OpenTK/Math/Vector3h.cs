@@ -21,6 +21,7 @@ SOFTWARE.
  */
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
@@ -29,9 +30,10 @@ using System.Xml.Serialization;
 namespace OpenTK
 {
     /// <summary>
-    /// 3-component Vector of the Half type. Occupies 6 Byte total.
+    ///     3-component Vector of the Half type. Occupies 6 Byte total.
     /// </summary>
-    [Serializable, StructLayout(LayoutKind.Sequential)]
+    [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
     public struct Vector3h : ISerializable, IEquatable<Vector3h>
     {
         /// <summary>The X component of the Half3.</summary>
@@ -44,7 +46,7 @@ namespace OpenTK
         public Half Z;
 
         /// <summary>
-        /// Constructs a new instance.
+        ///     Constructs a new instance.
         /// </summary>
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector3h(Half value)
@@ -55,10 +57,10 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        ///     Constructs a new instance.
         /// </summary>
         /// <param name="value">The value that will initialize this instance.</param>
-        public Vector3h(Single value)
+        public Vector3h(float value)
         {
             X = new Half(value);
             Y = new Half(value);
@@ -66,7 +68,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// The new Half3 instance will avoid conversion and copy directly from the Half parameters.
+        ///     The new Half3 instance will avoid conversion and copy directly from the Half parameters.
         /// </summary>
         /// <param name="x">An Half instance of a 16-bit half-precision floating-point number.</param>
         /// <param name="y">An Half instance of a 16-bit half-precision floating-point number.</param>
@@ -79,12 +81,12 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the 3 parameters into 16-bit half-precision floating-point.
+        ///     The new Half3 instance will convert the 3 parameters into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="x">32-bit single-precision floating-point number.</param>
         /// <param name="y">32-bit single-precision floating-point number.</param>
         /// <param name="z">32-bit single-precision floating-point number.</param>
-        public Vector3h(Single x, Single y, Single z)
+        public Vector3h(float x, float y, float z)
         {
             X = new Half(x);
             Y = new Half(y);
@@ -92,13 +94,13 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the 3 parameters into 16-bit half-precision floating-point.
+        ///     The new Half3 instance will convert the 3 parameters into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="x">32-bit single-precision floating-point number.</param>
         /// <param name="y">32-bit single-precision floating-point number.</param>
         /// <param name="z">32-bit single-precision floating-point number.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector3h(Single x, Single y, Single z, bool throwOnError)
+        public Vector3h(float x, float y, float z, bool throwOnError)
         {
             X = new Half(x, throwOnError);
             Y = new Half(y, throwOnError);
@@ -106,7 +108,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the Vector3 into 16-bit half-precision floating-point.
+        ///     The new Half3 instance will convert the Vector3 into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector3</param>
         public Vector3h(Vector3 v)
@@ -117,7 +119,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the Vector3 into 16-bit half-precision floating-point.
+        ///     The new Half3 instance will convert the Vector3 into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector3</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
@@ -129,8 +131,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the Vector3 into 16-bit half-precision floating-point.
-        /// This is the fastest constructor.
+        ///     The new Half3 instance will convert the Vector3 into 16-bit half-precision floating-point.
+        ///     This is the fastest constructor.
         /// </summary>
         /// <param name="v">OpenTK.Vector3</param>
         public Vector3h(ref Vector3 v)
@@ -141,7 +143,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the Vector3 into 16-bit half-precision floating-point.
+        ///     The new Half3 instance will convert the Vector3 into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector3</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
@@ -153,7 +155,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the Vector3d into 16-bit half-precision floating-point.
+        ///     The new Half3 instance will convert the Vector3d into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector3d</param>
         public Vector3h(Vector3d v)
@@ -164,7 +166,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the Vector3d into 16-bit half-precision floating-point.
+        ///     The new Half3 instance will convert the Vector3d into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector3d</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
@@ -176,8 +178,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the Vector3d into 16-bit half-precision floating-point.
-        /// This is the faster constructor.
+        ///     The new Half3 instance will convert the Vector3d into 16-bit half-precision floating-point.
+        ///     This is the faster constructor.
         /// </summary>
         /// <param name="v">OpenTK.Vector3d</param>
         public Vector3h(ref Vector3d v)
@@ -188,7 +190,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the Vector3d into 16-bit half-precision floating-point.
+        ///     The new Half3 instance will convert the Vector3d into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="v">OpenTK.Vector3d</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
@@ -200,84 +202,166 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the X and Y components of this instance.
+        ///     Gets or sets an OpenTK.Vector2h with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector2h Xy { get => new Vector2h(X, Y);
-            set { X = value.X; Y = value.Y; } }
+        public Vector2h Xy
+        {
+            get => new Vector2h(X, Y);
+            set
+            {
+                X = value.X;
+                Y = value.Y;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the X and Z components of this instance.
+        ///     Gets or sets an OpenTK.Vector2h with the X and Z components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector2h Xz { get => new Vector2h(X, Z);
-            set { X = value.X; Z = value.Y; } }
+        public Vector2h Xz
+        {
+            get => new Vector2h(X, Z);
+            set
+            {
+                X = value.X;
+                Z = value.Y;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the Y and X components of this instance.
+        ///     Gets or sets an OpenTK.Vector2h with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector2h Yx { get => new Vector2h(Y, X);
-            set { Y = value.X; X = value.Y; } }
+        public Vector2h Yx
+        {
+            get => new Vector2h(Y, X);
+            set
+            {
+                Y = value.X;
+                X = value.Y;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the Y and Z components of this instance.
+        ///     Gets or sets an OpenTK.Vector2h with the Y and Z components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector2h Yz { get => new Vector2h(Y, Z);
-            set { Y = value.X; Z = value.Y; } }
+        public Vector2h Yz
+        {
+            get => new Vector2h(Y, Z);
+            set
+            {
+                Y = value.X;
+                Z = value.Y;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the Z and X components of this instance.
+        ///     Gets or sets an OpenTK.Vector2h with the Z and X components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector2h Zx { get => new Vector2h(Z, X);
-            set { Z = value.X; X = value.Y; } }
+        public Vector2h Zx
+        {
+            get => new Vector2h(Z, X);
+            set
+            {
+                Z = value.X;
+                X = value.Y;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the Z and Y components of this instance.
+        ///     Gets or sets an OpenTK.Vector2h with the Z and Y components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector2h Zy { get => new Vector2h(Z, Y);
-            set { Z = value.X; Y = value.Y; } }
+        public Vector2h Zy
+        {
+            get => new Vector2h(Z, Y);
+            set
+            {
+                Z = value.X;
+                Y = value.Y;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the X, Z, and Y components of this instance.
+        ///     Gets or sets an OpenTK.Vector3h with the X, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector3h Xzy { get => new Vector3h(X, Z, Y);
-            set { X = value.X; Z = value.Y; Y = value.Z; } }
+        public Vector3h Xzy
+        {
+            get => new Vector3h(X, Z, Y);
+            set
+            {
+                X = value.X;
+                Z = value.Y;
+                Y = value.Z;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the Y, X, and Z components of this instance.
+        ///     Gets or sets an OpenTK.Vector3h with the Y, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector3h Yxz { get => new Vector3h(Y, X, Z);
-            set { Y = value.X; X = value.Y; Z = value.Z; } }
+        public Vector3h Yxz
+        {
+            get => new Vector3h(Y, X, Z);
+            set
+            {
+                Y = value.X;
+                X = value.Y;
+                Z = value.Z;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the Y, Z, and X components of this instance.
+        ///     Gets or sets an OpenTK.Vector3h with the Y, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector3h Yzx { get => new Vector3h(Y, Z, X);
-            set { Y = value.X; Z = value.Y; X = value.Z; } }
+        public Vector3h Yzx
+        {
+            get => new Vector3h(Y, Z, X);
+            set
+            {
+                Y = value.X;
+                Z = value.Y;
+                X = value.Z;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the Z, X, and Y components of this instance.
+        ///     Gets or sets an OpenTK.Vector3h with the Z, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector3h Zxy { get => new Vector3h(Z, X, Y);
-            set { Z = value.X; X = value.Y; Y = value.Z; } }
+        public Vector3h Zxy
+        {
+            get => new Vector3h(Z, X, Y);
+            set
+            {
+                Z = value.X;
+                X = value.Y;
+                Y = value.Z;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the Z, Y, and X components of this instance.
+        ///     Gets or sets an OpenTK.Vector3h with the Z, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector3h Zyx { get => new Vector3h(Z, Y, X);
-            set { Z = value.X; Y = value.Y; X = value.Z; } }
+        public Vector3h Zyx
+        {
+            get => new Vector3h(Z, Y, X);
+            set
+            {
+                Z = value.X;
+                Y = value.Y;
+                X = value.Z;
+            }
+        }
 
         /// <summary>
-        /// Returns this Half3 instance's contents as Vector3.
+        ///     Returns this Half3 instance's contents as Vector3.
         /// </summary>
         /// <returns>OpenTK.Vector3</returns>
         public Vector3 ToVector3()
@@ -286,7 +370,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns this Half3 instance's contents as Vector3d.
+        ///     Returns this Half3 instance's contents as Vector3d.
         /// </summary>
         public Vector3d ToVector3d()
         {
@@ -377,14 +461,15 @@ namespace OpenTK
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
         public bool Equals(Vector3h other)
         {
-            return (X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z));
+            return X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z);
         }
 
-        private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        private static readonly string listSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+
         /// <summary>Returns a string that contains this Half3's numbers in human-legible form.</summary>
         public override string ToString()
         {
-            return String.Format("({0}{3} {1}{3} {2})", X.ToString(), Y.ToString(), Z.ToString(), listSeparator);
+            return string.Format("({0}{3} {1}{3} {2})", X.ToString(), Y.ToString(), Z.ToString(), listSeparator);
         }
 
         /// <summary>Returns the Half3 as an array of bytes.</summary>

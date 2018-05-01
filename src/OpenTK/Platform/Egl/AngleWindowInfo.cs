@@ -5,37 +5,42 @@ using OpenTK.Platform.Windows;
 namespace OpenTK.Platform.Egl
 {
     using EGLSurface = IntPtr;
+
     /// <summary>
-    /// A window info for angle. 
+    ///     A window info for angle.
     /// </summary>
     public interface IAngleWindowInfo : IWindowInfo
     {
         /// <summary>
-        /// Query the underlying platform pointer / handle for this window's 
-        /// default surface or IntPtr.Zero
+        ///     Query the underlying platform pointer / handle for this window's
+        ///     default surface or IntPtr.Zero
         /// </summary>
         IntPtr QuerySurfacePointer();
+
         /// <summary>
-        /// Create an additional rendering surface that shares the display
-        /// of this window.
+        ///     Create an additional rendering surface that shares the display
+        ///     of this window.
         /// </summary>
         /// <param name="width">width in pixels</param>
         /// <param name="height">height in pixels</param>
         /// <returns>A reference to the new surface</returns>
         EGLSurface CreateSurface(int width, int height);
+
         /// <summary>
-        /// Destroy a surface created with CreateSurface and clears the passed reference.
+        ///     Destroy a surface created with CreateSurface and clears the passed reference.
         /// </summary>
         /// <param name="surface">Reference to the surface.</param>
         void DestroySurface(ref EGLSurface surface);
+
         /// <summary>
-        /// MakeCurrent the custom surface created with CreateSurface.
+        ///     MakeCurrent the custom surface created with CreateSurface.
         /// </summary>
         /// <param name="surface">Reference to the surface.</param>
         void MakeCurrent(EGLSurface surface);
+
         /// <summary>
-        /// Query the underlying platform pointer / handle for an EGLSurface 
-        /// created with CreateSurface.
+        ///     Query the underlying platform pointer / handle for an EGLSurface
+        ///     created with CreateSurface.
         /// </summary>
         /// <param name="surface"></param>
         IntPtr QuerySurfacePointer(EGLSurface surface);
@@ -60,9 +65,9 @@ namespace OpenTK.Platform.Egl
             PlatformWindow = platform_window;
         }
 
-        public IWindowInfo PlatformWindow { get; }
-
         public IWindowInfo WindowInfo => EglWindowInfo;
+
+        public IWindowInfo PlatformWindow { get; }
 
         public IntPtr DeviceContext
         {
@@ -73,6 +78,7 @@ namespace OpenTK.Platform.Egl
                 {
                     return win_win.DeviceContext;
                 }
+
                 return IntPtr.Zero;
             }
         }
@@ -91,27 +97,6 @@ namespace OpenTK.Platform.Egl
 
         public IntPtr Handle => PlatformWindow.Handle;
 
-        ~AngleWindowInfo()
-        {
-            Dispose(true);
-        }
-
-        private void Dispose(bool called_from_finalizer)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-            if (!called_from_finalizer)
-            {
-                PlatformWindow.Dispose();
-            }
-            // dispose unmanaged
-
-            _disposed = true;
-            GC.SuppressFinalize(this);
-        }
-
         public IntPtr QuerySurfacePointer()
         {
             return QuerySurfacePointer(Surface);
@@ -122,7 +107,7 @@ namespace OpenTK.Platform.Egl
             IntPtr surface;
             EglWindowInfo.CreatePbufferSurface(
                 EglContext.GraphicsMode.Index.Value,
-                width, height, 
+                width, height,
                 out surface);
             return surface;
         }
@@ -141,10 +126,33 @@ namespace OpenTK.Platform.Egl
         {
             if (UsesDirect3DBackend())
             {
-                return QuerySurfacePointer(surface, 
+                return QuerySurfacePointer(surface,
                     Egl.EGL_D3D_TEXTURE_2D_SHARE_HANDLE_ANGLE);
             }
+
             return IntPtr.Zero;
+        }
+
+        ~AngleWindowInfo()
+        {
+            Dispose(true);
+        }
+
+        private void Dispose(bool called_from_finalizer)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (!called_from_finalizer)
+            {
+                PlatformWindow.Dispose();
+            }
+            // dispose unmanaged
+
+            _disposed = true;
+            GC.SuppressFinalize(this);
         }
 
         private IntPtr QuerySurfacePointer(IntPtr surface, int attrib)
@@ -155,13 +163,14 @@ namespace OpenTK.Platform.Egl
             {
                 return surface_pointer;
             }
+
             return IntPtr.Zero;
         }
 
         private bool UsesDirect3DBackend()
         {
             var d3d_flags = GraphicsContextFlags.AngleD3D9 | GraphicsContextFlags.AngleD3D11;
-            return ((EglContext.GraphicsContextFlags & d3d_flags) != 0);
+            return (EglContext.GraphicsContextFlags & d3d_flags) != 0;
         }
     }
 }

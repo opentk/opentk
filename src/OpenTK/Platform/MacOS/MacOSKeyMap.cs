@@ -25,10 +25,10 @@
 
 //  Created by Erik Ylvisaker on 3/17/08.
 
+using OpenTK.Input;
+
 namespace OpenTK.Platform.MacOS
 {
-    using Input;
-
     internal static class MacOSKeyMap
     {
         public static Key GetKey(MacOSKeyCode code)

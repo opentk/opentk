@@ -40,6 +40,6 @@ namespace OpenTK.Platform.MacOS
         NumericPadKeyMask = 2097152U,
         HelpKeyMask = 4194304U,
         FunctionKeyMask = 8388608U,
-        DeviceIndependentModifierFlagsMask = 4294901760U,
+        DeviceIndependentModifierFlagsMask = 4294901760U
     }
 }

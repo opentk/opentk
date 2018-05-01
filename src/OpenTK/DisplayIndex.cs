@@ -26,41 +26,48 @@
 namespace OpenTK
 {
     /// <summary>
-    /// Defines <see cref="DisplayDevice"/> indices.
+    ///     Defines <see cref="DisplayDevice" /> indices.
     /// </summary>
     public enum DisplayIndex
     {
         /// <summary>
-        /// The first DisplayDevice.
+        ///     The first DisplayDevice.
         /// </summary>
         First = 0,
+
         /// <summary>
-        /// The second DisplayDevice.
+        ///     The second DisplayDevice.
         /// </summary>
         Second,
+
         /// <summary>
-        /// The third DisplayDevice.
+        ///     The third DisplayDevice.
         /// </summary>
         Third,
+
         /// <summary>
-        /// The fourth DisplayDevice.
+        ///     The fourth DisplayDevice.
         /// </summary>
         Fourth,
+
         /// <summary>
-        /// The fifth DisplayDevice.
+        ///     The fifth DisplayDevice.
         /// </summary>
         Fifth,
+
         /// <summary>
-        /// The sixth DisplayDevice.
+        ///     The sixth DisplayDevice.
         /// </summary>
         Sixth,
+
         /// <summary>
-        /// The default (primary) DisplayDevice.
+        ///     The default (primary) DisplayDevice.
         /// </summary>
         Primary = -1,
+
         /// <summary>
-        /// The default (primary) DisplayDevice.
+        ///     The default (primary) DisplayDevice.
         /// </summary>
-        Default = Primary,
+        Default = Primary
     }
 }

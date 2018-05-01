@@ -27,11 +27,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-#if !(ANDROID || IPHONE || MINIMAL)
-using Microsoft.Win32;
-#endif
 using OpenTK.Input;
 using OpenTK.Platform.Common;
+#if !(ANDROID || IPHONE || MINIMAL)
+using Microsoft.Win32;
+
+#endif
 
 namespace OpenTK.Platform.Windows
 {
@@ -40,8 +41,8 @@ namespace OpenTK.Platform.Windows
         private readonly List<KeyboardState> keyboards = new List<KeyboardState>();
         private readonly List<string> names = new List<string>();
         private readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
-        private readonly IntPtr window;
         private readonly object UpdateLock = new object();
+        private readonly IntPtr window;
 
         public WinRawKeyboard(IntPtr windowHandle)
         {
@@ -52,6 +53,46 @@ namespace OpenTK.Platform.Windows
             RefreshDevices();
 
             Debug.Unindent();
+        }
+
+        public KeyboardState GetState()
+        {
+            lock (UpdateLock)
+            {
+                var master = new KeyboardState();
+                foreach (var ks in keyboards)
+                {
+                    master.MergeBits(ks);
+                }
+
+                return master;
+            }
+        }
+
+        public KeyboardState GetState(int index)
+        {
+            lock (UpdateLock)
+            {
+                if (keyboards.Count > index)
+                {
+                    return keyboards[index];
+                }
+
+                return new KeyboardState();
+            }
+        }
+
+        public string GetDeviceName(int index)
+        {
+            lock (UpdateLock)
+            {
+                if (names.Count > index)
+                {
+                    return names[index];
+                }
+
+                return string.Empty;
+            }
         }
 
         public void RefreshDevices()
@@ -71,6 +112,7 @@ namespace OpenTK.Platform.Windows
                 {
                     ridl[i] = new RawInputDeviceList();
                 }
+
                 Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
 
                 // Discover keyboard devices:
@@ -103,31 +145,33 @@ namespace OpenTK.Platform.Windows
 
                         var deviceDesc = (string)regkey.GetValue("DeviceDesc");
                         var deviceClass = (string)regkey.GetValue("Class");
-                        var deviceClassGUID = (string)regkey.GetValue("ClassGUID"); // for windows 8 support via OpenTK issue 3198
+                        var deviceClassGUID =
+                            (string)regkey.GetValue("ClassGUID"); // for windows 8 support via OpenTK issue 3198
 
                         // making a guess at backwards compatability. Not sure what older windows returns in these cases...
-                        if (deviceClass == null || deviceClass.Equals(string.Empty)){
-                            var classGUIDKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Class\" + deviceClassGUID);
+                        if (deviceClass == null || deviceClass.Equals(string.Empty))
+                        {
+                            var classGUIDKey =
+                                Registry.LocalMachine.OpenSubKey(
+                                    @"SYSTEM\CurrentControlSet\Control\Class\" + deviceClassGUID);
                             deviceClass = classGUIDKey != null ? (string)classGUIDKey.GetValue("Class") : string.Empty;
                         }
 
-                        if (String.IsNullOrEmpty(deviceDesc))
+                        if (string.IsNullOrEmpty(deviceDesc))
                         {
                             Debug.Print("[Warning] Failed to retrieve device description, skipping this device.");
                             continue;
                         }
-                        else
-                        {
-                            deviceDesc = deviceDesc.Substring(deviceDesc.LastIndexOf(';') + 1);
-                        }
 
-                        if (!String.IsNullOrEmpty(deviceClass) && deviceClass.ToLower().Equals("keyboard"))
+                        deviceDesc = deviceDesc.Substring(deviceDesc.LastIndexOf(';') + 1);
+
+                        if (!string.IsNullOrEmpty(deviceClass) && deviceClass.ToLower().Equals("keyboard"))
                         {
                             // Register the keyboard:
                             var info = new RawInputDeviceInfo();
                             var devInfoSize = API.RawInputDeviceInfoSize;
                             Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICEINFO,
-                                    info, ref devInfoSize);
+                                info, ref devInfoSize);
 
                             //KeyboardDevice kb = new KeyboardDevice();
                             //kb.Description = deviceDesc;
@@ -219,9 +263,9 @@ namespace OpenTK.Platform.Windows
                 return null;
             }
 
-            var id_01 = split[0];    // ACPI (Class code)
-            var id_02 = split[1];    // PNP0303 (SubClass code)
-            var id_03 = split[2];    // 3&13c0b0c5&0 (Protocol code)
+            var id_01 = split[0]; // ACPI (Class code)
+            var id_02 = split[1]; // PNP0303 (SubClass code)
+            var id_03 = split[2]; // 3&13c0b0c5&0 (Protocol code)
             // The final part is the class GUID and is not needed here
 
             var findme = $@"System\CurrentControlSet\Enum\{id_01}\{id_02}\{id_03}";
@@ -243,7 +287,7 @@ namespace OpenTK.Platform.Windows
 
         private static void RegisterKeyboardDevice(IntPtr window, string name)
         {
-            var rid = new RawInputDevice[]
+            var rid = new[]
             {
                 new RawInputDevice(HIDUsageGD.Keyboard, RawInputDeviceFlags.INPUTSINK, window)
             };
@@ -256,49 +300,6 @@ namespace OpenTK.Platform.Windows
             else
             {
                 Debug.Print("Registered keyboard {0}", name);
-            }
-        }
-
-        public KeyboardState GetState()
-        {
-            lock (UpdateLock)
-            {
-                var master = new KeyboardState();
-                foreach (var ks in keyboards)
-                {
-                    master.MergeBits(ks);
-                }
-                return master;
-            }
-        }
-
-        public KeyboardState GetState(int index)
-        {
-            lock (UpdateLock)
-            {
-                if (keyboards.Count > index)
-                {
-                    return keyboards[index];
-                }
-                else
-                {
-                    return new KeyboardState();
-                }
-            }
-        }
-
-        public string GetDeviceName(int index)
-        {
-            lock (UpdateLock)
-            {
-                if (names.Count > index)
-                {
-                    return names[index];
-                }
-                else
-                {
-                    return String.Empty;
-                }
             }
         }
     }

@@ -25,8 +25,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
+using System.Text;
 
 namespace OpenTK.Graphics.ES20
 {
@@ -64,6 +64,7 @@ namespace OpenTK.Graphics.ES20
                     ContextErrors.Add(Context, new List<ErrorCode>());
                 }
             }
+
             ResetErrors();
         }
 
@@ -74,8 +75,9 @@ namespace OpenTK.Graphics.ES20
         {
             if (Context.ErrorChecking)
             {
-                while ((ErrorCode)GL.GetError() != ErrorCode.NoError)
-                { }
+                while (GL.GetError() != ErrorCode.NoError)
+                {
+                }
             }
         }
 
@@ -90,7 +92,7 @@ namespace OpenTK.Graphics.ES20
                 ErrorCode error;
                 do
                 {
-                    error = (ErrorCode)GL.GetError();
+                    error = GL.GetError();
                     error_list.Add(error);
                 } while (error != ErrorCode.NoError);
 
@@ -109,6 +111,7 @@ namespace OpenTK.Graphics.ES20
                             break;
                         }
                     }
+
                     sb.Remove(sb.Length - 2, 2); // Remove the last comma
 
                     throw new GraphicsErrorException(sb.ToString());

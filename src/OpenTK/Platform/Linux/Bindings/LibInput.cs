@@ -57,6 +57,7 @@ namespace OpenTK.Platform.Linux
 
         [DllImport(lib, EntryPoint = "libinput_device_get_sysname", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr DeviceGetNameInternal(IntPtr device);
+
         public static string DeviceGetName(IntPtr device)
         {
             unsafe
@@ -73,12 +74,13 @@ namespace OpenTK.Platform.Linux
 
         [DllImport(lib, EntryPoint = "libinput_device_get_output_name", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr DeviceGetOutputNameInternal(IntPtr device);
+
         public static string DeviceGetOutputName(IntPtr device)
         {
             unsafe
             {
                 var pname = (sbyte*)DeviceGetOutputNameInternal(device);
-                return pname == null ? String.Empty : new string(pname);
+                return pname == null ? string.Empty : new string(pname);
             }
         }
 
@@ -120,7 +122,8 @@ namespace OpenTK.Platform.Linux
         public static extern void Suspend(IntPtr libinput);
 
         [DllImport(lib, EntryPoint = "libinput_seat_get_logical_name", CallingConvention = CallingConvention.Cdecl)]
-        static extern public IntPtr SeatGetLogicalNameInternal(IntPtr seat);
+        public static extern IntPtr SeatGetLogicalNameInternal(IntPtr seat);
+
         public static string SeatGetLogicalName(IntPtr seat)
         {
             unsafe
@@ -130,7 +133,8 @@ namespace OpenTK.Platform.Linux
         }
 
         [DllImport(lib, EntryPoint = "libinput_seat_get_physical_name", CallingConvention = CallingConvention.Cdecl)]
-        static extern public IntPtr SeatGetPhysicalNameInternal(IntPtr seat);
+        public static extern IntPtr SeatGetPhysicalNameInternal(IntPtr seat);
+
         public static string SeatGetPhysicalName(IntPtr seat)
         {
             unsafe
@@ -168,8 +172,8 @@ namespace OpenTK.Platform.Linux
 
         /// \internal
         /// <summary>
-        /// Signals the end of a set of touchpoints at one device sample
-        /// time. This event has no coordinate information attached.
+        ///     Signals the end of a set of touchpoints at one device sample
+        ///     time. This event has no coordinate information attached.
         /// </summary>
         TouchFrame
     }
@@ -195,8 +199,8 @@ namespace OpenTK.Platform.Linux
     [StructLayout(LayoutKind.Sequential)]
     internal class InputInterface
     {
-        internal readonly IntPtr open;
         internal readonly IntPtr close;
+        internal readonly IntPtr open;
 
         public InputInterface(
             OpenRestrictedCallback open_restricted,
@@ -222,19 +226,24 @@ namespace OpenTK.Platform.Linux
         public uint KeyCount => GetSeatKeyCount(Event);
         public KeyState KeyState => GetKeyState(Event);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_keyboard_get_time", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_keyboard_get_time",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern uint GetTime(IntPtr @event);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_keyboard_get_base_event", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_keyboard_get_base_event",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr GetBaseEvent(IntPtr @event);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_keyboard_get_seat_key_count", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_keyboard_get_seat_key_count",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern uint GetSeatKeyCount(IntPtr @event);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_keyboard_get_key", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_keyboard_get_key",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern uint GetKey(IntPtr @event);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_keyboard_get_key_state", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_keyboard_get_key_state",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern KeyState GetKeyState(IntPtr @event);
     }
 
@@ -248,56 +257,86 @@ namespace OpenTK.Platform.Linux
         public EvdevButton Button => (EvdevButton)GetButton(Event);
         public uint ButtonCount => GetButtonCount(Event);
         public ButtonState ButtonState => GetButtonState(Event);
-        public bool HasAxis(PointerAxis axis) { return HasAxis(Event, axis) != 0; }
-        public double AxisValue(PointerAxis axis) { return GetAxisValue(Event, axis); }
+
+        public bool HasAxis(PointerAxis axis)
+        {
+            return HasAxis(Event, axis) != 0;
+        }
+
+        public double AxisValue(PointerAxis axis)
+        {
+            return GetAxisValue(Event, axis);
+        }
+
         public double DeltaX => GetDX(Event);
         public double DeltaY => GetDY(Event);
         public double X => GetAbsX(Event);
         public double Y => GetAbsY(Event);
-        public double TransformedX(int width) { return GetAbsXTransformed(Event, width); }
-        public double TransformedY(int height) { return GetAbsYTransformed(Event, height); }
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_time", CallingConvention = CallingConvention.Cdecl)]
+        public double TransformedX(int width)
+        {
+            return GetAbsXTransformed(Event, width);
+        }
+
+        public double TransformedY(int height)
+        {
+            return GetAbsYTransformed(Event, height);
+        }
+
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_time",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern uint GetTime(IntPtr @event);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_base_event", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_base_event",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr GetBaseEvent(IntPtr @event);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_seat_key_count", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_seat_key_count",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern uint GetSeatKeyCount(IntPtr @event);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_button", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_button",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern uint GetButton(IntPtr @event);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_seat_button_count", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_seat_button_count",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern uint GetButtonCount(IntPtr @event);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_button_state", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_button_state",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern ButtonState GetButtonState(IntPtr @event);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_has_axis", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_has_axis",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern int HasAxis(IntPtr @event, PointerAxis axis);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_axis_value", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_axis_value",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern double GetAxisValue(IntPtr @event, PointerAxis axis);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_dx", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_dx",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern double GetDX(IntPtr @event);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_dy", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_dy",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern double GetDY(IntPtr @event);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_absolute_x", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_absolute_x",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern double GetAbsX(IntPtr @event);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_absolute_y", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_absolute_y",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern double GetAbsY(IntPtr @event);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_absolute_x_transformed", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_absolute_x_transformed",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern double GetAbsXTransformed(IntPtr @event, int width);
 
-        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_absolute_y_transformed", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibInput.lib, EntryPoint = "libinput_event_pointer_get_absolute_y_transformed",
+            CallingConvention = CallingConvention.Cdecl)]
         private static extern double GetAbsYTransformed(IntPtr @event, int height);
     }
 }
-

@@ -28,13 +28,14 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-#if !MINIMAL
-using System.Drawing;
-#endif
 using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Graphics;
 using OpenTK.Input;
+#if !MINIMAL
+using System.Drawing;
+
+#endif
 
 namespace OpenTK.Platform.MacOS
 {
@@ -42,9 +43,11 @@ namespace OpenTK.Platform.MacOS
     {
         private static int UniqueId;
 
-        private static readonly IntPtr selNextEventMatchingMask = Selector.Get("nextEventMatchingMask:untilDate:inMode:dequeue:");
+        private static readonly IntPtr selNextEventMatchingMask =
+            Selector.Get("nextEventMatchingMask:untilDate:inMode:dequeue:");
 
         private static readonly IntPtr selSendEvent = Selector.Get("sendEvent:");
+
         //static readonly IntPtr selUpdateWindows = Selector.Get("updateWindows");
         private static readonly IntPtr selContentView = Selector.Get("contentView");
 
@@ -89,12 +92,14 @@ namespace OpenTK.Platform.MacOS
         private static readonly IntPtr selStyleMask = Selector.Get("styleMask");
 
         private static readonly IntPtr selHasPreciseScrollingDeltas = Selector.Get("hasPreciseScrollingDeltas");
+
         //static readonly IntPtr selIsMiniaturized = Selector.Get("isMiniaturized");
         //static readonly IntPtr selIsZoomed = Selector.Get("isZoomed");
         //static readonly IntPtr selPerformMiniaturize = Selector.Get("performMiniaturize:");
         private static readonly IntPtr selMiniaturize = Selector.Get("miniaturize:");
 
         private static readonly IntPtr selDeminiaturize = Selector.Get("deminiaturize:");
+
         //static readonly IntPtr selPerformZoom = Selector.Get("performZoom:");
         //static readonly IntPtr selZoom = Selector.Get("zoom:");
         private static readonly IntPtr selLevel = Selector.Get("level");
@@ -103,6 +108,7 @@ namespace OpenTK.Platform.MacOS
         private static readonly IntPtr selPresentationOptions = Selector.Get("presentationOptions");
 
         private static readonly IntPtr selSetPresentationOptions = Selector.Get("setPresentationOptions:");
+
         //static readonly IntPtr selIsInFullScreenMode = Selector.Get("isInFullScreenMode");
         //static readonly IntPtr selExitFullScreenModeWithOptions = Selector.Get("exitFullScreenModeWithOptions:");
         //static readonly IntPtr selEnterFullScreenModeWithOptions = Selector.Get("enterFullScreenMode:withOptions:");
@@ -112,7 +118,8 @@ namespace OpenTK.Platform.MacOS
         private static readonly IntPtr selInvalidateCursorRectsForView = Selector.Get("invalidateCursorRectsForView:");
 
         private static readonly IntPtr selInitWithBitmapDataPlanes =
-            Selector.Get("initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bitmapFormat:bytesPerRow:bitsPerPixel:");
+            Selector.Get(
+                "initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bitmapFormat:bytesPerRow:bitsPerPixel:");
 
         private static readonly IntPtr selBitmapData = Selector.Get("bitmapData");
         private static readonly IntPtr selAddRepresentation = Selector.Get("addRepresentation:");
@@ -124,11 +131,49 @@ namespace OpenTK.Platform.MacOS
         private static readonly IntPtr NSBitmapImageRep;
         private static readonly IntPtr NSDeviceRGBColorSpace = Cocoa.ToNSString("NSDeviceRGBColorSpace");
         private static readonly IntPtr NSFilenamesPboardType;
+        private readonly AcceptsFirstResponderDelegate AcceptsFirstResponderHandler;
+        private readonly CanBecomeKeyWindowDelegate CanBecomeKeyWindowHandler;
+        private readonly CanBecomeMainWindowDelegate CanBecomeMainWindowHandler;
+        private IntPtr current_icon_handle;
+        private bool cursorVisible = true;
+        private WindowBorder? deferredWindowBorder;
+        private bool disposed;
+        private readonly DraggingEnteredDelegate DraggingEnteredHandler;
+        private bool exists;
+        private Icon icon;
+        private int normalLevel;
+        private readonly PerformDragOperationDelegate PerformDragOperationHandler;
+        private RectangleF previousBounds;
+        private WindowBorder? previousWindowBorder;
+        private readonly ResetCursorRectsDelegate ResetCursorRectsHandler;
+        private MouseCursor selectedCursor = MouseCursor.Default; // user-selected cursor
+        private bool shouldClose;
+        private int suppressResize;
+        private string title;
+        private IntPtr trackingArea;
+        private WindowBorder windowBorder = WindowBorder.Resizable;
+
+        private readonly IntPtr windowClass;
+        private readonly WindowDidBecomeKeyDelegate WindowDidBecomeKeyHandler;
+        private readonly WindowDidDeminiaturizeDelegate WindowDidDeminiaturizeHandler;
+        private readonly WindowDidMiniaturizeDelegate WindowDidMiniaturizeHandler;
+        private readonly WindowDidMoveDelegate WindowDidMoveHandler;
+        private readonly WindowDidResignKeyDelegate WindowDidResignKeyHandler;
+        private readonly WindowDidResizeDelegate WindowDidResizeHandler;
+
+        private readonly CocoaWindowInfo windowInfo;
+
+        private readonly WindowKeyDownDelegate WindowKeyDownHandler;
+        private readonly WindowShouldCloseDelegate WindowShouldCloseHandler;
+        private readonly WindowShouldZoomToFrameDelegate WindowShouldZoomToFrameHandler;
+        private WindowState windowState = WindowState.Normal;
+        private readonly WindowWillMiniaturizeDelegate WindowWillMiniaturizeHandler;
 
         static CocoaNativeWindow()
         {
             Cocoa.Initialize();
-            NSApplication.Initialize(); // Problem: This does not allow creating a separate app and using CocoaNativeWindow.
+            NSApplication
+                .Initialize(); // Problem: This does not allow creating a separate app and using CocoaNativeWindow.
             NSDefaultRunLoopMode = Cocoa.GetStringConstant(Cocoa.FoundationLibrary, "NSDefaultRunLoopMode");
             NSCursor = Class.Get("NSCursor");
             NSImage = Class.Get("NSImage");
@@ -136,27 +181,8 @@ namespace OpenTK.Platform.MacOS
             NSFilenamesPboardType = Cocoa.GetStringConstant(Cocoa.AppKitLibrary, "NSFilenamesPboardType");
         }
 
-        private CocoaWindowInfo windowInfo;
-
-        private IntPtr windowClass;
-        private IntPtr trackingArea;
-        private IntPtr current_icon_handle;
-        private bool disposed;
-        private bool exists;
-        private bool cursorVisible = true;
-        private Icon icon;
-        private WindowBorder windowBorder = WindowBorder.Resizable;
-        private Nullable<WindowBorder> deferredWindowBorder;
-        private Nullable<WindowBorder> previousWindowBorder;
-        private WindowState windowState = WindowState.Normal;
-        private string title;
-        private RectangleF previousBounds;
-        private int normalLevel;
-        private bool shouldClose;
-        private int suppressResize;
-        private MouseCursor selectedCursor = MouseCursor.Default; // user-selected cursor
-
-        public CocoaNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+        public CocoaNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode,
+            GameWindowFlags options, DisplayDevice device)
         {
             // Create callback methods. We need to store those,
             // otherwise the GC may collect them while they are
@@ -189,7 +215,8 @@ namespace OpenTK.Platform.MacOS
             Class.RegisterMethod(windowClass, WindowWillMiniaturizeHandler, "windowWillMiniaturize:", "v@:@");
             Class.RegisterMethod(windowClass, WindowDidMiniaturizeHandler, "windowDidMiniaturize:", "v@:@");
             Class.RegisterMethod(windowClass, WindowDidDeminiaturizeHandler, "windowDidDeminiaturize:", "v@:@");
-            Class.RegisterMethod(windowClass, WindowShouldZoomToFrameHandler, "windowShouldZoom:toFrame:", "b@:@{NSRect={NSPoint=ff}{NSSize=ff}}");
+            Class.RegisterMethod(windowClass, WindowShouldZoomToFrameHandler, "windowShouldZoom:toFrame:",
+                "b@:@{NSRect={NSPoint=ff}{NSSize=ff}}");
             Class.RegisterMethod(windowClass, WindowShouldCloseHandler, "windowShouldClose:", "b@:@");
             Class.RegisterMethod(windowClass, AcceptsFirstResponderHandler, "acceptsFirstResponder", "b@:");
             Class.RegisterMethod(windowClass, CanBecomeKeyWindowHandler, "canBecomeKeyWindow", "b@:");
@@ -227,7 +254,8 @@ namespace OpenTK.Platform.MacOS
             }
 
             var defer = false;
-            var windowPtr = Cocoa.SendIntPtr(classPtr, Selector.Get("initWithContentRect:styleMask:backing:defer:"), contentRect, (int)style, (int)bufferingType, defer);
+            var windowPtr = Cocoa.SendIntPtr(classPtr, Selector.Get("initWithContentRect:styleMask:backing:defer:"),
+                contentRect, (int)style, (int)bufferingType, defer);
             if (windowPtr == IntPtr.Zero)
             {
                 Debug.Print("[Error] Failed to initialize window with ({0}, {1}, {2}, {3}).",
@@ -264,7 +292,8 @@ namespace OpenTK.Platform.MacOS
             windowInfo = new CocoaWindowInfo(windowPtr);
 
             // Set up behavior
-            Cocoa.SendIntPtr(windowPtr, Selector.Get("setDelegate:"), windowPtr); // The window class acts as its own delegate
+            Cocoa.SendIntPtr(windowPtr, Selector.Get("setDelegate:"),
+                windowPtr); // The window class acts as its own delegate
             Cocoa.SendVoid(windowPtr, Selector.Get("makeKeyWindow"));
             SetTitle(title, false);
 
@@ -284,55 +313,203 @@ namespace OpenTK.Platform.MacOS
                     IntPtr.Zero));
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        private delegate void WindowKeyDownDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        private delegate void WindowDidResizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        private delegate void WindowDidMoveDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        private delegate void WindowDidBecomeKeyDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        private delegate void WindowDidResignKeyDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        private delegate void WindowWillMiniaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        private delegate void WindowDidMiniaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        private delegate void WindowDidDeminiaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        private delegate bool WindowShouldZoomToFrameDelegate(IntPtr self, IntPtr cmd, IntPtr nsWindow, RectangleF toFrame);
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        private delegate bool WindowShouldCloseDelegate(IntPtr self, IntPtr cmd, IntPtr sender);
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        private delegate bool AcceptsFirstResponderDelegate(IntPtr self, IntPtr cmd);
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        private delegate bool CanBecomeKeyWindowDelegate(IntPtr self, IntPtr cmd);
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        private delegate bool CanBecomeMainWindowDelegate(IntPtr self, IntPtr cmd);
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        private delegate void ResetCursorRectsDelegate(IntPtr self, IntPtr cmd);
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        private delegate IntPtr DraggingEnteredDelegate(IntPtr self, IntPtr cmd, IntPtr sender);
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        private delegate bool PerformDragOperationDelegate(IntPtr self, IntPtr cmd, IntPtr sender);
+        public override Icon Icon
+        {
+            get => icon;
+            set
+            {
+                if (value != null && value != icon)
+                {
+                    // Create and set new icon
+                    var nsimg = IntPtr.Zero;
+                    using (Image img = value.ToBitmap())
+                    {
+                        nsimg = Cocoa.ToNSImage(img);
+                        if (nsimg != IntPtr.Zero)
+                        {
+                            Cocoa.SendVoid(NSApplication.Handle, selSetApplicationIconImage, nsimg);
+                        }
+                        else
+                        {
+                            Debug.Print("[Mac] Failed to create NSImage for {0}", value);
+                            return;
+                        }
+                    }
 
-        private WindowKeyDownDelegate WindowKeyDownHandler;
-        private WindowDidResizeDelegate WindowDidResizeHandler;
-        private WindowDidMoveDelegate WindowDidMoveHandler;
-        private WindowDidBecomeKeyDelegate WindowDidBecomeKeyHandler;
-        private WindowDidResignKeyDelegate WindowDidResignKeyHandler;
-        private WindowWillMiniaturizeDelegate WindowWillMiniaturizeHandler;
-        private WindowDidMiniaturizeDelegate WindowDidMiniaturizeHandler;
-        private WindowDidDeminiaturizeDelegate WindowDidDeminiaturizeHandler;
-        private WindowShouldZoomToFrameDelegate WindowShouldZoomToFrameHandler;
-        private WindowShouldCloseDelegate WindowShouldCloseHandler;
-        private AcceptsFirstResponderDelegate AcceptsFirstResponderHandler;
-        private CanBecomeKeyWindowDelegate CanBecomeKeyWindowHandler;
-        private CanBecomeMainWindowDelegate CanBecomeMainWindowHandler;
-        private ResetCursorRectsDelegate ResetCursorRectsHandler;
-        private DraggingEnteredDelegate DraggingEnteredHandler;
-        private PerformDragOperationDelegate PerformDragOperationHandler;
+                    // Release previous icon
+                    if (current_icon_handle != IntPtr.Zero)
+                    {
+                        Cocoa.SendVoid(current_icon_handle, Selector.Release);
+                    }
+
+                    // Raise IconChanged event
+                    current_icon_handle = nsimg;
+                    icon = value;
+                    OnIconChanged(EventArgs.Empty);
+                }
+            }
+        }
+
+        public override string Title
+        {
+            get => Cocoa.FromNSString(Cocoa.SendIntPtr(windowInfo.Handle, selTitle));
+            set => SetTitle(value, true);
+        }
+
+        public override bool Focused => Cocoa.SendBool(windowInfo.Handle, selIsKeyWindow);
+
+        public override bool Visible
+        {
+            get => Cocoa.SendBool(windowInfo.Handle, selIsVisible);
+            set
+            {
+                Cocoa.SendVoid(windowInfo.Handle, selSetIsVisible, value);
+                OnVisibleChanged(EventArgs.Empty);
+            }
+        }
+
+        public override bool Exists => exists;
+
+        public override IWindowInfo WindowInfo => windowInfo;
+
+        public override WindowState WindowState
+        {
+            get => windowState;
+            set
+            {
+                var oldState = windowState;
+                if (oldState == value)
+                {
+                    return;
+                }
+
+                RestoreWindowState();
+
+                if (value == WindowState.Fullscreen)
+                {
+                    if (MacOSFactory.ExclusiveFullscreen)
+                    {
+                        normalLevel = Cocoa.SendInt(windowInfo.Handle, selLevel);
+                        var windowLevel = CG.ShieldingWindowLevel();
+
+                        CG.CaptureAllDisplays();
+                        Cocoa.SendVoid(windowInfo.Handle, selSetLevel, windowLevel);
+                    }
+
+                    previousBounds = InternalBounds;
+                    previousWindowBorder = WindowBorder;
+
+                    SetMenuVisible(false);
+                    HideBorder();
+                    InternalBounds = GetCurrentScreenFrame();
+
+                    windowState = value;
+                    OnWindowStateChanged(EventArgs.Empty);
+                }
+                else if (value == WindowState.Maximized)
+                {
+                    WindowShouldZoomToFrame(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, GetCurrentScreenVisibleFrame());
+                }
+                else if (value == WindowState.Minimized)
+                {
+                    Cocoa.SendVoid(windowInfo.Handle, selMiniaturize, windowInfo.Handle);
+                }
+                else if (value == WindowState.Normal)
+                {
+                    windowState = value;
+                    OnWindowStateChanged(EventArgs.Empty);
+                    OnResize(EventArgs.Empty);
+                }
+            }
+        }
+
+        public override WindowBorder WindowBorder
+        {
+            get => windowBorder;
+            set
+            {
+                // Do not allow border changes during fullscreen mode.
+                if (windowState == WindowState.Fullscreen || windowState == WindowState.Maximized)
+                {
+                    deferredWindowBorder = value;
+                    return;
+                }
+
+                if (windowBorder == value)
+                {
+                    return;
+                }
+
+                SetWindowBorder(value);
+                OnWindowBorderChanged(EventArgs.Empty);
+            }
+        }
+
+        public override Rectangle Bounds
+        {
+            get
+            {
+                var r = Cocoa.SendRect(windowInfo.Handle, selFrame);
+                return new Rectangle(
+                    (int)r.X,
+                    (int)(GetCurrentScreenFrame().Height - r.Y - r.Height),
+                    (int)r.Width,
+                    (int)r.Height);
+            }
+            set => Cocoa.SendVoid(windowInfo.Handle, selSetFrame,
+                new RectangleF(
+                    value.X,
+                    GetCurrentScreenFrame().Height - value.Y - value.Height,
+                    value.Width,
+                    value.Height),
+                true);
+        }
+
+        private RectangleF InternalBounds
+        {
+            get => Cocoa.SendRect(windowInfo.Handle, selFrame);
+            set => Cocoa.SendVoid(windowInfo.Handle, selSetFrame, value, true);
+        }
+
+        public override Size ClientSize
+        {
+            get
+            {
+                var contentViewBounds = Cocoa.SendRect(windowInfo.ViewHandle, selBounds);
+                var bounds = Cocoa.SendRect(windowInfo.Handle, selConvertRectToBacking, contentViewBounds);
+                return new Size((int)bounds.Width, (int)bounds.Height);
+            }
+            set
+            {
+                var r_scaled = Cocoa.SendRect(windowInfo.Handle, selConvertRectFromBacking,
+                    new RectangleF(PointF.Empty, new SizeF(value.Width, value.Height)));
+                var r = Cocoa.SendRect(windowInfo.Handle, selFrameRectForContentRect, r_scaled);
+                Size = new Size((int)r.Width, (int)r.Height);
+            }
+        }
+
+        public override MouseCursor Cursor
+        {
+            get => selectedCursor;
+            set
+            {
+                selectedCursor = value;
+                InvalidateCursorRects();
+            }
+        }
+
+        public override bool CursorVisible
+        {
+            get => cursorVisible;
+            set
+            {
+                if (value != cursorVisible)
+                {
+                    SetCursorVisible(value);
+                    cursorVisible = value;
+                }
+            }
+        }
 
         private IntPtr DraggingEntered(IntPtr self, IntPtr cmd, IntPtr sender)
         {
@@ -349,7 +526,7 @@ namespace OpenTK.Platform.MacOS
         private bool PerformDragOperation(IntPtr self, IntPtr cmd, IntPtr sender)
         {
             var pboard = Cocoa.SendIntPtr(sender, Selector.Get("draggingPasteboard"));
-            
+
             var files = Cocoa.SendIntPtr(pboard, Selector.Get("propertyListForType:"), NSFilenamesPboardType);
 
             var count = Cocoa.SendInt(files, Selector.Get("count"));
@@ -359,7 +536,7 @@ namespace OpenTK.Platform.MacOS
                 var str = Cocoa.SendIntPtr(obj, Selector.Get("cStringUsingEncoding:"), new IntPtr(1));
                 OnFileDrop(Marshal.PtrToStringAuto(str));
             }
-            
+
             return true;
         }
 
@@ -597,14 +774,17 @@ namespace OpenTK.Platform.MacOS
             {
                 modifiers |= KeyModifiers.Control;
             }
+
             if ((mask & NSEventModifierMask.ShiftKeyMask) != 0)
             {
                 modifiers |= KeyModifiers.Shift;
             }
+
             if ((mask & NSEventModifierMask.AlternateKeyMask) != 0)
             {
                 modifiers |= KeyModifiers.Alt;
             }
+
             return modifiers;
         }
 
@@ -614,14 +794,17 @@ namespace OpenTK.Platform.MacOS
             {
                 return MouseButton.Left;
             }
+
             if (cocoaButtonIndex == 1)
             {
                 return MouseButton.Right;
             }
+
             if (cocoaButtonIndex == 2)
             {
                 return MouseButton.Middle;
             }
+
             if (cocoaButtonIndex >= (int)MouseButton.LastButton)
             {
                 return MouseButton.LastButton;
@@ -636,7 +819,8 @@ namespace OpenTK.Platform.MacOS
 
             while (true)
             {
-                var e = Cocoa.SendIntPtr(NSApplication.Handle, selNextEventMatchingMask, uint.MaxValue, IntPtr.Zero, NSDefaultRunLoopMode, true);
+                var e = Cocoa.SendIntPtr(NSApplication.Handle, selNextEventMatchingMask, uint.MaxValue, IntPtr.Zero,
+                    NSDefaultRunLoopMode, true);
 
                 if (e == IntPtr.Zero)
                 {
@@ -647,159 +831,152 @@ namespace OpenTK.Platform.MacOS
                 switch (type)
                 {
                     case NSEventType.KeyDown:
+                    {
+                        var keyCode = (MacOSKeyCode)Cocoa.SendUshort(e, selKeyCode);
+                        var isARepeat = Cocoa.SendBool(e, selIsARepeat);
+                        var key = MacOSKeyMap.GetKey(keyCode);
+
+                        OnKeyDown(key, isARepeat);
+
+                        var s = Cocoa.FromNSString(Cocoa.SendIntPtr(e, selCharactersIgnoringModifiers));
+                        foreach (var c in s)
                         {
-                            var keyCode = (MacOSKeyCode)Cocoa.SendUshort(e, selKeyCode);
-                            var isARepeat = Cocoa.SendBool(e, selIsARepeat);
-                            var key = MacOSKeyMap.GetKey(keyCode);
-
-                            OnKeyDown(key, isARepeat);
-
-                            var s = Cocoa.FromNSString(Cocoa.SendIntPtr(e, selCharactersIgnoringModifiers));
-                            foreach (var c in s)
+                            var intVal = (int)c;
+                            if (!char.IsControl(c) && (intVal < 63232 || intVal > 63235))
                             {
-                                var intVal = (int)c;
-                                if (!Char.IsControl(c) && (intVal < 63232 || intVal > 63235))
-                                {
-                                    // For some reason, arrow keys (mapped 63232-63235)
-                                    // are seen as non-control characters, so get rid of those.
-                                    OnKeyPress(c);
-                                }
+                                // For some reason, arrow keys (mapped 63232-63235)
+                                // are seen as non-control characters, so get rid of those.
+                                OnKeyPress(c);
                             }
                         }
                         break;
-
+                    }
                     case NSEventType.KeyUp:
-                        {
-                            var keyCode = (MacOSKeyCode)Cocoa.SendUshort(e, selKeyCode);
-                            var key = MacOSKeyMap.GetKey(keyCode);
-                            OnKeyUp(key);
-                        }
+                    {
+                        var keyCode = (MacOSKeyCode)Cocoa.SendUshort(e, selKeyCode);
+                        var key = MacOSKeyMap.GetKey(keyCode);
+                        OnKeyUp(key);
                         break;
-
+                    }
                     case NSEventType.FlagsChanged:
-                        {
-                            var modifierFlags = (NSEventModifierMask)Cocoa.SendUint(e, selModifierFlags);
-                            UpdateModifierFlags(GetModifiers(modifierFlags));
-                        }
+                    {
+                        var modifierFlags = (NSEventModifierMask)Cocoa.SendUint(e, selModifierFlags);
+                        UpdateModifierFlags(GetModifiers(modifierFlags));
                         break;
-
+                    }
                     case NSEventType.MouseEntered:
+                    {
+                        var eventTrackingArea = Cocoa.SendIntPtr(e, selTrackingArea);
+                        var trackingAreaOwner = Cocoa.SendIntPtr(eventTrackingArea, selOwner);
+                        if (trackingAreaOwner == windowInfo.ViewHandle)
                         {
-                            var eventTrackingArea = Cocoa.SendIntPtr(e, selTrackingArea);
-                            var trackingAreaOwner = Cocoa.SendIntPtr(eventTrackingArea, selOwner);
-                            if (trackingAreaOwner == windowInfo.ViewHandle)
+                            if (selectedCursor != MouseCursor.Default)
                             {
-                                if (selectedCursor != MouseCursor.Default)
-                                {
-                                    //SetCursor(selectedCursor);
-                                }
-
-                                OnMouseEnter(EventArgs.Empty);
+                                //SetCursor(selectedCursor);
                             }
+
+                            OnMouseEnter(EventArgs.Empty);
                         }
                         break;
-
+                    }
                     case NSEventType.MouseExited:
+                    {
+                        var eventTrackingArea = Cocoa.SendIntPtr(e, selTrackingArea);
+                        var trackingAreaOwner = Cocoa.SendIntPtr(eventTrackingArea, selOwner);
+                        if (trackingAreaOwner == windowInfo.ViewHandle)
                         {
-                            var eventTrackingArea = Cocoa.SendIntPtr(e, selTrackingArea);
-                            var trackingAreaOwner = Cocoa.SendIntPtr(eventTrackingArea, selOwner);
-                            if (trackingAreaOwner == windowInfo.ViewHandle)
+                            if (selectedCursor != MouseCursor.Default)
                             {
-                                if (selectedCursor != MouseCursor.Default)
-                                {
-                                    //SetCursor(MouseCursor.Default);
-                                }
-
-                                OnMouseLeave(EventArgs.Empty);
+                                //SetCursor(MouseCursor.Default);
                             }
+
+                            OnMouseLeave(EventArgs.Empty);
                         }
                         break;
-
+                    }
                     case NSEventType.LeftMouseDragged:
                     case NSEventType.RightMouseDragged:
                     case NSEventType.OtherMouseDragged:
                     case NSEventType.MouseMoved:
+                    {
+                        var p = new Point(MouseState.X, MouseState.Y);
+                        if (CursorVisible)
                         {
-                            var p = new Point(MouseState.X, MouseState.Y);
-                            if (CursorVisible)
-                            {
-                                // Use absolute coordinates
-                                var pf = Cocoa.SendPoint(e, selLocationInWindowOwner);
+                            // Use absolute coordinates
+                            var pf = Cocoa.SendPoint(e, selLocationInWindowOwner);
 
-                                // Convert from points to pixel coordinates
-                                var rf = Cocoa.SendRect(windowInfo.Handle, selConvertRectToBacking,
-                                    new RectangleF(pf.X, pf.Y, 0, 0));
+                            // Convert from points to pixel coordinates
+                            var rf = Cocoa.SendRect(windowInfo.Handle, selConvertRectToBacking,
+                                new RectangleF(pf.X, pf.Y, 0, 0));
 
-                                // See CocoaDrawingGuide under "Converting from Window to View Coordinates"
-                                p = new Point(
-                                    MathHelper.Clamp((int)Math.Round(rf.X), 0, Width),
-                                    MathHelper.Clamp((int)Math.Round(Height - rf.Y), 0, Height));
-                            }
-                            else
-                            {
-                                // Mouse has been disassociated,
-                                // use relative coordinates
-                                var dx = Cocoa.SendFloat(e, selDeltaX);
-                                var dy = Cocoa.SendFloat(e, selDeltaY);
+                            // See CocoaDrawingGuide under "Converting from Window to View Coordinates"
+                            p = new Point(
+                                MathHelper.Clamp((int)Math.Round(rf.X), 0, Width),
+                                MathHelper.Clamp((int)Math.Round(Height - rf.Y), 0, Height));
+                        }
+                        else
+                        {
+                            // Mouse has been disassociated,
+                            // use relative coordinates
+                            var dx = Cocoa.SendFloat(e, selDeltaX);
+                            var dy = Cocoa.SendFloat(e, selDeltaY);
 
-                                p = new Point(
-                                    MathHelper.Clamp((int)Math.Round(p.X + dx), 0, Width),
-                                    MathHelper.Clamp((int)Math.Round(p.Y + dy), 0, Height));
-                            }
+                            p = new Point(
+                                MathHelper.Clamp((int)Math.Round(p.X + dx), 0, Width),
+                                MathHelper.Clamp((int)Math.Round(p.Y + dy), 0, Height));
+                        }
 
-                            // Only raise events when the mouse has actually moved
-                            if (MouseState.X != p.X || MouseState.Y != p.Y)
-                            {
-                                OnMouseMove(p.X, p.Y);
-                            }
+                        // Only raise events when the mouse has actually moved
+                        if (MouseState.X != p.X || MouseState.Y != p.Y)
+                        {
+                            OnMouseMove(p.X, p.Y);
                         }
                         break;
-
+                    }
                     case NSEventType.CursorUpdate:
+                    {
                         break;
-
+                    }
                     case NSEventType.ScrollWheel:
+                    {
+                        float dx, dy;
+                        if (Cocoa.SendBool(e, selHasPreciseScrollingDeltas))
                         {
-                            float dx, dy;
-                            if (Cocoa.SendBool(e, selHasPreciseScrollingDeltas))
-                            {
-                                dx = Cocoa.SendFloat(e, selScrollingDeltaX) * MacOSFactory.ScrollFactor;
-                                dy = Cocoa.SendFloat(e, selScrollingDeltaY) * MacOSFactory.ScrollFactor;
-                            }
-                            else
-                            {
-                                dx = Cocoa.SendFloat(e, selDeltaX);
-                                dy = Cocoa.SendFloat(e, selDeltaY);
-                            }
+                            dx = Cocoa.SendFloat(e, selScrollingDeltaX) * MacOSFactory.ScrollFactor;
+                            dy = Cocoa.SendFloat(e, selScrollingDeltaY) * MacOSFactory.ScrollFactor;
+                        }
+                        else
+                        {
+                            dx = Cocoa.SendFloat(e, selDeltaX);
+                            dy = Cocoa.SendFloat(e, selDeltaY);
+                        }
 
-                            // Only raise wheel events when the user has actually scrolled
-                            if (dx != 0 || dy != 0)
-                            {
-                                // Note: OpenTK follows the win32 convention, where
-                                // (+h, +v) = (right, up). MacOS reports (+h, +v) = (left, up)
-                                // so we need to flip the horizontal scroll direction.
-                                OnMouseWheel(-dx, dy);
-                            }
+                        // Only raise wheel events when the user has actually scrolled
+                        if (dx != 0 || dy != 0)
+                        {
+                            // Note: OpenTK follows the win32 convention, where
+                            // (+h, +v) = (right, up). MacOS reports (+h, +v) = (left, up)
+                            // so we need to flip the horizontal scroll direction.
+                            OnMouseWheel(-dx, dy);
                         }
                         break;
-
+                    }
                     case NSEventType.LeftMouseDown:
                     case NSEventType.RightMouseDown:
                     case NSEventType.OtherMouseDown:
-                        {
-                            var buttonNumber = Cocoa.SendInt(e, selButtonNumber);
-                            OnMouseDown(GetMouseButton(buttonNumber));
-                        }
+                    {
+                        var buttonNumber = Cocoa.SendInt(e, selButtonNumber);
+                        OnMouseDown(GetMouseButton(buttonNumber));
                         break;
-
+                    }
                     case NSEventType.LeftMouseUp:
                     case NSEventType.RightMouseUp:
                     case NSEventType.OtherMouseUp:
-                        {
-                            var buttonNumber = Cocoa.SendInt(e, selButtonNumber);
-                            OnMouseUp(GetMouseButton(buttonNumber));
-                        }
+                    {
+                        var buttonNumber = Cocoa.SendInt(e, selButtonNumber);
+                        OnMouseUp(GetMouseButton(buttonNumber));
                         break;
+                    }
                 }
 
                 Cocoa.SendVoid(NSApplication.Handle, selSendEvent, e);
@@ -830,65 +1007,6 @@ namespace OpenTK.Platform.MacOS
                         new RectangleF(point.X, Height - point.Y, 0, 0)));
             return new Point((int)r.X, (int)(GetCurrentScreenFrame().Height - r.Y));
         }
-
-        public override Icon Icon
-        {
-            get => icon;
-            set
-            {
-                if (value != null && value != icon)
-                {
-                    // Create and set new icon
-                    var nsimg = IntPtr.Zero;
-                    using (Image img = value.ToBitmap())
-                    {
-                        nsimg = Cocoa.ToNSImage(img);
-                        if (nsimg != IntPtr.Zero)
-                        {
-                            Cocoa.SendVoid(NSApplication.Handle, selSetApplicationIconImage, nsimg);
-                        }
-                        else
-                        {
-                            Debug.Print("[Mac] Failed to create NSImage for {0}", value);
-                            return;
-                        }
-                    }
-
-                    // Release previous icon
-                    if (current_icon_handle != IntPtr.Zero)
-                    {
-                        Cocoa.SendVoid(current_icon_handle, Selector.Release);
-                    }
-
-                    // Raise IconChanged event
-                    current_icon_handle = nsimg;
-                    icon = value;
-                    OnIconChanged(EventArgs.Empty);
-                }
-            }
-        }
-
-        public override string Title
-        {
-            get => Cocoa.FromNSString(Cocoa.SendIntPtr(windowInfo.Handle, selTitle));
-            set => SetTitle(value, true);
-        }
-
-        public override bool Focused => Cocoa.SendBool(windowInfo.Handle, selIsKeyWindow);
-
-        public override bool Visible
-        {
-            get => Cocoa.SendBool(windowInfo.Handle, selIsVisible);
-            set
-            {
-                Cocoa.SendVoid(windowInfo.Handle, selSetIsVisible, value);
-                OnVisibleChanged(EventArgs.Empty);
-            }
-        }
-
-        public override bool Exists => exists;
-
-        public override IWindowInfo WindowInfo => windowInfo;
 
         private void RestoreWindowState()
         {
@@ -941,79 +1059,6 @@ namespace OpenTK.Platform.MacOS
             previousWindowBorder = null;
         }
 
-        public override WindowState WindowState
-        {
-            get => windowState;
-            set
-            {
-                var oldState = windowState;
-                if (oldState == value)
-                {
-                    return;
-                }
-
-                RestoreWindowState();
-
-                if (value == WindowState.Fullscreen)
-                {
-                    if (MacOSFactory.ExclusiveFullscreen)
-                    {
-                        normalLevel = Cocoa.SendInt(windowInfo.Handle, selLevel);
-                        var windowLevel = CG.ShieldingWindowLevel();
-
-                        CG.CaptureAllDisplays();
-                        Cocoa.SendVoid(windowInfo.Handle, selSetLevel, windowLevel);
-                    }
-
-                    previousBounds = InternalBounds;
-                    previousWindowBorder = WindowBorder;
-
-                    SetMenuVisible(false);
-                    HideBorder();
-                    InternalBounds = GetCurrentScreenFrame();
-
-                    windowState = value;
-                    OnWindowStateChanged(EventArgs.Empty);
-                }
-                else if (value == WindowState.Maximized)
-                {
-                    WindowShouldZoomToFrame(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, GetCurrentScreenVisibleFrame());
-                }
-                else if (value == WindowState.Minimized)
-                {
-                    Cocoa.SendVoid(windowInfo.Handle, selMiniaturize, windowInfo.Handle);
-                }
-                else if (value == WindowState.Normal)
-                {
-                    windowState = value;
-                    OnWindowStateChanged(EventArgs.Empty);
-                    OnResize(EventArgs.Empty);
-                }
-            }
-        }
-
-        public override WindowBorder WindowBorder
-        {
-            get => windowBorder;
-            set
-            {
-                // Do not allow border changes during fullscreen mode.
-                if (windowState == WindowState.Fullscreen || windowState == WindowState.Maximized)
-                {
-                    deferredWindowBorder = value;
-                    return;
-                }
-
-                if (windowBorder == value)
-                {
-                    return;
-                }
-
-                SetWindowBorder(value);
-                OnWindowBorderChanged(EventArgs.Empty);
-            }
-        }
-
         private void SetWindowBorder(WindowBorder windowBorder)
         {
             this.windowBorder = windowBorder;
@@ -1024,64 +1069,15 @@ namespace OpenTK.Platform.MacOS
         {
             switch (windowBorder)
             {
-                case WindowBorder.Resizable: return NSWindowStyle.Closable | NSWindowStyle.Miniaturizable | NSWindowStyle.Titled | NSWindowStyle.Resizable;
-                case WindowBorder.Fixed: return NSWindowStyle.Closable | NSWindowStyle.Miniaturizable | NSWindowStyle.Titled;
+                case WindowBorder.Resizable:
+                    return NSWindowStyle.Closable | NSWindowStyle.Miniaturizable | NSWindowStyle.Titled |
+                           NSWindowStyle.Resizable;
+                case WindowBorder.Fixed:
+                    return NSWindowStyle.Closable | NSWindowStyle.Miniaturizable | NSWindowStyle.Titled;
                 case WindowBorder.Hidden: return NSWindowStyle.Borderless;
             }
 
-            return (NSWindowStyle)0;
-        }
-
-        public override Rectangle Bounds
-        {
-            get
-            {
-                var r = Cocoa.SendRect(windowInfo.Handle, selFrame);
-                return new Rectangle(
-                    (int)r.X,
-                    (int)(GetCurrentScreenFrame().Height - r.Y - r.Height),
-                    (int)r.Width,
-                    (int)r.Height);
-            }
-            set => Cocoa.SendVoid(windowInfo.Handle, selSetFrame,
-                new RectangleF(
-                    value.X,
-                    GetCurrentScreenFrame().Height - value.Y - value.Height,
-                    value.Width,
-                    value.Height),
-                true);
-        }
-
-        private RectangleF InternalBounds
-        {
-            get => Cocoa.SendRect(windowInfo.Handle, selFrame);
-            set => Cocoa.SendVoid(windowInfo.Handle, selSetFrame, value, true);
-        }
-
-        public override Size ClientSize
-        {
-            get
-            {
-                var contentViewBounds = Cocoa.SendRect(windowInfo.ViewHandle, selBounds);
-                var bounds = Cocoa.SendRect(windowInfo.Handle, selConvertRectToBacking, contentViewBounds);
-                return new Size((int)bounds.Width, (int)bounds.Height);
-            }
-            set
-            {
-                var r_scaled = Cocoa.SendRect(windowInfo.Handle, selConvertRectFromBacking, new RectangleF(PointF.Empty, new SizeF (value.Width, value.Height)));
-                var r = Cocoa.SendRect(windowInfo.Handle, selFrameRectForContentRect, r_scaled);
-                Size = new Size((int)r.Width, (int)r.Height);
-            }
-        }
-
-        public override MouseCursor Cursor
-        {
-            get => selectedCursor;
-            set
-            {
-                selectedCursor = value;
-                InvalidateCursorRects();
-            }
+            return 0;
         }
 
         private static IntPtr ToNSCursor(MouseCursor cursor)
@@ -1124,11 +1120,12 @@ namespace OpenTK.Platform.MacOS
                     if (BitConverter.IsLittleEndian)
                     {
                         argb =
-                            (argb & 0x000000FFu) << 24 |
-                            (argb & 0x0000FF00u) << 8 |
-                            (argb & 0x00FF0000u) >> 8 |
-                            (argb & 0xFF000000u) >> 24;
+                            ((argb & 0x000000FFu) << 24) |
+                            ((argb & 0x0000FF00u) << 8) |
+                            ((argb & 0x00FF0000u) >> 8) |
+                            ((argb & 0xFF000000u) >> 24);
                     }
+
                     Marshal.WriteInt32(data, i, unchecked((int)argb));
                     i += 4;
                 }
@@ -1146,6 +1143,7 @@ namespace OpenTK.Platform.MacOS
                 Cocoa.SendVoid(imgdata, Selector.Release);
                 return IntPtr.Zero;
             }
+
             Cocoa.SendVoid(img, selAddRepresentation, imgdata);
 
             // Convert the NSImage to a NSCursor
@@ -1187,19 +1185,6 @@ namespace OpenTK.Platform.MacOS
         private void InvalidateCursorRects()
         {
             Cocoa.SendVoid(windowInfo.Handle, selInvalidateCursorRectsForView, windowInfo.ViewHandle);
-        }
-
-        public override bool CursorVisible
-        {
-            get => cursorVisible;
-            set
-            {
-                if (value != cursorVisible)
-                {
-                    SetCursorVisible(value);
-                    cursorVisible = value;
-                }
-            }
         }
 
         protected override void Dispose(bool disposing)
@@ -1286,7 +1271,7 @@ namespace OpenTK.Platform.MacOS
             else if (visible)
             {
                 var p = PointToScreen(new Point(MouseState.X, MouseState.Y));
-                Mouse.SetPosition((int)p.X, (int)p.Y);
+                Mouse.SetPosition(p.X, p.Y);
             }
 
             CG.AssociateMouseAndMouseCursorPosition(visible);
@@ -1295,8 +1280,10 @@ namespace OpenTK.Platform.MacOS
 
         private void SetMenuVisible(bool visible)
         {
-            var options = (NSApplicationPresentationOptions)Cocoa.SendInt(NSApplication.Handle, selPresentationOptions);
-            var changedOptions = NSApplicationPresentationOptions.HideMenuBar | NSApplicationPresentationOptions.HideDock;
+            var options =
+                (NSApplicationPresentationOptions)Cocoa.SendInt(NSApplication.Handle, selPresentationOptions);
+            var changedOptions =
+                NSApplicationPresentationOptions.HideMenuBar | NSApplicationPresentationOptions.HideDock;
 
             if (!visible)
             {
@@ -1356,5 +1343,53 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate void WindowKeyDownDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate void WindowDidResizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate void WindowDidMoveDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate void WindowDidBecomeKeyDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate void WindowDidResignKeyDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate void WindowWillMiniaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate void WindowDidMiniaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate void WindowDidDeminiaturizeDelegate(IntPtr self, IntPtr cmd, IntPtr notification);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate bool WindowShouldZoomToFrameDelegate(IntPtr self, IntPtr cmd, IntPtr nsWindow,
+            RectangleF toFrame);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate bool WindowShouldCloseDelegate(IntPtr self, IntPtr cmd, IntPtr sender);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate bool AcceptsFirstResponderDelegate(IntPtr self, IntPtr cmd);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate bool CanBecomeKeyWindowDelegate(IntPtr self, IntPtr cmd);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate bool CanBecomeMainWindowDelegate(IntPtr self, IntPtr cmd);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate void ResetCursorRectsDelegate(IntPtr self, IntPtr cmd);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate IntPtr DraggingEnteredDelegate(IntPtr self, IntPtr cmd, IntPtr sender);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        private delegate bool PerformDragOperationDelegate(IntPtr self, IntPtr cmd, IntPtr sender);
     }
 }

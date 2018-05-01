@@ -39,49 +39,13 @@ namespace OpenTK.Platform
     //        that is added.
     internal class DeviceCollection<T> : IEnumerable<T>
     {
-        internal struct Enumerator : IEnumerator<T>
-        {
-            private int Index;
-            private DeviceCollection<T> Collection;
-
-            internal Enumerator(DeviceCollection<T> collection)
-            {
-                Collection = collection;
-                Index = -1;
-                Current = default(T);
-            }
-
-            public T Current { get; private set; }
-
-            object IEnumerator.Current => Current;
-
-            public void Dispose()
-            {
-            }
-
-            public bool MoveNext()
-            {
-                do
-                {
-                    ++Index;
-                    if (Index < Collection.Devices.Count)
-                    {
-                        Current = Collection.Devices[Index];
-                    }
-                } while (Index < Collection.Devices.Count && Collection.Devices[Index] == null);
-
-                return Index < Collection.Devices.Count;
-            }
-
-            public void Reset()
-            {
-                Index = -1;
-                Current = default(T);
-            }
-        }
+        private readonly List<T> Devices = new List<T>();
 
         private readonly Dictionary<long, int> Map = new Dictionary<long, int>();
-        private readonly List<T> Devices = new List<T>();
+
+        public T this[int index] => FromIndex(index);
+
+        public int Count => Map.Count;
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
@@ -99,13 +63,11 @@ namespace OpenTK.Platform
             return new Enumerator(this);
         }
 
-        public T this[int index] => FromIndex(index);
-
         /// \internal
         /// <summary>
-        /// Adds or replaces a device based on its hardware id.
-        /// A zero-based device index will be generated automatically
-        /// for the first available device slot.
+        ///     Adds or replaces a device based on its hardware id.
+        ///     A zero-based device index will be generated automatically
+        ///     for the first available device slot.
         /// </summary>
         /// <param name="id">The hardware id for the device.</param>
         /// <param name="device">The device instance.</param>
@@ -146,10 +108,8 @@ namespace OpenTK.Platform
             {
                 return Devices[index];
             }
-            else
-            {
-                return default(T);
-            }
+
+            return default(T);
         }
 
         public bool FromIndex(int index, out T device)
@@ -159,11 +119,9 @@ namespace OpenTK.Platform
                 device = Devices[index];
                 return true;
             }
-            else
-            {
-                device = default(T);
-                return false;
-            }
+
+            device = default(T);
+            return false;
         }
 
         public T FromHardwareId(long id)
@@ -172,10 +130,8 @@ namespace OpenTK.Platform
             {
                 return FromIndex(Map[id]);
             }
-            else
-            {
-                return default(T);
-            }
+
+            return default(T);
         }
 
         public bool FromHardwareId(long id, out T device)
@@ -185,14 +141,10 @@ namespace OpenTK.Platform
                 device = FromIndex(Map[id]);
                 return true;
             }
-            else
-            {
-                device = default(T);
-                return false;
-            }
-        }
 
-        public int Count => Map.Count;
+            device = default(T);
+            return false;
+        }
 
         // Return the index of the first empty slot in Devices.
         // If no empty slot exists, append a new one and return
@@ -210,6 +162,46 @@ namespace OpenTK.Platform
             Devices.Add(default(T));
             return Devices.Count - 1;
         }
+
+        internal struct Enumerator : IEnumerator<T>
+        {
+            private int Index;
+            private readonly DeviceCollection<T> Collection;
+
+            internal Enumerator(DeviceCollection<T> collection)
+            {
+                Collection = collection;
+                Index = -1;
+                Current = default(T);
+            }
+
+            public T Current { get; private set; }
+
+            object IEnumerator.Current => Current;
+
+            public void Dispose()
+            {
+            }
+
+            public bool MoveNext()
+            {
+                do
+                {
+                    ++Index;
+                    if (Index < Collection.Devices.Count)
+                    {
+                        Current = Collection.Devices[Index];
+                    }
+                } while (Index < Collection.Devices.Count && Collection.Devices[Index] == null);
+
+                return Index < Collection.Devices.Count;
+            }
+
+            public void Reset()
+            {
+                Index = -1;
+                Current = default(T);
+            }
+        }
     }
 }
-

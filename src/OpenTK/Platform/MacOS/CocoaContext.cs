@@ -26,20 +26,17 @@
 //
 
 using System;
-using OpenTK.Platform;
-using OpenTK.Graphics;
-using OpenTK.Platform.MacOS;
-using System.Diagnostics;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
+using OpenTK.Graphics;
+using OpenTK.Platform;
+using OpenTK.Platform.MacOS;
 
 namespace OpenTK
 {
     internal class CocoaContext : DesktopGraphicsContext
     {
-        private CocoaWindowInfo cocoaWindow;
-        private IntPtr shareContextRef;
-
         private static readonly IntPtr NSOpenGLContext = Class.Get("NSOpenGLContext");
         private static readonly IntPtr selCurrentContext = Selector.Get("currentContext");
         private static readonly IntPtr selFlushBuffer = Selector.Get("flushBuffer");
@@ -54,12 +51,16 @@ namespace OpenTK
             "/System/Library/Frameworks/OpenGL.framework/OpenGLES",
             AddImageFlags.ReturnOnError);
 
+        private readonly CocoaWindowInfo cocoaWindow;
+        private readonly IntPtr shareContextRef;
+
         static CocoaContext()
         {
             Cocoa.Initialize();
         }
 
-        public CocoaContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, int majorVersion, int minorVersion)
+        public CocoaContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, int majorVersion,
+            int minorVersion)
         {
             Debug.Print("Context Type: {0}", shareContext);
             Debug.Print("Window info: {0}", window);
@@ -73,7 +74,9 @@ namespace OpenTK
 
             if (shareContext is GraphicsContext)
             {
-                var shareHandle = shareContext != null ? (shareContext as IGraphicsContextInternal).Context : (ContextHandle)IntPtr.Zero;
+                var shareHandle = shareContext != null
+                    ? (shareContext as IGraphicsContextInternal).Context
+                    : (ContextHandle)IntPtr.Zero;
                 shareContextRef = shareHandle.Handle;
             }
 
@@ -85,12 +88,14 @@ namespace OpenTK
             CreateContext(mode, cocoaWindow, shareContextRef, majorVersion, minorVersion, true);
         }
 
-        public CocoaContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, int majorVersion, int minorVersion)
+        public CocoaContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, int majorVersion,
+            int minorVersion)
         {
             if (handle == ContextHandle.Zero)
             {
                 throw new ArgumentException("handle");
             }
+
             if (window == null)
             {
                 throw new ArgumentNullException(nameof(window));
@@ -100,14 +105,35 @@ namespace OpenTK
             cocoaWindow = (CocoaWindowInfo)window;
         }
 
-        private void AddPixelAttrib(List<NSOpenGLPixelFormatAttribute> attributes, NSOpenGLPixelFormatAttribute attribute)
+        public override bool IsCurrent => Handle.Handle == CurrentContext;
+
+        public static IntPtr CurrentContext => Cocoa.SendIntPtr(NSOpenGLContext, selCurrentContext);
+
+        public override int SwapInterval
+        {
+            get => GetContextValue(NSOpenGLContextParameter.SwapInterval);
+            set
+            {
+                if (value < 0)
+                {
+                    // NSOpenGL does not offer EXT_swap_control_tear yet
+                    value = 1;
+                }
+
+                SetContextValue(value, NSOpenGLContextParameter.SwapInterval);
+            }
+        }
+
+        private void AddPixelAttrib(List<NSOpenGLPixelFormatAttribute> attributes,
+            NSOpenGLPixelFormatAttribute attribute)
         {
             Debug.Print(attribute.ToString());
 
             attributes.Add(attribute);
         }
 
-        private void AddPixelAttrib(List<NSOpenGLPixelFormatAttribute> attributes, NSOpenGLPixelFormatAttribute attribute, int value)
+        private void AddPixelAttrib(List<NSOpenGLPixelFormatAttribute> attributes,
+            NSOpenGLPixelFormatAttribute attribute, int value)
         {
             Debug.Print("{0} : {1}", attribute, value);
 
@@ -115,7 +141,8 @@ namespace OpenTK
             attributes.Add((NSOpenGLPixelFormatAttribute)value);
         }
 
-        private void CreateContext(GraphicsMode mode, CocoaWindowInfo cocoaWindow, IntPtr shareContextRef, int majorVersion, int minorVersion, bool fullscreen)
+        private void CreateContext(GraphicsMode mode, CocoaWindowInfo cocoaWindow, IntPtr shareContextRef,
+            int majorVersion, int minorVersion, bool fullscreen)
         {
             // Prepare attributes
             var pixelFormat = SelectPixelFormat(mode, majorVersion, minorVersion);
@@ -126,10 +153,11 @@ namespace OpenTK
 
             // Create context
             var context = Cocoa.SendIntPtr(NSOpenGLContext, Selector.Alloc);
-            context = Cocoa.SendIntPtr(context, Selector.Get("initWithFormat:shareContext:"), pixelFormat, shareContextRef);
+            context = Cocoa.SendIntPtr(context, Selector.Get("initWithFormat:shareContext:"), pixelFormat,
+                shareContextRef);
             if (context == IntPtr.Zero)
             {
-                throw new GraphicsException(String.Format(
+                throw new GraphicsException(string.Format(
                     "Failed to construct NSOpenGLContext",
                     mode));
             }
@@ -154,14 +182,15 @@ namespace OpenTK
             var attributes = new List<NSOpenGLPixelFormatAttribute>();
 
             var profile = NSOpenGLProfile.VersionLegacy;
-            if (majorVersion > 3 || (majorVersion == 3 && minorVersion >= 2))
+            if (majorVersion > 3 || majorVersion == 3 && minorVersion >= 2)
             {
                 profile = NSOpenGLProfile.Version3_2Core;
                 Debug.Print("Running the OpenGL core profile.");
             }
             else
             {
-                Debug.Print("Running the legacy OpenGL profile. Start with version major=3, minor=2 or later for the 3.2 profile.");
+                Debug.Print(
+                    "Running the legacy OpenGL profile. Start with version major=3, minor=2 or later for the 3.2 profile.");
             }
 
             Debug.Print("NSGL pixel format attributes:");
@@ -208,7 +237,7 @@ namespace OpenTK
                 AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.Accelerated);
             }
 
-            AddPixelAttrib(attributes, (NSOpenGLPixelFormatAttribute)0);
+            AddPixelAttrib(attributes, 0);
 
             Debug.Unindent();
 
@@ -217,6 +246,7 @@ namespace OpenTK
             {
                 Debug.Write(attributes[i] + "  ");
             }
+
             Debug.WriteLine("");
 
             // Create pixel format
@@ -237,7 +267,7 @@ namespace OpenTK
         {
             var pf = IntPtr.Zero;
             var count = 0;
-            Cgl.ChoosePixelFormat(new int[] { (int)Cgl.PixelFormatBool.Accelerated, 0 },
+            Cgl.ChoosePixelFormat(new[] { (int)Cgl.PixelFormatBool.Accelerated, 0 },
                 ref pf, ref count);
 
             if (pf != IntPtr.Zero)
@@ -277,36 +307,18 @@ namespace OpenTK
             Cocoa.SendVoid(Handle.Handle, selMakeCurrentContext);
         }
 
-        public override bool IsCurrent => Handle.Handle == CurrentContext;
-
-        public static IntPtr CurrentContext => Cocoa.SendIntPtr(NSOpenGLContext, selCurrentContext);
-
-        private unsafe void SetContextValue (int val, NSOpenGLContextParameter par)
+        private unsafe void SetContextValue(int val, NSOpenGLContextParameter par)
         {
             var p = &val;
             Cocoa.SendVoid(Handle.Handle, Selector.Get("setValues:forParameter:"), (IntPtr)p, (int)par);
         }
 
-        private unsafe int GetContextValue (NSOpenGLContextParameter par)
+        private unsafe int GetContextValue(NSOpenGLContextParameter par)
         {
             int ret;
             var p = &ret;
             Cocoa.SendVoid(Handle.Handle, Selector.Get("getValues:forParameter:"), (IntPtr)p, (int)par);
             return ret;
-        }
-
-        public override int SwapInterval
-        {
-            get => GetContextValue(NSOpenGLContextParameter.SwapInterval);
-            set
-            {
-                if (value < 0)
-                {
-                    // NSOpenGL does not offer EXT_swap_control_tear yet
-                    value = 1;
-                }
-                SetContextValue(value, NSOpenGLContextParameter.SwapInterval);
-            }
         }
 
         public override void Update(IWindowInfo window)
@@ -376,18 +388,20 @@ namespace OpenTK
                     symbol = NS.LookupSymbolInImage(opengl, new IntPtr(fun),
                         SymbolLookupFlags.Bind | SymbolLookupFlags.ReturnOnError);
                 }
+
                 if (symbol == IntPtr.Zero && opengles != IntPtr.Zero)
                 {
                     symbol = NS.LookupSymbolInImage(opengles, new IntPtr(fun),
                         SymbolLookupFlags.Bind | SymbolLookupFlags.ReturnOnError);
                 }
+
                 if (symbol != IntPtr.Zero)
                 {
                     address = NS.AddressOfSymbol(symbol);
                 }
+
                 return address;
             }
         }
     }
 }
-

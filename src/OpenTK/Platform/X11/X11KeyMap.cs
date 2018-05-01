@@ -1,4 +1,4 @@
-﻿﻿//
+﻿//
 // X11KeyMap.cs
 //
 // Author:
@@ -565,12 +565,12 @@ namespace OpenTK.Platform.X11
                     return Key.Home;
                 case XKey.End:
                     return Key.End;
-            //case XKey.Prior: return Key.PageUp;   // XKey.Prior == XKey.Page_Up
+                //case XKey.Prior: return Key.PageUp;   // XKey.Prior == XKey.Page_Up
                 case XKey.Page_Up:
                     return Key.PageUp;
                 case XKey.Page_Down:
                     return Key.PageDown;
-            //case XKey.Next: return Key.PageDown;  // XKey.Next == XKey.Page_Down
+                //case XKey.Next: return Key.PageDown;  // XKey.Next == XKey.Page_Down
 
                 case XKey.KP_Add:
                     return Key.KeypadAdd;
@@ -616,10 +616,8 @@ namespace OpenTK.Platform.X11
             {
                 return TranslateKeyXkb(e.display, e.keycode, out key);
             }
-            else
-            {
-                return TranslateKeyX11(ref e, out key);
-            }
+
+            return TranslateKeyX11(ref e, out key);
         }
 
         private bool TranslateKeyX11(ref XKeyEvent e, out Key key)
@@ -631,9 +629,10 @@ namespace OpenTK.Platform.X11
             {
                 key = TranslateXKey(keysym2);
             }
+
             if (key == Key.Unknown)
             {
-                Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.", e.keycode, (XKey)keysym, (XKey)keysym2);
+                Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.", e.keycode, keysym, keysym2);
             }
 
             return key != Key.Unknown;
@@ -652,20 +651,46 @@ namespace OpenTK.Platform.X11
             var keysym = Xkb.KeycodeToKeysym(display, keycode, 0, 1);
             switch (keysym)
             {
-                case XKey.KP_0: key = Key.Keypad0; return true;
-                case XKey.KP_1: key = Key.Keypad1; return true;
-                case XKey.KP_2: key = Key.Keypad2; return true;
-                case XKey.KP_3: key = Key.Keypad3; return true;
-                case XKey.KP_4: key = Key.Keypad4; return true;
-                case XKey.KP_5: key = Key.Keypad5; return true;
-                case XKey.KP_6: key = Key.Keypad6; return true;
-                case XKey.KP_7: key = Key.Keypad7; return true;
-                case XKey.KP_8: key = Key.Keypad8; return true;
-                case XKey.KP_9: key = Key.Keypad9; return true;
+                case XKey.KP_0:
+                    key = Key.Keypad0;
+                    return true;
+                case XKey.KP_1:
+                    key = Key.Keypad1;
+                    return true;
+                case XKey.KP_2:
+                    key = Key.Keypad2;
+                    return true;
+                case XKey.KP_3:
+                    key = Key.Keypad3;
+                    return true;
+                case XKey.KP_4:
+                    key = Key.Keypad4;
+                    return true;
+                case XKey.KP_5:
+                    key = Key.Keypad5;
+                    return true;
+                case XKey.KP_6:
+                    key = Key.Keypad6;
+                    return true;
+                case XKey.KP_7:
+                    key = Key.Keypad7;
+                    return true;
+                case XKey.KP_8:
+                    key = Key.Keypad8;
+                    return true;
+                case XKey.KP_9:
+                    key = Key.Keypad9;
+                    return true;
                 case XKey.KP_Separator:
-                case XKey.KP_Decimal: key = Key.KeypadDecimal; return true;
-                case XKey.KP_Equal: key = Key.Unknown; return false; // Todo: fixme
-                case XKey.KP_Enter: key = Key.KeypadEnter; return true;
+                case XKey.KP_Decimal:
+                    key = Key.KeypadDecimal;
+                    return true;
+                case XKey.KP_Equal:
+                    key = Key.Unknown;
+                    return false; // Todo: fixme
+                case XKey.KP_Enter:
+                    key = Key.KeypadEnter;
+                    return true;
             }
 
             // Translate non-alphanumeric keys using the primary group
@@ -684,6 +709,7 @@ namespace OpenTK.Platform.X11
             {
                 key = keycodes[keycode];
             }
+
             return key != Key.Unknown;
         }
 
@@ -702,10 +728,18 @@ namespace OpenTK.Platform.X11
                 case 1: return MouseButton.Left;
                 case 2: return MouseButton.Middle;
                 case 3: return MouseButton.Right;
-                case 4: wheely = +1; return MouseButton.LastButton;
-                case 5: wheely = -1; return MouseButton.LastButton;
-                case 6: wheelx = +1; return MouseButton.LastButton;
-                case 7: wheelx = -1; return MouseButton.LastButton;
+                case 4:
+                    wheely = +1;
+                    return MouseButton.LastButton;
+                case 5:
+                    wheely = -1;
+                    return MouseButton.LastButton;
+                case 6:
+                    wheelx = +1;
+                    return MouseButton.LastButton;
+                case 7:
+                    wheelx = -1;
+                    return MouseButton.LastButton;
                 case 8: return MouseButton.Button1;
                 case 9: return MouseButton.Button2;
                 case 10: return MouseButton.Button3;

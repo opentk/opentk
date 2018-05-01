@@ -33,27 +33,27 @@ namespace OpenTK.Platform
 {
     /// \internal
     /// <summary>
-    /// Implements IGamePadDriver using OpenTK.Input.Joystick
-    /// and a gamepad-specific axis/button mapping.
+    ///     Implements IGamePadDriver using OpenTK.Input.Joystick
+    ///     and a gamepad-specific axis/button mapping.
     /// </summary>
     /// <remarks>
-    /// <para>
-    /// This class supports OpenTK and is not meant to be accessed by user code.
-    /// </para>
-    /// <para>
-    /// To support gamepads on platforms that do not offer a gamepad-optimized API,
-    /// we need to use the generic OpenTK.Input.Joystick and implement a custom
-    /// mapping scheme to provide a stable mapping to OpenTK.Input.GamePad. This
-    /// class implements this mapping scheme.
-    /// </para>
+    ///     <para>
+    ///         This class supports OpenTK and is not meant to be accessed by user code.
+    ///     </para>
+    ///     <para>
+    ///         To support gamepads on platforms that do not offer a gamepad-optimized API,
+    ///         we need to use the generic OpenTK.Input.Joystick and implement a custom
+    ///         mapping scheme to provide a stable mapping to OpenTK.Input.GamePad. This
+    ///         class implements this mapping scheme.
+    ///     </para>
     /// </remarks>
     internal class MappedGamePadDriver : IGamePadDriver
     {
-        private readonly GamePadConfigurationDatabase database =
-            new GamePadConfigurationDatabase();
-
         private readonly Dictionary<Guid, GamePadConfiguration> configurations =
             new Dictionary<Guid, GamePadConfiguration>();
+
+        private readonly GamePadConfigurationDatabase database =
+            new GamePadConfigurationDatabase();
 
         public GamePadState GetState(int index)
         {
@@ -72,101 +72,99 @@ namespace OpenTK.Platform
                     switch (map.Source.Type)
                     {
                         case ConfigurationType.Axis:
+                        {
+                            // JoystickAxis -> Buttons/GamePadAxes mapping
+                            var source_axis = map.Source.Axis;
+                            var value = joy.GetAxisRaw(source_axis);
+
+                            switch (map.Target.Type)
                             {
-                                // JoystickAxis -> Buttons/GamePadAxes mapping
-                                var source_axis = map.Source.Axis;
-                                var value = joy.GetAxisRaw(source_axis);
+                                case ConfigurationType.Axis:
+                                    pad.SetAxis(map.Target.Axis, value);
+                                    break;
 
-                                switch (map.Target.Type)
-                                {
-                                    case ConfigurationType.Axis:
-                                        pad.SetAxis(map.Target.Axis, value);
-                                        break;
-
-                                    case ConfigurationType.Button:
-                                        // Todo: if SDL2 GameController config is ever updated to
-                                        // distinguish between negative/positive axes, then remove
-                                        // Math.Abs below.
-                                        // Button is considered press when the axis is >= 0.5 from center
-                                        pad.SetButton(map.Target.Button, Math.Abs(value) >= short.MaxValue >> 1);
-                                        break;
-                                }
+                                case ConfigurationType.Button:
+                                    // Todo: if SDL2 GameController config is ever updated to
+                                    // distinguish between negative/positive axes, then remove
+                                    // Math.Abs below.
+                                    // Button is considered press when the axis is >= 0.5 from center
+                                    pad.SetButton(map.Target.Button, Math.Abs(value) >= short.MaxValue >> 1);
+                                    break;
                             }
                             break;
-
+                        }
                         case ConfigurationType.Button:
+                        {
+                            // JoystickButton -> Buttons/GamePadAxes mapping
+                            var source_button = map.Source.Button;
+                            var pressed = joy.GetButton(source_button) == ButtonState.Pressed;
+
+                            switch (map.Target.Type)
                             {
-                                // JoystickButton -> Buttons/GamePadAxes mapping
-                                var source_button = map.Source.Button;
-                                var pressed = joy.GetButton(source_button) == ButtonState.Pressed;
+                                case ConfigurationType.Axis:
+                                    // Todo: if SDL2 GameController config is ever updated to
+                                    // distinguish between negative/positive axes, then update
+                                    // the following line to support both.
+                                    var value = pressed
+                                        ? short.MaxValue
+                                        : (map.Target.Axis & (GamePadAxes.LeftTrigger | GamePadAxes.RightTrigger)) != 0
+                                            ? short.MinValue
+                                            : (short)0;
+                                    pad.SetAxis(map.Target.Axis, value);
+                                    break;
 
-                                switch (map.Target.Type)
-                                {
-                                    case ConfigurationType.Axis:
-                                        // Todo: if SDL2 GameController config is ever updated to
-                                        // distinguish between negative/positive axes, then update
-                                        // the following line to support both.
-                                        var value = pressed ?
-                                            short.MaxValue :
-                                            (map.Target.Axis & (GamePadAxes.LeftTrigger | GamePadAxes.RightTrigger)) != 0 ?
-                                                short.MinValue :
-                                                (short)0;
-                                        pad.SetAxis(map.Target.Axis, value);
-                                        break;
-
-                                    case ConfigurationType.Button:
-                                        pad.SetButton(map.Target.Button, pressed);
-                                        break;
-                                }
+                                case ConfigurationType.Button:
+                                    pad.SetButton(map.Target.Button, pressed);
+                                    break;
                             }
                             break;
-
+                        }
                         case ConfigurationType.Hat:
+                        {
+                            // JoystickHat -> Buttons/GamePadAxes mapping
+                            var source_hat = map.Source.Hat;
+                            var state = joy.GetHat(source_hat);
+
+                            var pressed = false;
+                            switch (map.Source.HatPosition)
                             {
-                                // JoystickHat -> Buttons/GamePadAxes mapping
-                                var source_hat = map.Source.Hat;
-                                var state = joy.GetHat(source_hat);
+                                case HatPosition.Down:
+                                    pressed = state.IsDown;
+                                    break;
 
-                                var pressed = false;
-                                switch (map.Source.HatPosition)
-                                {
-                                    case HatPosition.Down:
-                                        pressed = state.IsDown;
-                                        break;
+                                case HatPosition.Up:
+                                    pressed = state.IsUp;
+                                    break;
 
-                                    case HatPosition.Up:
-                                        pressed = state.IsUp;
-                                        break;
+                                case HatPosition.Left:
+                                    pressed = state.IsLeft;
+                                    break;
 
-                                    case HatPosition.Left:
-                                        pressed = state.IsLeft;
-                                        break;
+                                case HatPosition.Right:
+                                    pressed = state.IsRight;
+                                    break;
+                            }
 
-                                    case HatPosition.Right:
-                                        pressed = state.IsRight;
-                                        break;
-                                }
+                            switch (map.Target.Type)
+                            {
+                                case ConfigurationType.Axis:
+                                    // Todo: if SDL2 GameController config is ever updated to
+                                    // distinguish between negative/positive axes, then update
+                                    // the following line to support both.
+                                    var value = pressed
+                                        ? short.MaxValue
+                                        : (map.Target.Axis & (GamePadAxes.LeftTrigger | GamePadAxes.RightTrigger)) != 0
+                                            ? short.MinValue
+                                            : (short)0;
+                                    pad.SetAxis(map.Target.Axis, value);
+                                    break;
 
-                                switch (map.Target.Type)
-                                {
-                                    case ConfigurationType.Axis:
-                                        // Todo: if SDL2 GameController config is ever updated to
-                                        // distinguish between negative/positive axes, then update
-                                        // the following line to support both.
-                                        var value = pressed ?
-                                            short.MaxValue :
-                                            (map.Target.Axis & (GamePadAxes.LeftTrigger | GamePadAxes.RightTrigger)) != 0 ?
-                                                short.MinValue :
-                                                (short)0;
-                                        pad.SetAxis(map.Target.Axis, value);
-                                        break;
-
-                                    case ConfigurationType.Button:
-                                        pad.SetButton(map.Target.Button, pressed);
-                                        break;
-                                }
+                                case ConfigurationType.Button:
+                                    pad.SetButton(map.Target.Button, pressed);
+                                    break;
                             }
                             break;
+                        }
                     }
                 }
             }
@@ -209,18 +207,20 @@ namespace OpenTK.Platform
             {
                 pad = new GamePadCapabilities();
             }
+
             return pad;
         }
 
         public string GetName(int index)
         {
             var joy = Joystick.GetCapabilities(index);
-            var name = String.Empty;
+            var name = string.Empty;
             if (joy.IsConnected)
             {
                 var map = GetConfiguration(Joystick.GetGuid(index));
                 name = map.Name;
             }
+
             return name;
         }
 
@@ -237,6 +237,7 @@ namespace OpenTK.Platform
                 var map = new GamePadConfiguration(config);
                 configurations.Add(guid, map);
             }
+
             return configurations[guid];
         }
 

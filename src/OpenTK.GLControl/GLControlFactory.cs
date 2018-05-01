@@ -38,6 +38,7 @@ namespace OpenTK
             {
                 throw new ArgumentNullException(nameof(mode));
             }
+
             if (control == null)
             {
                 throw new ArgumentNullException(nameof(control));
@@ -47,22 +48,23 @@ namespace OpenTK
             {
                 return new Sdl2GLControl(mode, control);
             }
-            else if (Configuration.RunningOnWindows)
+
+            if (Configuration.RunningOnWindows)
             {
                 return new WinGLControl(mode, control);
             }
-            else if (Configuration.RunningOnMacOS)
+
+            if (Configuration.RunningOnMacOS)
             {
                 return new CarbonGLControl(mode, control);
             }
-            else if (Configuration.RunningOnX11)
+
+            if (Configuration.RunningOnX11)
             {
                 return new X11GLControl(mode, control);
             }
-            else
-            {
-                throw new PlatformNotSupportedException();
-            }
+
+            throw new PlatformNotSupportedException();
         }
     }
 }

@@ -25,12 +25,15 @@
 
 using System;
 using System.Diagnostics;
+using OpenTK.Graphics;
+using OpenTK.Input;
+using OpenTK.Platform.Egl;
+using OpenTK.Platform.Linux;
+using OpenTK.Platform.SDL2;
+using OpenTK.Platform.X11;
 
 namespace OpenTK.Platform
 {
-    using Graphics;
-    using Input;
-
     internal sealed class Factory : IPlatformFactory
     {
         private bool disposed;
@@ -49,7 +52,7 @@ namespace OpenTK.Platform
 #if SDL2
             if (Configuration.RunningOnSdl2)
             {
-                Default = new SDL2.Sdl2Factory();
+                Default = new Sdl2Factory();
             }
 #endif
 #if WIN32
@@ -67,11 +70,11 @@ namespace OpenTK.Platform
 #if X11
             else if (Configuration.RunningOnX11)
             {
-                Default = new X11.X11Factory();
+                Default = new X11Factory();
             }
             else if (Configuration.RunningOnLinux)
             {
-                Default = new Linux.LinuxFactory();
+                Default = new LinuxFactory();
             }
 #endif
             if (Default == null)
@@ -104,7 +107,7 @@ namespace OpenTK.Platform
 #if X11
                 else if (Configuration.RunningOnX11)
                 {
-                    Embedded = new Egl.EglX11PlatformFactory();
+                    Embedded = new EglX11PlatformFactory();
                 }
 #endif
 #if WIN32
@@ -130,7 +133,7 @@ namespace OpenTK.Platform
 #if ANDROID
                 Angle = new UnsupportedPlatform();
 #else
-                Angle = new Egl.EglAnglePlatformFactory(Embedded);
+                Angle = new EglAnglePlatformFactory(Embedded);
 #endif
             }
 #endif
@@ -163,12 +166,14 @@ namespace OpenTK.Platform
             return Default.CreateDisplayDeviceDriver();
         }
 
-        public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext,
+            bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return Default.CreateGLContext(mode, window, shareContext, directRendering, major, minor, flags);
         }
 
-        public IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext,
+            bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return Default.CreateGLContext(handle, window, shareContext, directRendering, major, minor, flags);
         }
@@ -203,11 +208,45 @@ namespace OpenTK.Platform
             Default.RegisterResource(resource);
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (manual)
+                {
+                    Default.Dispose();
+                    if (Embedded != Default)
+                    {
+                        Embedded.Dispose();
+                    }
+                }
+                else
+                {
+                    Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
+                }
+
+                disposed = true;
+            }
+        }
+
+        ~Factory()
+        {
+            Dispose(false);
+        }
+
         private class UnsupportedPlatform : PlatformFactoryBase
         {
-            private static readonly string error_string = "Please, refer to http://www.opentk.com for more information.";
+            private static readonly string
+                error_string = "Please, refer to http://www.opentk.com for more information.";
 
-            public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+            public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title,
+                GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
             {
                 throw new PlatformNotSupportedException(error_string);
             }
@@ -217,12 +256,14 @@ namespace OpenTK.Platform
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+            public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window,
+                IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
             {
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+            public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window,
+                IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
             {
                 throw new PlatformNotSupportedException(error_string);
             }
@@ -246,37 +287,6 @@ namespace OpenTK.Platform
             {
                 throw new PlatformNotSupportedException(error_string);
             }
-        }
-
-        private void Dispose(bool manual)
-        {
-            if (!disposed)
-            {
-                if (manual)
-                {
-                    Default.Dispose();
-                    if (Embedded != Default)
-                    {
-                        Embedded.Dispose();
-                    }
-                }
-                else
-                {
-                    Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
-                }
-                disposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        ~Factory()
-        {
-            Dispose(false);
         }
     }
 }

@@ -141,18 +141,17 @@ namespace OpenTK.Platform.MacOS
         Up = 126,
         Down = 125,
         Left = 123,
-        Right = 124,
-
-
+        Right = 124
     }
+
     [Flags]
     internal enum MacOSKeyModifiers
     {
-        None     = 0,
-        Shift    = 0x0200,
+        None = 0,
+        Shift = 0x0200,
         CapsLock = 0x0400,
-        Control  = 0x1000,  //
-        Command  = 0x0100,  // Open-Apple  - Windows key
-        Option   = 0x0800,  // Option key is same position as the alt key on non-mac keyboards.
+        Control = 0x1000, //
+        Command = 0x0100, // Open-Apple  - Windows key
+        Option = 0x0800 // Option key is same position as the alt key on non-mac keyboards.
     }
 }

@@ -29,15 +29,17 @@ namespace OpenTK.Graphics
 {
     /// <summary>Defines the ColorFormat component of a GraphicsMode.</summary>
     /// <remarks>
-    /// <para>A ColorFormat contains Red, Green, Blue and Alpha components that descibe
-    /// the allocated bits per pixel for the corresponding color.</para>
+    ///     <para>
+    ///         A ColorFormat contains Red, Green, Blue and Alpha components that descibe
+    ///         the allocated bits per pixel for the corresponding color.
+    ///     </para>
     /// </remarks>
     public struct ColorFormat : IComparable<ColorFormat>, IEquatable<ColorFormat>
     {
         private byte red, green, blue, alpha;
 
         /// <summary>
-        /// Constructs a new ColorFormat with the specified aggregate bits per pixel.
+        ///     Constructs a new ColorFormat with the specified aggregate bits per pixel.
         /// </summary>
         /// <param name="bpp">The bits per pixel sum for the Red, Green, Blue and Alpha color channels.</param>
         public ColorFormat(int bpp)
@@ -46,6 +48,7 @@ namespace OpenTK.Graphics
             {
                 throw new ArgumentOutOfRangeException(nameof(bpp), "Must be greater or equal to zero.");
             }
+
             red = green = blue = alpha = 0;
             BitsPerPixel = bpp;
             IsIndexed = false;
@@ -80,14 +83,14 @@ namespace OpenTK.Graphics
                     break;
                 default:
                     Red = Blue = Alpha = (byte)(bpp / 4);
-                    Green = (byte)((bpp / 4) + (bpp % 4));
+                    Green = (byte)(bpp / 4 + bpp % 4);
                     break;
             }
         }
 
         /// <summary>
-        /// Constructs a new ColorFormat with the specified bits per pixel for
-        /// the Red, Green, Blue and Alpha color channels.
+        ///     Constructs a new ColorFormat with the specified bits per pixel for
+        ///     the Red, Green, Blue and Alpha color channels.
         /// </summary>
         /// <param name="red">Bits per pixel for the Red color channel.</param>
         /// <param name="green">Bits per pixel for the Green color channel.</param>
@@ -99,6 +102,7 @@ namespace OpenTK.Graphics
             {
                 throw new ArgumentOutOfRangeException("Arguments must be greater or equal to zero.");
             }
+
             this.red = (byte)red;
             this.green = (byte)green;
             this.blue = (byte)blue;
@@ -112,34 +116,46 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>Gets the bits per pixel for the Red channel.</summary>
-        public int Red { get => red;
+        public int Red
+        {
+            get => red;
             private set => red = (byte)value;
         }
+
         /// <summary>Gets the bits per pixel for the Green channel.</summary>
-        public int Green { get => green;
+        public int Green
+        {
+            get => green;
             private set => green = (byte)value;
         }
+
         /// <summary>Gets the bits per pixel for the Blue channel.</summary>
-        public int Blue { get => blue;
+        public int Blue
+        {
+            get => blue;
             private set => blue = (byte)value;
         }
+
         /// <summary>Gets the bits per pixel for the Alpha channel.</summary>
-        public int Alpha { get => alpha;
+        public int Alpha
+        {
+            get => alpha;
             private set => alpha = (byte)value;
         }
+
         /// <summary>Gets a System.Boolean indicating whether this ColorFormat is indexed.</summary>
-        public bool IsIndexed { get; private set; }
+        public bool IsIndexed { get; }
 
         /// <summary>Gets the sum of Red, Green, Blue and Alpha bits per pixel.</summary>
-        public int BitsPerPixel { get; private set; }
+        public int BitsPerPixel { get; }
 
         /// <summary>
-        /// Defines an empty ColorFormat, where all properties are set to zero.
+        ///     Defines an empty ColorFormat, where all properties are set to zero.
         /// </summary>
         public static readonly ColorFormat Empty = new ColorFormat(0);
 
         /// <summary>
-        /// Converts the specified bpp into a new ColorFormat.
+        ///     Converts the specified bpp into a new ColorFormat.
         /// </summary>
         /// <param name="bpp">The bits per pixel to convert.</param>
         /// <returns>A ColorFormat with the specified bits per pixel.</returns>
@@ -154,13 +170,13 @@ namespace OpenTK.Graphics
         //}
 
         /// <summary>
-        /// Compares two instances.
+        ///     Compares two instances.
         /// </summary>
         /// <param name="other">The other instance.</param>
         /// <returns>
-        /// Zero if this instance is equal to other;
-        /// a positive value  if this instance is greater than other;
-        /// a negative value otherwise.
+        ///     Zero if this instance is equal to other;
+        ///     a positive value  if this instance is greater than other;
+        ///     a negative value otherwise.
         /// </returns>
         public int CompareTo(ColorFormat other)
         {
@@ -169,17 +185,19 @@ namespace OpenTK.Graphics
             {
                 return result;
             }
+
             result = IsIndexed.CompareTo(other.IsIndexed);
             if (result != 0)
             {
                 return result;
             }
+
             result = Alpha.CompareTo(other.Alpha);
             return result;
         }
 
         /// <summary>
-        /// Compares whether this ColorFormat structure is equal to the specified ColorFormat.
+        ///     Compares whether this ColorFormat structure is equal to the specified ColorFormat.
         /// </summary>
         /// <param name="other">The ColorFormat structure to compare to.</param>
         /// <returns>True if both ColorFormat structures contain the same components; false otherwise.</returns>
@@ -193,17 +211,17 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Indicates whether this instance and a specified object are equal.
+        ///     Indicates whether this instance and a specified object are equal.
         /// </summary>
         /// <param name="obj">Another object to compare to.</param>
         /// <returns>True if this instance is equal to obj; false otherwise.</returns>
         public override bool Equals(object obj)
         {
-            return (obj is ColorFormat) ? Equals((ColorFormat)obj) : false;
+            return obj is ColorFormat ? Equals((ColorFormat)obj) : false;
         }
 
         /// <summary>
-        /// Compares two instances for equality.
+        ///     Compares two instances for equality.
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
@@ -214,7 +232,7 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Compares two instances for inequality.
+        ///     Compares two instances for inequality.
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
@@ -225,7 +243,7 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Compares two instances for inequality.
+        ///     Compares two instances for inequality.
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
@@ -236,7 +254,7 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Compares two instances for inequality.
+        ///     Compares two instances for inequality.
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
@@ -247,7 +265,7 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Compares two instances for inequality.
+        ///     Compares two instances for inequality.
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
@@ -258,7 +276,7 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Compares two instances for inequality.
+        ///     Compares two instances for inequality.
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
@@ -269,7 +287,7 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Returns the hash code for this instance.
+        ///     Returns the hash code for this instance.
         /// </summary>
         /// <returns>A System.Int32 with the hash code of this instance.</returns>
         public override int GetHashCode()
@@ -278,9 +296,9 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that describes this instance.
+        ///     Returns a <see cref="System.String" /> that describes this instance.
         /// </summary>
-        /// <returns>A <see cref="System.String"/> that describes this instance.</returns>
+        /// <returns>A <see cref="System.String" /> that describes this instance.</returns>
         public override string ToString()
         {
             return $"{BitsPerPixel} ({(IsIndexed ? " indexed" : Red + Green.ToString() + Blue + Alpha)})";

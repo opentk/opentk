@@ -44,6 +44,6 @@ namespace OpenTK.Platform.MacOS
         Unscaled = 2048,
         UnifiedTitleAndToolbar = 4096,
         Hud = 8192,
-        FullScreenWindow = 16384,
+        FullScreenWindow = 16384
     }
 }

@@ -34,24 +34,26 @@ namespace OpenTK.Platform.SDL2
         private readonly object inputDriverLock = new object();
         private Sdl2InputDriver inputDriver;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether to use SDL2 fullscreen-desktop mode
-        /// for fullscreen windows. When true, then GameWindow instances will not change
-        /// DisplayDevice resolutions when going fullscreen. When false, fullscreen GameWindows
-        /// will change the device resolution to match their size.
-        /// </summary>
-        /// <remarks>>
-        /// This is a workaround for the lack of ChangeResolution support in SDL2.
-        /// When and if this changes upstream, we should remove this code.
-        /// </remarks>
-        public static bool UseFullscreenDesktop { get; set; }
-
         public Sdl2Factory()
         {
             UseFullscreenDesktop = true;
         }
 
-        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+        /// <summary>
+        ///     Gets or sets a value indicating whether to use SDL2 fullscreen-desktop mode
+        ///     for fullscreen windows. When true, then GameWindow instances will not change
+        ///     DisplayDevice resolutions when going fullscreen. When false, fullscreen GameWindows
+        ///     will change the device resolution to match their size.
+        /// </summary>
+        /// <remarks>
+        ///     >
+        ///     This is a workaround for the lack of ChangeResolution support in SDL2.
+        ///     When and if this changes upstream, we should remove this code.
+        /// </remarks>
+        public static bool UseFullscreenDesktop { get; set; }
+
+        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title,
+            GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
             return new Sdl2NativeWindow(x, y, width, height, title, options, device);
         }
@@ -61,22 +63,21 @@ namespace OpenTK.Platform.SDL2
             return new Sdl2DisplayDeviceDriver();
         }
 
-        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window,
+            IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new Sdl2GraphicsContext(mode, window, shareContext, major, minor, flags);
         }
 
-        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window,
+            IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             throw new NotImplementedException();
         }
 
         public override GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
-            return (GraphicsContext.GetCurrentContextDelegate)delegate
-            {
-                return Sdl2GraphicsContext.GetCurrentContext();
-            };
+            return delegate { return Sdl2GraphicsContext.GetCurrentContext(); };
         }
 
         public override IKeyboardDriver2 CreateKeyboardDriver()
@@ -129,4 +130,3 @@ namespace OpenTK.Platform.SDL2
         }
     }
 }
-

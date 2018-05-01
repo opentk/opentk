@@ -5,22 +5,21 @@
  */
 
 using System;
+using System.Runtime.InteropServices;
 using System.Threading;
-
 using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Dummy
 {
     /// \internal
     /// <summary>
-    /// An empty IGraphicsContext implementation to be used inside the Visual Studio designer.
-    /// This class supports OpenTK, and is not intended for use by OpenTK programs.
+    ///     An empty IGraphicsContext implementation to be used inside the Visual Studio designer.
+    ///     This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
     internal sealed class DummyGLContext : GraphicsContextBase
     {
-        private readonly GraphicsContext.GetAddressDelegate Loader;
-
         private static int handle_count;
+        private readonly GraphicsContext.GetAddressDelegate Loader;
         private Thread current_thread;
 
         public DummyGLContext()
@@ -37,11 +36,18 @@ namespace OpenTK.Platform.Dummy
             {
                 Handle = handle;
             }
+
             Loader = loader;
             Mode = new GraphicsMode(new IntPtr(2), 32, 16, 0, 0, 0, 2, false);
         }
 
-        public override void SwapBuffers() { }
+        public override bool IsCurrent => current_thread != null && current_thread == Thread.CurrentThread;
+
+        public override int SwapInterval { get; set; }
+
+        public override void SwapBuffers()
+        {
+        }
 
         public override void MakeCurrent(IWindowInfo info)
         {
@@ -63,32 +69,32 @@ namespace OpenTK.Platform.Dummy
             }
         }
 
-        public override bool IsCurrent => current_thread != null && current_thread == Thread.CurrentThread;
-
         public override IntPtr GetAddress(IntPtr function)
         {
-            var str = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(function);
+            var str = Marshal.PtrToStringAnsi(function);
             return Loader(str);
         }
 
-        public override int SwapInterval { get; set; }
-
         public override void Update(IWindowInfo window)
-        { }
+        {
+        }
 
         public override void LoadAll()
         {
-            #if OPENGL
+#if OPENGL
             new OpenTK.Graphics.OpenGL.GL().LoadEntryPoints();
             new OpenTK.Graphics.OpenGL4.GL().LoadEntryPoints();
             #endif
-            #if OPENGLES
+#if OPENGLES
             new OpenTK.Graphics.ES11.GL().LoadEntryPoints();
             new OpenTK.Graphics.ES20.GL().LoadEntryPoints();
             new OpenTK.Graphics.ES30.GL().LoadEntryPoints();
             #endif
         }
 
-        protected override void Dispose(bool disposing) { IsDisposed = true; }
+        protected override void Dispose(bool disposing)
+        {
+            IsDisposed = true;
+        }
     }
 }

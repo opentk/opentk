@@ -69,6 +69,6 @@ namespace OpenTK.Platform.MacOS
         AllowOfflineRenderers = 96,
         AcceleratedCompute = 97,
         OpenGLProfile = 99, // Lion
-        VirtualScreenCount = 128,
+        VirtualScreenCount = 128
     }
 }

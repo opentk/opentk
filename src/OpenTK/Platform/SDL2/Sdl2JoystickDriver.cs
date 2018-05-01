@@ -32,12 +32,15 @@ namespace OpenTK.Platform.SDL2
 {
     internal class Sdl2JoystickDriver : IJoystickDriver2, IGamePadDriver, IDisposable
     {
-        private const float RangeMultiplier =  1.0f / 32768.0f;
+        private const float RangeMultiplier = 1.0f / 32768.0f;
         private readonly MappedGamePadDriver gamepad_driver = new MappedGamePadDriver();
         private bool disposed;
 
         private class Sdl2JoystickDetails
         {
+            public readonly JoystickHatState[] Hat =
+                new JoystickHatState[JoystickState.MaxHats];
+
             public IntPtr Handle { get; set; }
             public Guid Guid { get; set; }
             public int InstanceId { get; set; }
@@ -45,8 +48,6 @@ namespace OpenTK.Platform.SDL2
             public int HatCount { get; set; }
             public int BallCount { get; set; }
             public bool IsConnected { get; set; }
-            public readonly JoystickHatState[] Hat =
-                new JoystickHatState[JoystickState.MaxHats];
         }
 
         // For IJoystickDriver2 implementation
@@ -71,10 +72,6 @@ namespace OpenTK.Platform.SDL2
         readonly List<Sdl2GamePad> controllers = new List<Sdl2GamePad>(4);
         readonly Dictionary<int, int> sdl_instanceid_to_controllers = new Dictionary<int, int>();
 #endif
-
-        public Sdl2JoystickDriver()
-        {
-        }
 
         private JoystickDevice<Sdl2JoystickDetails> OpenJoystick(int id)
         {
@@ -123,49 +120,49 @@ namespace OpenTK.Platform.SDL2
             return sdl_instanceid_to_joysticks.ContainsKey(instance_id);
         }
 
-        private OpenTK.Input.HatPosition TranslateHat(HatPosition value)
+        private Input.HatPosition TranslateHat(HatPosition value)
         {
             if ((value & HatPosition.LeftUp) == HatPosition.LeftUp)
             {
-                return OpenTK.Input.HatPosition.UpLeft;
+                return Input.HatPosition.UpLeft;
             }
 
             if ((value & HatPosition.RightUp) == HatPosition.RightUp)
             {
-                return OpenTK.Input.HatPosition.UpRight;
+                return Input.HatPosition.UpRight;
             }
 
             if ((value & HatPosition.LeftDown) == HatPosition.LeftDown)
             {
-                return OpenTK.Input.HatPosition.DownLeft;
+                return Input.HatPosition.DownLeft;
             }
 
             if ((value & HatPosition.RightDown) == HatPosition.RightDown)
             {
-                return OpenTK.Input.HatPosition.DownRight;
+                return Input.HatPosition.DownRight;
             }
 
             if ((value & HatPosition.Up) == HatPosition.Up)
             {
-                return OpenTK.Input.HatPosition.Up;
+                return Input.HatPosition.Up;
             }
 
             if ((value & HatPosition.Right) == HatPosition.Right)
             {
-                return OpenTK.Input.HatPosition.Right;
+                return Input.HatPosition.Right;
             }
 
             if ((value & HatPosition.Down) == HatPosition.Down)
             {
-                return OpenTK.Input.HatPosition.Down;
+                return Input.HatPosition.Down;
             }
 
             if ((value & HatPosition.Left) == HatPosition.Left)
             {
-                return OpenTK.Input.HatPosition.Left;
+                return Input.HatPosition.Left;
             }
 
-            return OpenTK.Input.HatPosition.Centered;
+            return Input.HatPosition.Centered;
         }
 
 #if USE_SDL2_GAMECONTROLLER
@@ -322,34 +319,34 @@ namespace OpenTK.Platform.SDL2
             switch (ev.Type)
             {
                 case EventType.JOYDEVICEADDED:
+                {
+                    var handle = SDL.JoystickOpen(id);
+                    if (handle != IntPtr.Zero)
                     {
-                        var handle = SDL.JoystickOpen(id);
-                        if (handle != IntPtr.Zero)
+                        var joystick = OpenJoystick(id);
+
+                        var instance_id = joystick.Details.InstanceId;
+                        var device_id = id;
+
+                        if (joystick != null)
                         {
-                            var joystick = OpenJoystick(id);
-
-                            var instance_id = joystick.Details.InstanceId;
-                            var device_id = id;
-
-                            if (joystick != null)
+                            joystick.Details.IsConnected = true;
+                            if (device_id < joysticks.Count)
                             {
-                                joystick.Details.IsConnected = true;
-                                if (device_id < joysticks.Count)
-                                {
-                                    joysticks[device_id] = joystick;
-                                }
-                                else
-                                {
-                                    joysticks.Add(joystick);
-                                }
-
-                                sdl_instanceid_to_joysticks.Add(instance_id, device_id);
+                                joysticks[device_id] = joystick;
                             }
+                            else
+                            {
+                                joysticks.Add(joystick);
+                            }
+
+                            sdl_instanceid_to_joysticks.Add(instance_id, device_id);
                         }
                     }
                     break;
-
+                }
                 case EventType.JOYDEVICEREMOVED:
+                {
                     if (IsJoystickInstanceValid(id))
                     {
                         var instance_id = id;
@@ -364,7 +361,9 @@ namespace OpenTK.Platform.SDL2
                     {
                         Debug.Print("[SDL2] Invalid joystick id {0} in {1}", id, ev.Type);
                     }
+
                     break;
+                }
             }
         }
 
@@ -432,6 +431,7 @@ namespace OpenTK.Platform.SDL2
                 {
                     Debug.Print("[SDL2] Hat {0} out of range [0, {1}]", ev.Hat, JoystickState.MaxHats);
                 }
+
                 joystick.Details.PacketNumber = Math.Max(0, unchecked(joystick.Details.PacketNumber + 1));
             }
             else
@@ -641,6 +641,7 @@ namespace OpenTK.Platform.SDL2
                     joystick.Details.HatCount,
                     joystick.Details.IsConnected);
             }
+
             return new JoystickCapabilities();
         }
 
@@ -654,6 +655,7 @@ namespace OpenTK.Platform.SDL2
 
                 return joystick.Details.Guid;
             }
+
             return guid;
         }
 
@@ -678,6 +680,7 @@ namespace OpenTK.Platform.SDL2
                 {
                     Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
                 }
+
                 disposed = true;
             }
         }
@@ -694,4 +697,3 @@ namespace OpenTK.Platform.SDL2
         }
     }
 }
-

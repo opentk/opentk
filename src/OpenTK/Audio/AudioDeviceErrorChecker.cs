@@ -49,16 +49,16 @@ namespace OpenTK.Audio
             switch (err)
             {
                 case AlcError.OutOfMemory:
-                    throw new OutOfMemoryException(String.Format(ErrorString, Device, err));
+                    throw new OutOfMemoryException(string.Format(ErrorString, Device, err));
 
                 case AlcError.InvalidValue:
-                    throw new AudioValueException(String.Format(ErrorString, Device, err));
+                    throw new AudioValueException(string.Format(ErrorString, Device, err));
 
                 case AlcError.InvalidDevice:
-                    throw new AudioDeviceException(String.Format(ErrorString, Device, err));
+                    throw new AudioDeviceException(string.Format(ErrorString, Device, err));
 
                 case AlcError.InvalidContext:
-                    throw new AudioContextException(String.Format(ErrorString, Device, err));
+                    throw new AudioContextException(string.Format(ErrorString, Device, err));
 
                 case AlcError.NoError:
                 default:

@@ -8,7 +8,31 @@ namespace Bind.Structures
 {
     internal class Type : IComparable<Type>, IEquatable<Type>
     {
+        private static readonly string[] PointerLevels =
+        {
+            "",
+            "*",
+            "**",
+            "***",
+            "****"
+        };
+
+        private static readonly string[] ArrayLevels =
+        {
+            "",
+            "[]",
+            "[,]",
+            "[,,]"
+        };
+
+        private int _array;
         private string _currentQualifier = string.Empty;
+
+        private int _elementCount;
+
+        private int _pointer;
+
+        private string _type;
 
         public Type()
         {
@@ -33,16 +57,20 @@ namespace Bind.Structures
         private string CurrentQualifier
         {
             get => _currentQualifier;
-            set { PreviousQualifier = CurrentQualifier; _currentQualifier = value; }
+            set
+            {
+                PreviousQualifier = CurrentQualifier;
+                _currentQualifier = value;
+            }
         }
 
         private string PreviousQualifier { get; set; } = string.Empty;
 
         public string QualifiedType
         {
-            get => !string.IsNullOrEmpty(CurrentQualifier) ? $"{CurrentQualifier}.{CurrentType}"
-                :
-                CurrentType;
+            get => !string.IsNullOrEmpty(CurrentQualifier)
+                ? $"{CurrentQualifier}.{CurrentType}"
+                : CurrentType;
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -64,9 +92,8 @@ namespace Bind.Structures
             }
         }
 
-        private string _type;
         /// <summary>
-        /// Gets the type of the parameter.
+        ///     Gets the type of the parameter.
         /// </summary>
         public virtual string CurrentType
         {
@@ -82,6 +109,7 @@ namespace Bind.Structures
                 {
                     PreviousType = _type;
                 }
+
                 if (!string.IsNullOrEmpty(value))
                 {
                     _type = value.Trim();
@@ -99,15 +127,11 @@ namespace Bind.Structures
 
         public bool Reference { get; set; }
 
-        private int _array;
-
         public int Array
         {
             get => _array;
             set => _array = value > 0 ? value : 0;
         }
-
-        private int _elementCount;
 
         // If the type is an array and ElementCount > 0, then ElemenCount defines the expected array length.
         public int ElementCount
@@ -115,8 +139,6 @@ namespace Bind.Structures
             get => _elementCount;
             set => _elementCount = value > 0 ? value : 0;
         }
-
-        private int _pointer;
 
         public int Pointer
         {
@@ -181,32 +203,9 @@ namespace Bind.Structures
             }
         }
 
-        public bool Unsigned => (CurrentType.Contains("UInt") || CurrentType.Contains("Byte"));
+        public bool Unsigned => CurrentType.Contains("UInt") || CurrentType.Contains("Byte");
 
         public WrapperTypes WrapperType { get; set; } = WrapperTypes.None;
-
-        private static readonly string[] PointerLevels =
-        {
-            "",
-            "*",
-            "**",
-            "***",
-            "****"
-        };
-
-        private static readonly string[] ArrayLevels =
-        {
-            "",
-            "[]",
-            "[,]",
-            "[,,]"
-        };
-
-        // Only used for debugging.
-        public override string ToString()
-        {
-            return $"{CurrentType}{PointerLevels[Pointer]}{ArrayLevels[Array]}";
-        }
 
         public int CompareTo(Type other)
         {
@@ -219,14 +218,17 @@ namespace Bind.Structures
             {
                 result = Pointer.CompareTo(other.Pointer); // Must come after array/ref, see issue [#1098]
             }
+
             if (result == 0)
             {
                 result = Reference.CompareTo(other.Reference);
             }
+
             if (result == 0)
             {
                 result = Array.CompareTo(other.Array);
             }
+
             // Note: CLS-compliance and element counts
             // are used for comparison calculations, in order
             // to maintain a stable sorting order, even though
@@ -235,10 +237,12 @@ namespace Bind.Structures
             {
                 result = CLSCompliant.CompareTo(other.CLSCompliant);
             }
+
             if (result == 0)
             {
                 result = ElementCount.CompareTo(other.ElementCount);
             }
+
             return result;
         }
 
@@ -256,6 +260,12 @@ namespace Bind.Structures
             // This is necessary because otherwise we'd get
             // redefinition errors in the generated bindings.
             return result;
+        }
+
+        // Only used for debugging.
+        public override string ToString()
+        {
+            return $"{CurrentType}{PointerLevels[Pointer]}{ArrayLevels[Array]}";
         }
     }
 }

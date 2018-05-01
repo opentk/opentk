@@ -35,9 +35,8 @@ namespace OpenTK.Input
             Target = target;
         }
 
-        public GamePadConfigurationSource Source { get; private set; }
+        public GamePadConfigurationSource Source { get; }
 
-        public GamePadConfigurationTarget Target { get; private set; }
+        public GamePadConfigurationTarget Target { get; }
     }
 }
-

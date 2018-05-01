@@ -24,6 +24,7 @@
 //
 
 using System;
+using System.Threading;
 using OpenTK.Graphics;
 using OpenTK.Platform;
 
@@ -46,6 +47,12 @@ namespace OpenTK
 
             private IWindowInfo current_window;
 
+            public bool VSync
+            {
+                get => SwapInterval != 0;
+                set => SwapInterval = value ? 1 : 0;
+            }
+
             public void SwapBuffers()
             {
             }
@@ -59,12 +66,6 @@ namespace OpenTK
 
             public bool IsDisposed { get; private set; }
 
-            public bool VSync
-            {
-                get => SwapInterval != 0;
-                set => SwapInterval = value ? 1 : 0;
-            }
-
             public int SwapInterval { get; set; }
 
             public void Update(IWindowInfo window)
@@ -76,9 +77,7 @@ namespace OpenTK
             public bool ErrorChecking
             {
                 get => false;
-                set
-                {
-                }
+                set { }
             }
 
             public void LoadAll()
@@ -91,7 +90,7 @@ namespace OpenTK
             }
 
             public ContextHandle Context { get; } = new ContextHandle(new IntPtr(
-                System.Threading.Interlocked.Increment(ref instance_count)));
+                Interlocked.Increment(ref instance_count)));
 
             public IntPtr GetAddress(IntPtr function)
             {

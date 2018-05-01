@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using OpenTK.Input;
+using OpenTK.Platform.Common;
 
 namespace OpenTK.Platform.Linux
 {
@@ -39,17 +40,15 @@ namespace OpenTK.Platform.Linux
 
     internal class LinuxJoystickDetails
     {
-        public Guid Guid;
-        public string Name;
-        public int FileDescriptor;
-        public int PathIndex; // e.g. "0" for "/dev/input/event0". Used as a hardware id
-        public JoystickState State;
-        public JoystickCapabilities Caps;
-
         public readonly Dictionary<EvdevAxis, AxisInfo> AxisMap =
             new Dictionary<EvdevAxis, AxisInfo>();
+
         public readonly Dictionary<EvdevButton, int> ButtonMap =
             new Dictionary<EvdevButton, int>();
+
+        public JoystickCapabilities Caps;
+        public int FileDescriptor;
+        public Guid Guid;
 
         internal int[,] hatStates =
         {
@@ -58,23 +57,30 @@ namespace OpenTK.Platform.Linux
             {0, 0},
             {0, 0}
         };
+
+        public string Name;
+        public int PathIndex; // e.g. "0" for "/dev/input/event0". Used as a hardware id
+        public JoystickState State;
     }
 
     internal sealed class LinuxJoystick : IJoystickDriver2
     {
-        private static readonly HatPosition[,] HatPositions = new HatPosition[,]
+        private static readonly HatPosition[,] HatPositions =
         {
-            { HatPosition.UpLeft, HatPosition.Up, HatPosition.UpRight },
-            { HatPosition.Left, HatPosition.Centered, HatPosition.Right },
-            { HatPosition.DownLeft, HatPosition.Down, HatPosition.DownRight }
+            {HatPosition.UpLeft, HatPosition.Up, HatPosition.UpRight},
+            {HatPosition.Left, HatPosition.Centered, HatPosition.Right},
+            {HatPosition.DownLeft, HatPosition.Down, HatPosition.DownRight}
         };
+
+        private static readonly string JoystickPath = "/dev/input";
+        private static readonly string JoystickPathLegacy = "/dev";
+
+        private readonly DeviceCollection<LinuxJoystickDetails> Sticks =
+            new DeviceCollection<LinuxJoystickDetails>();
 
         private readonly object sync = new object();
 
         private readonly FileSystemWatcher watcher = new FileSystemWatcher();
-
-        private readonly DeviceCollection<LinuxJoystickDetails> Sticks =
-            new DeviceCollection<LinuxJoystickDetails>();
 
         private bool disposed;
 
@@ -83,9 +89,9 @@ namespace OpenTK.Platform.Linux
             var path =
                 Directory.Exists(JoystickPath) ? JoystickPath :
                 Directory.Exists(JoystickPathLegacy) ? JoystickPathLegacy :
-                String.Empty;
+                string.Empty;
 
-            if (!String.IsNullOrEmpty(path))
+            if (!string.IsNullOrEmpty(path))
             {
                 watcher.Path = path;
 
@@ -95,6 +101,40 @@ namespace OpenTK.Platform.Linux
 
                 OpenJoysticks(path);
             }
+        }
+
+        JoystickState IJoystickDriver2.GetState(int index)
+        {
+            var js = Sticks.FromIndex(index);
+            if (js != null)
+            {
+                PollJoystick(js);
+                return js.State;
+            }
+
+            return new JoystickState();
+        }
+
+        JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)
+        {
+            var js = Sticks.FromIndex(index);
+            if (js != null)
+            {
+                return js.Caps;
+            }
+
+            return new JoystickCapabilities();
+        }
+
+        Guid IJoystickDriver2.GetGuid(int index)
+        {
+            var js = Sticks.FromIndex(index);
+            if (js != null)
+            {
+                return js.Guid;
+            }
+
+            return Guid.Empty;
         }
 
         private void OpenJoysticks(string path)
@@ -118,11 +158,12 @@ namespace OpenTK.Platform.Linux
             if (path.StartsWith(evdev))
             {
                 int num;
-                if (Int32.TryParse(path.Substring(evdev.Length), out num))
+                if (int.TryParse(path.Substring(evdev.Length), out num))
                 {
                     return num;
                 }
             }
+
             return -1;
         }
 
@@ -197,14 +238,14 @@ namespace OpenTK.Platform.Linux
             return new Guid(bytes);
         }
 
-        private unsafe static bool TestBit(byte* ptr, int bit)
+        private static unsafe bool TestBit(byte* ptr, int bit)
         {
             var byte_offset = bit / 8;
             var bit_offset = bit % 8;
             return (*(ptr + byte_offset) & (1 << bit_offset)) != 0;
         }
 
-        private unsafe static void QueryCapabilities(LinuxJoystickDetails stick,
+        private static unsafe void QueryCapabilities(LinuxJoystickDetails stick,
             byte* axisbit, int axisbytes,
             byte* keybit, int keybytes,
             out int axes, out int buttons, out int hats)
@@ -304,7 +345,7 @@ namespace OpenTK.Platform.Linux
                                 PathIndex = number,
                                 State = new JoystickState(),
                                 Name = name,
-                                Guid = CreateGuid(id, name),
+                                Guid = CreateGuid(id, name)
                             };
 
                             int axes, buttons, hats;
@@ -362,7 +403,7 @@ namespace OpenTK.Platform.Linux
                 long length = 0;
                 while (true)
                 {
-                    length = (long)Libc.read(js.FileDescriptor, (void*)events, (UIntPtr)(sizeof(InputEvent) * EventCount));
+                    length = (long)Libc.read(js.FileDescriptor, events, (UIntPtr)(sizeof(InputEvent) * EventCount));
                     if (length <= 0)
                     {
                         break;
@@ -381,57 +422,61 @@ namespace OpenTK.Platform.Linux
                         switch (e->Type)
                         {
                             case EvdevType.ABS:
+                            {
+                                AxisInfo axis;
+                                if (js.AxisMap.TryGetValue((EvdevAxis)e->Code, out axis))
                                 {
-                                    AxisInfo axis;
-                                    if (js.AxisMap.TryGetValue((EvdevAxis)e->Code, out axis))
+                                    if (axis.Info.Maximum > axis.Info.Minimum)
                                     {
-                                        if (axis.Info.Maximum > axis.Info.Minimum)
+                                        if (e->Code >= (int)EvdevAxis.HAT0X && e->Code <= (int)EvdevAxis.HAT3Y)
                                         {
-                                            if (e->Code >= (int)EvdevAxis.HAT0X && e->Code <= (int)EvdevAxis.HAT3Y)
+                                            // We currently treat analogue hats as digital hats
+                                            // to maintain compatibility with SDL2. We can do
+                                            // better than this, however.
+                                            var hat = (e->Code - (int)EvdevAxis.HAT0X) / 2;
+                                            var xy_axis = axis.Axis & 0x1;
+                                            var value = e->Value.CompareTo(0) + 1;
+                                            switch (xy_axis)
                                             {
-                                                // We currently treat analogue hats as digital hats
-                                                // to maintain compatibility with SDL2. We can do
-                                                // better than this, however.
-                                                var hat = (e->Code - (int)EvdevAxis.HAT0X) / 2;
-                                                var xy_axis = (int)axis.Axis & 0x1;
-                                                var value = e->Value.CompareTo(0) + 1;
-                                                switch (xy_axis)
-                                                {
-                                                    case 0:
-                                                        // X-axis
-                                                        js.hatStates[hat, 1] = value;
-                                                        break;
+                                                case 0:
+                                                    // X-axis
+                                                    js.hatStates[hat, 1] = value;
+                                                    break;
 
-                                                    case 1:
-                                                        // Y-axis
-                                                        js.hatStates[hat, 0] = value;
-                                                        break;
-                                                }
-                                                js.State.SetHat((JoystickHat)hat, TranslateHat(js.hatStates[hat, 0], js.hatStates[hat, 1]));
+                                                case 1:
+                                                    // Y-axis
+                                                    js.hatStates[hat, 0] = value;
+                                                    break;
                                             }
-                                            else
-                                            {
-                                                // This axis represents a regular axis or trigger
-                                                js.State.SetAxis(
-                                                    axis.Axis,
-                                                    (short)Common.HidHelper.ScaleValue(e->Value,
-                                                        axis.Info.Minimum, axis.Info.Maximum,
-                                                        short.MinValue, short.MaxValue));
-                                            }
+
+                                            js.State.SetHat((JoystickHat)hat,
+                                                TranslateHat(js.hatStates[hat, 0], js.hatStates[hat, 1]));
+                                        }
+                                        else
+                                        {
+                                            // This axis represents a regular axis or trigger
+                                            js.State.SetAxis(
+                                                axis.Axis,
+                                                (short)HidHelper.ScaleValue(e->Value,
+                                                    axis.Info.Minimum, axis.Info.Maximum,
+                                                    short.MinValue, short.MaxValue));
                                         }
                                     }
-                                    break;
                                 }
 
+                                break;
+                            }
+
                             case EvdevType.KEY:
+                            {
+                                int button;
+                                if (js.ButtonMap.TryGetValue((EvdevButton)e->Code, out button))
                                 {
-                                    int button;
-                                    if (js.ButtonMap.TryGetValue((EvdevButton)e->Code, out button))
-                                    {
-                                        js.State.SetButton(button, e->Value != 0);
-                                    }
-                                    break;
+                                    js.State.SetButton(button, e->Value != 0);
                                 }
+
+                                break;
+                            }
                         }
 
                         // Create a serial number (total seconds in 24.8 fixed point format)
@@ -439,15 +484,12 @@ namespace OpenTK.Platform.Linux
                         var msec = (int)e->Time.MicroSeconds / 1000;
                         var packet =
                             ((sec & 0x00ffffff) << 24) |
-                            Common.HidHelper.ScaleValue(msec, 0, 1000, 0, 255);
+                            HidHelper.ScaleValue(msec, 0, 1000, 0, 255);
                         js.State.SetPacketNumber(packet);
                     }
                 }
             }
         }
-
-        private static readonly string JoystickPath = "/dev/input";
-        private static readonly string JoystickPathLegacy = "/dev";
 
         public void Dispose()
         {
@@ -476,37 +518,6 @@ namespace OpenTK.Platform.Linux
         ~LinuxJoystick()
         {
             Dispose(false);
-        }
-
-        JoystickState IJoystickDriver2.GetState(int index)
-        {
-            var js = Sticks.FromIndex(index);
-            if (js != null)
-            {
-                PollJoystick(js);
-                return js.State;
-            }
-            return new JoystickState();
-        }
-
-        JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)
-        {
-            var js = Sticks.FromIndex(index);
-            if (js != null)
-            {
-                return js.Caps;
-            }
-            return new JoystickCapabilities();
-        }
-
-        Guid IJoystickDriver2.GetGuid(int index)
-        {
-            var js = Sticks.FromIndex(index);
-            if (js != null)
-            {
-                return js.Guid;
-            }
-            return Guid.Empty;
         }
     }
 }

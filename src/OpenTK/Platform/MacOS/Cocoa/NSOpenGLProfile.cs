@@ -30,6 +30,6 @@ namespace OpenTK.Platform.MacOS
     internal enum NSOpenGLProfile
     {
         VersionLegacy = 4096,
-        Version3_2Core = 12800,
+        Version3_2Core = 12800
     }
 }

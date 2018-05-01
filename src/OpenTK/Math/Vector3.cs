@@ -21,38 +21,39 @@ SOFTWARE.
  */
 
 using System;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
 namespace OpenTK
 {
     /// <summary>
-    /// Represents a 3D vector using three single-precision floating-point numbers.
+    ///     Represents a 3D vector using three single-precision floating-point numbers.
     /// </summary>
     /// <remarks>
-    /// The Vector3 structure is suitable for interoperation with unmanaged code requiring three consecutive floats.
+    ///     The Vector3 structure is suitable for interoperation with unmanaged code requiring three consecutive floats.
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector3 : IEquatable<Vector3>
     {
         /// <summary>
-        /// The X component of the Vector3.
+        ///     The X component of the Vector3.
         /// </summary>
         public float X;
 
         /// <summary>
-        /// The Y component of the Vector3.
+        ///     The Y component of the Vector3.
         /// </summary>
         public float Y;
 
         /// <summary>
-        /// The Z component of the Vector3.
+        ///     The Z component of the Vector3.
         /// </summary>
         public float Z;
 
         /// <summary>
-        /// Constructs a new instance.
+        ///     Constructs a new instance.
         /// </summary>
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector3(float value)
@@ -63,7 +64,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Constructs a new Vector3.
+        ///     Constructs a new Vector3.
         /// </summary>
         /// <param name="x">The x component of the Vector3.</param>
         /// <param name="y">The y component of the Vector3.</param>
@@ -76,7 +77,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Constructs a new Vector3 from the given Vector2.
+        ///     Constructs a new Vector3 from the given Vector2.
         /// </summary>
         /// <param name="v">The Vector2 to copy components from.</param>
         public Vector3(Vector2 v)
@@ -87,7 +88,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Constructs a new Vector3 from the given Vector3.
+        ///     Constructs a new Vector3 from the given Vector3.
         /// </summary>
         /// <param name="v">The Vector3 to copy components from.</param>
         public Vector3(Vector3 v)
@@ -98,7 +99,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Constructs a new Vector3 from the given Vector4.
+        ///     Constructs a new Vector3 from the given Vector4.
         /// </summary>
         /// <param name="v">The Vector4 to copy components from.</param>
         public Vector3(Vector4 v)
@@ -110,24 +111,31 @@ namespace OpenTK
 
 
         /// <summary>
-        /// Gets or sets the value at the index of the Vector.
+        ///     Gets or sets the value at the index of the Vector.
         /// </summary>
-        public float this[int index] {
-            get{
+        public float this[int index]
+        {
+            get
+            {
                 if (index == 0)
                 {
                     return X;
                 }
-                else if (index == 1)
+
+                if (index == 1)
                 {
                     return Y;
                 }
-                else if (index == 2)
+
+                if (index == 2)
                 {
                     return Z;
                 }
+
                 throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
-            } set{
+            }
+            set
+            {
                 if (index == 0)
                 {
                     X = value;
@@ -148,36 +156,36 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Gets the length (magnitude) of the vector.
+        ///     Gets the length (magnitude) of the vector.
         /// </summary>
-        /// <see cref="LengthFast"/>
-        /// <seealso cref="LengthSquared"/>
+        /// <see cref="LengthFast" />
+        /// <seealso cref="LengthSquared" />
         public float Length => (float)Math.Sqrt(X * X + Y * Y + Z * Z);
 
         /// <summary>
-        /// Gets an approximation of the vector length (magnitude).
+        ///     Gets an approximation of the vector length (magnitude).
         /// </summary>
         /// <remarks>
-        /// This property uses an approximation of the square root function to calculate vector magnitude, with
-        /// an upper error bound of 0.001.
+        ///     This property uses an approximation of the square root function to calculate vector magnitude, with
+        ///     an upper error bound of 0.001.
         /// </remarks>
-        /// <see cref="Length"/>
-        /// <seealso cref="LengthSquared"/>
+        /// <see cref="Length" />
+        /// <seealso cref="LengthSquared" />
         public float LengthFast => 1.0f / MathHelper.InverseSqrtFast(X * X + Y * Y + Z * Z);
 
         /// <summary>
-        /// Gets the square of the vector length (magnitude).
+        ///     Gets the square of the vector length (magnitude).
         /// </summary>
         /// <remarks>
-        /// This property avoids the costly square root operation required by the Length property. This makes it more suitable
-        /// for comparisons.
+        ///     This property avoids the costly square root operation required by the Length property. This makes it more suitable
+        ///     for comparisons.
         /// </remarks>
-        /// <see cref="Length"/>
-        /// <seealso cref="LengthFast"/>
+        /// <see cref="Length" />
+        /// <seealso cref="LengthFast" />
         public float LengthSquared => X * X + Y * Y + Z * Z;
 
         /// <summary>
-        /// Returns a copy of the Vector3 scaled to unit length.
+        ///     Returns a copy of the Vector3 scaled to unit length.
         /// </summary>
         public Vector3 Normalized()
         {
@@ -187,7 +195,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Scales the Vector3 to unit length.
+        ///     Scales the Vector3 to unit length.
         /// </summary>
         public void Normalize()
         {
@@ -198,7 +206,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Scales the Vector3 to approximately unit length.
+        ///     Scales the Vector3 to approximately unit length.
         /// </summary>
         public void NormalizeFast()
         {
@@ -209,37 +217,37 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Defines a unit-length Vector3 that points towards the X-axis.
+        ///     Defines a unit-length Vector3 that points towards the X-axis.
         /// </summary>
         public static readonly Vector3 UnitX = new Vector3(1, 0, 0);
 
         /// <summary>
-        /// Defines a unit-length Vector3 that points towards the Y-axis.
+        ///     Defines a unit-length Vector3 that points towards the Y-axis.
         /// </summary>
         public static readonly Vector3 UnitY = new Vector3(0, 1, 0);
 
         /// <summary>
-        /// Defines a unit-length Vector3 that points towards the Z-axis.
+        ///     Defines a unit-length Vector3 that points towards the Z-axis.
         /// </summary>
         public static readonly Vector3 UnitZ = new Vector3(0, 0, 1);
 
         /// <summary>
-        /// Defines a zero-length Vector3.
+        ///     Defines a zero-length Vector3.
         /// </summary>
         public static readonly Vector3 Zero = new Vector3(0, 0, 0);
 
         /// <summary>
-        /// Defines an instance with all components set to 1.
+        ///     Defines an instance with all components set to 1.
         /// </summary>
         public static readonly Vector3 One = new Vector3(1, 1, 1);
 
         /// <summary>
-        /// Defines the size of the Vector3 struct in bytes.
+        ///     Defines the size of the Vector3 struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Marshal.SizeOf(new Vector3());
 
         /// <summary>
-        /// Adds two vectors.
+        ///     Adds two vectors.
         /// </summary>
         /// <param name="a">Left operand.</param>
         /// <param name="b">Right operand.</param>
@@ -251,7 +259,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Adds two vectors.
+        ///     Adds two vectors.
         /// </summary>
         /// <param name="a">Left operand.</param>
         /// <param name="b">Right operand.</param>
@@ -264,7 +272,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Subtract one Vector from another
+        ///     Subtract one Vector from another
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -276,7 +284,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Subtract one Vector from another
+        ///     Subtract one Vector from another
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -289,7 +297,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Multiplies a vector by a scalar.
+        ///     Multiplies a vector by a scalar.
         /// </summary>
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
@@ -301,7 +309,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Multiplies a vector by a scalar.
+        ///     Multiplies a vector by a scalar.
         /// </summary>
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
@@ -314,7 +322,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Multiplies a vector by the components a vector (scale).
+        ///     Multiplies a vector by the components a vector (scale).
         /// </summary>
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
@@ -326,7 +334,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Multiplies a vector by the components of a vector (scale).
+        ///     Multiplies a vector by the components of a vector (scale).
         /// </summary>
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
@@ -339,7 +347,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Divides a vector by a scalar.
+        ///     Divides a vector by a scalar.
         /// </summary>
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
@@ -351,7 +359,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Divides a vector by a scalar.
+        ///     Divides a vector by a scalar.
         /// </summary>
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
@@ -364,7 +372,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Divides a vector by the components of a vector (scale).
+        ///     Divides a vector by the components of a vector (scale).
         /// </summary>
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
@@ -376,7 +384,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Divide a vector by the components of a vector (scale).
+        ///     Divide a vector by the components of a vector (scale).
         /// </summary>
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
@@ -389,7 +397,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        ///     Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -403,7 +411,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns a vector created from the smallest of the corresponding components of the given vectors.
+        ///     Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -416,7 +424,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        ///     Returns a vector created from the largest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -430,7 +438,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns a vector created from the largest of the corresponding components of the given vectors.
+        ///     Returns a vector created from the largest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -443,8 +451,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns the Vector3 with the minimum magnitude. If the magnitudes are equal, the second vector
-        /// is selected.
+        ///     Returns the Vector3 with the minimum magnitude. If the magnitudes are equal, the second vector
+        ///     is selected.
         /// </summary>
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
@@ -455,8 +463,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns the Vector3 with the minimum magnitude. If the magnitudes are equal, the second vector
-        /// is selected.
+        ///     Returns the Vector3 with the minimum magnitude. If the magnitudes are equal, the second vector
+        ///     is selected.
         /// </summary>
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
@@ -468,8 +476,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns the Vector3 with the maximum magnitude. If the magnitudes are equal, the first vector
-        /// is selected.
+        ///     Returns the Vector3 with the maximum magnitude. If the magnitudes are equal, the first vector
+        ///     is selected.
         /// </summary>
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
@@ -480,8 +488,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns the Vector3 with the maximum magnitude. If the magnitudes are equal, the first vector
-        /// is selected.
+        ///     Returns the Vector3 with the maximum magnitude. If the magnitudes are equal, the first vector
+        ///     is selected.
         /// </summary>
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
@@ -493,7 +501,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns the Vector3 with the minimum magnitude
+        ///     Returns the Vector3 with the minimum magnitude
         /// </summary>
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
@@ -505,7 +513,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns the Vector3 with the minimum magnitude
+        ///     Returns the Vector3 with the minimum magnitude
         /// </summary>
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
@@ -517,7 +525,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Clamp a vector to the given minimum and maximum vectors
+        ///     Clamp a vector to the given minimum and maximum vectors
         /// </summary>
         /// <param name="vec">Input vector</param>
         /// <param name="min">Minimum vector</param>
@@ -532,7 +540,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Clamp a vector to the given minimum and maximum vectors
+        ///     Clamp a vector to the given minimum and maximum vectors
         /// </summary>
         /// <param name="vec">Input vector</param>
         /// <param name="min">Minimum vector</param>
@@ -546,7 +554,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Compute the euclidean distance between two vectors.
+        ///     Compute the euclidean distance between two vectors.
         /// </summary>
         /// <param name="vec1">The first vector</param>
         /// <param name="vec2">The second vector</param>
@@ -559,18 +567,19 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Compute the euclidean distance between two vectors.
+        ///     Compute the euclidean distance between two vectors.
         /// </summary>
         /// <param name="vec1">The first vector</param>
         /// <param name="vec2">The second vector</param>
         /// <param name="result">The distance</param>
         public static void Distance(ref Vector3 vec1, ref Vector3 vec2, out float result)
         {
-            result = (float)Math.Sqrt((vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y) + (vec2.Z - vec1.Z) * (vec2.Z - vec1.Z));
+            result = (float)Math.Sqrt((vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y) +
+                                      (vec2.Z - vec1.Z) * (vec2.Z - vec1.Z));
         }
 
         /// <summary>
-        /// Compute the squared euclidean distance between two vectors.
+        ///     Compute the squared euclidean distance between two vectors.
         /// </summary>
         /// <param name="vec1">The first vector</param>
         /// <param name="vec2">The second vector</param>
@@ -583,18 +592,19 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Compute the squared euclidean distance between two vectors.
+        ///     Compute the squared euclidean distance between two vectors.
         /// </summary>
         /// <param name="vec1">The first vector</param>
         /// <param name="vec2">The second vector</param>
         /// <param name="result">The squared distance</param>
         public static void DistanceSquared(ref Vector3 vec1, ref Vector3 vec2, out float result)
         {
-            result = (vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y) + (vec2.Z - vec1.Z) * (vec2.Z - vec1.Z);
+            result = (vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y) +
+                     (vec2.Z - vec1.Z) * (vec2.Z - vec1.Z);
         }
 
         /// <summary>
-        /// Scale a vector to unit length
+        ///     Scale a vector to unit length
         /// </summary>
         /// <param name="vec">The input vector</param>
         /// <returns>The normalized vector</returns>
@@ -608,7 +618,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Scale a vector to unit length
+        ///     Scale a vector to unit length
         /// </summary>
         /// <param name="vec">The input vector</param>
         /// <param name="result">The normalized vector</param>
@@ -621,7 +631,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Scale a vector to approximately unit length
+        ///     Scale a vector to approximately unit length
         /// </summary>
         /// <param name="vec">The input vector</param>
         /// <returns>The normalized vector</returns>
@@ -635,7 +645,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Scale a vector to approximately unit length
+        ///     Scale a vector to approximately unit length
         /// </summary>
         /// <param name="vec">The input vector</param>
         /// <param name="result">The normalized vector</param>
@@ -648,7 +658,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculate the dot (scalar) product of two vectors
+        ///     Calculate the dot (scalar) product of two vectors
         /// </summary>
         /// <param name="left">First operand</param>
         /// <param name="right">Second operand</param>
@@ -659,7 +669,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculate the dot (scalar) product of two vectors
+        ///     Calculate the dot (scalar) product of two vectors
         /// </summary>
         /// <param name="left">First operand</param>
         /// <param name="right">Second operand</param>
@@ -670,7 +680,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Caclulate the cross (vector) product of two vectors
+        ///     Caclulate the cross (vector) product of two vectors
         /// </summary>
         /// <param name="left">First operand</param>
         /// <param name="right">Second operand</param>
@@ -683,12 +693,12 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Caclulate the cross (vector) product of two vectors
+        ///     Caclulate the cross (vector) product of two vectors
         /// </summary>
         /// <remarks>
-        /// It is incorrect to call this method passing the same variable for
-        /// <paramref name="result"/> as for <paramref name="left"/> or
-        /// <paramref name="right"/>.
+        ///     It is incorrect to call this method passing the same variable for
+        ///     <paramref name="result" /> as for <paramref name="left" /> or
+        ///     <paramref name="right" />.
         /// </remarks>
         /// <param name="left">First operand</param>
         /// <param name="right">Second operand</param>
@@ -702,7 +712,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns a new Vector that is the linear blend of the 2 given Vectors
+        ///     Returns a new Vector that is the linear blend of the 2 given Vectors
         /// </summary>
         /// <param name="a">First input vector</param>
         /// <param name="b">Second input vector</param>
@@ -717,7 +727,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns a new Vector that is the linear blend of the 2 given Vectors
+        ///     Returns a new Vector that is the linear blend of the 2 given Vectors
         /// </summary>
         /// <param name="a">First input vector</param>
         /// <param name="b">Second input vector</param>
@@ -731,7 +741,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Interpolate 3 Vectors using Barycentric coordinates
+        ///     Interpolate 3 Vectors using Barycentric coordinates
         /// </summary>
         /// <param name="a">First input Vector</param>
         /// <param name="b">Second input Vector</param>
@@ -750,8 +760,12 @@ namespace OpenTK
         /// <param name="c">Third input Vector.</param>
         /// <param name="u">First Barycentric Coordinate.</param>
         /// <param name="v">Second Barycentric Coordinate.</param>
-        /// <param name="result">Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise</param>
-        public static void BaryCentric(ref Vector3 a, ref Vector3 b, ref Vector3 c, float u, float v, out Vector3 result)
+        /// <param name="result">
+        ///     Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
+        ///     otherwise
+        /// </param>
+        public static void BaryCentric(ref Vector3 a, ref Vector3 b, ref Vector3 c, float u, float v,
+            out Vector3 result)
         {
             result = a; // copy
 
@@ -766,8 +780,9 @@ namespace OpenTK
             Add(ref result, ref temp, out result);
         }
 
-        /// <summary>Transform a direction vector by the given Matrix
-        /// Assumes the matrix has a bottom row of (0,0,0,1), that is the translation part is ignored.
+        /// <summary>
+        ///     Transform a direction vector by the given Matrix
+        ///     Assumes the matrix has a bottom row of (0,0,0,1), that is the translation part is ignored.
         /// </summary>
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
@@ -779,12 +794,13 @@ namespace OpenTK
             return result;
         }
 
-        /// <summary>Transform a direction vector by the given Matrix
-        /// Assumes the matrix has a bottom row of (0,0,0,1), that is the translation part is ignored.
+        /// <summary>
+        ///     Transform a direction vector by the given Matrix
+        ///     Assumes the matrix has a bottom row of (0,0,0,1), that is the translation part is ignored.
         /// </summary>
         /// <remarks>
-        /// It is incorrect to call this method passing the same variable for
-        /// <paramref name="result"/> as for <paramref name="vec"/>.
+        ///     It is incorrect to call this method passing the same variable for
+        ///     <paramref name="result" /> as for <paramref name="vec" />.
         /// </remarks>
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
@@ -806,8 +822,8 @@ namespace OpenTK
 
         /// <summary>Transform a Normal by the given Matrix</summary>
         /// <remarks>
-        /// This calculates the inverse of the given matrix, use TransformNormalInverse if you
-        /// already have the inverse to avoid this extra calculation
+        ///     This calculates the inverse of the given matrix, use TransformNormalInverse if you
+        ///     already have the inverse to avoid this extra calculation
         /// </remarks>
         /// <param name="norm">The normal to transform</param>
         /// <param name="mat">The desired transformation</param>
@@ -821,8 +837,8 @@ namespace OpenTK
 
         /// <summary>Transform a Normal by the given Matrix</summary>
         /// <remarks>
-        /// This calculates the inverse of the given matrix, use TransformNormalInverse if you
-        /// already have the inverse to avoid this extra calculation
+        ///     This calculates the inverse of the given matrix, use TransformNormalInverse if you
+        ///     already have the inverse to avoid this extra calculation
         /// </remarks>
         /// <param name="norm">The normal to transform</param>
         /// <param name="mat">The desired transformation</param>
@@ -835,8 +851,8 @@ namespace OpenTK
 
         /// <summary>Transform a Normal by the (transpose of the) given Matrix</summary>
         /// <remarks>
-        /// This version doesn't calculate the inverse matrix.
-        /// Use this version if you already have the inverse of the desired transform to hand
+        ///     This version doesn't calculate the inverse matrix.
+        ///     Use this version if you already have the inverse of the desired transform to hand
         /// </remarks>
         /// <param name="norm">The normal to transform</param>
         /// <param name="invMat">The inverse of the desired transformation</param>
@@ -850,8 +866,8 @@ namespace OpenTK
 
         /// <summary>Transform a Normal by the (transpose of the) given Matrix</summary>
         /// <remarks>
-        /// This version doesn't calculate the inverse matrix.
-        /// Use this version if you already have the inverse of the desired transform to hand
+        ///     This version doesn't calculate the inverse matrix.
+        ///     Use this version if you already have the inverse of the desired transform to hand
         /// </remarks>
         /// <param name="norm">The normal to transform</param>
         /// <param name="invMat">The inverse of the desired transformation</param>
@@ -927,7 +943,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Transforms a vector by a quaternion rotation.
+        ///     Transforms a vector by a quaternion rotation.
         /// </summary>
         /// <param name="vec">The vector to transform.</param>
         /// <param name="quat">The quaternion to rotate the vector by.</param>
@@ -940,7 +956,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Transforms a vector by a quaternion rotation.
+        ///     Transforms a vector by a quaternion rotation.
         /// </summary>
         /// <param name="vec">The vector to transform.</param>
         /// <param name="quat">The quaternion to rotate the vector by.</param>
@@ -1004,7 +1020,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculates the angle (in radians) between two vectors.
+        ///     Calculates the angle (in radians) between two vectors.
         /// </summary>
         /// <param name="first">The first vector.</param>
         /// <param name="second">The second vector.</param>
@@ -1030,7 +1046,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Projects a vector from object space into screen space.
+        ///     Projects a vector from object space into screen space.
         /// </summary>
         /// <param name="vector">The vector to project.</param>
         /// <param name="x">The X coordinate of the viewport.</param>
@@ -1042,10 +1058,11 @@ namespace OpenTK
         /// <param name="worldViewProjection">The world-view-projection matrix.</param>
         /// <returns>The vector in screen space.</returns>
         /// <remarks>
-        /// To project to normalized device coordinates (NDC) use the following parameters:
-        /// Project(vector, -1, -1, 2, 2, -1, 1, worldViewProjection).
+        ///     To project to normalized device coordinates (NDC) use the following parameters:
+        ///     Project(vector, -1, -1, 2, 2, -1, 1, worldViewProjection).
         /// </remarks>
-        public static Vector3 Project(Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix4 worldViewProjection)
+        public static Vector3 Project(Vector3 vector, float x, float y, float width, float height, float minZ,
+            float maxZ, Matrix4 worldViewProjection)
         {
             Vector4 result;
 
@@ -1075,15 +1092,15 @@ namespace OpenTK
 
             result /= result.W;
 
-            result.X = x + (width * ((result.X + 1.0f) / 2.0f));
-            result.Y = y + (height * ((result.Y + 1.0f) / 2.0f));
-            result.Z = minZ + ((maxZ - minZ) * ((result.Z + 1.0f) / 2.0f));
+            result.X = x + width * ((result.X + 1.0f) / 2.0f);
+            result.Y = y + height * ((result.Y + 1.0f) / 2.0f);
+            result.Z = minZ + (maxZ - minZ) * ((result.Z + 1.0f) / 2.0f);
 
             return new Vector3(result.X, result.Y, result.Z);
         }
 
         /// <summary>
-        /// Projects a vector from screen space into object space.
+        ///     Projects a vector from screen space into object space.
         /// </summary>
         /// <param name="vector">The vector to project.</param>
         /// <param name="x">The X coordinate of the viewport.</param>
@@ -1095,16 +1112,17 @@ namespace OpenTK
         /// <param name="inverseWorldViewProjection">The inverse of the world-view-projection matrix.</param>
         /// <returns>The vector in object space.</returns>
         /// <remarks>
-        /// To project from normalized device coordinates (NDC) use the following parameters:
-        /// Project(vector, -1, -1, 2, 2, -1, 1, inverseWorldViewProjection).
+        ///     To project from normalized device coordinates (NDC) use the following parameters:
+        ///     Project(vector, -1, -1, 2, 2, -1, 1, inverseWorldViewProjection).
         /// </remarks>
-        public static Vector3 Unproject(Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix4 inverseWorldViewProjection)
+        public static Vector3 Unproject(Vector3 vector, float x, float y, float width, float height, float minZ,
+            float maxZ, Matrix4 inverseWorldViewProjection)
         {
             Vector4 result;
 
-            result.X = ((((vector.X - x) / width) * 2.0f) - 1.0f);
-            result.Y = ((((vector.Y - y) / height) * 2.0f) - 1.0f);
-            result.Z = (((vector.Z / (maxZ - minZ)) * 2.0f) - 1.0f);
+            result.X = (vector.X - x) / width * 2.0f - 1.0f;
+            result.Y = (vector.Y - y) / height * 2.0f - 1.0f;
+            result.Z = vector.Z / (maxZ - minZ) * 2.0f - 1.0f;
 
             result.X =
                 result.X * inverseWorldViewProjection.M11 +
@@ -1136,84 +1154,166 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2 with the X and Y components of this instance.
+        ///     Gets or sets an OpenTK.Vector2 with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector2 Xy { get => new Vector2(X, Y);
-            set { X = value.X; Y = value.Y; } }
+        public Vector2 Xy
+        {
+            get => new Vector2(X, Y);
+            set
+            {
+                X = value.X;
+                Y = value.Y;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2 with the X and Z components of this instance.
+        ///     Gets or sets an OpenTK.Vector2 with the X and Z components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector2 Xz { get => new Vector2(X, Z);
-            set { X = value.X; Z = value.Y; } }
+        public Vector2 Xz
+        {
+            get => new Vector2(X, Z);
+            set
+            {
+                X = value.X;
+                Z = value.Y;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2 with the Y and X components of this instance.
+        ///     Gets or sets an OpenTK.Vector2 with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector2 Yx { get => new Vector2(Y, X);
-            set { Y = value.X; X = value.Y; } }
+        public Vector2 Yx
+        {
+            get => new Vector2(Y, X);
+            set
+            {
+                Y = value.X;
+                X = value.Y;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2 with the Y and Z components of this instance.
+        ///     Gets or sets an OpenTK.Vector2 with the Y and Z components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector2 Yz { get => new Vector2(Y, Z);
-            set { Y = value.X; Z = value.Y; } }
+        public Vector2 Yz
+        {
+            get => new Vector2(Y, Z);
+            set
+            {
+                Y = value.X;
+                Z = value.Y;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2 with the Z and X components of this instance.
+        ///     Gets or sets an OpenTK.Vector2 with the Z and X components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector2 Zx { get => new Vector2(Z, X);
-            set { Z = value.X; X = value.Y; } }
+        public Vector2 Zx
+        {
+            get => new Vector2(Z, X);
+            set
+            {
+                Z = value.X;
+                X = value.Y;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2 with the Z and Y components of this instance.
+        ///     Gets or sets an OpenTK.Vector2 with the Z and Y components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector2 Zy { get => new Vector2(Z, Y);
-            set { Z = value.X; Y = value.Y; } }
+        public Vector2 Zy
+        {
+            get => new Vector2(Z, Y);
+            set
+            {
+                Z = value.X;
+                Y = value.Y;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3 with the X, Z, and Y components of this instance.
+        ///     Gets or sets an OpenTK.Vector3 with the X, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector3 Xzy { get => new Vector3(X, Z, Y);
-            set { X = value.X; Z = value.Y; Y = value.Z; } }
+        public Vector3 Xzy
+        {
+            get => new Vector3(X, Z, Y);
+            set
+            {
+                X = value.X;
+                Z = value.Y;
+                Y = value.Z;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3 with the Y, X, and Z components of this instance.
+        ///     Gets or sets an OpenTK.Vector3 with the Y, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector3 Yxz { get => new Vector3(Y, X, Z);
-            set { Y = value.X; X = value.Y; Z = value.Z; } }
+        public Vector3 Yxz
+        {
+            get => new Vector3(Y, X, Z);
+            set
+            {
+                Y = value.X;
+                X = value.Y;
+                Z = value.Z;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3 with the Y, Z, and X components of this instance.
+        ///     Gets or sets an OpenTK.Vector3 with the Y, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector3 Yzx { get => new Vector3(Y, Z, X);
-            set { Y = value.X; Z = value.Y; X = value.Z; } }
+        public Vector3 Yzx
+        {
+            get => new Vector3(Y, Z, X);
+            set
+            {
+                Y = value.X;
+                Z = value.Y;
+                X = value.Z;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3 with the Z, X, and Y components of this instance.
+        ///     Gets or sets an OpenTK.Vector3 with the Z, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector3 Zxy { get => new Vector3(Z, X, Y);
-            set { Z = value.X; X = value.Y; Y = value.Z; } }
+        public Vector3 Zxy
+        {
+            get => new Vector3(Z, X, Y);
+            set
+            {
+                Z = value.X;
+                X = value.Y;
+                Y = value.Z;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3 with the Z, Y, and X components of this instance.
+        ///     Gets or sets an OpenTK.Vector3 with the Z, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
-        public Vector3 Zyx { get => new Vector3(Z, Y, X);
-            set { Z = value.X; Y = value.Y; X = value.Z; } }
+        public Vector3 Zyx
+        {
+            get => new Vector3(Z, Y, X);
+            set
+            {
+                Z = value.X;
+                Y = value.Y;
+                X = value.Z;
+            }
+        }
 
         /// <summary>
-        /// Adds two instances.
+        ///     Adds two instances.
         /// </summary>
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
@@ -1227,7 +1327,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Subtracts two instances.
+        ///     Subtracts two instances.
         /// </summary>
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
@@ -1241,7 +1341,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Negates an instance.
+        ///     Negates an instance.
         /// </summary>
         /// <param name="vec">The instance.</param>
         /// <returns>The result of the calculation.</returns>
@@ -1254,7 +1354,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Multiplies an instance by a scalar.
+        ///     Multiplies an instance by a scalar.
         /// </summary>
         /// <param name="vec">The instance.</param>
         /// <param name="scale">The scalar.</param>
@@ -1268,7 +1368,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Multiplies an instance by a scalar.
+        ///     Multiplies an instance by a scalar.
         /// </summary>
         /// <param name="scale">The scalar.</param>
         /// <param name="vec">The instance.</param>
@@ -1282,7 +1382,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Component-wise multiplication between the specified instance by a scale vector.
+        ///     Component-wise multiplication between the specified instance by a scale vector.
         /// </summary>
         /// <param name="scale">Left operand.</param>
         /// <param name="vec">Right operand.</param>
@@ -1296,7 +1396,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Transform a Vector by the given Matrix.
+        ///     Transform a Vector by the given Matrix.
         /// </summary>
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
@@ -1309,7 +1409,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Transform a Vector by the given Matrix using right-handed notation
+        ///     Transform a Vector by the given Matrix using right-handed notation
         /// </summary>
         /// <param name="mat">The desired transformation</param>
         /// <param name="vec">The vector to transform</param>
@@ -1322,7 +1422,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Transforms a vector by a quaternion rotation.
+        ///     Transforms a vector by a quaternion rotation.
         /// </summary>
         /// <param name="vec">The vector to transform.</param>
         /// <param name="quat">The quaternion to rotate the vector by.</param>
@@ -1335,7 +1435,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Divides an instance by a scalar.
+        ///     Divides an instance by a scalar.
         /// </summary>
         /// <param name="vec">The instance.</param>
         /// <param name="scale">The scalar.</param>
@@ -1349,7 +1449,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Compares two instances for equality.
+        ///     Compares two instances for equality.
         /// </summary>
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
@@ -1360,7 +1460,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Compares two instances for inequality.
+        ///     Compares two instances for inequality.
         /// </summary>
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
@@ -1370,18 +1470,19 @@ namespace OpenTK
             return !left.Equals(right);
         }
 
-        private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        private static readonly string listSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+
         /// <summary>
-        /// Returns a System.String that represents the current Vector3.
+        ///     Returns a System.String that represents the current Vector3.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("({0}{3} {1}{3} {2})", X, Y, Z, listSeparator);
+            return string.Format("({0}{3} {1}{3} {2})", X, Y, Z, listSeparator);
         }
 
         /// <summary>
-        /// Returns the hashcode for this instance.
+        ///     Returns the hashcode for this instance.
         /// </summary>
         /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
         public override int GetHashCode()
@@ -1396,7 +1497,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Indicates whether this instance and a specified object are equal.
+        ///     Indicates whether this instance and a specified object are equal.
         /// </summary>
         /// <param name="obj">The object to compare to.</param>
         /// <returns>True if the instances are equal; false otherwise.</returns>

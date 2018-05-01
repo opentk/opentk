@@ -53,29 +53,38 @@ namespace OpenTK.Platform.MacOS
 
         [DllImport(Library, EntryPoint = "NSAddImage")]
         internal static extern IntPtr AddImage(string s, AddImageFlags flags);
+
         [DllImport(Library, EntryPoint = "NSAddressOfSymbol")]
         internal static extern IntPtr AddressOfSymbol(IntPtr symbol);
+
         [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
         internal static extern bool IsSymbolNameDefined(string s);
+
         [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
         internal static extern bool IsSymbolNameDefined(IntPtr s);
+
         [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
         internal static extern IntPtr LookupAndBindSymbol(string s);
+
         [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
         internal static extern IntPtr LookupAndBindSymbol(IntPtr s);
+
         [DllImport(Library, EntryPoint = "NSLookupSymbolInImage")]
         internal static extern IntPtr LookupSymbolInImage(IntPtr image, IntPtr symbolName, SymbolLookupFlags options);
 
         // Unfortunately, these are slower even if they are more
         // portable and simpler to use.
         [DllImport(Library)]
-        internal static extern IntPtr dlopen(String fileName, int flags);
+        internal static extern IntPtr dlopen(string fileName, int flags);
+
         [DllImport(Library)]
         internal static extern int dlclose(IntPtr handle);
-        [DllImport (Library)]
-        internal static extern IntPtr dlsym (IntPtr handle, string symbol);
-        [DllImport (Library)]
-        internal static extern IntPtr dlsym (IntPtr handle, IntPtr symbol);
+
+        [DllImport(Library)]
+        internal static extern IntPtr dlsym(IntPtr handle, string symbol);
+
+        [DllImport(Library)]
+        internal static extern IntPtr dlsym(IntPtr handle, IntPtr symbol);
 
         public static IntPtr GetAddress(string function)
         {
@@ -93,6 +102,7 @@ namespace OpenTK.Platform.MacOS
                 {
                     Marshal.WriteByte(ptr, i + 1, (byte)function[i]);
                 }
+
                 Marshal.WriteByte(ptr, function.Length + 1, 0); // null-terminate
 
                 var symbol = GetAddressInternal(ptr);
@@ -141,6 +151,7 @@ namespace OpenTK.Platform.MacOS
                     symbol = AddressOfSymbol(symbol);
                 }
             }
+
             return symbol;
         }
 
@@ -166,4 +177,3 @@ namespace OpenTK.Platform.MacOS
         }
     }
 }
-

@@ -26,14 +26,14 @@ namespace Bind
         ES20,
         ES30,
         ES31,
-        CL10,
+        CL10
     }
 
     internal static class MainClass
     {
         private static GeneratorMode _mode = GeneratorMode.Default;
         internal static List<IBind> Generators = new List<IBind>();
-        private static Settings _settings = new Settings();
+        private static readonly Settings _settings = new Settings();
 
         private static void Main(string[] arguments)
         {
@@ -116,13 +116,27 @@ namespace Bind
                                 var settings = Settings.Legacy.None;
                                 switch (val)
                                 {
-                                    case "tao": settings |= Settings.Legacy.Tao; break;
-                                    case "simple_enums": settings |= Settings.Legacy.NoAdvancedEnumProcessing; break;
-                                    case "safe": settings |= Settings.Legacy.NoPublicUnsafeFunctions; break;
-                                    case "permutations": settings |= Settings.Legacy.GenerateAllPermutations; break;
-                                    case "enums_in_class": settings |= Settings.Legacy.NestedEnums; break;
-                                    case "nodocs": settings |= Settings.Legacy.NoDocumentation; break;
-                                    case "keep_untyped_enums": settings |= Settings.Legacy.KeepUntypedEnums; break;
+                                    case "tao":
+                                        settings |= Settings.Legacy.Tao;
+                                        break;
+                                    case "simple_enums":
+                                        settings |= Settings.Legacy.NoAdvancedEnumProcessing;
+                                        break;
+                                    case "safe":
+                                        settings |= Settings.Legacy.NoPublicUnsafeFunctions;
+                                        break;
+                                    case "permutations":
+                                        settings |= Settings.Legacy.GenerateAllPermutations;
+                                        break;
+                                    case "enums_in_class":
+                                        settings |= Settings.Legacy.NestedEnums;
+                                        break;
+                                    case "nodocs":
+                                        settings |= Settings.Legacy.NoDocumentation;
+                                        break;
+                                    case "keep_untyped_enums":
+                                        settings |= Settings.Legacy.KeepUntypedEnums;
+                                        break;
                                 }
 
                                 if (enable)
@@ -164,7 +178,8 @@ namespace Bind
                 {
                     case GeneratorMode.All:
                         Console.WriteLine("Using 'all' generator mode.");
-                        Console.WriteLine("Use '-mode:all/gl2/gl4/es10/es11/es20/es30/es31' to select a specific mode.");
+                        Console.WriteLine(
+                            "Use '-mode:all/gl2/gl4/es10/es11/es20/es30/es31' to select a specific mode.");
                         Generators.Add(new GL2Generator(_settings));
                         Generators.Add(new GL4Generator(_settings));
                         Generators.Add(new ESGenerator(_settings));
@@ -223,7 +238,7 @@ namespace Bind
                     ticks = DateTime.Now.Ticks - ticks;
 
                     Console.WriteLine();
-                    Console.WriteLine("Bindings generated in {0} seconds.", ticks / (double)10000000.0);
+                    Console.WriteLine("Bindings generated in {0} seconds.", ticks / 10000000.0);
                 }
 
                 Console.WriteLine();
@@ -289,7 +304,7 @@ namespace Bind
         private static void ShowHelp()
         {
             Console.WriteLine(
-@"Usage: bind [-in:path] [-out:path] [switches]
+                @"Usage: bind [-in:path] [-out:path] [switches]
 Available switches:
 -in:         Input directory (e.g. -in:../specs/)
 -out:        Output directory (e.g. -out:out)

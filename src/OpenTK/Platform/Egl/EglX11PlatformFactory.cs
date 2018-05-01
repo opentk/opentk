@@ -30,14 +30,16 @@ namespace OpenTK.Platform.Egl
 {
     internal class EglX11PlatformFactory : X11Factory
     {
-        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window,
+            IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             var x11_win = (X11WindowInfo)window;
             var egl_win = new EglWindowInfo(x11_win.Handle, Egl.GetDisplay(x11_win.Display));
             return new EglUnixContext(mode, egl_win, shareContext, major, minor, flags);
         }
 
-        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window,
+            IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             var x11_win = (X11WindowInfo)window;
             var egl_win = new EglWindowInfo(x11_win.Handle, Egl.GetDisplay(x11_win.Display));
@@ -46,10 +48,7 @@ namespace OpenTK.Platform.Egl
 
         public override GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
-            return (GraphicsContext.GetCurrentContextDelegate)delegate
-            {
-                return new ContextHandle(Egl.GetCurrentContext());
-            };
+            return delegate { return new ContextHandle(Egl.GetCurrentContext()); };
         }
     }
 }

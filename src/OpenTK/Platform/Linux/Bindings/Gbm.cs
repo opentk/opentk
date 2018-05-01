@@ -42,7 +42,8 @@ namespace OpenTK.Platform.Linux
         private const string lib = "gbm";
 
         [DllImport(lib, EntryPoint = "gbm_bo_create", CallingConvention = CallingConvention.Cdecl)]
-        public static extern BufferObject CreateBuffer(Device gbm, int width, int height, SurfaceFormat format, SurfaceFlags flags);
+        public static extern BufferObject CreateBuffer(Device gbm, int width, int height, SurfaceFormat format,
+            SurfaceFlags flags);
 
         [DllImport(lib, EntryPoint = "gbm_bo_destroy", CallingConvention = CallingConvention.Cdecl)]
         public static extern void DestroyBuffer(BufferObject bo);
@@ -78,7 +79,8 @@ namespace OpenTK.Platform.Linux
         public static extern int DeviceGetFD(IntPtr gbm);
 
         [DllImport(lib, EntryPoint = "gbm_surface_create", CallingConvention = CallingConvention.Cdecl)]
-        public static extern Surface CreateSurface(Device gbm, int width, int height, SurfaceFormat format, SurfaceFlags flags);
+        public static extern Surface CreateSurface(Device gbm, int width, int height, SurfaceFormat format,
+            SurfaceFlags flags);
 
         [DllImport(lib, EntryPoint = "gbm_surface_destroy", CallingConvention = CallingConvention.Cdecl)]
         public static extern void DestroySurface(IntPtr surface);
@@ -97,88 +99,88 @@ namespace OpenTK.Platform.Linux
     internal enum SurfaceFormat
     {
         BigEndian = 1 << 31,
-        C8 = ((int)('C') | ((int)('8') << 8) | ((int)(' ') << 16) | ((int)(' ') << 24)),
+        C8 = 'C' | ('8' << 8) | (' ' << 16) | (' ' << 24),
 
-        RGB332 = ((int)('R') | ((int)('G') << 8) | ((int)('B') << 16) | ((int)('8') << 24)),
-        BGR233 = ((int)('B') | ((int)('G') << 8) | ((int)('R') << 16) | ((int)('8') << 24)),
+        RGB332 = 'R' | ('G' << 8) | ('B' << 16) | ('8' << 24),
+        BGR233 = 'B' | ('G' << 8) | ('R' << 16) | ('8' << 24),
 
-        XRGB4444 = ((int)('X') | ((int)('R') << 8) | ((int)('1') << 16) | ((int)('2') << 24)),
-        XBGR4444 = ((int)('X') | ((int)('B') << 8) | ((int)('1') << 16) | ((int)('2') << 24)),
-        RGBX4444 = ((int)('R') | ((int)('X') << 8) | ((int)('1') << 16) | ((int)('2') << 24)),
-        BGRX4444 = ((int)('B') | ((int)('X') << 8) | ((int)('1') << 16) | ((int)('2') << 24)),
+        XRGB4444 = 'X' | ('R' << 8) | ('1' << 16) | ('2' << 24),
+        XBGR4444 = 'X' | ('B' << 8) | ('1' << 16) | ('2' << 24),
+        RGBX4444 = 'R' | ('X' << 8) | ('1' << 16) | ('2' << 24),
+        BGRX4444 = 'B' | ('X' << 8) | ('1' << 16) | ('2' << 24),
 
-        ARGB4444 = ((int)('A') | ((int)('R') << 8) | ((int)('1') << 16) | ((int)('2') << 24)),
-        ABGR4444 = ((int)('A') | ((int)('B') << 8) | ((int)('1') << 16) | ((int)('2') << 24)),
-        RGBA4444 = ((int)('R') | ((int)('A') << 8) | ((int)('1') << 16) | ((int)('2') << 24)),
-        BGRA4444 = ((int)('B') | ((int)('A') << 8) | ((int)('1') << 16) | ((int)('2') << 24)),
+        ARGB4444 = 'A' | ('R' << 8) | ('1' << 16) | ('2' << 24),
+        ABGR4444 = 'A' | ('B' << 8) | ('1' << 16) | ('2' << 24),
+        RGBA4444 = 'R' | ('A' << 8) | ('1' << 16) | ('2' << 24),
+        BGRA4444 = 'B' | ('A' << 8) | ('1' << 16) | ('2' << 24),
 
-        XRGB1555 = ((int)('X') | ((int)('R') << 8) | ((int)('1') << 16) | ((int)('5') << 24)),
-        XBGR1555 = ((int)('X') | ((int)('B') << 8) | ((int)('1') << 16) | ((int)('5') << 24)),
-        RGBX5551 = ((int)('R') | ((int)('X') << 8) | ((int)('1') << 16) | ((int)('5') << 24)),
-        BGRX5551 = ((int)('B') | ((int)('X') << 8) | ((int)('1') << 16) | ((int)('5') << 24)),
+        XRGB1555 = 'X' | ('R' << 8) | ('1' << 16) | ('5' << 24),
+        XBGR1555 = 'X' | ('B' << 8) | ('1' << 16) | ('5' << 24),
+        RGBX5551 = 'R' | ('X' << 8) | ('1' << 16) | ('5' << 24),
+        BGRX5551 = 'B' | ('X' << 8) | ('1' << 16) | ('5' << 24),
 
-        ARGB1555 = ((int)('A') | ((int)('R') << 8) | ((int)('1') << 16) | ((int)('5') << 24)),
-        ABGR1555 = ((int)('A') | ((int)('B') << 8) | ((int)('1') << 16) | ((int)('5') << 24)),
-        RGBA5551 = ((int)('R') | ((int)('A') << 8) | ((int)('1') << 16) | ((int)('5') << 24)),
-        BGRA5551 = ((int)('B') | ((int)('A') << 8) | ((int)('1') << 16) | ((int)('5') << 24)),
+        ARGB1555 = 'A' | ('R' << 8) | ('1' << 16) | ('5' << 24),
+        ABGR1555 = 'A' | ('B' << 8) | ('1' << 16) | ('5' << 24),
+        RGBA5551 = 'R' | ('A' << 8) | ('1' << 16) | ('5' << 24),
+        BGRA5551 = 'B' | ('A' << 8) | ('1' << 16) | ('5' << 24),
 
-        RGB565 = ((int)('R') | ((int)('G') << 8) | ((int)('1') << 16) | ((int)('6') << 24)),
-        BGR565 = ((int)('B') | ((int)('G') << 8) | ((int)('1') << 16) | ((int)('6') << 24)),
+        RGB565 = 'R' | ('G' << 8) | ('1' << 16) | ('6' << 24),
+        BGR565 = 'B' | ('G' << 8) | ('1' << 16) | ('6' << 24),
 
-        RGB888 = ((int)('R') | ((int)('G') << 8) | ((int)('2') << 16) | ((int)('4') << 24)),
-        BGR888 = ((int)('B') | ((int)('G') << 8) | ((int)('2') << 16) | ((int)('4') << 24)),
+        RGB888 = 'R' | ('G' << 8) | ('2' << 16) | ('4' << 24),
+        BGR888 = 'B' | ('G' << 8) | ('2' << 16) | ('4' << 24),
 
-        XRGB8888 = ((int)('X') | ((int)('R') << 8) | ((int)('2') << 16) | ((int)('4') << 24)),
-        XBGR8888 = ((int)('X') | ((int)('B') << 8) | ((int)('2') << 16) | ((int)('4') << 24)),
-        RGBX8888 = ((int)('R') | ((int)('X') << 8) | ((int)('2') << 16) | ((int)('4') << 24)),
-        BGRX8888 = ((int)('B') | ((int)('X') << 8) | ((int)('2') << 16) | ((int)('4') << 24)),
+        XRGB8888 = 'X' | ('R' << 8) | ('2' << 16) | ('4' << 24),
+        XBGR8888 = 'X' | ('B' << 8) | ('2' << 16) | ('4' << 24),
+        RGBX8888 = 'R' | ('X' << 8) | ('2' << 16) | ('4' << 24),
+        BGRX8888 = 'B' | ('X' << 8) | ('2' << 16) | ('4' << 24),
 
-        ARGB8888 = ((int)('A') | ((int)('R') << 8) | ((int)('2') << 16) | ((int)('4') << 24)),
-        ABGR8888 = ((int)('A') | ((int)('B') << 8) | ((int)('2') << 16) | ((int)('4') << 24)),
-        RGBA8888 = ((int)('R') | ((int)('A') << 8) | ((int)('2') << 16) | ((int)('4') << 24)),
-        BGRA8888 = ((int)('B') | ((int)('A') << 8) | ((int)('2') << 16) | ((int)('4') << 24)),
+        ARGB8888 = 'A' | ('R' << 8) | ('2' << 16) | ('4' << 24),
+        ABGR8888 = 'A' | ('B' << 8) | ('2' << 16) | ('4' << 24),
+        RGBA8888 = 'R' | ('A' << 8) | ('2' << 16) | ('4' << 24),
+        BGRA8888 = 'B' | ('A' << 8) | ('2' << 16) | ('4' << 24),
 
-        XRGB2101010 = ((int)('X') | ((int)('R') << 8) | ((int)('3') << 16) | ((int)('0') << 24)),
-        XBGR2101010 = ((int)('X') | ((int)('B') << 8) | ((int)('3') << 16) | ((int)('0') << 24)),
-        RGBX1010102 = ((int)('R') | ((int)('X') << 8) | ((int)('3') << 16) | ((int)('0') << 24)),
-        BGRX1010102 = ((int)('B') | ((int)('X') << 8) | ((int)('3') << 16) | ((int)('0') << 24)),
+        XRGB2101010 = 'X' | ('R' << 8) | ('3' << 16) | ('0' << 24),
+        XBGR2101010 = 'X' | ('B' << 8) | ('3' << 16) | ('0' << 24),
+        RGBX1010102 = 'R' | ('X' << 8) | ('3' << 16) | ('0' << 24),
+        BGRX1010102 = 'B' | ('X' << 8) | ('3' << 16) | ('0' << 24),
 
-        ARGB2101010 = ((int)('A') | ((int)('R') << 8) | ((int)('3') << 16) | ((int)('0') << 24)),
-        ABGR2101010 = ((int)('A') | ((int)('B') << 8) | ((int)('3') << 16) | ((int)('0') << 24)),
-        RGBA1010102 = ((int)('R') | ((int)('A') << 8) | ((int)('3') << 16) | ((int)('0') << 24)),
-        BGRA1010102 = ((int)('B') | ((int)('A') << 8) | ((int)('3') << 16) | ((int)('0') << 24)),
+        ARGB2101010 = 'A' | ('R' << 8) | ('3' << 16) | ('0' << 24),
+        ABGR2101010 = 'A' | ('B' << 8) | ('3' << 16) | ('0' << 24),
+        RGBA1010102 = 'R' | ('A' << 8) | ('3' << 16) | ('0' << 24),
+        BGRA1010102 = 'B' | ('A' << 8) | ('3' << 16) | ('0' << 24),
 
-        YUYV = ((int)('Y') | ((int)('U') << 8) | ((int)('Y') << 16) | ((int)('V') << 24)),
-        YVYU = ((int)('Y') | ((int)('V') << 8) | ((int)('Y') << 16) | ((int)('U') << 24)),
-        UYVY = ((int)('U') | ((int)('Y') << 8) | ((int)('V') << 16) | ((int)('Y') << 24)),
-        VYUY = ((int)('V') | ((int)('Y') << 8) | ((int)('U') << 16) | ((int)('Y') << 24)),
+        YUYV = 'Y' | ('U' << 8) | ('Y' << 16) | ('V' << 24),
+        YVYU = 'Y' | ('V' << 8) | ('Y' << 16) | ('U' << 24),
+        UYVY = 'U' | ('Y' << 8) | ('V' << 16) | ('Y' << 24),
+        VYUY = 'V' | ('Y' << 8) | ('U' << 16) | ('Y' << 24),
 
-        AYUV = ((int)('A') | ((int)('Y') << 8) | ((int)('U') << 16) | ((int)('V') << 24)),
+        AYUV = 'A' | ('Y' << 8) | ('U' << 16) | ('V' << 24),
 
-        NV12 = ((int)('N') | ((int)('V') << 8) | ((int)('1') << 16) | ((int)('2') << 24)),
-        NV21 = ((int)('N') | ((int)('V') << 8) | ((int)('2') << 16) | ((int)('1') << 24)),
-        NV16 = ((int)('N') | ((int)('V') << 8) | ((int)('1') << 16) | ((int)('6') << 24)),
-        NV61 = ((int)('N') | ((int)('V') << 8) | ((int)('6') << 16) | ((int)('1') << 24)),
+        NV12 = 'N' | ('V' << 8) | ('1' << 16) | ('2' << 24),
+        NV21 = 'N' | ('V' << 8) | ('2' << 16) | ('1' << 24),
+        NV16 = 'N' | ('V' << 8) | ('1' << 16) | ('6' << 24),
+        NV61 = 'N' | ('V' << 8) | ('6' << 16) | ('1' << 24),
 
-        YUV410 = ((int)('Y') | ((int)('U') << 8) | ((int)('V') << 16) | ((int)('9') << 24)),
-        YVU410 = ((int)('Y') | ((int)('V') << 8) | ((int)('U') << 16) | ((int)('9') << 24)),
-        YUV411 = ((int)('Y') | ((int)('U') << 8) | ((int)('1') << 16) | ((int)('1') << 24)),
-        YVU411 = ((int)('Y') | ((int)('V') << 8) | ((int)('1') << 16) | ((int)('1') << 24)),
-        YUV420 = ((int)('Y') | ((int)('U') << 8) | ((int)('1') << 16) | ((int)('2') << 24)),
-        YVU420 = ((int)('Y') | ((int)('V') << 8) | ((int)('1') << 16) | ((int)('2') << 24)),
-        YUV422 = ((int)('Y') | ((int)('U') << 8) | ((int)('1') << 16) | ((int)('6') << 24)),
-        YVU422 = ((int)('Y') | ((int)('V') << 8) | ((int)('1') << 16) | ((int)('6') << 24)),
-        YUV444 = ((int)('Y') | ((int)('U') << 8) | ((int)('2') << 16) | ((int)('4') << 24)),
-        YVU444 = ((int)('Y') | ((int)('V') << 8) | ((int)('2') << 16) | ((int)('4') << 24)),
+        YUV410 = 'Y' | ('U' << 8) | ('V' << 16) | ('9' << 24),
+        YVU410 = 'Y' | ('V' << 8) | ('U' << 16) | ('9' << 24),
+        YUV411 = 'Y' | ('U' << 8) | ('1' << 16) | ('1' << 24),
+        YVU411 = 'Y' | ('V' << 8) | ('1' << 16) | ('1' << 24),
+        YUV420 = 'Y' | ('U' << 8) | ('1' << 16) | ('2' << 24),
+        YVU420 = 'Y' | ('V' << 8) | ('1' << 16) | ('2' << 24),
+        YUV422 = 'Y' | ('U' << 8) | ('1' << 16) | ('6' << 24),
+        YVU422 = 'Y' | ('V' << 8) | ('1' << 16) | ('6' << 24),
+        YUV444 = 'Y' | ('U' << 8) | ('2' << 16) | ('4' << 24),
+        YVU444 = 'Y' | ('V' << 8) | ('2' << 16) | ('4' << 24)
     }
 
     [Flags]
     internal enum SurfaceFlags
     {
-        Scanout = (1 << 0),
-        Cursor64x64 = (1 << 1),
-        Rendering = (1 << 2),
-        Write = (1 << 3),
+        Scanout = 1 << 0,
+        Cursor64x64 = 1 << 1,
+        Rendering = 1 << 2,
+        Write = 1 << 3
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -254,4 +256,3 @@ namespace OpenTK.Platform.Linux
         }
     }
 }
-

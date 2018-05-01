@@ -32,19 +32,19 @@ namespace OpenTK.Input
 {
     internal sealed class GamePadConfiguration
     {
-        private static readonly char[] ConfigurationSeparator = new char[] { ',' };
+        private static readonly char[] ConfigurationSeparator = {','};
 
         private readonly List<GamePadConfigurationItem> configuration_items =
             new List<GamePadConfigurationItem>();
-
-        public Guid Guid { get; private set; }
-
-        public string Name { get; private set; }
 
         public GamePadConfiguration(string configuration)
         {
             ParseConfiguration(configuration);
         }
+
+        public Guid Guid { get; private set; }
+
+        public string Name { get; private set; }
 
         public List<GamePadConfigurationItem>.Enumerator GetEnumerator()
         {
@@ -52,15 +52,15 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Parses a GamePad configuration string.
-        /// This string must follow the rules for SDL2
-        /// GameController outlined here:
-        /// http://wiki.libsdl.org/SDL_GameControllerAddMapping
+        ///     Parses a GamePad configuration string.
+        ///     This string must follow the rules for SDL2
+        ///     GameController outlined here:
+        ///     http://wiki.libsdl.org/SDL_GameControllerAddMapping
         /// </summary>
         /// <param name="configuration"></param>
         private void ParseConfiguration(string configuration)
         {
-            if (String.IsNullOrEmpty(configuration))
+            if (string.IsNullOrEmpty(configuration))
             {
                 throw new ArgumentNullException();
             }
@@ -89,7 +89,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Parses a gamepad configuration target string
+        ///     Parses a gamepad configuration target string
         /// </summary>
         /// <param name="target">The string to parse</param>
         /// <returns>The configuration target (Button index, axis index etc.)</returns>
@@ -153,13 +153,13 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Creates a new gamepad configuration source from the given string
+        ///     Creates a new gamepad configuration source from the given string
         /// </summary>
         /// <param name="item">The string to parse</param>
         /// <returns>The new gamepad configuration source</returns>
         private static GamePadConfigurationSource ParseSource(string item)
         {
-            if (String.IsNullOrEmpty(item))
+            if (string.IsNullOrEmpty(item))
             {
                 return new GamePadConfigurationSource();
             }
@@ -167,39 +167,41 @@ namespace OpenTK.Input
             switch (item[0])
             {
                 case 'a':
-                    return new GamePadConfigurationSource(isAxis:true, index:ParseIndex(item));
-
+                {
+                    return new GamePadConfigurationSource(true, ParseIndex(item));
+                }
                 case 'b':
-                    return new GamePadConfigurationSource(isAxis:false, index:ParseIndex(item));
-
+                {
+                    return new GamePadConfigurationSource(false, ParseIndex(item));
+                }
                 case 'h':
-                    {
-                        HatPosition position;
-                        var hat = ParseHat(item, out position);
-                        return new GamePadConfigurationSource(hat, position);
-                    }
-
+                {
+                    var hat = ParseHat(item, out var position);
+                    return new GamePadConfigurationSource(hat, position);
+                }
                 default:
+                {
                     throw new InvalidOperationException("[Input] Invalid GamePad configuration value");
+                }
             }
         }
 
         /// <summary>
-        /// Parses a string in the format a#" where:
-        /// - # is a zero-based integer number
+        ///     Parses a string in the format a#" where:
+        ///     - # is a zero-based integer number
         /// </summary>
         /// <param name="item">The string to parse</param>
         /// <returns>The index of the axis or button</returns>
         private static int ParseIndex(string item)
         {
             // item is in the format "a#" where # a zero-based integer number
-            return Int32.Parse(item.Substring(1)); ;
+            return int.Parse(item.Substring(1));
         }
 
         /// <summary>
-        /// Parses a string in the format "h#.#" where:
-        /// - the 1st # is the zero-based hat id
-        /// - the 2nd # is a bit-flag defining the hat position
+        ///     Parses a string in the format "h#.#" where:
+        ///     - the 1st # is the zero-based hat id
+        ///     - the 2nd # is a bit-flag defining the hat position
         /// </summary>
         /// <param name="item">The string to parse</param>
         /// <param name="position">The hat position assigned via 'out'</param>
@@ -207,21 +209,39 @@ namespace OpenTK.Input
         private static JoystickHat ParseHat(string item, out HatPosition position)
         {
             var hat = JoystickHat.Hat0;
-            var id = Int32.Parse(item.Substring(1, 1));
-            var pos = Int32.Parse(item.Substring(3));
+            var id = int.Parse(item.Substring(1, 1));
+            var pos = int.Parse(item.Substring(3));
 
             position = HatPosition.Centered;
             switch (pos)
             {
-                case 1: position = HatPosition.Up; break;
-                case 2: position = HatPosition.Right; break;
-                case 3: position = HatPosition.UpRight; break;
-                case 4: position = HatPosition.Down; break;
-                case 6: position = HatPosition.DownRight; break;
-                case 8: position = HatPosition.Left; break;
-                case 9: position = HatPosition.UpLeft; break;
-                case 12: position = HatPosition.DownLeft; break;
-                default: position = HatPosition.Centered; break;
+                case 1:
+                    position = HatPosition.Up;
+                    break;
+                case 2:
+                    position = HatPosition.Right;
+                    break;
+                case 3:
+                    position = HatPosition.UpRight;
+                    break;
+                case 4:
+                    position = HatPosition.Down;
+                    break;
+                case 6:
+                    position = HatPosition.DownRight;
+                    break;
+                case 8:
+                    position = HatPosition.Left;
+                    break;
+                case 9:
+                    position = HatPosition.UpLeft;
+                    break;
+                case 12:
+                    position = HatPosition.DownLeft;
+                    break;
+                default:
+                    position = HatPosition.Centered;
+                    break;
             }
 
             return hat + id;

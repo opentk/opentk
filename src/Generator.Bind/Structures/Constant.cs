@@ -10,20 +10,40 @@ using System.Linq;
 namespace Bind.Structures
 {
     /// <summary>
-    /// Represents an opengl constant in C# format. Both the constant name and value
-    /// can be retrieved or set. The value can be either a number, another constant
-    /// or an alias to a constant
+    ///     Represents an opengl constant in C# format. Both the constant name and value
+    ///     can be retrieved or set. The value can be either a number, another constant
+    ///     or an alias to a constant
     /// </summary>
     internal class Constant : IComparable<Constant>
     {
+        private string _name;
+
+        private string _value;
+
+        /// <summary>
+        ///     Creates an empty Constant.
+        /// </summary>
+        public Constant()
+        {
+        }
+
+        /// <summary>
+        ///     Creates a Constant with the given name and value.
+        /// </summary>
+        /// <param name="name">The Name of the Constant.</param>
+        /// <param name="value">The Type of the Constant.</param>
+        public Constant(string name, string value)
+        {
+            Name = name;
+            Value = value;
+        }
+
         // Gets the name prior to translation.
         public string OriginalName { get; private set; }
 
-        private string _name;
-
         /// <summary>
-        /// Gets or sets the name of the opengl constant (eg. GL_LINES).
-        /// Undergoes processing unless the Settings.Legacy.NoAdvancedEnumProcessing flag is set.
+        ///     Gets or sets the name of the opengl constant (eg. GL_LINES).
+        ///     Undergoes processing unless the Settings.Legacy.NoAdvancedEnumProcessing flag is set.
         /// </summary>
         public string Name
         {
@@ -44,10 +64,8 @@ namespace Bind.Structures
             }
         }
 
-        private string _value;
-
         /// <summary>
-        /// Gets or sets the value of the opengl constant (eg. 0x00000001).
+        ///     Gets or sets the value of the opengl constant (eg. 0x00000001).
         /// </summary>
         public string Value
         {
@@ -64,8 +82,8 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        /// Gets or sets a string indicating the OpenGL enum reference by this constant.
-        /// Can be null.
+        ///     Gets or sets a string indicating the OpenGL enum reference by this constant.
+        ///     Can be null.
         /// </summary>
         public string Reference { get; set; }
 
@@ -77,31 +95,24 @@ namespace Bind.Structures
                 ulong number;
                 var test = Value;
                 return ulong.TryParse(test.ToLower().Replace("0x", string.Empty),
-                    NumberStyles.AllowHexSpecifier, null, out number) &&
-                    number > int.MaxValue;
+                           NumberStyles.AllowHexSpecifier, null, out number) &&
+                       number > int.MaxValue;
             }
         }
 
-        /// <summary>
-        /// Creates an empty Constant.
-        /// </summary>
-        public Constant()
+        public int CompareTo(Constant other)
         {
+            var ret = Value.CompareTo(other.Value);
+            if (ret == 0)
+            {
+                return Name.CompareTo(other.Name);
+            }
+
+            return ret;
         }
 
         /// <summary>
-        /// Creates a Constant with the given name and value.
-        /// </summary>
-        /// <param name="name">The Name of the Constant.</param>
-        /// <param name="value">The Type of the Constant.</param>
-        public Constant(string name, string value)
-        {
-            Name = name;
-            Value = value;
-        }
-
-        /// <summary>
-        /// Replces the Value of the given constant with the value referenced by the [c.Reference, c.Value] pair.
+        ///     Replces the Value of the given constant with the value referenced by the [c.Reference, c.Value] pair.
         /// </summary>
         /// <param name="c">The Constant to translate</param>
         /// <param name="enums">The list of enums to check.</param>
@@ -112,6 +123,7 @@ namespace Bind.Structures
             {
                 throw new ArgumentNullException(nameof(c));
             }
+
             if (enums == null)
             {
                 throw new ArgumentNullException(nameof(enums));
@@ -126,8 +138,9 @@ namespace Bind.Structures
                 {
                     reference =
                         enums.ContainsKey(reference.Reference) &&
-                        enums[reference.Reference].ConstantCollection.ContainsKey(reference.Value) ?
-                        enums[reference.Reference].ConstantCollection[reference.Value] : null;
+                        enums[reference.Reference].ConstantCollection.ContainsKey(reference.Value)
+                            ? enums[reference.Reference].ConstantCollection[reference.Value]
+                            : null;
                 } while (reference != null && reference.Reference != null && reference.Reference != c.Reference);
 
                 // If we haven't managed to locate the reference, do
@@ -135,8 +148,8 @@ namespace Bind.Structures
                 if (reference == null || reference.Reference != null)
                 {
                     reference = enums.Values.Select(e =>
-                        e.ConstantCollection.Values.FirstOrDefault(t =>
-                            t.Reference == null && t.Name == c.Name))
+                            e.ConstantCollection.Values.FirstOrDefault(t =>
+                                t.Reference == null && t.Name == c.Name))
                         .FirstOrDefault(t => t != null);
                 }
 
@@ -147,12 +160,11 @@ namespace Bind.Structures
                     c.Reference = null;
                     return true;
                 }
-                else
-                {
-                    Trace.WriteLine($"[Warning] Failed to resolve token: {c}");
-                    return false;
-                }
+
+                Trace.WriteLine($"[Warning] Failed to resolve token: {c}");
+                return false;
             }
+
             return true;
         }
 
@@ -160,16 +172,6 @@ namespace Bind.Structures
         {
             return
                 $"{Name} = {(Unchecked ? "unchecked" : string.Empty)}((int){(!string.IsNullOrEmpty(Reference) ? Reference + "." : string.Empty)}{Value})";
-        }
-
-        public int CompareTo(Constant other)
-        {
-            var ret = Value.CompareTo(other.Value);
-            if (ret == 0)
-            {
-                return Name.CompareTo(other.Name);
-            }
-            return ret;
         }
     }
 }

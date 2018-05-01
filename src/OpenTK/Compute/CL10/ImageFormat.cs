@@ -24,7 +24,6 @@
 //
 
 #if EXPERIMENTAL
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -49,7 +48,8 @@ namespace OpenTK.Compute.CL10
         /// <summary>
         /// Gets or sets a <see cref="ChannelType"/> value, which indicates the data type of each image channel.
         /// </summary>
-        public ChannelType ChannelType { get { return image_channel_data_type; } set { image_channel_data_type = value; } }
+        public ChannelType ChannelType { get { return image_channel_data_type; } set { image_channel_data_type =
+ value; } }
     }
 }
 

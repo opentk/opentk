@@ -5,6 +5,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using OpenTK.Graphics;
 
 #pragma warning disable 1591
 
@@ -28,7 +29,7 @@ namespace OpenTK.Platform.X11
         GREEN_SIZE = 9,
         X_RENDERABLE_SGIX = 0x8012,
         LARGEST_PBUFFER = 0x801C,
-        DONT_CARE = unchecked((int)0xFFFFFFFF),
+        DONT_CARE = -1,
         TRANSPARENT_ALPHA_VALUE_EXT = 0x28,
         PSEUDO_COLOR_EXT = 0x8004,
         USE_GL = 1,
@@ -128,7 +129,7 @@ namespace OpenTK.Platform.X11
         CONFIG_CAVEAT = 0x20,
         RENDER_TYPE_SGIX = 0x8011,
         SWAP_INTERVAL_EXT = 0x20F1,
-        MAX_SWAP_INTERVAL_EXT = 0x20F2,
+        MAX_SWAP_INTERVAL_EXT = 0x20F2
     }
 
     internal enum GLXHyperpipeAttrib
@@ -136,20 +137,20 @@ namespace OpenTK.Platform.X11
         PIPE_RECT_LIMITS_SGIX = 0x00000002,
         PIPE_RECT_SGIX = 0x00000001,
         HYPERPIPE_STEREO_SGIX = 0x00000003,
-        HYPERPIPE_PIXEL_AVERAGE_SGIX = 0x00000004,
+        HYPERPIPE_PIXEL_AVERAGE_SGIX = 0x00000004
     }
 
     internal enum GLXStringName
     {
         EXTENSIONS = 0x3,
         VERSION = 0x2,
-        VENDOR = 0x1,
+        VENDOR = 0x1
     }
 
     internal enum GLXEventMask
     {
         PBUFFER_CLOBBER_MASK = 0x08000000,
-        BUFFER_CLOBBER_MASK_SGIX = 0x08000000,
+        BUFFER_CLOBBER_MASK_SGIX = 0x08000000
     }
 
     internal enum GLXRenderTypeMask
@@ -158,13 +159,13 @@ namespace OpenTK.Platform.X11
         RGBA_BIT = 0x00000001,
         RGBA_FLOAT_BIT_ARB = 0x00000004,
         RGBA_BIT_SGIX = 0x00000001,
-        COLOR_INDEX_BIT = 0x00000002,
+        COLOR_INDEX_BIT = 0x00000002
     }
 
     internal enum GLXHyperpipeTypeMask
     {
         HYPERPIPE_RENDER_PIPE_SGIX = 0x00000002,
-        HYPERPIPE_DISPLAY_PIPE_SGIX = 0x00000001,
+        HYPERPIPE_DISPLAY_PIPE_SGIX = 0x00000001
     }
 
     internal enum GLXPbufferClobberMask
@@ -185,12 +186,12 @@ namespace OpenTK.Platform.X11
         DEPTH_BUFFER_BIT = 0x00000020,
         FRONT_LEFT_BUFFER_BIT_SGIX = 0x00000001,
         BACK_LEFT_BUFFER_BIT = 0x00000004,
-        FRONT_RIGHT_BUFFER_BIT = 0x00000002,
+        FRONT_RIGHT_BUFFER_BIT = 0x00000002
     }
 
     internal enum GLXHyperpipeMisc
     {
-        HYPERPIPE_PIPE_NAME_LENGTH_SGIX = 80,
+        HYPERPIPE_PIPE_NAME_LENGTH_SGIX = 80
     }
 
     internal enum GLXErrorCode
@@ -203,13 +204,13 @@ namespace OpenTK.Platform.X11
         BAD_VALUE = 6,
         BAD_ATTRIBUTE = 2,
         BAD_VISUAL = 4,
-        BAD_HYPERPIPE_CONFIG_SGIX = 91,
+        BAD_HYPERPIPE_CONFIG_SGIX = 91
     }
 
     internal enum GLXSyncType
     {
         SYNC_SWAP_SGIX = 0x00000001,
-        SYNC_FRAME_SGIX = 0x00000000,
+        SYNC_FRAME_SGIX = 0x00000000
     }
 
     internal enum GLXDrawableTypeMask
@@ -219,7 +220,7 @@ namespace OpenTK.Platform.X11
         PBUFFER_BIT_SGIX = 0x00000004,
         PBUFFER_BIT = 0x00000004,
         WINDOW_BIT_SGIX = 0x00000001,
-        PIXMAP_BIT_SGIX = 0x00000002,
+        PIXMAP_BIT_SGIX = 0x00000002
     }
 
     internal enum ArbCreateContext
@@ -238,41 +239,46 @@ namespace OpenTK.Platform.X11
 
     internal enum ErrorCode
     {
-        NO_ERROR       = 0,
-        BAD_SCREEN     = 1,   /* screen # is bad */
-        BAD_ATTRIBUTE  = 2,   /* attribute to get is bad */
-        NO_EXTENSION   = 3,   /* no glx extension on server */
-        BAD_VISUAL     = 4,   /* visual # not known by GLX */
-        BAD_CONTEXT    = 5,   /* returned only by import_context EXT? */
-        BAD_VALUE      = 6,   /* returned only by glXSwapIntervalSGI? */
-        BAD_ENUM       = 7,   /* unused? */
+        NO_ERROR = 0,
+        BAD_SCREEN = 1, /* screen # is bad */
+        BAD_ATTRIBUTE = 2, /* attribute to get is bad */
+        NO_EXTENSION = 3, /* no glx extension on server */
+        BAD_VISUAL = 4, /* visual # not known by GLX */
+        BAD_CONTEXT = 5, /* returned only by import_context EXT? */
+        BAD_VALUE = 6, /* returned only by glXSwapIntervalSGI? */
+        BAD_ENUM = 7 /* unused? */
     }
 
     /// \internal
     /// <summary>
-    /// Provides access to GLX functions.
+    ///     Provides access to GLX functions.
     /// </summary>
-    internal class Glx : Graphics.GraphicsBindingsBase
+    internal class Glx : GraphicsBindingsBase
     {
         private const string Library = "libGL.so.1";
         private static readonly object sync_root = new object();
 
-        private static readonly byte[] EntryPointNames = new byte[]
+        private static readonly byte[] EntryPointNames =
         {
             // glXCreateContextAttribsARB
-            0x67, 0x6c, 0x58, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x41, 0x74, 0x74, 0x72, 0x69, 0x62, 0x73, 0x41, 0x52, 0x42, 0,
+            0x67, 0x6c, 0x58, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x41, 0x74,
+            0x74, 0x72, 0x69, 0x62, 0x73, 0x41, 0x52, 0x42, 0,
             // glXSwapIntervalEXT
-            0x67, 0x6c, 0x58, 0x53, 0x77, 0x61, 0x70, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x45, 0x58, 0x54, 0,
+            0x67, 0x6c, 0x58, 0x53, 0x77, 0x61, 0x70, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x45, 0x58, 0x54,
+            0,
             // glXSwapIntervalMESA
-            0x67, 0x6c, 0x58, 0x53, 0x77, 0x61, 0x70, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x4d, 0x45, 0x53, 0x41, 0,
+            0x67, 0x6c, 0x58, 0x53, 0x77, 0x61, 0x70, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x4d, 0x45, 0x53,
+            0x41, 0,
             // glXGetSwapIntervalMESA
-            0x67, 0x6c, 0x58, 0x47, 0x65, 0x74, 0x53, 0x77, 0x61, 0x70, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x4d, 0x45, 0x53, 0x41, 0,
+            0x67, 0x6c, 0x58, 0x47, 0x65, 0x74, 0x53, 0x77, 0x61, 0x70, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c,
+            0x4d, 0x45, 0x53, 0x41, 0,
             // glXSwapIntervalSGI
-            0x67, 0x6c, 0x58, 0x53, 0x77, 0x61, 0x70, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x53, 0x47, 0x49, 0,
+            0x67, 0x6c, 0x58, 0x53, 0x77, 0x61, 0x70, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x53, 0x47, 0x49,
+            0
         };
 
         private static readonly int[] EntryPointOffsets = new int[5];
-        private static IntPtr[] EntryPoints = new IntPtr[5];
+        private static readonly IntPtr[] EntryPoints = new IntPtr[5];
 
         internal Glx()
         {
@@ -326,6 +332,7 @@ namespace OpenTK.Platform.X11
             {
                 return EntryPoints[index] != IntPtr.Zero;
             }
+
             return false;
         }
 
@@ -333,7 +340,8 @@ namespace OpenTK.Platform.X11
         public static extern bool IsDirect(IntPtr dpy, IntPtr context);
 
         [DllImport(Library, EntryPoint = "glXQueryDrawable")]
-        public static extern ErrorCode QueryDrawable(IntPtr dpy, IntPtr drawable, GLXAttribute attribute, out int value);
+        public static extern ErrorCode
+            QueryDrawable(IntPtr dpy, IntPtr drawable, GLXAttribute attribute, out int value);
 
         [DllImport(Library, EntryPoint = "glXQueryExtension")]
         public static extern bool QueryExtension(IntPtr dpy, out int errorBase, out int eventBase);
@@ -387,10 +395,10 @@ namespace OpenTK.Platform.X11
         public static extern int GetConfig(IntPtr dpy, ref XVisualInfo vis, GLXAttribute attrib, out int value);
 
         [DllImport(Library, EntryPoint = "glXChooseVisual")]
-        public extern static IntPtr ChooseVisual(IntPtr dpy, int screen, IntPtr attriblist);
+        public static extern IntPtr ChooseVisual(IntPtr dpy, int screen, IntPtr attriblist);
 
         [DllImport(Library, EntryPoint = "glXChooseVisual")]
-        public extern static IntPtr ChooseVisual(IntPtr dpy, int screen, ref int attriblist);
+        public static extern IntPtr ChooseVisual(IntPtr dpy, int screen, ref int attriblist);
 
         public static IntPtr ChooseVisual(IntPtr dpy, int screen, int[] attriblist)
         {
@@ -405,22 +413,45 @@ namespace OpenTK.Platform.X11
 
         // Returns an array of GLXFBConfig structures.
         [DllImport(Library, EntryPoint = "glXChooseFBConfig")]
-        unsafe public extern static IntPtr* ChooseFBConfig(IntPtr dpy, int screen, int[] attriblist, out int fbount);
+        public static extern unsafe IntPtr* ChooseFBConfig(IntPtr dpy, int screen, int[] attriblist, out int fbount);
 
         // Returns a pointer to an XVisualInfo structure.
         [DllImport(Library, EntryPoint = "glXGetVisualFromFBConfig")]
-        public unsafe extern static IntPtr GetVisualFromFBConfig(IntPtr dpy, IntPtr fbconfig);
+        public static extern IntPtr GetVisualFromFBConfig(IntPtr dpy, IntPtr fbconfig);
 
-        public partial class Arb
+        [Slot(0)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern unsafe IntPtr glXCreateContextAttribsARB(IntPtr display, IntPtr fbconfig,
+            IntPtr share_context, bool direct, int* attribs);
+
+        [Slot(1)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern ErrorCode glXSwapIntervalEXT(IntPtr display, IntPtr drawable, int interval);
+
+        [Slot(2)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern ErrorCode glXSwapIntervalMESA(int interval);
+
+        [Slot(3)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int glXGetSwapIntervalMESA();
+
+        [Slot(4)]
+        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern ErrorCode glXSwapIntervalSGI(int interval);
+
+        public class Arb
         {
             [AutoGenerated(EntryPoint = "glXCreateContextAttribsARB")]
-            unsafe public static IntPtr CreateContextAttribs(IntPtr display, IntPtr fbconfig, IntPtr share_context, bool direct, int* attribs)
+            public static unsafe IntPtr CreateContextAttribs(IntPtr display, IntPtr fbconfig, IntPtr share_context,
+                bool direct, int* attribs)
             {
                 throw new BindingsNotRewrittenException();
             }
 
             [AutoGenerated(EntryPoint = "glXCreateContextAttribsARB")]
-            public static IntPtr CreateContextAttribs(IntPtr display, IntPtr fbconfig, IntPtr share_context, bool direct, int[] attribs)
+            public static IntPtr CreateContextAttribs(IntPtr display, IntPtr fbconfig, IntPtr share_context,
+                bool direct, int[] attribs)
             {
                 throw new BindingsNotRewrittenException();
             }
@@ -438,7 +469,7 @@ namespace OpenTK.Platform.X11
             public static extern IntPtr GetProcAddress(IntPtr procName);
         }
 
-        public partial class Ext
+        public class Ext
         {
             [AutoGenerated(EntryPoint = "glXSwapIntervalEXT")]
             public static ErrorCode SwapInterval(IntPtr display, IntPtr drawable, int interval)
@@ -447,7 +478,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        public partial class Mesa
+        public class Mesa
         {
             [AutoGenerated(EntryPoint = "glXSwapIntervalMESA")]
             public static ErrorCode SwapInterval(int interval)
@@ -462,7 +493,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        public partial class Sgi
+        public class Sgi
         {
             [AutoGenerated(EntryPoint = "glXSwapIntervalSGI")]
             public static ErrorCode SwapInterval(int interval)
@@ -470,22 +501,6 @@ namespace OpenTK.Platform.X11
                 throw new BindingsNotRewrittenException();
             }
         }
-
-        [Slot(0)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        internal unsafe static extern IntPtr glXCreateContextAttribsARB(IntPtr display, IntPtr fbconfig, IntPtr share_context, bool direct, int* attribs);
-        [Slot(1)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern ErrorCode glXSwapIntervalEXT(IntPtr display, IntPtr drawable, int interval);
-        [Slot(2)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern ErrorCode glXSwapIntervalMESA(int interval);
-        [Slot(3)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int glXGetSwapIntervalMESA();
-        [Slot(4)]
-        [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern ErrorCode glXSwapIntervalSGI(int interval);
     }
 }
 

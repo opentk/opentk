@@ -56,7 +56,7 @@ namespace OpenTK.Platform.Egl
             RenderableFlags renderableFlags)
         {
             var configs = new IntPtr[1];
-            var attribList = new int[]
+            var attribList = new[]
             {
                 Egl.SURFACE_TYPE, (int)surfaceType,
                 Egl.RENDERABLE_TYPE, (int)renderableFlags,
@@ -72,7 +72,7 @@ namespace OpenTK.Platform.Egl
                 Egl.SAMPLE_BUFFERS, samples > 0 ? 1 : 0,
                 Egl.SAMPLES, samples > 0 ? samples : 0,
 
-                Egl.NONE,
+                Egl.NONE
             };
 
             int numConfigs;
@@ -95,7 +95,8 @@ namespace OpenTK.Platform.Egl
             Egl.GetConfigAttrib(display, activeConfig, Egl.SAMPLES, out sampleBuffers);
             Egl.GetConfigAttrib(display, activeConfig, Egl.SAMPLES, out samples);
 
-            return new GraphicsMode(activeConfig, new ColorFormat(r, g, b, a), d, s, sampleBuffers > 0 ? samples : 0, 0, 2, false);
+            return new GraphicsMode(activeConfig, new ColorFormat(r, g, b, a), d, s, sampleBuffers > 0 ? samples : 0, 0,
+                2, false);
         }
     }
 }

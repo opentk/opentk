@@ -32,20 +32,36 @@ namespace OpenTK.Platform.Windows
 {
     internal sealed class WinRawInput : WinInputBase
     {
+        private static readonly Guid DeviceInterfaceHid = new Guid("4D1E55B2-F16F-11CF-88CB-001111000030");
+
+        private IntPtr DevNotifyHandle;
+
+        private WinRawJoystick joystick_driver;
         // Input event data.
 
         private WinRawKeyboard keyboard_driver;
         private WinRawMouse mouse_driver;
-        private WinRawJoystick joystick_driver;
-
-        private IntPtr DevNotifyHandle;
-        private static readonly Guid DeviceInterfaceHid = new Guid("4D1E55B2-F16F-11CF-88CB-001111000030");
 
         public WinRawInput()
-            : base()
         {
             Debug.WriteLine("Using WinRawInput.");
         }
+
+        public static int DeviceCount
+        {
+            get
+            {
+                var deviceCount = 0;
+                Functions.GetRawInputDeviceList(null, ref deviceCount, API.RawInputDeviceListSize);
+                return deviceCount;
+            }
+        }
+
+        public override IKeyboardDriver2 KeyboardDriver => keyboard_driver;
+
+        public override IMouseDriver2 MouseDriver => mouse_driver;
+
+        public override IJoystickDriver2 JoystickDriver => joystick_driver;
 
         private static IntPtr RegisterForDeviceNotifications(WinWindowInfo parent)
         {
@@ -57,11 +73,13 @@ namespace OpenTK.Platform.Windows
             unsafe
             {
                 dev_notify_handle = Functions.RegisterDeviceNotification(parent.Handle,
-                    new IntPtr((void*)&bdi), DeviceNotification.WINDOW_HANDLE);
+                    new IntPtr(&bdi), DeviceNotification.WINDOW_HANDLE);
             }
+
             if (dev_notify_handle == IntPtr.Zero)
             {
-                Debug.Print("[Warning] Failed to register for device notifications. Error: {0}", Marshal.GetLastWin32Error());
+                Debug.Print("[Warning] Failed to register for device notifications. Error: {0}",
+                    Marshal.GetLastWin32Error());
             }
 
             return dev_notify_handle;
@@ -69,7 +87,7 @@ namespace OpenTK.Platform.Windows
 
 
         // Processes the input Windows Message, routing the buffer to the correct Keyboard, Mouse or HID.
-        protected unsafe override IntPtr WindowProcedure(
+        protected override IntPtr WindowProcedure(
             IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             try
@@ -77,44 +95,49 @@ namespace OpenTK.Platform.Windows
                 switch (message)
                 {
                     case WindowMessage.INPUT:
+                    {
+                        // Retrieve the raw input data buffer
+                        RawInputHeader header;
+                        if (Functions.GetRawInputData(lParam, out header) == RawInputHeader.SizeInBytes)
                         {
-                            // Retrieve the raw input data buffer
-                            RawInputHeader header;
-                            if (Functions.GetRawInputData(lParam, out header) == RawInputHeader.SizeInBytes)
+                            switch (header.Type)
                             {
-                                switch (header.Type)
-                                {
-                                    case RawInputDeviceType.KEYBOARD:
-                                        if (((WinRawKeyboard)KeyboardDriver).ProcessKeyboardEvent(lParam))
-                                        {
-                                            return IntPtr.Zero;
-                                        }
-                                        break;
+                                case RawInputDeviceType.KEYBOARD:
+                                    if (((WinRawKeyboard)KeyboardDriver).ProcessKeyboardEvent(lParam))
+                                    {
+                                        return IntPtr.Zero;
+                                    }
 
-                                    case RawInputDeviceType.MOUSE:
-                                        if (((WinRawMouse)MouseDriver).ProcessMouseEvent(lParam))
-                                        {
-                                            return IntPtr.Zero;
-                                        }
-                                        break;
+                                    break;
 
-                                    case RawInputDeviceType.HID:
-                                        if (((WinRawJoystick)JoystickDriver).ProcessEvent(lParam))
-                                        {
-                                            return IntPtr.Zero;
-                                        }
-                                        break;
-                                }
+                                case RawInputDeviceType.MOUSE:
+                                    if (((WinRawMouse)MouseDriver).ProcessMouseEvent(lParam))
+                                    {
+                                        return IntPtr.Zero;
+                                    }
+
+                                    break;
+
+                                case RawInputDeviceType.HID:
+                                    if (((WinRawJoystick)JoystickDriver).ProcessEvent(lParam))
+                                    {
+                                        return IntPtr.Zero;
+                                    }
+
+                                    break;
                             }
                         }
                         break;
-
+                    }
                     case WindowMessage.DEVICECHANGE:
+                    {
                         ((WinRawKeyboard)KeyboardDriver).RefreshDevices();
                         ((WinRawMouse)MouseDriver).RefreshDevices();
                         ((WinRawJoystick)JoystickDriver).RefreshDevices();
                         break;
+                    }
                 }
+
                 return base.WindowProcedure(handle, message, wParam, lParam);
             }
             catch (Exception e)
@@ -141,16 +164,6 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public static int DeviceCount
-        {
-            get
-            {
-                var deviceCount = 0;
-                Functions.GetRawInputDeviceList(null, ref deviceCount, API.RawInputDeviceListSize);
-                return deviceCount;
-            }
-        }
-
         public static RawInputDeviceList[] GetDeviceList()
         {
             var count = DeviceCount;
@@ -159,14 +172,9 @@ namespace OpenTK.Platform.Windows
             {
                 ridl[i] = new RawInputDeviceList();
             }
+
             Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
             return ridl;
         }
-
-        public override IKeyboardDriver2 KeyboardDriver => keyboard_driver;
-
-        public override IMouseDriver2 MouseDriver => mouse_driver;
-
-        public override IJoystickDriver2 JoystickDriver => joystick_driver;
     }
 }

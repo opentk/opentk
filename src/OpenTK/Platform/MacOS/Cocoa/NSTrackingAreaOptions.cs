@@ -41,6 +41,6 @@ namespace OpenTK.Platform.MacOS
         ActiveAlways = 128,
         AssumeInside = 256,
         InVisibleRect = 512,
-        EnabledDuringMouseDrag = 1024,
+        EnabledDuringMouseDrag = 1024
     }
 }

@@ -28,20 +28,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.XPath;
 using Bind.Structures;
+using Delegate = Bind.Structures.Delegate;
+using Enum = Bind.Structures.Enum;
 
 namespace Bind
 {
-    using Delegate = Structures.Delegate;
-    using Enum = Structures.Enum;
-
     internal class XmlSpecReader : ISpecReader
     {
-        private Settings Settings { get; set; }
-
         public XmlSpecReader(Settings settings)
         {
             Settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
+
+        private Settings Settings { get; }
 
         public void ReadDelegates(string file, DelegateCollection delegates, string apiname, string apiversions)
         {
@@ -70,6 +69,7 @@ namespace Bind
                         delegates.Remove(node.GetAttribute("name", string.Empty));
                     }
                 }
+
                 foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathAdd))
                 {
                     delegates.AddRange(ReadDelegates(nav, apiversion));
@@ -106,6 +106,7 @@ namespace Bind
                         enums.Remove(node.GetAttribute("name", string.Empty));
                     }
                 }
+
                 foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathAdd))
                 {
                     Utilities.Merge(enums, ReadEnums(nav));
@@ -175,8 +176,7 @@ namespace Bind
                     {
                         glTypes.Add(words[0], words[1]);
                     }
-                }
-                while (!sr.EndOfStream);
+                } while (!sr.EndOfStream);
 
                 return glTypes;
             }
@@ -203,7 +203,8 @@ namespace Bind
                         continue;
                     }
 
-                    if (((Settings.Compatibility & Settings.Legacy.NoBoolParameters) != Settings.Legacy.None) && words[1] == "bool")
+                    if ((Settings.Compatibility & Settings.Legacy.NoBoolParameters) != Settings.Legacy.None &&
+                        words[1] == "bool")
                     {
                         words[1] = "Int32";
                     }
@@ -215,7 +216,8 @@ namespace Bind
             }
         }
 
-        private static void GetSignaturePaths(string apiname, string apiversion, out string xpathAdd, out string xpathDelete)
+        private static void GetSignaturePaths(string apiname, string apiversion, out string xpathAdd,
+            out string xpathDelete)
         {
             xpathAdd = "/signatures/add";
             xpathDelete = "/signatures/delete";
@@ -239,11 +241,12 @@ namespace Bind
         {
             var version =
                 specs.CreateNavigator().SelectSingleNode("/signatures")
-                .GetAttribute("version", string.Empty);
+                    .GetAttribute("version", string.Empty);
             if (string.IsNullOrEmpty(version))
             {
                 version = "1";
             }
+
             return version;
         }
 
@@ -322,7 +325,7 @@ namespace Bind
         private EnumCollection ReadEnums(XPathNavigator nav)
         {
             var enums = new EnumCollection();
-            var all = new Enum() { Name = Settings.CompleteEnumName };
+            var all = new Enum {Name = Settings.CompleteEnumName};
 
             if (nav != null)
             {
@@ -331,7 +334,7 @@ namespace Bind
                 // First pass: collect all available tokens and enums
                 foreach (XPathNavigator node in nav.SelectChildren("enum", string.Empty))
                 {
-                    var e = new Enum()
+                    var e = new Enum
                     {
                         Name = node.GetAttribute("name", string.Empty).Trim(),
                         Type = node.GetAttribute("type", string.Empty).Trim()
@@ -367,7 +370,7 @@ namespace Bind
                                 {
                                     Name = param.GetAttribute("token", string.Empty).Trim(),
                                     Reference = param.GetAttribute("enum", string.Empty).Trim(),
-                                    Value = param.GetAttribute("token", string.Empty).Trim(),
+                                    Value = param.GetAttribute("token", string.Empty).Trim()
                                 };
                                 break;
 
@@ -409,7 +412,8 @@ namespace Bind
                             }
                             catch (ArgumentException ex)
                             {
-                                Console.WriteLine("[Warning] Failed to add constant {0} to enum {1}: {2}", c.Name, e.Name, ex.Message);
+                                Console.WriteLine("[Warning] Failed to add constant {0} to enum {1}: {2}", c.Name,
+                                    e.Name, ex.Message);
                             }
                         }
                     }
@@ -418,7 +422,7 @@ namespace Bind
                 }
 
                 // Second pass: resolve "reuse" directives
-restart:
+                restart:
                 foreach (var pair in reuseList)
                 {
                     var e = pair.Key;

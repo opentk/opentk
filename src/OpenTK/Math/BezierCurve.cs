@@ -12,30 +12,32 @@ using System.Collections.Generic;
 namespace OpenTK
 {
     /// <summary>
-    /// Represents a bezier curve with as many points as you want.
+    ///     Represents a bezier curve with as many points as you want.
     /// </summary>
     [Serializable]
     public struct BezierCurve
     {
-        private List<Vector2> points;
+        private readonly List<Vector2> points;
 
         /// <summary>
-        /// The parallel value.
+        ///     The parallel value.
         /// </summary>
-        /// <remarks>This value defines whether the curve should be calculated as a
-        /// parallel curve to the original bezier curve. A value of 0.0f represents
-        /// the original curve, 5.0f i.e. stands for a curve that has always a distance
-        /// of 5.0f to the orignal curve at any point.</remarks>
+        /// <remarks>
+        ///     This value defines whether the curve should be calculated as a
+        ///     parallel curve to the original bezier curve. A value of 0.0f represents
+        ///     the original curve, 5.0f i.e. stands for a curve that has always a distance
+        ///     of 5.0f to the orignal curve at any point.
+        /// </remarks>
         public float Parallel;
 
         /// <summary>
-        /// Gets the points of this curve.
+        ///     Gets the points of this curve.
         /// </summary>
         /// <remarks>The first point and the last points represent the anchor points.</remarks>
         public IList<Vector2> Points => points;
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurve"/>.
+        ///     Constructs a new <see cref="BezierCurve" />.
         /// </summary>
         /// <param name="points">The points.</param>
         public BezierCurve(IEnumerable<Vector2> points)
@@ -50,7 +52,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurve"/>.
+        ///     Constructs a new <see cref="BezierCurve" />.
         /// </summary>
         /// <param name="points">The points.</param>
         public BezierCurve(params Vector2[] points)
@@ -65,7 +67,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurve"/>.
+        ///     Constructs a new <see cref="BezierCurve" />.
         /// </summary>
         /// <param name="parallel">The parallel value.</param>
         /// <param name="points">The points.</param>
@@ -81,7 +83,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurve"/>.
+        ///     Constructs a new <see cref="BezierCurve" />.
         /// </summary>
         /// <param name="parallel">The parallel value.</param>
         /// <param name="points">The points.</param>
@@ -98,7 +100,7 @@ namespace OpenTK
 
 
         /// <summary>
-        /// Calculates the point with the specified t.
+        ///     Calculates the point with the specified t.
         /// </summary>
         /// <param name="t">The t value, between 0.0f and 1.0f.</param>
         /// <returns>Resulting point.</returns>
@@ -108,48 +110,58 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculates the length of this bezier curve.
+        ///     Calculates the length of this bezier curve.
         /// </summary>
         /// <param name="precision">The precision.</param>
         /// <returns>Length of curve.</returns>
-        /// <remarks>The precision gets better as the <paramref name="precision"/>
-        /// value gets smaller.</remarks>
+        /// <remarks>
+        ///     The precision gets better as the <paramref name="precision" />
+        ///     value gets smaller.
+        /// </remarks>
         public float CalculateLength(float precision)
         {
             return CalculateLength(points, precision, Parallel);
         }
 
         /// <summary>
-        /// Calculates the length of the specified bezier curve.
+        ///     Calculates the length of the specified bezier curve.
         /// </summary>
         /// <param name="points">The points.</param>
         /// <param name="precision">The precision value.</param>
-        /// <returns>The precision gets better as the <paramref name="precision"/>
-        /// value gets smaller.</returns>
+        /// <returns>
+        ///     The precision gets better as the <paramref name="precision" />
+        ///     value gets smaller.
+        /// </returns>
         public static float CalculateLength(IList<Vector2> points, float precision)
         {
             return CalculateLength(points, precision, 0.0f);
         }
 
         /// <summary>
-        /// Calculates the length of the specified bezier curve.
+        ///     Calculates the length of the specified bezier curve.
         /// </summary>
         /// <param name="points">The points.</param>
         /// <param name="precision">The precision value.</param>
         /// <param name="parallel">The parallel value.</param>
         /// <returns>Length of curve.</returns>
-        /// <remarks><para>The precision gets better as the <paramref name="precision"/>
-        /// value gets smaller.</para>
-        /// <para>The <paramref name="parallel"/> parameter defines whether the curve should be calculated as a
-        /// parallel curve to the original bezier curve. A value of 0.0f represents
-        /// the original curve, 5.0f represents a curve that has always a distance
-        /// of 5.0f to the orignal curve.</para></remarks>
+        /// <remarks>
+        ///     <para>
+        ///         The precision gets better as the <paramref name="precision" />
+        ///         value gets smaller.
+        ///     </para>
+        ///     <para>
+        ///         The <paramref name="parallel" /> parameter defines whether the curve should be calculated as a
+        ///         parallel curve to the original bezier curve. A value of 0.0f represents
+        ///         the original curve, 5.0f represents a curve that has always a distance
+        ///         of 5.0f to the orignal curve.
+        ///     </para>
+        /// </remarks>
         public static float CalculateLength(IList<Vector2> points, float precision, float parallel)
         {
             var length = 0.0f;
             var old = CalculatePoint(points, 0.0f, parallel);
 
-            for (var i = precision; i < (1.0f + precision); i += precision)
+            for (var i = precision; i < 1.0f + precision; i += precision)
             {
                 var n = CalculatePoint(points, i, parallel);
                 length += (n - old).Length;
@@ -160,7 +172,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculates the point on the given bezier curve with the specified t parameter.
+        ///     Calculates the point on the given bezier curve with the specified t parameter.
         /// </summary>
         /// <param name="points">The points.</param>
         /// <param name="t">The t parameter, a value between 0.0f and 1.0f.</param>
@@ -171,27 +183,30 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculates the point on the given bezier curve with the specified t parameter.
+        ///     Calculates the point on the given bezier curve with the specified t parameter.
         /// </summary>
         /// <param name="points">The points.</param>
         /// <param name="t">The t parameter, a value between 0.0f and 1.0f.</param>
         /// <param name="parallel">The parallel value.</param>
         /// <returns>Resulting point.</returns>
-        /// <remarks>The <paramref name="parallel"/> parameter defines whether the curve should be calculated as a
-        /// parallel curve to the original bezier curve. A value of 0.0f represents
-        /// the original curve, 5.0f represents a curve that has always a distance
-        /// of 5.0f to the orignal curve.</remarks>
+        /// <remarks>
+        ///     The <paramref name="parallel" /> parameter defines whether the curve should be calculated as a
+        ///     parallel curve to the original bezier curve. A value of 0.0f represents
+        ///     the original curve, 5.0f represents a curve that has always a distance
+        ///     of 5.0f to the orignal curve.
+        /// </remarks>
         public static Vector2 CalculatePoint(IList<Vector2> points, float t, float parallel)
         {
             var r = new Vector2();
-            var c = 1.0d - (double)t;
+            var c = 1.0d - t;
             float temp;
             var i = 0;
 
             foreach (var pt in points)
             {
-                temp = (float)MathHelper.BinomialCoefficient(points.Count - 1, i) * (float)(Math.Pow(t, i) *
-                        Math.Pow(c, (points.Count - 1) - i));
+                temp = MathHelper.BinomialCoefficient(points.Count - 1, i) * (float)(Math.Pow(t, i) *
+                                                                                     Math.Pow(c, points.Count - 1 - i)
+                       );
 
                 r.X += temp * pt.X;
                 r.Y += temp * pt.Y;
@@ -218,7 +233,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculates the point with the specified t of the derivative of the given bezier function.
+        ///     Calculates the point with the specified t of the derivative of the given bezier function.
         /// </summary>
         /// <param name="points">The points.</param>
         /// <param name="t">The t parameter, value between 0.0f and 1.0f.</param>
@@ -226,14 +241,15 @@ namespace OpenTK
         private static Vector2 CalculatePointOfDerivative(IList<Vector2> points, float t)
         {
             var r = new Vector2();
-            var c = 1.0d - (double)t;
+            var c = 1.0d - t;
             float temp;
             var i = 0;
 
             foreach (var pt in points)
             {
-                temp = (float)MathHelper.BinomialCoefficient(points.Count - 2, i) * (float)(Math.Pow(t, i) *
-                        Math.Pow(c, (points.Count - 2) - i));
+                temp = MathHelper.BinomialCoefficient(points.Count - 2, i) * (float)(Math.Pow(t, i) *
+                                                                                     Math.Pow(c, points.Count - 2 - i)
+                       );
 
                 r.X += temp * pt.X;
                 r.Y += temp * pt.Y;

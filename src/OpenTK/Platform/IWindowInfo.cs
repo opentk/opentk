@@ -12,7 +12,7 @@ namespace OpenTK.Platform
     public interface IWindowInfo : IDisposable
     {
         /// <summary>
-        /// Retrieves a platform-specific handle to this window.
+        ///     Retrieves a platform-specific handle to this window.
         /// </summary>
         IntPtr Handle { get; }
     }

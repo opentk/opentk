@@ -2,8 +2,8 @@
  * See license.txt for license info
  */
 
-using Bind.Structures;
 using System.Collections.Generic;
+using Bind.Structures;
 
 namespace Bind
 {

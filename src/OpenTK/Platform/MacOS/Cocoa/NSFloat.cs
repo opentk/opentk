@@ -26,10 +26,11 @@
 //
 
 using System;
+using System.Runtime.InteropServices;
 #if !MINIMAL
 using System.Drawing;
+
 #endif
-using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.MacOS
 {
@@ -64,6 +65,7 @@ namespace OpenTK.Platform.MacOS
                     f.Value = *(IntPtr*)&d;
                 }
             }
+
             return f;
         }
 
@@ -82,6 +84,7 @@ namespace OpenTK.Platform.MacOS
                     f.Value = *(IntPtr*)&v;
                 }
             }
+
             return f;
         }
 
@@ -93,10 +96,8 @@ namespace OpenTK.Platform.MacOS
                 {
                     return *(float*)&f._value;
                 }
-                else
-                {
-                    return (float)*(double*)&f._value;
-                }
+
+                return (float)*(double*)&f._value;
             }
         }
 
@@ -106,12 +107,10 @@ namespace OpenTK.Platform.MacOS
             {
                 if (IntPtr.Size == 4)
                 {
-                    return (double)*(float*)&f._value;
+                    return *(float*)&f._value;
                 }
-                else
-                {
-                    return *(double*)&f._value;
-                }
+
+                return *(double*)&f._value;
             }
         }
     }

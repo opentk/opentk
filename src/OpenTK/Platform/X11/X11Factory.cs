@@ -34,6 +34,12 @@ namespace OpenTK.Platform.X11
     {
         private IInputDriver2 input_driver;
 
+        public X11Factory()
+        {
+            var result = Functions.XInitThreads();
+            Debug.Print("Initializing threaded X: {0}.", result != 0 ? "success" : "failed");
+        }
+
         private IInputDriver2 InputDriver
         {
             get
@@ -49,17 +55,13 @@ namespace OpenTK.Platform.X11
                         input_driver = new X11Input();
                     }
                 }
+
                 return input_driver;
             }
         }
 
-        public X11Factory()
-        {
-            var result = Functions.XInitThreads();
-            Debug.Print("Initializing threaded X: {0}.", result != 0 ? "success" : "failed");
-        }
-
-        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title,
+            GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
             return new X11GLNative(x, y, width, height, title, mode, options, device);
         }
@@ -69,22 +71,21 @@ namespace OpenTK.Platform.X11
             return new X11DisplayDevice();
         }
 
-        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window,
+            IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new X11GLContext(mode, window, shareContext, directRendering, major, minor, flags);
         }
 
-        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window,
+            IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new X11GLContext(handle, window, shareContext, directRendering, major, minor, flags);
         }
 
         public override GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
-            return (GraphicsContext.GetCurrentContextDelegate)delegate
-            {
-                return new ContextHandle(Glx.GetCurrentContext());
-            };
+            return delegate { return new ContextHandle(Glx.GetCurrentContext()); };
         }
 
         public override IKeyboardDriver2 CreateKeyboardDriver()

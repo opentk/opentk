@@ -1,7 +1,8 @@
-﻿using Mono.Cecil;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using Mono.Cecil;
 
 namespace OpenTK.Rewrite
 {
@@ -12,25 +13,15 @@ namespace OpenTK.Rewrite
     /// OpenTK is compiled for 2.0.
     internal sealed class OpenTKAssemblyResolver : IAssemblyResolver
     {
-        static readonly bool on_mono = Type.GetType("Mono.Runtime") != null;
+        private static readonly bool on_mono = Type.GetType("Mono.Runtime") != null;
 
-        readonly List<string> directories;
+        private readonly List<string> directories;
 
-        List<string> gac_paths;
+        private List<string> gac_paths;
 
         public OpenTKAssemblyResolver()
         {
-            directories = new List<string>(2) { ".", "bin" };
-        }
-
-        AssemblyDefinition GetAssembly(string file, ReaderParameters parameters)
-        {
-            if (parameters.AssemblyResolver == null)
-            {
-                parameters.AssemblyResolver = this;
-            }
-
-            return ModuleDefinition.ReadModule(file, parameters).Assembly;
+            directories = new List<string>(2) {".", "bin"};
         }
 
         public AssemblyDefinition Resolve(AssemblyNameReference name)
@@ -51,14 +42,14 @@ namespace OpenTK.Rewrite
                 // if the reference is retargetable, zero it
                 name = new AssemblyNameReference(name.Name, new Version(0, 0, 0, 0))
                 {
-                    PublicKeyToken = new byte[0],
+                    PublicKeyToken = new byte[0]
                 };
             }
 
             var framework_dir = Path.GetDirectoryName(typeof(object).Module.FullyQualifiedName);
             var framework_dirs = on_mono
-                ? new[] { framework_dir, Path.Combine(framework_dir, "Facades") }
-                : new[] { framework_dir };
+                ? new[] {framework_dir, Path.Combine(framework_dir, "Facades")}
+                : new[] {framework_dir};
 
             if (IsZero(name.Version))
             {
@@ -93,9 +84,24 @@ namespace OpenTK.Rewrite
             throw new AssemblyResolutionException(name);
         }
 
-        AssemblyDefinition SearchDirectory(AssemblyNameReference name, IEnumerable<string> directories, ReaderParameters parameters)
+        void IDisposable.Dispose()
         {
-            var extensions = name.IsWindowsRuntime ? new[] { ".winmd", ".dll" } : new[] { ".exe", ".dll" };
+        }
+
+        private AssemblyDefinition GetAssembly(string file, ReaderParameters parameters)
+        {
+            if (parameters.AssemblyResolver == null)
+            {
+                parameters.AssemblyResolver = this;
+            }
+
+            return ModuleDefinition.ReadModule(file, parameters).Assembly;
+        }
+
+        private AssemblyDefinition SearchDirectory(AssemblyNameReference name, IEnumerable<string> directories,
+            ReaderParameters parameters)
+        {
+            var extensions = name.IsWindowsRuntime ? new[] {".winmd", ".dll"} : new[] {".exe", ".dll"};
             foreach (var directory in directories)
             {
                 foreach (var extension in extensions)
@@ -123,12 +129,12 @@ namespace OpenTK.Rewrite
             return null;
         }
 
-        static bool IsZero(Version version)
+        private static bool IsZero(Version version)
         {
             return version.Major == 0 && version.Minor == 0 && version.Build == 0 && version.Revision == 0;
         }
 
-        AssemblyDefinition GetCorlib(AssemblyNameReference reference, ReaderParameters parameters)
+        private AssemblyDefinition GetCorlib(AssemblyNameReference reference, ReaderParameters parameters)
         {
             var version = reference.Version;
             var corlib = typeof(object).Assembly.GetName();
@@ -141,7 +147,7 @@ namespace OpenTK.Rewrite
             var path = Directory.GetParent(
                 Directory.GetParent(
                     typeof(object).Module.FullyQualifiedName).FullName
-                ).FullName;
+            ).FullName;
 
             if (on_mono)
             {
@@ -200,7 +206,8 @@ namespace OpenTK.Rewrite
             {
                 return GetAssembly(file, parameters);
             }
-            else if (on_mono && Directory.Exists(path + "-api"))
+
+            if (on_mono && Directory.Exists(path + "-api"))
             {
                 path = path + "-api";
                 file = Path.Combine(path, "mscorlib.dll");
@@ -213,7 +220,7 @@ namespace OpenTK.Rewrite
             return null;
         }
 
-        static List<string> GetGacPaths()
+        private static List<string> GetGacPaths()
         {
             if (on_mono)
             {
@@ -232,7 +239,7 @@ namespace OpenTK.Rewrite
             return paths;
         }
 
-        static List<string> GetDefaultMonoGacPaths()
+        private static List<string> GetDefaultMonoGacPaths()
         {
             var paths = new List<string>(1);
             var gac = GetCurrentMonoGac();
@@ -265,7 +272,7 @@ namespace OpenTK.Rewrite
             return paths;
         }
 
-        static string GetCurrentMonoGac()
+        private static string GetCurrentMonoGac()
         {
             return Path.Combine(
                 Directory.GetParent(
@@ -273,7 +280,7 @@ namespace OpenTK.Rewrite
                 "gac");
         }
 
-        AssemblyDefinition GetAssemblyInGac(AssemblyNameReference reference, ReaderParameters parameters)
+        private AssemblyDefinition GetAssemblyInGac(AssemblyNameReference reference, ReaderParameters parameters)
         {
             if (reference.PublicKeyToken == null || reference.PublicKeyToken.Length == 0)
             {
@@ -293,7 +300,7 @@ namespace OpenTK.Rewrite
             return GetAssemblyInNetGac(reference, parameters);
         }
 
-        AssemblyDefinition GetAssemblyInMonoGac(AssemblyNameReference reference, ReaderParameters parameters)
+        private AssemblyDefinition GetAssemblyInMonoGac(AssemblyNameReference reference, ReaderParameters parameters)
         {
             for (var i = 0; i < gac_paths.Count; i++)
             {
@@ -312,10 +319,10 @@ namespace OpenTK.Rewrite
             return null;
         }
 
-        AssemblyDefinition GetAssemblyInNetGac(AssemblyNameReference reference, ReaderParameters parameters)
+        private AssemblyDefinition GetAssemblyInNetGac(AssemblyNameReference reference, ReaderParameters parameters)
         {
-            var gacs = new[] { "GAC_MSIL", "GAC_32", "GAC_64", "GAC" };
-            var prefixes = new[] { string.Empty, "v4.0_" };
+            var gacs = new[] {"GAC_MSIL", "GAC_32", "GAC_64", "GAC"};
+            var prefixes = new[] {string.Empty, "v4.0_"};
 
             for (var i = 0; i < 2; i++)
             {
@@ -337,9 +344,9 @@ namespace OpenTK.Rewrite
             return null;
         }
 
-        static string GetAssemblyFile(AssemblyNameReference reference, string prefix, string gac)
+        private static string GetAssemblyFile(AssemblyNameReference reference, string prefix, string gac)
         {
-            var gac_folder = new System.Text.StringBuilder()
+            var gac_folder = new StringBuilder()
                 .Append(prefix)
                 .Append(reference.Version)
                 .Append("__");
@@ -354,7 +361,5 @@ namespace OpenTK.Rewrite
                     Path.Combine(gac, reference.Name), gac_folder.ToString()),
                 reference.Name + ".dll");
         }
-
-        void IDisposable.Dispose() { }
     }
 }

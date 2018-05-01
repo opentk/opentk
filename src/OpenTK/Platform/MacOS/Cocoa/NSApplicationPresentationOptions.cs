@@ -41,6 +41,6 @@ namespace OpenTK.Platform.MacOS
         DisableHideApplication = 256,
         DisableMenuBarTransparency = 512,
         FullScreen = 1024,
-        AutoHideToolbar = 2048,
+        AutoHideToolbar = 2048
     }
 }

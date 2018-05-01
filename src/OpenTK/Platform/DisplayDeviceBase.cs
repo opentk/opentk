@@ -42,14 +42,13 @@ namespace OpenTK.Platform
             {
                 return Primary;
             }
-            else if ((int)index >= 0 && (int)index < AvailableDevices.Count)
+
+            if ((int)index >= 0 && (int)index < AvailableDevices.Count)
             {
                 return AvailableDevices[(int)index];
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
     }
 }

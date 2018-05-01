@@ -31,7 +31,7 @@ namespace OpenTK.Platform.Linux
     // (the keyboard remains tied up.) We need to find a
     // proper way to clean up after ourselves, even in case
     // of a crash.
-    #if EXPERIMENTAL
+#if EXPERIMENTAL
     class LinuxKeyboardTTY : IKeyboardDriver2, IDisposable
     {
         const int stdin = 0; // STDIN_FILENO
@@ -245,4 +245,3 @@ namespace OpenTK.Platform.Linux
     }
     #endif
 }
-

@@ -26,39 +26,39 @@ using System.Runtime.InteropServices;
 namespace OpenTK
 {
     /// <summary>
-    /// Represents a 3x4 matrix.
+    ///     Represents a 3x4 matrix.
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix4x3 : IEquatable<Matrix4x3>
     {
         /// <summary>
-        /// Top row of the matrix
+        ///     Top row of the matrix
         /// </summary>
         public Vector3 Row0;
 
         /// <summary>
-        /// 2nd row of the matrix
+        ///     2nd row of the matrix
         /// </summary>
         public Vector3 Row1;
 
         /// <summary>
-        /// 3rd row of the matrix
+        ///     3rd row of the matrix
         /// </summary>
         public Vector3 Row2;
 
         /// <summary>
-        /// Bottom row of the matrix
+        ///     Bottom row of the matrix
         /// </summary>
         public Vector3 Row3;
 
         /// <summary>
-        /// The zero matrix
+        ///     The zero matrix
         /// </summary>
         public static readonly Matrix4x3 Zero = new Matrix4x3(Vector3.Zero, Vector3.Zero, Vector3.Zero, Vector3.Zero);
 
         /// <summary>
-        /// Constructs a new instance.
+        ///     Constructs a new instance.
         /// </summary>
         /// <param name="row0">Top row of the matrix</param>
         /// <param name="row1">Second row of the matrix</param>
@@ -73,7 +73,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        ///     Constructs a new instance.
         /// </summary>
         /// <param name="m00">First item of the first row of the matrix.</param>
         /// <param name="m01">Second item of the first row of the matrix.</param>
@@ -100,106 +100,130 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Gets the first column of this matrix.
+        ///     Gets the first column of this matrix.
         /// </summary>
         public Vector4 Column0 => new Vector4(Row0.X, Row1.X, Row2.X, Row3.X);
 
         /// <summary>
-        /// Gets the second column of this matrix.
+        ///     Gets the second column of this matrix.
         /// </summary>
         public Vector4 Column1 => new Vector4(Row0.Y, Row1.Y, Row2.Y, Row3.Y);
 
         /// <summary>
-        /// Gets the third column of this matrix.
+        ///     Gets the third column of this matrix.
         /// </summary>
         public Vector4 Column2 => new Vector4(Row0.Z, Row1.Z, Row2.Z, Row3.Z);
 
         /// <summary>
-        /// Gets or sets the value at row 1, column 1 of this instance.
+        ///     Gets or sets the value at row 1, column 1 of this instance.
         /// </summary>
-        public float M11 { get => Row0.X;
+        public float M11
+        {
+            get => Row0.X;
             set => Row0.X = value;
         }
 
         /// <summary>
-        /// Gets or sets the value at row 1, column 2 of this instance.
+        ///     Gets or sets the value at row 1, column 2 of this instance.
         /// </summary>
-        public float M12 { get => Row0.Y;
+        public float M12
+        {
+            get => Row0.Y;
             set => Row0.Y = value;
         }
 
         /// <summary>
-        /// Gets or sets the value at row 1, column 3 of this instance.
+        ///     Gets or sets the value at row 1, column 3 of this instance.
         /// </summary>
-        public float M13 { get => Row0.Z;
+        public float M13
+        {
+            get => Row0.Z;
             set => Row0.Z = value;
         }
 
         /// <summary>
-        /// Gets or sets the value at row 2, column 1 of this instance.
+        ///     Gets or sets the value at row 2, column 1 of this instance.
         /// </summary>
-        public float M21 { get => Row1.X;
+        public float M21
+        {
+            get => Row1.X;
             set => Row1.X = value;
         }
 
         /// <summary>
-        /// Gets or sets the value at row 2, column 2 of this instance.
+        ///     Gets or sets the value at row 2, column 2 of this instance.
         /// </summary>
-        public float M22 { get => Row1.Y;
+        public float M22
+        {
+            get => Row1.Y;
             set => Row1.Y = value;
         }
 
         /// <summary>
-        /// Gets or sets the value at row 2, column 3 of this instance.
+        ///     Gets or sets the value at row 2, column 3 of this instance.
         /// </summary>
-        public float M23 { get => Row1.Z;
+        public float M23
+        {
+            get => Row1.Z;
             set => Row1.Z = value;
         }
 
         /// <summary>
-        /// Gets or sets the value at row 3, column 1 of this instance.
+        ///     Gets or sets the value at row 3, column 1 of this instance.
         /// </summary>
-        public float M31 { get => Row2.X;
+        public float M31
+        {
+            get => Row2.X;
             set => Row2.X = value;
         }
 
         /// <summary>
-        /// Gets or sets the value at row 3, column 2 of this instance.
+        ///     Gets or sets the value at row 3, column 2 of this instance.
         /// </summary>
-        public float M32 { get => Row2.Y;
+        public float M32
+        {
+            get => Row2.Y;
             set => Row2.Y = value;
         }
 
         /// <summary>
-        /// Gets or sets the value at row 3, column 3 of this instance.
+        ///     Gets or sets the value at row 3, column 3 of this instance.
         /// </summary>
-        public float M33 { get => Row2.Z;
+        public float M33
+        {
+            get => Row2.Z;
             set => Row2.Z = value;
         }
 
         /// <summary>
-        /// Gets or sets the value at row 4, column 1 of this instance.
+        ///     Gets or sets the value at row 4, column 1 of this instance.
         /// </summary>
-        public float M41 { get => Row3.X;
+        public float M41
+        {
+            get => Row3.X;
             set => Row3.X = value;
         }
 
         /// <summary>
-        /// Gets or sets the value at row 4, column 2 of this instance.
+        ///     Gets or sets the value at row 4, column 2 of this instance.
         /// </summary>
-        public float M42 { get => Row3.Y;
+        public float M42
+        {
+            get => Row3.Y;
             set => Row3.Y = value;
         }
 
         /// <summary>
-        /// Gets or sets the value at row 4, column 3 of this instance.
+        ///     Gets or sets the value at row 4, column 3 of this instance.
         /// </summary>
-        public float M43 { get => Row3.Z;
+        public float M43
+        {
+            get => Row3.Z;
             set => Row3.Z = value;
         }
 
         /// <summary>
-        /// Gets or sets the values along the main diagonal of the matrix.
+        ///     Gets or sets the values along the main diagonal of the matrix.
         /// </summary>
         public Vector3 Diagonal
         {
@@ -213,12 +237,12 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Gets the trace of the matrix, the sum of the values along the diagonal.
+        ///     Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
         public float Trace => Row0.X + Row1.Y + Row2.Z;
 
         /// <summary>
-        /// Gets or sets the value at a specified row and column.
+        ///     Gets or sets the value at a specified row and column.
         /// </summary>
         public float this[int rowIndex, int columnIndex]
         {
@@ -228,19 +252,24 @@ namespace OpenTK
                 {
                     return Row0[columnIndex];
                 }
-                else if (rowIndex == 1)
+
+                if (rowIndex == 1)
                 {
                     return Row1[columnIndex];
                 }
-                else if (rowIndex == 2)
+
+                if (rowIndex == 2)
                 {
                     return Row2[columnIndex];
                 }
-                else if (rowIndex == 3)
+
+                if (rowIndex == 3)
                 {
                     return Row3[columnIndex];
                 }
-                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+
+                throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
+                                                   columnIndex + ")");
             }
             set
             {
@@ -262,13 +291,14 @@ namespace OpenTK
                 }
                 else
                 {
-                    throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " + columnIndex + ")");
+                    throw new IndexOutOfRangeException("You tried to set this matrix at: (" + rowIndex + ", " +
+                                                       columnIndex + ")");
                 }
             }
         }
 
         /// <summary>
-        /// Converts this instance into it's inverse by inverting the upper-left 3x3 and replacing Row3.
+        ///     Converts this instance into it's inverse by inverting the upper-left 3x3 and replacing Row3.
         /// </summary>
         public void Invert()
         {
@@ -276,7 +306,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Build a rotation matrix from the specified axis/angle rotation.
+        ///     Build a rotation matrix from the specified axis/angle rotation.
         /// </summary>
         /// <param name="axis">The axis to rotate about.</param>
         /// <param name="angle">Angle in radians to rotate counter-clockwise (looking in the direction of the given axis).</param>
@@ -316,7 +346,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Build a rotation matrix from the specified axis/angle rotation.
+        ///     Build a rotation matrix from the specified axis/angle rotation.
         /// </summary>
         /// <param name="axis">The axis to rotate about.</param>
         /// <param name="angle">Angle in radians to rotate counter-clockwise (looking in the direction of the given axis).</param>
@@ -329,17 +359,28 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Builds a rotation matrix from a quaternion.
+        ///     Builds a rotation matrix from a quaternion.
         /// </summary>
         /// <param name="q">The quaternion to rotate by.</param>
         /// <param name="result">A matrix instance.</param>
         public static void CreateFromQuaternion(ref Quaternion q, out Matrix4x3 result)
         {
-            float x = q.X, y = q.Y, z = q.Z, w = q.W,
-                tx = 2 * x, ty = 2 * y, tz = 2 * z,
-                txx = tx * x, tyy = ty * y, tzz = tz * z,
-                txy = tx * y, txz = tx * z, tyz = ty * z,
-                twx = w * tx, twy = w * ty, twz = w * tz;
+            float x = q.X,
+                y = q.Y,
+                z = q.Z,
+                w = q.W,
+                tx = 2 * x,
+                ty = 2 * y,
+                tz = 2 * z,
+                txx = tx * x,
+                tyy = ty * y,
+                tzz = tz * z,
+                txy = tx * y,
+                txz = tx * z,
+                tyz = ty * z,
+                twx = w * tx,
+                twy = w * ty,
+                twz = w * tz;
 
             result.Row0.X = 1f - tyy - tzz;
             result.Row0.Y = txy - twz;
@@ -361,7 +402,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Builds a rotation matrix from a quaternion.
+        ///     Builds a rotation matrix from a quaternion.
         /// </summary>
         /// <param name="q">The quaternion to rotate by.</param>
         /// <returns>A matrix instance.</returns>
@@ -373,7 +414,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Builds a rotation matrix for a rotation around the x-axis.
+        ///     Builds a rotation matrix for a rotation around the x-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
         /// <param name="result">The resulting Matrix4 instance.</param>
@@ -397,7 +438,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Builds a rotation matrix for a rotation around the x-axis.
+        ///     Builds a rotation matrix for a rotation around the x-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
         /// <returns>The resulting Matrix4 instance.</returns>
@@ -409,7 +450,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Builds a rotation matrix for a rotation around the y-axis.
+        ///     Builds a rotation matrix for a rotation around the y-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
         /// <param name="result">The resulting Matrix4 instance.</param>
@@ -433,7 +474,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Builds a rotation matrix for a rotation around the y-axis.
+        ///     Builds a rotation matrix for a rotation around the y-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
         /// <returns>The resulting Matrix4 instance.</returns>
@@ -445,7 +486,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Builds a rotation matrix for a rotation around the z-axis.
+        ///     Builds a rotation matrix for a rotation around the z-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
         /// <param name="result">The resulting Matrix4 instance.</param>
@@ -469,7 +510,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Builds a rotation matrix for a rotation around the z-axis.
+        ///     Builds a rotation matrix for a rotation around the z-axis.
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
         /// <returns>The resulting Matrix4 instance.</returns>
@@ -481,7 +522,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Creates a translation matrix.
+        ///     Creates a translation matrix.
         /// </summary>
         /// <param name="x">X translation.</param>
         /// <param name="y">Y translation.</param>
@@ -504,7 +545,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Creates a translation matrix.
+        ///     Creates a translation matrix.
         /// </summary>
         /// <param name="vector">The translation vector.</param>
         /// <param name="result">The resulting Matrix4 instance.</param>
@@ -525,7 +566,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Creates a translation matrix.
+        ///     Creates a translation matrix.
         /// </summary>
         /// <param name="x">X translation.</param>
         /// <param name="y">Y translation.</param>
@@ -539,7 +580,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Creates a translation matrix.
+        ///     Creates a translation matrix.
         /// </summary>
         /// <param name="vector">The translation vector.</param>
         /// <returns>The resulting Matrix4 instance.</returns>
@@ -551,7 +592,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Build a scaling matrix
+        ///     Build a scaling matrix
         /// </summary>
         /// <param name="scale">Single scale factor for x,y and z axes</param>
         /// <returns>A scaling matrix</returns>
@@ -561,7 +602,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Build a scaling matrix
+        ///     Build a scaling matrix
         /// </summary>
         /// <param name="scale">Scale factors for x,y and z axes</param>
         /// <returns>A scaling matrix</returns>
@@ -571,7 +612,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Build a scaling matrix
+        ///     Build a scaling matrix
         /// </summary>
         /// <param name="x">Scale factor for x-axis</param>
         /// <param name="y">Scale factor for y-axis</param>
@@ -596,8 +637,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// This isn't quite a multiply, but the result may be useful in some situations.
-        /// Multiplies two instances.
+        ///     This isn't quite a multiply, but the result may be useful in some situations.
+        ///     Multiplies two instances.
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
@@ -610,42 +651,59 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// This isn't quite a multiply, but the result may be useful in some situations.
-        /// Multiplies two instances.
+        ///     This isn't quite a multiply, but the result may be useful in some situations.
+        ///     Multiplies two instances.
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication</param>
         public static void Mult(ref Matrix4x3 left, ref Matrix3x4 right, out Matrix4 result)
         {
-            float lM11 = left.Row0.X, lM12 = left.Row0.Y, lM13 = left.Row0.Z,
-                lM21 = left.Row1.X, lM22 = left.Row1.Y, lM23 = left.Row1.Z,
-                lM31 = left.Row2.X, lM32 = left.Row2.Y, lM33 = left.Row2.Z,
-                lM41 = left.Row3.X, lM42 = left.Row3.Y, lM43 = left.Row3.Z,
-                rM11 = right.Row0.X, rM12 = right.Row0.Y, rM13 = right.Row0.Z, rM14 = right.Row0.W,
-                rM21 = right.Row1.X, rM22 = right.Row1.Y, rM23 = right.Row1.Z, rM24 = right.Row1.W,
-                rM31 = right.Row2.X, rM32 = right.Row2.Y, rM33 = right.Row2.Z, rM34 = right.Row2.W;
+            float lM11 = left.Row0.X,
+                lM12 = left.Row0.Y,
+                lM13 = left.Row0.Z,
+                lM21 = left.Row1.X,
+                lM22 = left.Row1.Y,
+                lM23 = left.Row1.Z,
+                lM31 = left.Row2.X,
+                lM32 = left.Row2.Y,
+                lM33 = left.Row2.Z,
+                lM41 = left.Row3.X,
+                lM42 = left.Row3.Y,
+                lM43 = left.Row3.Z,
+                rM11 = right.Row0.X,
+                rM12 = right.Row0.Y,
+                rM13 = right.Row0.Z,
+                rM14 = right.Row0.W,
+                rM21 = right.Row1.X,
+                rM22 = right.Row1.Y,
+                rM23 = right.Row1.Z,
+                rM24 = right.Row1.W,
+                rM31 = right.Row2.X,
+                rM32 = right.Row2.Y,
+                rM33 = right.Row2.Z,
+                rM34 = right.Row2.W;
 
-            result.Row0.X = (lM11 * rM11) + (lM12 * rM21) + (lM13 * rM31);
-            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22) + (lM13 * rM32);
-            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23) + (lM13 * rM33);
-            result.Row0.W = (lM11 * rM14) + (lM12 * rM24) + (lM13 * rM34);
-            result.Row1.X = (lM21 * rM11) + (lM22 * rM21) + (lM23 * rM31);
-            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22) + (lM23 * rM32);
-            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23) + (lM23 * rM33);
-            result.Row1.W = (lM21 * rM14) + (lM22 * rM24) + (lM23 * rM34);
-            result.Row2.X = (lM31 * rM11) + (lM32 * rM21) + (lM33 * rM31);
-            result.Row2.Y = (lM31 * rM12) + (lM32 * rM22) + (lM33 * rM32);
-            result.Row2.Z = (lM31 * rM13) + (lM32 * rM23) + (lM33 * rM33);
-            result.Row2.W = (lM31 * rM14) + (lM32 * rM24) + (lM33 * rM34);
-            result.Row3.X = (lM41 * rM11) + (lM42 * rM21) + (lM43 * rM31);
-            result.Row3.Y = (lM41 * rM12) + (lM42 * rM22) + (lM43 * rM32);
-            result.Row3.Z = (lM41 * rM13) + (lM42 * rM23) + (lM43 * rM33);
-            result.Row3.W = (lM41 * rM14) + (lM42 * rM24) + (lM43 * rM34);
+            result.Row0.X = lM11 * rM11 + lM12 * rM21 + lM13 * rM31;
+            result.Row0.Y = lM11 * rM12 + lM12 * rM22 + lM13 * rM32;
+            result.Row0.Z = lM11 * rM13 + lM12 * rM23 + lM13 * rM33;
+            result.Row0.W = lM11 * rM14 + lM12 * rM24 + lM13 * rM34;
+            result.Row1.X = lM21 * rM11 + lM22 * rM21 + lM23 * rM31;
+            result.Row1.Y = lM21 * rM12 + lM22 * rM22 + lM23 * rM32;
+            result.Row1.Z = lM21 * rM13 + lM22 * rM23 + lM23 * rM33;
+            result.Row1.W = lM21 * rM14 + lM22 * rM24 + lM23 * rM34;
+            result.Row2.X = lM31 * rM11 + lM32 * rM21 + lM33 * rM31;
+            result.Row2.Y = lM31 * rM12 + lM32 * rM22 + lM33 * rM32;
+            result.Row2.Z = lM31 * rM13 + lM32 * rM23 + lM33 * rM33;
+            result.Row2.W = lM31 * rM14 + lM32 * rM24 + lM33 * rM34;
+            result.Row3.X = lM41 * rM11 + lM42 * rM21 + lM43 * rM31;
+            result.Row3.Y = lM41 * rM12 + lM42 * rM22 + lM43 * rM32;
+            result.Row3.Z = lM41 * rM13 + lM42 * rM23 + lM43 * rM33;
+            result.Row3.W = lM41 * rM14 + lM42 * rM24 + lM43 * rM34;
         }
 
         /// <summary>
-        /// Multiplies two instances.
+        ///     Multiplies two instances.
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
@@ -658,39 +716,55 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// This isn't quite a multiply, but the result may be useful in some situations.
-        /// Multiplies two instances.
+        ///     This isn't quite a multiply, but the result may be useful in some situations.
+        ///     Multiplies two instances.
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication</param>
         public static void Mult(ref Matrix4x3 left, ref Matrix4x3 right, out Matrix4x3 result)
         {
-            float lM11 = left.Row0.X, lM12 = left.Row0.Y, lM13 = left.Row0.Z,
-                lM21 = left.Row1.X, lM22 = left.Row1.Y, lM23 = left.Row1.Z,
-                lM31 = left.Row2.X, lM32 = left.Row2.Y, lM33 = left.Row2.Z,
-                lM41 = left.Row3.X, lM42 = left.Row3.Y, lM43 = left.Row3.Z,
-                rM11 = right.Row0.X, rM12 = right.Row0.Y, rM13 = right.Row0.Z,
-                rM21 = right.Row1.X, rM22 = right.Row1.Y, rM23 = right.Row1.Z,
-                rM31 = right.Row2.X, rM32 = right.Row2.Y, rM33 = right.Row2.Z,
-                rM41 = right.Row3.X, rM42 = right.Row3.Y, rM43 = right.Row3.Z;
+            float lM11 = left.Row0.X,
+                lM12 = left.Row0.Y,
+                lM13 = left.Row0.Z,
+                lM21 = left.Row1.X,
+                lM22 = left.Row1.Y,
+                lM23 = left.Row1.Z,
+                lM31 = left.Row2.X,
+                lM32 = left.Row2.Y,
+                lM33 = left.Row2.Z,
+                lM41 = left.Row3.X,
+                lM42 = left.Row3.Y,
+                lM43 = left.Row3.Z,
+                rM11 = right.Row0.X,
+                rM12 = right.Row0.Y,
+                rM13 = right.Row0.Z,
+                rM21 = right.Row1.X,
+                rM22 = right.Row1.Y,
+                rM23 = right.Row1.Z,
+                rM31 = right.Row2.X,
+                rM32 = right.Row2.Y,
+                rM33 = right.Row2.Z,
+                rM41 = right.Row3.X,
+                rM42 = right.Row3.Y,
+                rM43 = right.Row3.Z;
 
-            result.Row0.X = (lM11 * rM11) + (lM12 * rM21) + (lM13 * rM31) + rM41;
-            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22) + (lM13 * rM32) + rM42;
-            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23) + (lM13 * rM33) + rM43;
-            result.Row1.X = (lM21 * rM11) + (lM22 * rM21) + (lM23 * rM31) + rM41;
-            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22) + (lM23 * rM32) + rM42;
-            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23) + (lM23 * rM33) + rM43;
-            result.Row2.X = (lM31 * rM11) + (lM32 * rM21) + (lM33 * rM31) + rM41;
-            result.Row2.Y = (lM31 * rM12) + (lM32 * rM22) + (lM33 * rM32) + rM42;
-            result.Row2.Z = (lM31 * rM13) + (lM32 * rM23) + (lM33 * rM33) + rM43;
-            result.Row3.X = (lM41 * rM11) + (lM42 * rM21) + (lM43 * rM31) + rM41;
-            result.Row3.Y = (lM41 * rM12) + (lM42 * rM22) + (lM43 * rM32) + rM42;
-            result.Row3.Z = (lM41 * rM13) + (lM42 * rM23) + (lM43 * rM33) + rM43;
+            result.Row0.X = lM11 * rM11 + lM12 * rM21 + lM13 * rM31 + rM41;
+            result.Row0.Y = lM11 * rM12 + lM12 * rM22 + lM13 * rM32 + rM42;
+            result.Row0.Z = lM11 * rM13 + lM12 * rM23 + lM13 * rM33 + rM43;
+            result.Row1.X = lM21 * rM11 + lM22 * rM21 + lM23 * rM31 + rM41;
+            result.Row1.Y = lM21 * rM12 + lM22 * rM22 + lM23 * rM32 + rM42;
+            result.Row1.Z = lM21 * rM13 + lM22 * rM23 + lM23 * rM33 + rM43;
+            result.Row2.X = lM31 * rM11 + lM32 * rM21 + lM33 * rM31 + rM41;
+            result.Row2.Y = lM31 * rM12 + lM32 * rM22 + lM33 * rM32 + rM42;
+            result.Row2.Z = lM31 * rM13 + lM32 * rM23 + lM33 * rM33 + rM43;
+            result.Row3.X = lM41 * rM11 + lM42 * rM21 + lM43 * rM31 + rM41;
+            result.Row3.Y = lM41 * rM12 + lM42 * rM22 + lM43 * rM32 + rM42;
+            result.Row3.Z = lM41 * rM13 + lM42 * rM23 + lM43 * rM33 + rM43;
         }
 
         /// <summary>
-        /// Multiplies an instance by a scalar.
+        ///     Multiplies an instance by a scalar.
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
@@ -703,7 +777,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Multiplies an instance by a scalar.
+        ///     Multiplies an instance by a scalar.
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
@@ -717,7 +791,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Adds two instances.
+        ///     Adds two instances.
         /// </summary>
         /// <param name="left">The left operand of the addition.</param>
         /// <param name="right">The right operand of the addition.</param>
@@ -730,7 +804,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Adds two instances.
+        ///     Adds two instances.
         /// </summary>
         /// <param name="left">The left operand of the addition.</param>
         /// <param name="right">The right operand of the addition.</param>
@@ -744,7 +818,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Subtracts one instance from another.
+        ///     Subtracts one instance from another.
         /// </summary>
         /// <param name="left">The left operand of the subraction.</param>
         /// <param name="right">The right operand of the subraction.</param>
@@ -757,7 +831,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Subtracts one instance from another.
+        ///     Subtracts one instance from another.
         /// </summary>
         /// <param name="left">The left operand of the subraction.</param>
         /// <param name="right">The right operand of the subraction.</param>
@@ -771,7 +845,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculate the inverse of the given matrix
+        ///     Calculate the inverse of the given matrix
         /// </summary>
         /// <param name="mat">The matrix to invert</param>
         /// <returns>The inverse of the given matrix if it has one, or the input if it is singular</returns>
@@ -784,7 +858,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculate the inverse of the given matrix
+        ///     Calculate the inverse of the given matrix
         /// </summary>
         /// <param name="mat">The matrix to invert</param>
         /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular</param>
@@ -801,10 +875,12 @@ namespace OpenTK
             result.Row0 = inverseRotation.Row0;
             result.Row1 = inverseRotation.Row1;
             result.Row2 = inverseRotation.Row2;
-            result.Row3 = new Vector3(-Vector3.Dot(inverseRotation.Row0, translation), -Vector3.Dot(inverseRotation.Row1, translation), -Vector3.Dot(inverseRotation.Row2, translation));
+            result.Row3 = new Vector3(-Vector3.Dot(inverseRotation.Row0, translation),
+                -Vector3.Dot(inverseRotation.Row1, translation), -Vector3.Dot(inverseRotation.Row2, translation));
         }
+
         /// <summary>
-        /// Calculate the transpose of the given matrix
+        ///     Calculate the transpose of the given matrix
         /// </summary>
         /// <param name="mat">The matrix to transpose</param>
         /// <returns>The transpose of the given matrix</returns>
@@ -814,7 +890,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculate the transpose of the given matrix
+        ///     Calculate the transpose of the given matrix
         /// </summary>
         /// <param name="mat">The matrix to transpose</param>
         /// <param name="result">The result of the calculation</param>
@@ -826,7 +902,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Matrix multiplication
+        ///     Matrix multiplication
         /// </summary>
         /// <param name="left">left-hand operand</param>
         /// <param name="right">right-hand operand</param>
@@ -837,7 +913,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Matrix multiplication
+        ///     Matrix multiplication
         /// </summary>
         /// <param name="left">left-hand operand</param>
         /// <param name="right">right-hand operand</param>
@@ -848,7 +924,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Matrix-scalar multiplication
+        ///     Matrix-scalar multiplication
         /// </summary>
         /// <param name="left">left-hand operand</param>
         /// <param name="right">right-hand operand</param>
@@ -859,7 +935,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Matrix addition
+        ///     Matrix addition
         /// </summary>
         /// <param name="left">left-hand operand</param>
         /// <param name="right">right-hand operand</param>
@@ -870,7 +946,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Matrix subtraction
+        ///     Matrix subtraction
         /// </summary>
         /// <param name="left">left-hand operand</param>
         /// <param name="right">right-hand operand</param>
@@ -881,7 +957,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Compares two instances for equality.
+        ///     Compares two instances for equality.
         /// </summary>
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
@@ -892,7 +968,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Compares two instances for inequality.
+        ///     Compares two instances for inequality.
         /// </summary>
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
@@ -903,7 +979,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns a System.String that represents the current Matrix4x3.
+        ///     Returns a System.String that represents the current Matrix4x3.
         /// </summary>
         /// <returns>The string representation of the matrix.</returns>
         public override string ToString()
@@ -912,7 +988,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns the hashcode for this instance.
+        ///     Returns the hashcode for this instance.
         /// </summary>
         /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
         public override int GetHashCode()
@@ -928,7 +1004,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Indicates whether this instance and a specified object are equal.
+        ///     Indicates whether this instance and a specified object are equal.
         /// </summary>
         /// <param name="obj">The object to compare tresult.</param>
         /// <returns>True if the instances are equal; false otherwise.</returns>

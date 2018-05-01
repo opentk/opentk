@@ -39,10 +39,6 @@ namespace Bind.GL2
                 Settings.OutputNamespace = "Tao.OpenGl";
                 Settings.OutputClass = "Gl";
             }
-            else
-            {
-                // Defaults
-            }
 
             Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
             Settings.DefaultImportsFile = "GLCore.cs";
@@ -60,4 +56,3 @@ namespace Bind.GL2
         }
     }
 }
-

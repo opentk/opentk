@@ -49,7 +49,7 @@ namespace OpenTK.Platform.Linux
         Out = 0x04,
         Error = 0x08,
         Hup = 0x10,
-        Invalid = 0x20,
+        Invalid = 0x20
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -60,4 +60,3 @@ namespace OpenTK.Platform.Linux
         public PollFlags revents;
     }
 }
-

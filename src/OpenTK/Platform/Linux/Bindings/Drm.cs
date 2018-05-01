@@ -87,15 +87,15 @@ namespace OpenTK.Platform.Linux
             PageFlipFlags flags, IntPtr user_data);
 
         [DllImport(lib, EntryPoint = "drmModeSetCrtc", CallingConvention = CallingConvention.Cdecl)]
-        unsafe public static extern int ModeSetCrtc(int fd, int crtcId, int bufferId,
+        public static extern unsafe int ModeSetCrtc(int fd, int crtcId, int bufferId,
             int x, int y, int* connectors, int count, ModeInfo* mode);
 
         [DllImport(lib, EntryPoint = "drmModeSetCursor2", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SetCursor(int fd, int crtcId, int bo_handle, int width, int height, int hot_x, int hot_y);
+        public static extern int SetCursor(int fd, int crtcId, int bo_handle, int width, int height, int hot_x,
+            int hot_y);
 
         [DllImport(lib, EntryPoint = "drmModeMoveCursor", CallingConvention = CallingConvention.Cdecl)]
         public static extern int MoveCursor(int fd, int crtcId, int x, int y);
-
     }
 
     internal enum ModeConnection
@@ -148,11 +148,11 @@ namespace OpenTK.Platform.Linux
         public ModeInfo* modes;
 
         public int count_props;
-        public int *props;
-        public long *prop_values;
+        public int* props;
+        public long* prop_values;
 
         public int count_encoders;
-        public int *encoders;
+        public int* encoders;
     }
 
     internal struct ModeCrtc
@@ -206,4 +206,3 @@ namespace OpenTK.Platform.Linux
         public int min_height, max_height;
     }
 }
-

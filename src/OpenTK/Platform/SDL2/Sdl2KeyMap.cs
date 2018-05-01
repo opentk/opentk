@@ -198,27 +198,27 @@ namespace OpenTK.Platform.SDL2
                     return Key.BackSpace;
 
                 case Code.SEMICOLON:
-                    return Key.Semicolon;      // Varies by keyboard: return ;: on Win2K/US
+                    return Key.Semicolon; // Varies by keyboard: return ;: on Win2K/US
                 case Code.SLASH:
-                    return Key.Slash;          // Varies by keyboard: return /? on Win2K/US
+                    return Key.Slash; // Varies by keyboard: return /? on Win2K/US
                 case Code.GRAVE:
-                    return Key.Tilde;          // Varies by keyboard: return `~ on Win2K/US
+                    return Key.Tilde; // Varies by keyboard: return `~ on Win2K/US
                 case Code.LEFTBRACKET:
-                    return Key.BracketLeft;    // Varies by keyboard: return [{ on Win2K/US
+                    return Key.BracketLeft; // Varies by keyboard: return [{ on Win2K/US
                 case Code.BACKSLASH:
-                    return Key.BackSlash;      // Varies by keyboard: return \| on Win2K/US
+                    return Key.BackSlash; // Varies by keyboard: return \| on Win2K/US
                 case Code.RIGHTBRACKET:
-                    return Key.BracketRight;   // Varies by keyboard: return ]} on Win2K/US
+                    return Key.BracketRight; // Varies by keyboard: return ]} on Win2K/US
                 case Code.APOSTROPHE:
-                    return Key.Quote;          // Varies by keyboard: return '" on Win2K/US
+                    return Key.Quote; // Varies by keyboard: return '" on Win2K/US
                 case Code.EQUALS:
                     return Key.Plus;
                 case Code.COMMA:
-                    return Key.Comma;     // Invariant: : return
+                    return Key.Comma; // Invariant: : return
                 case Code.MINUS:
-                    return Key.Minus;     // Invariant: -
+                    return Key.Minus; // Invariant: -
                 case Code.PERIOD:
-                    return Key.Period;    // Invariant: .
+                    return Key.Period; // Invariant: .
 
                 case Code.HOME:
                     return Key.Home;
@@ -307,4 +307,3 @@ namespace OpenTK.Platform.SDL2
         }
     }
 }
-

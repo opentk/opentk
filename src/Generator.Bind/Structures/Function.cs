@@ -34,6 +34,39 @@ namespace Bind.Structures
 
         public Delegate WrappedDelegate { get; set; }
 
+        public override bool Unsafe => base.Unsafe;
+
+        public FunctionBody Body { get; set; }
+
+        public string TrimmedName { get; set; }
+
+        public Documentation Documentation { get; set; }
+
+        public int CompareTo(Function other)
+        {
+            var ret = Name.CompareTo(other.Name);
+            if (ret == 0)
+            {
+                ret = Parameters.CompareTo(other.Parameters);
+            }
+
+            if (ret == 0)
+            {
+                ret = ReturnType.CompareTo(other.ReturnType);
+            }
+
+            return ret;
+        }
+
+        public bool Equals(Function other)
+        {
+            var result =
+                !string.IsNullOrEmpty(TrimmedName) && !string.IsNullOrEmpty(other.TrimmedName) &&
+                TrimmedName.Equals(other.TrimmedName) &&
+                Parameters.Equals(other.Parameters);
+            return result;
+        }
+
         public void TurnVoidPointersToIntPtr()
         {
             foreach (var p in Parameters)
@@ -46,58 +79,29 @@ namespace Bind.Structures
             }
         }
 
-        public override bool Unsafe => base.Unsafe;
-
-        public FunctionBody Body { get; set; }
-
-        public string TrimmedName { get; set; }
-
-        public Documentation Documentation { get; set; }
-
         public override string ToString()
         {
             return $"{ReturnType} {TrimmedName}{Parameters}";
         }
-
-        public bool Equals(Function other)
-        {
-            var result =
-                !string.IsNullOrEmpty(TrimmedName) && !string.IsNullOrEmpty(other.TrimmedName) &&
-                TrimmedName.Equals(other.TrimmedName) &&
-                Parameters.Equals(other.Parameters);
-            return result;
-        }
-
-        public int CompareTo(Function other)
-        {
-            var ret = Name.CompareTo(other.Name);
-            if (ret == 0)
-            {
-                ret = Parameters.CompareTo(other.Parameters);
-            }
-            if (ret == 0)
-            {
-                ret = ReturnType.CompareTo(other.ReturnType);
-            }
-            return ret;
-        }
     }
 
     /// <summary>
-    /// The <see cref="FunctionBody"/> class acts as a wrapper around a block of source code that makes up the body
-    /// of a function.
+    ///     The <see cref="FunctionBody" /> class acts as a wrapper around a block of source code that makes up the body
+    ///     of a function.
     /// </summary>
     public class FunctionBody : List<string>
     {
+        private string _indent = "";
+
         /// <summary>
-        /// Initializes an empty <see cref="FunctionBody"/>.
+        ///     Initializes an empty <see cref="FunctionBody" />.
         /// </summary>
         public FunctionBody()
         {
         }
 
         /// <summary>
-        /// Initializes a <see cref="FunctionBody"/> from an existing FunctionBody.
+        ///     Initializes a <see cref="FunctionBody" /> from an existing FunctionBody.
         /// </summary>
         /// <param name="fb">The body to copy from.</param>
         public FunctionBody(FunctionBody fb)
@@ -108,10 +112,8 @@ namespace Bind.Structures
             }
         }
 
-        private string _indent = "";
-
         /// <summary>
-        /// Indents this <see cref="FunctionBody"/> another level.
+        ///     Indents this <see cref="FunctionBody" /> another level.
         /// </summary>
         public void Indent()
         {
@@ -119,7 +121,7 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        /// Removes a level of indentation from this <see cref="FunctionBody"/>.
+        ///     Removes a level of indentation from this <see cref="FunctionBody" />.
         /// </summary>
         public void Unindent()
         {
@@ -134,7 +136,7 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        /// Adds a line of source code to the body at the current indentation level.
+        ///     Adds a line of source code to the body at the current indentation level.
         /// </summary>
         /// <param name="s">The line to add.</param>
         public new void Add(string s)
@@ -143,7 +145,7 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        /// Adds a range of source code lines to the body at the current indentation level.
+        ///     Adds a range of source code lines to the body at the current indentation level.
         /// </summary>
         /// <param name="collection"></param>
         public new void AddRange(IEnumerable<string> collection)
@@ -155,7 +157,7 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        /// Builds the contents of the function body into a string and encloses it with braces.
+        ///     Builds the contents of the function body into a string and encloses it with braces.
         /// </summary>
         /// <returns>The body, enclosed in braces.</returns>
         public override string ToString()
@@ -172,6 +174,7 @@ namespace Bind.Structures
             {
                 sb.AppendLine("    " + s);
             }
+
             sb.Append("}");
 
             return sb.ToString();
@@ -180,7 +183,7 @@ namespace Bind.Structures
 
     internal class FunctionCollection : SortedDictionary<string, List<Function>>
     {
-        private Regex _unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
+        private readonly Regex _unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
 
         private void Add(Function f)
         {
@@ -204,7 +207,7 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        /// Adds the function to the collection, if a function with the same name and parameters doesn't already exist.
+        ///     Adds the function to the collection, if a function with the same name and parameters doesn't already exist.
         /// </summary>
         /// <param name="f">The Function to add.</param>
         public void AddChecked(Function f)
@@ -221,15 +224,15 @@ namespace Bind.Structures
                 {
                     var existing = list[index];
                     var replace = existing.Parameters.HasUnsignedParameters &&
-                        !_unsignedFunctions.IsMatch(existing.Name) && _unsignedFunctions.IsMatch(f.Name);
+                                  !_unsignedFunctions.IsMatch(existing.Name) && _unsignedFunctions.IsMatch(f.Name);
                     replace |= !existing.Parameters.HasUnsignedParameters &&
-                        _unsignedFunctions.IsMatch(existing.Name) && !_unsignedFunctions.IsMatch(f.Name);
+                               _unsignedFunctions.IsMatch(existing.Name) && !_unsignedFunctions.IsMatch(f.Name);
                     replace |=
                         (from pOld in existing.Parameters
-                                        join pNew in f.Parameters on pOld.Name equals pNew.Name
-                                        where pNew.ElementCount == 0 && pOld.ElementCount != 0
-                                        select true)
-                            .Count() != 0;
+                            join pNew in f.Parameters on pOld.Name equals pNew.Name
+                            where pNew.ElementCount == 0 && pOld.ElementCount != 0
+                            select true)
+                        .Count() != 0;
                     if (replace)
                     {
                         list[index] = f;

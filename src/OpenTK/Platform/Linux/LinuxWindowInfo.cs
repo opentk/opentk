@@ -32,10 +32,6 @@ namespace OpenTK.Platform.Linux
 {
     internal class LinuxWindowInfo : EglWindowInfo
     {
-        public int FD { get; private set; }
-        public LinuxDisplay DisplayDevice { get; private set; }
-        public IntPtr BufferManager { get; private set; }
-
         public LinuxWindowInfo(IntPtr display, int fd, IntPtr gbm, LinuxDisplay display_device)
             : base(IntPtr.Zero, display, IntPtr.Zero)
         {
@@ -50,6 +46,9 @@ namespace OpenTK.Platform.Linux
             // The window handle and surface handle must
             // be filled in manually once they are known.
         }
+
+        public int FD { get; }
+        public LinuxDisplay DisplayDevice { get; }
+        public IntPtr BufferManager { get; }
     }
 }
-

@@ -30,14 +30,10 @@ namespace OpenTK.Platform.SDL2
 {
     internal class Sdl2GraphicsMode : IGraphicsMode
     {
-        public Sdl2GraphicsMode()
-        {
-        }
-
-        public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum, int buffers, bool stereo)
+        public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples,
+            ColorFormat accum, int buffers, bool stereo)
         {
             return new GraphicsMode(IntPtr.Zero, color, depth, stencil, samples, accum, buffers, stereo);
         }
     }
 }
-

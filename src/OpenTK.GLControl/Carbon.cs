@@ -8,26 +8,26 @@ namespace OpenTK.Platform.MacOS.Carbon
     {
         NoError = 0,
 
-        ParameterError               = -50,                          /*error in user parameter list*/
-        NoHardwareError             = -200,                         /*Sound Manager Error Returns*/
-        NotEnoughHardwareError      = -201,                         /*Sound Manager Error Returns*/
-        UserCanceledError           = -128,
-        QueueError                  = -1,                           /*queue element not found during deletion*/
-        VTypErr                     = -2,                           /*invalid queue element*/
-        CorErr                      = -3,                           /*core routine number out of range*/
-        UnimpErr                    = -4,                           /*unimplemented core routine*/
-        SlpTypeErr                  = -5,                           /*invalid queue element*/
-        SeNoDB                      = -8,                           /*no debugger installed to handle debugger command*/
-        ControlErr                  = -17,                          /*I/O System Errors*/
-        StatusErr                   = -18,                          /*I/O System Errors*/
-        ReadErr                     = -19,                          /*I/O System Errors*/
-        WritErr                     = -20,                          /*I/O System Errors*/
-        BadUnitErr                  = -21,                          /*I/O System Errors*/
-        UnitEmptyErr                = -22,                          /*I/O System Errors*/
-        OpenErr                     = -23,                          /*I/O System Errors*/
-        ClosErr                     = -24,                          /*I/O System Errors*/
-        DRemovErr                   = -25,                          /*tried to remove an open driver*/
-        DInstErr                    = -26,                          /*DrvrInstall couldn't find driver in resources*/
+        ParameterError = -50, /*error in user parameter list*/
+        NoHardwareError = -200, /*Sound Manager Error Returns*/
+        NotEnoughHardwareError = -201, /*Sound Manager Error Returns*/
+        UserCanceledError = -128,
+        QueueError = -1, /*queue element not found during deletion*/
+        VTypErr = -2, /*invalid queue element*/
+        CorErr = -3, /*core routine number out of range*/
+        UnimpErr = -4, /*unimplemented core routine*/
+        SlpTypeErr = -5, /*invalid queue element*/
+        SeNoDB = -8, /*no debugger installed to handle debugger command*/
+        ControlErr = -17, /*I/O System Errors*/
+        StatusErr = -18, /*I/O System Errors*/
+        ReadErr = -19, /*I/O System Errors*/
+        WritErr = -20, /*I/O System Errors*/
+        BadUnitErr = -21, /*I/O System Errors*/
+        UnitEmptyErr = -22, /*I/O System Errors*/
+        OpenErr = -23, /*I/O System Errors*/
+        ClosErr = -24, /*I/O System Errors*/
+        DRemovErr = -25, /*tried to remove an open driver*/
+        DInstErr = -26, /*DrvrInstall couldn't find driver in resources*/
 
         // Window Manager result codes.
         InvalidWindowPtr = -5600,
@@ -108,14 +108,14 @@ namespace OpenTK.Platform.MacOS.Carbon
             }
         }
 
-        internal short Width 
-        { 
+        internal short Width
+        {
             get => (short)(right - left);
             set => right = (short)(left + value);
         }
 
-        internal short Height 
-        { 
+        internal short Height
+        {
             get => (short)(bottom - top);
             set => bottom = (short)(top + value);
         }
@@ -136,8 +136,8 @@ namespace OpenTK.Platform.MacOS.Carbon
         private const string carbon = "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon";
 
         [DllImport(carbon)]
-        internal unsafe static extern OSStatus DMGetGDeviceByDisplayID(
-            IntPtr displayID, out IntPtr displayDevice, Boolean failToMain);
+        internal static extern OSStatus DMGetGDeviceByDisplayID(
+            IntPtr displayID, out IntPtr displayDevice, bool failToMain);
 
         [DllImport(carbon)]
         private static extern IntPtr GetControlBounds(IntPtr control, out Rect bounds);
@@ -156,4 +156,3 @@ namespace OpenTK.Platform.MacOS.Carbon
         internal static extern IntPtr GetWindowPort(IntPtr windowRef);
     }
 }
-

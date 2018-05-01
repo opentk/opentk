@@ -26,27 +26,32 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 #if !MINIMAL
 using System.Drawing;
+
 #endif
-using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.X11
 {
     internal sealed class X11DisplayDevice : DisplayDeviceBase
     {
+        // Store a mapping between DisplayDevices and their default resolutions.
+        private readonly Dictionary<DisplayDevice, int>
+            deviceToDefaultResolution = new Dictionary<DisplayDevice, int>();
+
+        // Store a mapping between DisplayDevices and X11 screens.
+        private readonly Dictionary<DisplayDevice, int> deviceToScreen = new Dictionary<DisplayDevice, int>();
+
+        // Keep the time when the config of each screen was last updated.
+        private readonly List<IntPtr> lastConfigUpdate = new List<IntPtr>();
+
         // Store a mapping between resolutions and their respective
         // size_index (needed for XRRSetScreenConfig). The size_index
         // is simply the sequence number of the resolution as returned by
         // XRRSizes. This is done per available screen.
         private readonly List<Dictionary<DisplayResolution, int>> screenResolutionToIndex =
             new List<Dictionary<DisplayResolution, int>>();
-        // Store a mapping between DisplayDevices and their default resolutions.
-        private readonly Dictionary<DisplayDevice, int> deviceToDefaultResolution = new Dictionary<DisplayDevice, int>();
-        // Store a mapping between DisplayDevices and X11 screens.
-        private readonly Dictionary<DisplayDevice, int> deviceToScreen = new Dictionary<DisplayDevice, int>();
-        // Keep the time when the config of each screen was last updated.
-        private readonly List<IntPtr> lastConfigUpdate = new List<IntPtr>();
 
         private bool xinerama_supported, xrandr_supported, xf86_supported;
 
@@ -88,7 +93,9 @@ namespace OpenTK.Platform.X11
                 {
                     xrandr_supported = QueryXRandR(devices);
                 }
-                catch { }
+                catch
+                {
+                }
 
                 if (!xrandr_supported)
                 {
@@ -97,7 +104,9 @@ namespace OpenTK.Platform.X11
                     {
                         xf86_supported = QueryXF86(devices);
                     }
-                    catch { }
+                    catch
+                    {
+                    }
 
                     if (!xf86_supported)
                     {
@@ -121,7 +130,8 @@ namespace OpenTK.Platform.X11
                 }
             }
 
-            throw new InvalidOperationException("No primary display found. Please file a bug at https://github.com/opentk/opentk/issues");
+            throw new InvalidOperationException(
+                "No primary display found. Please file a bug at https://github.com/opentk/opentk/issues");
         }
 
         private bool QueryXinerama(List<DisplayDevice> devices)
@@ -144,12 +154,14 @@ namespace OpenTK.Platform.X11
                         dev.IsPrimary = true;
                         first = false;
                     }
+
                     devices.Add(dev);
                     // It seems that all X screens are equal to 0 is Xinerama is enabled, at least on Nvidia (verify?)
                     deviceToScreen.Add(dev, 0 /*screen.ScreenNumber*/);
                 }
             }
-            return (devices.Count > 0);
+
+            return devices.Count > 0;
         }
 
         private bool QueryXRandR(List<DisplayDevice> devices)
@@ -176,9 +188,11 @@ namespace OpenTK.Platform.X11
                 {
                     if (size.Width == 0 || size.Height == 0)
                     {
-                        Debug.Print("[Warning] XRandR returned an invalid resolution ({0}) for display device {1}", size, screen);
+                        Debug.Print("[Warning] XRandR returned an invalid resolution ({0}) for display device {1}",
+                            size, screen);
                         continue;
                     }
+
                     short[] rates = null;
                     rates = Functions.XRRRates(API.DefaultDisplay, screen, resolution_count);
 
@@ -193,10 +207,11 @@ namespace OpenTK.Platform.X11
                         {
                             foreach (var depth in depths)
                             {
-                                available_res.Add(new DisplayResolution(0, 0, size.Width, size.Height, depth, (float)rate));
+                                available_res.Add(new DisplayResolution(0, 0, size.Width, size.Height, depth, rate));
                             }
                         }
                     }
+
                     // Keep the index of this resolution - we will need it for resolution changes later.
                     foreach (var depth in depths)
                     {
@@ -220,14 +235,17 @@ namespace OpenTK.Platform.X11
                 // Its depth is discovered by the FindCurrentDepth call.
                 var current_refresh_rate = FindCurrentRefreshRate(screen);
                 var current_depth = FindCurrentDepth(screen);
-                var screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, Functions.XRootWindow(API.DefaultDisplay, screen));
-                ushort current_rotation;  // Not needed.
+                var screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay,
+                    Functions.XRootWindow(API.DefaultDisplay, screen));
+                ushort current_rotation; // Not needed.
                 int current_sizes_index = Functions.XRRConfigCurrentConfiguration(screen_config, out current_rotation);
 
                 if (dev.Bounds == Rectangle.Empty)
                 {
-                    dev.Bounds = new Rectangle(0, 0, sizes[current_sizes_index].Width, sizes[current_sizes_index].Height);
+                    dev.Bounds = new Rectangle(0, 0, sizes[current_sizes_index].Width,
+                        sizes[current_sizes_index].Height);
                 }
+
                 dev.BitsPerPixel = current_depth;
                 dev.RefreshRate = current_refresh_rate;
                 dev.AvailableResolutions = available_res;
@@ -276,18 +294,21 @@ namespace OpenTK.Platform.X11
                 for (var i = 0; i < count; i++)
                 {
                     Mode = (API.XF86VidModeModeInfo)Marshal.PtrToStructure(array[i], typeof(API.XF86VidModeModeInfo));
-                    resolutions.Add(new DisplayResolution(x, y, Mode.hdisplay, Mode.vdisplay, 24, (Mode.dotclock * 1000F) / (Mode.vtotal * Mode.htotal)));
+                    resolutions.Add(new DisplayResolution(x, y, Mode.hdisplay, Mode.vdisplay, 24,
+                        Mode.dotclock * 1000F / (Mode.vtotal * Mode.htotal)));
                 }
 
                 dev.AvailableResolutions = resolutions;
                 int pixelClock;
                 API.XF86VidModeModeLine currentMode;
                 API.XF86VidModeGetModeLine(API.DefaultDisplay, currentScreen, out pixelClock, out currentMode);
-                dev.Bounds = new Rectangle(x, y, currentMode.hdisplay, (currentMode.vdisplay == 0) ? currentMode.vsyncstart : currentMode.vdisplay);
+                dev.Bounds = new Rectangle(x, y, currentMode.hdisplay,
+                    currentMode.vdisplay == 0 ? currentMode.vsyncstart : currentMode.vdisplay);
                 dev.BitsPerPixel = FindCurrentDepth(currentScreen);
-                dev.RefreshRate = (pixelClock * 1000F) / (currentMode.vtotal * currentMode.htotal);
+                dev.RefreshRate = pixelClock * 1000F / (currentMode.vtotal * currentMode.htotal);
                 currentScreen++;
             }
+
             return true;
         }
 
@@ -304,16 +325,18 @@ namespace OpenTK.Platform.X11
             {
                 throw new NotSupportedException("XRandR extensions not available.");
             }
+
             return resolutions;
         }
 
         private static float FindCurrentRefreshRate(int screen)
         {
             short rate = 0;
-            var screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, Functions.XRootWindow(API.DefaultDisplay, screen));
+            var screen_config =
+                Functions.XRRGetScreenInfo(API.DefaultDisplay, Functions.XRootWindow(API.DefaultDisplay, screen));
             rate = Functions.XRRConfigCurrentRate(screen_config);
             Functions.XRRFreeScreenConfigInfo(screen_config);
-            return (float)rate;
+            return rate;
         }
 
         private static int FindCurrentDepth(int screen)
@@ -330,7 +353,8 @@ namespace OpenTK.Platform.X11
                 var screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, root);
 
                 ushort current_rotation;
-                int current_resolution_index = Functions.XRRConfigCurrentConfiguration(screen_config, out current_rotation);
+                int current_resolution_index =
+                    Functions.XRRConfigCurrentConfiguration(screen_config, out current_rotation);
                 int new_resolution_index;
                 if (resolution != null)
                 {
@@ -350,14 +374,14 @@ namespace OpenTK.Platform.X11
                 if (refresh_rate > 0)
                 {
                     ret = Functions.XRRSetScreenConfigAndRate(API.DefaultDisplay,
-                    screen_config, root, new_resolution_index, current_rotation,
-                    refresh_rate, IntPtr.Zero);
+                        screen_config, root, new_resolution_index, current_rotation,
+                        refresh_rate, IntPtr.Zero);
                 }
                 else
                 {
                     ret = Functions.XRRSetScreenConfig(API.DefaultDisplay,
-                    screen_config, root, new_resolution_index, current_rotation,
-                    IntPtr.Zero);
+                        screen_config, root, new_resolution_index, current_rotation,
+                        IntPtr.Zero);
                 }
 
                 if (ret != 0)
@@ -375,7 +399,7 @@ namespace OpenTK.Platform.X11
             return false;
         }
 
-        public sealed override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
+        public override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
         {
             // If resolution is null, restore the default resolution (new_resolution_index = 0).
 
@@ -383,17 +407,16 @@ namespace OpenTK.Platform.X11
             {
                 return ChangeResolutionXRandR(device, resolution);
             }
-            else if (xf86_supported)
+
+            if (xf86_supported)
             {
                 return ChangeResolutionXF86(device, resolution);
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
-        public sealed override bool TryRestoreResolution(DisplayDevice device)
+        public override bool TryRestoreResolution(DisplayDevice device)
         {
             return TryChangeResolution(device, null);
         }
@@ -406,7 +429,7 @@ namespace OpenTK.Platform.X11
             public static extern bool XineramaQueryExtension(IntPtr dpy, out int event_basep, out int error_basep);
 
             [DllImport(Xinerama)]
-            public static extern int XineramaQueryVersion (IntPtr dpy, out int major_versionp, out int minor_versionp);
+            public static extern int XineramaQueryVersion(IntPtr dpy, out int major_versionp, out int minor_versionp);
 
             [DllImport(Xinerama)]
             public static extern bool XineramaIsActive(IntPtr dpy);
@@ -437,11 +460,11 @@ namespace OpenTK.Platform.X11
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         private struct XineramaScreenInfo
         {
-            public int ScreenNumber;
-            public short X;
-            public short Y;
-            public short Width;
-            public short Height;
+            public readonly int ScreenNumber;
+            public readonly short X;
+            public readonly short Y;
+            public readonly short Width;
+            public readonly short Height;
         }
     }
 }

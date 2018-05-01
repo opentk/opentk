@@ -25,8 +25,8 @@
 // THE SOFTWARE.
 //
 
-using System.Runtime.InteropServices;
 using System;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.MacOS
 {
@@ -37,23 +37,23 @@ namespace OpenTK.Platform.MacOS
         public static readonly IntPtr NSNumber = Get("NSNumber");
         public static readonly IntPtr NSUserDefaults = Get("NSUserDefaults");
 
-        [DllImport (Cocoa.LibObjC)]
-        private extern static IntPtr class_getName(IntPtr handle);
+        [DllImport(Cocoa.LibObjC)]
+        private static extern IntPtr class_getName(IntPtr handle);
 
-        [DllImport (Cocoa.LibObjC)]
-        private extern static bool class_addMethod(IntPtr classHandle, IntPtr selector, IntPtr method, string types);
+        [DllImport(Cocoa.LibObjC)]
+        private static extern bool class_addMethod(IntPtr classHandle, IntPtr selector, IntPtr method, string types);
 
-        [DllImport (Cocoa.LibObjC)]
-        private extern static IntPtr objc_getClass(string name);
+        [DllImport(Cocoa.LibObjC)]
+        private static extern IntPtr objc_getClass(string name);
 
-        [DllImport (Cocoa.LibObjC)]
-        private extern static IntPtr objc_allocateClassPair(IntPtr parentClass, string name, int extraBytes);
+        [DllImport(Cocoa.LibObjC)]
+        private static extern IntPtr objc_allocateClassPair(IntPtr parentClass, string name, int extraBytes);
 
-        [DllImport (Cocoa.LibObjC)]
-        private extern static void objc_registerClassPair(IntPtr classToRegister);
+        [DllImport(Cocoa.LibObjC)]
+        private static extern void objc_registerClassPair(IntPtr classToRegister);
 
-        [DllImport (Cocoa.LibObjC)]
-        private extern static void objc_disposeClassPair(IntPtr cls);
+        [DllImport(Cocoa.LibObjC)]
+        private static extern void objc_disposeClassPair(IntPtr cls);
 
         public static IntPtr Get(string name)
         {
@@ -62,6 +62,7 @@ namespace OpenTK.Platform.MacOS
             {
                 throw new ArgumentException("Unknown class: " + name);
             }
+
             return id;
         }
 

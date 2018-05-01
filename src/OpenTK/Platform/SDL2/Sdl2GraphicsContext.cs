@@ -31,9 +31,6 @@ namespace OpenTK.Platform.SDL2
 {
     internal class Sdl2GraphicsContext : DesktopGraphicsContext
     {
-        private IWindowInfo Window { get; set; }
-        private ContextHandle SdlContext { get; set; }
-
         private Sdl2GraphicsContext(IWindowInfo window)
         {
             // It is possible to create a GraphicsContext on a window
@@ -71,8 +68,7 @@ namespace OpenTK.Platform.SDL2
                     retry =
                         SdlContext == ContextHandle.Zero &&
                         Utilities.RelaxGraphicsMode(ref mode);
-                }
-                while (retry);
+                } while (retry);
 
                 if (SdlContext == ContextHandle.Zero)
                 {
@@ -83,10 +79,28 @@ namespace OpenTK.Platform.SDL2
 
                 Mode = GetGLAttributes(SdlContext, out flags);
             }
+
             Handle = GraphicsContext.GetCurrentContext();
             Debug.Print("SDL2 created GraphicsContext (handle: {0})", Handle);
             Debug.Print("    GraphicsMode: {0}", Mode);
             Debug.Print("    GraphicsContextFlags: {0}", flags);
+        }
+
+        private IWindowInfo Window { get; }
+        private ContextHandle SdlContext { get; }
+
+        public override bool IsCurrent => GraphicsContext.GetCurrentContext() == Context;
+
+        public override int SwapInterval
+        {
+            get => SDL.GL.GetSwapInterval();
+            set
+            {
+                if (SDL.GL.SetSwapInterval(value) < 0)
+                {
+                    Debug.Print("SDL2 failed to set swap interval: {0}", SDL.GetError());
+                }
+            }
         }
 
         private static GraphicsMode GetGLAttributes(ContextHandle sdlContext, out GraphicsContextFlags context_flags)
@@ -298,7 +312,8 @@ namespace OpenTK.Platform.SDL2
                 }
                 else
                 {
-                    Trace.WriteLine("Warning: SDL2 requires a shared context to be current before sharing. Sharing failed.");
+                    Trace.WriteLine(
+                        "Warning: SDL2 requires a shared context to be current before sharing. Sharing failed.");
                 }
             }
         }
@@ -336,20 +351,6 @@ namespace OpenTK.Platform.SDL2
             return SDL.GL.GetProcAddress(function);
         }
 
-        public override bool IsCurrent => GraphicsContext.GetCurrentContext() == Context;
-
-        public override int SwapInterval
-        {
-            get => SDL.GL.GetSwapInterval();
-            set
-            {
-                if (SDL.GL.SetSwapInterval(value) < 0)
-                {
-                    Debug.Print("SDL2 failed to set swap interval: {0}", SDL.GetError());
-                }
-            }
-        }
-
         protected override void Dispose(bool manual)
         {
             if (!IsDisposed)
@@ -367,9 +368,9 @@ namespace OpenTK.Platform.SDL2
                     Debug.Print("Sdl2GraphicsContext (handle: {0}) leaked, did you forget to call Dispose()?",
                         Handle);
                 }
+
                 IsDisposed = true;
             }
         }
     }
 }
-

@@ -25,7 +25,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Text;
+using OpenTK.Input;
 #if !MINIMAL
 using System.Drawing;
 #endif
@@ -33,39 +37,37 @@ using System.Drawing;
 using OpenTK.Minimal;
 #else
 using System.Drawing.Imaging;
+
 #endif
-using System.Runtime.InteropServices;
-using OpenTK.Input;
-using System.Text;
 
 namespace OpenTK.Platform.SDL2
 {
     internal class Sdl2NativeWindow : NativeWindowBase
     {
-        private readonly object sync = new object();
+        private static readonly Dictionary<uint, Sdl2NativeWindow> windows =
+            new Dictionary<uint, Sdl2NativeWindow>();
 
-        private Sdl2WindowInfo window;
-        private uint window_id;
-        private bool is_visible;
-        private bool is_focused;
-        private bool is_cursor_visible = true;
-        private bool exists;
-        private bool must_destroy;
-        private bool disposed;
-        private volatile bool is_in_closing_event;
-        private WindowState window_state = WindowState.Normal;
-        private WindowState previous_window_state = WindowState.Normal;
-        private WindowBorder window_border = WindowBorder.Resizable;
-        private Icon icon;
+        private readonly object sync = new object();
         private MouseCursor cursor = MouseCursor.Default;
-        private IntPtr sdl_cursor = IntPtr.Zero;
 
         // Used in KeyPress event to decode SDL UTF8 text strings
         // to .Net UTF16 strings
         private char[] DecodeTextBuffer = new char[32];
+        private bool disposed;
+        private bool exists;
+        private Icon icon;
+        private bool is_cursor_visible = true;
+        private bool is_focused;
+        private volatile bool is_in_closing_event;
+        private bool is_visible;
+        private bool must_destroy;
+        private WindowState previous_window_state = WindowState.Normal;
+        private IntPtr sdl_cursor = IntPtr.Zero;
 
-        private static readonly Dictionary<uint, Sdl2NativeWindow> windows =
-            new Dictionary<uint, Sdl2NativeWindow>();
+        private readonly Sdl2WindowInfo window;
+        private WindowBorder window_border = WindowBorder.Resizable;
+        private uint window_id;
+        private WindowState window_state = WindowState.Normal;
 
         public Sdl2NativeWindow(int x, int y, int width, int height,
             string title, GameWindowFlags options, DisplayDevice device)
@@ -100,10 +102,391 @@ namespace OpenTK.Platform.SDL2
                     handle = SDL.CreateWindow(title, bounds.Left + x, bounds.Top + y, width, height, flags);
                     exists = true;
                 }
+
                 ProcessEvents();
                 window = new Sdl2WindowInfo(handle, null);
                 window_id = SDL.GetWindowID(handle);
                 windows.Add(window_id, this);
+            }
+        }
+
+        public override MouseCursor Cursor
+        {
+            get => cursor;
+            set
+            {
+                lock (sync)
+                {
+                    if (cursor != value)
+                    {
+                        // Free the previous cursor,
+                        // if one has been set.
+                        if (sdl_cursor != IntPtr.Zero)
+                        {
+                            SDL.FreeCursor(sdl_cursor);
+                            sdl_cursor = IntPtr.Zero;
+                        }
+
+                        // Set the new cursor
+                        if (value == MouseCursor.Default)
+                        {
+                            // Reset to default cursor
+                            SDL.SetCursor(SDL.GetDefaultCursor());
+                            cursor = value;
+                        }
+                        else
+                        {
+                            // Create and set a new cursor using
+                            // the rgba values supplied by the user
+                            unsafe
+                            {
+                                fixed (byte* pixels = value.Data)
+                                {
+                                    var cursor_surface =
+                                        SDL.CreateRGBSurfaceFrom(
+                                            new IntPtr(pixels),
+                                            value.Width,
+                                            value.Height,
+                                            32,
+                                            value.Width * 4,
+                                            0x00ff0000,
+                                            0x0000ff00,
+                                            0x000000ff,
+                                            0xff000000);
+
+                                    if (cursor_surface == IntPtr.Zero)
+                                    {
+                                        Debug.Print("[SDL2] Failed to create cursor surface. Error: {0}",
+                                            SDL.GetError());
+                                        return;
+                                    }
+
+                                    sdl_cursor = SDL.CreateColorCursor(cursor_surface, value.X, value.Y);
+                                    if (sdl_cursor == IntPtr.Zero)
+                                    {
+                                        Debug.Print("[SDL2] Failed to create cursor. Error: {0}",
+                                            SDL.GetError());
+                                        return;
+                                    }
+
+                                    if (sdl_cursor != IntPtr.Zero)
+                                    {
+                                        SDL.SetCursor(sdl_cursor);
+                                        cursor = value;
+                                    }
+
+                                    if (cursor_surface != IntPtr.Zero)
+                                    {
+                                        SDL.FreeSurface(cursor_surface);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public override Icon Icon
+        {
+            get => icon;
+            set
+            {
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        // Set the new icon, if any, or clear the current
+                        // icon if null
+                        if (value != null)
+                        {
+                            using (var bmp = value.ToBitmap())
+                            {
+                                // Decode the icon into a SDL surface
+                                var data = bmp.LockBits(
+                                    new Rectangle(0, 0, value.Width, value.Height),
+                                    ImageLockMode.ReadWrite,
+                                    PixelFormat.Format32bppArgb);
+
+                                var surface = SDL.CreateRGBSurfaceFrom(
+                                    data.Scan0, data.Width, data.Height, 32, data.Stride,
+                                    0x00ff0000u, 0x0000ff00u, 0x000000ffu, 0xff000000u);
+
+                                // Update the window icon
+                                SDL.SetWindowIcon(window.Handle, surface);
+
+                                // Free the SDL surface as it is no longer needed
+                                SDL.FreeSurface(surface);
+                                bmp.UnlockBits(data);
+                            }
+                        }
+                        else
+                        {
+                            // Clear the window icon
+                            SDL.SetWindowIcon(window.Handle, IntPtr.Zero);
+                        }
+
+                        icon = value;
+                        OnIconChanged(EventArgs.Empty);
+                    }
+                }
+            }
+        }
+
+        public override string Title
+        {
+            get
+            {
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        return SDL.GetWindowTitle(window.Handle);
+                    }
+
+                    return string.Empty;
+                }
+            }
+            set
+            {
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        SDL.SetWindowTitle(window.Handle, value);
+                    }
+                }
+            }
+        }
+
+        public override bool Focused => is_focused;
+
+        public override bool Visible
+        {
+            get => is_visible;
+            set
+            {
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        if (value)
+                        {
+                            SDL.ShowWindow(window.Handle);
+                        }
+                        else
+                        {
+                            SDL.HideWindow(window.Handle);
+                        }
+                    }
+                }
+            }
+        }
+
+        public override bool Exists => exists;
+
+        public override IWindowInfo WindowInfo => window;
+
+        public override WindowState WindowState
+        {
+            get => window_state;
+            set
+            {
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        if (WindowState != value)
+                        {
+                            // Set the new WindowState
+                            switch (value)
+                            {
+                                case WindowState.Fullscreen:
+                                    RestoreWindow();
+                                    var success = Sdl2Factory.UseFullscreenDesktop
+                                        ? SDL.SetWindowFullscreen(window.Handle,
+                                              (uint)WindowFlags.FULLSCREEN_DESKTOP) < 0
+                                        : SDL.SetWindowFullscreen(window.Handle, (uint)WindowFlags.FULLSCREEN) < 0;
+
+                                    if (!success)
+                                    {
+                                        Debug.Print("SDL2 failed to enter fullscreen mode: {0}", SDL.GetError());
+                                    }
+
+                                    SDL.RaiseWindow(window.Handle);
+                                    // There is no "fullscreen" message in the event loop
+                                    // so we have to mark that ourselves
+                                    window_state = WindowState.Fullscreen;
+                                    break;
+
+                                case WindowState.Maximized:
+                                    RestoreWindow();
+                                    SDL.MaximizeWindow(window.Handle);
+                                    window_state = WindowState.Maximized;
+                                    break;
+
+                                case WindowState.Minimized:
+                                    SDL.MinimizeWindow(window.Handle);
+                                    window_state = WindowState.Minimized;
+                                    break;
+
+                                case WindowState.Normal:
+                                    RestoreWindow();
+                                    break;
+                            }
+
+                            if (!CursorVisible)
+                            {
+                                GrabCursor(true);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public override WindowBorder WindowBorder
+        {
+            get => window_border;
+            set
+            {
+                if (WindowBorder != value)
+                {
+                    lock (sync)
+                    {
+                        if (Exists)
+                        {
+                            switch (value)
+                            {
+                                case WindowBorder.Resizable:
+                                    SDL.SetWindowBordered(window.Handle, true);
+                                    window_border = WindowBorder.Resizable;
+                                    break;
+
+                                case WindowBorder.Hidden:
+                                    SDL.SetWindowBordered(window.Handle, false);
+                                    window_border = WindowBorder.Hidden;
+                                    break;
+
+                                case WindowBorder.Fixed:
+                                    Debug.WriteLine("SDL2 cannot change to fixed-size windows at runtime.");
+                                    break;
+                            }
+                        }
+                    }
+
+                    if (Exists)
+                    {
+                        OnWindowBorderChanged(EventArgs.Empty);
+                    }
+                }
+            }
+        }
+
+        public override Rectangle Bounds
+        {
+            get => new Rectangle(Location, Size);
+            set
+            {
+                Size = value.Size;
+                Location = value.Location;
+            }
+        }
+
+        public override Point Location
+        {
+            get
+            {
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        int x, y;
+                        SDL.GetWindowPosition(window.Handle, out x, out y);
+                        return new Point(x, y);
+                    }
+
+                    return new Point();
+                }
+            }
+            set
+            {
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        SDL.SetWindowPosition(window.Handle, value.X, value.Y);
+                    }
+                }
+            }
+        }
+
+        public override Size Size
+        {
+            get
+            {
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        int w, h;
+                        SDL.GetWindowSize(window.Handle, out w, out h);
+                        return new Size(w, h);
+                    }
+
+                    return new Size();
+                }
+            }
+            set
+            {
+                lock (sync)
+                {
+                    if (Exists)
+                    {
+                        SDL.SetWindowSize(window.Handle, value.Width, value.Height);
+                    }
+                }
+            }
+        }
+
+        public override Size ClientSize
+        {
+            get
+            {
+                int w, h;
+                if (SDL.Version.Number > 2000)
+                {
+                    // SDL > 2.0.0 supports SDL_GL_GetDrawableSize for
+                    // hidpi windows.
+                    SDL.GL.GetDrawableSize(window.Handle, out w, out h);
+                }
+                else
+                {
+                    SDL.GetWindowSize(window.Handle, out w, out h);
+                }
+
+                return new Size(w, h);
+            }
+            set
+            {
+                var scale = Size.Width / (float)ClientSize.Width;
+                Size = new Size((int)(value.Width * scale), (int)(value.Height * scale));
+            }
+        }
+
+        public override bool CursorVisible
+        {
+            get => is_cursor_visible;
+            set
+            {
+                lock (sync)
+                {
+                    if (Exists && value != is_cursor_visible)
+                    {
+                        GrabCursor(!value);
+                        is_cursor_visible = value;
+                    }
+                }
             }
         }
 
@@ -158,6 +541,7 @@ namespace OpenTK.Platform.SDL2
                             ProcessWindowEvent(window, ev.Window);
                             processed = true;
                         }
+
                         break;
 
                     case EventType.TEXTINPUT:
@@ -166,6 +550,7 @@ namespace OpenTK.Platform.SDL2
                             ProcessTextInputEvent(window, ev.Text);
                             processed = true;
                         }
+
                         break;
 
                     case EventType.KEYDOWN:
@@ -175,6 +560,7 @@ namespace OpenTK.Platform.SDL2
                             ProcessKeyEvent(window, ev);
                             processed = true;
                         }
+
                         break;
 
                     case EventType.MOUSEBUTTONDOWN:
@@ -184,6 +570,7 @@ namespace OpenTK.Platform.SDL2
                             ProcessMouseButtonEvent(window, ev.Button);
                             processed = true;
                         }
+
                         break;
 
                     case EventType.MOUSEMOTION:
@@ -192,6 +579,7 @@ namespace OpenTK.Platform.SDL2
                             ProcessMouseMotionEvent(window, ev.Motion);
                             processed = true;
                         }
+
                         break;
 
                     case EventType.MOUSEWHEEL:
@@ -200,6 +588,7 @@ namespace OpenTK.Platform.SDL2
                             ProcessMouseWheelEvent(window, ev.Wheel);
                             processed = true;
                         }
+
                         break;
 
                     case EventType.DROPFILE:
@@ -209,6 +598,7 @@ namespace OpenTK.Platform.SDL2
                             SDL.Free(ev.Drop.File);
                             processed = true;
                         }
+
                         break;
 
                     case EventType.QUIT:
@@ -309,7 +699,7 @@ namespace OpenTK.Platform.SDL2
             window.OnMouseWheel(ev.X, ev.Y);
         }
 
-        private static unsafe void ProcessDropEvent(Sdl2NativeWindow window, DropEvent ev)
+        private static void ProcessDropEvent(Sdl2NativeWindow window, DropEvent ev)
         {
             var dropString = Marshal.PtrToStringAuto(ev.File);
             window.OnFileDrop(dropString);
@@ -320,7 +710,7 @@ namespace OpenTK.Platform.SDL2
             switch (e.Event)
             {
                 case WindowEventID.CLOSE:
-                    var close_args = new System.ComponentModel.CancelEventArgs();
+                    var close_args = new CancelEventArgs();
                     try
                     {
                         window.is_in_closing_event = true;
@@ -336,6 +726,7 @@ namespace OpenTK.Platform.SDL2
                         window.OnClosed(EventArgs.Empty);
                         window.must_destroy = true;
                     }
+
                     break;
 
                 case WindowEventID.ENTER:
@@ -414,6 +805,7 @@ namespace OpenTK.Platform.SDL2
                     {
                         windows.Remove(window_id);
                     }
+
                     SDL.DestroyWindow(window.Handle);
                 }
             }
@@ -474,83 +866,6 @@ namespace OpenTK.Platform.SDL2
             window_state = WindowState.Normal;
         }
 
-        public override MouseCursor Cursor
-        {
-            get => cursor;
-            set
-            {
-                lock (sync)
-                {
-                    if (cursor != value)
-                    {
-                        // Free the previous cursor,
-                        // if one has been set.
-                        if (sdl_cursor != IntPtr.Zero)
-                        {
-                            SDL.FreeCursor(sdl_cursor);
-                            sdl_cursor = IntPtr.Zero;
-                        }
-
-                        // Set the new cursor
-                        if (value == MouseCursor.Default)
-                        {
-                            // Reset to default cursor
-                            SDL.SetCursor(SDL.GetDefaultCursor());
-                            cursor = value;
-                        }
-                        else
-                        {
-                            // Create and set a new cursor using
-                            // the rgba values supplied by the user
-                            unsafe
-                            {
-                                fixed (byte* pixels = value.Data)
-                                {
-                                    var cursor_surface =
-                                        SDL.CreateRGBSurfaceFrom(
-                                            new IntPtr(pixels),
-                                            value.Width,
-                                            value.Height,
-                                            32,
-                                            value.Width * 4,
-                                            0x00ff0000,
-                                            0x0000ff00,
-                                            0x000000ff,
-                                            0xff000000);
-
-                                    if (cursor_surface == IntPtr.Zero)
-                                    {
-                                        Debug.Print("[SDL2] Failed to create cursor surface. Error: {0}",
-                                            SDL.GetError());
-                                        return;
-                                    }
-
-                                    sdl_cursor = SDL.CreateColorCursor(cursor_surface, value.X, value.Y);
-                                    if (sdl_cursor == IntPtr.Zero)
-                                    {
-                                        Debug.Print("[SDL2] Failed to create cursor. Error: {0}",
-                                            SDL.GetError());
-                                        return;
-                                    }
-
-                                    if (sdl_cursor != IntPtr.Zero)
-                                    {
-                                        SDL.SetCursor(sdl_cursor);
-                                        cursor = value;
-                                    }
-
-                                    if (cursor_surface != IntPtr.Zero)
-                                    {
-                                        SDL.FreeSurface(cursor_surface);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         public override void Close()
         {
             lock (sync)
@@ -605,306 +920,6 @@ namespace OpenTK.Platform.SDL2
             return new Point(point.X + client.X, point.Y + client.Y);
         }
 
-        public override Icon Icon
-        {
-            get => icon;
-            set
-            {
-                lock (sync)
-                {
-                    if (Exists)
-                    {
-                        // Set the new icon, if any, or clear the current
-                        // icon if null
-                        if (value != null)
-                        {
-                            using (var bmp = value.ToBitmap())
-                            {
-                                // Decode the icon into a SDL surface
-                                var data = bmp.LockBits(
-                                    new Rectangle(0, 0, value.Width, value.Height),
-                                    ImageLockMode.ReadWrite,
-                                    PixelFormat.Format32bppArgb);
-
-                                var surface = SDL.CreateRGBSurfaceFrom(
-                                    data.Scan0, data.Width, data.Height, 32, data.Stride,
-                                    0x00ff0000u, 0x0000ff00u, 0x000000ffu, 0xff000000u);
-
-                                // Update the window icon
-                                SDL.SetWindowIcon(window.Handle, surface);
-
-                                // Free the SDL surface as it is no longer needed
-                                SDL.FreeSurface(surface);
-                                bmp.UnlockBits(data);
-                            }
-
-                        }
-                        else
-                        {
-                            // Clear the window icon
-                            SDL.SetWindowIcon(window.Handle, IntPtr.Zero);
-                        }
-
-                        icon = value;
-                        OnIconChanged(EventArgs.Empty);
-                    }
-                }
-            }
-        }
-
-        public override string Title
-        {
-            get
-            {
-                lock (sync)
-                {
-                    if (Exists)
-                    {
-                        return SDL.GetWindowTitle(window.Handle);
-                    }
-                    return String.Empty;
-                }
-            }
-            set
-            {
-                lock (sync)
-                {
-                    if (Exists)
-                    {
-                        SDL.SetWindowTitle(window.Handle, value);
-                    }
-                }
-            }
-        }
-
-        public override bool Focused => is_focused;
-
-        public override bool Visible
-        {
-            get => is_visible;
-            set
-            {
-                lock (sync)
-                {
-                    if (Exists)
-                    {
-                        if (value)
-                        {
-                            SDL.ShowWindow(window.Handle);
-                        }
-                        else
-                        {
-                            SDL.HideWindow(window.Handle);
-                        }
-                    }
-                }
-            }
-        }
-
-        public override bool Exists => exists;
-
-        public override IWindowInfo WindowInfo => window;
-
-        public override WindowState WindowState
-        {
-            get => window_state;
-            set
-            {
-                lock (sync)
-                {
-                    if (Exists)
-                    {
-                        if (WindowState != value)
-                        {
-                            // Set the new WindowState
-                            switch (value)
-                            {
-                                case WindowState.Fullscreen:
-                                    RestoreWindow();
-                                    var success = Sdl2Factory.UseFullscreenDesktop ?
-                                        SDL.SetWindowFullscreen(window.Handle, (uint)WindowFlags.FULLSCREEN_DESKTOP) < 0 :
-                                        SDL.SetWindowFullscreen(window.Handle, (uint)WindowFlags.FULLSCREEN) < 0;
-
-                                    if (!success)
-                                    {
-                                            Debug.Print("SDL2 failed to enter fullscreen mode: {0}", SDL.GetError());
-                                    }
-
-                                    SDL.RaiseWindow(window.Handle);
-                                    // There is no "fullscreen" message in the event loop
-                                    // so we have to mark that ourselves
-                                    window_state = WindowState.Fullscreen;
-                                    break;
-
-                                case WindowState.Maximized:
-                                    RestoreWindow();
-                                    SDL.MaximizeWindow(window.Handle);
-                                    window_state = WindowState.Maximized;
-                                    break;
-
-                                case WindowState.Minimized:
-                                    SDL.MinimizeWindow(window.Handle);
-                                    window_state = WindowState.Minimized;
-                                    break;
-
-                                case WindowState.Normal:
-                                    RestoreWindow();
-                                    break;
-                            }
-
-                            if (!CursorVisible)
-                            {
-                                GrabCursor(true);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        public override WindowBorder WindowBorder
-        {
-            get => window_border;
-            set
-            {
-                if (WindowBorder != value)
-                {
-                    lock (sync)
-                    {
-                        if (Exists)
-                        {
-
-                            switch (value)
-                            {
-                                case WindowBorder.Resizable:
-                                    SDL.SetWindowBordered(window.Handle, true);
-                                    window_border = WindowBorder.Resizable;
-                                    break;
-
-                                case WindowBorder.Hidden:
-                                    SDL.SetWindowBordered(window.Handle, false);
-                                    window_border = WindowBorder.Hidden;
-                                    break;
-
-                                case WindowBorder.Fixed:
-                                    Debug.WriteLine("SDL2 cannot change to fixed-size windows at runtime.");
-                                    break;
-                            }
-                        }
-                    }
-
-                    if (Exists)
-                    {
-                        OnWindowBorderChanged(EventArgs.Empty);
-                    }
-                }
-            }
-        }
-
-        public override Rectangle Bounds
-        {
-            get => new Rectangle(Location, Size);
-            set
-            {
-                Size = value.Size;
-                Location = value.Location;
-            }
-        }
-
-        public override Point Location
-        {
-            get
-            {
-                lock (sync)
-                {
-                    if (Exists)
-                    {
-                        int x, y;
-                        SDL.GetWindowPosition(window.Handle, out x, out y);
-                        return new Point(x, y);
-                    }
-                    return new Point();
-                }
-            }
-            set
-            {
-                lock (sync)
-                {
-                    if (Exists)
-                    {
-                        SDL.SetWindowPosition(window.Handle, value.X, value.Y);
-                    }
-                }
-            }
-        }
-
-        public override Size Size
-        {
-            get
-            {
-                lock (sync)
-                {
-                    if (Exists)
-                    {
-                        int w, h;
-                        SDL.GetWindowSize(window.Handle, out w, out h);
-                        return new Size(w, h);
-                    }
-                    return new Size();
-                }
-            }
-            set
-            {
-                lock (sync)
-                {
-                    if (Exists)
-                    {
-                        SDL.SetWindowSize(window.Handle, value.Width, value.Height);
-                    }
-                }
-            }
-        }
-
-        public override Size ClientSize
-        {
-            get
-            {
-                int w, h;
-                if (SDL.Version.Number > 2000)
-                {
-                    // SDL > 2.0.0 supports SDL_GL_GetDrawableSize for
-                    // hidpi windows.
-                    SDL.GL.GetDrawableSize(window.Handle, out w, out h);
-                }
-                else
-                {
-                    SDL.GetWindowSize(window.Handle, out w, out h);
-                }
-                return new Size(w, h);
-            }
-            set
-            {
-                var scale = Size.Width / (float)ClientSize.Width;
-                Size = new Size((int)(value.Width * scale), (int)(value.Height * scale));
-            }
-        }
-
-        public override bool CursorVisible
-        {
-            get => is_cursor_visible;
-            set
-            {
-                lock (sync)
-                {
-                    if (Exists && value != is_cursor_visible)
-                    {
-                        GrabCursor(!value);
-                        is_cursor_visible = value;
-                    }
-                }
-            }
-        }
-
         protected override void Dispose(bool manual)
         {
             if (!disposed)
@@ -939,10 +954,10 @@ namespace OpenTK.Platform.SDL2
                             Close();
                         }
                     }
+
                     disposed = true;
                 }
             }
         }
     }
 }
-

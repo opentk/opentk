@@ -3,16 +3,16 @@
 namespace OpenTK.Platform.MacOS
 {
     /// <summary>
-    /// The <see cref="NSAutoreleasePool"/> class is a wrapper around the native objective-C NSAutoreleasePool.
-    /// In particular, this construct mimics the usage of an @autorelease block and can be used in much the same way,
-    /// only with a C# using block instead.
+    ///     The <see cref="NSAutoreleasePool" /> class is a wrapper around the native objective-C NSAutoreleasePool.
+    ///     In particular, this construct mimics the usage of an @autorelease block and can be used in much the same way,
+    ///     only with a C# using block instead.
     /// </summary>
     public sealed class NSAutoreleasePool : IDisposable
     {
         private readonly IntPtr _autoreleasePool;
 
         /// <summary>
-        /// Allocates and initializes a new <see cref="NSAutoreleasePool"/>.
+        ///     Allocates and initializes a new <see cref="NSAutoreleasePool" />.
         /// </summary>
         public NSAutoreleasePool()
         {
@@ -21,7 +21,7 @@ namespace OpenTK.Platform.MacOS
         }
 
         /// <summary>
-        /// Disposes of the <see cref="NSAutoreleasePool"/> instance, draining it.
+        ///     Disposes of the <see cref="NSAutoreleasePool" /> instance, draining it.
         /// </summary>
         public void Dispose()
         {

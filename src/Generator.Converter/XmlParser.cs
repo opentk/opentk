@@ -21,6 +21,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -57,11 +58,11 @@ namespace OpenTK.Convert
                     {
                         if (e.Message == "The remote server returned an error: (401) Unauthorized.")
                         {
-                            System.Console.WriteLine(e.Message);
-                            System.Console.Write("Username: ");
-                            var username = System.Console.ReadLine();
-                            System.Console.Write("Password: ");
-                            var password = System.Console.ReadLine();
+                            Console.WriteLine(e.Message);
+                            Console.Write("Username: ");
+                            var username = Console.ReadLine();
+                            Console.Write("Password: ");
+                            var password = Console.ReadLine();
 
                             wb.UseDefaultCredentials = true;
                             wb.Credentials = new NetworkCredential(username, password);
@@ -88,14 +89,13 @@ namespace OpenTK.Convert
             {
                 return name.Remove(0, EnumPrefix.Length);
             }
-            else if (name.StartsWith(FuncPrefix))
+
+            if (name.StartsWith(FuncPrefix))
             {
                 return name.Remove(0, FuncPrefix.Length);
             }
-            else
-            {
-                return name;
-            }
+
+            return name;
         }
     }
 }

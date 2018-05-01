@@ -31,6 +31,6 @@ namespace OpenTK.Platform.MacOS
     {
         Regular,
         Accessory,
-        Prohibited,
+        Prohibited
     }
 }

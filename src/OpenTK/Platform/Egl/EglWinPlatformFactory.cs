@@ -32,7 +32,8 @@ namespace OpenTK.Platform.Egl
     // EGL factory for the Windows platform.
     internal class EglWinPlatformFactory : WinFactory
     {
-        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window,
+            IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             var win_win = (WinWindowInfo)window;
             var egl_display = GetDisplay(win_win.DeviceContext);
@@ -40,7 +41,8 @@ namespace OpenTK.Platform.Egl
             return new EglWinContext(mode, egl_win, shareContext, major, minor, flags);
         }
 
-        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window,
+            IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             var win_win = (WinWindowInfo)window;
             var egl_display = GetDisplay(win_win.DeviceContext);
@@ -50,10 +52,7 @@ namespace OpenTK.Platform.Egl
 
         public override GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
-            return (GraphicsContext.GetCurrentContextDelegate)delegate
-            {
-                return new ContextHandle(Egl.GetCurrentContext());
-            };
+            return delegate { return new ContextHandle(Egl.GetCurrentContext()); };
         }
 
         private IntPtr GetDisplay(IntPtr dc)

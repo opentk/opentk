@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Threading;
 using System.ComponentModel;
+using System.Threading;
+using Cairo;
 using Gdk;
-using OpenTK.Graphics;
 using Gtk;
+using OpenTK.Graphics;
 
 namespace OpenTK
 {
     /// <summary>
-    /// The <see cref="GLWidget"/> is a GTK widget for which an OpenGL context can be used to draw arbitrary graphics.
+    ///     The <see cref="GLWidget" /> is a GTK widget for which an OpenGL context can be used to draw arbitrary graphics.
     /// </summary>
     [ToolboxItem(true)]
     public class GLWidget : GLArea
@@ -20,22 +21,12 @@ namespace OpenTK
         private bool _Initialized;
 
         /// <summary>
-        /// The previous frame time reported by GTK.
+        ///     The previous frame time reported by GTK.
         /// </summary>
         private double? _PreviousFrameTime;
 
         /// <summary>
-        /// Gets the time taken to render the last frame (in seconds).
-        /// </summary>
-        public double DeltaTime { get; private set; }
-
-        /// <summary>
-        /// The set <see cref="ContextFlags"/> for this widget.
-        /// </summary>
-        public GraphicsContextFlags ContextFlags { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GLWidget"/> class.
+        ///     Initializes a new instance of the <see cref="GLWidget" /> class.
         /// </summary>
         public GLWidget()
             : this(GraphicsMode.Default)
@@ -49,15 +40,16 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GLWidget"/> class.
+        ///     Initializes a new instance of the <see cref="GLWidget" /> class.
         /// </summary>
-        /// <param name="graphicsMode">The <see cref="GraphicsMode"/> which the widget should be constructed with.</param>
+        /// <param name="graphicsMode">The <see cref="GraphicsMode" /> which the widget should be constructed with.</param>
         /// <param name="glVersionMajor">The major OpenGL version to attempt to initialize.</param>
         /// <param name="glVersionMinor">The minor OpenGL version to attempt to initialize.</param>
         /// <param name="contextFlags">
-        /// Any flags which should be used during initialization of the <see cref="GraphicsContext"/>.
+        ///     Any flags which should be used during initialization of the <see cref="GraphicsContext" />.
         /// </param>
-        public GLWidget(GraphicsMode graphicsMode, int glVersionMajor, int glVersionMinor, GraphicsContextFlags contextFlags)
+        public GLWidget(GraphicsMode graphicsMode, int glVersionMajor, int glVersionMinor,
+            GraphicsContextFlags contextFlags)
         {
             ContextFlags = contextFlags;
 
@@ -81,7 +73,17 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Updates the time delta with a new value from the last frame.
+        ///     Gets the time taken to render the last frame (in seconds).
+        /// </summary>
+        public double DeltaTime { get; private set; }
+
+        /// <summary>
+        ///     The set <see cref="ContextFlags" /> for this widget.
+        /// </summary>
+        public GraphicsContextFlags ContextFlags { get; }
+
+        /// <summary>
+        ///     Updates the time delta with a new value from the last frame.
         /// </summary>
         /// <param name="widget">The sending widget.</param>
         /// <param name="frameClock">The relevant frame clock.</param>
@@ -122,7 +124,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Destructs this object.
+        ///     Destructs this object.
         /// </summary>
         ~GLWidget()
         {
@@ -130,7 +132,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Destroys this <see cref="Widget"/>, disposing it and destroying it in the context of GTK.
+        ///     Destroys this <see cref="Widget" />, disposing it and destroying it in the context of GTK.
         /// </summary>
         public override void Destroy()
         {
@@ -141,7 +143,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Disposes the current object, releasing any native resources it was using.
+        ///     Disposes the current object, releasing any native resources it was using.
         /// </summary>
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
@@ -150,23 +152,24 @@ namespace OpenTK
             {
                 MakeCurrent();
                 OnShuttingDown();
-                if (GraphicsContext.ShareContexts && (Interlocked.Decrement(ref _GraphicsContextCount) == 0))
+                if (GraphicsContext.ShareContexts && Interlocked.Decrement(ref _GraphicsContextCount) == 0)
                 {
                     OnGraphicsContextShuttingDown();
                     _SharedContextInitialized = false;
                 }
+
                 _GraphicsContext.Dispose();
             }
         }
 
         /// <summary>
-        /// Called when the first <see cref="GraphicsContext"/> is created in the case where
-        /// GraphicsContext.ShareContexts == true;
+        ///     Called when the first <see cref="GraphicsContext" /> is created in the case where
+        ///     GraphicsContext.ShareContexts == true;
         /// </summary>
         public static event EventHandler GraphicsContextInitialized;
 
         /// <summary>
-        /// Invokes the <see cref="GraphicsContextInitialized"/> event.
+        ///     Invokes the <see cref="GraphicsContextInitialized" /> event.
         /// </summary>
         private static void OnGraphicsContextInitialized()
         {
@@ -177,13 +180,13 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Called when the first <see cref="GraphicsContext"/> is being destroyed in the case where
-        /// GraphicsContext.ShareContext == true;
+        ///     Called when the first <see cref="GraphicsContext" /> is being destroyed in the case where
+        ///     GraphicsContext.ShareContext == true;
         /// </summary>
         public static event EventHandler GraphicsContextShuttingDown;
 
         /// <summary>
-        /// Invokes the <see cref="GraphicsContextShuttingDown"/> event.
+        ///     Invokes the <see cref="GraphicsContextShuttingDown" /> event.
         /// </summary>
         private static void OnGraphicsContextShuttingDown()
         {
@@ -194,13 +197,13 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Called when this <see cref="GLWidget"/> has finished initializing and has a valid
-        /// <see cref="GraphicsContext"/>.
+        ///     Called when this <see cref="GLWidget" /> has finished initializing and has a valid
+        ///     <see cref="GraphicsContext" />.
         /// </summary>
         public event EventHandler Initialized;
 
         /// <summary>
-        /// Invokes the <see cref="Initialized"/> event.
+        ///     Invokes the <see cref="Initialized" /> event.
         /// </summary>
         protected virtual void OnInitialized()
         {
@@ -211,12 +214,12 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Called when this <see cref="GLWidget"/> is being disposed.
+        ///     Called when this <see cref="GLWidget" /> is being disposed.
         /// </summary>
         public event EventHandler ShuttingDown;
 
         /// <summary>
-        /// Invokes the <see cref="ShuttingDown"/> event.
+        ///     Invokes the <see cref="ShuttingDown" /> event.
         /// </summary>
         protected virtual void OnShuttingDown()
         {
@@ -227,11 +230,11 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Called when the widget needs to be (fully or partially) redrawn.
+        ///     Called when the widget needs to be (fully or partially) redrawn.
         /// </summary>
         /// <param name="cr"></param>
         /// <returns></returns>
-        protected override bool OnDrawn(Cairo.Context cr)
+        protected override bool OnDrawn(Context cr)
         {
             if (!_Initialized)
             {
@@ -243,7 +246,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Initializes the <see cref="GLWidget"/> with its given values and creates a <see cref="GraphicsContext"/>.
+        ///     Initializes the <see cref="GLWidget" /> with its given values and creates a <see cref="GraphicsContext" />.
         /// </summary>
         private void Initialize()
         {

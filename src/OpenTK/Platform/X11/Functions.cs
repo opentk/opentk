@@ -5,6 +5,8 @@
  */
 
 using System;
+using System.Runtime.InteropServices;
+using System.Text;
 #if !MINIMAL
 using System.Drawing;
 #endif
@@ -12,9 +14,8 @@ using System.Drawing;
 using OpenTK.Minimal;
 #else
 using System.Drawing.Imaging;
+
 #endif
-using System.Text;
-using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.X11
 {
@@ -31,8 +32,7 @@ namespace OpenTK.Platform.X11
     using Atom = IntPtr;
     using VisualID = IntPtr;
     using Time = IntPtr;
-    using KeyCode = Byte;    // Or maybe ushort?
-
+    using KeyCode = Byte; // Or maybe ushort?
     using Display = IntPtr;
     using XPointer = IntPtr;
 
@@ -44,13 +44,19 @@ namespace OpenTK.Platform.X11
     using SizeID = UInt16;
 
 
-
     internal static partial class Functions
     {
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public delegate bool EventPredicate(IntPtr display, ref XEvent e, IntPtr arg);
+
         public static readonly object Lock = API.Lock;
 
+        private static readonly IntPtr CopyFromParent = IntPtr.Zero;
+
         [DllImport("libX11", EntryPoint = "XOpenDisplay")]
-        private extern static IntPtr sys_XOpenDisplay(IntPtr display);
+        private static extern IntPtr sys_XOpenDisplay(IntPtr display);
+
         public static IntPtr XOpenDisplay(IntPtr display)
         {
             lock (Lock)
@@ -60,327 +66,379 @@ namespace OpenTK.Platform.X11
         }
 
         [DllImport("libX11", EntryPoint = "XCloseDisplay")]
-        public extern static int XCloseDisplay(IntPtr display);
+        public static extern int XCloseDisplay(IntPtr display);
+
         [DllImport("libX11", EntryPoint = "XSynchronize")]
-        public extern static IntPtr XSynchronize(IntPtr display, bool onoff);
+        public static extern IntPtr XSynchronize(IntPtr display, bool onoff);
 
         [DllImport("libX11", EntryPoint = "XCreateWindow")]
-        public unsafe extern static IntPtr XCreateWindow(IntPtr display, IntPtr parent, int x, int y, int width, int height, int border_width, int depth, int xclass, IntPtr visual, IntPtr valuemask, XSetWindowAttributes* attributes);
+        public static extern unsafe IntPtr XCreateWindow(IntPtr display, IntPtr parent, int x, int y, int width,
+            int height, int border_width, int depth, int xclass, IntPtr visual, IntPtr valuemask,
+            XSetWindowAttributes* attributes);
 
-        [DllImport("libX11", EntryPoint = "XCreateSimpleWindow")]//, CLSCompliant(false)]
-        public extern static IntPtr XCreateSimpleWindow(IntPtr display, IntPtr parent, int x, int y, int width, int height, int border_width, UIntPtr border, UIntPtr background);
+        [DllImport("libX11", EntryPoint = "XCreateSimpleWindow")] //, CLSCompliant(false)]
+        public static extern IntPtr XCreateSimpleWindow(IntPtr display, IntPtr parent, int x, int y, int width,
+            int height, int border_width, UIntPtr border, UIntPtr background);
+
         [DllImport("libX11", EntryPoint = "XCreateSimpleWindow")]
-        public extern static IntPtr XCreateSimpleWindow(IntPtr display, IntPtr parent, int x, int y, int width, int height, int border_width, IntPtr border, IntPtr background);
+        public static extern IntPtr XCreateSimpleWindow(IntPtr display, IntPtr parent, int x, int y, int width,
+            int height, int border_width, IntPtr border, IntPtr background);
 
         [DllImport("libX11", EntryPoint = "XMapWindow")]
-        public extern static int XMapWindow(IntPtr display, IntPtr window);
+        public static extern int XMapWindow(IntPtr display, IntPtr window);
+
         [DllImport("libX11", EntryPoint = "XUnmapWindow")]
-        public extern static int XUnmapWindow(IntPtr display, IntPtr window);
+        public static extern int XUnmapWindow(IntPtr display, IntPtr window);
+
         [DllImport("libX11", EntryPoint = "XMapSubwindows")]
-        public extern static int XMapSubindows(IntPtr display, IntPtr window);
+        public static extern int XMapSubindows(IntPtr display, IntPtr window);
+
         [DllImport("libX11", EntryPoint = "XUnmapSubwindows")]
-        public extern static int XUnmapSubwindows(IntPtr display, IntPtr window);
+        public static extern int XUnmapSubwindows(IntPtr display, IntPtr window);
+
         [DllImport("libX11", EntryPoint = "XRootWindow")]
-        public extern static IntPtr XRootWindow(IntPtr display, int screen_number);
+        public static extern IntPtr XRootWindow(IntPtr display, int screen_number);
 
         [DllImport("libX11", EntryPoint = "XNextEvent")]
-        public extern static IntPtr XNextEvent(IntPtr display, ref XEvent xevent);
-        [DllImport("libX11")]
-        public extern static Bool XWindowEvent(Display display, Window w, EventMask event_mask, ref XEvent event_return);
-        [DllImport("libX11")]
-        public extern static Bool XCheckWindowEvent(Display display, Window w, EventMask event_mask, ref XEvent event_return);
-        [DllImport("libX11")]
-        public extern static Bool XCheckTypedWindowEvent(Display display, Window w, XEventName event_type, ref XEvent event_return);
-        [DllImport("libX11")]
-        public extern static Bool XCheckTypedEvent(Display display, XEventName event_type, out XEvent event_return);
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public delegate Bool EventPredicate(IntPtr display, ref XEvent e, IntPtr arg);
-        [DllImport("libX11")]
-        public extern static Bool XIfEvent(Display display, ref XEvent e, IntPtr predicate, IntPtr arg );
-        [DllImport("libX11")]
-        public extern static Bool XCheckIfEvent(Display display, ref XEvent e, IntPtr predicate, IntPtr arg );
+        public static extern IntPtr XNextEvent(IntPtr display, ref XEvent xevent);
 
         [DllImport("libX11")]
-        public extern static int XConnectionNumber(IntPtr diplay);
+        public static extern bool XWindowEvent(Display display, Window w, EventMask event_mask,
+            ref XEvent event_return);
+
         [DllImport("libX11")]
-        public extern static int XPending(IntPtr diplay);
+        public static extern bool XCheckWindowEvent(Display display, Window w, EventMask event_mask,
+            ref XEvent event_return);
+
+        [DllImport("libX11")]
+        public static extern bool XCheckTypedWindowEvent(Display display, Window w, XEventName event_type,
+            ref XEvent event_return);
+
+        [DllImport("libX11")]
+        public static extern bool XCheckTypedEvent(Display display, XEventName event_type, out XEvent event_return);
+
+        [DllImport("libX11")]
+        public static extern bool XIfEvent(Display display, ref XEvent e, IntPtr predicate, IntPtr arg);
+
+        [DllImport("libX11")]
+        public static extern bool XCheckIfEvent(Display display, ref XEvent e, IntPtr predicate, IntPtr arg);
+
+        [DllImport("libX11")]
+        public static extern int XConnectionNumber(IntPtr diplay);
+
+        [DllImport("libX11")]
+        public static extern int XPending(IntPtr diplay);
 
         [DllImport("libX11", EntryPoint = "XSelectInput")]
-        public extern static int XSelectInput(IntPtr display, IntPtr window, IntPtr mask);
+        public static extern int XSelectInput(IntPtr display, IntPtr window, IntPtr mask);
 
         [DllImport("libX11", EntryPoint = "XDestroyWindow")]
-        public extern static int XDestroyWindow(IntPtr display, IntPtr window);
+        public static extern int XDestroyWindow(IntPtr display, IntPtr window);
 
         [DllImport("libX11", EntryPoint = "XReparentWindow")]
-        public extern static int XReparentWindow(IntPtr display, IntPtr window, IntPtr parent, int x, int y);
+        public static extern int XReparentWindow(IntPtr display, IntPtr window, IntPtr parent, int x, int y);
 
         [DllImport("libX11", EntryPoint = "XMoveResizeWindow")]
-        public extern static int XMoveResizeWindow(IntPtr display, IntPtr window, int x, int y, int width, int height);
+        public static extern int XMoveResizeWindow(IntPtr display, IntPtr window, int x, int y, int width, int height);
 
         [DllImport("libX11", EntryPoint = "XMoveWindow")]
-        public extern static int XMoveWindow(IntPtr display, IntPtr w, int x, int y);
+        public static extern int XMoveWindow(IntPtr display, IntPtr w, int x, int y);
 
         [DllImport("libX11", EntryPoint = "XResizeWindow")]
-        public extern static int XResizeWindow(IntPtr display, IntPtr window, int width, int height);
+        public static extern int XResizeWindow(IntPtr display, IntPtr window, int width, int height);
 
         [DllImport("libX11", EntryPoint = "XGetWindowAttributes")]
-        public extern static int XGetWindowAttributes(IntPtr display, IntPtr window, ref XWindowAttributes attributes);
+        public static extern int XGetWindowAttributes(IntPtr display, IntPtr window, ref XWindowAttributes attributes);
 
         [DllImport("libX11", EntryPoint = "XFlush")]
-        public extern static int XFlush(IntPtr display);
+        public static extern int XFlush(IntPtr display);
 
         [DllImport("libX11", EntryPoint = "XSetWMName")]
-        public extern static int XSetWMName(IntPtr display, IntPtr window, ref XTextProperty text_prop);
+        public static extern int XSetWMName(IntPtr display, IntPtr window, ref XTextProperty text_prop);
 
         [DllImport("libX11", EntryPoint = "XStoreName")]
-        public extern static int XStoreName(IntPtr display, IntPtr window, string window_name);
+        public static extern int XStoreName(IntPtr display, IntPtr window, string window_name);
 
         [DllImport("libX11", EntryPoint = "XFetchName")]
-        public extern static int XFetchName(IntPtr display, IntPtr window, ref IntPtr window_name);
+        public static extern int XFetchName(IntPtr display, IntPtr window, ref IntPtr window_name);
 
         [DllImport("libX11", EntryPoint = "XSendEvent")]
-        public extern static int XSendEvent(IntPtr display, IntPtr window, bool propagate, IntPtr event_mask, ref XEvent send_event);
+        public static extern int XSendEvent(IntPtr display, IntPtr window, bool propagate, IntPtr event_mask,
+            ref XEvent send_event);
 
-        public static int XSendEvent(IntPtr display, IntPtr window, bool propagate, EventMask event_mask, ref XEvent send_event)
+        public static int XSendEvent(IntPtr display, IntPtr window, bool propagate, EventMask event_mask,
+            ref XEvent send_event)
         {
             return XSendEvent(display, window, propagate, new IntPtr((int)event_mask), ref send_event);
         }
 
         [DllImport("libX11", EntryPoint = "XQueryTree")]
-        public extern static int XQueryTree(IntPtr display, IntPtr window, out IntPtr root_return, out IntPtr parent_return, out IntPtr children_return, out int nchildren_return);
+        public static extern int XQueryTree(IntPtr display, IntPtr window, out IntPtr root_return,
+            out IntPtr parent_return, out IntPtr children_return, out int nchildren_return);
 
         [DllImport("libX11", EntryPoint = "XFree")]
-        public extern static int XFree(IntPtr data);
+        public static extern int XFree(IntPtr data);
 
         [DllImport("libX11", EntryPoint = "XRaiseWindow")]
-        public extern static int XRaiseWindow(IntPtr display, IntPtr window);
+        public static extern int XRaiseWindow(IntPtr display, IntPtr window);
 
-        [DllImport("libX11", EntryPoint = "XLowerWindow")]//, CLSCompliant(false)]
-        public extern static uint XLowerWindow(IntPtr display, IntPtr window);
+        [DllImport("libX11", EntryPoint = "XLowerWindow")] //, CLSCompliant(false)]
+        public static extern uint XLowerWindow(IntPtr display, IntPtr window);
 
-        [DllImport("libX11", EntryPoint = "XConfigureWindow")]//, CLSCompliant(false)]
-        public extern static uint XConfigureWindow(IntPtr display, IntPtr window, ChangeWindowAttributes value_mask, ref XWindowChanges values);
+        [DllImport("libX11", EntryPoint = "XConfigureWindow")] //, CLSCompliant(false)]
+        public static extern uint XConfigureWindow(IntPtr display, IntPtr window, ChangeWindowAttributes value_mask,
+            ref XWindowChanges values);
 
         [DllImport("libX11", EntryPoint = "XInternAtom")]
-        public extern static IntPtr XInternAtom(IntPtr display, string atom_name, bool only_if_exists);
+        public static extern IntPtr XInternAtom(IntPtr display, string atom_name, bool only_if_exists);
 
         [DllImport("libX11", EntryPoint = "XInternAtoms")]
-        public extern static int XInternAtoms(IntPtr display, string[] atom_names, int atom_count, bool only_if_exists, IntPtr[] atoms);
+        public static extern int XInternAtoms(IntPtr display, string[] atom_names, int atom_count, bool only_if_exists,
+            IntPtr[] atoms);
 
         [DllImport("libX11", EntryPoint = "XGetAtomName")]
-        public extern static IntPtr XGetAtomName(IntPtr display, IntPtr atom);
+        public static extern IntPtr XGetAtomName(IntPtr display, IntPtr atom);
 
         [DllImport("libX11", EntryPoint = "XSetWMProtocols")]
-        public extern static int XSetWMProtocols(IntPtr display, IntPtr window, IntPtr[] protocols, int count);
+        public static extern int XSetWMProtocols(IntPtr display, IntPtr window, IntPtr[] protocols, int count);
 
         [DllImport("libX11", EntryPoint = "XGrabPointer")]
-        public extern static int XGrabPointer(IntPtr display, IntPtr window, bool owner_events, EventMask event_mask, GrabMode pointer_mode, GrabMode keyboard_mode, IntPtr confine_to, IntPtr cursor, IntPtr timestamp);
+        public static extern int XGrabPointer(IntPtr display, IntPtr window, bool owner_events, EventMask event_mask,
+            GrabMode pointer_mode, GrabMode keyboard_mode, IntPtr confine_to, IntPtr cursor, IntPtr timestamp);
 
         [DllImport("libX11", EntryPoint = "XUngrabPointer")]
-        public extern static int XUngrabPointer(IntPtr display, IntPtr timestamp);
+        public static extern int XUngrabPointer(IntPtr display, IntPtr timestamp);
 
         [DllImport("libX11", EntryPoint = "XGrabButton")]
-        public extern static int XGrabButton(IntPtr display,
+        public static extern int XGrabButton(IntPtr display,
             int button, uint modifiers, Window grab_window,
-            Bool owner_events, EventMask event_mask,
+            bool owner_events, EventMask event_mask,
             GrabMode pointer_mode, GrabMode keyboard_mode,
             Window confine_to, Cursor cursor);
 
         [DllImport("libX11", EntryPoint = "XUngrabButton")]
-        public extern static int XUngrabButton(IntPtr display, uint button, uint
-              modifiers, Window grab_window);
+        public static extern int XUngrabButton(IntPtr display, uint button, uint
+            modifiers, Window grab_window);
 
         [DllImport("libX11", EntryPoint = "XQueryPointer")]
-        public extern static bool XQueryPointer(IntPtr display, IntPtr window, out IntPtr root, out IntPtr child, out int root_x, out int root_y, out int win_x, out int win_y, out int keys_buttons);
+        public static extern bool XQueryPointer(IntPtr display, IntPtr window, out IntPtr root, out IntPtr child,
+            out int root_x, out int root_y, out int win_x, out int win_y, out int keys_buttons);
 
         [DllImport("libX11", EntryPoint = "XTranslateCoordinates")]
-        public extern static bool XTranslateCoordinates(IntPtr display, IntPtr src_w, IntPtr dest_w, int src_x, int src_y, out int intdest_x_return, out int dest_y_return, out IntPtr child_return);
+        public static extern bool XTranslateCoordinates(IntPtr display, IntPtr src_w, IntPtr dest_w, int src_x,
+            int src_y, out int intdest_x_return, out int dest_y_return, out IntPtr child_return);
 
 
         [DllImport("libX11")]
-        public extern static int XGrabKey(IntPtr display, int keycode, uint modifiers,
+        public static extern int XGrabKey(IntPtr display, int keycode, uint modifiers,
             Window grab_window, bool owner_events, GrabMode pointer_mode, GrabMode keyboard_mode);
 
         [DllImport("libX11")]
-        public extern static int XUngrabKey(IntPtr display, int keycode, uint modifiers, Window grab_window);
+        public static extern int XUngrabKey(IntPtr display, int keycode, uint modifiers, Window grab_window);
 
         [DllImport("libX11", EntryPoint = "XGrabKeyboard")]
-        public extern static int XGrabKeyboard(IntPtr display, IntPtr window, bool owner_events,
+        public static extern int XGrabKeyboard(IntPtr display, IntPtr window, bool owner_events,
             GrabMode pointer_mode, GrabMode keyboard_mode, IntPtr timestamp);
 
         [DllImport("libX11", EntryPoint = "XUngrabKeyboard")]
-        public extern static int XUngrabKeyboard(IntPtr display, IntPtr timestamp);
+        public static extern int XUngrabKeyboard(IntPtr display, IntPtr timestamp);
 
         [DllImport("libX11")]
-        public extern static int XAllowEvents(IntPtr display, EventMode event_mode, Time time);
+        public static extern int XAllowEvents(IntPtr display, EventMode event_mode, Time time);
 
         [DllImport("libX11", EntryPoint = "XGetGeometry")]
-        public extern static bool XGetGeometry(IntPtr display, IntPtr window, out IntPtr root, out int x, out int y, out int width, out int height, out int border_width, out int depth);
+        public static extern bool XGetGeometry(IntPtr display, IntPtr window, out IntPtr root, out int x, out int y,
+            out int width, out int height, out int border_width, out int depth);
 
         [DllImport("libX11", EntryPoint = "XGetGeometry")]
-        public extern static bool XGetGeometry(IntPtr display, IntPtr window, IntPtr root, out int x, out int y, out int width, out int height, IntPtr border_width, IntPtr depth);
+        public static extern bool XGetGeometry(IntPtr display, IntPtr window, IntPtr root, out int x, out int y,
+            out int width, out int height, IntPtr border_width, IntPtr depth);
 
         [DllImport("libX11", EntryPoint = "XGetGeometry")]
-        public extern static bool XGetGeometry(IntPtr display, IntPtr window, IntPtr root, out int x, out int y, IntPtr width, IntPtr height, IntPtr border_width, IntPtr depth);
+        public static extern bool XGetGeometry(IntPtr display, IntPtr window, IntPtr root, out int x, out int y,
+            IntPtr width, IntPtr height, IntPtr border_width, IntPtr depth);
 
         [DllImport("libX11", EntryPoint = "XGetGeometry")]
-        public extern static bool XGetGeometry(IntPtr display, IntPtr window, IntPtr root, IntPtr x, IntPtr y, out int width, out int height, IntPtr border_width, IntPtr depth);
+        public static extern bool XGetGeometry(IntPtr display, IntPtr window, IntPtr root, IntPtr x, IntPtr y,
+            out int width, out int height, IntPtr border_width, IntPtr depth);
 
-        [DllImport("libX11", EntryPoint = "XWarpPointer")]//, CLSCompliant(false)]
-        public extern static uint XWarpPointer(IntPtr display, IntPtr src_w, IntPtr dest_w, int src_x, int src_y, uint src_width, uint src_height, int dest_x, int dest_y);
+        [DllImport("libX11", EntryPoint = "XWarpPointer")] //, CLSCompliant(false)]
+        public static extern uint XWarpPointer(IntPtr display, IntPtr src_w, IntPtr dest_w, int src_x, int src_y,
+            uint src_width, uint src_height, int dest_x, int dest_y);
 
         [DllImport("libX11", EntryPoint = "XClearWindow")]
-        public extern static int XClearWindow(IntPtr display, IntPtr window);
+        public static extern int XClearWindow(IntPtr display, IntPtr window);
 
         [DllImport("libX11", EntryPoint = "XClearArea")]
-        public extern static int XClearArea(IntPtr display, IntPtr window, int x, int y, int width, int height, bool exposures);
+        public static extern int XClearArea(IntPtr display, IntPtr window, int x, int y, int width, int height,
+            bool exposures);
 
         // Colormaps
         [DllImport("libX11", EntryPoint = "XDefaultScreenOfDisplay")]
-        public extern static IntPtr XDefaultScreenOfDisplay(IntPtr display);
+        public static extern IntPtr XDefaultScreenOfDisplay(IntPtr display);
 
         [DllImport("libX11", EntryPoint = "XScreenNumberOfScreen")]
-        public extern static int XScreenNumberOfScreen(IntPtr display, IntPtr Screen);
+        public static extern int XScreenNumberOfScreen(IntPtr display, IntPtr Screen);
 
         [DllImport("libX11", EntryPoint = "XDefaultVisual")]
-        public extern static IntPtr XDefaultVisual(IntPtr display, int screen_number);
+        public static extern IntPtr XDefaultVisual(IntPtr display, int screen_number);
 
-        [DllImport("libX11", EntryPoint = "XDefaultDepth")]//, CLSCompliant(false)]
-        public extern static uint XDefaultDepth(IntPtr display, int screen_number);
+        [DllImport("libX11", EntryPoint = "XDefaultDepth")] //, CLSCompliant(false)]
+        public static extern uint XDefaultDepth(IntPtr display, int screen_number);
 
         [DllImport("libX11", EntryPoint = "XDefaultScreen")]
-        public extern static int XDefaultScreen(IntPtr display);
+        public static extern int XDefaultScreen(IntPtr display);
 
         [DllImport("libX11", EntryPoint = "XDefaultColormap")]
-        public extern static IntPtr XDefaultColormap(IntPtr display, int screen_number);
+        public static extern IntPtr XDefaultColormap(IntPtr display, int screen_number);
 
-        [DllImport("libX11", EntryPoint = "XLookupColor")]//, CLSCompliant(false)]
-        public extern static int XLookupColor(IntPtr display, IntPtr Colormap, string Coloranem, ref XColor exact_def_color, ref XColor screen_def_color);
+        [DllImport("libX11", EntryPoint = "XLookupColor")] //, CLSCompliant(false)]
+        public static extern int XLookupColor(IntPtr display, IntPtr Colormap, string Coloranem,
+            ref XColor exact_def_color, ref XColor screen_def_color);
 
-        [DllImport("libX11", EntryPoint = "XAllocColor")]//, CLSCompliant(false)]
-        public extern static int XAllocColor(IntPtr display, IntPtr Colormap, ref XColor colorcell_def);
+        [DllImport("libX11", EntryPoint = "XAllocColor")] //, CLSCompliant(false)]
+        public static extern int XAllocColor(IntPtr display, IntPtr Colormap, ref XColor colorcell_def);
 
         [DllImport("libX11", EntryPoint = "XSetTransientForHint")]
-        public extern static int XSetTransientForHint(IntPtr display, IntPtr window, IntPtr prop_window);
+        public static extern int XSetTransientForHint(IntPtr display, IntPtr window, IntPtr prop_window);
 
         [DllImport("libX11", EntryPoint = "XChangeProperty")]
-        public extern static int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type, int format, PropertyMode mode, ref MotifWmHints data, int nelements);
+        public static extern int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type,
+            int format, PropertyMode mode, ref MotifWmHints data, int nelements);
 
-        [DllImport("libX11", EntryPoint = "XChangeProperty")]//, CLSCompliant(false)]
-        public extern static int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type, int format, PropertyMode mode, ref uint value, int nelements);
-        [DllImport("libX11", EntryPoint = "XChangeProperty")]
-        public extern static int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type, int format, PropertyMode mode, ref int value, int nelements);
-
-        [DllImport("libX11", EntryPoint = "XChangeProperty")]//, CLSCompliant(false)]
-        public extern static int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type, int format, PropertyMode mode, ref IntPtr value, int nelements);
-
-        [DllImport("libX11", EntryPoint = "XChangeProperty")]//, CLSCompliant(false)]
-        public extern static int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type, int format, PropertyMode mode, uint[] data, int nelements);
+        [DllImport("libX11", EntryPoint = "XChangeProperty")] //, CLSCompliant(false)]
+        public static extern int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type,
+            int format, PropertyMode mode, ref uint value, int nelements);
 
         [DllImport("libX11", EntryPoint = "XChangeProperty")]
-        public extern static int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type, int format, PropertyMode mode, int[] data, int nelements);
+        public static extern int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type,
+            int format, PropertyMode mode, ref int value, int nelements);
+
+        [DllImport("libX11", EntryPoint = "XChangeProperty")] //, CLSCompliant(false)]
+        public static extern int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type,
+            int format, PropertyMode mode, ref IntPtr value, int nelements);
+
+        [DllImport("libX11", EntryPoint = "XChangeProperty")] //, CLSCompliant(false)]
+        public static extern int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type,
+            int format, PropertyMode mode, uint[] data, int nelements);
 
         [DllImport("libX11", EntryPoint = "XChangeProperty")]
-        public extern static int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type, int format, PropertyMode mode, IntPtr[] data, int nelements);
+        public static extern int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type,
+            int format, PropertyMode mode, int[] data, int nelements);
 
         [DllImport("libX11", EntryPoint = "XChangeProperty")]
-        public extern static int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type, int format, PropertyMode mode, IntPtr atoms, int nelements);
+        public static extern int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type,
+            int format, PropertyMode mode, IntPtr[] data, int nelements);
+
+        [DllImport("libX11", EntryPoint = "XChangeProperty")]
+        public static extern int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type,
+            int format, PropertyMode mode, IntPtr atoms, int nelements);
 
         [DllImport("libX11", EntryPoint = "XChangeProperty", CharSet = CharSet.Ansi)]
-        public extern static int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type, int format, PropertyMode mode, string text, int text_length);
+        public static extern int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type,
+            int format, PropertyMode mode, string text, int text_length);
 
         [DllImport("libX11", EntryPoint = "XDeleteProperty")]
-        public extern static int XDeleteProperty(IntPtr display, IntPtr window, IntPtr property);
+        public static extern int XDeleteProperty(IntPtr display, IntPtr window, IntPtr property);
 
         // Drawing
         [DllImport("libX11", EntryPoint = "XCreateGC")]
-        public extern static IntPtr XCreateGC(IntPtr display, IntPtr window, IntPtr valuemask, XGCValues[] values);
+        public static extern IntPtr XCreateGC(IntPtr display, IntPtr window, IntPtr valuemask, XGCValues[] values);
 
         [DllImport("libX11", EntryPoint = "XFreeGC")]
-        public extern static int XFreeGC(IntPtr display, IntPtr gc);
+        public static extern int XFreeGC(IntPtr display, IntPtr gc);
 
         [DllImport("libX11", EntryPoint = "XSetFunction")]
-        public extern static int XSetFunction(IntPtr display, IntPtr gc, GXFunction function);
+        public static extern int XSetFunction(IntPtr display, IntPtr gc, GXFunction function);
 
         [DllImport("libX11", EntryPoint = "XSetLineAttributes")]
-        public extern static int XSetLineAttributes(IntPtr display, IntPtr gc, int line_width, GCLineStyle line_style, GCCapStyle cap_style, GCJoinStyle join_style);
+        public static extern int XSetLineAttributes(IntPtr display, IntPtr gc, int line_width, GCLineStyle line_style,
+            GCCapStyle cap_style, GCJoinStyle join_style);
 
         [DllImport("libX11", EntryPoint = "XDrawLine")]
-        public extern static int XDrawLine(IntPtr display, IntPtr drawable, IntPtr gc, int x1, int y1, int x2, int y2);
+        public static extern int XDrawLine(IntPtr display, IntPtr drawable, IntPtr gc, int x1, int y1, int x2, int y2);
 
         [DllImport("libX11", EntryPoint = "XDrawRectangle")]
-        public extern static int XDrawRectangle(IntPtr display, IntPtr drawable, IntPtr gc, int x1, int y1, int width, int height);
+        public static extern int XDrawRectangle(IntPtr display, IntPtr drawable, IntPtr gc, int x1, int y1, int width,
+            int height);
 
         [DllImport("libX11", EntryPoint = "XFillRectangle")]
-        public extern static int XFillRectangle(IntPtr display, IntPtr drawable, IntPtr gc, int x1, int y1, int width, int height);
+        public static extern int XFillRectangle(IntPtr display, IntPtr drawable, IntPtr gc, int x1, int y1, int width,
+            int height);
 
         [DllImport("libX11", EntryPoint = "XSetWindowBackground")]
-        public extern static int XSetWindowBackground(IntPtr display, IntPtr window, IntPtr background);
+        public static extern int XSetWindowBackground(IntPtr display, IntPtr window, IntPtr background);
 
         [DllImport("libX11", EntryPoint = "XCopyArea")]
-        public extern static int XCopyArea(IntPtr display, IntPtr src, IntPtr dest, IntPtr gc, int src_x, int src_y, int width, int height, int dest_x, int dest_y);
+        public static extern int XCopyArea(IntPtr display, IntPtr src, IntPtr dest, IntPtr gc, int src_x, int src_y,
+            int width, int height, int dest_x, int dest_y);
 
         [DllImport("libX11", EntryPoint = "XGetWindowProperty")]
-        public extern static int XGetWindowProperty(IntPtr display, IntPtr window, IntPtr atom, IntPtr long_offset, IntPtr long_length, bool delete, IntPtr req_type, out IntPtr actual_type, out int actual_format, out IntPtr nitems, out IntPtr bytes_after, ref IntPtr prop);
+        public static extern int XGetWindowProperty(IntPtr display, IntPtr window, IntPtr atom, IntPtr long_offset,
+            IntPtr long_length, bool delete, IntPtr req_type, out IntPtr actual_type, out int actual_format,
+            out IntPtr nitems, out IntPtr bytes_after, ref IntPtr prop);
 
         [DllImport("libX11", EntryPoint = "XSetInputFocus")]
-        public extern static int XSetInputFocus(IntPtr display, IntPtr window, RevertTo revert_to, IntPtr time);
+        public static extern int XSetInputFocus(IntPtr display, IntPtr window, RevertTo revert_to, IntPtr time);
 
         [DllImport("libX11", EntryPoint = "XIconifyWindow")]
-        public extern static int XIconifyWindow(IntPtr display, IntPtr window, int screen_number);
+        public static extern int XIconifyWindow(IntPtr display, IntPtr window, int screen_number);
 
         [DllImport("libX11", EntryPoint = "XDefineCursor")]
-        public extern static int XDefineCursor(IntPtr display, IntPtr window, IntPtr cursor);
+        public static extern int XDefineCursor(IntPtr display, IntPtr window, IntPtr cursor);
 
         [DllImport("libX11", EntryPoint = "XUndefineCursor")]
-        public extern static int XUndefineCursor(IntPtr display, IntPtr window);
+        public static extern int XUndefineCursor(IntPtr display, IntPtr window);
 
         [DllImport("libX11", EntryPoint = "XFreeCursor")]
-        public extern static int XFreeCursor(IntPtr display, IntPtr cursor);
+        public static extern int XFreeCursor(IntPtr display, IntPtr cursor);
 
         [DllImport("libX11", EntryPoint = "XCreateFontCursor")]
-        public extern static IntPtr XCreateFontCursor(IntPtr display, CursorFontShape shape);
+        public static extern IntPtr XCreateFontCursor(IntPtr display, CursorFontShape shape);
 
-        [DllImport("libX11", EntryPoint = "XCreatePixmapCursor")]//, CLSCompliant(false)]
-        public extern static IntPtr XCreatePixmapCursor(IntPtr display, IntPtr source, IntPtr mask, ref XColor foreground_color, ref XColor background_color, int x_hot, int y_hot);
+        [DllImport("libX11", EntryPoint = "XCreatePixmapCursor")] //, CLSCompliant(false)]
+        public static extern IntPtr XCreatePixmapCursor(IntPtr display, IntPtr source, IntPtr mask,
+            ref XColor foreground_color, ref XColor background_color, int x_hot, int y_hot);
 
         [DllImport("libX11", EntryPoint = "XCreatePixmapFromBitmapData")]
-        public extern static IntPtr XCreatePixmapFromBitmapData(IntPtr display, IntPtr drawable, byte[] data, int width, int height, IntPtr fg, IntPtr bg, int depth);
+        public static extern IntPtr XCreatePixmapFromBitmapData(IntPtr display, IntPtr drawable, byte[] data, int width,
+            int height, IntPtr fg, IntPtr bg, int depth);
 
         [DllImport("libX11", EntryPoint = "XCreatePixmap")]
-        public extern static IntPtr XCreatePixmap(IntPtr display, IntPtr d, int width, int height, int depth);
+        public static extern IntPtr XCreatePixmap(IntPtr display, IntPtr d, int width, int height, int depth);
 
         [DllImport("libX11", EntryPoint = "XFreePixmap")]
-        public extern static IntPtr XFreePixmap(IntPtr display, IntPtr pixmap);
+        public static extern IntPtr XFreePixmap(IntPtr display, IntPtr pixmap);
 
         [DllImport("libX11", EntryPoint = "XQueryBestCursor")]
-        public extern static int XQueryBestCursor(IntPtr display, IntPtr drawable, int width, int height, out int best_width, out int best_height);
+        public static extern int XQueryBestCursor(IntPtr display, IntPtr drawable, int width, int height,
+            out int best_width, out int best_height);
 
         [DllImport("libX11", EntryPoint = "XQueryExtension")]
-        public extern static int XQueryExtension(IntPtr display, string extension_name, out int major, out int first_event, out int first_error);
+        public static extern int XQueryExtension(IntPtr display, string extension_name, out int major,
+            out int first_event, out int first_error);
 
         [DllImport("libX11", EntryPoint = "XWhitePixel")]
-        public extern static IntPtr XWhitePixel(IntPtr display, int screen_no);
+        public static extern IntPtr XWhitePixel(IntPtr display, int screen_no);
 
         [DllImport("libX11", EntryPoint = "XBlackPixel")]
-        public extern static IntPtr XBlackPixel(IntPtr display, int screen_no);
+        public static extern IntPtr XBlackPixel(IntPtr display, int screen_no);
 
         [DllImport("libX11", EntryPoint = "XGrabServer")]
-        public extern static void XGrabServer(IntPtr display);
+        public static extern void XGrabServer(IntPtr display);
 
         [DllImport("libX11", EntryPoint = "XUngrabServer")]
-        public extern static void XUngrabServer(IntPtr display);
+        public static extern void XUngrabServer(IntPtr display);
 
         [DllImport("libX11", EntryPoint = "XGetWMNormalHints")]
-        public extern static int XGetWMNormalHints(IntPtr display, IntPtr window, ref XSizeHints hints, out IntPtr supplied_return);
+        public static extern int XGetWMNormalHints(IntPtr display, IntPtr window, ref XSizeHints hints,
+            out IntPtr supplied_return);
 
         [DllImport("libX11", EntryPoint = "XSetWMNormalHints")]
-        public extern static void XSetWMNormalHints(IntPtr display, IntPtr window, ref XSizeHints hints);
+        public static extern void XSetWMNormalHints(IntPtr display, IntPtr window, ref XSizeHints hints);
 
         [DllImport("libX11", EntryPoint = "XSetZoomHints")]
-        public extern static void XSetZoomHints(IntPtr display, IntPtr window, ref XSizeHints hints);
+        public static extern void XSetZoomHints(IntPtr display, IntPtr window, ref XSizeHints hints);
 
         [DllImport("libX11")]
         public static extern IntPtr XGetWMHints(Display display, Window w); // returns XWMHints*
@@ -392,55 +450,61 @@ namespace OpenTK.Platform.X11
         public static extern IntPtr XAllocWMHints();
 
         [DllImport("libX11", EntryPoint = "XGetIconSizes")]
-        public extern static int XGetIconSizes(IntPtr display, IntPtr window, out IntPtr size_list, out int count);
+        public static extern int XGetIconSizes(IntPtr display, IntPtr window, out IntPtr size_list, out int count);
 
         [DllImport("libX11", EntryPoint = "XSetErrorHandler")]
-        public extern static IntPtr XSetErrorHandler(XErrorHandler error_handler);
+        public static extern IntPtr XSetErrorHandler(XErrorHandler error_handler);
 
         [DllImport("libX11", EntryPoint = "XGetErrorText")]
-        public extern static IntPtr XGetErrorText(IntPtr display, byte code, StringBuilder buffer, int length);
+        public static extern IntPtr XGetErrorText(IntPtr display, byte code, StringBuilder buffer, int length);
 
         [DllImport("libX11", EntryPoint = "XInitThreads")]
-        public extern static int XInitThreads();
+        public static extern int XInitThreads();
 
         [DllImport("libX11", EntryPoint = "XConvertSelection")]
-        public extern static int XConvertSelection(IntPtr display, IntPtr selection, IntPtr target, IntPtr property, IntPtr requestor, IntPtr time);
+        public static extern int XConvertSelection(IntPtr display, IntPtr selection, IntPtr target, IntPtr property,
+            IntPtr requestor, IntPtr time);
 
         [DllImport("libX11", EntryPoint = "XGetSelectionOwner")]
-        public extern static IntPtr XGetSelectionOwner(IntPtr display, IntPtr selection);
+        public static extern IntPtr XGetSelectionOwner(IntPtr display, IntPtr selection);
 
         [DllImport("libX11", EntryPoint = "XSetSelectionOwner")]
-        public extern static int XSetSelectionOwner(IntPtr display, IntPtr selection, IntPtr owner, IntPtr time);
+        public static extern int XSetSelectionOwner(IntPtr display, IntPtr selection, IntPtr owner, IntPtr time);
 
         [DllImport("libX11", EntryPoint = "XSetPlaneMask")]
-        public extern static int XSetPlaneMask(IntPtr display, IntPtr gc, IntPtr mask);
+        public static extern int XSetPlaneMask(IntPtr display, IntPtr gc, IntPtr mask);
 
-        [DllImport("libX11", EntryPoint = "XSetForeground")]//, CLSCompliant(false)]
-        public extern static int XSetForeground(IntPtr display, IntPtr gc, UIntPtr foreground);
+        [DllImport("libX11", EntryPoint = "XSetForeground")] //, CLSCompliant(false)]
+        public static extern int XSetForeground(IntPtr display, IntPtr gc, UIntPtr foreground);
+
         [DllImport("libX11", EntryPoint = "XSetForeground")]
-        public extern static int XSetForeground(IntPtr display, IntPtr gc, IntPtr foreground);
+        public static extern int XSetForeground(IntPtr display, IntPtr gc, IntPtr foreground);
 
-        [DllImport("libX11", EntryPoint = "XSetBackground")]//, CLSCompliant(false)]
-        public extern static int XSetBackground(IntPtr display, IntPtr gc, UIntPtr background);
+        [DllImport("libX11", EntryPoint = "XSetBackground")] //, CLSCompliant(false)]
+        public static extern int XSetBackground(IntPtr display, IntPtr gc, UIntPtr background);
+
         [DllImport("libX11", EntryPoint = "XSetBackground")]
-        public extern static int XSetBackground(IntPtr display, IntPtr gc, IntPtr background);
+        public static extern int XSetBackground(IntPtr display, IntPtr gc, IntPtr background);
 
         [DllImport("libX11", EntryPoint = "XBell")]
-        public extern static int XBell(IntPtr display, int percent);
+        public static extern int XBell(IntPtr display, int percent);
 
         [DllImport("libX11", EntryPoint = "XChangeActivePointerGrab")]
-        public extern static int XChangeActivePointerGrab(IntPtr display, EventMask event_mask, IntPtr cursor, IntPtr time);
+        public static extern int XChangeActivePointerGrab(IntPtr display, EventMask event_mask, IntPtr cursor,
+            IntPtr time);
 
         [DllImport("libX11", EntryPoint = "XFilterEvent")]
-        public extern static bool XFilterEvent(ref XEvent xevent, IntPtr window);
+        public static extern bool XFilterEvent(ref XEvent xevent, IntPtr window);
 
         [DllImport("libX11")]
-        public extern static void XPeekEvent(IntPtr display, ref XEvent xevent);
+        public static extern void XPeekEvent(IntPtr display, ref XEvent xevent);
 
         [DllImport("libX11", EntryPoint = "XGetVisualInfo")]
-        private static extern IntPtr XGetVisualInfoInternal(IntPtr display, IntPtr vinfo_mask, ref XVisualInfo template, out int nitems);
+        private static extern IntPtr XGetVisualInfoInternal(IntPtr display, IntPtr vinfo_mask, ref XVisualInfo template,
+            out int nitems);
 
-        public static IntPtr XGetVisualInfo(IntPtr display, XVisualInfoMask vinfo_mask, ref XVisualInfo template, out int nitems)
+        public static IntPtr XGetVisualInfo(IntPtr display, XVisualInfoMask vinfo_mask, ref XVisualInfo template,
+            out int nitems)
         {
             return XGetVisualInfoInternal(display, (IntPtr)(int)vinfo_mask, ref template, out nitems);
         }
@@ -455,7 +519,7 @@ namespace OpenTK.Platform.X11
         public static extern void XUnlockDisplay(Display display);
 
         [DllImport("libX11")]
-        public static extern Status XGetTransientForHint(Display display, Window w, out Window prop_window_return);
+        public static extern int XGetTransientForHint(Display display, Window w, out Window prop_window_return);
 
         [DllImport("libX11")]
         public static extern void XSync(Display display, bool discard);
@@ -491,10 +555,10 @@ namespace OpenTK.Platform.X11
             int bytes_buffer, [Out] KeySym[] keysym_return, IntPtr status_in_out);
 
         [DllImport("libX11")]
-        public static extern KeyCode XKeysymToKeycode(IntPtr display, KeySym keysym);
+        public static extern byte XKeysymToKeycode(IntPtr display, KeySym keysym);
 
         [DllImport("libX11")]
-        public static extern KeySym XKeycodeToKeysym(IntPtr display, KeyCode keycode, int index);
+        public static extern KeySym XKeycodeToKeysym(IntPtr display, byte keycode, int index);
 
         [DllImport("libX11")]
         public static extern int XRefreshKeyboardMapping(ref XMappingEvent event_map);
@@ -507,8 +571,6 @@ namespace OpenTK.Platform.X11
 
         [DllImport("libX11")]
         public static extern void XSetClassHint(IntPtr display, IntPtr window, ref XClassHint hint);
-
-        private static readonly IntPtr CopyFromParent = IntPtr.Zero;
 
         public static void SendNetWMMessage(X11WindowInfo window, IntPtr message_type, IntPtr l0, IntPtr l1, IntPtr l2)
         {
@@ -525,12 +587,12 @@ namespace OpenTK.Platform.X11
             xev.ClientMessageEvent.ptr3 = l2;
 
             XSendEvent(window.Display, window.RootWindow, false,
-                       new IntPtr((int)(EventMask.SubstructureRedirectMask | EventMask.SubstructureNotifyMask)),
-                       ref xev);
+                new IntPtr((int)(EventMask.SubstructureRedirectMask | EventMask.SubstructureNotifyMask)),
+                ref xev);
         }
 
         public static void SendNetClientMessage(X11WindowInfo window, IntPtr message_type,
-                                                IntPtr l0, IntPtr l1, IntPtr l2)
+            IntPtr l0, IntPtr l1, IntPtr l2)
         {
             XEvent xev;
 
@@ -547,26 +609,6 @@ namespace OpenTK.Platform.X11
             XSendEvent(window.Display, window.Handle, false, new IntPtr((int)EventMask.NoEventMask), ref xev);
         }
 
-        [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        private struct  Pixel
-        {
-            public byte A, R, G, B;
-            public Pixel(byte a, byte r, byte g, byte b)
-            {
-                A = a;
-                R = r;
-                G = g;
-                B = b;
-            }
-            public static implicit operator Pixel(int argb)
-            {
-                return new Pixel(
-                    (byte)((argb >> 24) & 0xFF),
-                    (byte)((argb >> 16) & 0xFF),
-                    (byte)((argb >> 8) & 0xFF),
-                    (byte)(argb & 0xFF));
-            }
-        }
         public static IntPtr CreatePixmapFromImage(Display display, Bitmap image)
         {
             var width = image.Width;
@@ -596,13 +638,13 @@ namespace OpenTK.Platform.X11
             var height = image.Height;
             var stride = (width + 7) >> 3;
             var mask = new byte[stride * height];
-            var msbfirst = (XBitmapBitOrder(display) == 1); // 1 = MSBFirst
+            var msbfirst = XBitmapBitOrder(display) == 1; // 1 = MSBFirst
 
             for (var y = 0; y < height; ++y)
             {
                 for (var x = 0; x < width; ++x)
                 {
-                    var bit = (byte)(1 << (msbfirst ? (7 - (x & 7)) : (x & 7)));
+                    var bit = (byte)(1 << (msbfirst ? 7 - (x & 7) : x & 7));
                     var offset = y * stride + (x >> 3);
 
                     if (image.GetPixel(x, y).A >= 128)
@@ -616,6 +658,32 @@ namespace OpenTK.Platform.X11
                 mask, width, height, new IntPtr(1), IntPtr.Zero, 1);
 
             return pixmap;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        private struct Pixel
+        {
+            public readonly byte A;
+            public readonly byte R;
+            public readonly byte G;
+            public readonly byte B;
+
+            public Pixel(byte a, byte r, byte g, byte b)
+            {
+                A = a;
+                R = r;
+                G = g;
+                B = b;
+            }
+
+            public static implicit operator Pixel(int argb)
+            {
+                return new Pixel(
+                    (byte)((argb >> 24) & 0xFF),
+                    (byte)((argb >> 16) & 0xFF),
+                    (byte)((argb >> 8) & 0xFF),
+                    (byte)(argb & 0xFF));
+            }
         }
     }
 }

@@ -27,99 +27,43 @@
 
 using System;
 using System.Diagnostics;
-#if !MINIMAL
-using System.Drawing;
-#endif
 using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Input;
+#if !MINIMAL
+using System.Drawing;
+
+#endif
 
 namespace OpenTK.Platform.Linux
 {
     internal class LinuxInput : IKeyboardDriver2, IMouseDriver2, IDisposable
     {
-        private class DeviceBase
-        {
-            private readonly IntPtr Device;
-            private string name;
-            private string output;
-            private string logical_seat;
-            private string physical_seat;
-
-            public DeviceBase(IntPtr device, int id)
-            {
-                Device = device;
-                Id = id;
-            }
-
-            public int Id
-            {
-                get => GetId(Device);
-                set => LibInput.DeviceSetData(Device, (IntPtr)value);
-            }
-
-            public string Name
-            {
-                get
-                {
-                    name = name ?? LibInput.DeviceGetName(Device);
-                    return name;
-                }
-            }
-
-            public IntPtr Seat => LibInput.DeviceGetSeat(Device);
-
-            public string LogicalSeatName
-            {
-                get
-                {
-                    logical_seat = logical_seat ?? LibInput.SeatGetLogicalName(Seat);
-                    return logical_seat;
-                }
-            }
-
-            public string PhysicalSeatName
-            {
-                get
-                {
-                    physical_seat = physical_seat ?? LibInput.SeatGetPhysicalName(Seat);
-                    return physical_seat;
-                }
-            }
-
-            public string Output
-            {
-                get
-                {
-                    output = output ?? LibInput.DeviceGetOutputName(Device);
-                    return output;
-                }
-            }
-        }
-
-        private class KeyboardDevice : DeviceBase
-        {
-            public KeyboardState State;
-
-            public KeyboardDevice(IntPtr device, int id)
-                : base(device, id)
-            {
-            }
-        }
-
-        private class MouseDevice : DeviceBase
-        {
-            public MouseState State;
-
-            public MouseDevice(IntPtr device, int id)
-                : base(device, id)
-            {
-            }
-        }
-
         private static readonly object Sync = new object();
         private static readonly Key[] KeyMap = Evdev.KeyMap;
         private static long DeviceFDCount;
+
+        private static readonly CloseRestrictedCallback CloseRestricted = CloseRestrictedHandler;
+
+        private static readonly OpenRestrictedCallback OpenRestricted = OpenRestrictedHandler;
+
+        // Todo: do we need to maintain the geometry of each display separately?
+        private Rectangle bounds;
+
+        // Global mouse cursor offset (used for emulating SetPosition)
+        private Vector2 CursorOffset = Vector2.Zero;
+
+        // Global mouse cursor state
+        private Vector2 CursorPosition = Vector2.Zero;
+        private long exit;
+
+        private int fd;
+        private IntPtr input_context;
+
+        private InputInterface input_interface = new InputInterface(
+            OpenRestricted, CloseRestricted);
+
+        private readonly Thread input_thread;
 
         // libinput returns various devices with keyboard/pointer even though
         // they are not traditional keyboards/mice (for example "Integrated Camera"
@@ -129,29 +73,13 @@ namespace OpenTK.Platform.Linux
         // to an actual keyboard/mouse only when we receive a valid input event.
         // This is far from optimal, but it appears to be the only viable solution
         // unless a new API is added to libinput.
-        private DeviceCollection<KeyboardDevice> KeyboardCandidates = new DeviceCollection<KeyboardDevice>();
+        private readonly DeviceCollection<KeyboardDevice> KeyboardCandidates = new DeviceCollection<KeyboardDevice>();
+        private readonly DeviceCollection<KeyboardDevice> Keyboards = new DeviceCollection<KeyboardDevice>();
+        private readonly DeviceCollection<MouseDevice> Mice = new DeviceCollection<MouseDevice>();
 
-        private DeviceCollection<MouseDevice> MouseCandidates = new DeviceCollection<MouseDevice>();
-        private DeviceCollection<KeyboardDevice> Keyboards = new DeviceCollection<KeyboardDevice>();
-        private DeviceCollection<MouseDevice> Mice = new DeviceCollection<MouseDevice>();
-
-        // Todo: do we need to maintain the geometry of each display separately?
-        private Rectangle bounds;
-
-        // Global mouse cursor state
-        private Vector2 CursorPosition = Vector2.Zero;
-        // Global mouse cursor offset (used for emulating SetPosition)
-        private Vector2 CursorOffset = Vector2.Zero;
+        private readonly DeviceCollection<MouseDevice> MouseCandidates = new DeviceCollection<MouseDevice>();
 
         private IntPtr udev;
-        private IntPtr input_context;
-
-        private InputInterface input_interface = new InputInterface(
-            OpenRestricted, CloseRestricted);
-
-        private int fd;
-        private Thread input_thread;
-        private long exit;
 
         public LinuxInput()
         {
@@ -179,13 +107,103 @@ namespace OpenTK.Platform.Linux
             }
             finally
             {
-                Debug.Print("Initialization {0}", exit == 0 ?
-                    "complete" : "failed");
+                Debug.Print("Initialization {0}", exit == 0 ? "complete" : "failed");
                 Debug.Unindent();
             }
         }
 
-        private static CloseRestrictedCallback CloseRestricted = CloseRestrictedHandler;
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        KeyboardState IKeyboardDriver2.GetState()
+        {
+            lock (Sync)
+            {
+                var state = new KeyboardState();
+                foreach (var keyboard in Keyboards)
+                {
+                    state.MergeBits(keyboard.State);
+                }
+
+                return state;
+            }
+        }
+
+        KeyboardState IKeyboardDriver2.GetState(int index)
+        {
+            lock (Sync)
+            {
+                var device = Keyboards.FromIndex(index);
+                if (device != null)
+                {
+                    return device.State;
+                }
+
+                return new KeyboardState();
+            }
+        }
+
+        string IKeyboardDriver2.GetDeviceName(int index)
+        {
+            lock (Sync)
+            {
+                var device = Keyboards.FromIndex(index);
+                if (device != null)
+                {
+                    return device.Name;
+                }
+
+                return string.Empty;
+            }
+        }
+
+        MouseState IMouseDriver2.GetState()
+        {
+            lock (Sync)
+            {
+                var state = new MouseState();
+                foreach (var mouse in Mice)
+                {
+                    state.MergeBits(mouse.State);
+                }
+
+                return state;
+            }
+        }
+
+        MouseState IMouseDriver2.GetState(int index)
+        {
+            lock (Sync)
+            {
+                var device = Mice.FromIndex(index);
+                if (device != null)
+                {
+                    return device.State;
+                }
+
+                return new MouseState();
+            }
+        }
+
+        void IMouseDriver2.SetPosition(double x, double y)
+        {
+            // Todo: this does not appear to be supported in libinput.
+            // We will have to emulate this in the KMS mouse rendering code.
+            CursorOffset = new Vector2(
+                (float)x - CursorPosition.X,
+                (float)y - CursorPosition.Y);
+            UpdateCursor();
+        }
+
+        MouseState IMouseDriver2.GetCursorState()
+        {
+            var state = (this as IMouseDriver2).GetState();
+            state.Position = CursorPosition + CursorOffset;
+            return state;
+        }
 
         private static void CloseRestrictedHandler(int fd, IntPtr data)
         {
@@ -201,8 +219,6 @@ namespace OpenTK.Platform.Linux
                 Interlocked.Decrement(ref DeviceFDCount);
             }
         }
-
-        private static OpenRestrictedCallback OpenRestricted = OpenRestrictedHandler;
 
         private static int OpenRestrictedHandler(IntPtr path, int flags, IntPtr data)
         {
@@ -260,6 +276,7 @@ namespace OpenTK.Platform.Linux
                     Interlocked.Increment(ref exit);
                 }
             }
+
             Debug.Print("[Input] Exited input loop.", poll_fd.fd, poll_fd.events);
         }
 
@@ -300,6 +317,7 @@ namespace OpenTK.Platform.Linux
                 Interlocked.Increment(ref exit);
                 return;
             }
+
             Debug.Print("[Input] Udev.New() = {0:x}", udev);
 
             input_context = LibInput.CreateContext(input_interface, IntPtr.Zero, udev);
@@ -309,6 +327,7 @@ namespace OpenTK.Platform.Linux
                 Interlocked.Increment(ref exit);
                 return;
             }
+
             Debug.Print("[Input] LibInput.CreateContext({0:x}) = {1:x}", udev, input_context);
 
             var seat_id = "seat0";
@@ -319,6 +338,7 @@ namespace OpenTK.Platform.Linux
                 Interlocked.Increment(ref exit);
                 return;
             }
+
             Debug.Print("[Input] LibInput.AssignSeat({0:x}) = {1}", input_context, seat_id);
 
             fd = LibInput.GetFD(input_context);
@@ -328,6 +348,7 @@ namespace OpenTK.Platform.Linux
                 Interlocked.Increment(ref exit);
                 return;
             }
+
             Debug.Print("[Input] LibInput.GetFD({0:x}) = {1}.", input_context, fd);
 
             ProcessEvents(input_context);
@@ -477,6 +498,7 @@ namespace OpenTK.Platform.Linux
                 {
                     mouse.State.SetScrollRelative((float)e.AxisValue(PointerAxis.HorizontalScroll), 0);
                 }
+
                 if (e.HasAxis(PointerAxis.VerticalScroll))
                 {
                     mouse.State.SetScrollRelative(0, (float)e.AxisValue(PointerAxis.VerticalScroll));
@@ -492,7 +514,7 @@ namespace OpenTK.Platform.Linux
 
                 var button = Evdev.GetMouseButton(e.Button);
                 var state = e.ButtonState;
-                mouse.State[(MouseButton)button] = state == ButtonState.Pressed;
+                mouse.State[button] = state == ButtonState.Pressed;
             }
         }
 
@@ -542,6 +564,7 @@ namespace OpenTK.Platform.Linux
             {
                 Debug.Print("[Input] Keyboard {0} does not exist in device list.", id);
             }
+
             return keyboard;
         }
 
@@ -557,104 +580,8 @@ namespace OpenTK.Platform.Linux
             {
                 Debug.Print("[Input] Mouse {0} does not exist in device list.", id);
             }
+
             return mouse;
-        }
-
-        KeyboardState IKeyboardDriver2.GetState()
-        {
-            lock (Sync)
-            {
-                var state = new KeyboardState();
-                foreach (var keyboard in Keyboards)
-                {
-                    state.MergeBits(keyboard.State);
-                }
-                return state;
-            }
-        }
-
-        KeyboardState IKeyboardDriver2.GetState(int index)
-        {
-            lock (Sync)
-            {
-                var device = Keyboards.FromIndex(index);
-                if (device != null)
-                {
-                    return device.State;
-                }
-                else
-                {
-                    return new KeyboardState();
-                }
-            }
-        }
-
-        string IKeyboardDriver2.GetDeviceName(int index)
-        {
-            lock (Sync)
-            {
-                var device = Keyboards.FromIndex(index);
-                if (device != null)
-                {
-                    return device.Name;
-                }
-                else
-                {
-                    return String.Empty;
-                }
-            }
-        }
-
-        MouseState IMouseDriver2.GetState()
-        {
-            lock (Sync)
-            {
-                var state = new MouseState();
-                foreach (var mouse in Mice)
-                {
-                    state.MergeBits(mouse.State);
-                }
-                return state;
-            }
-        }
-
-        MouseState IMouseDriver2.GetState(int index)
-        {
-            lock (Sync)
-            {
-                var device = Mice.FromIndex(index);
-                if (device != null)
-                {
-                    return device.State;
-                }
-                else
-                {
-                    return new MouseState();
-                }
-            }
-        }
-
-        void IMouseDriver2.SetPosition(double x, double y)
-        {
-            // Todo: this does not appear to be supported in libinput.
-            // We will have to emulate this in the KMS mouse rendering code.
-            CursorOffset = new Vector2(
-                (float)x - CursorPosition.X,
-                (float)y - CursorPosition.Y);
-            UpdateCursor();
-        }
-
-        MouseState IMouseDriver2.GetCursorState()
-        {
-            var state = (this as IMouseDriver2).GetState();
-            state.Position = CursorPosition + CursorOffset;
-            return state;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         private void Dispose(bool disposing)
@@ -690,6 +617,84 @@ namespace OpenTK.Platform.Linux
         {
             Dispose(false);
         }
+
+        private class DeviceBase
+        {
+            private readonly IntPtr Device;
+            private string logical_seat;
+            private string name;
+            private string output;
+            private string physical_seat;
+
+            public DeviceBase(IntPtr device, int id)
+            {
+                Device = device;
+                Id = id;
+            }
+
+            public int Id
+            {
+                get => GetId(Device);
+                set => LibInput.DeviceSetData(Device, (IntPtr)value);
+            }
+
+            public string Name
+            {
+                get
+                {
+                    name = name ?? LibInput.DeviceGetName(Device);
+                    return name;
+                }
+            }
+
+            public IntPtr Seat => LibInput.DeviceGetSeat(Device);
+
+            public string LogicalSeatName
+            {
+                get
+                {
+                    logical_seat = logical_seat ?? LibInput.SeatGetLogicalName(Seat);
+                    return logical_seat;
+                }
+            }
+
+            public string PhysicalSeatName
+            {
+                get
+                {
+                    physical_seat = physical_seat ?? LibInput.SeatGetPhysicalName(Seat);
+                    return physical_seat;
+                }
+            }
+
+            public string Output
+            {
+                get
+                {
+                    output = output ?? LibInput.DeviceGetOutputName(Device);
+                    return output;
+                }
+            }
+        }
+
+        private class KeyboardDevice : DeviceBase
+        {
+            public KeyboardState State;
+
+            public KeyboardDevice(IntPtr device, int id)
+                : base(device, id)
+            {
+            }
+        }
+
+        private class MouseDevice : DeviceBase
+        {
+            public MouseState State;
+
+            public MouseDevice(IntPtr device, int id)
+                : base(device, id)
+            {
+            }
+        }
     }
 }
-

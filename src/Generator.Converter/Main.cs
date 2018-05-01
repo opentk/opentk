@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using CommandLine;
@@ -48,14 +49,13 @@ namespace OpenTK.Convert
             {
                 return ((XElement)a).Attribute("name").Value.GetHashCode() ^ e.Name.LocalName.GetHashCode();
             }
-            else if (e.Name == "use")
+
+            if (e.Name == "use")
             {
                 return ((XElement)a).Attribute("token").Value.GetHashCode();
             }
-            else
-            {
-                throw new InvalidOperationException($"Unknown element type: {e}");
-            }
+
+            throw new InvalidOperationException($"Unknown element type: {e}");
         }
     }
 
@@ -71,7 +71,7 @@ namespace OpenTK.Convert
 
             try
             {
-                XmlParser xmlParser = new GLXmlParser { Prefix = CLIOptions.Prefix };
+                XmlParser xmlParser = new GLXmlParser {Prefix = CLIOptions.Prefix};
 
                 var sigs = CLIOptions.InputFiles.Select(h => xmlParser.Parse(h)).ToList();
 
@@ -82,13 +82,13 @@ namespace OpenTK.Convert
 
                 var settings = new XmlWriterSettings();
                 settings.Indent = true;
-                settings.Encoding = System.Text.Encoding.UTF8;
+                settings.Encoding = Encoding.UTF8;
 
                 TextWriter out_stream = null;
                 if (CLIOptions.OutputFile == null)
                 {
                     out_stream = Console.Out;
-                    Console.OutputEncoding = System.Text.Encoding.UTF8;
+                    Console.OutputEncoding = Encoding.UTF8;
                 }
                 else
                 {
@@ -103,15 +103,18 @@ namespace OpenTK.Convert
                         output.Add(
                             new XElement("add",
                                 new XAttribute("name", api.Attribute("name").Value),
-                                api.Attribute("version") != null ? new XAttribute("version",  api.Attribute("version").Value) : null,
+                                api.Attribute("version") != null
+                                    ? new XAttribute("version", api.Attribute("version").Value)
+                                    : null,
                                 api.Elements()
                                     .OrderBy(s => s.Name.LocalName)
-                                    .ThenBy(s => (string)s.Attribute("value") ?? String.Empty)
-                                    .ThenBy(s => (string)s.Attribute("name") ?? String.Empty)
-                                    .ThenBy(s => (string)s.Attribute("version") ?? String.Empty)
-                                    .ThenBy(s => (string)s.Attribute("extension") ?? String.Empty)
-                                ));
+                                    .ThenBy(s => (string)s.Attribute("value") ?? string.Empty)
+                                    .ThenBy(s => (string)s.Attribute("name") ?? string.Empty)
+                                    .ThenBy(s => (string)s.Attribute("version") ?? string.Empty)
+                                    .ThenBy(s => (string)s.Attribute("extension") ?? string.Empty)
+                            ));
                     }
+
                     output.WriteTo(writer);
                     writer.Flush();
                     writer.Close();
@@ -138,6 +141,7 @@ namespace OpenTK.Convert
                 {
                     continue;
                 }
+
                 var tokens = e.Value.Elements()
                     .OrderBy(t => (string)t.Attribute("name"))
                     .ToList();
@@ -166,6 +170,7 @@ namespace OpenTK.Convert
                     entries.Add(key, e);
                 }
             }
+
             return entries;
         }
     }

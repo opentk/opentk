@@ -3,28 +3,33 @@
  */
 
 using System;
-using System.Reflection;
 using System.Diagnostics;
+using System.Reflection;
 using OpenTK.Graphics;
+using OpenTK.Platform.Dummy;
+using OpenTK.Platform.Egl;
+using OpenTK.Platform.SDL2;
+using OpenTK.Platform.X11;
 
 namespace OpenTK.Platform
 {
     namespace MacOS
     {
         /// <summary>
-        /// This delegate represents any method that takes no arguments and returns an int.
-        /// I would have used Func but that requires .NET 4
+        ///     This delegate represents any method that takes no arguments and returns an int.
+        ///     I would have used Func but that requires .NET 4
         /// </summary>
         /// <returns>The int value that your method returns</returns>
         public delegate int GetInt();
     }
 
     /// <summary>
-    /// Provides cross-platform utilities to help interact with the underlying platform.
+    ///     Provides cross-platform utilities to help interact with the underlying platform.
     /// </summary>
     public static class Utilities
     {
         private static bool throw_on_error;
+
         internal static bool ThrowOnX11Error
         {
             get => throw_on_error;
@@ -34,7 +39,7 @@ namespace OpenTK.Platform
                 {
                     Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms")
                         .GetField("ErrorExceptions", BindingFlags.Static |
-                            BindingFlags.NonPublic)
+                                                     BindingFlags.NonPublic)
                         .SetValue(null, true);
                     throw_on_error = true;
                 }
@@ -42,7 +47,7 @@ namespace OpenTK.Platform
                 {
                     Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms")
                         .GetField("ErrorExceptions", BindingFlags.Static |
-                            BindingFlags.NonPublic)
+                                                     BindingFlags.NonPublic)
                         .SetValue(null, false);
                     throw_on_error = false;
                 }
@@ -52,17 +57,19 @@ namespace OpenTK.Platform
         private delegate Delegate LoadDelegateFunction(string name, Type signature);
 
         /// <internal />
-        /// <summary>Loads all extensions for the specified class. This function is intended
-        /// for OpenGL, Wgl, Glx, OpenAL etc.</summary>
+        /// <summary>
+        ///     Loads all extensions for the specified class. This function is intended
+        ///     for OpenGL, Wgl, Glx, OpenAL etc.
+        /// </summary>
         /// <param name="type">The class to load extensions for.</param>
         /// <remarks>
-        /// <para>The Type must contain a nested class called "Delegates".</para>
-        /// <para>
-        /// The Type must also implement a static function called LoadDelegate with the
-        /// following signature:
-        /// <code>static Delegate LoadDelegate(string name, Type signature)</code>
-        /// </para>
-        /// <para>This function allocates memory.</para>
+        ///     <para>The Type must contain a nested class called "Delegates".</para>
+        ///     <para>
+        ///         The Type must also implement a static function called LoadDelegate with the
+        ///         following signature:
+        ///         <code>static Delegate LoadDelegate(string name, Type signature)</code>
+        ///     </para>
+        ///     <para>This function allocates memory.</para>
         /// </remarks>
         internal static void LoadExtensions(Type type)
         {
@@ -71,23 +78,27 @@ namespace OpenTK.Platform
             // than with reflection, but the first time is more significant.
 
             var supported = 0;
-            var extensions_class = type.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            var extensions_class = type.GetNestedType("Delegates",
+                BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (extensions_class == null)
             {
                 throw new InvalidOperationException("The specified type does not have any loadable extensions.");
             }
 
-            var delegates = extensions_class.GetFields(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            var delegates =
+                extensions_class.GetFields(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (delegates == null)
             {
                 throw new InvalidOperationException("The specified type does not have any loadable extensions.");
             }
 
-            var load_delegate_method_info = type.GetMethod("LoadDelegate", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            var load_delegate_method_info = type.GetMethod("LoadDelegate",
+                BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (load_delegate_method_info == null)
             {
                 throw new InvalidOperationException(type + " does not contain a static LoadDelegate method.");
             }
+
             var LoadDelegate = (LoadDelegateFunction)Delegate.CreateDelegate(
                 typeof(LoadDelegateFunction), load_delegate_method_info);
 
@@ -108,7 +119,8 @@ namespace OpenTK.Platform
                 f.SetValue(null, d);
             }
 
-            var rebuildExtensionList = type.GetField("rebuildExtensionList", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            var rebuildExtensionList = type.GetField("rebuildExtensionList",
+                BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (rebuildExtensionList != null)
             {
                 rebuildExtensionList.SetValue(null, true);
@@ -120,22 +132,25 @@ namespace OpenTK.Platform
         }
 
         /// <internal />
-        /// <summary>Loads the specified extension for the specified class. This function is intended
-        /// for OpenGL, Wgl, Glx, OpenAL etc.</summary>
+        /// <summary>
+        ///     Loads the specified extension for the specified class. This function is intended
+        ///     for OpenGL, Wgl, Glx, OpenAL etc.
+        /// </summary>
         /// <param name="type">The class to load extensions for.</param>
         /// <param name="extension">The extension to load.</param>
         /// <remarks>
-        /// <para>The Type must contain a nested class called "Delegates".</para>
-        /// <para>
-        /// The Type must also implement a static function called LoadDelegate with the
-        /// following signature:
-        /// <code>static Delegate LoadDelegate(string name, Type signature)</code>
-        /// </para>
-        /// <para>This function allocates memory.</para>
+        ///     <para>The Type must contain a nested class called "Delegates".</para>
+        ///     <para>
+        ///         The Type must also implement a static function called LoadDelegate with the
+        ///         following signature:
+        ///         <code>static Delegate LoadDelegate(string name, Type signature)</code>
+        ///     </para>
+        ///     <para>This function allocates memory.</para>
         /// </remarks>
         internal static bool TryLoadExtension(Type type, string extension)
         {
-            var extensions_class = type.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            var extensions_class = type.GetNestedType("Delegates",
+                BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (extensions_class == null)
             {
                 Debug.Print(type.ToString(), " does not contain extensions.");
@@ -150,7 +165,8 @@ namespace OpenTK.Platform
                 return false;
             }
 
-            var f = extensions_class.GetField(extension, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            var f = extensions_class.GetField(extension,
+                BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (f == null)
             {
                 Debug.Print("Extension \"", extension, "\" not found in ", type);
@@ -162,36 +178,38 @@ namespace OpenTK.Platform
             if ((old != null ? old.Target : null) != (@new != null ? @new.Target : null))
             {
                 f.SetValue(null, @new);
-                var rebuildExtensionList = type.GetField("rebuildExtensionList", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+                var rebuildExtensionList = type.GetField("rebuildExtensionList",
+                    BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
                 if (rebuildExtensionList != null)
                 {
                     rebuildExtensionList.SetValue(null, true);
                 }
             }
+
             return @new != null;
         }
 
         internal static GraphicsContext.GetAddressDelegate CreateGetAddress()
         {
-            #if SDL2
+#if SDL2
             if (Configuration.RunningOnSdl2)
             {
-                return SDL2.SDL.GL.GetProcAddress;
+                return SDL.GL.GetProcAddress;
             }
-            #endif
-            #if WIN32
+#endif
+#if WIN32
             if (Configuration.RunningOnWindows)
             {
                 return Platform.Windows.Wgl.GetAddress;
             }
             #endif
-            #if X11
+#if X11
             if (Configuration.RunningOnX11)
             {
-                return X11.Glx.GetProcAddress;
+                return Glx.GetProcAddress;
             }
-            #endif
-            #if CARBON
+#endif
+#if CARBON
             if (Configuration.RunningOnMacOS)
             {
                 return Platform.MacOS.NS.GetAddress;
@@ -208,7 +226,7 @@ namespace OpenTK.Platform
         }
 
         /// <summary>
-        /// Constructs a new IWindowInfo instance for the X11 platform.
+        ///     Constructs a new IWindowInfo instance for the X11 platform.
         /// </summary>
         /// <param name="display">The display connection.</param>
         /// <param name="screen">The screen.</param>
@@ -216,37 +234,38 @@ namespace OpenTK.Platform
         /// <param name="rootWindow">The root window for screen.</param>
         /// <param name="visualInfo">A pointer to a XVisualInfo structure obtained through XGetVisualInfo.</param>
         /// <returns>A new IWindowInfo instance.</returns>
-        public static IWindowInfo CreateX11WindowInfo(IntPtr display, int screen, IntPtr windowHandle, IntPtr rootWindow, IntPtr visualInfo)
+        public static IWindowInfo CreateX11WindowInfo(IntPtr display, int screen, IntPtr windowHandle,
+            IntPtr rootWindow, IntPtr visualInfo)
         {
-            #if X11
-            var window = new X11.X11WindowInfo();
+#if X11
+            var window = new X11WindowInfo();
             window.Display = display;
             window.Screen = screen;
             window.Handle = windowHandle;
             window.RootWindow = rootWindow;
             window.Visual = visualInfo;
             return window;
-            #else
+#else
             return new Dummy.DummyWindowInfo();
             #endif
         }
 
         /// <summary>
-        /// Creates an IWindowInfo instance for the windows platform.
+        ///     Creates an IWindowInfo instance for the windows platform.
         /// </summary>
         /// <param name="windowHandle">The handle of the window.</param>
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateWindowsWindowInfo(IntPtr windowHandle)
         {
-            #if WIN32
+#if WIN32
             return new OpenTK.Platform.Windows.WinWindowInfo(windowHandle, null);
             #else
-            return new Dummy.DummyWindowInfo();
-            #endif
+            return new DummyWindowInfo();
+#endif
         }
 
         /// <summary>
-        /// Creates an IWindowInfo instance for the Mac OS X platform.
+        ///     Creates an IWindowInfo instance for the Mac OS X platform.
         /// </summary>
         /// <param name="windowHandle">The handle of the window.</param>
         /// <param name="ownHandle">Ignored. This is reserved for future use.</param>
@@ -254,23 +273,23 @@ namespace OpenTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateMacOSCarbonWindowInfo(IntPtr windowHandle, bool ownHandle, bool isControl)
         {
-            #if CARBON
+#if CARBON
             return CreateMacOSCarbonWindowInfo(windowHandle, ownHandle, isControl, null, null);
             #else
-            return new Dummy.DummyWindowInfo();
-            #endif
+            return new DummyWindowInfo();
+#endif
         }
 
-        #if CARBON
-        /// <summary>
-        /// Creates an IWindowInfo instance for the Mac OS X platform with an X and Y offset for the GL viewport location.
-        /// </summary>
-        /// <param name="windowHandle">The handle of the window.</param>
-        /// <param name="ownHandle">Ignored. This is reserved for future use.</param>
-        /// <param name="isControl">Set to true if windowHandle corresponds to a System.Windows.Forms control.</param>
-        /// <param name="xOffset">The X offset for the GL viewport</param>
-        /// <param name="yOffset">The Y offset for the GL viewport</param>
-        /// <returns>A new IWindowInfo instance.</returns>
+#if CARBON
+/// <summary>
+/// Creates an IWindowInfo instance for the Mac OS X platform with an X and Y offset for the GL viewport location.
+/// </summary>
+/// <param name="windowHandle">The handle of the window.</param>
+/// <param name="ownHandle">Ignored. This is reserved for future use.</param>
+/// <param name="isControl">Set to true if windowHandle corresponds to a System.Windows.Forms control.</param>
+/// <param name="xOffset">The X offset for the GL viewport</param>
+/// <param name="yOffset">The Y offset for the GL viewport</param>
+/// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateMacOSCarbonWindowInfo(IntPtr windowHandle, bool ownHandle, bool isControl,
             OpenTK.Platform.MacOS.GetInt xOffset, OpenTK.Platform.MacOS.GetInt yOffset)
         {
@@ -279,72 +298,72 @@ namespace OpenTK.Platform
         #endif
 
         /// <summary>
-        /// Creates an IWindowInfo instance for the Mac OS X platform.
+        ///     Creates an IWindowInfo instance for the Mac OS X platform.
         /// </summary>
         /// <param name="windowHandle">The handle of the NSWindow.</param>
         /// <remarks>Assumes that the NSWindow's contentView is the NSView we want to attach to our context.</remarks>
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateMacOSWindowInfo(IntPtr windowHandle)
         {
-            #if CARBON
+#if CARBON
             return new OpenTK.Platform.MacOS.CocoaWindowInfo(windowHandle);
             #else
-            return new Dummy.DummyWindowInfo();
-            #endif
+            return new DummyWindowInfo();
+#endif
         }
 
         /// <summary>
-        /// Creates an IWindowInfo instance for the Mac OS X platform.
+        ///     Creates an IWindowInfo instance for the Mac OS X platform.
         /// </summary>
         /// <param name="windowHandle">The handle of the NSWindow.</param>
         /// <param name="viewHandle">The handle of the NSView.</param>
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateMacOSWindowInfo(IntPtr windowHandle, IntPtr viewHandle)
         {
-            #if CARBON
+#if CARBON
             return new OpenTK.Platform.MacOS.CocoaWindowInfo(windowHandle, viewHandle);
             #else
-            return new Dummy.DummyWindowInfo();
-            #endif
+            return new DummyWindowInfo();
+#endif
         }
 
         /// <summary>
-        /// Creates an IWindowInfo instance for the dummy platform.
+        ///     Creates an IWindowInfo instance for the dummy platform.
         /// </summary>
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateDummyWindowInfo()
         {
-            return new Dummy.DummyWindowInfo();
+            return new DummyWindowInfo();
         }
 
         /// <summary>
-        /// Creates an IWindowInfo instance for the windows platform.
+        ///     Creates an IWindowInfo instance for the windows platform.
         /// </summary>
         /// <param name="windowHandle">The handle of the window.</param>
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateSdl2WindowInfo(IntPtr windowHandle)
         {
-            #if SDL2
-            return new SDL2.Sdl2WindowInfo(
+#if SDL2
+            return new Sdl2WindowInfo(
                 windowHandle, null);
-            #else
+#else
             return new Dummy.DummyWindowInfo();
             #endif
         }
 
-        #if !__MOBILE__
+#if !__MOBILE__
         /// <summary>
-        /// Creates an IWindowInfo instance for Angle rendering, based on
-        /// supplied platform window (e.g. a window created with
-        /// CreateWindowsWindowInfo, or CreateDummyWindowInfo).
+        ///     Creates an IWindowInfo instance for Angle rendering, based on
+        ///     supplied platform window (e.g. a window created with
+        ///     CreateWindowsWindowInfo, or CreateDummyWindowInfo).
         /// </summary>
         /// <param name="platformWindow"></param>
         /// <returns></returns>
-        public static Egl.IAngleWindowInfo CreateAngleWindowInfo(IWindowInfo platformWindow)
+        public static IAngleWindowInfo CreateAngleWindowInfo(IWindowInfo platformWindow)
         {
-            return new Egl.AngleWindowInfo(platformWindow);
+            return new AngleWindowInfo(platformWindow);
         }
-        #endif
+#endif
 
         internal static bool RelaxGraphicsMode(ref GraphicsMode mode)
         {
@@ -369,10 +388,10 @@ namespace OpenTK.Platform
 
         /// \internal
         /// <summary>
-        /// Relaxes graphics mode parameters. Use this function to increase compatibility
-        /// on systems that do not directly support a requested GraphicsMode. For example:
-        /// - user requested stereoscopic rendering, but GPU does not support stereo
-        /// - user requseted 16x antialiasing, but GPU only supports 4x
+        ///     Relaxes graphics mode parameters. Use this function to increase compatibility
+        ///     on systems that do not directly support a requested GraphicsMode. For example:
+        ///     - user requested stereoscopic rendering, but GPU does not support stereo
+        ///     - user requseted 16x antialiasing, but GPU only supports 4x
         /// </summary>
         /// <returns><c>true</c>, if a graphics mode parameter was relaxed, <c>false</c> otherwise.</returns>
         /// <param name="color">Color bits.</param>
@@ -382,7 +401,8 @@ namespace OpenTK.Platform
         /// <param name="accum">Accumulator buffer bits.</param>
         /// <param name="buffers">Number of rendering buffers (1 for single buffering, 2+ for double buffering, 0 for don't care).</param>
         /// <param name="stereo">Stereoscopic rendering enabled/disabled.</param>
-        internal static bool RelaxGraphicsMode(ref ColorFormat color, ref int depth, ref int stencil, ref int samples, ref ColorFormat accum, ref int buffers, ref bool stereo)
+        internal static bool RelaxGraphicsMode(ref ColorFormat color, ref int depth, ref int stencil, ref int samples,
+            ref ColorFormat accum, ref int buffers, ref bool stereo)
         {
             // Parameters are relaxed in order of importance.
             // - Accumulator buffers are way outdated as a concept,

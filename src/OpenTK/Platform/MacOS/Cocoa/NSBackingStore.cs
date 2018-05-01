@@ -31,6 +31,6 @@ namespace OpenTK.Platform.MacOS
     {
         Retained,
         Nonretained,
-        Buffered,
+        Buffered
     }
 }

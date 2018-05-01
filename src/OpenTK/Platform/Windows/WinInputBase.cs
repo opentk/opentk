@@ -33,17 +33,14 @@ namespace OpenTK.Platform.Windows
 {
     internal abstract class WinInputBase
     {
-        private readonly WindowProcedure WndProc;
-        private readonly Thread InputThread;
+        private static readonly IntPtr Unhandled = new IntPtr(-1);
         private readonly AutoResetEvent InputReady = new AutoResetEvent(false);
+        private readonly Thread InputThread;
+        private readonly WindowProcedure WndProc;
+
+        protected bool Disposed;
 
         private IntPtr OldWndProc;
-
-        protected INativeWindow Native { get; private set; }
-
-        protected WinWindowInfo Parent => (WinWindowInfo)Native.WindowInfo;
-
-        private static readonly IntPtr Unhandled = new IntPtr(-1);
 
         public WinInputBase()
         {
@@ -56,6 +53,16 @@ namespace OpenTK.Platform.Windows
 
             InputReady.WaitOne();
         }
+
+        protected INativeWindow Native { get; private set; }
+
+        protected WinWindowInfo Parent => (WinWindowInfo)Native.WindowInfo;
+
+        public abstract IMouseDriver2 MouseDriver { get; }
+
+        public abstract IKeyboardDriver2 KeyboardDriver { get; }
+
+        public abstract IJoystickDriver2 JoystickDriver { get; }
 
         private INativeWindow ConstructMessageWindow()
         {
@@ -103,15 +110,13 @@ namespace OpenTK.Platform.Windows
         private IntPtr WndProcHandler(
             IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            var ret =  WindowProcedure(handle, message, wParam, lParam);
+            var ret = WindowProcedure(handle, message, wParam, lParam);
             if (ret == Unhandled)
             {
                 return Functions.CallWindowProc(OldWndProc, handle, message, wParam, lParam);
             }
-            else
-            {
-                return ret;
-            }
+
+            return ret;
         }
 
         protected virtual IntPtr WindowProcedure(
@@ -122,14 +127,6 @@ namespace OpenTK.Platform.Windows
 
         // Note: this method is called through the input thread.
         protected abstract void CreateDrivers();
-
-        public abstract IMouseDriver2 MouseDriver { get; }
-
-        public abstract IKeyboardDriver2 KeyboardDriver { get; }
-
-        public abstract IJoystickDriver2 JoystickDriver { get; }
-
-        protected bool Disposed;
 
         public void Dispose()
         {

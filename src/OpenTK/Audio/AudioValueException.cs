@@ -29,9 +29,14 @@ namespace OpenTK.Audio
     public class AudioValueException : AudioException
     {
         /// <summary>Constructs a new instance.</summary>
-        public AudioValueException() : base() { }
+        public AudioValueException()
+        {
+        }
+
         /// <summary>Constructs a new instance with the specified error message.</summary>
         /// <param name="message">The error message of the AudioContextException.</param>
-        public AudioValueException(string message) : base(message) { }
+        public AudioValueException(string message) : base(message)
+        {
+        }
     }
 }

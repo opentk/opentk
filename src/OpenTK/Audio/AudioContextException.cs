@@ -30,9 +30,14 @@ namespace OpenTK.Audio
     public class AudioContextException : AudioException
     {
         /// <summary>Constructs a new AudioContextException.</summary>
-        public AudioContextException() : base() { }
+        public AudioContextException()
+        {
+        }
+
         /// <summary>Constructs a new AudioContextException with the specified error message.</summary>
         /// <param name="message">The error message of the AudioContextException.</param>
-        public AudioContextException(string message) : base(message) { }
+        public AudioContextException(string message) : base(message)
+        {
+        }
     }
 }

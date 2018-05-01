@@ -29,28 +29,28 @@ using System.Diagnostics;
 namespace OpenTK.Graphics
 {
     /// <summary>
-    /// Implements BindingsBase for the OpenTK.Graphics namespace (OpenGL and OpenGL|ES).
+    ///     Implements BindingsBase for the OpenTK.Graphics namespace (OpenGL and OpenGL|ES).
     /// </summary>
     public abstract class GraphicsBindingsBase : BindingsBase
     {
-        internal IntPtr[] _EntryPointsInstance;
-        internal byte[] _EntryPointNamesInstance;
         internal int[] _EntryPointNameOffsetsInstance;
+        internal byte[] _EntryPointNamesInstance;
+        internal IntPtr[] _EntryPointsInstance;
 
         /// <summary>
-        /// Retrieves an unmanaged function pointer to the specified function.
+        ///     Retrieves an unmanaged function pointer to the specified function.
         /// </summary>
         /// <param name="funcname">
-        /// A <see cref="System.String"/> that defines the name of the function.
+        ///     A <see cref="System.String" /> that defines the name of the function.
         /// </param>
         /// <returns>
-        /// A <see cref="IntPtr"/> that contains the address of funcname or IntPtr.Zero,
-        /// if the function is not supported by the drivers.
+        ///     A <see cref="IntPtr" /> that contains the address of funcname or IntPtr.Zero,
+        ///     if the function is not supported by the drivers.
         /// </returns>
         /// <remarks>
-        /// Note: some drivers are known to return non-zero values for unsupported functions.
-        /// Typical values include 1 and 2 - inheritors are advised to check for and ignore these
-        /// values.
+        ///     Note: some drivers are known to return non-zero values for unsupported functions.
+        ///     Typical values include 1 and 2 - inheritors are advised to check for and ignore these
+        ///     values.
         /// </remarks>
         protected override IntPtr GetAddress(string funcname)
         {
@@ -59,6 +59,7 @@ namespace OpenTK.Graphics
             {
                 throw new GraphicsContextMissingException();
             }
+
             return context != null ? context.GetAddress(funcname) : IntPtr.Zero;
         }
 

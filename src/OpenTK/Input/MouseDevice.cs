@@ -1,131 +1,81 @@
-﻿ //
- // The Open Toolkit Library License
- //
- // Copyright (c) 2006 - 2009 the Open Toolkit library.
- //
- // Permission is hereby granted, free of charge, to any person obtaining a copy
- // of this software and associated documentation files (the "Software"), to deal
- // in the Software without restriction, including without limitation the rights to
- // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
- // the Software, and to permit persons to whom the Software is furnished to do
- // so, subject to the following conditions:
- //
- // The above copyright notice and this permission notice shall be included in all
- // copies or substantial portions of the Software.
- //
- // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- // OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- // NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- // HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- // OTHER DEALINGS IN THE SOFTWARE.
- //
+﻿//
+// The Open Toolkit Library License
+//
+// Copyright (c) 2006 - 2009 the Open Toolkit library.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+//
 
 using System;
 #if !MINIMAL
-using System.Drawing;
+
 #endif
 
 
 namespace OpenTK.Input
 {
     /// <summary>
-    /// Represents a mouse device and provides methods to query its status.
+    ///     Represents a mouse device and provides methods to query its status.
     /// </summary>
     public sealed class MouseDevice : IInputDevice
     {
-        private IntPtr id;
-
         private MouseState state;
 
         /// <summary>
-        /// Gets a string describing this MouseDevice.
-        /// </summary>
-        public string Description { get; internal set; }
-
-        /// <summary>
-        /// Gets a value indicating the InputDeviceType of this InputDevice.
-        /// </summary>
-        public InputDeviceType DeviceType => InputDeviceType.Mouse;
-
-        /// <summary>
-        /// Retrieves the combined hardware <see cref="OpenTK.Input.MouseState"/> for all specified mouse devices.
-        /// This method is equivalent to <see cref="OpenTK.Input.Mouse.GetState()"/>.
-        /// </summary>
-        /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure representing the state for the specified mouse device.</returns>
-        /// <seealso cref="OpenTK.Input.Mouse.GetState()"/>
-        public MouseState GetState()
-        {
-            return Mouse.GetState();
-        }
-
-        /// <summary>
-        /// Retrieves the hardware <see cref="OpenTK.Input.MouseState"/> for the specified mouse device.
-        /// This method is equivalent to <see cref="OpenTK.Input.Mouse.GetState(int)"/>.
-        /// </summary>
-        /// <param name="index">The index of the mouse device.</param>
-        /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure representing the state for the specified mouse device.</returns>
-        /// <seealso cref="OpenTK.Input.Mouse.GetState(int)"/>
-        public MouseState GetState(int index)
-        {
-            return Mouse.GetState(index);
-        }
-
-        /// <summary>
-        /// Retreves the <see cref="OpenTK.Input.MouseState"/> for the mouse cursor.
-        /// This method is equivalent to <see cref="OpenTK.Input.Mouse.GetCursorState"/>.
-        /// </summary>
-        /// <returns>A <see cref="OpenTK.Input.MouseState"/> structure representing the state of the mouse cursor.</returns>
-        /// <seealso cref="OpenTK.Input.Mouse.GetCursorState()"/>
-        public MouseState GetCursorState()
-        {
-            return Mouse.GetCursorState();
-        }
-
-        /// <summary>
-        /// Gets an integer representing the number of buttons on this MouseDevice.
+        ///     Gets an integer representing the number of buttons on this MouseDevice.
         /// </summary>
         public int NumberOfButtons { get; internal set; }
 
         /// <summary>
-        /// Gets an integer representing the number of wheels on this MouseDevice.
+        ///     Gets an integer representing the number of wheels on this MouseDevice.
         /// </summary>
         public int NumberOfWheels { get; internal set; }
 
         /// <summary>
-        /// Gets an IntPtr representing a device dependent ID.
+        ///     Gets an IntPtr representing a device dependent ID.
         /// </summary>
-        public IntPtr DeviceID
-        {
-            get => id;
-            internal set => id = value;
-        }
+        public IntPtr DeviceID { get; internal set; }
 
         /// <summary>
-        /// Gets the absolute wheel position in integer units.
-        /// To support high-precision mice, it is recommended to use <see cref="WheelPrecise"/> instead.
+        ///     Gets the absolute wheel position in integer units.
+        ///     To support high-precision mice, it is recommended to use <see cref="WheelPrecise" /> instead.
         /// </summary>
         public int Wheel => state.Wheel;
 
         /// <summary>
-        /// Gets the absolute wheel position in floating-point units.
+        ///     Gets the absolute wheel position in floating-point units.
         /// </summary>
         public float WheelPrecise => state.WheelPrecise;
 
         /// <summary>
-        /// Gets an integer representing the absolute x position of the pointer, in window pixel coordinates.
+        ///     Gets an integer representing the absolute x position of the pointer, in window pixel coordinates.
         /// </summary>
         public int X => state.X;
 
         /// <summary>
-        /// Gets an integer representing the absolute y position of the pointer, in window pixel coordinates.
+        ///     Gets an integer representing the absolute y position of the pointer, in window pixel coordinates.
         /// </summary>
         public int Y => state.Y;
 
         /// <summary>
-        /// Gets a System.Boolean indicating the state of the specified MouseButton.
+        ///     Gets a System.Boolean indicating the state of the specified MouseButton.
         /// </summary>
         /// <param name="button">The MouseButton to check.</param>
         /// <returns>True if the MouseButton is pressed, false otherwise.</returns>
@@ -133,6 +83,50 @@ namespace OpenTK.Input
         {
             get => state[button];
             internal set => state[button] = value;
+        }
+
+        /// <summary>
+        ///     Gets a string describing this MouseDevice.
+        /// </summary>
+        public string Description { get; internal set; }
+
+        /// <summary>
+        ///     Gets a value indicating the InputDeviceType of this InputDevice.
+        /// </summary>
+        public InputDeviceType DeviceType => InputDeviceType.Mouse;
+
+        /// <summary>
+        ///     Retrieves the combined hardware <see cref="OpenTK.Input.MouseState" /> for all specified mouse devices.
+        ///     This method is equivalent to <see cref="OpenTK.Input.Mouse.GetState()" />.
+        /// </summary>
+        /// <returns>A <see cref="OpenTK.Input.MouseState" /> structure representing the state for the specified mouse device.</returns>
+        /// <seealso cref="OpenTK.Input.Mouse.GetState()" />
+        public MouseState GetState()
+        {
+            return Mouse.GetState();
+        }
+
+        /// <summary>
+        ///     Retrieves the hardware <see cref="OpenTK.Input.MouseState" /> for the specified mouse device.
+        ///     This method is equivalent to <see cref="OpenTK.Input.Mouse.GetState(int)" />.
+        /// </summary>
+        /// <param name="index">The index of the mouse device.</param>
+        /// <returns>A <see cref="OpenTK.Input.MouseState" /> structure representing the state for the specified mouse device.</returns>
+        /// <seealso cref="OpenTK.Input.Mouse.GetState(int)" />
+        public MouseState GetState(int index)
+        {
+            return Mouse.GetState(index);
+        }
+
+        /// <summary>
+        ///     Retreves the <see cref="OpenTK.Input.MouseState" /> for the mouse cursor.
+        ///     This method is equivalent to <see cref="OpenTK.Input.Mouse.GetCursorState" />.
+        /// </summary>
+        /// <returns>A <see cref="OpenTK.Input.MouseState" /> structure representing the state of the mouse cursor.</returns>
+        /// <seealso cref="OpenTK.Input.Mouse.GetCursorState()" />
+        public MouseState GetCursorState()
+        {
+            return Mouse.GetCursorState();
         }
 
         internal void HandleMouseDown(object sender, MouseButtonEventArgs e)
@@ -160,38 +154,38 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Occurs when the mouse's position is moved.
+        ///     Occurs when the mouse's position is moved.
         /// </summary>
         public event EventHandler<MouseMoveEventArgs> Move = delegate { };
 
         /// <summary>
-        /// Occurs when a button is pressed.
+        ///     Occurs when a button is pressed.
         /// </summary>
         public event EventHandler<MouseButtonEventArgs> ButtonDown = delegate { };
 
         /// <summary>
-        /// Occurs when a button is released.
+        ///     Occurs when a button is released.
         /// </summary>
         public event EventHandler<MouseButtonEventArgs> ButtonUp = delegate { };
 
         /// <summary>
-        /// Occurs when one of the mouse wheels is moved.
+        ///     Occurs when one of the mouse wheels is moved.
         /// </summary>
         public event EventHandler<MouseWheelEventArgs> WheelChanged = delegate { };
 
         /// <summary>
-        /// Calculates the hash code for this instance.
+        ///     Calculates the hash code for this instance.
         /// </summary>
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return (int)(NumberOfButtons ^ NumberOfWheels ^ id.GetHashCode() ^ Description.GetHashCode());
+            return NumberOfButtons ^ NumberOfWheels ^ DeviceID.GetHashCode() ^ Description.GetHashCode();
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that describes this instance.
+        ///     Returns a <see cref="System.String" /> that describes this instance.
         /// </summary>
-        /// <returns>A <see cref="System.String"/> that describes this instance.</returns>
+        /// <returns>A <see cref="System.String" /> that describes this instance.</returns>
         public override string ToString()
         {
             return $"ID: {DeviceID} ({Description}). Buttons: {NumberOfButtons}, Wheels: {NumberOfWheels}";

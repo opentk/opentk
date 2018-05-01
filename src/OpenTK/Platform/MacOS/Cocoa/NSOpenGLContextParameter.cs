@@ -45,6 +45,6 @@ namespace OpenTK.Platform.MacOS
         GpuVertexProcessing = 310, // Lion
         GpuFragmentProcessing = 311, // Lion
         HasDrawable = 314, // Lion
-        MpsSwapsInFlight = 315, // Lion
+        MpsSwapsInFlight = 315 // Lion
     }
 }

@@ -49,6 +49,6 @@ namespace OpenTK.Platform.X11
         Lazy = 0x0001,
         Now = 0x0002,
         Global = 0x0100,
-        Local = 0x0000,
+        Local = 0x0000
     }
 }

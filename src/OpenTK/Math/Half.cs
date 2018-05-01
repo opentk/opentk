@@ -55,46 +55,50 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
 namespace OpenTK
 {
-
     /// <summary>
-    /// The name Half is derived from half-precision floating-point number.
-    /// It occupies only 16 bits, which are split into 1 Sign bit, 5 Exponent bits and 10 Mantissa bits.
+    ///     The name Half is derived from half-precision floating-point number.
+    ///     It occupies only 16 bits, which are split into 1 Sign bit, 5 Exponent bits and 10 Mantissa bits.
     /// </summary>
     /// <remarks>
-    /// Quote from ARB_half_float_pixel specification:
-    /// Any representable 16-bit floating-point value is legal as input to a GL command that accepts 16-bit floating-point data.  The
-    /// result of providing a value that is not a floating-point number (such as infinity or NaN) to such a command is unspecified,
-    /// but must not lead to GL interruption or termination. Providing a denormalized number or negative zero to GL must yield
-    /// predictable results.
+    ///     Quote from ARB_half_float_pixel specification:
+    ///     Any representable 16-bit floating-point value is legal as input to a GL command that accepts 16-bit floating-point
+    ///     data.  The
+    ///     result of providing a value that is not a floating-point number (such as infinity or NaN) to such a command is
+    ///     unspecified,
+    ///     but must not lead to GL interruption or termination. Providing a denormalized number or negative zero to GL must
+    ///     yield
+    ///     predictable results.
     /// </remarks>
-    [Serializable, StructLayout(LayoutKind.Sequential)]
+    [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
     public struct Half : ISerializable, IComparable<Half>, IFormattable, IEquatable<Half>
     {
-        private UInt16 bits;
+        private ushort bits;
 
         /// <summary>Returns true if the Half is zero.</summary>
-        public bool IsZero => (bits == 0) || (bits == 0x8000);
+        public bool IsZero => bits == 0 || bits == 0x8000;
 
         /// <summary>Returns true if the Half represents Not A Number (NaN)</summary>
-        public bool IsNaN => (((bits & 0x7C00) == 0x7C00) && (bits & 0x03FF) != 0x0000);
+        public bool IsNaN => (bits & 0x7C00) == 0x7C00 && (bits & 0x03FF) != 0x0000;
 
         /// <summary>Returns true if the Half represents positive infinity.</summary>
-        public bool IsPositiveInfinity => (bits == 31744);
+        public bool IsPositiveInfinity => bits == 31744;
 
         /// <summary>Returns true if the Half represents negative infinity.</summary>
-        public bool IsNegativeInfinity => (bits == 64512);
+        public bool IsNegativeInfinity => bits == 64512;
 
         /// <summary>
-        /// The new Half instance will convert the parameter into 16-bit half-precision floating-point.
+        ///     The new Half instance will convert the parameter into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="f">32-bit single-precision floating-point number.</param>
-        public Half(Single f)
+        public Half(float f)
             : this()
         {
             unsafe
@@ -104,11 +108,11 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// The new Half instance will convert the parameter into 16-bit half-precision floating-point.
+        ///     The new Half instance will convert the parameter into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="f">32-bit single-precision floating-point number.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Half(Single f, bool throwOnError)
+        public Half(float f, bool throwOnError)
             : this(f)
         {
             if (throwOnError)
@@ -118,21 +122,24 @@ namespace OpenTK
                 {
                     throw new ArithmeticException("Half: Positive maximum value exceeded.");
                 }
+
                 if (f < -MaxValue)
                 {
                     throw new ArithmeticException("Half: Negative minimum value exceeded.");
                 }
 
                 // handle cases that make no sense
-                if (Single.IsNaN(f))
+                if (float.IsNaN(f))
                 {
                     throw new ArithmeticException("Half: Input is not a number (NaN).");
                 }
-                if (Single.IsPositiveInfinity(f))
+
+                if (float.IsPositiveInfinity(f))
                 {
                     throw new ArithmeticException("Half: Input is positive infinity.");
                 }
-                if (Single.IsNegativeInfinity(f))
+
+                if (float.IsNegativeInfinity(f))
                 {
                     throw new ArithmeticException("Half: Input is negative infinity.");
                 }
@@ -140,20 +147,24 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// The new Half instance will convert the parameter into 16-bit half-precision floating-point.
+        ///     The new Half instance will convert the parameter into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="d">64-bit double-precision floating-point number.</param>
-        public Half(Double d) : this((Single)d) { }
+        public Half(double d) : this((float)d)
+        {
+        }
 
         /// <summary>
-        /// The new Half instance will convert the parameter into 16-bit half-precision floating-point.
+        ///     The new Half instance will convert the parameter into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="d">64-bit double-precision floating-point number.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Half(Double d, bool throwOnError) : this((Single)d, throwOnError) { }
+        public Half(double d, bool throwOnError) : this((float)d, throwOnError)
+        {
+        }
 
         /// <summary>Ported from OpenEXR's IlmBase 1.0.1</summary>
-        private UInt16 SingleToHalf(Int32 si32)
+        private ushort SingleToHalf(int si32)
         {
             // Our floating point number, F, is represented by the bit pattern in integer i.
             // Disassemble that bit pattern into the sign, S, the exponent, E, and the significand, M.
@@ -175,7 +186,7 @@ namespace OpenTK
                     //
                     // We convert F to a half zero with the same sign as F.
 
-                    return (UInt16)sign;
+                    return (ushort)sign;
                 }
 
                 // E is between -10 and 0. F is a normalized float whose magnitude is less than Half.MinNormalizedValue.
@@ -199,55 +210,50 @@ namespace OpenTK
 
                 // Assemble the half from S, E (==zero) and M.
 
-                return (UInt16)(sign | mantissa);
+                return (ushort)(sign | mantissa);
             }
-            else if (exponent == 0xff - (127 - 15))
+
+            if (exponent == 0xff - (127 - 15))
             {
                 if (mantissa == 0)
                 {
                     // F is an infinity; convert F to a half infinity with the same sign as F.
 
-                    return (UInt16)(sign | 0x7c00);
+                    return (ushort)(sign | 0x7c00);
                 }
-                else
-                {
-                    // F is a NAN; we produce a half NAN that preserves the sign bit and the 10 leftmost bits of the
-                    // significand of F, with one exception: If the 10 leftmost bits are all zero, the NAN would turn
-                    // into an infinity, so we have to set at least one bit in the significand.
+                // F is a NAN; we produce a half NAN that preserves the sign bit and the 10 leftmost bits of the
+                // significand of F, with one exception: If the 10 leftmost bits are all zero, the NAN would turn
+                // into an infinity, so we have to set at least one bit in the significand.
 
-                    mantissa >>= 13;
-                    return (UInt16)(sign | 0x7c00 | mantissa | ((mantissa == 0) ? 1 : 0));
-                }
+                mantissa >>= 13;
+                return (ushort)(sign | 0x7c00 | mantissa | (mantissa == 0 ? 1 : 0));
             }
-            else
+            // E is greater than zero.  F is a normalized float. We try to convert F to a normalized half.
+
+            // Round to M to the nearest 10-bit value. In case of a tie, round to the nearest even value.
+
+            mantissa = mantissa + 0x00000fff + ((mantissa >> 13) & 1);
+
+            if ((mantissa & 0x00800000) != 0)
             {
-                // E is greater than zero.  F is a normalized float. We try to convert F to a normalized half.
-
-                // Round to M to the nearest 10-bit value. In case of a tie, round to the nearest even value.
-
-                mantissa = mantissa + 0x00000fff + ((mantissa >> 13) & 1);
-
-                if ((mantissa & 0x00800000) != 0)
-                {
-                    mantissa = 0;        // overflow in significand,
-                    exponent += 1;        // adjust exponent
-                }
-
-                // exponent overflow
-                if (exponent > 30)
-                {
-                    throw new ArithmeticException("Half: Hardware floating-point overflow.");
-                }
-
-                // Assemble the half from S, E and M.
-
-                return (UInt16)(sign | (exponent << 10) | (mantissa >> 13));
+                mantissa = 0; // overflow in significand,
+                exponent += 1; // adjust exponent
             }
+
+            // exponent overflow
+            if (exponent > 30)
+            {
+                throw new ArithmeticException("Half: Hardware floating-point overflow.");
+            }
+
+            // Assemble the half from S, E and M.
+
+            return (ushort)(sign | (exponent << 10) | (mantissa >> 13));
         }
 
         /// <summary>Converts the 16-bit half to 32-bit floating-point.</summary>
         /// <returns>A single-precision floating-point number.</returns>
-        public Single ToSingle()
+        public float ToSingle()
         {
             var i = HalfToFloat(bits);
 
@@ -258,9 +264,8 @@ namespace OpenTK
         }
 
         /// <summary>Ported from OpenEXR's IlmBase 1.0.1</summary>
-        private Int32 HalfToFloat(UInt16 ui16)
+        private int HalfToFloat(ushort ui16)
         {
-
             var sign = (ui16 >> 15) & 0x00000001;
             var exponent = (ui16 >> 10) & 0x0000001f;
             var mantissa = ui16 & 0x000003ff;
@@ -273,19 +278,16 @@ namespace OpenTK
 
                     return sign << 31;
                 }
-                else
+                // Denormalized number -- renormalize it
+
+                while ((mantissa & 0x00000400) == 0)
                 {
-                    // Denormalized number -- renormalize it
-
-                    while ((mantissa & 0x00000400) == 0)
-                    {
-                        mantissa <<= 1;
-                        exponent -= 1;
-                    }
-
-                    exponent += 1;
-                    mantissa &= ~0x00000400;
+                    mantissa <<= 1;
+                    exponent -= 1;
                 }
+
+                exponent += 1;
+                mantissa &= ~0x00000400;
             }
             else if (exponent == 31)
             {
@@ -295,12 +297,9 @@ namespace OpenTK
 
                     return (sign << 31) | 0x7f800000;
                 }
-                else
-                {
-                    // Nan -- preserve sign and significand bits
+                // Nan -- preserve sign and significand bits
 
-                    return (sign << 31) | 0x7f800000 | (mantissa << 13);
-                }
+                return (sign << 31) | 0x7f800000 | (mantissa << 13);
             }
 
             // Normalized number
@@ -314,13 +313,15 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Converts a System.Single to a OpenTK.Half.
+        ///     Converts a System.Single to a OpenTK.Half.
         /// </summary>
-        /// <param name="f">The value to convert.
-        /// A <see cref="System.Single"/>
+        /// <param name="f">
+        ///     The value to convert.
+        ///     A <see cref="System.Single" />
         /// </param>
-        /// <returns>The result of the conversion.
-        /// A <see cref="Half"/>
+        /// <returns>
+        ///     The result of the conversion.
+        ///     A <see cref="Half" />
         /// </returns>
         public static explicit operator Half(float f)
         {
@@ -328,13 +329,15 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Converts a System.Double to a OpenTK.Half.
+        ///     Converts a System.Double to a OpenTK.Half.
         /// </summary>
-        /// <param name="d">The value to convert.
-        /// A <see cref="System.Double"/>
+        /// <param name="d">
+        ///     The value to convert.
+        ///     A <see cref="System.Double" />
         /// </param>
-        /// <returns>The result of the conversion.
-        /// A <see cref="Half"/>
+        /// <returns>
+        ///     The result of the conversion.
+        ///     A <see cref="Half" />
         /// </returns>
         public static explicit operator Half(double d)
         {
@@ -342,13 +345,15 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Converts a OpenTK.Half to a System.Single.
+        ///     Converts a OpenTK.Half to a System.Single.
         /// </summary>
-        /// <param name="h">The value to convert.
-        /// A <see cref="Half"/>
+        /// <param name="h">
+        ///     The value to convert.
+        ///     A <see cref="Half" />
         /// </param>
-        /// <returns>The result of the conversion.
-        /// A <see cref="System.Single"/>
+        /// <returns>
+        ///     The result of the conversion.
+        ///     A <see cref="System.Single" />
         /// </returns>
         public static implicit operator float(Half h)
         {
@@ -356,33 +361,35 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Converts a OpenTK.Half to a System.Double.
+        ///     Converts a OpenTK.Half to a System.Double.
         /// </summary>
-        /// <param name="h">The value to convert.
-        /// A <see cref="Half"/>
+        /// <param name="h">
+        ///     The value to convert.
+        ///     A <see cref="Half" />
         /// </param>
-        /// <returns>The result of the conversion.
-        /// A <see cref="System.Double"/>
+        /// <returns>
+        ///     The result of the conversion.
+        ///     A <see cref="System.Double" />
         /// </returns>
         public static implicit operator double(Half h)
         {
-            return (double)h.ToSingle();
+            return h.ToSingle();
         }
 
         /// <summary>The size in bytes for an instance of the Half struct.</summary>
-        public static readonly Int32 SizeInBytes = 2;
+        public static readonly int SizeInBytes = 2;
 
         /// <summary>Smallest positive half</summary>
-        public static readonly Single MinValue = 5.96046448e-08f;
+        public static readonly float MinValue = 5.96046448e-08f;
 
         /// <summary>Smallest positive normalized half</summary>
-        public static readonly Single MinNormalizedValue = 6.10351562e-05f;
+        public static readonly float MinNormalizedValue = 6.10351562e-05f;
 
         /// <summary>Largest positive half</summary>
-        public static readonly Single MaxValue = 65504.0f;
+        public static readonly float MaxValue = 65504.0f;
 
         /// <summary>Smallest positive e for which half (1.0 + e) != half (1.0)</summary>
-        public static readonly Single Epsilon = 0.00097656f;
+        public static readonly float Epsilon = 0.00097656f;
 
         /// <summary>Constructor used by ISerializable to deserialize the object.</summary>
         /// <param name="info"></param>
@@ -405,7 +412,6 @@ namespace OpenTK
         public void FromBinaryStream(BinaryReader bin)
         {
             bits = bin.ReadUInt16();
-
         }
 
         /// <summary>Writes the Half into a Stream.</summary>
@@ -418,15 +424,22 @@ namespace OpenTK
         private const int maxUlps = 1;
 
         /// <summary>
-        /// Returns a value indicating whether this instance is equal to a specified OpenTK.Half value.
+        ///     Returns a value indicating whether this instance is equal to a specified OpenTK.Half value.
         /// </summary>
         /// <param name="other">OpenTK.Half object to compare to this instance..</param>
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
         public bool Equals(Half other)
         {
             short aInt, bInt;
-            unchecked { aInt = (short)other.bits; }
-            unchecked { bInt = (short)bits; }
+            unchecked
+            {
+                aInt = (short)other.bits;
+            }
+
+            unchecked
+            {
+                bInt = (short)bits;
+            }
 
             // Make aInt lexicographically ordered as a twos-complement int
             if (aInt < 0)
@@ -451,25 +464,31 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Compares this instance to a specified half-precision floating-point number
-        /// and returns an integer that indicates whether the value of this instance
-        /// is less than, equal to, or greater than the value of the specified half-precision
-        /// floating-point number.
+        ///     Compares this instance to a specified half-precision floating-point number
+        ///     and returns an integer that indicates whether the value of this instance
+        ///     is less than, equal to, or greater than the value of the specified half-precision
+        ///     floating-point number.
         /// </summary>
         /// <param name="other">A half-precision floating-point number to compare.</param>
         /// <returns>
-        /// A signed number indicating the relative values of this instance and value. If the number is:
-        /// <para>Less than zero, then this instance is less than other, or this instance is not a number
-        /// (OpenTK.Half.NaN) and other is a number.</para>
-        /// <para>Zero: this instance is equal to value, or both this instance and other
-        /// are not a number (OpenTK.Half.NaN), OpenTK.Half.PositiveInfinity, or
-        /// OpenTK.Half.NegativeInfinity.</para>
-        /// <para>Greater than zero: this instance is greater than othrs, or this instance is a number
-        /// and other is not a number (OpenTK.Half.NaN).</para>
+        ///     A signed number indicating the relative values of this instance and value. If the number is:
+        ///     <para>
+        ///         Less than zero, then this instance is less than other, or this instance is not a number
+        ///         (OpenTK.Half.NaN) and other is a number.
+        ///     </para>
+        ///     <para>
+        ///         Zero: this instance is equal to value, or both this instance and other
+        ///         are not a number (OpenTK.Half.NaN), OpenTK.Half.PositiveInfinity, or
+        ///         OpenTK.Half.NegativeInfinity.
+        ///     </para>
+        ///     <para>
+        ///         Greater than zero: this instance is greater than othrs, or this instance is a number
+        ///         and other is not a number (OpenTK.Half.NaN).
+        ///     </para>
         /// </returns>
         public int CompareTo(Half other)
         {
-            return ((float)this).CompareTo((float)other);
+            return ((float)this).CompareTo(other);
         }
 
         /// <summary>Converts this Half into a human-legible string representation.</summary>
@@ -493,7 +512,7 @@ namespace OpenTK
         /// <returns>A new Half instance.</returns>
         public static Half Parse(string s)
         {
-            return (Half)Single.Parse(s);
+            return (Half)float.Parse(s);
         }
 
         /// <summary>Converts the string representation of a number to a half-precision floating-point equivalent.</summary>
@@ -501,9 +520,9 @@ namespace OpenTK
         /// <param name="style">Specifies the format of s.</param>
         /// <param name="provider">Culture-specific formatting information.</param>
         /// <returns>A new Half instance.</returns>
-        public static Half Parse(string s, System.Globalization.NumberStyles style, IFormatProvider provider)
+        public static Half Parse(string s, NumberStyles style, IFormatProvider provider)
         {
-            return (Half)Single.Parse(s, style, provider);
+            return (Half)float.Parse(s, style, provider);
         }
 
         /// <summary>Converts the string representation of a number to a half-precision floating-point equivalent. Returns success.</summary>
@@ -513,7 +532,7 @@ namespace OpenTK
         public static bool TryParse(string s, out Half result)
         {
             float f;
-            var b = Single.TryParse(s, out f);
+            var b = float.TryParse(s, out f);
             result = (Half)f;
             return b;
         }
@@ -524,10 +543,10 @@ namespace OpenTK
         /// <param name="provider">Culture-specific formatting information.</param>
         /// <param name="result">The Half instance to write to.</param>
         /// <returns>Success.</returns>
-        public static bool TryParse(string s, System.Globalization.NumberStyles style, IFormatProvider provider, out Half result)
+        public static bool TryParse(string s, NumberStyles style, IFormatProvider provider, out Half result)
         {
             float f;
-            var b = Single.TryParse(s, style, provider, out f);
+            var b = float.TryParse(s, style, provider, out f);
             result = (Half)f;
             return b;
         }

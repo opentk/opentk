@@ -6,9 +6,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
-
+using System.Runtime.InteropServices;
 using OpenTK.Graphics;
 
 namespace OpenTK.Platform.X11
@@ -19,10 +18,6 @@ namespace OpenTK.Platform.X11
         // It seems the Choose* methods do not take multisampling into account (at least on some
         // drivers).
 
-
-        public X11GraphicsMode()
-        {
-        }
 
         public GraphicsMode SelectGraphicsMode(GraphicsMode desired_mode, out IntPtr visual, out IntPtr fbconfig)
         {
@@ -55,8 +50,7 @@ namespace OpenTK.Platform.X11
                         throw new GraphicsModeException("Requested GraphicsMode not available.");
                     }
                 }
-            }
-            while (visual == IntPtr.Zero);
+            } while (visual == IntPtr.Zero);
 
             var info = (XVisualInfo)Marshal.PtrToStructure(visual, typeof(XVisualInfo));
             gfx = CreateGraphicsMode(display, ref info);
@@ -104,6 +98,7 @@ namespace OpenTK.Platform.X11
                     visualAttributes.Add((int)GLXAttribute.RENDER_TYPE);
                     visualAttributes.Add((int)GLXRenderTypeMask.RGBA_BIT);
                 }
+
                 visualAttributes.Add((int)GLXAttribute.RED_SIZE);
                 visualAttributes.Add(mode.ColorFormat.Red);
                 visualAttributes.Add((int)GLXAttribute.GREEN_SIZE);
@@ -211,6 +206,7 @@ namespace OpenTK.Platform.X11
                 {
                     visualAttributes.Add((int)GLXAttribute.RGBA);
                 }
+
                 visualAttributes.Add((int)GLXAttribute.RED_SIZE);
                 visualAttributes.Add(mode.ColorFormat.Red);
                 visualAttributes.Add((int)GLXAttribute.GREEN_SIZE);

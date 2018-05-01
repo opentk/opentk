@@ -52,30 +52,30 @@ namespace OpenTK.Platform.Linux
         BRKINT = 1 << 1,
         IGNPAR = 1 << 2,
         PARMRK = 1 << 3,
-        INPCK  = 1 << 4,
+        INPCK = 1 << 4,
         ISTRIP = 1 << 5,
-        INLCR  = 1 << 6,
-        IGNCR  = 1 << 7,
-        ICRNL  = 1 << 8,
-        IUCLC  = 1 << 9,
-        IXON   = 1 << 10,
-        IXANY  = 1 << 11,
-        IXOFF  = 1 << 12,
+        INLCR = 1 << 6,
+        IGNCR = 1 << 7,
+        ICRNL = 1 << 8,
+        IUCLC = 1 << 9,
+        IXON = 1 << 10,
+        IXANY = 1 << 11,
+        IXOFF = 1 << 12,
         IMAXBEL = 1 << 13,
-        IUTF8  = 1 << 14,
+        IUTF8 = 1 << 14
     }
 
     [Flags]
     internal enum OutputFlags
     {
-        OPOST  = 1 << 1,
-        OLCUC  = 1 << 2,
-        ONLCR  = 1 << 3,
-        OCRNL  = 1 << 4,
-        ONOCR  = 1 << 5,
+        OPOST = 1 << 1,
+        OLCUC = 1 << 2,
+        ONLCR = 1 << 3,
+        OCRNL = 1 << 4,
+        ONOCR = 1 << 5,
         ONLRET = 1 << 6,
-        OFILL  = 1 << 7,
-        OFDEL  = 1 << 8,
+        OFILL = 1 << 7,
+        OFDEL = 1 << 8
     }
 
     [Flags]
@@ -96,7 +96,7 @@ namespace OpenTK.Platform.Linux
         B4800,
         B9600,
         B19200,
-        B38400,
+        B38400
     }
 
     [Flags]
@@ -104,7 +104,7 @@ namespace OpenTK.Platform.Linux
     {
         ISIG = 0x01,
         ICANON = 0x02,
-        ECHO = 0x08,
+        ECHO = 0x08
     }
 
     internal enum OptionalActions
@@ -162,7 +162,5 @@ namespace OpenTK.Platform.Linux
         public byte C29;
         public byte C30;
         public byte C31;
-
     }
 }
-

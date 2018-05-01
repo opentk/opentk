@@ -25,28 +25,32 @@
 
 using System;
 using OpenTK.Graphics;
+using OpenTK.Input;
 
 namespace OpenTK.Platform
 {
     internal interface IPlatformFactory : IDisposable
     {
-        INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device);
+        INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode,
+            GameWindowFlags options, DisplayDevice device);
 
         IDisplayDeviceDriver CreateDisplayDeviceDriver();
 
-        IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags);
+        IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext,
+            bool directRendering, int major, int minor, GraphicsContextFlags flags);
 
-        IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags);
+        IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext,
+            bool directRendering, int major, int minor, GraphicsContextFlags flags);
 
         GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext();
 
-        Input.IKeyboardDriver2 CreateKeyboardDriver();
+        IKeyboardDriver2 CreateKeyboardDriver();
 
-        Input.IMouseDriver2 CreateMouseDriver();
+        IMouseDriver2 CreateMouseDriver();
 
-        Input.IGamePadDriver CreateGamePadDriver();
+        IGamePadDriver CreateGamePadDriver();
 
-        Input.IJoystickDriver2 CreateJoystickDriver();
+        IJoystickDriver2 CreateJoystickDriver();
 
         void RegisterResource(IDisposable resource);
     }

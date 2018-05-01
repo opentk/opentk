@@ -25,8 +25,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL
 {
@@ -64,6 +64,7 @@ namespace OpenTK.Graphics.OpenGL
                     ContextErrors.Add(Context, new List<ErrorCode>());
                 }
             }
+
             ResetErrors();
         }
 
@@ -75,7 +76,8 @@ namespace OpenTK.Graphics.OpenGL
             if (Context.ErrorChecking)
             {
                 while (GL.GetError() != ErrorCode.NoError)
-                { }
+                {
+                }
             }
         }
 
@@ -109,6 +111,7 @@ namespace OpenTK.Graphics.OpenGL
                             break;
                         }
                     }
+
                     sb.Remove(sb.Length - 2, 2); // Remove the last comma
 
                     throw new GraphicsErrorException(sb.ToString());

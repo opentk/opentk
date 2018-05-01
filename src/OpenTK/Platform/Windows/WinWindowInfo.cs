@@ -33,41 +33,34 @@ namespace OpenTK.Platform.Windows
     /// <summary>Describes a win32 window.</summary>
     internal sealed class WinWindowInfo : IWindowInfo
     {
-        private IntPtr handle, dc;
         private bool disposed;
+        private IntPtr dc;
 
         /// <summary>
-        /// Constructs a new instance.
+        ///     Constructs a new instance.
         /// </summary>
         public WinWindowInfo()
         {
         }
 
         /// <summary>
-        /// Constructs a new instance with the specified window handle and paren.t
+        ///     Constructs a new instance with the specified window handle and paren.t
         /// </summary>
         /// <param name="handle">The window handle for this instance.</param>
         /// <param name="parent">The parent window of this instance (may be null).</param>
         public WinWindowInfo(IntPtr handle, WinWindowInfo parent)
         {
-            this.handle = handle;
+            Handle = handle;
             Parent = parent;
         }
 
         /// <summary>
-        /// Gets or sets the handle of the window.
-        /// </summary>
-        public IntPtr Handle { get => handle;
-            set => handle = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the Parent of the window (may be null).
+        ///     Gets or sets the Parent of the window (may be null).
         /// </summary>
         public WinWindowInfo Parent { get; set; }
 
         /// <summary>
-        /// Gets the device context for this window instance.
+        ///     Gets the device context for this window instance.
         /// </summary>
         public IntPtr DeviceContext
         {
@@ -85,8 +78,22 @@ namespace OpenTK.Platform.Windows
         // For compatibility with whoever thought it would be
         // a good idea to access internal APIs through reflection
         // (e.g. MonoGame)
-        public IntPtr WindowHandle { get => Handle;
+        public IntPtr WindowHandle
+        {
+            get => Handle;
             set => Handle = value;
+        }
+
+        /// <summary>
+        ///     Gets or sets the handle of the window.
+        /// </summary>
+        public IntPtr Handle { get; set; }
+
+        /// <summary>Releases the unmanaged resources consumed by this instance.</summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>Returns a System.String that represents the current window.</summary>
@@ -105,32 +112,28 @@ namespace OpenTK.Platform.Windows
             {
                 return false;
             }
+
             if (GetType() != obj.GetType())
             {
                 return false;
             }
+
             var info = (WinWindowInfo)obj;
 
             if (info == null)
             {
                 return false;
             }
+
             // TODO: Assumes windows will always have unique handles.
-            return handle.Equals(info.handle);
+            return Handle.Equals(info.Handle);
         }
 
         /// <summary>Returns the hash code for this instance.</summary>
         /// <returns>A hash code for the current <c>WinWindowInfo</c>.</returns>
         public override int GetHashCode()
         {
-            return handle.GetHashCode();
-        }
-
-        /// <summary>Releases the unmanaged resources consumed by this instance.</summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            return Handle.GetHashCode();
         }
 
         private void Dispose(bool manual)
@@ -139,9 +142,10 @@ namespace OpenTK.Platform.Windows
             {
                 if (dc != IntPtr.Zero)
                 {
-                    if (!Functions.ReleaseDC(handle, dc))
+                    if (!Functions.ReleaseDC(Handle, dc))
                     {
-                        Debug.Print("[Warning] Failed to release device context {0}. Windows error: {1}.", dc, Marshal.GetLastWin32Error());
+                        Debug.Print("[Warning] Failed to release device context {0}. Windows error: {1}.", dc,
+                            Marshal.GetLastWin32Error());
                     }
                 }
 

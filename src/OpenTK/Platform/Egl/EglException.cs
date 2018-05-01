@@ -6,18 +6,18 @@ using OpenTK.Graphics;
 namespace OpenTK.Platform.Egl
 {
     /// <summary>
-    /// Represents an Egl exception.
+    ///     Represents an Egl exception.
     /// </summary>
     public class EglException : GraphicsContextException
     {
-        /// <summary>
-        /// Gets the EGL error code.
-        /// </summary>
-        public ErrorCode ErrorCode { get; private set; }
-
         internal EglException(string message, ErrorCode errorCode) : base(message)
         {
             ErrorCode = errorCode;
         }
+
+        /// <summary>
+        ///     Gets the EGL error code.
+        /// </summary>
+        public ErrorCode ErrorCode { get; }
     }
 }

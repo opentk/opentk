@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml.XPath;
-
 using Bind.Structures;
 
 namespace Bind
@@ -25,17 +24,16 @@ namespace Bind
         private static readonly Regex RemoveXmlns = new Regex(
             "xmlns=\".+\"", RegexOptions.Compiled);
 
-        private readonly Dictionary<string, string> _documentationFiles =
-            new Dictionary<string, string>();
+        private static readonly char[] Newline = {'\n'};
 
         private readonly Dictionary<string, Documentation> _documentationCache =
             new Dictionary<string, Documentation>();
 
+        private readonly Dictionary<string, string> _documentationFiles =
+            new Dictionary<string, string>();
+
         private Documentation _cached;
         private string _lastFile;
-
-        private IBind Generator { get; set; }
-        private Settings Settings => Generator.Settings;
 
         public DocProcessor(IBind generator)
         {
@@ -51,6 +49,9 @@ namespace Bind
             }
         }
 
+        private IBind Generator { get; }
+        private Settings Settings => Generator.Settings;
+
         public Documentation Process(Function f, EnumProcessor processor)
         {
             Documentation docs = null;
@@ -59,29 +60,28 @@ namespace Bind
             {
                 return _documentationCache[f.WrappedDelegate.Name];
             }
-            else
+
+            var file = Settings.FunctionPrefix + f.WrappedDelegate.Name + ".xml";
+            if (!_documentationFiles.ContainsKey(file))
             {
-                var file = Settings.FunctionPrefix + f.WrappedDelegate.Name + ".xml";
-                if (!_documentationFiles.ContainsKey(file))
-                {
-                    file = Settings.FunctionPrefix + f.TrimmedName + ".xml";
-                }
-                if (!_documentationFiles.ContainsKey(file))
-                {
-                    file = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(Numbers) + ".xml";
-                }
-
-                docs = 
-                    (_documentationFiles.ContainsKey(file) ? ProcessFile(_documentationFiles[file], processor) : null) ??
-                    new Documentation
-                    {
-                        Summary = string.Empty,
-                        Parameters = f.Parameters.Select(p =>
-                        new DocumentationParameter(p.Name, string.Empty)).ToList()
-                    };
-
-                _documentationCache.Add(f.WrappedDelegate.Name, docs);
+                file = Settings.FunctionPrefix + f.TrimmedName + ".xml";
             }
+
+            if (!_documentationFiles.ContainsKey(file))
+            {
+                file = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(Numbers) + ".xml";
+            }
+
+            docs =
+                (_documentationFiles.ContainsKey(file) ? ProcessFile(_documentationFiles[file], processor) : null) ??
+                new Documentation
+                {
+                    Summary = string.Empty,
+                    Parameters = f.Parameters.Select(p =>
+                        new DocumentationParameter(p.Name, string.Empty)).ToList()
+                };
+
+            _documentationCache.Add(f.WrappedDelegate.Name, docs);
 
             return docs;
         }
@@ -124,6 +124,7 @@ namespace Bind
                         // Note: a few docs from man4 delimit eqn end with ": -->"
                         eqnEnd = removed.IndexOf(": -->") - equation - 4;
                     }
+
                     if (eqnEnd < 0)
                     {
                         Console.WriteLine("[Warning] Failed to find equation for mml.");
@@ -134,7 +135,7 @@ namespace Bind
                     text = text.Insert(m.Index, "<![CDATA[" + eqnSubstring + "]]>");
                 }
 
-            next:
+                next:
                 m = RemoveMathml.Match(text);
             }
 
@@ -172,6 +173,7 @@ namespace Bind
                         // Remove "GL_" from the beginning of the string
                         c = c.Replace(Settings.ConstantPrefix, string.Empty);
                     }
+
                     e.Value = enumProcessor.TranslateConstantName(c, false);
                 }
             }
@@ -184,12 +186,13 @@ namespace Bind
                         ((IEnumerable)doc.XPathEvaluate("/refentry/refnamediv/refpurpose"))
                         .Cast<XElement>().First().Value),
                 Parameters =
-                    ((IEnumerable)doc.XPathEvaluate("/refentry/refsect1[@id='parameters']/variablelist/varlistentry/term/parameter"))
-                        .Cast<XElement>()
-                        .Select(p =>
-                            new DocumentationParameter(
-                                p.Value.Trim(),
-                                Cleanup(p.XPathSelectElement("../../listitem").Value)))
+                    ((IEnumerable)doc.XPathEvaluate(
+                        "/refentry/refsect1[@id='parameters']/variablelist/varlistentry/term/parameter"))
+                    .Cast<XElement>()
+                    .Select(p =>
+                        new DocumentationParameter(
+                            p.Value.Trim(),
+                            Cleanup(p.XPathSelectElement("../../listitem").Value)))
                     .ToList()
             };
 
@@ -197,15 +200,13 @@ namespace Bind
             return inline;
         }
 
-        private static readonly char[] Newline = { '\n' };
-
         private static string Cleanup(string text)
         {
             return
                 string.Join(" ", text
-                    .Replace("\r", "\n")
-                    .Split(Newline, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(s => s.Trim()).ToArray())
+                        .Replace("\r", "\n")
+                        .Split(Newline, StringSplitOptions.RemoveEmptyEntries)
+                        .Select(s => s.Trim()).ToArray())
                     .Trim();
         }
     }

@@ -29,15 +29,15 @@ namespace OpenTK.Platform.MacOS
 {
     /// \internal
     /// <summary>
-    /// Describes a Carbon window.
+    ///     Describes a Carbon window.
     /// </summary>
     internal sealed class CarbonWindowInfo : IWindowInfo
     {
-        private bool ownHandle;
         private bool disposed;
+        private readonly bool ownHandle;
 
         /// <summary>
-        /// Constructs a new instance with the specified parameters.
+        ///     Constructs a new instance with the specified parameters.
         /// </summary>
         /// <param name="windowRef">A valid Carbon window reference.</param>
         /// <param name="ownHandle"></param>
@@ -49,37 +49,28 @@ namespace OpenTK.Platform.MacOS
             IsControl = isControl;
         }
 
-        public CarbonWindowInfo(IntPtr windowRef, bool ownHandle, bool isControl, GetInt getX, GetInt getY) : this(windowRef, ownHandle, isControl)
+        public CarbonWindowInfo(IntPtr windowRef, bool ownHandle, bool isControl, GetInt getX, GetInt getY) : this(
+            windowRef, ownHandle, isControl)
         {
             XOffset = getX;
             YOffset = getY;
         }
-
-        /// <summary>
-        /// Gets the window reference for this instance.
-        /// </summary>
-        public IntPtr Handle { get; set; }
 
         internal bool GoFullScreenHack { get; set; } = false;
 
         internal bool GoWindowedHack { get; set; } = false;
 
         /// <summary>
-        /// Gets a value indicating whether this instance refers to a System.Windows.Forms.Control.
+        ///     Gets a value indicating whether this instance refers to a System.Windows.Forms.Control.
         /// </summary>
         public bool IsControl { get; } = true;
-
-        /// <summary>Returns a System.String that represents the current window.</summary>
-        /// <returns>A System.String that represents the current window.</returns>
-        public override string ToString()
-        {
-            return $"MacOS.CarbonWindowInfo: Handle {Handle}";
-        }
 
         // For compatibility with whoever thought it would be
         // a good idea to access internal APIs through reflection
         // (e.g. MonoGame)
-        public IntPtr WindowHandle { get => Handle;
+        public IntPtr WindowHandle
+        {
+            get => Handle;
             set => Handle = value;
         }
 
@@ -87,9 +78,21 @@ namespace OpenTK.Platform.MacOS
 
         public GetInt YOffset { get; set; }
 
+        /// <summary>
+        ///     Gets the window reference for this instance.
+        /// </summary>
+        public IntPtr Handle { get; set; }
+
         public void Dispose()
         {
             Dispose(true);
+        }
+
+        /// <summary>Returns a System.String that represents the current window.</summary>
+        /// <returns>A System.String that represents the current window.</returns>
+        public override string ToString()
+        {
+            return $"MacOS.CarbonWindowInfo: Handle {Handle}";
         }
 
         private void Dispose(bool disposing)
@@ -101,7 +104,6 @@ namespace OpenTK.Platform.MacOS
 
             if (disposing)
             {
-
             }
 
             if (ownHandle)
@@ -116,6 +118,5 @@ namespace OpenTK.Platform.MacOS
         {
             Dispose(false);
         }
-
     }
 }

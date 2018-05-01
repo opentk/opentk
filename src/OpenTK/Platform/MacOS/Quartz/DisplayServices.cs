@@ -34,7 +34,6 @@ namespace OpenTK.Platform.MacOS
 
     internal enum CGDisplayErr
     {
-
     }
 
     internal enum CGError
@@ -49,21 +48,23 @@ namespace OpenTK.Platform.MacOS
         RangeCheck = 1007,
         TypeCheck = 1008,
         InvalidOperation = 1010,
-        NoneAvailable = 1011,
+        NoneAvailable = 1011
     }
 
     internal partial class CG
     {
-        private const string lib = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
+        private const string lib =
+            "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
 
         // CGPoint -> NSPoint
         // CGSize -> NSSize
         // CGRect -> NSRect
 
-        [DllImport(lib, EntryPoint="CGGetActiveDisplayList")]
-        internal unsafe static extern CGDisplayErr GetActiveDisplayList(int maxDisplays, IntPtr* activeDspys, out int dspyCnt);
+        [DllImport(lib, EntryPoint = "CGGetActiveDisplayList")]
+        internal static extern unsafe CGDisplayErr GetActiveDisplayList(int maxDisplays, IntPtr* activeDspys,
+            out int dspyCnt);
 
-        [DllImport(lib, EntryPoint="CGMainDisplayID")]
+        [DllImport(lib, EntryPoint = "CGMainDisplayID")]
         internal static extern IntPtr MainDisplayID();
 
         // Note: sizeof(HIRect) == 16, which is larger than 8 bytes.
@@ -71,7 +72,7 @@ namespace OpenTK.Platform.MacOS
         // first parameter slot. This is normally handled automatically
         // by gcc/clang, but here we have to do it ourselves.
         // See "Listing 4" on https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/LowLevelABI/130-IA-32_Function_Calling_Conventions/IA32.html#//apple_ref/doc/uid/TP40002492-SW3
-        internal unsafe static NSRect DisplayBounds(IntPtr display)
+        internal static NSRect DisplayBounds(IntPtr display)
         {
             NSRect rect;
             DisplayBounds(out rect, display);
@@ -79,30 +80,30 @@ namespace OpenTK.Platform.MacOS
         }
 
         [DllImport(lib, EntryPoint = "CGDisplayBounds")]
-        private unsafe static extern void DisplayBounds(out NSRect rect, IntPtr display);
+        private static extern void DisplayBounds(out NSRect rect, IntPtr display);
 
-        [DllImport(lib, EntryPoint="CGDisplayPixelsWide")]
+        [DllImport(lib, EntryPoint = "CGDisplayPixelsWide")]
         internal static extern int DisplayPixelsWide(IntPtr display);
 
-        [DllImport(lib, EntryPoint="CGDisplayPixelsHigh")]
+        [DllImport(lib, EntryPoint = "CGDisplayPixelsHigh")]
         internal static extern int DisplayPixelsHigh(IntPtr display);
 
-        [DllImport(lib, EntryPoint="CGDisplayCurrentMode")]
+        [DllImport(lib, EntryPoint = "CGDisplayCurrentMode")]
         internal static extern IntPtr DisplayCurrentMode(IntPtr display);
 
-        [DllImport(lib, EntryPoint="CGDisplayCapture")]
+        [DllImport(lib, EntryPoint = "CGDisplayCapture")]
         internal static extern CGDisplayErr DisplayCapture(IntPtr display);
 
-        [DllImport(lib, EntryPoint="CGCaptureAllDisplays")]
+        [DllImport(lib, EntryPoint = "CGCaptureAllDisplays")]
         internal static extern CGDisplayErr CaptureAllDisplays();
 
-        [DllImport(lib, EntryPoint="CGShieldingWindowLevel")]
+        [DllImport(lib, EntryPoint = "CGShieldingWindowLevel")]
         internal static extern uint ShieldingWindowLevel();
 
-        [DllImport(lib, EntryPoint="CGDisplayRelease")]
+        [DllImport(lib, EntryPoint = "CGDisplayRelease")]
         internal static extern CGDisplayErr DisplayRelease(IntPtr display);
 
-        [DllImport(lib, EntryPoint="CGReleaseAllDisplays")]
+        [DllImport(lib, EntryPoint = "CGReleaseAllDisplays")]
         internal static extern CGDisplayErr DisplayReleaseAll();
 
         [DllImport(lib, EntryPoint = "CGDisplayAvailableModes")]
@@ -126,7 +127,7 @@ namespace OpenTK.Platform.MacOS
         [DllImport(lib, EntryPoint = "CGAssociateMouseAndMouseCursorPosition")]
         internal static extern CGError AssociateMouseAndMouseCursorPosition(bool connected);
 
-        [DllImport(lib, EntryPoint="CGSetLocalEventsSuppressionInterval")]
+        [DllImport(lib, EntryPoint = "CGSetLocalEventsSuppressionInterval")]
         internal static extern CGError SetLocalEventsSuppressionInterval(double seconds);
     }
 }

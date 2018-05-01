@@ -32,14 +32,8 @@ namespace OpenTK.Platform.Egl
     internal abstract class EglContext : EmbeddedGraphicsContext
     {
         protected readonly RenderableFlags Renderable;
-        internal EglWindowInfo WindowInfo;
-
-        internal GraphicsContextFlags GraphicsContextFlags { get; set; }
-
-        internal IntPtr HandleAsEGLContext { get => Handle.Handle;
-            set => Handle = new ContextHandle(value);
-        }
         private int swap_interval = 1; // Default interval is defined as 1 in EGL.
+        internal EglWindowInfo WindowInfo;
 
         public EglContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
@@ -48,6 +42,7 @@ namespace OpenTK.Platform.Egl
             {
                 throw new ArgumentNullException(nameof(mode));
             }
+
             if (window == null)
             {
                 throw new ArgumentNullException(nameof(window));
@@ -92,14 +87,15 @@ namespace OpenTK.Platform.Egl
                 : SurfaceType.WINDOW_BIT;
 
             Mode = new EglGraphicsMode().SelectGraphicsMode(surfaceType,
-                    window.Display, mode.ColorFormat, mode.Depth, mode.Stencil,
-                    mode.Samples, mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
-                    Renderable);
+                window.Display, mode.ColorFormat, mode.Depth, mode.Stencil,
+                mode.Samples, mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
+                Renderable);
 
             if (!Mode.Index.HasValue)
             {
                 throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
             }
+
             var config = Mode.Index.Value;
 
             if (window.Surface == IntPtr.Zero)
@@ -128,12 +124,46 @@ namespace OpenTK.Platform.Egl
             {
                 throw new ArgumentException("handle");
             }
+
             if (window == null)
             {
                 throw new ArgumentNullException(nameof(window));
             }
 
             Handle = handle;
+        }
+
+        internal GraphicsContextFlags GraphicsContextFlags { get; set; }
+
+        internal IntPtr HandleAsEGLContext
+        {
+            get => Handle.Handle;
+            set => Handle = new ContextHandle(value);
+        }
+
+        public override bool IsCurrent => Egl.GetCurrentContext() == HandleAsEGLContext;
+
+        public override int SwapInterval
+        {
+            get => swap_interval;
+            set
+            {
+                if (value < 0)
+                {
+                    // EGL does not offer EXT_swap_control_tear yet
+                    value = 1;
+                }
+
+                if (Egl.SwapInterval(WindowInfo.Display, value))
+                {
+                    swap_interval = value;
+                }
+                else
+                {
+                    Debug.Print("[Warning] Egl.SwapInterval({0}, {1}) failed. Error: {2}",
+                        WindowInfo.Display, value, Egl.GetError());
+                }
+            }
         }
 
         public override void SwapBuffers()
@@ -173,31 +203,6 @@ namespace OpenTK.Platform.Egl
             else
             {
                 Egl.MakeCurrent(WindowInfo.Display, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
-            }
-        }
-
-        public override bool IsCurrent => Egl.GetCurrentContext() == HandleAsEGLContext;
-
-        public override int SwapInterval
-        {
-            get => swap_interval;
-            set
-            {
-                if (value < 0)
-                {
-                    // EGL does not offer EXT_swap_control_tear yet
-                    value = 1;
-                }
-
-                if (Egl.SwapInterval(WindowInfo.Display, value))
-                {
-                    swap_interval = value;
-                }
-                else
-                {
-                    Debug.Print("[Warning] Egl.SwapInterval({0}, {1}) failed. Error: {2}",
-                        WindowInfo.Display, value, Egl.GetError());
-                }
             }
         }
 
@@ -243,8 +248,10 @@ namespace OpenTK.Platform.Egl
                     {
                         Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, IntPtr.Zero);
                     }
+
                     Egl.DestroyContext(WindowInfo.Display, HandleAsEGLContext);
                 }
+
                 IsDisposed = true;
             }
         }
@@ -261,6 +268,7 @@ namespace OpenTK.Platform.Egl
             {
                 return (EglContext)internalContext.Implementation;
             }
+
             return (EglContext)sharedContext;
         }
     }

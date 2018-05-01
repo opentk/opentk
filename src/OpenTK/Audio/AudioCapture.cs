@@ -27,20 +27,20 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-
 using OpenTK.Audio.OpenAL;
 
 namespace OpenTK.Audio
 {
-
     /// <summary>
-    /// Provides methods to instantiate, use and destroy an audio device for recording.
-    /// Static methods are provided to list available devices known by the driver.
+    ///     Provides methods to instantiate, use and destroy an audio device for recording.
+    ///     Static methods are provided to list available devices known by the driver.
     /// </summary>
     public sealed class AudioCapture : IDisposable
     {
         // This must stay private info so the end-user cannot call any Alc commands for the recording device.
-        private IntPtr Handle;
+        private readonly IntPtr Handle;
+
+        private bool IsDisposed;
 
         // Alc.CaptureStop should be called prior to device shutdown, this keeps track of Alc.CaptureStart/Stop calls.
 
@@ -53,8 +53,8 @@ namespace OpenTK.Audio
         }
 
         /// <summary>
-        /// Opens the default device for audio recording.
-        /// Implicitly set parameters are: 22050Hz, 16Bit Mono, 4096 samples ringbuffer.
+        ///     Opens the default device for audio recording.
+        ///     Implicitly set parameters are: 22050Hz, 16Bit Mono, 4096 samples ringbuffer.
         /// </summary>
         public AudioCapture()
             : this(DefaultDevice, 22050, ALFormat.Mono16, 4096)
@@ -65,17 +65,22 @@ namespace OpenTK.Audio
         /// <param name="deviceName">The device name.</param>
         /// <param name="frequency">The frequency that the data should be captured at.</param>
         /// <param name="sampleFormat">The requested capture buffer format.</param>
-        /// <param name="bufferSize">The size of OpenAL's capture internal ring-buffer. This value expects number of samples, not bytes.</param>
+        /// <param name="bufferSize">
+        ///     The size of OpenAL's capture internal ring-buffer. This value expects number of samples, not
+        ///     bytes.
+        /// </param>
         public AudioCapture(string deviceName, int frequency, ALFormat sampleFormat, int bufferSize)
         {
             if (!AudioDeviceEnumerator.IsOpenALSupported)
             {
                 throw new DllNotFoundException("openal32.dll");
             }
+
             if (frequency <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(frequency));
             }
+
             if (bufferSize <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(bufferSize));
@@ -96,16 +101,19 @@ namespace OpenTK.Audio
             {
                 Debug.WriteLine(ErrorMessage("IntPtr.Zero", frequency, sampleFormat, bufferSize));
                 CurrentDevice = AudioDeviceEnumerator.DefaultRecordingDevice;
-                Handle = Alc.CaptureOpenDevice(AudioDeviceEnumerator.DefaultRecordingDevice, frequency, sampleFormat, bufferSize);
+                Handle = Alc.CaptureOpenDevice(AudioDeviceEnumerator.DefaultRecordingDevice, frequency, sampleFormat,
+                    bufferSize);
             }
 
             if (Handle == IntPtr.Zero)
             {
                 // Everything we tried failed. Capture may not be supported, bail out.
-                Debug.WriteLine(ErrorMessage(AudioDeviceEnumerator.DefaultRecordingDevice, frequency, sampleFormat, bufferSize));
+                Debug.WriteLine(ErrorMessage(AudioDeviceEnumerator.DefaultRecordingDevice, frequency, sampleFormat,
+                    bufferSize));
                 CurrentDevice = "None";
 
-                throw new AudioDeviceException("All attempts to open capture devices returned IntPtr.Zero. See debug log for verbose list.");
+                throw new AudioDeviceException(
+                    "All attempts to open capture devices returned IntPtr.Zero. See debug log for verbose list.");
             }
 
             // handle is not null, check for some Alc Error
@@ -116,52 +124,22 @@ namespace OpenTK.Audio
         }
 
         /// <summary>
-        /// The name of the device associated with this instance.
+        ///     The name of the device associated with this instance.
         /// </summary>
         public string CurrentDevice { get; }
 
         /// <summary>
-        /// Returns a list of strings containing all known recording devices.
+        ///     Returns a list of strings containing all known recording devices.
         /// </summary>
         public static IList<string> AvailableDevices => AudioDeviceEnumerator.AvailableRecordingDevices;
 
         /// <summary>
-        /// Returns the name of the device that will be used as recording default.
+        ///     Returns the name of the device that will be used as recording default.
         /// </summary>
         public static string DefaultDevice => AudioDeviceEnumerator.DefaultRecordingDevice;
 
-        /// <summary>
-        /// Checks for ALC error conditions.
-        /// </summary>
-        /// <exception cref="OutOfMemoryException">Raised when an out of memory error is detected.</exception>
-        /// <exception cref="AudioValueException">Raised when an invalid value is detected.</exception>
-        /// <exception cref="AudioDeviceException">Raised when an invalid device is detected.</exception>
-        /// <exception cref="AudioContextException">Raised when an invalid context is detected.</exception>
-        public void CheckErrors()
-        {
-            new AudioDeviceErrorChecker(Handle).Dispose();
-        }
-
         /// <summary>Returns the ALC error code for this device.</summary>
         public AlcError CurrentError => Alc.GetError(Handle);
-
-        /// <summary>
-        /// Start recording samples.
-        /// The number of available samples can be obtained through the <see cref="AvailableSamples"/> property.
-        /// The data can be queried with any <see cref="ReadSamples(IntPtr, int)"/> method.
-        /// </summary>
-        public void Start()
-        {
-            Alc.CaptureStart(Handle);
-            IsRunning = true;
-        }
-
-        /// <summary>Stop recording samples. This will not clear previously recorded samples.</summary>
-        public void Stop()
-        {
-            Alc.CaptureStop(Handle);
-            IsRunning = false;
-        }
 
         /// <summary>Returns the number of available samples for capture.</summary>
         public int AvailableSamples
@@ -176,7 +154,62 @@ namespace OpenTK.Audio
             }
         }
 
-        /// <summary>Fills the specified buffer with samples from the internal capture ring-buffer. This method does not block: it is an error to specify a sampleCount larger than AvailableSamples.</summary>
+        /// <summary>
+        ///     Gets the OpenTK.Audio.ALFormat for this instance.
+        /// </summary>
+        public ALFormat SampleFormat { get; }
+
+        /// <summary>
+        ///     Gets the sampling rate for this instance.
+        /// </summary>
+        public int SampleFrequency { get; }
+
+        /// <summary>
+        ///     Gets a value indicating whether this instance is currently capturing samples.
+        /// </summary>
+        public bool IsRunning { get; private set; }
+
+        /// <summary>Closes the device and disposes the instance.</summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        ///     Checks for ALC error conditions.
+        /// </summary>
+        /// <exception cref="OutOfMemoryException">Raised when an out of memory error is detected.</exception>
+        /// <exception cref="AudioValueException">Raised when an invalid value is detected.</exception>
+        /// <exception cref="AudioDeviceException">Raised when an invalid device is detected.</exception>
+        /// <exception cref="AudioContextException">Raised when an invalid context is detected.</exception>
+        public void CheckErrors()
+        {
+            new AudioDeviceErrorChecker(Handle).Dispose();
+        }
+
+        /// <summary>
+        ///     Start recording samples.
+        ///     The number of available samples can be obtained through the <see cref="AvailableSamples" /> property.
+        ///     The data can be queried with any <see cref="ReadSamples(IntPtr, int)" /> method.
+        /// </summary>
+        public void Start()
+        {
+            Alc.CaptureStart(Handle);
+            IsRunning = true;
+        }
+
+        /// <summary>Stop recording samples. This will not clear previously recorded samples.</summary>
+        public void Stop()
+        {
+            Alc.CaptureStop(Handle);
+            IsRunning = false;
+        }
+
+        /// <summary>
+        ///     Fills the specified buffer with samples from the internal capture ring-buffer. This method does not block: it
+        ///     is an error to specify a sampleCount larger than AvailableSamples.
+        /// </summary>
         /// <param name="buffer">A pointer to a previously initialized and pinned array.</param>
         /// <param name="sampleCount">The number of samples to be written to the buffer.</param>
         public void ReadSamples(IntPtr buffer, int sampleCount)
@@ -184,7 +217,10 @@ namespace OpenTK.Audio
             Alc.CaptureSamples(Handle, buffer, sampleCount);
         }
 
-        /// <summary>Fills the specified buffer with samples from the internal capture ring-buffer. This method does not block: it is an error to specify a sampleCount larger than AvailableSamples.</summary>
+        /// <summary>
+        ///     Fills the specified buffer with samples from the internal capture ring-buffer. This method does not block: it
+        ///     is an error to specify a sampleCount larger than AvailableSamples.
+        /// </summary>
         /// <param name="buffer">The buffer to fill.</param>
         /// <param name="sampleCount">The number of samples to be written to the buffer.</param>
         /// <exception cref="System.ArgumentNullException">Raised when buffer is null.</exception>
@@ -209,24 +245,15 @@ namespace OpenTK.Audio
             }
 
             var buffer_ptr = GCHandle.Alloc(buffer, GCHandleType.Pinned);
-            try { ReadSamples(buffer_ptr.AddrOfPinnedObject(), sampleCount); }
-            finally { buffer_ptr.Free(); }
+            try
+            {
+                ReadSamples(buffer_ptr.AddrOfPinnedObject(), sampleCount);
+            }
+            finally
+            {
+                buffer_ptr.Free();
+            }
         }
-
-        /// <summary>
-        /// Gets the OpenTK.Audio.ALFormat for this instance.
-        /// </summary>
-        public ALFormat SampleFormat { get; private set; }
-
-        /// <summary>
-        /// Gets the sampling rate for this instance.
-        /// </summary>
-        public int SampleFrequency { get; private set; }
-
-        /// <summary>
-        /// Gets a value indicating whether this instance is currently capturing samples.
-        /// </summary>
-        public bool IsRunning { get; private set; }
 
         // Retrieves the sample size in bytes for various ALFormats.
         // Compressed formats always return 1.
@@ -280,6 +307,7 @@ namespace OpenTK.Audio
                     alcerrmsg = alcerrcode.ToString();
                     break;
             }
+
             return "The handle returned by Alc.CaptureOpenDevice is null." +
                    "\nAlc Error: " + alcerrmsg +
                    "\nDevice Name: " + devicename +
@@ -289,20 +317,11 @@ namespace OpenTK.Audio
         }
 
         /// <summary>
-        /// Finalizes this instance.
+        ///     Finalizes this instance.
         /// </summary>
         ~AudioCapture()
         {
             Dispose();
-        }
-
-        private bool IsDisposed;
-
-        /// <summary>Closes the device and disposes the instance.</summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         private void Dispose(bool manual)
@@ -318,6 +337,7 @@ namespace OpenTK.Audio
 
                     Alc.CaptureCloseDevice(Handle);
                 }
+
                 IsDisposed = true;
             }
         }

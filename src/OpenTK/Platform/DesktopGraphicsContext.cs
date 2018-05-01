@@ -35,11 +35,11 @@ namespace OpenTK.Platform
         {
             var time = Stopwatch.StartNew();
 
-            #if OPENGL
+#if OPENGL
             new OpenTK.Graphics.OpenGL.GL().LoadEntryPoints();
             new OpenTK.Graphics.OpenGL4.GL().LoadEntryPoints();
             #endif
-            #if OPENGLES
+#if OPENGLES
             new OpenTK.Graphics.ES11.GL().LoadEntryPoints();
             new OpenTK.Graphics.ES20.GL().LoadEntryPoints();
             new OpenTK.Graphics.ES30.GL().LoadEntryPoints();

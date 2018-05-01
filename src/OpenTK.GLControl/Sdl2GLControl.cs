@@ -32,7 +32,7 @@ namespace OpenTK
 {
     internal class Sdl2GLControl : IGLControl
     {
-        private GraphicsMode mode;
+        private readonly GraphicsMode mode;
 
         public Sdl2GLControl(GraphicsMode mode, Control control)
         {

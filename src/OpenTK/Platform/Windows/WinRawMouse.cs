@@ -35,15 +35,15 @@ namespace OpenTK.Platform.Windows
 {
     /// \internal
     /// <summary>
-    /// Contains methods to register for and process mouse WM_INPUT messages.
+    ///     Contains methods to register for and process mouse WM_INPUT messages.
     /// </summary>
     internal sealed class WinRawMouse : IMouseDriver2
     {
         private readonly List<MouseState> mice = new List<MouseState>();
         private readonly List<string> names = new List<string>();
         private readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
-        private readonly IntPtr Window;
         private readonly object UpdateLock = new object();
+        private readonly IntPtr Window;
 
         public WinRawMouse(IntPtr window)
         {
@@ -59,6 +59,51 @@ namespace OpenTK.Platform.Windows
             RefreshDevices();
 
             Debug.Unindent();
+        }
+
+        public MouseState GetState()
+        {
+            lock (UpdateLock)
+            {
+                var master = new MouseState();
+                foreach (var ms in mice)
+                {
+                    master.MergeBits(ms);
+                }
+
+                return master;
+            }
+        }
+
+        public MouseState GetState(int index)
+        {
+            lock (UpdateLock)
+            {
+                if (mice.Count > index)
+                {
+                    return mice[index];
+                }
+
+                return new MouseState();
+            }
+        }
+
+        public void SetPosition(double x, double y)
+        {
+            Functions.SetCursorPos((int)x, (int)y);
+        }
+
+        public MouseState GetCursorState()
+        {
+            // For simplicity, get hardware state
+            // and simply overwrite its x and y location
+            var p = new POINT();
+            Functions.GetCursorPos(ref p);
+
+            var state = GetState();
+            state.X = p.X;
+            state.Y = p.Y;
+            return state;
         }
 
         public void RefreshDevices()
@@ -109,14 +154,16 @@ namespace OpenTK.Platform.Windows
                         {
                             // Added to address OpenTK issue 3198 with mouse on Windows 8
                             var deviceClassGUID = (string)regkey.GetValue("ClassGUID");
-                            var classGUIDKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Class\" + deviceClassGUID);
+                            var classGUIDKey =
+                                Registry.LocalMachine.OpenSubKey(
+                                    @"SYSTEM\CurrentControlSet\Control\Class\" + deviceClassGUID);
                             deviceClass = classGUIDKey != null ? (string)classGUIDKey.GetValue("Class") : string.Empty;
                         }
 
                         // deviceDesc remained null on a new Win7 system - not sure why.
                         // Since the description is not vital information, use a dummy description
                         // when that happens.
-                        if (String.IsNullOrEmpty(deviceDesc))
+                        if (string.IsNullOrEmpty(deviceDesc))
                         {
                             deviceDesc = "Windows Mouse " + mice.Count;
                         }
@@ -125,7 +172,7 @@ namespace OpenTK.Platform.Windows
                             deviceDesc = deviceDesc.Substring(deviceDesc.LastIndexOf(';') + 1);
                         }
 
-                        if (!String.IsNullOrEmpty(deviceClass) && deviceClass.ToLower().Equals("mouse"))
+                        if (!string.IsNullOrEmpty(deviceClass) && deviceClass.ToLower().Equals("mouse"))
                         {
                             if (!rawids.ContainsKey(new ContextHandle(dev.Device)))
                             {
@@ -133,7 +180,7 @@ namespace OpenTK.Platform.Windows
                                 var info = new RawInputDeviceInfo();
                                 var devInfoSize = API.RawInputDeviceInfoSize;
                                 Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICEINFO,
-                                        info, ref devInfoSize);
+                                    info, ref devInfoSize);
 
                                 RegisterRawDevice(Window, deviceDesc);
                                 var state = new MouseState();
@@ -182,46 +229,55 @@ namespace OpenTK.Platform.Windows
                     mouse.EnableBit((int)MouseButton.Left);
                     Functions.SetCapture(Window);
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_UP) != 0)
                 {
                     mouse.DisableBit((int)MouseButton.Left);
                     Functions.ReleaseCapture();
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_DOWN) != 0)
                 {
                     mouse.EnableBit((int)MouseButton.Right);
                     Functions.SetCapture(Window);
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_UP) != 0)
                 {
                     mouse.DisableBit((int)MouseButton.Right);
                     Functions.ReleaseCapture();
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_DOWN) != 0)
                 {
                     mouse.EnableBit((int)MouseButton.Middle);
                     Functions.SetCapture(Window);
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_UP) != 0)
                 {
                     mouse.DisableBit((int)MouseButton.Middle);
                     Functions.ReleaseCapture();
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_DOWN) != 0)
                 {
                     mouse.EnableBit((int)MouseButton.Button1);
                     Functions.SetCapture(Window);
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_UP) != 0)
                 {
                     mouse.DisableBit((int)MouseButton.Button1);
                     Functions.ReleaseCapture();
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_DOWN) != 0)
                 {
                     mouse.EnableBit((int)MouseButton.Button2);
                     Functions.SetCapture(Window);
                 }
+
                 if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_UP) != 0)
                 {
                     mouse.DisableBit((int)MouseButton.Button2);
@@ -244,7 +300,8 @@ namespace OpenTK.Platform.Windows
                     mouse.Y = raw.LastY;
                 }
                 else
-                {   // Seems like MOUSE_MOVE_RELATIVE is the default, unless otherwise noted.
+                {
+                    // Seems like MOUSE_MOVE_RELATIVE is the default, unless otherwise noted.
                     mouse.X += raw.LastX;
                     mouse.Y += raw.LastY;
                 }
@@ -290,9 +347,9 @@ namespace OpenTK.Platform.Windows
                 return null;
             }
 
-            var id_01 = split[0];    // ACPI (Class code)
-            var id_02 = split[1];    // PNP0303 (SubClass code)
-            var id_03 = split[2];    // 3&13c0b0c5&0 (Protocol code)
+            var id_01 = split[0]; // ACPI (Class code)
+            var id_02 = split[1]; // PNP0303 (SubClass code)
+            var id_03 = split[2]; // 3&13c0b0c5&0 (Protocol code)
             // The final part is the class GUID and is not needed here
 
             var findme = $@"System\CurrentControlSet\Enum\{id_01}\{id_02}\{id_03}";
@@ -303,7 +360,7 @@ namespace OpenTK.Platform.Windows
 
         private static void RegisterRawDevice(IntPtr window, string device)
         {
-            var rid = new RawInputDevice[]
+            var rid = new[]
             {
                 new RawInputDevice(HIDUsageGD.Mouse, RawInputDeviceFlags.INPUTSINK, window)
             };
@@ -317,52 +374,6 @@ namespace OpenTK.Platform.Windows
             {
                 Debug.Print("Registered mouse {0}", device);
             }
-        }
-
-        public MouseState GetState()
-        {
-            lock (UpdateLock)
-            {
-                var master = new MouseState();
-                foreach (var ms in mice)
-                {
-                    master.MergeBits(ms);
-                }
-                return master;
-            }
-        }
-
-        public MouseState GetState(int index)
-        {
-            lock (UpdateLock)
-            {
-                if (mice.Count > index)
-                {
-                    return mice[index];
-                }
-                else
-                {
-                    return new MouseState();
-                }
-            }
-        }
-
-        public void SetPosition(double x, double y)
-        {
-            Functions.SetCursorPos((int)x, (int)y);
-        }
-
-        public MouseState GetCursorState()
-        {
-            // For simplicity, get hardware state
-            // and simply overwrite its x and y location
-            var p = new POINT();
-            Functions.GetCursorPos(ref p);
-
-            var state = GetState();
-            state.X = p.X;
-            state.Y = p.Y;
-            return state;
         }
     }
 }

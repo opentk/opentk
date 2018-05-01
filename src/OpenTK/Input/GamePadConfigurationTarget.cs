@@ -25,14 +25,12 @@
 // THE SOFTWARE.
 //
 
-using System;
-
 namespace OpenTK.Input
 {
     internal struct GamePadConfigurationTarget
     {
-        private Nullable<Buttons> map_button;
-        private Nullable<GamePadAxes> map_axis;
+        private Buttons? map_button;
+        private GamePadAxes? map_axis;
 
         public GamePadConfigurationTarget(Buttons button)
             : this()
@@ -48,7 +46,7 @@ namespace OpenTK.Input
             map_axis = axis;
         }
 
-        public ConfigurationType Type { get; private set; }
+        public ConfigurationType Type { get; }
 
         public GamePadAxes Axis
         {

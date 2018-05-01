@@ -59,6 +59,6 @@ namespace OpenTK.Platform.MacOS
         Magnify = 30,
         Swipe = 31,
         SmartMagnify = 32,
-        QuickLook = 33,
+        QuickLook = 33
     }
 }

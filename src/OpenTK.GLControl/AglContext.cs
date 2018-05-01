@@ -28,27 +28,27 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using OpenTK.Graphics;
+using OpenTK.Platform.MacOS.Carbon;
 
 namespace OpenTK.Platform.MacOS
 {
-    using Carbon;
-    using Graphics;
-
     using AGLRendererInfo = IntPtr;
     using AGLPixelFormat = IntPtr;
     using AGLContext = IntPtr;
     using AGLPbuffer = IntPtr;
 
     /// <summary>
-    /// AGL context implementation for WinForms compatibility.
+    ///     AGL context implementation for WinForms compatibility.
     /// </summary>
     internal class AglContext : IGraphicsContext, IGraphicsContextInternal
     {
-        private IWindowInfo carbonWindow;
-        private IGraphicsContext dummyContext; // for extension loading
-
         private readonly GetInt XOffset;
         private readonly GetInt YOffset;
+        private readonly IWindowInfo carbonWindow;
+        private IGraphicsContext dummyContext; // for extension loading
+
+        private bool firstSwap = true;
 
         public AglContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext,
             GetInt xoffset, GetInt yoffset)
@@ -68,7 +68,9 @@ namespace OpenTK.Platform.MacOS
             }
             else if (shareContext is GraphicsContext)
             {
-                var shareHandle = shareContext != null ? (shareContext as IGraphicsContextInternal).Context : (ContextHandle)IntPtr.Zero;
+                var shareHandle = shareContext != null
+                    ? (shareContext as IGraphicsContextInternal).Context
+                    : (ContextHandle)IntPtr.Zero;
                 shareContextRef = shareHandle.Handle;
             }
 
@@ -79,6 +81,100 @@ namespace OpenTK.Platform.MacOS
 
             CreateContext(mode, carbonWindow, shareContextRef, true);
         }
+
+        public GraphicsMode Mode { get; set; }
+
+        public bool VSync
+        {
+            get => SwapInterval != 0;
+            set => SwapInterval = value ? 1 : 0;
+        }
+
+        public void Update(IWindowInfo window)
+        {
+            SetDrawable(window);
+            SetBufferRect(window);
+
+            Agl.aglUpdateContext(Context.Handle);
+        }
+
+        public void SwapBuffers()
+        {
+            // this is part of the hack to avoid dropping the first frame when
+            // using multiple GLControls.
+            if (firstSwap)
+            {
+                Debug.WriteLine("--> Resetting drawable. <--");
+                firstSwap = false;
+                SetDrawable(carbonWindow);
+                Update(carbonWindow);
+            }
+
+            Agl.aglSwapBuffers(Context.Handle);
+            MyAGLReportError("aglSwapBuffers");
+        }
+
+        public void MakeCurrent(IWindowInfo window)
+        {
+            if (Agl.aglSetCurrentContext(Context.Handle) == false)
+            {
+                MyAGLReportError("aglSetCurrentContext");
+            }
+        }
+
+        public bool IsCurrent => Context.Handle == Agl.aglGetCurrentContext();
+
+        public int SwapInterval
+        {
+            get
+            {
+                var swap_interval = 0;
+                if (Agl.aglGetInteger(Context.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, out swap_interval))
+                {
+                    return swap_interval;
+                }
+
+                MyAGLReportError("aglGetInteger");
+                return 0;
+            }
+            set
+            {
+                if (!Agl.aglSetInteger(Context.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, ref value))
+                {
+                    MyAGLReportError("aglSetInteger");
+                }
+            }
+        }
+
+        public void LoadAll()
+        {
+            dummyContext.LoadAll();
+        }
+
+        public bool IsDisposed { get; private set; }
+
+        public GraphicsMode GraphicsMode => Mode;
+
+        public bool ErrorChecking { get; set; }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        public IntPtr GetAddress(string function)
+        {
+            return NS.GetAddress(function);
+        }
+
+        public IntPtr GetAddress(IntPtr function)
+        {
+            return NS.GetAddress(function);
+        }
+
+        public IGraphicsContext Implementation => this;
+
+        public ContextHandle Context { get; private set; }
 
         private void AddPixelAttrib(List<int> aglAttributes, Agl.PixelFormatAttribute pixelFormatAttribute)
         {
@@ -127,10 +223,7 @@ namespace OpenTK.Platform.MacOS
 
             dummyContext = new GraphicsContext(Context,
                 GetAddress,
-                delegate
-                {
-                    return new ContextHandle(Agl.aglGetCurrentContext());
-                });
+                delegate { return new ContextHandle(Agl.aglGetCurrentContext()); });
         }
 
         private void SetBufferRect(IWindowInfo carbonWindow)
@@ -149,6 +242,7 @@ namespace OpenTK.Platform.MacOS
             {
                 glrect[0] = rect.X;
             }
+
             if (YOffset != null)
             {
                 glrect[1] = rect.Y + YOffset();
@@ -157,6 +251,7 @@ namespace OpenTK.Platform.MacOS
             {
                 glrect[1] = rect.Y;
             }
+
             glrect[2] = rect.Width;
             glrect[3] = rect.Height;
 
@@ -184,14 +279,6 @@ namespace OpenTK.Platform.MacOS
             return windowPort;
         }
 
-        public void Update(IWindowInfo window)
-        {
-            SetDrawable(window);
-            SetBufferRect(window);
-
-            Agl.aglUpdateContext(Context.Handle);
-        }
-
         private void MyAGLReportError(string function)
         {
             var err = Agl.GetError();
@@ -202,84 +289,9 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        private bool firstSwap = true;
-        public void SwapBuffers()
-        {
-            // this is part of the hack to avoid dropping the first frame when
-            // using multiple GLControls.
-            if (firstSwap)
-            {
-                Debug.WriteLine("--> Resetting drawable. <--");
-                firstSwap = false;
-                SetDrawable(carbonWindow);
-                Update(carbonWindow);
-            }
-
-            Agl.aglSwapBuffers(Context.Handle);
-            MyAGLReportError("aglSwapBuffers");
-        }
-
-        public void MakeCurrent(IWindowInfo window)
-        {
-            if (Agl.aglSetCurrentContext(Context.Handle) == false)
-            {
-                MyAGLReportError("aglSetCurrentContext");
-            }
-        }
-
-        public bool IsCurrent => (Context.Handle == Agl.aglGetCurrentContext());
-
-        public int SwapInterval
-        {
-            get
-            {
-                var swap_interval = 0;
-                if (Agl.aglGetInteger(Context.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, out swap_interval))
-                {
-                    return swap_interval;
-                }
-                else
-                {
-                    MyAGLReportError("aglGetInteger");
-                    return 0;
-                }
-            }
-            set
-            {
-                if (!Agl.aglSetInteger(Context.Handle, Agl.ParameterNames.AGL_SWAP_INTERVAL, ref value))
-                {
-                    MyAGLReportError("aglSetInteger");
-                }
-            }
-        }
-
-        public GraphicsMode Mode { get; set; }
-
-        public void LoadAll()
-        {
-            dummyContext.LoadAll();
-        }
-
-        public bool IsDisposed { get; private set; }
-
-        public bool VSync
-        {
-            get => SwapInterval != 0;
-            set => SwapInterval = value ? 1 : 0;
-        }
-
-        public GraphicsMode GraphicsMode => Mode;
-
-        public bool ErrorChecking { get; set; }
-
         ~AglContext()
         {
             Dispose(false);
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
         }
 
         private void Dispose(bool disposing)
@@ -302,7 +314,7 @@ namespace OpenTK.Platform.MacOS
             // Actually, it seems to crash the mono runtime. -AMK 2013
 
             Debug.Print("Destroying context");
-            if (Agl.aglDestroyContext(Context.Handle) == true)
+            if (Agl.aglDestroyContext(Context.Handle))
             {
                 Debug.Print("Context destruction completed successfully.");
                 Context = ContextHandle.Zero;
@@ -321,19 +333,5 @@ namespace OpenTK.Platform.MacOS
 
             IsDisposed = true;
         }
-
-        public IntPtr GetAddress(string function)
-        {
-            return NS.GetAddress(function);
-        }
-
-        public IntPtr GetAddress(IntPtr function)
-        {
-            return NS.GetAddress(function);
-        }
-
-        public IGraphicsContext Implementation => this;
-
-        public ContextHandle Context { get; private set; }
     }
 }

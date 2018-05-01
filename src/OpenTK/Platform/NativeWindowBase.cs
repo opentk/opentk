@@ -28,31 +28,31 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using OpenTK.Input;
 #if !MINIMAL
 using System.Drawing;
+
 #endif
-using OpenTK.Input;
 
 namespace OpenTK.Platform
 {
     // Common base class for all INativeWindow implementations
     internal abstract class NativeWindowBase : INativeWindow
     {
-        private readonly MouseButtonEventArgs MouseDownArgs = new MouseButtonEventArgs();
-        private readonly MouseButtonEventArgs MouseUpArgs = new MouseButtonEventArgs();
-        private readonly MouseMoveEventArgs MouseMoveArgs = new MouseMoveEventArgs();
-        private readonly MouseWheelEventArgs MouseWheelArgs = new MouseWheelEventArgs();
+        private readonly FileDropEventArgs FileDropArgs = new FileDropEventArgs();
 
         private readonly KeyboardKeyEventArgs KeyDownArgs = new KeyboardKeyEventArgs();
-        private readonly KeyboardKeyEventArgs KeyUpArgs = new KeyboardKeyEventArgs();
         private readonly KeyPressEventArgs KeyPressArgs = new KeyPressEventArgs((char)0);
-
-        private readonly FileDropEventArgs FileDropArgs = new FileDropEventArgs();
+        private readonly KeyboardKeyEventArgs KeyUpArgs = new KeyboardKeyEventArgs();
+        private readonly MouseButtonEventArgs MouseDownArgs = new MouseButtonEventArgs();
+        private readonly MouseMoveEventArgs MouseMoveArgs = new MouseMoveEventArgs();
+        private readonly MouseButtonEventArgs MouseUpArgs = new MouseButtonEventArgs();
+        private readonly MouseWheelEventArgs MouseWheelArgs = new MouseWheelEventArgs();
+        protected KeyboardState KeyboardState = new KeyboardState();
 
         // In order to simplify mouse event implementation,
         // we can store the current mouse state here.
         protected MouseState MouseState;
-        protected KeyboardState KeyboardState = new KeyboardState();
 
         private MouseState PreviousMouseState;
 
@@ -61,235 +61,6 @@ namespace OpenTK.Platform
             MouseState.SetIsConnected(true);
             KeyboardState.SetIsConnected(true);
             PreviousMouseState.SetIsConnected(true);
-        }
-
-        protected void OnMove(EventArgs e)
-        {
-            Move(this, e);
-        }
-
-        protected void OnResize(EventArgs e)
-        {
-            Resize(this, e);
-        }
-
-        protected void OnClosing(CancelEventArgs e)
-        {
-            Closing(this, e);
-        }
-
-        protected void OnClosed(EventArgs e)
-        {
-            Closed(this, e);
-        }
-
-        protected void OnDisposed(EventArgs e)
-        {
-            Disposed(this, e);
-        }
-
-        protected void OnIconChanged(EventArgs e)
-        {
-            IconChanged(this, e);
-        }
-
-        protected void OnTitleChanged(EventArgs e)
-        {
-            TitleChanged(this, e);
-        }
-
-        protected void OnVisibleChanged(EventArgs e)
-        {
-            VisibleChanged(this, e);
-        }
-
-        protected void OnFocusedChanged(EventArgs e)
-        {
-            FocusedChanged(this, e);
-        }
-
-        protected void OnWindowBorderChanged(EventArgs e)
-        {
-            WindowBorderChanged(this, e);
-        }
-
-        protected void OnWindowStateChanged(EventArgs e)
-        {
-            WindowStateChanged(this, e);
-        }
-
-        protected void OnKeyDown(Key key, bool repeat)
-        {
-            KeyboardState.SetKeyState(key, true);
-
-            var e = KeyDownArgs;
-            e.Keyboard = KeyboardState;
-            e.Key = key;
-            e.IsRepeat = repeat;
-            KeyDown(this, e);
-        }
-
-        protected void OnKeyPress(char c)
-        {
-            var e = KeyPressArgs;
-            e.KeyChar = c;
-            KeyPress(this, e);
-        }
-
-        protected void OnKeyUp(Key key)
-        {
-            KeyboardState.SetKeyState(key, false);
-
-            var e = KeyUpArgs;
-            e.Keyboard = KeyboardState;
-            e.Key = key;
-            e.IsRepeat = false;
-            KeyUp(this, e);
-        }
-
-        protected void OnFileDrop(string s)
-        {
-            var e = FileDropArgs;
-            FileDropArgs.FileName = s;
-            FileDrop(this, e);
-        }
-
-        /// \internal
-        /// <summary>
-        /// Call this method to simulate KeyDown/KeyUp events
-        /// on platforms that do not generate key events for
-        /// modifier flags (e.g. Mac/Cocoa).
-        /// Note: this method does not distinguish between the
-        /// left and right variants of modifier keys.
-        /// </summary>
-        /// <param name="mods">Mods.</param>
-        protected void UpdateModifierFlags(KeyModifiers mods)
-        {
-            var alt = (mods & KeyModifiers.Alt) != 0;
-            var control = (mods & KeyModifiers.Control) != 0;
-            var shift = (mods & KeyModifiers.Shift) != 0;
-
-            if (alt)
-            {
-                OnKeyDown(Key.AltLeft, KeyboardState[Key.AltLeft]);
-                OnKeyDown(Key.AltRight, KeyboardState[Key.AltLeft]);
-            }
-            else
-            {
-                if (KeyboardState[Key.AltLeft])
-                {
-                    OnKeyUp(Key.AltLeft);
-                }
-                if (KeyboardState[Key.AltRight])
-                {
-                    OnKeyUp(Key.AltRight);
-                }
-            }
-
-            if (control)
-            {
-                OnKeyDown(Key.ControlLeft, KeyboardState[Key.AltLeft]);
-                OnKeyDown(Key.ControlRight, KeyboardState[Key.AltLeft]);
-            }
-            else
-            {
-                if (KeyboardState[Key.ControlLeft])
-                {
-                    OnKeyUp(Key.ControlLeft);
-                }
-                if (KeyboardState[Key.ControlRight])
-                {
-                    OnKeyUp(Key.ControlRight);
-                }
-            }
-
-            if (shift)
-            {
-                OnKeyDown(Key.ShiftLeft, KeyboardState[Key.AltLeft]);
-                OnKeyDown(Key.ShiftRight, KeyboardState[Key.AltLeft]);
-            }
-            else
-            {
-                if (KeyboardState[Key.ShiftLeft])
-                {
-                    OnKeyUp(Key.ShiftLeft);
-                }
-                if (KeyboardState[Key.ShiftRight])
-                {
-                    OnKeyUp(Key.ShiftRight);
-                }
-            }
-        }
-
-        protected void OnMouseLeave(EventArgs e)
-        {
-            MouseLeave(this, e);
-        }
-
-        protected void OnMouseEnter(EventArgs e)
-        {
-            MouseEnter(this, e);
-        }
-
-        protected void OnMouseDown(MouseButton button)
-        {
-            MouseState[button] = true;
-
-            var e = MouseDownArgs;
-            e.Button = button;
-            e.IsPressed = true;
-            e.Mouse = MouseState;
-
-            MouseDown(this, e);
-        }
-
-        protected void OnMouseUp(MouseButton button)
-        {
-            MouseState[button] = false;
-
-            var e = MouseUpArgs;
-            e.Button = button;
-            e.IsPressed = false;
-            e.Mouse = MouseState;
-
-            MouseUp(this, e);
-        }
-
-        protected void OnMouseMove(int x, int y)
-        {
-            MouseState.X = x;
-            MouseState.Y = y;
-
-            var e = MouseMoveArgs;
-            e.Mouse = MouseState;
-            e.XDelta = MouseState.X - PreviousMouseState.X;
-            e.YDelta = MouseState.Y - PreviousMouseState.Y;
-
-            if (e.XDelta == 0 && e.YDelta == 0)
-            {
-                return;
-            }
-
-            PreviousMouseState = MouseState;
-            MouseMove(this, e);
-        }
-
-        protected void OnMouseWheel(float dx, float dy)
-        {
-            MouseState.SetScrollRelative(dx, dy);
-
-            var e = MouseWheelArgs;
-            e.Mouse = MouseState;
-            e.DeltaPrecise = MouseState.Scroll.Y - PreviousMouseState.Scroll.Y;
-
-            if (dx == 0 && dy == 0)
-            {
-                Debug.WriteLine("OnMouseWheel called without moving the mouse wheel.");
-                return;
-            }
-
-            PreviousMouseState = MouseState;
-            MouseWheel(this, e);
         }
 
         public event EventHandler<EventArgs> Move = delegate { };
@@ -417,6 +188,238 @@ namespace OpenTK.Platform
             GC.SuppressFinalize(this);
         }
 
+        protected void OnMove(EventArgs e)
+        {
+            Move(this, e);
+        }
+
+        protected void OnResize(EventArgs e)
+        {
+            Resize(this, e);
+        }
+
+        protected void OnClosing(CancelEventArgs e)
+        {
+            Closing(this, e);
+        }
+
+        protected void OnClosed(EventArgs e)
+        {
+            Closed(this, e);
+        }
+
+        protected void OnDisposed(EventArgs e)
+        {
+            Disposed(this, e);
+        }
+
+        protected void OnIconChanged(EventArgs e)
+        {
+            IconChanged(this, e);
+        }
+
+        protected void OnTitleChanged(EventArgs e)
+        {
+            TitleChanged(this, e);
+        }
+
+        protected void OnVisibleChanged(EventArgs e)
+        {
+            VisibleChanged(this, e);
+        }
+
+        protected void OnFocusedChanged(EventArgs e)
+        {
+            FocusedChanged(this, e);
+        }
+
+        protected void OnWindowBorderChanged(EventArgs e)
+        {
+            WindowBorderChanged(this, e);
+        }
+
+        protected void OnWindowStateChanged(EventArgs e)
+        {
+            WindowStateChanged(this, e);
+        }
+
+        protected void OnKeyDown(Key key, bool repeat)
+        {
+            KeyboardState.SetKeyState(key, true);
+
+            var e = KeyDownArgs;
+            e.Keyboard = KeyboardState;
+            e.Key = key;
+            e.IsRepeat = repeat;
+            KeyDown(this, e);
+        }
+
+        protected void OnKeyPress(char c)
+        {
+            var e = KeyPressArgs;
+            e.KeyChar = c;
+            KeyPress(this, e);
+        }
+
+        protected void OnKeyUp(Key key)
+        {
+            KeyboardState.SetKeyState(key, false);
+
+            var e = KeyUpArgs;
+            e.Keyboard = KeyboardState;
+            e.Key = key;
+            e.IsRepeat = false;
+            KeyUp(this, e);
+        }
+
+        protected void OnFileDrop(string s)
+        {
+            var e = FileDropArgs;
+            FileDropArgs.FileName = s;
+            FileDrop(this, e);
+        }
+
+        /// \internal
+        /// <summary>
+        ///     Call this method to simulate KeyDown/KeyUp events
+        ///     on platforms that do not generate key events for
+        ///     modifier flags (e.g. Mac/Cocoa).
+        ///     Note: this method does not distinguish between the
+        ///     left and right variants of modifier keys.
+        /// </summary>
+        /// <param name="mods">Mods.</param>
+        protected void UpdateModifierFlags(KeyModifiers mods)
+        {
+            var alt = (mods & KeyModifiers.Alt) != 0;
+            var control = (mods & KeyModifiers.Control) != 0;
+            var shift = (mods & KeyModifiers.Shift) != 0;
+
+            if (alt)
+            {
+                OnKeyDown(Key.AltLeft, KeyboardState[Key.AltLeft]);
+                OnKeyDown(Key.AltRight, KeyboardState[Key.AltLeft]);
+            }
+            else
+            {
+                if (KeyboardState[Key.AltLeft])
+                {
+                    OnKeyUp(Key.AltLeft);
+                }
+
+                if (KeyboardState[Key.AltRight])
+                {
+                    OnKeyUp(Key.AltRight);
+                }
+            }
+
+            if (control)
+            {
+                OnKeyDown(Key.ControlLeft, KeyboardState[Key.AltLeft]);
+                OnKeyDown(Key.ControlRight, KeyboardState[Key.AltLeft]);
+            }
+            else
+            {
+                if (KeyboardState[Key.ControlLeft])
+                {
+                    OnKeyUp(Key.ControlLeft);
+                }
+
+                if (KeyboardState[Key.ControlRight])
+                {
+                    OnKeyUp(Key.ControlRight);
+                }
+            }
+
+            if (shift)
+            {
+                OnKeyDown(Key.ShiftLeft, KeyboardState[Key.AltLeft]);
+                OnKeyDown(Key.ShiftRight, KeyboardState[Key.AltLeft]);
+            }
+            else
+            {
+                if (KeyboardState[Key.ShiftLeft])
+                {
+                    OnKeyUp(Key.ShiftLeft);
+                }
+
+                if (KeyboardState[Key.ShiftRight])
+                {
+                    OnKeyUp(Key.ShiftRight);
+                }
+            }
+        }
+
+        protected void OnMouseLeave(EventArgs e)
+        {
+            MouseLeave(this, e);
+        }
+
+        protected void OnMouseEnter(EventArgs e)
+        {
+            MouseEnter(this, e);
+        }
+
+        protected void OnMouseDown(MouseButton button)
+        {
+            MouseState[button] = true;
+
+            var e = MouseDownArgs;
+            e.Button = button;
+            e.IsPressed = true;
+            e.Mouse = MouseState;
+
+            MouseDown(this, e);
+        }
+
+        protected void OnMouseUp(MouseButton button)
+        {
+            MouseState[button] = false;
+
+            var e = MouseUpArgs;
+            e.Button = button;
+            e.IsPressed = false;
+            e.Mouse = MouseState;
+
+            MouseUp(this, e);
+        }
+
+        protected void OnMouseMove(int x, int y)
+        {
+            MouseState.X = x;
+            MouseState.Y = y;
+
+            var e = MouseMoveArgs;
+            e.Mouse = MouseState;
+            e.XDelta = MouseState.X - PreviousMouseState.X;
+            e.YDelta = MouseState.Y - PreviousMouseState.Y;
+
+            if (e.XDelta == 0 && e.YDelta == 0)
+            {
+                return;
+            }
+
+            PreviousMouseState = MouseState;
+            MouseMove(this, e);
+        }
+
+        protected void OnMouseWheel(float dx, float dy)
+        {
+            MouseState.SetScrollRelative(dx, dy);
+
+            var e = MouseWheelArgs;
+            e.Mouse = MouseState;
+            e.DeltaPrecise = MouseState.Scroll.Y - PreviousMouseState.Scroll.Y;
+
+            if (dx == 0 && dy == 0)
+            {
+                Debug.WriteLine("OnMouseWheel called without moving the mouse wheel.");
+                return;
+            }
+
+            PreviousMouseState = MouseState;
+            MouseWheel(this, e);
+        }
+
         protected abstract void Dispose(bool disposing);
 
         ~NativeWindowBase()
@@ -426,4 +429,3 @@ namespace OpenTK.Platform
         }
     }
 }
-

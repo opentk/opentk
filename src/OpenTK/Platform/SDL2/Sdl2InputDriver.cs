@@ -33,19 +33,19 @@ namespace OpenTK.Platform.SDL2
 {
     internal class Sdl2InputDriver : IInputDriver2
     {
-        private readonly static Dictionary<IntPtr, Sdl2InputDriver> DriverHandles =
+        private static readonly Dictionary<IntPtr, Sdl2InputDriver> DriverHandles =
             new Dictionary<IntPtr, Sdl2InputDriver>();
 
+        private static int count;
+
         private readonly IntPtr driver_handle;
+        private readonly IntPtr EventFilterDelegate;
+
+        private readonly EventFilter EventFilterDelegate_GCUnsafe = FilterInputEvents;
+        private readonly Sdl2JoystickDriver joystick_driver = new Sdl2JoystickDriver();
 
         private readonly Sdl2Keyboard keyboard_driver = new Sdl2Keyboard();
         private readonly Sdl2Mouse mouse_driver = new Sdl2Mouse();
-        private readonly Sdl2JoystickDriver joystick_driver = new Sdl2JoystickDriver();
-
-        private readonly EventFilter EventFilterDelegate_GCUnsafe = FilterInputEvents;
-        private readonly IntPtr EventFilterDelegate;
-
-        private static int count;
         private bool disposed;
 
         public Sdl2InputDriver()
@@ -63,14 +63,30 @@ namespace OpenTK.Platform.SDL2
                 {
                     Debug.Print("[SDL2] InputDriver failed to init Joystick subsystem. Error: {0}", SDL.GetError());
                 }
+
                 if (SDL.InitSubSystem(SystemFlags.GAMECONTROLLER) < 0)
                 {
-                    Debug.Print("[SDL2] InputDriver failed to init GameController subsystem. Error: {0}", SDL.GetError());
+                    Debug.Print("[SDL2] InputDriver failed to init GameController subsystem. Error: {0}",
+                        SDL.GetError());
                 }
             }
         }
 
-        private unsafe static int FilterInputEvents(IntPtr driver_handle, IntPtr e)
+        public IMouseDriver2 MouseDriver => mouse_driver;
+
+        public IKeyboardDriver2 KeyboardDriver => keyboard_driver;
+
+        public IGamePadDriver GamePadDriver => joystick_driver;
+
+        public IJoystickDriver2 JoystickDriver => joystick_driver;
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private static unsafe int FilterInputEvents(IntPtr driver_handle, IntPtr e)
         {
             try
             {
@@ -147,14 +163,6 @@ namespace OpenTK.Platform.SDL2
             return 0;
         }
 
-        public IMouseDriver2 MouseDriver => mouse_driver;
-
-        public IKeyboardDriver2 KeyboardDriver => keyboard_driver;
-
-        public IGamePadDriver GamePadDriver => joystick_driver;
-
-        public IJoystickDriver2 JoystickDriver => joystick_driver;
-
         private void Dispose(bool manual)
         {
             if (!disposed)
@@ -167,20 +175,16 @@ namespace OpenTK.Platform.SDL2
                     {
                         SDL.DelEventWatch(EventFilterDelegate, driver_handle);
                     }
+
                     DriverHandles.Remove(driver_handle);
                 }
                 else
                 {
                     Debug.WriteLine("Sdl2InputDriver leaked, did you forget to call Dispose()?");
                 }
+
                 disposed = true;
             }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         ~Sdl2InputDriver()
@@ -189,4 +193,3 @@ namespace OpenTK.Platform.SDL2
         }
     }
 }
-

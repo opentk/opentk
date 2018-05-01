@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 #if !MINIMAL
 using Microsoft.Win32;
+
 #endif
 
 namespace OpenTK.Platform.Windows
@@ -43,7 +44,7 @@ namespace OpenTK.Platform.Windows
                 HandleDisplaySettingsChanged;
         }
 
-        public sealed override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
+        public override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
         {
             DeviceMode mode = null;
 
@@ -55,17 +56,17 @@ namespace OpenTK.Platform.Windows
                 mode.BitsPerPel = resolution.BitsPerPixel;
                 mode.DisplayFrequency = (int)resolution.RefreshRate;
                 mode.Fields = Constants.DM_BITSPERPEL
-                    | Constants.DM_PELSWIDTH
-                    | Constants.DM_PELSHEIGHT
-                    | Constants.DM_DISPLAYFREQUENCY;
+                              | Constants.DM_PELSWIDTH
+                              | Constants.DM_PELSHEIGHT
+                              | Constants.DM_DISPLAYFREQUENCY;
             }
 
             return Constants.DISP_CHANGE_SUCCESSFUL ==
-                Functions.ChangeDisplaySettingsEx((string)device.Id, mode, IntPtr.Zero,
-                    ChangeDisplaySettingsEnum.Fullscreen, IntPtr.Zero);
+                   Functions.ChangeDisplaySettingsEx((string)device.Id, mode, IntPtr.Zero,
+                       ChangeDisplaySettingsEnum.Fullscreen, IntPtr.Zero);
         }
 
-        public sealed override bool TryRestoreResolution(DisplayDevice device)
+        public override bool TryRestoreResolution(DisplayDevice device)
         {
             return TryChangeResolution(device, null);
         }
@@ -103,8 +104,10 @@ namespace OpenTK.Platform.Windows
 
                     // The second function should only be executed when the first one fails
                     // (e.g. when the monitor is disabled)
-                    if (Functions.EnumDisplaySettingsEx(dev1.DeviceName, DisplayModeSettingsEnum.CurrentSettings, monitor_mode, 0) ||
-                        Functions.EnumDisplaySettingsEx(dev1.DeviceName, DisplayModeSettingsEnum.RegistrySettings, monitor_mode, 0))
+                    if (Functions.EnumDisplaySettingsEx(dev1.DeviceName, DisplayModeSettingsEnum.CurrentSettings,
+                            monitor_mode, 0) ||
+                        Functions.EnumDisplaySettingsEx(dev1.DeviceName, DisplayModeSettingsEnum.RegistrySettings,
+                            monitor_mode, 0))
                     {
                         VerifyMode(dev1, monitor_mode);
 
@@ -136,14 +139,14 @@ namespace OpenTK.Platform.Windows
                     // Construct the OpenTK DisplayDevice through the accumulated parameters.
                     // The constructor will automatically add the DisplayDevice to the list
                     // of available devices.
-                    #pragma warning disable 612,618
+#pragma warning disable 612,618
                     opentk_dev = new DisplayDevice(
                         opentk_dev_current_res,
                         opentk_dev_primary,
                         opentk_dev_available_res,
                         opentk_dev_current_res.Bounds,
                         dev1.DeviceName);
-                    #pragma warning restore 612,618
+#pragma warning restore 612,618
 
                     // Set the original resolution if the DisplayDevice was previously available.
                     foreach (var existingDevice in previousDevices)
@@ -162,7 +165,8 @@ namespace OpenTK.Platform.Windows
                     }
 
                     Debug.Print("DisplayDevice {0} ({1}) supports {2} resolutions.",
-                        device_count, opentk_dev.IsPrimary ? "primary" : "secondary", opentk_dev.AvailableResolutions.Count);
+                        device_count, opentk_dev.IsPrimary ? "primary" : "secondary",
+                        opentk_dev.AvailableResolutions.Count);
                 }
             }
         }
@@ -174,6 +178,7 @@ namespace OpenTK.Platform.Windows
             {
                 scale = monitor_mode.LogPixels / 96.0f;
             }
+
             return scale;
         }
 

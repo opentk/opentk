@@ -23,8 +23,8 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System.Drawing;
 using System.Windows.Forms;
-
 using OpenTK.Graphics;
 using OpenTK.Platform;
 using OpenTK.Platform.MacOS;
@@ -33,8 +33,11 @@ namespace OpenTK
 {
     internal class CarbonGLControl : IGLControl
     {
-        private GraphicsMode mode;
-        private Control control;
+        private readonly Control control;
+
+        // TODO: Fix this
+        private bool lastIsIdle;
+        private readonly GraphicsMode mode;
 
         internal CarbonGLControl(GraphicsMode mode, Control owner)
         {
@@ -44,31 +47,12 @@ namespace OpenTK
             WindowInfo = Utilities.CreateMacOSCarbonWindowInfo(control.Handle, false, true);
         }
 
-        private int GetXOffset()
-        {
-            return control.Location.X;
-        }
-
-        private int GetYOffset()
-        {
-            if (control.TopLevelControl != null)
-            {
-                var offset = control.PointToScreen (control.Location);
-                var windowOffset = control.TopLevelControl.PointToScreen (System.Drawing.Point.Empty);
-                var relativeY = offset.Y - windowOffset.Y; //control.TopLevelControl.Location.Y is not the same as windowOffset.Y for some reason.
-                return control.TopLevelControl.ClientSize.Height - control.Bottom - relativeY;
-            }
-            return control.Location.Y;
-        }
-
         public IGraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
         {
             // AGL does not support OpenGL profiles
             return new AglContext(mode, WindowInfo, GraphicsContext.CurrentContext, GetXOffset, GetYOffset);
         }
 
-        // TODO: Fix this
-        private bool lastIsIdle;
         public bool IsIdle
         {
             get
@@ -79,5 +63,25 @@ namespace OpenTK
         }
 
         public IWindowInfo WindowInfo { get; }
+
+        private int GetXOffset()
+        {
+            return control.Location.X;
+        }
+
+        private int GetYOffset()
+        {
+            if (control.TopLevelControl != null)
+            {
+                var offset = control.PointToScreen(control.Location);
+                var windowOffset = control.TopLevelControl.PointToScreen(Point.Empty);
+                var relativeY =
+                    offset.Y - windowOffset
+                        .Y; //control.TopLevelControl.Location.Y is not the same as windowOffset.Y for some reason.
+                return control.TopLevelControl.ClientSize.Height - control.Bottom - relativeY;
+            }
+
+            return control.Location.Y;
+        }
     }
 }

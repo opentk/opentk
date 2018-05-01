@@ -35,4 +35,3 @@ namespace OpenTK.Input
         Hat
     }
 }
-

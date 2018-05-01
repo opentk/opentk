@@ -1,39 +1,41 @@
 ﻿// Copyright (c) Open Toolkit library.
 // This file is subject to the terms and conditions defined in
 // file 'License.txt', which is part of this source code package.
+
 using System;
+using System.Globalization;
 using System.Runtime.InteropServices;
+
 namespace OpenTK
 {
     /// <summary>
-    /// Defines a 2d box (rectangle).
+    ///     Defines a 2d box (rectangle).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Box2d : IEquatable<Box2d>
     {
-
         /// <summary>
-        /// The left boundary of the structure.
+        ///     The left boundary of the structure.
         /// </summary>
         public double Left;
 
         /// <summary>
-        /// The right boundary of the structure.
+        ///     The right boundary of the structure.
         /// </summary>
         public double Right;
 
         /// <summary>
-        /// The top boundary of the structure.
+        ///     The top boundary of the structure.
         /// </summary>
         public double Top;
 
         /// <summary>
-        /// The bottom boundary of the structure.
+        ///     The bottom boundary of the structure.
         /// </summary>
         public double Bottom;
 
         /// <summary>
-        /// Constructs a new Box2d with the specified dimensions.
+        ///     Constructs a new Box2d with the specified dimensions.
         /// </summary>
         /// <param name="topLeft">An OpenTK.Vector2d describing the top-left corner of the Box2d.</param>
         /// <param name="bottomRight">An OpenTK.Vector2d describing the bottom-right corner of the Box2d.</param>
@@ -46,7 +48,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Constructs a new Box2d with the specified dimensions.
+        ///     Constructs a new Box2d with the specified dimensions.
         /// </summary>
         /// <param name="left">The position of the left boundary.</param>
         /// <param name="top">The position of the top boundary.</param>
@@ -61,7 +63,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Creates a new Box2d with the specified dimensions.
+        ///     Creates a new Box2d with the specified dimensions.
         /// </summary>
         /// <param name="top">The position of the top boundary.</param>
         /// <param name="left">The position of the left boundary.</param>
@@ -74,7 +76,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Creates a new Box2d with the specified dimensions.
+        ///     Creates a new Box2d with the specified dimensions.
         /// </summary>
         /// <param name="top">The position of the top boundary.</param>
         /// <param name="left">The position of the left boundary.</param>
@@ -87,7 +89,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Creates a new Box2d with the specified dimensions.
+        ///     Creates a new Box2d with the specified dimensions.
         /// </summary>
         /// <param name="position">The position of the top left corner.</param>
         /// <param name="size">The size of the box.</param>
@@ -98,17 +100,17 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Gets a double describing the width of the Box2d structure.
+        ///     Gets a double describing the width of the Box2d structure.
         /// </summary>
-        public double Width => (double)Math.Abs(Right - Left);
+        public double Width => Math.Abs(Right - Left);
 
         /// <summary>
-        /// Gets a double describing the height of the Box2d structure.
+        ///     Gets a double describing the height of the Box2d structure.
         /// </summary>
-        public double Height => (double)Math.Abs(Bottom - Top);
+        public double Height => Math.Abs(Bottom - Top);
 
         /// <summary>
-        /// Returns whether the box contains the specified point on the closed region described by this Box2.
+        ///     Returns whether the box contains the specified point on the closed region described by this Box2.
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
@@ -118,26 +120,26 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns whether the box contains the specified point.
+        ///     Returns whether the box contains the specified point.
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <param name="closedRegion">Whether to include the box boundary in the test region.</param>
         /// <returns>Whether this box contains the point.</returns>
         public bool Contains(Vector2d point, bool closedRegion)
         {
-            var xOK = (closedRegion == Left <= Right) ?
-                (point.X >= Left != point.X > Right) :
-                (point.X > Left != point.X >= Right);
+            var xOK = closedRegion == Left <= Right
+                ? point.X >= Left != point.X > Right
+                : point.X > Left != point.X >= Right;
 
-            var yOK = (closedRegion == Top <= Bottom) ?
-                (point.Y >= Top != point.Y > Bottom) :
-                (point.Y > Top != point.Y >= Bottom);
+            var yOK = closedRegion == Top <= Bottom
+                ? point.Y >= Top != point.Y > Bottom
+                : point.Y > Top != point.Y >= Bottom;
 
             return xOK && yOK;
         }
 
         /// <summary>
-        /// Returns a Box2d translated by the given amount.
+        ///     Returns a Box2d translated by the given amount.
         /// </summary>
         public Box2d Translated(Vector2d point)
         {
@@ -145,7 +147,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Translates this Box2d by the given amount.
+        ///     Translates this Box2d by the given amount.
         /// </summary>
         public void Translate(Vector2d point)
         {
@@ -156,16 +158,16 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Equality comparator.
+        ///     Equality comparator.
         /// </summary>
         public static bool operator ==(Box2d left, Box2d right)
         {
             return left.Bottom == right.Bottom && left.Top == right.Top &&
-                left.Left == right.Left && left.Right == right.Right;
+                   left.Left == right.Left && left.Right == right.Right;
         }
 
         /// <summary>
-        /// Inequality comparator.
+        ///     Inequality comparator.
         /// </summary>
         public static bool operator !=(Box2d left, Box2d right)
         {
@@ -173,7 +175,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Functional equality comparator.
+        ///     Functional equality comparator.
         /// </summary>
         public bool Equals(Box2d other)
         {
@@ -181,7 +183,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Implements Object.Equals.
+        ///     Implements Object.Equals.
         /// </summary>
         public override bool Equals(object obj)
         {
@@ -189,7 +191,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Gets the hash code for this Box2d.
+        ///     Gets the hash code for this Box2d.
         /// </summary>
         public override int GetHashCode()
         {
@@ -203,14 +205,15 @@ namespace OpenTK
             }
         }
 
-        private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        private static readonly string listSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+
         /// <summary>
-        /// Returns a <see cref="System.String"/> describing the current instance.
+        ///     Returns a <see cref="System.String" /> describing the current instance.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("({0}{4} {1}) - ({2}{4} {3})", Left, Top, Right, Bottom, listSeparator);
+            return string.Format("({0}{4} {1}) - ({2}{4} {3})", Left, Top, Right, Bottom, listSeparator);
         }
     }
 }

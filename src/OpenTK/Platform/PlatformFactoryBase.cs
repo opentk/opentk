@@ -35,9 +35,9 @@ namespace OpenTK.Platform
 {
     /// \internal
     /// <summary>
-    /// Implements IPlatformFactory functionality that is common
-    /// for all platform backends. IPlatformFactory implementations
-    /// should inherit from this class.
+    ///     Implements IPlatformFactory functionality that is common
+    ///     for all platform backends. IPlatformFactory implementations
+    ///     should inherit from this class.
     /// </summary>
     internal abstract class PlatformFactoryBase : IPlatformFactory
     {
@@ -46,17 +46,16 @@ namespace OpenTK.Platform
 
         protected bool IsDisposed;
 
-        public PlatformFactoryBase()
-        {
-        }
-
-        public abstract INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device);
+        public abstract INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title,
+            GraphicsMode mode, GameWindowFlags options, DisplayDevice device);
 
         public abstract IDisplayDeviceDriver CreateDisplayDeviceDriver();
 
-        public abstract IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags);
+        public abstract IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window,
+            IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags);
 
-        public virtual IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public virtual IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window,
+            IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             throw new NotImplementedException();
         }
@@ -100,6 +99,7 @@ namespace OpenTK.Platform
                         {
                             resource.Dispose();
                         }
+
                         Resources.Clear();
                     }
                 }
@@ -108,6 +108,7 @@ namespace OpenTK.Platform
                     Debug.Print("[OpenTK] {0} leaked with {1} live resources, did you forget to call Dispose()?",
                         GetType().FullName, Resources.Count);
                 }
+
                 IsDisposed = true;
             }
         }
@@ -118,4 +119,3 @@ namespace OpenTK.Platform
         }
     }
 }
-

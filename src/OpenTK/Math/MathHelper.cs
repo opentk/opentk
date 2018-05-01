@@ -12,62 +12,63 @@ using System.Diagnostics.CodeAnalysis;
 namespace OpenTK
 {
     /// <summary>
-    /// Contains common mathematical functions and constants.
+    ///     Contains common mathematical functions and constants.
     /// </summary>
     public static class MathHelper
     {
         /// <summary>
-        /// Defines the value of Pi as a <see cref="System.Single"/>.
+        ///     Defines the value of Pi as a <see cref="System.Single" />.
         /// </summary>
-        public const float Pi = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930382f;
+        public const float Pi =
+            3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930382f;
 
         /// <summary>
-        /// Defines the value of Pi divided by two as a <see cref="System.Single"/>.
+        ///     Defines the value of Pi divided by two as a <see cref="System.Single" />.
         /// </summary>
         public const float PiOver2 = Pi / 2;
 
         /// <summary>
-        /// Defines the value of Pi divided by three as a <see cref="System.Single"/>.
+        ///     Defines the value of Pi divided by three as a <see cref="System.Single" />.
         /// </summary>
         public const float PiOver3 = Pi / 3;
 
         /// <summary>
-        /// Definesthe value of  Pi divided by four as a <see cref="System.Single"/>.
+        ///     Definesthe value of  Pi divided by four as a <see cref="System.Single" />.
         /// </summary>
         public const float PiOver4 = Pi / 4;
 
         /// <summary>
-        /// Defines the value of Pi divided by six as a <see cref="System.Single"/>.
+        ///     Defines the value of Pi divided by six as a <see cref="System.Single" />.
         /// </summary>
         public const float PiOver6 = Pi / 6;
 
         /// <summary>
-        /// Defines the value of Pi multiplied by two as a <see cref="System.Single"/>.
+        ///     Defines the value of Pi multiplied by two as a <see cref="System.Single" />.
         /// </summary>
         public const float TwoPi = 2 * Pi;
 
         /// <summary>
-        /// Defines the value of Pi multiplied by 3 and divided by two as a <see cref="System.Single"/>.
+        ///     Defines the value of Pi multiplied by 3 and divided by two as a <see cref="System.Single" />.
         /// </summary>
         public const float ThreePiOver2 = 3 * Pi / 2;
 
         /// <summary>
-        /// Defines the value of E as a <see cref="System.Single"/>.
+        ///     Defines the value of E as a <see cref="System.Single" />.
         /// </summary>
         public const float E = 2.71828182845904523536f;
 
         /// <summary>
-        /// Defines the base-10 logarithm of E.
+        ///     Defines the base-10 logarithm of E.
         /// </summary>
         public const float Log10E = 0.434294482f;
 
         /// <summary>
-        /// Defines the base-2 logarithm of E.
+        ///     Defines the base-2 logarithm of E.
         /// </summary>
         public const float Log2E = 1.442695041f;
 
         /// <summary>
-        /// Returns the next power of two that is greater than or equal to the specified number.
+        ///     Returns the next power of two that is greater than or equal to the specified number.
         /// </summary>
         /// <param name="n">The specified number.</param>
         /// <returns>The next power of two.</returns>
@@ -77,11 +78,12 @@ namespace OpenTK
             {
                 throw new ArgumentOutOfRangeException(nameof(n), "Must be positive.");
             }
-            return (long)Math.Pow(2, Math.Ceiling(Math.Log((double)n, 2)));
+
+            return (long)Math.Pow(2, Math.Ceiling(Math.Log(n, 2)));
         }
 
         /// <summary>
-        /// Returns the next power of two that is greater than or equal to the specified number.
+        ///     Returns the next power of two that is greater than or equal to the specified number.
         /// </summary>
         /// <param name="n">The specified number.</param>
         /// <returns>The next power of two.</returns>
@@ -91,11 +93,12 @@ namespace OpenTK
             {
                 throw new ArgumentOutOfRangeException(nameof(n), "Must be positive.");
             }
-            return (int)Math.Pow(2, Math.Ceiling(Math.Log((double)n, 2)));
+
+            return (int)Math.Pow(2, Math.Ceiling(Math.Log(n, 2)));
         }
 
         /// <summary>
-        /// Returns the next power of two that is greater than or equal to the specified number.
+        ///     Returns the next power of two that is greater than or equal to the specified number.
         /// </summary>
         /// <param name="n">The specified number.</param>
         /// <returns>The next power of two.</returns>
@@ -105,11 +108,12 @@ namespace OpenTK
             {
                 throw new ArgumentOutOfRangeException(nameof(n), "Must be positive.");
             }
-            return (float)Math.Pow(2, Math.Ceiling(Math.Log((double)n, 2)));
+
+            return (float)Math.Pow(2, Math.Ceiling(Math.Log(n, 2)));
         }
 
         /// <summary>
-        /// Returns the next power of two that is greater than or equal to the specified number.
+        ///     Returns the next power of two that is greater than or equal to the specified number.
         /// </summary>
         /// <param name="n">The specified number.</param>
         /// <returns>The next power of two.</returns>
@@ -119,10 +123,12 @@ namespace OpenTK
             {
                 throw new ArgumentOutOfRangeException(nameof(n), "Must be positive.");
             }
-            return Math.Pow(2, Math.Ceiling(Math.Log((double)n, 2)));
+
+            return Math.Pow(2, Math.Ceiling(Math.Log(n, 2)));
         }
 
-        /// <summary>Calculates the factorial of a given natural number.
+        /// <summary>
+        ///     Calculates the factorial of a given natural number.
         /// </summary>
         /// <param name="n">The number.</param>
         /// <returns>n!</returns>
@@ -139,7 +145,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculates the binomial coefficient <paramref name="n"/> above <paramref name="k"/>.
+        ///     Calculates the binomial coefficient <paramref name="n" /> above <paramref name="k" />.
         /// </summary>
         /// <param name="n">The n.</param>
         /// <param name="k">The k.</param>
@@ -150,39 +156,39 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns an approximation of the inverse square root of left number.
+        ///     Returns an approximation of the inverse square root of left number.
         /// </summary>
         /// <param name="x">A number.</param>
         /// <returns>An approximation of the inverse square root of the specified number, with an upper error bound of 0.001</returns>
         /// <remarks>
-        /// This is an improved implementation of the the method known as Carmack's inverse square root
-        /// which is found in the Quake III source code. This implementation comes from
-        /// http://www.codemaestro.com/reviews/review00000105.html. For the history of this method, see
-        /// http://www.beyond3d.com/content/articles/8/
+        ///     This is an improved implementation of the the method known as Carmack's inverse square root
+        ///     which is found in the Quake III source code. This implementation comes from
+        ///     http://www.codemaestro.com/reviews/review00000105.html. For the history of this method, see
+        ///     http://www.beyond3d.com/content/articles/8/
         /// </remarks>
         public static float InverseSqrtFast(float x)
         {
             unsafe
             {
                 var xhalf = 0.5f * x;
-                var i = *(int*)&x;              // Read bits as integer.
-                i = 0x5f375a86 - (i >> 1);      // Make an initial guess for Newton-Raphson approximation
-                x = *(float*)&i;                // Convert bits back to float
+                var i = *(int*)&x; // Read bits as integer.
+                i = 0x5f375a86 - (i >> 1); // Make an initial guess for Newton-Raphson approximation
+                x = *(float*)&i; // Convert bits back to float
                 x = x * (1.5f - xhalf * x * x); // Perform left single Newton-Raphson step.
                 return x;
             }
         }
 
         /// <summary>
-        /// Returns an approximation of the inverse square root of left number.
+        ///     Returns an approximation of the inverse square root of left number.
         /// </summary>
         /// <param name="x">A number.</param>
         /// <returns>An approximation of the inverse square root of the specified number, with an upper error bound of 0.001</returns>
         /// <remarks>
-        /// This is an improved implementation of the the method known as Carmack's inverse square root
-        /// which is found in the Quake III source code. This implementation comes from
-        /// http://www.codemaestro.com/reviews/review00000105.html. For the history of this method, see
-        /// http://www.beyond3d.com/content/articles/8/
+        ///     This is an improved implementation of the the method known as Carmack's inverse square root
+        ///     which is found in the Quake III source code. This implementation comes from
+        ///     http://www.codemaestro.com/reviews/review00000105.html. For the history of this method, see
+        ///     http://www.beyond3d.com/content/articles/8/
         /// </remarks>
         public static double InverseSqrtFast(double x)
         {
@@ -202,7 +208,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Convert degrees to radians
+        ///     Convert degrees to radians
         /// </summary>
         /// <param name="degrees">An angle in degrees</param>
         /// <returns>The angle expressed in radians</returns>
@@ -213,7 +219,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Convert radians to degrees
+        ///     Convert radians to degrees
         /// </summary>
         /// <param name="radians">An angle in radians</param>
         /// <returns>The angle expressed in degrees</returns>
@@ -224,7 +230,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Convert degrees to radians
+        ///     Convert degrees to radians
         /// </summary>
         /// <param name="degrees">An angle in degrees</param>
         /// <returns>The angle expressed in radians</returns>
@@ -235,7 +241,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Convert radians to degrees
+        ///     Convert radians to degrees
         /// </summary>
         /// <param name="radians">An angle in radians</param>
         /// <returns>The angle expressed in degrees</returns>
@@ -246,7 +252,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Swaps two double values.
+        ///     Swaps two double values.
         /// </summary>
         /// <param name="a">The first value.</param>
         /// <param name="b">The second value.</param>
@@ -258,7 +264,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Swaps two float values.
+        ///     Swaps two float values.
         /// </summary>
         /// <param name="a">The first value.</param>
         /// <param name="b">The second value.</param>
@@ -270,7 +276,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Clamps a number between a minimum and a maximum.
+        ///     Clamps a number between a minimum and a maximum.
         /// </summary>
         /// <param name="n">The number to clamp.</param>
         /// <param name="min">The minimum allowed value.</param>
@@ -282,7 +288,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Clamps a number between a minimum and a maximum.
+        ///     Clamps a number between a minimum and a maximum.
         /// </summary>
         /// <param name="n">The number to clamp.</param>
         /// <param name="min">The minimum allowed value.</param>
@@ -294,7 +300,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Clamps a number between a minimum and a maximum.
+        ///     Clamps a number between a minimum and a maximum.
         /// </summary>
         /// <param name="n">The number to clamp.</param>
         /// <param name="min">The minimum allowed value.</param>
@@ -311,10 +317,10 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Approximates floating point equality with a maximum number of different bits.
-        /// This is typically used in place of an epsilon comparison.
-        /// see: https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
-        /// see: https://stackoverflow.com/questions/3874627/floating-point-comparison-functions-for-c-sharp
+        ///     Approximates floating point equality with a maximum number of different bits.
+        ///     This is typically used in place of an epsilon comparison.
+        ///     see: https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
+        ///     see: https://stackoverflow.com/questions/3874627/floating-point-comparison-functions-for-c-sharp
         /// </summary>
         /// <param name="a">the first value to compare</param>
         /// <param name="b">>the second value to compare</param>
@@ -326,27 +332,32 @@ namespace OpenTK
             long aInt = FloatToInt32Bits(a);
             if (aInt < 0)
             {
-                aInt = Int32.MinValue - aInt;
+                aInt = int.MinValue - aInt;
             }
 
             long bInt = FloatToInt32Bits(b);
             if (bInt < 0)
             {
-                bInt = Int32.MinValue - bInt;
+                bInt = int.MinValue - bInt;
             }
 
             var intDiff = Math.Abs(aInt - bInt);
-            return intDiff <= (1 << maxDeltaBits);
+            return intDiff <= 1 << maxDeltaBits;
         }
 
         /// <summary>
-        /// Approximates double-precision floating point equality by an epsilon (maximum error) value.
-        /// This method is designed as a "fits-all" solution and attempts to handle as many cases as possible.
+        ///     Approximates double-precision floating point equality by an epsilon (maximum error) value.
+        ///     This method is designed as a "fits-all" solution and attempts to handle as many cases as possible.
         /// </summary>
         /// <param name="a">The first float.</param>
         /// <param name="b">The second float.</param>
         /// <param name="epsilon">The maximum error between the two.</param>
-        /// <returns><value>true</value> if the values are approximately equal within the error margin; otherwise, <value>false</value>.</returns>
+        /// <returns>
+        ///     <value>true</value>
+        ///     if the values are approximately equal within the error margin; otherwise,
+        ///     <value>false</value>
+        ///     .
+        /// </returns>
         [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
         public static bool ApproximatelyEqualEpsilon(double a, double b, double epsilon)
         {
@@ -365,21 +376,26 @@ namespace OpenTK
             {
                 // a or b is zero, or both are extremely close to it.
                 // relative error is less meaningful here
-                return diff < (epsilon * doubleNormal);
+                return diff < epsilon * doubleNormal;
             }
 
             // use relative error
-            return diff / Math.Min((absA + absB), double.MaxValue) < epsilon;
+            return diff / Math.Min(absA + absB, double.MaxValue) < epsilon;
         }
 
         /// <summary>
-        /// Approximates single-precision floating point equality by an epsilon (maximum error) value.
-        /// This method is designed as a "fits-all" solution and attempts to handle as many cases as possible.
+        ///     Approximates single-precision floating point equality by an epsilon (maximum error) value.
+        ///     This method is designed as a "fits-all" solution and attempts to handle as many cases as possible.
         /// </summary>
         /// <param name="a">The first float.</param>
         /// <param name="b">The second float.</param>
         /// <param name="epsilon">The maximum error between the two.</param>
-        /// <returns><value>true</value> if the values are approximately equal within the error margin; otherwise, <value>false</value>.</returns>
+        /// <returns>
+        ///     <value>true</value>
+        ///     if the values are approximately equal within the error margin; otherwise,
+        ///     <value>false</value>
+        ///     .
+        /// </returns>
         [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
         public static bool ApproximatelyEqualEpsilon(float a, float b, float epsilon)
         {
@@ -398,19 +414,19 @@ namespace OpenTK
             {
                 // a or b is zero, or both are extremely close to it.
                 // relative error is less meaningful here
-                return diff < (epsilon * floatNormal);
+                return diff < epsilon * floatNormal;
             }
 
             // use relative error
-            var relativeError = diff / Math.Min((absA + absB), float.MaxValue);
+            var relativeError = diff / Math.Min(absA + absB, float.MaxValue);
             return relativeError < epsilon;
         }
 
         /// <summary>
-        /// Approximates equivalence between two single-precision floating-point numbers on a direct human scale.
-        /// It is important to note that this does not approximate equality - instead, it merely checks whether or not
-        /// two numbers could be considered equivalent to each other within a certain tolerance. The tolerance is
-        /// inclusive.
+        ///     Approximates equivalence between two single-precision floating-point numbers on a direct human scale.
+        ///     It is important to note that this does not approximate equality - instead, it merely checks whether or not
+        ///     two numbers could be considered equivalent to each other within a certain tolerance. The tolerance is
+        ///     inclusive.
         /// </summary>
         /// <param name="a">The first value to compare.</param>
         /// <param name="b">The second value to compare·</param>
@@ -430,10 +446,10 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Approximates equivalence between two double-precision floating-point numbers on a direct human scale.
-        /// It is important to note that this does not approximate equality - instead, it merely checks whether or not
-        /// two numbers could be considered equivalent to each other within a certain tolerance. The tolerance is
-        /// inclusive.
+        ///     Approximates equivalence between two double-precision floating-point numbers on a direct human scale.
+        ///     It is important to note that this does not approximate equality - instead, it merely checks whether or not
+        ///     two numbers could be considered equivalent to each other within a certain tolerance. The tolerance is
+        ///     inclusive.
         /// </summary>
         /// <param name="a">The first value to compare.</param>
         /// <param name="b">The second value to compare·</param>

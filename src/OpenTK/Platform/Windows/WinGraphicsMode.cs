@@ -27,23 +27,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-
 using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Windows
 {
     internal class WinGraphicsMode : IGraphicsMode
     {
-        private enum AccelerationType
-        {
-            // Software acceleration
-            None = 0,
-            // Partial acceleration (Direct3D emulation)
-            MCD,
-            // Full acceleration
-            ICD,
-        }
-
         private readonly IntPtr Device;
 
         public WinGraphicsMode(IntPtr device)
@@ -162,7 +151,7 @@ namespace OpenTK.Platform.Windows
                     }
 
                     if (mode.Samples > 0 &&
-                    Wgl.SupportsExtension("WGL_ARB_multisample"))
+                        Wgl.SupportsExtension("WGL_ARB_multisample"))
                     {
                         attributes.Add((int)WGL_ARB_multisample.SampleBuffersArb);
                         attributes.Add(1);
@@ -196,8 +185,7 @@ namespace OpenTK.Platform.Windows
                         Debug.Print("[WGL] ChoosePixelFormatARB failed with {0}", Marshal.GetLastWin32Error());
                         retry = Utilities.RelaxGraphicsMode(ref mode);
                     }
-                }
-                while (retry);
+                } while (retry);
             }
             else
             {
@@ -233,6 +221,7 @@ namespace OpenTK.Platform.Windows
                 const int penalty = 8;
                 distance += penalty * Math.Abs(got - requested);
             }
+
             return valid;
         }
 
@@ -250,10 +239,12 @@ namespace OpenTK.Platform.Windows
                     type = AccelerationType.None;
                 }
             }
+
             return type;
         }
 
-        private GraphicsMode ChoosePixelFormatPFD(IntPtr device, GraphicsMode mode, AccelerationType requested_acceleration_type)
+        private GraphicsMode ChoosePixelFormatPFD(IntPtr device, GraphicsMode mode,
+            AccelerationType requested_acceleration_type)
         {
             var pfd = new PixelFormatDescriptor();
             PixelFormatDescriptorFlags flags = 0;
@@ -295,6 +286,7 @@ namespace OpenTK.Platform.Windows
                 {
                     dist += 1000;
                 }
+
                 valid &= Compare(pfd.ColorBits, mode.ColorFormat.BitsPerPixel, ref dist);
                 valid &= Compare(pfd.RedBits, mode.ColorFormat.Red, ref dist);
                 valid &= Compare(pfd.GreenBits, mode.ColorFormat.Green, ref dist);
@@ -334,6 +326,7 @@ namespace OpenTK.Platform.Windows
                     (pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) != 0 ? 2 : 1,
                     (pfd.Flags & PixelFormatDescriptorFlags.STEREO) != 0);
             }
+
             return created_mode;
         }
 
@@ -345,7 +338,7 @@ namespace OpenTK.Platform.Windows
             {
                 // Define the list of attributes we are interested in.
                 // The results will be stored in the 'values' array below.
-                var attribs = new int[]
+                var attribs = new[]
                 {
                     (int)WGL_ARB_pixel_format.AccelerationArb,
 
@@ -396,7 +389,20 @@ namespace OpenTK.Platform.Windows
                         values[16] == 1 ? true : false);
                 }
             }
+
             return created_mode;
+        }
+
+        private enum AccelerationType
+        {
+            // Software acceleration
+            None = 0,
+
+            // Partial acceleration (Direct3D emulation)
+            MCD,
+
+            // Full acceleration
+            ICD
         }
     }
 }

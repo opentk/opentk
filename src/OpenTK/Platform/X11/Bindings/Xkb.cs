@@ -54,29 +54,29 @@ namespace OpenTK.Platform.X11
         internal const int UseCoreKeyboard = 0x0100;
 
         [DllImport(lib, EntryPoint = "XkbFreeKeyboard")]
-        unsafe internal extern static void FreeKeyboard(XkbDesc* descr, int which, bool free);
+        internal static extern unsafe void FreeKeyboard(XkbDesc* descr, int which, bool free);
 
         [DllImport(lib, EntryPoint = "XkbAllocKeyboard")]
-        unsafe internal extern static XkbDesc* AllocKeyboard(IntPtr display);
+        internal static extern unsafe XkbDesc* AllocKeyboard(IntPtr display);
 
         [DllImport(lib, EntryPoint = "XkbGetKeyboard")]
-        internal extern static IntPtr GetKeyboard(IntPtr display, XkbKeyboardMask which, int device_id);
+        internal static extern IntPtr GetKeyboard(IntPtr display, XkbKeyboardMask which, int device_id);
 
         [DllImport(lib, EntryPoint = "XkbGetMap")]
-        internal extern static IntPtr GetMap(IntPtr display, XkbKeyboardMask which, int device_spec);
+        internal static extern IntPtr GetMap(IntPtr display, XkbKeyboardMask which, int device_spec);
 
         [DllImport(lib, EntryPoint = "XkbGetNames")]
-        unsafe internal extern static IntPtr GetNames(IntPtr display, XkbNamesMask which, XkbDesc* xkb);
+        internal static extern unsafe IntPtr GetNames(IntPtr display, XkbNamesMask which, XkbDesc* xkb);
 
         [DllImport(lib, EntryPoint = "XkbKeycodeToKeysym")]
-        internal extern static XKey KeycodeToKeysym(IntPtr display, int keycode, int group, int level);
+        internal static extern XKey KeycodeToKeysym(IntPtr display, int keycode, int group, int level);
 
         [DllImport(lib, EntryPoint = "XkbQueryExtension")]
-        internal extern static bool QueryExtension(IntPtr display, out int opcode_rtrn, out int event_rtrn,
+        internal static extern bool QueryExtension(IntPtr display, out int opcode_rtrn, out int event_rtrn,
             out int error_rtrn, ref int major_in_out, ref int minor_in_out);
 
         [DllImport(lib, EntryPoint = "XkbSetDetectableAutoRepeat")]
-        internal extern static bool SetDetectableAutoRepeat(IntPtr display, bool detectable, out bool supported);
+        internal static extern bool SetDetectableAutoRepeat(IntPtr display, bool detectable, out bool supported);
 
         internal static bool IsSupported(IntPtr display)
         {
@@ -91,6 +91,7 @@ namespace OpenTK.Platform.X11
             {
                 Debug.Print("XKB version is {0}.{1}", major, minor);
             }
+
             return supported;
         }
     }
@@ -105,7 +106,7 @@ namespace OpenTK.Platform.X11
         Names = 1 << 4,
         CompatibilityMap = 1 << 5,
         Geometry = 1 << 6,
-        AllComponents = 1 << 7,
+        AllComponents = 1 << 7
     }
 
     [Flags]
@@ -135,8 +136,8 @@ namespace OpenTK.Platform.X11
         internal IntPtr dpy;
         internal ushort flags;
         internal ushort device_spec;
-        internal KeyCode min_key_code;
-        internal KeyCode max_key_code;
+        internal byte min_key_code;
+        internal byte max_key_code;
 
         internal XkbControlsPtr ctrls;
         internal XkbServerMapPtr server;
@@ -167,9 +168,10 @@ namespace OpenTK.Platform.X11
         internal struct Groups
         {
             private Atom groups0;
-            private Atom groups1;
-            private Atom groups2;
-            private Atom groups3;
+            private readonly Atom groups1;
+            private readonly Atom groups2;
+            private readonly Atom groups3;
+
             internal Atom this[int i]
             {
                 get
@@ -179,12 +181,9 @@ namespace OpenTK.Platform.X11
                         throw new IndexOutOfRangeException();
                     }
 
-                    unsafe
+                    fixed (Atom* ptr = &groups0)
                     {
-                        fixed (Atom* ptr = &groups0)
-                        {
-                            return *(ptr + i);
-                        }
+                        return *(ptr + i);
                     }
                 }
             }
@@ -194,37 +193,38 @@ namespace OpenTK.Platform.X11
         internal struct Indicators
         {
             private Atom indicators0;
-            private Atom indicators1;
-            private Atom indicators2;
-            private Atom indicators3;
-            private Atom indicators4;
-            private Atom indicators5;
-            private Atom indicators6;
-            private Atom indicators7;
-            private Atom indicators8;
-            private Atom indicators9;
-            private Atom indicators10;
-            private Atom indicators11;
-            private Atom indicators12;
-            private Atom indicators13;
-            private Atom indicators14;
-            private Atom indicators15;
-            private Atom indicators16;
-            private Atom indicators17;
-            private Atom indicators18;
-            private Atom indicators19;
-            private Atom indicators20;
-            private Atom indicators21;
-            private Atom indicators22;
-            private Atom indicators23;
-            private Atom indicators24;
-            private Atom indicators25;
-            private Atom indicators26;
-            private Atom indicators27;
-            private Atom indicators28;
-            private Atom indicators29;
-            private Atom indicators30;
-            private Atom indicators31;
+            private readonly Atom indicators1;
+            private readonly Atom indicators2;
+            private readonly Atom indicators3;
+            private readonly Atom indicators4;
+            private readonly Atom indicators5;
+            private readonly Atom indicators6;
+            private readonly Atom indicators7;
+            private readonly Atom indicators8;
+            private readonly Atom indicators9;
+            private readonly Atom indicators10;
+            private readonly Atom indicators11;
+            private readonly Atom indicators12;
+            private readonly Atom indicators13;
+            private readonly Atom indicators14;
+            private readonly Atom indicators15;
+            private readonly Atom indicators16;
+            private readonly Atom indicators17;
+            private readonly Atom indicators18;
+            private readonly Atom indicators19;
+            private readonly Atom indicators20;
+            private readonly Atom indicators21;
+            private readonly Atom indicators22;
+            private readonly Atom indicators23;
+            private readonly Atom indicators24;
+            private readonly Atom indicators25;
+            private readonly Atom indicators26;
+            private readonly Atom indicators27;
+            private readonly Atom indicators28;
+            private readonly Atom indicators29;
+            private readonly Atom indicators30;
+            private readonly Atom indicators31;
+
             internal Atom this[int i]
             {
                 get
@@ -234,12 +234,10 @@ namespace OpenTK.Platform.X11
                         throw new IndexOutOfRangeException();
                     }
 
-                    unsafe
+                    fixed (Atom* ptr = &indicators0)
                     {
-                        fixed (Atom* ptr = &indicators0)
-                        {
-                            return *(ptr + i);
-                        }                    }
+                        return *(ptr + i);
+                    }
                 }
             }
         }
@@ -248,21 +246,22 @@ namespace OpenTK.Platform.X11
         internal struct VMods
         {
             private Atom vmods0;
-            private Atom vmods1;
-            private Atom vmods2;
-            private Atom vmods3;
-            private Atom vmods4;
-            private Atom vmods5;
-            private Atom vmods6;
-            private Atom vmods7;
-            private Atom vmods8;
-            private Atom vmods9;
-            private Atom vmods10;
-            private Atom vmods11;
-            private Atom vmods12;
-            private Atom vmods13;
-            private Atom vmods14;
-            private Atom vmods15;
+            private readonly Atom vmods1;
+            private readonly Atom vmods2;
+            private readonly Atom vmods3;
+            private readonly Atom vmods4;
+            private readonly Atom vmods5;
+            private readonly Atom vmods6;
+            private readonly Atom vmods7;
+            private readonly Atom vmods8;
+            private readonly Atom vmods9;
+            private readonly Atom vmods10;
+            private readonly Atom vmods11;
+            private readonly Atom vmods12;
+            private readonly Atom vmods13;
+            private readonly Atom vmods14;
+            private readonly Atom vmods15;
+
             internal Atom this[int i]
             {
                 get
@@ -272,12 +271,9 @@ namespace OpenTK.Platform.X11
                         throw new IndexOutOfRangeException();
                     }
 
-                    unsafe
+                    fixed (Atom* ptr = &vmods0)
                     {
-                        fixed (Atom* ptr = &vmods0)
-                        {
-                            return *(ptr + i);
-                        }
+                        return *(ptr + i);
                     }
                 }
             }
@@ -293,7 +289,7 @@ namespace OpenTK.Platform.X11
         internal Groups groups;
         internal XkbKeyName* keys;
         internal XkbKeyAlias* key_aliases;
-        internal Atom *radio_groups;
+        internal Atom* radio_groups;
         internal Atom phys_symbols;
 
         internal byte num_keys;
@@ -301,4 +297,3 @@ namespace OpenTK.Platform.X11
         internal byte num_rg;
     }
 }
-

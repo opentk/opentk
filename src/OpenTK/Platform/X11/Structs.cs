@@ -27,6 +27,7 @@
 // NOT COMPLETE
 
 using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // Disable unused field warnings. This is interop, we don't use everything
@@ -551,102 +552,68 @@ namespace OpenTK.Platform.X11
     [StructLayout(LayoutKind.Sequential)]
     internal struct XGenericEvent
     {
-        public int type;         // of event. Always GenericEvent
-        public IntPtr serial;       // # of last request processed
-        public bool send_event;   // true if from SendEvent request
-        public IntPtr display;     // Display the event was read from
-        public int extension;    // major opcode of extension that caused the event
-        public int evtype;       // actual event type.
+        public int type; // of event. Always GenericEvent
+        public IntPtr serial; // # of last request processed
+        public bool send_event; // true if from SendEvent request
+        public IntPtr display; // Display the event was read from
+        public int extension; // major opcode of extension that caused the event
+        public int evtype; // actual event type.
     }
 
     internal struct XGenericEventCookie
     {
-        public int type;         // of event. Always GenericEvent
-        public IntPtr serial;       // # of last request processed
-        public bool send_event;   // true if from SendEvent request
-        public IntPtr display;     // Display the event was read from
-        public int extension;    // major opcode of extension that caused the event
-        public int evtype;       // actual event type.
-        public uint cookie;       // unique event cookie
-        public IntPtr data;        // actual event data
+        public int type; // of event. Always GenericEvent
+        public IntPtr serial; // # of last request processed
+        public bool send_event; // true if from SendEvent request
+        public IntPtr display; // Display the event was read from
+        public int extension; // major opcode of extension that caused the event
+        public int evtype; // actual event type.
+        public uint cookie; // unique event cookie
+        public IntPtr data; // actual event data
     }
 
     [StructLayout(LayoutKind.Explicit)]
     internal struct XEvent
     {
-        [FieldOffset(0)]
-        public XEventName type;
-        [FieldOffset(0)]
-        public XAnyEvent AnyEvent;
-        [FieldOffset(0)]
-        public XKeyEvent KeyEvent;
-        [FieldOffset(0)]
-        public XButtonEvent ButtonEvent;
-        [FieldOffset(0)]
-        public XMotionEvent MotionEvent;
-        [FieldOffset(0)]
-        public XCrossingEvent CrossingEvent;
-        [FieldOffset(0)]
-        public XFocusChangeEvent FocusChangeEvent;
-        [FieldOffset(0)]
-        public XExposeEvent ExposeEvent;
-        [FieldOffset(0)]
-        public XGraphicsExposeEvent GraphicsExposeEvent;
-        [FieldOffset(0)]
-        public XNoExposeEvent NoExposeEvent;
-        [FieldOffset(0)]
-        public XVisibilityEvent VisibilityEvent;
-        [FieldOffset(0)]
-        public XCreateWindowEvent CreateWindowEvent;
-        [FieldOffset(0)]
-        public XDestroyWindowEvent DestroyWindowEvent;
-        [FieldOffset(0)]
-        public XUnmapEvent UnmapEvent;
-        [FieldOffset(0)]
-        public XMapEvent MapEvent;
-        [FieldOffset(0)]
-        public XMapRequestEvent MapRequestEvent;
-        [FieldOffset(0)]
-        public XReparentEvent ReparentEvent;
-        [FieldOffset(0)]
-        public XConfigureEvent ConfigureEvent;
-        [FieldOffset(0)]
-        public XGravityEvent GravityEvent;
-        [FieldOffset(0)]
-        public XResizeRequestEvent ResizeRequestEvent;
-        [FieldOffset(0)]
-        public XConfigureRequestEvent ConfigureRequestEvent;
-        [FieldOffset(0)]
-        public XCirculateEvent CirculateEvent;
-        [FieldOffset(0)]
-        public XCirculateRequestEvent CirculateRequestEvent;
-        [FieldOffset(0)]
-        public XPropertyEvent PropertyEvent;
-        [FieldOffset(0)]
-        public XSelectionClearEvent SelectionClearEvent;
-        [FieldOffset(0)]
-        public XSelectionRequestEvent SelectionRequestEvent;
-        [FieldOffset(0)]
-        public XSelectionEvent SelectionEvent;
-        [FieldOffset(0)]
-        public XColormapEvent ColormapEvent;
-        [FieldOffset(0)]
-        public XClientMessageEvent ClientMessageEvent;
-        [FieldOffset(0)]
-        public XMappingEvent MappingEvent;
-        [FieldOffset(0)]
-        public XErrorEvent ErrorEvent;
-        [FieldOffset(0)]
-        public XKeymapEvent KeymapEvent;
-        [FieldOffset(0)]
-        public XGenericEvent GenericEvent;
-        [FieldOffset(0)]
-        public XGenericEventCookie GenericEventCookie;
+        [FieldOffset(0)] public XEventName type;
+        [FieldOffset(0)] public XAnyEvent AnyEvent;
+        [FieldOffset(0)] public XKeyEvent KeyEvent;
+        [FieldOffset(0)] public XButtonEvent ButtonEvent;
+        [FieldOffset(0)] public XMotionEvent MotionEvent;
+        [FieldOffset(0)] public XCrossingEvent CrossingEvent;
+        [FieldOffset(0)] public XFocusChangeEvent FocusChangeEvent;
+        [FieldOffset(0)] public XExposeEvent ExposeEvent;
+        [FieldOffset(0)] public XGraphicsExposeEvent GraphicsExposeEvent;
+        [FieldOffset(0)] public XNoExposeEvent NoExposeEvent;
+        [FieldOffset(0)] public XVisibilityEvent VisibilityEvent;
+        [FieldOffset(0)] public XCreateWindowEvent CreateWindowEvent;
+        [FieldOffset(0)] public XDestroyWindowEvent DestroyWindowEvent;
+        [FieldOffset(0)] public XUnmapEvent UnmapEvent;
+        [FieldOffset(0)] public XMapEvent MapEvent;
+        [FieldOffset(0)] public XMapRequestEvent MapRequestEvent;
+        [FieldOffset(0)] public XReparentEvent ReparentEvent;
+        [FieldOffset(0)] public XConfigureEvent ConfigureEvent;
+        [FieldOffset(0)] public XGravityEvent GravityEvent;
+        [FieldOffset(0)] public XResizeRequestEvent ResizeRequestEvent;
+        [FieldOffset(0)] public XConfigureRequestEvent ConfigureRequestEvent;
+        [FieldOffset(0)] public XCirculateEvent CirculateEvent;
+        [FieldOffset(0)] public XCirculateRequestEvent CirculateRequestEvent;
+        [FieldOffset(0)] public XPropertyEvent PropertyEvent;
+        [FieldOffset(0)] public XSelectionClearEvent SelectionClearEvent;
+        [FieldOffset(0)] public XSelectionRequestEvent SelectionRequestEvent;
+        [FieldOffset(0)] public XSelectionEvent SelectionEvent;
+        [FieldOffset(0)] public XColormapEvent ColormapEvent;
+        [FieldOffset(0)] public XClientMessageEvent ClientMessageEvent;
+        [FieldOffset(0)] public XMappingEvent MappingEvent;
+        [FieldOffset(0)] public XErrorEvent ErrorEvent;
+        [FieldOffset(0)] public XKeymapEvent KeymapEvent;
+        [FieldOffset(0)] public XGenericEvent GenericEvent;
+        [FieldOffset(0)] public XGenericEventCookie GenericEventCookie;
 
         //[MarshalAs(System.Runtime.InteropServices.UnmanagedType.ByValArray, SizeConst=24)]
         //[ FieldOffset(0) ] public int[] pad;
-        [FieldOffset(0)]
-        public XEventPad Pad;
+        [FieldOffset(0)] public XEventPad Pad;
+
         public override string ToString()
         {
             switch (type)
@@ -666,16 +633,19 @@ namespace OpenTK.Platform.X11
         {
             var result = string.Empty;
             var type = ev.GetType();
-            var fields = type.GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Instance);
+            var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
+                                        BindingFlags.Instance);
             for (var i = 0; i < fields.Length; i++)
             {
                 if (result != string.Empty)
                 {
                     result += ", ";
                 }
+
                 var value = fields[i].GetValue(ev);
                 result += fields[i].Name + "=" + (value == null ? "<null>" : value.ToString());
             }
+
             return type.Name + " (" + result + ")";
         }
     }
@@ -744,10 +714,8 @@ namespace OpenTK.Platform.X11
 
     internal struct XClassHint
     {
-        [MarshalAs(UnmanagedType.LPStr)]
-        public string Name;
-        [MarshalAs(UnmanagedType.LPStr)]
-        public string Class;
+        [MarshalAs(UnmanagedType.LPStr)] public string Name;
+        [MarshalAs(UnmanagedType.LPStr)] public string Class;
     }
 
     internal enum XWindowClass
@@ -869,7 +837,7 @@ namespace OpenTK.Platform.X11
         XK_Super_L = 0xFFEB,
         XK_Super_R = 0xFFEC,
         XK_Hyper_L = 0xFFED,
-        XK_Hyper_R = 0xFFEE,
+        XK_Hyper_R = 0xFFEE
     }
 
 #pragma warning disable 1591
@@ -1064,7 +1032,7 @@ namespace OpenTK.Platform.X11
         //BackingStore    (1L << 6)
         //BackingPlanes    (1L << 7)
         //BackingPixel    (1L << 8)
-        OverrideRedirect = 1 << 9,
+        OverrideRedirect = 1 << 9
     }
 
     internal enum StackMode
@@ -1118,14 +1086,14 @@ namespace OpenTK.Platform.X11
     [Flags]
     internal enum KeyMasks
     {
-        ShiftMask = (1 << 0),
-        LockMask = (1 << 1),
-        ControlMask = (1 << 2),
-        Mod1Mask = (1 << 3),
-        Mod2Mask = (1 << 4),
-        Mod3Mask = (1 << 5),
-        Mod4Mask = (1 << 6),
-        Mod5Mask = (1 << 7),
+        ShiftMask = 1 << 0,
+        LockMask = 1 << 1,
+        ControlMask = 1 << 2,
+        Mod1Mask = 1 << 3,
+        Mod2Mask = 1 << 4,
+        Mod3Mask = 1 << 5,
+        Mod4Mask = 1 << 6,
+        Mod5Mask = 1 << 7,
 
         ModMasks = Mod1Mask | Mod2Mask | Mod3Mask | Mod4Mask | Mod5Mask
     }
@@ -1157,11 +1125,9 @@ namespace OpenTK.Platform.X11
         [StructLayout(LayoutKind.Explicit)]
         internal struct AutoRepeats
         {
-            [FieldOffset(0)]
-            public byte first;
+            [FieldOffset(0)] public byte first;
 
-            [FieldOffset(31)]
-            public byte last;
+            [FieldOffset(31)] public byte last;
         }
     }
 
@@ -1271,22 +1237,22 @@ namespace OpenTK.Platform.X11
 
     internal enum GXFunction
     {
-        GXclear = 0x0,        /* 0 */
-        GXand = 0x1,        /* src AND dst */
-        GXandReverse = 0x2,        /* src AND NOT dst */
-        GXcopy = 0x3,        /* src */
-        GXandInverted = 0x4,        /* NOT src AND dst */
-        GXnoop = 0x5,        /* dst */
-        GXxor = 0x6,        /* src XOR dst */
-        GXor = 0x7,        /* src OR dst */
-        GXnor = 0x8,        /* NOT src AND NOT dst */
-        GXequiv = 0x9,        /* NOT src XOR dst */
-        GXinvert = 0xa,        /* NOT dst */
-        GXorReverse = 0xb,        /* src OR NOT dst */
-        GXcopyInverted = 0xc,        /* NOT src */
-        GXorInverted = 0xd,        /* NOT src OR dst */
-        GXnand = 0xe,        /* NOT src OR NOT dst */
-        GXset = 0xf        /* 1 */
+        GXclear = 0x0, /* 0 */
+        GXand = 0x1, /* src AND dst */
+        GXandReverse = 0x2, /* src AND NOT dst */
+        GXcopy = 0x3, /* src */
+        GXandInverted = 0x4, /* NOT src AND dst */
+        GXnoop = 0x5, /* dst */
+        GXxor = 0x6, /* src XOR dst */
+        GXor = 0x7, /* src OR dst */
+        GXnor = 0x8, /* NOT src AND NOT dst */
+        GXequiv = 0x9, /* NOT src XOR dst */
+        GXinvert = 0xa, /* NOT dst */
+        GXorReverse = 0xb, /* src OR NOT dst */
+        GXcopyInverted = 0xc, /* NOT src */
+        GXorInverted = 0xd, /* NOT src OR dst */
+        GXnand = 0xe, /* NOT src OR NOT dst */
+        GXset = 0xf /* 1 */
     }
 
     internal enum NetWindowManagerState
@@ -1408,17 +1374,17 @@ namespace OpenTK.Platform.X11
     [Flags]
     internal enum XSizeHintsFlags
     {
-        USPosition = (1 << 0),
-        USSize = (1 << 1),
-        PPosition = (1 << 2),
-        PSize = (1 << 3),
-        PMinSize = (1 << 4),
-        PMaxSize = (1 << 5),
-        PResizeInc = (1 << 6),
-        PAspect = (1 << 7),
-        PAllHints = (PPosition | PSize | PMinSize | PMaxSize | PResizeInc | PAspect),
-        PBaseSize = (1 << 8),
-        PWinGravity = (1 << 9),
+        USPosition = 1 << 0,
+        USSize = 1 << 1,
+        PPosition = 1 << 2,
+        PSize = 1 << 3,
+        PMinSize = 1 << 4,
+        PMaxSize = 1 << 5,
+        PResizeInc = 1 << 6,
+        PAspect = 1 << 7,
+        PAllHints = PPosition | PSize | PMinSize | PMaxSize | PResizeInc | PAspect,
+        PBaseSize = 1 << 8,
+        PWinGravity = 1 << 9
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -1447,14 +1413,16 @@ namespace OpenTK.Platform.X11
     [Flags]
     internal enum XWMHintsFlags
     {
-        InputHint = (1 << 0),
-        StateHint = (1 << 1),
-        IconPixmapHint = (1 << 2),
-        IconWindowHint = (1 << 3),
-        IconPositionHint = (1 << 4),
-        IconMaskHint = (1 << 5),
-        WindowGroupHint = (1 << 6),
-        AllHints = (InputHint | StateHint | IconPixmapHint | IconWindowHint | IconPositionHint | IconMaskHint | WindowGroupHint)
+        InputHint = 1 << 0,
+        StateHint = 1 << 1,
+        IconPixmapHint = 1 << 2,
+        IconWindowHint = 1 << 3,
+        IconPositionHint = 1 << 4,
+        IconMaskHint = 1 << 5,
+        WindowGroupHint = 1 << 6,
+
+        AllHints = InputHint | StateHint | IconPixmapHint | IconWindowHint | IconPositionHint | IconMaskHint |
+                   WindowGroupHint
     }
 
     internal enum XInitialState
@@ -1628,7 +1596,7 @@ namespace OpenTK.Platform.X11
         XIMStatusArea = 0x0100,
         XIMStatusCallbacks = 0x0200,
         XIMStatusNothing = 0x0400,
-        XIMStatusNone = 0x0800,
+        XIMStatusNone = 0x0800
     }
 
     [Flags]
@@ -1649,6 +1617,7 @@ namespace OpenTK.Platform.X11
         FocusOut = 5,
         FocusNext = 6,
         FocusPrev = 7,
+
         /* 8-9 were used for XEMBED_GRAB_KEY/XEMBED_UNGRAB_KEY */
         ModalityOn = 10,
         ModalityOff = 11,
@@ -1669,7 +1638,7 @@ namespace OpenTK.Platform.X11
     {
         Button = 1,
         Valuator = 2,
-        Scroll = 3,
+        Scroll = 3
     }
 
     internal enum XIScrollType
@@ -1684,7 +1653,7 @@ namespace OpenTK.Platform.X11
         public IntPtr name; // byte*
         public XIDeviceType use;
         public int attachment;
-        public Bool enabled;
+        public bool enabled;
         public int num_classes;
         public IntPtr classes; // XIAnyClassInfo**
     }
@@ -1731,72 +1700,72 @@ namespace OpenTK.Platform.X11
 
     internal struct XIDeviceEvent
     {
-        public int           type;         /* GenericEvent */
-        public IntPtr serial;       /* # of last request processed by server */
-        public bool          send_event;   /* true if this came from a SendEvent request */
-        public IntPtr display;     /* Display the event was read from */
-        public int           extension;    /* XI extension offset */
-        public XIEventType           evtype;
-        public Time          time;
-        public int           deviceid;
-        public int           sourceid;
-        public int           detail;
-        public Window        root;
-        public Window        @event;
-        public Window        child;
-        public double        root_x;
-        public double        root_y;
-        public double        event_x;
-        public double        event_y;
-        public XIEventFlags        flags;
-        public XIButtonState       buttons;
-        public XIValuatorState     valuators;
-        public XIModifierState     mods;
-        public XIGroupState        @group;
+        public int type; /* GenericEvent */
+        public IntPtr serial; /* # of last request processed by server */
+        public bool send_event; /* true if this came from a SendEvent request */
+        public IntPtr display; /* Display the event was read from */
+        public int extension; /* XI extension offset */
+        public XIEventType evtype;
+        public Time time;
+        public int deviceid;
+        public int sourceid;
+        public int detail;
+        public Window root;
+        public Window @event;
+        public Window child;
+        public double root_x;
+        public double root_y;
+        public double event_x;
+        public double event_y;
+        public XIEventFlags flags;
+        public XIButtonState buttons;
+        public XIValuatorState valuators;
+        public XIModifierState mods;
+        public XIGroupState group;
     }
 
     internal struct XIRawEvent
     {
-        public int           type;         /* GenericEvent */
-        public IntPtr serial;       /* # of last request processed by server */
-        public Bool          send_event;   /* true if this came from a SendEvent request */
-        public IntPtr display;     /* Display the event was read from */
-        public int           extension;    /* XI extension offset */
-        public XIEventType   evtype;       /* XI_RawKeyPress, XI_RawKeyRelease, etc. */
-        public Time          time;
-        public int           deviceid;
-        public int           sourceid;
-        public int           detail;
-        public XIEventFlags  flags;
+        public int type; /* GenericEvent */
+        public IntPtr serial; /* # of last request processed by server */
+        public bool send_event; /* true if this came from a SendEvent request */
+        public IntPtr display; /* Display the event was read from */
+        public int extension; /* XI extension offset */
+        public XIEventType evtype; /* XI_RawKeyPress, XI_RawKeyRelease, etc. */
+        public Time time;
+        public int deviceid;
+        public int sourceid;
+        public int detail;
+        public XIEventFlags flags;
         public XIValuatorState valuators;
         public IntPtr raw_values; // FP3232*
     }
 
     internal struct XIButtonState
     {
-        public int           mask_len;
+        public int mask_len;
         public IntPtr mask; // byte*
     }
 
     internal struct XIModifierState
     {
-        public int    @base;
-        public int    latched;
-        public int    locked;
-        public int    effective;
+        public int @base;
+        public int latched;
+        public int locked;
+        public int effective;
     }
 
     internal struct XIGroupState
     {
-        public int    @base;
-        public int    latched;
-        public int    locked;
-        public int    effective;
+        public int @base;
+        public int latched;
+        public int locked;
+        public int effective;
     }
 
     internal struct XIValuatorState
     {
-        public int           mask_len;
+        public int mask_len;
         public IntPtr mask; // byte*
         public IntPtr values; // double*
     }
@@ -1804,8 +1773,8 @@ namespace OpenTK.Platform.X11
     internal struct XIEventMask : IDisposable
     {
         public int deviceid; // 0 = XIAllDevices, 1 = XIAllMasterDevices
-        private int mask_len;
-        private unsafe byte* mask;
+        private readonly int mask_len;
+        private readonly unsafe byte* mask;
 
         public XIEventMask(int id, XIEventMasks m)
         {
@@ -1816,7 +1785,7 @@ namespace OpenTK.Platform.X11
                 mask = (byte*)Marshal.AllocHGlobal(mask_len);
                 for (var i = 0; i < mask_len; i++)
                 {
-                    mask[i] = (byte)((uint)m >> i * 8);
+                    mask[i] = (byte)((uint)m >> (i * 8));
                 }
             }
         }
@@ -1825,7 +1794,7 @@ namespace OpenTK.Platform.X11
         {
             unsafe
             {
-                Marshal.FreeHGlobal(new IntPtr((void*)mask));
+                Marshal.FreeHGlobal(new IntPtr(mask));
             }
         }
     }
@@ -1854,42 +1823,42 @@ namespace OpenTK.Platform.X11
 
     internal enum XIEventMasks
     {
-        DeviceChangedMask =            (1 << (int)XIEventType.DeviceChanged),
-        KeyPressMask =                 (1 << (int)XIEventType.KeyPress),
-        KeyReleaseMask =               (1 << (int)XIEventType.KeyRelease),
-        ButtonPressMask =              (1 << (int)XIEventType.ButtonPress),
-        ButtonReleaseMask =            (1 << (int)XIEventType.ButtonRelease),
-        MotionMask =                   (1 << (int)XIEventType.Motion),
-        EnterMask =                    (1 << (int)XIEventType.Enter),
-        LeaveMask =                    (1 << (int)XIEventType.Leave),
-        FocusInMask =                  (1 << (int)XIEventType.FocusIn),
-        FocusOutMask =                 (1 << (int)XIEventType.FocusOut),
-        HierarchyChangedMask =         (1 << (int)XIEventType.HierarchyChanged),
-        PropertyEventMask =            (1 << (int)XIEventType.PropertyEvent),
-        RawKeyPressMask =              (1 << (int)XIEventType.RawKeyPress),
-        RawKeyReleaseMask =            (1 << (int)XIEventType.RawKeyRelease),
-        RawButtonPressMask =           (1 << (int)XIEventType.RawButtonPress),
-        RawButtonReleaseMask =         (1 << (int)XIEventType.RawButtonRelease),
-        RawMotionMask =                (1 << (int)XIEventType.RawMotion),
+        DeviceChangedMask = 1 << XIEventType.DeviceChanged,
+        KeyPressMask = 1 << XIEventType.KeyPress,
+        KeyReleaseMask = 1 << XIEventType.KeyRelease,
+        ButtonPressMask = 1 << XIEventType.ButtonPress,
+        ButtonReleaseMask = 1 << XIEventType.ButtonRelease,
+        MotionMask = 1 << XIEventType.Motion,
+        EnterMask = 1 << XIEventType.Enter,
+        LeaveMask = 1 << XIEventType.Leave,
+        FocusInMask = 1 << XIEventType.FocusIn,
+        FocusOutMask = 1 << XIEventType.FocusOut,
+        HierarchyChangedMask = 1 << XIEventType.HierarchyChanged,
+        PropertyEventMask = 1 << XIEventType.PropertyEvent,
+        RawKeyPressMask = 1 << XIEventType.RawKeyPress,
+        RawKeyReleaseMask = 1 << XIEventType.RawKeyRelease,
+        RawButtonPressMask = 1 << XIEventType.RawButtonPress,
+        RawButtonReleaseMask = 1 << XIEventType.RawButtonRelease,
+        RawMotionMask = 1 << XIEventType.RawMotion
     }
 
     [Flags]
     internal enum XIKeyEventFlags
     {
-        Repeat = (1 << 16),
+        Repeat = 1 << 16
     }
 
     [Flags]
     internal enum XIPointerEventFlags
     {
-        Emulated = (1 << 16),
+        Emulated = 1 << 16
     }
 
     [Flags]
     internal enum XITouchEventFlags
     {
-        PendingEnd = (1 << 16),
-        EmulatingPointer = (1 << 17),
+        PendingEnd = 1 << 16,
+        EmulatingPointer = 1 << 17
     }
 
     [Flags]

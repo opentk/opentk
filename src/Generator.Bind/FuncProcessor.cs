@@ -32,12 +32,10 @@ using System.Text.RegularExpressions;
 using System.Xml.XPath;
 using Bind.Structures;
 using Delegate = Bind.Structures.Delegate;
-using Enum = Bind.Structures.Enum;
+using Type = Bind.Structures.Type;
 
 namespace Bind
 {
-    using Type = Structures.Type;
-
     internal class FuncProcessor
     {
         private static readonly Regex Endings = new Regex(
@@ -55,14 +53,14 @@ namespace Bind
 
         private readonly IEnumerable<string> _overrides;
 
-        private IBind Generator { get; set; }
-        private Settings Settings => Generator.Settings;
-
         public FuncProcessor(IBind generator, IEnumerable<string> overrides)
         {
             Generator = generator ?? throw new ArgumentNullException(nameof(generator));
             _overrides = overrides ?? throw new ArgumentNullException(nameof(overrides));
         }
+
+        private IBind Generator { get; }
+        private Settings Settings => Generator.Settings;
 
         public FunctionCollection Process(EnumProcessor enumProcessor, DocProcessor docProcessor,
             DelegateCollection delegates, EnumCollection enums, string apiname, string apiversion)
@@ -104,6 +102,7 @@ namespace Bind
                             overloadList.Add(overload);
                         }
                     }
+
                     foreach (var overload in overloadList)
                     {
                         delegates.Add(overload);
@@ -196,7 +195,8 @@ namespace Bind
             }
         }
 
-        private static string GetPath(string apipath, string apiname, string apiversion, string function, string extension)
+        private static string GetPath(string apipath, string apiname, string apiversion, string function,
+            string extension)
         {
             var path = new StringBuilder();
             path.Append("/signatures/");
@@ -313,17 +313,18 @@ namespace Bind
                 }
             }
 
-            if ((type.Array == 0 && type.Pointer == 0 && !type.Reference) &&
+            if (type.Array == 0 && type.Pointer == 0 && !type.Reference &&
                 (type.QualifiedType.ToLower().Contains("buffersize") ||
-                type.QualifiedType.ToLower().Contains("sizeiptr") ||
-                type.QualifiedType.Contains("size_t")))
+                 type.QualifiedType.ToLower().Contains("sizeiptr") ||
+                 type.QualifiedType.Contains("size_t")))
             {
                 type.WrapperType |= WrapperTypes.SizeParameter;
             }
 
             type.CurrentType =
-                Generator.CSTypes.ContainsKey(type.CurrentType) ?
-                Generator.CSTypes[type.CurrentType] : type.CurrentType;
+                Generator.CSTypes.ContainsKey(type.CurrentType)
+                    ? Generator.CSTypes[type.CurrentType]
+                    : type.CurrentType;
 
             // Make sure that enum parameters follow enum overrides, i.e.
             // if enum ErrorCodes is overriden to ErrorCode, then parameters
@@ -374,6 +375,7 @@ namespace Bind
             {
                 extension = extension[0] + extension.Substring(1).ToLower();
             }
+
             return extension;
         }
 
@@ -390,6 +392,7 @@ namespace Bind
             {
                 name = name.Remove(index);
             }
+
             return name;
         }
 
@@ -403,7 +406,7 @@ namespace Bind
             // Note: some endings should not be trimmed, for example: 'b' from Attrib.
             // Check the endingsNotToTrim regex for details.
             var m = EndingsNotToTrim.Match(trimmedName);
-            if ((m.Index + m.Length) != trimmedName.Length)
+            if (m.Index + m.Length != trimmedName.Length)
             {
                 m = Endings.Match(trimmedName);
 
@@ -433,10 +436,11 @@ namespace Bind
             return trimmedName;
         }
 
-        private static XPathNodeIterator GetFuncOverload(XPathNavigator nav, Delegate d, string apiname, string apiversion)
+        private static XPathNodeIterator GetFuncOverload(XPathNavigator nav, Delegate d, string apiname,
+            string apiversion)
         {
             // Try a few different extension variations that appear in the overrides xml file
-            string[] extensions = { d.Extension, TranslateExtension(d.Extension), d.Extension.ToUpper() };
+            string[] extensions = {d.Extension, TranslateExtension(d.Extension), d.Extension.ToUpper()};
             var trimmedName = GetTrimmedName(d);
             XPathNodeIterator functionOverload = null;
 
@@ -448,24 +452,27 @@ namespace Bind
                 {
                     break;
                 }
+
                 functionOverload = nav.Select(GetOverloadsPath(apiname, apiversion, extensionlessName, ext));
                 if (functionOverload.Count != 0)
                 {
                     break;
                 }
+
                 functionOverload = nav.Select(GetOverloadsPath(apiname, apiversion, trimmedName, ext));
                 if (functionOverload.Count != 0)
                 {
                     break;
                 }
             }
+
             return functionOverload;
         }
 
         private static XPathNavigator GetFuncOverride(XPathNavigator nav, Delegate d, string apiname, string apiversion)
         {
             // Try a few different extension variations that appear in the overrides xml file
-            string[] extensions = { d.Extension, TranslateExtension(d.Extension), d.Extension.ToUpper() };
+            string[] extensions = {d.Extension, TranslateExtension(d.Extension), d.Extension.ToUpper()};
             var trimmedName = GetTrimmedName(d);
             XPathNavigator functionOverride = null;
 
@@ -482,6 +489,7 @@ namespace Bind
                     break;
                 }
             }
+
             return functionOverride;
         }
 
@@ -521,7 +529,8 @@ namespace Bind
                             break;
                         case "count":
                             d.Parameters[i].ComputeSize = node.Value.Trim();
-                            d.Parameters[i].ElementCount = int.TryParse(d.Parameters[i].ComputeSize, out var count) ? count : 0;
+                            d.Parameters[i].ElementCount =
+                                int.TryParse(d.Parameters[i].ComputeSize, out var count) ? count : 0;
                             break;
                     }
                 }
@@ -676,6 +685,7 @@ namespace Bind
                 {
                     throw new NotSupportedException("[Out] String* parameters are not currently supported.");
                 }
+
                 if (p.Pointer >= 2)
                 {
                     throw new NotSupportedException("String arrays with arity >= 2 are not currently supported.");
@@ -782,6 +792,7 @@ namespace Bind
                     return fnew;
                 }));
             }
+
             wrappers.AddRange(overloads);
             return wrappers;
         }
@@ -828,6 +839,7 @@ namespace Bind
                     }
                 }
             }
+
             return wrappers;
         }
 
@@ -895,6 +907,7 @@ namespace Bind
                         {
                             mustRemove.Add(i);
                         }
+
                         if (functionJIsProblematic)
                         {
                             mustRemove.Add(j);
@@ -913,6 +926,7 @@ namespace Bind
                     count++;
                 }
             }
+
             return collection;
         }
 
@@ -1020,6 +1034,7 @@ namespace Bind
                             f = f ?? new Function(d);
                             f.Parameters[i].QualifiedType = "Int32";
                         }
+
                         i++;
                     }
 
@@ -1029,6 +1044,7 @@ namespace Bind
                     }
                 }
             }
+
             return convenienceWrappers;
         }
 
@@ -1073,7 +1089,8 @@ namespace Bind
             return f;
         }
 
-        private List<Function> GetWrapper(IDictionary<WrapperTypes, List<Function>> dictionary, WrapperTypes key, Function raw)
+        private List<Function> GetWrapper(IDictionary<WrapperTypes, List<Function>> dictionary, WrapperTypes key,
+            Function raw)
         {
             if (!dictionary.ContainsKey(key))
             {
@@ -1083,6 +1100,7 @@ namespace Bind
                     dictionary[key].Add(new Function(raw));
                 }
             }
+
             return dictionary[key];
         }
 
@@ -1130,6 +1148,7 @@ namespace Bind
                             {
                                 p.Array++;
                             }
+
                             p.Pointer--;
                         }
                     }
@@ -1178,8 +1197,9 @@ namespace Bind
                 // This means no wrapper has been generated by any of the previous
                 // transformations. Since the generic translation below operates on
                 // existing wrappers, add one here to get the process started.
-                wrappers.Add(WrapperTypes.None, new List<Function> { new Function(func) });
+                wrappers.Add(WrapperTypes.None, new List<Function> {new Function(func)});
             }
+
             var list = new List<Function>();
             foreach (var wrapper in wrappers.Values.SelectMany(v => v))
             {
@@ -1201,6 +1221,7 @@ namespace Bind
                         p.Flow = FlowDirection.Undefined;
                     }
                 }
+
                 if (genericWrapper != null)
                 {
                     list.Add(genericWrapper);
@@ -1222,6 +1243,7 @@ namespace Bind
                                 // Overloading on array arity is not CLS-compliant
                                 genericWrapper.CLSCompliant = false;
                             }
+
                             var p = genericWrapper.Parameters[i];
 
                             p.Reference = false;
@@ -1239,12 +1261,14 @@ namespace Bind
                             }
                         }
                     }
+
                     if (genericWrapper != null)
                     {
                         list.Add(genericWrapper);
                     }
                 }
             }
+
             GetWrapper(wrappers, WrapperTypes.GenericParameter, null)
                 .AddRange(list);
 
@@ -1269,12 +1293,10 @@ namespace Bind
                         {
                             throw new NotImplementedException();
                         }
-                        else
-                        {
-                            p.QualifiedType = "String";
-                            p.Pointer = 0;
-                            p.Array = 1;
-                        }
+
+                        p.QualifiedType = "String";
+                        p.Pointer = 0;
+                        p.Array = 1;
                     }
                 }
             }

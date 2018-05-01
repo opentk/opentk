@@ -1,6 +1,8 @@
+using Bind.ES;
+
 namespace Bind.CL
 {
-    internal class CLGenerator : ES.ESGenerator
+    internal class CLGenerator : ESGenerator
     {
         public CLGenerator(Settings settings)
             : base(settings)

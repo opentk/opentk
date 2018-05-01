@@ -12,19 +12,16 @@ namespace OpenTK.Platform.Windows
 {
     internal partial class Wgl
     {
-        private static IntPtr[] EntryPoints;
-        private static string[] EntryPointNames;
-
         internal const string Library = "OPENGL32.DLL";
+        private static readonly IntPtr[] EntryPoints;
+        private static readonly string[] EntryPointNames;
 
-        private readonly static Dictionary<string, bool> extensions =
+        private static readonly Dictionary<string, bool> extensions =
             new Dictionary<string, bool>();
 
         private static readonly object sync = new object();
 
-        public Wgl()
-        {
-        }
+        private object SyncRoot => sync;
 
         public static bool SupportsExtension(string name)
         {
@@ -32,7 +29,7 @@ namespace OpenTK.Platform.Windows
         }
 
         /// <summary>
-        /// Checks if a Wgl extension is supported by the given context.
+        ///     Checks if a Wgl extension is supported by the given context.
         /// </summary>
         /// <param name="dc">The device context.</param>
         /// <param name="name">The extension to check.</param>
@@ -53,9 +50,9 @@ namespace OpenTK.Platform.Windows
                     var str =
                         get_arb ? Arb.GetExtensionsString(dc) :
                         get_ext ? Ext.GetExtensionsString() :
-                        String.Empty;
+                        string.Empty;
 
-                    if (!String.IsNullOrEmpty(str))
+                    if (!string.IsNullOrEmpty(str))
                     {
                         foreach (var ext in str.Split(' '))
                         {
@@ -69,13 +66,14 @@ namespace OpenTK.Platform.Windows
             {
                 return extensions.ContainsKey(name);
             }
+
             return false;
         }
 
         /// <summary>
-        /// Checks whether an extension function is supported.
-        /// Do not use with core WGL functions, as this function
-        /// will incorrectly return false.
+        ///     Checks whether an extension function is supported.
+        ///     Do not use with core WGL functions, as this function
+        ///     will incorrectly return false.
         /// </summary>
         /// <param name="name">The extension function to check (e.g. "wglGetExtensionsStringARB"</param>
         /// <returns>True if the extension function is supported; otherwise, false.</returns>
@@ -86,10 +84,9 @@ namespace OpenTK.Platform.Windows
             {
                 return EntryPoints[index] != IntPtr.Zero;
             }
+
             return false;
         }
-
-        private object SyncRoot => sync;
 
         internal static IntPtr GetAddress(string function_string)
         {
@@ -98,6 +95,7 @@ namespace OpenTK.Platform.Windows
             {
                 address = Functions.GetProcAddress(WinFactory.OpenGLHandle, function_string);
             }
+
             return address;
         }
 
@@ -105,7 +103,7 @@ namespace OpenTK.Platform.Windows
         {
             // See https://www.opengl.org/wiki/Load_OpenGL_Functions
             var a = address.ToInt64();
-            var is_valid = (a < -1) || (a > 3);
+            var is_valid = a < -1 || a > 3;
             return is_valid;
         }
 
@@ -119,6 +117,7 @@ namespace OpenTK.Platform.Windows
                     {
                         EntryPoints[i] = GetAddress(EntryPointNames[i]);
                     }
+
                     extensions.Clear();
                 }
             }

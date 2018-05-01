@@ -5,9 +5,9 @@
  */
 
 using System;
-using System.Windows.Forms;
+using System.Reflection;
 using System.Runtime.InteropServices;
-
+using System.Windows.Forms;
 using OpenTK.Graphics;
 using OpenTK.Platform;
 
@@ -15,46 +15,13 @@ namespace OpenTK
 {
     internal class X11GLControl : IGLControl
     {
-        [DllImport("libX11")]
-        private static extern IntPtr XCreateColormap(IntPtr display, IntPtr window, IntPtr visual, int alloc);
-
-        [DllImport("libX11", EntryPoint = "XGetVisualInfo")]
-        private static extern IntPtr XGetVisualInfoInternal(IntPtr display, IntPtr vinfo_mask, ref XVisualInfo template, out int nitems);
-
-        private static IntPtr XGetVisualInfo(IntPtr display, int vinfo_mask, ref XVisualInfo template, out int nitems)
-        {
-            return XGetVisualInfoInternal(display, (IntPtr)vinfo_mask, ref template, out nitems);
-        }
-
-        [DllImport("libX11")]
-        private extern static int XPending(IntPtr diplay);
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct XVisualInfo
-        {
-            public IntPtr Visual;
-            public IntPtr VisualID;
-            public int Screen;
-            public int Depth;
-            public int Class;
-            public long RedMask;
-            public long GreenMask;
-            public long blueMask;
-            public int ColormapSize;
-            public int BitsPerRgb;
-
-            public override string ToString()
-            {
-                return $"id ({VisualID}), screen ({Screen}), depth ({Depth}), class ({Class})";
-            }
-        }
+        private readonly IntPtr display;
 
         private GraphicsMode mode;
-        private IntPtr display;
-        private IntPtr rootWindow;
+        private readonly IntPtr rootWindow;
 
         // Use reflection to retrieve the necessary values from Mono's Windows.Forms implementation.
-        private Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
+        private readonly Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
 
         internal X11GLControl(GraphicsMode mode, Control control)
         {
@@ -62,6 +29,7 @@ namespace OpenTK
             {
                 throw new ArgumentNullException(nameof(mode));
             }
+
             if (control == null)
             {
                 throw new ArgumentNullException(nameof(control));
@@ -100,7 +68,7 @@ namespace OpenTK
 
         public IGraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
         {
-            var context =  new GraphicsContext(mode, WindowInfo, major, minor, flags);
+            var context = new GraphicsContext(mode, WindowInfo, major, minor, flags);
             mode = context.GraphicsMode;
 
             // get the XVisualInfo for this GraphicsMode
@@ -123,16 +91,51 @@ namespace OpenTK
 
         public IWindowInfo WindowInfo { get; }
 
+        [DllImport("libX11")]
+        private static extern IntPtr XCreateColormap(IntPtr display, IntPtr window, IntPtr visual, int alloc);
+
+        [DllImport("libX11", EntryPoint = "XGetVisualInfo")]
+        private static extern IntPtr XGetVisualInfoInternal(IntPtr display, IntPtr vinfo_mask, ref XVisualInfo template,
+            out int nitems);
+
+        private static IntPtr XGetVisualInfo(IntPtr display, int vinfo_mask, ref XVisualInfo template, out int nitems)
+        {
+            return XGetVisualInfoInternal(display, (IntPtr)vinfo_mask, ref template, out nitems);
+        }
+
+        [DllImport("libX11")]
+        private static extern int XPending(IntPtr diplay);
+
         private static object GetStaticFieldValue(Type type, string fieldName)
         {
             return type.GetField(fieldName,
-                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+                BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
         }
 
         private static void SetStaticFieldValue(Type type, string fieldName, object value)
         {
             type.GetField(fieldName,
-                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).SetValue(null, value);
+                BindingFlags.Static | BindingFlags.NonPublic).SetValue(null, value);
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct XVisualInfo
+        {
+            public readonly IntPtr Visual;
+            public IntPtr VisualID;
+            public readonly int Screen;
+            public readonly int Depth;
+            public readonly int Class;
+            public readonly long RedMask;
+            public readonly long GreenMask;
+            public readonly long blueMask;
+            public readonly int ColormapSize;
+            public readonly int BitsPerRgb;
+
+            public override string ToString()
+            {
+                return $"id ({VisualID}), screen ({Screen}), depth ({Depth}), class ({Class})";
+            }
         }
     }
 }

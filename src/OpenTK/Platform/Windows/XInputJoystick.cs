@@ -26,10 +26,11 @@
 //
 
 using System;
-using OpenTK.Input;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Diagnostics;
+using OpenTK.Input;
+using OpenTK.Platform.Common;
 
 namespace OpenTK.Platform.Windows
 {
@@ -40,7 +41,7 @@ namespace OpenTK.Platform.Windows
         private static readonly Guid guid =
             new Guid("78696e70757400000000000000000000"); // equiv. to "xinput"
 
-        private XInput xinput = new XInput();
+        private readonly XInput xinput = new XInput();
 
         public JoystickState GetState(int index)
         {
@@ -52,12 +53,16 @@ namespace OpenTK.Platform.Windows
             {
                 state.SetIsConnected(true);
 
-                state.SetAxis(0, (short)xstate.GamePad.ThumbLX);
+                state.SetAxis(0, xstate.GamePad.ThumbLX);
                 state.SetAxis(1, (short)Math.Min(short.MaxValue, -xstate.GamePad.ThumbLY));
-                state.SetAxis(2, (short)Common.HidHelper.ScaleValue(xstate.GamePad.LeftTrigger, 0, byte.MaxValue, short.MinValue, short.MaxValue));
-                state.SetAxis(3, (short)xstate.GamePad.ThumbRX);
+                state.SetAxis(2,
+                    (short)HidHelper.ScaleValue(xstate.GamePad.LeftTrigger, 0, byte.MaxValue, short.MinValue,
+                        short.MaxValue));
+                state.SetAxis(3, xstate.GamePad.ThumbRX);
                 state.SetAxis(4, (short)Math.Min(short.MaxValue, -xstate.GamePad.ThumbRY));
-                state.SetAxis(5, (short)Common.HidHelper.ScaleValue(xstate.GamePad.RightTrigger, 0, byte.MaxValue, short.MinValue, short.MaxValue));
+                state.SetAxis(5,
+                    (short)HidHelper.ScaleValue(xstate.GamePad.RightTrigger, 0, byte.MaxValue, short.MinValue,
+                        short.MaxValue));
 
                 state.SetButton(0, (xstate.GamePad.Buttons & XInputButtons.A) != 0);
                 state.SetButton(1, (xstate.GamePad.Buttons & XInputButtons.B) != 0);
@@ -86,16 +91,19 @@ namespace OpenTK.Platform.Windows
             {
                 return HatPosition.UpLeft;
             }
+
             dir = XInputButtons.DPadUp | XInputButtons.DPadRight;
             if ((buttons & dir) == dir)
             {
                 return HatPosition.UpRight;
             }
+
             dir = XInputButtons.DPadDown | XInputButtons.DPadLeft;
             if ((buttons & dir) == dir)
             {
                 return HatPosition.DownLeft;
             }
+
             dir = XInputButtons.DPadDown | XInputButtons.DPadRight;
             if ((buttons & dir) == dir)
             {
@@ -107,16 +115,19 @@ namespace OpenTK.Platform.Windows
             {
                 return HatPosition.Up;
             }
+
             dir = XInputButtons.DPadRight;
             if ((buttons & dir) == dir)
             {
                 return HatPosition.Right;
             }
+
             dir = XInputButtons.DPadDown;
             if ((buttons & dir) == dir)
             {
                 return HatPosition.Down;
             }
+
             dir = XInputButtons.DPadLeft;
             if ((buttons & dir) == dir)
             {
@@ -142,12 +153,13 @@ namespace OpenTK.Platform.Windows
 
                 return new JoystickCapabilities(axes, buttons, 1, true);
             }
+
             return new JoystickCapabilities();
         }
 
         public string GetName(int index)
         {
-            return String.Empty;
+            return string.Empty;
         }
 
         public Guid GetGuid(int index)
@@ -161,8 +173,8 @@ namespace OpenTK.Platform.Windows
             right = MathHelper.Clamp(right, 0.0f, 1.0f);
 
             var vibration = new XInputVibration(
-                (ushort)(left * UInt16.MaxValue),
-                (ushort)(right * UInt16.MaxValue));
+                (ushort)(left * ushort.MaxValue),
+                (ushort)(right * ushort.MaxValue));
 
             return xinput.SetState((XInputUserIndex)index, ref vibration) == XInputErrorCode.Success;
         }
@@ -192,7 +204,7 @@ namespace OpenTK.Platform.Windows
         }
 
 #if false
-        // Todo: Implement JoystickType enumeration
+// Todo: Implement JoystickType enumeration
         GamePadType TranslateSubType(XInputDeviceSubType xtype)
         {
             switch (xtype)
@@ -246,7 +258,7 @@ namespace OpenTK.Platform.Windows
             Wireless = 0x0002,
             Voice = 0x0004,
             PluginModules = 0x0008,
-            NoNavigation = 0x0010,
+            NoNavigation = 0x0010
         }
 
         private enum XInputButtons : ushort
@@ -358,6 +370,10 @@ namespace OpenTK.Platform.Windows
         {
             private IntPtr dll;
 
+            internal readonly XInputGetCapabilities GetCapabilities;
+            internal readonly XInputGetState GetState;
+            internal readonly XInputSetState SetState;
+
             internal XInput()
             {
                 // Try to load the newest XInput***.dll installed on the system
@@ -367,22 +383,26 @@ namespace OpenTK.Platform.Windows
                 {
                     dll = Functions.LoadLibrary("XINPUT1_3");
                 }
+
                 if (dll == IntPtr.Zero)
                 {
                     dll = Functions.LoadLibrary("XINPUT1_2");
                 }
+
                 if (dll == IntPtr.Zero)
                 {
                     dll = Functions.LoadLibrary("XINPUT1_1");
                 }
+
                 if (dll == IntPtr.Zero)
                 {
                     dll = Functions.LoadLibrary("XINPUT9_1_0");
                 }
+
                 if (dll == IntPtr.Zero)
                 {
-                   Debug.Print("XInput was not found on this platform");
-                   return;
+                    Debug.Print("XInput was not found on this platform");
+                    return;
                 }
 
                 // Load the entry points we are interested in from that dll
@@ -395,6 +415,12 @@ namespace OpenTK.Platform.Windows
                 SetState = (XInputSetState)Load("XInputSetState", typeof(XInputSetState));
             }
 
+            public void Dispose()
+            {
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
             private Delegate Load(ushort ordinal, Type type)
             {
                 var pfunc = Functions.GetProcAddress(dll, (IntPtr)ordinal);
@@ -402,6 +428,7 @@ namespace OpenTK.Platform.Windows
                 {
                     return Marshal.GetDelegateForFunctionPointer(pfunc, type);
                 }
+
                 return null;
             }
 
@@ -412,12 +439,21 @@ namespace OpenTK.Platform.Windows
                 {
                     return Marshal.GetDelegateForFunctionPointer(pfunc, type);
                 }
+
                 return null;
             }
 
-            internal XInputGetCapabilities GetCapabilities;
-            internal XInputGetState GetState;
-            internal XInputSetState SetState;
+            private void Dispose(bool manual)
+            {
+                if (manual)
+                {
+                    if (dll != IntPtr.Zero)
+                    {
+                        Functions.FreeLibrary(dll);
+                        dll = IntPtr.Zero;
+                    }
+                }
+            }
 
             [SuppressUnmanagedCodeSecurity]
             internal delegate XInputErrorCode XInputGetCapabilities(
@@ -438,24 +474,6 @@ namespace OpenTK.Platform.Windows
                 XInputUserIndex dwUserIndex,
                 ref XInputVibration pVibration
             );
-
-            public void Dispose()
-            {
-                Dispose(true);
-                GC.SuppressFinalize(this);
-            }
-
-            private void Dispose(bool manual)
-            {
-                if (manual)
-                {
-                    if (dll != IntPtr.Zero)
-                    {
-                        Functions.FreeLibrary(dll);
-                        dll = IntPtr.Zero;
-                    }
-                }
-            }
         }
 
         public void Dispose()

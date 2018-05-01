@@ -27,13 +27,14 @@
 
 using System.Diagnostics;
 using OpenTK.Input;
+using OpenTK.Platform.Linux;
 
 namespace OpenTK.Platform.X11
 {
     internal class XI2Input : IInputDriver2
     {
+        private readonly LinuxJoystick joystick = new LinuxJoystick();
         private readonly XI2MouseKeyboard mouse_keyboard = new XI2MouseKeyboard();
-        private readonly Linux.LinuxJoystick joystick = new Linux.LinuxJoystick();
 
         internal XI2Input()
         {
@@ -53,7 +54,5 @@ namespace OpenTK.Platform.X11
             mouse_keyboard.Dispose();
             joystick.Dispose();
         }
-
     }
 }
-

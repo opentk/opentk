@@ -30,7 +30,7 @@ using System;
 namespace OpenTK.Input
 {
     /// <summary>
-    /// Describes the state of a <see cref="GamePad"/> directional pad.
+    ///     Describes the state of a <see cref="GamePad" /> directional pad.
     /// </summary>
     public struct GamePadDPad : IEquatable<GamePadDPad>
     {
@@ -53,41 +53,41 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets the <see cref="ButtonState"/> for the up button.
+        ///     Gets the <see cref="ButtonState" /> for the up button.
         /// </summary>
         /// <value><c>ButtonState.Pressed</c> if the up button is pressed; otherwise, <c>ButtonState.Released</c>.</value>
         public ButtonState Up => IsUp ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
-        /// Gets the <see cref="ButtonState"/> for the down button.
+        ///     Gets the <see cref="ButtonState" /> for the down button.
         /// </summary>
         /// <value><c>ButtonState.Pressed</c> if the down button is pressed; otherwise, <c>ButtonState.Released</c>.</value>
         public ButtonState Down => IsDown ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
-        /// Gets the <see cref="ButtonState"/> for the left button.
+        ///     Gets the <see cref="ButtonState" /> for the left button.
         /// </summary>
         /// <value><c>ButtonState.Pressed</c> if the left button is pressed; otherwise, <c>ButtonState.Released</c>.</value>
         public ButtonState Left => IsLeft ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
-        /// Gets the <see cref="ButtonState"/> for the right button.
+        ///     Gets the <see cref="ButtonState" /> for the right button.
         /// </summary>
         /// <value><c>ButtonState.Pressed</c> if the right button is pressed; otherwise, <c>ButtonState.Released</c>.</value>
         public ButtonState Right => IsRight ? ButtonState.Pressed : ButtonState.Released;
 
         /// <summary>
-        /// Gets a value indicating whether the up button is pressed.
+        ///     Gets a value indicating whether the up button is pressed.
         /// </summary>
         /// <value><c>true</c> if the up button is pressed; otherwise, <c>false</c>.</value>
         public bool IsUp
         {
-            get => (buttons  & DPadButtons.Up) != 0;
+            get => (buttons & DPadButtons.Up) != 0;
             internal set => SetButton(DPadButtons.Up, value);
         }
 
         /// <summary>
-        /// Gets a value indicating whether the down button is pressed.
+        ///     Gets a value indicating whether the down button is pressed.
         /// </summary>
         /// <value><c>true</c> if the down button is pressed; otherwise, <c>false</c>.</value>
         public bool IsDown
@@ -97,7 +97,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a value indicating whether the left button is pressed.
+        ///     Gets a value indicating whether the left button is pressed.
         /// </summary>
         /// <value><c>true</c> if the left button is pressed; otherwise, <c>false</c>.</value>
         public bool IsLeft
@@ -107,7 +107,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a value indicating whether the right button is pressed.
+        ///     Gets a value indicating whether the right button is pressed.
         /// </summary>
         /// <value><c>true</c> if the right button is pressed; otherwise, <c>false</c>.</value>
         public bool IsRight
@@ -116,46 +116,51 @@ namespace OpenTK.Input
             internal set => SetButton(DPadButtons.Right, value);
         }
 
-        /// <param name="left">A <see cref="GamePadDPad"/> instance to test for equality.</param>
-        /// <param name="right">A <see cref="GamePadDPad"/> instance to test for equality.</param>
+        /// <param name="left">A <see cref="GamePadDPad" /> instance to test for equality.</param>
+        /// <param name="right">A <see cref="GamePadDPad" /> instance to test for equality.</param>
         public static bool operator ==(GamePadDPad left, GamePadDPad right)
         {
             return left.Equals(right);
         }
 
-        /// <param name="left">A <see cref="GamePadDPad"/> instance to test for inequality.</param>
-        /// <param name="right">A <see cref="GamePadDPad"/> instance to test for inequality.</param>
+        /// <param name="left">A <see cref="GamePadDPad" /> instance to test for inequality.</param>
+        /// <param name="right">A <see cref="GamePadDPad" /> instance to test for inequality.</param>
         public static bool operator !=(GamePadDPad left, GamePadDPad right)
         {
             return !left.Equals(right);
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.GamePadDPad"/>.
+        ///     Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.GamePadDPad" />.
         /// </summary>
-        /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.GamePadDPad"/>.</returns>
+        /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.GamePadDPad" />.</returns>
         public override string ToString()
         {
             return
-                $"{{{(IsUp ? "U" : String.Empty)}{(IsLeft ? "L" : String.Empty)}{(IsDown ? "D" : String.Empty)}{(IsRight ? "R" : String.Empty)}}}";
+                $"{{{(IsUp ? "U" : string.Empty)}{(IsLeft ? "L" : string.Empty)}{(IsDown ? "D" : string.Empty)}{(IsRight ? "R" : string.Empty)}}}";
         }
 
         /// <summary>
-        /// Serves as a hash function for a <see cref="OpenTK.Input.GamePadDPad"/> object.
+        ///     Serves as a hash function for a <see cref="OpenTK.Input.GamePadDPad" /> object.
         /// </summary>
-        /// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
-        /// hash table.</returns>
+        /// <returns>
+        ///     A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
+        ///     hash table.
+        /// </returns>
         public override int GetHashCode()
         {
             return buttons.GetHashCode();
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="OpenTK.Input.GamePadDPad"/>.
+        ///     Determines whether the specified <see cref="System.Object" /> is equal to the current
+        ///     <see cref="OpenTK.Input.GamePadDPad" />.
         /// </summary>
-        /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="OpenTK.Input.GamePadDPad"/>.</param>
-        /// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current
-        /// <see cref="OpenTK.Input.GamePadDPad"/>; otherwise, <c>false</c>.</returns>
+        /// <param name="obj">The <see cref="System.Object" /> to compare with the current <see cref="OpenTK.Input.GamePadDPad" />.</param>
+        /// <returns>
+        ///     <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
+        ///     <see cref="OpenTK.Input.GamePadDPad" />; otherwise, <c>false</c>.
+        /// </returns>
         public override bool Equals(object obj)
         {
             return
@@ -176,11 +181,17 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="OpenTK.Input.GamePadDPad"/> is equal to the current <see cref="OpenTK.Input.GamePadDPad"/>.
+        ///     Determines whether the specified <see cref="OpenTK.Input.GamePadDPad" /> is equal to the current
+        ///     <see cref="OpenTK.Input.GamePadDPad" />.
         /// </summary>
-        /// <param name="other">The <see cref="OpenTK.Input.GamePadDPad"/> to compare with the current <see cref="OpenTK.Input.GamePadDPad"/>.</param>
-        /// <returns><c>true</c> if the specified <see cref="OpenTK.Input.GamePadDPad"/> is equal to the current
-        /// <see cref="OpenTK.Input.GamePadDPad"/>; otherwise, <c>false</c>.</returns>
+        /// <param name="other">
+        ///     The <see cref="OpenTK.Input.GamePadDPad" /> to compare with the current
+        ///     <see cref="OpenTK.Input.GamePadDPad" />.
+        /// </param>
+        /// <returns>
+        ///     <c>true</c> if the specified <see cref="OpenTK.Input.GamePadDPad" /> is equal to the current
+        ///     <see cref="OpenTK.Input.GamePadDPad" />; otherwise, <c>false</c>.
+        /// </returns>
         public bool Equals(GamePadDPad other)
         {
             return buttons == other.buttons;

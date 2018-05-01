@@ -32,8 +32,8 @@ namespace OpenTK.Platform.Egl
     // Holds information about an EGL window.
     internal class EglWindowInfo : IWindowInfo
     {
-        private IntPtr surface;
         private bool disposed;
+        private IntPtr surface;
 
         public EglWindowInfo(IntPtr handle, IntPtr display)
             : this(handle, display, IntPtr.Zero)
@@ -59,12 +59,20 @@ namespace OpenTK.Platform.Egl
             }
         }
 
-        public IntPtr Handle { get; set; }
-
         public IntPtr Display { get; private set; }
 
-        public IntPtr Surface { get => surface;
+        public IntPtr Surface
+        {
+            get => surface;
             private set => surface = value;
+        }
+
+        public IntPtr Handle { get; set; }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public void CreateWindowSurface(IntPtr config)
@@ -83,7 +91,7 @@ namespace OpenTK.Platform.Egl
 
         public void CreatePbufferSurface(IntPtr config)
         {
-            var attribs = new int[]{Egl.NONE};
+            var attribs = new[] {Egl.NONE};
             Surface = Egl.CreatePbufferSurface(Display, config, attribs);
             if (Surface == IntPtr.Zero)
             {
@@ -97,12 +105,13 @@ namespace OpenTK.Platform.Egl
             {
                 DestroySurface();
             }
+
             CreatePbufferSurface(config, width, height, out surface);
         }
 
         public void CreatePbufferSurface(IntPtr config, int width, int height, out IntPtr bufferSurface)
         {
-            var attribs = new int[]
+            var attribs = new[]
             {
                 Egl.WIDTH, width,
                 Egl.HEIGHT, height,
@@ -133,6 +142,7 @@ namespace OpenTK.Platform.Egl
             {
                 Egl.MakeCurrent(Display, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
             }
+
             if (Egl.DestroySurface(Display, bufferSurface))
             {
                 bufferSurface = IntPtr.Zero;
@@ -151,14 +161,9 @@ namespace OpenTK.Platform.Egl
                 {
                     Debug.Print("[Warning] Failed to terminate display {0}.", Display);
                 }
+
                 Display = IntPtr.Zero;
             }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         private void Dispose(bool manual)

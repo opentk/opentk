@@ -32,18 +32,11 @@ using OpenTK.Platform;
 namespace OpenTK.Graphics
 {
     // Provides the foundation for all IGraphicsContext implementations.
-    internal abstract class GraphicsContextBase : IGraphicsContext, IGraphicsContextInternal, IEquatable<IGraphicsContextInternal>
+    internal abstract class GraphicsContextBase : IGraphicsContext, IGraphicsContextInternal,
+        IEquatable<IGraphicsContextInternal>
     {
         protected ContextHandle Handle;
         protected GraphicsMode Mode;
-
-        public abstract void SwapBuffers();
-
-        public abstract void MakeCurrent(IWindowInfo window);
-
-        public abstract bool IsCurrent { get; }
-
-        public bool IsDisposed { get; protected set; }
 
         public bool VSync
         {
@@ -61,9 +54,24 @@ namespace OpenTK.Graphics
             }
         }
 
+        public bool Equals(IGraphicsContextInternal other)
+        {
+            return Context.Equals(other.Context);
+        }
+
+        public abstract void SwapBuffers();
+
+        public abstract void MakeCurrent(IWindowInfo window);
+
+        public abstract bool IsCurrent { get; }
+
+        public bool IsDisposed { get; protected set; }
+
         public abstract int SwapInterval { get; set; }
 
-        public virtual void Update(IWindowInfo window) { }
+        public virtual void Update(IWindowInfo window)
+        {
+        }
 
         public GraphicsMode GraphicsMode => Mode;
 
@@ -73,9 +81,15 @@ namespace OpenTK.Graphics
             set => throw new NotImplementedException();
         }
 
-        public IGraphicsContext Implementation => this;
-
         public abstract void LoadAll();
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public IGraphicsContext Implementation => this;
 
         public ContextHandle Context => Handle;
 
@@ -89,27 +103,16 @@ namespace OpenTK.Graphics
 
         public abstract IntPtr GetAddress(IntPtr function);
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
         protected abstract void Dispose(bool disposing);
 
-        #if DEBUG
+#if DEBUG
         ~GraphicsContextBase()
         {
             Dispose(false);
             Debug.Print("[Warning] {0}:{1} leaked. Did you forget to call Dispose()?",
                 GetType().FullName, Handle);
         }
-        #endif
-
-        public bool Equals(IGraphicsContextInternal other)
-        {
-            return Context.Equals(other.Context);
-        }
+#endif
 
         public override string ToString()
         {

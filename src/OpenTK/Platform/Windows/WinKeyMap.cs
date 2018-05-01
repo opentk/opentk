@@ -158,7 +158,8 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public static Key TranslateKey(short scancode, VirtualKeys vkey, bool extended0, bool extended1, out bool is_valid)
+        public static Key TranslateKey(short scancode, VirtualKeys vkey, bool extended0, bool extended1,
+            out bool is_valid)
         {
             is_valid = true;
 
@@ -168,17 +169,39 @@ namespace OpenTK.Platform.Windows
             {
                 switch (key)
                 {
-                    case Key.Insert: key = Key.Keypad0; break;
-                    case Key.End: key = Key.Keypad1; break;
-                    case Key.Down: key = Key.Keypad2; break;
-                    case Key.PageDown: key = Key.Keypad3; break;
-                    case Key.Left: key = Key.Keypad4; break;
-                    case Key.Right: key = Key.Keypad6; break;
-                    case Key.Home: key = Key.Keypad7; break;
-                    case Key.Up: key = Key.Keypad8; break;
-                    case Key.PageUp: key = Key.Keypad9; break;
-                    case Key.PrintScreen: key = Key.KeypadMultiply; break;
-                    case Key.Delete: key = Key.KeypadDecimal; break;
+                    case Key.Insert:
+                        key = Key.Keypad0;
+                        break;
+                    case Key.End:
+                        key = Key.Keypad1;
+                        break;
+                    case Key.Down:
+                        key = Key.Keypad2;
+                        break;
+                    case Key.PageDown:
+                        key = Key.Keypad3;
+                        break;
+                    case Key.Left:
+                        key = Key.Keypad4;
+                        break;
+                    case Key.Right:
+                        key = Key.Keypad6;
+                        break;
+                    case Key.Home:
+                        key = Key.Keypad7;
+                        break;
+                    case Key.Up:
+                        key = Key.Keypad8;
+                        break;
+                    case Key.PageUp:
+                        key = Key.Keypad9;
+                        break;
+                    case Key.PrintScreen:
+                        key = Key.KeypadMultiply;
+                        break;
+                    case Key.Delete:
+                        key = Key.KeypadDecimal;
+                        break;
                     case Key.NumLock:
                         if (vkey == VirtualKeys.Last)
                         {
@@ -188,6 +211,7 @@ namespace OpenTK.Platform.Windows
                         {
                             key = Key.Pause;
                         }
+
                         break;
                 }
             }
@@ -195,13 +219,27 @@ namespace OpenTK.Platform.Windows
             {
                 switch (key)
                 {
-                    case Key.Slash: key = Key.KeypadDivide; break;
-                    case Key.Enter: key = Key.KeypadEnter; break;
-                    case Key.AltLeft: key = Key.AltRight; break;
-                    case Key.AltRight: key = Key.AltLeft; break;
-                    case Key.ControlLeft: key = Key.ControlRight; break;
-                    case Key.ControlRight: key = Key.ControlLeft; break;
-                    case Key.ShiftLeft: is_valid = false; break;
+                    case Key.Slash:
+                        key = Key.KeypadDivide;
+                        break;
+                    case Key.Enter:
+                        key = Key.KeypadEnter;
+                        break;
+                    case Key.AltLeft:
+                        key = Key.AltRight;
+                        break;
+                    case Key.AltRight:
+                        key = Key.AltLeft;
+                        break;
+                    case Key.ControlLeft:
+                        key = Key.ControlRight;
+                        break;
+                    case Key.ControlRight:
+                        key = Key.ControlLeft;
+                        break;
+                    case Key.ShiftLeft:
+                        is_valid = false;
+                        break;
                 }
             }
 
@@ -209,7 +247,9 @@ namespace OpenTK.Platform.Windows
             {
                 switch (key)
                 {
-                    case Key.ControlLeft: key = Key.Pause; break;
+                    case Key.ControlLeft:
+                        key = Key.Pause;
+                        break;
                 }
             }
 

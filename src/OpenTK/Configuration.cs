@@ -26,21 +26,26 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using OpenTK.Platform.SDL2;
+using OpenTK.Platform.X11;
+using Version = OpenTK.Platform.SDL2.Version;
 
 namespace OpenTK
 {
     /// <summary>
-    /// Provides information about the underlying OS and runtime.
-    /// You must call <c>Toolkit.Init</c> before accessing members
-    /// of this class.
+    ///     Provides information about the underlying OS and runtime.
+    ///     You must call <c>Toolkit.Init</c> before accessing members
+    ///     of this class.
     /// </summary>
     public sealed class Configuration
     {
         private static bool runningOnUnix, runningOnMacOS, runningOnLinux;
-        private volatile static bool initialized;
-        private readonly static object InitLock = new object();
+        private static volatile bool initialized;
+        private static readonly object InitLock = new object();
 
-        private Configuration() { }
+        private Configuration()
+        {
+        }
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on a Windows platform.</summary>
         public static bool RunningOnWindows { get; private set; }
@@ -49,18 +54,14 @@ namespace OpenTK
         public static bool RunningOnX11 { get; private set; }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> indicating whether OpenTK is running on a Unix platform.
+        ///     Gets a <see cref="System.Boolean" /> indicating whether OpenTK is running on a Unix platform.
         /// </summary>
         public static bool RunningOnUnix => runningOnUnix;
 
         /// <summary>
-        /// Gets a System.Boolean indicating whether OpenTK is running on the SDL2 backend.
+        ///     Gets a System.Boolean indicating whether OpenTK is running on the SDL2 backend.
         /// </summary>
-        public static bool RunningOnSdl2
-        {
-            get;
-            private set;
-        }
+        public static bool RunningOnSdl2 { get; private set; }
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on the Linux kernel.</summary>
         public static bool RunningOnLinux => runningOnLinux;
@@ -69,13 +70,13 @@ namespace OpenTK
         public static bool RunningOnMacOS => runningOnMacOS;
 
         /// <summary>
-        /// Gets a System.Boolean indicating whether OpenTK is running on the Mono runtime.
+        ///     Gets a System.Boolean indicating whether OpenTK is running on the Mono runtime.
         /// </summary>
         public static bool RunningOnMono { get; private set; }
 
         /// <summary>
-        /// Gets a <c>System.Boolean</c> indicating whether
-        /// OpenTK is running on an Android device.
+        ///     Gets a <c>System.Boolean</c> indicating whether
+        ///     OpenTK is running on an Android device.
         /// </summary>
         public static bool RunningOnAndroid
         {
@@ -90,8 +91,8 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Gets a <c>System.Boolean</c> indicating whether
-        /// OpenTK is running on an Android device.
+        ///     Gets a <c>System.Boolean</c> indicating whether
+        ///     OpenTK is running on an Android device.
         /// </summary>
         public static bool RunningOnIOS
         {
@@ -105,31 +106,8 @@ namespace OpenTK
             }
         }
 
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-        private struct utsname
-        {
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-            public string sysname;
-
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-            public string nodename;
-
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-            public string release;
-
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-            public string version;
-
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-            public string machine;
-
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1024)]
-            public string extraJustInCase;
-
-        }
-
         /// <summary>
-        /// Detects the unix kernel by p/invoking uname (libc).
+        ///     Detects the unix kernel by p/invoking uname (libc).
         /// </summary>
         /// <returns></returns>
         private static string DetectUnixKernel()
@@ -161,7 +139,7 @@ namespace OpenTK
             return t != null;
         }
 
-        #if SDL2
+#if SDL2
         private static bool DetectSdl2()
         {
             var supported = false;
@@ -172,13 +150,13 @@ namespace OpenTK
             //   versions are not ABI-compatible)
             // - Successful SDL2 initialization (sometimes the
             //   binary exists but fails to initialize correctly)
-            var version = new Platform.SDL2.Version();
+            var version = new Version();
             try
             {
-                version = Platform.SDL2.SDL.Version;
+                version = SDL.Version;
                 if (version.Number >= 2000)
                 {
-                    if (Platform.SDL2.SDL.WasInit(0))
+                    if (SDL.WasInit(0))
                     {
                         supported = true;
                     }
@@ -186,17 +164,17 @@ namespace OpenTK
                     {
                         // Attempt to initialize SDL2.
                         var flags =
-                            Platform.SDL2.SystemFlags.VIDEO |
-                            Platform.SDL2.SystemFlags.TIMER;
+                            SystemFlags.VIDEO |
+                            SystemFlags.TIMER;
 
-                        if (Platform.SDL2.SDL.Init(flags) == 0)
+                        if (SDL.Init(flags) == 0)
                         {
                             supported = true;
                         }
                         else
                         {
                             Debug.Print("SDL2 init failed with error: {0}",
-                                Platform.SDL2.SDL.GetError());
+                                SDL.GetError());
                         }
                     }
                 }
@@ -218,7 +196,7 @@ namespace OpenTK
 
             return supported;
         }
-        #endif
+#endif
 
         private static void DetectUnix(out bool unix, out bool linux, out bool macos)
         {
@@ -257,11 +235,17 @@ namespace OpenTK
 
         private static bool DetectX11()
         {
-            #if X11
+#if X11
             // Detect whether X is present.
-            try { return Platform.X11.API.DefaultDisplay != IntPtr.Zero; }
-            catch { return false; }
-            #else
+            try
+            {
+                return API.DefaultDisplay != IntPtr.Zero;
+            }
+            catch
+            {
+                return false;
+            }
+#else
             return false;
             #endif
         }
@@ -288,7 +272,7 @@ namespace OpenTK
                         RunningOnSdl2 = DetectSdl2();
                     }
 
-                    if ((runningOnLinux && !RunningOnSdl2) || options.Backend == PlatformBackend.PreferX11)
+                    if (runningOnLinux && !RunningOnSdl2 || options.Backend == PlatformBackend.PreferX11)
                     {
                         RunningOnX11 = DetectX11();
                     }
@@ -296,11 +280,36 @@ namespace OpenTK
                     initialized = true;
 #endif
                     Debug.Print("Detected configuration: {0} / {1}",
-                        RunningOnWindows ? "Windows" : RunningOnLinux ? "Linux" : RunningOnMacOS ? "MacOS" :
-                        runningOnUnix ? "Unix" : RunningOnX11 ? "X11" : "Unknown Platform",
+                        RunningOnWindows ? "Windows" :
+                        RunningOnLinux ? "Linux" :
+                        RunningOnMacOS ? "MacOS" :
+                        runningOnUnix ? "Unix" :
+                        RunningOnX11 ? "X11" : "Unknown Platform",
                         RunningOnMono ? "Mono" : ".Net");
                 }
             }
+        }
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+        private struct utsname
+        {
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+            public readonly string sysname;
+
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+            public readonly string nodename;
+
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+            public readonly string release;
+
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+            public readonly string version;
+
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+            public readonly string machine;
+
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1024)]
+            public readonly string extraJustInCase;
         }
     }
 }

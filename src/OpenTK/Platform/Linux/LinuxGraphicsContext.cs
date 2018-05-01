@@ -29,23 +29,28 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
+using OpenTK.Platform.Egl;
 
 namespace OpenTK.Platform.Linux
 {
     /// \internal
     /// <summary>
-    /// Defines an IGraphicsContext implementation for the Linux KMS framebuffer.
-    /// For Linux/X11 and other Unix operating systems, use the more generic
-    /// <see cref="OpenTK.Platform.Egl.EglUnixContext"/> instead.
+    ///     Defines an IGraphicsContext implementation for the Linux KMS framebuffer.
+    ///     For Linux/X11 and other Unix operating systems, use the more generic
+    ///     <see cref="OpenTK.Platform.Egl.EglUnixContext" /> instead.
     /// </summary>
     /// <remarks>
-    /// Note: to display our results, we need to allocate a GBM framebuffer
-    /// and point the scanout address to that via Drm.ModeSetCrtc.
+    ///     Note: to display our results, we need to allocate a GBM framebuffer
+    ///     and point the scanout address to that via Drm.ModeSetCrtc.
     /// </remarks>
-    internal class LinuxGraphicsContext : Egl.EglUnixContext
+    internal class LinuxGraphicsContext : EglUnixContext
     {
+        private static readonly DestroyUserDataCallback DestroyFB = HandleDestroyFB;
+        private readonly PageFlipCallback PageFlip;
+
+        private readonly IntPtr PageFlipPtr;
         private BufferObject bo, bo_next;
-        private int fd;
+        private readonly int fd;
         private bool is_flip_queued;
         private int swap_interval;
 
@@ -57,10 +62,17 @@ namespace OpenTK.Platform.Linux
             {
                 throw new ArgumentException();
             }
+
             fd = window.FD;
 
             PageFlip = HandlePageFlip;
             PageFlipPtr = Marshal.GetFunctionPointerForDelegate(PageFlip);
+        }
+
+        public override int SwapInterval
+        {
+            get => swap_interval;
+            set => swap_interval = MathHelper.Clamp(value, 0, 1);
         }
 
         public override void SwapBuffers()
@@ -95,12 +107,6 @@ namespace OpenTK.Platform.Linux
             bo = LockSurface();
             var fb = GetFramebuffer(bo);
             SetScanoutRegion(fb);
-        }
-
-        public override int SwapInterval
-        {
-            get => swap_interval;
-            set => swap_interval = MathHelper.Clamp(value, 0, 1);
         }
 
         private void WaitFlip(bool block)
@@ -155,18 +161,15 @@ namespace OpenTK.Platform.Linux
                 throw new InvalidOperationException();
             }
 
-            unsafe
+            var ret = Drm.ModePageFlip(fd, wnd.DisplayDevice.Id, buffer,
+                PageFlipFlags.FlipEvent, IntPtr.Zero);
+
+            if (ret < 0)
             {
-                var ret = Drm.ModePageFlip(fd, wnd.DisplayDevice.Id, buffer,
-                    PageFlipFlags.FlipEvent, IntPtr.Zero);
-
-                if (ret < 0)
-                {
-                    Debug.Print("[KMS] Failed to enqueue framebuffer flip. Error: {0}", ret);
-                }
-
-                is_flip_queued = true;
+                Debug.Print("[KMS] Failed to enqueue framebuffer flip. Error: {0}", ret);
             }
+
+            is_flip_queued = true;
         }
 
         private void SetScanoutRegion(int buffer)
@@ -250,9 +253,6 @@ namespace OpenTK.Platform.Linux
             return -1;
         }
 
-        private readonly IntPtr PageFlipPtr;
-        private readonly PageFlipCallback PageFlip;
-
         private void HandlePageFlip(int fd,
             int sequence,
             int tv_sec,
@@ -261,8 +261,6 @@ namespace OpenTK.Platform.Linux
         {
             is_flip_queued = false;
         }
-
-        private static readonly DestroyUserDataCallback DestroyFB = HandleDestroyFB;
 
         private static void HandleDestroyFB(BufferObject bo, IntPtr data)
         {
@@ -299,10 +297,8 @@ namespace OpenTK.Platform.Linux
                     }
                 }
             }
+
             base.Dispose(manual);
         }
     }
 }
-
-
-

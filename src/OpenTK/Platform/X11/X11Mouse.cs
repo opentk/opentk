@@ -1,27 +1,27 @@
- //
- // The Open Toolkit Library License
- //
- // Copyright (c) 2006 - 2010 the Open Toolkit library.
- //
- // Permission is hereby granted, free of charge, to any person obtaining a copy
- // of this software and associated documentation files (the "Software"), to deal
- // in the Software without restriction, including without limitation the rights to
- // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
- // the Software, and to permit persons to whom the Software is furnished to do
- // so, subject to the following conditions:
- //
- // The above copyright notice and this permission notice shall be included in all
- // copies or substantial portions of the Software.
- //
- // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- // OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- // NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- // HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- // OTHER DEALINGS IN THE SOFTWARE.
- //
+//
+// The Open Toolkit Library License
+//
+// Copyright (c) 2006 - 2010 the Open Toolkit library.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+//
 
 using System;
 using System.Diagnostics;
@@ -44,8 +44,8 @@ namespace OpenTK.Platform.X11
     {
         private readonly IntPtr display;
         private readonly IntPtr root_window;
-        private MouseState mouse;
         private MouseState cursor;
+        private MouseState mouse;
 
         // When the mouse warps, "detach" the current location
         // from the pointer.
@@ -76,10 +76,8 @@ namespace OpenTK.Platform.X11
             {
                 return mouse;
             }
-            else
-            {
-                return new MouseState();
-            }
+
+            return new MouseState();
         }
 
         public MouseState GetCursorState()
@@ -129,11 +127,12 @@ namespace OpenTK.Platform.X11
                 }
                 else
                 {
-                    mouse.X += (int)root_x - mouse_detached_x;
-                    mouse.Y += (int)root_y - mouse_detached_y;
+                    mouse.X += root_x - mouse_detached_x;
+                    mouse.Y += root_y - mouse_detached_y;
                     mouse_detached_x = root_x;
                     mouse_detached_y = root_y;
                 }
+
                 cursor[MouseButton.Left] = mouse[MouseButton.Left] = (buttons & (int)MouseMask.Button1Mask) != 0;
                 cursor[MouseButton.Middle] = mouse[MouseButton.Middle] = (buttons & (int)MouseMask.Button2Mask) != 0;
                 cursor[MouseButton.Right] = mouse[MouseButton.Right] = (buttons & (int)MouseMask.Button3Mask) != 0;
@@ -154,4 +153,3 @@ namespace OpenTK.Platform.X11
         }
     }
 }
-

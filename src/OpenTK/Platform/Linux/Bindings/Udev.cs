@@ -41,4 +41,3 @@ namespace OpenTK.Platform.Linux
         public static extern void Destroy(IntPtr Udev);
     }
 }
-

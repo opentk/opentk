@@ -10,7 +10,8 @@ namespace OpenTK.Graphics
     {
         // Creates a temporary OpenGL context (if necessary) and finds the mode which closest matches
         // the specified parameters.
-        GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum, int buffers,
+        GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum,
+            int buffers,
             bool stereo);
     }
 }

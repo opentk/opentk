@@ -38,14 +38,14 @@ namespace Bind
     {
         private readonly IEnumerable<string> _overrides;
 
-        private IBind Generator { get; set; }
-        private Settings Settings => Generator.Settings;
-
         public EnumProcessor(IBind generator, IEnumerable<string> overrides)
         {
             Generator = generator ?? throw new ArgumentNullException(nameof(generator));
             _overrides = overrides ?? throw new ArgumentNullException(nameof(overrides));
         }
+
+        private IBind Generator { get; }
+        private Settings Settings => Generator.Settings;
 
         public EnumCollection Process(EnumCollection enums, string apiname)
         {
@@ -57,6 +57,7 @@ namespace Bind
                 enums = ProcessNames(enums, nav, apiname);
                 enums = ProcessConstants(enums, nav, apiname);
             }
+
             return enums;
         }
 
@@ -108,6 +109,7 @@ namespace Bind
                     e2.CLSCompliant = false;
                 }
             }
+
             foreach (var e in enums.Values)
             {
             }
@@ -126,6 +128,7 @@ namespace Bind
                     name = nameOverride.Value;
                 }
             }
+
             return name;
         }
 
@@ -170,6 +173,7 @@ namespace Bind
                     translator.Insert(insertPos, "_");
                     match = match.NextMatch();
                 }
+
                 name = translator.ToString();
                 translator.Remove(0, translator.Length);
 
@@ -188,7 +192,8 @@ namespace Bind
                         isAfterUnderscoreOrNumber = true;
                         continue; // skip this character
                     }
-                    else if (char.IsDigit(c))
+
+                    if (char.IsDigit(c))
                     {
                         isAfterUnderscoreOrNumber = true;
                     }
@@ -248,6 +253,7 @@ namespace Bind
                         processedConstants.Add(c.Name, c);
                     }
                 }
+
                 e.ConstantCollection = processedConstants;
 
                 var enumOverride = nav.SelectSingleNode(GetOverridesPath(apiname, e.Name));
@@ -271,16 +277,22 @@ namespace Bind
             if (enumOverride != null)
             {
                 var constantOverride = enumOverride.SelectSingleNode($"token[@name='{c.OriginalName}']") ??
-                    enumOverride.SelectSingleNode($"token[@name={c.Name}]");
+                                       enumOverride.SelectSingleNode($"token[@name={c.Name}]");
                 if (constantOverride != null)
                 {
                     foreach (XPathNavigator node in constantOverride.SelectChildren(XPathNodeType.Element))
                     {
                         switch (node.Name)
                         {
-                            case "name": c.Name = (string)node.TypedValue; break;
-                            case "value": c.Value = (string)node.TypedValue; break;
-                            case "reference": c.Reference = (string)node.TypedValue; break;
+                            case "name":
+                                c.Name = (string)node.TypedValue;
+                                break;
+                            case "value":
+                                c.Value = (string)node.TypedValue;
+                                break;
+                            case "reference":
+                                c.Reference = (string)node.TypedValue;
+                                break;
                         }
                     }
                 }
@@ -306,7 +318,7 @@ namespace Bind
                 var nameIsAllCaps = s.AsEnumerable().All(c => char.IsLetter(c) ? char.IsUpper(c) : true);
                 var nameContainsUnderscore = s.Contains("_");
                 if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None &&
-                (nameIsAllCaps || nameContainsUnderscore))
+                    (nameIsAllCaps || nameContainsUnderscore))
                 {
                     var nextCharUppercase = true;
                     var isAfterDigit = false;
@@ -336,6 +348,7 @@ namespace Bind
                             {
                                 nextCharUppercase = true;
                             }
+
                             translator.Append(nextCharUppercase ? char.ToUpper(c) : char.ToLower(c));
                             isAfterDigit = nextCharUppercase = false;
                         }
@@ -362,6 +375,7 @@ namespace Bind
                 {
                     value = value.Substring(0, value.Length - 3);
                 }
+
                 if (value.ToLower().EndsWith("u"))
                 {
                     value = value.Substring(0, value.Length - 1);
@@ -433,6 +447,7 @@ namespace Bind
                     CultureInfo.InvariantCulture,
                     out number);
             }
+
             return isNumber;
         }
     }

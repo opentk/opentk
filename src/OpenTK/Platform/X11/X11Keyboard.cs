@@ -23,7 +23,6 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
 using System.Diagnostics;
 using OpenTK.Input;
 
@@ -33,10 +32,10 @@ namespace OpenTK.Platform.X11
     // Only one keyboard supported.
     internal sealed class X11Keyboard : IKeyboardDriver2
     {
-        private readonly static string name = "Core X11 keyboard";
+        private static readonly string name = "Core X11 keyboard";
+        private readonly X11KeyMap KeyMap;
         private readonly byte[] keys = new byte[32];
         private readonly int KeysymsPerKeycode;
-        private readonly X11KeyMap KeyMap;
         private KeyboardState state;
 
         public X11Keyboard()
@@ -84,10 +83,8 @@ namespace OpenTK.Platform.X11
             {
                 return state;
             }
-            else
-            {
-                return new KeyboardState();
-            }
+
+            return new KeyboardState();
         }
 
         public string GetDeviceName(int index)
@@ -96,10 +93,8 @@ namespace OpenTK.Platform.X11
             {
                 return name;
             }
-            else
-            {
-                return String.Empty;
-            }
+
+            return string.Empty;
         }
 
         private void ProcessEvents()
@@ -110,7 +105,7 @@ namespace OpenTK.Platform.X11
                 Functions.XQueryKeymap(display, keys);
                 for (var keycode = 0; keycode < 256; keycode++)
                 {
-                    var pressed = (keys[keycode >> 3] >> (keycode & 0x07) & 0x01) != 0;
+                    var pressed = ((keys[keycode >> 3] >> (keycode & 0x07)) & 0x01) != 0;
                     Key key;
                     if (KeyMap.TranslateKey(keycode, out key))
                     {
@@ -121,4 +116,3 @@ namespace OpenTK.Platform.X11
         }
     }
 }
-

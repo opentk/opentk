@@ -3,6 +3,7 @@
  */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,22 +12,27 @@ using System.Text.RegularExpressions;
 namespace Bind.Structures
 {
     /// <summary>
-    /// Represents an opengl function.
-    /// The return value, function name, function parameters and opengl version can be retrieved or set.
+    ///     Represents an opengl function.
+    ///     The return value, function name, function parameters and opengl version can be retrieved or set.
     /// </summary>
     internal class Delegate : IComparable<Delegate>, IEquatable<Delegate>
     {
-        //internal static DelegateCollection Delegates;
+        protected static Regex Endings = new Regex(@"((((d|f|fi)|u?[isb])_?v?)|v)",
+            RegexOptions.Compiled | RegexOptions.RightToLeft);
 
-        private bool? _clsComplianceOverriden;
-
-        protected static Regex Endings = new Regex(@"((((d|f|fi)|u?[isb])_?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
-        protected static Regex EndingsNotToTrim = new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flag|Tess|Status|Pixels|Instanced|Indexed|Varyings|Boolean|IDs)", RegexOptions.Compiled | RegexOptions.RightToLeft);
+        protected static Regex EndingsNotToTrim =
+            new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flag|Tess|Status|Pixels|Instanced|Indexed|Varyings|Boolean|IDs)",
+                RegexOptions.Compiled | RegexOptions.RightToLeft);
 
         // Add a trailing v to functions matching this regex. Used to differntiate between overloads taking both
         // a 'type' and a 'ref type' (such overloads are not CLS Compliant).
         // The default Regex matches no functions. Create a new Regex in Bind.Generator classes to override the default behavior.
         internal static Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
+        //internal static DelegateCollection Delegates;
+
+        private bool? _clsComplianceOverriden;
+
+        private string _name;
 
         public Delegate()
         {
@@ -51,7 +57,7 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        ///  Gets the CLSCompliant property. True if the delegate is not CLSCompliant.
+        ///     Gets the CLSCompliant property. True if the delegate is not CLSCompliant.
         /// </summary>
         public virtual bool CLSCompliant
         {
@@ -79,6 +85,7 @@ namespace Bind.Structures
                         return false;
                     }
                 }
+
                 return true;
             }
             set => _clsComplianceOverriden = value;
@@ -87,9 +94,9 @@ namespace Bind.Structures
         public string Category { get; set; }
 
         /// <summary>
-        /// Gets a value that indicates whether this function needs to be wrapped with a Marshaling function.
-        /// This flag is set if a function contains an Array parameter, or returns
-        /// an Array or string.
+        ///     Gets a value that indicates whether this function needs to be wrapped with a Marshaling function.
+        ///     This flag is set if a function contains an Array parameter, or returns
+        ///     an Array or string.
         /// </summary>
         public bool NeedsWrapper
         {
@@ -115,7 +122,7 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        /// True if the delegate must be declared as 'unsafe'.
+        ///     True if the delegate must be declared as 'unsafe'.
         /// </summary>
         public virtual bool Unsafe
         {
@@ -144,13 +151,12 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        /// Gets or sets the return value of the opengl function.
+        ///     Gets or sets the return value of the opengl function.
         /// </summary>
         public Type ReturnType { get; set; } = new Type();
 
-        private string _name;
         /// <summary>
-        /// Gets or sets the name of the opengl function.
+        ///     Gets or sets the name of the opengl function.
         /// </summary>
         public virtual string Name
         {
@@ -167,15 +173,11 @@ namespace Bind.Structures
         public ParameterCollection Parameters { get; set; }
 
         /// <summary>
-        /// Defines the opengl version that introduced this function.
+        ///     Defines the opengl version that introduced this function.
         /// </summary>
         public string Version { get; set; }
 
-        public string Extension
-        {
-            get;
-            set;
-        }
+        public string Extension { get; set; }
 
         public bool Deprecated { get; set; }
         public string DeprecatedVersion { get; set; }
@@ -184,6 +186,30 @@ namespace Bind.Structures
 
         // Slot index in the address table
         public int Slot { get; set; }
+
+        public int CompareTo(Delegate other)
+        {
+            var ret = Name.CompareTo(other.Name);
+            if (ret == 0)
+            {
+                ret = Parameters.CompareTo(other.Parameters);
+            }
+
+            if (ret == 0)
+            {
+                ret = ReturnType.CompareTo(other.ReturnType);
+            }
+
+            return ret;
+        }
+
+        public bool Equals(Delegate other)
+        {
+            return
+                Name.Equals(other.Name) &&
+                Parameters.Equals(other.Parameters) &&
+                ReturnType.Equals(other.ReturnType);
+        }
 
         // This method should only be used for debugging purposes, not for code generation!
         // Returns a string representing the full delegate declaration without decorations.
@@ -201,82 +227,12 @@ namespace Bind.Structures
 
             return sb.ToString();
         }
-
-        public int CompareTo(Delegate other)
-        {
-            var ret = Name.CompareTo(other.Name);
-            if (ret == 0)
-            {
-                ret = Parameters.CompareTo(other.Parameters);
-            }
-            if (ret == 0)
-            {
-                ret = ReturnType.CompareTo(other.ReturnType);
-            }
-            return ret;
-        }
-
-        public bool Equals(Delegate other)
-        {
-            return
-                Name.Equals(other.Name) &&
-                Parameters.Equals(other.Parameters) &&
-                ReturnType.Equals(other.ReturnType);
-        }
     }
 
     internal class DelegateCollection : IDictionary<string, List<Delegate>>
     {
         private readonly SortedDictionary<string, List<Delegate>> _delegates =
             new SortedDictionary<string, List<Delegate>>();
-
-        public void Add(Delegate d)
-        {
-            if (!ContainsKey(d.Name))
-            {
-                Add(d.Name, new List<Delegate> { d });
-            }
-            else
-            {
-                var list = _delegates[d.Name];
-                var index = list.FindIndex(w => w.CompareTo(d) == 0);
-                if (index < 0)
-                {
-                    // Function not defined - add it!
-                    list.Add(d);
-                }
-                else
-                {
-                    // Function redefined with identical parameters:
-                    // merge their version and category properties and
-                    // discard the duplicate definition
-                    if (!list[index].Category.Contains(d.Category))
-                    {
-                        list[index].Category += "|" + d.Category;
-                    }
-                    if (string.IsNullOrEmpty(list[index].Version))
-                    {
-                        list[index].Version = d.Version;
-                    }
-                }
-            }
-        }
-
-        public void AddRange(IEnumerable<Delegate> delegates)
-        {
-            foreach (var d in delegates)
-            {
-                Add(d);
-            }
-        }
-
-        public void AddRange(DelegateCollection delegates)
-        {
-            foreach (var d in delegates.Values.SelectMany(v => v))
-            {
-                Add(d);
-            }
-        }
 
         public void Add(string key, List<Delegate> value)
         {
@@ -342,9 +298,58 @@ namespace Bind.Structures
             return _delegates.GetEnumerator();
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return _delegates.GetEnumerator();
+        }
+
+        public void Add(Delegate d)
+        {
+            if (!ContainsKey(d.Name))
+            {
+                Add(d.Name, new List<Delegate> {d});
+            }
+            else
+            {
+                var list = _delegates[d.Name];
+                var index = list.FindIndex(w => w.CompareTo(d) == 0);
+                if (index < 0)
+                {
+                    // Function not defined - add it!
+                    list.Add(d);
+                }
+                else
+                {
+                    // Function redefined with identical parameters:
+                    // merge their version and category properties and
+                    // discard the duplicate definition
+                    if (!list[index].Category.Contains(d.Category))
+                    {
+                        list[index].Category += "|" + d.Category;
+                    }
+
+                    if (string.IsNullOrEmpty(list[index].Version))
+                    {
+                        list[index].Version = d.Version;
+                    }
+                }
+            }
+        }
+
+        public void AddRange(IEnumerable<Delegate> delegates)
+        {
+            foreach (var d in delegates)
+            {
+                Add(d);
+            }
+        }
+
+        public void AddRange(DelegateCollection delegates)
+        {
+            foreach (var d in delegates.Values.SelectMany(v => v))
+            {
+                Add(d);
+            }
         }
     }
 }

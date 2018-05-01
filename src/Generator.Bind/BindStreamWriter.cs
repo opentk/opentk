@@ -36,17 +36,22 @@ namespace Bind
 
     internal class BindStreamWriter : IDisposable
     {
-        private static readonly string[] SplitStrings = { Environment.NewLine };
+        private static readonly string[] SplitStrings = {Environment.NewLine};
         private readonly StreamWriter _sw;
         public readonly string File;
+        private int _indentLevel;
 
         private bool _newline = true;
-        private int _indentLevel;
 
         public BindStreamWriter(string file)
         {
             File = file;
             _sw = new StreamWriter(file);
+        }
+
+        public void Dispose()
+        {
+            _sw.Dispose();
         }
 
         public void Indent()
@@ -73,6 +78,7 @@ namespace Bind
                     {
                         WriteIndentations(options);
                     }
+
                     _newline = false;
                     _sw.Write(lines[i]);
                 }
@@ -147,11 +153,6 @@ namespace Bind
                     _sw.Write("    ");
                 }
             }
-        }
-
-        public void Dispose()
-        {
-            _sw.Dispose();
         }
     }
 }

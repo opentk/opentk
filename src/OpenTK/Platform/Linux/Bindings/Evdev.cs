@@ -39,7 +39,7 @@ namespace OpenTK.Platform.Linux
         public const int AxisCount = 0x40;
         public const int EventCount = (int)EvdevType.CNT;
 
-        public static readonly Key[] KeyMap = new Key[]
+        public static readonly Key[] KeyMap =
         {
             // 0-7
             Key.Unknown,
@@ -328,7 +328,7 @@ namespace OpenTK.Platform.Linux
             Key.Unknown,
             Key.Unknown,
             Key.Unknown,
-            Key.Unknown, // reserved
+            Key.Unknown // reserved
         };
 
         public static MouseButton GetMouseButton(EvdevButton button)
@@ -384,7 +384,8 @@ namespace OpenTK.Platform.Linux
                 fixed (InputAbsInfo* pinfo = &info)
                 {
                     // EVIOCGABS(abs) = _IOR('E', 0x40 + (abs), struct input_absinfo)
-                    var ioctl = IOCreate(DirectionFlags.Read, (int)axis + 0x40, BlittableValueType<InputAbsInfo>.Stride);
+                    var ioctl = IOCreate(DirectionFlags.Read, (int)axis + 0x40,
+                        BlittableValueType<InputAbsInfo>.Stride);
                     var retval = Libc.ioctl(fd, ioctl, new IntPtr(pinfo));
                     return retval;
                 }
@@ -426,142 +427,142 @@ namespace OpenTK.Platform.Linux
 
     internal enum EvdevAxis
     {
-        X           = 0x00,
-        Y           = 0x01,
-        Z           = 0x02,
-        RX          = 0x03,
-        RY          = 0x04,
-        RZ          = 0x05,
-        THROTTLE    = 0x06,
-        RUDDER      = 0x07,
-        WHEEL       = 0x08,
-        GAS         = 0x09,
-        BRAKE       = 0x0a,
-        HAT0X       = 0x10,
-        HAT0Y       = 0x11,
-        HAT1X       = 0x12,
-        HAT1Y       = 0x13,
-        HAT2X       = 0x14,
-        HAT2Y       = 0x15,
-        HAT3X       = 0x16,
-        HAT3Y       = 0x17,
-        PRESSURE    = 0x18,
-        DISTANCE    = 0x19,
-        TILT_X      = 0x1a,
-        TILT_Y      = 0x1b,
-        TOOL_WIDTH  = 0x1c,
+        X = 0x00,
+        Y = 0x01,
+        Z = 0x02,
+        RX = 0x03,
+        RY = 0x04,
+        RZ = 0x05,
+        THROTTLE = 0x06,
+        RUDDER = 0x07,
+        WHEEL = 0x08,
+        GAS = 0x09,
+        BRAKE = 0x0a,
+        HAT0X = 0x10,
+        HAT0Y = 0x11,
+        HAT1X = 0x12,
+        HAT1Y = 0x13,
+        HAT2X = 0x14,
+        HAT2Y = 0x15,
+        HAT3X = 0x16,
+        HAT3Y = 0x17,
+        PRESSURE = 0x18,
+        DISTANCE = 0x19,
+        TILT_X = 0x1a,
+        TILT_Y = 0x1b,
+        TOOL_WIDTH = 0x1c,
 
-        VOLUME      = 0x20,
+        VOLUME = 0x20,
 
-        MISC        = 0x28,
+        MISC = 0x28,
 
-        MT_SLOT     = 0x2f,    /* MT slot being modified */
-        MT_TOUCH_MAJOR  = 0x30,    /* Major axis of touching ellipse */
-        MT_TOUCH_MINOR  = 0x31,    /* Minor axis (omit if circular) */
-        MT_WIDTH_MAJOR  = 0x32,    /* Major axis of approaching ellipse */
-        MT_WIDTH_MINOR  = 0x33,    /* Minor axis (omit if circular) */
-        MT_ORIENTATION  = 0x34,    /* Ellipse orientation */
-        MT_POSITION_X   = 0x35,    /* Center X touch position */
-        MT_POSITION_Y   = 0x36,    /* Center Y touch position */
-        MT_TOOL_TYPE    = 0x37,    /* Type of touching device */
-        MT_BLOB_ID      = 0x38,    /* Group a set of packets as a blob */
-        MT_TRACKING_ID  = 0x39,    /* Unique ID of initiated contact */
-        MT_PRESSURE     = 0x3a,    /* Pressure on contact area */
-        MT_DISTANCE     = 0x3b,    /* Contact hover distance */
-        MT_TOOL_X       = 0x3c,    /* Center X tool position */
-        MT_TOOL_Y       = 0x3d,    /* Center Y tool position */
+        MT_SLOT = 0x2f, /* MT slot being modified */
+        MT_TOUCH_MAJOR = 0x30, /* Major axis of touching ellipse */
+        MT_TOUCH_MINOR = 0x31, /* Minor axis (omit if circular) */
+        MT_WIDTH_MAJOR = 0x32, /* Major axis of approaching ellipse */
+        MT_WIDTH_MINOR = 0x33, /* Minor axis (omit if circular) */
+        MT_ORIENTATION = 0x34, /* Ellipse orientation */
+        MT_POSITION_X = 0x35, /* Center X touch position */
+        MT_POSITION_Y = 0x36, /* Center Y touch position */
+        MT_TOOL_TYPE = 0x37, /* Type of touching device */
+        MT_BLOB_ID = 0x38, /* Group a set of packets as a blob */
+        MT_TRACKING_ID = 0x39, /* Unique ID of initiated contact */
+        MT_PRESSURE = 0x3a, /* Pressure on contact area */
+        MT_DISTANCE = 0x3b, /* Contact hover distance */
+        MT_TOOL_X = 0x3c, /* Center X tool position */
+        MT_TOOL_Y = 0x3d, /* Center Y tool position */
 
-        MAX         = 0x3f,
-        CNT         = (MAX + 1),
+        MAX = 0x3f,
+        CNT = MAX + 1
     }
 
     internal enum EvdevButton
     {
-        MISC        = 0x100,
-        BTN0        = 0x100,
-        BTN1        = 0x101,
-        BTN2        = 0x102,
-        BTN3        = 0x103,
-        BTN4        = 0x104,
-        BTN5        = 0x105,
-        BTN6        = 0x106,
-        BTN7        = 0x107,
-        BTN8        = 0x108,
-        BTN9        = 0x109,
+        MISC = 0x100,
+        BTN0 = 0x100,
+        BTN1 = 0x101,
+        BTN2 = 0x102,
+        BTN3 = 0x103,
+        BTN4 = 0x104,
+        BTN5 = 0x105,
+        BTN6 = 0x106,
+        BTN7 = 0x107,
+        BTN8 = 0x108,
+        BTN9 = 0x109,
 
-        MOUSE       = 0x110,
-        LEFT        = 0x110,
-        RIGHT       = 0x111,
-        MIDDLE      = 0x112,
-        SIDE        = 0x113,
-        EXTRA       = 0x114,
-        FORWARD     = 0x115,
-        BACK        = 0x116,
-        TASK        = 0x117,
+        MOUSE = 0x110,
+        LEFT = 0x110,
+        RIGHT = 0x111,
+        MIDDLE = 0x112,
+        SIDE = 0x113,
+        EXTRA = 0x114,
+        FORWARD = 0x115,
+        BACK = 0x116,
+        TASK = 0x117,
 
-        JOYSTICK    = 0x120,
-        TRIGGER     = 0x120,
-        THUMB       = 0x121,
-        THUMB2      = 0x122,
-        TOP         = 0x123,
-        TOP2        = 0x124,
-        PINKIE      = 0x125,
-        BASE        = 0x126,
-        BASE2       = 0x127,
-        BASE3       = 0x128,
-        BASE4       = 0x129,
-        BASE5       = 0x12a,
-        BASE6       = 0x12b,
-        DEAD        = 0x12f,
+        JOYSTICK = 0x120,
+        TRIGGER = 0x120,
+        THUMB = 0x121,
+        THUMB2 = 0x122,
+        TOP = 0x123,
+        TOP2 = 0x124,
+        PINKIE = 0x125,
+        BASE = 0x126,
+        BASE2 = 0x127,
+        BASE3 = 0x128,
+        BASE4 = 0x129,
+        BASE5 = 0x12a,
+        BASE6 = 0x12b,
+        DEAD = 0x12f,
 
-        GAMEPAD     = 0x130,
-        SOUTH       = 0x130,
-        A           = SOUTH,
-        EAST        = 0x131,
-        B           = EAST,
-        C           = 0x132,
-        NORTH       = 0x133,
-        X           = NORTH,
-        WEST        = 0x134,
-        Y           = WEST,
-        Z           = 0x135,
-        TL          = 0x136,
-        TR          = 0x137,
-        TL2         = 0x138,
-        TR2         = 0x139,
-        SELECT      = 0x13a,
-        START       = 0x13b,
-        MODE        = 0x13c,
-        THUMBL      = 0x13d,
-        THUMBR      = 0x13e,
+        GAMEPAD = 0x130,
+        SOUTH = 0x130,
+        A = SOUTH,
+        EAST = 0x131,
+        B = EAST,
+        C = 0x132,
+        NORTH = 0x133,
+        X = NORTH,
+        WEST = 0x134,
+        Y = WEST,
+        Z = 0x135,
+        TL = 0x136,
+        TR = 0x137,
+        TL2 = 0x138,
+        TR2 = 0x139,
+        SELECT = 0x13a,
+        START = 0x13b,
+        MODE = 0x13c,
+        THUMBL = 0x13d,
+        THUMBR = 0x13e,
 
-        DIGI        = 0x140,
-        TOOL_PEN        = 0x140,
-        TOOL_RUBBER     = 0x141,
-        TOOL_BRUSH      = 0x142,
-        TOOL_PENCIL     = 0x143,
-        TOOL_AIRBRUSH   = 0x144,
-        TOOL_FINGER     = 0x145,
-        TOOL_MOUSE      = 0x146,
-        TOOL_LENS       = 0x147,
-        TOOL_QUINTTAP   = 0x148, // Five fingers on trackpad
-        TOUCH           = 0x14a,
-        STYLUS          = 0x14b,
-        STYLUS2     = 0x14c,
-        TOOL_DOUBLETAP  = 0x14d,
-        TOOL_TRIPLETAP  = 0x14e,
-        TOOL_QUADTAP    = 0x14f, // Four fingers on trackpad
+        DIGI = 0x140,
+        TOOL_PEN = 0x140,
+        TOOL_RUBBER = 0x141,
+        TOOL_BRUSH = 0x142,
+        TOOL_PENCIL = 0x143,
+        TOOL_AIRBRUSH = 0x144,
+        TOOL_FINGER = 0x145,
+        TOOL_MOUSE = 0x146,
+        TOOL_LENS = 0x147,
+        TOOL_QUINTTAP = 0x148, // Five fingers on trackpad
+        TOUCH = 0x14a,
+        STYLUS = 0x14b,
+        STYLUS2 = 0x14c,
+        TOOL_DOUBLETAP = 0x14d,
+        TOOL_TRIPLETAP = 0x14e,
+        TOOL_QUADTAP = 0x14f, // Four fingers on trackpad
 
-        WHEEL       = 0x150,
-        GEAR_DOWN   = 0x150,
-        GEAR_UP     = 0x151,
+        WHEEL = 0x150,
+        GEAR_DOWN = 0x150,
+        GEAR_UP = 0x151,
 
-        DPAD_UP     = 0x220,
-        DPAD_DOWN   = 0x221,
-        DPAD_LEFT   = 0x222,
-        DPAD_RIGHT  = 0x223,
+        DPAD_UP = 0x220,
+        DPAD_DOWN = 0x221,
+        DPAD_LEFT = 0x222,
+        DPAD_RIGHT = 0x223,
 
-        Last = 0x300,
+        Last = 0x300
     }
 
     internal enum EvdevType : byte
@@ -571,21 +572,24 @@ namespace OpenTK.Platform.Linux
         REL = 0x02,
         ABS = 0x03,
         MSC = 0x04,
-        SW =  0x05,
+        SW = 0x05,
         LED = 0x11,
         SND = 0x12,
         REP = 0x14,
-        FF =  0x15,
+        FF = 0x15,
         PWR = 0x16,
         FF_STATUS = 0x17,
         MAX = 0x1f,
-        CNT = (MAX + 1),
+        CNT = MAX + 1
     }
 
     internal enum EvdevIoctl : uint
     {
         Id = (2u << 30) | ((byte)'E' << 8) | (0x02u << 0) | (8u << 16), //EVIOCGID = _IOR('E', 0x02, struct input_id)
-        Name128 = (2u << 30) | ((byte)'E' << 8) | (0x06u << 0) | (128u << 16), //EVIOCGNAME(len) = _IOC(_IOC_READ, 'E', 0x06, len)
+
+        Name128 =
+            (2u << 30) | ((byte)'E' << 8) | (0x06u << 0) |
+            (128u << 16) //EVIOCGNAME(len) = _IOC(_IOC_READ, 'E', 0x06, len)
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -597,7 +601,7 @@ namespace OpenTK.Platform.Linux
         public int Fuzz;
         public int Flat;
         public int Resolution;
-    };
+    }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct InputId
@@ -612,7 +616,7 @@ namespace OpenTK.Platform.Linux
     internal struct InputEvent
     {
         public TimeVal Time;
-        private ushort type;
+        private readonly ushort type;
         public ushort Code;
         public int Value;
 
@@ -626,4 +630,3 @@ namespace OpenTK.Platform.Linux
         public IntPtr MicroSeconds;
     }
 }
-

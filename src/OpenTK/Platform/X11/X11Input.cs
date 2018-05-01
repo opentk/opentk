@@ -27,14 +27,15 @@
 
 using System.Diagnostics;
 using OpenTK.Input;
+using OpenTK.Platform.Linux;
 
 namespace OpenTK.Platform.X11
 {
     internal class X11Input : IInputDriver2
     {
-        private readonly X11Mouse mouse = new X11Mouse();
+        private readonly LinuxJoystick joystick = new LinuxJoystick();
         private readonly X11Keyboard keyboard = new X11Keyboard();
-        private readonly Linux.LinuxJoystick joystick = new Linux.LinuxJoystick();
+        private readonly X11Mouse mouse = new X11Mouse();
 
         internal X11Input()
         {
@@ -55,7 +56,5 @@ namespace OpenTK.Platform.X11
         {
             joystick.Dispose();
         }
-
     }
 }
-

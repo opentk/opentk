@@ -30,9 +30,6 @@ namespace OpenTK.Platform.SDL2
 {
     internal class Sdl2WindowInfo : IWindowInfo
     {
-        public IntPtr Handle { get; set; }
-        public Sdl2WindowInfo Parent { get; set; }
-
         public Sdl2WindowInfo()
         {
         }
@@ -43,12 +40,18 @@ namespace OpenTK.Platform.SDL2
             Parent = parent;
         }
 
+        public Sdl2WindowInfo Parent { get; set; }
+
         // For compatibility with whoever thought it would be
         // a good idea to access internal APIs through reflection
         // (e.g. MonoGame)
-        public IntPtr WindowHandle { get => Handle;
+        public IntPtr WindowHandle
+        {
+            get => Handle;
             set => Handle = value;
         }
+
+        public IntPtr Handle { get; set; }
 
         public void Dispose()
         {
@@ -56,4 +59,3 @@ namespace OpenTK.Platform.SDL2
         }
     }
 }
-

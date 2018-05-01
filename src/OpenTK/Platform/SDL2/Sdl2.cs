@@ -25,8 +25,8 @@
 
 using System;
 using System.Diagnostics;
-using System.Security;
 using System.Runtime.InteropServices;
+using System.Security;
 
 #pragma warning disable 0169
 
@@ -35,18 +35,19 @@ namespace OpenTK.Platform.SDL2
     using Surface = IntPtr;
     using Cursor = IntPtr;
 
-    internal partial class SDL
+    internal class SDL
     {
-        #if ANDROID
+#if ANDROID
         const string lib = "libSDL2.so";
         #elif IPHONE
         const string lib = "__Internal";
         #else
         private const string lib = "SDL2.dll";
-        #endif
+#endif
 
-        public readonly static object Sync = new object();
-        private static Nullable<Version> version;
+        public static readonly object Sync = new object();
+        private static Version? version;
+
         public static Version Version
         {
             get
@@ -57,6 +58,7 @@ namespace OpenTK.Platform.SDL2
                     {
                         version = GetVersion();
                     }
+
                     return version.Value;
                 }
                 catch
@@ -77,121 +79,146 @@ namespace OpenTK.Platform.SDL2
         }
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateColorCursor", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateColorCursor",
+            ExactSpelling = true)]
         public static extern Cursor CreateColorCursor(Surface surface, int hot_x, int hot_y);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_FreeCursor", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_FreeCursor",
+            ExactSpelling = true)]
         public static extern void FreeCursor(Cursor cursor);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetDefaultCursor", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetDefaultCursor",
+            ExactSpelling = true)]
         public static extern IntPtr GetDefaultCursor();
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetCursor", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetCursor",
+            ExactSpelling = true)]
         public static extern void SetCursor(Cursor cursor);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_AddEventWatch", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_AddEventWatch",
+            ExactSpelling = true)]
         public static extern void AddEventWatch(EventFilter filter, IntPtr userdata);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_AddEventWatch", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_AddEventWatch",
+            ExactSpelling = true)]
         public static extern void AddEventWatch(IntPtr filter, IntPtr userdata);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateRGBSurfaceFrom", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateRGBSurfaceFrom",
+            ExactSpelling = true)]
         public static extern IntPtr CreateRGBSurfaceFrom(IntPtr pixels,
             int width, int height, int depth, int pitch,
             uint Rmask, uint Gmask, uint Bmask, uint Amask);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateWindow", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateWindow",
+            ExactSpelling = true)]
         public static extern IntPtr CreateWindow(string title, int x, int y, int w, int h, WindowFlags flags);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateWindowFrom", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_CreateWindowFrom",
+            ExactSpelling = true)]
         public static extern IntPtr CreateWindowFrom(IntPtr data);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_DelEventWatch", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_DelEventWatch",
+            ExactSpelling = true)]
         public static extern void DelEventWatch(EventFilter filter, IntPtr userdata);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_DelEventWatch", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_DelEventWatch",
+            ExactSpelling = true)]
         public static extern void DelEventWatch(IntPtr filter, IntPtr userdata);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_DestroyWindow", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_DestroyWindow",
+            ExactSpelling = true)]
         public static extern void DestroyWindow(IntPtr window);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_FreeSurface", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_FreeSurface",
+            ExactSpelling = true)]
         public static extern void FreeSurface(IntPtr surface);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport (lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_free", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_free", ExactSpelling = true)]
         public static extern void Free(IntPtr memblock);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerEventState", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerEventState",
+            ExactSpelling = true)]
         public static extern EventState GameControllerEventState(EventState state);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetAxis", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetAxis",
+            ExactSpelling = true)]
         public static extern short GameControllerGetAxis(IntPtr gamecontroller, GameControllerAxis axis);
 
         /// <summary>
-        /// Gets the SDL joystick layer binding for the specified game controller axis
+        ///     Gets the SDL joystick layer binding for the specified game controller axis
         /// </summary>
         /// <param name="gamecontroller">Pointer to a game controller instance returned by <c>GameControllerOpen</c>.</param>
         /// <param name="axis">A value from the <c>GameControllerAxis</c> enumeration</param>
         /// <returns>A GameControllerButtonBind instance describing the specified binding</returns>
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetBindForAxis", ExactSpelling = true)]
-        public static extern GameControllerButtonBind GameControllerGetBindForAxis(IntPtr gamecontroller, GameControllerAxis axis);
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetBindForAxis",
+            ExactSpelling = true)]
+        public static extern GameControllerButtonBind GameControllerGetBindForAxis(IntPtr gamecontroller,
+            GameControllerAxis axis);
 
         /// <summary>
-        /// Gets the SDL joystick layer binding for the specified game controller button
+        ///     Gets the SDL joystick layer binding for the specified game controller button
         /// </summary>
         /// <param name="gamecontroller">Pointer to a game controller instance returned by <c>GameControllerOpen</c>.</param>
         /// <param name="button">A value from the <c>GameControllerButton</c> enumeration</param>
         /// <returns>A GameControllerButtonBind instance describing the specified binding</returns>
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetBindForButton", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetBindForButton",
+            ExactSpelling = true)]
         public static extern GameControllerButtonBind GameControllerGetBindForButton(
             IntPtr gamecontroller, GameControllerButton button);
 
         /// <summary>
-        /// Gets the current state of a button on a game controller.
+        ///     Gets the current state of a button on a game controller.
         /// </summary>
         /// <param name="gamecontroller">A game controller handle previously opened with <c>GameControllerOpen</c>.</param>
         /// <param name="button">A zero-based <c>GameControllerButton</c> value.</param>
         /// <returns><c>true</c> if the specified button is pressed; <c>false</c> otherwise.</returns>
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetButton", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetButton",
+            ExactSpelling = true)]
         public static extern bool GameControllerGetButton(IntPtr gamecontroller, GameControllerButton button);
 
         /// <summary>
-        /// Retrieve the joystick handle that corresponds to the specified game controller.
+        ///     Retrieve the joystick handle that corresponds to the specified game controller.
         /// </summary>
         /// <param name="gamecontroller">A game controller handle previously opened with <c>GameControllerOpen</c>.</param>
-        /// <returns>A handle to a joystick, or IntPtr.Zero in case of error. The pointer is owned by the callee. Use <c>SDL.GetError</c> to retrieve error information</returns>
+        /// <returns>
+        ///     A handle to a joystick, or IntPtr.Zero in case of error. The pointer is owned by the callee. Use
+        ///     <c>SDL.GetError</c> to retrieve error information
+        /// </returns>
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetJoystick", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerGetJoystick",
+            ExactSpelling = true)]
         public static extern IntPtr GameControllerGetJoystick(IntPtr gamecontroller);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetCurrentDisplayMode", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetCurrentDisplayMode",
+            ExactSpelling = true)]
         public static extern int GetCurrentDisplayMode(int displayIndex, out DisplayMode mode);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerName", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerName",
+            ExactSpelling = true)]
         private static extern IntPtr GameControllerNameInternal(IntPtr gamecontroller);
 
         /// <summary>
-        /// Return the name for an openend game controller instance.
+        ///     Return the name for an openend game controller instance.
         /// </summary>
         /// <returns>The name of the game controller name.</returns>
         /// <param name="gamecontroller">Pointer to a game controller instance returned by <c>GameControllerOpen</c>.</param>
@@ -204,60 +231,72 @@ namespace OpenTK.Platform.SDL2
         }
 
         /// <summary>
-        /// Opens a game controller for use.
+        ///     Opens a game controller for use.
         /// </summary>
         /// <param name="joystick_index">
-        /// A zero-based index for the game controller.
-        /// This index is the value which will identify this controller in future controller events.
+        ///     A zero-based index for the game controller.
+        ///     This index is the value which will identify this controller in future controller events.
         /// </param>
         /// <returns>A handle to the game controller instance, or IntPtr.Zero in case of error.</returns>
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerOpen", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GameControllerOpen",
+            ExactSpelling = true)]
         public static extern IntPtr GameControllerOpen(int joystick_index);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetDisplayBounds", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetDisplayBounds",
+            ExactSpelling = true)]
         public static extern int GetDisplayBounds(int displayIndex, out Rect rect);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetDisplayMode", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetDisplayMode",
+            ExactSpelling = true)]
         public static extern int GetDisplayMode(int displayIndex, int modeIndex, out DisplayMode mode);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetError", ExactSpelling = true)]
         private static extern IntPtr GetErrorInternal();
+
         public static string GetError()
         {
             return IntPtrToString(GetErrorInternal());
         }
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetModState", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetModState",
+            ExactSpelling = true)]
         public static extern Keymod GetModState();
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetMouseState", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetMouseState",
+            ExactSpelling = true)]
         public static extern ButtonFlags GetMouseState(out int hx, out int hy);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetGlobalMouseState", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetGlobalMouseState",
+            ExactSpelling = true)]
         public static extern ButtonFlags GetGlobalMouseState(out int hx, out int hy);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetNumDisplayModes", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetNumDisplayModes",
+            ExactSpelling = true)]
         public static extern int GetNumDisplayModes(int displayIndex);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetNumVideoDisplays", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetNumVideoDisplays",
+            ExactSpelling = true)]
         public static extern int GetNumVideoDisplays();
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetScancodeFromKey", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetScancodeFromKey",
+            ExactSpelling = true)]
         public static extern Scancode GetScancodeFromKey(Keycode key);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetVersion", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetVersion",
+            ExactSpelling = true)]
         public static extern void GetVersion(out Version version);
+
         public static Version GetVersion()
         {
             Version v;
@@ -266,31 +305,38 @@ namespace OpenTK.Platform.SDL2
         }
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetWindowID", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetWindowID",
+            ExactSpelling = true)]
         public static extern uint GetWindowID(IntPtr window);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetWindowPosition", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetWindowPosition",
+            ExactSpelling = true)]
         public static extern void GetWindowPosition(IntPtr window, out int x, out int y);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetWindowSize", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetWindowSize",
+            ExactSpelling = true)]
         public static extern void GetWindowSize(IntPtr window, out int w, out int h);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetWindowTitle", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetWindowTitle",
+            ExactSpelling = true)]
         private static extern IntPtr GetWindowTitlePrivate(IntPtr window);
+
         public static string GetWindowTitle(IntPtr window)
         {
             return Marshal.PtrToStringAnsi(GetWindowTitlePrivate(window));
         }
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_HideWindow", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_HideWindow",
+            ExactSpelling = true)]
         public static extern void HideWindow(IntPtr window);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_DisableScreenSaver", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_DisableScreenSaver",
+            ExactSpelling = true)]
         public static extern void DisableScreenSaver();
 
         [SuppressUnmanagedCodeSecurity]
@@ -298,45 +344,55 @@ namespace OpenTK.Platform.SDL2
         public static extern int Init(SystemFlags flags);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_InitSubSystem", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_InitSubSystem",
+            ExactSpelling = true)]
         public static extern int InitSubSystem(SystemFlags flags);
 
         /// <summary>
-        /// Determines if the specified joystick is supported by the GameController API.
+        ///     Determines if the specified joystick is supported by the GameController API.
         /// </summary>
         /// <returns><c>true</c> if joystick_index is supported by the GameController API; <c>false</c> otherwise.</returns>
         /// <param name="joystick_index">The index of the joystick to check.</param>
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_IsGameController", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_IsGameController",
+            ExactSpelling = true)]
         public static extern bool IsGameController(int joystick_index);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickClose", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickClose",
+            ExactSpelling = true)]
         public static extern void JoystickClose(IntPtr joystick);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickEventState", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickEventState",
+            ExactSpelling = true)]
         public static extern EventState JoystickEventState(EventState enabled);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickGetAxis", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickGetAxis",
+            ExactSpelling = true)]
         public static extern short JoystickGetAxis(IntPtr joystick, int axis);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickGetButton", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickGetButton",
+            ExactSpelling = true)]
         public static extern byte JoystickGetButton(IntPtr joystick, int button);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickGetGUID", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickGetGUID",
+            ExactSpelling = true)]
         public static extern JoystickGuid JoystickGetGUID(IntPtr joystick);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickInstanceID", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickInstanceID",
+            ExactSpelling = true)]
         public static extern int JoystickInstanceID(IntPtr joystick);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickName", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickName",
+            ExactSpelling = true)]
         private static extern IntPtr JoystickNameInternal(IntPtr joystick);
+
         public static string JoystickName(IntPtr joystick)
         {
             unsafe
@@ -346,39 +402,48 @@ namespace OpenTK.Platform.SDL2
         }
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickNumAxes", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickNumAxes",
+            ExactSpelling = true)]
         public static extern int JoystickNumAxes(IntPtr joystick);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickNumBalls", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickNumBalls",
+            ExactSpelling = true)]
         public static extern int JoystickNumBalls(IntPtr joystick);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickNumButtons", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickNumButtons",
+            ExactSpelling = true)]
         public static extern int JoystickNumButtons(IntPtr joystick);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickNumHats", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickNumHats",
+            ExactSpelling = true)]
         public static extern int JoystickNumHats(IntPtr joystick);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickOpen", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickOpen",
+            ExactSpelling = true)]
         public static extern IntPtr JoystickOpen(int device_index);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickUpdate", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_JoystickUpdate",
+            ExactSpelling = true)]
         public static extern void JoystickUpdate();
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_MaximizeWindow", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_MaximizeWindow",
+            ExactSpelling = true)]
         public static extern void MaximizeWindow(IntPtr window);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_MinimizeWindow", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_MinimizeWindow",
+            ExactSpelling = true)]
         public static extern void MinimizeWindow(IntPtr window);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_NumJoysticks", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_NumJoysticks",
+            ExactSpelling = true)]
         public static extern int NumJoysticks();
 
         public static int PeepEvents(ref Event e, EventAction action, EventType min, EventType max)
@@ -398,6 +463,7 @@ namespace OpenTK.Platform.SDL2
             {
                 throw new ArgumentNullException();
             }
+
             if (count <= 0 || count > e.Length)
             {
                 throw new ArgumentOutOfRangeException();
@@ -405,7 +471,7 @@ namespace OpenTK.Platform.SDL2
 
             unsafe
             {
-                fixed (Event *pe = e)
+                fixed (Event* pe = e)
                 {
                     return PeepEvents(pe, count, action, min, max);
                 }
@@ -413,73 +479,91 @@ namespace OpenTK.Platform.SDL2
         }
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_PeepEvents", ExactSpelling = true)]
-        private unsafe static extern int PeepEvents(Event* e, int count, EventAction action, EventType min, EventType max);
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_PeepEvents",
+            ExactSpelling = true)]
+        private static extern unsafe int PeepEvents(Event* e, int count, EventAction action, EventType min,
+            EventType max);
 
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_PixelFormatEnumToMasks", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_PixelFormatEnumToMasks",
+            ExactSpelling = true)]
         public static extern bool PixelFormatEnumToMasks(uint format, out int bpp,
             out uint rmask, out uint gmask, out uint bmask, out uint amask);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_PollEvent", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_PollEvent",
+            ExactSpelling = true)]
         public static extern int PollEvent(out Event e);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_PumpEvents", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_PumpEvents",
+            ExactSpelling = true)]
         public static extern void PumpEvents();
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_PushEvent", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_PushEvent",
+            ExactSpelling = true)]
         public static extern int PushEvent(ref Event @event);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_RaiseWindow", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_RaiseWindow",
+            ExactSpelling = true)]
         public static extern void RaiseWindow(IntPtr window);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_RestoreWindow", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_RestoreWindow",
+            ExactSpelling = true)]
         public static extern void RestoreWindow(IntPtr window);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetRelativeMouseMode", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetRelativeMouseMode",
+            ExactSpelling = true)]
         public static extern int SetRelativeMouseMode(bool enabled);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetWindowBordered", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetWindowBordered",
+            ExactSpelling = true)]
         public static extern void SetWindowBordered(IntPtr window, bool bordered);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetWindowFullscreen", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetWindowFullscreen",
+            ExactSpelling = true)]
         public static extern int SetWindowFullscreen(IntPtr window, uint flags);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetWindowGrab", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetWindowGrab",
+            ExactSpelling = true)]
         public static extern void SetWindowGrab(IntPtr window, bool grabbed);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetWindowIcon", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetWindowIcon",
+            ExactSpelling = true)]
         public static extern void SetWindowIcon(IntPtr window, IntPtr icon);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetWindowPosition", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetWindowPosition",
+            ExactSpelling = true)]
         public static extern void SetWindowPosition(IntPtr window, int x, int y);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetWindowSize", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetWindowSize",
+            ExactSpelling = true)]
         public static extern void SetWindowSize(IntPtr window, int x, int y);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetWindowTitle", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_SetWindowTitle",
+            ExactSpelling = true)]
         public static extern void SetWindowTitle(IntPtr window, string title);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_ShowCursor", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_ShowCursor",
+            ExactSpelling = true)]
         public static extern int ShowCursor(bool toggle);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_ShowWindow", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_ShowWindow",
+            ExactSpelling = true)]
         public static extern void ShowWindow(IntPtr window);
 
         [SuppressUnmanagedCodeSecurity]
@@ -487,25 +571,27 @@ namespace OpenTK.Platform.SDL2
         public static extern bool WasInit(SystemFlags flags);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_WarpMouseInWindow", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_WarpMouseInWindow",
+            ExactSpelling = true)]
         public static extern void WarpMouseInWindow(IntPtr window, int x, int y);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport (lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_WarpMouseGlobal", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_WarpMouseGlobal",
+            ExactSpelling = true)]
         public static extern void WarpMouseGlobal(int x, int y);
 
         /// <summary>
-        /// Retrieves driver-dependent window information.
+        ///     Retrieves driver-dependent window information.
         /// </summary>
         /// <param name="window">
-        /// The window about which information is being requested.
+        ///     The window about which information is being requested.
         /// </param>
         /// <param name="info">
-        /// Returns driver-dependent information about the specified window.
+        ///     Returns driver-dependent information about the specified window.
         /// </param>
         /// <returns>
-        /// True, if the function is implemented and the version number of the info struct is valid;
-        /// false, otherwise.
+        ///     True, if the function is implemented and the version number of the info struct is valid;
+        ///     false, otherwise.
         /// </returns>
         public static bool GetWindowWMInfo(IntPtr window, out SysWMInfo info)
         {
@@ -515,34 +601,42 @@ namespace OpenTK.Platform.SDL2
         }
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetWindowWMInfo", ExactSpelling = true)]
+        [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GetWindowWMInfo",
+            ExactSpelling = true)]
         private static extern bool GetWindowWMInfoInternal(IntPtr window, ref SysWMInfo info);
 
-        public partial class GL
+        public class GL
         {
             [SuppressUnmanagedCodeSecurity]
-            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_CreateContext", ExactSpelling = true)]
+            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_CreateContext",
+                ExactSpelling = true)]
             public static extern IntPtr CreateContext(IntPtr window);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_DeleteContext", ExactSpelling = true)]
+            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_DeleteContext",
+                ExactSpelling = true)]
             public static extern void DeleteContext(IntPtr context);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetAttribute", ExactSpelling = true)]
+            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetAttribute",
+                ExactSpelling = true)]
             public static extern int GetAttribute(ContextAttribute attr, out int value);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetCurrentContext", ExactSpelling = true)]
+            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetCurrentContext",
+                ExactSpelling = true)]
             public static extern IntPtr GetCurrentContext();
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetDrawableSize", ExactSpelling = true)]
+            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetDrawableSize",
+                ExactSpelling = true)]
             public static extern void GetDrawableSize(IntPtr window, out int w, out int h);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetProcAddress", ExactSpelling = true)]
+            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetProcAddress",
+                ExactSpelling = true)]
             public static extern IntPtr GetProcAddress(IntPtr proc);
+
             public static IntPtr GetProcAddress(string proc)
             {
                 var p = Marshal.StringToHGlobalAnsi(proc);
@@ -557,31 +651,38 @@ namespace OpenTK.Platform.SDL2
             }
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetSwapInterval", ExactSpelling = true)]
+            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_GetSwapInterval",
+                ExactSpelling = true)]
             public static extern int GetSwapInterval();
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_MakeCurrent", ExactSpelling = true)]
+            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_MakeCurrent",
+                ExactSpelling = true)]
             public static extern int MakeCurrent(IntPtr window, IntPtr context);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_SetAttribute", ExactSpelling = true)]
+            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_SetAttribute",
+                ExactSpelling = true)]
             public static extern int SetAttribute(ContextAttribute attr, int value);
+
             public static int SetAttribute(ContextAttribute attr, ContextFlags value)
             {
                 return SetAttribute(attr, (int)value);
             }
+
             public static int SetAttribute(ContextAttribute attr, ContextProfileFlags value)
             {
                 return SetAttribute(attr, (int)value);
             }
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_SetSwapInterval", ExactSpelling = true)]
+            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_SetSwapInterval",
+                ExactSpelling = true)]
             public static extern int SetSwapInterval(int interval);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_SwapWindow", ExactSpelling = true)]
+            [DllImport(lib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "SDL_GL_SwapWindow",
+                ExactSpelling = true)]
             public static extern void SwapWindow(IntPtr window);
         }
     }
@@ -605,7 +706,7 @@ namespace OpenTK.Platform.SDL2
         Middle = 1 << (Button.Middle - 1),
         Right = 1 << (Button.Right - 1),
         X1 = 1 << (Button.X1 - 1),
-        X2 = 1 << (Button.X2 - 1),
+        X2 = 1 << (Button.X2 - 1)
     }
 
     internal enum ContextAttribute
@@ -832,172 +933,172 @@ namespace OpenTK.Platform.SDL2
         x = 'x',
         y = 'y',
         z = 'z',
-        CAPSLOCK = (1 << 30) | (int)Scancode.CAPSLOCK,
-        F1 = (1 << 30) | (int)Scancode.F1,
-        F2 = (1 << 30) | (int)Scancode.F2,
-        F3 = (1 << 30) | (int)Scancode.F3,
-        F4 = (1 << 30) | (int)Scancode.F4,
-        F5 = (1 << 30) | (int)Scancode.F5,
-        F6 = (1 << 30) | (int)Scancode.F6,
-        F7 = (1 << 30) | (int)Scancode.F7,
-        F8 = (1 << 30) | (int)Scancode.F8,
-        F9 = (1 << 30) | (int)Scancode.F9,
-        F10 = (1 << 30) | (int)Scancode.F10,
-        F11 = (1 << 30) | (int)Scancode.F11,
-        F12 = (1 << 30) | (int)Scancode.F12,
-        PRINTSCREEN = (1 << 30) | (int)Scancode.PRINTSCREEN,
-        SCROLLLOCK = (1 << 30) | (int)Scancode.SCROLLLOCK,
-        PAUSE = (1 << 30) | (int)Scancode.PAUSE,
-        INSERT = (1 << 30) | (int)Scancode.INSERT,
-        HOME = (1 << 30) | (int)Scancode.HOME,
-        PAGEUP = (1 << 30) | (int)Scancode.PAGEUP,
+        CAPSLOCK = (1 << 30) | Scancode.CAPSLOCK,
+        F1 = (1 << 30) | Scancode.F1,
+        F2 = (1 << 30) | Scancode.F2,
+        F3 = (1 << 30) | Scancode.F3,
+        F4 = (1 << 30) | Scancode.F4,
+        F5 = (1 << 30) | Scancode.F5,
+        F6 = (1 << 30) | Scancode.F6,
+        F7 = (1 << 30) | Scancode.F7,
+        F8 = (1 << 30) | Scancode.F8,
+        F9 = (1 << 30) | Scancode.F9,
+        F10 = (1 << 30) | Scancode.F10,
+        F11 = (1 << 30) | Scancode.F11,
+        F12 = (1 << 30) | Scancode.F12,
+        PRINTSCREEN = (1 << 30) | Scancode.PRINTSCREEN,
+        SCROLLLOCK = (1 << 30) | Scancode.SCROLLLOCK,
+        PAUSE = (1 << 30) | Scancode.PAUSE,
+        INSERT = (1 << 30) | Scancode.INSERT,
+        HOME = (1 << 30) | Scancode.HOME,
+        PAGEUP = (1 << 30) | Scancode.PAGEUP,
         DELETE = 127, // '\177' octal
-        END = (1 << 30) | (int)Scancode.END,
-        PAGEDOWN = (1 << 30) | (int)Scancode.PAGEDOWN,
-        RIGHT = (1 << 30) | (int)Scancode.RIGHT,
-        LEFT = (1 << 30) | (int)Scancode.LEFT,
-        DOWN = (1 << 30) | (int)Scancode.DOWN,
-        UP = (1 << 30) | (int)Scancode.UP,
-        NUMLOCKCLEAR = (1 << 30) | (int)Scancode.NUMLOCKCLEAR,
-        KP_DIVIDE = (1 << 30) | (int)Scancode.KP_DIVIDE,
-        KP_MULTIPLY = (1 << 30) | (int)Scancode.KP_MULTIPLY,
-        KP_MINUS = (1 << 30) | (int)Scancode.KP_MINUS,
-        KP_PLUS = (1 << 30) | (int)Scancode.KP_PLUS,
-        KP_ENTER = (1 << 30) | (int)Scancode.KP_ENTER,
-        KP_1 = (1 << 30) | (int)Scancode.KP_1,
-        KP_2 = (1 << 30) | (int)Scancode.KP_2,
-        KP_3 = (1 << 30) | (int)Scancode.KP_3,
-        KP_4 = (1 << 30) | (int)Scancode.KP_4,
-        KP_5 = (1 << 30) | (int)Scancode.KP_5,
-        KP_6 = (1 << 30) | (int)Scancode.KP_6,
-        KP_7 = (1 << 30) | (int)Scancode.KP_7,
-        KP_8 = (1 << 30) | (int)Scancode.KP_8,
-        KP_9 = (1 << 30) | (int)Scancode.KP_9,
-        KP_0 = (1 << 30) | (int)Scancode.KP_0,
-        KP_PERIOD = (1 << 30) | (int)Scancode.KP_PERIOD,
-        APPLICATION = (1 << 30) | (int)Scancode.APPLICATION,
-        POWER = (1 << 30) | (int)Scancode.POWER,
-        KP_EQUALS = (1 << 30) | (int)Scancode.KP_EQUALS,
-        F13 = (1 << 30) | (int)Scancode.F13,
-        F14 = (1 << 30) | (int)Scancode.F14,
-        F15 = (1 << 30) | (int)Scancode.F15,
-        F16 = (1 << 30) | (int)Scancode.F16,
-        F17 = (1 << 30) | (int)Scancode.F17,
-        F18 = (1 << 30) | (int)Scancode.F18,
-        F19 = (1 << 30) | (int)Scancode.F19,
-        F20 = (1 << 30) | (int)Scancode.F20,
-        F21 = (1 << 30) | (int)Scancode.F21,
-        F22 = (1 << 30) | (int)Scancode.F22,
-        F23 = (1 << 30) | (int)Scancode.F23,
-        F24 = (1 << 30) | (int)Scancode.F24,
-        EXECUTE = (1 << 30) | (int)Scancode.EXECUTE,
-        HELP = (1 << 30) | (int)Scancode.HELP,
-        MENU = (1 << 30) | (int)Scancode.MENU,
-        SELECT = (1 << 30) | (int)Scancode.SELECT,
-        STOP = (1 << 30) | (int)Scancode.STOP,
-        AGAIN = (1 << 30) | (int)Scancode.AGAIN,
-        UNDO = (1 << 30) | (int)Scancode.UNDO,
-        CUT = (1 << 30) | (int)Scancode.CUT,
-        COPY = (1 << 30) | (int)Scancode.COPY,
-        PASTE = (1 << 30) | (int)Scancode.PASTE,
-        FIND = (1 << 30) | (int)Scancode.FIND,
-        MUTE = (1 << 30) | (int)Scancode.MUTE,
-        VOLUMEUP = (1 << 30) | (int)Scancode.VOLUMEUP,
-        VOLUMEDOWN = (1 << 30) | (int)Scancode.VOLUMEDOWN,
-        KP_COMMA = (1 << 30) | (int)Scancode.KP_COMMA,
-        KP_EQUALSAS400 = (1 << 30) | (int)Scancode.KP_EQUALSAS400,
-        ALTERASE = (1 << 30) | (int)Scancode.ALTERASE,
-        SYSREQ = (1 << 30) | (int)Scancode.SYSREQ,
-        CANCEL = (1 << 30) | (int)Scancode.CANCEL,
-        CLEAR = (1 << 30) | (int)Scancode.CLEAR,
-        PRIOR = (1 << 30) | (int)Scancode.PRIOR,
-        RETURN2 = (1 << 30) | (int)Scancode.RETURN2,
-        SEPARATOR = (1 << 30) | (int)Scancode.SEPARATOR,
-        OUT = (1 << 30) | (int)Scancode.OUT,
-        OPER = (1 << 30) | (int)Scancode.OPER,
-        CLEARAGAIN = (1 << 30) | (int)Scancode.CLEARAGAIN,
-        CRSEL = (1 << 30) | (int)Scancode.CRSEL,
-        EXSEL = (1 << 30) | (int)Scancode.EXSEL,
-        KP_00 = (1 << 30) | (int)Scancode.KP_00,
-        KP_000 = (1 << 30) | (int)Scancode.KP_000,
-        THOUSANDSSEPARATOR = (1 << 30) | (int)Scancode.THOUSANDSSEPARATOR,
-        DECIMALSEPARATOR = (1 << 30) | (int)Scancode.DECIMALSEPARATOR,
-        CURRENCYUNIT = (1 << 30) | (int)Scancode.CURRENCYUNIT,
-        CURRENCYSUBUNIT = (1 << 30) | (int)Scancode.CURRENCYSUBUNIT,
-        KP_LEFTPAREN = (1 << 30) | (int)Scancode.KP_LEFTPAREN,
-        KP_RIGHTPAREN = (1 << 30) | (int)Scancode.KP_RIGHTPAREN,
-        KP_LEFTBRACE = (1 << 30) | (int)Scancode.KP_LEFTBRACE,
-        KP_RIGHTBRACE = (1 << 30) | (int)Scancode.KP_RIGHTBRACE,
-        KP_TAB = (1 << 30) | (int)Scancode.KP_TAB,
-        KP_BACKSPACE = (1 << 30) | (int)Scancode.KP_BACKSPACE,
-        KP_A = (1 << 30) | (int)Scancode.KP_A,
-        KP_B = (1 << 30) | (int)Scancode.KP_B,
-        KP_C = (1 << 30) | (int)Scancode.KP_C,
-        KP_D = (1 << 30) | (int)Scancode.KP_D,
-        KP_E = (1 << 30) | (int)Scancode.KP_E,
-        KP_F = (1 << 30) | (int)Scancode.KP_F,
-        KP_XOR = (1 << 30) | (int)Scancode.KP_XOR,
-        KP_POWER = (1 << 30) | (int)Scancode.KP_POWER,
-        KP_PERCENT = (1 << 30) | (int)Scancode.KP_PERCENT,
-        KP_LESS = (1 << 30) | (int)Scancode.KP_LESS,
-        KP_GREATER = (1 << 30) | (int)Scancode.KP_GREATER,
-        KP_AMPERSAND = (1 << 30) | (int)Scancode.KP_AMPERSAND,
-        KP_DBLAMPERSAND = (1 << 30) | (int)Scancode.KP_DBLAMPERSAND,
-        KP_VERTICALBAR = (1 << 30) | (int)Scancode.KP_VERTICALBAR,
-        KP_DBLVERTICALBAR = (1 << 30) | (int)Scancode.KP_DBLVERTICALBAR,
-        KP_COLON = (1 << 30) | (int)Scancode.KP_COLON,
-        KP_HASH = (1 << 30) | (int)Scancode.KP_HASH,
-        KP_SPACE = (1 << 30) | (int)Scancode.KP_SPACE,
-        KP_AT = (1 << 30) | (int)Scancode.KP_AT,
-        KP_EXCLAM = (1 << 30) | (int)Scancode.KP_EXCLAM,
-        KP_MEMSTORE = (1 << 30) | (int)Scancode.KP_MEMSTORE,
-        KP_MEMRECALL = (1 << 30) | (int)Scancode.KP_MEMRECALL,
-        KP_MEMCLEAR = (1 << 30) | (int)Scancode.KP_MEMCLEAR,
-        KP_MEMADD = (1 << 30) | (int)Scancode.KP_MEMADD,
-        KP_MEMSUBTRACT = (1 << 30) | (int)Scancode.KP_MEMSUBTRACT,
-        KP_MEMMULTIPLY = (1 << 30) | (int)Scancode.KP_MEMMULTIPLY,
-        KP_MEMDIVIDE = (1 << 30) | (int)Scancode.KP_MEMDIVIDE,
-        KP_PLUSMINUS = (1 << 30) | (int)Scancode.KP_PLUSMINUS,
-        KP_CLEAR = (1 << 30) | (int)Scancode.KP_CLEAR,
-        KP_CLEARENTRY = (1 << 30) | (int)Scancode.KP_CLEARENTRY,
-        KP_BINARY = (1 << 30) | (int)Scancode.KP_BINARY,
-        KP_OCTAL = (1 << 30) | (int)Scancode.KP_OCTAL,
-        KP_DECIMAL = (1 << 30) | (int)Scancode.KP_DECIMAL,
-        KP_HEXADECIMAL = (1 << 30) | (int)Scancode.KP_HEXADECIMAL,
-        LCTRL = (1 << 30) | (int)Scancode.LCTRL,
-        LSHIFT = (1 << 30) | (int)Scancode.LSHIFT,
-        LALT = (1 << 30) | (int)Scancode.LALT,
-        LGUI = (1 << 30) | (int)Scancode.LGUI,
-        RCTRL = (1 << 30) | (int)Scancode.RCTRL,
-        RSHIFT = (1 << 30) | (int)Scancode.RSHIFT,
-        RALT = (1 << 30) | (int)Scancode.RALT,
-        RGUI = (1 << 30) | (int)Scancode.RGUI,
-        MODE = (1 << 30) | (int)Scancode.MODE,
-        AUDIONEXT = (1 << 30) | (int)Scancode.AUDIONEXT,
-        AUDIOPREV = (1 << 30) | (int)Scancode.AUDIOPREV,
-        AUDIOSTOP = (1 << 30) | (int)Scancode.AUDIOSTOP,
-        AUDIOPLAY = (1 << 30) | (int)Scancode.AUDIOPLAY,
-        AUDIOMUTE = (1 << 30) | (int)Scancode.AUDIOMUTE,
-        MEDIASELECT = (1 << 30) | (int)Scancode.MEDIASELECT,
-        WWW = (1 << 30) | (int)Scancode.WWW,
-        MAIL = (1 << 30) | (int)Scancode.MAIL,
-        CALCULATOR = (1 << 30) | (int)Scancode.CALCULATOR,
-        COMPUTER = (1 << 30) | (int)Scancode.COMPUTER,
-        AC_SEARCH = (1 << 30) | (int)Scancode.AC_SEARCH,
-        AC_HOME = (1 << 30) | (int)Scancode.AC_HOME,
-        AC_BACK = (1 << 30) | (int)Scancode.AC_BACK,
-        AC_FORWARD = (1 << 30) | (int)Scancode.AC_FORWARD,
-        AC_STOP = (1 << 30) | (int)Scancode.AC_STOP,
-        AC_REFRESH = (1 << 30) | (int)Scancode.AC_REFRESH,
-        AC_BOOKMARKS = (1 << 30) | (int)Scancode.AC_BOOKMARKS,
-        BRIGHTNESSDOWN = (1 << 30) | (int)Scancode.BRIGHTNESSDOWN,
-        BRIGHTNESSUP = (1 << 30) | (int)Scancode.BRIGHTNESSUP,
-        DISPLAYSWITCH = (1 << 30) | (int)Scancode.DISPLAYSWITCH,
-        KBDILLUMTOGGLE = (1 << 30) | (int)Scancode.KBDILLUMTOGGLE,
-        KBDILLUMDOWN = (1 << 30) | (int)Scancode.KBDILLUMDOWN,
-        KBDILLUMUP = (1 << 30) | (int)Scancode.KBDILLUMUP,
-        EJECT = (1 << 30) | (int)Scancode.EJECT,
-        SLEEP = (1 << 30) | (int)Scancode.SLEEP
+        END = (1 << 30) | Scancode.END,
+        PAGEDOWN = (1 << 30) | Scancode.PAGEDOWN,
+        RIGHT = (1 << 30) | Scancode.RIGHT,
+        LEFT = (1 << 30) | Scancode.LEFT,
+        DOWN = (1 << 30) | Scancode.DOWN,
+        UP = (1 << 30) | Scancode.UP,
+        NUMLOCKCLEAR = (1 << 30) | Scancode.NUMLOCKCLEAR,
+        KP_DIVIDE = (1 << 30) | Scancode.KP_DIVIDE,
+        KP_MULTIPLY = (1 << 30) | Scancode.KP_MULTIPLY,
+        KP_MINUS = (1 << 30) | Scancode.KP_MINUS,
+        KP_PLUS = (1 << 30) | Scancode.KP_PLUS,
+        KP_ENTER = (1 << 30) | Scancode.KP_ENTER,
+        KP_1 = (1 << 30) | Scancode.KP_1,
+        KP_2 = (1 << 30) | Scancode.KP_2,
+        KP_3 = (1 << 30) | Scancode.KP_3,
+        KP_4 = (1 << 30) | Scancode.KP_4,
+        KP_5 = (1 << 30) | Scancode.KP_5,
+        KP_6 = (1 << 30) | Scancode.KP_6,
+        KP_7 = (1 << 30) | Scancode.KP_7,
+        KP_8 = (1 << 30) | Scancode.KP_8,
+        KP_9 = (1 << 30) | Scancode.KP_9,
+        KP_0 = (1 << 30) | Scancode.KP_0,
+        KP_PERIOD = (1 << 30) | Scancode.KP_PERIOD,
+        APPLICATION = (1 << 30) | Scancode.APPLICATION,
+        POWER = (1 << 30) | Scancode.POWER,
+        KP_EQUALS = (1 << 30) | Scancode.KP_EQUALS,
+        F13 = (1 << 30) | Scancode.F13,
+        F14 = (1 << 30) | Scancode.F14,
+        F15 = (1 << 30) | Scancode.F15,
+        F16 = (1 << 30) | Scancode.F16,
+        F17 = (1 << 30) | Scancode.F17,
+        F18 = (1 << 30) | Scancode.F18,
+        F19 = (1 << 30) | Scancode.F19,
+        F20 = (1 << 30) | Scancode.F20,
+        F21 = (1 << 30) | Scancode.F21,
+        F22 = (1 << 30) | Scancode.F22,
+        F23 = (1 << 30) | Scancode.F23,
+        F24 = (1 << 30) | Scancode.F24,
+        EXECUTE = (1 << 30) | Scancode.EXECUTE,
+        HELP = (1 << 30) | Scancode.HELP,
+        MENU = (1 << 30) | Scancode.MENU,
+        SELECT = (1 << 30) | Scancode.SELECT,
+        STOP = (1 << 30) | Scancode.STOP,
+        AGAIN = (1 << 30) | Scancode.AGAIN,
+        UNDO = (1 << 30) | Scancode.UNDO,
+        CUT = (1 << 30) | Scancode.CUT,
+        COPY = (1 << 30) | Scancode.COPY,
+        PASTE = (1 << 30) | Scancode.PASTE,
+        FIND = (1 << 30) | Scancode.FIND,
+        MUTE = (1 << 30) | Scancode.MUTE,
+        VOLUMEUP = (1 << 30) | Scancode.VOLUMEUP,
+        VOLUMEDOWN = (1 << 30) | Scancode.VOLUMEDOWN,
+        KP_COMMA = (1 << 30) | Scancode.KP_COMMA,
+        KP_EQUALSAS400 = (1 << 30) | Scancode.KP_EQUALSAS400,
+        ALTERASE = (1 << 30) | Scancode.ALTERASE,
+        SYSREQ = (1 << 30) | Scancode.SYSREQ,
+        CANCEL = (1 << 30) | Scancode.CANCEL,
+        CLEAR = (1 << 30) | Scancode.CLEAR,
+        PRIOR = (1 << 30) | Scancode.PRIOR,
+        RETURN2 = (1 << 30) | Scancode.RETURN2,
+        SEPARATOR = (1 << 30) | Scancode.SEPARATOR,
+        OUT = (1 << 30) | Scancode.OUT,
+        OPER = (1 << 30) | Scancode.OPER,
+        CLEARAGAIN = (1 << 30) | Scancode.CLEARAGAIN,
+        CRSEL = (1 << 30) | Scancode.CRSEL,
+        EXSEL = (1 << 30) | Scancode.EXSEL,
+        KP_00 = (1 << 30) | Scancode.KP_00,
+        KP_000 = (1 << 30) | Scancode.KP_000,
+        THOUSANDSSEPARATOR = (1 << 30) | Scancode.THOUSANDSSEPARATOR,
+        DECIMALSEPARATOR = (1 << 30) | Scancode.DECIMALSEPARATOR,
+        CURRENCYUNIT = (1 << 30) | Scancode.CURRENCYUNIT,
+        CURRENCYSUBUNIT = (1 << 30) | Scancode.CURRENCYSUBUNIT,
+        KP_LEFTPAREN = (1 << 30) | Scancode.KP_LEFTPAREN,
+        KP_RIGHTPAREN = (1 << 30) | Scancode.KP_RIGHTPAREN,
+        KP_LEFTBRACE = (1 << 30) | Scancode.KP_LEFTBRACE,
+        KP_RIGHTBRACE = (1 << 30) | Scancode.KP_RIGHTBRACE,
+        KP_TAB = (1 << 30) | Scancode.KP_TAB,
+        KP_BACKSPACE = (1 << 30) | Scancode.KP_BACKSPACE,
+        KP_A = (1 << 30) | Scancode.KP_A,
+        KP_B = (1 << 30) | Scancode.KP_B,
+        KP_C = (1 << 30) | Scancode.KP_C,
+        KP_D = (1 << 30) | Scancode.KP_D,
+        KP_E = (1 << 30) | Scancode.KP_E,
+        KP_F = (1 << 30) | Scancode.KP_F,
+        KP_XOR = (1 << 30) | Scancode.KP_XOR,
+        KP_POWER = (1 << 30) | Scancode.KP_POWER,
+        KP_PERCENT = (1 << 30) | Scancode.KP_PERCENT,
+        KP_LESS = (1 << 30) | Scancode.KP_LESS,
+        KP_GREATER = (1 << 30) | Scancode.KP_GREATER,
+        KP_AMPERSAND = (1 << 30) | Scancode.KP_AMPERSAND,
+        KP_DBLAMPERSAND = (1 << 30) | Scancode.KP_DBLAMPERSAND,
+        KP_VERTICALBAR = (1 << 30) | Scancode.KP_VERTICALBAR,
+        KP_DBLVERTICALBAR = (1 << 30) | Scancode.KP_DBLVERTICALBAR,
+        KP_COLON = (1 << 30) | Scancode.KP_COLON,
+        KP_HASH = (1 << 30) | Scancode.KP_HASH,
+        KP_SPACE = (1 << 30) | Scancode.KP_SPACE,
+        KP_AT = (1 << 30) | Scancode.KP_AT,
+        KP_EXCLAM = (1 << 30) | Scancode.KP_EXCLAM,
+        KP_MEMSTORE = (1 << 30) | Scancode.KP_MEMSTORE,
+        KP_MEMRECALL = (1 << 30) | Scancode.KP_MEMRECALL,
+        KP_MEMCLEAR = (1 << 30) | Scancode.KP_MEMCLEAR,
+        KP_MEMADD = (1 << 30) | Scancode.KP_MEMADD,
+        KP_MEMSUBTRACT = (1 << 30) | Scancode.KP_MEMSUBTRACT,
+        KP_MEMMULTIPLY = (1 << 30) | Scancode.KP_MEMMULTIPLY,
+        KP_MEMDIVIDE = (1 << 30) | Scancode.KP_MEMDIVIDE,
+        KP_PLUSMINUS = (1 << 30) | Scancode.KP_PLUSMINUS,
+        KP_CLEAR = (1 << 30) | Scancode.KP_CLEAR,
+        KP_CLEARENTRY = (1 << 30) | Scancode.KP_CLEARENTRY,
+        KP_BINARY = (1 << 30) | Scancode.KP_BINARY,
+        KP_OCTAL = (1 << 30) | Scancode.KP_OCTAL,
+        KP_DECIMAL = (1 << 30) | Scancode.KP_DECIMAL,
+        KP_HEXADECIMAL = (1 << 30) | Scancode.KP_HEXADECIMAL,
+        LCTRL = (1 << 30) | Scancode.LCTRL,
+        LSHIFT = (1 << 30) | Scancode.LSHIFT,
+        LALT = (1 << 30) | Scancode.LALT,
+        LGUI = (1 << 30) | Scancode.LGUI,
+        RCTRL = (1 << 30) | Scancode.RCTRL,
+        RSHIFT = (1 << 30) | Scancode.RSHIFT,
+        RALT = (1 << 30) | Scancode.RALT,
+        RGUI = (1 << 30) | Scancode.RGUI,
+        MODE = (1 << 30) | Scancode.MODE,
+        AUDIONEXT = (1 << 30) | Scancode.AUDIONEXT,
+        AUDIOPREV = (1 << 30) | Scancode.AUDIOPREV,
+        AUDIOSTOP = (1 << 30) | Scancode.AUDIOSTOP,
+        AUDIOPLAY = (1 << 30) | Scancode.AUDIOPLAY,
+        AUDIOMUTE = (1 << 30) | Scancode.AUDIOMUTE,
+        MEDIASELECT = (1 << 30) | Scancode.MEDIASELECT,
+        WWW = (1 << 30) | Scancode.WWW,
+        MAIL = (1 << 30) | Scancode.MAIL,
+        CALCULATOR = (1 << 30) | Scancode.CALCULATOR,
+        COMPUTER = (1 << 30) | Scancode.COMPUTER,
+        AC_SEARCH = (1 << 30) | Scancode.AC_SEARCH,
+        AC_HOME = (1 << 30) | Scancode.AC_HOME,
+        AC_BACK = (1 << 30) | Scancode.AC_BACK,
+        AC_FORWARD = (1 << 30) | Scancode.AC_FORWARD,
+        AC_STOP = (1 << 30) | Scancode.AC_STOP,
+        AC_REFRESH = (1 << 30) | Scancode.AC_REFRESH,
+        AC_BOOKMARKS = (1 << 30) | Scancode.AC_BOOKMARKS,
+        BRIGHTNESSDOWN = (1 << 30) | Scancode.BRIGHTNESSDOWN,
+        BRIGHTNESSUP = (1 << 30) | Scancode.BRIGHTNESSUP,
+        DISPLAYSWITCH = (1 << 30) | Scancode.DISPLAYSWITCH,
+        KBDILLUMTOGGLE = (1 << 30) | Scancode.KBDILLUMTOGGLE,
+        KBDILLUMDOWN = (1 << 30) | Scancode.KBDILLUMDOWN,
+        KBDILLUMUP = (1 << 30) | Scancode.KBDILLUMUP,
+        EJECT = (1 << 30) | Scancode.EJECT,
+        SLEEP = (1 << 30) | Scancode.SLEEP
     }
 
     [Flags]
@@ -1016,10 +1117,10 @@ namespace OpenTK.Platform.SDL2
         CAPS = 0x2000,
         MODE = 0x4000,
         RESERVED = 0x8000,
-        CTRL = (LCTRL | RCTRL),
-        SHIFT = (LSHIFT | RSHIFT),
-        ALT = (LALT | RALT),
-        GUI = (LGUI | RGUI)
+        CTRL = LCTRL | RCTRL,
+        SHIFT = LSHIFT | RSHIFT,
+        ALT = LALT | RALT,
+        GUI = LGUI | RGUI
     }
 
     internal enum Scancode
@@ -1151,6 +1252,7 @@ namespace OpenTK.Platform.SDL2
         MUTE = 127,
         VOLUMEUP = 128,
         VOLUMEDOWN = 129,
+
         // not sure whether there's a reason to enable these
         //  LOCKINGCAPSLOCK = 130,
         //  LOCKINGNUMLOCK = 131,
@@ -1242,6 +1344,7 @@ namespace OpenTK.Platform.SDL2
         RALT = 230,
         RGUI = 231,
         MODE = 257,
+
         // These come from the USB consumer page (0x0C)
         AUDIONEXT = 258,
         AUDIOPREV = 259,
@@ -1260,6 +1363,7 @@ namespace OpenTK.Platform.SDL2
         AC_STOP = 272,
         AC_REFRESH = 273,
         AC_BOOKMARKS = 274,
+
         // These come from other sources, and are mostly mac related
         BRIGHTNESSDOWN = 275,
         BRIGHTNESSUP = 276,
@@ -1271,6 +1375,7 @@ namespace OpenTK.Platform.SDL2
         SLEEP = 282,
         APP1 = 283,
         APP2 = 284,
+
         // This is not a key, simply marks the number of scancodes
         // so that you know how big to make your arrays.
         SDL_NUM_SCANCODES = 512
@@ -1293,8 +1398,9 @@ namespace OpenTK.Platform.SDL2
         HAPTIC = 0x00001000,
         GAMECONTROLLER = 0x00002000,
         NOPARACHUTE = 0x00100000,
+
         EVERYTHING = TIMER | AUDIO | VIDEO |
-            JOYSTICK | HAPTIC | GAMECONTROLLER
+                     JOYSTICK | HAPTIC | GAMECONTROLLER
     }
 
     internal enum SysWMType
@@ -1305,7 +1411,7 @@ namespace OpenTK.Platform.SDL2
         Wayland,
         DirectFB,
         Cocoa,
-        UIKit,
+        UIKit
     }
 
     internal enum WindowEventID : byte
@@ -1324,7 +1430,7 @@ namespace OpenTK.Platform.SDL2
         LEAVE,
         FOCUS_GAINED,
         FOCUS_LOST,
-        CLOSE,
+        CLOSE
     }
 
     internal enum WindowFlags
@@ -1341,9 +1447,9 @@ namespace OpenTK.Platform.SDL2
         INPUT_GRABBED = 0x00000100,
         INPUT_FOCUS = 0x00000200,
         MOUSE_FOCUS = 0x00000400,
-        FULLSCREEN_DESKTOP = (FULLSCREEN | 0x00001000),
+        FULLSCREEN_DESKTOP = FULLSCREEN | 0x00001000,
         FOREIGN = 0x00000800,
-        ALLOW_HIGHDPI = 0x00002000,
+        ALLOW_HIGHDPI = 0x00002000
     }
 
     internal struct ControllerAxisEvent
@@ -1376,7 +1482,7 @@ namespace OpenTK.Platform.SDL2
         public uint Timestamp;
 
         /// <summary>
-        /// The joystick device index for the ADDED event, instance id for the REMOVED or REMAPPED event
+        ///     The joystick device index for the ADDED event, instance id for the REMOVED or REMAPPED event
         /// </summary>
         public int Which;
     }
@@ -1393,40 +1499,23 @@ namespace OpenTK.Platform.SDL2
     [StructLayout(LayoutKind.Explicit)]
     internal struct Event
     {
-        [FieldOffset(0)]
-        public EventType Type;
-        [FieldOffset(0)]
-        public WindowEvent Window;
-        [FieldOffset(0)]
-        public KeyboardEvent Key;
-        [FieldOffset(0)]
-        public TextEditingEvent Edit;
-        [FieldOffset(0)]
-        public TextInputEvent Text;
-        [FieldOffset(0)]
-        public MouseMotionEvent Motion;
-        [FieldOffset(0)]
-        public MouseButtonEvent Button;
-        [FieldOffset(0)]
-        public MouseWheelEvent Wheel;
-        [FieldOffset(0)]
-        public JoyAxisEvent JoyAxis;
-        [FieldOffset(0)]
-        public JoyBallEvent JoyBall;
-        [FieldOffset(0)]
-        public JoyHatEvent JoyHat;
-        [FieldOffset(0)]
-        public JoyButtonEvent JoyButton;
-        [FieldOffset(0)]
-        public JoyDeviceEvent JoyDevice;
-        [FieldOffset(0)]
-        public ControllerAxisEvent ControllerAxis;
-        [FieldOffset(0)]
-        public ControllerButtonEvent ControllerButton;
-        [FieldOffset(0)]
-        public ControllerDeviceEvent ControllerDevice;
-        [FieldOffset(0)]
-        public DropEvent Drop;
+        [FieldOffset(0)] public EventType Type;
+        [FieldOffset(0)] public WindowEvent Window;
+        [FieldOffset(0)] public KeyboardEvent Key;
+        [FieldOffset(0)] public TextEditingEvent Edit;
+        [FieldOffset(0)] public TextInputEvent Text;
+        [FieldOffset(0)] public MouseMotionEvent Motion;
+        [FieldOffset(0)] public MouseButtonEvent Button;
+        [FieldOffset(0)] public MouseWheelEvent Wheel;
+        [FieldOffset(0)] public JoyAxisEvent JoyAxis;
+        [FieldOffset(0)] public JoyBallEvent JoyBall;
+        [FieldOffset(0)] public JoyHatEvent JoyHat;
+        [FieldOffset(0)] public JoyButtonEvent JoyButton;
+        [FieldOffset(0)] public JoyDeviceEvent JoyDevice;
+        [FieldOffset(0)] public ControllerAxisEvent ControllerAxis;
+        [FieldOffset(0)] public ControllerButtonEvent ControllerButton;
+        [FieldOffset(0)] public ControllerDeviceEvent ControllerDevice;
+        [FieldOffset(0)] public DropEvent Drop;
 #if false
         [FieldOffset(0)]
         public QuitEvent quit;
@@ -1446,36 +1535,30 @@ namespace OpenTK.Platform.SDL2
         // This hack is necessary to ensure compatibility
         // with different SDL versions, which might have
         // different sizeof(SDL_Event).
-        [FieldOffset(0)]
-        private unsafe fixed byte reserved[128];
+        [FieldOffset(0)] private unsafe fixed byte reserved[128];
     }
 
     [StructLayout(LayoutKind.Explicit)]
     internal struct GameControllerButtonBind
     {
-        [FieldOffset(0)]
-        public GameControllerBindType BindType;
-        [FieldOffset(4)]
-        public Button Button;
-        [FieldOffset(4)]
-        public GameControllerAxis Axis;
-        [FieldOffset(4)]
-        public int Hat;
-        [FieldOffset(8)]
-        public int HatMask;
+        [FieldOffset(0)] public GameControllerBindType BindType;
+        [FieldOffset(4)] public Button Button;
+        [FieldOffset(4)] public GameControllerAxis Axis;
+        [FieldOffset(4)] public int Hat;
+        [FieldOffset(8)] public int HatMask;
     }
 
     internal struct JoyAxisEvent
     {
         public EventType Type;
-        public UInt32 Timestamp;
-        public Int32 Which; // SDL_JoystickID
+        public uint Timestamp;
+        public int Which; // SDL_JoystickID
         public byte Axis;
         private byte padding1;
         private byte padding2;
         private byte padding3;
-        public Int16 Value;
-        private UInt16 padding4;
+        public short Value;
+        private ushort padding4;
     }
 
     internal struct JoyBallEvent
@@ -1568,22 +1651,21 @@ namespace OpenTK.Platform.SDL2
         public Scancode Scancode;
         public Keycode Sym;
         public Keymod Mod;
-        [Obsolete]
-        public uint Unicode;
+        [Obsolete] public uint Unicode;
     }
 
     internal struct MouseButtonEvent
     {
         public EventType Type;
-        public UInt32 Timestamp;
-        public UInt32 WindowID;
-        public UInt32 Which;
+        public uint Timestamp;
+        public uint WindowID;
+        public uint Which;
         public Button Button;
         public State State;
         public byte Clicks;
         private byte padding1;
-        public Int32 X;
-        public Int32 Y;
+        public int X;
+        public int Y;
     }
 
     internal struct MouseMotionEvent
@@ -1593,10 +1675,10 @@ namespace OpenTK.Platform.SDL2
         public uint WindowID;
         public uint Which;
         public ButtonFlags State;
-        public Int32 X;
-        public Int32 Y;
-        public Int32 Xrel;
-        public Int32 Yrel;
+        public int X;
+        public int Y;
+        public int Xrel;
+        public int Yrel;
     }
 
     internal struct MouseWheelEvent
@@ -1611,14 +1693,14 @@ namespace OpenTK.Platform.SDL2
         public enum EventType : uint
         {
             /* Touch events */
-            FingerDown      = 0x700,
+            FingerDown = 0x700,
             FingerUp,
             FingerMotion,
 
             /* Gesture events */
-            DollarGesture   = 0x800,
+            DollarGesture = 0x800,
             DollarRecord,
-            MultiGesture,
+            MultiGesture
         }
 
         public const uint TouchMouseID = 0xffffffff;
@@ -1641,18 +1723,12 @@ namespace OpenTK.Platform.SDL2
         [StructLayout(LayoutKind.Explicit)]
         public struct SysInfo
         {
-            [FieldOffset(0)]
-            public WindowsInfo Windows;
-            [FieldOffset(0)]
-            public X11Info X11;
-            [FieldOffset(0)]
-            public WaylandInfo Wayland;
-            [FieldOffset(0)]
-            public DirectFBInfo DirectFB;
-            [FieldOffset(0)]
-            public CocoaInfo Cocoa;
-            [FieldOffset(0)]
-            public UIKitInfo UIKit;
+            [FieldOffset(0)] public WindowsInfo Windows;
+            [FieldOffset(0)] public X11Info X11;
+            [FieldOffset(0)] public WaylandInfo Wayland;
+            [FieldOffset(0)] public DirectFBInfo DirectFB;
+            [FieldOffset(0)] public CocoaInfo Cocoa;
+            [FieldOffset(0)] public UIKitInfo UIKit;
 
             public struct WindowsInfo
             {
@@ -1696,11 +1772,11 @@ namespace OpenTK.Platform.SDL2
         public const int TextSize = 32;
 
         public EventType Type;
-        public UInt32 Timestamp;
-        public UInt32 WindowID;
+        public uint Timestamp;
+        public uint WindowID;
         public unsafe fixed byte Text[TextSize];
-        public Int32 Start;
-        public Int32 Length;
+        public int Start;
+        public int Length;
     }
 
     internal struct TextInputEvent
@@ -1708,8 +1784,8 @@ namespace OpenTK.Platform.SDL2
         public const int TextSize = 32;
 
         public EventType Type;
-        public UInt32 Timestamp;
-        public UInt32 WindowID;
+        public uint Timestamp;
+        public uint WindowID;
         public unsafe fixed byte Text[TextSize];
     }
 
@@ -1725,25 +1801,24 @@ namespace OpenTK.Platform.SDL2
     internal struct WindowEvent
     {
         public EventType Type;
-        public UInt32 Timestamp;
-        public UInt32 WindowID;
+        public uint Timestamp;
+        public uint WindowID;
         public WindowEventID Event;
         private byte padding1;
         private byte padding2;
         private byte padding3;
-        public Int32 Data1;
-        public Int32 Data2;
+        public int Data1;
+        public int Data2;
     }
 
     /// <summary>
-    /// Drop event for SDL2 interop. For detailed info look: https://wiki.libsdl.org/SDL_DropEvent
+    ///     Drop event for SDL2 interop. For detailed info look: https://wiki.libsdl.org/SDL_DropEvent
     /// </summary>
     internal struct DropEvent
     {
-        public UInt32 Type;
-        public UInt32 Timestamp;
+        public uint Type;
+        public uint Timestamp;
         public IntPtr File;
-        public UInt32 WindowID;
+        public uint WindowID;
     }
 }
-

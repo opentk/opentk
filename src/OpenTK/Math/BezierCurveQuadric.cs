@@ -11,37 +11,39 @@ using System;
 namespace OpenTK
 {
     /// <summary>
-    /// Represents a quadric bezier curve with two anchor and one control point.
+    ///     Represents a quadric bezier curve with two anchor and one control point.
     /// </summary>
     [Serializable]
     public struct BezierCurveQuadric
     {
         /// <summary>
-        /// Start anchor point.
+        ///     Start anchor point.
         /// </summary>
         public Vector2 StartAnchor;
 
         /// <summary>
-        /// End anchor point.
+        ///     End anchor point.
         /// </summary>
         public Vector2 EndAnchor;
 
         /// <summary>
-        /// Control point, controls the direction of both endings of the curve.
+        ///     Control point, controls the direction of both endings of the curve.
         /// </summary>
         public Vector2 ControlPoint;
 
         /// <summary>
-        /// The parallel value.
+        ///     The parallel value.
         /// </summary>
-        /// <remarks>This value defines whether the curve should be calculated as a
-        /// parallel curve to the original bezier curve. A value of 0.0f represents
-        /// the original curve, 5.0f i.e. stands for a curve that has always a distance
-        /// of 5.f to the orignal curve at any point.</remarks>
+        /// <remarks>
+        ///     This value defines whether the curve should be calculated as a
+        ///     parallel curve to the original bezier curve. A value of 0.0f represents
+        ///     the original curve, 5.0f i.e. stands for a curve that has always a distance
+        ///     of 5.f to the orignal curve at any point.
+        /// </remarks>
         public float Parallel;
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurveQuadric"/>.
+        ///     Constructs a new <see cref="BezierCurveQuadric" />.
         /// </summary>
         /// <param name="startAnchor">The start anchor.</param>
         /// <param name="endAnchor">The end anchor.</param>
@@ -55,7 +57,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurveQuadric"/>.
+        ///     Constructs a new <see cref="BezierCurveQuadric" />.
         /// </summary>
         /// <param name="parallel">The parallel value.</param>
         /// <param name="startAnchor">The start anchor.</param>
@@ -70,7 +72,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculates the point with the specified t.
+        ///     Calculates the point with the specified t.
         /// </summary>
         /// <param name="t">The t value, between 0.0f and 1.0f.</param>
         /// <returns>Resulting point.</returns>
@@ -79,8 +81,8 @@ namespace OpenTK
             var r = new Vector2();
             var c = 1.0f - t;
 
-            r.X = (c * c * StartAnchor.X) + (2 * t * c * ControlPoint.X) + (t * t * EndAnchor.X);
-            r.Y = (c * c * StartAnchor.Y) + (2 * t * c * ControlPoint.Y) + (t * t * EndAnchor.Y);
+            r.X = c * c * StartAnchor.X + 2 * t * c * ControlPoint.X + t * t * EndAnchor.X;
+            r.Y = c * c * StartAnchor.Y + 2 * t * c * ControlPoint.Y + t * t * EndAnchor.Y;
 
             if (Parallel == 0.0f)
             {
@@ -102,7 +104,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculates the point with the specified t of the derivative of this function.
+        ///     Calculates the point with the specified t of the derivative of this function.
         /// </summary>
         /// <param name="t">The t, value between 0.0f and 1.0f.</param>
         /// <returns>Resulting point.</returns>
@@ -117,18 +119,20 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Calculates the length of this bezier curve.
+        ///     Calculates the length of this bezier curve.
         /// </summary>
         /// <param name="precision">The precision.</param>
         /// <returns>Length of curve.</returns>
-        /// <remarks>The precision gets better when the <paramref name="precision"/>
-        /// value gets smaller.</remarks>
+        /// <remarks>
+        ///     The precision gets better when the <paramref name="precision" />
+        ///     value gets smaller.
+        /// </remarks>
         public float CalculateLength(float precision)
         {
             var length = 0.0f;
             var old = CalculatePoint(0.0f);
 
-            for (var i = precision; i < (1.0f + precision); i += precision)
+            for (var i = precision; i < 1.0f + precision; i += precision)
             {
                 var n = CalculatePoint(i);
                 length += (n - old).Length;

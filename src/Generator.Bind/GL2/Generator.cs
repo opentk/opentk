@@ -13,39 +13,33 @@ namespace Bind.GL2
 {
     internal abstract class Generator : IBind
     {
-        protected string GLTypemap = "GL2/gl.tm";
+        protected readonly char[] Numbers = "0123456789".ToCharArray();
         protected string CSTypemap = "csharp.tm";
         protected string EnumSpec = "GL2/enum.spec";
         protected string EnumSpecExt = "GL2/enumext.spec";
+
+        protected Regex EnumToDotNet = new Regex("_[a-z|A-Z]?", RegexOptions.Compiled);
         protected string GLSpec = "GL2/gl.spec";
         protected string GLSpecExt = "";
+        protected string GLTypemap = "GL2/gl.tm";
 
         protected string LoadAllFuncName = "LoadAll";
 
-        protected Regex EnumToDotNet = new Regex("_[a-z|A-Z]?", RegexOptions.Compiled);
-
-        protected readonly char[] Numbers = "0123456789".ToCharArray();
-        //protected static readonly Dictionary<string, string> doc_replacements;
-
-        protected ISpecReader SpecReader { get; set; }
-
         /// <summary>
-        /// The Profile field corresponds to the "profile" attribute
-        /// in the OpenGL registry. We use this to distinguish between
-        /// different profiles (e.g. "gl", "glcore", "gles1", "gles2").
+        ///     The Profile field corresponds to the "profile" attribute
+        ///     in the OpenGL registry. We use this to distinguish between
+        ///     different profiles (e.g. "gl", "glcore", "gles1", "gles2").
         /// </summary>
         protected string Profile = "gl";
 
         /// <summary>
-        /// The Version field corresponds to the "number" attribute
-        /// in the OpenGL registry. We use this to distinguish between
-        /// OpenGL ES 2.0 and 3.0, which share the same profile "gles2".
-        /// If empty, then all elements of a profile will be parsed, and
-        /// their version number will be ignored.
+        ///     The Version field corresponds to the "number" attribute
+        ///     in the OpenGL registry. We use this to distinguish between
+        ///     OpenGL ES 2.0 and 3.0, which share the same profile "gles2".
+        ///     If empty, then all elements of a profile will be parsed, and
+        ///     their version number will be ignored.
         /// </summary>
         protected string Version = string.Empty;
-
-        public Settings Settings { get; protected set; }
 
         public Generator(Settings settings)
         {
@@ -74,25 +68,13 @@ namespace Bind.GL2
 
             SpecReader = new XmlSpecReader(Settings);
         }
+        //protected static readonly Dictionary<string, string> doc_replacements;
 
-        private IEnumerable<string> GetFiles(string path)
-        {
-            path = Path.Combine(Settings.InputPath, path);
-            if ((File.GetAttributes(path) & FileAttributes.Directory) != 0)
-            {
-                foreach (var file in Directory.GetFiles(
-                    path, "*.xml", SearchOption.AllDirectories))
-                {
-                    yield return file;
-                }
-            }
-            else
-            {
-                yield return path;
-            }
-        }
+        protected ISpecReader SpecReader { get; set; }
 
-        public DelegateCollection Delegates { get; private set; }
+        public Settings Settings { get; protected set; }
+
+        public DelegateCollection Delegates { get; }
         public EnumCollection Enums { get; private set; }
         public FunctionCollection Wrappers { get; private set; }
         public IDictionary<string, string> GLTypes { get; private set; }
@@ -126,6 +108,23 @@ namespace Bind.GL2
             Enums = enumProcessor.Process(Enums, Profile);
             Wrappers = funcProcessor.Process(enumProcessor, docProcessor,
                 Delegates, Enums, Profile, Version);
+        }
+
+        private IEnumerable<string> GetFiles(string path)
+        {
+            path = Path.Combine(Settings.InputPath, path);
+            if ((File.GetAttributes(path) & FileAttributes.Directory) != 0)
+            {
+                foreach (var file in Directory.GetFiles(
+                    path, "*.xml", SearchOption.AllDirectories))
+                {
+                    yield return file;
+                }
+            }
+            else
+            {
+                yield return path;
+            }
         }
     }
 }

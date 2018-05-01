@@ -26,16 +26,20 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using OpenTK.Platform.MacOS.Carbon;
 #if !MINIMAL
 using System.Drawing;
+
 #endif
-using OpenTK.Platform.MacOS.Carbon;
 
 namespace OpenTK.Platform.MacOS
 {
     internal sealed class QuartzDisplayDeviceDriver : DisplayDeviceBase
     {
-        private static object display_lock = new object();
+        private static readonly object display_lock = new object();
+        private readonly List<IntPtr> displaysCaptured = new List<IntPtr>();
+
+        private readonly Dictionary<IntPtr, IntPtr> storedModes = new Dictionary<IntPtr, IntPtr>();
 
         public QuartzDisplayDeviceDriver()
         {
@@ -68,7 +72,7 @@ namespace OpenTK.Platform.MacOS
 
                     // according to docs, first element in the array is always the
                     // main display.
-                    var primary = (i == 0);
+                    var primary = i == 0;
 
                     // gets current settings
                     var currentWidth = CG.DisplayPixelsWide(currentDisplay);
@@ -100,7 +104,7 @@ namespace OpenTK.Platform.MacOS
                             CV.DisplayLinkCreateWithCGDisplay(currentDisplay, out displayLink);
 
                             var t = CV.DisplayLinkGetNominalOutputVideoRefreshPeriod(displayLink);
-                            if ((t.flags & (Int32)CV.TimeFlags.TimeIsIndefinite) != (Int32)CV.TimeFlags.TimeIsIndefinite)
+                            if ((t.flags & (int)CV.TimeFlags.TimeIsIndefinite) != (int)CV.TimeFlags.TimeIsIndefinite)
                             {
                                 freq = (double)t.timeScale / t.timeValue;
                             }
@@ -123,7 +127,8 @@ namespace OpenTK.Platform.MacOS
                     }
 
                     var bounds = CG.DisplayBounds(currentDisplay);
-                    var newRect = new Rectangle((int)bounds.Location.X, (int)bounds.Location.Y, (int)bounds.Size.Width, (int)bounds.Size.Height);
+                    var newRect = new Rectangle((int)bounds.Location.X, (int)bounds.Location.Y,
+                        (int)bounds.Size.Width, (int)bounds.Size.Height);
 
                     Debug.Print("Display {0} bounds: {1}", i, newRect);
 
@@ -142,15 +147,12 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        static internal IntPtr HandleTo(DisplayDevice displayDevice)
+        internal static IntPtr HandleTo(DisplayDevice displayDevice)
         {
             return (IntPtr)displayDevice.Id;
         }
 
-        private Dictionary<IntPtr, IntPtr> storedModes = new Dictionary<IntPtr, IntPtr>();
-        private List<IntPtr> displaysCaptured = new List<IntPtr>();
-
-        public sealed override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
+        public override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
         {
             var display = HandleTo(device);
             var currentModePtr = CG.DisplayCurrentMode(display);
@@ -172,7 +174,8 @@ namespace OpenTK.Platform.MacOS
                 var bpp = (int)dict.GetNumberValue("BitsPerPixel");
                 var freq = dict.GetNumberValue("RefreshRate");
 
-                if (width == resolution.Width && height == resolution.Height && bpp == resolution.BitsPerPixel && Math.Abs(freq - resolution.RefreshRate) < 1e-6)
+                if (width == resolution.Width && height == resolution.Height && bpp == resolution.BitsPerPixel &&
+                    Math.Abs(freq - resolution.RefreshRate) < 1e-6)
                 {
 //                    if (displaysCaptured.Contains(display) == false)
 //                    {
@@ -185,12 +188,12 @@ namespace OpenTK.Platform.MacOS
 
                     return true;
                 }
-
             }
+
             return false;
         }
 
-        public sealed override bool TryRestoreResolution(DisplayDevice device)
+        public override bool TryRestoreResolution(DisplayDevice device)
         {
             var display = HandleTo(device);
 

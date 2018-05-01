@@ -4,9 +4,8 @@ using System.Runtime.InteropServices;
 namespace OpenTK.Graphics.ES11
 {
     /// <summary>
-    /// Provides access to OpenGL ES 1.1 methods.
+    ///     Provides access to OpenGL ES 1.1 methods.
     /// </summary>
-
     public sealed partial class GL : GraphicsBindingsBase
     {
 #if IPHONE
@@ -16,12 +15,12 @@ namespace OpenTK.Graphics.ES11
 #endif
         private static readonly object sync_root = new object();
 
-        private static IntPtr[] EntryPoints;
-        private static byte[] EntryPointNames;
-        private static int[] EntryPointNameOffsets;
+        private static readonly IntPtr[] EntryPoints;
+        private static readonly byte[] EntryPointNames;
+        private static readonly int[] EntryPointNameOffsets;
 
         /// <summary>
-        /// Constructs a new instance.
+        ///     Constructs a new instance.
         /// </summary>
         public GL()
         {
@@ -31,19 +30,19 @@ namespace OpenTK.Graphics.ES11
         }
 
         /// <summary>
-        /// Returns a synchronization token unique for the GL class.
+        ///     Returns a synchronization token unique for the GL class.
         /// </summary>
         protected override object SyncRoot => sync_root;
     }
 
     /// <summary>
-    /// Defines the signature of a debug callback for
-    /// <see cref="GL.DebugMessageCallback"/>.
+    ///     Defines the signature of a debug callback for
+    ///     <see cref="GL.DebugMessageCallback" />.
     /// </summary>
-    /// <param name="source">The <see cref="DebugSource"/> for this debug message.</param>
-    /// <param name="type">The <see cref="DebugType"/> for this debug message.</param>
+    /// <param name="source">The <see cref="DebugSource" /> for this debug message.</param>
+    /// <param name="type">The <see cref="DebugType" /> for this debug message.</param>
     /// <param name="id">The id of this debug message.</param>
-    /// <param name="severity">The <see cref="DebugSeverity"/> for this debug message.</param>
+    /// <param name="severity">The <see cref="DebugSeverity" /> for this debug message.</param>
     /// <param name="length">The length of this debug message.</param>
     /// <param name="message">A pointer to a null-terminated ASCII C string, representing the content of this debug message.</param>
     /// <param name="userParam">A pointer to a user-specified parameter.</param>
@@ -54,13 +53,13 @@ namespace OpenTK.Graphics.ES11
         IntPtr userParam);
 
     /// <summary>
-    /// Defines the signature of a debug callback for
-    /// <see cref="GL.Khr.DebugMessageCallback"/>.
+    ///     Defines the signature of a debug callback for
+    ///     <see cref="GL.Khr.DebugMessageCallback" />.
     /// </summary>
-    /// <param name="source">The <see cref="DebugSource"/> for this debug message.</param>
-    /// <param name="type">The <see cref="DebugType"/> for this debug message.</param>
+    /// <param name="source">The <see cref="DebugSource" /> for this debug message.</param>
+    /// <param name="type">The <see cref="DebugType" /> for this debug message.</param>
     /// <param name="id">The id of this debug message.</param>
-    /// <param name="severity">The <see cref="DebugSeverity"/> for this debug message.</param>
+    /// <param name="severity">The <see cref="DebugSeverity" /> for this debug message.</param>
     /// <param name="length">The length of this debug message.</param>
     /// <param name="message">A pointer to a null-terminated ASCII C string, representing the content of this debug message.</param>
     /// <param name="userParam">A pointer to a user-specified parameter.</param>

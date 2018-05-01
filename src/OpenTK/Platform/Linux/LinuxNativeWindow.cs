@@ -27,35 +27,34 @@
 
 using System;
 using System.Diagnostics;
-#if !MINIMAL
-using System.Drawing;
-#endif
 using OpenTK.Graphics;
 using OpenTK.Input;
 using OpenTK.Platform.Egl;
+#if !MINIMAL
+using System.Drawing;
+
+#endif
 
 namespace OpenTK.Platform.Linux
 {
-    using Egl = OpenTK.Platform.Egl.Egl;
-
     internal class LinuxNativeWindow : NativeWindowBase
     {
-        private LinuxWindowInfo window;
-        private string title;
-        private Icon icon;
-        private Rectangle bounds;
-        private Size client_size;
-        private bool exists;
-        private bool is_focused;
-        private bool is_cursor_visible = true;
-
-        private KeyboardState previous_keyboard;
-        private MouseState previous_mouse;
+        private readonly Rectangle bounds;
+        private readonly Size client_size;
 
         private MouseCursor cursor_current;
         private BufferObject cursor_custom;
-        private BufferObject cursor_default;
-        private BufferObject cursor_empty;
+        private readonly BufferObject cursor_default;
+        private readonly BufferObject cursor_empty;
+        private bool exists;
+        private Icon icon;
+        private bool is_cursor_visible = true;
+        private bool is_focused;
+
+        private KeyboardState previous_keyboard;
+        private MouseState previous_mouse;
+        private string title;
+        private readonly LinuxWindowInfo window;
 
         public LinuxNativeWindow(IntPtr display, IntPtr gbm, int fd,
             int x, int y, int width, int height, string title,
@@ -86,6 +85,7 @@ namespace OpenTK.Platform.Linux
             {
                 mode = new EglGraphicsMode().SelectGraphicsMode(window, mode, 0);
             }
+
             Debug.Print("[KMS] Selected EGL mode {0}", mode);
 
             var format = GetSurfaceFormat(display, mode);
@@ -98,8 +98,8 @@ namespace OpenTK.Platform.Linux
 
             Debug.Print("[KMS] Creating GBM surface on {0:x} with {1}x{2} {3} [{4}]",
                 gbm, width, height, format, usage);
-            var gbm_surface =  Gbm.CreateSurface(gbm,
-                    width, height, format, usage);
+            var gbm_surface = Gbm.CreateSurface(gbm,
+                width, height, format, usage);
             if (gbm_surface == IntPtr.Zero)
             {
                 throw new NotSupportedException("[KMS] Failed to create GBM surface for rendering");
@@ -115,6 +115,108 @@ namespace OpenTK.Platform.Linux
             cursor_empty = CreateCursor(gbm, Cursors.Empty);
             Cursor = MouseCursor.Default;
             exists = true;
+        }
+
+        public override Icon Icon
+        {
+            get => icon;
+            set
+            {
+                if (icon != value)
+                {
+                    icon = value;
+                    OnIconChanged(EventArgs.Empty);
+                }
+            }
+        }
+
+        public override string Title
+        {
+            get => title;
+            set
+            {
+                if (title != value)
+                {
+                    title = value;
+                    OnTitleChanged(EventArgs.Empty);
+                }
+            }
+        }
+
+        public override bool Focused => is_focused;
+
+        public override bool Visible
+        {
+            get => true;
+            set { }
+        }
+
+        public override bool Exists => exists;
+
+        public override IWindowInfo WindowInfo => window;
+
+        public override WindowState WindowState
+        {
+            get => WindowState.Fullscreen;
+            set { }
+        }
+
+        public override WindowBorder WindowBorder
+        {
+            get => WindowBorder.Hidden;
+            set { }
+        }
+
+        public override Rectangle Bounds
+        {
+            get => bounds;
+            set { }
+        }
+
+        public override Size ClientSize
+        {
+            get => client_size;
+            set { }
+        }
+
+        public override bool CursorVisible
+        {
+            get => is_cursor_visible;
+            set
+            {
+                if (value && !is_cursor_visible)
+                {
+                    SetCursor(cursor_current);
+                }
+                else if (!value && is_cursor_visible)
+                {
+                    SetCursor(MouseCursor.Empty);
+                }
+
+                is_cursor_visible = value;
+            }
+        }
+
+        public override MouseCursor Cursor
+        {
+            get => cursor_current;
+            set
+            {
+                if (cursor_current != value)
+                {
+                    if (cursor_custom != BufferObject.Zero)
+                    {
+                        cursor_custom.Dispose();
+                    }
+
+                    if (CursorVisible)
+                    {
+                        SetCursor(value);
+                    }
+
+                    cursor_current = value;
+                }
+            }
         }
 
         private static BufferObject CreateCursor(IntPtr gbm, MouseCursor cursor)
@@ -155,6 +257,7 @@ namespace OpenTK.Platform.Linux
                     cursor_data, dst_offset,
                     src_length);
             }
+
             bo.Write(cursor_data);
 
             return bo;
@@ -177,6 +280,7 @@ namespace OpenTK.Platform.Linux
                 {
                     cursor_custom.Dispose();
                 }
+
                 cursor_custom = CreateCursor(window.BufferManager, cursor);
                 bo = cursor_custom;
             }
@@ -201,15 +305,15 @@ namespace OpenTK.Platform.Linux
             // the corresponding surface format. If that fails
             // fall back to a manual algorithm.
             int format;
-            Egl.GetConfigAttrib(display, mode.Index.Value,
-                Egl.NATIVE_VISUAL_ID, out format);
+            Egl.Egl.GetConfigAttrib(display, mode.Index.Value,
+                Egl.Egl.NATIVE_VISUAL_ID, out format);
             if ((SurfaceFormat)format != 0)
             {
                 return (SurfaceFormat)format;
             }
 
             Debug.Print("[KMS] Failed to retrieve EGL visual from GBM surface. Error: {0}",
-                Egl.GetError());
+                Egl.Egl.GetError());
             Debug.Print("[KMS] Falling back to hardcoded formats.");
 
             var r = mode.ColorFormat.Red;
@@ -221,34 +325,42 @@ namespace OpenTK.Platform.Linux
             {
                 return SurfaceFormat.C8;
             }
+
             if (r == 3 && g == 3 && b == 2 && a == 0)
             {
                 return SurfaceFormat.RGB332;
             }
+
             if (r == 5 && g == 6 && b == 5 && a == 0)
             {
                 return SurfaceFormat.RGB565;
             }
+
             if (r == 5 && g == 6 && b == 5 && a == 0)
             {
                 return SurfaceFormat.RGB565;
             }
+
             if (r == 8 && g == 8 && b == 8 && a == 0)
             {
                 return SurfaceFormat.RGB888;
             }
+
             if (r == 5 && g == 5 && b == 5 && a == 1)
             {
                 return SurfaceFormat.RGBA5551;
             }
+
             if (r == 10 && g == 10 && b == 10 && a == 2)
             {
                 return SurfaceFormat.RGBA1010102;
             }
+
             if (r == 4 && g == 4 && b == 4 && a == 4)
             {
                 return SurfaceFormat.RGBA4444;
             }
+
             if (r == 8 && g == 8 && b == 8 && a == 8)
             {
                 return SurfaceFormat.RGBA8888;
@@ -272,6 +384,7 @@ namespace OpenTK.Platform.Linux
                     OnKeyUp(i);
                 }
             }
+
             return keyboard;
         }
 
@@ -388,116 +501,5 @@ namespace OpenTK.Platform.Linux
                 Debug.Print("[KMS] {0} leaked. Did you forget to call Dispose()?", GetType().FullName);
             }
         }
-
-        public override Icon Icon
-        {
-            get => icon;
-            set
-            {
-                if (icon != value)
-                {
-                    icon = value;
-                    OnIconChanged(EventArgs.Empty);
-                }
-            }
-        }
-
-        public override string Title
-        {
-            get => title;
-            set
-            {
-                if (title != value)
-                {
-                    title = value;
-                    OnTitleChanged(EventArgs.Empty);
-                }
-            }
-        }
-
-        public override bool Focused => is_focused;
-
-        public override bool Visible
-        {
-            get => true;
-            set
-            {
-            }
-        }
-
-        public override bool Exists => exists;
-
-        public override IWindowInfo WindowInfo => window;
-
-        public override WindowState WindowState
-        {
-            get => WindowState.Fullscreen;
-            set
-            {
-            }
-        }
-
-        public override WindowBorder WindowBorder
-        {
-            get => WindowBorder.Hidden;
-            set
-            {
-            }
-        }
-
-        public override Rectangle Bounds
-        {
-            get => bounds;
-            set
-            {
-            }
-        }
-
-        public override Size ClientSize
-        {
-            get => client_size;
-            set
-            {
-            }
-        }
-
-        public override bool CursorVisible
-        {
-            get => is_cursor_visible;
-            set
-            {
-                if (value && !is_cursor_visible)
-                {
-                    SetCursor(cursor_current);
-                }
-                else if (!value && is_cursor_visible)
-                {
-                    SetCursor(MouseCursor.Empty);
-                }
-                is_cursor_visible = value;
-            }
-        }
-
-        public override MouseCursor Cursor
-        {
-            get => cursor_current;
-            set
-            {
-                if (cursor_current != value)
-                {
-                    if (cursor_custom != BufferObject.Zero)
-                    {
-                        cursor_custom.Dispose();
-                    }
-
-                    if (CursorVisible)
-                    {
-                        SetCursor(value);
-                    }
-                    cursor_current = value;
-                }
-            }
-        }
     }
 }
-

@@ -33,15 +33,13 @@ namespace OpenTK.Platform.Windows
 {
     internal class WinFactory : PlatformFactoryBase
     {
+        private const string OpenGLName = "OPENGL32.DLL";
         private readonly object SyncRoot = new object();
 
         // The input drivers must be constructed lazily, *after* the
         // WinFactory constructor has finished running. The reason is
         // that they call WinFactory methods internally.
         private WinRawInput rawinput_driver; // For keyboard and mouse input
-
-        internal static IntPtr OpenGLHandle { get; private set; }
-        private const string OpenGLName = "OPENGL32.DLL";
 
         public WinFactory()
         {
@@ -67,6 +65,24 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        internal static IntPtr OpenGLHandle { get; private set; }
+
+        private WinRawInput RawInputDriver
+        {
+            get
+            {
+                lock (SyncRoot)
+                {
+                    if (rawinput_driver == null)
+                    {
+                        rawinput_driver = new WinRawInput();
+                    }
+
+                    return rawinput_driver;
+                }
+            }
+        }
+
         private static void LoadOpenGL()
         {
             OpenGLHandle = Functions.LoadLibrary(OpenGLName);
@@ -75,10 +91,12 @@ namespace OpenTK.Platform.Windows
                 throw new ApplicationException(
                     $"LoadLibrary(\"{OpenGLName}\") call failed with code {Marshal.GetLastWin32Error()}");
             }
+
             Debug.WriteLine($"Loaded opengl32.dll: {OpenGLHandle}");
         }
 
-        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title,
+            GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
             return new WinGLNative(x, y, width, height, title, options, device);
         }
@@ -88,22 +106,21 @@ namespace OpenTK.Platform.Windows
             return new WinDisplayDeviceDriver();
         }
 
-        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window,
+            IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new WinGLContext(mode, (WinWindowInfo)window, shareContext, major, minor, flags);
         }
 
-        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window,
+            IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new WinGLContext(handle, (WinWindowInfo)window, shareContext, major, minor, flags);
         }
 
         public override GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
-            return (GraphicsContext.GetCurrentContextDelegate)delegate
-            {
-                return new ContextHandle(Wgl.GetCurrentContext());
-            };
+            return delegate { return new ContextHandle(Wgl.GetCurrentContext()); };
         }
 
         public override IKeyboardDriver2 CreateKeyboardDriver()
@@ -124,21 +141,6 @@ namespace OpenTK.Platform.Windows
         public override IJoystickDriver2 CreateJoystickDriver()
         {
             return RawInputDriver.JoystickDriver;
-        }
-
-        private WinRawInput RawInputDriver
-        {
-            get
-            {
-                lock (SyncRoot)
-                {
-                    if (rawinput_driver == null)
-                    {
-                        rawinput_driver = new WinRawInput();
-                    }
-                    return rawinput_driver;
-                }
-            }
         }
 
         protected override void Dispose(bool manual)

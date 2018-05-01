@@ -24,8 +24,10 @@
 //
 
 using System;
+using System.Drawing;
+using System.Runtime.InteropServices;
+using System.Security;
 using System.Windows.Forms;
-
 using OpenTK.Graphics;
 using OpenTK.Platform;
 
@@ -33,51 +35,9 @@ namespace OpenTK
 {
     internal class WinGLControl : IGLControl
     {
-        private struct MSG
-        {
-            public IntPtr HWnd;
-            public uint Message;
-            public IntPtr WParam;
-            public IntPtr LParam;
-            public uint Time;
-            public POINT Point;
-            //internal object RefObject;
-
-            public override string ToString()
-            {
-                return
-                    $"msg=0x{(int) Message:x} ({Message.ToString()}) hwnd=0x{HWnd.ToInt32():x} wparam=0x{WParam.ToInt32():x} lparam=0x{LParam.ToInt32():x} pt=0x{Point:x}";
-            }
-        }
-
-        private struct POINT
-        {
-            public int X;
-            public int Y;
-
-            public POINT(int x, int y)
-            {
-                X = x;
-                Y = y;
-            }
-
-            public System.Drawing.Point ToPoint()
-            {
-                return new System.Drawing.Point(X, Y);
-            }
-
-            public override string ToString()
-            {
-                return "Point {" + X + ", " + Y + ")";
-            }
-        }
-
-        [System.Security.SuppressUnmanagedCodeSecurity]
-        [System.Runtime.InteropServices.DllImport("User32.dll")]
-        private static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, int flags);
+        private readonly GraphicsMode mode;
 
         private MSG msg;
-        private GraphicsMode mode;
 
         public WinGLControl(GraphicsMode mode, Control control)
         {
@@ -94,5 +54,50 @@ namespace OpenTK
         public bool IsIdle => !PeekMessage(ref msg, IntPtr.Zero, 0, 0, 0);
 
         public IWindowInfo WindowInfo { get; }
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport("User32.dll")]
+        private static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax,
+            int flags);
+
+        private struct MSG
+        {
+            public IntPtr HWnd;
+            public uint Message;
+            public IntPtr WParam;
+            public IntPtr LParam;
+            public uint Time;
+
+            public POINT Point;
+            //internal object RefObject;
+
+            public override string ToString()
+            {
+                return
+                    $"msg=0x{(int)Message:x} ({Message.ToString()}) hwnd=0x{HWnd.ToInt32():x} wparam=0x{WParam.ToInt32():x} lparam=0x{LParam.ToInt32():x} pt=0x{Point:x}";
+            }
+        }
+
+        private struct POINT
+        {
+            public readonly int X;
+            public readonly int Y;
+
+            public POINT(int x, int y)
+            {
+                X = x;
+                Y = y;
+            }
+
+            public Point ToPoint()
+            {
+                return new Point(X, Y);
+            }
+
+            public override string ToString()
+            {
+                return "Point {" + X + ", " + Y + ")";
+            }
+        }
     }
 }

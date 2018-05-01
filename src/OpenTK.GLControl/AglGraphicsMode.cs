@@ -46,16 +46,17 @@ namespace OpenTK.Platform.MacOS
                         ref color, ref depth, ref stencil, ref samples, ref accum,
                         ref buffers, ref stereo))
                     {
-                        throw new GraphicsModeException("Requested GraphicsMode not available, error: " + Agl.GetError());
+                        throw new GraphicsModeException(
+                            "Requested GraphicsMode not available, error: " + Agl.GetError());
                     }
                 }
-            }
-            while (pixelformat == IntPtr.Zero);
+            } while (pixelformat == IntPtr.Zero);
 
             return GetGraphicsModeFromPixelFormat(pixelformat);
         }
 
-        private static bool RelaxGraphicsMode(ref ColorFormat color, ref int depth, ref int stencil, ref int samples, ref ColorFormat accum, ref int buffers, ref bool stereo)
+        private static bool RelaxGraphicsMode(ref ColorFormat color, ref int depth, ref int stencil, ref int samples,
+            ref ColorFormat accum, ref int buffers, ref bool stereo)
         {
             // Parameters are relaxed in order of importance.
             // - Accumulator buffers are way outdated as a concept,
@@ -159,6 +160,7 @@ namespace OpenTK.Platform.MacOS
                 {
                     attribs.Add((int)Agl.PixelFormatAttribute.AGL_RGBA);
                 }
+
                 attribs.Add((int)Agl.PixelFormatAttribute.AGL_RED_SIZE);
                 attribs.Add(color.Red);
                 attribs.Add((int)Agl.PixelFormatAttribute.AGL_GREEN_SIZE);

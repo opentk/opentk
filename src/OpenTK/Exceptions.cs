@@ -27,14 +27,13 @@ using System;
 
 namespace OpenTK
 {
-
     /// <summary>
-    /// This exception is thrown when a GraphicsContext property cannot be changed after creation.
+    ///     This exception is thrown when a GraphicsContext property cannot be changed after creation.
     /// </summary>
     public class ContextExistsException : ApplicationException
     {
         /// <summary>
-        /// Constructs a new ContextExistsException instance.
+        ///     Constructs a new ContextExistsException instance.
         /// </summary>
         /// <param name="message">A System.String explaining the cause of this exception.</param>
         public ContextExistsException(string message)
@@ -43,19 +42,21 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Gets a System.String explaining the cause of this exception.
+        ///     Gets a System.String explaining the cause of this exception.
         /// </summary>
         public override string Message { get; }
     }
 
     /// <summary>
-    /// This exception is thown when a binding method is called and the bindings have not been rewritten by Rewrite.exe.
+    ///     This exception is thown when a binding method is called and the bindings have not been rewritten by Rewrite.exe.
     /// </summary>
     public class BindingsNotRewrittenException : Exception
     {
         /// <summary>
-        /// Constructs a new BindingsNotRewrittenException instance.
+        ///     Constructs a new BindingsNotRewrittenException instance.
         /// </summary>
-        public BindingsNotRewrittenException() : base("Rewrite.exe has not been run.") { }
+        public BindingsNotRewrittenException() : base("Rewrite.exe has not been run.")
+        {
+        }
     }
 }

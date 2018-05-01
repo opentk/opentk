@@ -33,7 +33,7 @@ namespace OpenTK.Platform.Common
     internal class HidHelper
     {
         /// <summary>
-        /// Scales the specified value linearly between min and max.
+        ///     Scales the specified value linearly between min and max.
         /// </summary>
         /// <param name="value">The value to scale</param>
         /// <param name="value_min">The minimum expected value (inclusive)</param>
@@ -48,6 +48,7 @@ namespace OpenTK.Platform.Common
             {
                 throw new ArgumentOutOfRangeException();
             }
+
             MathHelper.Clamp(value, value_min, value_max);
 
             var range = result_max - result_min;
@@ -81,6 +82,7 @@ namespace OpenTK.Platform.Common
                         case HIDUsageGD.Wheel:
                             return 8;
                     }
+
                     break;
 
                 case HIDPage.Simulation:
@@ -91,6 +93,7 @@ namespace OpenTK.Platform.Common
                         case HIDUsageSim.Throttle:
                             return 10;
                     }
+
                     break;
             }
 
@@ -107,32 +110,40 @@ namespace OpenTK.Platform.Common
         VR = 0x03,
         Sport = 0x04,
         Game = 0x05,
+
         // Reserved 0x06
-        KeyboardOrKeypad = 0x07, // USB Device Class Definition for Human Interface Devices (HID). Note: the usage type for all key codes is Selector (Sel).
+        KeyboardOrKeypad =
+            0x07, // USB Device Class Definition for Human Interface Devices (HID). Note: the usage type for all key codes is Selector (Sel).
         LEDs = 0x08,
         Button = 0x09,
         Ordinal = 0x0A,
         Telephony = 0x0B,
         Consumer = 0x0C,
         Digitizer = 0x0D,
+
         // Reserved 0x0E
         PID = 0x0F, // USB Physical Interface Device definitions for force feedback and related devices.
         Unicode = 0x10,
+
         // Reserved 0x11 - 0x13
         AlphanumericDisplay = 0x14,
+
         // Reserved 0x15 - 0x7F
         // Monitor 0x80 - 0x83   USB Device Class Definition for Monitor Devices
         // Power 0x84 - 0x87     USB Device Class Definition for Power Devices
-        PowerDevice = 0x84,                // Power Device Page
-        BatterySystem = 0x85,              // Battery System Page
+        PowerDevice = 0x84, // Power Device Page
+        BatterySystem = 0x85, // Battery System Page
+
         // Reserved 0x88 - 0x8B
         BarCodeScanner = 0x8C, // (Point of Sale) USB Device Class Definition for Bar Code Scanner Devices
         WeighingDevice = 0x8D, // (Point of Sale) USB Device Class Definition for Weighing Devices
         Scale = 0x8D, // (Point of Sale) USB Device Class Definition for Scale Devices
         MagneticStripeReader = 0x8E,
+
         // ReservedPointofSalepages 0x8F
         CameraControl = 0x90, // USB Device Class Definition for Image Class Devices
         Arcade = 0x91, // OAAF Definitions for arcade and coinop related Devices
+
         // Reserved 0x92 - 0xFEFF
         // VendorDefined 0xFF00 - 0xFFFF
         VendorDefinedStart = 0xFF00
@@ -150,12 +161,14 @@ namespace OpenTK.Platform.Common
     {
         Pointer = 0x01, // Physical Collection
         Mouse = 0x02, // Application Collection
+
         // 0x03 Reserved
         Joystick = 0x04, // Application Collection
         GamePad = 0x05, // Application Collection
         Keyboard = 0x06, // Application Collection
         Keypad = 0x07, // Application Collection
         MultiAxisController = 0x08, // Application Collection
+
         // 0x09 - 0x2F Reserved
         X = 0x30, // Dynamic Value
         Y = 0x31, // Dynamic Value
@@ -172,6 +185,7 @@ namespace OpenTK.Platform.Common
         MotionWakeup = 0x3C, // One-Shot Control
         Start = 0x3D, // On/Off Control
         Select = 0x3E, // On/Off Control
+
         // 0x3F Reserved
         Vx = 0x40, // Dynamic Value
         Vy = 0x41, // Dynamic Value
@@ -180,6 +194,7 @@ namespace OpenTK.Platform.Common
         Vbry = 0x44, // Dynamic Value
         Vbrz = 0x45, // Dynamic Value
         Vno = 0x46, // Dynamic Value
+
         // 0x47 - 0x7F Reserved
         SystemControl = 0x80, // Application Collection
         SystemPowerDown = 0x81, // One-Shot Control
@@ -195,11 +210,13 @@ namespace OpenTK.Platform.Common
         SystemMenuLeft = 0x8B, // Re-Trigger Control
         SystemMenuUp = 0x8C, // Re-Trigger Control
         SystemMenuDown = 0x8D, // Re-Trigger Control
+
         // 0x8E - 0x8F Reserved
         DPadUp = 0x90, // On/Off Control
         DPadDown = 0x91, // On/Off Control
         DPadRight = 0x92, // On/Off Control
         DPadLeft = 0x93, // On/Off Control
+
         // 0x94 - 0xFFFF Reserved
         Reserved = 0xFFFF
     }
@@ -218,6 +235,7 @@ namespace OpenTK.Platform.Common
         HelicopterSimulationDevice = 0x0A, //             Application Collection
         MagicCarpetSimulationDevice = 0x0B, //             Application Collection
         BicycleSimulationDevice = 0x0C, //             Application Collection
+
         // 0x0D - 0x1F Reserved
         FlightControlStick = 0x20, //             Application Collection
         FlightStick = 0x21, //             Application Collection
@@ -225,6 +243,7 @@ namespace OpenTK.Platform.Common
         CyclicTrim = 0x23, //             Physical Collection
         FlightYoke = 0x24, //             Application Collection
         TrackControl = 0x25, //             Physical Collection
+
         // 0x26 - 0xAF Reserved
         Aileron = 0xB0, //             Dynamic Value
         AileronTrim = 0xB1, //             Dynamic Value
@@ -259,6 +278,7 @@ namespace OpenTK.Platform.Common
         HandleBars = 0xCE, //             Dynamic Value
         FrontBrake = 0xCF, //             Dynamic Value
         RearBrake = 0xD0, //             Dynamic Value
+
         // 0xD1 - 0xFFFF Reserved
         Reserved = 0xFFFF
     }

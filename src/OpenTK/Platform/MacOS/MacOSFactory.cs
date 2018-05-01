@@ -23,12 +23,11 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using OpenTK.Graphics;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.MacOS
 {
-    using Graphics;
-
     internal class MacOSFactory : PlatformFactoryBase
     {
         // Todo: we can query the exact amount via
@@ -45,7 +44,8 @@ namespace OpenTK.Platform.MacOS
             InputDriver = new HIDInput();
         }
 
-        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title,
+            GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
             return new CocoaNativeWindow(x, y, width, height, title, mode, options, device);
         }
@@ -55,27 +55,26 @@ namespace OpenTK.Platform.MacOS
             return new QuartzDisplayDeviceDriver();
         }
 
-        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window,
+            IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new CocoaContext(mode, window, shareContext, major, minor);
         }
 
-        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window,
+            IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new CocoaContext(handle, window, shareContext, major, minor);
         }
 
         public override GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
-            return (GraphicsContext.GetCurrentContextDelegate)delegate
-            {
-                return new ContextHandle(CocoaContext.CurrentContext);
-            };
+            return delegate { return new ContextHandle(CocoaContext.CurrentContext); };
         }
 
         public override IKeyboardDriver2 CreateKeyboardDriver()
         {
-           return InputDriver.KeyboardDriver;
+            return InputDriver.KeyboardDriver;
         }
 
         public override IMouseDriver2 CreateMouseDriver()

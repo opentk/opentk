@@ -3,17 +3,22 @@
 namespace OpenTK.Graphics
 {
     /// <summary>
-    /// Represents errors related to a GraphicsContext.
+    ///     Represents errors related to a GraphicsContext.
     /// </summary>
     public class GraphicsContextException : Exception
     {
         /// <summary>
-        /// Constructs a new GraphicsContextException.
+        ///     Constructs a new GraphicsContextException.
         /// </summary>
-        public GraphicsContextException() : base() { }
+        public GraphicsContextException()
+        {
+        }
+
         /// <summary>
-        /// Constructs a new GraphicsContextException with the given error message.
+        ///     Constructs a new GraphicsContextException with the given error message.
         /// </summary>
-        public GraphicsContextException(string message) : base(message) { }
+        public GraphicsContextException(string message) : base(message)
+        {
+        }
     }
 }

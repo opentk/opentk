@@ -62,7 +62,7 @@ namespace OpenTK.Platform.Linux
         public static extern int ioctl(int d, KeyboardIoctlCode request, int data);
 
         [DllImport(lib)]
-        public static extern int open([MarshalAs(UnmanagedType.LPStr)]string pathname, OpenFlags flags);
+        public static extern int open([MarshalAs(UnmanagedType.LPStr)] string pathname, OpenFlags flags);
 
         [DllImport(lib)]
         public static extern int open(IntPtr pathname, OpenFlags flags);
@@ -71,7 +71,7 @@ namespace OpenTK.Platform.Linux
         public static extern int close(int fd);
 
         [DllImport(lib)]
-        unsafe public static extern IntPtr read(int fd, void* buffer, UIntPtr count);
+        public static extern unsafe IntPtr read(int fd, void* buffer, UIntPtr count);
 
         public static int read(int fd, out byte b)
         {
@@ -104,7 +104,7 @@ namespace OpenTK.Platform.Linux
     {
         Interrupted = 4,
         Again = 11,
-        InvalidValue = 22,
+        InvalidValue = 22
     }
 
     [Flags]
@@ -128,9 +128,9 @@ namespace OpenTK.Platform.Linux
     [Flags]
     internal enum JoystickEventType : byte
     {
-        Button = 0x01,    // button pressed/released
-        Axis = 0x02,      // joystick moved
-        Init = 0x80       // initial state of device
+        Button = 0x01, // button pressed/released
+        Axis = 0x02, // joystick moved
+        Init = 0x80 // initial state of device
     }
 
     internal enum JoystickIoctlCode : uint
@@ -138,31 +138,34 @@ namespace OpenTK.Platform.Linux
         Version = 0x80046a01,
         Axes = 0x80016a11,
         Buttons = 0x80016a12,
-        Name128 = (2u << 30) | (0x6A << 8) | (0x13 << 0) | (128 << 16) //JSIOCGNAME(128), which is _IOC(_IO_READ, 'j', 0x13, len)
+
+        Name128 =
+            (2u << 30) | (0x6A << 8) | (0x13 << 0) |
+            (128 << 16) //JSIOCGNAME(128), which is _IOC(_IO_READ, 'j', 0x13, len)
     }
 
     internal enum KeyboardIoctlCode
     {
         GetMode = 0x4b44,
-        SetMode = 0x4b45,
+        SetMode = 0x4b45
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct Stat
     {
-        public IntPtr dev;     /* ID of device containing file */
-        public IntPtr ino;     /* inode number */
-        public IntPtr mode;    /* protection */
-        public IntPtr nlink;   /* number of hard links */
-        public IntPtr uid;     /* user ID of owner */
-        public IntPtr gid;     /* group ID of owner */
-        public IntPtr rdev;    /* device ID (if special file) */
-        public IntPtr size;    /* total size, in bytes */
+        public IntPtr dev; /* ID of device containing file */
+        public IntPtr ino; /* inode number */
+        public IntPtr mode; /* protection */
+        public IntPtr nlink; /* number of hard links */
+        public IntPtr uid; /* user ID of owner */
+        public IntPtr gid; /* group ID of owner */
+        public IntPtr rdev; /* device ID (if special file) */
+        public IntPtr size; /* total size, in bytes */
         public IntPtr blksize; /* blocksize for file system I/O */
-        public IntPtr blocks;  /* number of 512B blocks allocated */
-        public IntPtr atime;   /* time of last access */
-        public IntPtr mtime;   /* time of last modification */
-        public IntPtr ctime;   /* time of last status change */
+        public IntPtr blocks; /* number of 512B blocks allocated */
+        public IntPtr atime; /* time of last access */
+        public IntPtr mtime; /* time of last modification */
+        public IntPtr ctime; /* time of last status change */
     }
 
     internal struct EvdevInputId
@@ -175,10 +178,9 @@ namespace OpenTK.Platform.Linux
 
     internal struct JoystickEvent
     {
-        public uint Time;    // (u32) event timestamp in milliseconds
-        public short Value;  // (s16) value
-        public JoystickEventType Type;    // (u8)  event type
-        public byte Number;  // (u8)  axis/button number
+        public uint Time; // (u32) event timestamp in milliseconds
+        public short Value; // (s16) value
+        public JoystickEventType Type; // (u8)  event type
+        public byte Number; // (u8)  axis/button number
     }
 }
-

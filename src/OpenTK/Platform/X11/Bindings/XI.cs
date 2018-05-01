@@ -45,36 +45,71 @@ namespace OpenTK.Platform.X11
 
         // mouse
         internal static readonly IntPtr ButtonLeft = Functions.XInternAtom(API.DefaultDisplay, "Button Left", false);
-        internal static readonly IntPtr ButtonMiddle = Functions.XInternAtom(API.DefaultDisplay, "Button Middle", false);
+
+        internal static readonly IntPtr
+            ButtonMiddle = Functions.XInternAtom(API.DefaultDisplay, "Button Middle", false);
+
         internal static readonly IntPtr ButtonRight = Functions.XInternAtom(API.DefaultDisplay, "Button Right", false);
-        internal static readonly IntPtr ButtonWheelUp = Functions.XInternAtom(API.DefaultDisplay, "Button Wheel Up", false);
-        internal static readonly IntPtr ButtonWheelDown = Functions.XInternAtom(API.DefaultDisplay, "Button Wheel Down", false);
-        internal static readonly IntPtr ButtonWheelLeft = Functions.XInternAtom(API.DefaultDisplay, "Button Horiz Wheel Left", false);
-        internal static readonly IntPtr ButtonWheelRight = Functions.XInternAtom(API.DefaultDisplay, "Button Horiz Wheel Right", false);
+
+        internal static readonly IntPtr ButtonWheelUp =
+            Functions.XInternAtom(API.DefaultDisplay, "Button Wheel Up", false);
+
+        internal static readonly IntPtr ButtonWheelDown =
+            Functions.XInternAtom(API.DefaultDisplay, "Button Wheel Down", false);
+
+        internal static readonly IntPtr ButtonWheelLeft =
+            Functions.XInternAtom(API.DefaultDisplay, "Button Horiz Wheel Left", false);
+
+        internal static readonly IntPtr ButtonWheelRight =
+            Functions.XInternAtom(API.DefaultDisplay, "Button Horiz Wheel Right", false);
+
         internal static readonly IntPtr RelativeX = Functions.XInternAtom(API.DefaultDisplay, "Rel X", false);
         internal static readonly IntPtr RelativeY = Functions.XInternAtom(API.DefaultDisplay, "Rel Y", false);
-        internal static readonly IntPtr RelativeHWheel = Functions.XInternAtom(API.DefaultDisplay, "Rel Horiz Wheel", false);
-        internal static readonly IntPtr RelativeVWheel = Functions.XInternAtom(API.DefaultDisplay, "Rel Vert Wheel", false);
-        internal static readonly IntPtr RelativeHScroll = Functions.XInternAtom(API.DefaultDisplay, "Rel Horiz Scroll", false);
-        internal static readonly IntPtr RelativeVScroll = Functions.XInternAtom(API.DefaultDisplay, "Rel Vert Scroll", false);
+
+        internal static readonly IntPtr RelativeHWheel =
+            Functions.XInternAtom(API.DefaultDisplay, "Rel Horiz Wheel", false);
+
+        internal static readonly IntPtr RelativeVWheel =
+            Functions.XInternAtom(API.DefaultDisplay, "Rel Vert Wheel", false);
+
+        internal static readonly IntPtr RelativeHScroll =
+            Functions.XInternAtom(API.DefaultDisplay, "Rel Horiz Scroll", false);
+
+        internal static readonly IntPtr RelativeVScroll =
+            Functions.XInternAtom(API.DefaultDisplay, "Rel Vert Scroll", false);
 
         // multitouch
         internal static readonly IntPtr TouchX = Functions.XInternAtom(API.DefaultDisplay, "Abs MT Position X", false);
         internal static readonly IntPtr TouchY = Functions.XInternAtom(API.DefaultDisplay, "Abs MT Position Y", false);
-        internal static readonly IntPtr TouchMajor = Functions.XInternAtom(API.DefaultDisplay, "Abs MT Touch Major", false);
-        internal static readonly IntPtr TouchMinor = Functions.XInternAtom(API.DefaultDisplay, "Abs MT Touch Minor", false);
-        internal static readonly IntPtr TouchPressure = Functions.XInternAtom(API.DefaultDisplay, "Abs MT Pressure", false);
-        internal static readonly IntPtr TouchId = Functions.XInternAtom(API.DefaultDisplay, "Abs MT Tracking ID", false);
-        internal static readonly IntPtr TouchMaxContacts = Functions.XInternAtom(API.DefaultDisplay, "Max Contacts", false);
+
+        internal static readonly IntPtr TouchMajor =
+            Functions.XInternAtom(API.DefaultDisplay, "Abs MT Touch Major", false);
+
+        internal static readonly IntPtr TouchMinor =
+            Functions.XInternAtom(API.DefaultDisplay, "Abs MT Touch Minor", false);
+
+        internal static readonly IntPtr TouchPressure =
+            Functions.XInternAtom(API.DefaultDisplay, "Abs MT Pressure", false);
+
+        internal static readonly IntPtr
+            TouchId = Functions.XInternAtom(API.DefaultDisplay, "Abs MT Tracking ID", false);
+
+        internal static readonly IntPtr TouchMaxContacts =
+            Functions.XInternAtom(API.DefaultDisplay, "Max Contacts", false);
 
         // tablet
         internal static readonly IntPtr AbsoluteX = Functions.XInternAtom(API.DefaultDisplay, "Abs X", false);
         internal static readonly IntPtr AbsoluteY = Functions.XInternAtom(API.DefaultDisplay, "Abs Y", false);
-        internal static readonly IntPtr AbsolutePressure = Functions.XInternAtom(API.DefaultDisplay, "Abs Pressure", false);
+
+        internal static readonly IntPtr AbsolutePressure =
+            Functions.XInternAtom(API.DefaultDisplay, "Abs Pressure", false);
+
         internal static readonly IntPtr AbsoluteTiltX = Functions.XInternAtom(API.DefaultDisplay, "Abs Tilt X", false);
         internal static readonly IntPtr AbsoluteTiltY = Functions.XInternAtom(API.DefaultDisplay, "Abs Tilt Y", false);
         internal static readonly IntPtr AbsoluteWheel = Functions.XInternAtom(API.DefaultDisplay, "Abs Wheel", false);
-        internal static readonly IntPtr AbsoluteDistance = Functions.XInternAtom(API.DefaultDisplay, "Abs Distance", false);
+
+        internal static readonly IntPtr AbsoluteDistance =
+            Functions.XInternAtom(API.DefaultDisplay, "Abs Distance", false);
 
         [DllImport(lib, EntryPoint = "XISelectEvents")]
         private static extern int SelectEvents(IntPtr dpy, Window win, [In] XIEventMask[] masks, int num_masks);
@@ -94,13 +129,13 @@ namespace OpenTK.Platform.X11
 
         [DllImport(lib, EntryPoint = "XIGrabDevice")]
         private static extern Status GrabDevice(IntPtr display, int deviceid, Window grab_window, Time time,
-            Cursor cursor, int grab_mode, int paired_device_mode, Bool owner_events, XIEventMask[] mask);
+            Cursor cursor, int grab_mode, int paired_device_mode, bool owner_events, XIEventMask[] mask);
 
         [DllImport(lib, EntryPoint = "XIUngrabDevice")]
         private static extern Status UngrabDevice(IntPtr display, int deviceid, Time time);
 
         [DllImport(lib, EntryPoint = "XIWarpPointer")]
-        public static extern Bool XIWarpPointer(Display display,
+        public static extern bool XIWarpPointer(Display display,
             int deviceid, Window src_w, Window dest_w,
             double src_x, double src_y, int src_width, int src_height,
             double dest_x, double dest_y);
@@ -112,7 +147,7 @@ namespace OpenTK.Platform.X11
         public static extern void FreeDeviceInfo(IntPtr devices);
 
         [DllImport(lib, EntryPoint = "XIQueryPointer")]
-        public static extern Bool QueryPointer(Display display,
+        public static extern bool QueryPointer(Display display,
             int deviceid, Window win,
             out Window root_return, out Window child_return,
             out double root_x_return, out double root_y_return,
@@ -130,7 +165,7 @@ namespace OpenTK.Platform.X11
         MasterKeyboard = 2,
         SlavePointer = 3,
         SlaveKeyboard = 4,
-        FloatingSlave = 5,
+        FloatingSlave = 5
     }
 
     internal enum XIMode

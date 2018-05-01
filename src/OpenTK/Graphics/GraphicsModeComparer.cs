@@ -36,31 +36,37 @@ namespace OpenTK.Graphics
             {
                 return result;
             }
+
             result = x.Depth.CompareTo(y.Depth);
             if (result != 0)
             {
                 return result;
             }
+
             result = x.Stencil.CompareTo(y.Stencil);
             if (result != 0)
             {
                 return result;
             }
+
             result = x.Samples.CompareTo(y.Samples);
             if (result != 0)
             {
                 return result;
             }
+
             result = x.Stereo.CompareTo(y.Stereo);
             if (result != 0)
             {
                 return result;
             }
+
             result = x.Buffers.CompareTo(y.Buffers);
             if (result != 0)
             {
                 return result;
             }
+
             return x.AccumulatorFormat.CompareTo(y.AccumulatorFormat);
         }
     }

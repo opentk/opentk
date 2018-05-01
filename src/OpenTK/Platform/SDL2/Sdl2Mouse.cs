@@ -25,14 +25,16 @@
 
 using System;
 using System.Diagnostics;
+using OpenTK.Input;
+
 #if !MINIMAL
 #endif
-using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
 {
     internal class Sdl2Mouse : IMouseDriver2
     {
+        internal static float Scale = 1.0f;
         private MouseState state;
 
         public Sdl2Mouse()
@@ -40,7 +42,59 @@ namespace OpenTK.Platform.SDL2
             state.IsConnected = true;
         }
 
-        static internal MouseButton TranslateButton(Button button)
+        public MouseState GetState()
+        {
+            var scaledState = state;
+            if (Configuration.RunningOnMacOS)
+            {
+                scaledState.X = (int)Math.Round(scaledState.X * Scale);
+                scaledState.Y = (int)Math.Round(scaledState.Y * Scale);
+            }
+
+            return scaledState;
+        }
+
+        public MouseState GetState(int index)
+        {
+            if (index == 0)
+            {
+                return GetState();
+            }
+
+            return new MouseState();
+        }
+
+        public MouseState GetCursorState()
+        {
+            int x, y;
+            var buttons = SDL.GetGlobalMouseState(out x, out y);
+
+            if (Configuration.RunningOnMacOS)
+            {
+                x = (int)Math.Round(x * Scale);
+                y = (int)Math.Round(y * Scale);
+            }
+
+            var c = new MouseState();
+            c.SetIsConnected(true);
+            c.X = x;
+            c.Y = y;
+            c.SetScrollAbsolute(state.Scroll.X, state.Scroll.Y); // we cannot query the scrollwheel directly
+            c[MouseButton.Left] = (buttons & ButtonFlags.Left) != 0;
+            c[MouseButton.Middle] = (buttons & ButtonFlags.Middle) != 0;
+            c[MouseButton.Right] = (buttons & ButtonFlags.Right) != 0;
+            c[MouseButton.Button1] = (buttons & ButtonFlags.X1) != 0;
+            c[MouseButton.Button2] = (buttons & ButtonFlags.X2) != 0;
+
+            return c;
+        }
+
+        public void SetPosition(double x, double y)
+        {
+            SDL.WarpMouseGlobal((int)x, (int)y);
+        }
+
+        internal static MouseButton TranslateButton(Button button)
         {
             switch (button)
             {
@@ -77,8 +131,6 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
-        internal static float Scale = 1.0f;
-
         public void ProcessWheelEvent(MouseWheelEvent wheel)
         {
             state.SetScrollRelative(wheel.X, wheel.Y);
@@ -95,59 +147,5 @@ namespace OpenTK.Platform.SDL2
             var pressed = button.State == State.Pressed;
             SetButtonState(TranslateButton(button.Button), pressed);
         }
-
-        public MouseState GetState()
-        {
-            var scaledState = state;
-            if (Configuration.RunningOnMacOS)
-            {
-                scaledState.X = (int)Math.Round(scaledState.X * Scale);
-                scaledState.Y = (int)Math.Round(scaledState.Y * Scale);
-            }
-            return scaledState;
-        }
-
-        public MouseState GetState(int index)
-        {
-            if (index == 0)
-            {
-                return GetState();
-            }
-            else
-            {
-                return new MouseState();
-            }
-        }
-
-        public MouseState GetCursorState()
-        {
-            int x, y;
-            var buttons = SDL.GetGlobalMouseState(out x, out y);
-
-            if (Configuration.RunningOnMacOS)
-            {
-                x = (int)Math.Round(x * Scale);
-                y = (int)Math.Round(y * Scale);
-            }
-
-            var c = new MouseState();
-            c.SetIsConnected(true);
-            c.X = x;
-            c.Y = y;
-            c.SetScrollAbsolute(state.Scroll.X, state.Scroll.Y); // we cannot query the scrollwheel directly
-            c[MouseButton.Left] = (buttons & ButtonFlags.Left) != 0;
-            c[MouseButton.Middle] = (buttons & ButtonFlags.Middle) != 0;
-            c[MouseButton.Right] = (buttons & ButtonFlags.Right) != 0;
-            c[MouseButton.Button1] = (buttons & ButtonFlags.X1) != 0;
-            c[MouseButton.Button2] = (buttons & ButtonFlags.X2) != 0;
-
-            return c;
-        }
-
-        public void SetPosition(double x, double y)
-        {
-            SDL.WarpMouseGlobal((int)x, (int)y);
-        }
     }
 }
-

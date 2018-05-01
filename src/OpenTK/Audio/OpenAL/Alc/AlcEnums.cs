@@ -10,7 +10,7 @@ using System;
 namespace OpenTK.Audio.OpenAL
 {
     /// <summary>
-    /// Defines available context attributes.
+    ///     Defines available context attributes.
     /// </summary>
     public enum AlcContextAttributes
     {
@@ -29,12 +29,17 @@ namespace OpenTK.Audio.OpenAL
         ///<summary>Followed by System.Int32 Num of requested Stereo Sources</summary>
         StereoSources = 0x1011,
 
-        /// <summary>(EFX Extension) This Context property can be passed to OpenAL during Context creation (alcCreateContext) to request a maximum number of Auxiliary Sends desired on each Source. It is not guaranteed that the desired number of sends will be available, so an application should query this property after creating the context using alcGetIntergerv. Default: 2</summary>
-        EfxMaxAuxiliarySends = 0x20003,
+        /// <summary>
+        ///     (EFX Extension) This Context property can be passed to OpenAL during Context creation (alcCreateContext) to
+        ///     request a maximum number of Auxiliary Sends desired on each Source. It is not guaranteed that the desired number of
+        ///     sends will be available, so an application should query this property after creating the context using
+        ///     alcGetIntergerv. Default: 2
+        /// </summary>
+        EfxMaxAuxiliarySends = 0x20003
     }
 
     /// <summary>
-    /// Defines OpenAL context errors.
+    ///     Defines OpenAL context errors.
     /// </summary>
     public enum AlcError
     {
@@ -54,11 +59,11 @@ namespace OpenTK.Audio.OpenAL
         InvalidValue = 0xA004,
 
         ///<summary>Out of memory. Unable to allocate memory.</summary>
-        OutOfMemory = 0xA005,
+        OutOfMemory = 0xA005
     }
 
     /// <summary>
-    /// Defines available parameters for <see cref="OpenTK.Audio.OpenAL.Alc.GetString(IntPtr, AlcGetString)"/>.
+    ///     Defines available parameters for <see cref="OpenTK.Audio.OpenAL.Alc.GetString(IntPtr, AlcGetString)" />.
     /// </summary>
     public enum AlcGetString
     {
@@ -76,33 +81,39 @@ namespace OpenTK.Audio.OpenAL
 
         // duplicates from AlcGetStringList:
 
-        ///<summary>Will only return the first Device, not a list. Use AlcGetStringList.CaptureDeviceSpecifier. ALC_EXT_CAPTURE_EXT </summary>
+        /// <summary>
+        ///     Will only return the first Device, not a list. Use AlcGetStringList.CaptureDeviceSpecifier.
+        ///     ALC_EXT_CAPTURE_EXT
+        /// </summary>
         CaptureDeviceSpecifier = 0x310,
 
         ///<summary>Will only return the first Device, not a list. Use AlcGetStringList.DeviceSpecifier</summary>
         DeviceSpecifier = 0x1005,
 
         /// <summary>Will only return the first Device, not a list. Use AlcGetStringList.AllDevicesSpecifier</summary>
-        AllDevicesSpecifier = 0x1013,
+        AllDevicesSpecifier = 0x1013
     }
 
     /// <summary>
-    /// Defines available parameters for <see cref="Alc.GetString(IntPtr, AlcGetStringList)"/>.
+    ///     Defines available parameters for <see cref="Alc.GetString(IntPtr, AlcGetStringList)" />.
     /// </summary>
     public enum AlcGetStringList
     {
-        ///<summary>The name of the specified capture device, or a list of all available capture devices if no capture device is specified. ALC_EXT_CAPTURE_EXT </summary>
+        /// <summary>
+        ///     The name of the specified capture device, or a list of all available capture devices if no capture device is
+        ///     specified. ALC_EXT_CAPTURE_EXT
+        /// </summary>
         CaptureDeviceSpecifier = 0x310,
 
         ///<summary>The specifier strings for all available devices. ALC_ENUMERATION_EXT</summary>
         DeviceSpecifier = 0x1005,
 
         /// <summary>The specifier strings for all available devices. ALC_ENUMERATE_ALL_EXT</summary>
-        AllDevicesSpecifier = 0x1013,
+        AllDevicesSpecifier = 0x1013
     }
 
     /// <summary>
-    /// Defines available parameters for <see cref="Alc.GetInteger(IntPtr, AlcGetInteger, int, int[])"/>.
+    ///     Defines available parameters for <see cref="Alc.GetInteger(IntPtr, AlcGetInteger, int, int[])" />.
     /// </summary>
     public enum AlcGetInteger
     {
@@ -112,22 +123,41 @@ namespace OpenTK.Audio.OpenAL
         ///<summary>The specification revision for this implementation (minor version). NULL is an acceptable device.</summary>
         MinorVersion = 0x1001,
 
-        ///<summary>The size (number of ALCint values) required for a zero-terminated attributes list, for the current context. NULL is an invalid device.</summary>
+        /// <summary>
+        ///     The size (number of ALCint values) required for a zero-terminated attributes list, for the current context.
+        ///     NULL is an invalid device.
+        /// </summary>
         AttributesSize = 0x1002,
 
-        ///<summary>Expects a destination of ALC_ATTRIBUTES_SIZE, and provides an attribute list for the current context of the specified device. NULL is an invalid device.</summary>
+        /// <summary>
+        ///     Expects a destination of ALC_ATTRIBUTES_SIZE, and provides an attribute list for the current context of the
+        ///     specified device. NULL is an invalid device.
+        /// </summary>
         AllAttributes = 0x1003,
 
         ///<summary>The number of capture samples available. NULL is an invalid device.</summary>
         CaptureSamples = 0x312,
 
-        /// <summary>(EFX Extension) This property can be used by the application to retrieve the Major version number of the Effects Extension supported by this OpenAL implementation. As this is a Context property is should be retrieved using alcGetIntegerv.</summary>
+        /// <summary>
+        ///     (EFX Extension) This property can be used by the application to retrieve the Major version number of the
+        ///     Effects Extension supported by this OpenAL implementation. As this is a Context property is should be retrieved
+        ///     using alcGetIntegerv.
+        /// </summary>
         EfxMajorVersion = 0x20001,
 
-        /// <summary>(EFX Extension) This property can be used by the application to retrieve the Minor version number of the Effects Extension supported by this OpenAL implementation. As this is a Context property is should be retrieved using alcGetIntegerv.</summary>
+        /// <summary>
+        ///     (EFX Extension) This property can be used by the application to retrieve the Minor version number of the
+        ///     Effects Extension supported by this OpenAL implementation. As this is a Context property is should be retrieved
+        ///     using alcGetIntegerv.
+        /// </summary>
         EfxMinorVersion = 0x20002,
 
-        /// <summary>(EFX Extension) This Context property can be passed to OpenAL during Context creation (alcCreateContext) to request a maximum number of Auxiliary Sends desired on each Source. It is not guaranteed that the desired number of sends will be available, so an application should query this property after creating the context using alcGetIntergerv. Default: 2</summary>
-        EfxMaxAuxiliarySends = 0x20003,
+        /// <summary>
+        ///     (EFX Extension) This Context property can be passed to OpenAL during Context creation (alcCreateContext) to
+        ///     request a maximum number of Auxiliary Sends desired on each Source. It is not guaranteed that the desired number of
+        ///     sends will be available, so an application should query this property after creating the context using
+        ///     alcGetIntergerv. Default: 2
+        /// </summary>
+        EfxMaxAuxiliarySends = 0x20003
     }
 }

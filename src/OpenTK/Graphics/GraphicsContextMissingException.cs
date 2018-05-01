@@ -1,19 +1,20 @@
-﻿using System;
+﻿using System.Threading;
 
 namespace OpenTK.Graphics
 {
     /// <summary>
-    /// Thrown when an operation that required GraphicsContext is performed, when no
-    /// GraphicsContext is current in the calling thread.
+    ///     Thrown when an operation that required GraphicsContext is performed, when no
+    ///     GraphicsContext is current in the calling thread.
     /// </summary>
     public class GraphicsContextMissingException : GraphicsContextException
     {
         /// <summary>
-        /// Constructs a new GraphicsContextMissingException.
+        ///     Constructs a new GraphicsContextMissingException.
         /// </summary>
         public GraphicsContextMissingException()
             : base(
-                $"No context is current in the calling thread (ThreadId: {System.Threading.Thread.CurrentThread.ManagedThreadId}).")
-        { }
+                $"No context is current in the calling thread (ThreadId: {Thread.CurrentThread.ManagedThreadId}).")
+        {
+        }
     }
 }

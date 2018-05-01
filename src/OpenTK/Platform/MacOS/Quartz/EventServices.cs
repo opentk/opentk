@@ -49,8 +49,7 @@ namespace OpenTK.Platform.MacOS
             CGEventTapPlacement place,
             CGEventTapOptions options,
             CGEventMask eventsOfInterest,
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            EventTapCallBack callback,
+            [MarshalAs(UnmanagedType.FunctionPtr)] EventTapCallBack callback,
             IntPtr refcon);
 
         [DllImport(lib, EntryPoint = "CGEventGetDoubleValueField")]
@@ -65,6 +64,7 @@ namespace OpenTK.Platform.MacOS
 
         [DllImport(lib, EntryPoint = "CGEventGetLocation")]
         internal static extern NSPointF EventGetLocationF(CGEventRef @event);
+
         [DllImport(lib, EntryPoint = "CGEventGetLocation")]
         internal static extern NSPointD EventGetLocationD(CGEventRef @event);
 
@@ -72,24 +72,24 @@ namespace OpenTK.Platform.MacOS
         {
             var r = new NSPoint();
 
-            unsafe {
+            unsafe
+            {
                 if (IntPtr.Size == 4)
                 {
                     var pf = EventGetLocationF(@event);
-                    r.X.Value = *(IntPtr *)&pf.X;
-                    r.Y.Value = *(IntPtr *)&pf.Y;
+                    r.X.Value = *(IntPtr*)&pf.X;
+                    r.Y.Value = *(IntPtr*)&pf.Y;
                 }
                 else
                 {
                     var pd = EventGetLocationD(@event);
-                    r.X.Value = *(IntPtr *)&pd.X;
-                    r.Y.Value = *(IntPtr *)&pd.Y;
+                    r.X.Value = *(IntPtr*)&pd.X;
+                    r.Y.Value = *(IntPtr*)&pd.Y;
                 }
             }
 
             return r;
         }
-
     }
 
     internal enum CGEventTapLocation
@@ -114,23 +114,24 @@ namespace OpenTK.Platform.MacOS
     [Flags]
     internal enum CGEventMask : long
     {
-        LeftMouseDown       = 1 << CGEventType.LeftMouseDown,
-        LeftMouseUp         = 1 << CGEventType.LeftMouseUp,
-        RightMouseDown      = 1 << CGEventType.RightMouseDown,
-        RightMouseUp        = 1 << CGEventType.RightMouseUp,
-        MouseMoved          = 1 << CGEventType.MouseMoved,
-        LeftMouseDragged    = 1 << CGEventType.LeftMouseDown,
-        RightMouseDragged   = 1 << CGEventType.RightMouseDown,
-        KeyDown             = 1 << CGEventType.KeyDown,
-        KeyUp               = 1 << CGEventType.KeyUp,
-        FlagsChanged        = 1 << CGEventType.FlagsChanged,
-        ScrollWheel         = 1 << CGEventType.ScrollWheel,
-        TabletPointer       = 1 << CGEventType.TabletPointer,
-        TabletProximity     = 1 << CGEventType.TabletProximity,
-        OtherMouseDown      = 1 << CGEventType.OtherMouseDown,
-        OtherMouseUp        = 1 << CGEventType.OtherMouseUp,
-        OtherMouseDragged   = 1 << CGEventType.OtherMouseDragged,
+        LeftMouseDown = 1 << CGEventType.LeftMouseDown,
+        LeftMouseUp = 1 << CGEventType.LeftMouseUp,
+        RightMouseDown = 1 << CGEventType.RightMouseDown,
+        RightMouseUp = 1 << CGEventType.RightMouseUp,
+        MouseMoved = 1 << CGEventType.MouseMoved,
+        LeftMouseDragged = 1 << CGEventType.LeftMouseDown,
+        RightMouseDragged = 1 << CGEventType.RightMouseDown,
+        KeyDown = 1 << CGEventType.KeyDown,
+        KeyUp = 1 << CGEventType.KeyUp,
+        FlagsChanged = 1 << CGEventType.FlagsChanged,
+        ScrollWheel = 1 << CGEventType.ScrollWheel,
+        TabletPointer = 1 << CGEventType.TabletPointer,
+        TabletProximity = 1 << CGEventType.TabletProximity,
+        OtherMouseDown = 1 << CGEventType.OtherMouseDown,
+        OtherMouseUp = 1 << CGEventType.OtherMouseUp,
+        OtherMouseDragged = 1 << CGEventType.OtherMouseDragged,
         All = -1,
+
         AllMouse =
             LeftMouseDown | LeftMouseUp | LeftMouseDragged |
             RightMouseDown | RightMouseUp | RightMouseDragged |
@@ -140,23 +141,23 @@ namespace OpenTK.Platform.MacOS
 
     internal enum CGEventType
     {
-        Null                = 0,
-        LeftMouseDown       = 1,
-        LeftMouseUp         = 2,
-        RightMouseDown      = 3,
-        RightMouseUp        = 4,
-        MouseMoved          = 5,
-        LeftMouseDragged    = 6,
-        RightMouseDragged   = 7,
-        KeyDown             = 10,
-        KeyUp               = 11,
-        FlagsChanged        = 12,
-        ScrollWheel         = 22,
-        TabletPointer       = 23,
-        TabletProximity     = 24,
-        OtherMouseDown      = 25,
-        OtherMouseUp        = 26,
-        OtherMouseDragged   = 27,
+        Null = 0,
+        LeftMouseDown = 1,
+        LeftMouseUp = 2,
+        RightMouseDown = 3,
+        RightMouseUp = 4,
+        MouseMoved = 5,
+        LeftMouseDragged = 6,
+        RightMouseDragged = 7,
+        KeyDown = 10,
+        KeyUp = 11,
+        FlagsChanged = 12,
+        ScrollWheel = 22,
+        TabletPointer = 23,
+        TabletProximity = 24,
+        OtherMouseDown = 25,
+        OtherMouseUp = 26,
+        OtherMouseDragged = 27,
         TapDisabledByTimeout = -2,
         TapDisabledByUserInput = -1
     }
@@ -218,4 +219,3 @@ namespace OpenTK.Platform.MacOS
         ScrollWheelEventIsContinuous = 88
     }
 }
-

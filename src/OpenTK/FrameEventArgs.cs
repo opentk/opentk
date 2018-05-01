@@ -28,22 +28,23 @@ using System;
 namespace OpenTK
 {
     /// <summary>
-    /// Defines the arguments for frame events.
-    /// A FrameEventArgs instance is only valid for the duration of the relevant event;
-    /// do not store references to FrameEventArgs outside this event.
+    ///     Defines the arguments for frame events.
+    ///     A FrameEventArgs instance is only valid for the duration of the relevant event;
+    ///     do not store references to FrameEventArgs outside this event.
     /// </summary>
     public class FrameEventArgs : EventArgs
     {
         private double elapsed;
 
         /// <summary>
-        /// Constructs a new FrameEventArgs instance.
+        ///     Constructs a new FrameEventArgs instance.
         /// </summary>
         public FrameEventArgs()
-        { }
+        {
+        }
 
         /// <summary>
-        /// Constructs a new FrameEventArgs instance.
+        ///     Constructs a new FrameEventArgs instance.
         /// </summary>
         /// <param name="elapsed">The amount of time that has elapsed since the previous event, in seconds.</param>
         public FrameEventArgs(double elapsed)
@@ -52,7 +53,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Double"/> that indicates how many seconds of time elapsed since the previous event.
+        ///     Gets a <see cref="System.Double" /> that indicates how many seconds of time elapsed since the previous event.
         /// </summary>
         public double Time
         {
@@ -63,6 +64,7 @@ namespace OpenTK
                 {
                     throw new ArgumentOutOfRangeException();
                 }
+
                 elapsed = value;
             }
         }
