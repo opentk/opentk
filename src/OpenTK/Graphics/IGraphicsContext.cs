@@ -5,6 +5,7 @@
  */
 
 using System;
+using OpenTK.Core;
 using OpenTK.Platform;
 
 namespace OpenTK.Graphics

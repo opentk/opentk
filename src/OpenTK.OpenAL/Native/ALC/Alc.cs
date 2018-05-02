@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
+using OpenTK.Core;
 
 /* Type Mapping
 // 8-bit boolean

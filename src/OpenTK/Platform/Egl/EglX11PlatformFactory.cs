@@ -23,6 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using OpenTK.Core;
 using OpenTK.Graphics;
 using OpenTK.Platform.X11;
 

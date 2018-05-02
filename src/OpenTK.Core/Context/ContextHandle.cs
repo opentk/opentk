@@ -6,7 +6,7 @@
 
 using System;
 
-namespace OpenTK
+namespace OpenTK.Core
 {
     /// <summary>
     /// Represents a handle to an OpenGL or OpenAL context.
@@ -30,39 +30,6 @@ namespace OpenTK
         public ContextHandle(IntPtr h)
         {
             Handle = h;
-        }
-
-        /// <summary>
-        /// Converts this instance to its equivalent string representation.
-        /// </summary>
-        /// <returns>A System.String that contains the string representation of this instance.</returns>
-        public override string ToString()
-        {
-            return Handle.ToString();
-        }
-
-        /// <summary>
-        /// Compares this instance to the specified object.
-        /// </summary>
-        /// <param name="obj">The System.Object to compare to.</param>
-        /// <returns>True if obj is a ContextHandle that is equal to this instance; false otherwise.</returns>
-        public override bool Equals(object obj)
-        {
-            if (obj is ContextHandle)
-            {
-                return Equals((ContextHandle)obj);
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Returns the hash code for this instance.
-        /// </summary>
-        /// <returns>A System.Int32 with the hash code of this instance.</returns>
-        public override int GetHashCode()
-        {
-            return Handle.GetHashCode();
         }
 
         /// <summary>
@@ -107,15 +74,30 @@ namespace OpenTK
             return !left.Equals(right);
         }
 
-        /// <summary>
-        /// Compares the numerical value of this instance to the specified ContextHandle and
-        /// returns a value indicating their relative order.
-        /// </summary>
-        /// <param name="other">The ContextHandle to compare to.</param>
-        /// <returns>
-        /// Less than 0, if this instance is less than other; 0 if both are equal; Greater than 0 if other is greater than
-        /// this instance.
-        /// </returns>
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return Handle.ToString();
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object obj)
+        {
+            if (obj is ContextHandle handle)
+            {
+                return Equals(handle);
+            }
+
+            return false;
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return Handle.GetHashCode();
+        }
+
+        /// <inheritdoc />
         public int CompareTo(ContextHandle other)
         {
             unsafe
@@ -124,11 +106,7 @@ namespace OpenTK
             }
         }
 
-        /// <summary>
-        /// Compares this instance to the specified ContextHandle for equality.
-        /// </summary>
-        /// <param name="other">The ContextHandle to compare to.</param>
-        /// <returns>True if this instance is equal to other; false otherwise.</returns>
+        /// <inheritdoc />
         public bool Equals(ContextHandle other)
         {
             return Handle == other.Handle;

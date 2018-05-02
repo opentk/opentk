@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using OpenTK.Core;
 using OpenTK.Input;
 using OpenTK.Platform.Common;
 #if !(ANDROID || IPHONE || MINIMAL)

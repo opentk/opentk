@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
+using OpenTK.Core;
 using OpenTK.Input;
 using OpenTK.Platform.Common;
 

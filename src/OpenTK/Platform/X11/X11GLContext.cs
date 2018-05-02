@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using OpenTK.Core;
 using OpenTK.Graphics;
 
 namespace OpenTK.Platform.X11

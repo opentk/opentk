@@ -26,6 +26,7 @@
 
 using System;
 using System.Collections.Generic;
+using OpenTK.Core;
 using OpenTK.OpenAL.Native;
 
 namespace OpenTK.OpenAL
@@ -708,25 +709,6 @@ namespace OpenTK.OpenAL
         ~AudioContext()
         {
             Dispose(false);
-        }
-
-        /// <summary>
-        /// Calculates the hash code for this instance.
-        /// </summary>
-        /// <returns></returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        /// <summary>
-        /// Compares this instance with another.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        /// <returns>True, if obj refers to this instance; false otherwise.</returns>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
         }
 
         /// <summary>

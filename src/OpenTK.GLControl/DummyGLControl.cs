@@ -25,6 +25,7 @@
 
 using System;
 using System.Threading;
+using OpenTK.Core;
 using OpenTK.Graphics;
 using OpenTK.Platform;
 

@@ -19,7 +19,8 @@
     <IncludeSource>true</IncludeSource>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenTK\OpenTK.csproj" />
+    <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
+    <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
   </ItemGroup>
   <Import Project="..\..\build\targets\stylecop.props" />
 </Project>

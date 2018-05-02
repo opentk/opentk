@@ -5,6 +5,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using OpenTK.Core;
 using OpenTK.Graphics;
 
 #pragma warning disable 1591

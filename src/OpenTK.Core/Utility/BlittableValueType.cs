@@ -25,10 +25,11 @@
 
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace OpenTK
+namespace OpenTK.Core
 {
     /// <summary>
     /// Checks whether the specified type parameter is a blittable value type.
@@ -91,7 +92,6 @@ namespace OpenTK
         // Throws a NotSupportedException if it is not.
         private static bool CheckType(Type type)
         {
-            //Debug.Print("Checking type {0} (size: {1} bytes).", type.Name, Marshal.SizeOf(type));
             if (type.IsPrimitive)
             {
                 return true;
@@ -103,16 +103,10 @@ namespace OpenTK
             }
 
             var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            Debug.Indent();
-            foreach (var field in fields)
+            if (fields.Any(field => !CheckType(field.FieldType)))
             {
-                if (!CheckType(field.FieldType))
-                {
-                    return false;
-                }
+                return false;
             }
-
-            Debug.Unindent();
 
             return Stride != 0;
         }
@@ -121,11 +115,12 @@ namespace OpenTK
         // or [StructLayout(LayoutKind.Explicit)]
         private static bool CheckStructLayoutAttribute(Type type)
         {
-            var attr =
-                (StructLayoutAttribute[])type.GetCustomAttributes(typeof(StructLayoutAttribute), true);
+            if (!(type.GetCustomAttribute(typeof(StructLayoutAttribute), true) is StructLayoutAttribute attr))
+            {
+                return false;
+            }
 
-            if (attr == null ||
-                attr != null && attr.Length > 0 && attr[0].Value != LayoutKind.Explicit && attr[0].Pack != 1)
+            if (attr.Value != LayoutKind.Explicit && attr.Pack != 1)
             {
                 return false;
             }

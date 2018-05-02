@@ -27,6 +27,7 @@
 
 using System;
 using System.Diagnostics;
+using OpenTK.Core;
 using OpenTK.Platform;
 
 namespace OpenTK.Graphics

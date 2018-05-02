@@ -31,6 +31,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
+using OpenTK.Core;
 using OpenTK.Platform.Common;
 #if !MINIMAL
 using System.Drawing;

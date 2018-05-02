@@ -4,6 +4,7 @@ using System.Threading;
 using Cairo;
 using Gdk;
 using Gtk;
+using OpenTK.Core;
 using OpenTK.Graphics;
 
 namespace OpenTK

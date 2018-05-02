@@ -8,6 +8,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
+using OpenTK.Core;
 using OpenTK.Mathematics;
 
 /* Type Mapping

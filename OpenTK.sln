@@ -52,6 +52,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Mathematics", "src\O
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.OpenAL", "src\OpenTK.OpenAL\OpenTK.OpenAL.csproj", "{6E833F6A-F48D-444C-A44B-FB489137E233}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Core", "src\OpenTK.Core\OpenTK.Core.csproj", "{30B46B07-2836-4862-B7FA-A158B581F83E}"
+EndProject
 
 
 Global
@@ -112,6 +114,10 @@ Global
 		{6E833F6A-F48D-444C-A44B-FB489137E233}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E833F6A-F48D-444C-A44B-FB489137E233}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E833F6A-F48D-444C-A44B-FB489137E233}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30B46B07-2836-4862-B7FA-A158B581F83E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30B46B07-2836-4862-B7FA-A158B581F83E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30B46B07-2836-4862-B7FA-A158B581F83E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30B46B07-2836-4862-B7FA-A158B581F83E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D4E8E132-A698-41CC-B101-0FC17C0470DC} = {45E6173C-631D-459C-BB8C-31C44BCB9B61}

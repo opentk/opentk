@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using OpenTK.Core;
 using OpenTK.OpenAL.Native;
 
 namespace OpenTK.OpenAL
