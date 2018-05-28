@@ -53,17 +53,23 @@ namespace Bind
 
         private readonly IEnumerable<string> _overrides;
 
-        public FuncProcessor(IBind generator, IEnumerable<string> overrides)
+        public FuncProcessor(IGenerator generator, IEnumerable<string> overrides)
         {
             Generator = generator ?? throw new ArgumentNullException(nameof(generator));
             _overrides = overrides ?? throw new ArgumentNullException(nameof(overrides));
         }
 
-        private IBind Generator { get; }
-        private Settings Settings => Generator.Settings;
+        private IGenerator Generator { get; }
 
-        public FunctionCollection Process(EnumProcessor enumProcessor, DocProcessor docProcessor,
-            DelegateCollection delegates, EnumCollection enums, string apiname, string apiversion)
+        public FunctionCollection Process
+        (
+            EnumProcessor enumProcessor,
+            DocProcessor docProcessor,
+            DelegateCollection delegates,
+            EnumCollection enums,
+            string apiname,
+            string apiversion
+        )
         {
             foreach (var file in _overrides)
             {
@@ -81,9 +87,9 @@ namespace Bind
                         {
                             var replace = GetFuncOverride(nav, d, apiname, apiversion);
                             TranslateExtension(d);
-                            TranslateReturnType(d, replace, nav, enumProcessor, enums, apiname, version);
-                            TranslateParameters(d, replace, nav, enumProcessor, enums, apiname, version);
-                            TranslateAttributes(d, replace, nav, apiname, version);
+                            TranslateReturnType(d, replace, nav, enumProcessor, enums, apiname);
+                            TranslateParameters(d, replace, nav, enumProcessor, enums, apiname);
+                            TranslateAttributes(d, replace, nav);
                         }
                     }
 
@@ -96,9 +102,9 @@ namespace Bind
                         foreach (XPathNavigator overloadElement in overloadElements)
                         {
                             var overload = new Delegate(d);
-                            TranslateReturnType(overload, overloadElement, nav, enumProcessor, enums, apiname, version);
-                            TranslateParameters(overload, overloadElement, nav, enumProcessor, enums, apiname, version);
-                            TranslateAttributes(overload, overloadElement, nav, apiname, version);
+                            TranslateReturnType(overload, overloadElement, nav, enumProcessor, enums, apiname);
+                            TranslateParameters(overload, overloadElement, nav, enumProcessor, enums, apiname);
+                            TranslateAttributes(overload, overloadElement, nav);
                             overloadList.Add(overload);
                         }
                     }
@@ -134,8 +140,7 @@ namespace Bind
             return wrappers;
         }
 
-        private void GenerateDocumentation(FunctionCollection wrappers,
-            EnumProcessor enumProcessor, DocProcessor docProcessor)
+        private void GenerateDocumentation(FunctionCollection wrappers, EnumProcessor enumProcessor, DocProcessor docProcessor)
         {
             foreach (var list in wrappers)
             {
@@ -161,22 +166,10 @@ namespace Bind
             var slot = -1;
             foreach (var list in delegates.Values)
             {
-                var func = list.First();
-                if (func.RequiresSlot(Settings))
+                slot++;
+                foreach (var d in list)
                 {
-                    slot++;
-                    foreach (var d in list)
-                    {
-                        d.Slot = slot;
-                    }
-                }
-                else
-                {
-                    // Core function routed through DllImport - no slot generated
-                    foreach (var d in list)
-                    {
-                        d.Slot = -1;
-                    }
+                    d.Slot = slot;
                 }
             }
         }
@@ -195,8 +188,7 @@ namespace Bind
             }
         }
 
-        private static string GetPath(string apipath, string apiname, string apiversion, string function,
-            string extension)
+        private static string GetPath(string apipath, string apiname, string apiversion, string function, string extension)
         {
             var path = new StringBuilder();
             path.Append("/signatures/");
@@ -215,20 +207,22 @@ namespace Bind
                 path.Append($"[contains(concat('|', @version, '|'), '|{apiversion}|') or not(boolean(@version))]");
             }
 
-            if (function != null)
+            if (function == null)
             {
-                if (extension != null)
-                {
-                    // match an override that has this specific extension
-                    // *or* one that has no extension at all (equivalent
-                    // to "match all possible extensions")
-                    path.Append($"/function[contains(concat('|', @name, '|'), '|{function}|') and " +
-                                $"(contains(concat('|', @extension, '|'), '|{extension}|') or not(boolean(@extension)))]");
-                }
-                else
-                {
-                    path.Append($"/function[contains(concat('|', @name, '|'), '|{function}|')]");
-                }
+                return path.ToString();
+            }
+
+            if (extension != null)
+            {
+                // match an override that has this specific extension
+                // *or* one that has no extension at all (equivalent
+                // to "match all possible extensions")
+                path.Append($"/function[contains(concat('|', @name, '|'), '|{function}|') and " +
+                            $"(contains(concat('|', @extension, '|'), '|{extension}|') or not(boolean(@extension)))]");
+            }
+            else
+            {
+                path.Append($"/function[contains(concat('|', @name, '|'), '|{function}|')]");
             }
 
             return path.ToString();
@@ -244,10 +238,7 @@ namespace Bind
             return GetPath("replace", apiname, apiversion, function, extension);
         }
 
-        private void TranslateType(Type type,
-            XPathNavigator functionOverride, XPathNavigator overrides,
-            EnumProcessor enumProcessor, EnumCollection enums,
-            string category, string apiname)
+        private void TranslateType(Type type, XPathNavigator overrides, EnumProcessor enumProcessor, EnumCollection enums, string category, string apiname)
         {
             category = enumProcessor.TranslateEnumName(category);
 
@@ -264,21 +255,11 @@ namespace Bind
             {
                 type.IsEnum = true;
 
-                if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
-                {
-                    type.QualifiedType = "int";
-                }
-                else
-                {
-                    // Some functions and enums have the same names.
-                    // Make sure we reference the enums rather than the functions.
-                    if (normal)
-                    {
-                        type.QualifiedType = $"{Settings.EnumsOutput}.{@enum.Name}";
-                    }
-                }
+                // Some functions and enums have the same names.
+                // Make sure we reference the enums rather than the functions.
+                type.QualifiedType = $"{Generator.Namespace}.{@enum.Name}";
             }
-            else if (Generator.GLTypes.TryGetValue(type.CurrentType, out var s))
+            else if (Generator.APITypes.TryGetValue(type.CurrentType, out var s))
             {
                 // Check if the parameter is a generic GLenum. If it is, search for a better match,
                 // otherwise fallback to Settings.CompleteEnumName (named 'All' by default).
@@ -286,25 +267,10 @@ namespace Bind
                 {
                     type.IsEnum = true;
 
-                    if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
+                    // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
+                    if (enums.ContainsKey(category))
                     {
-                        type.QualifiedType = "int";
-                    }
-                    else
-                    {
-                        // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
-                        // Note: for backwards compatibility we use "category" only for the gl api.
-                        // glcore, gles1 and gles2 use the All enum instead.
-                        if (apiname == "gl" && enums.ContainsKey(category))
-                        {
-                            type.QualifiedType =
-                                $"{Settings.EnumsOutput}{Settings.NamespaceSeparator}{enumProcessor.TranslateEnumName(category)}";
-                        }
-                        else
-                        {
-                            type.QualifiedType =
-                                $"{Settings.EnumsOutput}{Settings.NamespaceSeparator}{Settings.CompleteEnumName}";
-                        }
+                        type.QualifiedType = enumProcessor.TranslateEnumName(category);
                     }
                 }
                 else
@@ -322,8 +288,8 @@ namespace Bind
             }
 
             type.CurrentType =
-                Generator.CSTypes.ContainsKey(type.CurrentType)
-                    ? Generator.CSTypes[type.CurrentType]
+                Generator.LanguageTypes.ContainsKey(type.CurrentType)
+                    ? Generator.LanguageTypes[type.CurrentType]
                     : type.CurrentType;
 
             // Make sure that enum parameters follow enum overrides, i.e.
@@ -387,7 +353,7 @@ namespace Bind
         private static string GetTrimmedExtension(string name, string extension)
         {
             // Extensions are always uppercase
-            var index = name.LastIndexOf(extension.ToUpper());
+            var index = name.LastIndexOf(extension.ToUpper(), StringComparison.Ordinal);
             if (index >= 0)
             {
                 name = name.Remove(index);
@@ -436,8 +402,7 @@ namespace Bind
             return trimmedName;
         }
 
-        private static XPathNodeIterator GetFuncOverload(XPathNavigator nav, Delegate d, string apiname,
-            string apiversion)
+        private static XPathNodeIterator GetFuncOverload(XPathNavigator nav, Delegate d, string apiname, string apiversion)
         {
             // Try a few different extension variations that appear in the overrides xml file
             string[] extensions = { d.Extension, TranslateExtension(d.Extension), d.Extension.ToUpper() };
@@ -555,14 +520,19 @@ namespace Bind
         // 3) A generic object or void* (translates to IntPtr)
         // 4) A GLenum (translates to int on Legacy.Tao or GL.Enums.GLenum otherwise).
         // Return types must always be CLS-compliant, because .Net does not support overloading on return types.
-        private void TranslateReturnType(Delegate d,
-            XPathNavigator functionOverride, XPathNavigator nav,
-            EnumProcessor enumProcessor, EnumCollection enums,
-            string apiname, string apiversion)
+        private void TranslateReturnType
+        (
+            Delegate d,
+            XPathNavigator functionOverride,
+            XPathNavigator nav,
+            EnumProcessor enumProcessor,
+            EnumCollection enums,
+            string apiname
+        )
         {
             ApplyReturnTypeReplacement(d, functionOverride);
 
-            TranslateType(d.ReturnType, functionOverride, nav, enumProcessor, enums, d.Category, apiname);
+            TranslateType(d.ReturnType, nav, enumProcessor, enums, d.Category, apiname);
 
             if (d.ReturnType.CurrentType.ToLower() == "void" && d.ReturnType.Pointer != 0)
             {
@@ -585,15 +555,7 @@ namespace Bind
 
             if (d.ReturnType.CurrentType.Contains("GLenum"))
             {
-                if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
-                {
-                    d.ReturnType.QualifiedType =
-                        $"{Settings.EnumsOutput}{Settings.NamespaceSeparator}{Settings.CompleteEnumName}";
-                }
-                else
-                {
-                    d.ReturnType.QualifiedType = "int";
-                }
+                d.ReturnType.QualifiedType = "int";
             }
 
             if (d.ReturnType.CurrentType.ToLower().Contains("bool"))
@@ -605,30 +567,21 @@ namespace Bind
             d.ReturnType.CurrentType = GetCLSCompliantType(d.ReturnType);
         }
 
-        private Delegate GetCLSCompliantDelegate(Delegate d)
-        {
-            var f = new Delegate(d);
-
-            for (var i = 0; i < f.Parameters.Count; i++)
-            {
-                f.Parameters[i].CurrentType = GetCLSCompliantType(f.Parameters[i]);
-            }
-
-            f.ReturnType.CurrentType = GetCLSCompliantType(f.ReturnType);
-
-            return f;
-        }
-
-        private void TranslateParameters(Delegate d,
-            XPathNavigator functionOverride, XPathNavigator nav,
-            EnumProcessor enumProcessor, EnumCollection enums,
-            string apiname, string apiversion)
+        private void TranslateParameters
+        (
+            Delegate d,
+            XPathNavigator functionOverride,
+            XPathNavigator nav,
+            EnumProcessor enumProcessor,
+            EnumCollection enums,
+            string apiname
+        )
         {
             ApplyParameterReplacement(d, functionOverride);
 
             for (var i = 0; i < d.Parameters.Count; i++)
             {
-                TranslateParameter(d.Parameters[i], functionOverride, nav, enumProcessor, enums, d.Category, apiname);
+                TranslateParameter(d.Parameters[i], nav, enumProcessor, enums, d.Category, apiname);
                 if (d.Parameters[i].CurrentType == "UInt16" && d.Name.Contains("LineStipple"))
                 {
                     d.Parameters[i].WrapperType |= WrapperTypes.UncheckedParameter;
@@ -649,12 +602,17 @@ namespace Bind
             }
         }
 
-        private void TranslateParameter(Parameter p,
-            XPathNavigator functionOverride, XPathNavigator overrides,
-            EnumProcessor enumProcessor, EnumCollection enums,
-            string category, string apiname)
+        private void TranslateParameter
+        (
+            Parameter p,
+            XPathNavigator overrides,
+            EnumProcessor enumProcessor,
+            EnumCollection enums,
+            string category,
+            string apiname
+        )
         {
-            TranslateType(p, functionOverride, overrides, enumProcessor, enums, category, apiname);
+            TranslateType(p, overrides, enumProcessor, enums, category, apiname);
 
             // Translate char* -> string. This simplifies the rest of the logic below
             if (p.CurrentType.ToLower().Contains("char") && p.Pointer > 0)
@@ -717,17 +675,11 @@ namespace Bind
 
             if (Utilities.CSharpKeywords.Contains(p.Name))
             {
-                p.Name = Settings.KeywordEscapeCharacter + p.Name;
+                p.Name = $"@{p.Name}";
             }
-
-            // This causes problems with bool arrays
-            //if (CurrentType.ToLower().Contains("bool"))
-            //    WrapperType = WrapperTypes.BoolParameter;
         }
 
-        private void TranslateAttributes(Delegate d,
-            XPathNavigator functionOverride, XPathNavigator nav,
-            string apiname, string apiversion)
+        private void TranslateAttributes(Delegate d, XPathNavigator functionOverride, XPathNavigator nav)
         {
             if (functionOverride == null)
             {
@@ -767,33 +719,6 @@ namespace Bind
                 wrappers.AddRange(CreateNormalWrappers(d, enums));
             }
 
-            if ((Settings.Compatibility & Settings.Legacy.KeepUntypedEnums) == 0)
-            {
-                return wrappers;
-            }
-
-            // Generate an "All" overload for every function that takes strongly-typed enums
-            var overloads = new List<Function>();
-            foreach (var list in wrappers.Values)
-            {
-                overloads.AddRange(list.Where(f => f.Parameters.Any(p => p.IsEnum)).Select(f =>
-                {
-                    var fnew = new Function(f);
-                    fnew.Obsolete = "Use strongly-typed overload instead";
-                    // Note that we can only overload parameters, not the return type
-                    foreach (var p in fnew.Parameters)
-                    {
-                        if (p.IsEnum)
-                        {
-                            p.CurrentType = Settings.CompleteEnumName;
-                        }
-                    }
-
-                    return fnew;
-                }));
-            }
-
-            wrappers.AddRange(overloads);
             return wrappers;
         }
 
@@ -935,11 +860,6 @@ namespace Bind
             if (type.CLSCompliant)
             {
                 return type.CurrentType;
-            }
-
-            if (type.Pointer != 0 && Settings.Compatibility == Settings.Legacy.Tao)
-            {
-                return "IntPtr";
             }
 
             switch (type.CurrentType)
@@ -1089,8 +1009,7 @@ namespace Bind
             return f;
         }
 
-        private List<Function> GetWrapper(IDictionary<WrapperTypes, List<Function>> dictionary, WrapperTypes key,
-            Function raw)
+        private List<Function> GetWrapper(IDictionary<WrapperTypes, List<Function>> dictionary, WrapperTypes key, Function raw)
         {
             if (!dictionary.ContainsKey(key))
             {
@@ -1161,20 +1080,6 @@ namespace Bind
 
                             p.Reference = true;
                             p.Pointer--;
-                        }
-                    }
-
-                    if ((parameter.WrapperType & WrapperTypes.PointerParameter) != 0)
-                    {
-                        foreach (var wrapper in GetWrapper(wrappers, WrapperTypes.PointerParameter, func))
-                        {
-                            var p = wrapper.Parameters[i];
-
-                            if (Settings.IsEnabled(Settings.Legacy.NoPublicUnsafeFunctions))
-                            {
-                                p.QualifiedType = "IntPtr";
-                                p.Pointer = 0;
-                            }
                         }
                     }
 

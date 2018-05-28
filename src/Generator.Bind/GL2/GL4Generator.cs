@@ -24,31 +24,40 @@
 //
 
 using System.IO;
+using System.Linq;
 
 namespace Bind.GL2
 {
+    /// <summary>
+    /// Generates API bindings for the OpenGL 4 API.
+    /// </summary>
     internal class GL4Generator : Generator
     {
-        public GL4Generator(Settings settings)
-            : base(settings)
+        /// <inheritdoc/>
+        public override string APIIdentifier => "GL4";
+
+        /// <inheritdoc/>
+        public override string OutputSubfolder => "OpenGL4";
+
+        /// <inheritdoc/>
+        public override string Namespace => "OpenTK.Graphics.OpenGL4";
+
+        /// <inheritdoc/>
+        protected override string ProfileName => "glcore";
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GL4Generator"/> class.
+        /// </summary>
+        public GL4Generator()
         {
-            Settings.DefaultOutputPath = Path.Combine(
-                Settings.DefaultOutputPath, "../OpenGL4");
-            Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL4";
-            Settings.DefaultImportsFile = "GL4Core.cs";
-            Settings.DefaultDelegatesFile = "GL4Delegates.cs";
-            Settings.DefaultEnumsFile = "GL4Enums.cs";
-            Settings.DefaultWrappersFile = "GL4.cs";
-            Settings.DefaultDocPath = Path.Combine(
-                Settings.DefaultDocPath, "GL");
+            var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "GL2", "GL");
+            var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
 
-            Settings.OverridesFiles.Add("GL2/overrides.xml");
-            Settings.OverridesFiles.Add("GL2/GL/");
-
-            Profile = "glcore";
-
-            //Settings.DefaultCompatibility |=
-            //    Settings.Legacy.UseDllImports | Settings.Legacy.UseWindowsCompatibleGL;
+            OverrideFiles = new[]
+            {
+                Path.Combine(Program.Arguments.InputPath, "GL2", "overrides.xml")
+            }
+            .Concat(extraOverrides);
         }
     }
 }

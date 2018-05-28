@@ -119,8 +119,6 @@ namespace Bind
 
     internal static class Utilities
     {
-        public static readonly char[] Separators = { ' ', '\n', ',', '(', ')', ';', '#' };
-
         // Both GL and ES contains SGI extension enums, even though no function
         // uses them. This is a remnant from the glory days of gl.spec and GL 1.1.
         // Note: REMOVING THESE WILL BREAK BINARY-COMPATIBILITY WITH OPENTK 1.0,
@@ -306,20 +304,6 @@ namespace Bind
         internal static string StripGL2Extension(string p)
         {
             return p.Substring(0, p.Length - GetGL2Extension(p).Length);
-        }
-
-        public static bool RequiresSlot(this Delegate d, Settings settings)
-        {
-            double version;
-            double.TryParse(
-                d.Version,
-                NumberStyles.Float,
-                CultureInfo.InvariantCulture,
-                out version);
-            return
-                !settings.IsEnabled(Settings.Legacy.UseDllImports) ||
-                settings.IsEnabled(Settings.Legacy.UseWindowsCompatibleGL) && version > 1.1 ||
-                d.Extension != "Core";
         }
     }
 }

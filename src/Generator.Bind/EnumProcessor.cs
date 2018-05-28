@@ -38,14 +38,13 @@ namespace Bind
     {
         private readonly IEnumerable<string> _overrides;
 
-        public EnumProcessor(IBind generator, IEnumerable<string> overrides)
+        public EnumProcessor(IGenerator generator, IEnumerable<string> overrides)
         {
             Generator = generator ?? throw new ArgumentNullException(nameof(generator));
             _overrides = overrides ?? throw new ArgumentNullException(nameof(overrides));
         }
 
-        private IBind Generator { get; }
-        private Settings Settings => Generator.Settings;
+        private IGenerator Generator { get; }
 
         public EnumCollection Process(EnumCollection enums, string apiname)
         {
@@ -159,7 +158,7 @@ namespace Bind
             {
                 if (char.IsDigit(name[0]))
                 {
-                    name = Settings.ConstantPrefix + name;
+                    name = $"{Generator.ConstantPrefix}{name}";
                 }
 
                 var translator = new StringBuilder(name);
@@ -229,10 +228,6 @@ namespace Bind
                 translator.Replace("SRgb", "Srgb");
 
                 name = translator.ToString();
-                if (name.StartsWith(Settings.EnumPrefix))
-                {
-                    name = name.Substring(Settings.EnumPrefix.Length);
-                }
             }
 
             return name;
@@ -315,17 +310,16 @@ namespace Bind
             else
             {
                 // Translate the constant's name to match .Net naming conventions
-                var nameIsAllCaps = s.AsEnumerable().All(c => char.IsLetter(c) ? char.IsUpper(c) : true);
+                var nameIsAllCaps = s.AsEnumerable().All(c => !char.IsLetter(c) || char.IsUpper(c));
                 var nameContainsUnderscore = s.Contains("_");
-                if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None &&
-                    (nameIsAllCaps || nameContainsUnderscore))
+                if (nameIsAllCaps || nameContainsUnderscore)
                 {
                     var nextCharUppercase = true;
                     var isAfterDigit = false;
 
                     if (!isValue && char.IsDigit(s[0]))
                     {
-                        s = Settings.ConstantPrefix + s;
+                        s = Generator.ConstantPrefix + s;
                     }
 
                     foreach (var c in s)
@@ -383,9 +377,9 @@ namespace Bind
             }
 
             // Strip the prefix, if any.
-            if (value.StartsWith(Settings.ConstantPrefix))
+            if (value.StartsWith(Generator.ConstantPrefix))
             {
-                value = value.Substring(Settings.ConstantPrefix.Length);
+                value = value.Substring(Generator.ConstantPrefix.Length);
             }
 
             return TranslateConstantName(value, IsValue(value));

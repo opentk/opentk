@@ -5,12 +5,12 @@ using Bind.GL2;
 namespace Bind.ES
 {
     /// <summary>
-    /// Generates API bindings for the OpenGL ES 3.1 API.
+    /// Generates API bindings for OpenGL ES 1.1.
     /// </summary>
-    internal class ES31Generator : Generator
+    internal class ES11Generator : Generator
     {
         /// <inheritdoc/>
-        public override string APIIdentifier => "ES31";
+        public override string APIIdentifier => "ES11";
 
         /// <inheritdoc/>
         public override string OutputSubfolder => APIIdentifier;
@@ -18,21 +18,21 @@ namespace Bind.ES
         /// <inheritdoc/>
         public override string Namespace => $"OpenTK.Graphics.{APIIdentifier}";
 
+        /// <remarks>
+        /// The ES 1.1 generator uses the ES2.0 documentation, since there are no docbook sources available for 1.1.
+        /// </remarks>
         /// <inheritdoc/>
-        public override string SpecificationDocumentationPath => APIIdentifier;
+        public override string SpecificationDocumentationPath => "ES20";
 
         /// <inheritdoc/>
-        protected override string ProfileName => "gles2";
-
-        /// <inheritdoc/>
-        protected override string Version => "2.0|3.0|3.1";
+        protected override string ProfileName => "gles1";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ES31Generator"/> class.
+        /// Initializes a new instance of the <see cref="ES11Generator"/> class.
         /// </summary>
-        public ES31Generator()
+        public ES11Generator()
         {
-            var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "GL2", "ES", "3.1");
+            var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "GL2", "GL");
             var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
 
             OverrideFiles = new[]

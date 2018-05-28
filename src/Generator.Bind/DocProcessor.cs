@@ -35,11 +35,18 @@ namespace Bind
         private Documentation _cached;
         private string _lastFile;
 
-        public DocProcessor(IBind generator)
+        public DocProcessor(IGenerator generator)
         {
             Generator = generator ?? throw new ArgumentNullException();
-            foreach (var file in Directory.GetFiles(Settings.DocPath).Concat(
-                Directory.GetFiles(Settings.FallbackDocPath)))
+
+            var docFilePath = Path.Combine
+            (
+                Program.Arguments.DocumentationPath,
+                Generator.SpecificationDocumentationPath
+            );
+
+            var docFiles = Directory.GetFiles(docFilePath, "*.xml", SearchOption.AllDirectories);
+            foreach (var file in docFiles)
             {
                 var name = Path.GetFileName(file);
                 if (!_documentationFiles.ContainsKey(name))
@@ -49,36 +56,36 @@ namespace Bind
             }
         }
 
-        private IBind Generator { get; }
-        private Settings Settings => Generator.Settings;
+        private IGenerator Generator { get; }
 
         public Documentation Process(Function f, EnumProcessor processor)
         {
-            Documentation docs = null;
-
             if (_documentationCache.ContainsKey(f.WrappedDelegate.Name))
             {
                 return _documentationCache[f.WrappedDelegate.Name];
             }
 
-            var file = Settings.FunctionPrefix + f.WrappedDelegate.Name + ".xml";
+            var file = Generator.FunctionPrefix + f.WrappedDelegate.Name + ".xml";
             if (!_documentationFiles.ContainsKey(file))
             {
-                file = Settings.FunctionPrefix + f.TrimmedName + ".xml";
+                file = Generator.FunctionPrefix + f.TrimmedName + ".xml";
             }
 
             if (!_documentationFiles.ContainsKey(file))
             {
-                file = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(Numbers) + ".xml";
+                file = Generator.FunctionPrefix + f.TrimmedName.TrimEnd(Numbers) + ".xml";
             }
 
-            docs =
-                (_documentationFiles.ContainsKey(file) ? ProcessFile(_documentationFiles[file], processor) : null) ??
-                new Documentation
+            var docs =
+                (_documentationFiles.ContainsKey(file) ? ProcessFile(_documentationFiles[file], processor) : null)
+                ?? new Documentation
                 {
                     Summary = string.Empty,
-                    Parameters = f.Parameters.Select(p =>
-                        new DocumentationParameter(p.Name, string.Empty)).ToList()
+                    Parameters = f.Parameters.Select
+                    (
+                        p =>
+                            new DocumentationParameter(p.Name, string.Empty)
+                    ).ToList()
                 };
 
             _documentationCache.Add(f.WrappedDelegate.Name, docs);
@@ -92,15 +99,13 @@ namespace Bind
         // Todo: Some files include more than 1 function - find a way to map these extra functions.
         private Documentation ProcessFile(string file, EnumProcessor processor)
         {
-            string text;
-
             if (_lastFile == file)
             {
                 return _cached;
             }
 
             _lastFile = file;
-            text = File.ReadAllText(file);
+            var text = File.ReadAllText(file);
 
             text = text
                 .Replace("&epsi;", "epsilon") // Fix unrecognized &epsi; entities
@@ -113,16 +118,16 @@ namespace Bind
             {
                 var removed = text.Substring(m.Index, m.Length);
                 text = text.Remove(m.Index, m.Length);
-                var equation = removed.IndexOf("eqn");
+                var equation = removed.IndexOf("eqn", StringComparison.Ordinal);
                 if (equation > 0)
                 {
                     // Find the start and end of the equation string
                     var eqnStart = equation + 4;
-                    var eqnEnd = removed.IndexOf(":-->") - equation - 4;
+                    var eqnEnd = removed.IndexOf(":-->", StringComparison.Ordinal) - equation - 4;
                     if (eqnEnd < 0)
                     {
                         // Note: a few docs from man4 delimit eqn end with ": -->"
-                        eqnEnd = removed.IndexOf(": -->") - equation - 4;
+                        eqnEnd = removed.IndexOf(": -->", StringComparison.Ordinal) - equation - 4;
                     }
 
                     if (eqnEnd < 0)
@@ -161,21 +166,17 @@ namespace Bind
                 throw new ArgumentNullException();
             }
 
-            var noConstProcessing = Settings.Legacy.NoAdvancedEnumProcessing | Settings.Legacy.ConstIntEnums;
-            if (!Generator.Settings.IsEnabled(noConstProcessing))
+            // Translate all GL_FOO_BAR constants according to EnumProcessor
+            foreach (var e in doc.XPathSelectElements("//constant"))
             {
-                // Translate all GL_FOO_BAR constants according to EnumProcessor
-                foreach (var e in doc.XPathSelectElements("//constant"))
+                var c = e.Value;
+                if (c.StartsWith(Generator.ConstantPrefix))
                 {
-                    var c = e.Value;
-                    if (c.StartsWith(Settings.ConstantPrefix))
-                    {
-                        // Remove "GL_" from the beginning of the string
-                        c = c.Replace(Settings.ConstantPrefix, string.Empty);
-                    }
-
-                    e.Value = enumProcessor.TranslateConstantName(c, false);
+                    // Remove "GL_" from the beginning of the string
+                    c = c.Replace(Generator.ConstantPrefix, string.Empty);
                 }
+
+                e.Value = enumProcessor.TranslateConstantName(c, false);
             }
 
             // Create inline documentation

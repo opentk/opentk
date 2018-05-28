@@ -59,7 +59,7 @@ namespace Bind.Structures
 
         /// <summary>
         /// Gets the name of the parameter. If the name matches a keyword of the current language,
-        /// then it is escaped with <see cref="Settings.KeywordEscapeCharacter" />.
+        /// then it is escaped with an @ symbol.
         /// </summary>
         public string Name
         {
@@ -214,7 +214,6 @@ namespace Bind.Structures
         }
 
         public bool Rebuild { get; set; }
-        private Settings Settings { get; set; }
 
         public bool HasPointerParameters
         {

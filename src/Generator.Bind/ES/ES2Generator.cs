@@ -3,32 +3,38 @@ using Bind.GL2;
 
 namespace Bind.ES
 {
-    // Generation implementation for OpenGL ES 2.0 and 3.0
+    /// <summary>
+    /// Generates API bindings for OpenGL ES 2.0.
+    /// </summary>
     internal class ES2Generator : Generator
     {
-        public ES2Generator(Settings settings)
-            : base(settings)
+        /// <inheritdoc/>
+        public override string APIIdentifier => "ES20";
+
+        /// <inheritdoc/>
+        public override string OutputSubfolder => APIIdentifier;
+
+        /// <inheritdoc/>
+        public override string Namespace => $"OpenTK.Graphics.{APIIdentifier}";
+
+        /// <inheritdoc/>
+        public override string SpecificationDocumentationPath => APIIdentifier;
+
+        /// <inheritdoc/>
+        protected override string ProfileName => "gles2";
+
+        /// <inheritdoc/>
+        protected override string Version => "2.0";
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ES2Generator"/> class.
+        /// </summary>
+        public ES2Generator()
         {
-            Settings.DefaultOutputPath = Path.Combine(
-                Settings.DefaultOutputPath, "../ES20");
-            Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES20";
-            Settings.DefaultImportsFile = "ES20Core.cs";
-            Settings.DefaultDelegatesFile = "ES20Delegates.cs";
-            Settings.DefaultEnumsFile = "ES20Enums.cs";
-            Settings.DefaultWrappersFile = "ES20.cs";
-            Settings.DefaultDocPath = Path.Combine(
-                Settings.DefaultDocPath, "ES20");
-
-            Settings.OverridesFiles.Add("GL2/overrides.xml");
-
-            Profile = "gles2";
-            Version = "2.0";
-
-            // For compatibility with OpenTK 1.0 and Xamarin, generate
-            // overloads using the "All" enum in addition to strongly-typed enums.
-            // This can be disabled by passing "-o:-keep_untyped_enums" as a cmdline parameter.
-            Settings.DefaultCompatibility |= Settings.Legacy.KeepUntypedEnums;
-            //Settings.DefaultCompatibility |= Settings.Legacy.UseDllImports;
+            OverrideFiles = new[]
+            {
+                Path.Combine(Program.Arguments.InputPath, "GL2", "overrides.xml")
+            };
         }
     }
 }
