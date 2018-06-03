@@ -37,6 +37,8 @@ namespace OpenTK.Input
         private MouseScroll scroll;
         private ushort buttons;
 
+        public bool HasPreciseScroll { get; internal set; }
+
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the specified
         /// <see cref="OpenTK.Input.MouseButton"/> is pressed.

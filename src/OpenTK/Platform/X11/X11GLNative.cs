@@ -1094,7 +1094,7 @@ namespace OpenTK.Platform.X11
                             {
                                 // High resolution scroll events not supported
                                 // fallback to the old Button4-7 scroll buttons
-                                OnMouseWheel(dx, dy);
+                                OnMouseWheel(dx, dy, false);
                             }
                         }
                         break;

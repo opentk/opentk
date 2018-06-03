@@ -540,14 +540,14 @@ namespace OpenTK.Platform.Windows
         {
             // This is due to inconsistent behavior of the WParam value on 64bit arch, whese
             // wparam = 0xffffffffff880000 or wparam = 0x00000000ff100000
-            OnMouseWheel(0, ((long)wParam << 32 >> 48) / 120.0f);
+            OnMouseWheel(0, ((long)wParam << 32 >> 48) / 120.0f, false);
         }
 
         private void HandleMouseHWheel(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             // This is due to inconsistent behavior of the WParam value on 64bit arch, whese
             // wparam = 0xffffffffff880000 or wparam = 0x00000000ff100000
-            OnMouseWheel(((long)wParam << 32 >> 48) / 120.0f, 0);
+            OnMouseWheel(((long)wParam << 32 >> 48) / 120.0f, 0, false);
         }
 
         private void HandleLButtonDown(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)

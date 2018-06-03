@@ -761,7 +761,8 @@ namespace OpenTK.Platform.MacOS
                     case NSEventType.ScrollWheel:
                         {
                             float dx, dy;
-                            if (Cocoa.SendBool(e, selHasPreciseScrollingDeltas))
+                            bool isPrecise = Cocoa.SendBool(e, selHasPreciseScrollingDeltas);
+                            if (isPrecise)
                             {
                                 dx = Cocoa.SendFloat(e, selScrollingDeltaX) * MacOSFactory.ScrollFactor;
                                 dy = Cocoa.SendFloat(e, selScrollingDeltaY) * MacOSFactory.ScrollFactor;
@@ -778,7 +779,7 @@ namespace OpenTK.Platform.MacOS
                                 // Note: OpenTK follows the win32 convention, where
                                 // (+h, +v) = (right, up). MacOS reports (+h, +v) = (left, up)
                                 // so we need to flip the horizontal scroll direction.
-                                OnMouseWheel(-dx, dy);
+                                OnMouseWheel(-dx, dy, isPrecise);
                             }
                         }
                         break;
@@ -1151,6 +1152,7 @@ namespace OpenTK.Platform.MacOS
                     NSBitmapFormat.AlphaFirst,
                     4 * cursor.Width,
                     32);
+
             if (imgdata == IntPtr.Zero)
             {
                 Debug.Print("Failed to create NSBitmapImageRep with size ({0},{1]})",

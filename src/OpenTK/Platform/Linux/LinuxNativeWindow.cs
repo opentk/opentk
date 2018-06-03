@@ -318,7 +318,7 @@ namespace OpenTK.Platform.Linux
             {
                 float dx = mouse.Scroll.X - previous_mouse.Scroll.X;
                 float dy = mouse.Scroll.Y - previous_mouse.Scroll.Y;
-                OnMouseWheel(dx, dy);
+                OnMouseWheel(dx, dy, false);
             }
 
             // Handle mouse focus
