@@ -124,8 +124,6 @@ namespace Bind
         {
             /// <summary>Default value.</summary>
             None = 0x00,
-            /// <summary>Leave enums in the default STRANGE_capitalization.ALL_CAPS form.</summary>
-            NoAdvancedEnumProcessing = 0x02,
             /// <summary>Don't allow unsafe wrappers in the interface.</summary>
             NoPublicUnsafeFunctions = 0x04,
             /// <summary>Don't trim the [fdisub]v? endings from functions.</summary>
@@ -168,8 +166,7 @@ namespace Bind
             /// for higher versions.
             /// </summary>
             UseWindowsCompatibleGL = 0x8000,
-            Tao = NoAdvancedEnumProcessing |
-                  NoPublicUnsafeFunctions |
+            Tao = NoPublicUnsafeFunctions |
                   NoTrimFunctionEnding |
                   NoTrimFunctionPrefix |
                   NoSeparateFunctionNamespaces |

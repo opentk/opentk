@@ -119,7 +119,6 @@ namespace Bind
                             switch (val)
                             {
                                 case "tao": settings |= Settings.Legacy.Tao; break;
-                                case "simple_enums": settings |= Settings.Legacy.NoAdvancedEnumProcessing; break;
                                 case "safe": settings |= Settings.Legacy.NoPublicUnsafeFunctions; break;
                                 case "permutations": settings |= Settings.Legacy.GenerateAllPermutations; break;
                                 case "enums_in_class": settings |= Settings.Legacy.NestedEnums; break;

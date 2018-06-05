@@ -165,20 +165,16 @@ namespace Bind
                 throw new ArgumentNullException();
             }
 
-            var no_const_processing = Settings.Legacy.NoAdvancedEnumProcessing;
-            if (!Generator.Settings.IsEnabled(no_const_processing))
+            // Translate all GL_FOO_BAR constants according to EnumProcessor
+            foreach (var e in doc.XPathSelectElements("//constant"))
             {
-                // Translate all GL_FOO_BAR constants according to EnumProcessor
-                foreach (var e in doc.XPathSelectElements("//constant"))
+                var c = e.Value;
+                if (c.StartsWith(Settings.ConstantPrefix))
                 {
-                    var c = e.Value;
-                    if (c.StartsWith(Settings.ConstantPrefix))
-                    {
-                        // Remove "GL_" from the beginning of the string
-                        c = c.Replace(Settings.ConstantPrefix, String.Empty);
-                    }
-                    e.Value = enum_processor.TranslateConstantName(c, false);
+                    // Remove "GL_" from the beginning of the string
+                    c = c.Replace(Settings.ConstantPrefix, String.Empty);
                 }
+                e.Value = enum_processor.TranslateConstantName(c, false);
             }
 
             // Create inline documentation
