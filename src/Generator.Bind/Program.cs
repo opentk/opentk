@@ -10,17 +10,30 @@ using System.Security;
 using System.Text.RegularExpressions;
 using Bind.Generators.ES;
 using Bind.Generators.GL2;
+using CommandLine;
 
 namespace Bind
 {
     internal static class Program
     {
+        /// <summary>
+        /// Gets the command-line arguments that were passed to the program.
+        /// </summary>
+        internal static CommandLineArguments Arguments { get; private set; }
+
         private static TargetAPI mode = TargetAPI.All;
         static internal List<IBind> Generators = new List<IBind>();
         private static Settings Settings = new Settings();
 
-        private static void Main(string[] arguments)
+        private static void Main(string[] args)
         {
+            Console.WriteLine($"OpenGL binding generator {Assembly.GetExecutingAssembly().GetName().Version} for OpenTK.");
+            Console.WriteLine("For comments, bugs and suggestions visit http://github.com/opentk/opentk");
+            Console.WriteLine();
+
+            Parser.Default.ParseArguments<CommandLineArguments>(args)
+                .WithParsed(r => Arguments = r);
+
             Debug.Listeners.Clear();
             Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
             Debug.AutoFlush = true;
@@ -31,7 +44,7 @@ namespace Bind
             try
             {
                 var split = new Regex(@"-\w+", RegexOptions.Compiled);
-                foreach (var argument in arguments)
+                foreach (var argument in args)
                 {
                     string a = argument.Replace("--", "-").Trim();
                     var match = split.Match(a);
