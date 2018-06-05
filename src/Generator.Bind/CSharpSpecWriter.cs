@@ -199,7 +199,7 @@ namespace Bind
             int current_wrapper = 0;
             foreach (string key in wrappers.Keys)
             {
-                if (((Settings.Compatibility & Settings.Legacy.NoSeparateFunctionNamespaces) == Settings.Legacy.None) && key != "Core")
+                if (key != "Core")
                 {
                     if (!Char.IsDigit(key[0]))
                     {
@@ -221,7 +221,7 @@ namespace Bind
                     current_wrapper++;
                 }
 
-                if (((Settings.Compatibility & Settings.Legacy.NoSeparateFunctionNamespaces) == Settings.Legacy.None) && key != "Core")
+                if (key != "Core")
                 {
                     sw.Unindent();
                     sw.WriteLine("}");

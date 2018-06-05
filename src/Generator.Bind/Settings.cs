@@ -111,11 +111,6 @@ namespace Bind
             /// <summary>Default value.</summary>
             None = 0x00,
             /// <summary>
-            /// Don't spearate functions in different namespaces, according to their extension category
-            /// (e.g. GL.Arb, GL.Ext etc).
-            /// </summary>
-            NoSeparateFunctionNamespaces = 0x10,
-            /// <summary>
             /// No public void* parameters (should always be enabled. Disable at your own risk. Disabling
             /// means that BitmapData.Scan0 and other .Net properties/functions must be cast to (void*)
             /// explicitly, to avoid the 'object' overload from being called.)
@@ -141,7 +136,6 @@ namespace Bind
             /// </summary>
             UseWindowsCompatibleGL = 0x8000,
             Tao =
-                  NoSeparateFunctionNamespaces |
                   TurnVoidPointersToIntPtr |
                   NoDropMultipleTokens |
                   NoDebugHelpers,
