@@ -106,8 +106,6 @@ namespace Bind
         {
             /// <summary>Default value.</summary>
             None = 0x00,
-            /// <summary>Marks deprecated functions as [Obsolete]</summary>
-            AddDeprecationWarnings = 0x2000,
             /// <summary>Use DllImport declaration for core functions (do not generate entry point slots)</summary>
             UseDllImports = 0x4000,
             /// <summary>
