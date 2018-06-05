@@ -149,8 +149,6 @@ namespace Bind
             NoBoolParameters = 0x100,
             /// <summary>Keep all enum tokens, even if same value (e.g. FooARB, FooEXT and FooSGI).</summary>
             NoDropMultipleTokens = 0x200,
-            /// <summary>Do not emit inline documentation.</summary>
-            NoDocumentation = 0x400,
             /// <summary>Disables ErrorHelper generation.</summary>
             NoDebugHelpers = 0x800,
             /// <summary>Generate both typed and untyped ("All") signatures for enum parameters.</summary>
@@ -174,7 +172,6 @@ namespace Bind
                   NestedEnums |
                   NoBoolParameters |
                   NoDropMultipleTokens |
-                  NoDocumentation |
                   NoDebugHelpers,
             /*GenerateAllPermutations,*/
         }

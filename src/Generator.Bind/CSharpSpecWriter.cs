@@ -264,10 +264,7 @@ namespace Bind
 
         private void WriteWrapper(BindStreamWriter sw, Function f, EnumCollection enums)
         {
-            if ((Settings.Compatibility & Settings.Legacy.NoDocumentation) == 0)
-            {
-                WriteDocumentation(sw, f);
-            }
+            WriteDocumentation(sw, f);
             WriteMethod(sw, f, enums);
             sw.WriteLine();
         }
@@ -423,12 +420,9 @@ namespace Bind
 
             foreach (var c in constants)
             {
-                if (!Settings.IsEnabled(Settings.Legacy.NoDocumentation))
-                {
-                    sw.WriteLine("/// <summary>");
-                    sw.WriteLine("/// Original was " + Settings.ConstantPrefix + c.OriginalName + " = " + c.Value);
-                    sw.WriteLine("/// </summary>");
-                }
+                sw.WriteLine("/// <summary>");
+                sw.WriteLine("/// Original was " + Settings.ConstantPrefix + c.OriginalName + " = " + c.Value);
+                sw.WriteLine("/// </summary>");
 
                 var str = String.Format("{0} = {1}((int){2}{3})", c.Name, c.Unchecked ? "unchecked" : "",
                     !String.IsNullOrEmpty(c.Reference) ? c.Reference + Settings.NamespaceSeparator : "", c.Value);
@@ -483,26 +477,23 @@ namespace Bind
 
             foreach (Enum @enum in enums.Values)
             {
-                if (!Settings.IsEnabled(Settings.Legacy.NoDocumentation))
-                {
-                    // Document which functions use this enum.
-                    var functions = enum_counts[@enum]
-                        .Select(w => Settings.GLClass + (w.Extension != "Core" ? ("." + w.Extension) : "") + "." + w.TrimmedName)
-                        .Distinct();
+                // Document which functions use this enum.
+                var functions = enum_counts[@enum]
+                    .Select(w => Settings.GLClass + (w.Extension != "Core" ? ("." + w.Extension) : "") + "." + w.TrimmedName)
+                    .Distinct();
 
-                    sw.WriteLine("/// <summary>");
-                    sw.WriteLine(String.Format("/// {0}",
-                        functions.Count() >= 3 ?
-                            String.Format("Used in {0} and {1} other function{2}",
-                                String.Join(", ", functions.Take(2).ToArray()),
-                                functions.Count() - 2,
-                                functions.Count() - 2 > 1 ? "s" : "") :
+                sw.WriteLine("/// <summary>");
+                sw.WriteLine(String.Format("/// {0}",
+                    functions.Count() >= 3 ?
+                        String.Format("Used in {0} and {1} other function{2}",
+                            String.Join(", ", functions.Take(2).ToArray()),
+                            functions.Count() - 2,
+                            functions.Count() - 2 > 1 ? "s" : "") :
                         functions.Count() >= 1 ?
                             String.Format("Used in {0}",
                                 String.Join(", ", functions.ToArray())) :
                             "Not used directly."));
-                    sw.WriteLine("/// </summary>");
-                }
+                sw.WriteLine("/// </summary>");
 
                 if (@enum.IsObsolete)
                 {
