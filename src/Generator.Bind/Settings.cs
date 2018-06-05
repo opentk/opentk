@@ -30,7 +30,7 @@ namespace Bind
         public string DefaultDelegatesFile = "Delegates.cs";
         public string DefaultEnumsFile = "Enums.cs";
         public string DefaultWrappersFile = "GL.cs";
-        public Legacy DefaultCompatibility = Legacy.NoDropMultipleTokens;
+        public Legacy DefaultCompatibility = Legacy.None;
 
         private string inputPath, outputPath, outputNamespace, docPath, fallbackDocPath, licenseFile,
             languageTypeMapFile, keywordEscapeCharacter, importsFile, delegatesFile, enumsFile,
@@ -110,8 +110,6 @@ namespace Bind
         {
             /// <summary>Default value.</summary>
             None = 0x00,
-            /// <summary>Keep all enum tokens, even if same value (e.g. FooARB, FooEXT and FooSGI).</summary>
-            NoDropMultipleTokens = 0x200,
             /// <summary>Disables ErrorHelper generation.</summary>
             NoDebugHelpers = 0x800,
             /// <summary>Generate both typed and untyped ("All") signatures for enum parameters.</summary>
@@ -128,7 +126,6 @@ namespace Bind
             /// </summary>
             UseWindowsCompatibleGL = 0x8000,
             Tao =
-                  NoDropMultipleTokens |
                   NoDebugHelpers,
             /*GenerateAllPermutations,*/
         }
@@ -149,21 +146,6 @@ namespace Bind
         public void Disable(Legacy flag)
         {
             Compatibility &= ~flag;
-        }
-
-        /// <summary>True if multiple tokens should be dropped (e.g. FooARB, FooEXT and FooSGI).</summary>
-        public bool DropMultipleTokens
-        {
-            get { return (Compatibility & Legacy.NoDropMultipleTokens) == Legacy.None; }
-            set { if (value)
-                {
-                    Compatibility |= Legacy.NoDropMultipleTokens;
-                }
-                else
-                {
-                    Compatibility &= ~Legacy.NoDropMultipleTokens;
-                }
-            }
         }
 
         public string WindowsGDI = "OpenTK.Platform.Windows.API";
