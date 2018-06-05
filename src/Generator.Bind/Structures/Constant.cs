@@ -150,11 +150,9 @@ namespace Bind.Structures
                     c.Reference = null;
                     return true;
                 }
-                else
-                {
-                    Trace.WriteLine(String.Format("[Warning] Failed to resolve token: {0}", c));
-                    return false;
-                }
+
+                Trace.WriteLine(String.Format("[Warning] Failed to resolve token: {0}", c));
+                return false;
             }
             return true;
         }

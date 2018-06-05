@@ -110,14 +110,13 @@ namespace Bind.Structures
             {
                 return -1;
             }
-            else if (String.IsNullOrEmpty(ext2) && !String.IsNullOrEmpty(ext1))
+
+            if (String.IsNullOrEmpty(ext2) && !String.IsNullOrEmpty(ext1))
             {
                 return 1;
             }
-            else
-            {
-                return 0;
-            }
+
+            return 0;
         }
 
         public void Add(Enum e)

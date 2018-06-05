@@ -230,7 +230,7 @@ namespace Bind.Structures
             // The rest of the comparisons help maintain a stable order (useful for source control).
             // Note that CompareTo is stricter than Equals and that there is code in
             // DelegateCollection.Add that depends on this fact.
-            int result = this.CurrentType.CompareTo(other.CurrentType);
+            int result = CurrentType.CompareTo(other.CurrentType);
             if (result == 0)
             {
                 result = Pointer.CompareTo(other.Pointer); // Must come after array/ref, see issue [#1098]

@@ -428,7 +428,7 @@ namespace Bind
         {
             // Check if the result is a number.
             long number;
-            var isNumber = false;
+            bool isNumber;
             if (test.ToLower().StartsWith("0x"))
             {
                 isNumber = true;

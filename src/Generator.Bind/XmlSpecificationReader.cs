@@ -113,11 +113,6 @@ namespace Bind
                 Console.WriteLine("Reading opengl types.");
                 Dictionary<string, string> GLTypes = new Dictionary<string, string>();
 
-                if (sr == null)
-                {
-                    return GLTypes;
-                }
-
                 do
                 {
                     string line = sr.ReadLine();
@@ -331,7 +326,7 @@ namespace Bind
 
                     if (String.IsNullOrEmpty(e.Name))
                     {
-                        throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
+                        throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node));
                     }
 
                     // It seems that all flag collections contain "Mask" in their names.

@@ -216,14 +216,6 @@ namespace Bind.Structures
             }
         }
 
-        public ParameterCollection(IEnumerable<Parameter> parameters)
-        {
-            foreach (Parameter p in parameters)
-            {
-                Add(new Parameter(p));
-            }
-        }
-
         private void BuildCache()
         {
             BuildReferenceAndPointerParametersCache();
@@ -318,7 +310,7 @@ namespace Bind.Structures
             {
                 foreach (Parameter p in this)
                 {
-                    sb.Append(p.ToString());
+                    sb.Append(p);
                     sb.Append(", ");
                 }
                 sb.Replace(", ", ")", sb.Length - 2, 2);
@@ -430,22 +422,21 @@ namespace Bind.Structures
             {
                 return -1;
             }
-            else if (Count > other.Count)
+
+            if (Count > other.Count)
             {
                 return 1;
             }
-            else
+
+            for (int i = 0; i < Count; i++)
             {
-                for (int i = 0; i < Count; i++)
+                int result = this[i].CompareTo(other[i]);
+                if (result != 0)
                 {
-                    int result = this[i].CompareTo(other[i]);
-                    if (result != 0)
-                    {
-                        return result;
-                    }
+                    return result;
                 }
-                return 0;
             }
+            return 0;
         }
 
         public bool Equals(ParameterCollection other)

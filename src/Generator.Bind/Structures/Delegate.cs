@@ -20,9 +20,6 @@ namespace Bind.Structures
 
         private bool? cls_compliance_overriden;
 
-        protected static Regex endings = new Regex(@"((((d|f|fi)|u?[isb])_?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
-        protected static Regex endingsNotToTrim = new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flag|Tess|Status|Pixels|Instanced|Indexed|Varyings|Boolean|IDs)", RegexOptions.Compiled | RegexOptions.RightToLeft);
-
         // Add a trailing v to functions matching this regex. Used to differntiate between overloads taking both
         // a 'type' and a 'ref type' (such overloads are not CLS Compliant).
         // The default Regex matches no functions. Create a new Regex in Bind.Generator classes to override the default behavior.
@@ -200,7 +197,7 @@ namespace Bind.Structures
             sb.Append(ReturnType);
             sb.Append(" ");
             sb.Append(Name);
-            sb.Append(Parameters.ToString());
+            sb.Append(Parameters);
 
             return sb.ToString();
         }

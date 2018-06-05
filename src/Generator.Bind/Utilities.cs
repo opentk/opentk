@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Bind.Structures;
@@ -101,7 +100,6 @@ namespace Bind
 
     internal static class Utilities
     {
-        public static readonly char[] Separators = { ' ', '\n', ',', '(', ')', ';', '#' };
         public static Regex Extensions { get; private set; }
         public static Regex Acronyms { get; private set; }
 
@@ -134,7 +132,7 @@ namespace Bind
                     String.Join("|", extension_names.ToArray()),
                     RegexOptions.Compiled);
 
-                var acronyms = new string[]
+                var acronyms = new[]
                 {
                     "EGL",  "ES", "GL", "CL",
                     "RGBA", "BGRA", "RGB", "BGR",
@@ -150,22 +148,8 @@ namespace Bind
             }
         }
 
-        internal static StreamReader OpenSpecFile(string folder, string file)
-        {
-            if (String.IsNullOrEmpty(folder) || String.IsNullOrEmpty(file))
-            {
-                return null;
-            }
-
-            Console.WriteLine(folder);
-            Console.WriteLine(file);
-            string path = Path.Combine(folder, file);
-            Console.WriteLine(path);
-            return new StreamReader(path);
-        }
-
         public static readonly List<string> CSharpKeywords = new List<string>(
-            new string[]
+            new[]
             {
                 "abstract", "event", "new", "struct",
                 "as", "explicit", "null", "switch",
@@ -229,7 +213,7 @@ namespace Bind
         /// <param name="s"></param>
         /// <param name="t"></param>
         /// <returns></returns>
-        internal static Enum Merge(Enum s, Constant t)
+        internal static void Merge(Enum s, Constant t)
         {
             if (!s.ConstantCollection.ContainsKey(t.Name))
             {
@@ -245,8 +229,6 @@ namespace Bind
                     s.ConstantCollection[t.Name] = t;
                 }
             }
-
-            return s;
         }
 
         internal static string GetGL2Extension(string name)
@@ -269,20 +251,8 @@ namespace Bind
                 }
                 return ext;
             }
-            else
-            {
-                return String.Empty;
-            }
-        }
 
-        private static bool IsGL2Extension(string function)
-        {
-            return !String.IsNullOrEmpty(GetGL2Extension(function));
-        }
-
-        internal static string StripGL2Extension(string p)
-        {
-            return p.Substring(0, p.Length - GetGL2Extension(p).Length);
+            return String.Empty;
         }
     }
 }

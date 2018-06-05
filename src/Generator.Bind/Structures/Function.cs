@@ -46,14 +46,6 @@ namespace Bind.Structures
             }
         }
 
-        public override bool Unsafe
-        {
-            get
-            {
-                return base.Unsafe;
-            }
-        }
-
         public FunctionBody Body { get; set; }
 
         public string TrimmedName { get; set; }

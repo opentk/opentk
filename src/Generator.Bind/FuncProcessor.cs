@@ -89,7 +89,7 @@ namespace Bind
                             TranslateExtension(d);
                             TranslateReturnType(d, replace, nav, enumProcessor, enums, apiname);
                             TranslateParameters(d, replace, nav, enumProcessor, enums, apiname);
-                            TranslateAttributes(d, replace, nav);
+                            TranslateAttributes(d, replace);
                         }
                     }
 
@@ -104,7 +104,7 @@ namespace Bind
                             var overload = new Delegate(d);
                             TranslateReturnType(overload, overloadElement, nav, enumProcessor, enums, apiname);
                             TranslateParameters(overload, overloadElement, nav, enumProcessor, enums, apiname);
-                            TranslateAttributes(overload, overloadElement, nav);
+                            TranslateAttributes(overload, overloadElement);
                             overloadList.Add(overload);
                         }
                     }
@@ -117,13 +117,13 @@ namespace Bind
             }
 
             Console.WriteLine("Generating wrappers.");
-            var wrappers = CreateWrappers(delegates, enums);
+            var wrappers = CreateWrappers(delegates);
 
             Console.WriteLine("Generating convenience overloads.");
             wrappers.AddRange(CreateConvenienceOverloads(wrappers));
 
             Console.WriteLine("Generating CLS compliant overloads.");
-            wrappers = CreateCLSCompliantWrappers(wrappers, enums);
+            wrappers = CreateCLSCompliantWrappers(wrappers);
 
             Console.WriteLine("Removing non-CLS compliant duplicates.");
             wrappers = MarkCLSCompliance(wrappers);
@@ -679,7 +679,7 @@ namespace Bind
             }
         }
 
-        private void TranslateAttributes(Delegate d, XPathNavigator functionOverride, XPathNavigator nav)
+        private void TranslateAttributes(Delegate d, XPathNavigator functionOverride)
         {
             if (functionOverride == null)
             {
@@ -711,18 +711,18 @@ namespace Bind
             }
         }
 
-        private FunctionCollection CreateWrappers(DelegateCollection delegates, EnumCollection enums)
+        private FunctionCollection CreateWrappers(DelegateCollection delegates)
         {
             var wrappers = new FunctionCollection();
             foreach (var d in delegates.Values.SelectMany(v => v))
             {
-                wrappers.AddRange(CreateNormalWrappers(d, enums));
+                wrappers.AddRange(CreateNormalWrappers(d));
             }
 
             return wrappers;
         }
 
-        private FunctionCollection CreateCLSCompliantWrappers(FunctionCollection functions, EnumCollection enums)
+        private FunctionCollection CreateCLSCompliantWrappers(FunctionCollection functions)
         {
             // If the function is not CLS-compliant (e.g. it contains unsigned parameters)
             // we need to create a CLS-Compliant overload. However, we should only do this
@@ -883,13 +883,13 @@ namespace Bind
             return type.CurrentType;
         }
 
-        private IEnumerable<Function> CreateNormalWrappers(Delegate d, EnumCollection enums)
+        private IEnumerable<Function> CreateNormalWrappers(Delegate d)
         {
             var f = new Function(d);
             TrimName(f);
 
             WrapReturnType(f);
-            foreach (var wrapper in WrapParameters(f, enums))
+            foreach (var wrapper in WrapParameters(f))
             {
                 yield return wrapper;
             }
@@ -996,7 +996,7 @@ namespace Bind
         {
             var f = new Function(d);
             var pArray = f.Parameters.Last();
-            var pSize = f.Parameters[f.Parameters.Count - 2];
+
             f.Parameters.RemoveAt(f.Parameters.Count - 2);
             pArray.WrapperType |= WrapperTypes.ConvenienceArrayType;
             // Since this is a 1-element overload, we don't need
@@ -1023,7 +1023,7 @@ namespace Bind
             return dictionary[key];
         }
 
-        public IEnumerable<Function> WrapParameters(Function func, EnumCollection enums)
+        public IEnumerable<Function> WrapParameters(Function func)
         {
             if (func.Parameters.Count == 0)
             {
