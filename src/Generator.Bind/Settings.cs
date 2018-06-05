@@ -114,8 +114,6 @@ namespace Bind
             NoPublicUnsafeFunctions = 0x04,
             /// <summary>Don't trim the [fdisub]v? endings from functions.</summary>
             NoTrimFunctionEnding = NoPublicUnsafeFunctions,
-            /// <summary>Don't trim the [gl|wgl|glx|glu] prefixes from functions.</summary>
-            NoTrimFunctionPrefix = 0x08,
             /// <summary>
             /// Don't spearate functions in different namespaces, according to their extension category
             /// (e.g. GL.Arb, GL.Ext etc).
@@ -148,7 +146,6 @@ namespace Bind
             UseWindowsCompatibleGL = 0x8000,
             Tao = NoPublicUnsafeFunctions |
                   NoTrimFunctionEnding |
-                  NoTrimFunctionPrefix |
                   NoSeparateFunctionNamespaces |
                   TurnVoidPointersToIntPtr |
                   NoDropMultipleTokens |
