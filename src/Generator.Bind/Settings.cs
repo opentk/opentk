@@ -110,12 +110,6 @@ namespace Bind
         {
             /// <summary>Default value.</summary>
             None = 0x00,
-            /// <summary>
-            /// No public void* parameters (should always be enabled. Disable at your own risk. Disabling
-            /// means that BitmapData.Scan0 and other .Net properties/functions must be cast to (void*)
-            /// explicitly, to avoid the 'object' overload from being called.)
-            /// </summary>
-            TurnVoidPointersToIntPtr = 0x20,
             /// <summary>Generate all possible permutations for ref/array/pointer parameters.</summary>
             GenerateAllPermutations = 0x40,
             /// <summary>Keep all enum tokens, even if same value (e.g. FooARB, FooEXT and FooSGI).</summary>
@@ -136,7 +130,6 @@ namespace Bind
             /// </summary>
             UseWindowsCompatibleGL = 0x8000,
             Tao =
-                  TurnVoidPointersToIntPtr |
                   NoDropMultipleTokens |
                   NoDebugHelpers,
             /*GenerateAllPermutations,*/
