@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Bind.Structures;
-using Delegate=Bind.Structures.Delegate;
 using Enum=Bind.Structures.Enum;
 
 namespace Bind
@@ -284,18 +283,6 @@ namespace Bind
         internal static string StripGL2Extension(string p)
         {
             return p.Substring(0, p.Length - GetGL2Extension(p).Length);
-        }
-
-        public static bool RequiresSlot(this Delegate d, Settings settings)
-        {
-            double version;
-            Double.TryParse(
-                d.Version,
-                System.Globalization.NumberStyles.Float,
-                System.Globalization.CultureInfo.InvariantCulture,
-                out version);
-
-            return true;
         }
     }
 }

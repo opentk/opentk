@@ -1,29 +1,37 @@
 ﻿using System.IO;
-using Bind.Generators.GL2;
 using Bind.GL2;
 
 namespace Bind.Generators.ES
 {
-    // Generation implementation for OpenGL ES 3.0
-    internal class ES3Generator : Generator
+    /// <summary>
+    /// Generates API bindings for OpenGL ES 3.0.
+    /// </summary>
+    internal class ES3Generator : GeneratorBase
     {
-        public ES3Generator(Settings settings)
-            : base(settings)
+        /// <inheritdoc/>
+        public override string OutputSubfolder => "ES30";
+
+        /// <inheritdoc/>
+        public override string Namespace => "OpenTK.Graphics.ES30";
+
+        /// <inheritdoc/>
+        public override string SpecificationDocumentationPath => "ES30";
+
+        /// <inheritdoc/>
+        protected override string ProfileName => "gles2";
+
+        /// <inheritdoc/>
+        protected override string Version => "2.0|3.0";
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ES3Generator"/> class.
+        /// </summary>
+        public ES3Generator()
         {
-            Settings.DefaultOutputPath = Path.Combine(
-                Settings.DefaultOutputPath, "../ES30");
-            Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES30";
-            Settings.DefaultImportsFile = "ES30Core.cs";
-            Settings.DefaultDelegatesFile = "ES30Delegates.cs";
-            Settings.DefaultEnumsFile = "ES30Enums.cs";
-            Settings.DefaultWrappersFile = "ES30.cs";
-            Settings.DefaultDocPath = Path.Combine(
-                Settings.DefaultDocPath, "ES30");
-
-            Settings.OverridesFiles.Add("GL2/overrides.xml");
-
-            Profile = "gles2"; // The 3.0 spec reuses the gles2 apiname
-            Version = "2.0|3.0";
+            OverrideFiles = new[]
+            {
+                Path.Combine(Program.Arguments.InputPath, "GL2", "overrides.xml")
+            };
         }
     }
 }

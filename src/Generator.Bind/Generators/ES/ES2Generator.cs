@@ -1,29 +1,40 @@
 ﻿using System.IO;
-using Bind.Generators.GL2;
 using Bind.GL2;
 
 namespace Bind.Generators.ES
 {
-    // Generation implementation for OpenGL ES 2.0 and 3.0
-    internal class ES2Generator : Generator
+    /// <summary>
+    /// Generates API bindings for OpenGL ES 2.0.
+    /// </summary>
+    internal class ES2Generator : GeneratorBase
     {
-        public ES2Generator(Settings settings)
-            : base(settings)
+        /// <inheritdoc/>
+        public override string APIIdentifier => "ES20";
+
+        /// <inheritdoc/>
+        public override string OutputSubfolder => APIIdentifier;
+
+        /// <inheritdoc/>
+        public override string Namespace => $"OpenTK.Graphics.{APIIdentifier}";
+
+        /// <inheritdoc/>
+        public override string SpecificationDocumentationPath => APIIdentifier;
+
+        /// <inheritdoc/>
+        protected override string ProfileName => "gles2";
+
+        /// <inheritdoc/>
+        protected override string Version => "2.0";
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ES2Generator"/> class.
+        /// </summary>
+        public ES2Generator()
         {
-            Settings.DefaultOutputPath = Path.Combine(
-                Settings.DefaultOutputPath, "../ES20");
-            Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES20";
-            Settings.DefaultImportsFile = "ES20Core.cs";
-            Settings.DefaultDelegatesFile = "ES20Delegates.cs";
-            Settings.DefaultEnumsFile = "ES20Enums.cs";
-            Settings.DefaultWrappersFile = "ES20.cs";
-            Settings.DefaultDocPath = Path.Combine(
-                Settings.DefaultDocPath, "ES20");
-
-            Settings.OverridesFiles.Add("GL2/overrides.xml");
-
-            Profile = "gles2";
-            Version = "2.0";
+            OverrideFiles = new[]
+            {
+                Path.Combine(Program.Arguments.InputPath, "GL2", "overrides.xml")
+            };
         }
     }
 }

@@ -27,19 +27,13 @@ namespace Bind
         /// Gets or sets the base path where documentation files are stored.
         /// </summary>
         [Option('d', "doc-path", HelpText = "The base path where documentation files are stored.")]
-        public string DocumentationPath { get; set; } = Path.Combine("src", "Generator.Bind", "Specifications", "License.txt");
+        public string DocumentationPath { get; set; } = Path.Combine("src", "Generator.Bind", "Specifications", "Docs");
 
         /// <summary>
         /// Gets or sets the path to the license file to use for headers.
         /// </summary>
         [Option('l', "license-file", HelpText = "The path to the license file to use for headers.")]
         public string LicenseFile { get; set; } = Path.Combine("src", "Generator.Bind", "Specifications", "License.txt");
-
-        /// <summary>
-        /// Gets or sets a value indicating whether inline XML documentation should be generated for the bindings.
-        /// </summary>
-        [Option('n', "no-docs", HelpText = "Don't generate inline XML documentation for the bindings.")]
-        public bool NoDocumentation { get; set; }
 
         /// <summary>
         /// Gets or sets the APIs that should be generated.

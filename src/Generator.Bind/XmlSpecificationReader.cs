@@ -29,24 +29,13 @@ using System.IO;
 using System.Xml.XPath;
 using Bind.Structures;
 
+using Delegate = Bind.Structures.Delegate;
+using Enum = Bind.Structures.Enum;
+
 namespace Bind
 {
-    using Delegate = Bind.Structures.Delegate;
-    using Enum = Bind.Structures.Enum;
-
-    internal class XmlSpecificationReader : ISpecReader
+    internal class XmlSpecificationReader : ISpecificationReader
     {
-        private Settings Settings { get; set; }
-
-        public XmlSpecificationReader(Settings settings)
-        {
-            if (settings == null)
-            {
-                throw new ArgumentNullException("settings");
-            }
-            Settings = settings;
-        }
-
         public void ReadDelegates(string file, DelegateCollection delegates, string apiname, string apiversions)
         {
             var specs = new XPathDocument(file);

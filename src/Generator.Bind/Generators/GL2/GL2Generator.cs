@@ -26,28 +26,32 @@
 //
 
 using System.IO;
+using System.Linq;
+using Bind.GL2;
 
 namespace Bind.Generators.GL2
 {
-    internal class GL2Generator : Generator
+    /// <summary>
+    /// Generates API bindings for the OpenGL 2 API.
+    /// </summary>
+    internal class GL2Generator : GeneratorBase
     {
-        public GL2Generator(Settings settings)
-            : base(settings)
+        /// <inheritdoc/>
+        public override string APIIdentifier => "GL2";
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GL2Generator"/> class.
+        /// </summary>
+        public GL2Generator()
         {
-            Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
-            Settings.DefaultImportsFile = "GLCore.cs";
-            Settings.DefaultDelegatesFile = "GLDelegates.cs";
-            Settings.DefaultEnumsFile = "GLEnums.cs";
-            Settings.DefaultWrappersFile = "GL.cs";
-            Settings.DefaultDocPath = Path.Combine(
-                Settings.DefaultDocPath, "GL");
+            var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "GL2", "GL");
+            var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
 
-            Settings.OverridesFiles.Add("GL2/overrides.xml");
-            Settings.OverridesFiles.Add("GL2/GL/");
-
-            //Settings.DefaultCompatibility |=
-            //    Settings.Legacy.UseDllImports | Settings.Legacy.UseWindowsCompatibleGL;
+            OverrideFiles = new[]
+            {
+                Path.Combine(Program.Arguments.InputPath, "GL2", "overrides.xml")
+            }
+            .Concat(extraOverrides);
         }
     }
 }
-

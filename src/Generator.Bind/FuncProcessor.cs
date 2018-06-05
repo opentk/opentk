@@ -1,4 +1,4 @@
-﻿//
+﻿﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2013 Stefanos Apostolopoulos for the Open Toolkit library.
@@ -32,11 +32,10 @@ using System.Text.RegularExpressions;
 using System.Xml.XPath;
 using Bind.Structures;
 using Delegate = Bind.Structures.Delegate;
+using Type = Bind.Structures.Type;
 
 namespace Bind
 {
-    using Type = Bind.Structures.Type;
-
     internal class FuncProcessor
     {
         private static readonly Regex Endings = new Regex(
@@ -52,30 +51,27 @@ namespace Bind
 
         private static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
 
-        private readonly IEnumerable<string> Overrides;
+        private readonly IEnumerable<string> _overrides;
 
-        private IBind Generator { get; set; }
-        private Settings Settings { get { return Generator.Settings; } }
-
-        public FuncProcessor(IBind generator, IEnumerable<string> overrides)
+        public FuncProcessor(IGenerator generator, IEnumerable<string> overrides)
         {
-            if (generator == null)
-            {
-                throw new ArgumentNullException("generator");
-            }
-            if (overrides == null)
-            {
-                throw new ArgumentNullException("overrides");
-            }
-
-            Generator = generator;
-            Overrides = overrides;
+            Generator = generator ?? throw new ArgumentNullException(nameof(generator));
+            _overrides = overrides ?? throw new ArgumentNullException(nameof(overrides));
         }
 
-        public FunctionCollection Process(EnumProcessor enum_processor, DocProcessor doc_processor,
-            DelegateCollection delegates, EnumCollection enums, string apiname, string apiversion)
+        private IGenerator Generator { get; }
+
+        public FunctionCollection Process
+        (
+            EnumProcessor enumProcessor,
+            DocProcessor docProcessor,
+            DelegateCollection delegates,
+            EnumCollection enums,
+            string apiname,
+            string apiversion
+        )
         {
-            foreach (var file in Overrides)
+            foreach (var file in _overrides)
             {
                 Console.WriteLine("Processing funcs in {0}.", file);
 
@@ -91,28 +87,29 @@ namespace Bind
                         {
                             var replace = GetFuncOverride(nav, d, apiname, apiversion);
                             TranslateExtension(d);
-                            TranslateReturnType(d, replace, nav, enum_processor, enums, apiname, version);
-                            TranslateParameters(d, replace, nav, enum_processor, enums, apiname, version);
-                            TranslateAttributes(d, replace, nav, apiname, version);
+                            TranslateReturnType(d, replace, nav, enumProcessor, enums, apiname);
+                            TranslateParameters(d, replace, nav, enumProcessor, enums, apiname);
+                            TranslateAttributes(d, replace, nav);
                         }
                     }
 
                     // Create overloads for backwards compatibility,
                     // by resolving <overload> elements
-                    var overload_list = new List<Delegate>();
+                    var overloadList = new List<Delegate>();
                     foreach (var d in delegates.Values.Select(v => v.First()))
                     {
-                        var overload_elements = GetFuncOverload(nav, d, apiname, apiversion);
-                        foreach (XPathNavigator overload_element in overload_elements)
+                        var overloadElements = GetFuncOverload(nav, d, apiname, apiversion);
+                        foreach (XPathNavigator overloadElement in overloadElements)
                         {
                             var overload = new Delegate(d);
-                            TranslateReturnType(overload, overload_element, nav, enum_processor, enums, apiname, version);
-                            TranslateParameters(overload, overload_element, nav, enum_processor, enums, apiname, version);
-                            TranslateAttributes(overload, overload_element, nav, apiname, version);
-                            overload_list.Add(overload);
+                            TranslateReturnType(overload, overloadElement, nav, enumProcessor, enums, apiname);
+                            TranslateParameters(overload, overloadElement, nav, enumProcessor, enums, apiname);
+                            TranslateAttributes(overload, overloadElement, nav);
+                            overloadList.Add(overload);
                         }
                     }
-                    foreach (var overload in overload_list)
+
+                    foreach (var overload in overloadList)
                     {
                         delegates.Add(overload);
                     }
@@ -138,20 +135,19 @@ namespace Bind
             GenerateAddressTable(delegates);
 
             Console.WriteLine("Generating documentation.");
-            GenerateDocumentation(wrappers, enum_processor, doc_processor);
+            GenerateDocumentation(wrappers, enumProcessor, docProcessor);
 
             return wrappers;
         }
 
-        private void GenerateDocumentation(FunctionCollection wrappers,
-            EnumProcessor enum_processor, DocProcessor doc_processor)
+        private void GenerateDocumentation(FunctionCollection wrappers, EnumProcessor enumProcessor, DocProcessor docProcessor)
         {
             foreach (var list in wrappers)
             {
                 foreach (var f in list.Value)
                 {
-                    f.Documentation = doc_processor.Process(f,
-                        enum_processor);
+                    f.Documentation = docProcessor.Process(f,
+                        enumProcessor);
                 }
             }
         }
@@ -167,7 +163,7 @@ namespace Bind
             // Generator.Rewrite detects this and generates a static DllImport call
             // instead of a calli instruction for these functions.
 
-            int slot = -1;
+            var slot = -1;
             foreach (var list in delegates.Values)
             {
                 slot++;
@@ -197,42 +193,36 @@ namespace Bind
             var path = new StringBuilder();
             path.Append("/signatures/");
             path.Append(apipath);
-            if (!String.IsNullOrEmpty(apiname) && !String.IsNullOrEmpty(apiversion))
+            if (!string.IsNullOrEmpty(apiname) && !string.IsNullOrEmpty(apiversion))
             {
-                path.Append(String.Format(
-                    "[contains(concat('|', @name, '|'), '|{0}|') and " +
-                    "(contains(concat('|', @version, '|'), '|{1}|') or not(boolean(@version)))]",
-                    apiname,
-                    apiversion));
+                path.Append($"[contains(concat('|', @name, '|'), '|{apiname}|') and " +
+                            $"(contains(concat('|', @version, '|'), '|{apiversion}|') or not(boolean(@version)))]");
             }
-            else if (!String.IsNullOrEmpty(apiname))
+            else if (!string.IsNullOrEmpty(apiname))
             {
-                path.Append(String.Format("[contains(concat('|', @name, '|'), '|{0}|')]", apiname));
+                path.Append($"[contains(concat('|', @name, '|'), '|{apiname}|')]");
             }
-            else if (!String.IsNullOrEmpty(apiversion))
+            else if (!string.IsNullOrEmpty(apiversion))
             {
-                path.Append(String.Format("[contains(concat('|', @version, '|'), '|{0}|') or not(boolean(@version))]", apiversion));
+                path.Append($"[contains(concat('|', @version, '|'), '|{apiversion}|') or not(boolean(@version))]");
             }
 
-            if (function != null)
+            if (function == null)
             {
-                if (extension != null)
-                {
-                    // match an override that has this specific extension
-                    // *or* one that has no extension at all (equivalent
-                    // to "match all possible extensions")
-                    path.Append(String.Format(
-                        "/function[contains(concat('|', @name, '|'), '|{0}|') and " +
-                        "(contains(concat('|', @extension, '|'), '|{1}|') or not(boolean(@extension)))]",
-                        function,
-                        extension));
-                }
-                else
-                {
-                    path.Append(String.Format(
-                        "/function[contains(concat('|', @name, '|'), '|{0}|')]",
-                        function));
-                }
+                return path.ToString();
+            }
+
+            if (extension != null)
+            {
+                // match an override that has this specific extension
+                // *or* one that has no extension at all (equivalent
+                // to "match all possible extensions")
+                path.Append($"/function[contains(concat('|', @name, '|'), '|{function}|') and " +
+                            $"(contains(concat('|', @extension, '|'), '|{extension}|') or not(boolean(@extension)))]");
+            }
+            else
+            {
+                path.Append($"/function[contains(concat('|', @name, '|'), '|{function}|')]");
             }
 
             return path.ToString();
@@ -248,22 +238,16 @@ namespace Bind
             return GetPath("replace", apiname, apiversion, function, extension);
         }
 
-        private void TranslateType(Bind.Structures.Type type,
-            XPathNavigator function_override, XPathNavigator overrides,
-            EnumProcessor enum_processor, EnumCollection enums,
-            string category, string apiname)
+        private void TranslateType(Type type, XPathNavigator overrides, EnumProcessor enumProcessor, EnumCollection enums, string category, string apiname)
         {
-            Bind.Structures.Enum @enum;
-            string s;
-
-            category = enum_processor.TranslateEnumName(category);
+            category = enumProcessor.TranslateEnumName(category);
 
             // Try to find out if it is an enum. If the type exists in the normal GLEnums list, use this.
             // Special case for Boolean which is there simply because C89 does not support bool types.
             // We don't really need that in C#
-            bool normal =
-                enums.TryGetValue(type.CurrentType, out @enum) ||
-                enums.TryGetValue(enum_processor.TranslateEnumName(type.CurrentType), out @enum);
+            var normal =
+                enums.TryGetValue(type.CurrentType, out var @enum) ||
+                enums.TryGetValue(enumProcessor.TranslateEnumName(type.CurrentType), out @enum);
 
             // Translate enum types
             type.IsEnum = false;
@@ -273,9 +257,9 @@ namespace Bind
 
                 // Some functions and enums have the same names.
                 // Make sure we reference the enums rather than the functions.
-                type.QualifiedType = String.Format("{0}.{1}", Settings.EnumsOutput, @enum.Name);
+                type.QualifiedType = $"{Generator.Namespace}.{@enum.Name}";
             }
-            else if (Generator.GLTypes.TryGetValue(type.CurrentType, out s))
+            else if (Generator.APITypes.TryGetValue(type.CurrentType, out var s))
             {
                 // Check if the parameter is a generic GLenum. If it is, search for a better match,
                 // otherwise fallback to Settings.CompleteEnumName (named 'All' by default).
@@ -283,10 +267,10 @@ namespace Bind
                 {
                     type.IsEnum = true;
 
+                    // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
                     if (enums.ContainsKey(category))
                     {
-                        type.QualifiedType = String.Format("{0}{1}{2}", Settings.EnumsOutput,
-                            Settings.NamespaceSeparator, enum_processor.TranslateEnumName(category));
+                        type.QualifiedType = enumProcessor.TranslateEnumName(category);
                     }
                 }
                 else
@@ -295,50 +279,50 @@ namespace Bind
                 }
             }
 
-            if ((type.Array == 0 && type.Pointer == 0 && !type.Reference) &&
+            if (type.Array == 0 && type.Pointer == 0 && !type.Reference &&
                 (type.QualifiedType.ToLower().Contains("buffersize") ||
-                type.QualifiedType.ToLower().Contains("sizeiptr") ||
-                type.QualifiedType.Contains("size_t")))
+                 type.QualifiedType.ToLower().Contains("sizeiptr") ||
+                 type.QualifiedType.Contains("size_t")))
             {
                 type.WrapperType |= WrapperTypes.SizeParameter;
             }
 
             type.CurrentType =
-                Generator.CSTypes.ContainsKey(type.CurrentType) ?
-                Generator.CSTypes[type.CurrentType] : type.CurrentType;
+                Generator.LanguageTypes.ContainsKey(type.CurrentType)
+                    ? Generator.LanguageTypes[type.CurrentType]
+                    : type.CurrentType;
 
             // Make sure that enum parameters follow enum overrides, i.e.
             // if enum ErrorCodes is overriden to ErrorCode, then parameters
             // of type ErrorCodes should also be overriden to ErrorCode.
-            XPathNavigator enum_override = overrides.SelectSingleNode(
+            var enumOverride = overrides.SelectSingleNode(
                 EnumProcessor.GetOverridesPath(apiname, type.CurrentType));
-            if (enum_override != null)
+            if (enumOverride != null)
             {
                 // For consistency - many overrides use string instead of String.
-                if (enum_override.Value == "string")
+                if (enumOverride.Value == "string")
                 {
                     type.QualifiedType = "String";
                 }
-                else if (enum_override.Value == "StringBuilder")
+                else if (enumOverride.Value == "StringBuilder")
                 {
                     throw new NotSupportedException("StringBuilder enum overrides are no longer supported");
                 }
                 else
                 {
-                    type.CurrentType = enum_override.Value;
+                    type.CurrentType = enumOverride.Value;
                 }
             }
 
-            if (type.CurrentType == "IntPtr" && String.IsNullOrEmpty(type.PreviousType))
+            if (type.CurrentType == "IntPtr" && string.IsNullOrEmpty(type.PreviousType))
             {
                 type.Pointer = 0;
             }
 
             if (type.Pointer >= 3)
             {
-                System.Diagnostics.Trace.WriteLine(String.Format(
-                    "[Error] Type '{0}' has a high pointer level. Bindings will be incorrect.",
-                    type));
+                Trace.WriteLine(
+                    $"[Error] Type '{type}' has a high pointer level. Bindings will be incorrect.");
             }
 
             if (!type.IsEnum)
@@ -357,6 +341,7 @@ namespace Bind
             {
                 extension = extension[0] + extension.Substring(1).ToLower();
             }
+
             return extension;
         }
 
@@ -368,104 +353,109 @@ namespace Bind
         private static string GetTrimmedExtension(string name, string extension)
         {
             // Extensions are always uppercase
-            int index = name.LastIndexOf(extension.ToUpper());
+            var index = name.LastIndexOf(extension.ToUpper(), StringComparison.Ordinal);
             if (index >= 0)
             {
                 name = name.Remove(index);
             }
+
             return name;
         }
 
         // Trims unecessary suffices from the specified OpenGL function name.
         private static string GetTrimmedName(Delegate d)
         {
-            string name = d.Name;
-            string extension = d.Extension;
-            string trimmed_name = GetTrimmedExtension(name, extension);
+            var name = d.Name;
+            var extension = d.Extension;
+            var trimmedName = GetTrimmedExtension(name, extension);
 
             // Note: some endings should not be trimmed, for example: 'b' from Attrib.
             // Check the endingsNotToTrim regex for details.
-            Match m = EndingsNotToTrim.Match(trimmed_name);
-            if ((m.Index + m.Length) != trimmed_name.Length)
+            var m = EndingsNotToTrim.Match(trimmedName);
+            if (m.Index + m.Length != trimmedName.Length)
             {
-                m = Endings.Match(trimmed_name);
+                m = Endings.Match(trimmedName);
 
-                if (m.Length > 0 && m.Index + m.Length == trimmed_name.Length)
+                if (m.Length > 0 && m.Index + m.Length == trimmedName.Length)
                 {
                     // Only trim endings, not internal matches.
                     if (m.Value[m.Length - 1] == 'v' && EndingsAddV.IsMatch(name) &&
                         !name.StartsWith("Get") && !name.StartsWith("MatrixIndex"))
                     {
                         // Only trim ending 'v' when there is a number
-                        trimmed_name = trimmed_name.Substring(0, m.Index) + "v";
+                        trimmedName = trimmedName.Substring(0, m.Index) + "v";
                     }
                     else
                     {
-                        if (!trimmed_name.EndsWith("xedv"))
+                        if (!trimmedName.EndsWith("xedv"))
                         {
-                            trimmed_name = trimmed_name.Substring(0, m.Index);
+                            trimmedName = trimmedName.Substring(0, m.Index);
                         }
                         else
                         {
-                            trimmed_name = trimmed_name.Substring(0, m.Index + 1);
+                            trimmedName = trimmedName.Substring(0, m.Index + 1);
                         }
                     }
                 }
             }
 
-            return trimmed_name;
+            return trimmedName;
         }
 
         private static XPathNodeIterator GetFuncOverload(XPathNavigator nav, Delegate d, string apiname, string apiversion)
         {
             // Try a few different extension variations that appear in the overrides xml file
             string[] extensions = { d.Extension, TranslateExtension(d.Extension), d.Extension.ToUpper() };
-            string trimmed_name = GetTrimmedName(d);
-            XPathNodeIterator function_overload = null;
+            var trimmedName = GetTrimmedName(d);
+            XPathNodeIterator functionOverload = null;
 
             foreach (var ext in extensions)
             {
-                string extensionless_name = GetTrimmedExtension(d.Name, ext);
-                function_overload = nav.Select(GetOverloadsPath(apiname, apiversion, d.Name, ext));
-                if (function_overload.Count != 0)
+                var extensionlessName = GetTrimmedExtension(d.Name, ext);
+                functionOverload = nav.Select(GetOverloadsPath(apiname, apiversion, d.Name, ext));
+                if (functionOverload.Count != 0)
                 {
                     break;
                 }
-                function_overload = nav.Select(GetOverloadsPath(apiname, apiversion, extensionless_name, ext));
-                if (function_overload.Count != 0)
+
+                functionOverload = nav.Select(GetOverloadsPath(apiname, apiversion, extensionlessName, ext));
+                if (functionOverload.Count != 0)
                 {
                     break;
                 }
-                function_overload = nav.Select(GetOverloadsPath(apiname, apiversion, trimmed_name, ext));
-                if (function_overload.Count != 0)
+
+                functionOverload = nav.Select(GetOverloadsPath(apiname, apiversion, trimmedName, ext));
+                if (functionOverload.Count != 0)
                 {
                     break;
                 }
             }
-            return function_overload;
+
+            return functionOverload;
         }
 
         private static XPathNavigator GetFuncOverride(XPathNavigator nav, Delegate d, string apiname, string apiversion)
         {
             // Try a few different extension variations that appear in the overrides xml file
             string[] extensions = { d.Extension, TranslateExtension(d.Extension), d.Extension.ToUpper() };
-            string trimmed_name = GetTrimmedName(d);
-            XPathNavigator function_override = null;
+            var trimmedName = GetTrimmedName(d);
+            XPathNavigator functionOverride = null;
 
             foreach (var ext in extensions)
             {
-                string extensionless_name = GetTrimmedExtension(d.Name, ext);
-                function_override =
+                var extensionlessName = GetTrimmedExtension(d.Name, ext);
+                functionOverride =
                     nav.SelectSingleNode(GetOverridesPath(apiname, apiversion, d.Name, ext)) ??
-                    nav.SelectSingleNode(GetOverridesPath(apiname, apiversion, extensionless_name, ext)) ??
-                    nav.SelectSingleNode(GetOverridesPath(apiname, apiversion, trimmed_name, ext));
+                    nav.SelectSingleNode(GetOverridesPath(apiname, apiversion, extensionlessName, ext)) ??
+                    nav.SelectSingleNode(GetOverridesPath(apiname, apiversion, trimmedName, ext));
 
-                if (function_override != null)
+                if (functionOverride != null)
                 {
                     break;
                 }
             }
-            return function_override;
+
+            return functionOverride;
         }
 
         private void TrimName(Function f)
@@ -473,59 +463,51 @@ namespace Bind
             f.TrimmedName = GetTrimmedName(f);
         }
 
-        private static void ApplyParameterReplacement(Delegate d, XPathNavigator function_override)
+        private static void ApplyParameterReplacement(Delegate d, XPathNavigator functionOverride)
         {
-            if (function_override != null)
+            if (functionOverride == null)
             {
-                for (int i = 0; i < d.Parameters.Count; i++)
+                return;
+            }
+
+            for (var i = 0; i < d.Parameters.Count; i++)
+            {
+                var paramOverride = functionOverride.SelectSingleNode(
+                    $"param[@name='{d.Parameters[i].RawName}' or @index='{i}']");
+                if (paramOverride == null)
                 {
-                    XPathNavigator param_override = function_override.SelectSingleNode(String.Format(
-                        "param[@name='{0}' or @index='{1}']",
-                        d.Parameters[i].RawName,
-                        i));
-                    if (param_override != null)
+                    continue;
+                }
+
+                foreach (XPathNavigator node in paramOverride.SelectChildren(XPathNodeType.Element))
+                {
+                    switch (node.Name)
                     {
-                        foreach (XPathNavigator node in param_override.SelectChildren(XPathNodeType.Element))
-                        {
-                            switch (node.Name)
-                            {
-                                case "type":
-                                    d.Parameters[i].CurrentType = (string)node.TypedValue;
-                                    break;
-                                case "name":
-                                    d.Parameters[i].Name = (string)node.TypedValue;
-                                    break;
-                                case "flow":
-                                    d.Parameters[i].Flow = Parameter.GetFlowDirection((string)node.TypedValue);
-                                    break;
-                                case "count":
-                                    d.Parameters[i].ComputeSize = node.Value.Trim();
-                                    int count;
-                                    if (Int32.TryParse(d.Parameters[i].ComputeSize, out count))
-                                    {
-                                        d.Parameters[i].ElementCount = count;
-                                    }
-                                    else
-                                    {
-                                        d.Parameters[i].ElementCount = 0;
-                                    }
-                                    break;
-                            }
-                        }
+                        case "type":
+                            d.Parameters[i].CurrentType = (string)node.TypedValue;
+                            break;
+                        case "name":
+                            d.Parameters[i].Name = (string)node.TypedValue;
+                            break;
+                        case "flow":
+                            d.Parameters[i].Flow = Parameter.GetFlowDirection((string)node.TypedValue);
+                            break;
+                        case "count":
+                            d.Parameters[i].ComputeSize = node.Value.Trim();
+                            d.Parameters[i].ElementCount =
+                                int.TryParse(d.Parameters[i].ComputeSize, out var count) ? count : 0;
+                            break;
                     }
                 }
             }
         }
 
-        private static void ApplyReturnTypeReplacement(Delegate d, XPathNavigator function_override)
+        private static void ApplyReturnTypeReplacement(Delegate d, XPathNavigator functionOverride)
         {
-            if (function_override != null)
+            var returnOverride = functionOverride?.SelectSingleNode("returns");
+            if (returnOverride != null)
             {
-                XPathNavigator return_override = function_override.SelectSingleNode("returns");
-                if (return_override != null)
-                {
-                    d.ReturnType.CurrentType = return_override.Value;
-                }
+                d.ReturnType.CurrentType = returnOverride.Value;
             }
         }
 
@@ -538,14 +520,19 @@ namespace Bind
         // 3) A generic object or void* (translates to IntPtr)
         // 4) A GLenum (translates to int on Legacy.Tao or GL.Enums.GLenum otherwise).
         // Return types must always be CLS-compliant, because .Net does not support overloading on return types.
-        private void TranslateReturnType(Delegate d,
-            XPathNavigator function_override, XPathNavigator nav,
-            EnumProcessor enum_processor, EnumCollection enums,
-            string apiname, string apiversion)
+        private void TranslateReturnType
+        (
+            Delegate d,
+            XPathNavigator functionOverride,
+            XPathNavigator nav,
+            EnumProcessor enumProcessor,
+            EnumCollection enums,
+            string apiname
+        )
         {
-            ApplyReturnTypeReplacement(d, function_override);
+            ApplyReturnTypeReplacement(d, functionOverride);
 
-            TranslateType(d.ReturnType, function_override, nav, enum_processor, enums, d.Category, apiname);
+            TranslateType(d.ReturnType, nav, enumProcessor, enums, d.Category, apiname);
 
             if (d.ReturnType.CurrentType.ToLower() == "void" && d.ReturnType.Pointer != 0)
             {
@@ -568,11 +555,7 @@ namespace Bind
 
             if (d.ReturnType.CurrentType.Contains("GLenum"))
             {
-                // May need another go at this
-                //d.ReturnType.QualifiedType = String.Format("{0}{1}{2}",
-                    //Settings.EnumsOutput, Settings.NamespaceSeparator, Settings.CompleteEnumName);
-
-                throw new NotImplementedException();
+                d.ReturnType.QualifiedType = "int";
             }
 
             if (d.ReturnType.CurrentType.ToLower().Contains("bool"))
@@ -584,59 +567,52 @@ namespace Bind
             d.ReturnType.CurrentType = GetCLSCompliantType(d.ReturnType);
         }
 
-        private Delegate GetCLSCompliantDelegate(Delegate d)
+        private void TranslateParameters
+        (
+            Delegate d,
+            XPathNavigator functionOverride,
+            XPathNavigator nav,
+            EnumProcessor enumProcessor,
+            EnumCollection enums,
+            string apiname
+        )
         {
-            Delegate f = new Delegate(d);
+            ApplyParameterReplacement(d, functionOverride);
 
-            for (int i = 0; i < f.Parameters.Count; i++)
+            for (var i = 0; i < d.Parameters.Count; i++)
             {
-                f.Parameters[i].CurrentType = GetCLSCompliantType(f.Parameters[i]);
-            }
-
-            f.ReturnType.CurrentType = GetCLSCompliantType(f.ReturnType);
-
-            return f;
-        }
-
-        private void TranslateParameters(Delegate d,
-            XPathNavigator function_override, XPathNavigator nav,
-            EnumProcessor enum_processor, EnumCollection enums,
-            string apiname, string apiversion)
-        {
-            ApplyParameterReplacement(d, function_override);
-
-            for (int i = 0; i < d.Parameters.Count; i++)
-            {
-                TranslateParameter(d.Parameters[i], function_override, nav, enum_processor, enums, d.Category, apiname);
+                TranslateParameter(d.Parameters[i], nav, enumProcessor, enums, d.Category, apiname);
                 if (d.Parameters[i].CurrentType == "UInt16" && d.Name.Contains("LineStipple"))
                 {
                     d.Parameters[i].WrapperType |= WrapperTypes.UncheckedParameter;
                 }
 
-                if (function_override != null)
+                var paramOverride = functionOverride?.SelectSingleNode(
+                    $"param[@name='{d.Parameters[i].RawName}' or @index='{i}']");
+                if (paramOverride == null)
                 {
-                    XPathNavigator param_override = function_override.SelectSingleNode(String.Format(
-                           "param[@name='{0}' or @index='{1}']",
-                           d.Parameters[i].RawName,
-                           i));
-                    if (param_override != null)
-                    {
-                        var legacyArrayParameter = param_override.GetAttribute("legacyArrayParameter", String.Empty);
-                        if (!String.IsNullOrEmpty(legacyArrayParameter))
-                        {
-                            d.Parameters[i].WrapperType |= WrapperTypes.LegacyArrayParameter;
-                        }
-                    }
+                    continue;
+                }
+
+                var legacyArrayParameter = paramOverride.GetAttribute("legacyArrayParameter", string.Empty);
+                if (!string.IsNullOrEmpty(legacyArrayParameter))
+                {
+                    d.Parameters[i].WrapperType |= WrapperTypes.LegacyArrayParameter;
                 }
             }
         }
 
-        private void TranslateParameter(Parameter p,
-            XPathNavigator function_override, XPathNavigator overrides,
-            EnumProcessor enum_processor, EnumCollection enums,
-            string category, string apiname)
+        private void TranslateParameter
+        (
+            Parameter p,
+            XPathNavigator overrides,
+            EnumProcessor enumProcessor,
+            EnumCollection enums,
+            string category,
+            string apiname
+        )
         {
-            TranslateType(p, function_override, overrides, enum_processor, enums, category, apiname);
+            TranslateType(p, overrides, enumProcessor, enums, category, apiname);
 
             // Translate char* -> string. This simplifies the rest of the logic below
             if (p.CurrentType.ToLower().Contains("char") && p.Pointer > 0)
@@ -667,6 +643,7 @@ namespace Bind
                 {
                     throw new NotSupportedException("[Out] String* parameters are not currently supported.");
                 }
+
                 if (p.Pointer >= 2)
                 {
                     throw new NotSupportedException("String arrays with arity >= 2 are not currently supported.");
@@ -698,43 +675,39 @@ namespace Bind
 
             if (Utilities.CSharpKeywords.Contains(p.Name))
             {
-                p.Name = Settings.KeywordEscapeCharacter + p.Name;
+                p.Name = $"@{p.Name}";
             }
-
-            // This causes problems with bool arrays
-            //if (CurrentType.ToLower().Contains("bool"))
-            //    WrapperType = WrapperTypes.BoolParameter;
         }
 
-        private void TranslateAttributes(Delegate d,
-            XPathNavigator function_override, XPathNavigator nav,
-            string apiname, string apiversion)
+        private void TranslateAttributes(Delegate d, XPathNavigator functionOverride, XPathNavigator nav)
         {
-            if (function_override != null)
+            if (functionOverride == null)
             {
-                var version_override = function_override.SelectSingleNode("version");
-                if (version_override != null)
-                {
-                    d.Version = version_override.Value;
-                }
+                return;
+            }
 
-                var profile_override = function_override.SelectSingleNode("profile");
-                if (profile_override != null)
-                {
-                    Debug.Print("Profile override not yet implemented");
-                }
+            var versionOverride = functionOverride.SelectSingleNode("version");
+            if (versionOverride != null)
+            {
+                d.Version = versionOverride.Value;
+            }
 
-                var name_override = function_override.SelectSingleNode("name");
-                if (name_override != null)
-                {
-                    d.Name = name_override.Value;
-                }
+            var profileOverride = functionOverride.SelectSingleNode("profile");
+            if (profileOverride != null)
+            {
+                Debug.Print("Profile override not yet implemented");
+            }
 
-                var obsolete = function_override.GetAttribute("obsolete", String.Empty);
-                if (!String.IsNullOrEmpty(obsolete))
-                {
-                    d.Obsolete = obsolete;
-                }
+            var nameOverride = functionOverride.SelectSingleNode("name");
+            if (nameOverride != null)
+            {
+                d.Name = nameOverride.Value;
+            }
+
+            var obsolete = functionOverride.GetAttribute("obsolete", string.Empty);
+            if (!string.IsNullOrEmpty(obsolete))
+            {
+                d.Obsolete = obsolete;
             }
         }
 
@@ -762,33 +735,36 @@ namespace Bind
                 {
                     wrappers.AddChecked(f);
 
-                    if (!f.CLSCompliant)
+                    if (f.CLSCompliant)
                     {
-                        // The return type must always be cls-compliant,
-                        // since we cannot overload on return types alone.
-                        f.ReturnType.CurrentType = GetCLSCompliantType(f.ReturnType);
+                        continue;
+                    }
 
-                        // Create a cls-compliant wrapper for the parameters
-                        Function cls = new Function(f);
-                        bool modified = false;
-                        for (int i = 0; i < f.Parameters.Count; i++)
-                        {
-                            cls.Parameters[i].CurrentType = GetCLSCompliantType(cls.Parameters[i]);
-                            if (cls.Parameters[i].CurrentType != f.Parameters[i].CurrentType)
-                            {
-                                modified = true;
-                            }
-                        }
+                    // The return type must always be cls-compliant,
+                    // since we cannot overload on return types alone.
+                    f.ReturnType.CurrentType = GetCLSCompliantType(f.ReturnType);
 
-                        // Only add a cls-compliant overload if we have
-                        // changed a parameter.
-                        if (modified)
+                    // Create a cls-compliant wrapper for the parameters
+                    var cls = new Function(f);
+                    var modified = false;
+                    for (var i = 0; i < f.Parameters.Count; i++)
+                    {
+                        cls.Parameters[i].CurrentType = GetCLSCompliantType(cls.Parameters[i]);
+                        if (cls.Parameters[i].CurrentType != f.Parameters[i].CurrentType)
                         {
-                            wrappers.AddChecked(cls);
+                            modified = true;
                         }
+                    }
+
+                    // Only add a cls-compliant overload if we have
+                    // changed a parameter.
+                    if (modified)
+                    {
+                        wrappers.AddChecked(cls);
                     }
                 }
             }
+
             return wrappers;
         }
 
@@ -807,58 +783,66 @@ namespace Bind
             //        results.Add(w);
             //    }
 
-            foreach (List<Function> wrappers in collection.Values)
+            foreach (var wrappers in collection.Values)
             {
-                var must_remove = new List<int>();
+                var mustRemove = new List<int>();
 
-                for (int i = 0; i < wrappers.Count; i++)
+                for (var i = 0; i < wrappers.Count; i++)
                 {
-                    for (int j = i + 1; j < wrappers.Count; j++)
+                    for (var j = i + 1; j < wrappers.Count; j++)
                     {
-                        if (wrappers[i].TrimmedName == wrappers[j].TrimmedName && wrappers[i].Parameters.Count == wrappers[j].Parameters.Count)
+                        if (wrappers[i].TrimmedName != wrappers[j].TrimmedName ||
+                            wrappers[i].Parameters.Count != wrappers[j].Parameters.Count)
                         {
-                            bool function_i_is_problematic = false;
-                            bool function_j_is_problematic = false;
+                            continue;
+                        }
 
-                            int k;
-                            for (k = 0; k < wrappers[i].Parameters.Count; k++)
+                        var functionIIsProblematic = false;
+                        var functionJIsProblematic = false;
+
+                        int k;
+                        for (k = 0; k < wrappers[i].Parameters.Count; k++)
+                        {
+                            if (wrappers[i].Parameters[k].CurrentType != wrappers[j].Parameters[k].CurrentType)
                             {
-                                if (wrappers[i].Parameters[k].CurrentType != wrappers[j].Parameters[k].CurrentType)
-                                {
-                                    break;
-                                }
-
-                                if (wrappers[i].Parameters[k].DiffersOnlyOnReference(wrappers[j].Parameters[k]))
-                                {
-                                    if (wrappers[i].Parameters[k].Reference)
-                                    {
-                                        function_i_is_problematic = true;
-                                    }
-                                    else
-                                    {
-                                        function_j_is_problematic = true;
-                                    }
-                                }
+                                break;
                             }
 
-                            if (k == wrappers[i].Parameters.Count)
+                            if (!wrappers[i].Parameters[k].DiffersOnlyOnReference(wrappers[j].Parameters[k]))
                             {
-                                if (function_i_is_problematic)
-                                {
-                                    must_remove.Add(i);
-                                }
-                                if (function_j_is_problematic)
-                                {
-                                    must_remove.Add(j);
-                                }
+                                continue;
                             }
+
+                            if (wrappers[i].Parameters[k].Reference)
+                            {
+                                functionIIsProblematic = true;
+                            }
+                            else
+                            {
+                                functionJIsProblematic = true;
+                            }
+                        }
+
+                        if (k != wrappers[i].Parameters.Count)
+                        {
+                            continue;
+                        }
+
+                        if (functionIIsProblematic)
+                        {
+                            mustRemove.Add(i);
+                        }
+
+                        if (functionJIsProblematic)
+                        {
+                            mustRemove.Add(j);
                         }
                     }
                 }
 
-                int count = 0;
-                must_remove.Sort();
-                foreach (var i in must_remove)
+                var count = 0;
+                mustRemove.Sort();
+                foreach (var i in mustRemove)
                 {
                     // Careful: whenever we remove a function, the total count
                     // is reduced. We must account for that, or we will remove
@@ -867,30 +851,33 @@ namespace Bind
                     count++;
                 }
             }
+
             return collection;
         }
 
         private string GetCLSCompliantType(Type type)
         {
-            if (!type.CLSCompliant)
+            if (type.CLSCompliant)
             {
-                switch (type.CurrentType)
-                {
-                    case "UInt16":
-                    case "ushort":
-                        return "Int16";
-                    case "UInt32":
-                    case "uint":
-                        return "Int32";
-                    case "UInt64":
-                    case "ulong":
-                        return "Int64";
-                    case "SByte":
-                    case "sbyte":
-                        return "Byte";
-                    case "UIntPtr":
-                        return "IntPtr";
-                }
+                return type.CurrentType;
+            }
+
+            switch (type.CurrentType)
+            {
+                case "UInt16":
+                case "ushort":
+                    return "Int16";
+                case "UInt32":
+                case "uint":
+                    return "Int32";
+                case "UInt64":
+                case "ulong":
+                    return "Int64";
+                case "SByte":
+                case "sbyte":
+                    return "Byte";
+                case "UIntPtr":
+                    return "IntPtr";
             }
 
             return type.CurrentType;
@@ -898,7 +885,7 @@ namespace Bind
 
         private IEnumerable<Function> CreateNormalWrappers(Delegate d, EnumCollection enums)
         {
-            Function f = new Function(d);
+            var f = new Function(d);
             TrimName(f);
 
             WrapReturnType(f);
@@ -910,7 +897,7 @@ namespace Bind
 
         private IEnumerable<Function> CreateConvenienceOverloads(FunctionCollection wrappers)
         {
-            var convenience_wrappers = new List<Function>();
+            var convenienceWrappers = new List<Function>();
             foreach (var d in wrappers.Values.SelectMany(w => w))
             {
                 if (d.Parameters.Count > 0 && d.Parameters.Count <= 2)
@@ -920,24 +907,24 @@ namespace Bind
 
                     var name = d.Name;
 
-                    bool is_candidate = true;
-                    is_candidate &=
+                    var isCandidate = true;
+                    isCandidate &=
                         name.StartsWith("Get") || name.StartsWith("Gen") ||
                         name.StartsWith("Delete") || name.StartsWith("New");
-                    is_candidate &= p.Pointer > 0;
+                    isCandidate &= p.Pointer > 0;
                     // if there is a specific count set, such as "4", then this function
                     // returns a vector of specific dimensions and it would be wrong
                     // to generate an overload that returns a value of different size.
-                    is_candidate &= p.ElementCount == 0 || p.ElementCount == 1;
-                    is_candidate &= r.CurrentType == "void" && r.Pointer == 0;
+                    isCandidate &= p.ElementCount == 0 || p.ElementCount == 1;
+                    isCandidate &= r.CurrentType == "void" && r.Pointer == 0;
 
                     Function f = null;
-                    if (is_candidate && p.Flow == FlowDirection.Out)
+                    if (isCandidate && p.Flow == FlowDirection.Out)
                     {
                         // Match Gen*|Get*|New*([Out] int[] names) methods
                         f = CreateReturnTypeConvenienceWrapper(d);
                     }
-                    else if (is_candidate && p.Flow != FlowDirection.Out)
+                    else if (isCandidate && p.Flow != FlowDirection.Out)
                     {
                         // Match *Delete(int count, int[] names) methods
                         if (d.Parameters.Count == 2)
@@ -951,7 +938,7 @@ namespace Bind
                         // If we have a convenience overload, we should turn its name from plural into singular
                         f.TrimmedName = f.TrimmedName.Replace("Queries", "Query").TrimEnd('s');
 
-                        convenience_wrappers.Add(f);
+                        convenienceWrappers.Add(f);
                     }
                 }
 
@@ -959,7 +946,7 @@ namespace Bind
                 // and add Int32 overloads for convenience.
                 {
                     Function f = null;
-                    int i = 0;
+                    var i = 0;
                     foreach (var p in d.Parameters)
                     {
                         if ((p.WrapperType & WrapperTypes.SizeParameter) != 0)
@@ -967,16 +954,18 @@ namespace Bind
                             f = f ?? new Function(d);
                             f.Parameters[i].QualifiedType = "Int32";
                         }
+
                         i++;
                     }
 
                     if (f != null)
                     {
-                        convenience_wrappers.Add(f);
+                        convenienceWrappers.Add(f);
                     }
                 }
             }
-            return convenience_wrappers;
+
+            return convenienceWrappers;
         }
 
         private static Function CreateReturnTypeConvenienceWrapper(Function d)
@@ -987,32 +976,36 @@ namespace Bind
             f.Parameters.RemoveAt(f.Parameters.Count - 1);
             f.ReturnType.WrapperType |= WrapperTypes.ConvenienceReturnType;
 
-            if (f.Parameters.Count > 0)
+            if (f.Parameters.Count <= 0)
             {
-                var p_size = f.Parameters.Last();
-                if (p_size.CurrentType.ToLower().StartsWith("int") && p_size.Pointer == 0)
-                {
-                    f.Parameters.RemoveAt(f.Parameters.Count - 1);
-                    f.ReturnType.WrapperType |= WrapperTypes.ConvenienceArrayReturnType;
-                }
+                return f;
             }
+
+            var pSize = f.Parameters.Last();
+            if (!pSize.CurrentType.ToLower().StartsWith("int") || pSize.Pointer != 0)
+            {
+                return f;
+            }
+
+            f.Parameters.RemoveAt(f.Parameters.Count - 1);
+            f.ReturnType.WrapperType |= WrapperTypes.ConvenienceArrayReturnType;
             return f;
         }
 
         private static Function CreateArrayReturnTypeConvenienceWrapper(Function d)
         {
             var f = new Function(d);
-            var p_array = f.Parameters.Last();
-            var p_size = f.Parameters[f.Parameters.Count - 2];
+            var pArray = f.Parameters.Last();
+            var pSize = f.Parameters[f.Parameters.Count - 2];
             f.Parameters.RemoveAt(f.Parameters.Count - 2);
-            p_array.WrapperType |= WrapperTypes.ConvenienceArrayType;
+            pArray.WrapperType |= WrapperTypes.ConvenienceArrayType;
             // Since this is a 1-element overload, we don't need
             // array or reference wrappers.
-            p_array.WrapperType &= ~(
+            pArray.WrapperType &= ~(
                 WrapperTypes.ReferenceParameter |
                 WrapperTypes.ArrayParameter);
-            p_array.Array = p_array.Pointer = 0;
-            p_array.Reference = false;
+            pArray.Array = pArray.Pointer = 0;
+            pArray.Reference = false;
             return f;
         }
 
@@ -1026,6 +1019,7 @@ namespace Bind
                     dictionary[key].Add(new Function(raw));
                 }
             }
+
             return dictionary[key];
         }
 
@@ -1040,7 +1034,7 @@ namespace Bind
             }
 
             var wrappers = new Dictionary<WrapperTypes, List<Function>>();
-            for (int i = 0; i < func.Parameters.Count; i++)
+            for (var i = 0; i < func.Parameters.Count; i++)
             {
                 var parameter = func.Parameters[i];
 
@@ -1073,6 +1067,7 @@ namespace Bind
                             {
                                 p.Array++;
                             }
+
                             p.Pointer--;
                         }
                     }
@@ -1085,14 +1080,6 @@ namespace Bind
 
                             p.Reference = true;
                             p.Pointer--;
-                        }
-                    }
-
-                    if ((parameter.WrapperType & WrapperTypes.PointerParameter) != 0)
-                    {
-                        foreach (var wrapper in GetWrapper(wrappers, WrapperTypes.PointerParameter, func))
-                        {
-                            var p = wrapper.Parameters[i];
                         }
                     }
 
@@ -1117,49 +1104,52 @@ namespace Bind
                 // existing wrappers, add one here to get the process started.
                 wrappers.Add(WrapperTypes.None, new List<Function> { new Function(func) });
             }
+
             var list = new List<Function>();
             foreach (var wrapper in wrappers.Values.SelectMany(v => v))
             {
                 // Add generic 'ref T' wrapper
-                Function generic_wrapper = null;
-                for (int i = 0; i < wrapper.Parameters.Count; i++)
+                Function genericWrapper = null;
+                for (var i = 0; i < wrapper.Parameters.Count; i++)
                 {
                     var parameter = wrapper.Parameters[i];
                     if ((parameter.WrapperType & WrapperTypes.GenericParameter) != 0)
                     {
-                        generic_wrapper = generic_wrapper ?? new Function(wrapper);
-                        var p = generic_wrapper.Parameters[i];
+                        genericWrapper = genericWrapper ?? new Function(wrapper);
+                        var p = genericWrapper.Parameters[i];
 
                         p.Reference = true;
                         p.Pointer = 0;
                         p.Array = 0;
                         p.Generic = true;
-                        p.QualifiedType = "T" + i.ToString();
+                        p.QualifiedType = "T" + i;
                         p.Flow = FlowDirection.Undefined;
                     }
                 }
-                if (generic_wrapper != null)
+
+                if (genericWrapper != null)
                 {
-                    list.Add(generic_wrapper);
+                    list.Add(genericWrapper);
                 }
 
                 // Add the following wrappers:
                 // 'IntPtr', 'T[]', 'T[,]' and 'T[,,]'
-                for (int arity = 0; arity < 4; arity++)
+                for (var arity = 0; arity < 4; arity++)
                 {
-                    generic_wrapper = null;
-                    for (int i = 0; i < wrapper.Parameters.Count; i++)
+                    genericWrapper = null;
+                    for (var i = 0; i < wrapper.Parameters.Count; i++)
                     {
                         var parameter = wrapper.Parameters[i];
                         if ((parameter.WrapperType & WrapperTypes.GenericParameter) != 0)
                         {
-                            generic_wrapper = generic_wrapper ?? new Function(wrapper);
+                            genericWrapper = genericWrapper ?? new Function(wrapper);
                             if (arity > 0)
                             {
                                 // Overloading on array arity is not CLS-compliant
-                                generic_wrapper.CLSCompliant = false;
+                                genericWrapper.CLSCompliant = false;
                             }
-                            var p = generic_wrapper.Parameters[i];
+
+                            var p = genericWrapper.Parameters[i];
 
                             p.Reference = false;
                             p.Pointer = 0;
@@ -1171,24 +1161,26 @@ namespace Bind
                             else
                             {
                                 p.Generic = true;
-                                p.QualifiedType = "T" + i.ToString();
+                                p.QualifiedType = "T" + i;
                                 p.Flow = FlowDirection.Undefined;
                             }
                         }
                     }
-                    if (generic_wrapper != null)
+
+                    if (genericWrapper != null)
                     {
-                        list.Add(generic_wrapper);
+                        list.Add(genericWrapper);
                     }
                 }
             }
+
             GetWrapper(wrappers, WrapperTypes.GenericParameter, null)
                 .AddRange(list);
 
             // Handle string parameters
             foreach (var wrapper in wrappers.Values.SelectMany(v => v))
             {
-                for (int i = 0; i < wrapper.Parameters.Count; i++)
+                for (var i = 0; i < wrapper.Parameters.Count; i++)
                 {
                     var p = wrapper.Parameters[i];
                     if ((p.WrapperType & WrapperTypes.StringParameter) != 0)
@@ -1206,12 +1198,10 @@ namespace Bind
                         {
                             throw new NotImplementedException();
                         }
-                        else
-                        {
-                            p.QualifiedType = "String";
-                            p.Pointer = 0;
-                            p.Array = 1;
-                        }
+
+                        p.QualifiedType = "String";
+                        p.Pointer = 0;
+                        p.Array = 1;
                     }
                 }
             }

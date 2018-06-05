@@ -203,7 +203,6 @@ namespace Bind.Structures
         private bool hasGenericParameters;
 
         public bool Rebuild { get; set; }
-        private Settings Settings { get; set; }
 
         public ParameterCollection()
         {

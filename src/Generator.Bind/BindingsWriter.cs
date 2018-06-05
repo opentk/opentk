@@ -40,10 +40,9 @@ namespace Bind
 
     internal sealed class BindingsWriter
     {
-        private IBind Generator { get; set; }
-        private Settings Settings { get { return Generator.Settings; } }
+        private IGenerator Generator { get; set; }
 
-        public void WriteBindings(IBind generator)
+        public void WriteBindings(IGenerator generator)
         {
             Generator = generator;
             WriteBindings(generator.Delegates, generator.Wrappers, generator.Enums);
@@ -64,10 +63,13 @@ namespace Bind
 
         private void WriteBindings(DelegateCollection delegates, FunctionCollection wrappers, EnumCollection enums)
         {
-            Console.WriteLine("Writing bindings to {0}", Settings.OutputPath);
-            if (!Directory.Exists(Settings.OutputPath))
+            var baseOutputPath = Program.Arguments.OutputPath;
+
+            Console.WriteLine($"Writing bindings to {baseOutputPath}");
+
+            if (!Directory.Exists(baseOutputPath))
             {
-                Directory.CreateDirectory(Settings.OutputPath);
+                Directory.CreateDirectory(baseOutputPath);
             }
 
             // Enums
@@ -82,7 +84,7 @@ namespace Bind
                     sw.WriteLine("using System;");
                     sw.WriteLineNoTabs();
 
-                    sw.WriteLine("namespace {0}", Settings.EnumsOutput);
+                    sw.WriteLine("namespace {0}", Generator.Namespace);
                     using (sw.BeginBlock())
                     {
                         WriteEnums(sw, enums, wrappers);
@@ -111,51 +113,41 @@ namespace Bind
 
                     sw.WriteLineNoTabs();
 
-                    sw.WriteLine("namespace {0}", Settings.OutputNamespace);
+                    sw.WriteLine("namespace {0}", Generator.Namespace);
                     using (sw.BeginBlock())
                     {
-                        WriteWrappers(sw, wrappers, delegates, enums, Generator.CSTypes);
+                        WriteWrappers(sw, wrappers, delegates, enums);
                     }
                 }
             }
 
-            string output_enums = Path.Combine(Settings.OutputPath, Settings.EnumsFile);
-            string output_delegates = Path.Combine(Settings.OutputPath, Settings.DelegatesFile);
-            string output_core = Path.Combine(Settings.OutputPath, Settings.ImportsFile);
-            string output_wrappers = Path.Combine(Settings.OutputPath, Settings.WrappersFile);
+            var outputEnums = Path.Combine(baseOutputPath, Generator.OutputSubfolder, $"{Generator.APIIdentifier}.Enums.cs");
+            var outputWrappers = Path.Combine(baseOutputPath, Generator.OutputSubfolder, $"{Generator.APIIdentifier}.cs");
 
-            if (File.Exists(output_enums))
+            if (File.Exists(outputEnums))
             {
-                File.Delete(output_enums);
-            }
-            if (File.Exists(output_delegates))
-            {
-                File.Delete(output_delegates);
-            }
-            if (File.Exists(output_core))
-            {
-                File.Delete(output_core);
-            }
-            if (File.Exists(output_wrappers))
-            {
-                File.Delete(output_wrappers);
+                File.Delete(outputEnums);
             }
 
-            File.Move(tempEnumsFilePath, output_enums);
-            File.Move(tempWrappersFilePath, output_wrappers);
+            if (File.Exists(outputWrappers))
+            {
+                File.Delete(outputWrappers);
+            }
+
+            File.Move(tempEnumsFilePath, outputEnums);
+            File.Move(tempWrappersFilePath, outputWrappers);
         }
 
         private void WriteWrappers(SourceWriter sw, FunctionCollection wrappers,
-            DelegateCollection delegates, EnumCollection enums,
-            IDictionary<string, string> CSTypes)
+            DelegateCollection delegates, EnumCollection enums)
         {
-            Trace.WriteLine(String.Format("Writing wrappers to:\t{0}.{1}", Settings.OutputNamespace, Settings.OutputClass));
+            Trace.WriteLine(String.Format("Writing wrappers to:\t{0}.{1}", Generator.Namespace, Generator.ClassName));
 
-            sw.WriteLine("partial class {0}", Settings.OutputClass);
+            sw.WriteLine("partial class {0}", Generator.ClassName);
             using (sw.BeginBlock())
             {
                 // Write constructor
-                sw.WriteLine("static {0}()", Settings.OutputClass);
+                sw.WriteLine("static {0}()", Generator.ClassName);
                 using (sw.BeginBlock())
                 {
                     // Write entry point names.
@@ -167,9 +159,14 @@ namespace Bind
                     {
                         foreach (var d in delegates.Values.Select(d => d.First()))
                         {
-                            var name = Settings.FunctionPrefix + d.Name;
-                            sw.WriteLine("{0}, 0,", String.Join(", ",
-                                System.Text.Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()));
+                            var name = Generator.FunctionPrefix + d.Name;
+                            var byteString = string.Join
+                            (
+                                ", ",
+                                Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()
+                            );
+
+                            sw.WriteLine($"{byteString}, 0,");
                         }
                     }
 
@@ -178,11 +175,11 @@ namespace Bind
                     sw.WriteLine("EntryPointNameOffsets = new int[]");
                     using (sw.BeginBlock(true))
                     {
-                        int offset = 0;
+                        var offset = 0;
                         foreach (var d in delegates.Values.Select(d => d.First()))
                         {
-                            sw.WriteLine("{0},", offset);
-                            var name = Settings.FunctionPrefix + d.Name;
+                            sw.WriteLine($"{offset},");
+                            var name = Generator.FunctionPrefix + d.Name;
                             offset += name.Length + 1;
                         }
                     }
@@ -204,7 +201,7 @@ namespace Bind
                         else
                         {
                             // Identifiers cannot start with a number:
-                            sw.WriteLine("public static partial class {0}{1}", Settings.ConstantPrefix, key);
+                            sw.WriteLine("public static partial class {0}{1}", Generator.ConstantPrefix, key);
                         }
                         using (sw.BeginBlock())
                         {
@@ -271,7 +268,7 @@ namespace Bind
             }
 
             sw.WriteLine("[AutoGenerated(Category = \"{0}\", Version = \"{1}\", EntryPoint = \"{2}\")]",
-                f.Category, f.Version, Settings.FunctionPrefix + f.WrappedDelegate.EntryPoint);
+                f.Category, f.Version, Generator.FunctionPrefix + f.WrappedDelegate.EntryPoint);
 
             var declarationString = GetDeclarationString(f).TrimEnd();
             var declarationStringLines = declarationString.Split('\n').ToList();
@@ -418,11 +415,11 @@ namespace Bind
             foreach (var c in constants)
             {
                 sw.WriteLine("/// <summary>");
-                sw.WriteLine("/// Original was " + Settings.ConstantPrefix + c.OriginalName + " = " + c.Value);
+                sw.WriteLine("/// Original was " + Generator.ConstantPrefix + c.OriginalName + " = " + c.Value);
                 sw.WriteLine("/// </summary>");
 
                 var str = String.Format("{0} = {1}((int){2}{3})", c.Name, c.Unchecked ? "unchecked" : "",
-                    !String.IsNullOrEmpty(c.Reference) ? c.Reference + Settings.NamespaceSeparator : "", c.Value);
+                    !String.IsNullOrEmpty(c.Reference) ? c.Reference + "." : "", c.Value);
 
                 sw.Write(str);
                 if (!String.IsNullOrEmpty(str))
@@ -439,8 +436,6 @@ namespace Bind
 
         private void WriteEnums(SourceWriter sw, EnumCollection enums, FunctionCollection wrappers)
         {
-            Trace.WriteLine(String.Format("Writing enums to:\t{0}", Settings.EnumsOutput));
-
             // Build a dictionary of which functions use which enums
             var enum_counts = new Dictionary<Enum, List<Function>>();
             foreach (var e in enums.Values)
@@ -463,7 +458,7 @@ namespace Bind
             {
                 // Document which functions use this enum.
                 var functions = enum_counts[@enum]
-                    .Select(w => Settings.OutputClass + (w.Extension != "Core" ? ("." + w.Extension) : "") + "." + w.TrimmedName)
+                    .Select(w => Generator.ClassName + (w.Extension != "Core" ? ("." + w.Extension) : "") + "." + w.TrimmedName)
                     .Distinct();
 
                 sw.WriteLine("/// <summary>");
@@ -504,7 +499,7 @@ namespace Bind
 
         public void WriteLicense(SourceWriter sw)
         {
-            var licenseFilePath = Path.Combine(Settings.InputPath, Settings.LicenseFile);
+            var licenseFilePath = Path.Combine(Program.Arguments.LicenseFile);
             var licenseContents = File.ReadAllText(licenseFilePath).TrimEnd();
 
             sw.WriteLine(licenseContents);
@@ -532,7 +527,7 @@ namespace Bind
                 c.Name,
                 c.Unchecked ? "unchecked" : String.Empty,
                 !String.IsNullOrEmpty(c.Reference) ?
-                    c.Reference + Settings.NamespaceSeparator :
+                    c.Reference + "." :
                     String.Empty,
                 c.Value);
         }
@@ -548,7 +543,7 @@ namespace Bind
             }
             sb.Append(GetDeclarationString(d.ReturnType));
             sb.Append(" ");
-            sb.Append(Settings.FunctionPrefix);
+            sb.Append(Generator.FunctionPrefix);
             sb.Append(d.Name);
             sb.Append(GetDeclarationString(d.Parameters));
 
