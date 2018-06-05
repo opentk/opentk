@@ -30,13 +30,11 @@ namespace Bind
         public string DefaultDelegatesFile = "Delegates.cs";
         public string DefaultEnumsFile = "Enums.cs";
         public string DefaultWrappersFile = "GL.cs";
-        public Legacy DefaultCompatibility = Legacy.None;
 
         private string inputPath, outputPath, outputNamespace, docPath, fallbackDocPath, licenseFile,
             languageTypeMapFile, keywordEscapeCharacter, importsFile, delegatesFile, enumsFile,
             wrappersFile;
 
-        private Nullable<Legacy> compatibility;
         public string InputPath { get { return inputPath ?? DefaultInputPath; } set { inputPath = value; } }
         public string OutputPath { get { return outputPath ?? DefaultOutputPath; } set { outputPath = value; } }
         public string OutputNamespace { get { return outputNamespace ?? DefaultOutputNamespace; } set { outputNamespace = value; } }
@@ -50,7 +48,6 @@ namespace Bind
         public string DelegatesFile { get { return delegatesFile ?? DefaultDelegatesFile; } set { delegatesFile = value; } }
         public string EnumsFile { get { return enumsFile ?? DefaultEnumsFile; } set { enumsFile = value; } }
         public string WrappersFile { get { return wrappersFile ?? DefaultWrappersFile; } set { wrappersFile = value; } }
-        public Legacy Compatibility { get { return compatibility ?? DefaultCompatibility; } set { compatibility = value; } }
 
         public string GLClass = "GL";        // Needed by Glu for the AuxEnumsClass. Can be set through -gl:"xxx".
         public string OutputClass = "GL";    // The real output class. Can be set through -class:"xxx".
@@ -100,41 +97,6 @@ namespace Bind
 
         public string DelegatesClass = "Delegates";
         public string ImportsClass = "Core";
-
-        [Flags]
-        public enum Legacy
-        {
-            /// <summary>Default value.</summary>
-            None = 0x00,
-            /// <summary>Use DllImport declaration for core functions (do not generate entry point slots)</summary>
-            UseDllImports = 0x4000,
-            /// <summary>
-            /// Use in conjuction with UseDllImports, to create
-            /// bindings that are compatible with opengl32.dll on Windows.
-            /// This uses DllImports up to GL 1.1 and function pointers
-            /// for higher versions.
-            /// </summary>
-            UseWindowsCompatibleGL = 0x8000,
-            /*GenerateAllPermutations,*/
-        }
-
-        // Returns true if flag is enabled.
-        public bool IsEnabled(Legacy flag)
-        {
-            return (Compatibility & flag) != (Legacy)0;
-        }
-
-        // Enables the specified flag.
-        public void Enable(Legacy flag)
-        {
-            Compatibility |= flag;
-        }
-
-        // Disables the specified flag.
-        public void Disable(Legacy flag)
-        {
-            Compatibility &= ~flag;
-        }
 
         public string WindowsGDI = "OpenTK.Platform.Windows.API";
 

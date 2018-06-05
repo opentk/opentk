@@ -165,12 +165,9 @@ namespace Bind
             sw.Indent();
             foreach (var d in delegates.Values.Select(d => d.First()))
             {
-                if (d.RequiresSlot(Settings))
-                {
-                    var name = Settings.FunctionPrefix + d.Name;
-                    sw.WriteLine("{0}, 0,", String.Join(", ",
-                        System.Text.Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()));
-                }
+                var name = Settings.FunctionPrefix + d.Name;
+                sw.WriteLine("{0}, 0,", String.Join(", ",
+                    System.Text.Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()));
             }
             sw.Unindent();
             sw.WriteLine("};");
@@ -182,12 +179,9 @@ namespace Bind
             int offset = 0;
             foreach (var d in delegates.Values.Select(d => d.First()))
             {
-                if (d.RequiresSlot(Settings))
-                {
-                    sw.WriteLine("{0},", offset);
-                    var name = Settings.FunctionPrefix + d.Name;
-                    offset += name.Length + 1;
-                }
+                sw.WriteLine("{0},", offset);
+                var name = Settings.FunctionPrefix + d.Name;
+                offset += name.Length + 1;
             }
             sw.Unindent();
             sw.WriteLine("};");
@@ -268,7 +262,7 @@ namespace Bind
                 sw.WriteLine("[CLSCompliant(false)]");
             }
 
-            sw.WriteLine("public static {0} {{ throw new BindingsNotRewrittenException(); }}", GetDeclarationString(f, Settings.Compatibility));
+            sw.WriteLine("public static {0} {{ throw new BindingsNotRewrittenException(); }}", GetDeclarationString(f));
         }
 
         private void WriteDocumentation(BindStreamWriter sw, Function f)
@@ -573,7 +567,7 @@ namespace Bind
             return sb.ToString();
         }
 
-        private string GetDeclarationString(Function f, Settings.Legacy settings)
+        private string GetDeclarationString(Function f)
         {
             StringBuilder sb = new StringBuilder();
 

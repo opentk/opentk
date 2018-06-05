@@ -170,22 +170,10 @@ namespace Bind
             int slot = -1;
             foreach (var list in delegates.Values)
             {
-                var func = list.First();
-                if (func.RequiresSlot(Settings))
+                slot++;
+                foreach (var d in list)
                 {
-                    slot++;
-                    foreach (var d in list)
-                    {
-                        d.Slot = slot;
-                    }
-                }
-                else
-                {
-                    // Core function routed through DllImport - no slot generated
-                    foreach (var d in list)
-                    {
-                        d.Slot = -1;
-                    }
+                    d.Slot = slot;
                 }
             }
         }
