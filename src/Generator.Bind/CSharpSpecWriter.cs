@@ -439,7 +439,7 @@ namespace Bind
             {
                 // Document which functions use this enum.
                 var functions = enum_counts[@enum]
-                    .Select(w => Settings.GLClass + (w.Extension != "Core" ? ("." + w.Extension) : "") + "." + w.TrimmedName)
+                    .Select(w => Settings.OutputClass + (w.Extension != "Core" ? ("." + w.Extension) : "") + "." + w.TrimmedName)
                     .Distinct();
 
                 sw.WriteLine("/// <summary>");

@@ -235,10 +235,6 @@ namespace Bind
                 translator.Replace("SRgb", "Srgb");
 
                 name = translator.ToString();
-                if (name.StartsWith(Settings.EnumPrefix))
-                {
-                    name = name.Substring(Settings.EnumPrefix.Length);
-                }
             }
 
             return name;

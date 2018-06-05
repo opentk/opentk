@@ -49,32 +49,10 @@ namespace Bind
         public string EnumsFile { get { return enumsFile ?? DefaultEnumsFile; } set { enumsFile = value; } }
         public string WrappersFile { get { return wrappersFile ?? DefaultWrappersFile; } set { wrappersFile = value; } }
 
-        public string GLClass = "GL";        // Needed by Glu for the AuxEnumsClass. Can be set through -gl:"xxx".
         public string OutputClass = "GL";    // The real output class. Can be set through -class:"xxx".
         public string FunctionPrefix = "gl";
         public string ConstantPrefix = "GL_";
-        public string EnumPrefix = "";
         public string NamespaceSeparator = ".";
-
-        // TODO: This code is too fragile.
-        // Old enums code:
-        public string normalEnumsClassOverride = null;
-        public string NestedEnumsClass = "Enums";
-        public string NormalEnumsClass
-        {
-            get
-            {
-                return
-                    normalEnumsClassOverride == null ?
-                        String.IsNullOrEmpty(NestedEnumsClass) ? OutputClass : OutputClass + NamespaceSeparator + NestedEnumsClass :
-                        normalEnumsClassOverride;
-            }
-        }
-
-        public string AuxEnumsClass
-        {
-            get { return GLClass + NamespaceSeparator + NestedEnumsClass; }
-        }
 
         public string EnumsOutput
         {
@@ -84,21 +62,11 @@ namespace Bind
             }
         }
 
-        public string EnumsAuxOutput
-        {
-            get
-            {
-                return OutputNamespace + NamespaceSeparator + EnumsNamespace;
-            }
-        }
-
         // New enums namespace (don't use a nested class).
         public string EnumsNamespace = null; // = "Enums";
 
         public string DelegatesClass = "Delegates";
         public string ImportsClass = "Core";
-
-        public string WindowsGDI = "OpenTK.Platform.Windows.API";
 
         public Settings Clone()
         {

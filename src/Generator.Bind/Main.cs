@@ -99,11 +99,6 @@ namespace Bind
                             Settings.OutputClass = val;
                             break;
                         }
-                        case "gl":
-                        {
-                            Settings.GLClass = val;
-                            break;
-                        }
                         default:
                         {
                             throw new ArgumentException
