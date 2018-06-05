@@ -32,7 +32,7 @@ namespace Bind.Structures
 
         private string CurrentQualifier
         {
-            get { return _currentQualifier; }
+            get => _currentQualifier;
             set { PreviousQualifier = CurrentQualifier; _currentQualifier = value; }
         }
 
@@ -40,13 +40,9 @@ namespace Bind.Structures
 
         public string QualifiedType
         {
-            get
-            {
-                return
-                    !string.IsNullOrEmpty(CurrentQualifier) ? $"{CurrentQualifier}.{CurrentType}"
-                        :
-                        CurrentType;
-            }
+            get => !string.IsNullOrEmpty(CurrentQualifier) ? $"{CurrentQualifier}.{CurrentType}"
+                :
+                CurrentType;
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -74,10 +70,7 @@ namespace Bind.Structures
         /// </summary>
         public virtual string CurrentType
         {
-            get
-            {
-                return _type;
-            }
+            get => _type;
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -110,8 +103,8 @@ namespace Bind.Structures
 
         public int Array
         {
-            get { return _array; }
-            set { _array = value > 0 ? value : 0; }
+            get => _array;
+            set => _array = value > 0 ? value : 0;
         }
 
         private int _elementCount;
@@ -119,16 +112,16 @@ namespace Bind.Structures
         // If the type is an array and ElementCount > 0, then ElemenCount defines the expected array length.
         public int ElementCount
         {
-            get { return _elementCount; }
-            set { _elementCount = value > 0 ? value : 0; }
+            get => _elementCount;
+            set => _elementCount = value > 0 ? value : 0;
         }
 
         private int _pointer;
 
         public int Pointer
         {
-            get { return _pointer; }
-            set { _pointer = value > 0 ? value : 0; }
+            get => _pointer;
+            set => _pointer = value > 0 ? value : 0;
         }
 
         // Set to true if parameter is an enum.
@@ -188,13 +181,7 @@ namespace Bind.Structures
             }
         }
 
-        public bool Unsigned
-        {
-            get
-            {
-                return (CurrentType.Contains("UInt") || CurrentType.Contains("Byte"));
-            }
-        }
+        public bool Unsigned => (CurrentType.Contains("UInt") || CurrentType.Contains("Byte"));
 
         public WrapperTypes WrapperType { get; set; } = WrapperTypes.None;
 

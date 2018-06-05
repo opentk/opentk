@@ -78,10 +78,7 @@ namespace Bind.Structures
                 }
                 return true;
             }
-            set
-            {
-                _clsComplianceOverriden = value;
-            }
+            set => _clsComplianceOverriden = value;
         }
 
         public string Category { get; set; }
@@ -154,7 +151,7 @@ namespace Bind.Structures
         /// </summary>
         public virtual string Name
         {
-            get { return _name; }
+            get => _name;
             set
             {
                 if (!string.IsNullOrEmpty(value))
@@ -300,31 +297,13 @@ namespace Bind.Structures
 
         public List<Delegate> this[string index]
         {
-            get
-            {
-                return _delegates[index];
-            }
-            set
-            {
-                _delegates[index] = value;
-            }
+            get => _delegates[index];
+            set => _delegates[index] = value;
         }
 
-        public ICollection<string> Keys
-        {
-            get
-            {
-                return _delegates.Keys;
-            }
-        }
+        public ICollection<string> Keys => _delegates.Keys;
 
-        public ICollection<List<Delegate>> Values
-        {
-            get
-            {
-                return _delegates.Values;
-            }
-        }
+        public ICollection<List<Delegate>> Values => _delegates.Values;
 
         public void Add(KeyValuePair<string, List<Delegate>> item)
         {
@@ -351,21 +330,9 @@ namespace Bind.Structures
             return _delegates.Remove(item.Key);
         }
 
-        public int Count
-        {
-            get
-            {
-                return _delegates.Count;
-            }
-        }
+        public int Count => _delegates.Count;
 
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsReadOnly => false;
 
         public IEnumerator<KeyValuePair<string, List<Delegate>>> GetEnumerator()
         {

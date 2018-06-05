@@ -25,22 +25,22 @@ namespace Bind.Structures
 
         public string Name
         {
-            get { return _name ?? ""; }
-            set { _name = value; }
+            get => _name ?? "";
+            set => _name = value;
         }
 
         // Typically 'long' or 'int'. Default is 'int'.
         public string Type
         {
-            get { return string.IsNullOrEmpty(_type) ? "int" : _type; }
-            set { _type = value; }
+            get => string.IsNullOrEmpty(_type) ? "int" : _type;
+            set => _type = value;
         }
 
         private SortedDictionary<string, Constant> _constantCollection = new SortedDictionary<string, Constant>();
 
         public IDictionary<string, Constant> ConstantCollection
         {
-            get { return _constantCollection; }
+            get => _constantCollection;
             set
             {
                 if (value == null)
@@ -68,7 +68,7 @@ namespace Bind.Structures
         }
 
         public string Obsolete { get; set; }
-        public bool IsObsolete { get { return !string.IsNullOrEmpty(Obsolete); } }
+        public bool IsObsolete => !string.IsNullOrEmpty(Obsolete);
 
         public bool CLSCompliant { get; set; }
     }
@@ -150,10 +150,7 @@ namespace Bind.Structures
             return _enumerations.ContainsKey(key);
         }
 
-        public ICollection<string> Keys
-        {
-            get { return _enumerations.Keys; }
-        }
+        public ICollection<string> Keys => _enumerations.Keys;
 
         public bool Remove(string key)
         {
@@ -165,21 +162,12 @@ namespace Bind.Structures
             return _enumerations.TryGetValue(key, out value);
         }
 
-        public ICollection<Enum> Values
-        {
-            get { return _enumerations.Values; }
-        }
+        public ICollection<Enum> Values => _enumerations.Values;
 
         public Enum this[string key]
         {
-            get
-            {
-                return _enumerations[key];
-            }
-            set
-            {
-                _enumerations[key] = value;
-            }
+            get => _enumerations[key];
+            set => _enumerations[key] = value;
         }
 
         public void Add(KeyValuePair<string, Enum> item)
@@ -202,15 +190,9 @@ namespace Bind.Structures
             _enumerations.CopyTo(array, arrayIndex);
         }
 
-        public int Count
-        {
-            get { return _enumerations.Count; }
-        }
+        public int Count => _enumerations.Count;
 
-        public bool IsReadOnly
-        {
-            get { return (_enumerations as IDictionary<string, Enum>).IsReadOnly; }
-        }
+        public bool IsReadOnly => (_enumerations as IDictionary<string, Enum>).IsReadOnly;
 
         public bool Remove(KeyValuePair<string, Enum> item)
         {
