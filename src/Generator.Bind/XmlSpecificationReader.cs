@@ -34,11 +34,11 @@ namespace Bind
     using Delegate = Bind.Structures.Delegate;
     using Enum = Bind.Structures.Enum;
 
-    internal class XmlSpecReader : ISpecReader
+    internal class XmlSpecificationReader : ISpecReader
     {
         private Settings Settings { get; set; }
 
-        public XmlSpecReader(Settings settings)
+        public XmlSpecificationReader(Settings settings)
         {
             if (settings == null)
             {
