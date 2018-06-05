@@ -59,10 +59,7 @@ namespace Bind.Structures
         // Use only for debugging, not for code generation.
         public override string ToString()
         {
-            return string.Format("enum {0} : {1} {{ {2} }}",
-                Name,
-                Type,
-                ConstantCollection);
+            return $"enum {Name} : {Type} {{ {ConstantCollection} }}";
         }
 
         public void Add(Constant constant)

@@ -205,17 +205,14 @@ namespace Bind
 
             if (!string.IsNullOrEmpty(apiname) && !string.IsNullOrEmpty(apiversion))
             {
-                var match = string.Format(
-                    "[contains(concat('|', @name, '|'), '|{0}|') and " +
-                    "(contains(concat('|', @version, '|'), '|{1}|') or not(boolean(@version)))]",
-                    apiname,
-                    apiversion);
+                var match = $"[contains(concat('|', @name, '|'), '|{apiname}|') and " +
+                            $"(contains(concat('|', @version, '|'), '|{apiversion}|') or not(boolean(@version)))]";
                 xpathAdd += match;
                 xpathDelete += match;
             }
             else if (!string.IsNullOrEmpty(apiname))
             {
-                var match = string.Format("[contains(concat('|', @name, '|'), '|{0}|')]", apiname);
+                var match = $"[contains(concat('|', @name, '|'), '|{apiname}|')]";
                 xpathAdd += match;
                 xpathDelete += match;
             }
@@ -326,7 +323,7 @@ namespace Bind
 
                     if (string.IsNullOrEmpty(e.Name))
                     {
-                        throw new InvalidOperationException(string.Format("Empty name for enum element {0}", node));
+                        throw new InvalidOperationException($"Empty name for enum element {node}");
                     }
 
                     // It seems that all flag collections contain "Mask" in their names.
