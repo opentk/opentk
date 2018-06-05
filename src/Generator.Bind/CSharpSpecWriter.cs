@@ -212,6 +212,11 @@ namespace Bind
                             {
                                 WriteWrapper(sw, f, enums);
                                 current_wrapper++;
+
+                                if (f != wrappers[key].Last())
+                                {
+                                    sw.WriteLineNoTabs();
+                                }
                             }
                         }
                     }
@@ -222,7 +227,17 @@ namespace Bind
                         {
                             WriteWrapper(sw, f, enums);
                             current_wrapper++;
+
+                            if (f != wrappers[key].Last())
+                            {
+                                sw.WriteLineNoTabs();
+                            }
                         }
+                    }
+
+                    if (key != wrappers.Keys.Last())
+                    {
+                        sw.WriteLineNoTabs();
                     }
                 }
 
@@ -245,7 +260,6 @@ namespace Bind
         {
             WriteDocumentation(sw, f);
             WriteMethod(sw, f, enums);
-            sw.WriteLineNoTabs();
         }
 
         private void WriteMethod(SourceWriter sw, Function f, EnumCollection enums)
@@ -263,7 +277,7 @@ namespace Bind
                 sw.WriteLine("[CLSCompliant(false)]");
             }
 
-            var declarationString = GetDeclarationString(f);
+            var declarationString = GetDeclarationString(f).TrimEnd();
             var declarationStringLines = declarationString.Split('\n').ToList();
 
             sw.WriteLine($"public static {declarationStringLines.First()}");
@@ -316,7 +330,7 @@ namespace Bind
 
                 if (!String.IsNullOrEmpty(docs.Summary))
                 {
-                    var summaryLines = docs.Summary.Split('\n');
+                    var summaryLines = docs.Summary.TrimEnd().Split('\n');
                     foreach (var summaryLine in summaryLines)
                     {
                         sw.WriteLine($"/// {summaryLine}");
