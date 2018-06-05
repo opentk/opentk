@@ -8,29 +8,14 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Security;
 using System.Text.RegularExpressions;
-using Bind.ES;
-using Bind.GL2;
+using Bind.Generators.ES;
+using Bind.Generators.GL2;
 
 namespace Bind
 {
-    internal enum GeneratorMode
+    internal static class Program
     {
-        All = 0,
-        Default = All,
-        GL2,
-        GL3,
-        GL4,
-        ES10,
-        ES11,
-        ES20,
-        ES30,
-        ES31,
-        CL10,
-    }
-
-    internal static class MainClass
-    {
-        private static GeneratorMode mode = GeneratorMode.Default;
+        private static TargetAPI mode = TargetAPI.All;
         static internal List<IBind> Generators = new List<IBind>();
         private static Settings Settings = new Settings();
 
@@ -42,11 +27,6 @@ namespace Bind
             Trace.Listeners.Clear();
             Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
             Trace.AutoFlush = true;
-
-            Console.WriteLine("OpenGL binding generator {0} for OpenTK.",
-                Assembly.GetExecutingAssembly().GetName().Version.ToString());
-            Console.WriteLine("For comments, bugs and suggestions visit http://github.com/opentk/opentk");
-            Console.WriteLine();
 
             try
             {
@@ -124,7 +104,7 @@ namespace Bind
             {
                 switch (mode)
                 {
-                    case GeneratorMode.All:
+                    case TargetAPI.All:
                         Console.WriteLine("Using 'all' generator mode.");
                         Console.WriteLine("Use '-mode:all/gl2/gl4/es10/es11/es20/es30/es31' to select a specific mode.");
                         Generators.Add(new GL2Generator(Settings));
@@ -135,32 +115,32 @@ namespace Bind
                         Generators.Add(new ES31Generator(Settings));
                         break;
 
-                    case GeneratorMode.GL2:
+                    case TargetAPI.GL2:
                         Generators.Add(new GL2Generator(Settings));
                         break;
 
-                    case GeneratorMode.GL3:
-                    case GeneratorMode.GL4:
+                    case TargetAPI.GL3:
+                    case TargetAPI.GL4:
                         Generators.Add(new GL4Generator(Settings));
                         break;
 
-                    case GeneratorMode.ES10:
+                    case TargetAPI.ES10:
                         Generators.Add(new ESGenerator(Settings));
                         break;
 
-                    case GeneratorMode.ES11:
+                    case TargetAPI.ES11:
                         Generators.Add(new ESGenerator(Settings));
                         break;
 
-                    case GeneratorMode.ES20:
+                    case TargetAPI.ES20:
                         Generators.Add(new ES2Generator(Settings));
                         break;
 
-                    case GeneratorMode.ES30:
+                    case TargetAPI.ES30:
                         Generators.Add(new ES3Generator(Settings));
                         break;
 
-                    case GeneratorMode.ES31:
+                    case TargetAPI.ES31:
                         Generators.Add(new ES31Generator(Settings));
                         break;
 
@@ -175,7 +155,7 @@ namespace Bind
 
                     generator.Process();
 
-                    var writer = new CSharpSpecWriter();
+                    var writer = new BindingsWriter();
                     writer.WriteBindings(generator);
 
                     ticks = DateTime.Now.Ticks - ticks;
@@ -204,39 +184,34 @@ namespace Bind
             {
                 case "gl":
                 case "gl2":
-                    mode = GeneratorMode.GL2;
+                    mode = TargetAPI.GL2;
                     break;
 
                 case "gl3":
                 case "gl4":
-                    mode = GeneratorMode.GL4;
+                    mode = TargetAPI.GL4;
                     break;
 
                 case "es10":
-                    mode = GeneratorMode.ES10;
+                    mode = TargetAPI.ES10;
                     break;
 
                 case "es11":
-                    mode = GeneratorMode.ES11;
+                    mode = TargetAPI.ES11;
                     break;
 
                 case "es2":
                 case "es20":
-                    mode = GeneratorMode.ES20;
+                    mode = TargetAPI.ES20;
                     break;
 
                 case "es3":
                 case "es30":
-                    mode = GeneratorMode.ES30;
+                    mode = TargetAPI.ES30;
                     break;
 
                 case "es31":
-                    mode = GeneratorMode.ES31;
-                    break;
-
-                case "cl":
-                case "cl10":
-                    mode = GeneratorMode.CL10;
+                    mode = TargetAPI.ES31;
                     break;
 
                 default:
