@@ -1,4 +1,4 @@
-﻿//
+﻿﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2010 the Open Toolkit library.
@@ -24,6 +24,7 @@
 //
 
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -31,34 +32,41 @@ using System.Linq;
 using System.Text;
 using Bind.Structures;
 using Bind.Writers;
+using Delegate = Bind.Structures.Delegate;
+using Enum = Bind.Structures.Enum;
+using Type = Bind.Structures.Type;
 
 namespace Bind
 {
-    using Delegate = Bind.Structures.Delegate;
-    using Enum = Bind.Structures.Enum;
-    using Type = Bind.Structures.Type;
-
+    /// <summary>
+    /// Handles the writing of bindings to files.
+    /// </summary>
     internal sealed class BindingsWriter
     {
+        // For example, if parameter foo has indirection level = 1, then it
+        // is consumed as 'foo*' in the fixed_statements and the call string.
+        private static readonly string[] PointerLevels = { "", "*", "**", "***", "****" };
+
+        private static readonly string[] ArrayLevels = { "", "[]", "[,]", "[,,]", "[,,,]" };
+
+        private static readonly Dictionary<string, string> Aliases = new Dictionary<string, string>
+        {
+            { nameof(Int16), "short" },
+            { nameof(UInt16), "ushort" },
+            { nameof(Int32), "int" },
+            { nameof(UInt32), "uint" },
+            { nameof(Int64), "long" },
+            { nameof(UInt64), "ulong" },
+            { nameof(Single), "float" },
+            { nameof(Double), "double" }
+        };
+
         private IGenerator Generator { get; set; }
 
         public void WriteBindings(IGenerator generator)
         {
             Generator = generator;
             WriteBindings(generator.Delegates, generator.Wrappers, generator.Enums);
-        }
-
-        private static void ConsoleRewrite(string text)
-        {
-            int left = Console.CursorLeft;
-            int top = Console.CursorTop;
-            Console.Write(text);
-            for (int i = text.Length; i < 80; i++)
-            {
-                Console.Write(" ");
-            }
-            Console.WriteLine();
-            Console.SetCursorPosition(left, top);
         }
 
         private void WriteBindings(DelegateCollection delegates, FunctionCollection wrappers, EnumCollection enums)
@@ -84,7 +92,7 @@ namespace Bind
                     sw.WriteLine("using System;");
                     sw.WriteLineNoTabs();
 
-                    sw.WriteLine("namespace {0}", Generator.Namespace);
+                    sw.WriteLine($"namespace {Generator.Namespace}");
                     using (sw.BeginBlock())
                     {
                         WriteEnums(sw, enums, wrappers);
@@ -116,7 +124,7 @@ namespace Bind
                     sw.WriteLine("namespace {0}", Generator.Namespace);
                     using (sw.BeginBlock())
                     {
-                        WriteWrappers(sw, wrappers, delegates, enums);
+                        WriteWrappers(sw, wrappers, delegates);
                     }
                 }
             }
@@ -138,16 +146,15 @@ namespace Bind
             File.Move(tempWrappersFilePath, outputWrappers);
         }
 
-        private void WriteWrappers(SourceWriter sw, FunctionCollection wrappers,
-            DelegateCollection delegates, EnumCollection enums)
+        private void WriteWrappers(SourceWriter sw, FunctionCollection wrappers, DelegateCollection delegates)
         {
-            Trace.WriteLine(String.Format("Writing wrappers to:\t{0}.{1}", Generator.Namespace, Generator.ClassName));
+            Trace.WriteLine($"Writing wrappers to:\t{Generator.Namespace}.{Generator.ClassName}");
 
             sw.WriteLine("partial class {0}", Generator.ClassName);
             using (sw.BeginBlock())
             {
                 // Write constructor
-                sw.WriteLine("static {0}()", Generator.ClassName);
+                sw.WriteLine($"static {Generator.ClassName}()");
                 using (sw.BeginBlock())
                 {
                     // Write entry point names.
@@ -189,7 +196,6 @@ namespace Bind
 
                 sw.WriteLineNoTabs();
 
-                int current_wrapper = 0;
                 foreach (string key in wrappers.Keys)
                 {
                     if (key != "Core")
@@ -206,10 +212,9 @@ namespace Bind
                         using (sw.BeginBlock())
                         {
                             wrappers[key].Sort();
-                            foreach (Function f in wrappers[key])
+                            foreach (var f in wrappers[key])
                             {
-                                WriteWrapper(sw, f, enums);
-                                current_wrapper++;
+                                WriteMethod(sw, f);
 
                                 if (f != wrappers[key].Last())
                                 {
@@ -221,10 +226,9 @@ namespace Bind
                     else
                     {
                         wrappers[key].Sort();
-                        foreach (Function f in wrappers[key])
+                        foreach (var f in wrappers[key])
                         {
-                            WriteWrapper(sw, f, enums);
-                            current_wrapper++;
+                            WriteMethod(sw, f);
 
                             if (f != wrappers[key].Last())
                             {
@@ -241,34 +245,31 @@ namespace Bind
 
                 // Emit native signatures.
                 // These are required by the patcher.
-                int current_signature = 0;
-                foreach (var d in wrappers.Values.SelectMany(e => e).Select(w => w.WrappedDelegate).Distinct())
+                var wrappersToWrite = wrappers.Values.SelectMany(e => e).Select(w => w.WrappedDelegate).Distinct().ToList();
+                foreach (var d in wrappersToWrite)
                 {
-                    sw.WriteLine("[Slot({0})]", d.Slot);
+                    sw.WriteLine($"[Slot({d.Slot})]");
                     sw.WriteLine("[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
                     sw.WriteLine("private static extern {0};", GetDeclarationString(d, false));
-                    current_signature++;
-                }
 
-                Console.WriteLine("Wrote {0} wrappers for {1} signatures", current_wrapper, current_signature);
+                    if (d != wrappersToWrite.Last())
+                    {
+                        sw.WriteLine();
+                    }
+                }
             }
         }
 
-        private void WriteWrapper(SourceWriter sw, Function f, EnumCollection enums)
+        private void WriteMethod(SourceWriter sw, Function f)
         {
             WriteDocumentation(sw, f);
-            WriteMethod(sw, f, enums);
-        }
 
-        private void WriteMethod(SourceWriter sw, Function f, EnumCollection enums)
-        {
-            if (!String.IsNullOrEmpty(f.Obsolete))
+            if (!string.IsNullOrEmpty(f.Obsolete))
             {
-                sw.WriteLine("[Obsolete(\"{0}\")]", f.Obsolete);
+                sw.WriteLine($"[Obsolete(\"{f.Obsolete}\")]");
             }
 
-            sw.WriteLine("[AutoGenerated(Category = \"{0}\", Version = \"{1}\", EntryPoint = \"{2}\")]",
-                f.Category, f.Version, Generator.FunctionPrefix + f.WrappedDelegate.EntryPoint);
+            sw.WriteLine($"[AutoGenerated(Category = \"{f.Category}\", Version = \"{f.Version}\", EntryPoint = \"{Generator.FunctionPrefix}{f.WrappedDelegate.EntryPoint}\")]");
 
             var declarationString = GetDeclarationString(f).TrimEnd();
             var declarationStringLines = declarationString.Split('\n').ToList();
@@ -289,140 +290,152 @@ namespace Bind
         {
             var docs = f.Documentation;
 
-            try
+            var warning = string.Empty;
+            var category = string.Empty;
+            if (f.Deprecated)
             {
-                string warning = String.Empty;
-                string category = String.Empty;
-                if (f.Deprecated)
+                warning = $"[deprecated: v{f.DeprecatedVersion}]";
+            }
+
+            if (f.Extension != "Core" && !string.IsNullOrEmpty(f.Category))
+            {
+                category = $"[requires: {f.Category}]";
+            }
+            else if (!string.IsNullOrEmpty(f.Version))
+            {
+                if (f.Category.StartsWith("VERSION"))
                 {
-                    warning = String.Format("[deprecated: v{0}]", f.DeprecatedVersion);
+                    category = $"[requires: {"v" + f.Version}]";
                 }
-
-                if (f.Extension != "Core" && !String.IsNullOrEmpty(f.Category))
+                else
                 {
-                    category = String.Format("[requires: {0}]", f.Category);
-                }
-                else if (!String.IsNullOrEmpty(f.Version))
-                {
-                    if (f.Category.StartsWith("VERSION"))
-                    {
-                        category = String.Format("[requires: {0}]", "v" + f.Version);
-                    }
-                    else
-                    {
-                        category = String.Format("[requires: {0}]", "v" + f.Version + " or " + f.Category);
-                    }
-                }
-
-                // Write function summary
-                sw.WriteLine("/// <summary>");
-                if (!String.IsNullOrEmpty(category) || !String.IsNullOrEmpty(warning))
-                {
-                    sw.WriteLine($"/// {category}{warning}");
-                }
-
-                if (!String.IsNullOrEmpty(docs.Summary))
-                {
-                    var summaryLines = docs.Summary.TrimEnd().Split('\n');
-                    foreach (var summaryLine in summaryLines)
-                    {
-                        sw.WriteLine($"/// {summaryLine}");
-                    }
-                }
-                sw.WriteLine("/// </summary>");
-
-                // Write function parameters
-                for (int i = 0; i < f.Parameters.Count; i++)
-                {
-                    var param = f.Parameters[i];
-
-                    string length = String.Empty;
-                    if (!String.IsNullOrEmpty(param.ComputeSize))
-                    {
-                        length = String.Format("[length: {0}]", param.ComputeSize);
-                    }
-
-                    // Try to match the correct parameter from documentation:
-                    // - first by name
-                    // - then by index
-                    var docparam =
-                        (docs.Parameters
-                            .Where(p => p.Name == param.RawName)
-                            .FirstOrDefault()) ??
-                        (docs.Parameters.Count > i ?
-                            docs.Parameters[i] : null);
-
-                    if (docparam != null)
-                    {
-                        if (docparam.Name != param.RawName &&
-                            docparam.Name != param.RawName.Substring(1)) // '@ref' -> 'ref' etc
-                        {
-                            Console.Error.WriteLine(
-                                "[Warning] Parameter '{0}' in function '{1}' has incorrect doc name '{2}'",
-                                param.RawName, f.Name, docparam.Name);
-                        }
-
-                        // Note: we use param.Name, because the documentation sometimes
-                        // uses different names than the specification.
-                        sw.Write("/// <param name=\"{0}\">", param.Name);
-                        if (!String.IsNullOrEmpty(length))
-                        {
-                            sw.Write("{0}", length);
-                        }
-                        if (!String.IsNullOrEmpty(docparam.Documentation))
-                        {
-                            sw.WriteLine("");
-                            sw.WriteLine("/// {0}", docparam.Documentation);
-                            sw.WriteLine("/// </param>");
-                        }
-                        else
-                        {
-                            sw.WriteLine("</param>");
-                        }
-                    }
-                    else
-                    {
-                        Console.Error.WriteLine(
-                            "[Warning] Parameter '{0}' in function '{1}' not found in documentation '{{{2}}}'",
-                            param.Name, f.Name,
-                            String.Join(",", docs.Parameters.Select(p => p.Name).ToArray()));
-                        sw.WriteLine("/// <param name=\"{0}\">{1}</param>",
-                            param.Name, length);
-                    }
+                    category = $"[requires: {"v" + f.Version + " or " + f.Category}]";
                 }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine("[Warning] Error documenting function {0}: {1}", f.WrappedDelegate.Name, e.ToString());
-            }
-        }
 
-        public void WriteTypes(SourceWriter sw, Dictionary<string, string> CSTypes)
-        {
-            sw.WriteLineNoTabs();
-            foreach (string s in CSTypes.Keys)
+            // Write function summary
+            sw.WriteLine("/// <summary>");
+            if (!string.IsNullOrEmpty(category) || !string.IsNullOrEmpty(warning))
             {
-                sw.WriteLine("using {0} = System.{1};", s, CSTypes[s]);
+                sw.WriteLine("/// {0}{1}", category, warning);
+            }
+
+            if (!string.IsNullOrEmpty(docs.Summary))
+            {
+                var summaryLines = docs.Summary.TrimEnd().Split('\n');
+                foreach (var summaryLine in summaryLines)
+                {
+                    sw.WriteLine($"/// {summaryLine}");
+                }
+            }
+            sw.WriteLine("/// </summary>");
+
+            // Write function parameters
+            for (var i = 0; i < f.Parameters.Count; i++)
+            {
+                var param = f.Parameters[i];
+
+                var length = string.Empty;
+                if (!string.IsNullOrEmpty(param.ComputeSize))
+                {
+                    length = $"[length: {param.ComputeSize}]";
+                }
+
+                // Try to match the correct parameter from documentation:
+                // - first by name
+                // - then by index
+                var docparam =
+                    docs.Parameters
+                        .FirstOrDefault(p => p.Name == param.RawName) ??
+                    (docs.Parameters.Count > i ? docs.Parameters[i] : null);
+
+                if (docparam != null)
+                {
+                    // '@ref' -> 'ref' etc
+                    if (docparam.Name != param.RawName && docparam.Name != param.RawName.Substring(1))
+                    {
+                        Console.Error.WriteLine
+                        (
+                            $"[Warning] Parameter '{param.RawName}' in function '{f.Name}' has incorrect doc name '{docparam.Name}'"
+                        );
+                    }
+
+                    // Note: we use param.Name, because the documentation sometimes
+                    // uses different names than the specification.
+                    sw.WriteLine("/// <param name=\"{0}\">", param.Name);
+                    if (!string.IsNullOrEmpty(length))
+                    {
+                        sw.WriteLine("/// {0}", length);
+                    }
+
+                    if (!string.IsNullOrEmpty(docparam.Documentation))
+                    {
+                        sw.WriteLine("/// {0}", docparam.Documentation);
+                    }
+
+                    sw.WriteLine("/// </param>");
+                }
+                else
+                {
+                    var docstring = string.Join(",", docs.Parameters.Select(p => p.Name).ToArray());
+
+                    Console.Error.WriteLine
+                    (
+                        $"[Warning] Parameter '{param.Name}' in function '{f.Name}' not found in documentation '{docstring}'"
+                    );
+                    sw.WriteLine($"/// <param name=\"{param.Name}\">{length}</param>");
+                }
             }
         }
 
         private void WriteConstants(SourceWriter sw, IEnumerable<Constant> constants)
         {
-             // Make sure everything is sorted. This will avoid random changes between
+            // Make sure everything is sorted. This will avoid random changes between
             // consecutive runs of the program.
             constants = constants.OrderBy(c => c).ToList();
 
             foreach (var c in constants)
             {
                 sw.WriteLine("/// <summary>");
-                sw.WriteLine("/// Original was " + Generator.ConstantPrefix + c.OriginalName + " = " + c.Value);
+                sw.WriteLine($"/// Original was {Generator.ConstantPrefix}{c.OriginalName} = {c.Value}");
                 sw.WriteLine("/// </summary>");
 
-                var str = String.Format("{0} = {1}((int){2}{3})", c.Name, c.Unchecked ? "unchecked" : "",
-                    !String.IsNullOrEmpty(c.Reference) ? c.Reference + "." : "", c.Value);
+                string valueString;
+                if (string.IsNullOrEmpty(c.Reference))
+                {
+                    // This enum has a value
+                    valueString = c.Value;
+                }
+                else
+                {
+                    // The enum is a reference to another enum
+                    valueString = $"{c.Reference}.{c.Value}";
+                }
 
-                sw.Write(str);
-                if (!String.IsNullOrEmpty(str))
+                var isHex = c.Value.StartsWith("0x");
+                if (isHex)
+                {
+                    valueString = valueString.ToLowerInvariant();
+
+                    var needsCasting = c.Value.SkipWhile(ch => ch != 'x').Count() > 7;
+                    if (needsCasting)
+                    {
+                        // We need to cast this to a straight integer
+                        if (c.Unchecked)
+                        {
+                            valueString = $"unchecked((int){valueString})";
+                        }
+                        else
+                        {
+                            valueString = $"((int){valueString})";
+                        }
+                    }
+                }
+
+                var constant = $"{c.Name} = {valueString}";
+
+                sw.Write(constant);
+                if (!string.IsNullOrEmpty(constant))
                 {
                     sw.WriteLine(",");
                 }
@@ -437,41 +450,37 @@ namespace Bind
         private void WriteEnums(SourceWriter sw, EnumCollection enums, FunctionCollection wrappers)
         {
             // Build a dictionary of which functions use which enums
-            var enum_counts = new Dictionary<Enum, List<Function>>();
+            var enumCounts = new Dictionary<Enum, List<Function>>();
             foreach (var e in enums.Values)
             {
                 // Initialize the dictionary
-                enum_counts.Add(e, new List<Function>());
+                enumCounts.Add(e, new List<Function>());
             }
+
             foreach (var wrapper in wrappers.Values.SelectMany(w => w))
             {
                 // Add every function to every enum parameter it references
                 foreach (var parameter in wrapper.Parameters.Where(p => p.IsEnum))
                 {
                     var e = enums[parameter.CurrentType];
-                    var list = enum_counts[e];
+                    var list = enumCounts[e];
                     list.Add(wrapper);
                 }
             }
 
-            foreach (Enum @enum in enums.Values)
+            foreach (var @enum in enums.Values)
             {
                 // Document which functions use this enum.
-                var functions = enum_counts[@enum]
-                    .Select(w => Generator.ClassName + (w.Extension != "Core" ? ("." + w.Extension) : "") + "." + w.TrimmedName)
-                    .Distinct();
+                var functions = enumCounts[@enum]
+                    .Select(w =>
+                        Generator.ClassName + (w.Extension != "Core" ? "." + w.Extension : string.Empty) + "." +
+                        w.TrimmedName)
+                    .Distinct()
+                    .ToList();
 
                 sw.WriteLine("/// <summary>");
-                sw.WriteLine(String.Format("/// {0}",
-                    functions.Count() >= 3 ?
-                        String.Format("Used in {0} and {1} other function{2}",
-                            String.Join(", ", functions.Take(2).ToArray()),
-                            functions.Count() - 2,
-                            functions.Count() - 2 > 1 ? "s" : "") :
-                        functions.Count() >= 1 ?
-                            String.Format("Used in {0}",
-                                String.Join(", ", functions.ToArray())) :
-                            "Not used directly."));
+                sw.WriteLine(
+                    $"/// {(functions.Count >= 3 ? $"Used in {string.Join(", ", functions.Take(2).ToArray())} and {functions.Count - 2} other function{(functions.Count() - 2 > 1 ? "s" : "")}" : functions.Count() >= 1 ? $"Used in {string.Join(", ", functions.ToArray())}" : "Not used directly.")}");
                 sw.WriteLine("/// </summary>");
 
                 if (@enum.IsObsolete)
@@ -484,7 +493,13 @@ namespace Bind
                     sw.WriteLine("[Flags]");
                 }
 
-                sw.WriteLine("public enum " + @enum.Name + " : " + @enum.Type);
+                var enumTypeString = string.Empty;
+                if (@enum.Type != "int")
+                {
+                    enumTypeString = $" : {@enum.Type}";
+                }
+
+                sw.WriteLine($"public enum {@enum.Name}{enumTypeString}");
                 using (sw.BeginBlock())
                 {
                     WriteConstants(sw, @enum.ConstantCollection.Values);
@@ -505,42 +520,16 @@ namespace Bind
             sw.WriteLine(licenseContents);
         }
 
-        // For example, if parameter foo has indirection level = 1, then it
-        // is consumed as 'foo*' in the fixed_statements and the call string.
-        private readonly static string[] pointer_levels = new string[] { "", "*", "**", "***", "****" };
-
-        private readonly static string[] array_levels = new string[] { "", "[]", "[,]", "[,,]", "[,,,]" };
-
-        private static bool IsEnum(string s, EnumCollection enums)
+        private string GetDeclarationString(Delegate d, bool isDelegate)
         {
-            return enums.ContainsKey(s);
-        }
+            var sb = new StringBuilder();
 
-        private string GetDeclarationString(Constant c)
-        {
-            if (String.IsNullOrEmpty(c.Name))
-            {
-                throw new InvalidOperationException("Invalid Constant: Name is empty");
-            }
-
-            return String.Format("{0} = {1}((int){2}{3})",
-                c.Name,
-                c.Unchecked ? "unchecked" : String.Empty,
-                !String.IsNullOrEmpty(c.Reference) ?
-                    c.Reference + "." :
-                    String.Empty,
-                c.Value);
-        }
-
-        private string GetDeclarationString(Delegate d, bool is_delegate)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append(d.Unsafe ? "unsafe " : "");
-            if (is_delegate)
+            sb.Append(d.Unsafe ? "unsafe " : string.Empty);
+            if (isDelegate)
             {
                 sb.Append("delegate ");
             }
+
             sb.Append(GetDeclarationString(d.ReturnType));
             sb.Append(" ");
             sb.Append(Generator.FunctionPrefix);
@@ -550,58 +539,20 @@ namespace Bind
             return sb.ToString();
         }
 
-        private string GetDeclarationString(Enum e)
-        {
-            StringBuilder sb = new StringBuilder();
-            List<Constant> constants = new List<Constant>(e.ConstantCollection.Values);
-            constants.Sort(delegate(Constant c1, Constant c2)
-            {
-                int ret = String.Compare(c1.Value, c2.Value);
-                if (ret == 0)
-                {
-                    return String.Compare(c1.Name, c2.Name);
-                }
-                return ret;
-            });
-
-            if (e.IsFlagCollection)
-            {
-                sb.AppendLine("[Flags]");
-            }
-            sb.Append("public enum ");
-            sb.Append(e.Name);
-            sb.Append(" : ");
-            sb.AppendLine(e.Type);
-            sb.AppendLine("{");
-
-            foreach (Constant c in constants)
-            {
-                var declaration = GetDeclarationString(c);
-                sb.Append("    ");
-                sb.Append(declaration);
-                if (!String.IsNullOrEmpty(declaration))
-                {
-                    sb.AppendLine(",");
-                }
-            }
-            sb.Append("}");
-
-            return sb.ToString();
-        }
-
         private string GetDeclarationString(Function f)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             sb.Append(f.Unsafe ? "unsafe " : "");
             sb.Append(GetDeclarationString(f.ReturnType));
             sb.Append(" ");
-            sb.Append(!String.IsNullOrEmpty(f.TrimmedName) ? f.TrimmedName : f.Name);
+
+            sb.Append(!string.IsNullOrEmpty(f.TrimmedName) ? f.TrimmedName : f.Name);
 
             if (f.Parameters.HasGenericParameters)
             {
                 sb.Append("<");
-                foreach (Parameter p in f.Parameters.Where(p  => p.Generic))
+                foreach (var p in f.Parameters.Where(p => p.Generic))
                 {
                     sb.Append(p.CurrentType);
                     sb.Append(", ");
@@ -616,20 +567,20 @@ namespace Bind
             if (f.Parameters.HasGenericParameters)
             {
                 sb.AppendLine();
-                foreach (Parameter p in f.Parameters.Where(p => p.Generic))
+                foreach (var p in f.Parameters.Where(p => p.Generic))
                 {
-                    sb.AppendLine(String.Format("    where {0} : struct", p.CurrentType));
+                    sb.AppendLine($"    where {p.CurrentType} : struct");
                 }
             }
 
             return sb.ToString();
         }
 
-        private string GetDeclarationString(Parameter p, bool override_unsafe_setting)
+        private string GetDeclarationString(Parameter p)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
-            List<string> attributes = new List<string>();
+            var attributes = new List<string>();
             if (p.Flow == FlowDirection.Out)
             {
                 attributes.Add("OutAttribute");
@@ -640,12 +591,11 @@ namespace Bind
                 attributes.Add("OutAttribute");
             }
 
-            if (!String.IsNullOrEmpty(p.ComputeSize))
+            if (!string.IsNullOrEmpty(p.ComputeSize))
             {
-                int count;
-                if (Int32.TryParse(p.ComputeSize, out count))
+                if (int.TryParse(p.ComputeSize, out var count))
                 {
-                    attributes.Add(String.Format("CountAttribute(Count = {0})", count));
+                    attributes.Add($"CountAttribute(Count = {count})");
                 }
                 else
                 {
@@ -653,12 +603,12 @@ namespace Bind
                     {
                         //remove the compsize hint, just keep comma delimited param names
                         var len = "COMPSIZE(".Length;
-                        var computed = p.ComputeSize.Substring(len, (p.ComputeSize.Length - len) - 1);
-                        attributes.Add(String.Format("CountAttribute(Computed = \"{0}\")", computed));
+                        var computed = p.ComputeSize.Substring(len, p.ComputeSize.Length - len - 1);
+                        attributes.Add($"CountAttribute(Computed = \"{computed}\")");
                     }
                     else
                     {
-                        attributes.Add(String.Format("CountAttribute(Parameter = \"{0}\")", p.ComputeSize));
+                        attributes.Add($"CountAttribute(Parameter = \"{p.ComputeSize}\")");
                     }
                 }
             }
@@ -682,8 +632,9 @@ namespace Bind
                 }
             }
 
-            sb.Append(GetDeclarationString(p as Type));
-            if (!String.IsNullOrEmpty(p.Name))
+            sb.Append(GetDeclarationString((Type)p));
+
+            if (!string.IsNullOrEmpty(p.Name))
             {
                 sb.Append(" ");
                 sb.Append(p.Name);
@@ -694,16 +645,17 @@ namespace Bind
 
         private string GetDeclarationString(ParameterCollection parameters)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             sb.Append("(");
             if (parameters.Count > 0)
             {
-                foreach (Parameter p in parameters)
+                foreach (var p in parameters)
                 {
-                    sb.Append(GetDeclarationString(p, false));
+                    sb.Append(GetDeclarationString(p));
                     sb.Append(", ");
                 }
+
                 sb.Replace(", ", ")", sb.Length - 2, 2);
             }
             else
@@ -716,12 +668,18 @@ namespace Bind
 
         private string GetDeclarationString(Type type)
         {
-            var t = type.QualifiedType;
+            var t = GetQualifiedTypeOrAlias(type);
+            return $"{t}{PointerLevels[type.Pointer]}{ArrayLevels[type.Array]}";
+        }
 
-            return String.Format("{0}{1}{2}",
-                t,
-                pointer_levels[type.Pointer],
-                array_levels[type.Array]);
+        private string GetQualifiedTypeOrAlias(Type type)
+        {
+            if (Aliases.ContainsKey(type.QualifiedType))
+            {
+                return Aliases[type.QualifiedType];
+            }
+
+            return type.QualifiedType;
         }
     }
 }
