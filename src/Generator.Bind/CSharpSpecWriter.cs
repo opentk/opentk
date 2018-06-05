@@ -30,6 +30,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Bind.Structures;
+using Bind.Writers;
 
 namespace Bind
 {
@@ -69,44 +70,52 @@ namespace Bind
                 Directory.CreateDirectory(Settings.OutputPath);
             }
 
-            string temp_enums_file = Path.GetTempFileName();
-            string temp_wrappers_file = Path.GetTempFileName();
-
             // Enums
-            using (BindStreamWriter sw = new BindStreamWriter(temp_enums_file))
+            string tempEnumsFilePath = Path.GetTempFileName();
+            using (var outputFile = File.Open(tempEnumsFilePath, FileMode.OpenOrCreate))
             {
-                WriteLicense(sw);
+                using (SourceWriter sw = new SourceWriter(new StreamWriter(outputFile)))
+                {
+                    WriteLicense(sw);
 
-                sw.WriteLine("using System;");
-                sw.WriteLine();
+                    sw.WriteLine("using System;");
+                    sw.WriteLineNoTabs();
 
-                sw.WriteLine("namespace {0}", Settings.EnumsOutput);
-
-                sw.WriteLine("{");
-
-                sw.Indent();
-                WriteEnums(sw, enums, wrappers);
-                sw.Unindent();
-
-                sw.WriteLine("}");
+                    sw.WriteLine("namespace {0}", Settings.EnumsOutput);
+                    using (sw.BeginBlock())
+                    {
+                        WriteEnums(sw, enums, wrappers);
+                    }
+                }
             }
 
             // Wrappers
-            using (BindStreamWriter sw = new BindStreamWriter(temp_wrappers_file))
+            string tempWrappersFilePath = Path.GetTempFileName();
+            using (var outputFile = File.Open(tempWrappersFilePath, FileMode.OpenOrCreate))
             {
-                WriteLicense(sw);
-                sw.WriteLine("namespace {0}", Settings.OutputNamespace);
-                sw.WriteLine("{");
-                sw.Indent();
+                using (var sw = new SourceWriter(new StreamWriter(outputFile)))
+                {
+                    WriteLicense(sw);
 
-                sw.WriteLine("using System;");
-                sw.WriteLine("using System.Text;");
-                sw.WriteLine("using System.Runtime.InteropServices;");
+                    sw.WriteLine("using System;");
+                    sw.WriteLine("using System.Text;");
+                    sw.WriteLine("using System.Runtime.InteropServices;");
+                    sw.WriteLineNoTabs();
 
-                WriteWrappers(sw, wrappers, delegates, enums, Generator.CSTypes);
+                    sw.WriteLine("#pragma warning disable 3019 // CLSCompliant attribute");
+                    sw.WriteLine("#pragma warning disable 1591 // Missing doc comments");
+                    sw.WriteLine("#pragma warning disable 1572 // Wrong param comments");
+                    sw.WriteLine("#pragma warning disable 1573 // Missing param comments");
+                    sw.WriteLine("#pragma warning disable 626 // extern method without DllImport");
 
-                sw.Unindent();
-                sw.WriteLine("}");
+                    sw.WriteLineNoTabs();
+
+                    sw.WriteLine("namespace {0}", Settings.OutputNamespace);
+                    using (sw.BeginBlock())
+                    {
+                        WriteWrappers(sw, wrappers, delegates, enums, Generator.CSTypes);
+                    }
+                }
             }
 
             string output_enums = Path.Combine(Settings.OutputPath, Settings.EnumsFile);
@@ -131,123 +140,115 @@ namespace Bind
                 File.Delete(output_wrappers);
             }
 
-            File.Move(temp_enums_file, output_enums);
-            File.Move(temp_wrappers_file, output_wrappers);
+            File.Move(tempEnumsFilePath, output_enums);
+            File.Move(tempWrappersFilePath, output_wrappers);
         }
 
-        private void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers,
+        private void WriteWrappers(SourceWriter sw, FunctionCollection wrappers,
             DelegateCollection delegates, EnumCollection enums,
             IDictionary<string, string> CSTypes)
         {
             Trace.WriteLine(String.Format("Writing wrappers to:\t{0}.{1}", Settings.OutputNamespace, Settings.OutputClass));
 
-            sw.WriteLine("#pragma warning disable 3019"); // CLSCompliant attribute
-            sw.WriteLine("#pragma warning disable 1591"); // Missing doc comments
-            sw.WriteLine("#pragma warning disable 1572"); // Wrong param comments
-            sw.WriteLine("#pragma warning disable 1573"); // Missing param comments
-            sw.WriteLine("#pragma warning disable 626"); // extern method without DllImport
-
-            sw.WriteLine();
             sw.WriteLine("partial class {0}", Settings.OutputClass);
-            sw.WriteLine("{");
-            sw.Indent();
-
-            // Write constructor
-            sw.WriteLine("static {0}()", Settings.OutputClass);
-            sw.WriteLine("{");
-            sw.Indent();
-            // Write entry point names.
-            // Instead of strings, which are costly to construct,
-            // we use a 1d array of ASCII bytes. Names are laid out
-            // sequentially, with a nul-terminator between them.
-            sw.WriteLine("EntryPointNames = new byte[]", delegates.Count);
-            sw.WriteLine("{");
-            sw.Indent();
-            foreach (var d in delegates.Values.Select(d => d.First()))
+            using (sw.BeginBlock())
             {
-                var name = Settings.FunctionPrefix + d.Name;
-                sw.WriteLine("{0}, 0,", String.Join(", ",
-                    System.Text.Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()));
-            }
-            sw.Unindent();
-            sw.WriteLine("};");
-            // Write entry point name offsets.
-            // This is an array of offsets into the EntryPointNames[] array above.
-            sw.WriteLine("EntryPointNameOffsets = new int[]", delegates.Count);
-            sw.WriteLine("{");
-            sw.Indent();
-            int offset = 0;
-            foreach (var d in delegates.Values.Select(d => d.First()))
-            {
-                sw.WriteLine("{0},", offset);
-                var name = Settings.FunctionPrefix + d.Name;
-                offset += name.Length + 1;
-            }
-            sw.Unindent();
-            sw.WriteLine("};");
-            sw.WriteLine("EntryPoints = new IntPtr[EntryPointNameOffsets.Length];");
-            sw.Unindent();
-            sw.WriteLine("}");
-            sw.WriteLine();
-
-            int current_wrapper = 0;
-            foreach (string key in wrappers.Keys)
-            {
-                if (key != "Core")
+                // Write constructor
+                sw.WriteLine("static {0}()", Settings.OutputClass);
+                using (sw.BeginBlock())
                 {
-                    if (!Char.IsDigit(key[0]))
+                    // Write entry point names.
+                    // Instead of strings, which are costly to construct,
+                    // we use a 1d array of ASCII bytes. Names are laid out
+                    // sequentially, with a nul-terminator between them.
+                    sw.WriteLine("EntryPointNames = new byte[]");
+                    using (sw.BeginBlock(true))
                     {
-                        sw.WriteLine("public static partial class {0}", key);
+                        foreach (var d in delegates.Values.Select(d => d.First()))
+                        {
+                            var name = Settings.FunctionPrefix + d.Name;
+                            sw.WriteLine("{0}, 0,", String.Join(", ",
+                                System.Text.Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()));
+                        }
+                    }
+
+                    // Write entry point name offsets.
+                    // This is an array of offsets into the EntryPointNames[] array above.
+                    sw.WriteLine("EntryPointNameOffsets = new int[]");
+                    using (sw.BeginBlock(true))
+                    {
+                        int offset = 0;
+                        foreach (var d in delegates.Values.Select(d => d.First()))
+                        {
+                            sw.WriteLine("{0},", offset);
+                            var name = Settings.FunctionPrefix + d.Name;
+                            offset += name.Length + 1;
+                        }
+                    }
+
+                    sw.WriteLine("EntryPoints = new IntPtr[EntryPointNameOffsets.Length];");
+                }
+
+                sw.WriteLineNoTabs();
+
+                int current_wrapper = 0;
+                foreach (string key in wrappers.Keys)
+                {
+                    if (key != "Core")
+                    {
+                        if (!Char.IsDigit(key[0]))
+                        {
+                            sw.WriteLine("public static partial class {0}", key);
+                        }
+                        else
+                        {
+                            // Identifiers cannot start with a number:
+                            sw.WriteLine("public static partial class {0}{1}", Settings.ConstantPrefix, key);
+                        }
+                        using (sw.BeginBlock())
+                        {
+                            wrappers[key].Sort();
+                            foreach (Function f in wrappers[key])
+                            {
+                                WriteWrapper(sw, f, enums);
+                                current_wrapper++;
+                            }
+                        }
                     }
                     else
                     {
-                        // Identifiers cannot start with a number:
-                        sw.WriteLine("public static partial class {0}{1}", Settings.ConstantPrefix, key);
+                        wrappers[key].Sort();
+                        foreach (Function f in wrappers[key])
+                        {
+                            WriteWrapper(sw, f, enums);
+                            current_wrapper++;
+                        }
                     }
-                    sw.WriteLine("{");
-                    sw.Indent();
                 }
 
-                wrappers[key].Sort();
-                foreach (Function f in wrappers[key])
+                // Emit native signatures.
+                // These are required by the patcher.
+                int current_signature = 0;
+                foreach (var d in wrappers.Values.SelectMany(e => e).Select(w => w.WrappedDelegate).Distinct())
                 {
-                    WriteWrapper(sw, f, enums);
-                    current_wrapper++;
+                    sw.WriteLine("[Slot({0})]", d.Slot);
+                    sw.WriteLine("[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
+                    sw.WriteLine("private static extern {0};", GetDeclarationString(d, false));
+                    current_signature++;
                 }
 
-                if (key != "Core")
-                {
-                    sw.Unindent();
-                    sw.WriteLine("}");
-                    sw.WriteLine();
-                }
+                Console.WriteLine("Wrote {0} wrappers for {1} signatures", current_wrapper, current_signature);
             }
-
-            // Emit native signatures.
-            // These are required by the patcher.
-            int current_signature = 0;
-            foreach (var d in wrappers.Values.SelectMany(e => e).Select(w => w.WrappedDelegate).Distinct())
-            {
-                sw.WriteLine("[Slot({0})]", d.Slot);
-                sw.WriteLine("[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
-                sw.WriteLine("private static extern {0};", GetDeclarationString(d, false));
-                current_signature++;
-            }
-
-            sw.Unindent();
-            sw.WriteLine("}");
-
-            Console.WriteLine("Wrote {0} wrappers for {1} signatures", current_wrapper, current_signature);
         }
 
-        private void WriteWrapper(BindStreamWriter sw, Function f, EnumCollection enums)
+        private void WriteWrapper(SourceWriter sw, Function f, EnumCollection enums)
         {
             WriteDocumentation(sw, f);
             WriteMethod(sw, f, enums);
-            sw.WriteLine();
+            sw.WriteLineNoTabs();
         }
 
-        private void WriteMethod(BindStreamWriter sw, Function f, EnumCollection enums)
+        private void WriteMethod(SourceWriter sw, Function f, EnumCollection enums)
         {
             if (!String.IsNullOrEmpty(f.Obsolete))
             {
@@ -262,10 +263,22 @@ namespace Bind
                 sw.WriteLine("[CLSCompliant(false)]");
             }
 
-            sw.WriteLine("public static {0} {{ throw new BindingsNotRewrittenException(); }}", GetDeclarationString(f));
+            var declarationString = GetDeclarationString(f);
+            var declarationStringLines = declarationString.Split('\n').ToList();
+
+            sw.WriteLine($"public static {declarationStringLines.First()}");
+            foreach (var line in declarationStringLines.Skip(1))
+            {
+                sw.WriteLine(line);
+            }
+
+            using (sw.BeginBlock())
+            {
+                sw.WriteLine("throw new BindingsNotRewrittenException();");
+            }
         }
 
-        private void WriteDocumentation(BindStreamWriter sw, Function f)
+        private void WriteDocumentation(SourceWriter sw, Function f)
         {
             var docs = f.Documentation;
 
@@ -295,21 +308,21 @@ namespace Bind
                 }
 
                 // Write function summary
-                sw.Write("/// <summary>");
+                sw.WriteLine("/// <summary>");
                 if (!String.IsNullOrEmpty(category) || !String.IsNullOrEmpty(warning))
                 {
-                    sw.Write(WriteOptions.NoIndent, "{0}{1}", category, warning);
+                    sw.WriteLine($"/// {category}{warning}");
                 }
+
                 if (!String.IsNullOrEmpty(docs.Summary))
                 {
-                    sw.WriteLine();
-                    sw.WriteLine("/// {0}", docs.Summary);
-                    sw.WriteLine("/// </summary>");
+                    var summaryLines = docs.Summary.Split('\n');
+                    foreach (var summaryLine in summaryLines)
+                    {
+                        sw.WriteLine($"/// {summaryLine}");
+                    }
                 }
-                else
-                {
-                    sw.WriteLine(WriteOptions.NoIndent, "</summary>");
-                }
+                sw.WriteLine("/// </summary>");
 
                 // Write function parameters
                 for (int i = 0; i < f.Parameters.Count; i++)
@@ -347,17 +360,17 @@ namespace Bind
                         sw.Write("/// <param name=\"{0}\">", param.Name);
                         if (!String.IsNullOrEmpty(length))
                         {
-                            sw.Write(WriteOptions.NoIndent, "{0}", length);
+                            sw.Write("{0}", length);
                         }
                         if (!String.IsNullOrEmpty(docparam.Documentation))
                         {
-                            sw.WriteLine(WriteOptions.NoIndent, "");
+                            sw.WriteLine("");
                             sw.WriteLine("/// {0}", docparam.Documentation);
                             sw.WriteLine("/// </param>");
                         }
                         else
                         {
-                            sw.WriteLine(WriteOptions.NoIndent, "</param>");
+                            sw.WriteLine("</param>");
                         }
                     }
                     else
@@ -377,16 +390,16 @@ namespace Bind
             }
         }
 
-        public void WriteTypes(BindStreamWriter sw, Dictionary<string, string> CSTypes)
+        public void WriteTypes(SourceWriter sw, Dictionary<string, string> CSTypes)
         {
-            sw.WriteLine();
+            sw.WriteLineNoTabs();
             foreach (string s in CSTypes.Keys)
             {
                 sw.WriteLine("using {0} = System.{1};", s, CSTypes[s]);
             }
         }
 
-        private void WriteConstants(BindStreamWriter sw, IEnumerable<Constant> constants)
+        private void WriteConstants(SourceWriter sw, IEnumerable<Constant> constants)
         {
              // Make sure everything is sorted. This will avoid random changes between
             // consecutive runs of the program.
@@ -409,12 +422,8 @@ namespace Bind
             }
         }
 
-        private void WriteEnums(BindStreamWriter sw, EnumCollection enums, FunctionCollection wrappers)
+        private void WriteEnums(SourceWriter sw, EnumCollection enums, FunctionCollection wrappers)
         {
-            //sw.WriteLine("#pragma warning disable 3019");   // CLSCompliant attribute
-            //sw.WriteLine("#pragma warning disable 1591");   // Missing doc comments
-            //sw.WriteLine();
-
             Trace.WriteLine(String.Format("Writing enums to:\t{0}", Settings.EnumsOutput));
 
             // Build a dictionary of which functions use which enums
@@ -467,20 +476,20 @@ namespace Bind
                 {
                     sw.WriteLine("[Flags]");
                 }
+
                 sw.WriteLine("public enum " + @enum.Name + " : " + @enum.Type);
-                sw.WriteLine("{");
-                sw.Indent();
-                WriteConstants(sw, @enum.ConstantCollection.Values);
-                sw.Unindent();
-                sw.WriteLine("}");
-                sw.WriteLine();
+                using (sw.BeginBlock())
+                {
+                    WriteConstants(sw, @enum.ConstantCollection.Values);
+                }
+                sw.WriteLineNoTabs();
             }
         }
 
-        public void WriteLicense(BindStreamWriter sw)
+        public void WriteLicense(SourceWriter sw)
         {
             sw.WriteLine(File.ReadAllText(Path.Combine(Settings.InputPath, Settings.LicenseFile)));
-            sw.WriteLine();
+            sw.WriteLineNoTabs();
         }
 
         // For example, if parameter foo has indirection level = 1, then it
