@@ -25,7 +25,7 @@
 
 using System.IO;
 
-namespace Bind.GL2
+namespace Bind.Generators.GL2
 {
     internal class GL4Generator : Generator
     {

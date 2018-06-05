@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Bind.Structures;
 
-namespace Bind.GL2
+namespace Bind.Generators.GL2
 {
     internal abstract class Generator : IBind
     {
@@ -72,7 +72,7 @@ namespace Bind.GL2
             Enums = new EnumCollection();
             Wrappers = new FunctionCollection();
 
-            SpecReader = new XmlSpecReader(Settings);
+            SpecReader = new XmlSpecificationReader(Settings);
         }
 
         private IEnumerable<string> GetFiles(string path)

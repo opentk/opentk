@@ -1,7 +1,8 @@
 ﻿using System.IO;
+using Bind.Generators.GL2;
 using Bind.GL2;
 
-namespace Bind.ES
+namespace Bind.Generators.ES
 {
     // Generator implementation for OpenGL ES 1.0 and 1.1
     internal class ESGenerator : Generator
