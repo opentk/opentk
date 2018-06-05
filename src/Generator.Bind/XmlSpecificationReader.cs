@@ -53,17 +53,17 @@ namespace Bind
 
             foreach (var apiversion in apiversions.Split('|'))
             {
-                string xpath_add, xpath_delete;
-                GetSignaturePaths(apiname, apiversion, out xpath_add, out xpath_delete);
+                string xpathAdd, xpathDelete;
+                GetSignaturePaths(apiname, apiversion, out xpathAdd, out xpathDelete);
 
-                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_delete))
+                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathDelete))
                 {
                     foreach (XPathNavigator node in nav.SelectChildren("function", String.Empty))
                     {
                         delegates.Remove(node.GetAttribute("name", String.Empty));
                     }
                 }
-                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_add))
+                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathAdd))
                 {
                     delegates.AddRange(ReadDelegates(nav, apiversion));
                 }
@@ -87,31 +87,31 @@ namespace Bind
 
             foreach (var apiversion in apiversions.Split('|'))
             {
-                string xpath_add, xpath_delete;
-                GetSignaturePaths(apiname, apiversion, out xpath_add, out xpath_delete);
+                string xpathAdd, xpathDelete;
+                GetSignaturePaths(apiname, apiversion, out xpathAdd, out xpathDelete);
 
                 // First, read all enum definitions from spec and override file.
                 // Afterwards, read all token/enum overrides from overrides file.
-                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_delete))
+                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathDelete))
                 {
                     foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
                     {
                         enums.Remove(node.GetAttribute("name", String.Empty));
                     }
                 }
-                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpath_add))
+                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathAdd))
                 {
                     Utilities.Merge(enums, ReadEnums(nav));
                 }
             }
         }
 
-        public Dictionary<string, string> ReadTypeMap(string file)
+        public Dictionary<string, string> ReadAPITypeMap(string file)
         {
             using (var sr = new StreamReader(file))
             {
-                Console.WriteLine("Reading opengl types.");
-                Dictionary<string, string> GLTypes = new Dictionary<string, string>();
+                Console.WriteLine("Reading OpenGL types.");
+                Dictionary<string, string> apiTypes = new Dictionary<string, string>();
 
                 do
                 {
@@ -127,12 +127,12 @@ namespace Bind
                     if (words[0].ToLower() == "void")
                     {
                         // Special case for "void" -> "". We make it "void" -> "void"
-                        GLTypes.Add(words[0], "void");
+                        apiTypes.Add(words[0], "void");
                     }
                     else if (words[0] == "VoidPointer" || words[0] == "ConstVoidPointer")
                     {
                         // "(Const)VoidPointer" -> "void*"
-                        GLTypes.Add(words[0], "void*");
+                        apiTypes.Add(words[0], "void*");
                     }
                     else if (words[0] == "CharPointer" || words[0] == "charPointerARB" ||
                              words[0] == "ConstCharPointer")
@@ -141,7 +141,7 @@ namespace Bind
                         // Hence we give it a push.
                         // Note: When both CurrentType == "String" and Pointer == true, the typematching is hardcoded to use
                         // String[] or StringBuilder[].
-                        GLTypes.Add(words[0], "String");
+                        apiTypes.Add(words[0], "String");
                     }
                     /*else if (words[0].Contains("Pointer"))
                     {
@@ -149,32 +149,32 @@ namespace Bind
                     }*/
                     else if (words[1].Contains("GLvoid"))
                     {
-                        GLTypes.Add(words[0], "void");
+                        apiTypes.Add(words[0], "void");
                     }
                     else if (words[1] == "const" && words[2] == "GLubyte")
                     {
-                        GLTypes.Add(words[0], "String");
+                        apiTypes.Add(words[0], "String");
                     }
                     else if (words[1] == "struct")
                     {
-                        GLTypes.Add(words[0], words[2]);
+                        apiTypes.Add(words[0], words[2]);
                     }
                     else
                     {
-                        GLTypes.Add(words[0], words[1]);
+                        apiTypes.Add(words[0], words[1]);
                     }
                 }
                 while (!sr.EndOfStream);
 
-                return GLTypes;
+                return apiTypes;
             }
         }
 
-        public Dictionary<string, string> ReadCSTypeMap(string file)
+        public Dictionary<string, string> ReadLanguageTypeMap(string file)
         {
             using (var sr = new StreamReader(file))
             {
-                Dictionary<string, string> CSTypes = new Dictionary<string, string>();
+                Dictionary<string, string> languageTypes = new Dictionary<string, string>();
                 Console.WriteLine("Reading C# types.");
 
                 while (!sr.EndOfStream)
@@ -191,17 +191,17 @@ namespace Bind
                         continue;
                     }
 
-                    CSTypes.Add(words[0], words[1]);
+                    languageTypes.Add(words[0], words[1]);
                 }
 
-                return CSTypes;
+                return languageTypes;
             }
         }
 
-        private static void GetSignaturePaths(string apiname, string apiversion, out string xpath_add, out string xpath_delete)
+        private static void GetSignaturePaths(string apiname, string apiversion, out string xpathAdd, out string xpathDelete)
         {
-            xpath_add = "/signatures/add";
-            xpath_delete = "/signatures/delete";
+            xpathAdd = "/signatures/add";
+            xpathDelete = "/signatures/delete";
 
             if (!String.IsNullOrEmpty(apiname) && !String.IsNullOrEmpty(apiversion))
             {
@@ -210,14 +210,14 @@ namespace Bind
                     "(contains(concat('|', @version, '|'), '|{1}|') or not(boolean(@version)))]",
                     apiname,
                     apiversion);
-                xpath_add += match;
-                xpath_delete += match;
+                xpathAdd += match;
+                xpathDelete += match;
             }
             else if (!String.IsNullOrEmpty(apiname))
             {
                 var match = String.Format("[contains(concat('|', @name, '|'), '|{0}|')]", apiname);
-                xpath_add += match;
-                xpath_delete += match;
+                xpathAdd += match;
+                xpathDelete += match;
             }
         }
 
@@ -311,7 +311,7 @@ namespace Bind
 
             if (nav != null)
             {
-                var reuse_list = new List<KeyValuePair<Enum, string>>();
+                var reuseList = new List<KeyValuePair<Enum, string>>();
 
                 // First pass: collect all available tokens and enums
                 foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
@@ -357,8 +357,8 @@ namespace Bind
                                 break;
 
                             case "reuse":
-                                var reuse_enum = param.GetAttribute("enum", String.Empty).Trim();
-                                reuse_list.Add(new KeyValuePair<Enum, string>(e, reuse_enum));
+                                var reuseEnum = param.GetAttribute("enum", String.Empty).Trim();
+                                reuseList.Add(new KeyValuePair<Enum, string>(e, reuseEnum));
                                 break;
 
                             default:
@@ -403,7 +403,7 @@ namespace Bind
 
                 // Second pass: resolve "reuse" directives
 restart:
-                foreach (var pair in reuse_list)
+                foreach (var pair in reuseList)
                 {
                     var e = pair.Key;
                     var reuse = pair.Value;
@@ -411,8 +411,8 @@ restart:
 
                     if (enums.ContainsKey(reuse))
                     {
-                        var reuse_enum = enums[reuse];
-                        foreach (var token in reuse_enum.ConstantCollection.Values)
+                        var reuseEnum = enums[reuse];
+                        foreach (var token in reuseEnum.ConstantCollection.Values)
                         {
                             Utilities.Merge(e, token);
                         }

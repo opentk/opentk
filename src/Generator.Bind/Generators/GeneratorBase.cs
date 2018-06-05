@@ -120,8 +120,8 @@ namespace Bind.GL2
             var specificationFilePath = Path.Combine(Program.Arguments.InputPath, SpecificationFile);
             var enumSpecificationPath = Path.Combine(Program.Arguments.InputPath, EnumSpecificationFile);
 
-            APITypes = SpecificationReader.ReadTypeMap(glTypemapPath);
-            LanguageTypes = SpecificationReader.ReadCSTypeMap(csTypemapPath);
+            APITypes = SpecificationReader.ReadAPITypeMap(glTypemapPath);
+            LanguageTypes = SpecificationReader.ReadLanguageTypeMap(csTypemapPath);
 
             // Read enum signatures
             SpecificationReader.ReadEnums(enumSpecificationPath, Enums, ProfileName, Version);

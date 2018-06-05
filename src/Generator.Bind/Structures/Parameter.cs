@@ -14,7 +14,7 @@ namespace Bind.Structures
     /// </summary>
     internal class Parameter : Type, IComparable<Parameter>, IEquatable<Parameter>
     {
-        private string cache;
+        private string _cache;
 
         /// <summary>
         /// Creates a new Parameter without type and name.
@@ -40,7 +40,7 @@ namespace Bind.Structures
             UnmanagedType = p.UnmanagedType;
             Generic = p.Generic;
             Flow = p.Flow;
-            cache = p.cache;
+            _cache = p._cache;
             ComputeSize = p.ComputeSize;
             //this.rebuild = false;
         }
@@ -78,18 +78,18 @@ namespace Bind.Structures
             }
         }
 
-        private UnmanagedType _unmanaged_type;
+        private UnmanagedType _unmanagedType;
         /// <summary>
         /// Gets or sets the name of the parameter.
         /// </summary>
         private UnmanagedType UnmanagedType
         {
-            get { return _unmanaged_type; }
+            get { return _unmanagedType; }
             set
             {
-                if (_unmanaged_type != value)
+                if (_unmanagedType != value)
                 {
-                    _unmanaged_type = value;
+                    _unmanagedType = value;
                 }
             }
         }
@@ -195,12 +195,12 @@ namespace Bind.Structures
     /// </summary>
     internal class ParameterCollection : IList<Parameter>, IComparable<ParameterCollection>, IEquatable<ParameterCollection>
     {
-        private readonly List<Parameter> Parameters = new List<Parameter>();
+        private readonly List<Parameter> _parameters = new List<Parameter>();
 
-        private bool hasPointerParameters;
-        private bool hasReferenceParameters;
-        private bool hasUnsignedParameters;
-        private bool hasGenericParameters;
+        private bool _hasPointerParameters;
+        private bool _hasReferenceParameters;
+        private bool _hasUnsignedParameters;
+        private bool _hasGenericParameters;
 
         public bool Rebuild { get; set; }
 
@@ -231,7 +231,7 @@ namespace Bind.Structures
                     BuildCache();
                 }
 
-                return hasPointerParameters;
+                return _hasPointerParameters;
             }
         }
 
@@ -244,7 +244,7 @@ namespace Bind.Structures
                     BuildCache();
                 }
 
-                return hasReferenceParameters;
+                return _hasReferenceParameters;
             }
         }
 
@@ -257,7 +257,7 @@ namespace Bind.Structures
                     BuildCache();
                 }
 
-                return hasUnsignedParameters;
+                return _hasUnsignedParameters;
             }
         }
 
@@ -270,7 +270,7 @@ namespace Bind.Structures
                     BuildCache();
                 }
 
-                return hasGenericParameters;
+                return _hasGenericParameters;
             }
         }
 
@@ -281,22 +281,22 @@ namespace Bind.Structures
             {
                 if (p.Pointer != 0 || p.CurrentType.Contains("IntPtr"))
                 {
-                    hasPointerParameters = true;
+                    _hasPointerParameters = true;
                 }
 
                 if (p.Reference)
                 {
-                    hasReferenceParameters = true;
+                    _hasReferenceParameters = true;
                 }
 
                 if (p.Unsigned)
                 {
-                    hasUnsignedParameters = true;
+                    _hasUnsignedParameters = true;
                 }
 
                 if (p.Generic)
                 {
-                    hasGenericParameters = true;
+                    _hasGenericParameters = true;
                 }
             }
         }
@@ -337,39 +337,39 @@ namespace Bind.Structures
 
         public void Add(Parameter p)
         {
-            Parameters.Add(p);
+            _parameters.Add(p);
             Rebuild = true;
         }
 
         public void Clear()
         {
-            Parameters.Clear();
+            _parameters.Clear();
             Rebuild = true;
         }
 
         public bool Contains(Parameter item)
         {
-            return Parameters.Contains(item);
+            return _parameters.Contains(item);
         }
 
         public void CopyTo(Parameter[] array, int arrayIndex)
         {
-            Parameters.CopyTo(array, arrayIndex);
+            _parameters.CopyTo(array, arrayIndex);
         }
 
         public int Count
         {
-            get { return Parameters.Count; }
+            get { return _parameters.Count; }
         }
 
         public bool IsReadOnly
         {
-            get { return (Parameters as ICollection<Parameter>).IsReadOnly; }
+            get { return (_parameters as ICollection<Parameter>).IsReadOnly; }
         }
 
         public bool Remove(Parameter item)
         {
-            var result = Parameters.Remove(item);
+            var result = _parameters.Remove(item);
             if (result)
             {
                 Rebuild = true;
@@ -379,28 +379,28 @@ namespace Bind.Structures
 
         public IEnumerator<Parameter> GetEnumerator()
         {
-            return Parameters.GetEnumerator();
+            return _parameters.GetEnumerator();
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return Parameters.GetEnumerator();
+            return _parameters.GetEnumerator();
         }
 
         public int IndexOf(Parameter item)
         {
-            return Parameters.IndexOf(item);
+            return _parameters.IndexOf(item);
         }
 
         public void Insert(int index, Parameter item)
         {
-            Parameters.Insert(index, item);
+            _parameters.Insert(index, item);
             Rebuild = true;
         }
 
         public void RemoveAt(int index)
         {
-            Parameters.RemoveAt(index);
+            _parameters.RemoveAt(index);
             Rebuild = true;
         }
 
@@ -408,11 +408,11 @@ namespace Bind.Structures
         {
             get
             {
-                return Parameters[index];
+                return _parameters[index];
             }
             set
             {
-                Parameters[index] = value;
+                _parameters[index] = value;
             }
         }
 

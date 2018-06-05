@@ -36,11 +36,11 @@ namespace Bind.Structures
             set { _type = value; }
         }
 
-        private SortedDictionary<string, Constant> _constant_collection = new SortedDictionary<string, Constant>();
+        private SortedDictionary<string, Constant> _constantCollection = new SortedDictionary<string, Constant>();
 
         public IDictionary<string, Constant> ConstantCollection
         {
-            get { return _constant_collection; }
+            get { return _constantCollection; }
             set
             {
                 if (value == null)
@@ -48,10 +48,10 @@ namespace Bind.Structures
                     throw new ArgumentNullException("value");
                 }
 
-                _constant_collection.Clear();
+                _constantCollection.Clear();
                 foreach (var item in value)
                 {
-                    _constant_collection.Add(item.Key, item.Value);
+                    _constantCollection.Add(item.Key, item.Value);
                 }
             }
         }
@@ -78,7 +78,7 @@ namespace Bind.Structures
 
     internal class EnumCollection : IDictionary<string, Enum>
     {
-        private SortedDictionary<string, Enum> Enumerations = new SortedDictionary<string, Enum>();
+        private SortedDictionary<string, Enum> _enumerations = new SortedDictionary<string, Enum>();
 
         // Return -1 for ext1, 1 for ext2 or 0 if no preference.
         private int OrderOfPreference(string ext1, string ext2)
@@ -144,90 +144,90 @@ namespace Bind.Structures
             }
             else
             {
-                Enumerations.Add(key, value);
+                _enumerations.Add(key, value);
             }
         }
 
         public bool ContainsKey(string key)
         {
-            return Enumerations.ContainsKey(key);
+            return _enumerations.ContainsKey(key);
         }
 
         public ICollection<string> Keys
         {
-            get { return Enumerations.Keys; }
+            get { return _enumerations.Keys; }
         }
 
         public bool Remove(string key)
         {
-            return Enumerations.Remove(key);
+            return _enumerations.Remove(key);
         }
 
         public bool TryGetValue(string key, out Enum value)
         {
-            return Enumerations.TryGetValue(key, out value);
+            return _enumerations.TryGetValue(key, out value);
         }
 
         public ICollection<Enum> Values
         {
-            get { return Enumerations.Values; }
+            get { return _enumerations.Values; }
         }
 
         public Enum this[string key]
         {
             get
             {
-                return Enumerations[key];
+                return _enumerations[key];
             }
             set
             {
-                Enumerations[key] = value;
+                _enumerations[key] = value;
             }
         }
 
         public void Add(KeyValuePair<string, Enum> item)
         {
-            Enumerations.Add(item.Key, item.Value);
+            _enumerations.Add(item.Key, item.Value);
         }
 
         public void Clear()
         {
-            Enumerations.Clear();
+            _enumerations.Clear();
         }
 
         public bool Contains(KeyValuePair<string, Enum> item)
         {
-            return Enumerations.Contains(item);
+            return _enumerations.Contains(item);
         }
 
         public void CopyTo(KeyValuePair<string, Enum>[] array, int arrayIndex)
         {
-            Enumerations.CopyTo(array, arrayIndex);
+            _enumerations.CopyTo(array, arrayIndex);
         }
 
         public int Count
         {
-            get { return Enumerations.Count; }
+            get { return _enumerations.Count; }
         }
 
         public bool IsReadOnly
         {
-            get { return (Enumerations as IDictionary<string, Enum>).IsReadOnly; }
+            get { return (_enumerations as IDictionary<string, Enum>).IsReadOnly; }
         }
 
         public bool Remove(KeyValuePair<string, Enum> item)
         {
-            return Enumerations.Remove(item.Key);
+            return _enumerations.Remove(item.Key);
         }
 
         public IEnumerator<KeyValuePair<string, Enum>> GetEnumerator()
         {
-            return Enumerations.GetEnumerator();
+            return _enumerations.GetEnumerator();
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return Enumerations.GetEnumerator();
+            return _enumerations.GetEnumerator();
         }
     }
 }
