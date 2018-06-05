@@ -417,7 +417,7 @@ namespace Bind
         {
              // Make sure everything is sorted. This will avoid random changes between
             // consecutive runs of the program.
-            constants = constants.OrderBy(c => c);
+            constants = constants.OrderBy(c => c).ToList();
 
             foreach (var c in constants)
             {
@@ -432,6 +432,11 @@ namespace Bind
                 if (!String.IsNullOrEmpty(str))
                 {
                     sw.WriteLine(",");
+                }
+
+                if (c != constants.Last())
+                {
+                    sw.WriteLineNoTabs();
                 }
             }
         }
@@ -496,7 +501,11 @@ namespace Bind
                 {
                     WriteConstants(sw, @enum.ConstantCollection.Values);
                 }
-                sw.WriteLineNoTabs();
+
+                if (@enum != enums.Values.Last())
+                {
+                    sw.WriteLineNoTabs();
+                }
             }
         }
 
