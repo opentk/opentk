@@ -110,8 +110,6 @@ namespace Bind
         {
             /// <summary>Default value.</summary>
             None = 0x00,
-            /// <summary>Generate all possible permutations for ref/array/pointer parameters.</summary>
-            GenerateAllPermutations = 0x40,
             /// <summary>Keep all enum tokens, even if same value (e.g. FooARB, FooEXT and FooSGI).</summary>
             NoDropMultipleTokens = 0x200,
             /// <summary>Disables ErrorHelper generation.</summary>
