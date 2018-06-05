@@ -77,6 +77,7 @@ namespace Bind
                 using (SourceWriter sw = new SourceWriter(new StreamWriter(outputFile)))
                 {
                     WriteLicense(sw);
+                    sw.WriteLineNoTabs();
 
                     sw.WriteLine("using System;");
                     sw.WriteLineNoTabs();
@@ -96,6 +97,7 @@ namespace Bind
                 using (var sw = new SourceWriter(new StreamWriter(outputFile)))
                 {
                     WriteLicense(sw);
+                    sw.WriteLineNoTabs();
 
                     sw.WriteLine("using System;");
                     sw.WriteLine("using System.Text;");
@@ -502,8 +504,10 @@ namespace Bind
 
         public void WriteLicense(SourceWriter sw)
         {
-            sw.WriteLine(File.ReadAllText(Path.Combine(Settings.InputPath, Settings.LicenseFile)));
-            sw.WriteLineNoTabs();
+            var licenseFilePath = Path.Combine(Settings.InputPath, Settings.LicenseFile);
+            var licenseContents = File.ReadAllText(licenseFilePath).TrimEnd();
+
+            sw.WriteLine(licenseContents);
         }
 
         // For example, if parameter foo has indirection level = 1, then it
