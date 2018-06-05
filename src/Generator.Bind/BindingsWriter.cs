@@ -120,7 +120,7 @@ namespace Bind
 
                     sw.WriteLineNoTabs();
 
-                    sw.WriteLine("namespace {0}", Generator.Namespace);
+                    sw.WriteLine($"namespace {Generator.Namespace}");
                     using (sw.BeginBlock())
                     {
                         WriteWrappers(sw, wrappers, delegates);
@@ -149,7 +149,7 @@ namespace Bind
         {
             Trace.WriteLine($"Writing wrappers to:\t{Generator.Namespace}.{Generator.ClassName}");
 
-            sw.WriteLine("partial class {0}", Generator.ClassName);
+            sw.WriteLine($"partial class {Generator.ClassName}");
             using (sw.BeginBlock())
             {
                 // Write constructor
@@ -201,12 +201,12 @@ namespace Bind
                     {
                         if (!char.IsDigit(key[0]))
                         {
-                            sw.WriteLine("public static partial class {0}", key);
+                            sw.WriteLine($"public static partial class {key}");
                         }
                         else
                         {
                             // Identifiers cannot start with a number:
-                            sw.WriteLine("public static partial class {0}{1}", Generator.ConstantPrefix, key);
+                            sw.WriteLine($"public static partial class {Generator.ConstantPrefix}{key}");
                         }
                         using (sw.BeginBlock())
                         {
@@ -249,7 +249,7 @@ namespace Bind
                 {
                     sw.WriteLine($"[Slot({d.Slot})]");
                     sw.WriteLine("[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
-                    sw.WriteLine("private static extern {0};", GetDeclarationString(d, false));
+                    sw.WriteLine($"private static extern {GetDeclarationString(d, false)};");
 
                     if (d != wrappersToWrite.Last())
                     {
@@ -316,7 +316,7 @@ namespace Bind
             sw.WriteLine("/// <summary>");
             if (!string.IsNullOrEmpty(category) || !string.IsNullOrEmpty(warning))
             {
-                sw.WriteLine("/// {0}{1}", category, warning);
+                sw.WriteLine($"/// {category}{warning}");
             }
 
             if (!string.IsNullOrEmpty(docs.Summary))
@@ -361,15 +361,15 @@ namespace Bind
 
                     // Note: we use param.Name, because the documentation sometimes
                     // uses different names than the specification.
-                    sw.WriteLine("/// <param name=\"{0}\">", param.Name);
+                    sw.WriteLine($"/// <param name=\"{param.Name}\">");
                     if (!string.IsNullOrEmpty(length))
                     {
-                        sw.WriteLine("/// {0}", length);
+                        sw.WriteLine($"/// {length}");
                     }
 
                     if (!string.IsNullOrEmpty(docparam.Documentation))
                     {
-                        sw.WriteLine("/// {0}", docparam.Documentation);
+                        sw.WriteLine($"/// {docparam.Documentation}");
                     }
 
                     sw.WriteLine("/// </param>");
@@ -484,7 +484,7 @@ namespace Bind
 
                 if (@enum.IsObsolete)
                 {
-                    sw.WriteLine("[Obsolete(\"{0}\")]", @enum.Obsolete);
+                    sw.WriteLine($"[Obsolete(\"{@enum.Obsolete}\")]");
                 }
 
                 if (@enum.IsFlagCollection)
