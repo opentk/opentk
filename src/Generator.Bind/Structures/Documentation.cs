@@ -37,13 +37,14 @@ namespace Bind.Structures
 
     internal class DocumentationParameter
     {
+        public string Name { get; set; }
+        public string Documentation { get; set; }
+
         public DocumentationParameter(string name, string doc)
         {
             Name = name;
             Documentation = doc;
         }
-
-        public string Name { get; set; }
-        public string Documentation { get; set; }
     }
 }
+

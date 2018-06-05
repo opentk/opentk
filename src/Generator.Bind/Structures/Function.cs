@@ -34,42 +34,9 @@ namespace Bind.Structures
 
         public Delegate WrappedDelegate { get; set; }
 
-        public override bool Unsafe => base.Unsafe;
-
-        public FunctionBody Body { get; set; }
-
-        public string TrimmedName { get; set; }
-
-        public Documentation Documentation { get; set; }
-
-        public int CompareTo(Function other)
-        {
-            var ret = Name.CompareTo(other.Name);
-            if (ret == 0)
-            {
-                ret = Parameters.CompareTo(other.Parameters);
-            }
-
-            if (ret == 0)
-            {
-                ret = ReturnType.CompareTo(other.ReturnType);
-            }
-
-            return ret;
-        }
-
-        public bool Equals(Function other)
-        {
-            var result =
-                !string.IsNullOrEmpty(TrimmedName) && !string.IsNullOrEmpty(other.TrimmedName) &&
-                TrimmedName.Equals(other.TrimmedName) &&
-                Parameters.Equals(other.Parameters);
-            return result;
-        }
-
         public void TurnVoidPointersToIntPtr()
         {
-            foreach (var p in Parameters)
+            foreach (Parameter p in Parameters)
             {
                 if (p.Pointer != 0 && p.CurrentType == "void")
                 {
@@ -79,59 +46,99 @@ namespace Bind.Structures
             }
         }
 
+        public override bool Unsafe
+        {
+            get
+            {
+                return base.Unsafe;
+            }
+        }
+
+        public FunctionBody Body { get; set; }
+
+        public string TrimmedName { get; set; }
+
+        public Documentation Documentation { get; set; }
+
         public override string ToString()
         {
-            return $"{ReturnType} {TrimmedName}{Parameters}";
+            return String.Format("{0} {1}{2}",
+                ReturnType,
+                TrimmedName,
+                Parameters);
+        }
+
+        public bool Equals(Function other)
+        {
+            bool result =
+                !String.IsNullOrEmpty(TrimmedName) && !String.IsNullOrEmpty(other.TrimmedName) &&
+                TrimmedName.Equals(other.TrimmedName) &&
+                Parameters.Equals(other.Parameters);
+            return result;
+        }
+
+        public int CompareTo(Function other)
+        {
+            int ret = Name.CompareTo(other.Name);
+            if (ret == 0)
+            {
+                ret = Parameters.CompareTo(other.Parameters);
+            }
+            if (ret == 0)
+            {
+                ret = ReturnType.CompareTo(other.ReturnType);
+            }
+            return ret;
         }
     }
 
     /// <summary>
-    /// The <see cref="FunctionBody" /> class acts as a wrapper around a block of source code that makes up the body
+    /// The <see cref="FunctionBody"/> class acts as a wrapper around a block of source code that makes up the body
     /// of a function.
     /// </summary>
     public class FunctionBody : List<string>
     {
-        private string _indent = "";
-
         /// <summary>
-        /// Initializes an empty <see cref="FunctionBody" />.
+        /// Initializes an empty <see cref="FunctionBody"/>.
         /// </summary>
         public FunctionBody()
         {
         }
 
         /// <summary>
-        /// Initializes a <see cref="FunctionBody" /> from an existing FunctionBody.
+        /// Initializes a <see cref="FunctionBody"/> from an existing FunctionBody.
         /// </summary>
         /// <param name="fb">The body to copy from.</param>
         public FunctionBody(FunctionBody fb)
         {
-            foreach (var s in fb)
+            foreach (string s in fb)
             {
                 Add(s);
             }
         }
 
+        private string indent = "";
+
         /// <summary>
-        /// Indents this <see cref="FunctionBody" /> another level.
+        /// Indents this <see cref="FunctionBody"/> another level.
         /// </summary>
         public void Indent()
         {
-            _indent += "    ";
+            indent += "    ";
         }
 
         /// <summary>
-        /// Removes a level of indentation from this <see cref="FunctionBody" />.
+        /// Removes a level of indentation from this <see cref="FunctionBody"/>.
         /// </summary>
         public void Unindent()
         {
-            if (_indent.Length > 4)
+            if (indent.Length > 4)
             {
-                _indent = _indent.Substring(4);
+                indent = indent.Substring(4);
             }
             else
             {
-                _indent = string.Empty;
+                indent = String.Empty;
             }
         }
 
@@ -139,18 +146,18 @@ namespace Bind.Structures
         /// Adds a line of source code to the body at the current indentation level.
         /// </summary>
         /// <param name="s">The line to add.</param>
-        public new void Add(string s)
+        new public void Add(string s)
         {
-            base.Add(_indent + s.TrimEnd('\r', '\n'));
+            base.Add(indent + s.TrimEnd('\r', '\n'));
         }
 
         /// <summary>
         /// Adds a range of source code lines to the body at the current indentation level.
         /// </summary>
         /// <param name="collection"></param>
-        public new void AddRange(IEnumerable<string> collection)
+        new public void AddRange(IEnumerable<string> collection)
         {
-            foreach (var t in collection)
+            foreach (string t in collection)
             {
                 Add(t);
             }
@@ -164,17 +171,16 @@ namespace Bind.Structures
         {
             if (Count == 0)
             {
-                return string.Empty;
+                return String.Empty;
             }
 
-            var sb = new StringBuilder(Count);
+            StringBuilder sb = new StringBuilder(Count);
 
             sb.AppendLine("{");
-            foreach (var s in this)
+            foreach (string s in this)
             {
                 sb.AppendLine("    " + s);
             }
-
             sb.Append("}");
 
             return sb.ToString();
@@ -183,7 +189,7 @@ namespace Bind.Structures
 
     internal class FunctionCollection : SortedDictionary<string, List<Function>>
     {
-        private readonly Regex _unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
+        private Regex unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
 
         private void Add(Function f)
         {
@@ -200,7 +206,7 @@ namespace Bind.Structures
 
         public void AddRange(IEnumerable<Function> functions)
         {
-            foreach (var f in functions)
+            foreach (Function f in functions)
             {
                 AddChecked(f);
             }
@@ -215,24 +221,24 @@ namespace Bind.Structures
             if (ContainsKey(f.Extension))
             {
                 var list = this[f.Extension];
-                var index = list.IndexOf(f);
+                int index = list.IndexOf(f);
                 if (index == -1)
                 {
                     Add(f);
                 }
                 else
                 {
-                    var existing = list[index];
-                    var replace = existing.Parameters.HasUnsignedParameters &&
-                                  !_unsignedFunctions.IsMatch(existing.Name) && _unsignedFunctions.IsMatch(f.Name);
+                    Function existing = list[index];
+                    bool replace = existing.Parameters.HasUnsignedParameters &&
+                        !unsignedFunctions.IsMatch(existing.Name) && unsignedFunctions.IsMatch(f.Name);
                     replace |= !existing.Parameters.HasUnsignedParameters &&
-                               _unsignedFunctions.IsMatch(existing.Name) && !_unsignedFunctions.IsMatch(f.Name);
+                        unsignedFunctions.IsMatch(existing.Name) && !unsignedFunctions.IsMatch(f.Name);
                     replace |=
-                        (from pOld in existing.Parameters
-                            join pNew in f.Parameters on pOld.Name equals pNew.Name
-                            where pNew.ElementCount == 0 && pOld.ElementCount != 0
-                            select true)
-                        .Count() != 0;
+                        (from p_old in existing.Parameters
+                                        join p_new in f.Parameters on p_old.Name equals p_new.Name
+                                        where p_new.ElementCount == 0 && p_old.ElementCount != 0
+                                        select true)
+                            .Count() != 0;
                     if (replace)
                     {
                         list[index] = f;

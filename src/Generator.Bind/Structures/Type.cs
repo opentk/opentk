@@ -8,31 +8,7 @@ namespace Bind.Structures
 {
     internal class Type : IComparable<Type>, IEquatable<Type>
     {
-        private static readonly string[] PointerLevels =
-        {
-            "",
-            "*",
-            "**",
-            "***",
-            "****"
-        };
-
-        private static readonly string[] ArrayLevels =
-        {
-            "",
-            "[]",
-            "[,]",
-            "[,,]"
-        };
-
-        private int _array;
-        private string _currentQualifier = string.Empty;
-
-        private int _elementCount;
-
-        private int _pointer;
-
-        private string _type;
+        private string current_qualifier = String.Empty;
 
         public Type()
         {
@@ -56,68 +32,71 @@ namespace Bind.Structures
 
         private string CurrentQualifier
         {
-            get => _currentQualifier;
-            set
-            {
-                PreviousQualifier = CurrentQualifier;
-                _currentQualifier = value;
-            }
+            get { return current_qualifier; }
+            set { PreviousQualifier = CurrentQualifier; current_qualifier = value; }
         }
 
-        private string PreviousQualifier { get; set; } = string.Empty;
+        private string PreviousQualifier { get; set; } = String.Empty;
 
         public string QualifiedType
         {
-            get => !string.IsNullOrEmpty(CurrentQualifier)
-                ? $"{CurrentQualifier}.{CurrentType}"
-                : CurrentType;
+            get
+            {
+                return
+                    !String.IsNullOrEmpty(CurrentQualifier) ?
+                        String.Format("{0}.{1}", CurrentQualifier, CurrentType) :
+                        CurrentType;
+            }
             set
             {
-                if (string.IsNullOrEmpty(value))
+                if (String.IsNullOrEmpty(value))
                 {
                     throw new ArgumentNullException();
                 }
 
-                var qualifierEnd = value.LastIndexOf('.');
-                if (qualifierEnd > -1)
+                int qualifier_end = value.LastIndexOf('.');
+                if (qualifier_end > -1)
                 {
-                    CurrentQualifier = value.Substring(0, qualifierEnd);
-                    CurrentType = value.Substring(qualifierEnd + 1);
+                    CurrentQualifier = value.Substring(0, qualifier_end);
+                    CurrentType = value.Substring(qualifier_end + 1);
                 }
                 else
                 {
                     CurrentType = value;
-                    CurrentQualifier = string.Empty;
+                    CurrentQualifier = String.Empty;
                 }
             }
         }
 
+        private string type;
         /// <summary>
         /// Gets the type of the parameter.
         /// </summary>
         public virtual string CurrentType
         {
-            get => _type;
+            get
+            {
+                return type;
+            }
             set
             {
-                if (string.IsNullOrEmpty(value))
+                if (String.IsNullOrEmpty(value))
                 {
                     throw new ArgumentException();
                 }
 
-                if (!string.IsNullOrEmpty(_type))
+                if (!String.IsNullOrEmpty(type))
                 {
-                    PreviousType = _type;
+                    PreviousType = type;
+                }
+                if (!String.IsNullOrEmpty(value))
+                {
+                    type = value.Trim();
                 }
 
-                if (!string.IsNullOrEmpty(value))
+                while (type.EndsWith("*"))
                 {
-                    _type = value.Trim();
-                }
-
-                while (_type.EndsWith("*"))
-                {
-                    _type = _type.Substring(0, _type.Length - 1).Trim();
+                    type = type.Substring(0, type.Length - 1).Trim();
                     Pointer++;
                 }
             }
@@ -127,23 +106,29 @@ namespace Bind.Structures
 
         public bool Reference { get; set; }
 
+        private int array;
+
         public int Array
         {
-            get => _array;
-            set => _array = value > 0 ? value : 0;
+            get { return array; }
+            set { array = value > 0 ? value : 0; }
         }
+
+        private int element_count;
 
         // If the type is an array and ElementCount > 0, then ElemenCount defines the expected array length.
         public int ElementCount
         {
-            get => _elementCount;
-            set => _elementCount = value > 0 ? value : 0;
+            get { return element_count; }
+            set { element_count = value > 0 ? value : 0; }
         }
+
+        private int pointer;
 
         public int Pointer
         {
-            get => _pointer;
-            set => _pointer = value > 0 ? value : 0;
+            get { return pointer; }
+            set { pointer = value > 0 ? value : 0; }
         }
 
         // Set to true if parameter is an enum.
@@ -154,7 +139,7 @@ namespace Bind.Structures
         {
             get
             {
-                var compliant = true;
+                bool compliant = true;
 
                 switch (CurrentType.ToLower())
                 {
@@ -203,9 +188,41 @@ namespace Bind.Structures
             }
         }
 
-        public bool Unsigned => CurrentType.Contains("UInt") || CurrentType.Contains("Byte");
+        public bool Unsigned
+        {
+            get
+            {
+                return (CurrentType.Contains("UInt") || CurrentType.Contains("Byte"));
+            }
+        }
 
         public WrapperTypes WrapperType { get; set; } = WrapperTypes.None;
+
+        private static readonly string[] PointerLevels =
+        {
+            "",
+            "*",
+            "**",
+            "***",
+            "****"
+        };
+
+        private static readonly string[] ArrayLevels =
+        {
+            "",
+            "[]",
+            "[,]",
+            "[,,]"
+        };
+
+        // Only used for debugging.
+        public override string ToString()
+        {
+            return String.Format("{0}{1}{2}",
+                CurrentType,
+                PointerLevels[Pointer],
+                ArrayLevels[Array]);
+        }
 
         public int CompareTo(Type other)
         {
@@ -213,22 +230,19 @@ namespace Bind.Structures
             // The rest of the comparisons help maintain a stable order (useful for source control).
             // Note that CompareTo is stricter than Equals and that there is code in
             // DelegateCollection.Add that depends on this fact.
-            var result = CurrentType.CompareTo(other.CurrentType);
+            int result = this.CurrentType.CompareTo(other.CurrentType);
             if (result == 0)
             {
                 result = Pointer.CompareTo(other.Pointer); // Must come after array/ref, see issue [#1098]
             }
-
             if (result == 0)
             {
                 result = Reference.CompareTo(other.Reference);
             }
-
             if (result == 0)
             {
                 result = Array.CompareTo(other.Array);
             }
-
             // Note: CLS-compliance and element counts
             // are used for comparison calculations, in order
             // to maintain a stable sorting order, even though
@@ -237,18 +251,16 @@ namespace Bind.Structures
             {
                 result = CLSCompliant.CompareTo(other.CLSCompliant);
             }
-
             if (result == 0)
             {
                 result = ElementCount.CompareTo(other.ElementCount);
             }
-
             return result;
         }
 
         public bool Equals(Type other)
         {
-            var result =
+            bool result =
                 CurrentType.Equals(other.CurrentType) &&
                 Pointer.Equals(other.Pointer) &&
                 Reference.Equals(other.Reference) &&
@@ -260,12 +272,6 @@ namespace Bind.Structures
             // This is necessary because otherwise we'd get
             // redefinition errors in the generated bindings.
             return result;
-        }
-
-        // Only used for debugging.
-        public override string ToString()
-        {
-            return $"{CurrentType}{PointerLevels[Pointer]}{ArrayLevels[Array]}";
         }
     }
 }

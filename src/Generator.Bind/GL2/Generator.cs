@@ -2,147 +2,130 @@
  * See license.txt for license info
  */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using Bind.Structures;
 
 namespace Bind.GL2
 {
-    /// <summary>
-    /// Base class for API generators.
-    /// </summary>
-    internal abstract class Generator : IGenerator
+    internal abstract class Generator : IBind
     {
-        /// <inheritdoc/>
-        public virtual string APIIdentifier => "GL";
+        protected string glTypemap = "GL2/gl.tm";
+        protected string csTypemap = "csharp.tm";
+        protected string enumSpec = "GL2/enum.spec";
+        protected string enumSpecExt = "GL2/enumext.spec";
+        protected string glSpec = "GL2/gl.spec";
+        protected string glSpecExt = "";
 
-        /// <inheritdoc/>
-        public virtual string OutputSubfolder => "OpenGL";
+        protected string loadAllFuncName = "LoadAll";
 
-        /// <inheritdoc/>
-        public virtual string Namespace => "OpenTK.Graphics.OpenGL";
+        protected Regex enumToDotNet = new Regex("_[a-z|A-Z]?", RegexOptions.Compiled);
 
-        /// <inheritdoc/>
-        public virtual string ClassName => "GL";
+        protected readonly char[] numbers = "0123456789".ToCharArray();
+        //protected static readonly Dictionary<string, string> doc_replacements;
 
-        /// <inheritdoc/>
-        public virtual string FunctionPrefix => "gl";
-
-        /// <inheritdoc/>
-        public virtual string ConstantPrefix => "GL_";
-
-        /// <inheritdoc/>
-        public virtual string SpecificationDocumentationPath => "GL";
+        protected ISpecReader SpecReader { get; set; }
 
         /// <summary>
-        /// Gets or sets a set of paths, indicating files to scan for specification overrides.
+        /// The Profile field corresponds to the "profile" attribute
+        /// in the OpenGL registry. We use this to distinguish between
+        /// different profiles (e.g. "gl", "glcore", "gles1", "gles2").
         /// </summary>
-        protected virtual IEnumerable<string> OverrideFiles { get; set; }
+        protected string Profile = "gl";
 
         /// <summary>
-        /// Gets the path to the file that contains the language typemap.
+        /// The Version field corresponds to the "number" attribute
+        /// in the OpenGL registry. We use this to distinguish between
+        /// OpenGL ES 2.0 and 3.0, which share the same profile "gles2".
+        /// If empty, then all elements of a profile will be parsed, and
+        /// their version number will be ignored.
         /// </summary>
-        protected virtual string LanguageTypemap => "csharp.tm";
+        protected string Version = String.Empty;
 
-        /// <summary>
-        /// Gets the path to the file that contains the API typemap.
-        /// </summary>
-        protected virtual string APITypemap => Path.Combine("GL2", "gl.tm");
+        public Settings Settings { get; protected set; }
 
-        /// <summary>
-        /// Gets the path to the file that contains the API specification.
-        /// </summary>
-        protected virtual string SpecificationFile => Path.Combine("GL2", "signatures.xml");
-
-        /// <summary>
-        /// Gets the path to the file that contains the API enum specification.
-        /// </summary>
-        protected virtual string EnumSpecificationFile => Path.Combine("GL2", "signatures.xml");
-
-        /// <summary>
-        /// Gets the name of the function that loads all entrypoints.
-        /// </summary>
-        protected const string LoadAllFuncName = "LoadAll";
-
-        /// <summary>
-        /// Gets the name that corresponds to the "profile" attribute in the OpenGL registry. We use this to distinguish
-        /// between different profiles (e.g. "gl", "glcore", "gles1", "gles2").
-        /// </summary>
-        protected virtual string ProfileName => "gl";
-
-        /// <summary>
-        /// Gets the version that corresponds to the "number" attribute in the OpenGL registry. We use this to
-        /// distinguish between OpenGL ES 2.0 and 3.0, which share the same profile "gles2". If empty, then all elements
-        /// of a profile will be parsed, and their version number will be ignored.
-        /// </summary>
-        protected virtual string Version => string.Empty;
-
-        /// <summary>
-        /// Gets the specification reader associated with this generator.
-        /// </summary>
-        protected ISpecificationReader SpecificationReader { get; }
-
-        /// <inheritdoc />
-        public DelegateCollection Delegates { get; }
-
-        /// <inheritdoc />
-        public EnumCollection Enums { get; private set; }
-
-        /// <inheritdoc />
-        public FunctionCollection Wrappers { get; private set; }
-
-        /// <inheritdoc />
-        public IDictionary<string, string> APITypes { get; private set; }
-
-        /// <inheritdoc />
-        public IDictionary<string, string> LanguageTypes { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Generator"/> class.
-        /// </summary>
-        public Generator()
+        public Generator(Settings settings)
         {
-            OverrideFiles = new List<string>();
+            if (settings == null)
+            {
+                throw new ArgumentNullException("settings");
+            }
+
+            Settings = settings.Clone();
+
+            glTypemap = "GL2/gl.tm";
+            csTypemap = Settings.LanguageTypeMapFile;
+
+            enumSpec = Path.Combine("GL2", "signatures.xml");
+            enumSpecExt = String.Empty;
+            glSpec = Path.Combine("GL2", "signatures.xml");
+            glSpecExt = String.Empty;
+
+            Settings.ImportsClass = "Core";
+            Settings.DelegatesClass = "Delegates";
+            Settings.OutputClass = "GL";
 
             Delegates = new DelegateCollection();
             Enums = new EnumCollection();
             Wrappers = new FunctionCollection();
 
-            SpecificationReader = new XmlSpecificationReader();
+            SpecReader = new XmlSpecReader(Settings);
         }
 
-        /// <inheritdoc />
-        public virtual void LoadData()
+        private IEnumerable<string> GetFiles(string path)
         {
-            var glTypemapPath = Path.Combine(Program.Arguments.InputPath, APITypemap);
-            var csTypemapPath = Path.Combine(Program.Arguments.InputPath, LanguageTypemap);
+            path = Path.Combine(Settings.InputPath, path);
+            if ((File.GetAttributes(path) & FileAttributes.Directory) != 0)
+            {
+                foreach (var file in Directory.GetFiles(
+                    path, "*.xml", SearchOption.AllDirectories))
+                {
+                    yield return file;
+                }
+            }
+            else
+            {
+                yield return path;
+            }
+        }
 
-            var specificationFilePath = Path.Combine(Program.Arguments.InputPath, SpecificationFile);
-            var enumSpecificationPath = Path.Combine(Program.Arguments.InputPath, EnumSpecificationFile);
+        public DelegateCollection Delegates { get; private set; }
+        public EnumCollection Enums { get; private set; }
+        public FunctionCollection Wrappers { get; private set; }
+        public IDictionary<string, string> GLTypes { get; private set; }
+        public IDictionary<string, string> CSTypes { get; private set; }
 
-            APITypes = SpecificationReader.ReadTypeMap(glTypemapPath);
-            LanguageTypes = SpecificationReader.ReadCSTypeMap(csTypemapPath);
+        public virtual void Process()
+        {
+            var overrides = Settings.OverridesFiles.SelectMany(GetFiles);
+
+            GLTypes = SpecReader.ReadTypeMap(Path.Combine(Settings.InputPath, glTypemap));
+            CSTypes = SpecReader.ReadCSTypeMap(Path.Combine(Settings.InputPath, csTypemap));
 
             // Read enum signatures
-            SpecificationReader.ReadEnums(enumSpecificationPath, Enums, ProfileName, Version);
-            foreach (var file in OverrideFiles)
+            SpecReader.ReadEnums(Path.Combine(Settings.InputPath, enumSpec), Enums, Profile, Version);
+            foreach (var file in overrides)
             {
-                SpecificationReader.ReadEnums(file, Enums, ProfileName, Version);
+                SpecReader.ReadEnums(file, Enums, Profile, Version);
             }
 
             // Read delegate signatures
-            SpecificationReader.ReadDelegates(specificationFilePath, Delegates, ProfileName, Version);
-            foreach (var file in OverrideFiles)
+            SpecReader.ReadDelegates(Path.Combine(Settings.InputPath, glSpec), Delegates, Profile, Version);
+            foreach (var file in overrides)
             {
-                SpecificationReader.ReadDelegates(file, Delegates, ProfileName, Version);
+                SpecReader.ReadDelegates(file, Delegates, Profile, Version);
             }
 
-            var enumProcessor = new EnumProcessor(this, OverrideFiles);
-            var funcProcessor = new FuncProcessor(this, OverrideFiles);
-            var docProcessor = new DocProcessor(this);
+            var enum_processor = new EnumProcessor(this, overrides);
+            var func_processor = new FuncProcessor(this, overrides);
+            var doc_processor = new DocProcessor(this);
 
-            Enums = enumProcessor.Process(Enums, ProfileName);
-            Wrappers = funcProcessor.Process(enumProcessor, docProcessor, Delegates, Enums, ProfileName, Version);
+            Enums = enum_processor.Process(Enums, Profile);
+            Wrappers = func_processor.Process(enum_processor, doc_processor,
+                Delegates, Enums, Profile, Version);
         }
     }
 }

@@ -7,7 +7,7 @@ using Bind.Structures;
 
 namespace Bind
 {
-    internal interface ISpecificationReader
+    internal interface ISpecReader
     {
         void ReadDelegates(string file, DelegateCollection delegates, string apiname, string apiversion);
         void ReadEnums(string file, EnumCollection enums, string apiname, string apiversion);

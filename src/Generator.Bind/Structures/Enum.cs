@@ -3,7 +3,6 @@
  */
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,9 +10,6 @@ namespace Bind.Structures
 {
     internal class Enum
     {
-        private readonly SortedDictionary<string, Constant> _constantCollection =
-            new SortedDictionary<string, Constant>();
-
         private string _name, _type;
 
         public Enum()
@@ -22,59 +18,120 @@ namespace Bind.Structures
         }
 
         // Returns true if the enum contains a collection of flags, i.e. 1, 2, 4, 8, ...
-        public bool IsFlagCollection { get; set; }
+        public bool IsFlagCollection
+        {
+            get; set;
+        }
 
         public string Name
         {
-            get => _name ?? "";
-            set => _name = value;
+            get { return _name ?? ""; }
+            set { _name = value; }
         }
 
         // Typically 'long' or 'int'. Default is 'int'.
         public string Type
         {
-            get => string.IsNullOrEmpty(_type) ? "int" : _type;
-            set => _type = value;
+            get { return String.IsNullOrEmpty(_type) ? "int" : _type; }
+            set { _type = value; }
         }
+
+        private SortedDictionary<string, Constant> _constant_collection = new SortedDictionary<string, Constant>();
 
         public IDictionary<string, Constant> ConstantCollection
         {
-            get => _constantCollection;
+            get { return _constant_collection; }
             set
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException("value");
                 }
 
-                _constantCollection.Clear();
+                _constant_collection.Clear();
                 foreach (var item in value)
                 {
-                    _constantCollection.Add(item.Key, item.Value);
+                    _constant_collection.Add(item.Key, item.Value);
                 }
             }
         }
 
-        public string Obsolete { get; set; }
-        public bool IsObsolete => !string.IsNullOrEmpty(Obsolete);
-
-        public bool CLSCompliant { get; set; }
-
         // Use only for debugging, not for code generation.
         public override string ToString()
         {
-            return $"enum {Name} : {Type} {{ {ConstantCollection} }}";
+            return String.Format("enum {0} : {1} {{ {2} }}",
+                Name,
+                Type,
+                ConstantCollection);
         }
 
         public void Add(Constant constant)
         {
             ConstantCollection.Add(constant.Name, constant);
         }
+
+        public string Obsolete { get; set; }
+        public bool IsObsolete { get { return !String.IsNullOrEmpty(Obsolete); } }
+
+        public bool CLSCompliant { get; set; }
     }
 
     internal class EnumCollection : IDictionary<string, Enum>
     {
-        private readonly SortedDictionary<string, Enum> _enumerations = new SortedDictionary<string, Enum>();
+        private SortedDictionary<string, Enum> Enumerations = new SortedDictionary<string, Enum>();
+
+        // Return -1 for ext1, 1 for ext2 or 0 if no preference.
+        private int OrderOfPreference(string ext1, string ext2)
+        {
+            // If one is empty and the other not, prefer the empty one (empty == core)
+            // Otherwise check for Arb and Ext. To reuse the logic for the
+            // empty check, let's try to remove first Arb, then Ext from the strings.
+            int ret = PreferEmpty(ext1, ext2);
+            if (ret != 0)
+            {
+                return ret;
+            }
+
+            ext1 = ext1.Replace("Arb", ""); ext2 = ext2.Replace("Arb", "");
+            ret = PreferEmpty(ext1, ext2);
+            if (ret != 0)
+            {
+                return ret;
+            }
+
+            ext1 = ext1.Replace("Ext", ""); ext2 = ext2.Replace("Ext", "");
+            return PreferEmpty(ext1, ext2);
+        }
+
+        // Prefer the empty string over the non-empty.
+        private int PreferEmpty(string ext1, string ext2)
+        {
+            if (String.IsNullOrEmpty(ext1) && !String.IsNullOrEmpty(ext2))
+            {
+                return -1;
+            }
+            else if (String.IsNullOrEmpty(ext2) && !String.IsNullOrEmpty(ext1))
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public void Add(Enum e)
+        {
+            Add(e.Name, e);
+        }
+
+        public void AddRange(EnumCollection enums)
+        {
+            foreach (Enum e in enums.Values)
+            {
+                Add(e);
+            }
+        }
 
         public void Add(string key, Enum value)
         {
@@ -88,126 +145,90 @@ namespace Bind.Structures
             }
             else
             {
-                _enumerations.Add(key, value);
+                Enumerations.Add(key, value);
             }
         }
 
         public bool ContainsKey(string key)
         {
-            return _enumerations.ContainsKey(key);
+            return Enumerations.ContainsKey(key);
         }
 
-        public ICollection<string> Keys => _enumerations.Keys;
+        public ICollection<string> Keys
+        {
+            get { return Enumerations.Keys; }
+        }
 
         public bool Remove(string key)
         {
-            return _enumerations.Remove(key);
+            return Enumerations.Remove(key);
         }
 
         public bool TryGetValue(string key, out Enum value)
         {
-            return _enumerations.TryGetValue(key, out value);
+            return Enumerations.TryGetValue(key, out value);
         }
 
-        public ICollection<Enum> Values => _enumerations.Values;
+        public ICollection<Enum> Values
+        {
+            get { return Enumerations.Values; }
+        }
 
         public Enum this[string key]
         {
-            get => _enumerations[key];
-            set => _enumerations[key] = value;
+            get
+            {
+                return Enumerations[key];
+            }
+            set
+            {
+                Enumerations[key] = value;
+            }
         }
 
         public void Add(KeyValuePair<string, Enum> item)
         {
-            _enumerations.Add(item.Key, item.Value);
+            Enumerations.Add(item.Key, item.Value);
         }
 
         public void Clear()
         {
-            _enumerations.Clear();
+            Enumerations.Clear();
         }
 
         public bool Contains(KeyValuePair<string, Enum> item)
         {
-            return _enumerations.Contains(item);
+            return Enumerations.Contains(item);
         }
 
         public void CopyTo(KeyValuePair<string, Enum>[] array, int arrayIndex)
         {
-            _enumerations.CopyTo(array, arrayIndex);
+            Enumerations.CopyTo(array, arrayIndex);
         }
 
-        public int Count => _enumerations.Count;
+        public int Count
+        {
+            get { return Enumerations.Count; }
+        }
 
-        public bool IsReadOnly => (_enumerations as IDictionary<string, Enum>).IsReadOnly;
+        public bool IsReadOnly
+        {
+            get { return (Enumerations as IDictionary<string, Enum>).IsReadOnly; }
+        }
 
         public bool Remove(KeyValuePair<string, Enum> item)
         {
-            return _enumerations.Remove(item.Key);
+            return Enumerations.Remove(item.Key);
         }
 
         public IEnumerator<KeyValuePair<string, Enum>> GetEnumerator()
         {
-            return _enumerations.GetEnumerator();
+            return Enumerations.GetEnumerator();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return _enumerations.GetEnumerator();
-        }
-
-        // Return -1 for ext1, 1 for ext2 or 0 if no preference.
-        private int OrderOfPreference(string ext1, string ext2)
-        {
-            // If one is empty and the other not, prefer the empty one (empty == core)
-            // Otherwise check for Arb and Ext. To reuse the logic for the
-            // empty check, let's try to remove first Arb, then Ext from the strings.
-            var ret = PreferEmpty(ext1, ext2);
-            if (ret != 0)
-            {
-                return ret;
-            }
-
-            ext1 = ext1.Replace("Arb", "");
-            ext2 = ext2.Replace("Arb", "");
-            ret = PreferEmpty(ext1, ext2);
-            if (ret != 0)
-            {
-                return ret;
-            }
-
-            ext1 = ext1.Replace("Ext", "");
-            ext2 = ext2.Replace("Ext", "");
-            return PreferEmpty(ext1, ext2);
-        }
-
-        // Prefer the empty string over the non-empty.
-        private int PreferEmpty(string ext1, string ext2)
-        {
-            if (string.IsNullOrEmpty(ext1) && !string.IsNullOrEmpty(ext2))
-            {
-                return -1;
-            }
-
-            if (string.IsNullOrEmpty(ext2) && !string.IsNullOrEmpty(ext1))
-            {
-                return 1;
-            }
-
-            return 0;
-        }
-
-        public void Add(Enum e)
-        {
-            Add(e.Name, e);
-        }
-
-        public void AddRange(EnumCollection enums)
-        {
-            foreach (var e in enums.Values)
-            {
-                Add(e);
-            }
+            return Enumerations.GetEnumerator();
         }
     }
 }

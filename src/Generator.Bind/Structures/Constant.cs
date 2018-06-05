@@ -16,9 +16,74 @@ namespace Bind.Structures
     /// </summary>
     internal class Constant : IComparable<Constant>
     {
+        // Gets the name prior to translation.
+        public string OriginalName { get; private set; }
+
         private string _name;
 
+        /// <summary>
+        /// Gets or sets the name of the opengl constant (eg. GL_LINES).
+        /// Undergoes processing unless the Settings.Legacy.NoAdvancedEnumProcessing flag is set.
+        /// </summary>
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException("value");
+                }
+
+                if (OriginalName == null)
+                {
+                    OriginalName = _name;
+                }
+
+                _name = value;
+            }
+        }
+
         private string _value;
+
+        /// <summary>
+        /// Gets or sets the value of the opengl constant (eg. 0x00000001).
+        /// </summary>
+        public string Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException("value");
+                }
+
+                _value = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a string indicating the OpenGL enum reference by this constant.
+        /// Can be null.
+        /// </summary>
+        public string Reference { get; set; }
+
+        public bool Unchecked
+        {
+            get
+            {
+                // Check if the value is a number larger than Int32.MaxValue.
+                ulong number;
+                string test = Value;
+                return UInt64.TryParse(test.ToLower().Replace("0x", String.Empty),
+                    NumberStyles.AllowHexSpecifier, null, out number) &&
+                    number > Int32.MaxValue;
+            }
+        }
 
         /// <summary>
         /// Creates an empty Constant.
@@ -38,79 +103,6 @@ namespace Bind.Structures
             Value = value;
         }
 
-        // Gets the name prior to translation.
-        public string OriginalName { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the name of the opengl constant (eg. GL_LINES).
-        /// Undergoes processing unless the Settings.Legacy.NoAdvancedEnumProcessing flag is set.
-        /// </summary>
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentNullException(nameof(value));
-                }
-
-                if (OriginalName == null)
-                {
-                    OriginalName = _name;
-                }
-
-                _name = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the value of the opengl constant (eg. 0x00000001).
-        /// </summary>
-        public string Value
-        {
-            get => _value;
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentNullException(nameof(value));
-                }
-
-                _value = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a string indicating the OpenGL enum reference by this constant.
-        /// Can be null.
-        /// </summary>
-        public string Reference { get; set; }
-
-        public bool Unchecked
-        {
-            get
-            {
-                // Check if the value is a number larger than Int32.MaxValue.
-                ulong number;
-                var test = Value;
-                return ulong.TryParse(test.ToLower().Replace("0x", string.Empty),
-                           NumberStyles.AllowHexSpecifier, null, out number) &&
-                       number > int.MaxValue;
-            }
-        }
-
-        public int CompareTo(Constant other)
-        {
-            var ret = Value.CompareTo(other.Value);
-            if (ret == 0)
-            {
-                return Name.CompareTo(other.Name);
-            }
-
-            return ret;
-        }
-
         /// <summary>
         /// Replces the Value of the given constant with the value referenced by the [c.Reference, c.Value] pair.
         /// </summary>
@@ -121,26 +113,24 @@ namespace Bind.Structures
         {
             if (c == null)
             {
-                throw new ArgumentNullException(nameof(c));
+                throw new ArgumentNullException("c");
             }
-
             if (enums == null)
             {
-                throw new ArgumentNullException(nameof(enums));
+                throw new ArgumentNullException("enums");
             }
 
-            if (!string.IsNullOrEmpty(c.Reference))
+            if (!String.IsNullOrEmpty(c.Reference))
             {
                 // Resolve the referenced Constant. Be careful
                 // to avoid loops in the definitions.
-                var reference = c;
+                Constant reference = c;
                 do
                 {
                     reference =
                         enums.ContainsKey(reference.Reference) &&
-                        enums[reference.Reference].ConstantCollection.ContainsKey(reference.Value)
-                            ? enums[reference.Reference].ConstantCollection[reference.Value]
-                            : null;
+                        enums[reference.Reference].ConstantCollection.ContainsKey(reference.Value) ?
+                        enums[reference.Reference].ConstantCollection[reference.Value] : null;
                 } while (reference != null && reference.Reference != null && reference.Reference != c.Reference);
 
                 // If we haven't managed to locate the reference, do
@@ -148,8 +138,8 @@ namespace Bind.Structures
                 if (reference == null || reference.Reference != null)
                 {
                     reference = enums.Values.Select(e =>
-                            e.ConstantCollection.Values.FirstOrDefault(t =>
-                                t.Reference == null && t.Name == c.Name))
+                        e.ConstantCollection.Values.FirstOrDefault(t =>
+                            t.Reference == null && t.Name == c.Name))
                         .FirstOrDefault(t => t != null);
                 }
 
@@ -160,18 +150,33 @@ namespace Bind.Structures
                     c.Reference = null;
                     return true;
                 }
-
-                Trace.WriteLine($"[Warning] Failed to resolve token: {c}");
-                return false;
+                else
+                {
+                    Trace.WriteLine(String.Format("[Warning] Failed to resolve token: {0}", c));
+                    return false;
+                }
             }
-
             return true;
         }
 
         public override string ToString()
         {
             return
-                $"{Name} = {(Unchecked ? "unchecked" : string.Empty)}((int){(!string.IsNullOrEmpty(Reference) ? Reference + "." : string.Empty)}{Value})";
+                String.Format("{0} = {1}((int){2}{3})",
+                Name,
+                Unchecked ? "unchecked" : String.Empty,
+                !String.IsNullOrEmpty(Reference) ? Reference + "." : String.Empty,
+                Value);
+        }
+
+        public int CompareTo(Constant other)
+        {
+            int ret = Value.CompareTo(other.Value);
+            if (ret == 0)
+            {
+                return Name.CompareTo(other.Name);
+            }
+            return ret;
         }
     }
 }

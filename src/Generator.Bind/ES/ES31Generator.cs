@@ -1,45 +1,35 @@
 ﻿using System.IO;
-using System.Linq;
 using Bind.GL2;
 
 namespace Bind.ES
 {
-    /// <summary>
-    /// Generates API bindings for the OpenGL ES 3.1 API.
-    /// </summary>
+    // Generation implementation for OpenGL ES 3.1
     internal class ES31Generator : Generator
     {
-        /// <inheritdoc/>
-        public override string APIIdentifier => "ES31";
-
-        /// <inheritdoc/>
-        public override string OutputSubfolder => APIIdentifier;
-
-        /// <inheritdoc/>
-        public override string Namespace => $"OpenTK.Graphics.{APIIdentifier}";
-
-        /// <inheritdoc/>
-        public override string SpecificationDocumentationPath => APIIdentifier;
-
-        /// <inheritdoc/>
-        protected override string ProfileName => "gles2";
-
-        /// <inheritdoc/>
-        protected override string Version => "2.0|3.0|3.1";
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ES31Generator"/> class.
-        /// </summary>
-        public ES31Generator()
+        public ES31Generator(Settings settings)
+            : base(settings)
         {
-            var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "GL2", "ES", "3.1");
-            var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
+            Settings.DefaultOutputPath = Path.Combine(
+                Settings.DefaultOutputPath, "../ES31");
+            Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES31";
+            Settings.DefaultImportsFile = "ES31.Core.cs";
+            Settings.DefaultDelegatesFile = "ES31.Delegates.cs";
+            Settings.DefaultEnumsFile = "ES31.Enums.cs";
+            Settings.DefaultWrappersFile = "ES31.cs";
+            Settings.DefaultDocPath = Path.Combine(
+                Settings.DefaultDocPath, "ES31");
 
-            OverrideFiles = new[]
-            {
-                Path.Combine(Program.Arguments.InputPath, "GL2", "overrides.xml")
-            }
-            .Concat(extraOverrides);
+            Settings.OverridesFiles.Add("GL2/overrides.xml");
+            Settings.OverridesFiles.Add("GL2/ES/3.1");
+
+            Profile = "gles2";
+            Version = "2.0|3.0|3.1";
+
+            // For compatibility with OpenTK 1.0 and Xamarin, generate
+            // overloads using the "All" enum in addition to strongly-typed enums.
+            // This can be disabled by passing "-o:-keep_untyped_enums" as a cmdline parameter.
+            Settings.DefaultCompatibility |= Settings.Legacy.KeepUntypedEnums;
+            //Settings.DefaultCompatibility |= Settings.Legacy.UseDllImports;
         }
     }
 }
