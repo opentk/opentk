@@ -110,10 +110,6 @@ namespace Bind
         {
             /// <summary>Default value.</summary>
             None = 0x00,
-            /// <summary>Don't allow unsafe wrappers in the interface.</summary>
-            NoPublicUnsafeFunctions = 0x04,
-            /// <summary>Don't trim the [fdisub]v? endings from functions.</summary>
-            NoTrimFunctionEnding = NoPublicUnsafeFunctions,
             /// <summary>
             /// Don't spearate functions in different namespaces, according to their extension category
             /// (e.g. GL.Arb, GL.Ext etc).
@@ -144,8 +140,7 @@ namespace Bind
             /// for higher versions.
             /// </summary>
             UseWindowsCompatibleGL = 0x8000,
-            Tao = NoPublicUnsafeFunctions |
-                  NoTrimFunctionEnding |
+            Tao =
                   NoSeparateFunctionNamespaces |
                   TurnVoidPointersToIntPtr |
                   NoDropMultipleTokens |

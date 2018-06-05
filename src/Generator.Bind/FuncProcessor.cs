@@ -1139,12 +1139,6 @@ namespace Bind
                         foreach (var wrapper in GetWrapper(wrappers, WrapperTypes.PointerParameter, func))
                         {
                             var p = wrapper.Parameters[i];
-
-                            if (Settings.IsEnabled(Settings.Legacy.NoPublicUnsafeFunctions))
-                            {
-                                p.QualifiedType = "IntPtr";
-                                p.Pointer = 0;
-                            }
                         }
                     }
 

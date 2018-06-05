@@ -584,10 +584,6 @@ namespace Bind
             sb.Append(f.Unsafe ? "unsafe " : "");
             sb.Append(GetDeclarationString(f.ReturnType));
             sb.Append(" ");
-            if ((Settings.Compatibility & Settings.Legacy.NoTrimFunctionEnding) != Settings.Legacy.None)
-            {
-                sb.Append(Settings.FunctionPrefix);
-            }
             sb.Append(!String.IsNullOrEmpty(f.TrimmedName) ? f.TrimmedName : f.Name);
 
             if (f.Parameters.HasGenericParameters)
@@ -674,21 +670,7 @@ namespace Bind
                 }
             }
 
-            if (!override_unsafe_setting && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None))
-            {
-                if (p.Pointer != 0)
-                {
-                    sb.Append("IntPtr");
-                }
-                else
-                {
-                    sb.Append(GetDeclarationString(p as Type));
-                }
-            }
-            else
-            {
-                sb.Append(GetDeclarationString(p as Type));
-            }
+            sb.Append(GetDeclarationString(p as Type));
             if (!String.IsNullOrEmpty(p.Name))
             {
                 sb.Append(" ");
