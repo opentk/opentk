@@ -58,9 +58,9 @@ namespace Bind
 
                 foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathDelete))
                 {
-                    foreach (XPathNavigator node in nav.SelectChildren("function", String.Empty))
+                    foreach (XPathNavigator node in nav.SelectChildren("function", string.Empty))
                     {
-                        delegates.Remove(node.GetAttribute("name", String.Empty));
+                        delegates.Remove(node.GetAttribute("name", string.Empty));
                     }
                 }
                 foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathAdd))
@@ -94,9 +94,9 @@ namespace Bind
                 // Afterwards, read all token/enum overrides from overrides file.
                 foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathDelete))
                 {
-                    foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
+                    foreach (XPathNavigator node in nav.SelectChildren("enum", string.Empty))
                     {
-                        enums.Remove(node.GetAttribute("name", String.Empty));
+                        enums.Remove(node.GetAttribute("name", string.Empty));
                     }
                 }
                 foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathAdd))
@@ -117,7 +117,7 @@ namespace Bind
                 {
                     string line = sr.ReadLine();
 
-                    if (String.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
                     {
                         continue;
                     }
@@ -180,7 +180,7 @@ namespace Bind
                 while (!sr.EndOfStream)
                 {
                     string line = sr.ReadLine();
-                    if (String.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
                     {
                         continue;
                     }
@@ -203,9 +203,9 @@ namespace Bind
             xpathAdd = "/signatures/add";
             xpathDelete = "/signatures/delete";
 
-            if (!String.IsNullOrEmpty(apiname) && !String.IsNullOrEmpty(apiversion))
+            if (!string.IsNullOrEmpty(apiname) && !string.IsNullOrEmpty(apiversion))
             {
-                var match = String.Format(
+                var match = string.Format(
                     "[contains(concat('|', @name, '|'), '|{0}|') and " +
                     "(contains(concat('|', @version, '|'), '|{1}|') or not(boolean(@version)))]",
                     apiname,
@@ -213,9 +213,9 @@ namespace Bind
                 xpathAdd += match;
                 xpathDelete += match;
             }
-            else if (!String.IsNullOrEmpty(apiname))
+            else if (!string.IsNullOrEmpty(apiname))
             {
-                var match = String.Format("[contains(concat('|', @name, '|'), '|{0}|')]", apiname);
+                var match = string.Format("[contains(concat('|', @name, '|'), '|{0}|')]", apiname);
                 xpathAdd += match;
                 xpathDelete += match;
             }
@@ -225,8 +225,8 @@ namespace Bind
         {
             var version =
                 specs.CreateNavigator().SelectSingleNode("/signatures")
-                .GetAttribute("version", String.Empty);
-            if (String.IsNullOrEmpty(version))
+                .GetAttribute("version", string.Empty);
+            if (string.IsNullOrEmpty(version))
             {
                 version = "1";
             }
@@ -239,16 +239,16 @@ namespace Bind
             var extensions = new List<string>();
 
             string path = "function";
-            foreach (XPathNavigator node in specs.SelectChildren(path, String.Empty))
+            foreach (XPathNavigator node in specs.SelectChildren(path, string.Empty))
             {
-                var name = node.GetAttribute("name", String.Empty).Trim();
-                var version = node.GetAttribute("version", String.Empty).Trim();
+                var name = node.GetAttribute("name", string.Empty).Trim();
+                var version = node.GetAttribute("version", string.Empty).Trim();
 
                 // Ignore functions that have a higher version number than
                 // our current apiversion. Extensions do not have a version,
                 // so we add them anyway (which is desirable).
-                if (!String.IsNullOrEmpty(version) && !String.IsNullOrEmpty(apiversion) &&
-                    Decimal.Parse(version) > Decimal.Parse(apiversion))
+                if (!string.IsNullOrEmpty(version) && !string.IsNullOrEmpty(apiversion) &&
+                    decimal.Parse(version) > decimal.Parse(apiversion))
                 {
                     continue;
                 }
@@ -258,12 +258,12 @@ namespace Bind
                 {
                     Name = name,
                     EntryPoint = name,
-                    Version = node.GetAttribute("version", String.Empty).Trim(),
-                    Category = node.GetAttribute("category", String.Empty).Trim(),
-                    DeprecatedVersion = node.GetAttribute("deprecated", String.Empty).Trim(),
-                    Deprecated = !String.IsNullOrEmpty(node.GetAttribute("deprecated", String.Empty)),
-                    Extension = node.GetAttribute("extension", String.Empty).Trim() ?? "Core",
-                    Obsolete = node.GetAttribute("obsolete", String.Empty).Trim()
+                    Version = node.GetAttribute("version", string.Empty).Trim(),
+                    Category = node.GetAttribute("category", string.Empty).Trim(),
+                    DeprecatedVersion = node.GetAttribute("deprecated", string.Empty).Trim(),
+                    Deprecated = !string.IsNullOrEmpty(node.GetAttribute("deprecated", string.Empty)),
+                    Extension = node.GetAttribute("extension", string.Empty).Trim() ?? "Core",
+                    Obsolete = node.GetAttribute("obsolete", string.Empty).Trim()
                 };
                 if (!extensions.Contains(d.Extension))
                 {
@@ -275,23 +275,23 @@ namespace Bind
                     switch (param.Name)
                     {
                         case "returns":
-                            d.ReturnType.CurrentType = param.GetAttribute("type", String.Empty).Trim();
+                            d.ReturnType.CurrentType = param.GetAttribute("type", string.Empty).Trim();
                             break;
 
                         case "param":
                             Parameter p = new Parameter();
-                            p.CurrentType = param.GetAttribute("type", String.Empty).Trim();
-                            p.Name = param.GetAttribute("name", String.Empty).Trim();
+                            p.CurrentType = param.GetAttribute("type", string.Empty).Trim();
+                            p.Name = param.GetAttribute("name", string.Empty).Trim();
 
-                            p.ComputeSize = param.GetAttribute("count", String.Empty).Trim();
+                            p.ComputeSize = param.GetAttribute("count", string.Empty).Trim();
 
                             int elementCount;
-                            if (Int32.TryParse(p.ComputeSize, out elementCount))
+                            if (int.TryParse(p.ComputeSize, out elementCount))
                             {
                                 p.ElementCount = elementCount;
                             }
 
-                            p.Flow = Parameter.GetFlowDirection(param.GetAttribute("flow", String.Empty).Trim());
+                            p.Flow = Parameter.GetFlowDirection(param.GetAttribute("flow", string.Empty).Trim());
 
                             d.Parameters.Add(p);
                             break;
@@ -314,19 +314,19 @@ namespace Bind
                 var reuseList = new List<KeyValuePair<Enum, string>>();
 
                 // First pass: collect all available tokens and enums
-                foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
+                foreach (XPathNavigator node in nav.SelectChildren("enum", string.Empty))
                 {
                     Enum e = new Enum()
                     {
-                        Name = node.GetAttribute("name", String.Empty).Trim(),
-                        Type = node.GetAttribute("type", String.Empty).Trim()
+                        Name = node.GetAttribute("name", string.Empty).Trim(),
+                        Type = node.GetAttribute("type", string.Empty).Trim()
                     };
 
-                    e.Obsolete = node.GetAttribute("obsolete", String.Empty).Trim();
+                    e.Obsolete = node.GetAttribute("obsolete", string.Empty).Trim();
 
-                    if (String.IsNullOrEmpty(e.Name))
+                    if (string.IsNullOrEmpty(e.Name))
                     {
-                        throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node));
+                        throw new InvalidOperationException(string.Format("Empty name for enum element {0}", node));
                     }
 
                     // It seems that all flag collections contain "Mask" in their names.
@@ -342,22 +342,22 @@ namespace Bind
                             case "token":
                                 c = new Constant
                                 {
-                                    Name = param.GetAttribute("name", String.Empty).Trim(),
-                                    Value = param.GetAttribute("value", String.Empty).Trim()
+                                    Name = param.GetAttribute("name", string.Empty).Trim(),
+                                    Value = param.GetAttribute("value", string.Empty).Trim()
                                 };
                                 break;
 
                             case "use":
                                 c = new Constant
                                 {
-                                    Name = param.GetAttribute("token", String.Empty).Trim(),
-                                    Reference = param.GetAttribute("enum", String.Empty).Trim(),
-                                    Value = param.GetAttribute("token", String.Empty).Trim(),
+                                    Name = param.GetAttribute("token", string.Empty).Trim(),
+                                    Reference = param.GetAttribute("enum", string.Empty).Trim(),
+                                    Value = param.GetAttribute("token", string.Empty).Trim(),
                                 };
                                 break;
 
                             case "reuse":
-                                var reuseEnum = param.GetAttribute("enum", String.Empty).Trim();
+                                var reuseEnum = param.GetAttribute("enum", string.Empty).Trim();
                                 reuseList.Add(new KeyValuePair<Enum, string>(e, reuseEnum));
                                 break;
 

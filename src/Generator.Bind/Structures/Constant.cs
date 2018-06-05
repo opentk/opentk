@@ -30,7 +30,7 @@ namespace Bind.Structures
             get { return _name; }
             set
             {
-                if (String.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value))
                 {
                     throw new ArgumentNullException("value");
                 }
@@ -57,7 +57,7 @@ namespace Bind.Structures
             }
             set
             {
-                if (String.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value))
                 {
                     throw new ArgumentNullException("value");
                 }
@@ -79,9 +79,9 @@ namespace Bind.Structures
                 // Check if the value is a number larger than Int32.MaxValue.
                 ulong number;
                 string test = Value;
-                return UInt64.TryParse(test.ToLower().Replace("0x", String.Empty),
+                return ulong.TryParse(test.ToLower().Replace("0x", string.Empty),
                     NumberStyles.AllowHexSpecifier, null, out number) &&
-                    number > Int32.MaxValue;
+                    number > int.MaxValue;
             }
         }
 
@@ -120,7 +120,7 @@ namespace Bind.Structures
                 throw new ArgumentNullException("enums");
             }
 
-            if (!String.IsNullOrEmpty(c.Reference))
+            if (!string.IsNullOrEmpty(c.Reference))
             {
                 // Resolve the referenced Constant. Be careful
                 // to avoid loops in the definitions.
@@ -151,7 +151,7 @@ namespace Bind.Structures
                     return true;
                 }
 
-                Trace.WriteLine(String.Format("[Warning] Failed to resolve token: {0}", c));
+                Trace.WriteLine(string.Format("[Warning] Failed to resolve token: {0}", c));
                 return false;
             }
             return true;
@@ -160,10 +160,10 @@ namespace Bind.Structures
         public override string ToString()
         {
             return
-                String.Format("{0} = {1}((int){2}{3})",
+                string.Format("{0} = {1}((int){2}{3})",
                 Name,
-                Unchecked ? "unchecked" : String.Empty,
-                !String.IsNullOrEmpty(Reference) ? Reference + "." : String.Empty,
+                Unchecked ? "unchecked" : string.Empty,
+                !string.IsNullOrEmpty(Reference) ? Reference + "." : string.Empty,
                 Value);
         }
 

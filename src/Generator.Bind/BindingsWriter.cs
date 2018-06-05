@@ -199,7 +199,7 @@ namespace Bind
                 {
                     if (key != "Core")
                     {
-                        if (!Char.IsDigit(key[0]))
+                        if (!char.IsDigit(key[0]))
                         {
                             sw.WriteLine("public static partial class {0}", key);
                         }

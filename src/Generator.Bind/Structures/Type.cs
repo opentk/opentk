@@ -8,7 +8,7 @@ namespace Bind.Structures
 {
     internal class Type : IComparable<Type>, IEquatable<Type>
     {
-        private string _currentQualifier = String.Empty;
+        private string _currentQualifier = string.Empty;
 
         public Type()
         {
@@ -36,20 +36,20 @@ namespace Bind.Structures
             set { PreviousQualifier = CurrentQualifier; _currentQualifier = value; }
         }
 
-        private string PreviousQualifier { get; set; } = String.Empty;
+        private string PreviousQualifier { get; set; } = string.Empty;
 
         public string QualifiedType
         {
             get
             {
                 return
-                    !String.IsNullOrEmpty(CurrentQualifier) ?
-                        String.Format("{0}.{1}", CurrentQualifier, CurrentType) :
+                    !string.IsNullOrEmpty(CurrentQualifier) ?
+                        string.Format("{0}.{1}", CurrentQualifier, CurrentType) :
                         CurrentType;
             }
             set
             {
-                if (String.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value))
                 {
                     throw new ArgumentNullException();
                 }
@@ -63,7 +63,7 @@ namespace Bind.Structures
                 else
                 {
                     CurrentType = value;
-                    CurrentQualifier = String.Empty;
+                    CurrentQualifier = string.Empty;
                 }
             }
         }
@@ -80,16 +80,16 @@ namespace Bind.Structures
             }
             set
             {
-                if (String.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value))
                 {
                     throw new ArgumentException();
                 }
 
-                if (!String.IsNullOrEmpty(_type))
+                if (!string.IsNullOrEmpty(_type))
                 {
                     PreviousType = _type;
                 }
-                if (!String.IsNullOrEmpty(value))
+                if (!string.IsNullOrEmpty(value))
                 {
                     _type = value.Trim();
                 }
@@ -218,7 +218,7 @@ namespace Bind.Structures
         // Only used for debugging.
         public override string ToString()
         {
-            return String.Format("{0}{1}{2}",
+            return string.Format("{0}{1}{2}",
                 CurrentType,
                 PointerLevels[Pointer],
                 ArrayLevels[Array]);

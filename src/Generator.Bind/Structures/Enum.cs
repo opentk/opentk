@@ -32,7 +32,7 @@ namespace Bind.Structures
         // Typically 'long' or 'int'. Default is 'int'.
         public string Type
         {
-            get { return String.IsNullOrEmpty(_type) ? "int" : _type; }
+            get { return string.IsNullOrEmpty(_type) ? "int" : _type; }
             set { _type = value; }
         }
 
@@ -59,7 +59,7 @@ namespace Bind.Structures
         // Use only for debugging, not for code generation.
         public override string ToString()
         {
-            return String.Format("enum {0} : {1} {{ {2} }}",
+            return string.Format("enum {0} : {1} {{ {2} }}",
                 Name,
                 Type,
                 ConstantCollection);
@@ -71,7 +71,7 @@ namespace Bind.Structures
         }
 
         public string Obsolete { get; set; }
-        public bool IsObsolete { get { return !String.IsNullOrEmpty(Obsolete); } }
+        public bool IsObsolete { get { return !string.IsNullOrEmpty(Obsolete); } }
 
         public bool CLSCompliant { get; set; }
     }
@@ -106,12 +106,12 @@ namespace Bind.Structures
         // Prefer the empty string over the non-empty.
         private int PreferEmpty(string ext1, string ext2)
         {
-            if (String.IsNullOrEmpty(ext1) && !String.IsNullOrEmpty(ext2))
+            if (string.IsNullOrEmpty(ext1) && !string.IsNullOrEmpty(ext2))
             {
                 return -1;
             }
 
-            if (String.IsNullOrEmpty(ext2) && !String.IsNullOrEmpty(ext1))
+            if (string.IsNullOrEmpty(ext2) && !string.IsNullOrEmpty(ext1))
             {
                 return 1;
             }

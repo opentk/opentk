@@ -129,7 +129,7 @@ namespace Bind
                 _extensionNames.Sort((a, b) => b.Length.CompareTo(a.Length));
 
                 Extensions = new Regex(
-                    String.Join("|", _extensionNames.ToArray()),
+                    string.Join("|", _extensionNames.ToArray()),
                     RegexOptions.Compiled);
 
                 var acronyms = new[]
@@ -144,7 +144,7 @@ namespace Bind
 
                 var acronymNames = extensions.Concat(acronyms).ToList();
                 acronymNames.Sort((a, b) => b.Length.CompareTo(a.Length));
-                Acronyms = new Regex(String.Join("|", acronymNames.ToArray()), RegexOptions.Compiled);
+                Acronyms = new Regex(string.Join("|", acronymNames.ToArray()), RegexOptions.Compiled);
             }
         }
 
@@ -224,7 +224,7 @@ namespace Bind
                 // Tried to add a constant that already exists. If one constant
                 // is like: 'Foo = 0x5' and the other like: 'Foo = Bar.Foo', then
                 // keep the first one.
-                if (!String.IsNullOrEmpty(s.ConstantCollection[t.Name].Reference))
+                if (!string.IsNullOrEmpty(s.ConstantCollection[t.Name].Reference))
                 {
                     s.ConstantCollection[t.Name] = t;
                 }
@@ -252,7 +252,7 @@ namespace Bind
                 return ext;
             }
 
-            return String.Empty;
+            return string.Empty;
         }
     }
 }
