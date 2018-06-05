@@ -110,8 +110,6 @@ namespace Bind
         {
             /// <summary>Default value.</summary>
             None = 0x00,
-            /// <summary>Disables ErrorHelper generation.</summary>
-            NoDebugHelpers = 0x800,
             /// <summary>Generate both typed and untyped ("All") signatures for enum parameters.</summary>
             KeepUntypedEnums = 0x1000,
             /// <summary>Marks deprecated functions as [Obsolete]</summary>
@@ -125,8 +123,6 @@ namespace Bind
             /// for higher versions.
             /// </summary>
             UseWindowsCompatibleGL = 0x8000,
-            Tao =
-                  NoDebugHelpers,
             /*GenerateAllPermutations,*/
         }
 

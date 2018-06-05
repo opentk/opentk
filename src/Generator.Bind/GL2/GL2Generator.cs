@@ -34,16 +34,6 @@ namespace Bind.GL2
         public GL2Generator(Settings settings)
             : base(settings)
         {
-            if (Settings.Compatibility == Settings.Legacy.Tao)
-            {
-                Settings.OutputNamespace = "Tao.OpenGl";
-                Settings.OutputClass = "Gl";
-            }
-            else
-            {
-                // Defaults
-            }
-
             Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
             Settings.DefaultImportsFile = "GLCore.cs";
             Settings.DefaultDelegatesFile = "GLDelegates.cs";

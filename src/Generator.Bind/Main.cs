@@ -118,7 +118,6 @@ namespace Bind
                             var settings = Settings.Legacy.None;
                             switch (val)
                             {
-                                case "tao": settings |= Settings.Legacy.Tao; break;
                                 case "keep_untyped_enums": settings |= Settings.Legacy.KeepUntypedEnums; break;
                             }
 

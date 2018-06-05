@@ -915,11 +915,6 @@ namespace Bind
         {
             if (!type.CLSCompliant)
             {
-                if (type.Pointer != 0 && Settings.Compatibility == Settings.Legacy.Tao)
-                {
-                    return "IntPtr";
-                }
-
                 switch (type.CurrentType)
                 {
                     case "UInt16":
