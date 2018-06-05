@@ -1,0 +1,51 @@
+﻿using System.Runtime.InteropServices;
+
+namespace OpenTK.NT.Native
+{
+    /// <summary>
+    /// Contains information about the state of the mouse.
+    /// </summary>
+    [StructLayout(LayoutKind.Explicit)]
+    public struct RawMouse
+    {
+        /// <summary>
+        /// Mouse state. This member can be any reasonable combination of the following.
+        /// MOUSE_ATTRIBUTES_CHANGED
+        /// Mouse attributes changed; application needs to query the mouse attributes.
+        /// MOUSE_MOVE_RELATIVE
+        /// Mouse movement data is relative to the last mouse position.
+        /// MOUSE_MOVE_ABSOLUTE
+        /// Mouse movement data is based on absolute position.
+        /// MOUSE_VIRTUAL_DESKTOP
+        /// Mouse coordinates are mapped to the virtual desktop (for a multiple monitor system).
+        /// </summary>
+        [FieldOffset(0)] public RawMouseFlags Flags; // USHORT in winuser.h, but only INT works -- USHORT returns 0.
+
+        [FieldOffset(4)] public RawInputMouseState ButtonFlags;
+
+        /// <summary>
+        /// If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed value that specifies the wheel delta.
+        /// </summary>
+        [FieldOffset(6)] public ushort ButtonData;
+
+        /// <summary>
+        /// Raw state of the mouse buttons.
+        /// </summary>
+        [FieldOffset(8)] public uint RawButtons;
+
+        /// <summary>
+        /// Motion in the X direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
+        /// </summary>
+        [FieldOffset(12)] public int LastX;
+
+        /// <summary>
+        /// Motion in the Y direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
+        /// </summary>
+        [FieldOffset(16)] public int LastY;
+
+        /// <summary>
+        /// Device-specific additional information for the event.
+        /// </summary>
+        [FieldOffset(20)] public uint ExtraInformation;
+    }
+}
