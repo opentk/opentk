@@ -592,8 +592,8 @@ src/OpenTK/Graphics/ES31/ES31.cs
 src/OpenTK/Graphics/ES31/ES31Enums.cs
 src/OpenTK/Graphics/OpenGL/GL.cs
 src/OpenTK/Graphics/OpenGL/GLEnums.cs
-src/OpenTK/Graphics/OpenGL4/GL4.cs
-src/OpenTK/Graphics/OpenGL4/GL4Enums.cs
+#src/OpenTK/Graphics/OpenGL4/GL4.cs
+#src/OpenTK/Graphics/OpenGL4/GL4Enums.cs
 
 ### OpenTK AssemblyInfo files ###
 **/AssemblyInfo.cs
