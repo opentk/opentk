@@ -207,11 +207,6 @@ namespace Bind
                         continue;
                     }
 
-                    if (((Settings.Compatibility & Settings.Legacy.NoBoolParameters) != Settings.Legacy.None) && words[1] == "bool")
-                    {
-                        words[1] = "Int32";
-                    }
-
                     CSTypes.Add(words[0], words[1]);
                 }
 

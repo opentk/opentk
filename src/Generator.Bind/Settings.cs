@@ -129,8 +129,6 @@ namespace Bind
             TurnVoidPointersToIntPtr = 0x20,
             /// <summary>Generate all possible permutations for ref/array/pointer parameters.</summary>
             GenerateAllPermutations = 0x40,
-            /// <summary>Turn GLboolean to int (Boolean enum), not bool.</summary>
-            NoBoolParameters = 0x100,
             /// <summary>Keep all enum tokens, even if same value (e.g. FooARB, FooEXT and FooSGI).</summary>
             NoDropMultipleTokens = 0x200,
             /// <summary>Disables ErrorHelper generation.</summary>
@@ -153,7 +151,6 @@ namespace Bind
                   NoTrimFunctionPrefix |
                   NoSeparateFunctionNamespaces |
                   TurnVoidPointersToIntPtr |
-                  NoBoolParameters |
                   NoDropMultipleTokens |
                   NoDebugHelpers,
             /*GenerateAllPermutations,*/
