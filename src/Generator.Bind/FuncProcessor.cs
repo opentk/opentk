@@ -295,18 +295,10 @@ namespace Bind
                 {
                     type.IsEnum = true;
 
-                    // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
-                    // Note: for backwards compatibility we use "category" only for the gl api.
-                    // glcore, gles1 and gles2 use the All enum instead.
-                    if (apiname == "gl" && enums.ContainsKey(category))
+                    if (enums.ContainsKey(category))
                     {
                         type.QualifiedType = String.Format("{0}{1}{2}", Settings.EnumsOutput,
                             Settings.NamespaceSeparator, enum_processor.TranslateEnumName(category));
-                    }
-                    else
-                    {
-                        type.QualifiedType = String.Format("{0}{1}{2}", Settings.EnumsOutput,
-                            Settings.NamespaceSeparator, Settings.CompleteEnumName);
                     }
                 }
                 else
@@ -588,8 +580,11 @@ namespace Bind
 
             if (d.ReturnType.CurrentType.Contains("GLenum"))
             {
-                d.ReturnType.QualifiedType = String.Format("{0}{1}{2}",
-                    Settings.EnumsOutput, Settings.NamespaceSeparator, Settings.CompleteEnumName);
+                // May need another go at this
+                //d.ReturnType.QualifiedType = String.Format("{0}{1}{2}",
+                    //Settings.EnumsOutput, Settings.NamespaceSeparator, Settings.CompleteEnumName);
+
+                throw new NotImplementedException();
             }
 
             if (d.ReturnType.CurrentType.ToLower().Contains("bool"))
@@ -763,30 +758,6 @@ namespace Bind
                 wrappers.AddRange(CreateNormalWrappers(d, enums));
             }
 
-            if ((Settings.Compatibility & Settings.Legacy.KeepUntypedEnums) != 0)
-            {
-                // Generate an "All" overload for every function that takes strongly-typed enums
-                var overloads = new List<Function>();
-                foreach (var list in wrappers.Values)
-                {
-                    overloads.AddRange(list.Where(f => f.Parameters.Any(p => p.IsEnum)).Select(f =>
-                    {
-                        var fnew = new Function(f);
-                        fnew.Obsolete = "Use strongly-typed overload instead";
-                        // Note that we can only overload parameters, not the return type
-                        foreach (var p in fnew.Parameters)
-                        {
-                            if (p.IsEnum)
-                            {
-                                p.CurrentType = Settings.CompleteEnumName;
-                            }
-                        }
-
-                        return fnew;
-                    }));
-                }
-                wrappers.AddRange(overloads);
-            }
             return wrappers;
         }
 

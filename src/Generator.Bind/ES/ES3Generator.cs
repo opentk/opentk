@@ -23,12 +23,6 @@ namespace Bind.ES
 
             Profile = "gles2"; // The 3.0 spec reuses the gles2 apiname
             Version = "2.0|3.0";
-
-            // For compatibility with OpenTK 1.0 and Xamarin, generate
-            // overloads using the "All" enum in addition to strongly-typed enums.
-            // This can be disabled by passing "-o:-keep_untyped_enums" as a cmdline parameter.
-            Settings.DefaultCompatibility |= Settings.Legacy.KeepUntypedEnums;
-            //Settings.DefaultCompatibility |= Settings.Legacy.UseDllImports;
         }
     }
 }

@@ -101,17 +101,11 @@ namespace Bind
         public string DelegatesClass = "Delegates";
         public string ImportsClass = "Core";
 
-        /// <summary>
-        /// The name of the C# enum which holds every single OpenGL enum (for compatibility purposes).
-        /// </summary>
-        public string CompleteEnumName = "All";
         [Flags]
         public enum Legacy
         {
             /// <summary>Default value.</summary>
             None = 0x00,
-            /// <summary>Generate both typed and untyped ("All") signatures for enum parameters.</summary>
-            KeepUntypedEnums = 0x1000,
             /// <summary>Marks deprecated functions as [Obsolete]</summary>
             AddDeprecationWarnings = 0x2000,
             /// <summary>Use DllImport declaration for core functions (do not generate entry point slots)</summary>

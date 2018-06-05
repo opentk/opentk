@@ -104,34 +104,6 @@ namespace Bind
                             Settings.GLClass = val;
                             break;
                         }
-                        case "legacy":
-                        case "o":
-                        case "option":
-                        {
-                            val = val.ToLower();
-                            bool enable = !opt.StartsWith("-");
-                            if (val.StartsWith("+") || val.StartsWith("-"))
-                            {
-                                val = val.Substring(1);
-                            }
-
-                            var settings = Settings.Legacy.None;
-                            switch (val)
-                            {
-                                case "keep_untyped_enums": settings |= Settings.Legacy.KeepUntypedEnums; break;
-                            }
-
-                            if (enable)
-                            {
-                                Settings.Compatibility |= settings;
-                            }
-                            else
-                            {
-                                Settings.Compatibility &= ~settings;
-                            }
-
-                            break;
-                        }
                         default:
                         {
                             throw new ArgumentException

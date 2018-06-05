@@ -27,12 +27,6 @@ namespace Bind.ES
             // Todo: add support for common and light profiles.
             Profile = "gles1";
             // no explicit version means both 1.0 and 1.1 versions
-
-            // For compatibility with OpenTK 1.0 and Xamarin, generate
-            // overloads using the "All" enum in addition to strongly-typed enums.
-            // This can be disabled by passing "-o:-keep_untyped_enums" as a cmdline parameter.
-            Settings.DefaultCompatibility |= Settings.Legacy.KeepUntypedEnums;
-            //Settings.DefaultCompatibility |= Settings.Legacy.UseDllImports;
         }
     }
 }

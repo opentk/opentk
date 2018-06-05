@@ -324,7 +324,6 @@ namespace Bind
         private EnumCollection ReadEnums(XPathNavigator nav)
         {
             EnumCollection enums = new EnumCollection();
-            Enum all = new Enum() { Name = Settings.CompleteEnumName };
 
             if (nav != null)
             {
@@ -384,7 +383,6 @@ namespace Bind
 
                         if (c != null)
                         {
-                            Utilities.Merge(all, c);
                             try
                             {
                                 if (!e.ConstantCollection.ContainsKey(c.Name))
@@ -451,7 +449,6 @@ restart:
                 }
             }
 
-            Utilities.Merge(enums, all);
             return enums;
         }
     }
