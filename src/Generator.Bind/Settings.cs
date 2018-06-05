@@ -83,14 +83,7 @@ namespace Bind
         {
             get
             {
-                if ((Compatibility & Legacy.NestedEnums) != Legacy.None)
-                {
-                    return OutputNamespace + NamespaceSeparator + OutputClass + NamespaceSeparator + NestedEnumsClass;
-                }
-                else
-                {
-                    return String.IsNullOrEmpty(EnumsNamespace) ? OutputNamespace : OutputNamespace + NamespaceSeparator + EnumsNamespace;
-                }
+                return String.IsNullOrEmpty(EnumsNamespace) ? OutputNamespace : OutputNamespace + NamespaceSeparator + EnumsNamespace;
             }
         }
 
@@ -98,14 +91,7 @@ namespace Bind
         {
             get
             {
-                if ((Compatibility & Legacy.NestedEnums) != Legacy.None)
-                {
-                    return OutputNamespace + NamespaceSeparator + GLClass + NamespaceSeparator + NestedEnumsClass;
-                }
-                else
-                {
-                    return OutputNamespace + NamespaceSeparator + EnumsNamespace;
-                }
+                return OutputNamespace + NamespaceSeparator + EnumsNamespace;
             }
         }
 
@@ -143,8 +129,6 @@ namespace Bind
             TurnVoidPointersToIntPtr = 0x20,
             /// <summary>Generate all possible permutations for ref/array/pointer parameters.</summary>
             GenerateAllPermutations = 0x40,
-            /// <summary>Nest enums inside the GL class.</summary>
-            NestedEnums = 0x80,
             /// <summary>Turn GLboolean to int (Boolean enum), not bool.</summary>
             NoBoolParameters = 0x100,
             /// <summary>Keep all enum tokens, even if same value (e.g. FooARB, FooEXT and FooSGI).</summary>
@@ -169,7 +153,6 @@ namespace Bind
                   NoTrimFunctionPrefix |
                   NoSeparateFunctionNamespaces |
                   TurnVoidPointersToIntPtr |
-                  NestedEnums |
                   NoBoolParameters |
                   NoDropMultipleTokens |
                   NoDebugHelpers,

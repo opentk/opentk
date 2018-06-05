@@ -121,7 +121,6 @@ namespace Bind
                                 case "tao": settings |= Settings.Legacy.Tao; break;
                                 case "safe": settings |= Settings.Legacy.NoPublicUnsafeFunctions; break;
                                 case "permutations": settings |= Settings.Legacy.GenerateAllPermutations; break;
-                                case "enums_in_class": settings |= Settings.Legacy.NestedEnums; break;
                                 case "keep_untyped_enums": settings |= Settings.Legacy.KeepUntypedEnums; break;
                             }
 

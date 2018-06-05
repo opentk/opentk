@@ -80,29 +80,13 @@ namespace Bind
                 sw.WriteLine("using System;");
                 sw.WriteLine();
 
-                if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
-                {
-                    sw.WriteLine("namespace {0}", Settings.OutputNamespace);
-                    sw.WriteLine("{");
-                    sw.Indent();
-                    sw.WriteLine("static partial class {0}", Settings.OutputClass);
-                }
-                else
-                {
-                    sw.WriteLine("namespace {0}", Settings.EnumsOutput);
-                }
+                sw.WriteLine("namespace {0}", Settings.EnumsOutput);
 
                 sw.WriteLine("{");
 
                 sw.Indent();
                 WriteEnums(sw, enums, wrappers);
                 sw.Unindent();
-
-                if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
-                {
-                    sw.WriteLine("}");
-                    sw.Unindent();
-                }
 
                 sw.WriteLine("}");
             }
@@ -441,21 +425,7 @@ namespace Bind
             //sw.WriteLine("#pragma warning disable 1591");   // Missing doc comments
             //sw.WriteLine();
 
-            if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
-            {
-                Trace.WriteLine(String.Format("Writing enums to:\t{0}.{1}.{2}", Settings.OutputNamespace, Settings.OutputClass, Settings.NestedEnumsClass));
-            }
-            else
-            {
-                Trace.WriteLine(String.Format("Writing enums to:\t{0}", Settings.EnumsOutput));
-            }
-
-            if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None && !String.IsNullOrEmpty(Settings.NestedEnumsClass))
-            {
-                sw.WriteLine("public class Enums");
-                sw.WriteLine("{");
-                sw.Indent();
-            }
+            Trace.WriteLine(String.Format("Writing enums to:\t{0}", Settings.EnumsOutput));
 
             // Build a dictionary of which functions use which enums
             var enum_counts = new Dictionary<Enum, List<Function>>();
@@ -514,13 +484,6 @@ namespace Bind
                 sw.Unindent();
                 sw.WriteLine("}");
                 sw.WriteLine();
-            }
-
-            if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None &&
-                !String.IsNullOrEmpty(Settings.NestedEnumsClass))
-            {
-                sw.Unindent();
-                sw.WriteLine("}");
             }
         }
 
