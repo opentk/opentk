@@ -124,8 +124,6 @@ namespace Bind
         {
             /// <summary>Default value.</summary>
             None = 0x00,
-            /// <summary>Leave enums as plain const ints.</summary>
-            ConstIntEnums = 0x01,
             /// <summary>Leave enums in the default STRANGE_capitalization.ALL_CAPS form.</summary>
             NoAdvancedEnumProcessing = 0x02,
             /// <summary>Don't allow unsafe wrappers in the interface.</summary>
@@ -170,8 +168,7 @@ namespace Bind
             /// for higher versions.
             /// </summary>
             UseWindowsCompatibleGL = 0x8000,
-            Tao = ConstIntEnums |
-                  NoAdvancedEnumProcessing |
+            Tao = NoAdvancedEnumProcessing |
                   NoPublicUnsafeFunctions |
                   NoTrimFunctionEnding |
                   NoTrimFunctionPrefix |

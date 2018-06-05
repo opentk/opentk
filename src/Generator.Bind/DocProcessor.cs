@@ -76,7 +76,7 @@ namespace Bind
                     file = Settings.FunctionPrefix + f.TrimmedName.TrimEnd(numbers) + ".xml";
                 }
 
-                docs = 
+                docs =
                     (DocumentationFiles.ContainsKey(file) ? ProcessFile(DocumentationFiles[file], processor) : null) ??
                     new Documentation
                     {
@@ -165,7 +165,7 @@ namespace Bind
                 throw new ArgumentNullException();
             }
 
-            var no_const_processing = Settings.Legacy.NoAdvancedEnumProcessing | Settings.Legacy.ConstIntEnums;
+            var no_const_processing = Settings.Legacy.NoAdvancedEnumProcessing;
             if (!Generator.Settings.IsEnabled(no_const_processing))
             {
                 // Translate all GL_FOO_BAR constants according to EnumProcessor

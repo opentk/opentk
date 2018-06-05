@@ -283,19 +283,9 @@ namespace Bind
             {
                 type.IsEnum = true;
 
-                if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
-                {
-                    type.QualifiedType = "int";
-                }
-                else
-                {
-                    // Some functions and enums have the same names.
-                    // Make sure we reference the enums rather than the functions.
-                    if (normal)
-                    {
-                        type.QualifiedType = String.Format("{0}.{1}", Settings.EnumsOutput, @enum.Name);
-                    }
-                }
+                // Some functions and enums have the same names.
+                // Make sure we reference the enums rather than the functions.
+                type.QualifiedType = String.Format("{0}.{1}", Settings.EnumsOutput, @enum.Name);
             }
             else if (Generator.GLTypes.TryGetValue(type.CurrentType, out s))
             {
@@ -305,25 +295,18 @@ namespace Bind
                 {
                     type.IsEnum = true;
 
-                    if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
+                    // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
+                    // Note: for backwards compatibility we use "category" only for the gl api.
+                    // glcore, gles1 and gles2 use the All enum instead.
+                    if (apiname == "gl" && enums.ContainsKey(category))
                     {
-                        type.QualifiedType = "int";
+                        type.QualifiedType = String.Format("{0}{1}{2}", Settings.EnumsOutput,
+                            Settings.NamespaceSeparator, enum_processor.TranslateEnumName(category));
                     }
                     else
                     {
-                        // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
-                        // Note: for backwards compatibility we use "category" only for the gl api.
-                        // glcore, gles1 and gles2 use the All enum instead.
-                        if (apiname == "gl" && enums.ContainsKey(category))
-                        {
-                            type.QualifiedType = String.Format("{0}{1}{2}", Settings.EnumsOutput,
-                                Settings.NamespaceSeparator, enum_processor.TranslateEnumName(category));
-                        }
-                        else
-                        {
-                            type.QualifiedType = String.Format("{0}{1}{2}", Settings.EnumsOutput,
-                                Settings.NamespaceSeparator, Settings.CompleteEnumName);
-                        }
+                        type.QualifiedType = String.Format("{0}{1}{2}", Settings.EnumsOutput,
+                            Settings.NamespaceSeparator, Settings.CompleteEnumName);
                     }
                 }
                 else
@@ -605,15 +588,8 @@ namespace Bind
 
             if (d.ReturnType.CurrentType.Contains("GLenum"))
             {
-                if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
-                {
-                    d.ReturnType.QualifiedType = String.Format("{0}{1}{2}",
-                        Settings.EnumsOutput, Settings.NamespaceSeparator, Settings.CompleteEnumName);
-                }
-                else
-                {
-                    d.ReturnType.QualifiedType = "int";
-                }
+                d.ReturnType.QualifiedType = String.Format("{0}{1}{2}",
+                    Settings.EnumsOutput, Settings.NamespaceSeparator, Settings.CompleteEnumName);
             }
 
             if (d.ReturnType.CurrentType.ToLower().Contains("bool"))

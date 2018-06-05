@@ -456,103 +456,80 @@ namespace Bind
                 Trace.WriteLine(String.Format("Writing enums to:\t{0}", Settings.EnumsOutput));
             }
 
-            if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
+            if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None && !String.IsNullOrEmpty(Settings.NestedEnumsClass))
             {
-                if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None &&
-                    !String.IsNullOrEmpty(Settings.NestedEnumsClass))
-                {
-                    sw.WriteLine("public class Enums");
-                    sw.WriteLine("{");
-                    sw.Indent();
-                }
+                sw.WriteLine("public class Enums");
+                sw.WriteLine("{");
+                sw.Indent();
+            }
 
-                // Build a dictionary of which functions use which enums
-                var enum_counts = new Dictionary<Enum, List<Function>>();
-                foreach (var e in enums.Values)
+            // Build a dictionary of which functions use which enums
+            var enum_counts = new Dictionary<Enum, List<Function>>();
+            foreach (var e in enums.Values)
+            {
+                // Initialize the dictionary
+                enum_counts.Add(e, new List<Function>());
+            }
+            foreach (var wrapper in wrappers.Values.SelectMany(w => w))
+            {
+                // Add every function to every enum parameter it references
+                foreach (var parameter in wrapper.Parameters.Where(p => p.IsEnum))
                 {
-                    // Initialize the dictionary
-                    enum_counts.Add(e, new List<Function>());
-                }
-                foreach (var wrapper in wrappers.Values.SelectMany(w => w))
-                {
-                    // Add every function to every enum parameter it references
-                    foreach (var parameter in wrapper.Parameters.Where(p => p.IsEnum))
-                    {
-                        var e = enums[parameter.CurrentType];
-                        var list = enum_counts[e];
-                        list.Add(wrapper);
-                    }
-                }
-
-                foreach (Enum @enum in enums.Values)
-                {
-                    if (!Settings.IsEnabled(Settings.Legacy.NoDocumentation))
-                    {
-                        // Document which functions use this enum.
-                        var functions = enum_counts[@enum]
-                            .Select(w => Settings.GLClass + (w.Extension != "Core" ? ("." + w.Extension) : "") + "." + w.TrimmedName)
-                            .Distinct();
-
-                        sw.WriteLine("/// <summary>");
-                        sw.WriteLine(String.Format("/// {0}",
-                            functions.Count() >= 3 ?
-                                String.Format("Used in {0} and {1} other function{2}",
-                                    String.Join(", ", functions.Take(2).ToArray()),
-                                    functions.Count() - 2,
-                                    functions.Count() - 2 > 1 ? "s" : "") :
-                            functions.Count() >= 1 ?
-                                String.Format("Used in {0}",
-                                    String.Join(", ", functions.ToArray())) :
-                                "Not used directly."));
-                        sw.WriteLine("/// </summary>");
-                    }
-
-                    if (@enum.IsObsolete)
-                    {
-                        sw.WriteLine("[Obsolete(\"{0}\")]", @enum.Obsolete);
-                    }
-                    if (!@enum.CLSCompliant)
-                    {
-                        sw.WriteLine("[CLSCompliant(false)]");
-                    }
-                    if (@enum.IsFlagCollection)
-                    {
-                        sw.WriteLine("[Flags]");
-                    }
-                    sw.WriteLine("public enum " + @enum.Name + " : " + @enum.Type);
-                    sw.WriteLine("{");
-                    sw.Indent();
-                    WriteConstants(sw, @enum.ConstantCollection.Values);
-                    sw.Unindent();
-                    sw.WriteLine("}");
-                    sw.WriteLine();
-                }
-
-                if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None &&
-                    !String.IsNullOrEmpty(Settings.NestedEnumsClass))
-                {
-                    sw.Unindent();
-                    sw.WriteLine("}");
+                    var e = enums[parameter.CurrentType];
+                    var list = enum_counts[e];
+                    list.Add(wrapper);
                 }
             }
-            else
+
+            foreach (Enum @enum in enums.Values)
             {
-                // Tao legacy mode: dump all enums as constants in GLClass.
-                foreach (Constant c in enums[Settings.CompleteEnumName].ConstantCollection.Values)
+                if (!Settings.IsEnabled(Settings.Legacy.NoDocumentation))
                 {
-                    // Print constants avoiding circular definitions
-                    if (c.Name != c.Value)
-                    {
-                        sw.WriteLine(String.Format(
-                            "public const int {0} = {2}((int){1});",
-                            c.Name.StartsWith(Settings.ConstantPrefix) ? c.Name : Settings.ConstantPrefix + c.Name,
-                            Char.IsDigit(c.Value[0]) ? c.Value : c.Value.StartsWith(Settings.ConstantPrefix) ? c.Value : Settings.ConstantPrefix + c.Value,
-                            c.Unchecked ? "unchecked" : ""));
-                    }
-                    else
-                    {
-                    }
+                    // Document which functions use this enum.
+                    var functions = enum_counts[@enum]
+                        .Select(w => Settings.GLClass + (w.Extension != "Core" ? ("." + w.Extension) : "") + "." + w.TrimmedName)
+                        .Distinct();
+
+                    sw.WriteLine("/// <summary>");
+                    sw.WriteLine(String.Format("/// {0}",
+                        functions.Count() >= 3 ?
+                            String.Format("Used in {0} and {1} other function{2}",
+                                String.Join(", ", functions.Take(2).ToArray()),
+                                functions.Count() - 2,
+                                functions.Count() - 2 > 1 ? "s" : "") :
+                        functions.Count() >= 1 ?
+                            String.Format("Used in {0}",
+                                String.Join(", ", functions.ToArray())) :
+                            "Not used directly."));
+                    sw.WriteLine("/// </summary>");
                 }
+
+                if (@enum.IsObsolete)
+                {
+                    sw.WriteLine("[Obsolete(\"{0}\")]", @enum.Obsolete);
+                }
+                if (!@enum.CLSCompliant)
+                {
+                    sw.WriteLine("[CLSCompliant(false)]");
+                }
+                if (@enum.IsFlagCollection)
+                {
+                    sw.WriteLine("[Flags]");
+                }
+                sw.WriteLine("public enum " + @enum.Name + " : " + @enum.Type);
+                sw.WriteLine("{");
+                sw.Indent();
+                WriteConstants(sw, @enum.ConstantCollection.Values);
+                sw.Unindent();
+                sw.WriteLine("}");
+                sw.WriteLine();
+            }
+
+            if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None &&
+                !String.IsNullOrEmpty(Settings.NestedEnumsClass))
+            {
+                sw.Unindent();
+                sw.WriteLine("}");
             }
         }
 
@@ -598,11 +575,11 @@ namespace Bind
             {
                 sb.Append("delegate ");
             }
-            sb.Append(GetDeclarationString(d.ReturnType, Settings.Legacy.ConstIntEnums));
+            sb.Append(GetDeclarationString(d.ReturnType));
             sb.Append(" ");
             sb.Append(Settings.FunctionPrefix);
             sb.Append(d.Name);
-            sb.Append(GetDeclarationString(d.Parameters, Settings.Legacy.ConstIntEnums));
+            sb.Append(GetDeclarationString(d.Parameters));
 
             return sb.ToString();
         }
@@ -651,7 +628,7 @@ namespace Bind
             StringBuilder sb = new StringBuilder();
 
             sb.Append(f.Unsafe ? "unsafe " : "");
-            sb.Append(GetDeclarationString(f.ReturnType, settings));
+            sb.Append(GetDeclarationString(f.ReturnType));
             sb.Append(" ");
             if ((Settings.Compatibility & Settings.Legacy.NoTrimFunctionEnding) != Settings.Legacy.None)
             {
@@ -672,7 +649,7 @@ namespace Bind
                 sb.Append(">");
             }
 
-            sb.Append(GetDeclarationString(f.Parameters, settings));
+            sb.Append(GetDeclarationString(f.Parameters));
 
             if (f.Parameters.HasGenericParameters)
             {
@@ -686,7 +663,7 @@ namespace Bind
             return sb.ToString();
         }
 
-        private string GetDeclarationString(Parameter p, bool override_unsafe_setting, Settings.Legacy settings)
+        private string GetDeclarationString(Parameter p, bool override_unsafe_setting)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -751,12 +728,12 @@ namespace Bind
                 }
                 else
                 {
-                    sb.Append(GetDeclarationString(p as Type, settings));
+                    sb.Append(GetDeclarationString(p as Type));
                 }
             }
             else
             {
-                sb.Append(GetDeclarationString(p as Type, settings));
+                sb.Append(GetDeclarationString(p as Type));
             }
             if (!String.IsNullOrEmpty(p.Name))
             {
@@ -767,7 +744,7 @@ namespace Bind
             return sb.ToString();
         }
 
-        private string GetDeclarationString(ParameterCollection parameters, Settings.Legacy settings)
+        private string GetDeclarationString(ParameterCollection parameters)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -776,7 +753,7 @@ namespace Bind
             {
                 foreach (Parameter p in parameters)
                 {
-                    sb.Append(GetDeclarationString(p, false, settings));
+                    sb.Append(GetDeclarationString(p, false));
                     sb.Append(", ");
                 }
                 sb.Replace(", ", ")", sb.Length - 2, 2);
@@ -789,16 +766,9 @@ namespace Bind
             return sb.ToString();
         }
 
-        private string GetDeclarationString(Type type, Settings.Legacy settings)
+        private string GetDeclarationString(Type type)
         {
             var t = type.QualifiedType;
-            if ((settings & Settings.Legacy.ConstIntEnums) != 0)
-            {
-                if (type.IsEnum)
-                {
-                    t = "System.Int32";
-                }
-            }
 
             return String.Format("{0}{1}{2}",
                 t,
