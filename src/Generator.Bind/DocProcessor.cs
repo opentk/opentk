@@ -10,6 +10,9 @@ using Bind.Structures;
 
 namespace Bind
 {
+    /// <summary>
+    /// Generates documentation definitions from function definitions.
+    /// </summary>
     internal class DocProcessor
     {
         private static readonly char[] Numbers = "0123456789".ToCharArray();
@@ -35,6 +38,10 @@ namespace Bind
         private Documentation _cached;
         private string _lastFile;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DocProcessor"/> class.
+        /// </summary>
+        /// <param name="generator">The API generator.</param>
         public DocProcessor(IGenerator generator)
         {
             Generator = generator ?? throw new ArgumentNullException();
@@ -58,6 +65,12 @@ namespace Bind
 
         private IGenerator Generator { get; }
 
+        /// <summary>
+        /// Generates a documentation definition from a given function definition.
+        /// </summary>
+        /// <param name="f">The function.</param>
+        /// <param name="processor">The enumeration processor.</param>
+        /// <returns>A documentation definition.</returns>
         public Documentation Process(Function f, EnumProcessor processor)
         {
             if (_documentationCache.ContainsKey(f.WrappedDelegate.Name))

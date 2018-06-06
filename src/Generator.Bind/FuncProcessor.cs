@@ -36,6 +36,9 @@ using Type = Bind.Structures.Type;
 
 namespace Bind
 {
+    /// <summary>
+    /// Processing class for combining the enums and delegates into a final set of functions.
+    /// </summary>
     internal class FuncProcessor
     {
         private static readonly Regex Endings = new Regex(
@@ -53,6 +56,11 @@ namespace Bind
 
         private readonly IEnumerable<string> _overrides;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FuncProcessor"/> class.
+        /// </summary>
+        /// <param name="generator">The API generator.</param>
+        /// <param name="overrides">The override files.</param>
         public FuncProcessor(IGenerator generator, IEnumerable<string> overrides)
         {
             Generator = generator ?? throw new ArgumentNullException(nameof(generator));
@@ -61,6 +69,16 @@ namespace Bind
 
         private IGenerator Generator { get; }
 
+        /// <summary>
+        /// Consumes a set of enums and delegates to produce usable functions.
+        /// </summary>
+        /// <param name="enumProcessor">The enumeration processor.</param>
+        /// <param name="docProcessor">The documentation processor.</param>
+        /// <param name="delegates">The delegates.</param>
+        /// <param name="enums">The enums.</param>
+        /// <param name="apiname">The name of the API to produce a function collection for.</param>
+        /// <param name="apiversion">The version of the API to produce a function collection for.</param>
+        /// <returns>A collection of functions.</returns>
         public FunctionCollection Process
         (
             EnumProcessor enumProcessor,
@@ -146,8 +164,7 @@ namespace Bind
             {
                 foreach (var f in list.Value)
                 {
-                    f.Documentation = docProcessor.Process(f,
-                        enumProcessor);
+                    f.Documentation = docProcessor.Process(f, enumProcessor);
                 }
             }
         }
@@ -1035,7 +1052,7 @@ namespace Bind
             return dictionary[key];
         }
 
-        public IEnumerable<Function> WrapParameters(Function func)
+        private IEnumerable<Function> WrapParameters(Function func)
         {
             if (func.Parameters.Count == 0)
             {
