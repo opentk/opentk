@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using Bind.Structures;
 
-namespace Bind.GL2
+namespace Bind.Generators
 {
     /// <summary>
     /// Base class for API generators.

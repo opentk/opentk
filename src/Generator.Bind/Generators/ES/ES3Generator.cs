@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Bind.GL2;
 
 namespace Bind.Generators.ES
 {
@@ -8,6 +7,7 @@ namespace Bind.Generators.ES
     /// </summary>
     internal class ES3Generator : GeneratorBase
     {
+        /// <inheritdoc/>
         public override string APIIdentifier => "ES30";
 
         /// <inheritdoc/>

@@ -6,12 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Bind.Generators;
 using Bind.Generators.ES;
 using Bind.Generators.GL2;
 using CommandLine;
 
 namespace Bind
 {
+    /// <summary>
+    /// Main class for the program.
+    /// </summary>
     internal static class Program
     {
         /// <summary>

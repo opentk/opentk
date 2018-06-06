@@ -29,6 +29,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml.XPath;
+using Bind.Generators;
 using Bind.Structures;
 
 namespace Bind

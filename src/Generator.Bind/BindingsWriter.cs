@@ -29,6 +29,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Bind.Generators;
 using Bind.Structures;
 using Bind.Writers;
 

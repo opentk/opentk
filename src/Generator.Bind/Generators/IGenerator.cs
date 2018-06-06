@@ -5,8 +5,11 @@
 using System.Collections.Generic;
 using Bind.Structures;
 
-namespace Bind
+namespace Bind.Generators
 {
+    /// <summary>
+    /// Interface for API generation configuration objects.
+    /// </summary>
     internal interface IGenerator
     {
         /// <summary>

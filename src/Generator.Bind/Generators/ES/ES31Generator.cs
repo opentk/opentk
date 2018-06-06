@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Linq;
-using Bind.GL2;
 
 namespace Bind.Generators.ES
 {

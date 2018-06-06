@@ -30,6 +30,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.XPath;
+using Bind.Generators;
 using Bind.Structures;
 
 namespace Bind
