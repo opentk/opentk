@@ -34,7 +34,7 @@ namespace Bind.Structures
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 if (OriginalName == null)
@@ -58,7 +58,7 @@ namespace Bind.Structures
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 _value = value;
@@ -93,25 +93,6 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConstantDefinition"/> class.
-        /// </summary>
-        public ConstantDefinition()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConstantDefinition"/> class.
-        /// This constructor creates a Constant with the given name and value.
-        /// </summary>
-        /// <param name="name">The name of the constant.</param>
-        /// <param name="value">The type of the constant.</param>
-        public ConstantDefinition(string name, string value)
-        {
-            Name = name;
-            Value = value;
-        }
-
-        /// <summary>
         /// Replces the Value of the given constant with the value referenced by the [c.Reference, c.Value] pair.
         /// </summary>
         /// <param name="c">The Constant to translate</param>
@@ -121,11 +102,11 @@ namespace Bind.Structures
         {
             if (c == null)
             {
-                throw new ArgumentNullException("c");
+                throw new ArgumentNullException(nameof(c));
             }
             if (enums == null)
             {
-                throw new ArgumentNullException("enums");
+                throw new ArgumentNullException(nameof(enums));
             }
 
             if (!string.IsNullOrEmpty(c.Reference))
