@@ -74,6 +74,7 @@ namespace Bind.Structures
         }
 
         private UnmanagedType _unmanagedType;
+
         /// <summary>
         /// Gets or sets the name of the parameter.
         /// </summary>

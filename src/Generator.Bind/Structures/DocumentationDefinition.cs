@@ -32,6 +32,7 @@ namespace Bind.Structures
     internal class DocumentationDefinition
     {
         public string Summary { get; set; }
+
         public List<DocumentationParameterDefinition> Parameters { get; set; }
     }
 }

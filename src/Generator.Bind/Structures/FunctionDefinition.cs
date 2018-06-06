@@ -50,7 +50,7 @@ namespace Bind.Structures
         /// <inheritdoc/>
         public int CompareTo(FunctionDefinition other)
         {
-            var ret = Name.CompareTo(other.Name);
+            var ret = String.Compare(Name, other.Name, StringComparison.Ordinal);
             if (ret == 0)
             {
                 ret = Parameters.CompareTo(other.Parameters);

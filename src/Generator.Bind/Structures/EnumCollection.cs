@@ -10,47 +10,6 @@ namespace Bind.Structures
     {
         private SortedDictionary<string, EnumDefinition> _enumerations = new SortedDictionary<string, EnumDefinition>();
 
-        // Return -1 for ext1, 1 for ext2 or 0 if no preference.
-        private int OrderOfPreference(string ext1, string ext2)
-        {
-            // If one is empty and the other not, prefer the empty one (empty == core)
-            // Otherwise check for Arb and Ext. To reuse the logic for the
-            // empty check, let's try to remove first Arb, then Ext from the strings.
-            var ret = PreferEmpty(ext1, ext2);
-            if (ret != 0)
-            {
-                return ret;
-            }
-
-            ext1 = ext1.Replace("Arb", string.Empty);
-            ext2 = ext2.Replace("Arb", string.Empty);
-            ret = PreferEmpty(ext1, ext2);
-            if (ret != 0)
-            {
-                return ret;
-            }
-
-            ext1 = ext1.Replace("Ext", string.Empty);
-            ext2 = ext2.Replace("Ext", string.Empty);
-            return PreferEmpty(ext1, ext2);
-        }
-
-        // Prefer the empty string over the non-empty.
-        private int PreferEmpty(string ext1, string ext2)
-        {
-            if (string.IsNullOrEmpty(ext1) && !string.IsNullOrEmpty(ext2))
-            {
-                return -1;
-            }
-
-            if (string.IsNullOrEmpty(ext2) && !string.IsNullOrEmpty(ext1))
-            {
-                return 1;
-            }
-
-            return 0;
-        }
-
         /// <inheritdoc/>
         public void Add(string key, EnumDefinition value)
         {

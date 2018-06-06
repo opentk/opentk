@@ -39,7 +39,7 @@ namespace Bind.Structures
         /// <summary>
         /// True if the delegate must be declared as 'unsafe'.
         /// </summary>
-        public virtual bool Unsafe
+        public bool Unsafe
         {
             //get { return @unsafe; }
             //set { @unsafe = value; }
@@ -74,7 +74,7 @@ namespace Bind.Structures
         /// <summary>
         /// Gets or sets the name of the opengl function.
         /// </summary>
-        public virtual string Name
+        public string Name
         {
             get => _name;
             set
@@ -100,13 +100,15 @@ namespace Bind.Structures
         }
 
         public bool Deprecated { get; set; }
+
         public string DeprecatedVersion { get; set; }
+
         public string EntryPoint { get; set; }
+
         public string Obsolete { get; set; }
 
         // Slot index in the address table
         public int Slot { get; set; }
-
 
         /// <inheritdoc/>
         public override string ToString()

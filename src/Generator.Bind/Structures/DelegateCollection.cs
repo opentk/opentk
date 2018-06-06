@@ -40,14 +40,6 @@ namespace Bind.Structures
             }
         }
 
-        public void AddRange(IEnumerable<DelegateDefinition> delegates)
-        {
-            foreach (var d in delegates)
-            {
-                Add(d);
-            }
-        }
-
         public void AddRange(DelegateCollection delegates)
         {
             foreach (var d in delegates.Values.SelectMany(v => v))

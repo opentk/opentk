@@ -16,18 +16,20 @@ namespace Bind.Structures
 
         public TypeDefinition(TypeDefinition t)
         {
-            if (t != null)
+            if (t == null)
             {
-                QualifiedType = t.QualifiedType ?? t.CurrentType; // Covers current type and qualifier
-                PreviousType = t.PreviousType;
-                PreviousQualifier = t.PreviousQualifier;
-                WrapperType = t.WrapperType;
-                Array = t.Array;
-                Pointer = t.Pointer;
-                Reference = t.Reference;
-                ElementCount = t.ElementCount;
-                IsEnum = t.IsEnum;
+                return;
             }
+
+            QualifiedType = t.QualifiedType ?? t.CurrentType; // Covers current type and qualifier
+            PreviousType = t.PreviousType;
+            PreviousQualifier = t.PreviousQualifier;
+            WrapperType = t.WrapperType;
+            Array = t.Array;
+            Pointer = t.Pointer;
+            Reference = t.Reference;
+            ElementCount = t.ElementCount;
+            IsEnum = t.IsEnum;
         }
 
         private string CurrentQualifier
@@ -65,10 +67,11 @@ namespace Bind.Structures
         }
 
         private string _type;
+
         /// <summary>
         /// Gets the type of the parameter.
         /// </summary>
-        public virtual string CurrentType
+        public string CurrentType
         {
             get => _type;
             set
@@ -187,6 +190,7 @@ namespace Bind.Structures
                 Pointer.Equals(other.Pointer) &&
                 Reference.Equals(other.Reference) &&
                 Array.Equals(other.Array);
+
             // Note: CLS-compliance and element count do not factor
             // factor into the equality calculations, i.e.
             //  Foo(single[]) == Foo(single[]) -> true

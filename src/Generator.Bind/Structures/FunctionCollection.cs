@@ -33,7 +33,7 @@ namespace Bind.Structures
         /// Adds the function to the collection, if a function with the same name and parameters doesn't already exist.
         /// </summary>
         /// <param name="f">The Function to add.</param>
-        public void AddChecked(FunctionDefinition f)
+        private void AddChecked(FunctionDefinition f)
         {
             if (ContainsKey(f.Extension))
             {
