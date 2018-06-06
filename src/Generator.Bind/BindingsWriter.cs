@@ -81,10 +81,10 @@ namespace Bind
             }
 
             // Enums
-            string tempEnumsFilePath = Path.GetTempFileName();
+            var tempEnumsFilePath = Path.GetTempFileName();
             using (var outputFile = File.Open(tempEnumsFilePath, FileMode.OpenOrCreate))
             {
-                using (SourceWriter sw = new SourceWriter(new StreamWriter(outputFile)))
+                using (var sw = new SourceWriter(new StreamWriter(outputFile)))
                 {
                     WriteLicense(sw);
                     sw.WriteLineNoTabs();
@@ -101,7 +101,7 @@ namespace Bind
             }
 
             // Wrappers
-            string tempWrappersFilePath = Path.GetTempFileName();
+            var tempWrappersFilePath = Path.GetTempFileName();
             using (var outputFile = File.Open(tempWrappersFilePath, FileMode.OpenOrCreate))
             {
                 using (var sw = new SourceWriter(new StreamWriter(outputFile)))
@@ -196,7 +196,7 @@ namespace Bind
 
                 sw.WriteLineNoTabs();
 
-                foreach (string key in wrappers.Keys)
+                foreach (var key in wrappers.Keys)
                 {
                     if (key != "Core")
                     {

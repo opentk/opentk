@@ -36,7 +36,7 @@ namespace Bind.Structures
 
         public void TurnVoidPointersToIntPtr()
         {
-            foreach (ParameterDefinition p in Parameters)
+            foreach (var p in Parameters)
             {
                 if (p.Pointer != 0 && p.CurrentType == "void")
                 {
@@ -59,7 +59,7 @@ namespace Bind.Structures
 
         public bool Equals(FunctionDefinition other)
         {
-            bool result =
+            var result =
                 !string.IsNullOrEmpty(TrimmedName) && !string.IsNullOrEmpty(other.TrimmedName) &&
                 TrimmedName.Equals(other.TrimmedName) &&
                 Parameters.Equals(other.Parameters);
@@ -68,7 +68,7 @@ namespace Bind.Structures
 
         public int CompareTo(FunctionDefinition other)
         {
-            int ret = Name.CompareTo(other.Name);
+            var ret = Name.CompareTo(other.Name);
             if (ret == 0)
             {
                 ret = Parameters.CompareTo(other.Parameters);
@@ -100,7 +100,7 @@ namespace Bind.Structures
         /// <param name="fb">The body to copy from.</param>
         public FunctionBody(FunctionBody fb)
         {
-            foreach (string s in fb)
+            foreach (var s in fb)
             {
                 Add(s);
             }
@@ -146,7 +146,7 @@ namespace Bind.Structures
         /// <param name="collection"></param>
         new public void AddRange(IEnumerable<string> collection)
         {
-            foreach (string t in collection)
+            foreach (var t in collection)
             {
                 Add(t);
             }
@@ -163,10 +163,10 @@ namespace Bind.Structures
                 return string.Empty;
             }
 
-            StringBuilder sb = new StringBuilder(Count);
+            var sb = new StringBuilder(Count);
 
             sb.AppendLine("{");
-            foreach (string s in this)
+            foreach (var s in this)
             {
                 sb.AppendLine("    " + s);
             }
@@ -195,7 +195,7 @@ namespace Bind.Structures
 
         public void AddRange(IEnumerable<FunctionDefinition> functions)
         {
-            foreach (FunctionDefinition f in functions)
+            foreach (var f in functions)
             {
                 AddChecked(f);
             }
@@ -210,15 +210,15 @@ namespace Bind.Structures
             if (ContainsKey(f.Extension))
             {
                 var list = this[f.Extension];
-                int index = list.IndexOf(f);
+                var index = list.IndexOf(f);
                 if (index == -1)
                 {
                     Add(f);
                 }
                 else
                 {
-                    FunctionDefinition existing = list[index];
-                    bool replace = existing.Parameters.HasUnsignedParameters &&
+                    var existing = list[index];
+                    var replace = existing.Parameters.HasUnsignedParameters &&
                         !_unsignedFunctions.IsMatch(existing.Name) && _unsignedFunctions.IsMatch(f.Name);
                     replace |= !existing.Parameters.HasUnsignedParameters &&
                         _unsignedFunctions.IsMatch(existing.Name) && !_unsignedFunctions.IsMatch(f.Name);

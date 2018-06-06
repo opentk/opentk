@@ -129,18 +129,18 @@ namespace Bind
             using (var sr = new StreamReader(file))
             {
                 Console.WriteLine("Reading OpenGL types.");
-                Dictionary<string, string> apiTypes = new Dictionary<string, string>();
+                var apiTypes = new Dictionary<string, string>();
 
                 do
                 {
-                    string line = sr.ReadLine();
+                    var line = sr.ReadLine();
 
                     if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
                     {
                         continue;
                     }
 
-                    string[] words = line.Split(" ,*\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    var words = line.Split(" ,*\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
                     if (words[0].ToLower() == "void")
                     {
@@ -193,18 +193,18 @@ namespace Bind
         {
             using (var sr = new StreamReader(file))
             {
-                Dictionary<string, string> languageTypes = new Dictionary<string, string>();
+                var languageTypes = new Dictionary<string, string>();
                 Console.WriteLine("Reading C# types.");
 
                 while (!sr.EndOfStream)
                 {
-                    string line = sr.ReadLine();
+                    var line = sr.ReadLine();
                     if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
                     {
                         continue;
                     }
 
-                    string[] words = line.Split(" ,\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    var words = line.Split(" ,\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                     if (words.Length < 2)
                     {
                         continue;
@@ -251,10 +251,10 @@ namespace Bind
 
         private DelegateCollection ReadDelegates(XPathNavigator specs, string apiversion)
         {
-            DelegateCollection delegates = new DelegateCollection();
+            var delegates = new DelegateCollection();
             var extensions = new List<string>();
 
-            string path = "function";
+            var path = "function";
             foreach (XPathNavigator node in specs.SelectChildren(path, string.Empty))
             {
                 var name = node.GetAttribute("name", string.Empty).Trim();
@@ -295,7 +295,7 @@ namespace Bind
                             break;
 
                         case "param":
-                            ParameterDefinition p = new ParameterDefinition();
+                            var p = new ParameterDefinition();
                             p.CurrentType = param.GetAttribute("type", string.Empty).Trim();
                             p.Name = param.GetAttribute("name", string.Empty).Trim();
 
@@ -323,7 +323,7 @@ namespace Bind
 
         private EnumCollection ReadEnums(XPathNavigator nav)
         {
-            EnumCollection enums = new EnumCollection();
+            var enums = new EnumCollection();
 
             if (nav != null)
             {
@@ -332,7 +332,7 @@ namespace Bind
                 // First pass: collect all available tokens and enums
                 foreach (XPathNavigator node in nav.SelectChildren("enum", string.Empty))
                 {
-                    EnumDefinition e = new EnumDefinition()
+                    var e = new EnumDefinition()
                     {
                         Name = node.GetAttribute("name", string.Empty).Trim(),
                         Type = node.GetAttribute("type", string.Empty).Trim()

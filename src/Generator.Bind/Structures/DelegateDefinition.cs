@@ -69,7 +69,7 @@ namespace Bind.Structures
                     return false;
                 }
 
-                foreach (ParameterDefinition p in Parameters)
+                foreach (var p in Parameters)
                 {
                     if (!p.CLSCompliant)
                     {
@@ -99,7 +99,7 @@ namespace Bind.Structures
                     return true;
                 }
 
-                foreach (ParameterDefinition p in Parameters)
+                foreach (var p in Parameters)
                 {
                     if (p.WrapperType != WrapperTypes.None)
                     {
@@ -128,7 +128,7 @@ namespace Bind.Structures
                     return true;
                 }
 
-                foreach (ParameterDefinition p in Parameters)
+                foreach (var p in Parameters)
                 {
                     if (p.Pointer != 0)
                     {
@@ -187,7 +187,7 @@ namespace Bind.Structures
         // (ie "(unsafe) void delegate glXxxYyy(int a, float b, IntPtr c)"
         override public string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             sb.Append(Unsafe ? "unsafe " : "");
             sb.Append("delegate ");
@@ -201,7 +201,7 @@ namespace Bind.Structures
 
         public int CompareTo(DelegateDefinition other)
         {
-            int ret = Name.CompareTo(other.Name);
+            var ret = Name.CompareTo(other.Name);
             if (ret == 0)
             {
                 ret = Parameters.CompareTo(other.Parameters);

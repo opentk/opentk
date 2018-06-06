@@ -153,7 +153,7 @@ namespace Bind.Structures
 
         public int CompareTo(ParameterDefinition other)
         {
-            int result = base.CompareTo(other);
+            var result = base.CompareTo(other);
             if (result == 0)
             {
                 result = Name.CompareTo(other.Name);
@@ -173,7 +173,7 @@ namespace Bind.Structures
 
         public bool Equals(ParameterDefinition other)
         {
-            bool result =
+            var result =
                 base.Equals(other as TypeDefinition) &&
                 Name.Equals(other.Name);
 
@@ -201,7 +201,7 @@ namespace Bind.Structures
 
         public ParameterCollection(ParameterCollection pc)
         {
-            foreach (ParameterDefinition p in pc)
+            foreach (var p in pc)
             {
                 Add(new ParameterDefinition(p));
             }
@@ -268,7 +268,7 @@ namespace Bind.Structures
 
         private void BuildReferenceAndPointerParametersCache()
         {
-            foreach (ParameterDefinition p in this)
+            foreach (var p in this)
             {
                 if (p.Pointer != 0 || p.CurrentType.Contains("IntPtr"))
                 {
@@ -295,11 +295,11 @@ namespace Bind.Structures
         // Only use for debugging, not for code generation!
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("(");
             if (Count > 0)
             {
-                foreach (ParameterDefinition p in this)
+                foreach (var p in this)
                 {
                     sb.Append(p);
                     sb.Append(", ");
@@ -316,7 +316,7 @@ namespace Bind.Structures
 
         public bool ContainsType(string type)
         {
-            foreach (ParameterDefinition p in this)
+            foreach (var p in this)
             {
                 if (p.CurrentType == type)
                 {
@@ -407,9 +407,9 @@ namespace Bind.Structures
                 return 1;
             }
 
-            for (int i = 0; i < Count; i++)
+            for (var i = 0; i < Count; i++)
             {
-                int result = this[i].CompareTo(other[i]);
+                var result = this[i].CompareTo(other[i]);
                 if (result != 0)
                 {
                     return result;
@@ -425,8 +425,8 @@ namespace Bind.Structures
                 return false;
             }
 
-            bool result = true;
-            for (int i = 0; i < Count && result; i++)
+            var result = true;
+            for (var i = 0; i < Count && result; i++)
             {
                 result &= this[i].Equals(other[i]);
             }

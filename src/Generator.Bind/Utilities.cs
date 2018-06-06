@@ -41,7 +41,7 @@ namespace Bind
         public static void AddExtensions(IEnumerable<string> extensions)
         {
             // Merge the new extensions with the current list of extensions
-            int extensionCount = _extensionNames.Count;
+            var extensionCount = _extensionNames.Count;
             _extensionNames.AddRange(
                 extensions.Where(n => !_extensionNames.Contains(n)));
 
@@ -184,8 +184,8 @@ namespace Bind
             }
             else
             {
-                EnumDefinition e = currentEnums[newEnum.Name];
-                foreach (ConstantDefinition c in newEnum.ConstantCollection.Values)
+                var e = currentEnums[newEnum.Name];
+                foreach (var c in newEnum.ConstantCollection.Values)
                 {
                     Merge(e, c);
                 }
@@ -234,7 +234,7 @@ namespace Bind
                 return string.Empty;
             }
 
-            string ext = match.Value;
+            var ext = match.Value;
 
             if (returnUnmodified)
             {
