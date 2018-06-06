@@ -127,60 +127,6 @@ namespace Bind.Structures
         // Set to true if parameter is an enum.
         public bool IsEnum { get; set; }
 
-
-        public bool CLSCompliant
-        {
-            get
-            {
-                var compliant = true;
-
-                switch (CurrentType.ToLower())
-                {
-                    case "sbyte":
-                    case "ushort":
-                    case "uint":
-                    case "ulong":
-                    case "uintptr":
-                    case "uint16":
-                    case "uint32":
-                    case "uint64":
-                        compliant = false;
-                        break;
-
-                    default:
-                        compliant = Pointer == 0;
-                        break;
-                }
-
-                return compliant;
-
-                /*
-                if (Pointer != 0)
-                {
-                    compliant &= CurrentType.Contains("IntPtr");    // IntPtr's are CLSCompliant.
-                    // If the NoPublicUnsageFunctions is set, the pointer will be CLSCompliant.
-                    compliant |= (Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None;
-                }
-                return compliant;
-                */
-                //return compliant && (!Pointer || CurrentType.Contains("IntPtr"));
-                //return compliant && !(Pointer && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) == Settings.Legacy.None));
-
-                /*
-                 * return !(
-                    (Pointer && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) == Settings.Legacy.None ) ||
-                    CurrentType.Contains("UInt") ||
-                    CurrentType.Contains("SByte")));
-                */
-
-                /*(Type.Contains("GLu") && !Type.Contains("GLubyte")) ||
-                Type == "GLbitfield" ||
-                Type.Contains("GLhandle") ||
-                Type.Contains("GLhalf") ||
-                Type == "GLbyte");*/
-            }
-        }
-
         public bool Unsigned => (CurrentType.Contains("UInt") || CurrentType.Contains("Byte"));
 
         public WrapperTypes WrapperType { get; set; } = WrapperTypes.None;
@@ -226,14 +172,6 @@ namespace Bind.Structures
             if (result == 0)
             {
                 result = Array.CompareTo(other.Array);
-            }
-            // Note: CLS-compliance and element counts
-            // are used for comparison calculations, in order
-            // to maintain a stable sorting order, even though
-            // they are not used in equality calculations.
-            if (result == 0)
-            {
-                result = CLSCompliant.CompareTo(other.CLSCompliant);
             }
             if (result == 0)
             {

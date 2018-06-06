@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Bind.Structures
 {
@@ -16,15 +15,6 @@ namespace Bind.Structures
     /// </summary>
     internal class DelegateDefinition : IComparable<DelegateDefinition>, IEquatable<DelegateDefinition>
     {
-        //internal static DelegateCollection Delegates;
-
-        private bool? _clsComplianceOverriden;
-
-        // Add a trailing v to functions matching this regex. Used to differntiate between overloads taking both
-        // a 'type' and a 'ref type' (such overloads are not CLS Compliant).
-        // The default Regex matches no functions. Create a new Regex in Bind.Generator classes to override the default behavior.
-        internal static Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
-
         public DelegateDefinition()
         {
             Parameters = new ParameterCollection();
@@ -43,42 +33,7 @@ namespace Bind.Structures
             DeprecatedVersion = d.DeprecatedVersion;
             EntryPoint = d.EntryPoint;
             Obsolete = d.Obsolete;
-            _clsComplianceOverriden = d._clsComplianceOverriden;
             Slot = d.Slot;
-        }
-
-        /// <summary>
-        ///  Gets the CLSCompliant property. True if the delegate is not CLSCompliant.
-        /// </summary>
-        public virtual bool CLSCompliant
-        {
-            get
-            {
-                if (_clsComplianceOverriden != null)
-                {
-                    return (bool)_clsComplianceOverriden;
-                }
-
-                if (Unsafe)
-                {
-                    return false;
-                }
-
-                if (!ReturnTypeDefinition.CLSCompliant)
-                {
-                    return false;
-                }
-
-                foreach (var p in Parameters)
-                {
-                    if (!p.CLSCompliant)
-                    {
-                        return false;
-                    }
-                }
-                return true;
-            }
-            set => _clsComplianceOverriden = value;
         }
 
         public string Category { get; set; }

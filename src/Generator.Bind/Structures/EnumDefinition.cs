@@ -15,14 +15,6 @@ namespace Bind.Structures
         private string _name, _type;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EnumDefinition"/> class.
-        /// </summary>
-        public EnumDefinition()
-        {
-            CLSCompliant = true;
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the enum contains a collection of flags, i.e. 1, 2, 4, 8, ...
         /// </summary>
         public bool IsFlagCollection
@@ -87,10 +79,5 @@ namespace Bind.Structures
         /// Gets a value indicating whether the enumeration is obsolete.
         /// </summary>
         public bool IsObsolete => !string.IsNullOrEmpty(Obsolete);
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the enumeration is CLS-compliant.
-        /// </summary>
-        public bool CLSCompliant { get; set; }
     }
 }

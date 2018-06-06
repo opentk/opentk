@@ -139,12 +139,6 @@ namespace Bind
             Console.WriteLine("Generating convenience overloads.");
             wrappers.AddRange(CreateConvenienceOverloads(wrappers));
 
-            Console.WriteLine("Generating CLS compliant overloads.");
-            wrappers = CreateCLSCompliantWrappers(wrappers);
-
-            Console.WriteLine("Removing non-CLS compliant duplicates.");
-            wrappers = MarkCLSCompliance(wrappers);
-
             Console.WriteLine("Removing overloaded delegates.");
             RemoveOverloadedDelegates(delegates, wrappers);
 
@@ -591,8 +585,6 @@ namespace Bind
                 d.ReturnTypeDefinition.QualifiedType = "byte";
                 d.ReturnTypeDefinition.WrapperType |= WrapperTypes.BoolParameter;
             }
-
-            d.ReturnTypeDefinition.CurrentType = GetCLSCompliantType(d.ReturnTypeDefinition);
         }
 
         private void TranslateParameters
@@ -748,167 +740,6 @@ namespace Bind
             }
 
             return wrappers;
-        }
-
-        private FunctionCollection CreateCLSCompliantWrappers(FunctionCollection functions)
-        {
-            // If the function is not CLS-compliant (e.g. it contains unsigned parameters)
-            // we need to create a CLS-Compliant overload. However, we should only do this
-            // iff the opengl function does not contain unsigned/signed overloads itself
-            // to avoid redefinitions.
-            var wrappers = new FunctionCollection();
-            foreach (var list in functions.Values)
-            {
-                foreach (var f in list)
-                {
-                    wrappers.AddChecked(f);
-
-                    if (f.CLSCompliant)
-                    {
-                        continue;
-                    }
-
-                    // The return type must always be cls-compliant,
-                    // since we cannot overload on return types alone.
-                    f.ReturnTypeDefinition.CurrentType = GetCLSCompliantType(f.ReturnTypeDefinition);
-
-                    // Create a cls-compliant wrapper for the parameters
-                    var cls = new FunctionDefinition(f);
-                    var modified = false;
-                    for (var i = 0; i < f.Parameters.Count; i++)
-                    {
-                        cls.Parameters[i].CurrentType = GetCLSCompliantType(cls.Parameters[i]);
-                        if (cls.Parameters[i].CurrentType != f.Parameters[i].CurrentType)
-                        {
-                            modified = true;
-                        }
-                    }
-
-                    // Only add a cls-compliant overload if we have
-                    // changed a parameter.
-                    if (modified)
-                    {
-                        wrappers.AddChecked(cls);
-                    }
-                }
-            }
-
-            return wrappers;
-        }
-
-        private static FunctionCollection MarkCLSCompliance(FunctionCollection collection)
-        {
-            //foreach (var w in
-            //    (from list in collection
-            //    from w1 in list.Value
-            //    from w2 in list.Value
-            //    where
-            //        w1.TrimmedName == w2.TrimmedName &&
-            //        w1.Parameters.Count == w2.Parameters.Count &&
-            //        ParametersDifferOnlyInReference(w1.Parameters, w2.Parameters)
-            //    select !w1.Parameters.HasReferenceParameters ? w1 : w2))
-            //    {
-            //        results.Add(w);
-            //    }
-
-            foreach (var wrappers in collection.Values)
-            {
-                var mustRemove = new List<int>();
-
-                for (var i = 0; i < wrappers.Count; i++)
-                {
-                    for (var j = i + 1; j < wrappers.Count; j++)
-                    {
-                        if (wrappers[i].TrimmedName != wrappers[j].TrimmedName ||
-                            wrappers[i].Parameters.Count != wrappers[j].Parameters.Count)
-                        {
-                            continue;
-                        }
-
-                        var functionIIsProblematic = false;
-                        var functionJIsProblematic = false;
-
-                        int k;
-                        for (k = 0; k < wrappers[i].Parameters.Count; k++)
-                        {
-                            if (wrappers[i].Parameters[k].CurrentType != wrappers[j].Parameters[k].CurrentType)
-                            {
-                                break;
-                            }
-
-                            if (!wrappers[i].Parameters[k].DiffersOnlyOnReference(wrappers[j].Parameters[k]))
-                            {
-                                continue;
-                            }
-
-                            if (wrappers[i].Parameters[k].Reference)
-                            {
-                                functionIIsProblematic = true;
-                            }
-                            else
-                            {
-                                functionJIsProblematic = true;
-                            }
-                        }
-
-                        if (k != wrappers[i].Parameters.Count)
-                        {
-                            continue;
-                        }
-
-                        if (functionIIsProblematic)
-                        {
-                            mustRemove.Add(i);
-                        }
-
-                        if (functionJIsProblematic)
-                        {
-                            mustRemove.Add(j);
-                        }
-                    }
-                }
-
-                var count = 0;
-                mustRemove.Sort();
-                foreach (var i in mustRemove)
-                {
-                    // Careful: whenever we remove a function, the total count
-                    // is reduced. We must account for that, or we will remove
-                    // the wrong function!
-                    wrappers.RemoveAt(i - count);
-                    count++;
-                }
-            }
-
-            return collection;
-        }
-
-        private string GetCLSCompliantType(TypeDefinition typeDefinition)
-        {
-            if (typeDefinition.CLSCompliant)
-            {
-                return typeDefinition.CurrentType;
-            }
-
-            switch (typeDefinition.CurrentType)
-            {
-                case "UInt16":
-                case "ushort":
-                    return "Int16";
-                case "UInt32":
-                case "uint":
-                    return "Int32";
-                case "UInt64":
-                case "ulong":
-                    return "Int64";
-                case "SByte":
-                case "sbyte":
-                    return "Byte";
-                case "UIntPtr":
-                    return "IntPtr";
-            }
-
-            return typeDefinition.CurrentType;
         }
 
         private IEnumerable<FunctionDefinition> CreateNormalWrappers(DelegateDefinition d)
@@ -1171,11 +1002,6 @@ namespace Bind
                         if ((parameter.WrapperType & WrapperTypes.GenericParameter) != 0)
                         {
                             genericWrapper = genericWrapper ?? new FunctionDefinition(wrapper);
-                            if (arity > 0)
-                            {
-                                // Overloading on array arity is not CLS-compliant
-                                genericWrapper.CLSCompliant = false;
-                            }
 
                             var p = genericWrapper.Parameters[i];
 

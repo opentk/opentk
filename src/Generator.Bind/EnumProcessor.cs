@@ -115,25 +115,6 @@ namespace Bind
                 processedEnums.Add(e.Name, e);
             }
 
-            // Mark enums differing only in case as not CLS-compliant.
-            var list = enums.Values.ToList();
-            while (list.Count > 0)
-            {
-                var e1 = list.Last();
-                list.RemoveAt(list.Count - 1);
-
-                var e2 = list.FirstOrDefault(l => string.Compare(e1.Name, l.Name, true) == 0);
-                if (e2 != null)
-                {
-                    e1.CLSCompliant = false;
-                    e2.CLSCompliant = false;
-                }
-            }
-
-            foreach (var e in enums.Values)
-            {
-            }
-
             return processedEnums;
         }
 

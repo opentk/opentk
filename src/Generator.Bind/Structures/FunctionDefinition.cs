@@ -27,7 +27,6 @@ namespace Bind.Structures
             ReturnTypeDefinition = new TypeDefinition(f.ReturnTypeDefinition);
             TrimmedName = f.TrimmedName;
             Obsolete = f.Obsolete;
-            CLSCompliant = f.CLSCompliant;
             DocumentationDefinition = f.DocumentationDefinition;
             Body.AddRange(f.Body);
         }
