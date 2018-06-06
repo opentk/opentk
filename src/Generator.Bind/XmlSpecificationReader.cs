@@ -31,8 +31,18 @@ using Bind.Structures;
 
 namespace Bind
 {
+    /// <summary>
+    /// Reader class for the XML API specifications.
+    /// </summary>
     internal class XmlSpecificationReader : ISpecificationReader
     {
+        /// <summary>
+        /// Reads the delegate specification into the given enum collection.
+        /// </summary>
+        /// <param name="file">The file to read from.</param>
+        /// <param name="delegates">The delegate collection to read into.</param>
+        /// <param name="apiname">The name of the API.</param>
+        /// <param name="apiversions">The versions of the API to read.</param>
         public void ReadDelegates(string file, DelegateCollection delegates, string apiname, string apiversions)
         {
             var specs = new XPathDocument(file);
@@ -50,8 +60,7 @@ namespace Bind
 
             foreach (var apiversion in apiversions.Split('|'))
             {
-                string xpathAdd, xpathDelete;
-                GetSignaturePaths(apiname, apiversion, out xpathAdd, out xpathDelete);
+                GetSignaturePaths(apiname, apiversion, out var xpathAdd, out var xpathDelete);
 
                 foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathDelete))
                 {
@@ -67,6 +76,13 @@ namespace Bind
             }
         }
 
+        /// <summary>
+        /// Reads the enum specification into the given enum collection.
+        /// </summary>
+        /// <param name="file">The file to read from.</param>
+        /// <param name="enums">The enum collection to read into.</param>
+        /// <param name="apiname">The name of the API.</param>
+        /// <param name="apiversions">The versions of the API to read.</param>
         public void ReadEnums(string file, EnumCollection enums, string apiname, string apiversions)
         {
             var specs = new XPathDocument(file);
@@ -84,8 +100,7 @@ namespace Bind
 
             foreach (var apiversion in apiversions.Split('|'))
             {
-                string xpathAdd, xpathDelete;
-                GetSignaturePaths(apiname, apiversion, out xpathAdd, out xpathDelete);
+                GetSignaturePaths(apiname, apiversion, out var xpathAdd, out var xpathDelete);
 
                 // First, read all enum definitions from spec and override file.
                 // Afterwards, read all token/enum overrides from overrides file.
@@ -103,6 +118,11 @@ namespace Bind
             }
         }
 
+        /// <summary>
+        /// Reads the typemap for the input API into a dictionary.
+        /// </summary>
+        /// <param name="file">The typemap file.</param>
+        /// <returns>A dictionary of the mapped types.</returns>
         public Dictionary<string, string> ReadAPITypeMap(string file)
         {
             using (var sr = new StreamReader(file))
@@ -167,6 +187,11 @@ namespace Bind
             }
         }
 
+        /// <summary>
+        /// Reads the typemap for the output language into a dictionary.
+        /// </summary>
+        /// <param name="file">The typemap file.</param>
+        /// <returns>A dictionary of the mapped types.</returns>
         public Dictionary<string, string> ReadLanguageTypeMap(string file)
         {
             using (var sr = new StreamReader(file))
@@ -380,8 +405,10 @@ namespace Bind
                                     }
                                     else
                                     {
-                                        Console.WriteLine("[Warning] Conflicting token {0}.{1} with value {2} != {3}",
-                                            e.Name, c.Name, e.ConstantCollection[c.Name].Value, c.Value);
+                                        Console.WriteLine
+                                        (
+                                            $"[Warning] Conflicting token {e.Name}.{c.Name} with value {e.ConstantCollection[c.Name].Value} != {c.Value}"
+                                        );
                                     }
                                 }
                             }
