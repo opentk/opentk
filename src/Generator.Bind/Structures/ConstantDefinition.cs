@@ -16,7 +16,9 @@ namespace Bind.Structures
     /// </summary>
     internal class ConstantDefinition : IComparable<ConstantDefinition>
     {
-        // Gets the name prior to translation.
+        /// <summary>
+        /// Gets the name prior to translation into a C#-style name.
+        /// </summary>
         public string OriginalName { get; private set; }
 
         private string _name;
@@ -69,31 +71,40 @@ namespace Bind.Structures
         /// </summary>
         public string Reference { get; set; }
 
+        /// <summary>
+        /// Gets a value indicating whether the constant requires unchecked casting.
+        /// </summary>
         public bool Unchecked
         {
             get
             {
                 // Check if the value is a number larger than Int32.MaxValue.
-                ulong number;
                 string test = Value;
-                return ulong.TryParse(test.ToLower().Replace("0x", string.Empty),
-                    NumberStyles.AllowHexSpecifier, null, out number) &&
-                    number > int.MaxValue;
+                return ulong.TryParse
+               (
+                   test.ToLower().Replace("0x", string.Empty),
+                   NumberStyles.AllowHexSpecifier,
+                   null,
+                   out var number
+               )
+               &&
+               number > int.MaxValue;
             }
         }
 
         /// <summary>
-        /// Creates an empty Constant.
+        /// Initializes a new instance of the <see cref="ConstantDefinition"/> class.
         /// </summary>
         public ConstantDefinition()
         {
         }
 
         /// <summary>
-        /// Creates a Constant with the given name and value.
+        /// Initializes a new instance of the <see cref="ConstantDefinition"/> class.
+        /// This constructor creates a Constant with the given name and value.
         /// </summary>
-        /// <param name="name">The Name of the Constant.</param>
-        /// <param name="value">The Type of the Constant.</param>
+        /// <param name="name">The name of the constant.</param>
+        /// <param name="value">The type of the constant.</param>
         public ConstantDefinition(string name, string value)
         {
             Name = name;
@@ -128,7 +139,8 @@ namespace Bind.Structures
                         enums.ContainsKey(reference.Reference) &&
                         enums[reference.Reference].ConstantCollection.ContainsKey(reference.Value) ?
                         enums[reference.Reference].ConstantCollection[reference.Value] : null;
-                } while (reference != null && reference.Reference != null && reference.Reference != c.Reference);
+                }
+                while (reference?.Reference != null && reference.Reference != c.Reference);
 
                 // If we haven't managed to locate the reference, do
                 // a brute-force search through all enums.
@@ -154,18 +166,20 @@ namespace Bind.Structures
             return true;
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             return
                 $"{Name} = {(Unchecked ? "unchecked" : string.Empty)}((int){(!string.IsNullOrEmpty(Reference) ? Reference + "." : string.Empty)}{Value})";
         }
 
+        /// <inheritdoc/>
         public int CompareTo(ConstantDefinition other)
         {
-            int ret = Value.CompareTo(other.Value);
+            int ret = string.Compare(Value, other.Value, StringComparison.Ordinal);
             if (ret == 0)
             {
-                return Name.CompareTo(other.Name);
+                return string.Compare(Name, other.Name, StringComparison.Ordinal);
             }
             return ret;
         }

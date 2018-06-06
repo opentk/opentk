@@ -41,9 +41,9 @@ namespace Bind
     {
         // For example, if parameter foo has indirection level = 1, then it
         // is consumed as 'foo*' in the fixed_statements and the call string.
-        private static readonly string[] PointerLevels = { "", "*", "**", "***", "****" };
+        private static readonly string[] PointerLevels = { string.Empty, "*", "**", "***", "****" };
 
-        private static readonly string[] ArrayLevels = { "", "[]", "[,]", "[,,]", "[,,,]" };
+        private static readonly string[] ArrayLevels = { string.Empty, "[]", "[,]", "[,,]", "[,,,]" };
 
         private static readonly Dictionary<string, string> Aliases = new Dictionary<string, string>
         {
@@ -59,6 +59,10 @@ namespace Bind
 
         private IGenerator Generator { get; set; }
 
+        /// <summary>
+        /// Writes the bindings for the given generator to file.
+        /// </summary>
+        /// <param name="generator">The generator.</param>
         public void WriteBindings(IGenerator generator)
         {
             Generator = generator;
@@ -476,7 +480,7 @@ namespace Bind
 
                 sw.WriteLine("/// <summary>");
                 sw.WriteLine(
-                    $"/// {(functions.Count >= 3 ? $"Used in {string.Join(", ", functions.Take(2).ToArray())} and {functions.Count - 2} other function{(functions.Count() - 2 > 1 ? "s" : "")}" : functions.Count() >= 1 ? $"Used in {string.Join(", ", functions.ToArray())}" : "Not used directly.")}");
+                    $"/// {(functions.Count >= 3 ? $"Used in {string.Join(", ", functions.Take(2).ToArray())} and {functions.Count - 2} other function{(functions.Count() - 2 > 1 ? "s" : string.Empty)}" : functions.Count() >= 1 ? $"Used in {string.Join(", ", functions.ToArray())}" : "Not used directly.")}");
                 sw.WriteLine("/// </summary>");
 
                 if (@enum.IsObsolete)
@@ -508,7 +512,7 @@ namespace Bind
             }
         }
 
-        public void WriteLicense(SourceWriter sw)
+        private void WriteLicense(SourceWriter sw)
         {
             var licenseFilePath = Path.Combine(Program.Arguments.LicenseFile);
             var licenseContents = File.ReadAllText(licenseFilePath).TrimEnd();
@@ -539,7 +543,7 @@ namespace Bind
         {
             var sb = new StringBuilder();
 
-            sb.Append(f.Unsafe ? "unsafe " : "");
+            sb.Append(f.Unsafe ? "unsafe " : string.Empty);
             sb.Append(GetDeclarationString(f.ReturnTypeDefinition));
             sb.Append(" ");
 
