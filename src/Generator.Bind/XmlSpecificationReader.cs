@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.XPath;
 using Bind.Structures;
 
@@ -36,93 +37,93 @@ namespace Bind
     /// </summary>
     internal class XmlSpecificationReader : ISpecificationReader
     {
-        /// <summary>
-        /// Reads the delegate specification into the given enum collection.
-        /// </summary>
-        /// <param name="file">The file to read from.</param>
-        /// <param name="delegates">The delegate collection to read into.</param>
-        /// <param name="apiname">The name of the API.</param>
-        /// <param name="apiversions">The versions of the API to read.</param>
-        public void ReadDelegates(string file, DelegateCollection delegates, string apiname, string apiversions)
+        /// <inheritdoc />
+        public DelegateCollection ReadDelegates(string specFile, IEnumerable<string> overrideFiles, string apiname, string apiversions)
         {
-            var specs = new XPathDocument(file);
+            var delegates = new DelegateCollection();
 
-            // The pre-GL4.4 spec format does not distinguish between
-            // different apinames (it is assumed that different APIs
-            // are stored in distinct signature.xml files).
-            // To maintain compatibility, we detect the version of the
-            // signatures.xml file and ignore apiname if it is version 1.
-            var specversion = GetSpecVersion(specs);
-            if (specversion == "1")
+            var files = new[] { specFile }.Concat(overrideFiles);
+            foreach (var file in files)
             {
-                apiname = null;
-            }
+                var specs = new XPathDocument(file);
 
-            foreach (var apiversion in apiversions.Split('|'))
-            {
-                GetSignaturePaths(apiname, apiversion, out var xpathAdd, out var xpathDelete);
-
-                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathDelete))
+                // The pre-GL4.4 spec format does not distinguish between
+                // different apinames (it is assumed that different APIs
+                // are stored in distinct signature.xml files).
+                // To maintain compatibility, we detect the version of the
+                // signatures.xml file and ignore apiname if it is version 1.
+                var specversion = GetSpecVersion(specs);
+                if (specversion == "1")
                 {
-                    foreach (XPathNavigator node in nav.SelectChildren("function", string.Empty))
+                    apiname = null;
+                }
+
+                foreach (var apiversion in apiversions.Split('|'))
+                {
+                    GetSignaturePaths(apiname, apiversion, out var xpathAdd, out var xpathDelete);
+
+                    foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathDelete))
                     {
-                        delegates.Remove(node.GetAttribute("name", string.Empty));
+                        foreach (XPathNavigator node in nav.SelectChildren("function", string.Empty))
+                        {
+                            delegates.Remove(node.GetAttribute("name", string.Empty));
+                        }
+                    }
+                    foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathAdd))
+                    {
+                        delegates.AddRange(ReadDelegates(nav, apiversion));
                     }
                 }
-                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathAdd))
-                {
-                    delegates.AddRange(ReadDelegates(nav, apiversion));
-                }
             }
+
+            return delegates;
         }
 
-        /// <summary>
-        /// Reads the enum specification into the given enum collection.
-        /// </summary>
-        /// <param name="file">The file to read from.</param>
-        /// <param name="enums">The enum collection to read into.</param>
-        /// <param name="apiname">The name of the API.</param>
-        /// <param name="apiversions">The versions of the API to read.</param>
-        public void ReadEnums(string file, EnumCollection enums, string apiname, string apiversions)
+        /// <inheritdoc/>
+        public EnumCollection ReadEnums(string specFile, IEnumerable<string> overrideFiles, string apiname, string apiversions)
         {
-            var specs = new XPathDocument(file);
+            var enums = new EnumCollection();
 
-            // The pre-GL4.4 spec format does not distinguish between
-            // different apinames (it is assumed that different APIs
-            // are stored in distinct signature.xml files).
-            // To maintain compatibility, we detect the version of the
-            // signatures.xml file and ignore apiname if it is version 1.
-            var specversion = GetSpecVersion(specs);
-            if (specversion == "1")
+            var files = new[] { specFile }.Concat(overrideFiles);
+            foreach (var file in files)
             {
-                apiname = null;
-            }
+                var specs = new XPathDocument(file);
 
-            foreach (var apiversion in apiversions.Split('|'))
-            {
-                GetSignaturePaths(apiname, apiversion, out var xpathAdd, out var xpathDelete);
-
-                // First, read all enum definitions from spec and override file.
-                // Afterwards, read all token/enum overrides from overrides file.
-                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathDelete))
+                // The pre-GL4.4 spec format does not distinguish between
+                // different apinames (it is assumed that different APIs
+                // are stored in distinct signature.xml files).
+                // To maintain compatibility, we detect the version of the
+                // signatures.xml file and ignore apiname if it is version 1.
+                var specversion = GetSpecVersion(specs);
+                if (specversion == "1")
                 {
-                    foreach (XPathNavigator node in nav.SelectChildren("enum", string.Empty))
+                    apiname = null;
+                }
+
+                foreach (var apiversion in apiversions.Split('|'))
+                {
+                    GetSignaturePaths(apiname, apiversion, out var xpathAdd, out var xpathDelete);
+
+                    // First, read all enum definitions from spec and override file.
+                    // Afterwards, read all token/enum overrides from overrides file.
+                    foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathDelete))
                     {
-                        enums.Remove(node.GetAttribute("name", string.Empty));
+                        foreach (XPathNavigator node in nav.SelectChildren("enum", string.Empty))
+                        {
+                            enums.Remove(node.GetAttribute("name", string.Empty));
+                        }
+                    }
+                    foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathAdd))
+                    {
+                        Utilities.Merge(enums, ReadEnums(nav));
                     }
                 }
-                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathAdd))
-                {
-                    Utilities.Merge(enums, ReadEnums(nav));
-                }
             }
+
+            return enums;
         }
 
-        /// <summary>
-        /// Reads the typemap for the input API into a dictionary.
-        /// </summary>
-        /// <param name="file">The typemap file.</param>
-        /// <returns>A dictionary of the mapped types.</returns>
+        /// <inheritdoc/>
         public Dictionary<string, string> ReadAPITypeMap(string file)
         {
             using (var sr = new StreamReader(file))
@@ -187,11 +188,7 @@ namespace Bind
             }
         }
 
-        /// <summary>
-        /// Reads the typemap for the output language into a dictionary.
-        /// </summary>
-        /// <param name="file">The typemap file.</param>
-        /// <returns>A dictionary of the mapped types.</returns>
+        /// <inheritdoc/>
         public Dictionary<string, string> ReadLanguageTypeMap(string file)
         {
             using (var sr = new StreamReader(file))

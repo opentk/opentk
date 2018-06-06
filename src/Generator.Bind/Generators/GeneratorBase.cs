@@ -83,7 +83,7 @@ namespace Bind.GL2
         protected ISpecificationReader SpecificationReader { get; }
 
         /// <inheritdoc />
-        public DelegateCollection Delegates { get; }
+        public DelegateCollection Delegates { get; private set; }
 
         /// <inheritdoc />
         public EnumCollection Enums { get; private set; }
@@ -104,8 +104,6 @@ namespace Bind.GL2
         {
             OverrideFiles = new List<string>();
 
-            Delegates = new DelegateCollection();
-            Enums = new EnumCollection();
             Wrappers = new FunctionCollection();
 
             SpecificationReader = new XmlSpecificationReader();
@@ -124,18 +122,10 @@ namespace Bind.GL2
             LanguageTypes = SpecificationReader.ReadLanguageTypeMap(csTypemapPath);
 
             // Read enum signatures
-            SpecificationReader.ReadEnums(enumSpecificationPath, Enums, ProfileName, Version);
-            foreach (var file in OverrideFiles)
-            {
-                SpecificationReader.ReadEnums(file, Enums, ProfileName, Version);
-            }
+            Enums = SpecificationReader.ReadEnums(enumSpecificationPath, OverrideFiles, ProfileName, Version);
 
             // Read delegate signatures
-            SpecificationReader.ReadDelegates(specificationFilePath, Delegates, ProfileName, Version);
-            foreach (var file in OverrideFiles)
-            {
-                SpecificationReader.ReadDelegates(file, Delegates, ProfileName, Version);
-            }
+            Delegates = SpecificationReader.ReadDelegates(specificationFilePath, OverrideFiles, ProfileName, Version);
 
             var enumProcessor = new EnumProcessor(this, OverrideFiles);
             var funcProcessor = new FuncProcessor(this, OverrideFiles);

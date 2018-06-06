@@ -11683,7 +11683,7 @@ namespace OpenTK.Graphics.OpenGL4
     /// <summary>
     /// Not used directly.
     /// </summary>
-    public enum FragmentOpAti
+    public enum FragmentOpATI
     {
         /// <summary>
         /// Original was GL_MOV_ATI = 0x8961
@@ -24436,19 +24436,9 @@ namespace OpenTK.Graphics.OpenGL4
         QuadIntensity8Sgis = 0x8123,
 
         /// <summary>
-        /// Original was GL_DEPTH_COMPONENT16 = 0x81a5
-        /// </summary>
-        DepthComponent16 = 0x81a5,
-
-        /// <summary>
         /// Original was GL_DEPTH_COMPONENT16_SGIX = 0x81A5
         /// </summary>
         DepthComponent16Sgix = 0x81a5,
-
-        /// <summary>
-        /// Original was GL_DEPTH_COMPONENT24 = 0x81a6
-        /// </summary>
-        DepthComponent24 = 0x81a6,
 
         /// <summary>
         /// Original was GL_DEPTH_COMPONENT24_SGIX = 0x81A6
@@ -24456,14 +24446,24 @@ namespace OpenTK.Graphics.OpenGL4
         DepthComponent24Sgix = 0x81a6,
 
         /// <summary>
-        /// Original was GL_DEPTH_COMPONENT32 = 0x81a7
-        /// </summary>
-        DepthComponent32 = 0x81a7,
-
-        /// <summary>
         /// Original was GL_DEPTH_COMPONENT32_SGIX = 0x81A7
         /// </summary>
         DepthComponent32Sgix = 0x81a7,
+
+        /// <summary>
+        /// Original was GL_DEPTH_COMPONENT16 = 0x81a5
+        /// </summary>
+        DepthComponent16 = 0x81a5,
+
+        /// <summary>
+        /// Original was GL_DEPTH_COMPONENT24 = 0x81a6
+        /// </summary>
+        DepthComponent24 = 0x81a6,
+
+        /// <summary>
+        /// Original was GL_DEPTH_COMPONENT32 = 0x81a7
+        /// </summary>
+        DepthComponent32 = 0x81a7,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RED = 0x8225
@@ -28580,14 +28580,14 @@ namespace OpenTK.Graphics.OpenGL4
         None = 0,
 
         /// <summary>
-        /// Original was GL_COMPARE_REF_TO_TEXTURE = 0x884E
-        /// </summary>
-        CompareRefToTexture = 0x884e,
-
-        /// <summary>
         /// Original was GL_COMPARE_R_TO_TEXTURE = 0x884E
         /// </summary>
         CompareRToTexture = 0x884e,
+
+        /// <summary>
+        /// Original was GL_COMPARE_REF_TO_TEXTURE = 0x884E
+        /// </summary>
+        CompareRefToTexture = 0x884e,
     }
 
     /// <summary>
