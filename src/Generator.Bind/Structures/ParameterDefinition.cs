@@ -12,14 +12,14 @@ namespace Bind.Structures
     /// <summary>
     /// Represents a single parameter of an opengl function.
     /// </summary>
-    internal class Parameter : Type, IComparable<Parameter>, IEquatable<Parameter>
+    internal class ParameterDefinition : TypeDefinition, IComparable<ParameterDefinition>, IEquatable<ParameterDefinition>
     {
         private string _cache;
 
         /// <summary>
         /// Creates a new Parameter without type and name.
         /// </summary>
-        public Parameter()
+        public ParameterDefinition()
         {
         }
 
@@ -27,7 +27,7 @@ namespace Bind.Structures
         /// Creates a new parameter from the parameters passed (deep copy).
         /// </summary>
         /// <param name="p">The parameter to copy from.</param>
-        public Parameter(Parameter p)
+        public ParameterDefinition(ParameterDefinition p)
             : base(p)
         {
             if (p == null)
@@ -133,7 +133,7 @@ namespace Bind.Structures
         // returns false 'int' & 'int*'
         // returns false 'int' & 'int[]'
         // returns false 'int' & 'float'
-        public bool DiffersOnlyOnReference(Parameter other)
+        public bool DiffersOnlyOnReference(ParameterDefinition other)
         {
             return
                 CurrentType == other.CurrentType &&
@@ -151,7 +151,7 @@ namespace Bind.Structures
         }
 
 
-        public int CompareTo(Parameter other)
+        public int CompareTo(ParameterDefinition other)
         {
             int result = base.CompareTo(other);
             if (result == 0)
@@ -171,10 +171,10 @@ namespace Bind.Structures
                     string.Empty);
         }
 
-        public bool Equals(Parameter other)
+        public bool Equals(ParameterDefinition other)
         {
             bool result =
-                base.Equals(other as Type) &&
+                base.Equals(other as TypeDefinition) &&
                 Name.Equals(other.Name);
 
             return result;
@@ -184,9 +184,9 @@ namespace Bind.Structures
     /// <summary>
     /// Holds the parameter list of an opengl function.
     /// </summary>
-    internal class ParameterCollection : IList<Parameter>, IComparable<ParameterCollection>, IEquatable<ParameterCollection>
+    internal class ParameterCollection : IList<ParameterDefinition>, IComparable<ParameterCollection>, IEquatable<ParameterCollection>
     {
-        private readonly List<Parameter> _parameters = new List<Parameter>();
+        private readonly List<ParameterDefinition> _parameters = new List<ParameterDefinition>();
 
         private bool _hasPointerParameters;
         private bool _hasReferenceParameters;
@@ -201,9 +201,9 @@ namespace Bind.Structures
 
         public ParameterCollection(ParameterCollection pc)
         {
-            foreach (Parameter p in pc)
+            foreach (ParameterDefinition p in pc)
             {
-                Add(new Parameter(p));
+                Add(new ParameterDefinition(p));
             }
         }
 
@@ -268,7 +268,7 @@ namespace Bind.Structures
 
         private void BuildReferenceAndPointerParametersCache()
         {
-            foreach (Parameter p in this)
+            foreach (ParameterDefinition p in this)
             {
                 if (p.Pointer != 0 || p.CurrentType.Contains("IntPtr"))
                 {
@@ -299,7 +299,7 @@ namespace Bind.Structures
             sb.Append("(");
             if (Count > 0)
             {
-                foreach (Parameter p in this)
+                foreach (ParameterDefinition p in this)
                 {
                     sb.Append(p);
                     sb.Append(", ");
@@ -316,7 +316,7 @@ namespace Bind.Structures
 
         public bool ContainsType(string type)
         {
-            foreach (Parameter p in this)
+            foreach (ParameterDefinition p in this)
             {
                 if (p.CurrentType == type)
                 {
@@ -326,7 +326,7 @@ namespace Bind.Structures
             return false;
         }
 
-        public void Add(Parameter p)
+        public void Add(ParameterDefinition p)
         {
             _parameters.Add(p);
             Rebuild = true;
@@ -338,21 +338,21 @@ namespace Bind.Structures
             Rebuild = true;
         }
 
-        public bool Contains(Parameter item)
+        public bool Contains(ParameterDefinition item)
         {
             return _parameters.Contains(item);
         }
 
-        public void CopyTo(Parameter[] array, int arrayIndex)
+        public void CopyTo(ParameterDefinition[] array, int arrayIndex)
         {
             _parameters.CopyTo(array, arrayIndex);
         }
 
         public int Count => _parameters.Count;
 
-        public bool IsReadOnly => (_parameters as ICollection<Parameter>).IsReadOnly;
+        public bool IsReadOnly => (_parameters as ICollection<ParameterDefinition>).IsReadOnly;
 
-        public bool Remove(Parameter item)
+        public bool Remove(ParameterDefinition item)
         {
             var result = _parameters.Remove(item);
             if (result)
@@ -362,7 +362,7 @@ namespace Bind.Structures
             return result;
         }
 
-        public IEnumerator<Parameter> GetEnumerator()
+        public IEnumerator<ParameterDefinition> GetEnumerator()
         {
             return _parameters.GetEnumerator();
         }
@@ -372,12 +372,12 @@ namespace Bind.Structures
             return _parameters.GetEnumerator();
         }
 
-        public int IndexOf(Parameter item)
+        public int IndexOf(ParameterDefinition item)
         {
             return _parameters.IndexOf(item);
         }
 
-        public void Insert(int index, Parameter item)
+        public void Insert(int index, ParameterDefinition item)
         {
             _parameters.Insert(index, item);
             Rebuild = true;
@@ -389,7 +389,7 @@ namespace Bind.Structures
             Rebuild = true;
         }
 
-        public Parameter this[int index]
+        public ParameterDefinition this[int index]
         {
             get => _parameters[index];
             set => _parameters[index] = value;

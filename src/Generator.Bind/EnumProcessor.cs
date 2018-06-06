@@ -30,14 +30,21 @@ using System.Linq;
 using System.Text;
 using System.Xml.XPath;
 using Bind.Structures;
-using Enum = Bind.Structures.Enum;
 
 namespace Bind
 {
+    /// <summary>
+    /// Generator class for enumerations.
+    /// </summary>
     internal class EnumProcessor
     {
         private readonly IEnumerable<string> _overrides;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EnumProcessor"/> class.
+        /// </summary>
+        /// <param name="generator">The API generator.</param>
+        /// <param name="overrides">The override file paths.</param>
         public EnumProcessor(IGenerator generator, IEnumerable<string> overrides)
         {
             Generator = generator ?? throw new ArgumentNullException(nameof(generator));
@@ -46,6 +53,12 @@ namespace Bind
 
         private IGenerator Generator { get; }
 
+        /// <summary>
+        /// Generates a collection of enumerations using the given API name.
+        /// </summary>
+        /// <param name="enums">The base enum collection to use.</param>
+        /// <param name="apiname">The name of the API.</param>
+        /// <returns>A collection of enums.</returns>
         public EnumCollection Process(EnumCollection enums, string apiname)
         {
             foreach (var file in _overrides)
@@ -60,7 +73,14 @@ namespace Bind
             return enums;
         }
 
-        public static string GetOverridesPath(string apiname, string enumeration)
+        /// <summary>
+        /// Gets an XML path to an enumeration overrides node, given the API name and enumeration name.
+        /// </summary>
+        /// <param name="apiname">The API name.</param>
+        /// <param name="enumeration">The enumeration name.</param>
+        /// <returns>The node path.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="enumeration"/> is null.</exception>
+        public static string GetOverridesNodePath(string apiname, string enumeration)
         {
             if (enumeration == null)
             {
@@ -118,7 +138,7 @@ namespace Bind
 
         private static string ReplaceName(XPathNavigator nav, string apiname, string name)
         {
-            var enumOverride = nav.SelectSingleNode(GetOverridesPath(apiname, name));
+            var enumOverride = nav.SelectSingleNode(GetOverridesNodePath(apiname, name));
             if (enumOverride != null)
             {
                 var nameOverride = enumOverride.SelectSingleNode("name");
@@ -142,6 +162,11 @@ namespace Bind
             return !unprocessed;
         }
 
+        /// <summary>
+        /// Translates an enumeration member name into a C#-style name.
+        /// </summary>
+        /// <param name="name">The original name.</param>
+        /// <returns>The translated name.</returns>
         public string TranslateEnumName(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -237,7 +262,7 @@ namespace Bind
         {
             foreach (var e in enums.Values)
             {
-                var processedConstants = new SortedDictionary<string, Constant>();
+                var processedConstants = new SortedDictionary<string, ConstantDefinition>();
                 foreach (var c in e.ConstantCollection.Values)
                 {
                     c.Name = TranslateConstantName(c.Name, false);
@@ -251,7 +276,7 @@ namespace Bind
 
                 e.ConstantCollection = processedConstants;
 
-                var enumOverride = nav.SelectSingleNode(GetOverridesPath(apiname, e.Name));
+                var enumOverride = nav.SelectSingleNode(GetOverridesNodePath(apiname, e.Name));
                 foreach (var c in e.ConstantCollection.Values)
                 {
                     ReplaceConstant(enumOverride, c);
@@ -267,7 +292,7 @@ namespace Bind
             return enums;
         }
 
-        private static void ReplaceConstant(XPathNavigator enumOverride, Constant c)
+        private static void ReplaceConstant(XPathNavigator enumOverride, ConstantDefinition c)
         {
             if (enumOverride != null)
             {
@@ -294,6 +319,12 @@ namespace Bind
             }
         }
 
+        /// <summary>
+        /// Translates a given string into a C#-style identifier or value.
+        /// </summary>
+        /// <param name="s">The original string.</param>
+        /// <param name="isValue">Whether or not the string is a value.</param>
+        /// <returns>The translated name.</returns>
         public string TranslateConstantName(string s, bool isValue)
         {
             if (string.IsNullOrEmpty(s))
@@ -359,9 +390,9 @@ namespace Bind
             return translator.ToString();
         }
 
-        public string TranslateConstantValue(string value)
+        private string TranslateConstantValue(string value)
         {
-            // Remove decorations to get a pure number (e.g. 0x80u -> 80).
+            // Remove decorations to get a pure number (e.g. 0x80u -> 0x80).
             if (value.ToLower().StartsWith("0x"))
             {
                 // Trim the unsigned or long specifiers used in C constants ('u' or 'ull').
@@ -389,7 +420,7 @@ namespace Bind
         // (e.g. FOG_COORD_ARRAY_TYPE = GL_FOG_COORDINATE_ARRAY_TYPE)
         // In this case try searching all enums for the correct constant to alias (stupid opengl specs).
         // This turns every bare alias into a normal alias that is processed afterwards.
-        private static void ResolveBareAlias(Constant c, EnumCollection enums)
+        private static void ResolveBareAlias(ConstantDefinition c, EnumCollection enums)
         {
             // Constants are considered bare aliases when they don't have a reference and
             // their values are non-numeric.
@@ -410,12 +441,12 @@ namespace Bind
         // Resolve 'use' tokens by searching and replacing the correct
         // value from the enum collection.
         // Tokens that can't be resolved are removed.
-        private static void ResolveAliases(Enum e, EnumCollection enums)
+        private static void ResolveAliases(EnumDefinition e, EnumCollection enums)
         {
             // Note that we have the removal must be a separate step, since
             // we cannot modify a collection while iterating with foreach.
             var brokenReferences = e.ConstantCollection.Values
-                .Where(c => !Constant.TranslateConstantWithReference(c, enums))
+                .Where(c => !ConstantDefinition.TranslateConstantWithReference(c, enums))
                 .Select(c => c).ToList();
             foreach (var c in brokenReferences)
             {

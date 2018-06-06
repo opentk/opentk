@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Bind.Structures;
-using Enum=Bind.Structures.Enum;
 
 namespace Bind
 {
@@ -189,7 +188,7 @@ namespace Bind
         /// </summary>
         /// <param name="enums"></param>
         /// <param name="t"></param>
-        internal static void Merge(EnumCollection enums, Enum t)
+        internal static void Merge(EnumCollection enums, EnumDefinition t)
         {
             if (!enums.ContainsKey(t.Name))
             {
@@ -197,8 +196,8 @@ namespace Bind
             }
             else
             {
-                Enum e = enums[t.Name];
-                foreach (Constant c in t.ConstantCollection.Values)
+                EnumDefinition e = enums[t.Name];
+                foreach (ConstantDefinition c in t.ConstantCollection.Values)
                 {
                     Merge(e, c);
                 }
@@ -213,7 +212,7 @@ namespace Bind
         /// <param name="s"></param>
         /// <param name="t"></param>
         /// <returns></returns>
-        internal static void Merge(Enum s, Constant t)
+        internal static void Merge(EnumDefinition s, ConstantDefinition t)
         {
             if (!s.ConstantCollection.ContainsKey(t.Name))
             {

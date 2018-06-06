@@ -29,9 +29,6 @@ using System.IO;
 using System.Xml.XPath;
 using Bind.Structures;
 
-using Delegate = Bind.Structures.Delegate;
-using Enum = Bind.Structures.Enum;
-
 namespace Bind
 {
     internal class XmlSpecificationReader : ISpecificationReader
@@ -251,7 +248,7 @@ namespace Bind
                 }
 
                 // Check whether we are adding to an existing delegate or creating a new one.
-                var d = new Delegate
+                var d = new DelegateDefinition
                 {
                     Name = name,
                     EntryPoint = name,
@@ -272,11 +269,11 @@ namespace Bind
                     switch (param.Name)
                     {
                         case "returns":
-                            d.ReturnType.CurrentType = param.GetAttribute("type", string.Empty).Trim();
+                            d.ReturnTypeDefinition.CurrentType = param.GetAttribute("type", string.Empty).Trim();
                             break;
 
                         case "param":
-                            Parameter p = new Parameter();
+                            ParameterDefinition p = new ParameterDefinition();
                             p.CurrentType = param.GetAttribute("type", string.Empty).Trim();
                             p.Name = param.GetAttribute("name", string.Empty).Trim();
 
@@ -288,7 +285,7 @@ namespace Bind
                                 p.ElementCount = elementCount;
                             }
 
-                            p.Flow = Parameter.GetFlowDirection(param.GetAttribute("flow", string.Empty).Trim());
+                            p.Flow = ParameterDefinition.GetFlowDirection(param.GetAttribute("flow", string.Empty).Trim());
 
                             d.Parameters.Add(p);
                             break;
@@ -308,12 +305,12 @@ namespace Bind
 
             if (nav != null)
             {
-                var reuseList = new List<KeyValuePair<Enum, string>>();
+                var reuseList = new List<KeyValuePair<EnumDefinition, string>>();
 
                 // First pass: collect all available tokens and enums
                 foreach (XPathNavigator node in nav.SelectChildren("enum", string.Empty))
                 {
-                    Enum e = new Enum()
+                    EnumDefinition e = new EnumDefinition()
                     {
                         Name = node.GetAttribute("name", string.Empty).Trim(),
                         Type = node.GetAttribute("type", string.Empty).Trim()
@@ -333,11 +330,11 @@ namespace Bind
 
                     foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
                     {
-                        Constant c = null;
+                        ConstantDefinition c = null;
                         switch (param.Name)
                         {
                             case "token":
-                                c = new Constant
+                                c = new ConstantDefinition
                                 {
                                     Name = param.GetAttribute("name", string.Empty).Trim(),
                                     Value = param.GetAttribute("value", string.Empty).Trim()
@@ -345,7 +342,7 @@ namespace Bind
                                 break;
 
                             case "use":
-                                c = new Constant
+                                c = new ConstantDefinition
                                 {
                                     Name = param.GetAttribute("token", string.Empty).Trim(),
                                     Reference = param.GetAttribute("enum", string.Empty).Trim(),
@@ -355,7 +352,7 @@ namespace Bind
 
                             case "reuse":
                                 var reuseEnum = param.GetAttribute("enum", string.Empty).Trim();
-                                reuseList.Add(new KeyValuePair<Enum, string>(e, reuseEnum));
+                                reuseList.Add(new KeyValuePair<EnumDefinition, string>(e, reuseEnum));
                                 break;
 
                             default:

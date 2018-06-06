@@ -14,7 +14,7 @@ namespace Bind.Structures
     /// can be retrieved or set. The value can be either a number, another constant
     /// or an alias to a constant
     /// </summary>
-    internal class Constant : IComparable<Constant>
+    internal class ConstantDefinition : IComparable<ConstantDefinition>
     {
         // Gets the name prior to translation.
         public string OriginalName { get; private set; }
@@ -85,7 +85,7 @@ namespace Bind.Structures
         /// <summary>
         /// Creates an empty Constant.
         /// </summary>
-        public Constant()
+        public ConstantDefinition()
         {
         }
 
@@ -94,7 +94,7 @@ namespace Bind.Structures
         /// </summary>
         /// <param name="name">The Name of the Constant.</param>
         /// <param name="value">The Type of the Constant.</param>
-        public Constant(string name, string value)
+        public ConstantDefinition(string name, string value)
         {
             Name = name;
             Value = value;
@@ -106,7 +106,7 @@ namespace Bind.Structures
         /// <param name="c">The Constant to translate</param>
         /// <param name="enums">The list of enums to check.</param>
         /// <returns>True if the reference was found; false otherwise.</returns>
-        public static bool TranslateConstantWithReference(Constant c, EnumCollection enums)
+        public static bool TranslateConstantWithReference(ConstantDefinition c, EnumCollection enums)
         {
             if (c == null)
             {
@@ -121,7 +121,7 @@ namespace Bind.Structures
             {
                 // Resolve the referenced Constant. Be careful
                 // to avoid loops in the definitions.
-                Constant reference = c;
+                ConstantDefinition reference = c;
                 do
                 {
                     reference =
@@ -160,7 +160,7 @@ namespace Bind.Structures
                 $"{Name} = {(Unchecked ? "unchecked" : string.Empty)}((int){(!string.IsNullOrEmpty(Reference) ? Reference + "." : string.Empty)}{Value})";
         }
 
-        public int CompareTo(Constant other)
+        public int CompareTo(ConstantDefinition other)
         {
             int ret = Value.CompareTo(other.Value);
             if (ret == 0)

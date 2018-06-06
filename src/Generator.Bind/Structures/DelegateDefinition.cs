@@ -14,7 +14,7 @@ namespace Bind.Structures
     /// Represents an opengl function.
     /// The return value, function name, function parameters and opengl version can be retrieved or set.
     /// </summary>
-    internal class Delegate : IComparable<Delegate>, IEquatable<Delegate>
+    internal class DelegateDefinition : IComparable<DelegateDefinition>, IEquatable<DelegateDefinition>
     {
         //internal static DelegateCollection Delegates;
 
@@ -25,18 +25,18 @@ namespace Bind.Structures
         // The default Regex matches no functions. Create a new Regex in Bind.Generator classes to override the default behavior.
         internal static Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
 
-        public Delegate()
+        public DelegateDefinition()
         {
             Parameters = new ParameterCollection();
         }
 
-        public Delegate(Delegate d)
+        public DelegateDefinition(DelegateDefinition d)
         {
             Category = d.Category;
             Extension = d.Extension;
             Name = d.Name;
             Parameters = new ParameterCollection(d.Parameters);
-            ReturnType = new Type(d.ReturnType);
+            ReturnTypeDefinition = new TypeDefinition(d.ReturnTypeDefinition);
             Version = d.Version;
             //this.Version = !String.IsNullOrEmpty(d.Version) ? new string(d.Version.ToCharArray()) : "";
             Deprecated = d.Deprecated;
@@ -64,12 +64,12 @@ namespace Bind.Structures
                     return false;
                 }
 
-                if (!ReturnType.CLSCompliant)
+                if (!ReturnTypeDefinition.CLSCompliant)
                 {
                     return false;
                 }
 
-                foreach (Parameter p in Parameters)
+                foreach (ParameterDefinition p in Parameters)
                 {
                     if (!p.CLSCompliant)
                     {
@@ -94,12 +94,12 @@ namespace Bind.Structures
             {
                 // TODO: Add special cases for (Get)ShaderSource.
 
-                if (ReturnType.WrapperType != WrapperTypes.None)
+                if (ReturnTypeDefinition.WrapperType != WrapperTypes.None)
                 {
                     return true;
                 }
 
-                foreach (Parameter p in Parameters)
+                foreach (ParameterDefinition p in Parameters)
                 {
                     if (p.WrapperType != WrapperTypes.None)
                     {
@@ -123,12 +123,12 @@ namespace Bind.Structures
                 //if ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None)
                 //    return false;
 
-                if (ReturnType.Pointer != 0)
+                if (ReturnTypeDefinition.Pointer != 0)
                 {
                     return true;
                 }
 
-                foreach (Parameter p in Parameters)
+                foreach (ParameterDefinition p in Parameters)
                 {
                     if (p.Pointer != 0)
                     {
@@ -143,7 +143,7 @@ namespace Bind.Structures
         /// <summary>
         /// Gets or sets the return value of the opengl function.
         /// </summary>
-        public Type ReturnType { get; set; } = new Type();
+        public TypeDefinition ReturnTypeDefinition { get; set; } = new TypeDefinition();
 
         private string _name;
         /// <summary>
@@ -191,7 +191,7 @@ namespace Bind.Structures
 
             sb.Append(Unsafe ? "unsafe " : "");
             sb.Append("delegate ");
-            sb.Append(ReturnType);
+            sb.Append(ReturnTypeDefinition);
             sb.Append(" ");
             sb.Append(Name);
             sb.Append(Parameters);
@@ -199,7 +199,7 @@ namespace Bind.Structures
             return sb.ToString();
         }
 
-        public int CompareTo(Delegate other)
+        public int CompareTo(DelegateDefinition other)
         {
             int ret = Name.CompareTo(other.Name);
             if (ret == 0)
@@ -208,30 +208,30 @@ namespace Bind.Structures
             }
             if (ret == 0)
             {
-                ret = ReturnType.CompareTo(other.ReturnType);
+                ret = ReturnTypeDefinition.CompareTo(other.ReturnTypeDefinition);
             }
             return ret;
         }
 
-        public bool Equals(Delegate other)
+        public bool Equals(DelegateDefinition other)
         {
             return
                 Name.Equals(other.Name) &&
                 Parameters.Equals(other.Parameters) &&
-                ReturnType.Equals(other.ReturnType);
+                ReturnTypeDefinition.Equals(other.ReturnTypeDefinition);
         }
     }
 
-    internal class DelegateCollection : IDictionary<string, List<Delegate>>
+    internal class DelegateCollection : IDictionary<string, List<DelegateDefinition>>
     {
-        private readonly SortedDictionary<string, List<Delegate>> _delegates =
-            new SortedDictionary<string, List<Delegate>>();
+        private readonly SortedDictionary<string, List<DelegateDefinition>> _delegates =
+            new SortedDictionary<string, List<DelegateDefinition>>();
 
-        public void Add(Delegate d)
+        public void Add(DelegateDefinition d)
         {
             if (!ContainsKey(d.Name))
             {
-                Add(d.Name, new List<Delegate> { d });
+                Add(d.Name, new List<DelegateDefinition> { d });
             }
             else
             {
@@ -259,7 +259,7 @@ namespace Bind.Structures
             }
         }
 
-        public void AddRange(IEnumerable<Delegate> delegates)
+        public void AddRange(IEnumerable<DelegateDefinition> delegates)
         {
             foreach (var d in delegates)
             {
@@ -275,7 +275,7 @@ namespace Bind.Structures
             }
         }
 
-        public void Add(string key, List<Delegate> value)
+        public void Add(string key, List<DelegateDefinition> value)
         {
             _delegates.Add(key, value.ToList());
         }
@@ -290,12 +290,12 @@ namespace Bind.Structures
             return _delegates.Remove(key);
         }
 
-        public bool TryGetValue(string key, out List<Delegate> value)
+        public bool TryGetValue(string key, out List<DelegateDefinition> value)
         {
             return _delegates.TryGetValue(key, out value);
         }
 
-        public List<Delegate> this[string index]
+        public List<DelegateDefinition> this[string index]
         {
             get => _delegates[index];
             set => _delegates[index] = value;
@@ -303,9 +303,9 @@ namespace Bind.Structures
 
         public ICollection<string> Keys => _delegates.Keys;
 
-        public ICollection<List<Delegate>> Values => _delegates.Values;
+        public ICollection<List<DelegateDefinition>> Values => _delegates.Values;
 
-        public void Add(KeyValuePair<string, List<Delegate>> item)
+        public void Add(KeyValuePair<string, List<DelegateDefinition>> item)
         {
             _delegates.Add(item.Key, item.Value.ToList());
         }
@@ -315,17 +315,17 @@ namespace Bind.Structures
             _delegates.Clear();
         }
 
-        public bool Contains(KeyValuePair<string, List<Delegate>> item)
+        public bool Contains(KeyValuePair<string, List<DelegateDefinition>> item)
         {
             return _delegates.Contains(item);
         }
 
-        public void CopyTo(KeyValuePair<string, List<Delegate>>[] array, int arrayIndex)
+        public void CopyTo(KeyValuePair<string, List<DelegateDefinition>>[] array, int arrayIndex)
         {
             _delegates.CopyTo(array, arrayIndex);
         }
 
-        public bool Remove(KeyValuePair<string, List<Delegate>> item)
+        public bool Remove(KeyValuePair<string, List<DelegateDefinition>> item)
         {
             return _delegates.Remove(item.Key);
         }
@@ -334,7 +334,7 @@ namespace Bind.Structures
 
         public bool IsReadOnly => false;
 
-        public IEnumerator<KeyValuePair<string, List<Delegate>>> GetEnumerator()
+        public IEnumerator<KeyValuePair<string, List<DelegateDefinition>>> GetEnumerator()
         {
             return _delegates.GetEnumerator();
         }

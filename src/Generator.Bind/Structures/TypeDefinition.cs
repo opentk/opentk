@@ -6,15 +6,15 @@ using System;
 
 namespace Bind.Structures
 {
-    internal class Type : IComparable<Type>, IEquatable<Type>
+    internal class TypeDefinition : IComparable<TypeDefinition>, IEquatable<TypeDefinition>
     {
         private string _currentQualifier = string.Empty;
 
-        public Type()
+        public TypeDefinition()
         {
         }
 
-        public Type(Type t)
+        public TypeDefinition(TypeDefinition t)
         {
             if (t != null)
             {
@@ -40,9 +40,9 @@ namespace Bind.Structures
 
         public string QualifiedType
         {
-            get => !string.IsNullOrEmpty(CurrentQualifier) ? $"{CurrentQualifier}.{CurrentType}"
-                :
-                CurrentType;
+            get => !string.IsNullOrEmpty(CurrentQualifier)
+                ? $"{CurrentQualifier}.{CurrentType}"
+                : CurrentType;
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -208,7 +208,7 @@ namespace Bind.Structures
             return $"{CurrentType}{PointerLevels[Pointer]}{ArrayLevels[Array]}";
         }
 
-        public int CompareTo(Type other)
+        public int CompareTo(TypeDefinition other)
         {
             // Make sure that Pointer parameters are sorted last to avoid bug [#1098].
             // The rest of the comparisons help maintain a stable order (useful for source control).
@@ -242,7 +242,7 @@ namespace Bind.Structures
             return result;
         }
 
-        public bool Equals(Type other)
+        public bool Equals(TypeDefinition other)
         {
             bool result =
                 CurrentType.Equals(other.CurrentType) &&

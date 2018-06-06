@@ -29,18 +29,18 @@ using System.Collections.Generic;
 
 namespace Bind.Structures
 {
-    internal class Documentation
+    internal class DocumentationDefinition
     {
         public string Summary { get; set; }
-        public List<DocumentationParameter> Parameters { get; set; }
+        public List<DocumentationParameterDefinition> Parameters { get; set; }
     }
 
-    internal class DocumentationParameter
+    internal class DocumentationParameterDefinition
     {
         public string Name { get; set; }
         public string Documentation { get; set; }
 
-        public DocumentationParameter(string name, string doc)
+        public DocumentationParameterDefinition(string name, string doc)
         {
             Name = name;
             Documentation = doc;

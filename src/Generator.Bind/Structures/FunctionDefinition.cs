@@ -10,33 +10,33 @@ using System.Text.RegularExpressions;
 
 namespace Bind.Structures
 {
-    internal class Function : Delegate, IEquatable<Function>, IComparable<Function>
+    internal class FunctionDefinition : DelegateDefinition, IEquatable<FunctionDefinition>, IComparable<FunctionDefinition>
     {
-        public Function(Delegate d)
+        public FunctionDefinition(DelegateDefinition d)
             : base(d)
         {
             TrimmedName = Name = d.Name;
             Body = new FunctionBody();
-            WrappedDelegate = d;
+            WrappedDelegateDefinition = d;
         }
 
-        public Function(Function f)
-            : this(f.WrappedDelegate)
+        public FunctionDefinition(FunctionDefinition f)
+            : this(f.WrappedDelegateDefinition)
         {
             Parameters = new ParameterCollection(f.Parameters);
-            ReturnType = new Type(f.ReturnType);
+            ReturnTypeDefinition = new TypeDefinition(f.ReturnTypeDefinition);
             TrimmedName = f.TrimmedName;
             Obsolete = f.Obsolete;
             CLSCompliant = f.CLSCompliant;
-            Documentation = f.Documentation;
+            DocumentationDefinition = f.DocumentationDefinition;
             Body.AddRange(f.Body);
         }
 
-        public Delegate WrappedDelegate { get; set; }
+        public DelegateDefinition WrappedDelegateDefinition { get; set; }
 
         public void TurnVoidPointersToIntPtr()
         {
-            foreach (Parameter p in Parameters)
+            foreach (ParameterDefinition p in Parameters)
             {
                 if (p.Pointer != 0 && p.CurrentType == "void")
                 {
@@ -50,14 +50,14 @@ namespace Bind.Structures
 
         public string TrimmedName { get; set; }
 
-        public Documentation Documentation { get; set; }
+        public DocumentationDefinition DocumentationDefinition { get; set; }
 
         public override string ToString()
         {
-            return $"{ReturnType} {TrimmedName}{Parameters}";
+            return $"{ReturnTypeDefinition} {TrimmedName}{Parameters}";
         }
 
-        public bool Equals(Function other)
+        public bool Equals(FunctionDefinition other)
         {
             bool result =
                 !string.IsNullOrEmpty(TrimmedName) && !string.IsNullOrEmpty(other.TrimmedName) &&
@@ -66,7 +66,7 @@ namespace Bind.Structures
             return result;
         }
 
-        public int CompareTo(Function other)
+        public int CompareTo(FunctionDefinition other)
         {
             int ret = Name.CompareTo(other.Name);
             if (ret == 0)
@@ -75,7 +75,7 @@ namespace Bind.Structures
             }
             if (ret == 0)
             {
-                ret = ReturnType.CompareTo(other.ReturnType);
+                ret = ReturnTypeDefinition.CompareTo(other.ReturnTypeDefinition);
             }
             return ret;
         }
@@ -176,15 +176,15 @@ namespace Bind.Structures
         }
     }
 
-    internal class FunctionCollection : SortedDictionary<string, List<Function>>
+    internal class FunctionCollection : SortedDictionary<string, List<FunctionDefinition>>
     {
         private Regex _unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
 
-        private void Add(Function f)
+        private void Add(FunctionDefinition f)
         {
             if (!ContainsKey(f.Extension))
             {
-                Add(f.Extension, new List<Function>());
+                Add(f.Extension, new List<FunctionDefinition>());
                 this[f.Extension].Add(f);
             }
             else
@@ -193,9 +193,9 @@ namespace Bind.Structures
             }
         }
 
-        public void AddRange(IEnumerable<Function> functions)
+        public void AddRange(IEnumerable<FunctionDefinition> functions)
         {
-            foreach (Function f in functions)
+            foreach (FunctionDefinition f in functions)
             {
                 AddChecked(f);
             }
@@ -205,7 +205,7 @@ namespace Bind.Structures
         /// Adds the function to the collection, if a function with the same name and parameters doesn't already exist.
         /// </summary>
         /// <param name="f">The Function to add.</param>
-        public void AddChecked(Function f)
+        public void AddChecked(FunctionDefinition f)
         {
             if (ContainsKey(f.Extension))
             {
@@ -217,7 +217,7 @@ namespace Bind.Structures
                 }
                 else
                 {
-                    Function existing = list[index];
+                    FunctionDefinition existing = list[index];
                     bool replace = existing.Parameters.HasUnsignedParameters &&
                         !_unsignedFunctions.IsMatch(existing.Name) && _unsignedFunctions.IsMatch(f.Name);
                     replace |= !existing.Parameters.HasUnsignedParameters &&

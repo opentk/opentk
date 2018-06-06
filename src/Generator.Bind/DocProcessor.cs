@@ -29,13 +29,13 @@ namespace Bind
 
         private static readonly char[] Newline = { '\n' };
 
-        private readonly Dictionary<string, Documentation> _documentationCache =
-            new Dictionary<string, Documentation>();
+        private readonly Dictionary<string, DocumentationDefinition> _documentationCache =
+            new Dictionary<string, DocumentationDefinition>();
 
         private readonly Dictionary<string, string> _documentationFiles =
             new Dictionary<string, string>();
 
-        private Documentation _cached;
+        private DocumentationDefinition _cached;
         private string _lastFile;
 
         /// <summary>
@@ -71,14 +71,14 @@ namespace Bind
         /// <param name="f">The function.</param>
         /// <param name="processor">The enumeration processor.</param>
         /// <returns>A documentation definition.</returns>
-        public Documentation Process(Function f, EnumProcessor processor)
+        public DocumentationDefinition Process(FunctionDefinition f, EnumProcessor processor)
         {
-            if (_documentationCache.ContainsKey(f.WrappedDelegate.Name))
+            if (_documentationCache.ContainsKey(f.WrappedDelegateDefinition.Name))
             {
-                return _documentationCache[f.WrappedDelegate.Name];
+                return _documentationCache[f.WrappedDelegateDefinition.Name];
             }
 
-            var file = Generator.FunctionPrefix + f.WrappedDelegate.Name + ".xml";
+            var file = Generator.FunctionPrefix + f.WrappedDelegateDefinition.Name + ".xml";
             if (!_documentationFiles.ContainsKey(file))
             {
                 file = Generator.FunctionPrefix + f.TrimmedName + ".xml";
@@ -91,17 +91,17 @@ namespace Bind
 
             var docs =
                 (_documentationFiles.ContainsKey(file) ? ProcessFile(_documentationFiles[file], processor) : null)
-                ?? new Documentation
+                ?? new DocumentationDefinition
                 {
                     Summary = string.Empty,
                     Parameters = f.Parameters.Select
                     (
                         p =>
-                            new DocumentationParameter(p.Name, string.Empty)
+                            new DocumentationParameterDefinition(p.Name, string.Empty)
                     ).ToList()
                 };
 
-            _documentationCache.Add(f.WrappedDelegate.Name, docs);
+            _documentationCache.Add(f.WrappedDelegateDefinition.Name, docs);
 
             return docs;
         }
@@ -110,7 +110,7 @@ namespace Bind
         // found in the <!-- eqn: :--> comments in the docs.
         // Todo: Some simple MathML tags do not include comments, find a solution.
         // Todo: Some files include more than 1 function - find a way to map these extra functions.
-        private Documentation ProcessFile(string file, EnumProcessor processor)
+        private DocumentationDefinition ProcessFile(string file, EnumProcessor processor)
         {
             if (_lastFile == file)
             {
@@ -172,7 +172,7 @@ namespace Bind
             }
         }
 
-        private Documentation ToInlineDocs(XDocument doc, EnumProcessor enumProcessor)
+        private DocumentationDefinition ToInlineDocs(XDocument doc, EnumProcessor enumProcessor)
         {
             if (doc == null || enumProcessor == null)
             {
@@ -193,7 +193,7 @@ namespace Bind
             }
 
             // Create inline documentation
-            var inline = new Documentation
+            var inline = new DocumentationDefinition
             {
                 Summary =
                     Cleanup(
@@ -204,7 +204,7 @@ namespace Bind
                         "/refentry/refsect1[@id='parameters']/variablelist/varlistentry/term/parameter"))
                     .Cast<XElement>()
                     .Select(p =>
-                        new DocumentationParameter(
+                        new DocumentationParameterDefinition(
                             p.Value.Trim(),
                             Cleanup(p.XPathSelectElement("../../listitem").Value)))
                     .ToList()

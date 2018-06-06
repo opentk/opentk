@@ -8,11 +8,11 @@ using System.Linq;
 
 namespace Bind.Structures
 {
-    internal class Enum
+    internal class EnumDefinition
     {
         private string _name, _type;
 
-        public Enum()
+        public EnumDefinition()
         {
             CLSCompliant = true;
         }
@@ -36,9 +36,9 @@ namespace Bind.Structures
             set => _type = value;
         }
 
-        private SortedDictionary<string, Constant> _constantCollection = new SortedDictionary<string, Constant>();
+        private SortedDictionary<string, ConstantDefinition> _constantCollection = new SortedDictionary<string, ConstantDefinition>();
 
-        public IDictionary<string, Constant> ConstantCollection
+        public IDictionary<string, ConstantDefinition> ConstantCollection
         {
             get => _constantCollection;
             set
@@ -62,9 +62,9 @@ namespace Bind.Structures
             return $"enum {Name} : {Type} {{ {ConstantCollection} }}";
         }
 
-        public void Add(Constant constant)
+        public void Add(ConstantDefinition constantDefinition)
         {
-            ConstantCollection.Add(constant.Name, constant);
+            ConstantCollection.Add(constantDefinition.Name, constantDefinition);
         }
 
         public string Obsolete { get; set; }
@@ -73,9 +73,9 @@ namespace Bind.Structures
         public bool CLSCompliant { get; set; }
     }
 
-    internal class EnumCollection : IDictionary<string, Enum>
+    internal class EnumCollection : IDictionary<string, EnumDefinition>
     {
-        private SortedDictionary<string, Enum> _enumerations = new SortedDictionary<string, Enum>();
+        private SortedDictionary<string, EnumDefinition> _enumerations = new SortedDictionary<string, EnumDefinition>();
 
         // Return -1 for ext1, 1 for ext2 or 0 if no preference.
         private int OrderOfPreference(string ext1, string ext2)
@@ -116,20 +116,20 @@ namespace Bind.Structures
             return 0;
         }
 
-        public void Add(Enum e)
+        public void Add(EnumDefinition e)
         {
             Add(e.Name, e);
         }
 
         public void AddRange(EnumCollection enums)
         {
-            foreach (Enum e in enums.Values)
+            foreach (EnumDefinition e in enums.Values)
             {
                 Add(e);
             }
         }
 
-        public void Add(string key, Enum value)
+        public void Add(string key, EnumDefinition value)
         {
             if (ContainsKey(key))
             {
@@ -157,20 +157,20 @@ namespace Bind.Structures
             return _enumerations.Remove(key);
         }
 
-        public bool TryGetValue(string key, out Enum value)
+        public bool TryGetValue(string key, out EnumDefinition value)
         {
             return _enumerations.TryGetValue(key, out value);
         }
 
-        public ICollection<Enum> Values => _enumerations.Values;
+        public ICollection<EnumDefinition> Values => _enumerations.Values;
 
-        public Enum this[string key]
+        public EnumDefinition this[string key]
         {
             get => _enumerations[key];
             set => _enumerations[key] = value;
         }
 
-        public void Add(KeyValuePair<string, Enum> item)
+        public void Add(KeyValuePair<string, EnumDefinition> item)
         {
             _enumerations.Add(item.Key, item.Value);
         }
@@ -180,26 +180,26 @@ namespace Bind.Structures
             _enumerations.Clear();
         }
 
-        public bool Contains(KeyValuePair<string, Enum> item)
+        public bool Contains(KeyValuePair<string, EnumDefinition> item)
         {
             return _enumerations.Contains(item);
         }
 
-        public void CopyTo(KeyValuePair<string, Enum>[] array, int arrayIndex)
+        public void CopyTo(KeyValuePair<string, EnumDefinition>[] array, int arrayIndex)
         {
             _enumerations.CopyTo(array, arrayIndex);
         }
 
         public int Count => _enumerations.Count;
 
-        public bool IsReadOnly => (_enumerations as IDictionary<string, Enum>).IsReadOnly;
+        public bool IsReadOnly => (_enumerations as IDictionary<string, EnumDefinition>).IsReadOnly;
 
-        public bool Remove(KeyValuePair<string, Enum> item)
+        public bool Remove(KeyValuePair<string, EnumDefinition> item)
         {
             return _enumerations.Remove(item.Key);
         }
 
-        public IEnumerator<KeyValuePair<string, Enum>> GetEnumerator()
+        public IEnumerator<KeyValuePair<string, EnumDefinition>> GetEnumerator()
         {
             return _enumerations.GetEnumerator();
         }
