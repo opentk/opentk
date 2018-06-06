@@ -5211,7 +5211,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Arb.BufferPageCommitment
+    /// Not used directly.
     /// </summary>
     public enum ArbSparseBuffer
     {
@@ -7439,6 +7439,47 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
+    /// Used in GL.NV.DrawCommandsAddres, GL.NV.DrawCommands
+    /// </summary>
+    public enum BasicPrimitiveType
+    {
+        /// <summary>
+        /// Original was GL_POINTS = 0x0000
+        /// </summary>
+        Points = 0x0000,
+
+        /// <summary>
+        /// Original was GL_LINES = 0x0001
+        /// </summary>
+        Lines = 0x0001,
+
+        /// <summary>
+        /// Original was GL_TRIANGLES = 0x0004
+        /// </summary>
+        Triangles = 0x0004,
+
+        /// <summary>
+        /// Original was GL_QUADS = 0x0007
+        /// </summary>
+        Quads = 0x0007,
+
+        /// <summary>
+        /// Original was GL_LINES_ADJACENCY = 0x000A
+        /// </summary>
+        LinesAdjacency = 0x000a,
+
+        /// <summary>
+        /// Original was GL_TRIANGLES_ADJACENCY = 0x000C
+        /// </summary>
+        TrianglesAdjacency = 0x000c,
+
+        /// <summary>
+        /// Original was GL_PATCHES = 0x000E
+        /// </summary>
+        Patches = 0x000e,
+    }
+
+    /// <summary>
     /// Not used directly.
     /// </summary>
     public enum BeginFeedbackMode
@@ -8612,7 +8653,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Ext.GetBooleanIndexed, GL.NV.GetBufferParameter
+    /// Used in GL.Arb.BufferPageCommitment, GL.Ext.GetBooleanIndexed and 1 other function
     /// </summary>
     public enum BufferTargetArb
     {
@@ -9276,6 +9317,32 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_COLOR_ATTACHMENT31 = 0x8CFF
         /// </summary>
         ColorAttachment31 = 0x8cff,
+    }
+
+    /// <summary>
+    /// Used in GL.NV.CoverageModulation
+    /// </summary>
+    public enum ColorComponent
+    {
+        /// <summary>
+        /// Original was GL_NONE = 0
+        /// </summary>
+        None = 0,
+
+        /// <summary>
+        /// Original was GL_ALPHA = 0x1906
+        /// </summary>
+        Alpha = 0x1906,
+
+        /// <summary>
+        /// Original was GL_RGB = 0x1907
+        /// </summary>
+        Rgb = 0x1907,
+
+        /// <summary>
+        /// Original was GL_RGBA = 0x1908
+        /// </summary>
+        Rgba = 0x1908,
     }
 
     /// <summary>
@@ -11616,7 +11683,7 @@ namespace OpenTK.Graphics.OpenGL4
     /// <summary>
     /// Not used directly.
     /// </summary>
-    public enum FragmentOpATI
+    public enum FragmentOpAti
     {
         /// <summary>
         /// Original was GL_MOV_ATI = 0x8961
@@ -21333,7 +21400,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.NV.DrawCommandsAddres, GL.NV.DrawCommands and 2 other functions
+    /// Used in GL.NV.GetCommandHeader, GL.NV.StateCapture
     /// </summary>
     public enum NvCommandList
     {
@@ -21518,7 +21585,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.NV.ConservativeRasterParameter
+    /// Not used directly.
     /// </summary>
     public enum NvConservativeRasterPreSnapTriangles
     {
@@ -21587,7 +21654,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.NV.CoverageModulation
+    /// Not used directly.
     /// </summary>
     public enum NvFramebufferMixedSamples
     {
@@ -22937,7 +23004,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.NV.BufferAddressRange, GL.NV.ColorFormat and 7 other functions
+    /// Used in GL.NV.BufferAddressRange, GL.NV.GetIntegerui64 and 5 other functions
     /// </summary>
     public enum NvVertexBufferUnifiedMemory
     {
@@ -25562,7 +25629,7 @@ namespace OpenTK.Graphics.OpenGL4
     }
 
     /// <summary>
-    /// Used in GL.Arb.GetnColorTable, GL.Arb.GetnConvolutionFilter and 58 other functions
+    /// Used in GL.Arb.GetnColorTable, GL.Arb.GetnConvolutionFilter and 60 other functions
     /// </summary>
     public enum PixelType
     {

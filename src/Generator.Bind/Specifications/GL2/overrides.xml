@@ -1309,6 +1309,9 @@
       <param name="target">
         <type>AssemblyProgramTargetArb</type>
       </param>
+      <param name="format">
+        <type>AssemblyProgramFormatArb</type>
+      </param>
     </function>
 
     <function name="BindProgram" extension="Arb">
@@ -1329,13 +1332,13 @@
       </param>
     </function>
 
-    <function name="GetProgramEnvParameter4" extension="Arb">
+    <function name="GetProgramEnvParameter" extension="Arb">
       <param name="target">
         <type>AssemblyProgramTargetArb</type>
       </param>
     </function>
 
-    <function name="GetProgramLocalParameter4" extension="Arb">
+    <function name="GetProgramLocalParameter" extension="Arb">
       <param name="target">
         <type>AssemblyProgramTargetArb</type>
       </param>
@@ -1423,6 +1426,12 @@
     <function name="GetBufferPointer" extension="Arb">
       <param name="pname">
         <type>BufferPointerNameArb</type>
+      </param>
+    </function>
+
+    <function name="BufferPageCommitment" extension="Arb">
+      <param name="target">
+        <type>BufferTargetArb</type>
       </param>
     </function>
 
@@ -1537,6 +1546,18 @@
        </param>
     </function>
 
+    <function name="GetUnsignedByte" extension="Ext">
+      <param name="target">
+        <type>ExtMemoryObject</type>
+      </param>
+    </function>
+
+    <function name="ClearNamedBufferSubData" extension="Ext">
+      <param name="internalformat">
+        <type>RenderbufferStorage</type>
+      </param>
+    </function>
+
     <!-- Apple -->
 
     <function name="BufferParameter" extension="Apple">
@@ -1646,6 +1667,78 @@
     <function name="VertexAttribPointer" extension="NV">
       <param name="type">
         <type>VertexAttribParameterArb</type>
+      </param>
+    </function>
+
+    <function name="BlendParameter" extension="NV">
+      <param name="pname">
+        <type>NvBlendEquationAdvanced</type>
+      </param>
+    </function>
+
+    <function name="BufferAddressRange" extension="NV">
+      <param name="pname">
+        <type>NvVertexBufferUnifiedMemory</type>
+      </param>
+    </function>
+
+    <function name="ColorFormat" extension="NV">
+      <param name="type">
+        <type>PixelType</type>
+      </param>
+    </function>
+
+    <function name="ConservativeRasterParameter" extension="NV">
+      <param name="pname">
+        <type>NvConservativeRasterDilate</type>
+      </param>
+    </function>
+
+    <function name="CoverageModulation" extension="NV">
+      <param name="components">
+        <type>ColorComponent</type>
+      </param>
+    </function>
+
+    <function name="DrawCommandsAddress" extension="NV">
+      <param name="primitiveMode">
+        <type>BasicPrimitiveType</type>
+      </param>
+    </function>
+
+    <function name="DrawCommands" extension="NV">
+      <param name="primitiveMode">
+        <type>BasicPrimitiveType</type>
+      </param>
+    </function>
+
+    <function name="FogCoordFormat" extension="NV">
+      <param name="type">
+        <type>PixelType</type>
+      </param>
+    </function>
+
+    <function name="GetBufferParameter" extension="NV">
+      <param name="pname">
+        <type>NvShaderBufferLoad</type>
+      </param>
+    </function>
+
+    <function name="GetCommandHeader" extension="NV">
+      <param name="tokenID">
+        <type>NvCommandList</type>
+      </param>
+    </function>
+
+    <function name="GetIntegerui64i_v" extension="NV">
+      <param name="value">
+        <type>NvVertexBufferUnifiedMemory</type>
+      </param>
+    </function>
+
+    <function name="GetIntegerui64vNV" extension="NV">
+      <param name="value">
+        <type>NvShaderBufferLoad</type>
       </param>
     </function>
 
@@ -2474,6 +2567,12 @@
   </overload>
 
   <add name="gl|glcore">
+    <enum name="ColorComponent">
+      <use token="RGB"/>
+      <use token="RGBA"/>
+      <use token="ALPHA"/>
+      <use token="NONE"/>
+    </enum>
     <enum name="ActiveAttribType">
       <use enum="VERSION_1_1" token="NONE" />
       <use enum="DataType" token="FLOAT" />
@@ -4130,6 +4229,16 @@
       <use enum="VERSION_3_2" token="LINE_STRIP_ADJACENCY" />
       <use enum="VERSION_3_2" token="TRIANGLE_STRIP_ADJACENCY" />
       <use enum="VERSION_4_0" token="PATCHES" />
+      <use enum="VERSION_4_0" token="QUADS" />
+    </enum>
+    <enum name="BasicPrimitiveType">
+      <use enum="VERSION_1_1" token="POINTS" />
+      <use enum="VERSION_1_1" token="LINES" />
+      <use enum="VERSION_1_1" token="TRIANGLES" />
+      <use enum="VERSION_4_0" token="QUADS" />
+      <use enum="VERSION_4_0" token="PATCHES" />
+      <use enum="VERSION_3_2" token="LINES_ADJACENCY" />
+      <use enum="VERSION_3_2" token="TRIANGLES_ADJACENCY" />
     </enum>
     <enum name="ProgramInterface">
       <use enum="VERSION_3_0" token="TRANSFORM_FEEDBACK_BUFFER" />
@@ -5523,7 +5632,16 @@
     <function name="ObjectLabel">
       <param name="identifier"><type>ObjectLabelIdentifier</type></param>
     </function>
-   </replace>
+  </replace>
+
+  <replace name="gles2">
+    <!-- EXT_memory_object -->
+    <function name="GetUnsignedByte" extension="Ext">
+      <param name="target">
+        <type>ExtMemoryObject</type>
+      </param>
+    </function>
+  </replace>
 
   <!--  gles2 replacements for backwards compatibility -->
   <replace name="gles2">

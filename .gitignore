@@ -592,8 +592,8 @@ src/OpenTK/Graphics/ES30/ES30.cs
 src/OpenTK/Graphics/ES30/ES30.Enums.cs
 src/OpenTK/Graphics/ES31/ES31.cs
 src/OpenTK/Graphics/ES31/ES31.Enums.cs
-src/OpenTK/Graphics/OpenGL/GL.cs
-src/OpenTK/Graphics/OpenGL/GL.Enums.cs
+src/OpenTK/Graphics/OpenGL/GL2.cs
+src/OpenTK/Graphics/OpenGL/GL2.Enums.cs
 #src/OpenTK/Graphics/OpenGL4/GL4.cs
 #src/OpenTK/Graphics/OpenGL4/GL4Enums.cs
 

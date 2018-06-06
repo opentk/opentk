@@ -272,6 +272,18 @@ namespace Bind
                     {
                         type.QualifiedType = enumProcessor.TranslateEnumName(category);
                     }
+                    else
+                    {
+                        // Should have used the "All" enum, which is now gone.
+                        Trace.WriteLine
+                        (
+                            $"[Warning] Could not determine actual enum type for parameter {type}. Using weakly typed" +
+                            $" integer instead - please specify an override in overrides.xml."
+                        );
+
+                        type.IsEnum = false;
+                        type.QualifiedType = "int";
+                    }
                 }
                 else
                 {

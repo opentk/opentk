@@ -8,14 +8,16 @@ namespace Bind.Generators.ES
     /// </summary>
     internal class ES3Generator : GeneratorBase
     {
-        /// <inheritdoc/>
-        public override string OutputSubfolder => "ES30";
+        public override string APIIdentifier => "ES30";
 
         /// <inheritdoc/>
-        public override string Namespace => "OpenTK.Graphics.ES30";
+        public override string OutputSubfolder => APIIdentifier;
 
         /// <inheritdoc/>
-        public override string SpecificationDocumentationPath => "ES30";
+        public override string Namespace => $"OpenTK.Graphics.{APIIdentifier}";
+
+        /// <inheritdoc/>
+        public override string SpecificationDocumentationPath => APIIdentifier;
 
         /// <inheritdoc/>
         protected override string ProfileName => "gles2";
