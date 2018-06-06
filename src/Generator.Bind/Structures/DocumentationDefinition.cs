@@ -34,17 +34,5 @@ namespace Bind.Structures
         public string Summary { get; set; }
         public List<DocumentationParameterDefinition> Parameters { get; set; }
     }
-
-    internal class DocumentationParameterDefinition
-    {
-        public string Name { get; set; }
-        public string Documentation { get; set; }
-
-        public DocumentationParameterDefinition(string name, string doc)
-        {
-            Name = name;
-            Documentation = doc;
-        }
-    }
 }
 

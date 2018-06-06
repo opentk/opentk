@@ -3,8 +3,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Bind.Structures
@@ -37,34 +35,6 @@ namespace Bind.Structures
         }
 
         public string Category { get; set; }
-
-        /// <summary>
-        /// Gets a value that indicates whether this function needs to be wrapped with a Marshaling function.
-        /// This flag is set if a function contains an Array parameter, or returns
-        /// an Array or string.
-        /// </summary>
-        public bool NeedsWrapper
-        {
-            get
-            {
-                // TODO: Add special cases for (Get)ShaderSource.
-
-                if (ReturnTypeDefinition.WrapperType != WrapperTypes.None)
-                {
-                    return true;
-                }
-
-                foreach (var p in Parameters)
-                {
-                    if (p.WrapperType != WrapperTypes.None)
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-        }
 
         /// <summary>
         /// True if the delegate must be declared as 'unsafe'.
@@ -137,10 +107,9 @@ namespace Bind.Structures
         // Slot index in the address table
         public int Slot { get; set; }
 
-        // This method should only be used for debugging purposes, not for code generation!
-        // Returns a string representing the full delegate declaration without decorations.
-        // (ie "(unsafe) void delegate glXxxYyy(int a, float b, IntPtr c)"
-        override public string ToString()
+
+        /// <inheritdoc/>
+        public override string ToString()
         {
             var sb = new StringBuilder();
 
@@ -154,6 +123,7 @@ namespace Bind.Structures
             return sb.ToString();
         }
 
+        /// <inheritdoc/>
         public int CompareTo(DelegateDefinition other)
         {
             var ret = Name.CompareTo(other.Name);
@@ -168,135 +138,13 @@ namespace Bind.Structures
             return ret;
         }
 
+        /// <inheritdoc/>
         public bool Equals(DelegateDefinition other)
         {
             return
                 Name.Equals(other.Name) &&
                 Parameters.Equals(other.Parameters) &&
                 ReturnTypeDefinition.Equals(other.ReturnTypeDefinition);
-        }
-    }
-
-    internal class DelegateCollection : IDictionary<string, List<DelegateDefinition>>
-    {
-        private readonly SortedDictionary<string, List<DelegateDefinition>> _delegates =
-            new SortedDictionary<string, List<DelegateDefinition>>();
-
-        public void Add(DelegateDefinition d)
-        {
-            if (!ContainsKey(d.Name))
-            {
-                Add(d.Name, new List<DelegateDefinition> { d });
-            }
-            else
-            {
-                var list = _delegates[d.Name];
-                var index = list.FindIndex(w => w.CompareTo(d) == 0);
-                if (index < 0)
-                {
-                    // Function not defined - add it!
-                    list.Add(d);
-                }
-                else
-                {
-                    // Function redefined with identical parameters:
-                    // merge their version and category properties and
-                    // discard the duplicate definition
-                    if (!list[index].Category.Contains(d.Category))
-                    {
-                        list[index].Category += "|" + d.Category;
-                    }
-                    if (string.IsNullOrEmpty(list[index].Version))
-                    {
-                        list[index].Version = d.Version;
-                    }
-                }
-            }
-        }
-
-        public void AddRange(IEnumerable<DelegateDefinition> delegates)
-        {
-            foreach (var d in delegates)
-            {
-                Add(d);
-            }
-        }
-
-        public void AddRange(DelegateCollection delegates)
-        {
-            foreach (var d in delegates.Values.SelectMany(v => v))
-            {
-                Add(d);
-            }
-        }
-
-        public void Add(string key, List<DelegateDefinition> value)
-        {
-            _delegates.Add(key, value.ToList());
-        }
-
-        public bool ContainsKey(string key)
-        {
-            return _delegates.ContainsKey(key);
-        }
-
-        public bool Remove(string key)
-        {
-            return _delegates.Remove(key);
-        }
-
-        public bool TryGetValue(string key, out List<DelegateDefinition> value)
-        {
-            return _delegates.TryGetValue(key, out value);
-        }
-
-        public List<DelegateDefinition> this[string index]
-        {
-            get => _delegates[index];
-            set => _delegates[index] = value;
-        }
-
-        public ICollection<string> Keys => _delegates.Keys;
-
-        public ICollection<List<DelegateDefinition>> Values => _delegates.Values;
-
-        public void Add(KeyValuePair<string, List<DelegateDefinition>> item)
-        {
-            _delegates.Add(item.Key, item.Value.ToList());
-        }
-
-        public void Clear()
-        {
-            _delegates.Clear();
-        }
-
-        public bool Contains(KeyValuePair<string, List<DelegateDefinition>> item)
-        {
-            return _delegates.Contains(item);
-        }
-
-        public void CopyTo(KeyValuePair<string, List<DelegateDefinition>>[] array, int arrayIndex)
-        {
-            _delegates.CopyTo(array, arrayIndex);
-        }
-
-        public bool Remove(KeyValuePair<string, List<DelegateDefinition>> item)
-        {
-            return _delegates.Remove(item.Key);
-        }
-
-        public int Count => _delegates.Count;
-
-        public bool IsReadOnly => false;
-
-        public IEnumerator<KeyValuePair<string, List<DelegateDefinition>>> GetEnumerator()
-        {
-            return _delegates.GetEnumerator();
-        }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return _delegates.GetEnumerator();
         }
     }
 }
