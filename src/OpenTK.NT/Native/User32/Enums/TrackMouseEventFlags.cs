@@ -1,9 +1,11 @@
 ﻿using System;
 
+using DWORD = System.UInt32;
+
 namespace OpenTK.NT.Native
 {
     [Flags]
-    public enum TrackMouseEventFlags : uint
+    public enum TrackMouseEventFlags : DWORD
     {
         HOVER = 0x00000001,
         LEAVE = 0x00000002,

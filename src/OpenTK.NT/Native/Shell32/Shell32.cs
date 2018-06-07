@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 using HDROP = System.IntPtr;
 using LPCTSTR = System.String;
-using DWORD = System.Int32;
+using DWORD = System.UInt32;
 using UINT = System.UInt32;
 
 namespace OpenTK.NT.Native

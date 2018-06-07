@@ -1,16 +1,17 @@
 ﻿using System.Runtime.InteropServices;
 
+using DWORD = System.UInt32;
 using HWND = System.IntPtr;
 
 namespace OpenTK.NT.Native
 {
-    public struct TrackMouseEventStructure
+    public struct TRACKMOUSEEVENT
     {
-        public int Size;
-        public TrackMouseEventFlags Flags;
+        public DWORD cbSize;
+        public TrackMouseEventFlags dwFlags;
         public HWND TrackWindowHandle;
-        public int HoverTime;
+        public DWORD dwHoverTime;
 
-        public static readonly int SizeInBytes = Marshal.SizeOf(typeof(TrackMouseEventStructure));
+        public static readonly int SizeInBytes = Marshal.SizeOf(typeof(TRACKMOUSEEVENT));
     }
 }

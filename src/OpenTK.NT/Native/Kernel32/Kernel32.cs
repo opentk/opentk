@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Security;
 
-using DWORD = System.Int32;
+using DWORD = System.UInt32;
 
 namespace OpenTK.NT.Native
 {
