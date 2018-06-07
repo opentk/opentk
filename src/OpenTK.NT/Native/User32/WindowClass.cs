@@ -14,7 +14,7 @@ namespace OpenTK.NT.Native
             internal static extern bool GetClassInfoEx(
                 [In] [Optional] HINSTANCE hinst,
                 [MarshalAs(UnmanagedType.LPTStr)] string lpszClass,
-                [Out] out ExtendedWindowClass lpwcx
+                [Out] out WNDCLASSEX lpwcx
             );
 
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
@@ -22,14 +22,14 @@ namespace OpenTK.NT.Native
             internal static extern bool GetClassInfoEx(
                 [In] HINSTANCE hinst,
                 [In] IntPtr lpszClass,
-                [Out] out ExtendedWindowClass lpwcx
+                [Out] out WNDCLASSEX lpwcx
             );
 
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-            internal static extern ushort RegisterClass([In] ref Native.WindowClass lpWndClass);
+            internal static extern ushort RegisterClass([In] ref WNDCLASS lpWndClass);
 
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-            internal static extern ushort RegisterClassEx([In] ref ExtendedWindowClass lpwcx);
+            internal static extern ushort RegisterClassEx([In] ref WNDCLASSEX lpwcx);
 
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
             [return: MarshalAs(UnmanagedType.Bool)]

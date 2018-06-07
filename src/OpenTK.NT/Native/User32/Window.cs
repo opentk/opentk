@@ -163,7 +163,7 @@ namespace OpenTK.NT.Native
             private static extern int SetWindowLongInternal(
                 [In] HWND hWnd,
                 [In] GetWindowLongOffsets nIndex,
-                [In] [MarshalAs(UnmanagedType.FunctionPtr)] WindowProcedure dwNewLong
+                [In] [MarshalAs(UnmanagedType.FunctionPtr)] WindowProc dwNewLong
             );
 
             [SuppressUnmanagedCodeSecurity]
@@ -179,10 +179,10 @@ namespace OpenTK.NT.Native
             private static extern LONG_PTR SetWindowLongPtrInternal(
                 [In] HWND hWnd,
                 [In] GetWindowLongOffsets nIndex,
-                [In] [MarshalAs(UnmanagedType.FunctionPtr)] WindowProcedure dwNewLong
+                [In] [MarshalAs(UnmanagedType.FunctionPtr)] WindowProc dwNewLong
             );
 
-            internal static IntPtr SetWindowLong(HWND hWnd, WindowProcedure newValue)
+            internal static IntPtr SetWindowLong(HWND hWnd, WindowProc newValue)
                 => SetWindowLong(hWnd, GetWindowLongOffsets.WNDPROC, Marshal.GetFunctionPointerForDelegate(newValue));
 
             internal static IntPtr GetWindowLong(HWND hWnd, GetWindowLongOffsets nIndex)
