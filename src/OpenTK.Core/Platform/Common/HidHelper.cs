@@ -1,25 +1,27 @@
 ﻿using System;
+using System.Diagnostics;
+using OpenTK.Mathematics;
 
 namespace OpenTK.Core.Platform.Common
 {
-    public class HidHelper
+    public static class HidHelper
     {
         /// <summary>
         /// Scales the specified value linearly between min and max.
         /// </summary>
-        /// <param name="value">The value to scale</param>
-        /// <param name="value_min">The minimum expected value (inclusive)</param>
-        /// <param name="value_max">The maximum expected value (inclusive)</param>
-        /// <param name="result_min">The minimum output value (inclusive)</param>
-        /// <param name="result_max">The maximum output value (inclusive)</param>
-        /// <returns>The value, scaled linearly between min and max</returns>
-        public static int ScaleValue(int value, int value_min, int value_max,
-            int result_min, int result_max)
+        /// <param name="value">The value to scale.</param>
+        /// <param name="value_min">The minimum expected value (inclusive).</param>
+        /// <param name="value_max">The maximum expected value (inclusive).</param>
+        /// <param name="result_min">The minimum output value (inclusive).</param>
+        /// <param name="result_max">The maximum output value (inclusive).</param>
+        /// <returns>The value, scaled linearly between min and max.</returns>
+        public static int ScaleValue(int value,
+            int value_min, int value_max,
+            int result_min, int result_max
+        )
         {
             if (value_min >= value_max || result_min >= result_max)
-            {
                 throw new ArgumentOutOfRangeException();
-            }
 
             MathHelper.Clamp(value, value_min, value_max);
 
@@ -56,7 +58,6 @@ namespace OpenTK.Core.Platform.Common
                     }
 
                     break;
-
                 case HidPage.Simulation:
                     switch ((HidUsageSim)usage)
                     {
