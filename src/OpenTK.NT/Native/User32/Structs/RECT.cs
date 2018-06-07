@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
 using System.Runtime.InteropServices;
 
+using LONG = System.Int32;
+
 namespace OpenTK.NT.Native
 {
     /// <summary>
@@ -18,54 +20,46 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Specifies the x-coordinate of the upper-left corner of the rectangle.
         /// </summary>
-        internal int left;
+        internal LONG left;
 
         /// <summary>
         /// Specifies the y-coordinate of the upper-left corner of the rectangle.
         /// </summary>
-        internal int top;
+        internal LONG top;
 
         /// <summary>
         /// Specifies the x-coordinate of the lower-right corner of the rectangle.
         /// </summary>
-        internal int right;
+        internal LONG right;
 
         /// <summary>
         /// Specifies the y-coordinate of the lower-right corner of the rectangle.
         /// </summary>
-        internal int bottom;
+        internal LONG bottom;
 
-        internal int Width => right - left;
-        internal int Height => bottom - top;
+        internal LONG Width => right - left;
+        internal LONG Height => bottom - top;
 
-        public override string ToString()
-        {
-            return $"({left},{top})-({right},{bottom})";
-        }
+        public override string ToString() => $"({left},{top})-({right},{bottom})";
 
-        internal Rectangle ToRectangle()
-        {
-            return Rectangle.FromLTRB(left, top, right, bottom);
-        }
+        internal Rectangle ToRectangle() => Rectangle.FromLTRB(left, top, right, bottom);
 
         internal static RECT From(Rectangle value)
-        {
-            var rect = new RECT();
-            rect.left = value.Left;
-            rect.right = value.Right;
-            rect.top = value.Top;
-            rect.bottom = value.Bottom;
-            return rect;
-        }
+            => new RECT
+            {
+                left = value.Left,
+                right = value.Right,
+                top = value.Top,
+                bottom = value.Bottom
+            };
 
         internal static RECT From(Size value)
-        {
-            var rect = new RECT();
-            rect.left = 0;
-            rect.right = value.Width;
-            rect.top = 0;
-            rect.bottom = value.Height;
-            return rect;
-        }
+            => new RECT
+            {
+                left = 0,
+                right = value.Width,
+                top = 0,
+                bottom = value.Height
+            };
     }
 }

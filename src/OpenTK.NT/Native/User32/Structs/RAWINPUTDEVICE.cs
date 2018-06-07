@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 
 using HWND = System.IntPtr;
+using USHORT = System.UInt16;
 
 namespace OpenTK.NT.Native
 {
@@ -15,18 +16,17 @@ namespace OpenTK.NT.Native
     /// legacy keyboard messages are not generated.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
-    public struct RawInputDevice
+    public struct RAWINPUTDEVICE
     {
         /// <summary>
         /// Top level collection Usage page for the raw input device.
         /// </summary>
-        internal HidPage UsagePage;
+        internal HidPage usUsagePage;
 
         /// <summary>
         /// Top level collection Usage for the raw input device.
         /// </summary>
-        //internal USHORT Usage;
-        internal short Usage;
+        internal USHORT usUsage;
 
         /// <summary>
         /// Mode flag that specifies how to interpret the information provided by UsagePage and Usage.
@@ -34,40 +34,37 @@ namespace OpenTK.NT.Native
         /// By default, the operating system sends raw input from devices with the specified top level collection (TLC)
         /// to the registered application as long as it has the window focus.
         /// </summary>
-        internal RawInputDeviceFlags Flags;
+        internal RawInputDeviceFlags dwFlags;
 
         /// <summary>
         /// Handle to the target window. If NULL it follows the keyboard focus.
         /// </summary>
-        internal HWND Target;
+        internal HWND hwndTarget;
 
-        public RawInputDevice(HidUsageGD usage, RawInputDeviceFlags flags, HWND target)
+        public RAWINPUTDEVICE(HidUsageGD usage, RawInputDeviceFlags flags, HWND target)
+            : this((ushort)usage, flags, target, HidPage.GenericDesktop)
         {
-            UsagePage = HidPage.GenericDesktop;
-            Usage = (short)usage;
-            Flags = flags;
-            Target = target;
         }
 
-        public RawInputDevice(HidUsageCD usage, RawInputDeviceFlags flags, HWND target)
+        public RAWINPUTDEVICE(HidUsageCD usage, RawInputDeviceFlags flags, HWND target)
+            : this((ushort)usage, flags, target, HidPage.Consumer)
         {
-            UsagePage = HidPage.Consumer;
-            Usage = (short)usage;
-            Flags = flags;
-            Target = target;
         }
 
-        public RawInputDevice(HidUsageSim usage, RawInputDeviceFlags flags, HWND target)
+        public RAWINPUTDEVICE(HidUsageSim usage, RawInputDeviceFlags flags, HWND target)
+            : this((ushort)usage, flags, target, HidPage.Simulation)
         {
-            UsagePage = HidPage.Simulation;
-            Usage = (short)usage;
-            Flags = flags;
-            Target = target;
+        }
+
+        private RAWINPUTDEVICE(ushort usage, RawInputDeviceFlags flags, HWND target, HidPage usagePage)
+        {
+            usUsage = usage;
+            dwFlags = flags;
+            hwndTarget = target;
+            usUsagePage = usagePage;
         }
 
         public override string ToString()
-        {
-            return $"{UsagePage}/{Usage}, flags: {Flags}, window: {Target}";
-        }
+            => $"{usUsagePage}/{usUsage}, flags: {dwFlags}, window: {hwndTarget}";
     }
 }

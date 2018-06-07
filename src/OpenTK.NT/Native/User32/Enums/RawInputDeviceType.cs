@@ -1,6 +1,8 @@
-﻿namespace OpenTK.NT.Native
+﻿using DWORD = System.UInt32;
+
+namespace OpenTK.NT.Native
 {
-    public enum RawInputDeviceType
+    public enum RawInputDeviceType : DWORD
     {
         MOUSE = 0,
         KEYBOARD = 1,

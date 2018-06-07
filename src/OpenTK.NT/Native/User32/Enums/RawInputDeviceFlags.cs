@@ -3,7 +3,7 @@
 namespace OpenTK.NT.Native
 {
     [Flags]
-    public enum RawInputDeviceFlags
+    public enum RawInputDeviceFlags : uint
     {
         /// <summary>
         /// If set, this removes the top level collection from the inclusion list.

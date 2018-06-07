@@ -16,12 +16,12 @@ namespace OpenTK.NT.Native
     ///  </para>
     /// </remarks>
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    public struct RawInput
+    public struct RAWINPUT
     {
-        public RawInputHeader Header;
-        public RawInputData Data;
+        public RAWINPUTHEADER header;
+        public RawInputData data;
 
         public static readonly int SizeInBytes =
-            BlittableValueType<RawInput>.Stride;
+            BlittableValueType<RAWINPUT>.Stride;
     }
 }

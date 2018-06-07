@@ -1,5 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 
+using DWORD = System.UInt32;
+
 namespace OpenTK.NT.Native
 {
     /// <summary>
@@ -9,36 +11,36 @@ namespace OpenTK.NT.Native
     /// For the keyboard, the Usage Page is 1 and the Usage is 6.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
-    public struct RawInputKeyboardDeviceInfo
+    public struct RID_DEVICE_INFO_KEYBOARD
     {
         /// <summary>
         /// Type of the keyboard.
         /// </summary>
-        internal int Type;
+        internal DWORD dwType;
 
         /// <summary>
         /// Subtype of the keyboard.
         /// </summary>
-        internal int SubType;
+        internal DWORD dwSubType;
 
         /// <summary>
         /// Scan code mode.
         /// </summary>
-        internal int KeyboardMode;
+        internal DWORD dwKeyboardMode;
 
         /// <summary>
         /// Number of function keys on the keyboard.
         /// </summary>
-        internal int NumberOfFunctionKeys;
+        internal DWORD dwNumberOfFunctionKeys;
 
         /// <summary>
         /// Number of LED indicators on the keyboard.
         /// </summary>
-        internal int NumberOfIndicators;
+        internal DWORD dwNumberOfIndicators;
 
         /// <summary>
         /// Total number of keys on the keyboard.
         /// </summary>
-        internal int NumberOfKeysTotal;
+        internal DWORD dwNumberOfKeysTotal;
     }
 }

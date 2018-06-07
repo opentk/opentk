@@ -1,18 +1,21 @@
 ﻿using System.Runtime.InteropServices;
 
+using UINT = System.UInt32;
+using ULONG = System.UInt32;
+using USHORT = System.UInt16;
+
 namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Contains information about the state of the keyboard.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct RawKeyboard
+    public struct RAWKEYBOARD
     {
         /// <summary>
         /// Scan code from the key depression. The scan code for keyboard overrun is KEYBOARD_OVERRUN_MAKE_CODE.
         /// </summary>
-        //internal USHORT MakeCode;
-        internal short MakeCode;
+        internal USHORT MakeCode;
 
         /// <summary>
         /// Flags for scan code information. It can be one or more of the following.
@@ -28,24 +31,21 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Reserved; must be zero.
         /// </summary>
-        private readonly ushort Reserved;
+        private readonly USHORT Reserved;
 
         /// <summary>
         /// Microsoft Windows message compatible virtual-key code. For more information, see Virtual-Key Codes.
         /// </summary>
-        //internal USHORT VKey;
         internal VirtualKeys VKey;
 
         /// <summary>
         /// Corresponding window message, for example WM_KEYDOWN, WM_SYSKEYDOWN, and so forth.
         /// </summary>
-        //internal UINT Message;
-        internal int Message;
+        internal UINT Message;
 
         /// <summary>
         /// Device-specific additional information for the event.
         /// </summary>
-        //internal ULONG ExtraInformation;
-        internal int ExtraInformation;
+        internal ULONG ExtraInformation;
     }
 }

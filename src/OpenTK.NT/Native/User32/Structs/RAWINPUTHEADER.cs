@@ -1,6 +1,7 @@
 ﻿using OpenTK.Core;
 using System.Runtime.InteropServices;
 
+using DWORD = System.UInt32;
 using HANDLE = System.IntPtr;
 using WPARAM = System.IntPtr;
 
@@ -13,30 +14,30 @@ namespace OpenTK.NT.Native
     /// To get more information on the device, use hDevice in a call to GetRawInputDeviceInfo.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
-    public struct RawInputHeader
+    public struct RAWINPUTHEADER
     {
         /// <summary>
         /// Type of raw input.
         /// </summary>
-        internal RawInputDeviceType Type;
+        internal RawInputDeviceType dwType;
 
         /// <summary>
         /// Size, in bytes, of the entire input packet of data. This includes the RawInput struct plus possible extra input
         /// reports in the RAWHID variable length array.
         /// </summary>
-        internal int Size;
+        internal DWORD dwSize;
 
         /// <summary>
         /// Handle to the device generating the raw input data.
         /// </summary>
-        internal HANDLE Device;
+        internal HANDLE hDevice;
 
         /// <summary>
         /// Value passed in the wParam parameter of the WM_INPUT message.
         /// </summary>
-        internal WPARAM Param;
+        internal WPARAM wParam;
 
         public static readonly int SizeInBytes =
-            BlittableValueType<RawInputHeader>.Stride;
+            BlittableValueType<RAWINPUTHEADER>.Stride;
     }
 }

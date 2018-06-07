@@ -1,6 +1,6 @@
 ﻿namespace OpenTK.NT.Native
 {
-    public enum RawInputKeyboardDataFlags : short //: ushort
+    public enum RawInputKeyboardDataFlags : ushort
     {
         MAKE = 0,
         BREAK = 1,

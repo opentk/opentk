@@ -8,21 +8,19 @@ namespace OpenTK.NT.Native
     /// Contains information about a raw input device.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct RawInputDeviceList
+    public struct RAWINPUTDEVICELIST
     {
         /// <summary>
         /// Handle to the raw input device.
         /// </summary>
-        internal HANDLE Device;
+        internal HANDLE hDevice;
 
         /// <summary>
         /// Type of device.
         /// </summary>
-        internal RawInputDeviceType Type;
+        internal RawInputDeviceType dwType;
 
         public override string ToString()
-        {
-            return $"{Type}, Handle: {Device}";
-        }
+            => $"{dwType}, Handle: {hDevice}";
     }
 }

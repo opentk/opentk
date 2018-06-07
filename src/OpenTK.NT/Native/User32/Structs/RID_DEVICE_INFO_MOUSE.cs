@@ -1,5 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 
+using BOOL = System.Boolean;
+using DWORD = System.UInt32;
+
 namespace OpenTK.NT.Native
 {
     /// <summary>
@@ -9,22 +12,22 @@ namespace OpenTK.NT.Native
     /// For the keyboard, the Usage Page is 1 and the Usage is 2.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
-    public struct RawInputMouseDeviceInfo
+    public struct RID_DEVICE_INFO_MOUSE
     {
         /// <summary>
         /// ID for the mouse device.
         /// </summary>
-        internal int Id;
+        internal DWORD dwId;
 
         /// <summary>
         /// Number of buttons for the mouse.
         /// </summary>
-        internal int NumberOfButtons;
+        internal DWORD dwNumberOfButtons;
 
         /// <summary>
         /// Number of data points per second. This information may not be applicable for every mouse device.
         /// </summary>
-        internal int SampleRate;
+        internal DWORD dwSampleRate;
 
         /// <summary>
         /// TRUE if the mouse has a wheel for horizontal scrolling; otherwise, FALSE.
@@ -32,6 +35,6 @@ namespace OpenTK.NT.Native
         /// <remarks>
         /// This member is only supported under Microsoft Windows Vista and later versions.
         /// </remarks>
-        internal bool HasHorizontalWheel;
+        internal BOOL fHasHorizontalWheel;
     }
 }

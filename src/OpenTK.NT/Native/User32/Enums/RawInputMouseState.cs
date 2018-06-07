@@ -3,7 +3,7 @@
 namespace OpenTK.NT.Native
 {
     [Flags]
-    public enum RawInputMouseState : ushort
+    public enum RawInputMouseState : uint
     {
         LEFT_BUTTON_DOWN = 0x0001, // Left Button changed to down.
         LEFT_BUTTON_UP = 0x0002, // Left Button changed to up.

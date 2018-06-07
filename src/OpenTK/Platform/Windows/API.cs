@@ -97,24 +97,12 @@ namespace OpenTK.Platform.Windows
     {
         internal static readonly short PixelFormatDescriptorSize;
         internal static readonly short PixelFormatDescriptorVersion;
-        internal static readonly int RawInputSize;
-        internal static readonly int RawInputDeviceSize;
-        internal static readonly int RawInputHeaderSize;
-        internal static readonly int RawInputDeviceListSize;
-        internal static readonly int RawInputDeviceInfoSize;
-        internal static readonly int RawMouseSize;
 
         internal static readonly int WindowInfoSize;
 
         // Prevent BeforeFieldInit optimization, and initialize 'size' fields.
         static API()
         {
-            RawInputHeaderSize = Marshal.SizeOf(typeof(RawInputHeader));
-            RawInputSize = Marshal.SizeOf(typeof(RawInput));
-            RawMouseSize = Marshal.SizeOf(typeof(RawMouse));
-            RawInputDeviceSize = Marshal.SizeOf(typeof(RawInputDevice));
-            RawInputDeviceListSize = Marshal.SizeOf(typeof(RawInputDeviceList));
-            RawInputDeviceInfoSize = Marshal.SizeOf(typeof(RawInputDeviceInfo));
             PixelFormatDescriptorVersion = 1;
             PixelFormatDescriptorSize = (short)Marshal.SizeOf(typeof(PixelFormatDescriptor));
             WindowInfoSize = Marshal.SizeOf(typeof(WindowInfo));

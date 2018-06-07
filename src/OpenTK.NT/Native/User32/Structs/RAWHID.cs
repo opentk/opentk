@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
+using DWORD = System.UInt32;
+
 namespace OpenTK.NT.Native
 {
     /// <summary>
@@ -13,35 +15,33 @@ namespace OpenTK.NT.Native
     /// dwSizeHid * dwCount.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
-    internal struct RawHID
+    internal struct RAWHID
     {
         /// <summary>
         /// Size, in bytes, of each HID input in bRawData.
         /// </summary>
-        internal int Size;
+        public DWORD dwSizeHid;
 
         /// <summary>
         /// Number of HID inputs in bRawData.
         /// </summary>
-        internal int Count;
+        public DWORD dwCount;
 
         /// <summary>
         /// Raw input data as an array of bytes.
         /// </summary>
-        internal byte RawData;
+        public byte bRawData;
 
         internal byte this[int index]
         {
             get
             {
-                if (index < 0 || index > Size * Count)
-                {
+                if (index < 0 || index > dwSizeHid * dwCount)
                     throw new ArgumentOutOfRangeException(nameof(index));
-                }
 
                 unsafe
                 {
-                    fixed (byte* data = &RawData)
+                    fixed (byte* data = &bRawData)
                     {
                         return *(data + index);
                     }
