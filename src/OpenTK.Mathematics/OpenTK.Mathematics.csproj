@@ -4,7 +4,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Deterministic>true</Deterministic>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <AssemblyName>OpenTK.OpenTK.Mathematics</AssemblyName>
+    <AssemblyName>OpenTK.Mathematics</AssemblyName>
     <RootNamespace>OpenTK.Mathematics</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
