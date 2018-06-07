@@ -1,9 +1,11 @@
 ﻿using System;
 
+using UINT = System.UInt32;
+
 namespace OpenTK.NT.Native
 {
     [Flags]
-    internal enum ClassStyle
+    internal enum ClassStyle : UINT
     {
         //None            = 0x0000,
         VRedraw = 0x0001,

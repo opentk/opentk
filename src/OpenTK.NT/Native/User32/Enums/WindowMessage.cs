@@ -1,6 +1,8 @@
-﻿namespace OpenTK.NT.Native
+﻿using UINT = System.UInt32;
+
+namespace OpenTK.NT.Native
 {
-    public enum WindowMessage
+    public enum WindowMessage : UINT
     {
         NULL = 0x0000,
         CREATE = 0x0001,

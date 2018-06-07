@@ -1,60 +1,49 @@
 ﻿using System.Runtime.InteropServices;
 
+using DWORD = System.UInt32;
+using WORD = System.UInt16;
+
 namespace OpenTK.NT.Native
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-    public class DEVMODE
+    public class DEVMODE // unions aren't represented
     {
-        internal int BitsPerPel;
-        internal short Collate;
-
-        internal short Color;
-
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         internal string DeviceName;
+        internal WORD dmSpecVersion;
+        internal WORD dmDriverVersion;
+        internal readonly WORD dmSize = (ushort)Marshal.SizeOf(typeof(DEVMODE));
+        internal WORD dmDriverExtra;
+        internal DWORD dmFields;
 
-        internal int DisplayFixedOutput;
-        internal int DisplayFlags;
-        internal int DisplayFrequency;
-        internal int DisplayOrientation;
-        internal int DitherType;
-        internal short DriverExtra;
-        internal short DriverVersion;
-        internal short Duplex;
-        internal int Fields;
+        internal POINT dmPosition;
+        internal DWORD dmDisplayOrientation;
+        internal DWORD dmDisplayFixedOutput;
+
+        internal short dmColor;
+        internal short dmDuplex;
+        internal short dmYResolution;
+        internal short dmTTOption;
+        internal short dmCollate;
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-        internal string FormName;
+        internal string dmFormName;
+        internal WORD dmLogPixels;
+        internal DWORD dmBitsPerPel;
+        internal DWORD dmPelsWidth;
+        internal DWORD dmPelsHeight;
 
-        internal int ICMIntent;
-        internal int ICMMethod;
-        internal short LogPixels;
-        internal int MediaType;
-        internal int PanningHeight;
-        internal int PanningWidth;
-        internal int PelsHeight;
-        internal int PelsWidth;
+        internal DWORD dmDisplayFlags;
+        internal DWORD dmDisplayFrequency;
 
-        //internal short Orientation;
-        //internal short PaperSize;
-        //internal short PaperLength;
-        //internal short PaperWidth;
-        //internal short Scale;
-        //internal short Copies;
-        //internal short DefaultSource;
-        //internal short PrintQuality;
+        internal DWORD dmICMMethod;
+        internal DWORD dmICMIntent;
+        internal DWORD dmMediaType;
+        internal DWORD dmDitherType;
+        internal DWORD dmReserved1;
+        internal DWORD dmReserved2;
 
-        internal POINT Position;
-        internal int Reserved1;
-        internal int Reserved2;
-        private short Size;
-        internal short SpecVersion;
-        internal short TTOption;
-        internal short YResolution;
-
-        internal DEVMODE()
-        {
-            Size = (short)Marshal.SizeOf(this);
-        }
+        internal DWORD dmPanningWidth;
+        internal DWORD dmPanningHeight;
     }
 }
