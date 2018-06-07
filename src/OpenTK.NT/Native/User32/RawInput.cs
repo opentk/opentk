@@ -14,7 +14,7 @@ namespace OpenTK.NT.Native
     {
         public static class RawInput
         {
-            public static readonly uint Size = (uint)Marshal.SizeOf(typeof(Native.RAWINPUT));
+            public static readonly uint Size = (uint)Marshal.SizeOf(typeof(RAWINPUT));
             public static readonly uint DeviceSize = (uint)Marshal.SizeOf(typeof(RAWINPUTDEVICE));
             public static readonly uint HeaderSize = (uint)Marshal.SizeOf(typeof(RAWINPUTHEADER));
             public static readonly uint DeviceListSize = (uint)Marshal.SizeOf(typeof(RAWINPUTDEVICELIST));
@@ -34,7 +34,7 @@ namespace OpenTK.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll")]
             internal static extern LRESULT DefRawInputProc(
-                [In] Native.RAWINPUT[] paRawInput,
+                [In] RAWINPUT[] paRawInput,
                 [In] int nInput,
                 [In] uint cbSizeHeader
             );
@@ -98,7 +98,7 @@ namespace OpenTK.NT.Native
             /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
             internal static extern uint GetRegisteredRawInputDevices(
-                [Out] [Optional] Native.RAWINPUT[] pRawInputDevices,
+                [Out] [Optional] RAWINPUT[] pRawInputDevices,
                 [In] [Out] ref uint puiNumDevices,
                 [In] uint cbSize
             );
@@ -121,7 +121,7 @@ namespace OpenTK.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
             internal static extern uint GetRawInputBuffer(
-                [Out] [Optional] Native.RAWINPUT[] pData,
+                [Out] [Optional] RAWINPUT[] pData,
                 [In] [Out] ref uint pcbSize,
                 [In] uint cbSizeHeader
             );
@@ -299,7 +299,7 @@ namespace OpenTK.NT.Native
                 [In] [Out] ref uint pcbSize
             );
 
-            internal static int GetRawInputData(IntPtr raw, out RAWINPUTHEADER header)
+            internal static uint GetRawInputData(IntPtr raw, out RAWINPUTHEADER header)
             {
                 var size = RAWINPUTHEADER.SizeInBytes;
                 unsafe
@@ -318,12 +318,12 @@ namespace OpenTK.NT.Native
                 return size;
             }
 
-            internal static int GetRawInputData(IntPtr raw, out Native.RAWINPUT data)
+            internal static uint GetRawInputData(IntPtr raw, out RAWINPUT data)
             {
-                var size = Native.RAWINPUT.SizeInBytes;
+                var size = RAWINPUT.SizeInBytes;
                 unsafe
                 {
-                    fixed (Native.RAWINPUT* pdata = &data)
+                    fixed (RAWINPUT* pdata = &data)
                     {
                         GetRawInputData(raw, GetRawInputDataEnum.INPUT,
                             (IntPtr)pdata, ref size, HeaderSize);
@@ -333,9 +333,9 @@ namespace OpenTK.NT.Native
                 return size;
             }
 
-            internal static int GetRawInputData(IntPtr raw, byte[] data)
+            internal static uint GetRawInputData(IntPtr raw, byte[] data)
             {
-                var size = data.Length;
+                var size = (uint)data.Length;
                 unsafe
                 {
                     fixed (byte* pdata = data)
@@ -419,7 +419,7 @@ namespace OpenTK.NT.Native
             internal static extern uint GetRawInputData(
                 [In] HRAWINPUT hRawInput,
                 [In] GetRawInputDataEnum uiCommand,
-                [Out] [Optional] out Native.RAWINPUT pData,
+                [Out] [Optional] out RAWINPUT pData,
                 [In] [Out] ref uint pcbSize,
                 [In] uint cbSizeHeader
             );
@@ -429,7 +429,7 @@ namespace OpenTK.NT.Native
             internal static extern unsafe int GetRawInputData(
                 HRAWINPUT RawInput,
                 GetRawInputDataEnum Command,
-                Native.RAWINPUT* Data,
+                RAWINPUT* Data,
                 [In] [Out] ref int Size,
                 int SizeHeader
             );

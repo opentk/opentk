@@ -37,7 +37,7 @@ namespace OpenTK.NT.Native
         /// </summary>
         internal WPARAM wParam;
 
-        public static readonly int SizeInBytes =
-            BlittableValueType<RAWINPUTHEADER>.Stride;
+        public static readonly uint SizeInBytes =
+            (uint)BlittableValueType<RAWINPUTHEADER>.Stride;
     }
 }
