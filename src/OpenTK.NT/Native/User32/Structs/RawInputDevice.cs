@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using OpenTK.Core.Platform.Common;
+using System.Runtime.InteropServices;
 
 using HWND = System.IntPtr;
 
@@ -19,7 +20,7 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Top level collection Usage page for the raw input device.
         /// </summary>
-        internal HIDPage UsagePage;
+        internal HidPage UsagePage;
 
         /// <summary>
         /// Top level collection Usage for the raw input device.
@@ -40,25 +41,25 @@ namespace OpenTK.NT.Native
         /// </summary>
         internal HWND Target;
 
-        public RawInputDevice(HIDUsageGD usage, RawInputDeviceFlags flags, HWND target)
+        public RawInputDevice(HidUsageGD usage, RawInputDeviceFlags flags, HWND target)
         {
-            UsagePage = HIDPage.GenericDesktop;
+            UsagePage = HidPage.GenericDesktop;
             Usage = (short)usage;
             Flags = flags;
             Target = target;
         }
 
-        public RawInputDevice(HIDUsageCD usage, RawInputDeviceFlags flags, HWND target)
+        public RawInputDevice(HidUsageCD usage, RawInputDeviceFlags flags, HWND target)
         {
-            UsagePage = HIDPage.Consumer;
+            UsagePage = HidPage.Consumer;
             Usage = (short)usage;
             Flags = flags;
             Target = target;
         }
 
-        public RawInputDevice(HIDUsageSim usage, RawInputDeviceFlags flags, HWND target)
+        public RawInputDevice(HidUsageSim usage, RawInputDeviceFlags flags, HWND target)
         {
-            UsagePage = HIDPage.Simulation;
+            UsagePage = HidPage.Simulation;
             Usage = (short)usage;
             Flags = flags;
             Target = target;

@@ -1,7 +1,7 @@
-﻿namespace OpenTK.NT.Native
+﻿namespace OpenTK.Core.Platform.Common
 {
     // Generic desktop usage
-    public enum HIDUsageGD : ushort
+    public enum HidUsageGD : ushort
     {
         Pointer = 0x01, // Physical Collection
         Mouse = 0x02, // Application Collection

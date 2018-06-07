@@ -1,6 +1,6 @@
-﻿namespace OpenTK.NT.Native
+﻿namespace OpenTK.Core.Platform.Common
 {
-    public enum HIDUsageSim : ushort
+    public enum HidUsageSim : ushort
     {
         FlightSimulationDevice = 0x01, // Application Collection
         AutomobileSimulationDevice = 0x02, //             Application Collection

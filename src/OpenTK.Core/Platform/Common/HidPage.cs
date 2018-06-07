@@ -1,6 +1,6 @@
-﻿namespace OpenTK.NT.Native
+﻿namespace OpenTK.Core.Platform.Common
 {
-    public enum HIDPage : ushort
+    public enum HidPage : ushort
     {
         Undefined = 0x00,
         GenericDesktop = 0x01,
