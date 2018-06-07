@@ -125,6 +125,15 @@ namespace OpenTK.Platform.Windows
         #define NEXTRAWINPUTBLOCK(ptr) ((PRAWINPUT)RAWINPUT_ALIGN((ULONG_PTR)((PBYTE)(ptr) + (ptr)->header.dwSize)))
         */
 
+        /// <summary>
+        /// Sets the timing resolution of the GetTime (?) method.
+        /// </summary>
+        /// <param name="period">Timing resolution in msec (?)</param>
+        /// <returns>(?)</returns>
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport("winmm.dll")]
+        internal static extern IntPtr TimeBeginPeriod(int period);
+
         internal static IntPtr NextRawInputStructure(IntPtr data)
         {
             unsafe

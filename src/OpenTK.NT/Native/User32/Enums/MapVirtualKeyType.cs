@@ -1,6 +1,6 @@
 ﻿namespace OpenTK.NT.Native
 {
-    internal enum MapVirtualKeyType
+    internal enum MapVirtualKeyType : uint
     {
         /// <summary>
         /// uCode is a virtual-key code and is translated into a scan code. If it is a virtual-key code that does not

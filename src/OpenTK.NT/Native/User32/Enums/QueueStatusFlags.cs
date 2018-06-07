@@ -6,7 +6,7 @@ namespace OpenTK.NT.Native
     /// Queue status flags for GetQueueStatus() and MsgWaitForMultipleObjects()
     /// </summary>
     [Flags]
-    internal enum QueueStatusFlags
+    internal enum QueueStatusFlags : uint
     {
         /// <summary>
         /// A WM_KEYUP, WM_KEYDOWN, WM_SYSKEYUP, or WM_SYSKEYDOWN message is in the queue.
