@@ -18,4 +18,5 @@
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
   </PropertyGroup>
+  <Import Project="..\..\build\targets\stylecop.props" />
 </Project>
