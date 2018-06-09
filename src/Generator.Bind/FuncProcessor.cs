@@ -256,8 +256,8 @@ namespace Bind
             // Special case for Boolean which is there simply because C89 does not support bool types.
             // We don't really need that in C#
             var normal =
-                enums.TryGetValue(typeDefinition.CurrentType, out var @enum) ||
-                enums.TryGetValue(enumProcessor.TranslateEnumName(typeDefinition.CurrentType), out @enum);
+                enums.TryGetValue(typeDefinition.TypeName, out var @enum) ||
+                enums.TryGetValue(enumProcessor.TranslateEnumName(typeDefinition.TypeName), out @enum);
 
             // Translate enum types
             typeDefinition.IsEnum = false;
@@ -267,9 +267,9 @@ namespace Bind
 
                 // Some functions and enums have the same names.
                 // Make sure we reference the enums rather than the functions.
-                typeDefinition.QualifiedType = $"{Generator.Namespace}.{@enum.Name}";
+                typeDefinition.QualifiedTypeName = $"{Generator.Namespace}.{@enum.Name}";
             }
-            else if (Generator.APITypes.TryGetValue(typeDefinition.CurrentType, out var s))
+            else if (Generator.APITypes.TryGetValue(typeDefinition.TypeName, out var s))
             {
                 // Check if the parameter is a generic GLenum. If it is, search for a better match,
                 // otherwise fallback to Settings.CompleteEnumName (named 'All' by default).
@@ -280,7 +280,7 @@ namespace Bind
                     // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
                     if (enums.ContainsKey(category))
                     {
-                        typeDefinition.QualifiedType = enumProcessor.TranslateEnumName(category);
+                        typeDefinition.QualifiedTypeName = enumProcessor.TranslateEnumName(category);
                     }
                     else
                     {
@@ -292,39 +292,39 @@ namespace Bind
                         );
 
                         typeDefinition.IsEnum = false;
-                        typeDefinition.QualifiedType = "int";
+                        typeDefinition.QualifiedTypeName = "int";
                     }
                 }
                 else
                 {
-                    typeDefinition.QualifiedType = s;
+                    typeDefinition.QualifiedTypeName = s;
                 }
             }
 
             if (!typeDefinition.IsArray && !typeDefinition.IsPointer && !typeDefinition.IsReference &&
-                (typeDefinition.QualifiedType.ToLower().Contains("buffersize") ||
-                 typeDefinition.QualifiedType.ToLower().Contains("sizeiptr") ||
-                 typeDefinition.QualifiedType.Contains("size_t")))
+                (typeDefinition.QualifiedTypeName.ToLower().Contains("buffersize") ||
+                 typeDefinition.QualifiedTypeName.ToLower().Contains("sizeiptr") ||
+                 typeDefinition.QualifiedTypeName.Contains("size_t")))
             {
                 typeDefinition.WrapperType |= WrapperTypes.SizeParameter;
             }
 
-            typeDefinition.CurrentType =
-                Generator.LanguageTypes.ContainsKey(typeDefinition.CurrentType)
-                    ? Generator.LanguageTypes[typeDefinition.CurrentType]
-                    : typeDefinition.CurrentType;
+            typeDefinition.TypeName =
+                Generator.LanguageTypes.ContainsKey(typeDefinition.TypeName)
+                    ? Generator.LanguageTypes[typeDefinition.TypeName]
+                    : typeDefinition.TypeName;
 
             // Make sure that enum parameters follow enum overrides, i.e.
             // if enum ErrorCodes is overriden to ErrorCode, then parameters
             // of type ErrorCodes should also be overriden to ErrorCode.
             var enumOverride = overrides.SelectSingleNode(
-                EnumProcessor.GetOverridesNodePath(apiname, typeDefinition.CurrentType));
+                EnumProcessor.GetOverridesNodePath(apiname, typeDefinition.TypeName));
             if (enumOverride != null)
             {
                 // For consistency - many overrides use string instead of String.
                 if (enumOverride.Value == "string")
                 {
-                    typeDefinition.QualifiedType = "String";
+                    typeDefinition.QualifiedTypeName = "String";
                 }
                 else if (enumOverride.Value == "StringBuilder")
                 {
@@ -332,13 +332,8 @@ namespace Bind
                 }
                 else
                 {
-                    typeDefinition.CurrentType = enumOverride.Value;
+                    typeDefinition.TypeName = enumOverride.Value;
                 }
-            }
-
-            if (typeDefinition.CurrentType == "IntPtr" && string.IsNullOrEmpty(typeDefinition.PreviousType))
-            {
-                typeDefinition.IndirectionLevel = 0;
             }
 
             if (typeDefinition.IndirectionLevel >= 3)
@@ -352,7 +347,7 @@ namespace Bind
                 // Remove qualifier if type is not an enum
                 // Resolves issues when replacing / overriding
                 // an enum parameter with a non-enum type
-                typeDefinition.QualifiedType = typeDefinition.CurrentType;
+                typeDefinition.QualifiedTypeName = typeDefinition.TypeName;
             }
         }
 
@@ -506,7 +501,7 @@ namespace Bind
                     switch (node.Name)
                     {
                         case "type":
-                            d.Parameters[i].CurrentType = (string)node.TypedValue;
+                            d.Parameters[i].TypeName = (string)node.TypedValue;
                             break;
                         case "name":
                             d.Parameters[i].Name = (string)node.TypedValue;
@@ -529,7 +524,7 @@ namespace Bind
             var returnOverride = functionOverride?.SelectSingleNode("returns");
             if (returnOverride != null)
             {
-                d.ReturnTypeDefinition.CurrentType = returnOverride.Value;
+                d.ReturnTypeDefinition.TypeName = returnOverride.Value;
             }
         }
 
@@ -556,33 +551,33 @@ namespace Bind
 
             TranslateType(d.ReturnTypeDefinition, nav, enumProcessor, enums, d.Category, apiname);
 
-            if (d.ReturnTypeDefinition.CurrentType.ToLower() == "void" && d.ReturnTypeDefinition.IsPointer)
+            if (d.ReturnTypeDefinition.TypeName.ToLower() == "void" && d.ReturnTypeDefinition.IsPointer)
             {
-                d.ReturnTypeDefinition.QualifiedType = "IntPtr";
+                d.ReturnTypeDefinition.QualifiedTypeName = "IntPtr";
                 d.ReturnTypeDefinition.IndirectionLevel--;
                 d.ReturnTypeDefinition.WrapperType |= WrapperTypes.GenericReturnType;
             }
 
-            if (d.ReturnTypeDefinition.CurrentType.ToLower() == "string")
+            if (d.ReturnTypeDefinition.TypeName.ToLower() == "string")
             {
-                d.ReturnTypeDefinition.QualifiedType = "IntPtr";
+                d.ReturnTypeDefinition.QualifiedTypeName = "IntPtr";
                 d.ReturnTypeDefinition.WrapperType |= WrapperTypes.StringReturnType;
             }
 
-            if (d.ReturnTypeDefinition.CurrentType.ToLower() == "object")
+            if (d.ReturnTypeDefinition.TypeName.ToLower() == "object")
             {
-                d.ReturnTypeDefinition.QualifiedType = "IntPtr";
+                d.ReturnTypeDefinition.QualifiedTypeName = "IntPtr";
                 d.ReturnTypeDefinition.WrapperType |= WrapperTypes.GenericReturnType;
             }
 
-            if (d.ReturnTypeDefinition.CurrentType.Contains("GLenum"))
+            if (d.ReturnTypeDefinition.TypeName.Contains("GLenum"))
             {
-                d.ReturnTypeDefinition.QualifiedType = "int";
+                d.ReturnTypeDefinition.QualifiedTypeName = "int";
             }
 
-            if (d.ReturnTypeDefinition.CurrentType.ToLower().Contains("bool"))
+            if (d.ReturnTypeDefinition.TypeName.ToLower().Contains("bool"))
             {
-                d.ReturnTypeDefinition.QualifiedType = "byte";
+                d.ReturnTypeDefinition.QualifiedTypeName = "byte";
                 d.ReturnTypeDefinition.WrapperType |= WrapperTypes.BoolParameter;
             }
         }
@@ -602,7 +597,7 @@ namespace Bind
             for (var i = 0; i < d.Parameters.Count; i++)
             {
                 TranslateParameter(d.Parameters[i], nav, enumProcessor, enums, d.Category, apiname);
-                if (d.Parameters[i].CurrentType == "UInt16" && d.Name.Contains("LineStipple"))
+                if (d.Parameters[i].TypeName == "UInt16" && d.Name.Contains("LineStipple"))
                 {
                     d.Parameters[i].WrapperType |= WrapperTypes.UncheckedParameter;
                 }
@@ -635,14 +630,14 @@ namespace Bind
             TranslateType(p, overrides, enumProcessor, enums, category, apiname);
 
             // Translate char* -> string. This simplifies the rest of the logic below
-            if (p.CurrentType.ToLower().Contains("char") && p.IsPointer)
+            if (p.TypeName.ToLower().Contains("char") && p.IsPointer)
             {
-                p.CurrentType = "string";
+                p.TypeName = "string";
                 p.IndirectionLevel--;
             }
 
             // Find out the necessary wrapper types.
-            if (p.CurrentType.ToLower() == "string" && !p.IsPointer)
+            if (p.TypeName.ToLower() == "string" && !p.IsPointer)
             {
                 // char* -> IntPtr
                 // Due to a bug in the Mono runtime, we need
@@ -650,11 +645,11 @@ namespace Bind
                 // StringBuilder crashes at runtime.
                 // For symmetry, and to avoid potential runtime bugs,
                 // we will also marshal [in] string types manually.
-                p.QualifiedType = "IntPtr";
+                p.QualifiedTypeName = "IntPtr";
                 p.WrapperType |= WrapperTypes.StringParameter;
             }
 
-            if (p.CurrentType.ToLower() == "string" && p.IsPointer)
+            if (p.TypeName.ToLower() == "string" && p.IsPointer)
             {
                 // string* -> [In] String[]
                 // [Out] StringBuilder[] parameter is not currently supported
@@ -669,7 +664,7 @@ namespace Bind
                     throw new NotSupportedException("String arrays with arity >= 2 are not currently supported.");
                 }
 
-                p.QualifiedType = "IntPtr";
+                p.QualifiedTypeName = "IntPtr";
                 p.IndirectionLevel = 0;
                 p.ArrayDimensions = 0;
                 p.WrapperType |= WrapperTypes.StringArrayParameter;
@@ -677,9 +672,9 @@ namespace Bind
 
             if (p.IsPointer && p.WrapperType == WrapperTypes.None)
             {
-                if (p.QualifiedType.ToLower().StartsWith("void"))
+                if (p.QualifiedTypeName.ToLower().StartsWith("void"))
                 {
-                    p.QualifiedType = "IntPtr";
+                    p.QualifiedTypeName = "IntPtr";
                     p.IndirectionLevel = 0; // Generic parameters cannot have pointers
                     p.WrapperType |= WrapperTypes.GenericParameter;
                     p.WrapperType |= WrapperTypes.ArrayParameter;
@@ -775,7 +770,7 @@ namespace Bind
                     // returns a vector of specific dimensions and it would be wrong
                     // to generate an overload that returns a value of different size.
                     isCandidate &= p.ElementCount == 0 || p.ElementCount == 1;
-                    isCandidate &= r.CurrentType == "void" && !r.IsPointer;
+                    isCandidate &= r.TypeName == "void" && !r.IsPointer;
 
                     FunctionDefinition f = null;
                     if (isCandidate && p.Flow == FlowDirection.Out)
@@ -811,7 +806,7 @@ namespace Bind
                         if ((p.WrapperType & WrapperTypes.SizeParameter) != 0)
                         {
                             f = f ?? new FunctionDefinition(d);
-                            f.Parameters[i].QualifiedType = "Int32";
+                            f.Parameters[i].QualifiedTypeName = "Int32";
                         }
 
                         i++;
@@ -841,7 +836,7 @@ namespace Bind
             }
 
             var pSize = f.Parameters.Last();
-            if (!pSize.CurrentType.ToLower().StartsWith("int") || pSize.IsPointer)
+            if (!pSize.TypeName.ToLower().StartsWith("int") || pSize.IsPointer)
             {
                 return f;
             }
@@ -981,7 +976,7 @@ namespace Bind
                         p.IndirectionLevel = 0;
                         p.ArrayDimensions = 0;
                         p.Generic = true;
-                        p.QualifiedType = "T" + i;
+                        p.QualifiedTypeName = "T" + i;
                         p.Flow = FlowDirection.Undefined;
                     }
                 }
@@ -1010,12 +1005,12 @@ namespace Bind
                             p.ArrayDimensions = (uint)arity;
                             if (arity == 0)
                             {
-                                p.QualifiedType = "IntPtr";
+                                p.QualifiedTypeName = "IntPtr";
                             }
                             else
                             {
                                 p.Generic = true;
-                                p.QualifiedType = "T" + i;
+                                p.QualifiedTypeName = "T" + i;
                                 p.Flow = FlowDirection.Undefined;
                             }
                         }
@@ -1039,7 +1034,7 @@ namespace Bind
                     var p = wrapper.Parameters[i];
                     if ((p.WrapperType & WrapperTypes.StringParameter) != 0)
                     {
-                        p.QualifiedType = "String";
+                        p.QualifiedTypeName = "String";
                         if (p.Flow == FlowDirection.Out)
                         {
                             p.IsReference = true;
@@ -1053,7 +1048,7 @@ namespace Bind
                             throw new NotImplementedException();
                         }
 
-                        p.QualifiedType = "String";
+                        p.QualifiedTypeName = "String";
                         p.IndirectionLevel = 0;
                         p.ArrayDimensions = 1;
                     }
@@ -1071,18 +1066,18 @@ namespace Bind
         {
             if ((func.ReturnTypeDefinition.WrapperType & WrapperTypes.StringReturnType) != 0)
             {
-                func.ReturnTypeDefinition.QualifiedType = "String";
+                func.ReturnTypeDefinition.QualifiedTypeName = "String";
             }
 
             if ((func.ReturnTypeDefinition.WrapperType & WrapperTypes.GenericReturnType) != 0)
             {
                 // Nothing else we can do, using generics will break the runtime
-                func.ReturnTypeDefinition.QualifiedType = "IntPtr";
+                func.ReturnTypeDefinition.QualifiedTypeName = "IntPtr";
             }
 
             if ((func.ReturnTypeDefinition.WrapperType & WrapperTypes.BoolParameter) != 0)
             {
-                func.ReturnTypeDefinition.QualifiedType = "bool";
+                func.ReturnTypeDefinition.QualifiedTypeName = "bool";
             }
         }
     }

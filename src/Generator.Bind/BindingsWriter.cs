@@ -463,7 +463,7 @@ namespace Bind
                 // Add every function to every enum parameter it references
                 foreach (var parameter in wrapper.Parameters.Where(p => p.IsEnum))
                 {
-                    var e = enums[parameter.CurrentType];
+                    var e = enums[parameter.TypeName];
                     var list = enumCounts[e];
                     list.Add(wrapper);
                 }
@@ -555,7 +555,7 @@ namespace Bind
                 sb.Append("<");
                 foreach (var p in f.Parameters.Where(p => p.Generic))
                 {
-                    sb.Append(p.CurrentType);
+                    sb.Append(p.TypeName);
                     sb.Append(", ");
                 }
 
@@ -570,7 +570,7 @@ namespace Bind
                 sb.AppendLine();
                 foreach (var p in f.Parameters.Where(p => p.Generic))
                 {
-                    sb.AppendLine($"    where {p.CurrentType} : struct");
+                    sb.AppendLine($"    where {p.TypeName} : struct");
                 }
             }
 
@@ -675,12 +675,12 @@ namespace Bind
 
         private string GetQualifiedTypeOrAlias(TypeDefinition typeDefinition)
         {
-            if (Aliases.ContainsKey(typeDefinition.QualifiedType))
+            if (Aliases.ContainsKey(typeDefinition.QualifiedTypeName))
             {
-                return Aliases[typeDefinition.QualifiedType];
+                return Aliases[typeDefinition.QualifiedTypeName];
             }
 
-            return typeDefinition.QualifiedType;
+            return typeDefinition.QualifiedTypeName;
         }
     }
 }

@@ -8,6 +8,10 @@ namespace Bind.Structures
 {
     internal class FunctionDefinition : DelegateDefinition, IEquatable<FunctionDefinition>, IComparable<FunctionDefinition>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FunctionDefinition"/> class.
+        /// </summary>
+        /// <param name="d">The delegate definition to wrap.</param>
         public FunctionDefinition(DelegateDefinition d)
             : base(d)
         {
@@ -15,6 +19,11 @@ namespace Bind.Structures
             WrappedDelegateDefinition = d;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FunctionDefinition"/> class.
+        /// This constructor performs a deep copy of the given definition.
+        /// </summary>
+        /// <param name="f">The definition to copy.</param>
         public FunctionDefinition(FunctionDefinition f)
             : this(f.WrappedDelegateDefinition)
         {
@@ -27,8 +36,14 @@ namespace Bind.Structures
 
         public DelegateDefinition WrappedDelegateDefinition { get; set; }
 
+        /// <summary>
+        /// Gets or sets the trimmed name of this function.
+        /// </summary>
         public string TrimmedName { get; set; }
 
+        /// <summary>
+        /// Gets or sets the documentation definition for this function.
+        /// </summary>
         public DocumentationDefinition DocumentationDefinition { get; set; }
 
         /// <inheritdoc/>
@@ -50,7 +65,7 @@ namespace Bind.Structures
         /// <inheritdoc/>
         public int CompareTo(FunctionDefinition other)
         {
-            var ret = String.Compare(Name, other.Name, StringComparison.Ordinal);
+            var ret = string.Compare(Name, other.Name, StringComparison.Ordinal);
             if (ret == 0)
             {
                 ret = Parameters.CompareTo(other.Parameters);

@@ -6,14 +6,24 @@ using System;
 
 namespace Bind.Structures
 {
+    /// <summary>
+    /// Represents a type definition that's used for translation between the OpenGL specification and the CLR.
+    /// </summary>
     internal class TypeDefinition : IComparable<TypeDefinition>, IEquatable<TypeDefinition>
     {
-        private string _currentQualifier = string.Empty;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TypeDefinition"/> class.
+        ///
+        /// </summary>
         public TypeDefinition()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TypeDefinition"/> class.
+        /// This constructor performs a deep copy of the given definition.
+        /// </summary>
+        /// <param name="t">The definition to copy.</param>
         public TypeDefinition(TypeDefinition t)
         {
             if (t == null)
@@ -21,9 +31,7 @@ namespace Bind.Structures
                 return;
             }
 
-            QualifiedType = t.QualifiedType ?? t.CurrentType; // Covers current type and qualifier
-            PreviousType = t.PreviousType;
-            PreviousQualifier = t.PreviousQualifier;
+            QualifiedTypeName = t.QualifiedTypeName ?? t.TypeName; // Covers current type and qualifier
             WrapperType = t.WrapperType;
             ArrayDimensions = t.ArrayDimensions;
             IndirectionLevel = t.IndirectionLevel;
@@ -32,19 +40,18 @@ namespace Bind.Structures
             IsEnum = t.IsEnum;
         }
 
-        private string CurrentQualifier
-        {
-            get => _currentQualifier;
-            set { PreviousQualifier = CurrentQualifier; _currentQualifier = value; }
-        }
+        private string CurrentQualifier { get; set; } = string.Empty;
 
-        private string PreviousQualifier { get; set; } = string.Empty;
-
-        public string QualifiedType
+        /// <summary>
+        /// Gets or sets the fully-qualified name of the type. Setting this also sets <see cref="TypeName"/> to the
+        /// unqualified type name.
+        /// </summary>
+        /// <exception cref="ArgumentNullException">Thrown if the value is null.</exception>
+        public string QualifiedTypeName
         {
             get => !string.IsNullOrEmpty(CurrentQualifier)
-                ? $"{CurrentQualifier}.{CurrentType}"
-                : CurrentType;
+                ? $"{CurrentQualifier}.{TypeName}"
+                : TypeName;
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -56,24 +63,24 @@ namespace Bind.Structures
                 if (qualifierEnd > -1)
                 {
                     CurrentQualifier = value.Substring(0, qualifierEnd);
-                    CurrentType = value.Substring(qualifierEnd + 1);
+                    TypeName = value.Substring(qualifierEnd + 1);
                 }
                 else
                 {
-                    CurrentType = value;
+                    TypeName = value;
                     CurrentQualifier = string.Empty;
                 }
             }
         }
 
-        private string _type;
+        private string _typeName;
 
         /// <summary>
-        /// Gets the type of the parameter.
+        /// Gets or sets the type of the parameter.
         /// </summary>
-        public string CurrentType
+        public string TypeName
         {
-            get => _type;
+            get => _typeName;
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -81,24 +88,18 @@ namespace Bind.Structures
                     throw new ArgumentException();
                 }
 
-                if (!string.IsNullOrEmpty(_type))
-                {
-                    PreviousType = _type;
-                }
                 if (!string.IsNullOrEmpty(value))
                 {
-                    _type = value.Trim();
+                    _typeName = value.Trim();
                 }
 
-                while (_type.EndsWith("*"))
+                while (_typeName.EndsWith("*"))
                 {
-                    _type = _type.Substring(0, _type.Length - 1).Trim();
+                    _typeName = _typeName.Substring(0, _typeName.Length - 1).Trim();
                     IndirectionLevel++;
                 }
             }
         }
-
-        public string PreviousType { get; private set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the type is a CLR by-ref type (that is, out or ref).
@@ -138,40 +139,32 @@ namespace Bind.Structures
         /// <summary>
         /// Gets a value indicating whether the type is an unsigned type.
         /// </summary>
-        public bool IsUnsigned => (CurrentType.Contains("UInt") || CurrentType.Contains("Byte"));
+        public bool IsUnsigned => (TypeName.Contains("UInt") || TypeName.Contains("Byte"));
 
+        /// <summary>
+        /// Gets or sets the wrapper type hinting information for this definition.
+        /// </summary>
         public WrapperTypes WrapperType { get; set; } = WrapperTypes.None;
 
-        private static readonly string[] PointerLevels =
-        {
-            "",
-            "*",
-            "**",
-            "***",
-            "****"
-        };
-
-        private static readonly string[] ArrayLevels =
-        {
-            "",
-            "[]",
-            "[,]",
-            "[,,]"
-        };
-
-        // Only used for debugging.
+        /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{CurrentType}{PointerLevels[IndirectionLevel]}{ArrayLevels[ArrayDimensions]}";
+            var pointerLevelString = new string('*', (int)IndirectionLevel);
+            var arrayLevelString = ArrayDimensions > 0
+                ? $"[{new string(',', (int)ArrayDimensions)}]"
+                : string.Empty;
+
+            return $"{TypeName}{pointerLevelString}{arrayLevelString}";
         }
 
+        /// <inheritdoc/>
         public int CompareTo(TypeDefinition other)
         {
             // Make sure that Pointer parameters are sorted last to avoid bug [#1098].
             // The rest of the comparisons help maintain a stable order (useful for source control).
             // Note that CompareTo is stricter than Equals and that there is code in
             // DelegateCollection.Add that depends on this fact.
-            var result = CurrentType.CompareTo(other.CurrentType);
+            var result = TypeName.CompareTo(other.TypeName);
             if (result == 0)
             {
                 result = IndirectionLevel.CompareTo(other.IndirectionLevel); // Must come after array/ref, see issue [#1098]
@@ -191,10 +184,11 @@ namespace Bind.Structures
             return result;
         }
 
+        /// <inheritdoc/>
         public bool Equals(TypeDefinition other)
         {
             var result =
-                CurrentType.Equals(other.CurrentType) &&
+                TypeName.Equals(other.TypeName) &&
                 IndirectionLevel.Equals(other.IndirectionLevel) &&
                 IsReference.Equals(other.IsReference) &&
                 ArrayDimensions.Equals(other.ArrayDimensions);

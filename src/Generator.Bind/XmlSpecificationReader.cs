@@ -291,12 +291,12 @@ namespace Bind
                     switch (param.Name)
                     {
                         case "returns":
-                            d.ReturnTypeDefinition.CurrentType = param.GetAttribute("type", string.Empty).Trim();
+                            d.ReturnTypeDefinition.TypeName = param.GetAttribute("type", string.Empty).Trim();
                             break;
 
                         case "param":
                             var p = new ParameterDefinition();
-                            p.CurrentType = param.GetAttribute("type", string.Empty).Trim();
+                            p.TypeName = param.GetAttribute("type", string.Empty).Trim();
                             p.Name = param.GetAttribute("name", string.Empty).Trim();
 
                             p.ComputeSize = param.GetAttribute("count", string.Empty).Trim();
