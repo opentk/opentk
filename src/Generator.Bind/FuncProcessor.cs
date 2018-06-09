@@ -301,7 +301,7 @@ namespace Bind
                 }
             }
 
-            if (typeDefinition.Array == 0 && typeDefinition.Pointer == 0 && !typeDefinition.Reference &&
+            if (!typeDefinition.IsArray && !typeDefinition.IsPointer && !typeDefinition.IsReference &&
                 (typeDefinition.QualifiedType.ToLower().Contains("buffersize") ||
                  typeDefinition.QualifiedType.ToLower().Contains("sizeiptr") ||
                  typeDefinition.QualifiedType.Contains("size_t")))
@@ -338,10 +338,10 @@ namespace Bind
 
             if (typeDefinition.CurrentType == "IntPtr" && string.IsNullOrEmpty(typeDefinition.PreviousType))
             {
-                typeDefinition.Pointer = 0;
+                typeDefinition.IndirectionLevel = 0;
             }
 
-            if (typeDefinition.Pointer >= 3)
+            if (typeDefinition.IndirectionLevel >= 3)
             {
                 Trace.WriteLine(
                     $"[Error] Type '{typeDefinition}' has a high pointer level. Bindings will be incorrect.");
@@ -517,7 +517,7 @@ namespace Bind
                         case "count":
                             d.Parameters[i].ComputeSize = node.Value.Trim();
                             d.Parameters[i].ElementCount =
-                                int.TryParse(d.Parameters[i].ComputeSize, out var count) ? count : 0;
+                                uint.TryParse(d.Parameters[i].ComputeSize, out var count) ? count : 0;
                             break;
                     }
                 }
@@ -556,10 +556,10 @@ namespace Bind
 
             TranslateType(d.ReturnTypeDefinition, nav, enumProcessor, enums, d.Category, apiname);
 
-            if (d.ReturnTypeDefinition.CurrentType.ToLower() == "void" && d.ReturnTypeDefinition.Pointer != 0)
+            if (d.ReturnTypeDefinition.CurrentType.ToLower() == "void" && d.ReturnTypeDefinition.IsPointer)
             {
                 d.ReturnTypeDefinition.QualifiedType = "IntPtr";
-                d.ReturnTypeDefinition.Pointer--;
+                d.ReturnTypeDefinition.IndirectionLevel--;
                 d.ReturnTypeDefinition.WrapperType |= WrapperTypes.GenericReturnType;
             }
 
@@ -635,14 +635,14 @@ namespace Bind
             TranslateType(p, overrides, enumProcessor, enums, category, apiname);
 
             // Translate char* -> string. This simplifies the rest of the logic below
-            if (p.CurrentType.ToLower().Contains("char") && p.Pointer > 0)
+            if (p.CurrentType.ToLower().Contains("char") && p.IsPointer)
             {
                 p.CurrentType = "string";
-                p.Pointer--;
+                p.IndirectionLevel--;
             }
 
             // Find out the necessary wrapper types.
-            if (p.CurrentType.ToLower() == "string" && p.Pointer == 0)
+            if (p.CurrentType.ToLower() == "string" && !p.IsPointer)
             {
                 // char* -> IntPtr
                 // Due to a bug in the Mono runtime, we need
@@ -654,7 +654,7 @@ namespace Bind
                 p.WrapperType |= WrapperTypes.StringParameter;
             }
 
-            if (p.CurrentType.ToLower() == "string" && p.Pointer >= 1)
+            if (p.CurrentType.ToLower() == "string" && p.IsPointer)
             {
                 // string* -> [In] String[]
                 // [Out] StringBuilder[] parameter is not currently supported
@@ -664,23 +664,23 @@ namespace Bind
                     throw new NotSupportedException("[Out] String* parameters are not currently supported.");
                 }
 
-                if (p.Pointer >= 2)
+                if (p.IndirectionLevel >= 2)
                 {
                     throw new NotSupportedException("String arrays with arity >= 2 are not currently supported.");
                 }
 
                 p.QualifiedType = "IntPtr";
-                p.Pointer = 0;
-                p.Array = 0;
+                p.IndirectionLevel = 0;
+                p.ArrayDimensions = 0;
                 p.WrapperType |= WrapperTypes.StringArrayParameter;
             }
 
-            if (p.Pointer > 0 && p.WrapperType == 0)
+            if (p.IsPointer && p.WrapperType == WrapperTypes.None)
             {
                 if (p.QualifiedType.ToLower().StartsWith("void"))
                 {
                     p.QualifiedType = "IntPtr";
-                    p.Pointer = 0; // Generic parameters cannot have pointers
+                    p.IndirectionLevel = 0; // Generic parameters cannot have pointers
                     p.WrapperType |= WrapperTypes.GenericParameter;
                     p.WrapperType |= WrapperTypes.ArrayParameter;
                     p.WrapperType |= WrapperTypes.ReferenceParameter;
@@ -770,12 +770,12 @@ namespace Bind
                     isCandidate &=
                         name.StartsWith("Get") || name.StartsWith("Gen") ||
                         name.StartsWith("Delete") || name.StartsWith("New");
-                    isCandidate &= p.Pointer > 0;
+                    isCandidate &= p.IsPointer;
                     // if there is a specific count set, such as "4", then this function
                     // returns a vector of specific dimensions and it would be wrong
                     // to generate an overload that returns a value of different size.
                     isCandidate &= p.ElementCount == 0 || p.ElementCount == 1;
-                    isCandidate &= r.CurrentType == "void" && r.Pointer == 0;
+                    isCandidate &= r.CurrentType == "void" && !r.IsPointer;
 
                     FunctionDefinition f = null;
                     if (isCandidate && p.Flow == FlowDirection.Out)
@@ -831,7 +831,7 @@ namespace Bind
         {
             var f = new FunctionDefinition(d);
             f.ReturnTypeDefinition = new TypeDefinition(f.Parameters.Last());
-            f.ReturnTypeDefinition.Pointer = 0;
+            f.ReturnTypeDefinition.IndirectionLevel = 0;
             f.Parameters.RemoveAt(f.Parameters.Count - 1);
             f.ReturnTypeDefinition.WrapperType |= WrapperTypes.ConvenienceReturnType;
 
@@ -841,7 +841,7 @@ namespace Bind
             }
 
             var pSize = f.Parameters.Last();
-            if (!pSize.CurrentType.ToLower().StartsWith("int") || pSize.Pointer != 0)
+            if (!pSize.CurrentType.ToLower().StartsWith("int") || pSize.IsPointer)
             {
                 return f;
             }
@@ -863,8 +863,8 @@ namespace Bind
             pArray.WrapperType &= ~(
                 WrapperTypes.ReferenceParameter |
                 WrapperTypes.ArrayParameter);
-            pArray.Array = pArray.Pointer = 0;
-            pArray.Reference = false;
+            pArray.ArrayDimensions = pArray.IndirectionLevel = 0;
+            pArray.IsReference = false;
             return f;
         }
 
@@ -907,8 +907,8 @@ namespace Bind
                         {
                             wrapper.Obsolete = "Use out overload instead";
                             var p = wrapper.Parameters[i];
-                            p.Array++;
-                            p.Pointer--;
+                            p.ArrayDimensions++;
+                            p.IndirectionLevel--;
                         }
                     }
 
@@ -920,14 +920,14 @@ namespace Bind
 
                             if (p.ElementCount == 1)
                             {
-                                p.Reference = true;
+                                p.IsReference = true;
                             }
                             else
                             {
-                                p.Array++;
+                                p.ArrayDimensions++;
                             }
 
-                            p.Pointer--;
+                            p.IndirectionLevel--;
                         }
                     }
 
@@ -937,8 +937,8 @@ namespace Bind
                         {
                             var p = wrapper.Parameters[i];
 
-                            p.Reference = true;
-                            p.Pointer--;
+                            p.IsReference = true;
+                            p.IndirectionLevel--;
                         }
                     }
 
@@ -977,9 +977,9 @@ namespace Bind
                         genericWrapper = genericWrapper ?? new FunctionDefinition(wrapper);
                         var p = genericWrapper.Parameters[i];
 
-                        p.Reference = true;
-                        p.Pointer = 0;
-                        p.Array = 0;
+                        p.IsReference = true;
+                        p.IndirectionLevel = 0;
+                        p.ArrayDimensions = 0;
                         p.Generic = true;
                         p.QualifiedType = "T" + i;
                         p.Flow = FlowDirection.Undefined;
@@ -1005,9 +1005,9 @@ namespace Bind
 
                             var p = genericWrapper.Parameters[i];
 
-                            p.Reference = false;
-                            p.Pointer = 0;
-                            p.Array = arity;
+                            p.IsReference = false;
+                            p.IndirectionLevel = 0;
+                            p.ArrayDimensions = (uint)arity;
                             if (arity == 0)
                             {
                                 p.QualifiedType = "IntPtr";
@@ -1042,7 +1042,7 @@ namespace Bind
                         p.QualifiedType = "String";
                         if (p.Flow == FlowDirection.Out)
                         {
-                            p.Reference = true;
+                            p.IsReference = true;
                         }
                     }
 
@@ -1054,8 +1054,8 @@ namespace Bind
                         }
 
                         p.QualifiedType = "String";
-                        p.Pointer = 0;
-                        p.Array = 1;
+                        p.IndirectionLevel = 0;
+                        p.ArrayDimensions = 1;
                     }
                 }
             }

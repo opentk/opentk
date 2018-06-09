@@ -48,14 +48,14 @@ namespace Bind.Structures
                 //if ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None)
                 //    return false;
 
-                if (ReturnTypeDefinition.Pointer != 0)
+                if (ReturnTypeDefinition.IsPointer)
                 {
                     return true;
                 }
 
                 foreach (var p in Parameters)
                 {
-                    if (p.Pointer != 0)
+                    if (p.IsPointer)
                     {
                         return true;
                     }

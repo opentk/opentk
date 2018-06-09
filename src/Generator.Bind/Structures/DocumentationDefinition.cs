@@ -29,10 +29,19 @@ using System.Collections.Generic;
 
 namespace Bind.Structures
 {
+    /// <summary>
+    /// Holds data for function documentation.
+    /// </summary>
     internal class DocumentationDefinition
     {
+        /// <summary>
+        /// Gets or sets the documentation summary.
+        /// </summary>
         public string Summary { get; set; }
 
+        /// <summary>
+        /// Gets or sets a list of parameter documentations for the function (if any).
+        /// </summary>
         public List<DocumentationParameterDefinition> Parameters { get; set; }
     }
 }

@@ -301,7 +301,7 @@ namespace Bind
 
                             p.ComputeSize = param.GetAttribute("count", string.Empty).Trim();
 
-                            if (int.TryParse(p.ComputeSize, out var elementCount))
+                            if (uint.TryParse(p.ComputeSize, out var elementCount))
                             {
                                 p.ElementCount = elementCount;
                             }

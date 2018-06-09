@@ -550,7 +550,7 @@ namespace Bind
 
             sb.Append(!string.IsNullOrEmpty(f.TrimmedName) ? f.TrimmedName : f.Name);
 
-            if (f.Parameters.HasGenericParameters)
+            if (f.Parameters.Any(p => p.Generic))
             {
                 sb.Append("<");
                 foreach (var p in f.Parameters.Where(p => p.Generic))
@@ -565,7 +565,7 @@ namespace Bind
 
             sb.Append(GetDeclarationString(f.Parameters));
 
-            if (f.Parameters.HasGenericParameters)
+            if (f.Parameters.Any(p => p.Generic))
             {
                 sb.AppendLine();
                 foreach (var p in f.Parameters.Where(p => p.Generic))
@@ -621,7 +621,7 @@ namespace Bind
                 sb.Append("] ");
             }
 
-            if (p.Reference)
+            if (p.IsReference)
             {
                 if (p.Flow == FlowDirection.Out)
                 {
@@ -670,7 +670,7 @@ namespace Bind
         private string GetDeclarationString(TypeDefinition typeDefinition)
         {
             var t = GetQualifiedTypeOrAlias(typeDefinition);
-            return $"{t}{PointerLevels[typeDefinition.Pointer]}{ArrayLevels[typeDefinition.Array]}";
+            return $"{t}{PointerLevels[typeDefinition.IndirectionLevel]}{ArrayLevels[typeDefinition.ArrayDimensions]}";
         }
 
         private string GetQualifiedTypeOrAlias(TypeDefinition typeDefinition)

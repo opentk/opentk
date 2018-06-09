@@ -25,9 +25,9 @@ namespace Bind.Structures
             PreviousType = t.PreviousType;
             PreviousQualifier = t.PreviousQualifier;
             WrapperType = t.WrapperType;
-            Array = t.Array;
-            Pointer = t.Pointer;
-            Reference = t.Reference;
+            ArrayDimensions = t.ArrayDimensions;
+            IndirectionLevel = t.IndirectionLevel;
+            IsReference = t.IsReference;
             ElementCount = t.ElementCount;
             IsEnum = t.IsEnum;
         }
@@ -93,44 +93,52 @@ namespace Bind.Structures
                 while (_type.EndsWith("*"))
                 {
                     _type = _type.Substring(0, _type.Length - 1).Trim();
-                    Pointer++;
+                    IndirectionLevel++;
                 }
             }
         }
 
         public string PreviousType { get; private set; }
 
-        public bool Reference { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether the type is a CLR by-ref type (that is, out or ref).
+        /// </summary>
+        public bool IsReference { get; set; }
 
-        private int _array;
+        /// <summary>
+        /// Gets or sets the number of dimensions in the array (the level of the array).
+        /// </summary>
+        public uint ArrayDimensions { get; set; }
 
-        public int Array
-        {
-            get => _array;
-            set => _array = value > 0 ? value : 0;
-        }
+        /// <summary>
+        /// Gets a value indicating whether the type is an array.
+        /// </summary>
+        public bool IsArray => ArrayDimensions > 0;
 
-        private int _elementCount;
+        /// <summary>
+        /// Gets or sets the expected array length.
+        /// </summary>
+        public uint ElementCount { get; set; }
 
-        // If the type is an array and ElementCount > 0, then ElemenCount defines the expected array length.
-        public int ElementCount
-        {
-            get => _elementCount;
-            set => _elementCount = value > 0 ? value : 0;
-        }
+        /// <summary>
+        /// Gets or sets the levels of pointer indirection that the type has.
+        /// </summary>
+        public uint IndirectionLevel { get; set; }
 
-        private int _pointer;
+        /// <summary>
+        /// Gets a value indicating whether the type is a pointer type.
+        /// </summary>
+        public bool IsPointer => IndirectionLevel > 0;
 
-        public int Pointer
-        {
-            get => _pointer;
-            set => _pointer = value > 0 ? value : 0;
-        }
-
-        // Set to true if parameter is an enum.
+        /// <summary>
+        /// Gets or sets a value indicating whether the type is an enum.
+        /// </summary>
         public bool IsEnum { get; set; }
 
-        public bool Unsigned => (CurrentType.Contains("UInt") || CurrentType.Contains("Byte"));
+        /// <summary>
+        /// Gets a value indicating whether the type is an unsigned type.
+        /// </summary>
+        public bool IsUnsigned => (CurrentType.Contains("UInt") || CurrentType.Contains("Byte"));
 
         public WrapperTypes WrapperType { get; set; } = WrapperTypes.None;
 
@@ -154,7 +162,7 @@ namespace Bind.Structures
         // Only used for debugging.
         public override string ToString()
         {
-            return $"{CurrentType}{PointerLevels[Pointer]}{ArrayLevels[Array]}";
+            return $"{CurrentType}{PointerLevels[IndirectionLevel]}{ArrayLevels[ArrayDimensions]}";
         }
 
         public int CompareTo(TypeDefinition other)
@@ -166,15 +174,15 @@ namespace Bind.Structures
             var result = CurrentType.CompareTo(other.CurrentType);
             if (result == 0)
             {
-                result = Pointer.CompareTo(other.Pointer); // Must come after array/ref, see issue [#1098]
+                result = IndirectionLevel.CompareTo(other.IndirectionLevel); // Must come after array/ref, see issue [#1098]
             }
             if (result == 0)
             {
-                result = Reference.CompareTo(other.Reference);
+                result = IsReference.CompareTo(other.IsReference);
             }
             if (result == 0)
             {
-                result = Array.CompareTo(other.Array);
+                result = ArrayDimensions.CompareTo(other.ArrayDimensions);
             }
             if (result == 0)
             {
@@ -187,9 +195,9 @@ namespace Bind.Structures
         {
             var result =
                 CurrentType.Equals(other.CurrentType) &&
-                Pointer.Equals(other.Pointer) &&
-                Reference.Equals(other.Reference) &&
-                Array.Equals(other.Array);
+                IndirectionLevel.Equals(other.IndirectionLevel) &&
+                IsReference.Equals(other.IsReference) &&
+                ArrayDimensions.Equals(other.ArrayDimensions);
 
             // Note: CLS-compliance and element count do not factor
             // factor into the equality calculations, i.e.

@@ -12,81 +12,22 @@ namespace Bind.Structures
     {
         private readonly List<ParameterDefinition> _parameters = new List<ParameterDefinition>();
 
-        private bool _hasPointerParameters;
-        private bool _hasReferenceParameters;
-        private bool _hasUnsignedParameters;
-        private bool _hasGenericParameters;
-
-        public bool Rebuild { get; set; }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParameterCollection"/> class.
+        /// </summary>
         public ParameterCollection()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParameterCollection"/> class.
+        /// </summary>
+        /// <param name="pc">The existing <see cref="ParameterCollection"/> to copy from.</param>
         public ParameterCollection(ParameterCollection pc)
         {
             foreach (var p in pc)
             {
                 Add(new ParameterDefinition(p));
-            }
-        }
-
-        private void BuildCache()
-        {
-            BuildReferenceAndPointerParametersCache();
-            Rebuild = false;
-        }
-
-        public bool HasUnsignedParameters
-        {
-            get
-            {
-                if (Rebuild)
-                {
-                    BuildCache();
-                }
-
-                return _hasUnsignedParameters;
-            }
-        }
-
-        public bool HasGenericParameters
-        {
-            get
-            {
-                if (Rebuild)
-                {
-                    BuildCache();
-                }
-
-                return _hasGenericParameters;
-            }
-        }
-
-
-        private void BuildReferenceAndPointerParametersCache()
-        {
-            foreach (var p in this)
-            {
-                if (p.Pointer != 0 || p.CurrentType.Contains("IntPtr"))
-                {
-                    _hasPointerParameters = true;
-                }
-
-                if (p.Reference)
-                {
-                    _hasReferenceParameters = true;
-                }
-
-                if (p.Unsigned)
-                {
-                    _hasUnsignedParameters = true;
-                }
-
-                if (p.Generic)
-                {
-                    _hasGenericParameters = true;
-                }
             }
         }
 
@@ -116,14 +57,12 @@ namespace Bind.Structures
         public void Add(ParameterDefinition p)
         {
             _parameters.Add(p);
-            Rebuild = true;
         }
 
         /// <inheritdoc/>
         public void Clear()
         {
             _parameters.Clear();
-            Rebuild = true;
         }
 
         /// <inheritdoc/>
@@ -147,12 +86,7 @@ namespace Bind.Structures
         /// <inheritdoc/>
         public bool Remove(ParameterDefinition item)
         {
-            var result = _parameters.Remove(item);
-            if (result)
-            {
-                Rebuild = true;
-            }
-            return result;
+            return _parameters.Remove(item);
         }
 
         /// <inheritdoc/>
@@ -177,14 +111,12 @@ namespace Bind.Structures
         public void Insert(int index, ParameterDefinition item)
         {
             _parameters.Insert(index, item);
-            Rebuild = true;
         }
 
         /// <inheritdoc/>
         public void RemoveAt(int index)
         {
             _parameters.RemoveAt(index);
-            Rebuild = true;
         }
 
         /// <inheritdoc/>

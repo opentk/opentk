@@ -15,14 +15,15 @@ namespace Bind.Structures
         private string _cache;
 
         /// <summary>
-        /// Creates a new Parameter without type and name.
+        /// Initializes a new instance of the <see cref="ParameterDefinition"/> class.
         /// </summary>
         public ParameterDefinition()
         {
         }
 
         /// <summary>
-        /// Creates a new parameter from the parameters passed (deep copy).
+        /// Initializes a new instance of the <see cref="ParameterDefinition"/> class.
+        /// Creates a new parameter from the parameter passed (deep copy).
         /// </summary>
         /// <param name="p">The parameter to copy from.</param>
         public ParameterDefinition(ParameterDefinition p)
@@ -34,7 +35,6 @@ namespace Bind.Structures
             }
 
             Name = p.Name;
-            Unchecked = p.Unchecked;
             UnmanagedType = p.UnmanagedType;
             Generic = p.Generic;
             Flow = p.Flow;
@@ -44,7 +44,7 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        /// Gets or sets the raw name of the parameter.
+        /// Gets the raw name of the parameter.
         /// </summary>
         public string RawName
         {
@@ -53,8 +53,7 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        /// Gets the name of the parameter. If the name matches a keyword of the current language,
-        /// then it is escaped with <see cref="Settings.KeywordEscapeCharacter"/>.
+        /// Gets or sets the name of the parameter.
         /// </summary>
         public string Name
         {
@@ -65,7 +64,7 @@ namespace Bind.Structures
                 {
                     while (value.StartsWith("*"))
                     {
-                        Pointer++;
+                        IndirectionLevel++;
                         value = value.Substring(1);
                     }
                     RawName = value;
@@ -107,26 +106,22 @@ namespace Bind.Structures
             }
         }
 
-        private bool _unchecked;
-
-        public bool Unchecked
-        {
-            get => _unchecked;
-            set
-            {
-                if (_unchecked != value)
-                {
-                    _unchecked = value;
-                }
-            }
-        }
-
+        /// <summary>
+        /// Gets or sets a value indicating whether the parameter is a generic parameter.
+        /// </summary>
         public bool Generic { get; set; }
 
+        /// <summary>
+        /// Gets or sets the parameter size computation hint information.
+        /// </summary>
         public string ComputeSize { get; set; }
 
-        // Returns the FlowDirection that matches the specified string
-        // ("out" or "in", otherwise undefined).
+        /// <summary>
+        /// Returns the FlowDirection that matches the specified string
+        /// ("out" or "in", otherwise undefined).
+        /// </summary>
+        /// <param name="direction">The raw direction to parse.</param>
+        /// <returns>A flow direction, based on the input.</returns>
         public static FlowDirection GetFlowDirection(string direction)
         {
             return direction == "out" ? FlowDirection.Out : direction == "in" ? FlowDirection.In : FlowDirection.Undefined;
@@ -147,14 +142,12 @@ namespace Bind.Structures
         /// <inheritdoc/>
         public override string ToString()
         {
-            return string.Format("{2}{0} {1}",
-                base.ToString(),
-                Name,
-                Reference ?
-                    Flow == FlowDirection.Out ? "out " : "ref " :
-                    string.Empty);
+            var modifier = IsReference ? Flow == FlowDirection.Out ? "out " : "ref " : string.Empty;
+
+            return $"{modifier}{base.ToString()} {Name}";
         }
 
+        /// <inheritdoc/>
         public bool Equals(ParameterDefinition other)
         {
             var result =
