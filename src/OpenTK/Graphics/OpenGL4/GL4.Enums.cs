@@ -11683,7 +11683,7 @@ namespace OpenTK.Graphics.OpenGL4
     /// <summary>
     /// Not used directly.
     /// </summary>
-    public enum FragmentOpAti
+    public enum FragmentOpATI
     {
         /// <summary>
         /// Original was GL_MOV_ATI = 0x8961

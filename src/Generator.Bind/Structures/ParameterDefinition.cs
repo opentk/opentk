@@ -3,22 +3,23 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Bind.Structures
 {
     /// <summary>
     /// Represents a single parameter of an opengl function.
     /// </summary>
-    internal class ParameterDefinition : TypeDefinition, IComparable<ParameterDefinition>, IEquatable<ParameterDefinition>
+    internal class ParameterDefinition : IComparable<ParameterDefinition>, IEquatable<ParameterDefinition>
     {
-        private string _cache;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ParameterDefinition"/> class.
         /// </summary>
         public ParameterDefinition()
         {
+            ParameterType = new TypeDefinition();
         }
 
         /// <summary>
@@ -27,7 +28,6 @@ namespace Bind.Structures
         /// </summary>
         /// <param name="p">The parameter to copy from.</param>
         public ParameterDefinition(ParameterDefinition p)
-            : base(p)
         {
             if (p == null)
             {
@@ -38,10 +38,15 @@ namespace Bind.Structures
             UnmanagedType = p.UnmanagedType;
             Generic = p.Generic;
             Flow = p.Flow;
-            _cache = p._cache;
             ComputeSize = p.ComputeSize;
-            //this.rebuild = false;
+
+            ParameterType = new TypeDefinition(p.ParameterType);
         }
+
+        /// <summary>
+        /// Gets or sets the type of the parameter.
+        /// </summary>
+        public TypeDefinition ParameterType { get; set; }
 
         /// <summary>
         /// Gets the raw name of the parameter.
@@ -64,7 +69,7 @@ namespace Bind.Structures
                 {
                     while (value.StartsWith("*"))
                     {
-                        IndirectionLevel++;
+                        ParameterType.IndirectionLevel++;
                         value = value.Substring(1);
                     }
                     RawName = value;
@@ -127,14 +132,82 @@ namespace Bind.Structures
             return direction == "out" ? FlowDirection.Out : direction == "in" ? FlowDirection.In : FlowDirection.Undefined;
         }
 
+        /// <inheritdoc/>
+        public string GetDeclarationString()
+        {
+            var sb = new StringBuilder();
+
+            var attributes = new List<string>();
+            if (Flow == FlowDirection.Out)
+            {
+                attributes.Add("OutAttribute");
+            }
+            else if (Flow == FlowDirection.Undefined)
+            {
+                attributes.Add("InAttribute");
+                attributes.Add("OutAttribute");
+            }
+
+            if (!string.IsNullOrEmpty(ComputeSize))
+            {
+                if (int.TryParse(ComputeSize, out var count))
+                {
+                    attributes.Add($"CountAttribute(Count = {count})");
+                }
+                else
+                {
+                    if (ComputeSize.StartsWith("COMPSIZE"))
+                    {
+                        //remove the compsize hint, just keep comma delimited param names
+                        var len = "COMPSIZE(".Length;
+                        var computed = ComputeSize.Substring(len, ComputeSize.Length - len - 1);
+                        attributes.Add($"CountAttribute(Computed = \"{computed}\")");
+                    }
+                    else
+                    {
+                        attributes.Add($"CountAttribute(Parameter = \"{ComputeSize}\")");
+                    }
+                }
+            }
+
+            if (attributes.Count != 0)
+            {
+                sb.Append("[");
+                sb.Append(string.Join(", ", attributes));
+                sb.Append("] ");
+            }
+
+            if (ParameterType.IsReference)
+            {
+                if (Flow == FlowDirection.Out)
+                {
+                    sb.Append("out ");
+                }
+                else
+                {
+                    sb.Append("ref ");
+                }
+            }
+
+            sb.Append(ParameterType.GetDeclarationString());
+
+            if (!string.IsNullOrEmpty(Name))
+            {
+                sb.Append(" ");
+                sb.Append(Name);
+            }
+
+            return sb.ToString();
+        }
 
         /// <inheritdoc/>
         public int CompareTo(ParameterDefinition other)
         {
-            var result = base.CompareTo(other);
+            var result = ParameterType.CompareTo(other.ParameterType);
+
             if (result == 0)
             {
-                result = Name.CompareTo(other.Name);
+                result = string.Compare(Name, other.Name, StringComparison.Ordinal);
             }
             return result;
         }
@@ -142,7 +215,7 @@ namespace Bind.Structures
         /// <inheritdoc/>
         public override string ToString()
         {
-            var modifier = IsReference ? Flow == FlowDirection.Out ? "out " : "ref " : string.Empty;
+            var modifier = ParameterType.IsReference ? Flow == FlowDirection.Out ? "out " : "ref " : string.Empty;
 
             return $"{modifier}{base.ToString()} {Name}";
         }
@@ -150,8 +223,13 @@ namespace Bind.Structures
         /// <inheritdoc/>
         public bool Equals(ParameterDefinition other)
         {
+            if (other is null)
+            {
+                return false;
+            }
+
             var result =
-                base.Equals(other) &&
+                ParameterType.Equals(other.ParameterType) &&
                 Name.Equals(other.Name);
 
             return result;

@@ -3,13 +3,14 @@
  */
 
 using System;
+using Bind.Extensions;
 
 namespace Bind.Structures
 {
     /// <summary>
     /// Represents a type definition that's used for translation between the OpenGL specification and the CLR.
     /// </summary>
-    internal class TypeDefinition : IComparable<TypeDefinition>, IEquatable<TypeDefinition>
+    public class TypeDefinition : IComparable<TypeDefinition>, IEquatable<TypeDefinition>, IDeclarable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TypeDefinition"/> class.
@@ -151,10 +152,26 @@ namespace Bind.Structures
         {
             var pointerLevelString = new string('*', (int)IndirectionLevel);
             var arrayLevelString = ArrayDimensions > 0
-                ? $"[{new string(',', (int)ArrayDimensions)}]"
+                ? ArrayDimensions == 1
+                    ? "[]"
+                    : $"[{new string(',', (int)ArrayDimensions - 1)}]"
                 : string.Empty;
 
             return $"{TypeName}{pointerLevelString}{arrayLevelString}";
+        }
+
+        /// <inheritdoc/>
+        public virtual string GetDeclarationString()
+        {
+            var typeName = this.GetQualifiedTypeOrAlias();
+            var pointerLevelString = new string('*', (int)IndirectionLevel);
+            var arrayLevelString = ArrayDimensions > 0
+                ? ArrayDimensions == 1
+                    ? "[]"
+                    : $"[{new string(',', (int)ArrayDimensions - 1)}]"
+                : string.Empty;
+
+            return $"{typeName}{pointerLevelString}{arrayLevelString}";
         }
 
         /// <inheritdoc/>

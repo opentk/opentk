@@ -295,14 +295,14 @@ namespace Bind
 
                         case "param":
                             var p = new ParameterDefinition();
-                            p.TypeName = param.GetAttribute("type", string.Empty).Trim();
+                            p.ParameterType.TypeName = param.GetAttribute("type", string.Empty).Trim();
                             p.Name = param.GetAttribute("name", string.Empty).Trim();
 
                             p.ComputeSize = param.GetAttribute("count", string.Empty).Trim();
 
                             if (uint.TryParse(p.ComputeSize, out var elementCount))
                             {
-                                p.ElementCount = elementCount;
+                                p.ParameterType.ElementCount = elementCount;
                             }
 
                             p.Flow = ParameterDefinition.GetFlowDirection(param.GetAttribute("flow", string.Empty).Trim());

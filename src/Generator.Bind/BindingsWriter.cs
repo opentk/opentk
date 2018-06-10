@@ -29,6 +29,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Bind.Extensions;
 using Bind.Generators;
 using Bind.Structures;
 using Bind.Writers;
@@ -46,17 +47,7 @@ namespace Bind
 
         private static readonly string[] ArrayLevels = { string.Empty, "[]", "[,]", "[,,]", "[,,,]" };
 
-        private static readonly Dictionary<string, string> Aliases = new Dictionary<string, string>
-        {
-            { nameof(Int16), "short" },
-            { nameof(UInt16), "ushort" },
-            { nameof(Int32), "int" },
-            { nameof(UInt32), "uint" },
-            { nameof(Int64), "long" },
-            { nameof(UInt64), "ulong" },
-            { nameof(Single), "float" },
-            { nameof(Double), "double" }
-        };
+
 
         private IGenerator Generator { get; set; }
 
@@ -461,9 +452,9 @@ namespace Bind
             foreach (var wrapper in wrappers.Values.SelectMany(w => w))
             {
                 // Add every function to every enum parameter it references
-                foreach (var parameter in wrapper.Parameters.Where(p => p.IsEnum))
+                foreach (var parameter in wrapper.Parameters.Where(p => p.ParameterType.IsEnum))
                 {
-                    var e = enums[parameter.TypeName];
+                    var e = enums[parameter.ParameterType.TypeName];
                     var list = enumCounts[e];
                     list.Add(wrapper);
                 }
@@ -531,7 +522,7 @@ namespace Bind
                 sb.Append("delegate ");
             }
 
-            sb.Append(GetDeclarationString(d.ReturnTypeDefinition));
+            sb.Append(d.ReturnTypeDefinition.GetDeclarationString());
             sb.Append(" ");
             sb.Append(Generator.FunctionPrefix);
             sb.Append(d.Name);
@@ -545,7 +536,7 @@ namespace Bind
             var sb = new StringBuilder();
 
             sb.Append(f.RequiresUnsafeDeclaration ? "unsafe " : string.Empty);
-            sb.Append(GetDeclarationString(f.ReturnTypeDefinition));
+            sb.Append(f.ReturnTypeDefinition.GetDeclarationString());
             sb.Append(" ");
 
             sb.Append(!string.IsNullOrEmpty(f.TrimmedName) ? f.TrimmedName : f.Name);
@@ -555,7 +546,7 @@ namespace Bind
                 sb.Append("<");
                 foreach (var p in f.Parameters.Where(p => p.Generic))
                 {
-                    sb.Append(p.TypeName);
+                    sb.Append(p.ParameterType.TypeName);
                     sb.Append(", ");
                 }
 
@@ -570,75 +561,8 @@ namespace Bind
                 sb.AppendLine();
                 foreach (var p in f.Parameters.Where(p => p.Generic))
                 {
-                    sb.AppendLine($"    where {p.TypeName} : struct");
+                    sb.AppendLine($"    where {p.ParameterType.TypeName} : struct");
                 }
-            }
-
-            return sb.ToString();
-        }
-
-        private string GetDeclarationString(ParameterDefinition p)
-        {
-            var sb = new StringBuilder();
-
-            var attributes = new List<string>();
-            if (p.Flow == FlowDirection.Out)
-            {
-                attributes.Add("OutAttribute");
-            }
-            else if (p.Flow == FlowDirection.Undefined)
-            {
-                attributes.Add("InAttribute");
-                attributes.Add("OutAttribute");
-            }
-
-            if (!string.IsNullOrEmpty(p.ComputeSize))
-            {
-                if (int.TryParse(p.ComputeSize, out var count))
-                {
-                    attributes.Add($"CountAttribute(Count = {count})");
-                }
-                else
-                {
-                    if (p.ComputeSize.StartsWith("COMPSIZE"))
-                    {
-                        //remove the compsize hint, just keep comma delimited param names
-                        var len = "COMPSIZE(".Length;
-                        var computed = p.ComputeSize.Substring(len, p.ComputeSize.Length - len - 1);
-                        attributes.Add($"CountAttribute(Computed = \"{computed}\")");
-                    }
-                    else
-                    {
-                        attributes.Add($"CountAttribute(Parameter = \"{p.ComputeSize}\")");
-                    }
-                }
-            }
-
-            if (attributes.Count != 0)
-            {
-                sb.Append("[");
-                sb.Append(string.Join(", ", attributes));
-                sb.Append("] ");
-            }
-
-            if (p.IsReference)
-            {
-                if (p.Flow == FlowDirection.Out)
-                {
-                    sb.Append("out ");
-                }
-                else
-                {
-                    sb.Append("ref ");
-                }
-            }
-
-            sb.Append(GetDeclarationString((TypeDefinition)p));
-
-            if (!string.IsNullOrEmpty(p.Name))
-            {
-                sb.Append(" ");
-                sb.Append(p.Name);
             }
 
             return sb.ToString();
@@ -653,7 +577,7 @@ namespace Bind
             {
                 foreach (var p in parameters)
                 {
-                    sb.Append(GetDeclarationString(p));
+                    sb.Append(p.GetDeclarationString());
                     sb.Append(", ");
                 }
 
@@ -665,22 +589,6 @@ namespace Bind
             }
 
             return sb.ToString();
-        }
-
-        private string GetDeclarationString(TypeDefinition typeDefinition)
-        {
-            var t = GetQualifiedTypeOrAlias(typeDefinition);
-            return $"{t}{PointerLevels[typeDefinition.IndirectionLevel]}{ArrayLevels[typeDefinition.ArrayDimensions]}";
-        }
-
-        private string GetQualifiedTypeOrAlias(TypeDefinition typeDefinition)
-        {
-            if (Aliases.ContainsKey(typeDefinition.QualifiedTypeName))
-            {
-                return Aliases[typeDefinition.QualifiedTypeName];
-            }
-
-            return typeDefinition.QualifiedTypeName;
         }
     }
 }

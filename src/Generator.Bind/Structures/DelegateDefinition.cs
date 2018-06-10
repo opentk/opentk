@@ -59,7 +59,7 @@ namespace Bind.Structures
 
                 foreach (var p in Parameters)
                 {
-                    if (p.IsPointer)
+                    if (p.ParameterType.IsPointer)
                     {
                         return true;
                     }

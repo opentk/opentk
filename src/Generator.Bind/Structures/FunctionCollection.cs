@@ -53,14 +53,14 @@ namespace Bind.Structures
                 else
                 {
                     var existing = list[index];
-                    var replace = existing.Parameters.Any(p => p.IsUnsigned) &&
+                    var replace = existing.Parameters.Any(p => p.ParameterType.IsUnsigned) &&
                                   !_unsignedFunctions.IsMatch(existing.Name) && _unsignedFunctions.IsMatch(f.Name);
-                    replace |= !existing.Parameters.Any(p => p.IsUnsigned) &&
+                    replace |= !existing.Parameters.Any(p => p.ParameterType.IsUnsigned) &&
                                _unsignedFunctions.IsMatch(existing.Name) && !_unsignedFunctions.IsMatch(f.Name);
                     replace |=
                         (from pOld in existing.Parameters
                             join pNew in f.Parameters on pOld.Name equals pNew.Name
-                            where pNew.ElementCount == 0 && pOld.ElementCount != 0
+                            where pNew.ParameterType.ElementCount == 0 && pOld.ParameterType.ElementCount != 0
                             select true)
                         .Count() != 0;
                     if (replace)
