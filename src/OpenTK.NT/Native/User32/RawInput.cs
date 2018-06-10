@@ -433,6 +433,22 @@ namespace OpenTK.NT.Native
                 [In] [Out] ref int Size,
                 int SizeHeader
             );
+
+            internal static IntPtr NextRawInputStructure(IntPtr data)
+            {
+                unsafe
+                {
+                    return RawInputAlign((IntPtr)((byte*)data + HeaderSize));
+                }
+            }
+
+            private static IntPtr RawInputAlign(IntPtr data)
+            {
+                unsafe
+                {
+                    return (IntPtr)((byte*)data + ((IntPtr.Size - 1) & ~(IntPtr.Size - 1)));
+                }
+            }
         }
     }
 }

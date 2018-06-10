@@ -109,66 +109,6 @@ namespace OpenTK.Platform.Windows
         }
     }
 
-    internal static class Functions
-    {
-        [DllImport("dwmapi.dll")]
-        public static extern unsafe HRESULT DwmGetWindowAttribute(HWND hwnd, DwmWindowAttribute dwAttribute,
-            void* pvAttribute, int cbAttribute);
-
-        /* From winuser.h
-        #ifdef _WIN64
-        #define RAWINPUT_ALIGN(x)   (((x) + sizeof(QWORD) - 1) & ~(sizeof(QWORD) - 1))
-        #else   // _WIN64
-        #define RAWINPUT_ALIGN(x)   (((x) + sizeof(DWORD) - 1) & ~(sizeof(DWORD) - 1))
-        #endif  // _WIN64
-
-        #define NEXTRAWINPUTBLOCK(ptr) ((PRAWINPUT)RAWINPUT_ALIGN((ULONG_PTR)((PBYTE)(ptr) + (ptr)->header.dwSize)))
-        */
-
-        /// <summary>
-        /// Sets the timing resolution of the GetTime (?) method.
-        /// </summary>
-        /// <param name="period">Timing resolution in msec (?)</param>
-        /// <returns>(?)</returns>
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport("winmm.dll")]
-        internal static extern IntPtr TimeBeginPeriod(int period);
-
-        internal static IntPtr NextRawInputStructure(IntPtr data)
-        {
-            unsafe
-            {
-                return RawInputAlign((IntPtr)((byte*)data + API.RawInputHeaderSize));
-            }
-        }
-
-        private static IntPtr RawInputAlign(IntPtr data)
-        {
-            unsafe
-            {
-                return (IntPtr)((byte*)data + ((IntPtr.Size - 1) & ~(IntPtr.Size - 1)));
-            }
-        }
-
-        [DllImport("Advapi32.dll")]
-        internal static extern int RegOpenKeyEx(
-            HKEY hKey,
-            [MarshalAs(UnmanagedType.LPTStr)] string lpSubKey,
-            int ulOptions,
-            uint samDesired,
-            out PHKEY phkResult);
-
-        [DllImport("Advapi32.dll")]
-        internal static extern int RegGetValue(
-            HKEY hkey,
-            [MarshalAs(UnmanagedType.LPTStr)] string lpSubKey,
-            [MarshalAs(UnmanagedType.LPTStr)] string lpValue,
-            int dwFlags,
-            out int pdwType,
-            StringBuilder pvData,
-            ref int pcbData);
-    }
-
     internal static class Constants
     {
         // Found in winuser.h
