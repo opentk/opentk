@@ -2,7 +2,13 @@
 using System.Runtime.InteropServices;
 using System.Security;
 
+using BOOL = System.Boolean;
 using DWORD = System.UInt32;
+using FARPROC = System.IntPtr;
+using HMODULE = System.IntPtr;
+using LARGE_INTEGER = System.Int64;
+using LPCSTR = System.String;
+using LPCTSTR = System.String;
 
 namespace OpenTK.NT.Native
 {
@@ -13,30 +19,35 @@ namespace OpenTK.NT.Native
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Lib)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool QueryPerformanceFrequency(ref long PerformanceFrequency);
+        public static extern BOOL QueryPerformanceFrequency([Out] out LARGE_INTEGER lpFrequency);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Lib)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool QueryPerformanceCounter(ref long PerformanceCount);
+        public static extern BOOL QueryPerformanceCounter([Out] out LARGE_INTEGER lpPerformanceCount);
 
-        [DllImport(Lib)]
-        public static extern IntPtr GetProcAddress(IntPtr handle, string funcname);
+        [DllImport(Lib, SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern FARPROC GetProcAddress(
+            [In] HMODULE hModule,
+            [In] [MarshalAs(UnmanagedType.LPTStr)] LPCSTR lpProcName
+        );
 
-        [DllImport(Lib)]
-        public static extern IntPtr GetProcAddress(IntPtr handle, IntPtr funcname);
+        [DllImport(Lib, SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern FARPROC GetProcAddress([In] HMODULE hModule, [In] IntPtr lpProcName);
 
         [DllImport(Lib)]
         public static extern void SetLastError(DWORD dwErrCode);
 
         [DllImport(Lib)]
-        public static extern IntPtr GetModuleHandle([MarshalAs(UnmanagedType.LPTStr)] string module_name);
+        public static extern HMODULE GetModuleHandle(
+            [In] [Optional] [MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpModuleName
+        );
 
         [DllImport(Lib, SetLastError = true)]
-        public static extern IntPtr LoadLibrary(string dllName);
+        public static extern HMODULE LoadLibrary([In] LPCTSTR lpFileName);
 
         [DllImport(Lib)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool FreeLibrary(IntPtr handle);
+        public static extern BOOL FreeLibrary([In] HMODULE hModule);
     }
 }
