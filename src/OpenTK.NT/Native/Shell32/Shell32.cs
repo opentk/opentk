@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-using HDROP = System.IntPtr;
-using LPCTSTR = System.String;
+using BOOL = System.Boolean;
 using DWORD = System.UInt32;
+using DWORD_PTR = System.IntPtr;
+using HDROP = System.IntPtr;
+using HWND = System.IntPtr;
+using LPCTSTR = System.String;
+using LPTSTR = System.Text.StringBuilder;
 using UINT = System.UInt32;
 
 namespace OpenTK.NT.Native
@@ -12,16 +16,27 @@ namespace OpenTK.NT.Native
     {
         private const string Lib = "shell32.dll";
 
-        [DllImport(Lib, CharSet = CharSet.Auto)]
-        public static extern bool DragAcceptFiles(IntPtr handle, [MarshalAs(UnmanagedType.Bool)] bool fAccept);
+        [DllImport(Lib)]
+        public static extern void DragAcceptFiles(HWND handle, [MarshalAs(UnmanagedType.Bool)] BOOL fAccept);
 
         [DllImport(Lib, CharSet = CharSet.Auto)]
-        public static extern uint DragQueryFile(HDROP hDrop, uint iFile, IntPtr lpszFile, uint cch);
+        public static extern UINT DragQueryFile(
+            [In] HDROP hDrop,
+            [In] UINT iFile,
+            [Out] LPTSTR lpszFile,
+            UINT cch
+        );
 
         [DllImport(Lib)]
         public static extern void DragFinish(HDROP hDrop);
 
         [DllImport(Lib)]
-        public static extern IntPtr SHGetFileInfo(LPCTSTR pszPath, DWORD dwFileAttributes, ref SHFILEINFO psfi, UINT cbFileInfo, ShGetFileIconFlags uFlags);
+        public static extern DWORD_PTR SHGetFileInfo(
+            [In] LPCTSTR pszPath,
+            DWORD dwFileAttributes,
+            [In] [Out] ref SHFILEINFO psfi,
+            UINT cbFileInfo,
+            ShGetFileInfoFlags uFlags
+        );
     }
 }

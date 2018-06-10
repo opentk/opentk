@@ -1,6 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 
+using DWORD = System.UInt32;
 using HICON = System.IntPtr;
+using TCHAR = System.String;
 
 namespace OpenTK.NT.Native
 {
@@ -9,12 +11,12 @@ namespace OpenTK.NT.Native
     {
         public HICON hIcon;
         public int iIcon;
-        public uint dwAttributes;
+        public DWORD dwAttributes;
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-        public string szDisplayName;
+        public TCHAR szDisplayName;
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
-        public string szTypeName;
+        public TCHAR szTypeName;
     }
 }
