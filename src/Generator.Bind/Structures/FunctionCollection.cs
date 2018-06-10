@@ -4,23 +4,30 @@ using System.Text.RegularExpressions;
 
 namespace Bind.Structures
 {
+    /// <summary>
+    /// Represents a collection of function definitions.
+    /// </summary>
     internal class FunctionCollection : SortedDictionary<string, List<FunctionDefinition>>
     {
         private Regex _unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
 
         private void Add(FunctionDefinition f)
         {
-            if (!ContainsKey(f.Extension))
+            if (!ContainsKey(f.ExtensionName))
             {
-                Add(f.Extension, new List<FunctionDefinition>());
-                this[f.Extension].Add(f);
+                Add(f.ExtensionName, new List<FunctionDefinition>());
+                this[f.ExtensionName].Add(f);
             }
             else
             {
-                this[f.Extension].Add(f);
+                this[f.ExtensionName].Add(f);
             }
         }
 
+        /// <summary>
+        /// Adds a range of function definitions to the collection.
+        /// </summary>
+        /// <param name="functions">The functions.</param>
         public void AddRange(IEnumerable<FunctionDefinition> functions)
         {
             foreach (var f in functions)
@@ -35,9 +42,9 @@ namespace Bind.Structures
         /// <param name="f">The Function to add.</param>
         private void AddChecked(FunctionDefinition f)
         {
-            if (ContainsKey(f.Extension))
+            if (ContainsKey(f.ExtensionName))
             {
-                var list = this[f.Extension];
+                var list = this[f.ExtensionName];
                 var index = list.IndexOf(f);
                 if (index == -1)
                 {

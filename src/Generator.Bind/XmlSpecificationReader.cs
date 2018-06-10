@@ -277,13 +277,12 @@ namespace Bind
                     Version = node.GetAttribute("version", string.Empty).Trim(),
                     Category = node.GetAttribute("category", string.Empty).Trim(),
                     DeprecatedVersion = node.GetAttribute("deprecated", string.Empty).Trim(),
-                    Deprecated = !string.IsNullOrEmpty(node.GetAttribute("deprecated", string.Empty)),
-                    Extension = node.GetAttribute("extension", string.Empty).Trim() ?? "Core",
-                    Obsolete = node.GetAttribute("obsolete", string.Empty).Trim()
+                    ExtensionName = node.GetAttribute("extension", string.Empty).Trim(),
+                    ObsoletionReason = node.GetAttribute("obsolete", string.Empty).Trim()
                 };
-                if (!extensions.Contains(d.Extension))
+                if (!extensions.Contains(d.ExtensionName))
                 {
-                    extensions.Add(d.Extension);
+                    extensions.Add(d.ExtensionName);
                 }
 
                 foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))

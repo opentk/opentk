@@ -6,6 +6,9 @@ using System;
 
 namespace Bind.Structures
 {
+    /// <summary>
+    /// Represents a documented, name-trimmed function that wraps a delegate definition.
+    /// </summary>
     internal class FunctionDefinition : DelegateDefinition, IEquatable<FunctionDefinition>, IComparable<FunctionDefinition>
     {
         /// <summary>
@@ -30,10 +33,13 @@ namespace Bind.Structures
             Parameters = new ParameterCollection(f.Parameters);
             ReturnTypeDefinition = new TypeDefinition(f.ReturnTypeDefinition);
             TrimmedName = f.TrimmedName;
-            Obsolete = f.Obsolete;
+            ObsoletionReason = f.ObsoletionReason;
             DocumentationDefinition = f.DocumentationDefinition;
         }
 
+        /// <summary>
+        /// Gets or sets the delegate definition that the function definition wraps.
+        /// </summary>
         public DelegateDefinition WrappedDelegateDefinition { get; set; }
 
         /// <summary>

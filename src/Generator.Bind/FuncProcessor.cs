@@ -364,7 +364,7 @@ namespace Bind
 
         private void TranslateExtension(DelegateDefinition d)
         {
-            d.Extension = TranslateExtension(d.Extension);
+            d.ExtensionName = TranslateExtension(d.ExtensionName);
         }
 
         private static string GetTrimmedExtension(string name, string extension)
@@ -383,7 +383,7 @@ namespace Bind
         private static string GetTrimmedName(DelegateDefinition d)
         {
             var name = d.Name;
-            var extension = d.Extension;
+            var extension = d.ExtensionName;
             var trimmedName = GetTrimmedExtension(name, extension);
 
             // Note: some endings should not be trimmed, for example: 'b' from Attrib.
@@ -422,7 +422,7 @@ namespace Bind
         private static XPathNodeIterator GetFuncOverload(XPathNavigator nav, DelegateDefinition d, string apiname, string apiversion)
         {
             // Try a few different extension variations that appear in the overrides xml file
-            string[] extensions = { d.Extension, TranslateExtension(d.Extension), d.Extension.ToUpper() };
+            string[] extensions = { d.ExtensionName, TranslateExtension(d.ExtensionName), d.ExtensionName.ToUpper() };
             var trimmedName = GetTrimmedName(d);
             XPathNodeIterator functionOverload = null;
 
@@ -454,7 +454,7 @@ namespace Bind
         private static XPathNavigator GetFuncOverride(XPathNavigator nav, DelegateDefinition d, string apiname, string apiversion)
         {
             // Try a few different extension variations that appear in the overrides xml file
-            string[] extensions = { d.Extension, TranslateExtension(d.Extension), d.Extension.ToUpper() };
+            string[] extensions = { d.ExtensionName, TranslateExtension(d.ExtensionName), d.ExtensionName.ToUpper() };
             var trimmedName = GetTrimmedName(d);
             XPathNavigator functionOverride = null;
 
@@ -722,7 +722,7 @@ namespace Bind
             var obsolete = functionOverride.GetAttribute("obsolete", string.Empty);
             if (!string.IsNullOrEmpty(obsolete))
             {
-                d.Obsolete = obsolete;
+                d.ObsoletionReason = obsolete;
             }
         }
 
@@ -900,7 +900,7 @@ namespace Bind
                     {
                         foreach (var wrapper in GetWrapper(wrappers, WrapperTypes.LegacyArrayParameter, func))
                         {
-                            wrapper.Obsolete = "Use out overload instead";
+                            wrapper.ObsoletionReason = "Use out overload instead";
                             var p = wrapper.Parameters[i];
                             p.ArrayDimensions++;
                             p.IndirectionLevel--;

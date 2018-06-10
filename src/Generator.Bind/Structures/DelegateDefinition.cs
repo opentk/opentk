@@ -13,41 +13,45 @@ namespace Bind.Structures
     /// </summary>
     internal class DelegateDefinition : IComparable<DelegateDefinition>, IEquatable<DelegateDefinition>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DelegateDefinition"/> class.
+        /// </summary>
         public DelegateDefinition()
         {
             Parameters = new ParameterCollection();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DelegateDefinition"/> class.
+        /// This constructor performs a deep copy of the given delegate definition.
+        /// </summary>
+        /// <param name="d">The definition to copy.</param>
         public DelegateDefinition(DelegateDefinition d)
         {
             Category = d.Category;
-            Extension = d.Extension;
+            ExtensionName = d.ExtensionName;
             Name = d.Name;
             Parameters = new ParameterCollection(d.Parameters);
             ReturnTypeDefinition = new TypeDefinition(d.ReturnTypeDefinition);
             Version = d.Version;
-            //this.Version = !String.IsNullOrEmpty(d.Version) ? new string(d.Version.ToCharArray()) : "";
-            Deprecated = d.Deprecated;
             DeprecatedVersion = d.DeprecatedVersion;
             EntryPoint = d.EntryPoint;
-            Obsolete = d.Obsolete;
+            ObsoletionReason = d.ObsoletionReason;
             Slot = d.Slot;
         }
 
+        /// <summary>
+        /// Gets or sets the category that the function is part of.
+        /// </summary>
         public string Category { get; set; }
 
         /// <summary>
-        /// True if the delegate must be declared as 'unsafe'.
+        /// Gets a value indicating whether the function needs to be declared as "unsafe".
         /// </summary>
-        public bool Unsafe
+        public bool RequiresUnsafeDeclaration
         {
-            //get { return @unsafe; }
-            //set { @unsafe = value; }
             get
             {
-                //if ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None)
-                //    return false;
-
                 if (ReturnTypeDefinition.IsPointer)
                 {
                     return true;
@@ -71,6 +75,7 @@ namespace Bind.Structures
         public TypeDefinition ReturnTypeDefinition { get; set; } = new TypeDefinition();
 
         private string _name;
+
         /// <summary>
         /// Gets or sets the name of the opengl function.
         /// </summary>
@@ -86,28 +91,49 @@ namespace Bind.Structures
             }
         }
 
+        /// <summary>
+        /// Gets or sets the set of parameters that the function takes.
+        /// </summary>
         public ParameterCollection Parameters { get; set; }
 
         /// <summary>
-        /// Defines the opengl version that introduced this function.
+        /// Gets or sets the OpenGL version that introduced this function.
         /// </summary>
         public string Version { get; set; }
 
-        public string Extension
-        {
-            get;
-            set;
-        }
+        /// <summary>
+        /// Gets or sets the name of the OpenGL extension that the function is a part of.
+        /// </summary>
+        public string ExtensionName { get; set; }
 
-        public bool Deprecated { get; set; }
+        /// <summary>
+        /// Gets a value indicating whether the function is deprecated.
+        /// </summary>
+        public bool IsDeprecated => !string.IsNullOrWhiteSpace(DeprecatedVersion);
 
+        /// <summary>
+        /// Gets or sets the version that the function was deprecated in.
+        /// </summary>
         public string DeprecatedVersion { get; set; }
 
+        /// <summary>
+        /// Gets or sets the name of the function's entry point.
+        /// </summary>
         public string EntryPoint { get; set; }
 
-        public string Obsolete { get; set; }
+        /// <summary>
+        /// Gets or sets the reason why the function is obsolete.
+        /// </summary>
+        public string ObsoletionReason { get; set; }
 
-        // Slot index in the address table
+        /// <summary>
+        /// Gets a value indicating whether the function is obsolete.
+        /// </summary>
+        public bool IsObsolete => !string.IsNullOrWhiteSpace(ObsoletionReason);
+
+        /// <summary>
+        /// Gets or sets the slot index in the address table.
+        /// </summary>
         public int Slot { get; set; }
 
         /// <inheritdoc/>
@@ -115,7 +141,11 @@ namespace Bind.Structures
         {
             var sb = new StringBuilder();
 
-            sb.Append(Unsafe ? "unsafe " : "");
+            if (RequiresUnsafeDeclaration)
+            {
+                sb.Append("unsafe ");
+            }
+
             sb.Append("delegate ");
             sb.Append(ReturnTypeDefinition);
             sb.Append(" ");
@@ -128,7 +158,8 @@ namespace Bind.Structures
         /// <inheritdoc/>
         public int CompareTo(DelegateDefinition other)
         {
-            var ret = Name.CompareTo(other.Name);
+            var ret = string.Compare(Name, other.Name, StringComparison.Ordinal);
+
             if (ret == 0)
             {
                 ret = Parameters.CompareTo(other.Parameters);
@@ -143,6 +174,11 @@ namespace Bind.Structures
         /// <inheritdoc/>
         public bool Equals(DelegateDefinition other)
         {
+            if (other is null)
+            {
+                return false;
+            }
+
             return
                 Name.Equals(other.Name) &&
                 Parameters.Equals(other.Parameters) &&
