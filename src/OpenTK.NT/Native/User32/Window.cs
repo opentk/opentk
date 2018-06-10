@@ -133,7 +133,7 @@ namespace OpenTK.NT.Native
 
             // SetWindowLongPtr does not exist on x86 platforms (it's a macro that resolves to SetWindowLong).
             // We need to detect if we are on x86 or x64 at runtime and call the correct function
-            internal static IntPtr SetWindowLong(HWND hWnd, GetWindowLongOffsets nIndex, LONG_PTR dwNewLong)
+            internal static IntPtr SetWindowLong(HWND hWnd, int nIndex, LONG_PTR dwNewLong)
             {
                 Kernel32.SetLastError(0); // not sure we have to do this
 
@@ -150,11 +150,14 @@ namespace OpenTK.NT.Native
                 return result;
             }
 
+            internal static IntPtr SetWindowLong(HWND hWnd, GetWindowLongIndex nIndex, LONG_PTR dwNewLong)
+                => SetWindowLong(hWnd, (int)nIndex, dwNewLong);
+
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLong")]
             private static extern int SetWindowLongInternal(
                 [In] HWND hWnd,
-                [In] GetWindowLongOffsets nIndex,
+                [In] int nIndex,
                 [In] int dwNewLong
             );
 
@@ -162,7 +165,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLong")]
             private static extern int SetWindowLongInternal(
                 [In] HWND hWnd,
-                [In] GetWindowLongOffsets nIndex,
+                [In] int nIndex,
                 [In] [MarshalAs(UnmanagedType.FunctionPtr)] WindowProc dwNewLong
             );
 
@@ -170,7 +173,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtr")]
             private static extern LONG_PTR SetWindowLongPtrInternal(
                 [In] HWND hWnd,
-                [In] GetWindowLongOffsets nIndex,
+                [In] int nIndex,
                 [In] LONG_PTR dwNewLong
             );
 
@@ -178,14 +181,17 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtr")]
             private static extern LONG_PTR SetWindowLongPtrInternal(
                 [In] HWND hWnd,
-                [In] GetWindowLongOffsets nIndex,
+                [In] int nIndex,
                 [In] [MarshalAs(UnmanagedType.FunctionPtr)] WindowProc dwNewLong
             );
 
             internal static IntPtr SetWindowLong(HWND hWnd, WindowProc newValue)
-                => SetWindowLong(hWnd, GetWindowLongOffsets.WNDPROC, Marshal.GetFunctionPointerForDelegate(newValue));
+                => SetWindowLong(hWnd, GetWindowLongIndex.WNDPROC, Marshal.GetFunctionPointerForDelegate(newValue));
 
-            internal static IntPtr GetWindowLong(HWND hWnd, GetWindowLongOffsets nIndex)
+            internal static IntPtr GetWindowLong(HWND hWnd, GetWindowLongIndex nIndex)
+                => GetWindowLong(hWnd, (int)nIndex);
+
+            public static IntPtr GetWindowLong(HWND hWnd, int nIndex)
             {
                 if (IntPtr.Size == 4)
                     return new IntPtr(GetWindowLongInternal(hWnd, nIndex));
@@ -195,11 +201,11 @@ namespace OpenTK.NT.Native
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true, EntryPoint = "GetWindowLong")]
-            private static extern int GetWindowLongInternal([In] HWND hWnd, [In] GetWindowLongOffsets nIndex);
+            private static extern int GetWindowLongInternal([In] HWND hWnd, [In] int nIndex);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true, EntryPoint = "GetWindowLongPtr")]
-            private static extern IntPtr GetWindowLongPtrInternal([In] HWND hWnd, [In] GetWindowLongOffsets nIndex);
+            private static extern IntPtr GetWindowLongPtrInternal([In] HWND hWnd, [In] int nIndex);
 
             [DllImport("User32.dll", CharSet = CharSet.Auto)]
             public static extern LRESULT DefWindowProc(
