@@ -33,7 +33,7 @@ namespace OpenTK.NT.Native
             /// DestroyIcon function.
             /// </remarks>
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern HICON CreateIconIndirect([In] ref IconInfo iconInfo);
+            public static extern HICON CreateIconIndirect([In] ref ICONINFO iconInfo);
 
             /// <summary>
             /// Destroys an icon and frees any memory the icon occupied.
@@ -84,7 +84,7 @@ namespace OpenTK.NT.Native
             /// </remarks>
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool GetIconInfo([In] HICON hIcon, [Out] out IconInfo pIconInfo);
+            public static extern bool GetIconInfo([In] HICON hIcon, [Out] out ICONINFO pIconInfo);
 
             [DllImport("user32.dll", SetLastError = true)]
             public static extern HICON LoadIcon(

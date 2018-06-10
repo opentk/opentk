@@ -77,7 +77,7 @@ namespace OpenTK.NT.Native
             public static extern bool EnumDisplayDevices(
                 [In] [MarshalAs(UnmanagedType.LPTStr)] string lpDevice,
                 [In] int iDevNum,
-                [Out] WindowsDisplayDevice lpDisplayDevice,
+                [Out] out DISPLAY_DEVICE lpDisplayDevice,
                 [In] int dwFlags
             );
         }

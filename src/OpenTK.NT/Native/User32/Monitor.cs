@@ -11,7 +11,7 @@ namespace OpenTK.NT.Native
         {
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool GetMonitorInfo([In] HMONITOR hMonitor, [Out] out MonitorInfo lpmi);
+            public static extern bool GetMonitorInfo([In] HMONITOR hMonitor, [Out] out MONITORINFO lpmi);
 
             [DllImport("user32.dll")]
             public static extern HMONITOR MonitorFromPoint([In] POINT pt, [In] MonitorFrom dwFlags);
