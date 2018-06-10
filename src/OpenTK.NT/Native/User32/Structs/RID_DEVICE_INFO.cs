@@ -8,14 +8,14 @@ namespace OpenTK.NT.Native
     /// Defines the raw input data coming from any device.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public class RID_DEVICE_INFO
+    public struct RID_DEVICE_INFO
     {
         internal DeviceStruct device;
 
         /// <summary>
         /// Size, in bytes, of the RawInputDeviceInfo structure.
         /// </summary>
-        internal DWORD cbSize = (uint)Marshal.SizeOf(typeof(RID_DEVICE_INFO));
+        internal DWORD cbSize;
 
         /// <summary>
         /// Type of raw input data.
@@ -29,5 +29,7 @@ namespace OpenTK.NT.Native
             [FieldOffset(0)] internal RID_DEVICE_INFO_KEYBOARD keyboard;
             [FieldOffset(0)] internal RID_DEVICE_INFO_HID hid;
         }
+
+        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RID_DEVICE_INFO>();
     }
 }

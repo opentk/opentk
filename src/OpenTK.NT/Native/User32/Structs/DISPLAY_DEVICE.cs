@@ -1,5 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 
+using DWORD = System.UInt32;
+
 namespace OpenTK.NT.Native
 {
     /// <summary>
@@ -7,15 +9,9 @@ namespace OpenTK.NT.Native
     /// the EnumDisplayDevices function.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-    public class WindowsDisplayDevice
+    public struct DISPLAY_DEVICE
     {
-        private readonly int size;
-
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-        internal string DeviceID;
-
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-        internal string DeviceKey;
+        public DWORD cb;
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         internal string DeviceName;
@@ -23,11 +19,14 @@ namespace OpenTK.NT.Native
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
         internal string DeviceString;
 
-        internal DisplayDeviceStateFlags StateFlags; // DWORD
+        internal DisplayDeviceStateFlags StateFlags;
 
-        internal WindowsDisplayDevice()
-        {
-            size = (short)Marshal.SizeOf(this);
-        }
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        internal string DeviceID;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        internal string DeviceKey;
+
+        public static readonly int SizeInBytes = Marshal.SizeOf<DISPLAY_DEVICE>();
     }
 }

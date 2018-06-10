@@ -360,7 +360,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool GetWindowInfo([In] HWND hwnd, [In] [Out] ref WindowInfo wi);
+            internal static extern bool GetWindowInfo([In] HWND hwnd, [In] [Out] ref WINDOWINFO wi);
 
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]

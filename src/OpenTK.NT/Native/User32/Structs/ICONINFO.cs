@@ -1,5 +1,8 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
+
+using BOOL = System.Boolean;
+using DWORD = System.UInt32;
+using HBITMAP = System.IntPtr;
 
 namespace OpenTK.NT.Native
 {
@@ -7,27 +10,27 @@ namespace OpenTK.NT.Native
     /// Contains information about an icon or a cursor.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct IconInfo
+    public struct ICONINFO
     {
         /// <summary>
         /// Specifies whether this structure defines an icon or a cursor. A
         /// value of TRUE specifies an icon; FALSE specifies a cursor
         /// </summary>
-        public bool fIcon;
+        public BOOL fIcon;
 
         /// <summary>
         /// The x-coordinate of a cursor's hot spot. If this structure defines
         /// an icon, the hot spot is always in the center of the icon, and
         /// this member is ignored.
         /// </summary>
-        public int xHotspot;
+        public DWORD xHotspot;
 
         /// <summary>
         /// The y-coordinate of a cursor's hot spot. If this structure defines
         /// an icon, the hot spot is always in the center of the icon, and
         /// this member is ignored.
         /// </summary>
-        public int yHotspot;
+        public DWORD yHotspot;
 
         /// <summary>
         /// The icon bitmask bitmap. If this structure defines a black and
@@ -37,7 +40,7 @@ namespace OpenTK.NT.Native
         /// two. If this structure defines a color icon, this mask only
         /// defines the AND bitmask of the icon.
         /// </summary>
-        public IntPtr hbmMask;
+        public HBITMAP hbmMask;
 
         /// <summary>
         /// A handle to the icon color bitmap. This member can be optional if
@@ -46,6 +49,6 @@ namespace OpenTK.NT.Native
         /// subsequently, the color bitmap is applied (using XOR) to the
         /// destination by using the SRCINVERT flag.
         /// </summary>
-        public IntPtr hbmColor;
+        public HBITMAP hbmColor;
     }
 }

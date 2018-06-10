@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
+using DWORD = System.UInt32;
+using ULONG_PTR = System.IntPtr;
+
 namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Contains information about the mouse's location in screen coordinates.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct MouseMovePoint
+    public struct MOUSEMOVEPOINT
     {
         /// <summary>
         /// The x-coordinate of the mouse.
@@ -22,16 +25,16 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// The time stamp of the mouse coordinate.
         /// </summary>
-        public int Time;
+        public DWORD Time;
 
         /// <summary>
         /// Additional information associated with this coordinate.
         /// </summary>
-        public IntPtr ExtraInfo;
+        public ULONG_PTR ExtraInfo;
 
         /// <summary>
         /// Returns the size of a MouseMovePoint in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Marshal.SizeOf(default(MouseMovePoint));
+        public static readonly int SizeInBytes = Marshal.SizeOf<MOUSEMOVEPOINT>();
     }
 }

@@ -6,13 +6,13 @@ using WORD = System.UInt16;
 namespace OpenTK.NT.Native
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-    public class DEVMODE // unions aren't represented
+    public struct DEVMODE // unions aren't represented
     {
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         internal string DeviceName;
         internal WORD dmSpecVersion;
         internal WORD dmDriverVersion;
-        internal readonly WORD dmSize = (ushort)Marshal.SizeOf(typeof(DEVMODE));
+        internal WORD dmSize;
         internal WORD dmDriverExtra;
         internal DWORD dmFields;
 
@@ -45,5 +45,7 @@ namespace OpenTK.NT.Native
 
         internal DWORD dmPanningWidth;
         internal DWORD dmPanningHeight;
+
+        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<DEVMODE>();
     }
 }

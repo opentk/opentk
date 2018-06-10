@@ -10,7 +10,7 @@ namespace OpenTK.NT.Native
     [StructLayout(LayoutKind.Sequential)]
     internal struct WNDCLASS
     {
-        internal ClassStyle style;
+        internal WindowClassStyleFlags style;
         [MarshalAs(UnmanagedType.FunctionPtr)]
         internal WindowProc lpfnWndProc;
 
@@ -29,6 +29,6 @@ namespace OpenTK.NT.Native
         [MarshalAs(UnmanagedType.LPTStr)]
         internal string lpszClassName;
 
-        internal static int SizeInBytes = Marshal.SizeOf(default(WNDCLASS));
+        internal static int SizeInBytes = Marshal.SizeOf<WNDCLASS>();
     }
 }

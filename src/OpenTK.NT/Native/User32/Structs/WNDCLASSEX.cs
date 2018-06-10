@@ -13,7 +13,7 @@ namespace OpenTK.NT.Native
     {
         public UINT cbSize;
 
-        public ClassStyle style;
+        public WindowClassStyleFlags style;
 
         //public WNDPROC WndProc;
         [MarshalAs(UnmanagedType.FunctionPtr)]
@@ -34,6 +34,6 @@ namespace OpenTK.NT.Native
 
         public HICON hIconSm;
 
-        public static uint SizeInBytes = (uint)Marshal.SizeOf(default(WNDCLASSEX));
+        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<WNDCLASSEX>();
     }
 }

@@ -12,6 +12,6 @@ namespace OpenTK.NT.Native
         public HWND TrackWindowHandle;
         public DWORD dwHoverTime;
 
-        public static readonly int SizeInBytes = Marshal.SizeOf(typeof(TRACKMOUSEEVENT));
+        public static readonly int SizeInBytes = Marshal.SizeOf<TRACKMOUSEEVENT>();
     }
 }
