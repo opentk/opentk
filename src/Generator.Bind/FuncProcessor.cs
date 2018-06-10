@@ -601,19 +601,6 @@ namespace Bind
                 {
                     d.Parameters[i].WrapperType |= WrapperTypes.UncheckedParameter;
                 }
-
-                var paramOverride = functionOverride?.SelectSingleNode(
-                    $"param[@name='{d.Parameters[i].RawName}' or @index='{i}']");
-                if (paramOverride == null)
-                {
-                    continue;
-                }
-
-                var legacyArrayParameter = paramOverride.GetAttribute("legacyArrayParameter", string.Empty);
-                if (!string.IsNullOrEmpty(legacyArrayParameter))
-                {
-                    d.Parameters[i].WrapperType |= WrapperTypes.LegacyArrayParameter;
-                }
             }
         }
 
@@ -896,17 +883,6 @@ namespace Bind
                 // Generics are handled in a second pass.
                 if ((parameter.WrapperType & WrapperTypes.GenericParameter) == 0)
                 {
-                    if ((parameter.WrapperType & WrapperTypes.LegacyArrayParameter) != 0)
-                    {
-                        foreach (var wrapper in GetWrapper(wrappers, WrapperTypes.LegacyArrayParameter, func))
-                        {
-                            wrapper.ObsoletionReason = "Use out overload instead";
-                            var p = wrapper.Parameters[i];
-                            p.ArrayDimensions++;
-                            p.IndirectionLevel--;
-                        }
-                    }
-
                     if ((parameter.WrapperType & WrapperTypes.ArrayParameter) != 0)
                     {
                         foreach (var wrapper in GetWrapper(wrappers, WrapperTypes.ArrayParameter, func))

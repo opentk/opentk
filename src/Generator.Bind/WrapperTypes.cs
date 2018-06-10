@@ -97,11 +97,6 @@ namespace Bind
         /// Functions takes an IntPtr that corresponds to a size_t.
         /// Add an int32 overload for convenience.
         /// </summary>
-        SizeParameter = 1 << 14,
-
-        /// <summary>
-        /// Function takes a ref but we emit a legacy array overload to maintain backwards compatability.
-        /// </summary>
-        LegacyArrayParameter = 1 << 15,
+        SizeParameter = 1 << 14
     }
 }
