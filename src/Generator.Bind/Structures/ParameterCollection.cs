@@ -8,7 +8,7 @@ namespace Bind.Structures
     /// <summary>
     /// Holds the parameter list of an opengl function.
     /// </summary>
-    internal class ParameterCollection : IList<ParameterDefinition>, IComparable<ParameterCollection>, IEquatable<ParameterCollection>
+    internal class ParameterCollection : IList<ParameterDefinition>, IComparable<ParameterCollection>, IEquatable<ParameterCollection>, IDeclarable
     {
         private readonly List<ParameterDefinition> _parameters = new List<ParameterDefinition>();
 
@@ -43,6 +43,30 @@ namespace Bind.Structures
                     sb.Append(p);
                     sb.Append(", ");
                 }
+                sb.Replace(", ", ")", sb.Length - 2, 2);
+            }
+            else
+            {
+                sb.Append(")");
+            }
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string GetDeclarationString()
+        {
+            var sb = new StringBuilder();
+
+            sb.Append("(");
+            if (Count > 0)
+            {
+                foreach (var p in this)
+                {
+                    sb.Append(p.GetDeclarationString());
+                    sb.Append(", ");
+                }
+
                 sb.Replace(", ", ")", sb.Length - 2, 2);
             }
             else

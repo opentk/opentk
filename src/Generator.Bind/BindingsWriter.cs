@@ -526,7 +526,7 @@ namespace Bind
             sb.Append(" ");
             sb.Append(Generator.FunctionPrefix);
             sb.Append(d.Name);
-            sb.Append(GetDeclarationString(d.Parameters));
+            sb.Append(d.Parameters.GetDeclarationString());
 
             return sb.ToString();
         }
@@ -554,7 +554,7 @@ namespace Bind
                 sb.Append(">");
             }
 
-            sb.Append(GetDeclarationString(f.Parameters));
+            sb.Append(f.Parameters.GetDeclarationString());
 
             if (f.Parameters.Any(p => p.Generic))
             {
@@ -563,29 +563,6 @@ namespace Bind
                 {
                     sb.AppendLine($"    where {p.ParameterType.TypeName} : struct");
                 }
-            }
-
-            return sb.ToString();
-        }
-
-        private string GetDeclarationString(ParameterCollection parameters)
-        {
-            var sb = new StringBuilder();
-
-            sb.Append("(");
-            if (parameters.Count > 0)
-            {
-                foreach (var p in parameters)
-                {
-                    sb.Append(p.GetDeclarationString());
-                    sb.Append(", ");
-                }
-
-                sb.Replace(", ", ")", sb.Length - 2, 2);
-            }
-            else
-            {
-                sb.Append(")");
             }
 
             return sb.ToString();
