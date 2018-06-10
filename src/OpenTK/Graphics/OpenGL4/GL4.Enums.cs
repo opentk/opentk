@@ -18847,11 +18847,6 @@ namespace OpenTK.Graphics.OpenGL4
     public enum KhrBlendEquationAdvanced
     {
         /// <summary>
-        /// Original was GL_BLEND_ADVANCED_COHERENT_KHR = 0x9285
-        /// </summary>
-        BlendAdvancedCoherentKhr = 0x9285,
-
-        /// <summary>
         /// Original was GL_MULTIPLY_KHR = 0x9294
         /// </summary>
         MultiplyKhr = 0x9294,
