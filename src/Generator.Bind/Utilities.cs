@@ -65,6 +65,7 @@ namespace Bind
                     "3TC", "DXT", "BPTC", "RGTC",
                     "3DC", "ATC", "ETC",
                     "ANGLE",  "MESAX", "MESA",
+                    "ATI"
                 };
 
                 var acronymNames = extensions.Concat(acronyms).ToList();
