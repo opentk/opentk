@@ -68,7 +68,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
             internal static extern LRESULT SendMessage(
                 [In] HWND hWnd,
-                [In] WindowMessage Msg,
+                [In] WM Msg,
                 [In] WPARAM wParam,
                 [In] LPARAM lParam
             );
@@ -78,7 +78,7 @@ namespace OpenTK.NT.Native
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool PostMessage(
                 [In] [Optional] HWND hWnd,
-                [In] WindowMessage Msg,
+                [In] WM Msg,
                 [In] WPARAM wParam,
                 [In] LPARAM lParam
             );

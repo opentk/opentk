@@ -18,7 +18,7 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Type of device.
         /// </summary>
-        internal RawInputDeviceType dwType;
+        internal RAWINPUTDEVICE_TYPE dwType;
 
         public override string ToString()
             => $"{dwType}, Handle: {hDevice}";

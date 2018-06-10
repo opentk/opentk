@@ -20,7 +20,7 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Type of raw input data.
         /// </summary>
-        internal RawInputDeviceType dwType;
+        internal RAWINPUTDEVICE_TYPE dwType;
 
         [StructLayout(LayoutKind.Explicit)]
         internal struct DeviceStruct

@@ -9,7 +9,7 @@ namespace OpenTK.NT.Native
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void TimerProc(
         [In] HWND hwnd,
-        [In] WindowMessage uMsg,
+        [In] WM uMsg,
         [In] UINT_PTR idEvent,
         [In] DWORD dwTime
     );

@@ -43,7 +43,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll")]
             internal static extern ChangeDisplaySettingsResult ChangeDisplaySettings(
                 [In] DEVMODE lpDevMode,
-                [In] ChangeDisplaySettingsEnum dwflags
+                [In] ChangeDisplaySettingsFlags dwflags
             );
 
             [DllImport("user32.dll", CharSet = CharSet.Auto)]
@@ -51,7 +51,7 @@ namespace OpenTK.NT.Native
                 [In] [MarshalAs(UnmanagedType.LPTStr)] string lpszDeviceName,
                 [In] DEVMODE lpDevMode,
                 HWND hwnd,
-                [In] ChangeDisplaySettingsEnum dwflags,
+                [In] ChangeDisplaySettingsFlags dwflags,
                 [In] LPVOID lParam
             );
 

@@ -26,7 +26,7 @@ namespace OpenTK.NT.Native
         /// RI_KEY_TERMSRV_SET_LED
         /// RI_KEY_TERMSRV_SHADOW
         /// </summary>
-        internal RawInputKeyboardDataFlags Flags;
+        internal RAWKEYBOARD_FLAGS Flags;
 
         /// <summary>
         /// Reserved; must be zero.
@@ -36,7 +36,7 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Microsoft Windows message compatible virtual-key code. For more information, see Virtual-Key Codes.
         /// </summary>
-        internal VirtualKeys VKey;
+        internal VIRTUALKEYS VKey;
 
         /// <summary>
         /// Corresponding window message, for example WM_KEYDOWN, WM_SYSKEYDOWN, and so forth.

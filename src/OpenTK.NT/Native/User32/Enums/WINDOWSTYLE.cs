@@ -1,0 +1,42 @@
+﻿using System;
+
+using DWORD = System.UInt32;
+
+namespace OpenTK.NT.Native
+{
+    [Flags]
+    internal enum WINDOWSTYLE : DWORD
+    {
+        OVERLAPPED = 0x00000000,
+        POPUP = 0x80000000,
+        CHILD = 0x40000000,
+        MINIMIZE = 0x20000000,
+        VISIBLE = 0x10000000,
+        DISABLED = 0x08000000,
+        CLIPSIBLINGS = 0x04000000,
+        CLIPCHILDREN = 0x02000000,
+        MAXIMIZE = 0x01000000,
+        CAPTION = 0x00C00000, // Border | DialogFrame
+        BORDER = 0x00800000,
+        DIALOGFRAME = 0x00400000,
+        VSCROLL = 0x00200000,
+        HSCREEN = 0x00100000,
+        SYSTEMMENU = 0x00080000,
+        THICKFRAME = 0x00040000,
+        GROUP = 0x00020000,
+        TABSTOP = 0x00010000,
+
+        MINIMIZEBOX = 0x00020000,
+        MAXIMIZEBOX = 0x00010000,
+
+        TILED = OVERLAPPED,
+        ICONIC = MINIMIZE,
+        SIZEBOX = THICKFRAME,
+        TILEDWINDOW = OVERLAPPEDWINDOW,
+
+        // Common window styles:
+        OVERLAPPEDWINDOW = OVERLAPPED | CAPTION | SYSTEMMENU | THICKFRAME | MINIMIZEBOX | MAXIMIZEBOX,
+        POPUPWINDOW = POPUP | BORDER | SYSTEMMENU,
+        CHILDWINDOW = CHILD
+    }
+}

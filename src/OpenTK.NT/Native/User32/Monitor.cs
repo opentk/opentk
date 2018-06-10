@@ -14,10 +14,10 @@ namespace OpenTK.NT.Native
             public static extern bool GetMonitorInfo([In] HMONITOR hMonitor, [Out] out MONITORINFO lpmi);
 
             [DllImport("user32.dll")]
-            public static extern HMONITOR MonitorFromPoint([In] POINT pt, [In] MonitorFrom dwFlags);
+            public static extern HMONITOR MonitorFromPoint([In] POINT pt, [In] MonitorFromEnum dwFlags);
 
             [DllImport("user32.dll")]
-            public static extern HMONITOR MonitorFromWindow([In] HWND hwnd, [In] MonitorFrom dwFlags);
+            public static extern HMONITOR MonitorFromWindow([In] HWND hwnd, [In] MonitorFromEnum dwFlags);
         }
     }
 }

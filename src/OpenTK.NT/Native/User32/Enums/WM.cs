@@ -2,7 +2,7 @@
 
 namespace OpenTK.NT.Native
 {
-    public enum WindowMessage : UINT
+    public enum WM : UINT
     {
         NULL = 0x0000,
         CREATE = 0x0001,
@@ -114,17 +114,17 @@ namespace OpenTK.NT.Native
         NCMBUTTONDBLCLK = 0x00A9,
 
         /// <summary>
-        /// Windows 2000 and higher only.
+        /// Only supported on Windows 2000 and higher.
         /// </summary>
         NCXBUTTONDOWN = 0x00ab,
 
         /// <summary>
-        /// Windows 2000 and higher only.
+        /// Only supported on Windows 2000 and higher.
         /// </summary>
         NCXBUTTONUP = 0x00ac,
 
         /// <summary>
-        /// Windows 2000 and higher only.
+        /// Only supported on Windows 2000 and higher.
         /// </summary>
         NCXBUTTONDBLCLK = 0x00ad,
 
@@ -189,22 +189,22 @@ namespace OpenTK.NT.Native
         MOUSEWHEEL = 0x020A,
 
         /// <summary>
-        /// Windows 2000 and higher only.
+        /// Only supported on Windows 2000 and higher.
         /// </summary>
         XBUTTONDOWN = 0x020B,
 
         /// <summary>
-        /// Windows 2000 and higher only.
+        /// Only supported on Windows 2000 and higher.
         /// </summary>
         XBUTTONUP = 0x020C,
 
         /// <summary>
-        /// Windows 2000 and higher only.
+        /// Only supported on Windows 2000 and higher.
         /// </summary>
         XBUTTONDBLCLK = 0x020D,
 
         /// <summary>
-        /// Windows Vista and higher only.
+        /// Only supported on Vista and higher.
         /// </summary>
         MOUSEHWHEEL = 0x020E,
         PARENTNOTIFY = 0x0210,

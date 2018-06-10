@@ -30,33 +30,32 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// Mode flag that specifies how to interpret the information provided by UsagePage and Usage.
-        /// It can be zero (the default) or one of the following values.
         /// By default, the operating system sends raw input from devices with the specified top level collection (TLC)
         /// to the registered application as long as it has the window focus.
         /// </summary>
-        internal RawInputDeviceFlags dwFlags;
+        internal RAWINPUTDEVICE_FLAGS dwFlags;
 
         /// <summary>
         /// Handle to the target window. If NULL it follows the keyboard focus.
         /// </summary>
         internal HWND hwndTarget;
 
-        public RAWINPUTDEVICE(HidUsageGD usage, RawInputDeviceFlags flags, HWND target)
+        public RAWINPUTDEVICE(HidUsageGD usage, RAWINPUTDEVICE_FLAGS flags, HWND target)
             : this((ushort)usage, flags, target, HidPage.GenericDesktop)
         {
         }
 
-        public RAWINPUTDEVICE(HidUsageCD usage, RawInputDeviceFlags flags, HWND target)
+        public RAWINPUTDEVICE(HidUsageCD usage, RAWINPUTDEVICE_FLAGS flags, HWND target)
             : this((ushort)usage, flags, target, HidPage.Consumer)
         {
         }
 
-        public RAWINPUTDEVICE(HidUsageSim usage, RawInputDeviceFlags flags, HWND target)
+        public RAWINPUTDEVICE(HidUsageSim usage, RAWINPUTDEVICE_FLAGS flags, HWND target)
             : this((ushort)usage, flags, target, HidPage.Simulation)
         {
         }
 
-        private RAWINPUTDEVICE(ushort usage, RawInputDeviceFlags flags, HWND target, HidPage usagePage)
+        private RAWINPUTDEVICE(ushort usage, RAWINPUTDEVICE_FLAGS flags, HWND target, HidPage usagePage)
         {
             usUsage = usage;
             dwFlags = flags;

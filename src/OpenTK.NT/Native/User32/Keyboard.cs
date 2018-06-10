@@ -11,11 +11,11 @@ namespace OpenTK.NT.Native
         {
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            internal static extern short GetKeyState([In] VirtualKeys nVirtKey);
+            internal static extern short GetKeyState([In] VIRTUALKEYS nVirtKey);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            internal static extern short GetAsyncKeyState([In] VirtualKeys vKey);
+            internal static extern short GetAsyncKeyState([In] VIRTUALKEYS vKey);
 
             [DllImport("user32.dll")]
             public static extern HWND GetFocus();
@@ -25,7 +25,7 @@ namespace OpenTK.NT.Native
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            internal static extern uint MapVirtualKey([In] VirtualKeys vkey, [In] MapVirtualKeyType uMapType);
+            internal static extern uint MapVirtualKey([In] VIRTUALKEYS vkey, [In] MapVirtualKeyType uMapType);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]

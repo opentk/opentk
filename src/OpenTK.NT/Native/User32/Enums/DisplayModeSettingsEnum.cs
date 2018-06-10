@@ -1,8 +1,10 @@
-﻿namespace OpenTK.NT.Native
+﻿using DWORD = System.UInt32;
+
+namespace OpenTK.NT.Native
 {
-    public enum DisplayModeSettingsEnum
+    public enum DisplayModeSettingsEnum : DWORD
     {
-        CurrentSettings = -1,
-        RegistrySettings = -2
+        CURRENT_SETTINGS = unchecked((uint)-1),
+        REGISTRY_SETTINGS = unchecked((uint)-2)
     }
 }

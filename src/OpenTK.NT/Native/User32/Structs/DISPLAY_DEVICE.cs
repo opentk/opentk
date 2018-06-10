@@ -19,7 +19,7 @@ namespace OpenTK.NT.Native
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
         internal string DeviceString;
 
-        internal DisplayDeviceStateFlags StateFlags;
+        internal DISPLAY_DEVICE_STATE_FLAGS StateFlags;
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
         internal string DeviceID;

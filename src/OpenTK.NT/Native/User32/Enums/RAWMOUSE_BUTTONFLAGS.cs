@@ -3,7 +3,7 @@
 namespace OpenTK.NT.Native
 {
     [Flags]
-    public enum RawInputMouseState : uint
+    public enum RAWMOUSE_BUTTONFLAGS : uint
     {
         LEFT_BUTTON_DOWN = 0x0001, // Left Button changed to down.
         LEFT_BUTTON_UP = 0x0002, // Left Button changed to up.
@@ -24,6 +24,9 @@ namespace OpenTK.NT.Native
         BUTTON_5_DOWN = 0x0100,
         BUTTON_5_UP = 0x0200,
 
+        /// <summary>
+        /// Raw input comes from a mouse wheel. The wheel delta is stored in <see cref="RAWMOUSE.usButtonData"/>.
+        /// </summary>
         WHEEL = 0x0400,
         HWHEEL = 0x0800
     }

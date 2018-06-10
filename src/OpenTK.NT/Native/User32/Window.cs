@@ -50,7 +50,7 @@ namespace OpenTK.NT.Native
             [SuppressUnmanagedCodeSecurity]
             internal static extern bool AdjustWindowRect(
                 [In] [Out] ref RECT lpRect,
-                [In] WindowStyle dwStyle,
+                [In] WINDOWSTYLE dwStyle,
                 [In] bool bMenu
             );
 
@@ -59,17 +59,17 @@ namespace OpenTK.NT.Native
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool AdjustWindowRectEx(
                 [In] [Out] ref RECT lpRect,
-                [In] WindowStyle dwStyle,
+                [In] WINDOWSTYLE dwStyle,
                 [In] [MarshalAs(UnmanagedType.Bool)] bool bMenu,
-                [In] ExtendedWindowStyle dwExStyle
+                [In] WINDOWSTYLE_EX dwExStyle
             );
 
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
             internal static extern HWND CreateWindowEx(
-                [In] ExtendedWindowStyle dwExStyle,
+                [In] WINDOWSTYLE_EX dwExStyle,
                 [In] [Optional] [MarshalAs(UnmanagedType.LPTStr)] string lpClassName,
                 [In] [Optional] [MarshalAs(UnmanagedType.LPTStr)] string lpWindowName,
-                [In] WindowStyle dwStyle,
+                [In] WINDOWSTYLE dwStyle,
                 [In] int x,
                 [In] int y,
                 [In] int nWidth,
@@ -82,10 +82,10 @@ namespace OpenTK.NT.Native
 
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
             internal static extern HWND CreateWindowEx(
-                [In] ExtendedWindowStyle dwExStyle,
+                [In] WINDOWSTYLE_EX dwExStyle,
                 [In] [Optional] IntPtr lpClassAtom,
                 [In] [Optional] string lpWindowName,
-                [In] WindowStyle dwStyle,
+                [In] WINDOWSTYLE dwStyle,
                 [In] int x,
                 [In] int y,
                 [In] int nWidth,
@@ -105,7 +105,7 @@ namespace OpenTK.NT.Native
             internal static extern LRESULT CallWindowProc(
                 [In] WNDPROC lpPrevWndFunc,
                 [In] HWND hWnd,
-                [In] WindowMessage Msg,
+                [In] WM Msg,
                 [In] WPARAM wParam,
                 [In] LPARAM lParam
             );
@@ -210,7 +210,7 @@ namespace OpenTK.NT.Native
             [DllImport("User32.dll", CharSet = CharSet.Auto)]
             public static extern LRESULT DefWindowProc(
                 [In] HWND hWnd,
-                [In] WindowMessage Msg,
+                [In] WM Msg,
                 [In] WPARAM wParam,
                 [In] LPARAM lParam
             );

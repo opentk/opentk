@@ -23,9 +23,9 @@ namespace OpenTK.NT.Native
         /// MOUSE_VIRTUAL_DESKTOP
         /// Mouse coordinates are mapped to the virtual desktop (for a multiple monitor system).
         /// </summary>
-        [FieldOffset(0)] public RawMouseFlags usFlags; // USHORT in winuser.h, but only INT works -- USHORT returns 0.
+        [FieldOffset(0)] public RAWMOUSE_FLAGS usFlags; // USHORT in winuser.h, but only INT works -- USHORT returns 0.
 
-        [FieldOffset(4)] public RawInputMouseState usButtonFlags;
+        [FieldOffset(4)] public RAWMOUSE_BUTTONFLAGS usButtonFlags;
 
         /// <summary>
         /// If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed value that specifies the wheel delta.

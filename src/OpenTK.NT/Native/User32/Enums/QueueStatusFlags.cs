@@ -1,12 +1,14 @@
 ﻿using System;
 
+using DWORD = System.UInt32;
+
 namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Queue status flags for GetQueueStatus() and MsgWaitForMultipleObjects()
     /// </summary>
     [Flags]
-    internal enum QueueStatusFlags : uint
+    internal enum QueueStatusFlags : DWORD
     {
         /// <summary>
         /// A WM_KEYUP, WM_KEYDOWN, WM_SYSKEYUP, or WM_SYSKEYDOWN message is in the queue.

@@ -13,7 +13,7 @@ namespace OpenTK.NT.Native
     {
         public UINT cbSize;
 
-        public WindowClassStyleFlags style;
+        public WNDCLASS_STYLEFLAGS style;
 
         //public WNDPROC WndProc;
         [MarshalAs(UnmanagedType.FunctionPtr)]

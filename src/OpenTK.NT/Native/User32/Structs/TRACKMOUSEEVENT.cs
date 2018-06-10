@@ -8,7 +8,7 @@ namespace OpenTK.NT.Native
     public struct TRACKMOUSEEVENT
     {
         public DWORD cbSize;
-        public TrackMouseEventFlags dwFlags;
+        public TRACKMOUSEEVENT_FLAGS dwFlags;
         public HWND TrackWindowHandle;
         public DWORD dwHoverTime;
 

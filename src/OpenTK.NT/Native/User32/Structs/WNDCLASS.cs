@@ -10,7 +10,7 @@ namespace OpenTK.NT.Native
     [StructLayout(LayoutKind.Sequential)]
     internal struct WNDCLASS
     {
-        internal WindowClassStyleFlags style;
+        internal WNDCLASS_STYLEFLAGS style;
         [MarshalAs(UnmanagedType.FunctionPtr)]
         internal WindowProc lpfnWndProc;
 

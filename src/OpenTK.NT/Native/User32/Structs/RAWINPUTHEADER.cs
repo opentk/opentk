@@ -19,7 +19,7 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Type of raw input.
         /// </summary>
-        internal RawInputDeviceType dwType;
+        internal RAWINPUTDEVICE_TYPE dwType;
 
         /// <summary>
         /// Size, in bytes, of the entire input packet of data. This includes the RawInput struct plus possible extra input

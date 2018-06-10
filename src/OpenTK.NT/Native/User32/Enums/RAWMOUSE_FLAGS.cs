@@ -6,7 +6,7 @@ namespace OpenTK.NT.Native
     /// Mouse indicator flags (found in winuser.h).
     /// </summary>
     [Flags]
-    public enum RawMouseFlags : ushort
+    public enum RAWMOUSE_FLAGS : ushort
     {
         /// <summary>
         /// LastX/Y indicate relative motion.

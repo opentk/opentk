@@ -1,14 +1,48 @@
-﻿namespace OpenTK.NT.Native
+﻿using LONG = System.Int32;
+
+namespace OpenTK.NT.Native
 {
-    public enum ChangeDisplaySettingsResult
+    public enum ChangeDisplaySettingsResult : LONG
     {
-        Successful = 0,
-        Restart = 1,
-        Failed = -1,
-        BadMode = -2,
-        NotUpdated = -3,
-        BadFlags = -4,
-        BadParam = -5,
-        BadDualView = -6, // Win XP and higher
+        /// <summary>
+        /// The settings change was successful.
+        /// </summary>
+        SUCCESSFUL = 0,
+
+        /// <summary>
+        /// The computer must be restarted for the graphics mode to work.
+        /// </summary>
+        RESTART = 1,
+
+        /// <summary>
+        /// The display driver failed the specified graphics mode.
+        /// </summary>
+        FAILED = -1,
+
+        /// <summary>
+        /// The graphics mode is not supported.
+        /// </summary>
+        BADMODE = -2,
+
+        /// <summary>
+        /// Unable to write settings to the registry.
+        /// </summary>
+        NOTUPDATED = -3,
+
+        /// <summary>
+        /// An invalid set of flags was passed in.
+        /// </summary>
+        BADFLAGS = -4,
+
+        /// <summary>
+        /// An invalid parameter was passed in. This can include an invalid flag or combination of flags.
+        /// </summary>
+        BADPARAM = -5,
+
+        /// <summary>
+        /// The settings change was unsuccessful because the system is DualView capable.
+        /// Only supported on XP and higher.
+        /// </summary>
+        BADDUALVIEW = -6,
     }
 }

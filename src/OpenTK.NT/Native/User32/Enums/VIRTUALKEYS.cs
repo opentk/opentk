@@ -1,6 +1,6 @@
 ﻿namespace OpenTK.NT.Native
 {
-    internal enum VirtualKeys : short
+    internal enum VIRTUALKEYS : short
     {
         /*
          * Virtual Key, Standard Set

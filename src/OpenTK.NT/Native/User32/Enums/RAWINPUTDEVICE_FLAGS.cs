@@ -3,7 +3,7 @@
 namespace OpenTK.NT.Native
 {
     [Flags]
-    public enum RawInputDeviceFlags : uint
+    public enum RAWINPUTDEVICE_FLAGS : uint
     {
         /// <summary>
         /// If set, this removes the top level collection from the inclusion list.
@@ -57,10 +57,15 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// If set, this enables the caller to receive input in the background only if the foreground application
         /// does not process it. In other words, if the foreground application is not registered for raw input,
-        /// then the background application that is registered will receive the input.
+        /// then the background application that is registered will receive the input.<br/>
+        /// Only supported on Vista later.
         /// </summary>
         EXINPUTSINK = 0x00001000,
 
+        /// <summary>
+        /// If set, this enables the caller to receive WM_INPUT_DEVICE_CHANGE notifications for device arrival and device removal.<br/>
+        /// Only supported on Vista and later.
+        /// </summary>
         DEVNOTIFY = 0x00002000
         //EXMODEMASK      = 0x000000F0
     }
