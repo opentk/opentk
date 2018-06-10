@@ -2,39 +2,49 @@
 using System.Runtime.InteropServices;
 using System.Security;
 
+using BOOL = System.Boolean;
+using HDC = System.IntPtr;
+using HGDIOBJ = System.IntPtr;
+using UINT = System.UInt32;
+
 namespace OpenTK.NT.Native
 {
     public static class Gdi32
     {
-        [DllImport("gdi32.dll")]
-        internal static extern int ChoosePixelFormat(IntPtr dc, ref PixelFormatDescriptor pfd);
+        private const string Lib = "gdi32.dll";
 
-        [DllImport("gdi32.dll")]
-        internal static extern int DescribePixelFormat(IntPtr deviceContext, int pixel, int pfdSize,
-            ref PixelFormatDescriptor pixelFormat);
+        [DllImport(Lib, SetLastError = true)]
+        internal static extern int ChoosePixelFormat(HDC hdc, ref PIXELFORMATDESCRIPTOR ppfd);
 
-        /// <summary>
-        /// </summary>
-        /// <param name="dc"></param>
-        /// <param name="format"></param>
-        /// <param name="pfd"></param>
-        /// <returns></returns>
-        [DllImport("gdi32.dll", SetLastError = true)]
+        [DllImport(Lib, SetLastError = true)]
+        internal static extern int DescribePixelFormat(
+            HDC hdc,
+            int iPixelFormat,
+            UINT nBytes,
+            ref PIXELFORMATDESCRIPTOR ppfd
+        );
+
+        [DllImport(Lib, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool SetPixelFormat(IntPtr dc, int format, ref PixelFormatDescriptor pfd);
+        internal static extern BOOL SetPixelFormat(
+            HDC hdc,
+            int iPixelFormat,
+            ref PIXELFORMATDESCRIPTOR ppfd
+        );
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport("gdi32.dll", SetLastError = true)]
+        [DllImport(Lib, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool SwapBuffers(IntPtr dc);
+        internal static extern BOOL SwapBuffers(HDC hdc);
 
-        [DllImport("gdi32.dll", CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
-        public static extern int GetDeviceCaps(IntPtr hDC, DeviceCaps nIndex);
+        [DllImport(Lib, CharSet = CharSet.Auto)]
+        public static extern int GetDeviceCaps([In] HDC hdc, [In] GetDeviceCapsIndex nIndex);
 
-        [DllImport("gdi32.dll", SetLastError = true)]
-        internal static extern IntPtr GetStockObject(StockObjects fnObject);
+        [DllImport(Lib)]
+        internal static extern HGDIOBJ GetStockObject(GetStockObjectType fnObject);
 
-        [DllImport("gdi32.dll", SetLastError = true)]
-        internal static extern bool DeleteObject([In] IntPtr hObject);
+        [DllImport(Lib)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern BOOL DeleteObject([In] HGDIOBJ hObject);
     }
 }

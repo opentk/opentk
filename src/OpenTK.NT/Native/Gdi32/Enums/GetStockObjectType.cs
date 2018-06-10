@@ -3,7 +3,7 @@
     /// <summary>
     /// Identifiers for the GetStockObject method.
     /// </summary>
-    public enum StockObjects
+    public enum GetStockObjectType
     {
         WHITE_BRUSH = 0,
         LTGRAY_BRUSH = 1,
