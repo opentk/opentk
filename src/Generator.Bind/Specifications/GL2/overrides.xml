@@ -1098,7 +1098,6 @@
       <param name="identifier">
         <type>ObjectLabelIdentifier</type>
       </param>
-      <param name="length" legacyArrayParameter="true" />
     </function>
 
     <function name="GetProgramInterfaceiv" extension="Core">
@@ -1120,7 +1119,6 @@
       <param name="programInterface">
         <type>ProgramInterface</type>
       </param>
-      <param name="length" legacyArrayParameter="true" />
     </function>
 
     <function name="GetProgramResourceiv" extension="Core">
@@ -1130,7 +1128,6 @@
       <param name="props">
         <type>ProgramProperty</type>
       </param>
-      <param name="length" legacyArrayParameter="true" />
     </function>
 
     <function name="GetProgramResourceLocation" extension="Core">
@@ -1782,16 +1779,6 @@
       </param>
     </function>
 
-    <!--  For backwards compatibility -->
-    <function name="EdgeFlagv" extension="Core">
-      <param name="flag" legacyArrayParameter="true" />
-    </function>
-    <function name="GetObjectPtrLabel" extension="Core">
-      <param name="length" legacyArrayParameter="true" />
-    </function>
-    <function name="GetObjectPtrLabel" extension="KHR">
-      <param name="length" legacyArrayParameter="true" />
-    </function>
   </replace>
 
   <overload name="glcore">
@@ -1802,25 +1789,6 @@
       </param>
     </function>
   </overload>
-
-  <!-- For backwards compatibility -->
-  <replace name="gl">
-    <function name="GetObjectLabel" extension="Ext">
-      <param name="length" legacyArrayParameter="true" />
-    </function>
-    <function name="GetObjectPtrLabel" extension="Core">
-      <param name="length" legacyArrayParameter="true" />
-    </function>
-    <function name="GetObjectPtrLabel" extension="KHR">
-      <param name="length" legacyArrayParameter="true" />
-    </function>
-    <function name="GetProgramPipelineInfoLog" extension="Core">
-      <param name="length" legacyArrayParameter="true" />
-    </function>
-    <function name="GetProgramPipelineInfoLog" extension="Ext">
-      <param name="length" legacyArrayParameter="true" />
-    </function>
-  </replace>
 
   <overload name="gl">
     <!-- generated from apitest -->
@@ -5056,23 +5024,6 @@
     <function name="DeletePerfMonitors" extension="AMD">
       <param name="monitors"><flow>in</flow></param>
     </function>
-
-    <!-- For backwards compatibility -->
-    <function name="ExtGetBuffersQCOM" extension="QCOM">
-      <param name="numBuffers" legacyArrayParameter="true" />
-    </function>
-    <function name="ExtGetFramebuffersQCOM" extension="QCOM">
-      <param name="numFramebuffers" legacyArrayParameter="true" />
-    </function>
-    <function name="ExtGetProgramsQCOM" extension="QCOM">
-      <param name="numPrograms" legacyArrayParameter="true" />
-    </function>
-    <function name="ExtGetRenderbuffersQCOM" extension="QCOM">
-      <param name="numRenderbuffers" legacyArrayParameter="true" />
-    </function>
-    <function name="ExtGetShadersQCOM" extension="QCOM">
-      <param name="numShaders" legacyArrayParameter="true" />
-    </function>
   </replace>
 
   <add name="gles1">
@@ -5627,7 +5578,6 @@
     </function>
     <function name="GetObjectLabel">
       <param name="identifier"><type>ObjectLabelIdentifier</type></param>
-      <param name="length" legacyArrayParameter="true" />
     </function>
     <function name="ObjectLabel">
       <param name="identifier"><type>ObjectLabelIdentifier</type></param>
@@ -5645,48 +5595,11 @@
 
   <!--  gles2 replacements for backwards compatibility -->
   <replace name="gles2">
-    <function name="GetObjectLabel">
-      <param name="length" legacyArrayParameter="true" />
-    </function>
-    <function name="GetObjectPtrLabel">
-      <param name="length" legacyArrayParameter="true" />
-    </function>
-    <function name="GetProgramPipelineInfoLog" extension="EXT">
-      <param name="length" legacyArrayParameter="true" />
-    </function>
     <!-- GetTranslatedShaderSource is missing count attributes -->
     <function name="GetTranslatedShaderSource" extension="ANGLE">
-      <param name="length" legacyArrayParameter="true" />
       <param name="source">
         <count>bufsize</count>
       </param>
-    </function>
-    <function name="GetProgramBinary" extension="OES">
-      <param name="length" legacyArrayParameter="true" />
-      <param name="binaryFormat" legacyArrayParameter="true" />
-    </function>
-    <function name="ExtGetBuffers" extension="QCOM">
-      <param name="numBuffers" legacyArrayParameter="true" />
-    </function>
-    <function name="ExtGetFramebuffers" extension="QCOM">
-      <param name="numFramebuffers" legacyArrayParameter="true" />
-    </function>
-    <function name="ExtGetPrograms" extension="QCOM">
-      <param name="numPrograms" legacyArrayParameter="true" />
-    </function>
-    <function name="ExtGetRenderbuffers" extension="QCOM">
-      <param name="numRenderbuffers" legacyArrayParameter="true" />
-    </function>
-    <function name="ExtGetShaders" extension="QCOM">
-      <param name="numShaders" legacyArrayParameter="true" />
-    </function>
-  </replace>
-
-  <!--  gles2 replacements for backwards compatibility (2.0 only) -->
-  <replace name="gles2" version="2.0">
-    <!-- Khronos added count="1" to VertexAttrib1fv -->
-    <function name="VertexAttrib1fv">
-      <param name="v" legacyArrayParameter="true" />
     </function>
   </replace>
 
