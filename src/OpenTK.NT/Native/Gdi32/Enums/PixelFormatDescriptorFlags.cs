@@ -5,7 +5,7 @@ using DWORD = System.UInt32;
 namespace OpenTK.NT.Native
 {
     [Flags]
-    internal enum PIXELFORMATDESCRIPTOR_FLAGS : DWORD
+    internal enum PixelFormatDescriptorFlags : DWORD
     {
         /// <summary>
         /// The buffer is double-buffered. This flag and PFD_SUPPORT_GDI are mutually exclusive 

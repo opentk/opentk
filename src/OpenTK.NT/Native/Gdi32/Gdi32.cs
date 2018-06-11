@@ -14,14 +14,14 @@ namespace OpenTK.NT.Native
         private const string Lib = "gdi32.dll";
 
         [DllImport(Lib, SetLastError = true)]
-        internal static extern int ChoosePixelFormat(HDC hdc, ref PIXELFORMATDESCRIPTOR ppfd);
+        internal static extern int ChoosePixelFormat(HDC hdc, ref PixelFormatDescriptor ppfd);
 
         [DllImport(Lib, SetLastError = true)]
         internal static extern int DescribePixelFormat(
             HDC hdc,
             int iPixelFormat,
             UINT nBytes,
-            ref PIXELFORMATDESCRIPTOR ppfd
+            ref PixelFormatDescriptor ppfd
         );
 
         [DllImport(Lib, SetLastError = true)]
@@ -29,7 +29,7 @@ namespace OpenTK.NT.Native
         internal static extern BOOL SetPixelFormat(
             HDC hdc,
             int iPixelFormat,
-            ref PIXELFORMATDESCRIPTOR ppfd
+            ref PixelFormatDescriptor ppfd
         );
 
         [SuppressUnmanagedCodeSecurity]

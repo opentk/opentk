@@ -11,12 +11,12 @@ namespace OpenTK.NT.Native
     /// Found in WinGDI.h
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct PIXELFORMATDESCRIPTOR
+    public struct PixelFormatDescriptor
     {
         internal WORD nSize;
         internal WORD nVersion;
-        internal PIXELFORMATDESCRIPTOR_FLAGS dwFlags;
-        internal PIXELFORMATDESCRIPTOR_PIXELTYPE iPixelType;
+        internal PixelFormatDescriptorFlags dwFlags;
+        internal PixelFormatDescriptorPixelType iPixelType;
         internal BYTE cColorBits;
         internal BYTE cRedBits;
         internal BYTE cRedShift;
