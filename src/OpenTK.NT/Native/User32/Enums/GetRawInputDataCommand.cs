@@ -5,12 +5,12 @@ namespace OpenTK.NT.Native
     public enum GetRawInputDataCommand : UINT
     {
         /// <summary>
-        /// Get the raw data from the <see cref="RAWINPUT"/> structure.
+        /// Get the raw data from the <see cref="RawInput"/> structure.
         /// </summary>
         INPUT = 0x10000003,
 
         /// <summary>
-        /// Get the header information from the <see cref="RAWINPUT"/> structure.
+        /// Get the header information from the <see cref="RawInput"/> structure.
         /// </summary>
         HEADER = 0x10000005
     }

@@ -14,12 +14,12 @@ namespace OpenTK.NT.Native
     {
         public static class RawInput
         {
-            public static readonly uint Size = (uint)Marshal.SizeOf(typeof(RAWINPUT));
-            public static readonly uint DeviceSize = (uint)Marshal.SizeOf(typeof(RAWINPUTDEVICE));
-            public static readonly uint HeaderSize = (uint)Marshal.SizeOf(typeof(RAWINPUTHEADER));
-            public static readonly uint DeviceListSize = (uint)Marshal.SizeOf(typeof(RAWINPUTDEVICELIST));
-            public static readonly uint DeviceInfoSize = (uint)Marshal.SizeOf(typeof(RID_DEVICE_INFO));
-            public static readonly uint RawMouseSize = (uint)Marshal.SizeOf(typeof(RAWMOUSE));
+            public static readonly uint Size = (uint)Marshal.SizeOf(typeof(Native.RawInput));
+            public static readonly uint DeviceSize = (uint)Marshal.SizeOf(typeof(RawInputDevice));
+            public static readonly uint HeaderSize = (uint)Marshal.SizeOf(typeof(RawInputHeader));
+            public static readonly uint DeviceListSize = (uint)Marshal.SizeOf(typeof(RawInputDeviceList));
+            public static readonly uint DeviceInfoSize = (uint)Marshal.SizeOf(typeof(RawDeviceInfo));
+            public static readonly uint RawMouseSize = (uint)Marshal.SizeOf(typeof(RawMouse));
 
             /// <summary>
             /// calls the default raw input procedure to provide default processing for
@@ -34,7 +34,7 @@ namespace OpenTK.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll")]
             internal static extern LRESULT DefRawInputProc(
-                [In] RAWINPUT[] paRawInput,
+                [In] Native.RawInput[] paRawInput,
                 [In] int nInput,
                 [In] uint cbSizeHeader
             );
@@ -65,7 +65,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool RegisterRawInputDevices(
-                [In] RAWINPUTDEVICE[] pRawInputDevices,
+                [In] RawInputDevice[] pRawInputDevices,
                 [In] uint uiNumDevices,
                 [In] uint cbSize
             );
@@ -98,7 +98,7 @@ namespace OpenTK.NT.Native
             /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
             internal static extern uint GetRegisteredRawInputDevices(
-                [Out] [Optional] RAWINPUT[] pRawInputDevices,
+                [Out] [Optional] Native.RawInput[] pRawInputDevices,
                 [In] [Out] ref uint puiNumDevices,
                 [In] uint cbSize
             );
@@ -121,7 +121,7 @@ namespace OpenTK.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
             internal static extern uint GetRawInputBuffer(
-                [Out] [Optional] RAWINPUT[] pData,
+                [Out] [Optional] Native.RawInput[] pData,
                 [In] [Out] ref uint pcbSize,
                 [In] uint cbSizeHeader
             );
@@ -165,7 +165,7 @@ namespace OpenTK.NT.Native
             /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
             internal static extern uint GetRawInputDeviceList(
-                [Out] [Optional] RAWINPUTDEVICELIST[] pRawInputDeviceList,
+                [Out] [Optional] RawInputDeviceList[] pRawInputDeviceList,
                 [In] [Out] ref uint puiNumDevices,
                 [In] uint cbSize
             );
@@ -295,19 +295,19 @@ namespace OpenTK.NT.Native
             internal static extern uint GetRawInputDeviceInfo(
                 [In] [Optional] HANDLE hDevice,
                 [In] GetRawInputDeviceInfoEnum uiCommand,
-                [In] [Out] [Optional] RID_DEVICE_INFO pData,
+                [In] [Out] [Optional] RawDeviceInfo pData,
                 [In] [Out] ref uint pcbSize
             );
 
-            internal static uint GetRawInputData(IntPtr raw, out RAWINPUTHEADER header)
+            internal static uint GetRawInputData(IntPtr raw, out RawInputHeader header)
             {
-                var size = RAWINPUTHEADER.SizeInBytes;
+                var size = RawInputHeader.SizeInBytes;
                 unsafe
                 {
-                    fixed (RAWINPUTHEADER* pheader = &header)
+                    fixed (RawInputHeader* pheader = &header)
                     {
                         if (GetRawInputData(raw, GetRawInputDataCommand.HEADER,
-                                (IntPtr)pheader, ref size, HeaderSize) != RAWINPUTHEADER.SizeInBytes)
+                                (IntPtr)pheader, ref size, HeaderSize) != RawInputHeader.SizeInBytes)
                         {
                             System.Diagnostics.Debug.Print("[Error] Failed to retrieve raw input header. Error: {0}",
                                 Marshal.GetLastWin32Error());
@@ -318,15 +318,15 @@ namespace OpenTK.NT.Native
                 return size;
             }
 
-            internal static uint GetRawInputData(IntPtr raw, out RAWINPUT data)
+            internal static uint GetRawInputData(IntPtr raw, out Native.RawInput data)
             {
-                var size = RAWINPUT.SizeInBytes;
+                var size = Native.RawInput.SizeInBytes;
                 unsafe
                 {
-                    fixed (RAWINPUT* pdata = &data)
+                    fixed (Native.RawInput* pdata = &data)
                     {
                         GetRawInputData(raw, GetRawInputDataCommand.INPUT,
-                            (IntPtr)pdata, ref size, HeaderSize);
+                            (LPVOID)pdata, ref size, HeaderSize);
                     }
                 }
 
@@ -419,7 +419,7 @@ namespace OpenTK.NT.Native
             internal static extern uint GetRawInputData(
                 [In] HRAWINPUT hRawInput,
                 [In] GetRawInputDataCommand uiCommand,
-                [Out] [Optional] out RAWINPUT pData,
+                [Out] [Optional] out Native.RawInput pData,
                 [In] [Out] ref uint pcbSize,
                 [In] uint cbSizeHeader
             );
@@ -429,7 +429,7 @@ namespace OpenTK.NT.Native
             internal static extern unsafe int GetRawInputData(
                 HRAWINPUT RawInput,
                 GetRawInputDataCommand Command,
-                RAWINPUT* Data,
+                Native.RawInput* Data,
                 [In] [Out] ref int Size,
                 int SizeHeader
             );

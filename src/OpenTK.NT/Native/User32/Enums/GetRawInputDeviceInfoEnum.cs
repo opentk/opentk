@@ -14,7 +14,7 @@
         DEVICENAME = 0x20000007, // the return valus is the character length, not the byte size
 
         /// <summary>
-        /// pData points to an <see cref="RID_DEVICE_INFO"/> structure.
+        /// pData points to an <see cref="RawDeviceInfo"/> structure.
         /// </summary>
         DEVICEINFO = 0x2000000b
     }

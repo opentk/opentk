@@ -49,8 +49,8 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             internal static extern bool AdjustWindowRect(
-                [In] [Out] ref RECT lpRect,
-                [In] WINDOWSTYLE dwStyle,
+                [In] [Out] ref Rectangle lpRect,
+                [In] WindowStyles dwStyle,
                 [In] bool bMenu
             );
 
@@ -58,18 +58,18 @@ namespace OpenTK.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool AdjustWindowRectEx(
-                [In] [Out] ref RECT lpRect,
-                [In] WINDOWSTYLE dwStyle,
+                [In] [Out] ref Rectangle lpRect,
+                [In] WindowStyles dwStyle,
                 [In] [MarshalAs(UnmanagedType.Bool)] bool bMenu,
-                [In] WINDOWSTYLE_EX dwExStyle
+                [In] WindowStylesEx dwExStyle
             );
 
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
             internal static extern HWND CreateWindowEx(
-                [In] WINDOWSTYLE_EX dwExStyle,
+                [In] WindowStylesEx dwExStyle,
                 [In] [Optional] [MarshalAs(UnmanagedType.LPTStr)] string lpClassName,
                 [In] [Optional] [MarshalAs(UnmanagedType.LPTStr)] string lpWindowName,
-                [In] WINDOWSTYLE dwStyle,
+                [In] WindowStyles dwStyle,
                 [In] int x,
                 [In] int y,
                 [In] int nWidth,
@@ -82,10 +82,10 @@ namespace OpenTK.NT.Native
 
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
             internal static extern HWND CreateWindowEx(
-                [In] WINDOWSTYLE_EX dwExStyle,
+                [In] WindowStylesEx dwExStyle,
                 [In] [Optional] IntPtr lpClassAtom,
                 [In] [Optional] string lpWindowName,
-                [In] WINDOWSTYLE dwStyle,
+                [In] WindowStyles dwStyle,
                 [In] int x,
                 [In] int y,
                 [In] int nWidth,
@@ -366,7 +366,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool GetWindowInfo([In] HWND hwnd, [In] [Out] ref WINDOWINFO wi);
+            internal static extern bool GetWindowInfo([In] HWND hwnd, [In] [Out] ref WindowInfo wi);
 
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
@@ -392,7 +392,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool GetWindowRect([In] HWND windowHandle, [Out] out RECT windowRectangle);
+            internal static extern bool GetWindowRect([In] HWND windowHandle, [Out] out Rectangle windowRectangle);
 
             /// <summary>
             /// The GetClientRect function retrieves the coordinates of a window's client area. The client coordinates specify the
@@ -415,7 +415,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool GetClientRect([In] HWND windowHandle, [Out] out RECT clientRectangle);
+            internal static extern bool GetClientRect([In] HWND windowHandle, [Out] out Rectangle clientRectangle);
 
             /// <summary>
             /// Converts the screen coordinates of a specified point on the screen to client-area coordinates.
@@ -443,7 +443,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool ScreenToClient([In] HWND hWnd, ref POINT lpPoint);
+            internal static extern bool ScreenToClient([In] HWND hWnd, ref Point lpPoint);
 
             /// <summary>
             /// Converts the client-area coordinates of a specified point to screen coordinates.
@@ -469,7 +469,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool ClientToScreen([In] HWND hWnd, [In] [Out] ref POINT point);
+            internal static extern bool ClientToScreen([In] HWND hWnd, [In] [Out] ref Point point);
         }
     }
 }

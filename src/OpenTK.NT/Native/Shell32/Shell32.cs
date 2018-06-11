@@ -34,7 +34,7 @@ namespace OpenTK.NT.Native
         public static extern DWORD_PTR SHGetFileInfo(
             [In] LPCTSTR pszPath,
             DWORD dwFileAttributes,
-            [In] [Out] ref SHFILEINFO psfi,
+            [In] [Out] ref SHFileInfo psfi,
             UINT cbFileInfo,
             ShGetFileInfoFlags uFlags
         );

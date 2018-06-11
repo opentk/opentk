@@ -25,7 +25,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool PeekMessage(
-                [Out] out MSG lpMsg,
+                [Out] out Msg lpMsg,
                 [In] [Optional] HWND hWnd,
                 [In] uint wMsgFilterMin,
                 [In] uint wMsgFilterMax,
@@ -48,7 +48,7 @@ namespace OpenTK.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport("User32.dll", SetLastError = true)]
             internal static extern int GetMessage(
-                [Out] out MSG msg,
+                [Out] out Msg msg,
                 [In] [Optional] HWND hWnd,
                 [In] uint wMsgFilterMin,
                 [In] uint wMsgFilterMax
@@ -88,12 +88,12 @@ namespace OpenTK.NT.Native
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("User32.dll")]
-            internal static extern LRESULT DispatchMessage([In] ref MSG lpmsg);
+            internal static extern LRESULT DispatchMessage([In] ref Msg lpmsg);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("User32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool TranslateMessage([In] ref MSG lpMsg);
+            internal static extern bool TranslateMessage([In] ref Msg lpMsg);
 
             /// <summary>
             /// Indicates the type of messages found in the calling thread's message queue.

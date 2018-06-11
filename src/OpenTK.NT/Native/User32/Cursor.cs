@@ -28,7 +28,7 @@ namespace OpenTK.NT.Native
 
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ClipCursor([In] [Optional] ref RECT lpRect);
+            public static extern bool ClipCursor([In] [Optional] ref Rectangle lpRect);
 
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
@@ -57,7 +57,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool GetCursorPos([Out] out POINT lpPoint);
+            internal static extern bool GetCursorPos([Out] out Point lpPoint);
 
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
