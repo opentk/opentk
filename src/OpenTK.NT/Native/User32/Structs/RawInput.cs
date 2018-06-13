@@ -1,5 +1,4 @@
-﻿using OpenTK.Core;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace OpenTK.NT.Native
 {
@@ -21,6 +20,6 @@ namespace OpenTK.NT.Native
         public RawInputHeader header;
         public RawInputData data;
 
-        public static readonly int SizeInBytes = BlittableValueType<RawInput>.Stride;
+        public static readonly int SizeInBytes = Marshal.SizeOf<RawInput>();
     }
 }

@@ -1,5 +1,4 @@
-﻿using OpenTK.Core;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace OpenTK.NT.Native
 {
@@ -10,6 +9,6 @@ namespace OpenTK.NT.Native
         [FieldOffset(0)] public RawKeyboard Keyboard;
         [FieldOffset(0)] public RawHid HID;
 
-        public static readonly int SizeInBytes = BlittableValueType<RawInputData>.Stride;
+        public static readonly int SizeInBytes = Marshal.SizeOf<RawInputData>();
     }
 }

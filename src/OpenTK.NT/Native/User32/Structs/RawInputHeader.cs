@@ -1,5 +1,4 @@
-﻿using OpenTK.Core;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 using DWORD = System.UInt32;
 using HANDLE = System.IntPtr;
@@ -37,6 +36,6 @@ namespace OpenTK.NT.Native
         /// </summary>
         public WPARAM wParam;
 
-        public static readonly int SizeInBytes = BlittableValueType<RawInputHeader>.Stride;
+        public static readonly int SizeInBytes = Marshal.SizeOf<RawInputHeader>();
     }
 }
