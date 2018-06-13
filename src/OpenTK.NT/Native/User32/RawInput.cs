@@ -33,7 +33,7 @@ namespace OpenTK.NT.Native
             /// <returns>If successful, the function returns S_OK. Otherwise it returns an error value.</returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll")]
-            internal static extern LRESULT DefRawInputProc(
+            public static extern LRESULT DefRawInputProc(
                 [In] Native.RawInput[] paRawInput,
                 [In] int nInput,
                 [In] uint cbSizeHeader
@@ -41,7 +41,7 @@ namespace OpenTK.NT.Native
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll")]
-            internal static extern LRESULT DefRawInputProc(
+            public static extern LRESULT DefRawInputProc(
                 [In] IntPtr paRawInput,
                 [In] int nInput,
                 [In] uint cbSizeHeader
@@ -64,7 +64,7 @@ namespace OpenTK.NT.Native
             /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool RegisterRawInputDevices(
+            public static extern bool RegisterRawInputDevices(
                 [In] RawInputDevice[] pRawInputDevices,
                 [In] uint uiNumDevices,
                 [In] uint cbSize
@@ -97,7 +97,7 @@ namespace OpenTK.NT.Native
             ///  </para>
             /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
-            internal static extern uint GetRegisteredRawInputDevices(
+            public static extern uint GetRegisteredRawInputDevices(
                 [Out] [Optional] Native.RawInput[] pRawInputDevices,
                 [In] [Out] ref uint puiNumDevices,
                 [In] uint cbSize
@@ -120,7 +120,7 @@ namespace OpenTK.NT.Native
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            internal static extern uint GetRawInputBuffer(
+            public static extern uint GetRawInputBuffer(
                 [Out] [Optional] Native.RawInput[] pData,
                 [In] [Out] ref uint pcbSize,
                 [In] uint cbSizeHeader
@@ -128,7 +128,7 @@ namespace OpenTK.NT.Native
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            internal static extern int GetRawInputBuffer(
+            public static extern int GetRawInputBuffer(
                 [Out] [Optional] IntPtr pData,
                 [In] [Out] ref uint pcbSize,
                 [In] uint cbSizeHeader
@@ -164,7 +164,7 @@ namespace OpenTK.NT.Native
             /// On any other error, the function returns (UINT) -1 and GetLastError returns the error indication.
             /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
-            internal static extern uint GetRawInputDeviceList(
+            public static extern uint GetRawInputDeviceList(
                 [Out] [Optional] RawInputDeviceList[] pRawInputDeviceList,
                 [In] [Out] ref uint puiNumDevices,
                 [In] uint cbSize
@@ -198,7 +198,7 @@ namespace OpenTK.NT.Native
             /// On any other error, the function returns (UINT) -1 and GetLastError returns the error indication.
             /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
-            internal static extern uint GetRawInputDeviceList(
+            public static extern uint GetRawInputDeviceList(
                 [Out] [Optional] IntPtr pRawInputDeviceList,
                 [In] [Out] ref uint puiNumDevices,
                 [In] uint cbSize
@@ -240,7 +240,7 @@ namespace OpenTK.NT.Native
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            internal static extern int GetRawInputDeviceInfo(
+            public static extern int GetRawInputDeviceInfo(
                 [In] [Optional] HANDLE hDevice,
                 [In] GetRawInputDeviceInfoEnum uiCommand,
                 [In] [Out] [Optional] byte[] pData,
@@ -249,7 +249,7 @@ namespace OpenTK.NT.Native
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            internal static extern int GetRawInputDeviceInfo(
+            public static extern int GetRawInputDeviceInfo(
                 [In] [Optional] HANDLE hDevice,
                 [In] GetRawInputDeviceInfoEnum uiCommand,
                 [In] [Out] [Optional] LPVOID pData,
@@ -292,14 +292,14 @@ namespace OpenTK.NT.Native
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            internal static extern uint GetRawInputDeviceInfo(
+            public static extern uint GetRawInputDeviceInfo(
                 [In] [Optional] HANDLE hDevice,
                 [In] GetRawInputDeviceInfoEnum uiCommand,
                 [In] [Out] [Optional] RawDeviceInfo pData,
                 [In] [Out] ref uint pcbSize
             );
 
-            internal static uint GetRawInputData(IntPtr raw, out RawInputHeader header)
+            public static uint GetRawInputData(IntPtr raw, out RawInputHeader header)
             {
                 var size = RawInputHeader.SizeInBytes;
                 unsafe
@@ -318,7 +318,7 @@ namespace OpenTK.NT.Native
                 return size;
             }
 
-            internal static uint GetRawInputData(IntPtr raw, out Native.RawInput data)
+            public static uint GetRawInputData(IntPtr raw, out Native.RawInput data)
             {
                 var size = Native.RawInput.SizeInBytes;
                 unsafe
@@ -333,7 +333,7 @@ namespace OpenTK.NT.Native
                 return size;
             }
 
-            internal static uint GetRawInputData(IntPtr raw, byte[] data)
+            public static uint GetRawInputData(IntPtr raw, byte[] data)
             {
                 var size = (uint)data.Length;
                 unsafe
@@ -378,7 +378,7 @@ namespace OpenTK.NT.Native
             /// </remarks>
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            internal static extern uint GetRawInputData(
+            public static extern uint GetRawInputData(
                 [In] HRAWINPUT hRawInput,
                 [In] GetRawInputDataCommand uiCommand,
                 [Out] [Optional] LPVOID pData,
@@ -416,7 +416,7 @@ namespace OpenTK.NT.Native
             /// </remarks>
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            internal static extern uint GetRawInputData(
+            public static extern uint GetRawInputData(
                 [In] HRAWINPUT hRawInput,
                 [In] GetRawInputDataCommand uiCommand,
                 [Out] [Optional] out Native.RawInput pData,
@@ -426,7 +426,7 @@ namespace OpenTK.NT.Native
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            internal static extern unsafe int GetRawInputData(
+            public static extern unsafe int GetRawInputData(
                 HRAWINPUT RawInput,
                 GetRawInputDataCommand Command,
                 Native.RawInput* Data,
@@ -434,7 +434,7 @@ namespace OpenTK.NT.Native
                 int SizeHeader
             );
 
-            internal static IntPtr NextRawInputStructure(IntPtr data)
+            public static IntPtr NextRawInputStructure(IntPtr data)
             {
                 unsafe
                 {

@@ -7,16 +7,16 @@ using WPARAM = System.IntPtr;
 namespace OpenTK.NT.Native
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal struct Msg
+    public struct Msg
     {
-        internal HWND HWnd;
-        internal WM Message;
-        internal WPARAM WParam;
-        internal LPARAM LParam;
-        internal uint Time;
+        public HWND HWnd;
+        public WM Message;
+        public WPARAM WParam;
+        public LPARAM LParam;
+        public uint Time;
 
-        internal Point Point;
-        //internal object RefObject;
+        public Point Point;
+        //public object RefObject;
 
         public override string ToString()
             => $"msg=0x{(int)Message:x} ({Message.ToString()}) hwnd=0x{HWnd.ToInt32():x} wparam=0x{WParam.ToInt32():x} lparam=0x{LParam.ToInt32():x} pt=0x{Point:x}";

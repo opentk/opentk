@@ -5,7 +5,7 @@ using UINT = System.UInt32;
 namespace OpenTK.NT.Native
 {
     [Flags]
-    internal enum WindowClassStyleFlags : UINT
+    public enum WindowClassStyleFlags : UINT
     {
         VRedraw = 0x0001,
         HRedraw = 0x0002,

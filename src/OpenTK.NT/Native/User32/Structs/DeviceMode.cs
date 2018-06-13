@@ -9,42 +9,42 @@ namespace OpenTK.NT.Native
     public struct DeviceMode // unions aren't represented
     {
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-        internal string DeviceName;
-        internal WORD dmSpecVersion;
-        internal WORD dmDriverVersion;
-        internal WORD dmSize;
-        internal WORD dmDriverExtra;
-        internal DWORD dmFields;
+        public string DeviceName;
+        public WORD dmSpecVersion;
+        public WORD dmDriverVersion;
+        public WORD dmSize;
+        public WORD dmDriverExtra;
+        public DWORD dmFields;
 
-        internal Point dmPosition;
-        internal DWORD dmDisplayOrientation;
-        internal DWORD dmDisplayFixedOutput;
+        public Point dmPosition;
+        public DWORD dmDisplayOrientation;
+        public DWORD dmDisplayFixedOutput;
 
-        internal short dmColor;
-        internal short dmDuplex;
-        internal short dmYResolution;
-        internal short dmTTOption;
-        internal short dmCollate;
+        public short dmColor;
+        public short dmDuplex;
+        public short dmYResolution;
+        public short dmTTOption;
+        public short dmCollate;
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-        internal string dmFormName;
-        internal WORD dmLogPixels;
-        internal DWORD dmBitsPerPel;
-        internal DWORD dmPelsWidth;
-        internal DWORD dmPelsHeight;
+        public string dmFormName;
+        public WORD dmLogPixels;
+        public DWORD dmBitsPerPel;
+        public DWORD dmPelsWidth;
+        public DWORD dmPelsHeight;
 
-        internal DWORD dmDisplayFlags;
-        internal DWORD dmDisplayFrequency;
+        public DWORD dmDisplayFlags;
+        public DWORD dmDisplayFrequency;
 
-        internal DWORD dmICMMethod;
-        internal DWORD dmICMIntent;
-        internal DWORD dmMediaType;
-        internal DWORD dmDitherType;
-        internal DWORD dmReserved1;
-        internal DWORD dmReserved2;
+        public DWORD dmICMMethod;
+        public DWORD dmICMIntent;
+        public DWORD dmMediaType;
+        public DWORD dmDitherType;
+        public DWORD dmReserved1;
+        public DWORD dmReserved2;
 
-        internal DWORD dmPanningWidth;
-        internal DWORD dmPanningHeight;
+        public DWORD dmPanningWidth;
+        public DWORD dmPanningHeight;
 
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<DeviceMode>();
     }

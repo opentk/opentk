@@ -5,7 +5,7 @@ using DWORD = System.UInt32;
 namespace OpenTK.NT.Native
 {
     [Flags]
-    internal enum WindowStylesEx : DWORD
+    public enum WindowStylesEx : DWORD
     {
         /// <summary>
         /// The window has a double border; the window can, optionally, be created with a title bar

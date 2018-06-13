@@ -3,7 +3,7 @@
     /// <summary>
     /// ShowWindow() Commands
     /// </summary>
-    internal enum ShowWindowCommand
+    public enum ShowWindowCommand
     {
         /// <summary>
         /// Hides the window and activates another window.

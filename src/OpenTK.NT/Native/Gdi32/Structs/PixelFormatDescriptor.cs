@@ -13,31 +13,31 @@ namespace OpenTK.NT.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct PixelFormatDescriptor
     {
-        internal WORD nSize;
-        internal WORD nVersion;
-        internal PixelFormatDescriptorFlags dwFlags;
-        internal PixelFormatDescriptorPixelType iPixelType;
-        internal BYTE cColorBits;
-        internal BYTE cRedBits;
-        internal BYTE cRedShift;
-        internal BYTE cGreenBits;
-        internal BYTE cGreenShift;
-        internal BYTE cBlueBits;
-        internal BYTE cBlueShift;
-        internal BYTE cAlphaBits;
-        internal BYTE cAlphaShift;
-        internal BYTE cAccumBits;
-        internal BYTE cAccumRedBits;
-        internal BYTE cAccumGreenBits;
-        internal BYTE cAccumBlueBits;
-        internal BYTE cAccumAlphaBits;
-        internal BYTE cDepthBits;
-        internal BYTE cStencilBits;
-        internal BYTE cAuxBuffers;
-        internal BYTE iLayerType;
-        internal BYTE bReserved;
-        internal DWORD dwLayerMask;
-        internal DWORD dwVisibleMask;
-        internal DWORD dwDamageMask;
+        public WORD nSize;
+        public WORD nVersion;
+        public PixelFormatDescriptorFlags dwFlags;
+        public PixelFormatDescriptorPixelType iPixelType;
+        public BYTE cColorBits;
+        public BYTE cRedBits;
+        public BYTE cRedShift;
+        public BYTE cGreenBits;
+        public BYTE cGreenShift;
+        public BYTE cBlueBits;
+        public BYTE cBlueShift;
+        public BYTE cAlphaBits;
+        public BYTE cAlphaShift;
+        public BYTE cAccumBits;
+        public BYTE cAccumRedBits;
+        public BYTE cAccumGreenBits;
+        public BYTE cAccumBlueBits;
+        public BYTE cAccumAlphaBits;
+        public BYTE cDepthBits;
+        public BYTE cStencilBits;
+        public BYTE cAuxBuffers;
+        public BYTE iLayerType;
+        public BYTE bReserved;
+        public DWORD dwLayerMask;
+        public DWORD dwVisibleMask;
+        public DWORD dwDamageMask;
     }
 }

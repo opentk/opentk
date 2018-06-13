@@ -19,31 +19,31 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Specifies the x-coordinate of the upper-left corner of the rectangle.
         /// </summary>
-        internal LONG left;
+        public LONG left;
 
         /// <summary>
         /// Specifies the y-coordinate of the upper-left corner of the rectangle.
         /// </summary>
-        internal LONG top;
+        public LONG top;
 
         /// <summary>
         /// Specifies the x-coordinate of the lower-right corner of the rectangle.
         /// </summary>
-        internal LONG right;
+        public LONG right;
 
         /// <summary>
         /// Specifies the y-coordinate of the lower-right corner of the rectangle.
         /// </summary>
-        internal LONG bottom;
+        public LONG bottom;
 
-        internal LONG Width => right - left;
-        internal LONG Height => bottom - top;
+        public LONG Width => right - left;
+        public LONG Height => bottom - top;
 
         public override string ToString() => $"({left},{top})-({right},{bottom})";
 
-        internal System.Drawing.Rectangle ToRectangle() => System.Drawing.Rectangle.FromLTRB(left, top, right, bottom);
+        public System.Drawing.Rectangle ToRectangle() => System.Drawing.Rectangle.FromLTRB(left, top, right, bottom);
 
-        internal static Rectangle From(System.Drawing.Rectangle value)
+        public static Rectangle From(System.Drawing.Rectangle value)
             => new Rectangle
             {
                 left = value.Left,
@@ -52,7 +52,7 @@ namespace OpenTK.NT.Native
                 bottom = value.Bottom
             };
 
-        internal static Rectangle From(System.Drawing.Size value)
+        public static Rectangle From(System.Drawing.Size value)
             => new Rectangle
             {
                 left = 0,

@@ -14,18 +14,18 @@ namespace OpenTK.NT.Native
         public DWORD cb;
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-        internal string DeviceName;
+        public string DeviceName;
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-        internal string DeviceString;
+        public string DeviceString;
 
-        internal DisplayDeviceStateFlags StateFlags;
-
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-        internal string DeviceID;
+        public DisplayDeviceStateFlags StateFlags;
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-        internal string DeviceKey;
+        public string DeviceID;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string DeviceKey;
 
         public static readonly int SizeInBytes = Marshal.SizeOf<DisplayDevice>();
     }

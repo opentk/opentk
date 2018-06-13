@@ -6,9 +6,9 @@ namespace OpenTK.NT.Native
     [StructLayout(LayoutKind.Explicit)]
     public struct RawInputData
     {
-        [FieldOffset(0)] internal RawMouse Mouse;
-        [FieldOffset(0)] internal RawKeyboard Keyboard;
-        [FieldOffset(0)] internal RawHid HID;
+        [FieldOffset(0)] public RawMouse Mouse;
+        [FieldOffset(0)] public RawKeyboard Keyboard;
+        [FieldOffset(0)] public RawHid HID;
 
         public static readonly int SizeInBytes =
             BlittableValueType<RawInputData>.Stride;

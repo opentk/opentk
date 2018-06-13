@@ -11,7 +11,7 @@ namespace OpenTK.NT.Native
     /// Contains window information.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    internal struct WindowInfo
+    public struct WindowInfo
     {
         /// <summary>
         /// The size of the structure, in bytes.

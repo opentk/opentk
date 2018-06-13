@@ -8,27 +8,27 @@ using HCURSOR = System.IntPtr;
 namespace OpenTK.NT.Native
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal struct WindowClass
+    public struct WindowClass
     {
-        internal WindowClassStyleFlags style;
+        public WindowClassStyleFlags style;
         [MarshalAs(UnmanagedType.FunctionPtr)]
-        internal WindowProc lpfnWndProc;
+        public WindowProc lpfnWndProc;
 
-        internal int cbClsExtra;
-        internal int cbWndExtra;
+        public int cbClsExtra;
+        public int cbWndExtra;
 
-        internal HINSTANCE hInstance;
-        internal HICON hIcon;
-        internal HCURSOR hCursor;
+        public HINSTANCE hInstance;
+        public HICON hIcon;
+        public HCURSOR hCursor;
 
-        internal HBRUSH hbrBackground;
-
-        [MarshalAs(UnmanagedType.LPTStr)]
-        internal string lpszMenuName;
+        public HBRUSH hbrBackground;
 
         [MarshalAs(UnmanagedType.LPTStr)]
-        internal string lpszClassName;
+        public string lpszMenuName;
 
-        internal static int SizeInBytes = Marshal.SizeOf<WindowClass>();
+        [MarshalAs(UnmanagedType.LPTStr)]
+        public string lpszClassName;
+
+        public static int SizeInBytes = Marshal.SizeOf<WindowClass>();
     }
 }

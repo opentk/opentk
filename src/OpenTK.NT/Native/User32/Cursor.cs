@@ -57,7 +57,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool GetCursorPos([Out] out Point lpPoint);
+            public static extern bool GetCursorPos([Out] out Point lpPoint);
 
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]

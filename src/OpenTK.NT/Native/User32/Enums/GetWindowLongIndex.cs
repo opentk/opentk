@@ -2,7 +2,7 @@
 
 namespace OpenTK.NT.Native
 {
-    internal enum GetWindowLongIndex : LONG
+    public enum GetWindowLongIndex : LONG
     {
         /// <summary>
         /// Retrieves the address of the window procedure, or a handle

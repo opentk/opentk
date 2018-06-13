@@ -17,17 +17,17 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// ID for the mouse device.
         /// </summary>
-        internal DWORD dwId;
+        public DWORD dwId;
 
         /// <summary>
         /// Number of buttons for the mouse.
         /// </summary>
-        internal DWORD dwNumberOfButtons;
+        public DWORD dwNumberOfButtons;
 
         /// <summary>
         /// Number of data points per second. This information may not be applicable for every mouse device.
         /// </summary>
-        internal DWORD dwSampleRate;
+        public DWORD dwSampleRate;
 
         /// <summary>
         /// TRUE if the mouse has a wheel for horizontal scrolling; otherwise, FALSE.
@@ -35,6 +35,6 @@ namespace OpenTK.NT.Native
         /// <remarks>
         /// This member is only supported under Microsoft Windows Vista and later versions.
         /// </remarks>
-        internal BOOL fHasHorizontalWheel;
+        public BOOL fHasHorizontalWheel;
     }
 }

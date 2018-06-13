@@ -16,31 +16,31 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Type of the keyboard.
         /// </summary>
-        internal DWORD dwType;
+        public DWORD dwType;
 
         /// <summary>
         /// Subtype of the keyboard.
         /// </summary>
-        internal DWORD dwSubType;
+        public DWORD dwSubType;
 
         /// <summary>
         /// Scan code mode.
         /// </summary>
-        internal DWORD dwKeyboardMode;
+        public DWORD dwKeyboardMode;
 
         /// <summary>
         /// Number of function keys on the keyboard.
         /// </summary>
-        internal DWORD dwNumberOfFunctionKeys;
+        public DWORD dwNumberOfFunctionKeys;
 
         /// <summary>
         /// Number of LED indicators on the keyboard.
         /// </summary>
-        internal DWORD dwNumberOfIndicators;
+        public DWORD dwNumberOfIndicators;
 
         /// <summary>
         /// Total number of keys on the keyboard.
         /// </summary>
-        internal DWORD dwNumberOfKeysTotal;
+        public DWORD dwNumberOfKeysTotal;
     }
 }

@@ -14,10 +14,10 @@ namespace OpenTK.NT.Native
         private const string Lib = "gdi32.dll";
 
         [DllImport(Lib, SetLastError = true)]
-        internal static extern int ChoosePixelFormat(HDC hdc, ref PixelFormatDescriptor ppfd);
+        public static extern int ChoosePixelFormat(HDC hdc, ref PixelFormatDescriptor ppfd);
 
         [DllImport(Lib, SetLastError = true)]
-        internal static extern int DescribePixelFormat(
+        public static extern int DescribePixelFormat(
             HDC hdc,
             int iPixelFormat,
             UINT nBytes,
@@ -26,7 +26,7 @@ namespace OpenTK.NT.Native
 
         [DllImport(Lib, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern BOOL SetPixelFormat(
+        public static extern BOOL SetPixelFormat(
             HDC hdc,
             int iPixelFormat,
             ref PixelFormatDescriptor ppfd
@@ -35,16 +35,16 @@ namespace OpenTK.NT.Native
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Lib, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern BOOL SwapBuffers(HDC hdc);
+        public static extern BOOL SwapBuffers(HDC hdc);
 
         [DllImport(Lib, CharSet = CharSet.Auto)]
         public static extern int GetDeviceCaps([In] HDC hdc, [In] GetDeviceCapsIndex nIndex);
 
         [DllImport(Lib)]
-        internal static extern HGDIOBJ GetStockObject(GetStockObjectType fnObject);
+        public static extern HGDIOBJ GetStockObject(GetStockObjectType fnObject);
 
         [DllImport(Lib)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern BOOL DeleteObject([In] HGDIOBJ hObject);
+        public static extern BOOL DeleteObject([In] HGDIOBJ hObject);
     }
 }

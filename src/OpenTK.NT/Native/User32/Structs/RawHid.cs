@@ -15,7 +15,7 @@ namespace OpenTK.NT.Native
     /// dwSizeHid * dwCount.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
-    internal struct RawHid
+    public struct RawHid
     {
         /// <summary>
         /// Size, in bytes, of each HID input in bRawData.
@@ -32,7 +32,7 @@ namespace OpenTK.NT.Native
         /// </summary>
         public byte bRawData;
 
-        internal byte this[int index]
+        public byte this[int index]
         {
             get
             {

@@ -21,24 +21,24 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Top level collection Usage page for the raw input device.
         /// </summary>
-        internal HidPage usUsagePage;
+        public HidPage usUsagePage;
 
         /// <summary>
         /// Top level collection Usage for the raw input device.
         /// </summary>
-        internal USHORT usUsage;
+        public USHORT usUsage;
 
         /// <summary>
         /// Mode flag that specifies how to interpret the information provided by UsagePage and Usage.
         /// By default, the operating system sends raw input from devices with the specified top level collection (TLC)
         /// to the registered application as long as it has the window focus.
         /// </summary>
-        internal RawInputDeviceFlags dwFlags;
+        public RawInputDeviceFlags dwFlags;
 
         /// <summary>
         /// Handle to the target window. If NULL it follows the keyboard focus.
         /// </summary>
-        internal HWND hwndTarget;
+        public HWND hwndTarget;
 
         public RawInputDevice(HidUsageGD usage, RawInputDeviceFlags flags, HWND target)
             : this((ushort)usage, flags, target, HidPage.GenericDesktop)

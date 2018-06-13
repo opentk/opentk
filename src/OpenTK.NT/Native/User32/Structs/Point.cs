@@ -5,8 +5,8 @@ namespace OpenTK.NT.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct Point
     {
-        internal int X;
-        internal int Y;
+        public int X;
+        public int Y;
 
         public Point(int x, int y)
         {

@@ -14,26 +14,26 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Vendor ID for the HID.
         /// </summary>
-        internal DWORD dwVendorId;
+        public DWORD dwVendorId;
 
         /// <summary>
         /// Product ID for the HID.
         /// </summary>
-        internal DWORD dwProductId;
+        public DWORD dwProductId;
 
         /// <summary>
         /// Version number for the HID.
         /// </summary>
-        internal DWORD dwVersionNumber;
+        public DWORD dwVersionNumber;
 
         /// <summary>
         /// Top-level collection Usage Page for the device.
         /// </summary>
-        internal USHORT usUsagePage;
+        public USHORT usUsagePage;
 
         /// <summary>
         /// Top-level collection Usage for the device.
         /// </summary>
-        internal USHORT usUsage;
+        public USHORT usUsage;
     }
 }

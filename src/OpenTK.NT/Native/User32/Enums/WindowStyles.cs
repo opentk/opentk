@@ -5,7 +5,7 @@ using DWORD = System.UInt32;
 namespace OpenTK.NT.Native
 {
     [Flags]
-    internal enum WindowStyles : DWORD
+    public enum WindowStyles : DWORD
     {
         Overlapped = 0x00000000,
         Popup = 0x80000000,

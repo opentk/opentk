@@ -15,7 +15,7 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Scan code from the key depression. The scan code for keyboard overrun is KEYBOARD_OVERRUN_MAKE_CODE.
         /// </summary>
-        internal USHORT MakeCode;
+        public USHORT MakeCode;
 
         /// <summary>
         /// Flags for scan code information. It can be one or more of the following.
@@ -26,7 +26,7 @@ namespace OpenTK.NT.Native
         /// RI_KEY_TERMSRV_SET_LED
         /// RI_KEY_TERMSRV_SHADOW
         /// </summary>
-        internal RawKeyboardFlags Flags;
+        public RawKeyboardFlags Flags;
 
         /// <summary>
         /// Reserved; must be zero.
@@ -36,16 +36,16 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Microsoft Windows message compatible virtual-key code. For more information, see Virtual-Key Codes.
         /// </summary>
-        internal VirtualKeys VKey;
+        public VirtualKeys VKey;
 
         /// <summary>
         /// Corresponding window message, for example WM_KEYDOWN, WM_SYSKEYDOWN, and so forth.
         /// </summary>
-        internal UINT Message;
+        public UINT Message;
 
         /// <summary>
         /// Device-specific additional information for the event.
         /// </summary>
-        internal ULONG ExtraInformation;
+        public ULONG ExtraInformation;
     }
 }

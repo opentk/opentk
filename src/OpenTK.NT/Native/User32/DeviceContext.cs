@@ -11,11 +11,11 @@ namespace OpenTK.NT.Native
         public static class DeviceContext
         {
             [DllImport("user32.dll")]
-            internal static extern HDC GetDC([In] HWND hWnd);
+            public static extern HDC GetDC([In] HWND hWnd);
 
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool ReleaseDC([In] HWND hWnd, [In] HDC DC);
+            public static extern bool ReleaseDC([In] HWND hWnd, [In] HDC DC);
 
             /// <summary>
             /// The ChangeDisplaySettings function changes the settings of the default display device to the specified graphics
@@ -41,7 +41,7 @@ namespace OpenTK.NT.Native
             ///  </para>
             /// </remarks>
             [DllImport("user32.dll")]
-            internal static extern ChangeDisplaySettingsResult ChangeDisplaySettings(
+            public static extern ChangeDisplaySettingsResult ChangeDisplaySettings(
                 [In] DeviceMode lpDevMode,
                 [In] ChangeDisplaySettingsFlags dwflags
             );
@@ -57,7 +57,7 @@ namespace OpenTK.NT.Native
 
             [DllImport("user32.dll", CharSet = CharSet.Auto)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool EnumDisplaySettings(
+            public static extern bool EnumDisplaySettings(
                 [In] [MarshalAs(UnmanagedType.LPTStr)] string lpszDeviceName,
                 [In] DisplayModeSettingsEnum iModeNum,
                 [Out] DeviceMode lpDevMode

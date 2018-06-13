@@ -48,7 +48,7 @@ namespace OpenTK.NT.Native
             /// </remarks>
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
-            internal static extern bool AdjustWindowRect(
+            public static extern bool AdjustWindowRect(
                 [In] [Out] ref Rectangle lpRect,
                 [In] WindowStyles dwStyle,
                 [In] bool bMenu
@@ -57,7 +57,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool AdjustWindowRectEx(
+            public static extern bool AdjustWindowRectEx(
                 [In] [Out] ref Rectangle lpRect,
                 [In] WindowStyles dwStyle,
                 [In] [MarshalAs(UnmanagedType.Bool)] bool bMenu,
@@ -65,7 +65,7 @@ namespace OpenTK.NT.Native
             );
 
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-            internal static extern HWND CreateWindowEx(
+            public static extern HWND CreateWindowEx(
                 [In] WindowStylesEx dwExStyle,
                 [In] [Optional] [MarshalAs(UnmanagedType.LPTStr)] string lpClassName,
                 [In] [Optional] [MarshalAs(UnmanagedType.LPTStr)] string lpWindowName,
@@ -81,7 +81,7 @@ namespace OpenTK.NT.Native
             );
 
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-            internal static extern HWND CreateWindowEx(
+            public static extern HWND CreateWindowEx(
                 [In] WindowStylesEx dwExStyle,
                 [In] [Optional] IntPtr lpClassAtom,
                 [In] [Optional] string lpWindowName,
@@ -98,11 +98,11 @@ namespace OpenTK.NT.Native
 
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool DestroyWindow([In] HWND hWnd);
+            public static extern bool DestroyWindow([In] HWND hWnd);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            internal static extern LRESULT CallWindowProc(
+            public static extern LRESULT CallWindowProc(
                 [In] WNDPROC lpPrevWndFunc,
                 [In] HWND hWnd,
                 [In] WM Msg,
@@ -129,11 +129,11 @@ namespace OpenTK.NT.Native
             /// </remarks>
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool SetProcessDPIAware();
+            public static extern bool SetProcessDPIAware();
 
             // SetWindowLongPtr does not exist on x86 platforms (it's a macro that resolves to SetWindowLong).
             // We need to detect if we are on x86 or x64 at runtime and call the correct function
-            internal static IntPtr SetWindowLong(HWND hWnd, int nIndex, LONG_PTR dwNewLong)
+            public static IntPtr SetWindowLong(HWND hWnd, int nIndex, LONG_PTR dwNewLong)
             {
                 Kernel32.SetLastError(0); // not sure we have to do this
 
@@ -150,7 +150,7 @@ namespace OpenTK.NT.Native
                 return result;
             }
 
-            internal static IntPtr SetWindowLong(HWND hWnd, GetWindowLongIndex nIndex, LONG_PTR dwNewLong)
+            public static IntPtr SetWindowLong(HWND hWnd, GetWindowLongIndex nIndex, LONG_PTR dwNewLong)
                 => SetWindowLong(hWnd, (int)nIndex, dwNewLong);
 
             [SuppressUnmanagedCodeSecurity]
@@ -185,10 +185,10 @@ namespace OpenTK.NT.Native
                 [In] [MarshalAs(UnmanagedType.FunctionPtr)] WindowProc dwNewLong
             );
 
-            internal static IntPtr SetWindowLong(HWND hWnd, WindowProc newValue)
+            public static IntPtr SetWindowLong(HWND hWnd, WindowProc newValue)
                 => SetWindowLong(hWnd, GetWindowLongIndex.WindowProcedure, Marshal.GetFunctionPointerForDelegate(newValue));
 
-            internal static IntPtr GetWindowLong(HWND hWnd, GetWindowLongIndex nIndex)
+            public static IntPtr GetWindowLong(HWND hWnd, GetWindowLongIndex nIndex)
                 => GetWindowLong(hWnd, (int)nIndex);
 
             public static IntPtr GetWindowLong(HWND hWnd, int nIndex)
@@ -251,7 +251,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool ShowWindow([In] HWND hWnd, [In] ShowWindowCommand nCmdShow);
+            public static extern bool ShowWindow([In] HWND hWnd, [In] ShowWindowCommand nCmdShow);
 
             /// <summary>
             /// The GetWindowText function copies the text of the specified window's title bar (if it has one) into a buffer. If
@@ -293,7 +293,7 @@ namespace OpenTK.NT.Native
             ///  </para>
             /// </remarks>
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-            internal static extern int GetWindowText(
+            public static extern int GetWindowText(
                 [In] HWND hWnd,
                 [In] [Out] [MarshalAs(UnmanagedType.LPTStr)] LPTSTR lpString,
                 [In] int nMaxCount
@@ -332,7 +332,7 @@ namespace OpenTK.NT.Native
             /// </remarks>
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool SetWindowText(
+            public static extern bool SetWindowText(
                 [In] HWND hWnd,
                 [In] [Optional] [MarshalAs(UnmanagedType.LPTStr)] string lpString
             );
@@ -366,7 +366,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool GetWindowInfo([In] HWND hwnd, [In] [Out] ref WindowInfo wi);
+            public static extern bool GetWindowInfo([In] HWND hwnd, [In] [Out] ref WindowInfo wi);
 
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
@@ -392,7 +392,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool GetWindowRect([In] HWND windowHandle, [Out] out Rectangle windowRectangle);
+            public static extern bool GetWindowRect([In] HWND windowHandle, [Out] out Rectangle windowRectangle);
 
             /// <summary>
             /// The GetClientRect function retrieves the coordinates of a window's client area. The client coordinates specify the
@@ -415,7 +415,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool GetClientRect([In] HWND windowHandle, [Out] out Rectangle clientRectangle);
+            public static extern bool GetClientRect([In] HWND windowHandle, [Out] out Rectangle clientRectangle);
 
             /// <summary>
             /// Converts the screen coordinates of a specified point on the screen to client-area coordinates.
@@ -443,7 +443,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool ScreenToClient([In] HWND hWnd, ref Point lpPoint);
+            public static extern bool ScreenToClient([In] HWND hWnd, ref Point lpPoint);
 
             /// <summary>
             /// Converts the client-area coordinates of a specified point to screen coordinates.
@@ -469,7 +469,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool ClientToScreen([In] HWND hWnd, [In] [Out] ref Point point);
+            public static extern bool ClientToScreen([In] HWND hWnd, [In] [Out] ref Point point);
         }
     }
 }

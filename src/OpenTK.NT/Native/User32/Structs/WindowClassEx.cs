@@ -9,7 +9,7 @@ using UINT = System.UInt32;
 namespace OpenTK.NT.Native
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-    internal struct WindowClassEx
+    public struct WindowClassEx
     {
         public UINT cbSize;
 

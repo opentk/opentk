@@ -24,7 +24,7 @@ namespace OpenTK.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool PeekMessage(
+            public static extern bool PeekMessage(
                 [Out] out Msg lpMsg,
                 [In] [Optional] HWND hWnd,
                 [In] uint wMsgFilterMin,
@@ -47,7 +47,7 @@ namespace OpenTK.NT.Native
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport("User32.dll", SetLastError = true)]
-            internal static extern int GetMessage(
+            public static extern int GetMessage(
                 [Out] out Msg msg,
                 [In] [Optional] HWND hWnd,
                 [In] uint wMsgFilterMin,
@@ -63,10 +63,10 @@ namespace OpenTK.NT.Native
             /// </summary>
             /// <returns>The return value specifies the message time.</returns>
             [DllImport("User32.dll")]
-            internal static extern int GetMessageTime();
+            public static extern int GetMessageTime();
 
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-            internal static extern LRESULT SendMessage(
+            public static extern LRESULT SendMessage(
                 [In] HWND hWnd,
                 [In] WM Msg,
                 [In] WPARAM wParam,
@@ -76,7 +76,7 @@ namespace OpenTK.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Auto)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool PostMessage(
+            public static extern bool PostMessage(
                 [In] [Optional] HWND hWnd,
                 [In] WM Msg,
                 [In] WPARAM wParam,
@@ -84,16 +84,16 @@ namespace OpenTK.NT.Native
             );
 
             [DllImport("User32.dll", CharSet = CharSet.Auto)]
-            internal static extern void PostQuitMessage([In] int nExitCode);
+            public static extern void PostQuitMessage([In] int nExitCode);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("User32.dll")]
-            internal static extern LRESULT DispatchMessage([In] ref Msg lpmsg);
+            public static extern LRESULT DispatchMessage([In] ref Msg lpmsg);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("User32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool TranslateMessage([In] ref Msg lpMsg);
+            public static extern bool TranslateMessage([In] ref Msg lpMsg);
 
             /// <summary>
             /// Indicates the type of messages found in the calling thread's message queue.
@@ -120,7 +120,7 @@ namespace OpenTK.NT.Native
             /// </remarks>
             [SuppressUnmanagedCodeSecurity]
             [DllImport("User32.dll", CharSet = CharSet.Auto)]
-            internal static extern int GetQueueStatus([In] QueueStatusFlags flags);
+            public static extern int GetQueueStatus([In] QueueStatusFlags flags);
         }
     }
 }
