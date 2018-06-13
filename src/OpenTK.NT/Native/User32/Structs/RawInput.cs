@@ -21,7 +21,6 @@ namespace OpenTK.NT.Native
         public RawInputHeader header;
         public RawInputData data;
 
-        public static readonly uint SizeInBytes =
-            (uint)BlittableValueType<RawInput>.Stride;
+        public static readonly int SizeInBytes = BlittableValueType<RawInput>.Stride;
     }
 }

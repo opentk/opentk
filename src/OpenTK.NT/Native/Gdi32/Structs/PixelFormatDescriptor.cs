@@ -40,7 +40,6 @@ namespace OpenTK.NT.Native
         public DWORD dwVisibleMask;
         public DWORD dwDamageMask;
 
-        public static readonly uint SizeInBytes 
-            = (uint)Marshal.SizeOf<PixelFormatDescriptor>();
+        public static readonly int SizeInBytes = Marshal.SizeOf<PixelFormatDescriptor>();
     }
 }

@@ -10,7 +10,6 @@ namespace OpenTK.NT.Native
         [FieldOffset(0)] public RawKeyboard Keyboard;
         [FieldOffset(0)] public RawHid HID;
 
-        public static readonly int SizeInBytes =
-            BlittableValueType<RawInputData>.Stride;
+        public static readonly int SizeInBytes = BlittableValueType<RawInputData>.Stride;
     }
 }

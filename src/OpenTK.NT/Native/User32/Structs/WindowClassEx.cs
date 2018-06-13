@@ -34,6 +34,6 @@ namespace OpenTK.NT.Native
 
         public HICON hIconSm;
 
-        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<WindowClassEx>();
+        public static readonly int SizeInBytes = Marshal.SizeOf<WindowClassEx>();
     }
 }
