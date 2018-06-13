@@ -1,4 +1,6 @@
-﻿using HINSTANCE = System.IntPtr;
+﻿using System.Runtime.InteropServices;
+
+using HINSTANCE = System.IntPtr;
 using HMENU = System.IntPtr;
 using HWND = System.IntPtr;
 using LPVOID = System.IntPtr;
