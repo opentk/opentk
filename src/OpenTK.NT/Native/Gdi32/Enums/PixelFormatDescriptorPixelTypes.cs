@@ -2,7 +2,7 @@
 
 namespace OpenTK.NT.Native
 {
-    public enum PixelFormatDescriptorPixelType : BYTE
+    public enum PixelFormatDescriptorPixelTypes : BYTE
     {
         Rgba = 0,
         Indexed = 1

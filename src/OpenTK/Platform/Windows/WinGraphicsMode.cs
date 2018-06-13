@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
+using OpenTK.NT.Native;
 
 namespace OpenTK.Platform.Windows
 {
@@ -270,14 +271,14 @@ namespace OpenTK.Platform.Windows
                 flags |= PixelFormatDescriptorFlags.SUPPORT_COMPOSITION;
             }
 
-            var count = Functions.DescribePixelFormat(device, 1, API.PixelFormatDescriptorSize, ref pfd);
+            var count = Functions.DescribePixelFormat(device, 1, PixelFormatDescriptor.SizeInBytes, ref pfd);
 
             var best = 0;
             var best_dist = int.MaxValue;
             for (var index = 1; index <= count; index++)
             {
                 var dist = 0;
-                var valid = Functions.DescribePixelFormat(device, index, API.PixelFormatDescriptorSize, ref pfd) != 0;
+                var valid = Functions.DescribePixelFormat(device, index, PixelFormatDescriptor.SizeInBytes, ref pfd) != 0;
                 valid &= GetAccelerationType(ref pfd) == requested_acceleration_type;
                 valid &= (pfd.Flags & flags) == flags;
                 valid &= pfd.PixelType == PixelType.RGBA; // indexed modes not currently supported

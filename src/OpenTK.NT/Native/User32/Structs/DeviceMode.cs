@@ -14,7 +14,7 @@ namespace OpenTK.NT.Native
         public WORD dmDriverVersion;
         public WORD dmSize;
         public WORD dmDriverExtra;
-        public DWORD dmFields;
+        public DeviceModeFieldFlags dmFields;
 
         public Point dmPosition;
         public DWORD dmDisplayOrientation;

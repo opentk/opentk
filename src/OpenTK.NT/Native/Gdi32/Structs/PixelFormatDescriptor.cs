@@ -16,7 +16,7 @@ namespace OpenTK.NT.Native
         public WORD nSize;
         public WORD nVersion;
         public PixelFormatDescriptorFlags dwFlags;
-        public PixelFormatDescriptorPixelType iPixelType;
+        public PixelFormatDescriptorPixelTypes iPixelType;
         public BYTE cColorBits;
         public BYTE cRedBits;
         public BYTE cRedShift;
@@ -34,10 +34,13 @@ namespace OpenTK.NT.Native
         public BYTE cDepthBits;
         public BYTE cStencilBits;
         public BYTE cAuxBuffers;
-        public BYTE iLayerType;
+        public PixelFormatDescriptorLayerTypes iLayerType;
         public BYTE bReserved;
         public DWORD dwLayerMask;
         public DWORD dwVisibleMask;
         public DWORD dwDamageMask;
+
+        public static readonly uint SizeInBytes 
+            = (uint)Marshal.SizeOf<PixelFormatDescriptor>();
     }
 }

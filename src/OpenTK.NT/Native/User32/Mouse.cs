@@ -47,7 +47,7 @@ namespace OpenTK.NT.Native
                 [In] ref MouseMovePoint lppt,
                 [Out] out MouseMovePoint lpptBuf,
                 [In] int nBufPoints,
-                [In] uint resolution
+                [In] GetMouseMovePointsResolution resolution
             );
         }
     }

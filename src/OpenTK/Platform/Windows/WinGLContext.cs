@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Core;
 using OpenTK.Graphics;
+using OpenTK.NT.Native;
 
 namespace OpenTK.Platform.Windows
 {
@@ -339,7 +340,7 @@ namespace OpenTK.Platform.Windows
             var pfd = new PixelFormatDescriptor();
             Functions.DescribePixelFormat(
                 window.DeviceContext, (int)mode.Index.Value,
-                API.PixelFormatDescriptorSize, ref pfd);
+                PixelFormatDescriptor.SizeInBytes, ref pfd);
 
             Debug.WriteLine(mode.Index.ToString());
 

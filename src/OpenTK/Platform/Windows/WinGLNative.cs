@@ -29,6 +29,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Input;
+using OpenTK.NT.Native;
 #if !MINIMAL
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -779,19 +780,19 @@ namespace OpenTK.Platform.Windows
 
         private void HandleSize(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            var state = (SizeMessage)wParam.ToInt64();
+            var state = (WindowMessageSize)wParam.ToInt64();
             var new_state = windowState;
             switch (state)
             {
-                case SizeMessage.RESTORED:
+                case WindowMessageSize.Restored:
                     new_state = borderless_maximized_window_state ? WindowState.Maximized : WindowState.Normal;
                     break;
 
-                case SizeMessage.MINIMIZED:
+                case WindowMessageSize.Minimized:
                     new_state = WindowState.Minimized;
                     break;
 
-                case SizeMessage.MAXIMIZED:
+                case WindowMessageSize.Maximized:
                     new_state = WindowBorder == WindowBorder.Hidden ? WindowState.Fullscreen : WindowState.Maximized;
                     break;
             }
@@ -910,12 +911,12 @@ namespace OpenTK.Platform.Windows
                 var points = Functions.GetMouseMovePointsEx(
                     (uint)MouseMovePoint.SizeInBytes,
                     &movePoint, movePoints, numPoints,
-                    Constants.GMMP_USE_DISPLAY_POINTS);
+                    GetMouseMovePointsResolution.UseDisplayPoints);
 
                 var lastError = Marshal.GetLastWin32Error();
 
                 // No points returned or search point not found
-                if (points == 0 || points == -1 && lastError == Constants.ERROR_POINT_NOT_FOUND)
+                if (points == 0 || points == -1 && lastError == 1171) // 'The point passed to GetMouseMovePoints is not in the buffer.'
                 {
                     // Just use the mouse move position
                     OnMouseMove(point.X, point.Y);

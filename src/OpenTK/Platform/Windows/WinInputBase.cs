@@ -28,6 +28,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Input;
+using OpenTK.NT.Native;
 
 namespace OpenTK.Platform.Windows
 {
@@ -73,7 +74,7 @@ namespace OpenTK.Platform.Windows
             INativeWindow native = new NativeWindow();
             native.ProcessEvents();
             var parent = native.WindowInfo as WinWindowInfo;
-            Functions.SetParent(parent.Handle, Constants.MESSAGE_ONLY);
+            User32.Window.SetParent(parent.Handle, new IntPtr(-3)); // HWND_MESSAGE, a message-only window
             native.ProcessEvents();
 
             Debug.Unindent();
