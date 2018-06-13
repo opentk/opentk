@@ -63,6 +63,8 @@ namespace OpenTK.NT.Native
             usUsagePage = usagePage;
         }
 
+        public static readonly int SizeInBytes = Marshal.SizeOf<RawInputDevice>();
+
         public override string ToString()
             => $"{usUsagePage}/{usUsage}, flags: {dwFlags}, window: {hwndTarget}";
     }

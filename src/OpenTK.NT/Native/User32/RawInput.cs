@@ -14,13 +14,6 @@ namespace OpenTK.NT.Native
     {
         public static class RawInput
         {
-            public static readonly uint Size = (uint)Marshal.SizeOf(typeof(Native.RawInput));
-            public static readonly uint DeviceSize = (uint)Marshal.SizeOf(typeof(RawInputDevice));
-            public static readonly uint HeaderSize = (uint)Marshal.SizeOf(typeof(RawInputHeader));
-            public static readonly uint DeviceListSize = (uint)Marshal.SizeOf(typeof(RawInputDeviceList));
-            public static readonly uint DeviceInfoSize = (uint)Marshal.SizeOf(typeof(RawDeviceInfo));
-            public static readonly uint RawMouseSize = (uint)Marshal.SizeOf(typeof(RawMouse));
-
             /// <summary>
             /// calls the default raw input procedure to provide default processing for
             /// any raw input messages that an application does not process.
