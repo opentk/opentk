@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
     <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
+    <ProjectReference Include="..\OpenTK.NT\OpenTK.NT.csproj" />
   </ItemGroup>
   <Target Name="Rewrite" AfterTargets="AfterBuild">
     <Exec Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" Command="$(ProjectDir)..\..\src\Generator.Rewrite\bin\Debug\net461\Rewrite.exe --assembly $(OutputPath)OpenTK.dll --debug" />
