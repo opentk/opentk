@@ -186,7 +186,7 @@ namespace OpenTK.NT.Native
             );
 
             internal static IntPtr SetWindowLong(HWND hWnd, WindowProc newValue)
-                => SetWindowLong(hWnd, GetWindowLongIndex.WNDPROC, Marshal.GetFunctionPointerForDelegate(newValue));
+                => SetWindowLong(hWnd, GetWindowLongIndex.WindowProcedure, Marshal.GetFunctionPointerForDelegate(newValue));
 
             internal static IntPtr GetWindowLong(HWND hWnd, GetWindowLongIndex nIndex)
                 => GetWindowLong(hWnd, (int)nIndex);

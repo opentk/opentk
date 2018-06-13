@@ -7,42 +7,42 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// The settings change was successful.
         /// </summary>
-        SUCCESSFUL = 0,
+        Successful = 0,
 
         /// <summary>
         /// The computer must be restarted for the graphics mode to work.
         /// </summary>
-        RESTART = 1,
+        Restart = 1,
 
         /// <summary>
         /// The display driver failed the specified graphics mode.
         /// </summary>
-        FAILED = -1,
+        Failed = -1,
 
         /// <summary>
         /// The graphics mode is not supported.
         /// </summary>
-        BADMODE = -2,
+        BadMode = -2,
 
         /// <summary>
         /// Unable to write settings to the registry.
         /// </summary>
-        NOTUPDATED = -3,
+        NotUpdated = -3,
 
         /// <summary>
         /// An invalid set of flags was passed in.
         /// </summary>
-        BADFLAGS = -4,
+        BadFlags = -4,
 
         /// <summary>
         /// An invalid parameter was passed in. This can include an invalid flag or combination of flags.
         /// </summary>
-        BADPARAM = -5,
+        BadParam = -5,
 
         /// <summary>
         /// The settings change was unsuccessful because the system is DualView capable.
         /// Only supported on XP and higher.
         /// </summary>
-        BADDUALVIEW = -6,
+        BadDualView = -6,
     }
 }

@@ -5,65 +5,65 @@
         /*
          * Virtual Key, Standard Set
          */
-        LBUTTON = 0x01,
-        RBUTTON = 0x02,
-        CANCEL = 0x03,
-        MBUTTON = 0x04, /* NOT contiguous with L & RBUTTON */
+        LButton = 0x01,
+        RButton = 0x02,
+        Cancel = 0x03,
+        MButton = 0x04, /* NOT contiguous with L & RBUTTON */
 
-        XBUTTON1 = 0x05, /* NOT contiguous with L & RBUTTON */
-        XBUTTON2 = 0x06, /* NOT contiguous with L & RBUTTON */
+        XButton1 = 0x05, /* NOT contiguous with L & RBUTTON */
+        XButton2 = 0x06, /* NOT contiguous with L & RBUTTON */
 
         /*
          * 0x07 : unassigned
          */
 
-        BACK = 0x08,
-        TAB = 0x09,
+        Back = 0x08,
+        Tab = 0x09,
 
         /*
          * 0x0A - 0x0B : reserved
          */
 
-        CLEAR = 0x0C,
-        RETURN = 0x0D,
+        Clear = 0x0C,
+        Return = 0x0D,
 
-        SHIFT = 0x10,
-        CONTROL = 0x11,
-        MENU = 0x12,
-        PAUSE = 0x13,
-        CAPITAL = 0x14,
+        Shift = 0x10,
+        Control = 0x11,
+        Menu = 0x12,
+        Pause = 0x13,
+        Capital = 0x14,
 
-        KANA = 0x15,
-        HANGEUL = 0x15, /* old name - should be here for compatibility */
-        HANGUL = 0x15,
-        JUNJA = 0x17,
-        FINAL = 0x18,
-        HANJA = 0x19,
-        KANJI = 0x19,
+        Kana = 0x15,
+        Hangeul = 0x15, /* old name - should be here for compatibility */
+        Hangul = 0x15,
+        Junja = 0x17,
+        Final = 0x18,
+        Hanja = 0x19,
+        Kanji = 0x19,
 
-        ESCAPE = 0x1B,
+        Escape = 0x1B,
 
-        CONVERT = 0x1C,
-        NONCONVERT = 0x1D,
-        ACCEPT = 0x1E,
-        MODECHANGE = 0x1F,
+        Convert = 0x1C,
+        NonConvert = 0x1D,
+        Accept = 0x1E,
+        ModeChange = 0x1F,
 
-        SPACE = 0x20,
-        PRIOR = 0x21,
-        NEXT = 0x22,
-        END = 0x23,
-        HOME = 0x24,
-        LEFT = 0x25,
-        UP = 0x26,
-        RIGHT = 0x27,
-        DOWN = 0x28,
-        SELECT = 0x29,
-        PRINT = 0x2A,
-        EXECUTE = 0x2B,
-        SNAPSHOT = 0x2C,
-        INSERT = 0x2D,
-        DELETE = 0x2E,
-        HELP = 0x2F,
+        Space = 0x20,
+        Prior = 0x21,
+        Next = 0x22,
+        End = 0x23,
+        Home = 0x24,
+        Left = 0x25,
+        Up = 0x26,
+        Right = 0x27,
+        Down = 0x28,
+        Select = 0x29,
+        Print = 0x2A,
+        Execute = 0x2B,
+        Snapshot = 0x2C,
+        Insert = 0x2D,
+        Delete = 0x2E,
+        Help = 0x2F,
 
         /*
          * 0 - 9 are the same as ASCII '0' - '9' (0x30 - 0x39)
@@ -71,32 +71,32 @@
          * A - Z are the same as ASCII 'A' - 'Z' (0x41 - 0x5A)
          */
 
-        LWIN = 0x5B,
-        RWIN = 0x5C,
-        APPS = 0x5D,
+        LWin = 0x5B,
+        RWin = 0x5C,
+        Apps = 0x5D,
 
         /*
          * 0x5E : reserved
          */
 
-        SLEEP = 0x5F,
+        Sleep = 0x5F,
 
-        NUMPAD0 = 0x60,
-        NUMPAD1 = 0x61,
-        NUMPAD2 = 0x62,
-        NUMPAD3 = 0x63,
-        NUMPAD4 = 0x64,
-        NUMPAD5 = 0x65,
-        NUMPAD6 = 0x66,
-        NUMPAD7 = 0x67,
-        NUMPAD8 = 0x68,
-        NUMPAD9 = 0x69,
-        MULTIPLY = 0x6A,
-        ADD = 0x6B,
-        SEPARATOR = 0x6C,
-        SUBTRACT = 0x6D,
-        DECIMAL = 0x6E,
-        DIVIDE = 0x6F,
+        Numpad0 = 0x60,
+        Numpad1 = 0x61,
+        Numpad2 = 0x62,
+        Numpad3 = 0x63,
+        Numpad4 = 0x64,
+        Numpad5 = 0x65,
+        Numpad6 = 0x66,
+        Numpad7 = 0x67,
+        Numpad8 = 0x68,
+        Numpad9 = 0x69,
+        Multiply = 0x6A,
+        Add = 0x6B,
+        Separator = 0x6C,
+        Subtract = 0x6D,
+        Decimal = 0x6E,
+        Divide = 0x6F,
         F1 = 0x70,
         F2 = 0x71,
         F3 = 0x72,
@@ -126,22 +126,22 @@
          * 0x88 - 0x8F : unassigned
          */
 
-        NUMLOCK = 0x90,
-        SCROLL = 0x91,
+        NumLock = 0x90,
+        Scroll = 0x91,
 
         /*
          * NEC PC-9800 kbd definitions
          */
-        OEM_NEC_EQUAL = 0x92, // '=' key on numpad
+        OemNecEqual = 0x92, // '=' key on numpad
 
         /*
          * Fujitsu/OASYS kbd definitions
          */
-        OEM_FJ_JISHO = 0x92, // 'Dictionary' key
-        OEM_FJ_MASSHOU = 0x93, // 'Unregister word' key
-        OEM_FJ_TOUROKU = 0x94, // 'Register word' key
-        OEM_FJ_LOYA = 0x95, // 'Left OYAYUBI' key
-        OEM_FJ_ROYA = 0x96, // 'Right OYAYUBI' key
+        OemFJJisho = 0x92, // 'Dictionary' key
+        OemFJMasshou = 0x93, // 'Unregister word' key
+        OemFJTouroku = 0x94, // 'Register word' key
+        OemFJLoya = 0x95, // 'Left OYAYUBI' key
+        OemFJRoya = 0x96, // 'Right OYAYUBI' key
 
         /*
          * 0x97 - 0x9F : unassigned
@@ -152,44 +152,44 @@
          * Used only as parameters to GetAsyncKeyState() and GetKeyState().
          * No other API or message will distinguish left and right keys in this way.
          */
-        LSHIFT = 0xA0,
-        RSHIFT = 0xA1,
-        LCONTROL = 0xA2,
-        RCONTROL = 0xA3,
-        LMENU = 0xA4,
-        RMENU = 0xA5,
+        LShift = 0xA0,
+        RShift = 0xA1,
+        LControl = 0xA2,
+        RControl = 0xA3,
+        LMenu = 0xA4,
+        RMenu = 0xA5,
 
-        BROWSER_BACK = 0xA6,
-        BROWSER_FORWARD = 0xA7,
-        BROWSER_REFRESH = 0xA8,
-        BROWSER_STOP = 0xA9,
-        BROWSER_SEARCH = 0xAA,
-        BROWSER_FAVORITES = 0xAB,
-        BROWSER_HOME = 0xAC,
+        BrowserBack = 0xA6,
+        BrowserForward = 0xA7,
+        BrowserRefresh = 0xA8,
+        BrowserStop = 0xA9,
+        BrowserSearch = 0xAA,
+        BrowserFavorites = 0xAB,
+        BrowserHome = 0xAC,
 
-        VOLUME_MUTE = 0xAD,
-        VOLUME_DOWN = 0xAE,
-        VOLUME_UP = 0xAF,
-        MEDIA_NEXT_TRACK = 0xB0,
-        MEDIA_PREV_TRACK = 0xB1,
-        MEDIA_STOP = 0xB2,
-        MEDIA_PLAY_PAUSE = 0xB3,
-        LAUNCH_MAIL = 0xB4,
-        LAUNCH_MEDIA_SELECT = 0xB5,
-        LAUNCH_APP1 = 0xB6,
-        LAUNCH_APP2 = 0xB7,
+        VolumeMute = 0xAD,
+        VolumeDown = 0xAE,
+        VolumeUp = 0xAF,
+        MediaNextTrack = 0xB0,
+        MediaPreviousTrack = 0xB1,
+        MediaStop = 0xB2,
+        MediaPlayPause = 0xB3,
+        LaunchMail = 0xB4,
+        LaunchMediaSelect = 0xB5,
+        LaunchApp1 = 0xB6,
+        LaunchApp2 = 0xB7,
 
         /*
          * 0xB8 - 0xB9 : reserved
          */
 
-        OEM_1 = 0xBA, // ';:' for US
-        OEM_PLUS = 0xBB, // '+' any country
-        OEM_COMMA = 0xBC, // ',' any country
-        OEM_MINUS = 0xBD, // '-' any country
-        OEM_PERIOD = 0xBE, // '.' any country
-        OEM_2 = 0xBF, // '/?' for US
-        OEM_3 = 0xC0, // '`~' for US
+        Oem1 = 0xBA, // ';:' for US
+        OemPlus = 0xBB, // '+' any country
+        OemComma = 0xBC, // ',' any country
+        OemMinus = 0xBD, // '-' any country
+        OemPeriod = 0xBE, // '.' any country
+        Oem2 = 0xBF, // '/?' for US
+        Oem3 = 0xC0, // '`~' for US
 
         /*
          * 0xC1 - 0xD7 : reserved
@@ -199,11 +199,11 @@
          * 0xD8 - 0xDA : unassigned
          */
 
-        OEM_4 = 0xDB, //  '[{' for US
-        OEM_5 = 0xDC, //  '\|' for US
-        OEM_6 = 0xDD, //  ']}' for US
-        OEM_7 = 0xDE, //  ''"' for US
-        OEM_8 = 0xDF,
+        Oem4 = 0xDB, //  '[{' for US
+        Oem5 = 0xDC, //  '\|' for US
+        Oem6 = 0xDD, //  ']}' for US
+        Oem7 = 0xDE, //  ''"' for US
+        Oem8 = 0xDF,
 
         /*
          * 0xE0 : reserved
@@ -212,17 +212,17 @@
         /*
          * Various extended or enhanced keyboards
          */
-        OEM_AX = 0xE1, //  'AX' key on Japanese AX kbd
-        OEM_102 = 0xE2, //  "<>" or "\|" on RT 102-key kbd.
-        ICO_HELP = 0xE3, //  Help key on ICO
-        ICO_00 = 0xE4, //  00 key on ICO
+        OemAX = 0xE1, //  'AX' key on Japanese AX kbd
+        Oem102 = 0xE2, //  "<>" or "\|" on RT 102-key kbd.
+        IcoHelp = 0xE3, //  Help key on ICO
+        Ico00 = 0xE4, //  00 key on ICO
 
-        PROCESSKEY = 0xE5,
+        ProcessKey = 0xE5,
 
-        ICO_CLEAR = 0xE6,
+        IcoClear = 0xE6,
 
 
-        PACKET = 0xE7,
+        Packet = 0xE7,
 
         /*
          * 0xE8 : unassigned
@@ -231,29 +231,29 @@
         /*
          * Nokia/Ericsson definitions
          */
-        OEM_RESET = 0xE9,
-        OEM_JUMP = 0xEA,
-        OEM_PA1 = 0xEB,
-        OEM_PA2 = 0xEC,
-        OEM_PA3 = 0xED,
-        OEM_WSCTRL = 0xEE,
-        OEM_CUSEL = 0xEF,
-        OEM_ATTN = 0xF0,
-        OEM_FINISH = 0xF1,
-        OEM_COPY = 0xF2,
-        OEM_AUTO = 0xF3,
-        OEM_ENLW = 0xF4,
-        OEM_BACKTAB = 0xF5,
+        OemReset = 0xE9,
+        OemJump = 0xEA,
+        OemPA1 = 0xEB,
+        OemPA2 = 0xEC,
+        OemPA3 = 0xED,
+        OemWSCtrl = 0xEE,
+        OemCUseL = 0xEF,
+        OemAttn = 0xF0,
+        OemFinish = 0xF1,
+        OemCopy = 0xF2,
+        OemAuto = 0xF3,
+        OemEnlw = 0xF4,
+        OemBacktab = 0xF5,
 
-        ATTN = 0xF6,
-        CRSEL = 0xF7,
-        EXSEL = 0xF8,
-        EREOF = 0xF9,
-        PLAY = 0xFA,
-        ZOOM = 0xFB,
-        NONAME = 0xFC,
+        Attn = 0xF6,
+        CrSel = 0xF7,
+        ExSel = 0xF8,
+        ErEof = 0xF9,
+        Play = 0xFA,
+        Zoom = 0xFB,
+        NoName = 0xFC,
         PA1 = 0xFD,
-        OEM_CLEAR = 0xFE,
+        OemClear = 0xFE,
 
         Last
     }

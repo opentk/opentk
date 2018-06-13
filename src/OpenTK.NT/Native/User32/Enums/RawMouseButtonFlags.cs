@@ -5,29 +5,29 @@ namespace OpenTK.NT.Native
     [Flags]
     public enum RawMouseButtonFlags : uint
     {
-        LEFT_BUTTON_DOWN = 0x0001, // Left Button changed to down.
-        LEFT_BUTTON_UP = 0x0002, // Left Button changed to up.
-        RIGHT_BUTTON_DOWN = 0x0004, // Right Button changed to down.
-        RIGHT_BUTTON_UP = 0x0008, // Right Button changed to up.
-        MIDDLE_BUTTON_DOWN = 0x0010, // Middle Button changed to down.
-        MIDDLE_BUTTON_UP = 0x0020, // Middle Button changed to up.
+        LeftButtonDown = 0x0001, // Left Button changed to down.
+        LeftButtonUp = 0x0002, // Left Button changed to up.
+        RightButtonDown = 0x0004, // Right Button changed to down.
+        RightButtonUp = 0x0008, // Right Button changed to up.
+        MiddleButtonDown = 0x0010, // Middle Button changed to down.
+        MiddleButtonUp = 0x0020, // Middle Button changed to up.
 
-        BUTTON_1_DOWN = LEFT_BUTTON_DOWN,
-        BUTTON_1_UP = LEFT_BUTTON_UP,
-        BUTTON_2_DOWN = RIGHT_BUTTON_DOWN,
-        BUTTON_2_UP = RIGHT_BUTTON_UP,
-        BUTTON_3_DOWN = MIDDLE_BUTTON_DOWN,
-        BUTTON_3_UP = MIDDLE_BUTTON_UP,
+        Button1Down = LeftButtonDown,
+        Button1Up = LeftButtonUp,
+        Button2Down = RightButtonDown,
+        Button2Up = RightButtonUp,
+        Button3Down = MiddleButtonDown,
+        Button3Up = MiddleButtonUp,
 
-        BUTTON_4_DOWN = 0x0040,
-        BUTTON_4_UP = 0x0080,
-        BUTTON_5_DOWN = 0x0100,
-        BUTTON_5_UP = 0x0200,
+        Button4Down = 0x0040,
+        Button4Up = 0x0080,
+        Button5Down = 0x0100,
+        Button5Up = 0x0200,
 
         /// <summary>
         /// Raw input comes from a mouse wheel. The wheel delta is stored in <see cref="RawMouse.usButtonData"/>.
         /// </summary>
-        WHEEL = 0x0400,
-        HWHEEL = 0x0800
+        Wheel = 0x0400,
+        HWheel = 0x0800
     }
 }

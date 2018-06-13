@@ -2,10 +2,10 @@
 {
     public enum DeviceBroadcastType
     {
-        OEM = 0,
-        VOLUME = 2,
-        PORT = 3,
-        INTERFACE = 5,
-        HANDLE = 6
+        Oem = 0,
+        Volume = 2,
+        Port = 3,
+        Interface = 5,
+        Handle = 6
     }
 }

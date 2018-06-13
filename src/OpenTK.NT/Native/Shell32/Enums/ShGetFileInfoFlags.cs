@@ -8,66 +8,66 @@ namespace OpenTK.NT.Native
     public enum ShGetFileInfoFlags : UINT
     {
         /// <summary>
-        /// Modify SHGFI_ICON, causing the function to retrieve the file's large icon.
-        /// The SHGFI_ICON flag must also be set.
+        /// Modify <see cref="Icon"/>, causing the function to retrieve the file's large icon.
+        /// The <see cref="Icon"/> flag must also be set.
         /// </summary>
-        LARGEICON = 0x000000000,
+        LargeIcon = 0x000000000,
 
         /// <summary>
         /// Modify SHGFI_ICON, causing the function to retrieve the file's small icon. 
-        /// Also used to modify SHGFI_SYSICONINDEX, causing the function to return the handle
-        /// to the system image list that contains small icon images. The SHGFI_ICON
-        /// and/or SHGFI_SYSICONINDEX flag must also be set.
+        /// Also used to modify <see cref="SysIconIndex"/>, causing the function to return the handle
+        /// to the system image list that contains small icon images. The <see cref="Icon"/>
+        /// and/or <see cref="SysIconIndex"/> flag must also be set.
         /// </summary>
-        SMALLICON = 0x000000001,
+        SmallIcon = 0x000000001,
 
         /// <summary>
-        /// Modify SHGFI_ICON, causing the function to retrieve the file's open icon. 
-        /// Also used to modify SHGFI_SYSICONINDEX, causing the function to return the handle
+        /// Modify <see cref="Icon"/>, causing the function to retrieve the file's open icon. 
+        /// Also used to modify <see cref="SysIconIndex"/>, causing the function to return the handle
         /// to the system image list that contains the file's small open icon. A container
         /// object displays an open icon to indicate that the container is open. 
-        /// The SHGFI_ICON and/or SHGFI_SYSICONINDEX flag must also be set.
+        /// The <see cref="Icon"/> and/or <see cref="SysIconIndex"/> flag must also be set.
         /// </summary>
-        OPENICON = 0x000000002,
+        OpenIcon = 0x000000002,
 
         /// <summary>
-        /// Modify SHGFI_ICON, causing the function to retrieve a Shell-sized icon.
+        /// Modify <see cref="Icon"/>, causing the function to retrieve a Shell-sized icon.
         /// If this flag is not specified the function sizes the icon according to 
-        /// the system metric values. The SHGFI_ICON flag must also be set.
+        /// the system metric values. The <see cref="Icon"/> flag must also be set.
         /// </summary>
-        SHELLICONSIZE = 0x000000004,
+        ShellIconSize = 0x000000004,
 
         /// <summary>
         /// Indicate that pszPath is the address of an ITEMIDLIST structure rather than a path name.
         /// </summary>
-        PIDL = 0x000000008,
+        Pidl = 0x000000008,
 
         /// <summary>
         /// Indicates that the function should not attempt to access the file specified by pszPath. 
         /// Rather, it should act as if the file specified by pszPath exists with the file attributes 
-        /// passed in dwFileAttributes. This flag cannot be combined with the SHGFI_ATTRIBUTES, 
-        /// SHGFI_EXETYPE, or SHGFI_PIDL flags.
+        /// passed in dwFileAttributes. This flag cannot be combined with the <see cref="Attributes"/>, 
+        /// <see cref="ExeType"/>, or <see cref="Pidl"/> flags.
         /// </summary>
-        USEFILEATTRIBUTES = 0x000000010,
+        UseFileAttributes = 0x000000010,
 
         /// <summary>
-        /// Apply the appropriate overlays to the file's icon. The SHGFI_ICON flag must also be set.
+        /// Apply the appropriate overlays to the file's icon. The <see cref="Icon"/> flag must also be set.
         /// </summary>
-        ADDOVERLAYS = 0x000000020,
+        AddOverlays = 0x000000020,
 
         /// <summary>
         /// Return the index of the overlay icon. The value of the overlay index is returned in the upper
         /// eight bits of the iIcon member of the structure specified by psfi. 
-        /// This flag requires that the SHGFI_ICON be set as well.
+        /// This flag requires that the <see cref="Icon"/> be set as well.
         /// </summary>
-        OVERLAYINDEX = 0x000000040,
+        OverlayIndex = 0x000000040,
 
         /// <summary>
         /// Retrieve the handle to the icon that represents the file and the index of the icon within the
         /// system image list. The handle is copied to the hIcon member of the structure specified by psfi,
         /// and the index is copied to the iIcon member.
         /// </summary>
-        ICON = 0x000000100,
+        Icon = 0x000000100,
 
         /// <summary>
         /// Retrieve the display name for the file, which is the name as it appears in Windows Explorer.
@@ -76,19 +76,19 @@ namespace OpenTK.NT.Native
         /// 8.3 form of the file name. Note that the display name can be affected by settings such
         /// as whether extensions are shown.
         /// </summary>
-        DISPLAYNAME = 0x000000200,
+        DisplayName = 0x000000200,
 
         /// <summary>
         /// Retrieve the string that describes the file's type. The string is copied to
         /// the szTypeName member of the structure specified in psfi.
         /// </summary>
-        TYPENAME = 0x000000400,
+        TypeName = 0x000000400,
 
         /// <summary>
         /// Retrieve the item attributes. The attributes are copied to the dwAttributes member
         /// of the structure specified in the psfi parameter.
         /// </summary>
-        ATTRIBUTES = 0x000000800,
+        Attributes = 0x000000800,
 
         /// <summary>
         /// Retrieve the name of the file that contains the icon representing the file specified
@@ -97,13 +97,13 @@ namespace OpenTK.NT.Native
         /// copied to the szDisplayName member of the structure specified by psfi.
         /// The icon's index is copied to that structure's iIcon member.
         /// </summary>
-        ICONLOCATION = 0x000001000,
+        IconLocation = 0x000001000,
 
         /// <summary>
         /// Retrieve the type of the executable file if pszPath identifies an executable file. 
         /// The information is packed into the return value. This flag cannot be specified with any other flags.
         /// </summary>
-        EXETYPE = 0x000002000,
+        ExeType = 0x000002000,
 
         /// <summary>
         /// Retrieve the index of a system image list icon. If successful, the index is copied to the
@@ -111,26 +111,26 @@ namespace OpenTK.NT.Native
         /// images whose indices are successfully copied to iIcon are valid. Attempting to access 
         /// other images in the system image list will result in undefined behavior.
         /// </summary>
-        SYSICONINDEX = 0x000004000,
+        SysIconIndex = 0x000004000,
 
         /// <summary>
-        /// Modify SHGFI_ICON, causing the function to add the link overlay to the file's icon.
-        /// The SHGFI_ICON flag must also be set.
+        /// Modify <see cref="Icon"/>, causing the function to add the link overlay to the file's icon.
+        /// The <see cref="Icon"/> flag must also be set.
         /// </summary>
-        LINKOVERLAY = 0x000008000,
+        LinkOverlay = 0x000008000,
 
         /// <summary>
-        /// Modify SHGFI_ICON, causing the function to blend the file's icon with the system highlight color.
-        /// The SHGFI_ICON flag must also be set.
+        /// Modify <see cref="Icon"/>, causing the function to blend the file's icon with the system highlight color.
+        /// The <see cref="Icon"/> flag must also be set.
         /// </summary>
-        SELECTED = 0x000010000,
+        Selected = 0x000010000,
 
         /// <summary>
-        /// Modify SHGFI_ATTRIBUTES to indicate that the dwAttributes member of the SHFILEINFO structure 
+        /// Modify <see cref="Attributes"/> to indicate that the dwAttributes member of the <see cref="SHFileInfo"/> structure 
         /// at psfi contains the specific attributes that are desired. These attributes are passed to 
         /// IShellFolder::GetAttributesOf. If this flag is not specified, 0xFFFFFFFF is passed to IShellFolder::GetAttributesOf,
-        /// requesting all attributes. This flag cannot be specified with the SHGFI_ICON flag.
+        /// requesting all attributes. This flag cannot be specified with the <see cref="Icon"/> flag.
         /// </summary>
-        ATTR_SPECIFIED = 0x000020000,
+        AttributeSpecified = 0x000020000,
     }
 }

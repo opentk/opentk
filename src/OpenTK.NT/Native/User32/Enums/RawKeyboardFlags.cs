@@ -5,12 +5,12 @@
         /// <summary>
         /// The key is down.
         /// </summary>
-        MAKE = 0x0,
+        Make = 0x0,
 
         /// <summary>
         /// The key is up.
         /// </summary>
-        BREAK = 0x1,
+        Break = 0x1,
 
         /// <summary>
         /// The scan code has the E0 prefix.
@@ -22,7 +22,7 @@
         /// </summary>
         E1 = 0x4,
 
-        TERMSRV_SET_LED = 0x8,
-        TERMSRV_SHADOW = 0x10
+        TermsrvSetLed = 0x8,
+        TermsrvShadow = 0x10
     }
 }

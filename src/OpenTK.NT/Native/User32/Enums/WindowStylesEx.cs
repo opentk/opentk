@@ -9,27 +9,27 @@ namespace OpenTK.NT.Native
     {
         /// <summary>
         /// The window has a double border; the window can, optionally, be created with a title bar
-        /// by specifying the WS_CAPTION style in the dwStyle parameter.
+        /// by specifying the <see cref="WindowStyles.Caption"/> style in the dwStyle parameter.
         /// </summary>
-        DLGMODALFRAME = 0x00000001,
+        DialogModalFrame = 0x00000001,
 
         /// <summary>
-        /// The child window created with this style does not send the WM_PARENTNOTIFY message to
+        /// The child window created with this style does not send the <see cref="WM.ParentNotify"/> message to
         /// its parent window when it is created or destroyed.
         /// </summary>
-        NOPARENTNOTIFY = 0x00000004,
+        NoParentModify = 0x00000004,
 
         /// <summary>
         /// The window should be placed above all non-topmost windows and should stay above them,
         /// even when the window is deactivated. To add or remove this style, use the
         /// <see cref="User32.Window.SetWindowPos"/> function.
         /// </summary>
-        TOPMOST = 0x00000008,
+        Topmost = 0x00000008,
 
         /// <summary>
         /// The window accepts drag-drop files.
         /// </summary>
-        ACCEPTFILES = 0x00000010,
+        AcceptFiles = 0x00000010,
 
         /// <summary>
         /// The window should not be painted until siblings beneath the window 
@@ -38,13 +38,13 @@ namespace OpenTK.NT.Native
         /// sibling windows have already been painted.<br/>
         /// To achieve transparency without these restrictions, use the SetWindowRgn function.
         /// </summary>
-        TRANSPARENT = 0x00000020,
+        Transparent = 0x00000020,
 
 
         /// <summary>
         /// The window is a MDI child window.
         /// </summary>
-        MDICHILD = 0x00000040,
+        MdiChild = 0x00000040,
 
         /// <summary>
         /// The window is intended to be used as a floating toolbar. A tool window has a title bar
@@ -53,66 +53,66 @@ namespace OpenTK.NT.Native
         /// If a tool window has a system menu, its icon is not displayed on the title bar. However,
         /// you can display the system menu by right-clicking or by typing ALT+SPACE. 
         /// </summary>
-        TOOLWINDOW = 0x00000080,
+        ToolWindow = 0x00000080,
 
         /// <summary>
         /// The window has a border with a raised edge.
         /// </summary>
-        WINDOWEDGE = 0x00000100,
+        WindowEdge = 0x00000100,
 
         /// <summary>
         /// The window has a border with a sunken edge.
         /// </summary>
-        CLIENTEDGE = 0x00000200,
+        ClientEdge = 0x00000200,
 
         /// <summary>
         /// The title bar of the window includes a question mark. When the user clicks the question mark,
         /// the cursor changes to a question mark with a pointer. If the user then clicks a child window,
-        /// the child receives a WM_HELP message. The child window should pass the message to the parent
+        /// the child receives a <see cref="WM.Help"/> message. The child window should pass the message to the parent
         /// window procedure, which should call the WinHelp function using the HELP_WM_HELP command. 
         /// The Help application displays a pop-up window that typically contains help for the child window.<br/>
-        /// WS_EX_CONTEXTHELP cannot be used with the WS_MAXIMIZEBOX or WS_MINIMIZEBOX styles.
+        /// <see cref="ContextHelp"/> cannot be used with the <see cref="WindowStyles.MaximizeBox"/> or <see cref="WindowStyles.MinimizeBox"/> styles.
         /// </summary>
-        CONTEXTHELP = 0x00000400,
+        ContextHelp = 0x00000400,
 
 
         /// <summary>
         /// The window has generic "right-aligned" properties. This depends on the window class.
         /// This style has an effect only if the shell language is Hebrew, Arabic, or another language
         /// that supports reading-order alignment; otherwise, the style is ignored.<br/>
-        /// Using the WS_EX_RIGHT style for static or edit controls has the same effect as using the SS_RIGHT
+        /// Using the <see cref="Right"/> style for static or edit controls has the same effect as using the SS_RIGHT
         /// or ES_RIGHT style, respectively. Using this style with button controls has the same effect
         /// as using BS_RIGHT and BS_RIGHTBUTTON styles. 
         /// </summary>
-        RIGHT = 0x00001000,
+        Right = 0x00001000,
 
         /// <summary>
         /// The window has generic left-aligned properties. This is the default.
         /// </summary>
-        LEFT = 0x00000000,
+        Left = 0x00000000,
 
         /// <summary>
         /// If the shell language is Hebrew, Arabic, or another language that supports reading-order alignment,
         /// the window text is displayed using right-to-left reading-order properties. For other languages,
         /// the style is ignored.
         /// </summary>
-        RTLREADING = 0x00002000,
+        RtlReading = 0x00002000,
 
         /// <summary>
         /// The window text is displayed using left-to-right reading-order properties. This is the default.
         /// </summary>
-        LTRREADING = 0x00000000,
+        LtrReading = 0x00000000,
 
         /// <summary>
         /// If the shell language is Hebrew, Arabic, or another language that supports reading order alignment,
         /// the vertical scroll bar (if present) is to the left of the client area. For other languages, the style is ignored.
         /// </summary>
-        LEFTSCROLLBAR = 0x00004000,
+        LeftScrollbar = 0x00004000,
 
         /// <summary>
         /// The vertical scroll bar (if present) is to the right of the client area. This is the default.
         /// </summary>
-        RIGHTSCROLLBAR = 0x00000000,
+        RightScrollbar = 0x00000000,
 
 
         /// <summary>
@@ -120,65 +120,65 @@ namespace OpenTK.NT.Native
         /// If this style is specified, the dialog manager recurses into children of this window when performing
         /// navigation operations such as handling the TAB key, an arrow key, or a keyboard mnemonic.
         /// </summary>
-        CONTROLPARENT = 0x00010000,
+        ControlParent = 0x00010000,
 
         /// <summary>
         /// The window has a three-dimensional border style intended to be used for items that do not accept user input.
         /// </summary>
-        STATICEDGE = 0x00020000,
+        StaticEdge = 0x00020000,
         
         /// <summary>
         /// Forces a top-level window onto the taskbar when the window is visible. 
         /// </summary>
-        APPWINDOW = 0x00040000,
+        AppWindow = 0x00040000,
 
 
         /// <summary>
         /// The window is an overlapped window.
         /// </summary>
-        OVERLAPPEDWINDOW = WINDOWEDGE | CLIENTEDGE,
+        OverlappedWindow = WindowEdge | ClientEdge,
 
         /// <summary>
         /// The window is palette window, which is a modeless dialog box that presents an array of commands. 
         /// </summary>
-        PALETTEWINDOW = WINDOWEDGE | TOOLWINDOW | TOPMOST,
+        PaletteWindow = WindowEdge | ToolWindow | Topmost,
 
 
         /// <summary>
         /// The window is a layered window. This style cannot be used if the window has
-        /// a class style of either <see cref="WindowClassStyleFlags.OWNDC"/> or <see cref="WindowClassStyleFlags.CLASSDC"/>.<br/>
+        /// a class style of either <see cref="WindowClassStyleFlags.OwnDC"/> or <see cref="WindowClassStyleFlags.ClassDC"/>.<br/>
         /// Only supported on Windows 2000 and higher.
         /// </summary>
-        LAYERED = 0x00080000,
+        Layered = 0x00080000,
 
 
         /// <summary>
         /// The window does not pass its window layout to its child windows.<br/>
         /// Only supported on Windows 2000 and higher.
         /// </summary>
-        NOINHERITLAYOUT = 0x00100000, // Disable inheritence of mirroring by children
+        NoInheritLayout = 0x00100000, // Disable inheritence of mirroring by children
 
         /// <summary>
         /// The window does not render to a redirection surface. This is for windows that do not have visible
         /// content or that use mechanisms other than surfaces to provide their visual.<br/>
         /// Only supported on Windows 2000 and higher.
         /// </summary>
-        NOREDIRECTIONBITMAP = 0x00200000,
+        NoRedirectionBitmap = 0x00200000,
 
         /// <summary>
         /// If the shell language is Hebrew, Arabic, or another language that supports reading order alignment,
         /// the horizontal origin of the window is on the right edge. Increasing horizontal values advance to the left.<br/>
         /// Only supported on Windows 2000 and higher.
         /// </summary>
-        LAYOUTRTL = 0x00400000, // Right to left mirroring
+        LayoutRtl = 0x00400000, // Right to left mirroring
 
 
         /// <summary>
         /// Paints all descendants of a window in bottom-to-top painting order using double-buffering.<br/>
-        /// This cannot be used if the window has a class style of either CS_OWNDC or CS_CLASSDC.<br/>
+        /// This cannot be used if the window has a class style of either <see cref="WindowClassStyleFlags.OwnDC"/> or <see cref="WindowClassStyleFlags.ClassDC"/>.<br/>
         /// Only supported on Windows XP and higher.
         /// </summary>
-        COMPOSITED = 0x02000000,
+        Composited = 0x02000000,
 
         /// <summary>
         /// A top-level window created with this style does not become the foreground window when the user clicks it.
@@ -188,6 +188,6 @@ namespace OpenTK.NT.Native
         /// The window does not appear on the taskbar by default. To force the window to appear on the taskbar, use the WS_EX_APPWINDOW style.<br/>
         /// Only supported on Windows 2000 and higher.
         /// </summary>
-        NOACTIVATE = 0x08000000
+        NoActivate = 0x08000000
     }
 }

@@ -10,38 +10,38 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Messages are not removed from the queue after processing by <see cref="User32.Message.PeekMessage"/>.
         /// </summary>
-        NOREMOVE = 0,
+        NoRemove = 0,
 
         /// <summary>
         /// Messages are removed from the queue after processing by <see cref="User32.Message.PeekMessage"/>.
         /// </summary>
-        REMOVE = 1,
+        Remove = 1,
 
         /// <summary>
         /// Prevents the system from releasing any thread that is waiting for the caller to go idle (see WaitForInputIdle).
-        /// Combine this value with either <see cref="NOREMOVE"/> or <see cref="REMOVE"/>.
+        /// Combine this value with either <see cref="NoRemove"/> or <see cref="Remove"/>.
         /// </summary>
-        NOYIELD = 2,
+        NoYield = 2,
 
 
         /// <summary>
         /// Process mouse and keyboard messages.
         /// </summary>
-        QS_INPUT = QueueStatusFlags.INPUT << 16,
+        QSInput = QueueStatusFlags.Input << 16,
 
         /// <summary>
         /// Process paint messages.
         /// </summary>
-        QS_PAINT = QueueStatusFlags.PAINT << 16,
+        QSPaint = QueueStatusFlags.Paint << 16,
 
         /// <summary>
         /// Process all posted messages, including timers and hotkeys.
         /// </summary>
-        QS_POSTMESSAGE = (QueueStatusFlags.POSTMESSAGE | QueueStatusFlags.HOTKEY | QueueStatusFlags.TIMER) << 16,
+        QSPostMessage = (QueueStatusFlags.PostMessage | QueueStatusFlags.Hotkey | QueueStatusFlags.Timer) << 16,
 
         /// <summary>
         /// Process all sent messages.
         /// </summary>
-        QS_SENDMESSAGE = QueueStatusFlags.SENDMESSAGE << 16
+        QSSendMessage = QueueStatusFlags.SendMessage << 16
     }
 }

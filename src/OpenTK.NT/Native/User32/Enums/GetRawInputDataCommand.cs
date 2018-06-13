@@ -7,11 +7,11 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Get the raw data from the <see cref="RawInput"/> structure.
         /// </summary>
-        INPUT = 0x10000003,
+        Input = 0x10000003,
 
         /// <summary>
         /// Get the header information from the <see cref="RawInput"/> structure.
         /// </summary>
-        HEADER = 0x10000005
+        Header = 0x10000005
     }
 }
