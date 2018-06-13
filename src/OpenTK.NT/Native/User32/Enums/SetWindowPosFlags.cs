@@ -1,9 +1,11 @@
 ﻿using System;
 
+using UINT = System.UInt32;
+
 namespace OpenTK.NT.Native
 {
     [Flags]
-    public enum SetWindowPosFlags
+    public enum SetWindowPosFlags : UINT
     {
         /// <summary>
         /// Retains the current size (ignores the cx and cy parameters).
