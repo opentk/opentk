@@ -39,8 +39,8 @@ namespace OpenTK.NT.Native
         NoActivate = 0x0010,
 
         /// <summary>
-        /// Sends a <see cref="WM.NCCalcSize"/> message to the window, even if the window's size is not being changed.
-        /// If this flag is not specified, <see cref="WM.NCCalcSize"/> is sent only when the window's size is being changed.
+        /// Sends a <see cref="WindowMessage.NCCalcSize"/> message to the window, even if the window's size is not being changed.
+        /// If this flag is not specified, <see cref="WindowMessage.NCCalcSize"/> is sent only when the window's size is being changed.
         /// </summary>
         FrameChanged = 0x0020,
 
@@ -67,7 +67,7 @@ namespace OpenTK.NT.Native
         NoOwnerZOrder = 0x0200,
 
         /// <summary>
-        /// Prevents the window from receiving the <see cref="WM.WindowPosChanging"/> message.
+        /// Prevents the window from receiving the <see cref="WindowMessage.WindowPosChanging"/> message.
         /// </summary>
         NoSendChanging = 0x0400,
 

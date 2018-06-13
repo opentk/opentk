@@ -8,21 +8,21 @@ namespace OpenTK.NT.Native
     public enum TrackMouseEventFlags : DWORD
     {
         /// <summary>
-        /// The caller wants hover notification. Notification is delivered as a <see cref="WM.MouseHover"/> message.<br/>
+        /// The caller wants hover notification. Notification is delivered as a <see cref="WindowMessage.MouseHover"/> message.<br/>
         /// If the caller requests hover tracking while hover tracking is already active, the hover timer will be reset.<br/>
         /// This flag is ignored if the mouse pointer is not over the specified window or area.
         /// </summary>
         Hover = 0x00000001,
 
         /// <summary>
-        /// The caller wants leave notification. Notification is delivered as a <see cref="WM.MouseLeave"/> message.
+        /// The caller wants leave notification. Notification is delivered as a <see cref="WindowMessage.MouseLeave"/> message.
         /// If the mouse is not over the specified window or area, a leave notification is generated immediately and no further tracking is performed.
         /// </summary>
         Leave = 0x00000002,
 
         /// <summary>
         /// The caller wants hover and leave notification for the nonclient areas.
-        /// Notification is delivered as <see cref="WM.NCMouseHover"/> and <see cref="WM.NCMouseLeave"/> messages.
+        /// Notification is delivered as <see cref="WindowMessage.NCMouseHover"/> and <see cref="WindowMessage.NCMouseLeave"/> messages.
         /// </summary>
         NonClient = 0x00000010,
 

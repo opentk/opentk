@@ -10,7 +10,7 @@ namespace OpenTK.NT.Native
     public struct Msg
     {
         public HWND HWnd;
-        public WM Message;
+        public WindowMessage Message;
         public WPARAM WParam;
         public LPARAM LParam;
         public uint Time;

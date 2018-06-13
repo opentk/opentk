@@ -105,7 +105,7 @@ namespace OpenTK.NT.Native
             public static extern LRESULT CallWindowProc(
                 [In] WNDPROC lpPrevWndFunc,
                 [In] HWND hWnd,
-                [In] WM Msg,
+                [In] WindowMessage Msg,
                 [In] WPARAM wParam,
                 [In] LPARAM lParam
             );
@@ -210,7 +210,7 @@ namespace OpenTK.NT.Native
             [DllImport("User32.dll", CharSet = CharSet.Auto)]
             public static extern LRESULT DefWindowProc(
                 [In] HWND hWnd,
-                [In] WM Msg,
+                [In] WindowMessage Msg,
                 [In] WPARAM wParam,
                 [In] LPARAM lParam
             );

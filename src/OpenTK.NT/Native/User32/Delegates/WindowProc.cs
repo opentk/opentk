@@ -12,7 +12,7 @@ namespace OpenTK.NT.Native
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate LRESULT WindowProc(
         [In] HWND hWnd,
-        [In] WM message,
+        [In] WindowMessage message,
         [In] WPARAM wParam, 
         [In] LPARAM lParam
     );

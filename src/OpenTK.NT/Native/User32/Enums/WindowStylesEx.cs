@@ -14,7 +14,7 @@ namespace OpenTK.NT.Native
         DialogModalFrame = 0x00000001,
 
         /// <summary>
-        /// The child window created with this style does not send the <see cref="WM.ParentNotify"/> message to
+        /// The child window created with this style does not send the <see cref="WindowMessage.ParentNotify"/> message to
         /// its parent window when it is created or destroyed.
         /// </summary>
         NoParentModify = 0x00000004,
@@ -68,7 +68,7 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// The title bar of the window includes a question mark. When the user clicks the question mark,
         /// the cursor changes to a question mark with a pointer. If the user then clicks a child window,
-        /// the child receives a <see cref="WM.Help"/> message. The child window should pass the message to the parent
+        /// the child receives a <see cref="WindowMessage.Help"/> message. The child window should pass the message to the parent
         /// window procedure, which should call the WinHelp function using the HELP_WM_HELP command. 
         /// The Help application displays a pop-up window that typically contains help for the child window.<br/>
         /// <see cref="ContextHelp"/> cannot be used with the <see cref="WindowStyles.MaximizeBox"/> or <see cref="WindowStyles.MinimizeBox"/> styles.

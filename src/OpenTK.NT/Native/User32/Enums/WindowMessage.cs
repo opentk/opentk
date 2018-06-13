@@ -2,7 +2,7 @@
 
 namespace OpenTK.NT.Native
 {
-    public enum WM : UINT
+    public enum WindowMessage : UINT
     {
         Null = 0x0000,
         Create = 0x0001,
