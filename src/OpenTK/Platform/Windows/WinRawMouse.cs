@@ -30,6 +30,7 @@ using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using OpenTK.Core;
 using OpenTK.Input;
+using OpenTK.NT.Native;
 using OpenTK.Platform.Common;
 
 namespace OpenTK.Platform.Windows
@@ -366,7 +367,7 @@ namespace OpenTK.Platform.Windows
                 new RawInputDevice(HIDUsageGD.Mouse, RawInputDeviceFlags.INPUTSINK, window)
             };
 
-            if (!Functions.RegisterRawInputDevices(rid, 1, API.RawInputDeviceSize))
+            if (!User32.RawInput.RegisterRawInputDevices(rid, 1, RawInputDevice.SizeInBytes))
             {
                 Debug.Print("[Warning] Raw input registration failed with error: {0}. Device: {1}",
                     Marshal.GetLastWin32Error(), rid[0].ToString());

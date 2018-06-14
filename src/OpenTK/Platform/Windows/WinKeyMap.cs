@@ -24,6 +24,7 @@
 //
 
 using OpenTK.Input;
+using OpenTK.NT.Native;
 
 namespace OpenTK.Platform.Windows
 {
@@ -207,7 +208,7 @@ namespace OpenTK.Platform.Windows
                         {
                             is_valid = false;
                         }
-                        else if (vkey == VirtualKeys.PAUSE)
+                        else if (vkey == VirtualKeys.Pause)
                         {
                             key = Key.Pause;
                         }

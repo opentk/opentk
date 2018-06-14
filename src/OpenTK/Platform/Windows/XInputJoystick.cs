@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using OpenTK.Input;
 using OpenTK.Mathematics;
-using OpenTK.Platform.Common;
+using OpenTK.NT.Native;
 
 namespace OpenTK.Platform.Windows
 {
@@ -378,25 +378,25 @@ namespace OpenTK.Platform.Windows
             {
                 // Try to load the newest XInput***.dll installed on the system
                 // The delegates below will be loaded dynamically from that dll
-                dll = Functions.LoadLibrary("XINPUT1_4");
+                dll = Kernel32.LoadLibrary("XINPUT1_4");
                 if (dll == IntPtr.Zero)
                 {
-                    dll = Functions.LoadLibrary("XINPUT1_3");
+                    dll = Kernel32.LoadLibrary("XINPUT1_3");
                 }
 
                 if (dll == IntPtr.Zero)
                 {
-                    dll = Functions.LoadLibrary("XINPUT1_2");
+                    dll = Kernel32.LoadLibrary("XINPUT1_2");
                 }
 
                 if (dll == IntPtr.Zero)
                 {
-                    dll = Functions.LoadLibrary("XINPUT1_1");
+                    dll = Kernel32.LoadLibrary("XINPUT1_1");
                 }
 
                 if (dll == IntPtr.Zero)
                 {
-                    dll = Functions.LoadLibrary("XINPUT9_1_0");
+                    dll = Kernel32.LoadLibrary("XINPUT9_1_0");
                 }
 
                 if (dll == IntPtr.Zero)
@@ -423,7 +423,7 @@ namespace OpenTK.Platform.Windows
 
             private Delegate Load(ushort ordinal, Type type)
             {
-                var pfunc = Functions.GetProcAddress(dll, (IntPtr)ordinal);
+                var pfunc = Kernel32.GetProcAddress(dll, (IntPtr)ordinal);
                 if (pfunc != IntPtr.Zero)
                 {
                     return Marshal.GetDelegateForFunctionPointer(pfunc, type);
@@ -434,7 +434,7 @@ namespace OpenTK.Platform.Windows
 
             private Delegate Load(string name, Type type)
             {
-                var pfunc = Functions.GetProcAddress(dll, name);
+                var pfunc = Kernel32.GetProcAddress(dll, name);
                 if (pfunc != IntPtr.Zero)
                 {
                     return Marshal.GetDelegateForFunctionPointer(pfunc, type);
@@ -449,7 +449,7 @@ namespace OpenTK.Platform.Windows
                 {
                     if (dll != IntPtr.Zero)
                     {
-                        Functions.FreeLibrary(dll);
+                        Kernel32.FreeLibrary(dll);
                         dll = IntPtr.Zero;
                     }
                 }

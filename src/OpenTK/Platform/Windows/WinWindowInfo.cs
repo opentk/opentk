@@ -23,6 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using OpenTK.NT.Native;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -70,7 +71,7 @@ namespace OpenTK.Platform.Windows
             {
                 if (dc == IntPtr.Zero)
                 {
-                    dc = Functions.GetDC(Handle);
+                    dc = User32.DeviceContext.GetDC(Handle);
                 }
 
                 return dc;
@@ -152,7 +153,7 @@ namespace OpenTK.Platform.Windows
             {
                 if (dc != IntPtr.Zero)
                 {
-                    if (!Functions.ReleaseDC(Handle, dc))
+                    if (!User32.DeviceContext.ReleaseDC(Handle, dc))
                     {
                         Debug.Print("[Warning] Failed to release device context {0}. Windows error: {1}.", dc,
                             Marshal.GetLastWin32Error());

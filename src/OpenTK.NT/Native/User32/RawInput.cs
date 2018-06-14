@@ -300,7 +300,7 @@ namespace OpenTK.NT.Native
                     fixed (RawInputHeader* pheader = &header)
                     {
                         if (GetRawInputData(raw, GetRawInputDataCommand.Header,
-                                (IntPtr)pheader, ref size, HeaderSize) != RawInputHeader.SizeInBytes)
+                                (IntPtr)pheader, ref size, RawInputHeader.SizeInBytes) != RawInputHeader.SizeInBytes)
                         {
                             System.Diagnostics.Debug.Print("[Error] Failed to retrieve raw input header. Error: {0}",
                                 Marshal.GetLastWin32Error());
@@ -319,7 +319,7 @@ namespace OpenTK.NT.Native
                     fixed (Native.RawInput* pdata = &data)
                     {
                         GetRawInputData(raw, GetRawInputDataCommand.Input,
-                            (LPVOID)pdata, ref size, HeaderSize);
+                            (LPVOID)pdata, ref size, RawInputHeader.SizeInBytes);
                     }
                 }
 
@@ -334,7 +334,7 @@ namespace OpenTK.NT.Native
                     fixed (byte* pdata = data)
                     {
                         GetRawInputData(raw, GetRawInputDataCommand.Input,
-                            (IntPtr)pdata, ref size, HeaderSize);
+                            (IntPtr)pdata, ref size, RawInputHeader.SizeInBytes);
                     }
                 }
 
@@ -431,7 +431,7 @@ namespace OpenTK.NT.Native
             {
                 unsafe
                 {
-                    return RawInputAlign((IntPtr)((byte*)data + HeaderSize));
+                    return RawInputAlign((IntPtr)((byte*)data + RawInputHeader.SizeInBytes));
                 }
             }
 
