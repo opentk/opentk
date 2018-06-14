@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using OpenTK.Mathematics;
 
 namespace OpenTK.Core.Platform.Common
 {
@@ -23,7 +22,7 @@ namespace OpenTK.Core.Platform.Common
             if (value_min >= value_max || result_min >= result_max)
                 throw new ArgumentOutOfRangeException();
 
-            MathHelper.Clamp(value, value_min, value_max);
+            value = Math.Max(Math.Min(value, value_max), value_min);
 
             var range = result_max - result_min;
             long temp = (value - value_min) * range; // need long to avoid overflow
