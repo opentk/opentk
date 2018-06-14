@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-using DWORD = System.Int32;
+using DWORD = System.UInt32;
 
 namespace OpenTK.NT.Native
 {
