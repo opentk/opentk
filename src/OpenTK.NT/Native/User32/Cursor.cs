@@ -28,7 +28,7 @@ namespace OpenTK.NT.Native
 
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ClipCursor([In] [Optional] ref Rectangle lpRect);
+            public static extern bool ClipCursor([In] [Optional] ref Rect lpRect);
 
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]

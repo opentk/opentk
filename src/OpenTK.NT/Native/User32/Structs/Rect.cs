@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Drawing;
+using System.Runtime.InteropServices;
 
 using LONG = System.Int32;
 
@@ -14,7 +15,7 @@ namespace OpenTK.NT.Native
     /// row of pixels. This structure is identical to the RECTL structure.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
-    public struct Rectangle
+    public struct Rect
     {
         /// <summary>
         /// Specifies the x-coordinate of the upper-left corner of the rectangle.
@@ -41,10 +42,10 @@ namespace OpenTK.NT.Native
 
         public override string ToString() => $"({left},{top})-({right},{bottom})";
 
-        public System.Drawing.Rectangle ToRectangle() => System.Drawing.Rectangle.FromLTRB(left, top, right, bottom);
+        public Rectangle ToRectangle() => Rectangle.FromLTRB(left, top, right, bottom);
 
-        public static Rectangle From(System.Drawing.Rectangle value)
-            => new Rectangle
+        public static Rect From(Rectangle value)
+            => new Rect
             {
                 left = value.Left,
                 right = value.Right,
@@ -52,8 +53,8 @@ namespace OpenTK.NT.Native
                 bottom = value.Bottom
             };
 
-        public static Rectangle From(System.Drawing.Size value)
-            => new Rectangle
+        public static Rect From(Size value)
+            => new Rect
             {
                 left = 0,
                 right = value.Width,

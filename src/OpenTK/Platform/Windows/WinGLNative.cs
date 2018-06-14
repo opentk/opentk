@@ -182,8 +182,8 @@ namespace OpenTK.Platform.Windows
             set
             {
                 var style = (WindowStyle)Functions.GetWindowLong(window.Handle, GetWindowLongOffsets.STYLE);
-                var rect = Win32Rectangle.From(value);
                 Functions.AdjustWindowRect(ref rect, style, false);
+                var rect = Rect.From(value);
                 Size = new Size(rect.Width, rect.Height);
             }
         }
@@ -536,8 +536,8 @@ namespace OpenTK.Platform.Windows
 
                 // Make sure client size doesn't change when changing the border style.
                 var client_size = ClientSize;
-                var rect = Win32Rectangle.From(bounds);
                 Functions.AdjustWindowRectEx(ref rect, new_style, false, ParentStyleEx);
+                var rect = Rect.From(bounds);
 
                 // This avoids leaving garbage on the background window.
                 if (was_visible)
@@ -710,8 +710,8 @@ namespace OpenTK.Platform.Windows
                         bounds.Width = pos->cx;
                         bounds.Height = pos->cy;
 
-                        Win32Rectangle rect;
                         Functions.GetClientRect(handle, out rect);
+                        Rect rect;
                         client_rectangle = rect.ToRectangle();
 
                         Functions.SetWindowPos(window.Handle, IntPtr.Zero, bounds.X, bounds.Y, bounds.Width,
@@ -1098,8 +1098,8 @@ namespace OpenTK.Platform.Windows
                 bounds.Width = cs.cx;
                 bounds.Height = cs.cy;
 
-                Win32Rectangle rect;
                 Functions.GetClientRect(handle, out rect);
+                Rect rect;
                 client_rectangle = rect.ToRectangle();
 
                 invisible_since_creation = true;
@@ -1374,12 +1374,15 @@ namespace OpenTK.Platform.Windows
             }
 
             // Find out the final window rectangle, after the WM has added its chrome (titlebar, sidebars etc).
-            var rect = new Win32Rectangle();
-            rect.left = x;
-            rect.top = y;
-            rect.right = x + width;
-            rect.bottom = y + height;
             Functions.AdjustWindowRectEx(ref rect, style, false, ex_style);
+            var rect = new Rect
+            {
+                left = x,
+                top = y,
+                right = x + width,
+                bottom = y + height
+            };
+            
 
             // Create the window class that we will use for this window.
             // The current approach is to register a new class for each top-level WinGLWindow we create.
@@ -1463,12 +1466,15 @@ namespace OpenTK.Platform.Windows
         private void GrabCursor()
         {
             var pos = PointToScreen(new Point(ClientRectangle.X, ClientRectangle.Y));
-            var rect = new Win32Rectangle();
-            rect.left = pos.X;
-            rect.right = pos.X + ClientRectangle.Width;
-            rect.top = pos.Y;
-            rect.bottom = pos.Y + ClientRectangle.Height;
             if (!Functions.ClipCursor(ref rect))
+            var rect = new Rect
+            {
+                left = pos.X,
+                right = pos.X + ClientRectangle.Width,
+                top = pos.Y,
+                bottom = pos.Y + ClientRectangle.Height,
+            };
+            
             {
                 Debug.WriteLine($"Failed to grab cursor. Error: {Marshal.GetLastWin32Error()}");
             }

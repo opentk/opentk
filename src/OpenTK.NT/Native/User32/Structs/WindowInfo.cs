@@ -21,12 +21,12 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Pointer to a RECT structure that specifies the coordinates of the window.
         /// </summary>
-        public Rectangle rcWindow;
+        public Rect rcWindow;
 
         /// <summary>
         /// Pointer to a RECT structure that specifies the coordinates of the client area.
         /// </summary>
-        public Rectangle rcClient;
+        public Rect rcClient;
 
         /// <summary>
         /// The window styles. For a table of window styles, see CreateWindowEx.

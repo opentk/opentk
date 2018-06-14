@@ -49,7 +49,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             public static extern bool AdjustWindowRect(
-                [In] [Out] ref Rectangle lpRect,
+                [In] [Out] ref Rect lpRect,
                 [In] WindowStyles dwStyle,
                 [In] bool bMenu
             );
@@ -58,7 +58,7 @@ namespace OpenTK.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool AdjustWindowRectEx(
-                [In] [Out] ref Rectangle lpRect,
+                [In] [Out] ref Rect lpRect,
                 [In] WindowStyles dwStyle,
                 [In] [MarshalAs(UnmanagedType.Bool)] bool bMenu,
                 [In] WindowStylesEx dwExStyle
@@ -392,7 +392,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool GetWindowRect([In] HWND windowHandle, [Out] out Rectangle windowRectangle);
+            public static extern bool GetWindowRect([In] HWND windowHandle, [Out] out Rect windowRectangle);
 
             /// <summary>
             /// The GetClientRect function retrieves the coordinates of a window's client area. The client coordinates specify the
@@ -415,7 +415,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool GetClientRect([In] HWND windowHandle, [Out] out Rectangle clientRectangle);
+            public static extern bool GetClientRect([In] HWND windowHandle, [Out] out Rect clientRectangle);
 
             /// <summary>
             /// Converts the screen coordinates of a specified point on the screen to client-area coordinates.
