@@ -11,7 +11,7 @@ namespace OpenTK.NT.Native
     /// For the keyboard, the Usage Page is 1 and the Usage is 6.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
-    public struct RawDeviceInfoKeyboard
+    public struct RawInputDeviceInfoKeyboard
     {
         /// <summary>
         /// Type of the keyboard.

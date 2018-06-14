@@ -29,7 +29,8 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using OpenTK.Core;
 using OpenTK.Input;
-using OpenTK.Platform.Common;
+using OpenTK.NT.Native;
+using OpenTK.Core.Platform.Common;
 #if !(ANDROID || IPHONE || MINIMAL)
 using Microsoft.Win32;
 
@@ -62,9 +63,7 @@ namespace OpenTK.Platform.Windows
             {
                 var master = new KeyboardState();
                 foreach (var ks in keyboards)
-                {
                     master.MergeBits(ks);
-                }
 
                 return master;
             }
@@ -73,27 +72,17 @@ namespace OpenTK.Platform.Windows
         public KeyboardState GetState(int index)
         {
             lock (UpdateLock)
-            {
-                if (keyboards.Count > index)
-                {
-                    return keyboards[index];
-                }
-
-                return new KeyboardState();
-            }
+                return keyboards.Count > index ?
+                    keyboards[index] :
+                    new KeyboardState();
         }
 
         public string GetDeviceName(int index)
         {
             lock (UpdateLock)
-            {
-                if (names.Count > index)
-                {
-                    return names[index];
-                }
-
-                return string.Empty;
-            }
+                return names.Count > index ?
+                    names[index] :
+                    string.Empty;
         }
 
         public void RefreshDevices()
@@ -107,14 +96,12 @@ namespace OpenTK.Platform.Windows
                     keyboards[i] = state;
                 }
 
-                var count = WinRawInput.DeviceCount;
+                uint count = WinRawInput.DeviceCount;
                 var ridl = new RawInputDeviceList[count];
                 for (var i = 0; i < count; i++)
-                {
                     ridl[i] = new RawInputDeviceList();
-                }
 
-                Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
+                User32.RawInput.GetRawInputDeviceList(ridl, ref count, RawInputDeviceList.SizeInBytes);
 
                 // Discover keyboard devices:
                 foreach (var dev in ridl)
@@ -134,19 +121,17 @@ namespace OpenTK.Platform.Windows
                     {
                         // This is a terminal services device, skip it.
                     }
-                    else if (dev.Type == RawInputDeviceType.KEYBOARD || dev.Type == RawInputDeviceType.HID)
+                    else if (dev.Type == RawInputDeviceType.Keyboard || dev.Type == RawInputDeviceType.Hid)
                     {
                         // This is a keyboard or USB keyboard device. In the latter case, discover if it really is a
                         // keyboard device by qeurying the registry.
                         var regkey = GetRegistryKey(name);
                         if (regkey == null)
-                        {
                             continue;
-                        }
 
-                        var deviceDesc = (string)regkey.GetValue("DeviceDesc");
-                        var deviceClass = (string)regkey.GetValue("Class");
-                        var deviceClassGUID =
+                        string deviceDesc = (string)regkey.GetValue("DeviceDesc");
+                        string deviceClass = (string)regkey.GetValue("Class");
+                        string deviceClassGUID =
                             (string)regkey.GetValue("ClassGUID"); // for windows 8 support via OpenTK issue 3198
 
                         // making a guess at backwards compatability. Not sure what older windows returns in these cases...
@@ -170,20 +155,16 @@ namespace OpenTK.Platform.Windows
                         {
                             // Register the keyboard:
                             var info = new RawInputDeviceInfo();
-                            var devInfoSize = API.RawInputDeviceInfoSize;
-                            Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICEINFO,
-                                info, ref devInfoSize);
-
-                            //KeyboardDevice kb = new KeyboardDevice();
-                            //kb.Description = deviceDesc;
-                            //kb.NumberOfLeds = info.Device.Keyboard.NumberOfIndicators;
-                            //kb.NumberOfFunctionKeys = info.Device.Keyboard.NumberOfFunctionKeys;
-                            //kb.NumberOfKeys = info.Device.Keyboard.NumberOfKeysTotal;
-                            //kb.DeviceID = dev.Device;
+                            var devInfoSize = RawInputDeviceInfo.SizeInBytes;
+                            User32.RawInput.GetRawInputDeviceInfo(
+                                dev.Device,
+                                GetRawInputDeviceInfoEnum.DeviceInfo,
+                                info,
+                                ref devInfoSize
+                            );
 
                             RegisterKeyboardDevice(window, deviceDesc);
-                            var state = new KeyboardState();
-                            state.IsConnected = true;
+                            var state = new KeyboardState { IsConnected = true };
                             keyboards.Add(state);
                             names.Add(deviceDesc);
                             rawids.Add(new ContextHandle(dev.Device), keyboards.Count - 1);
@@ -197,40 +178,33 @@ namespace OpenTK.Platform.Windows
         {
             var processed = false;
 
-            RawInput rin;
-            if (Functions.GetRawInputData(raw, out rin) > 0)
+            if (User32.RawInput.GetRawInputData(raw, out RawInput rin) > 0)
             {
                 var pressed =
-                    rin.Data.Keyboard.Message == (int)WindowMessage.KEYDOWN ||
-                    rin.Data.Keyboard.Message == (int)WindowMessage.SYSKEYDOWN;
-                var scancode = rin.Data.Keyboard.MakeCode;
+                    rin.Data.Keyboard.Message == (uint)WindowMessage.KeyDown ||
+                    rin.Data.Keyboard.Message == (uint)WindowMessage.SystemKeyDown;
+                short scancode = (short)rin.Data.Keyboard.MakeCode;
                 var vkey = rin.Data.Keyboard.VKey;
 
-                var extended0 = (int)(rin.Data.Keyboard.Flags & RawInputKeyboardDataFlags.E0) != 0;
-                var extended1 = (int)(rin.Data.Keyboard.Flags & RawInputKeyboardDataFlags.E1) != 0;
-
-                var is_valid = true;
+                bool extended0 = (int)(rin.Data.Keyboard.Flags & RawKeyboardFlags.E0) != 0;
+                bool extended1 = (int)(rin.Data.Keyboard.Flags & RawKeyboardFlags.E1) != 0;
 
                 var handle = new ContextHandle(rin.Header.Device);
                 KeyboardState keyboard;
                 if (!rawids.ContainsKey(handle))
-                {
                     RefreshDevices();
-                }
 
                 if (keyboards.Count == 0)
-                {
                     return false;
-                }
 
                 // Note:For some reason, my Microsoft Digital 3000 keyboard reports 0
                 // as rin.Header.Device for the "zoom-in/zoom-out" buttons.
                 // That's problematic, because no device has a "0" id.
                 // As a workaround, we'll add those buttons to the first device (if any).
-                var keyboard_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
+                int keyboard_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
                 keyboard = keyboards[keyboard_handle];
 
-                var key = WinKeyMap.TranslateKey(scancode, vkey, extended0, extended1, out is_valid);
+                var key = WinKeyMap.TranslateKey(scancode, vkey, extended0, extended1, out bool is_valid);
 
                 if (is_valid)
                 {
@@ -251,18 +225,14 @@ namespace OpenTK.Platform.Windows
         private static RegistryKey GetRegistryKey(string name)
         {
             if (name.Length < 4)
-            {
                 return null;
-            }
 
             // remove the \??\
             name = name.Substring(4);
 
             var split = name.Split('#');
             if (split.Length < 3)
-            {
                 return null;
-            }
 
             var id_01 = split[0]; // ACPI (Class code)
             var id_02 = split[1]; // PNP0303 (SubClass code)
@@ -277,10 +247,10 @@ namespace OpenTK.Platform.Windows
 
         private static string GetDeviceName(RawInputDeviceList dev)
         {
-            var size = 0;
-            Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size);
+            uint size = 0;
+            User32.RawInput.GetRawInputDeviceInfo(dev.Device, GetRawInputDeviceInfoEnum.DeviceName, IntPtr.Zero, ref size);
             var name_ptr = Marshal.AllocHGlobal((IntPtr)size);
-            Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, name_ptr, ref size);
+            User32.RawInput.GetRawInputDeviceInfo(dev.Device, GetRawInputDeviceInfoEnum.DeviceName, name_ptr, ref size);
             var name = Marshal.PtrToStringAnsi(name_ptr);
             Marshal.FreeHGlobal(name_ptr);
             return name;
@@ -290,10 +260,10 @@ namespace OpenTK.Platform.Windows
         {
             var rid = new[]
             {
-                new RawInputDevice(HIDUsageGD.Keyboard, RawInputDeviceFlags.INPUTSINK, window)
+                new RawInputDevice(HidUsageGD.Keyboard, RawInputDeviceFlags.InputSink, window)
             };
 
-            if (!Functions.RegisterRawInputDevices(rid, 1, API.RawInputDeviceSize))
+            if (!User32.RawInput.RegisterRawInputDevices(rid, 1, RawInputDevice.SizeInBytes))
             {
                 Debug.Print("[Warning] Raw input registration failed with error: {0}. Device: {1}",
                     Marshal.GetLastWin32Error(), rid[0].ToString());

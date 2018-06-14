@@ -288,7 +288,7 @@ namespace OpenTK.NT.Native
             public static extern uint GetRawInputDeviceInfo(
                 [In] [Optional] HANDLE hDevice,
                 [In] GetRawInputDeviceInfoEnum uiCommand,
-                [In] [Out] [Optional] RawDeviceInfo pData,
+                [In] [Out] [Optional] RawInputDeviceInfo pData,
                 [In] [Out] ref uint pcbSize
             );
 

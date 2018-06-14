@@ -8,7 +8,7 @@ namespace OpenTK.NT.Native
     /// Defines the raw input data coming from any device.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct RawDeviceInfo
+    public struct RawInputDeviceInfo
     {
         public DeviceStruct Device;
 
@@ -25,11 +25,11 @@ namespace OpenTK.NT.Native
         [StructLayout(LayoutKind.Explicit)]
         public struct DeviceStruct
         {
-            [FieldOffset(0)] public RawDeviceInfoMouse Mouse;
-            [FieldOffset(0)] public RawDeviceInfoKeyboard Keyboard;
-            [FieldOffset(0)] public RawDeviceInfoHid Hid;
+            [FieldOffset(0)] public RawInputDeviceInfoMouse Mouse;
+            [FieldOffset(0)] public RawInputDeviceInfoKeyboard Keyboard;
+            [FieldOffset(0)] public RawInputDeviceInfoHid Hid;
         }
 
-        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawDeviceInfo>();
+        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawInputDeviceInfo>();
     }
 }

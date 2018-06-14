@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
+using DEVMODE = System.IntPtr;
 using HDC = System.IntPtr;
 using HWND = System.IntPtr;
 using LPVOID = System.IntPtr;
@@ -42,14 +43,14 @@ namespace OpenTK.NT.Native
             /// </remarks>
             [DllImport("user32.dll")]
             public static extern ChangeDisplaySettingsResult ChangeDisplaySettings(
-                [In] DeviceMode lpDevMode,
+                [In] ref DeviceMode lpDevMode,
                 [In] ChangeDisplaySettingsFlags dwflags
             );
 
             [DllImport("user32.dll", CharSet = CharSet.Auto)]
             public static extern ChangeDisplaySettingsResult ChangeDisplaySettingsEx(
                 [In] [MarshalAs(UnmanagedType.LPTStr)] string lpszDeviceName,
-                [In] DeviceMode lpDevMode,
+                [In] DEVMODE lpDevMode,
                 HWND hwnd,
                 [In] ChangeDisplaySettingsFlags dwflags,
                 [In] LPVOID lParam
@@ -60,7 +61,7 @@ namespace OpenTK.NT.Native
             public static extern bool EnumDisplaySettings(
                 [In] [MarshalAs(UnmanagedType.LPTStr)] string lpszDeviceName,
                 [In] DisplayModeSettingsEnum iModeNum,
-                [Out] DeviceMode lpDevMode
+                [Out] out DeviceMode lpDevMode
             );
 
             [DllImport("user32.dll", CharSet = CharSet.Auto)]
@@ -68,7 +69,7 @@ namespace OpenTK.NT.Native
             public static extern bool EnumDisplaySettingsEx(
                 [In] [MarshalAs(UnmanagedType.LPTStr)] string lpszDeviceName,
                 [In] DisplayModeSettingsEnum iModeNum,
-                [Out] DeviceMode lpDevMode,
+                [Out] out DeviceMode lpDevMode,
                 [In] int dwFlags
             );
 

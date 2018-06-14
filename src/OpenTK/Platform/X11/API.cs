@@ -3,6 +3,7 @@
  * See license.txt for license info
  */
 
+using OpenTK.Core.Platform;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;

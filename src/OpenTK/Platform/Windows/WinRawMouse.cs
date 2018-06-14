@@ -29,9 +29,9 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using OpenTK.Core;
+using OpenTK.Core.Platform.Common;
 using OpenTK.Input;
 using OpenTK.NT.Native;
-using OpenTK.Platform.Common;
 
 namespace OpenTK.Platform.Windows
 {
@@ -91,16 +91,13 @@ namespace OpenTK.Platform.Windows
         }
 
         public void SetPosition(double x, double y)
-        {
-            Functions.SetCursorPos((int)x, (int)y);
-        }
+            => User32.Cursor.SetCursorPos((int)x, (int)y);
 
         public MouseState GetCursorState()
         {
             // For simplicity, get hardware state
             // and simply overwrite its x and y location
-            var p = new POINT();
-            Functions.GetCursorPos(ref p);
+            User32.Cursor.GetCursorPos(out Point p);
 
             var state = GetState();
             state.X = p.X;
@@ -140,7 +137,7 @@ namespace OpenTK.Platform.Windows
                     {
                         // This is a terminal services device, skip it.
                     }
-                    else if (dev.Type == RawInputDeviceType.MOUSE || dev.Type == RawInputDeviceType.HID)
+                    else if (dev.Type == RawInputDeviceType.Mouse || dev.Type == RawInputDeviceType.Hid)
                     {
                         // This is a mouse or a USB mouse device. In the latter case, discover if it really is a
                         // mouse device by qeurying the registry.
@@ -180,8 +177,8 @@ namespace OpenTK.Platform.Windows
                             {
                                 // Register the device:
                                 var info = new RawInputDeviceInfo();
-                                var devInfoSize = API.RawInputDeviceInfoSize;
-                                Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICEINFO,
+                                var devInfoSize = RawInputDeviceInfo.SizeInBytes;
+                                User32.RawInput.GetRawInputDeviceInfo(dev.Device, GetRawInputDeviceInfoEnum.DeviceInfo,
                                     info, ref devInfoSize);
 
                                 RegisterRawDevice(Window, deviceDesc);
@@ -202,7 +199,7 @@ namespace OpenTK.Platform.Windows
             var processed = false;
 
             RawInput rin;
-            if (Functions.GetRawInputData(raw_buffer, out rin) > 0)
+            if (User32.RawInput.GetRawInputData(raw_buffer, out rin) > 0)
             {
                 var raw = rin.Data.Mouse;
                 var handle = new ContextHandle(rin.Header.Device);
@@ -226,77 +223,77 @@ namespace OpenTK.Platform.Windows
                 mouse = mice[mouse_handle];
 
                 // Set and release capture of the mouse to fix http://www.opentk.com/node/2133, Patch by Artfunkel
-                if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_DOWN) != 0)
+                if ((raw.ButtonFlags & RawMouseButtonFlags.LeftButtonDown) != 0)
                 {
                     mouse.EnableBit((int)MouseButton.Left);
-                    Functions.SetCapture(Window);
+                    User32.Mouse.SetCapture(Window);
                 }
 
-                if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_UP) != 0)
+                if ((raw.ButtonFlags & RawMouseButtonFlags.LeftButtonUp) != 0)
                 {
                     mouse.DisableBit((int)MouseButton.Left);
-                    Functions.ReleaseCapture();
+                    User32.Mouse.ReleaseCapture();
                 }
 
-                if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_DOWN) != 0)
+                if ((raw.ButtonFlags & RawMouseButtonFlags.RightButtonDown) != 0)
                 {
                     mouse.EnableBit((int)MouseButton.Right);
-                    Functions.SetCapture(Window);
+                    User32.Mouse.SetCapture(Window);
                 }
 
-                if ((raw.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_UP) != 0)
+                if ((raw.ButtonFlags & RawMouseButtonFlags.RightButtonUp) != 0)
                 {
                     mouse.DisableBit((int)MouseButton.Right);
-                    Functions.ReleaseCapture();
+                    User32.Mouse.ReleaseCapture();
                 }
 
-                if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_DOWN) != 0)
+                if ((raw.ButtonFlags & RawMouseButtonFlags.MiddleButtonDown) != 0)
                 {
                     mouse.EnableBit((int)MouseButton.Middle);
-                    Functions.SetCapture(Window);
+                    User32.Mouse.SetCapture(Window);
                 }
 
-                if ((raw.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_UP) != 0)
+                if ((raw.ButtonFlags & RawMouseButtonFlags.MiddleButtonUp) != 0)
                 {
                     mouse.DisableBit((int)MouseButton.Middle);
-                    Functions.ReleaseCapture();
+                    User32.Mouse.ReleaseCapture();
                 }
 
-                if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_DOWN) != 0)
+                if ((raw.ButtonFlags & RawMouseButtonFlags.Button4Down) != 0)
                 {
                     mouse.EnableBit((int)MouseButton.Button1);
-                    Functions.SetCapture(Window);
+                    User32.Mouse.SetCapture(Window);
                 }
 
-                if ((raw.ButtonFlags & RawInputMouseState.BUTTON_4_UP) != 0)
+                if ((raw.ButtonFlags & RawMouseButtonFlags.Button4Up) != 0)
                 {
                     mouse.DisableBit((int)MouseButton.Button1);
-                    Functions.ReleaseCapture();
+                    User32.Mouse.ReleaseCapture();
                 }
 
-                if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_DOWN) != 0)
+                if ((raw.ButtonFlags & RawMouseButtonFlags.Button5Down) != 0)
                 {
                     mouse.EnableBit((int)MouseButton.Button2);
-                    Functions.SetCapture(Window);
+                    User32.Mouse.SetCapture(Window);
                 }
 
-                if ((raw.ButtonFlags & RawInputMouseState.BUTTON_5_UP) != 0)
+                if ((raw.ButtonFlags & RawMouseButtonFlags.Button5Up) != 0)
                 {
                     mouse.DisableBit((int)MouseButton.Button2);
-                    Functions.ReleaseCapture();
+                    User32.Mouse.ReleaseCapture();
                 }
 
-                if ((raw.ButtonFlags & RawInputMouseState.WHEEL) != 0)
+                if ((raw.ButtonFlags & RawMouseButtonFlags.Wheel) != 0)
                 {
                     mouse.SetScrollRelative(0, (short)raw.ButtonData / 120.0f);
                 }
 
-                if ((raw.ButtonFlags & RawInputMouseState.HWHEEL) != 0)
+                if ((raw.ButtonFlags & RawMouseButtonFlags.HWheel) != 0)
                 {
                     mouse.SetScrollRelative((short)raw.ButtonData / 120.0f, 0);
                 }
 
-                if ((raw.Flags & RawMouseFlags.MOUSE_MOVE_ABSOLUTE) != 0)
+                if ((raw.Flags & RawMouseFlags.MouseMoveAbsolute) != 0)
                 {
                     mouse.X = raw.LastX;
                     mouse.Y = raw.LastY;
@@ -321,13 +318,13 @@ namespace OpenTK.Platform.Windows
         private static string GetDeviceName(RawInputDeviceList dev)
         {
             // get name size
-            var size = 0;
-            Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size);
+            uint size = 0;
+            User32.RawInput.GetRawInputDeviceInfo(dev.Device, GetRawInputDeviceInfoEnum.DeviceName, IntPtr.Zero, ref size);
 
             // get actual name
             var name_ptr = Marshal.AllocHGlobal((IntPtr)size);
-            Functions.GetRawInputDeviceInfo(dev.Device, RawInputDeviceInfoEnum.DEVICENAME, name_ptr, ref size);
-            var name = Marshal.PtrToStringAnsi(name_ptr);
+            User32.RawInput.GetRawInputDeviceInfo(dev.Device, GetRawInputDeviceInfoEnum.DeviceName, name_ptr, ref size);
+            string name = Marshal.PtrToStringAnsi(name_ptr);
             Marshal.FreeHGlobal(name_ptr);
 
             return name;
@@ -336,9 +333,7 @@ namespace OpenTK.Platform.Windows
         private static RegistryKey FindRegistryKey(string name)
         {
             if (name.Length < 4)
-            {
                 return null;
-            }
 
             // remove the \??\
             name = name.Substring(4);
@@ -364,7 +359,7 @@ namespace OpenTK.Platform.Windows
         {
             var rid = new[]
             {
-                new RawInputDevice(HIDUsageGD.Mouse, RawInputDeviceFlags.INPUTSINK, window)
+                new RawInputDevice(HidUsageGD.Mouse, RawInputDeviceFlags.InputSink, window)
             };
 
             if (!User32.RawInput.RegisterRawInputDevices(rid, 1, RawInputDevice.SizeInBytes))

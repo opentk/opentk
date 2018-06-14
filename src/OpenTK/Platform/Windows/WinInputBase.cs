@@ -27,6 +27,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
+using OpenTK.Core.Platform;
 using OpenTK.Input;
 using OpenTK.NT.Native;
 
@@ -37,7 +38,7 @@ namespace OpenTK.Platform.Windows
         private static readonly IntPtr Unhandled = new IntPtr(-1);
         private readonly AutoResetEvent InputReady = new AutoResetEvent(false);
         private readonly Thread InputThread;
-        private readonly WindowProcedure WndProc;
+        private readonly WindowProc WndProc;
 
         protected bool Disposed;
 
@@ -88,23 +89,22 @@ namespace OpenTK.Platform.Windows
             CreateDrivers();
 
             // Subclass the window to retrieve the events we are interested in.
-            OldWndProc = Functions.SetWindowLong(Parent.Handle, WndProc);
+            OldWndProc = User32.Window.SetWindowLong(Parent.Handle, WndProc);
             Debug.Print("Input window attached to {0}", Parent);
 
             InputReady.Set();
 
-            var msg = new MSG();
             while (Native.Exists)
             {
-                var ret = Functions.GetMessage(ref msg, Parent.Handle, 0, 0);
+                var ret = User32.Message.GetMessage(out Msg msg, Parent.Handle, 0, 0);
                 if (ret == -1)
                 {
                     throw new PlatformException(
                         $"An error happened while processing the message queue. Windows error: {Marshal.GetLastWin32Error()}");
                 }
 
-                Functions.TranslateMessage(ref msg);
-                Functions.DispatchMessage(ref msg);
+                User32.Message.TranslateMessage(ref msg);
+                User32.Message.DispatchMessage(ref msg);
             }
         }
 
@@ -114,7 +114,7 @@ namespace OpenTK.Platform.Windows
             var ret = WindowProcedure(handle, message, wParam, lParam);
             if (ret == Unhandled)
             {
-                return Functions.CallWindowProc(OldWndProc, handle, message, wParam, lParam);
+                return User32.Window.CallWindowProc(OldWndProc, handle, message, wParam, lParam);
             }
 
             return ret;

@@ -12,7 +12,7 @@ namespace OpenTK.NT.Native
     /// For the keyboard, the Usage Page is 1 and the Usage is 2.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
-    public struct RawDeviceInfoMouse
+    public struct RawInputDeviceInfoMouse
     {
         /// <summary>
         /// ID for the mouse device.

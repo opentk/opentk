@@ -28,6 +28,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using OpenTK.Core;
 using OpenTK.Input;
+using OpenTK.NT.Native;
 
 namespace OpenTK.Platform.Windows
 {
@@ -48,12 +49,12 @@ namespace OpenTK.Platform.Windows
             Debug.WriteLine("Using WinRawInput.");
         }
 
-        public static int DeviceCount
+        public static uint DeviceCount
         {
             get
             {
-                var deviceCount = 0;
-                Functions.GetRawInputDeviceList(null, ref deviceCount, API.RawInputDeviceListSize);
+                uint deviceCount = 0;
+                User32.RawInput.GetRawInputDeviceList(null, ref deviceCount, RawInputDeviceList.SizeInBytes);
                 return deviceCount;
             }
         }
@@ -69,12 +70,12 @@ namespace OpenTK.Platform.Windows
             IntPtr dev_notify_handle;
             var bdi = new BroadcastDeviceInterface();
             bdi.Size = BlittableValueType.StrideOf(bdi);
-            bdi.DeviceType = DeviceBroadcastType.INTERFACE;
+            bdi.DeviceType = DeviceBroadcastType.Interface;
             bdi.ClassGuid = DeviceInterfaceHid;
             unsafe
             {
-                dev_notify_handle = Functions.RegisterDeviceNotification(parent.Handle,
-                    new IntPtr(&bdi), DeviceNotification.WINDOW_HANDLE);
+                dev_notify_handle = User32.Device.RegisterDeviceNotification(parent.Handle,
+                    new IntPtr(&bdi), DeviceNotificationEnum.WindowHandle);
             }
 
             if (dev_notify_handle == IntPtr.Zero)
@@ -95,15 +96,15 @@ namespace OpenTK.Platform.Windows
             {
                 switch (message)
                 {
-                    case WindowMessage.INPUT:
+                    case WindowMessage.Input:
                     {
                         // Retrieve the raw input data buffer
                         RawInputHeader header;
-                        if (Functions.GetRawInputData(lParam, out header) == RawInputHeader.SizeInBytes)
+                        if (User32.RawInput.GetRawInputData(lParam, out header) == RawInputHeader.SizeInBytes)
                         {
                             switch (header.Type)
                             {
-                                case RawInputDeviceType.KEYBOARD:
+                                case RawInputDeviceType.Keyboard:
                                     if (((WinRawKeyboard)KeyboardDriver).ProcessKeyboardEvent(lParam))
                                     {
                                         return IntPtr.Zero;
@@ -111,7 +112,7 @@ namespace OpenTK.Platform.Windows
 
                                     break;
 
-                                case RawInputDeviceType.MOUSE:
+                                case RawInputDeviceType.Mouse:
                                     if (((WinRawMouse)MouseDriver).ProcessMouseEvent(lParam))
                                     {
                                         return IntPtr.Zero;
@@ -119,7 +120,7 @@ namespace OpenTK.Platform.Windows
 
                                     break;
 
-                                case RawInputDeviceType.HID:
+                                case RawInputDeviceType.Hid:
                                     if (((WinRawJoystick)JoystickDriver).ProcessEvent(lParam))
                                     {
                                         return IntPtr.Zero;
@@ -131,7 +132,7 @@ namespace OpenTK.Platform.Windows
 
                         break;
                     }
-                    case WindowMessage.DEVICECHANGE:
+                    case WindowMessage.DeviceChange:
                     {
                         ((WinRawKeyboard)KeyboardDriver).RefreshDevices();
                         ((WinRawMouse)MouseDriver).RefreshDevices();
@@ -161,21 +162,21 @@ namespace OpenTK.Platform.Windows
         {
             if (!Disposed)
             {
-                Functions.UnregisterDeviceNotification(DevNotifyHandle);
+                User32.Device.UnregisterDeviceNotification(DevNotifyHandle);
                 base.Dispose(manual);
             }
         }
 
         public static RawInputDeviceList[] GetDeviceList()
         {
-            var count = DeviceCount;
+            uint count = DeviceCount;
             var ridl = new RawInputDeviceList[count];
             for (var i = 0; i < count; i++)
             {
                 ridl[i] = new RawInputDeviceList();
             }
 
-            Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
+            User32.RawInput.GetRawInputDeviceList(ridl, ref count, RawInputDeviceList.SizeInBytes);
             return ridl;
         }
     }

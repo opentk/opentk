@@ -281,7 +281,7 @@ namespace OpenTK.Platform.Windows
                 var valid = Gdi32.DescribePixelFormat(device, index, PixelFormatDescriptor.SizeInBytes, ref pfd) != 0;
                 valid &= GetAccelerationType(ref pfd) == requested_acceleration_type;
                 valid &= (pfd.Flags & flags) == flags;
-                valid &= pfd.PixelType == PixelType.RGBA; // indexed modes not currently supported
+                valid &= pfd.PixelType == PixelFormatDescriptorPixelTypes.Rgba; // indexed modes not currently supported
                 // heavily penalize single-buffered modes when the user requests double buffering
                 if ((pfd.Flags & PixelFormatDescriptorFlags.DoubleBuffer) == 0 && mode.Buffers > 1)
                 {
@@ -315,7 +315,7 @@ namespace OpenTK.Platform.Windows
             int pixelformat)
         {
             GraphicsMode created_mode = null;
-            if (Functions.DescribePixelFormat(device, pixelformat, pfd.Size, ref pfd) > 0)
+            if (Gdi32.DescribePixelFormat(device, pixelformat, pfd.Size, ref pfd) > 0)
             {
                 created_mode = new GraphicsMode(
                     new IntPtr(pixelformat),
@@ -324,8 +324,8 @@ namespace OpenTK.Platform.Windows
                     pfd.StencilBits,
                     0, // MSAA not supported when using PixelFormatDescriptor
                     new ColorFormat(pfd.AccumRedBits, pfd.AccumGreenBits, pfd.AccumBlueBits, pfd.AccumAlphaBits),
-                    (pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) != 0 ? 2 : 1,
-                    (pfd.Flags & PixelFormatDescriptorFlags.STEREO) != 0);
+                    (pfd.Flags & PixelFormatDescriptorFlags.DoubleBuffer) != 0 ? 2 : 1,
+                    (pfd.Flags & PixelFormatDescriptorFlags.Stereo) != 0);
             }
 
             return created_mode;

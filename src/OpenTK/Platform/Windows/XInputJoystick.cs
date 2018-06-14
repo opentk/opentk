@@ -29,6 +29,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
+using OpenTK.Core.Platform.Common;
 using OpenTK.Input;
 using OpenTK.Mathematics;
 using OpenTK.NT.Native;

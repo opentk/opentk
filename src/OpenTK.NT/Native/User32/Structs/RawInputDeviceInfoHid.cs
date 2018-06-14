@@ -9,7 +9,7 @@ namespace OpenTK.NT.Native
     /// Defines the raw input data coming from the specified Human Interface Device (HID).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct RawDeviceInfoHid
+    public struct RawInputDeviceInfoHid
     {
         /// <summary>
         /// Vendor ID for the HID.

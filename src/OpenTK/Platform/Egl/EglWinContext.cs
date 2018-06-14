@@ -28,14 +28,15 @@
 using System;
 using OpenTK.Core;
 using OpenTK.Graphics;
+using OpenTK.NT.Native;
 using OpenTK.Platform.Windows;
 
 namespace OpenTK.Platform.Egl
 {
     internal class EglWinContext : EglContext
     {
-        private IntPtr ES1 = Functions.LoadLibrary("libGLESv1_CM");
-        private IntPtr ES2 = Functions.LoadLibrary("libGLESv2");
+        private IntPtr ES1 = Kernel32.LoadLibrary("libGLESv1_CM");
+        private IntPtr ES2 = Kernel32.LoadLibrary("libGLESv2");
 
         public EglWinContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
@@ -53,12 +54,12 @@ namespace OpenTK.Platform.Egl
         {
             if ((renderable & (RenderableFlags.ES2 | RenderableFlags.ES3)) != 0 && ES2 != IntPtr.Zero)
             {
-                return Functions.GetProcAddress(ES2, function);
+                return Kernel32.GetProcAddress(ES2, function);
             }
 
             if ((renderable & RenderableFlags.ES) != 0 && ES1 != IntPtr.Zero)
             {
-                return Functions.GetProcAddress(ES1, function);
+                return Kernel32.GetProcAddress(ES1, function);
             }
 
             return IntPtr.Zero;
@@ -68,12 +69,12 @@ namespace OpenTK.Platform.Egl
         {
             if (ES1 != IntPtr.Zero)
             {
-                Functions.FreeLibrary(ES1);
+                Kernel32.FreeLibrary(ES1);
             }
 
             if (ES2 != IntPtr.Zero)
             {
-                Functions.FreeLibrary(ES2);
+                Kernel32.FreeLibrary(ES2);
             }
 
             ES1 = ES2 = IntPtr.Zero;
