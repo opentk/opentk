@@ -4,7 +4,7 @@ namespace OpenTK.NT.Native
 {
     public enum DisplayModeSettingsEnum : DWORD
     {
-        CurrentSettings = unchecked((uint)-1),
-        RegistrySettings = unchecked((uint)-2)
+        CurrentSettings = 0xFFFFFFFF, // ((DWORD)-1)
+        RegistrySettings = 0xFFFFFFFE // ((DWORD)-2)
     }
 }
