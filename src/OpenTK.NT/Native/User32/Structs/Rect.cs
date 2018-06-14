@@ -20,46 +20,46 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Specifies the x-coordinate of the upper-left corner of the rectangle.
         /// </summary>
-        public LONG left;
+        public LONG Left;
 
         /// <summary>
         /// Specifies the y-coordinate of the upper-left corner of the rectangle.
         /// </summary>
-        public LONG top;
+        public LONG Top;
 
         /// <summary>
         /// Specifies the x-coordinate of the lower-right corner of the rectangle.
         /// </summary>
-        public LONG right;
+        public LONG Right;
 
         /// <summary>
         /// Specifies the y-coordinate of the lower-right corner of the rectangle.
         /// </summary>
-        public LONG bottom;
+        public LONG Bottom;
 
-        public LONG Width => right - left;
-        public LONG Height => bottom - top;
+        public LONG Width => Right - Left;
+        public LONG Height => Bottom - Top;
 
-        public override string ToString() => $"({left},{top})-({right},{bottom})";
+        public override string ToString() => $"({Left},{Top})-({Right},{Bottom})";
 
-        public Rectangle ToRectangle() => Rectangle.FromLTRB(left, top, right, bottom);
+        public Rectangle ToRectangle() => Rectangle.FromLTRB(Left, Top, Right, Bottom);
 
         public static Rect From(Rectangle value)
             => new Rect
             {
-                left = value.Left,
-                right = value.Right,
-                top = value.Top,
-                bottom = value.Bottom
+                Left = value.Left,
+                Right = value.Right,
+                Top = value.Top,
+                Bottom = value.Bottom
             };
 
         public static Rect From(Size value)
             => new Rect
             {
-                left = 0,
-                right = value.Width,
-                top = 0,
-                bottom = value.Height
+                Left = 0,
+                Right = value.Width,
+                Top = 0,
+                Bottom = value.Height
             };
     }
 }

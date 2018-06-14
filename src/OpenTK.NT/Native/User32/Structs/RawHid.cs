@@ -20,28 +20,28 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Size, in bytes, of each HID input in bRawData.
         /// </summary>
-        public DWORD dwSizeHid;
+        public DWORD SizeHid;
 
         /// <summary>
         /// Number of HID inputs in bRawData.
         /// </summary>
-        public DWORD dwCount;
+        public DWORD Count;
 
         /// <summary>
         /// Raw input data as an array of bytes.
         /// </summary>
-        public byte bRawData;
+        public byte RawData;
 
         public byte this[int index]
         {
             get
             {
-                if (index < 0 || index > dwSizeHid * dwCount)
+                if (index < 0 || index > SizeHid * Count)
                     throw new ArgumentOutOfRangeException(nameof(index));
 
                 unsafe
                 {
-                    fixed (byte* data = &bRawData)
+                    fixed (byte* data = &RawData)
                     {
                         return *(data + index);
                     }

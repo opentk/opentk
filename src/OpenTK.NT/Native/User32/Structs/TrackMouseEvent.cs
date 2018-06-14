@@ -7,10 +7,10 @@ namespace OpenTK.NT.Native
 {
     public struct TrackMouseEvent
     {
-        public DWORD cbSize;
-        public TrackMouseEventFlags dwFlags;
+        public DWORD Size;
+        public TrackMouseEventFlags Flags;
         public HWND TrackWindowHandle;
-        public DWORD dwHoverTime;
+        public DWORD HoverTime;
 
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<TrackMouseEvent>();
     }

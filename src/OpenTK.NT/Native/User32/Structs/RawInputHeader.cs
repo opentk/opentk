@@ -18,23 +18,23 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Type of raw input.
         /// </summary>
-        public RawInputDeviceType dwType;
+        public RawInputDeviceType Type;
 
         /// <summary>
         /// Size, in bytes, of the entire input packet of data. This includes the RawInput struct plus possible extra input
         /// reports in the RAWHID variable length array.
         /// </summary>
-        public DWORD dwSize;
+        public DWORD Size;
 
         /// <summary>
         /// Handle to the device generating the raw input data.
         /// </summary>
-        public HANDLE hDevice;
+        public HANDLE Device;
 
         /// <summary>
         /// Value passed in the wParam parameter of the WM_INPUT message.
         /// </summary>
-        public WPARAM wParam;
+        public WPARAM Param;
 
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawInputHeader>();
     }

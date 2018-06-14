@@ -9,14 +9,14 @@ namespace OpenTK.NT.Native
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct SHFileInfo
     {
-        public HICON hIcon;
-        public int iIcon;
-        public DWORD dwAttributes;
+        public HICON Icon;
+        public int IconIndex;
+        public DWORD Attributes;
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-        public TCHAR szDisplayName;
+        public TCHAR DisplayName;
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
-        public TCHAR szTypeName;
+        public TCHAR TypeName;
     }
 }

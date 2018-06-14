@@ -13,32 +13,32 @@ namespace OpenTK.NT.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct PixelFormatDescriptor
     {
-        public WORD nSize;
-        public WORD nVersion;
-        public PixelFormatDescriptorFlags dwFlags;
-        public PixelFormatDescriptorPixelTypes iPixelType;
-        public BYTE cColorBits;
-        public BYTE cRedBits;
-        public BYTE cRedShift;
-        public BYTE cGreenBits;
-        public BYTE cGreenShift;
-        public BYTE cBlueBits;
-        public BYTE cBlueShift;
-        public BYTE cAlphaBits;
-        public BYTE cAlphaShift;
-        public BYTE cAccumBits;
-        public BYTE cAccumRedBits;
-        public BYTE cAccumGreenBits;
-        public BYTE cAccumBlueBits;
-        public BYTE cAccumAlphaBits;
-        public BYTE cDepthBits;
-        public BYTE cStencilBits;
-        public BYTE cAuxBuffers;
-        public PixelFormatDescriptorLayerTypes iLayerType;
-        public BYTE bReserved;
-        public DWORD dwLayerMask;
-        public DWORD dwVisibleMask;
-        public DWORD dwDamageMask;
+        public WORD Size;
+        public WORD Version;
+        public PixelFormatDescriptorFlags Flags;
+        public PixelFormatDescriptorPixelTypes PixelType;
+        public BYTE ColorBits;
+        public BYTE RedBits;
+        public BYTE RedShift;
+        public BYTE GreenBits;
+        public BYTE GreenShift;
+        public BYTE BlueBits;
+        public BYTE BlueShift;
+        public BYTE AlphaBits;
+        public BYTE AlphaShift;
+        public BYTE AccumBits;
+        public BYTE AccumRedBits;
+        public BYTE AccumGreenBits;
+        public BYTE AccumBlueBits;
+        public BYTE AccumAlphaBits;
+        public BYTE DepthBits;
+        public BYTE StencilBits;
+        public BYTE AuxBuffers;
+        public PixelFormatDescriptorLayerTypes LayerType;
+        public BYTE Reserved;
+        public DWORD LayerMask;
+        public DWORD VisibleMask;
+        public DWORD DamageMask;
 
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<PixelFormatDescriptor>();
     }

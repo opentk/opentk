@@ -17,8 +17,8 @@ namespace OpenTK.NT.Native
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct RawInput
     {
-        public RawInputHeader header;
-        public RawInputData data;
+        public RawInputHeader Header;
+        public RawInputData Data;
 
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawInput>();
     }

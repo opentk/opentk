@@ -10,24 +10,24 @@ namespace OpenTK.NT.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct RawDeviceInfo
     {
-        public DeviceStruct device;
+        public DeviceStruct Device;
 
         /// <summary>
         /// Size, in bytes, of the RawInputDeviceInfo structure.
         /// </summary>
-        public DWORD cbSize;
+        public DWORD Size;
 
         /// <summary>
         /// Type of raw input data.
         /// </summary>
-        public RawInputDeviceType dwType;
+        public RawInputDeviceType Type;
 
         [StructLayout(LayoutKind.Explicit)]
         public struct DeviceStruct
         {
-            [FieldOffset(0)] public RawDeviceInfoMouse mouse;
-            [FieldOffset(0)] public RawDeviceInfoKeyboard keyboard;
-            [FieldOffset(0)] public RawDeviceInfoHid hid;
+            [FieldOffset(0)] public RawDeviceInfoMouse Mouse;
+            [FieldOffset(0)] public RawDeviceInfoKeyboard Keyboard;
+            [FieldOffset(0)] public RawDeviceInfoHid Hid;
         }
 
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawDeviceInfo>();

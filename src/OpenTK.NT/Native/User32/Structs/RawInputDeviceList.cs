@@ -13,16 +13,16 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Handle to the raw input device.
         /// </summary>
-        public HANDLE hDevice;
+        public HANDLE Device;
 
         /// <summary>
         /// Type of device.
         /// </summary>
-        public RawInputDeviceType dwType;
+        public RawInputDeviceType Type;
 
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawInputDeviceList>();
 
         public override string ToString()
-            => $"{dwType}, Handle: {hDevice}";
+            => $"{Type}, Handle: {Device}";
     }
 }

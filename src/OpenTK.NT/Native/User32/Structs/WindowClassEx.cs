@@ -11,28 +11,28 @@ namespace OpenTK.NT.Native
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct WindowClassEx
     {
-        public UINT cbSize;
+        public UINT Size;
 
-        public WindowClassStyleFlags style;
+        public WindowClassStyleFlags Style;
 
         //public WNDPROC WndProc;
         [MarshalAs(UnmanagedType.FunctionPtr)]
-        public WindowProc lpfnWndProc;
+        public WindowProc WndProc;
 
-        public int cbClsExtra;
-        public int cbWndExtra;
+        public int ClsExtra;
+        public int WndExtra;
 
-        public HINSTANCE hInstance;
-        public HICON hIcon;
-        public HCURSOR hCursor;
-        public HBRUSH hbrBackground;
+        public HINSTANCE Instance;
+        public HICON Icon;
+        public HCURSOR Cursor;
+        public HBRUSH Background;
 
         [MarshalAs(UnmanagedType.LPTStr)]
-        public string lpszMenuName;
+        public string MenuName;
         [MarshalAs(UnmanagedType.LPTStr)]
-        public string lpszClassName;
+        public string ClassName;
 
-        public HICON hIconSm;
+        public HICON IconSm;
 
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<WindowClassEx>();
     }

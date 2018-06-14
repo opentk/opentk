@@ -21,24 +21,24 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Top level collection Usage page for the raw input device.
         /// </summary>
-        public HidPage usUsagePage;
+        public HidPage UsagePage;
 
         /// <summary>
         /// Top level collection Usage for the raw input device.
         /// </summary>
-        public USHORT usUsage;
+        public USHORT Usage;
 
         /// <summary>
         /// Mode flag that specifies how to interpret the information provided by UsagePage and Usage.
         /// By default, the operating system sends raw input from devices with the specified top level collection (TLC)
         /// to the registered application as long as it has the window focus.
         /// </summary>
-        public RawInputDeviceFlags dwFlags;
+        public RawInputDeviceFlags Flags;
 
         /// <summary>
         /// Handle to the target window. If NULL it follows the keyboard focus.
         /// </summary>
-        public HWND hwndTarget;
+        public HWND Target;
 
         public RawInputDevice(HidUsageGD usage, RawInputDeviceFlags flags, HWND target)
             : this((ushort)usage, flags, target, HidPage.GenericDesktop)
@@ -57,15 +57,15 @@ namespace OpenTK.NT.Native
 
         private RawInputDevice(ushort usage, RawInputDeviceFlags flags, HWND target, HidPage usagePage)
         {
-            usUsage = usage;
-            dwFlags = flags;
-            hwndTarget = target;
-            usUsagePage = usagePage;
+            Usage = usage;
+            Flags = flags;
+            Target = target;
+            UsagePage = usagePage;
         }
 
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawInputDevice>();
 
         public override string ToString()
-            => $"{usUsagePage}/{usUsage}, flags: {dwFlags}, window: {hwndTarget}";
+            => $"{UsagePage}/{Usage}, flags: {Flags}, window: {Target}";
     }
 }

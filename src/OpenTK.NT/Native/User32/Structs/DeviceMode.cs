@@ -10,41 +10,41 @@ namespace OpenTK.NT.Native
     {
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string DeviceName;
-        public WORD dmSpecVersion;
-        public WORD dmDriverVersion;
-        public WORD dmSize;
-        public WORD dmDriverExtra;
-        public DeviceModeFieldFlags dmFields;
+        public WORD SpecVersion;
+        public WORD DriverVersion;
+        public WORD Size;
+        public WORD DriverExtra;
+        public DeviceModeFieldFlags Fields;
 
-        public Point dmPosition;
-        public DWORD dmDisplayOrientation;
-        public DWORD dmDisplayFixedOutput;
+        public Point Position;
+        public DWORD DisplayOrientation;
+        public DWORD DisplayFixedOutput;
 
-        public short dmColor;
-        public short dmDuplex;
-        public short dmYResolution;
-        public short dmTTOption;
-        public short dmCollate;
+        public short Color;
+        public short Duplex;
+        public short YResolution;
+        public short TTOption;
+        public short Collate;
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-        public string dmFormName;
-        public WORD dmLogPixels;
-        public DWORD dmBitsPerPel;
-        public DWORD dmPelsWidth;
-        public DWORD dmPelsHeight;
+        public string FormName;
+        public WORD LogPixels;
+        public DWORD BitsPerPel;
+        public DWORD PelsWidth;
+        public DWORD PelsHeight;
 
-        public DWORD dmDisplayFlags;
-        public DWORD dmDisplayFrequency;
+        public DWORD DisplayFlags;
+        public DWORD DisplayFrequency;
 
-        public DWORD dmICMMethod;
-        public DWORD dmICMIntent;
-        public DWORD dmMediaType;
-        public DWORD dmDitherType;
-        public DWORD dmReserved1;
-        public DWORD dmReserved2;
+        public DWORD ICMMethod;
+        public DWORD ICMIntent;
+        public DWORD MediaType;
+        public DWORD DitherType;
+        public DWORD Reserved1;
+        public DWORD Reserved2;
 
-        public DWORD dmPanningWidth;
-        public DWORD dmPanningHeight;
+        public DWORD PanningWidth;
+        public DWORD PanningHeight;
 
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<DeviceMode>();
     }

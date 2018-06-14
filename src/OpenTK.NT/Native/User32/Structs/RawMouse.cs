@@ -23,34 +23,34 @@ namespace OpenTK.NT.Native
         /// MOUSE_VIRTUAL_DESKTOP
         /// Mouse coordinates are mapped to the virtual desktop (for a multiple monitor system).
         /// </summary>
-        [FieldOffset(0)] public RawMouseFlags usFlags; // USHORT in winuser.h, but only INT works -- USHORT returns 0.
+        [FieldOffset(0)] public RawMouseFlags Flags; // USHORT in winuser.h, but only INT works -- USHORT returns 0.
 
-        [FieldOffset(4)] public RawMouseButtonFlags usButtonFlags;
+        [FieldOffset(4)] public RawMouseButtonFlags ButtonFlags;
 
         /// <summary>
         /// If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed value that specifies the wheel delta.
         /// </summary>
-        [FieldOffset(6)] public USHORT usButtonData;
+        [FieldOffset(6)] public USHORT ButtonData;
 
         /// <summary>
         /// Raw state of the mouse buttons.
         /// </summary>
-        [FieldOffset(8)] public ULONG ulRawButtons;
+        [FieldOffset(8)] public ULONG RawButtons;
 
         /// <summary>
         /// Motion in the X direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
         /// </summary>
-        [FieldOffset(12)] public LONG lLastX;
+        [FieldOffset(12)] public LONG LastX;
 
         /// <summary>
         /// Motion in the Y direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
         /// </summary>
-        [FieldOffset(16)] public LONG lLastY;
+        [FieldOffset(16)] public LONG LastY;
 
         /// <summary>
         /// Device-specific additional information for the event.
         /// </summary>
-        [FieldOffset(20)] public ULONG ulExtraInformation;
+        [FieldOffset(20)] public ULONG ExtraInformation;
 
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawMouse>();
     }

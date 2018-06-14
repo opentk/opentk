@@ -7,7 +7,7 @@ namespace OpenTK.NT.Native
     {
         [FieldOffset(0)] public RawMouse Mouse;
         [FieldOffset(0)] public RawKeyboard Keyboard;
-        [FieldOffset(0)] public RawHid HID;
+        [FieldOffset(0)] public RawHid Hid;
 
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawInputData>();
     }

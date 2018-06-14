@@ -10,24 +10,24 @@ namespace OpenTK.NT.Native
     [StructLayout(LayoutKind.Sequential)]
     public struct WindowClass
     {
-        public WindowClassStyleFlags style;
+        public WindowClassStyleFlags Style;
         [MarshalAs(UnmanagedType.FunctionPtr)]
-        public WindowProc lpfnWndProc;
+        public WindowProc WndProc;
 
-        public int cbClsExtra;
-        public int cbWndExtra;
+        public int ClsExtra;
+        public int WndExtra;
 
-        public HINSTANCE hInstance;
-        public HICON hIcon;
-        public HCURSOR hCursor;
+        public HINSTANCE Instance;
+        public HICON Icon;
+        public HCURSOR Cursor;
 
-        public HBRUSH hbrBackground;
-
-        [MarshalAs(UnmanagedType.LPTStr)]
-        public string lpszMenuName;
+        public HBRUSH Background;
 
         [MarshalAs(UnmanagedType.LPTStr)]
-        public string lpszClassName;
+        public string MenuName;
+
+        [MarshalAs(UnmanagedType.LPTStr)]
+        public string ClassName;
 
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<WindowClass>();
     }

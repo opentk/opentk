@@ -16,32 +16,32 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// The size of the structure, in bytes.
         /// </summary>
-        public DWORD cbSize;
+        public DWORD Size;
 
         /// <summary>
         /// Pointer to a RECT structure that specifies the coordinates of the window.
         /// </summary>
-        public Rect rcWindow;
+        public Rect Window;
 
         /// <summary>
         /// Pointer to a RECT structure that specifies the coordinates of the client area.
         /// </summary>
-        public Rect rcClient;
+        public Rect Client;
 
         /// <summary>
         /// The window styles. For a table of window styles, see CreateWindowEx.
         /// </summary>
-        public WindowStyles dwStyle;
+        public WindowStyles Style;
 
         /// <summary>
         /// The extended window styles. For a table of extended window styles, see CreateWindowEx.
         /// </summary>
-        public WindowStylesEx dwExStyle;
+        public WindowStylesEx ExStyle;
 
         /// <summary>
         /// The window status. If this member is WS_ACTIVECAPTION, the window is active. Otherwise, this member is zero.
         /// </summary>
-        public DWORD dwWindowStatus;
+        public DWORD WindowStatus;
 
         /// <summary>
         /// The width of the window border, in pixels.
@@ -63,5 +63,4 @@ namespace OpenTK.NT.Native
         /// </summary>
         public WORD CreatorVersion;
     }
-
 }
