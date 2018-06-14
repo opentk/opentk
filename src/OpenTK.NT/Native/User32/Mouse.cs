@@ -49,6 +49,15 @@ namespace OpenTK.NT.Native
                 [In] int nBufPoints,
                 [In] GetMouseMovePointsResolution resolution
             );
+
+            [DllImport("user32", SetLastError = true)]
+            public static unsafe extern int GetMouseMovePointsEx(
+                [In] uint cbSize,
+                [In] ref MouseMovePoint lppt,
+                [Out] MouseMovePoint* lpptBuf,
+                [In] int nBufPoints,
+                [In] GetMouseMovePointsResolution resolution
+            );
         }
     }
 }
