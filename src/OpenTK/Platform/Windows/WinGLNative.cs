@@ -46,11 +46,8 @@ namespace OpenTK.Platform.Windows
     /// </summary>
     internal sealed class WinGLNative : NativeWindowBase
     {
-        private const WindowStylesEx ParentStyleEx =
-            WindowStylesEx.WindowEdge | WindowStylesEx.AppWindow;
-
+        private const WindowStylesEx ParentStyleEx = WindowStylesEx.WindowEdge | WindowStylesEx.AppWindow;
         private const WindowStylesEx ChildStyleEx = 0;
-
         private const WindowClassStyleFlags DefaultClassStyle = WindowClassStyleFlags.OwnDC;
 
         private const long ExtendedBit = 1 << 24; // Used to distinguish left and right control, alt and enter keys.
@@ -63,56 +60,63 @@ namespace OpenTK.Platform.Windows
         public static readonly uint AltRightScanCode = User32.Keyboard.MapVirtualKey(VirtualKeys.RMenu, 0);
 
         private static readonly object SyncRoot = new object();
-        private readonly string ClassName = Guid.NewGuid().ToString();
 
+        private readonly string ClassName = Guid.NewGuid().ToString();
         private readonly IntPtr Instance = Marshal.GetHINSTANCE(typeof(WinGLNative).Module);
 
-        private readonly uint ModalLoopTimerPeriod = 1;
+        private const uint ModalLoopTimerPeriod = 1;
 
-        private readonly StringBuilder sb_title = new StringBuilder(256);
         private readonly WinWindowInfo window;
         private readonly WindowProc WindowProcedureDelegate;
 
-        private bool
-            borderless_maximized_window_state; // Hack to get maximized mode with hidden border (not normally possible).
+        // Hack to get maximized mode with hidden border (not normally possible).
+        private bool borderless_maximized_window_state;
 
-        private Rectangle
-            bounds,
-            client_rectangle,
-            previous_bounds; // Used to restore previous size when leaving fullscreen mode.
+        // Used to restore previous size when leaving fullscreen mode.
+        private Rectangle bounds, client_rectangle, previous_bounds; 
 
         private bool class_registered;
 
         private MouseCursor cursor = MouseCursor.Default;
         private IntPtr cursor_handle = User32.Cursor.LoadCursor(CursorName.Arrow);
         private int cursor_visible_count;
-        private WindowBorder? deferred_window_border; // Set to avoid changing borders during fullscreen state.
+
+        // Set to avoid changing borders during fullscreen state.
+        private WindowBorder? deferred_window_border; 
         private bool disposed;
         private bool exists;
         private bool focused;
 
         private Icon icon;
 
-        private bool
-            invisible_since_creation; // Set by WindowsMessage.CREATE and consumed by Visible = true (calls BringWindowToFront).
+        // Set by WindowsMessage.CREATE and consumed by Visible = true (calls BringWindowToFront).
+        private bool invisible_since_creation;
 
-        private bool is_in_modal_loop; // set to true whenever we enter the modal resize/move event loop
+        // set to true whenever we enter the modal resize/move event loop
+        private bool is_in_modal_loop;
         private int mouse_capture_count;
         private int mouse_last_timestamp;
         private bool mouse_outside_window = true;
 
-        private Msg msg;
-        private WindowBorder? previous_window_border; // Set when changing to fullscreen state.
+        // Set when changing to fullscreen state.
+        private WindowBorder? previous_window_border;
 
-        private int
-            suppress_resize; // Used in WindowBorder and WindowState in order to avoid rapid, consecutive resize events.
+        // Used in WindowBorder and WindowState in order to avoid rapid, consecutive resize events.
+        private int suppress_resize;
 
         private IntPtr timer_handle;
         private WindowBorder windowBorder = WindowBorder.Resizable;
         private WindowState windowState = WindowState.Normal;
 
-        public WinGLNative(int x, int y, int width, int height, string title, GameWindowFlags options,
-            DisplayDevice device)
+        public WinGLNative(
+            int x, 
+            int y,
+            int width,
+            int height,
+            string title,
+            GameWindowFlags options,
+            DisplayDevice device
+        )
         {
             lock (SyncRoot)
             {
@@ -120,18 +124,11 @@ namespace OpenTK.Platform.Windows
                 // don't move it below the CreateWindow calls.
                 WindowProcedureDelegate = WindowProcedure;
 
-                //// This timer callback is called periodically when the window enters a sizing / moving modal loop.
-                //ModalLoopCallback = delegate(IntPtr handle, WindowMessage msg, UIntPtr eventId, int time)
-                //{
-                //    // Todo: find a way to notify the frontend that it should process queued up UpdateFrame/RenderFrame events.
-                //    if (Move != null)
-                //        Move(this, EventArgs.Empty);
-                //};
+                int scale_width = width;
+                int scale_height = height;
+                int scale_x = x;
+                int scale_y = y;
 
-                var scale_width = width;
-                var scale_height = height;
-                var scale_x = x;
-                var scale_y = y;
                 if (Toolkit.Options.EnableHighResolution)
                 {
                     // CreateWindow takes values in pixels.
@@ -147,11 +144,18 @@ namespace OpenTK.Platform.Windows
                     scale_y = ScaleY(y);
                 }
 
-                window = new WinWindowInfo(
-                    CreateWindow(
-                        scale_x, scale_y, scale_width, scale_height,
-                        title, options, device, IntPtr.Zero),
-                    null);
+                var hWnd = CreateWindow(
+                    scale_x,
+                    scale_y,
+                    scale_width,
+                    scale_height,
+                    title,
+                    options,
+                    device,
+                    IntPtr.Zero
+                );
+
+                window = new WinWindowInfo(hWnd, null);
                 Shell32.DragAcceptFiles(window.Handle, true);
 
                 exists = true;
@@ -173,8 +177,7 @@ namespace OpenTK.Platform.Windows
         public override Size Size
         {
             get => Bounds.Size;
-            set => User32.Window.SetWindowPos(window.Handle, IntPtr.Zero, 0, 0, value.Width, value.Height,
-                SetWindowPosFlags.NoMove);
+            set => User32.Window.SetWindowPos(window.Handle, IntPtr.Zero, 0, 0, value.Width, value.Height, SetWindowPosFlags.NoMove);
         }
 
         public override Size ClientSize
@@ -183,7 +186,7 @@ namespace OpenTK.Platform.Windows
             set
             {
                 var style = (WindowStyles)User32.Window.GetWindowLong(window.Handle, GetWindowLongIndex.Style);
-                var rect = Rect.From(value);
+                Rect rect = Rect.From(value);
                 User32.Window.AdjustWindowRect(ref rect, style, false);
                 Size = new Size(rect.Width, rect.Height);
             }
@@ -194,19 +197,18 @@ namespace OpenTK.Platform.Windows
             get => icon;
             set
             {
-                if (value != icon)
-                {
-                    icon = value;
-                    if (window.Handle != IntPtr.Zero)
-                    {
-                        User32.Message.SendMessage(window.Handle, WindowMessage.SetIcon, (IntPtr)0,
-                            icon == null ? IntPtr.Zero : value.Handle);
-                        User32.Message.SendMessage(window.Handle, WindowMessage.SetIcon, (IntPtr)1,
-                            icon == null ? IntPtr.Zero : value.Handle);
-                    }
+                if (value == Icon)
+                    return;
 
-                    OnIconChanged(EventArgs.Empty);
+                icon = value;
+                if (window.Handle != IntPtr.Zero)
+                {
+                    var lParam = icon?.Handle ?? IntPtr.Zero;
+                    User32.Message.SendMessage(window.Handle, WindowMessage.SetIcon, new IntPtr(0), lParam);
+                    User32.Message.SendMessage(window.Handle, WindowMessage.SetIcon, new IntPtr(1), lParam);
                 }
+
+                OnIconChanged(EventArgs.Empty);
             }
         }
 
@@ -216,24 +218,19 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                sb_title.Remove(0, sb_title.Length);
-                if (User32.Window.GetWindowText(window.Handle, sb_title, sb_title.Capacity) == 0)
-                {
-                    Debug.Print("Failed to retrieve window title (window:{0}, reason:{1}).", window.Handle,
-                        Marshal.GetLastWin32Error());
-                }
+                var titleBuilder = new StringBuilder(256); // max window title length
 
-                return sb_title.ToString();
+                if (User32.Window.GetWindowText(window.Handle, titleBuilder, titleBuilder.Capacity) == 0)
+                    Debug.Print($"Failed to retrieve window title (window: {window.Handle}, reason: {Marshal.GetLastWin32Error()}).");
+
+                return titleBuilder.ToString();
             }
             set
             {
                 if (Title != value)
                 {
                     if (!User32.Window.SetWindowText(window.Handle, value))
-                    {
-                        Debug.Print("Failed to change window title (window:{0}, new title:{1}, reason:{2}).",
-                            window.Handle, value, Marshal.GetLastWin32Error());
-                    }
+                        Debug.Print($"Failed to change window title (window: {window.Handle}, new title: {value}, reason: {Marshal.GetLastWin32Error()}).");
 
                     OnTitleChanged(EventArgs.Empty);
                 }
@@ -245,24 +242,24 @@ namespace OpenTK.Platform.Windows
             get => User32.Window.IsWindowVisible(window.Handle);
             set
             {
-                if (value != Visible)
-                {
-                    if (value)
-                    {
-                        User32.Window.ShowWindow(window.Handle, ShowWindowCommand.Show);
-                        if (invisible_since_creation)
-                        {
-                            User32.Window.BringWindowToTop(window.Handle);
-                            User32.Window.SetForegroundWindow(window.Handle);
-                        }
-                    }
-                    else if (!value)
-                    {
-                        User32.Window.ShowWindow(window.Handle, ShowWindowCommand.Hide);
-                    }
+                if (value == Visible)
+                    return;
 
-                    OnVisibleChanged(EventArgs.Empty);
+                if (value)
+                {
+                    User32.Window.ShowWindow(window.Handle, ShowWindowCommand.Show);
+                    if (invisible_since_creation)
+                    {
+                        User32.Window.BringWindowToTop(window.Handle);
+                        User32.Window.SetForegroundWindow(window.Handle);
+                    }
                 }
+                else
+                {
+                    User32.Window.ShowWindow(window.Handle, ShowWindowCommand.Hide);
+                }
+
+                OnVisibleChanged(EventArgs.Empty);
             }
         }
 
@@ -274,90 +271,85 @@ namespace OpenTK.Platform.Windows
             set
             {
                 if (value == null)
-                {
                     throw new ArgumentNullException(nameof(value));
-                }
 
-                if (value != cursor)
+                if (value == Cursor)
+                    return;
+
+                var oldCursor = cursor;
+                var oldCursorHandle = cursor_handle;
+
+                if (value == MouseCursor.Default)
                 {
-                    var oldCursor = cursor;
-                    var oldCursorHandle = cursor_handle;
+                    cursor = value;
+                    cursor_handle = User32.Cursor.LoadCursor(CursorName.Arrow);
+                    User32.Cursor.SetCursor(cursor_handle);
+                }
+                else
+                {
+                    var stride = value.Width * (Image.GetPixelFormatSize(PixelFormat.Format32bppArgb) / 8);
 
-                    if (value == MouseCursor.Default)
+                    Bitmap bmp;
+                    unsafe
                     {
-                        cursor = value;
-                        cursor_handle = User32.Cursor.LoadCursor(CursorName.Arrow);
-                        User32.Cursor.SetCursor(cursor_handle);
-                    }
-                    else
-                    {
-                        var stride = value.Width *
-                                     (Image.GetPixelFormatSize(PixelFormat.Format32bppArgb) / 8);
-
-                        Bitmap bmp;
-                        unsafe
+                        fixed (byte* pixels = value.Data)
                         {
-                            fixed (byte* pixels = value.Data)
-                            {
-                                bmp = new Bitmap(value.Width, value.Height, stride,
-                                    PixelFormat.Format32bppArgb,
-                                    new IntPtr(pixels));
-                            }
-                        }
-
-                        using (bmp)
-                        {
-                            var iconInfo = new IconInfo();
-                            var bmpIcon = bmp.GetHicon();
-                            var success = User32.Icon.GetIconInfo(bmpIcon, out iconInfo);
-
-                            try
-                            {
-                                if (!success)
-                                {
-                                    throw new Win32Exception();
-                                }
-
-                                iconInfo.XHotspot = (uint)value.X;
-                                iconInfo.YHotspot = (uint)value.Y;
-                                iconInfo.Icon = false;
-
-                                var icon = User32.Icon.CreateIconIndirect(ref iconInfo);
-                                if (icon == IntPtr.Zero)
-                                {
-                                    throw new Win32Exception();
-                                }
-
-                                // Need to destroy this icon when/if it's replaced by another cursor.
-                                cursor = value;
-                                cursor_handle = icon;
-                                User32.Cursor.SetCursor(icon);
-                            }
-                            finally
-                            {
-                                if (success)
-                                {
-                                    // GetIconInfo creates bitmaps for the hbmMask and hbmColor members of ICONINFO.
-                                    // The calling application must manage these bitmaps and delete them when they are no longer necessary.
-                                    Gdi32.DeleteObject(iconInfo.BitmapColor);
-                                    Gdi32.DeleteObject(iconInfo.BitmapMask);
-                                }
-
-                                User32.Icon.DestroyIcon(bmpIcon);
-                            }
+                            bmp = new Bitmap(
+                                value.Width,
+                                value.Height,
+                                stride,
+                                PixelFormat.Format32bppArgb,
+                                new IntPtr(pixels)
+                            );
                         }
                     }
 
-                    Debug.Assert(oldCursorHandle != IntPtr.Zero);
-                    Debug.Assert(oldCursorHandle != cursor_handle);
-                    Debug.Assert(oldCursor != cursor);
-
-                    // If we've replaced a custom (non-default) cursor we need to free the handle.
-                    if (oldCursor != MouseCursor.Default)
+                    using (bmp)
                     {
-                        User32.Icon.DestroyIcon(oldCursorHandle);
+                        var iconInfo = new IconInfo();
+                        var bmpIcon = bmp.GetHicon();
+                        var success = User32.Icon.GetIconInfo(bmpIcon, out iconInfo);
+
+                        try
+                        {
+                            if (!success)
+                                throw new Win32Exception();
+
+                            iconInfo.XHotspot = (uint)value.X;
+                            iconInfo.YHotspot = (uint)value.Y;
+                            iconInfo.Icon = false;
+
+                            var icon = User32.Icon.CreateIconIndirect(ref iconInfo);
+                            if (icon == IntPtr.Zero)
+                                throw new Win32Exception();
+
+                            // Need to destroy this icon when/if it's replaced by another cursor.
+                            cursor = value;
+                            cursor_handle = icon;
+                            User32.Cursor.SetCursor(icon);
+                        }
+                        finally
+                        {
+                            if (success)
+                            {
+                                // GetIconInfo creates bitmaps for the hbmMask and hbmColor members of ICONINFO.
+                                // The calling application must manage these bitmaps and delete them when they are no longer necessary.
+                                Gdi32.DeleteObject(iconInfo.BitmapColor);
+                                Gdi32.DeleteObject(iconInfo.BitmapMask);
+                            }
+
+                            User32.Icon.DestroyIcon(bmpIcon);
+                        }
                     }
                 }
+
+                Debug.Assert(oldCursorHandle != IntPtr.Zero);
+                Debug.Assert(oldCursorHandle != cursor_handle);
+                Debug.Assert(oldCursor != cursor);
+
+                // If we've replaced a custom (non-default) cursor we need to free the handle.
+                if (oldCursor != MouseCursor.Default)
+                    User32.Icon.DestroyIcon(oldCursorHandle);
             }
         }
 
@@ -367,16 +359,15 @@ namespace OpenTK.Platform.Windows
             set
             {
                 if (value == CursorVisible)
-                {
                     return;
-                }
 
                 if (value)
                 {
                     do
                     {
                         cursor_visible_count = User32.Cursor.ShowCursor(true);
-                    } while (cursor_visible_count < 0);
+                    }
+                    while (cursor_visible_count < 0);
 
                     UngrabCursor();
                 }
@@ -385,7 +376,8 @@ namespace OpenTK.Platform.Windows
                     do
                     {
                         cursor_visible_count = User32.Cursor.ShowCursor(false);
-                    } while (cursor_visible_count >= 0);
+                    }
+                    while (cursor_visible_count >= 0);
 
                     GrabCursor();
                 }
@@ -398,12 +390,10 @@ namespace OpenTK.Platform.Windows
             set
             {
                 if (WindowState == value)
-                {
                     return;
-                }
 
                 ShowWindowCommand command = 0;
-                var exiting_fullscreen = false;
+                bool exiting_fullscreen = false;
 
                 switch (value)
                 {
@@ -468,15 +458,11 @@ namespace OpenTK.Platform.Windows
                 }
 
                 if (command != 0)
-                {
                     User32.Window.ShowWindow(window.Handle, command);
-                }
 
                 // Restore previous window border or apply pending border change when leaving fullscreen mode.
                 if (exiting_fullscreen)
-                {
                     RestoreBorder();
-                }
 
                 // Restore previous window size/location if necessary
                 if (command == ShowWindowCommand.Restore && previous_bounds != Rectangle.Empty)
@@ -500,15 +486,13 @@ namespace OpenTK.Platform.Windows
                     return;
                 }
 
-                if (windowBorder == value)
-                {
+                if (value == WindowBorder)
                     return;
-                }
 
                 // We wish to avoid making an invisible window visible just to change the border.
                 // However, it's a good idea to make a visible window invisible temporarily, to
                 // avoid garbage caused by the border change.
-                var was_visible = Visible;
+                bool was_visible = Visible;
 
                 // To ensure maximized/minimized windows work correctly, reset state to normal,
                 // change the border, then go back to maximized/minimized.
@@ -526,7 +510,7 @@ namespace OpenTK.Platform.Windows
 
                     case WindowBorder.Fixed:
                         new_style |= WindowStyles.OverlappedWindow &
-                                     ~(WindowStyles.ThickFrame | WindowStyles.MaximizeBox | WindowStyles.SizeBox);
+                            ~(WindowStyles.ThickFrame | WindowStyles.MaximizeBox | WindowStyles.SizeBox);
                         break;
 
                     case WindowBorder.Hidden:
@@ -541,22 +525,24 @@ namespace OpenTK.Platform.Windows
 
                 // This avoids leaving garbage on the background window.
                 if (was_visible)
-                {
                     Visible = false;
-                }
 
-                User32.Window.SetWindowLong(window.Handle, GetWindowLongIndex.Style, (IntPtr)(int)new_style);
-                User32.Window.SetWindowPos(window.Handle, IntPtr.Zero, 0, 0, rect.Width, rect.Height,
-                    SetWindowPosFlags.NoMove | SetWindowPosFlags.NoZOrder |
-                    SetWindowPosFlags.FrameChanged);
+                User32.Window.SetWindowLong(window.Handle, GetWindowLongIndex.Style, new IntPtr((int)new_style));
+                User32.Window.SetWindowPos(
+                    window.Handle,
+                    IntPtr.Zero,
+                    0,
+                    0,
+                    rect.Width,
+                    rect.Height,
+                    SetWindowPosFlags.NoMove | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.FrameChanged
+                );
 
                 // Force window to redraw update its borders, but only if it's
                 // already visible (invisible windows will change borders when
                 // they become visible, so no need to make them visiable prematurely).
                 if (was_visible)
-                {
                     Visible = true;
-                }
 
                 WindowState = state;
 
@@ -565,17 +551,21 @@ namespace OpenTK.Platform.Windows
                 // delivered when running on Mono/Windows.
                 if (Configuration.RunningOnMono)
                 {
-                    var style = new StyleStruct();
-                    style.New = new_style;
-                    style.Old = old_style;
-                    unsafe
+                    var style = new StyleStruct
                     {
-                        HandleStyleChanged(
-                            window.Handle,
-                            WindowMessage.StyleChanged,
-                            new IntPtr((int)(GetWindowLongIndex.Style | GetWindowLongIndex.ExStyle)),
-                            new IntPtr(&style));
-                    }
+                        New = new_style,
+                        Old = old_style
+                    };
+
+                    var ptr = IntPtr.Zero;
+                    Marshal.StructureToPtr(style, ptr, true);
+
+                    HandleStyleChanged(
+                        window.Handle,
+                        WindowMessage.StyleChanged,
+                        new IntPtr((int)(GetWindowLongIndex.Style | GetWindowLongIndex.ExStyle)),
+                        ptr
+                    );
                 }
             }
         }
@@ -587,13 +577,17 @@ namespace OpenTK.Platform.Windows
         private static int Scale(int v, ScaleDirection direction)
         {
             var dc = User32.DeviceContext.GetDC(IntPtr.Zero);
+
             if (dc != IntPtr.Zero)
             {
-                var dpi = Gdi32.GetDeviceCaps(dc,
-                    direction == ScaleDirection.X ? GetDeviceCapsIndex.LogicalPixelsX : GetDeviceCapsIndex.LogicalPixelsY);
+                int dpi = Gdi32.GetDeviceCaps(
+                    dc,
+                    direction == ScaleDirection.X ? GetDeviceCapsIndex.LogicalPixelsX : GetDeviceCapsIndex.LogicalPixelsY
+                );
+
                 if (dpi > 0)
                 {
-                    var scale = dpi / 96.0f;
+                    float scale = dpi / 96.0f;
                     v = (int)Math.Round(v * scale);
                 }
 
@@ -603,26 +597,24 @@ namespace OpenTK.Platform.Windows
             return v;
         }
 
-        private static int ScaleX(int x)
-        {
-            return Scale(x, ScaleDirection.X);
-        }
+        private static int ScaleX(int x) => Scale(x, ScaleDirection.X);
 
-        private static int ScaleY(int y)
-        {
-            return Scale(y, ScaleDirection.Y);
-        }
+        private static int ScaleY(int y) => Scale(y, ScaleDirection.Y);
 
         private static int Unscale(int v, ScaleDirection direction)
         {
             var dc = User32.DeviceContext.GetDC(IntPtr.Zero);
+
             if (dc != IntPtr.Zero)
             {
-                var dpi = Gdi32.GetDeviceCaps(dc,
-                    direction == ScaleDirection.X ? GetDeviceCapsIndex.LogicalPixelsX : GetDeviceCapsIndex.LogicalPixelsY);
+                int dpi = Gdi32.GetDeviceCaps(
+                    dc,
+                    direction == ScaleDirection.X ? GetDeviceCapsIndex.LogicalPixelsX : GetDeviceCapsIndex.LogicalPixelsY
+                );
+
                 if (dpi > 0)
                 {
-                    var scale = dpi / 96.0f;
+                    float scale = dpi / 96.0f;
                     v = (int)Math.Round(v / scale);
                 }
 
@@ -632,34 +624,22 @@ namespace OpenTK.Platform.Windows
             return v;
         }
 
-        private static int UnscaleX(int x)
-        {
-            return Unscale(x, ScaleDirection.X);
-        }
+        private static int UnscaleX(int x) => Unscale(x, ScaleDirection.X);
 
-        private static int UnscaleY(int y)
-        {
-            return Unscale(y, ScaleDirection.Y);
-        }
+        private static int UnscaleY(int y) => Unscale(y, ScaleDirection.Y);
 
         private void HandleActivate(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             // See http://msdn.microsoft.com/en-us/library/ms646274(VS.85).aspx (WM_ACTIVATE notification):
             // wParam: The low-order word specifies whether the window is being activated or deactivated.
-            var new_focused_state = Focused;
-            if (IntPtr.Size == 4)
-            {
-                focused = (wParam.ToInt32() & 0xFFFF) != 0;
-            }
-            else
-            {
-                focused = (wParam.ToInt64() & 0xFFFF) != 0;
-            }
+            bool new_focused_state = Focused;
+
+            focused = IntPtr.Size == 4 ?
+                (wParam.ToInt32() & 0xFFFF) != 0 :
+                (wParam.ToInt64() & 0xFFFF) != 0;
 
             if (new_focused_state != Focused)
-            {
                 OnFocusedChanged(EventArgs.Empty);
-            }
         }
 
         private void HandleEnterModalLoop(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -671,9 +651,7 @@ namespace OpenTK.Platform.Windows
             StartTimer(handle);
 
             if (!CursorVisible)
-            {
                 UngrabCursor();
-            }
         }
 
         private void HandleExitModalLoop(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -685,56 +663,51 @@ namespace OpenTK.Platform.Windows
 
             // Ensure cursor remains grabbed
             if (!CursorVisible)
-            {
                 GrabCursor();
-            }
         }
 
         private void HandleWindowPositionChanged(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            unsafe
+            var pos = Marshal.PtrToStructure<WindowPosition>(lParam);
+            if (window != null && pos.hwnd == window.Handle)
             {
-                var pos = (WindowPosition*)lParam;
-                if (window != null && pos->hwnd == window.Handle)
+                var new_location = new System.Drawing.Point(pos.x, pos.y);
+                if (Location != new_location)
                 {
-                    var new_location = new System.Drawing.Point(pos->x, pos->y);
-                    if (Location != new_location)
-                    {
-                        bounds.Location = new_location;
-                        OnMove(EventArgs.Empty);
-                    }
+                    bounds.Location = new_location;
+                    OnMove(EventArgs.Empty);
+                }
 
-                    var new_size = new Size(pos->cx, pos->cy);
-                    if (Size != new_size)
-                    {
-                        bounds.Width = pos->cx;
-                        bounds.Height = pos->cy;
+                var new_size = new Size(pos.cx, pos.cy);
+                if (Size != new_size)
+                {
+                    bounds.Width = pos.cx;
+                    bounds.Height = pos.cy;
 
-                        Rect rect;
-                        User32.Window.GetClientRect(handle, out rect);
-                        client_rectangle = rect.ToRectangle();
+                    User32.Window.GetClientRect(handle, out Rect rect);
+                    client_rectangle = rect.ToRectangle();
 
-                        User32.Window.SetWindowPos(window.Handle, IntPtr.Zero, bounds.X, bounds.Y, bounds.Width,
-                            bounds.Height,
-                            SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder |
-                            SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoSendChanging);
+                    User32.Window.SetWindowPos(
+                        window.Handle, 
+                        IntPtr.Zero, 
+                        bounds.X, 
+                        bounds.Y, 
+                        bounds.Width,
+                        bounds.Height,
+                        SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder |
+                        SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoSendChanging
+                    );
 
-                        if (suppress_resize <= 0)
-                        {
-                            OnResize(EventArgs.Empty);
-                        }
-                    }
+                    if (suppress_resize <= 0)
+                        OnResize(EventArgs.Empty);
+                }
 
-                    if (!is_in_modal_loop)
-                    {
-                        // If we are in a modal resize/move loop, cursor grabbing is
-                        // handled inside [ENTER|EXIT]SIZEMOVE case above.
-                        // If not, then we have to handle cursor grabbing here.
-                        if (!CursorVisible)
-                        {
-                            GrabCursor();
-                        }
-                    }
+                if (!is_in_modal_loop && !CursorVisible)
+                {
+                    // If we are in a modal resize/move loop, cursor grabbing is
+                    // handled inside [ENTER|EXIT]SIZEMOVE case above.
+                    // If not, then we have to handle cursor grabbing here.
+                    GrabCursor();
                 }
             }
         }
@@ -744,34 +717,23 @@ namespace OpenTK.Platform.Windows
             var old_border = windowBorder;
             var new_border = old_border;
 
-            unsafe
+            var get_window_style = (GetWindowLongIndex)wParam.ToInt32();
+            if ((get_window_style & (GetWindowLongIndex.Style | GetWindowLongIndex.ExStyle)) != 0)
             {
-                var get_window_style = (GetWindowLongIndex)wParam.ToInt32();
-                if ((get_window_style & (GetWindowLongIndex.Style | GetWindowLongIndex.ExStyle)) != 0)
-                {
-                    var style = ((StyleStruct*)lParam)->New;
-                    if ((style & WindowStyles.Popup) != 0)
-                    {
-                        new_border = WindowBorder.Hidden;
-                    }
-                    else if ((style & WindowStyles.ThickFrame) != 0)
-                    {
-                        new_border = WindowBorder.Resizable;
-                    }
-                    else if ((style & ~(WindowStyles.ThickFrame | WindowStyles.MaximizeBox)) != 0)
-                    {
-                        new_border = WindowBorder.Fixed;
-                    }
-                }
+                var style = Marshal.PtrToStructure<StyleStruct>(lParam).New;
+                if ((style & WindowStyles.Popup) != 0)
+                    new_border = WindowBorder.Hidden;
+                else if ((style & WindowStyles.ThickFrame) != 0)
+                    new_border = WindowBorder.Resizable;
+                else if ((style & ~(WindowStyles.ThickFrame | WindowStyles.MaximizeBox)) != 0)
+                    new_border = WindowBorder.Fixed;
             }
 
             if (new_border != windowBorder)
             {
                 // Ensure cursor remains grabbed
                 if (!CursorVisible)
-                {
                     GrabCursor();
-                }
 
                 windowBorder = new_border;
                 OnWindowBorderChanged(EventArgs.Empty);
@@ -804,53 +766,41 @@ namespace OpenTK.Platform.Windows
 
                 // Ensure cursor remains grabbed
                 if (!CursorVisible)
-                {
                     GrabCursor();
-                }
             }
         }
 
-        private IntPtr? HandleSetCursor(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
+        private IntPtr HandleSetCursor(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             if (cursor != MouseCursor.Default)
             {
                 // Only set the mouse cursor inside the client rectangle
                 // See MSDN "Setting the Cursor Image"
                 const int ht_client = 1;
-                if ((lParam.ToInt64() & 0xffff) == ht_client)
+                if ((lParam.ToInt64() & 0xFFFF) == ht_client)
                 {
                     User32.Cursor.SetCursor(cursor_handle);
                     return new IntPtr(1);
                 }
             }
 
-            return null;
+            return IntPtr.Zero;
         }
 
         private void HandleCaptureChanged(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             if (lParam != window.Handle)
-            {
                 mouse_capture_count = 0;
-            }
         }
 
         private void HandleChar(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            char c;
-            if (IntPtr.Size == 4)
-            {
-                c = (char)wParam.ToInt32();
-            }
-            else
-            {
-                c = (char)wParam.ToInt64();
-            }
+            char c = IntPtr.Size == 4 ?
+                (char)wParam.ToInt32() :
+                (char)wParam.ToInt64();
 
             if (!char.IsControl(c))
-            {
                 OnKeyPress(c);
-            }
         }
 
         private void HandleMouseMove(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -861,7 +811,7 @@ namespace OpenTK.Platform.Windows
 
             if (mouse_capture_count > 0)
             {
-                var mouse_was_outside_window = mouse_outside_window;
+                bool mouse_was_outside_window = mouse_outside_window;
                 mouse_outside_window = !ClientRectangle.Contains(point);
 
                 if (mouse_outside_window && !mouse_was_outside_window)
@@ -892,9 +842,9 @@ namespace OpenTK.Platform.Windows
                 // GetMouseMovePointsEx works with screen coordinates
                 var screenPoint = NT.Native.Point.FromPoint(point);
                 User32.Window.ClientToScreen(handle, ref screenPoint);
-                var timestamp = User32.Message.GetMessageTime();
+                int timestamp = User32.Message.GetMessageTime();
 
-                // & 0xFFFF to handle multiple monitors http://support.microsoft.com/kb/269743
+                // & 0xFFFF to handle multiple monitors
                 var movePoint = new MouseMovePoint
                 {
                     X = screenPoint.X & 0xFFFF,
@@ -908,12 +858,15 @@ namespace OpenTK.Platform.Windows
 
                 // GetMouseMovePointsEx fills in movePoints so that the most
                 // recent events are at low indices in the array.
-                var points = User32.Mouse.GetMouseMovePointsEx(
-                    (uint)MouseMovePoint.SizeInBytes,
-                    ref movePoint, movePoints, numPoints,
-                    GetMouseMovePointsResolution.UseDisplayPoints);
+                int points = User32.Mouse.GetMouseMovePointsEx(
+                    MouseMovePoint.SizeInBytes,
+                    ref movePoint,
+                    movePoints,
+                    numPoints,
+                    GetMouseMovePointsResolution.UseDisplayPoints
+                );
 
-                var lastError = Marshal.GetLastWin32Error();
+                int lastError = Marshal.GetLastWin32Error();
 
                 // No points returned or search point not found
                 if (points == 0 || points == -1 && lastError == 1171) // 'The point passed to GetMouseMovePoints is not in the buffer.'
@@ -932,13 +885,11 @@ namespace OpenTK.Platform.Windows
                     User32.Window.ClientToScreen(handle, ref currentScreenPosition);
 
                     // Find the first move point we've already seen.
-                    var i = 0;
+                    int i = 0;
                     for (i = 0; i < points; ++i)
                     {
                         if (movePoints[i].Time < mouse_last_timestamp)
-                        {
                             break;
-                        }
 
                         if (movePoints[i].Time == mouse_last_timestamp &&
                             movePoints[i].X == currentScreenPosition.X &&
@@ -954,14 +905,10 @@ namespace OpenTK.Platform.Windows
                         var position = new NT.Native.Point(movePoints[i].X, movePoints[i].Y);
                         // Handle multiple monitors http://support.microsoft.com/kb/269743
                         if (position.X > 32767)
-                        {
                             position.X -= 65536;
-                        }
 
                         if (position.Y > 32767)
-                        {
                             position.Y -= 65536;
-                        }
 
                         User32.Window.ScreenToClient(handle, ref position);
                         OnMouseMove(position.X, position.Y);
@@ -1052,7 +999,7 @@ namespace OpenTK.Platform.Windows
 
         private void HandleKeyboard(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            var pressed =
+            bool pressed =
                 message == WindowMessage.KeyDown ||
                 message == WindowMessage.SystemKeyDown;
 
@@ -1063,12 +1010,11 @@ namespace OpenTK.Platform.Windows
             // Win95 does not distinguish left/right key constants (GetAsyncKeyState returns 0).
             // In this case, both keys will be reported as pressed.
 
-            var extended = (lParam.ToInt64() & ExtendedBit) != 0;
-            var scancode = (short)((lParam.ToInt64() >> 16) & 0xff);
+            bool extended = (lParam.ToInt64() & ExtendedBit) != 0;
+            short scancode = (short)((lParam.ToInt64() >> 16) & 0xFF);
             //ushort repeat_count = unchecked((ushort)((ulong)lParam.ToInt64() & 0xffffu));
             var vkey = (VirtualKeys)wParam;
-            bool is_valid;
-            var key = WinKeyMap.TranslateKey(scancode, vkey, extended, false, out is_valid);
+            var key = WinKeyMap.TranslateKey(scancode, vkey, extended, false, out bool is_valid);
 
             if (is_valid)
             {
@@ -1090,7 +1036,7 @@ namespace OpenTK.Platform.Windows
 
         private void HandleCreate(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            var cs = (CreateStruct)Marshal.PtrToStructure(lParam, typeof(CreateStruct));
+            var cs = Marshal.PtrToStructure<CreateStruct>(lParam);
             if (cs.hwndParent == IntPtr.Zero)
             {
                 bounds.X = cs.x;
@@ -1098,8 +1044,7 @@ namespace OpenTK.Platform.Windows
                 bounds.Width = cs.cx;
                 bounds.Height = cs.cy;
 
-                Rect rect;
-                User32.Window.GetClientRect(handle, out rect);
+                User32.Window.GetClientRect(handle, out Rect rect);
                 client_rectangle = rect.ToRectangle();
 
                 invisible_since_creation = true;
@@ -1113,9 +1058,7 @@ namespace OpenTK.Platform.Windows
             OnClosing(e);
 
             if (!e.Cancel)
-            {
                 DestroyWindow();
-            }
         }
 
         private void HandleDestroy(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -1123,9 +1066,7 @@ namespace OpenTK.Platform.Windows
             exists = false;
 
             if (handle == window.Handle)
-            {
                 User32.WindowClass.UnregisterClass(ClassName, Instance);
-            }
 
             window.Dispose();
 
@@ -1135,19 +1076,16 @@ namespace OpenTK.Platform.Windows
         private void HandleDropFiles(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             var hDrop = wParam;
-            var filesCounter = Shell32.DragQueryFile(hDrop, uint.MaxValue, IntPtr.Zero, 0);
+            uint filesCounter = Shell32.DragQueryFile(hDrop, 0xFFFFFFFF, null, 0);
             for (uint i = 0; i < filesCounter; ++i)
             {
                 // Don't forget about \0 at the end
-                var filenameChars = Shell32.DragQueryFile(hDrop, i, IntPtr.Zero, 0) + 1;
-                var filenameSize = (int)(filenameChars * Marshal.SystemDefaultCharSize);
-                var str = Marshal.AllocHGlobal(filenameSize);
+                uint filenameChars = Shell32.DragQueryFile(hDrop, i, null, 0) + 1;
+                var builder = new StringBuilder((int)filenameChars);
 
-                Shell32.DragQueryFile(hDrop, i, str, filenameChars);
+                Shell32.DragQueryFile(hDrop, i, builder, filenameChars);
 
-                var dropString = Marshal.PtrToStringAuto(str);
-                Marshal.FreeHGlobal(str);
-                OnFileDrop(dropString);
+                OnFileDrop(builder.ToString());
             }
 
             Shell32.DragFinish(hDrop);
@@ -1155,7 +1093,7 @@ namespace OpenTK.Platform.Windows
 
         private IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            IntPtr? result = null;
+            var result = IntPtr.Zero;
 
             switch (message)
             {
@@ -1282,10 +1220,8 @@ namespace OpenTK.Platform.Windows
                     break;
             }
 
-            if (result.HasValue)
-            {
-                return result.Value;
-            }
+            if (result != IntPtr.Zero)
+                return result;
 
             return User32.Window.DefWindowProc(handle, message, wParam, lParam);
         }
@@ -1355,8 +1291,16 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        private IntPtr CreateWindow(int x, int y, int width, int height, string title, GameWindowFlags options,
-            DisplayDevice device, IntPtr parentHandle)
+        private IntPtr CreateWindow(
+            int x,
+            int y,
+            int width,
+            int height,
+            string title,
+            GameWindowFlags options,
+            DisplayDevice device,
+            IntPtr parentHandle
+        )
         {
             // Use win32 to create the native window.
             // Keep in mind that some construction code runs in the WM_CREATE message handler.
@@ -1400,33 +1344,37 @@ namespace OpenTK.Platform.Windows
                     Instance = Instance,
                     WndProc = WindowProcedureDelegate,
                     ClassName = ClassName,
-                    Icon = Icon != null ? Icon.Handle : IntPtr.Zero,
+                    Icon = Icon?.Handle ?? IntPtr.Zero,
                     // Todo: the following line appears to resize one of the 'large' icons, rather than using a small icon directly (multi-icon files). Investigate!
                     IconSm = Icon != null ? new Icon(Icon, 16, 16).Handle : IntPtr.Zero,
                     Cursor = User32.Cursor.LoadCursor(CursorName.Arrow),
                 };
                 
-                var atom = User32.WindowClass.RegisterClassEx(ref wc);
+                ushort atom = User32.WindowClass.RegisterClassEx(ref wc);
 
                 if (atom == 0)
-                {
-                    throw new PlatformException(
-                        $"Failed to register window class. Error: {Marshal.GetLastWin32Error()}");
-                }
+                    throw new Win32Exception("Failed to register window class.");
 
                 class_registered = true;
             }
 
-            var window_name = Marshal.StringToHGlobalAuto(title);
             var handle = User32.Window.CreateWindowEx(
-                ex_style, ClassName, window_name, style,
-                rect.Left, rect.Top, rect.Width, rect.Height,
-                parentHandle, IntPtr.Zero, Instance, IntPtr.Zero);
+                ex_style,
+                ClassName,
+                title,
+                style,
+                rect.Left,
+                rect.Top,
+                rect.Width,
+                rect.Height,
+                parentHandle,
+                IntPtr.Zero,
+                Instance, 
+                IntPtr.Zero
+            );
 
             if (handle == IntPtr.Zero)
-            {
-                throw new PlatformException($"Failed to create window. Error: {Marshal.GetLastWin32Error()}");
-            }
+                throw new Win32Exception("Failed to create window.");
 
             return handle;
         }
@@ -1436,12 +1384,12 @@ namespace OpenTK.Platform.Windows
         /// </summary>
         private void DestroyWindow()
         {
-            if (Exists)
-            {
-                Debug.Print("Destroying window: {0}", window);
-                User32.Window.DestroyWindow(window.Handle);
-                exists = false;
-            }
+            if (!Exists)
+                return;
+
+            Debug.Print("Destroying window: {0}", window);
+            User32.Window.DestroyWindow(window.Handle);
+            exists = false;
         }
 
         private void HideBorder()
@@ -1478,17 +1426,13 @@ namespace OpenTK.Platform.Windows
             };
             
             if (!User32.Cursor.ClipCursor(ref rect))
-            {
                 Debug.WriteLine($"Failed to grab cursor. Error: {Marshal.GetLastWin32Error()}");
-            }
         }
 
         private void UngrabCursor()
         {
             if (!User32.Cursor.ClipCursor(IntPtr.Zero))
-            {
                 Debug.WriteLine($"Failed to ungrab cursor. Error: {Marshal.GetLastWin32Error()}");
-            }
         }
 
 
@@ -1501,10 +1445,7 @@ namespace OpenTK.Platform.Windows
         {
             var p = NT.Native.Point.FromPoint(point);
             if (!User32.Window.ScreenToClient(window.Handle, ref p))
-            {
-                throw new InvalidOperationException(
-                    $"Could not convert point {p.ToString()} from screen to client coordinates. Windows error: {Marshal.GetLastWin32Error()}");
-            }
+                throw new InvalidOperationException($"Could not convert point {p} from screen to client coordinates. Windows error: {Marshal.GetLastWin32Error()}");
 
             return p.ToPoint();
         }
@@ -1513,10 +1454,7 @@ namespace OpenTK.Platform.Windows
         {
             var p = NT.Native.Point.FromPoint(point);
             if (!User32.Window.ClientToScreen(window.Handle, ref p))
-            {
-                throw new InvalidOperationException(
-                    $"Could not convert point {p.ToString()} from screen to client coordinates. Windows error: {Marshal.GetLastWin32Error()}");
-            }
+                throw new InvalidOperationException($"Could not convert point {p} from screen to client coordinates. Windows error: {Marshal.GetLastWin32Error()}");
 
             return p.ToPoint();
         }
@@ -1524,7 +1462,7 @@ namespace OpenTK.Platform.Windows
         public override void ProcessEvents()
         {
             base.ProcessEvents();
-            while (User32.Message.PeekMessage(out msg, IntPtr.Zero, 0, 0, PeekMessageFlags.Remove))
+            while (User32.Message.PeekMessage(out Msg msg, IntPtr.Zero, 0, 0, PeekMessageFlags.Remove))
             {
                 User32.Message.TranslateMessage(ref msg);
                 User32.Message.DispatchMessage(ref msg);
@@ -1545,15 +1483,11 @@ namespace OpenTK.Platform.Windows
 
                     // Safe to clean managed resources
                     DestroyWindow();
-                    if (Icon != null)
-                    {
-                        Icon.Dispose();
-                    }
+                    Icon?.Dispose();
                 }
                 else
                 {
-                    Debug.Print("[Warning] INativeWindow leaked ({0}). Did you forget to call INativeWindow.Dispose()?",
-                        this);
+                    Debug.Print($"[Warning] INativeWindow leaked ({this}). Did you forget to call INativeWindow.Dispose()?");
                 }
 
                 OnDisposed(EventArgs.Empty);
