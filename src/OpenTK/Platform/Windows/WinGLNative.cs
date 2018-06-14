@@ -63,7 +63,7 @@ namespace OpenTK.Platform.Windows
         public static readonly uint AltRightScanCode = User32.Keyboard.MapVirtualKey(VirtualKeys.RMenu, 0);
 
         private static readonly object SyncRoot = new object();
-        private readonly IntPtr ClassName = Marshal.StringToHGlobalAuto(Guid.NewGuid().ToString());
+        private readonly string ClassName = Guid.NewGuid().ToString();
 
         private readonly IntPtr Instance = Marshal.GetHINSTANCE(typeof(WinGLNative).Module);
 
@@ -318,9 +318,9 @@ namespace OpenTK.Platform.Windows
                                     throw new Win32Exception();
                                 }
 
-                                iconInfo.xHotspot = value.X;
-                                iconInfo.yHotspot = value.Y;
-                                iconInfo.fIcon = false;
+                                iconInfo.XHotspot = (uint)value.X;
+                                iconInfo.YHotspot = (uint)value.Y;
+                                iconInfo.Icon = false;
 
                                 var icon = User32.Icon.CreateIconIndirect(ref iconInfo);
                                 if (icon == IntPtr.Zero)
@@ -339,8 +339,8 @@ namespace OpenTK.Platform.Windows
                                 {
                                     // GetIconInfo creates bitmaps for the hbmMask and hbmColor members of ICONINFO.
                                     // The calling application must manage these bitmaps and delete them when they are no longer necessary.
-                                    Gdi32.DeleteObject(iconInfo.hbmColor);
-                                    Gdi32.DeleteObject(iconInfo.hbmMask);
+                                    Gdi32.DeleteObject(iconInfo.BitmapColor);
+                                    Gdi32.DeleteObject(iconInfo.BitmapMask);
                                 }
 
                                 User32.Icon.DestroyIcon(bmpIcon);
@@ -430,12 +430,12 @@ namespace OpenTK.Platform.Windows
                         if (WindowBorder == WindowBorder.Hidden)
                         {
                             var current_monitor = User32.Monitor.MonitorFromWindow(window.Handle, MonitorFromEnum.DefaultToNearest);
-                            var info = new MonitorInfo { cbSize = MonitorInfo.SizeInBytes };
+                            var info = new MonitorInfo { Size = MonitorInfo.SizeInBytes };
                             User32.Monitor.GetMonitorInfo(current_monitor, out info);
 
                             previous_bounds = Bounds;
                             borderless_maximized_window_state = true;
-                            Bounds = info.rcWork.ToRectangle();
+                            Bounds = info.Work.ToRectangle();
                         }
                         else
                         {
@@ -573,7 +573,7 @@ namespace OpenTK.Platform.Windows
                         HandleStyleChanged(
                             window.Handle,
                             WindowMessage.StyleChanged,
-                            new IntPtr((int)(GetWindowLongIndex.Style| GetWindowLongIndex.ExStyle)),
+                            new IntPtr((int)(GetWindowLongIndex.Style | GetWindowLongIndex.ExStyle)),
                             new IntPtr(&style));
                     }
                 }
@@ -746,8 +746,8 @@ namespace OpenTK.Platform.Windows
 
             unsafe
             {
-                var get_window_style = (GWL)wParam.ToInt32();
-                if ((get_window_style & (GWL.STYLE | GWL.EXSTYLE)) != 0)
+                var get_window_style = (GetWindowLongIndex)wParam.ToInt32();
+                if ((get_window_style & (GetWindowLongIndex.Style | GetWindowLongIndex.ExStyle)) != 0)
                 {
                     var style = ((StyleStruct*)lParam)->New;
                     if ((style & WindowStyles.Popup) != 0)
@@ -890,7 +890,7 @@ namespace OpenTK.Platform.Windows
             unsafe
             {
                 // GetMouseMovePointsEx works with screen coordinates
-                var screenPoint = point;
+                var screenPoint = NT.Native.Point.FromPoint(point);
                 User32.Window.ClientToScreen(handle, ref screenPoint);
                 var timestamp = User32.Message.GetMessageTime();
 
@@ -899,7 +899,7 @@ namespace OpenTK.Platform.Windows
                 {
                     X = screenPoint.X & 0xFFFF,
                     Y = screenPoint.Y & 0xFFFF,
-                    Time = timestamp
+                    Time = (uint)timestamp
                 };
 
                 // Max points GetMouseMovePointsEx can return is 64.
@@ -1315,9 +1315,9 @@ namespace OpenTK.Platform.Windows
         {
             var me = new TrackMouseEvent
             {
-                cbSize = TrackMouseEvent.SizeInBytes,
+                Size = TrackMouseEvent.SizeInBytes,
                 TrackWindowHandle = window.Handle,
-                dwFlags = TrackMouseEventFlags.Leave
+                Flags = TrackMouseEventFlags.Leave
             };
             
 
@@ -1379,10 +1379,10 @@ namespace OpenTK.Platform.Windows
             // Find out the final window rectangle, after the WM has added its chrome (titlebar, sidebars etc).
             var rect = new Rect
             {
-                left = x,
-                top = y,
-                right = x + width,
-                bottom = y + height
+                Left = x,
+                Top = y,
+                Right = x + width,
+                Bottom = y + height
             };
             
             User32.Window.AdjustWindowRectEx(ref rect, style, false, ex_style);
@@ -1393,17 +1393,17 @@ namespace OpenTK.Platform.Windows
             {
                 var wc = new WindowClassEx
                 {
-                    cbSize = WindowClassEx.SizeInBytes,
+                    Size = WindowClassEx.SizeInBytes,
                     // Setting the background here ensures the window doesn't flash gray/white until the first frame is rendered.
-                    hbrBackground = Gdi32.GetStockObject(GetStockObjectType.BlackBrush),
-                    style = DefaultClassStyle,
-                    hInstance = Instance,
-                    lpfnWndProc = WindowProcedureDelegate,
-                    lpszClassName = ClassName,
-                    hIcon = Icon != null ? Icon.Handle : IntPtr.Zero,
+                    Background = Gdi32.GetStockObject(GetStockObjectType.BlackBrush),
+                    Style = DefaultClassStyle,
+                    Instance = Instance,
+                    WndProc = WindowProcedureDelegate,
+                    ClassName = ClassName,
+                    Icon = Icon != null ? Icon.Handle : IntPtr.Zero,
                     // Todo: the following line appears to resize one of the 'large' icons, rather than using a small icon directly (multi-icon files). Investigate!
-                    hIconSm = Icon != null ? new Icon(Icon, 16, 16).Handle : IntPtr.Zero,
-                    hCursor = User32.Cursor.LoadCursor(CursorName.Arrow),
+                    IconSm = Icon != null ? new Icon(Icon, 16, 16).Handle : IntPtr.Zero,
+                    Cursor = User32.Cursor.LoadCursor(CursorName.Arrow),
                 };
                 
                 var atom = User32.WindowClass.RegisterClassEx(ref wc);
@@ -1420,7 +1420,7 @@ namespace OpenTK.Platform.Windows
             var window_name = Marshal.StringToHGlobalAuto(title);
             var handle = User32.Window.CreateWindowEx(
                 ex_style, ClassName, window_name, style,
-                rect.left, rect.top, rect.Width, rect.Height,
+                rect.Left, rect.Top, rect.Width, rect.Height,
                 parentHandle, IntPtr.Zero, Instance, IntPtr.Zero);
 
             if (handle == IntPtr.Zero)
@@ -1454,10 +1454,7 @@ namespace OpenTK.Platform.Windows
         private void RestoreBorder()
         {
             suppress_resize++;
-            WindowBorder =
-                deferred_window_border.HasValue ? deferred_window_border.Value :
-                previous_window_border.HasValue ? previous_window_border.Value :
-                WindowBorder;
+            WindowBorder = deferred_window_border ?? previous_window_border ?? WindowBorder;
             suppress_resize--;
             deferred_window_border = previous_window_border = null;
         }
@@ -1471,13 +1468,13 @@ namespace OpenTK.Platform.Windows
 
         private void GrabCursor()
         {
-            var pos = PointToScreen(new NT.Native.Point(ClientRectangle.X, ClientRectangle.Y));
+            var pos = PointToScreen(new System.Drawing.Point(ClientRectangle.X, ClientRectangle.Y));
             var rect = new Rect
             {
-                left = pos.X,
-                right = pos.X + ClientRectangle.Width,
-                top = pos.Y,
-                bottom = pos.Y + ClientRectangle.Height,
+                Left = pos.X,
+                Right = pos.X + ClientRectangle.Width,
+                Top = pos.Y,
+                Bottom = pos.Y + ClientRectangle.Height,
             };
             
             if (!User32.Cursor.ClipCursor(ref rect))
@@ -1500,26 +1497,28 @@ namespace OpenTK.Platform.Windows
             User32.Message.PostMessage(window.Handle, WindowMessage.Close, IntPtr.Zero, IntPtr.Zero);
         }
 
-        public override Point PointToClient(Point point)
+        public override System.Drawing.Point PointToClient(System.Drawing.Point point)
         {
-            if (!User32.Window.ScreenToClient(window.Handle, ref point))
+            var p = NT.Native.Point.FromPoint(point);
+            if (!User32.Window.ScreenToClient(window.Handle, ref p))
             {
                 throw new InvalidOperationException(
-                    $"Could not convert point {point.ToString()} from screen to client coordinates. Windows error: {Marshal.GetLastWin32Error()}");
+                    $"Could not convert point {p.ToString()} from screen to client coordinates. Windows error: {Marshal.GetLastWin32Error()}");
             }
 
-            return point;
+            return p.ToPoint();
         }
 
-        public override Point PointToScreen(Point point)
+        public override System.Drawing.Point PointToScreen(System.Drawing.Point point)
         {
-            if (!User32.Window.ClientToScreen(window.Handle, ref point))
+            var p = NT.Native.Point.FromPoint(point);
+            if (!User32.Window.ClientToScreen(window.Handle, ref p))
             {
                 throw new InvalidOperationException(
-                    $"Could not convert point {point.ToString()} from screen to client coordinates. Windows error: {Marshal.GetLastWin32Error()}");
+                    $"Could not convert point {p.ToString()} from screen to client coordinates. Windows error: {Marshal.GetLastWin32Error()}");
             }
 
-            return point;
+            return p.ToPoint();
         }
 
         public override void ProcessEvents()
