@@ -29,6 +29,6 @@ namespace OpenTK.NT.Native
         [MarshalAs(UnmanagedType.LPTStr)]
         public string lpszClassName;
 
-        public static int SizeInBytes = Marshal.SizeOf<WindowClass>();
+        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<WindowClass>();
     }
 }

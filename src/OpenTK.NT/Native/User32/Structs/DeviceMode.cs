@@ -46,6 +46,6 @@ namespace OpenTK.NT.Native
         public DWORD dmPanningWidth;
         public DWORD dmPanningHeight;
 
-        public static readonly int SizeInBytes = Marshal.SizeOf<DeviceMode>();
+        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<DeviceMode>();
     }
 }

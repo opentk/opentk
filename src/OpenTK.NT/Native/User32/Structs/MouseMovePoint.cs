@@ -35,6 +35,6 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Returns the size of a MouseMovePoint in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Marshal.SizeOf<MouseMovePoint>();
+        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<MouseMovePoint>();
     }
 }

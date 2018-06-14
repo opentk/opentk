@@ -36,6 +36,6 @@ namespace OpenTK.NT.Native
         /// </summary>
         public WPARAM wParam;
 
-        public static readonly int SizeInBytes = Marshal.SizeOf<RawInputHeader>();
+        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawInputHeader>();
     }
 }

@@ -30,6 +30,6 @@ namespace OpenTK.NT.Native
             [FieldOffset(0)] public RawDeviceInfoHid hid;
         }
 
-        public static readonly int SizeInBytes = Marshal.SizeOf<RawDeviceInfo>();
+        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawDeviceInfo>();
     }
 }

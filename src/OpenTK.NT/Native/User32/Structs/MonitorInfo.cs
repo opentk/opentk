@@ -11,6 +11,6 @@ namespace OpenTK.NT.Native
         public Rect rcWork;
         public DWORD dwFlags;
 
-        public static readonly int SizeInBytes = Marshal.SizeOf<MonitorInfo>();
+        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<MonitorInfo>();
     }
 }

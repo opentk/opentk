@@ -20,7 +20,7 @@ namespace OpenTK.NT.Native
         /// </summary>
         public RawInputDeviceType dwType;
 
-        public static readonly int SizeInBytes = Marshal.SizeOf<RawInputDeviceList>();
+        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawInputDeviceList>();
 
         public override string ToString()
             => $"{dwType}, Handle: {hDevice}";

@@ -20,6 +20,6 @@ namespace OpenTK.NT.Native
         public RawInputHeader header;
         public RawInputData data;
 
-        public static readonly int SizeInBytes = Marshal.SizeOf<RawInput>();
+        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawInput>();
     }
 }

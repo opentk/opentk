@@ -27,6 +27,6 @@ namespace OpenTK.NT.Native
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
         public string DeviceKey;
 
-        public static readonly int SizeInBytes = Marshal.SizeOf<DisplayDevice>();
+        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<DisplayDevice>();
     }
 }

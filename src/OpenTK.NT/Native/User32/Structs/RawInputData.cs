@@ -9,6 +9,6 @@ namespace OpenTK.NT.Native
         [FieldOffset(0)] public RawKeyboard Keyboard;
         [FieldOffset(0)] public RawHid HID;
 
-        public static readonly int SizeInBytes = Marshal.SizeOf<RawInputData>();
+        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawInputData>();
     }
 }

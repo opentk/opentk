@@ -52,6 +52,6 @@ namespace OpenTK.NT.Native
         /// </summary>
         [FieldOffset(20)] public ULONG ulExtraInformation;
 
-        public static readonly int SizeInBytes = Marshal.SizeOf<RawMouse>();
+        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawMouse>();
     }
 }
