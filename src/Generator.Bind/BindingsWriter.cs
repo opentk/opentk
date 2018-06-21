@@ -33,6 +33,7 @@ using Bind.Extensions;
 using Bind.Generators;
 using Bind.Structures;
 using Bind.Writers;
+using Humanizer;
 
 namespace Bind
 {
@@ -41,14 +42,6 @@ namespace Bind
     /// </summary>
     internal sealed class BindingsWriter
     {
-        // For example, if parameter foo has indirection level = 1, then it
-        // is consumed as 'foo*' in the fixed_statements and the call string.
-        private static readonly string[] PointerLevels = { string.Empty, "*", "**", "***", "****" };
-
-        private static readonly string[] ArrayLevels = { string.Empty, "[]", "[,]", "[,,]", "[,,,]" };
-
-
-
         private IGenerator Generator { get; set; }
 
         /// <summary>
@@ -73,28 +66,27 @@ namespace Bind
             }
 
             // Enums
-            var tempEnumsFilePath = Path.GetTempFileName();
-            using (var outputFile = File.Open(tempEnumsFilePath, FileMode.OpenOrCreate))
-            {
-                using (var sw = new SourceWriter(new StreamWriter(outputFile)))
-                {
-                    WriteLicense(sw);
-                    sw.WriteLineNoTabs();
-
-                    sw.WriteLine("using System;");
-                    sw.WriteLineNoTabs();
-
-                    sw.WriteLine($"namespace {Generator.Namespace}");
-                    using (sw.BeginBlock())
-                    {
-                        WriteEnums(sw, enums, wrappers);
-                    }
-                }
-            }
+            WriteEnums(enums, wrappers);
 
             // Wrappers
-            var tempWrappersFilePath = Path.GetTempFileName();
-            using (var outputFile = File.Open(tempWrappersFilePath, FileMode.OpenOrCreate))
+            WriteWrappers(wrappers, delegates);
+        }
+
+        private void WriteWrappers(FunctionCollection wrappers, DelegateCollection delegates)
+        {
+            Trace.WriteLine($"Writing wrappers to:\t{Generator.Namespace}.{Generator.ClassName}");
+
+            var baseOutputPath = Path.Combine(Program.Arguments.OutputPath, Generator.OutputSubfolder);
+            var wrappersOutputDirectory = Path.Combine(baseOutputPath, "Wrappers");
+
+            if (!Directory.Exists(wrappersOutputDirectory))
+            {
+                Directory.CreateDirectory(wrappersOutputDirectory);
+            }
+
+            // Create the interop setup neccesary
+            var tempInteropFilePath = Path.GetTempFileName();
+            using (var outputFile = File.Open(tempInteropFilePath, FileMode.OpenOrCreate))
             {
                 using (var sw = new SourceWriter(new StreamWriter(outputFile)))
                 {
@@ -106,148 +98,164 @@ namespace Bind
                     sw.WriteLine("using System.Runtime.InteropServices;");
                     sw.WriteLineNoTabs();
 
-                    sw.WriteLine("#pragma warning disable 1591 // Missing doc comments");
-                    sw.WriteLine("#pragma warning disable 1572 // Wrong param comments");
-                    sw.WriteLine("#pragma warning disable 1573 // Missing param comments");
-                    sw.WriteLine("#pragma warning disable 626 // extern method without DllImport");
-
-                    sw.WriteLineNoTabs();
-
                     sw.WriteLine($"namespace {Generator.Namespace}");
                     using (sw.BeginBlock())
                     {
-                        WriteWrappers(sw, wrappers, delegates);
-                    }
-                }
-            }
-
-            var outputEnums = Path.Combine(baseOutputPath, Generator.OutputSubfolder, $"{Generator.APIIdentifier}.Enums.cs");
-            var outputWrappers = Path.Combine(baseOutputPath, Generator.OutputSubfolder, $"{Generator.APIIdentifier}.cs");
-
-            if (File.Exists(outputEnums))
-            {
-                File.Delete(outputEnums);
-            }
-
-            if (File.Exists(outputWrappers))
-            {
-                File.Delete(outputWrappers);
-            }
-
-            File.Move(tempEnumsFilePath, outputEnums);
-            File.Move(tempWrappersFilePath, outputWrappers);
-        }
-
-        private void WriteWrappers(SourceWriter sw, FunctionCollection wrappers, DelegateCollection delegates)
-        {
-            Trace.WriteLine($"Writing wrappers to:\t{Generator.Namespace}.{Generator.ClassName}");
-
-            sw.WriteLine($"partial class {Generator.ClassName}");
-            using (sw.BeginBlock())
-            {
-                // Write constructor
-                sw.WriteLine($"static {Generator.ClassName}()");
-                using (sw.BeginBlock())
-                {
-                    // Write entry point names.
-                    // Instead of strings, which are costly to construct,
-                    // we use a 1d array of ASCII bytes. Names are laid out
-                    // sequentially, with a nul-terminator between them.
-                    sw.WriteLine("EntryPointNames = new byte[]");
-                    using (sw.BeginBlock(true))
-                    {
-                        foreach (var d in delegates.Values.Select(d => d.First()))
-                        {
-                            var name = Generator.FunctionPrefix + d.Name;
-                            var byteString = string.Join
-                            (
-                                ", ",
-                                Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()
-                            );
-
-                            sw.WriteLine($"{byteString}, 0,");
-                        }
-                    }
-
-                    // Write entry point name offsets.
-                    // This is an array of offsets into the EntryPointNames[] array above.
-                    sw.WriteLine("EntryPointNameOffsets = new int[]");
-                    using (sw.BeginBlock(true))
-                    {
-                        var offset = 0;
-                        foreach (var d in delegates.Values.Select(d => d.First()))
-                        {
-                            sw.WriteLine($"{offset},");
-                            var name = Generator.FunctionPrefix + d.Name;
-                            offset += name.Length + 1;
-                        }
-                    }
-
-                    sw.WriteLine("EntryPoints = new IntPtr[EntryPointNameOffsets.Length];");
-                }
-
-                sw.WriteLineNoTabs();
-
-                foreach (var key in wrappers.Keys)
-                {
-                    if (key != "Core")
-                    {
-                        if (!char.IsDigit(key[0]))
-                        {
-                            sw.WriteLine($"public static partial class {key}");
-                        }
-                        else
-                        {
-                            // Identifiers cannot start with a number:
-                            sw.WriteLine($"public static partial class {Generator.ConstantPrefix}{key}");
-                        }
+                        sw.WriteLine($"public sealed partial class {Generator.ClassName}");
                         using (sw.BeginBlock())
                         {
-                            wrappers[key].Sort();
-                            foreach (var f in wrappers[key])
+                            // Write constructor
+                            sw.WriteLine($"static {Generator.ClassName}()");
+                            using (sw.BeginBlock())
                             {
-                                WriteMethod(sw, f);
-
-                                if (f != wrappers[key].Last())
+                                // Write entry point names.
+                                // Instead of strings, which are costly to construct,
+                                // we use a 1d array of ASCII bytes. Names are laid out
+                                // sequentially, with a nul-terminator between them.
+                                sw.WriteLine("EntryPointNames = new byte[]");
+                                using (sw.BeginBlock(true))
                                 {
-                                    sw.WriteLineNoTabs();
+                                    foreach (var d in delegates.Values.Select(d => d.First()))
+                                    {
+                                        var name = Generator.FunctionPrefix + d.Name;
+                                        var byteString = string.Join
+                                        (
+                                            ", ",
+                                            Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()
+                                        );
+
+                                        sw.WriteLine($"{byteString}, 0,");
+                                    }
                                 }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        wrappers[key].Sort();
-                        foreach (var f in wrappers[key])
-                        {
-                            WriteMethod(sw, f);
 
-                            if (f != wrappers[key].Last())
-                            {
                                 sw.WriteLineNoTabs();
+
+                                // Write entry point name offsets.
+                                // This is an array of offsets into the EntryPointNames[] array above.
+                                sw.WriteLine("EntryPointNameOffsets = new int[]");
+                                using (sw.BeginBlock(true))
+                                {
+                                    var offset = 0;
+                                    foreach (var d in delegates.Values.Select(d => d.First()))
+                                    {
+                                        sw.WriteLine($"{offset},");
+                                        var name = Generator.FunctionPrefix + d.Name;
+                                        offset += name.Length + 1;
+                                    }
+                                }
+
+                                sw.WriteLineNoTabs();
+
+                                sw.WriteLine("EntryPoints = new IntPtr[EntryPointNameOffsets.Length];");
                             }
                         }
-                    }
-
-                    if (key != wrappers.Keys.Last())
-                    {
-                        sw.WriteLineNoTabs();
                     }
                 }
+            }
 
-                // Emit native signatures.
-                // These are required by the patcher.
-                var wrappersToWrite = wrappers.Values.SelectMany(e => e).Select(w => w.WrappedDelegateDefinition).Distinct().ToList();
-                foreach (var d in wrappersToWrite)
+            var outputFilePath = Path.Combine(wrappersOutputDirectory, $"{Generator.ClassName}.cs");
+
+            if (File.Exists(outputFilePath))
+            {
+                File.Delete(outputFilePath);
+            }
+
+            File.Move(tempInteropFilePath, outputFilePath);
+
+            // Next, we'll create the individual category files
+            foreach (var (extensionName, extensionWrappers) in wrappers)
+            {
+                var extensionOutputDirectory = Path.Combine(wrappersOutputDirectory, extensionName);
+
+                if (!Directory.Exists(extensionOutputDirectory))
                 {
-                    sw.WriteLine($"[Slot({d.Slot})]");
-                    sw.WriteLine("[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
-                    sw.WriteLine($"private static extern {GetDeclarationString(d, false)};");
+                    Directory.CreateDirectory(extensionOutputDirectory);
+                }
 
-                    if (d != wrappersToWrite.Last())
+                var wrappersByCategory = extensionWrappers.GroupBy(w => w.Category);
+                foreach (var category in wrappersByCategory)
+                {
+                    var categoryNameWithoutExtensionPrefix = category.Key.Substring(category.Key.IndexOf('_') + 1);
+                    var titleCaseCategoryName = categoryNameWithoutExtensionPrefix.Pascalize();
+
+                    var tempWrapperOutputPath = Path.GetTempFileName();
+                    using (var outputFile = File.Open(tempWrapperOutputPath, FileMode.OpenOrCreate))
                     {
-                        sw.WriteLine();
+                        using (var sw = new SourceWriter(new StreamWriter(outputFile)))
+                        {
+                            WriteLicense(sw);
+                            sw.WriteLineNoTabs();
+
+                            sw.WriteLine("using System;");
+                            sw.WriteLine("using System.Text;");
+                            sw.WriteLine("using System.Runtime.InteropServices;");
+                            sw.WriteLineNoTabs();
+
+                            sw.WriteLine($"namespace {Generator.Namespace}");
+                            using (sw.BeginBlock())
+                            {
+                                SourceWriterBlock outerBlock = null;
+                                if (extensionName == "Core")
+                                {
+                                    sw.WriteLine($"public sealed partial class {Generator.ClassName}");
+                                }
+                                else
+                                {
+                                    sw.WriteLine($"public sealed partial class {Generator.ClassName}");
+
+                                    outerBlock = sw.BeginBlock();
+
+                                    sw.WriteLine("/// <summary>");
+                                    sw.WriteLine($"/// Contains native bindings to functions in the category \"{titleCaseCategoryName}\" in the extension \"{extensionName}\".");
+                                    sw.WriteLine("/// </summary>");
+                                    sw.WriteLine($"public static partial class {extensionName}");
+                                }
+
+                                using (sw.BeginBlock())
+                                {
+                                    var categoryWrappers = category.OrderBy(w => w).ToList();
+                                    foreach (var wrapper in categoryWrappers)
+                                    {
+                                        WriteMethod(sw, wrapper);
+
+                                        if (wrapper != categoryWrappers.Last())
+                                        {
+                                            sw.WriteLineNoTabs();
+                                        }
+                                    }
+
+                                    sw.WriteLineNoTabs();
+
+                                    // Emit native signatures.
+                                    // These are required by the patcher.
+                                    var categoryNatives = categoryWrappers.Select(w => w.WrappedDelegateDefinition).Distinct().ToList();
+                                    foreach (var native in categoryNatives)
+                                    {
+                                        sw.WriteLine($"[Slot({native.Slot})]");
+                                        sw.WriteLine("[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
+                                        sw.WriteLine($"private static extern {GetDeclarationString(native, false)};");
+
+                                        if (native != categoryNatives.Last())
+                                        {
+                                            sw.WriteLineNoTabs();
+                                        }
+                                    }
+                                }
+
+                                // We've got a nested class to close
+                                outerBlock?.Dispose();
+                            }
+                        }
                     }
+
+                    var outputCategorySubPath = Path.Combine(extensionOutputDirectory, $"{titleCaseCategoryName}.cs");
+
+                    if (File.Exists(outputCategorySubPath))
+                    {
+                        File.Delete(outputCategorySubPath);
+                    }
+
+                    File.Move(tempWrapperOutputPath, outputCategorySubPath);
                 }
             }
         }
@@ -424,22 +432,21 @@ namespace Bind
                     }
                 }
 
-                var constant = $"{c.Name} = {valueString}";
-
-                sw.Write(constant);
-                if (!string.IsNullOrEmpty(constant))
-                {
-                    sw.WriteLine(",");
-                }
+                sw.Write($"{c.Name} = {valueString}");
 
                 if (c != constants.Last())
                 {
+                    sw.WriteLine(",");
                     sw.WriteLineNoTabs();
+                }
+                else
+                {
+                    sw.WriteLine();
                 }
             }
         }
 
-        private void WriteEnums(SourceWriter sw, EnumCollection enums, FunctionCollection wrappers)
+        private void WriteEnums(EnumCollection enums, FunctionCollection wrappers)
         {
             // Build a dictionary of which functions use which enums
             var enumCounts = new Dictionary<EnumDefinition, List<FunctionDefinition>>();
@@ -460,47 +467,76 @@ namespace Bind
                 }
             }
 
+            var baseOutputPath = Path.Combine(Program.Arguments.OutputPath, Generator.OutputSubfolder);
+            var enumOutputDirectory = Path.Combine(baseOutputPath, "Enums");
+
+            if (!Directory.Exists(enumOutputDirectory))
+            {
+                Directory.CreateDirectory(enumOutputDirectory);
+            }
+
             foreach (var @enum in enums.Values)
             {
-                // Document which functions use this enum.
-                var functions = enumCounts[@enum]
-                    .Select(w =>
-                        Generator.ClassName + (w.ExtensionName != "Core" ? "." + w.ExtensionName : string.Empty) + "." +
-                        w.TrimmedName)
-                    .Distinct()
-                    .ToList();
-
-                sw.WriteLine("/// <summary>");
-                sw.WriteLine(
-                    $"/// {(functions.Count >= 3 ? $"Used in {string.Join(", ", functions.Take(2).ToArray())} and {functions.Count - 2} other function{(functions.Count() - 2 > 1 ? "s" : string.Empty)}" : functions.Count() >= 1 ? $"Used in {string.Join(", ", functions.ToArray())}" : "Not used directly.")}");
-                sw.WriteLine("/// </summary>");
-
-                if (@enum.IsObsolete)
+                var tempEnumFilePath = Path.GetTempFileName();
+                using (var outputFile = File.Open(tempEnumFilePath, FileMode.OpenOrCreate))
                 {
-                    sw.WriteLine($"[Obsolete(\"{@enum.Obsolete}\")]");
+                    using (var sw = new SourceWriter(new StreamWriter(outputFile)))
+                    {
+                        WriteLicense(sw);
+                        sw.WriteLineNoTabs();
+
+                        sw.WriteLine("using System;");
+                        sw.WriteLineNoTabs();
+
+                        sw.WriteLine($"namespace {Generator.Namespace}");
+                        using (sw.BeginBlock())
+                        {
+                            // Document which functions use this enum.
+                            var functions = enumCounts[@enum]
+                                .Select(w =>
+                                    Generator.ClassName + (w.ExtensionName != "Core" ? "." + w.ExtensionName : string.Empty) + "." +
+                                    w.TrimmedName)
+                                .Distinct()
+                                .ToList();
+
+                            sw.WriteLine("/// <summary>");
+                            sw.WriteLine(
+                                $"/// {(functions.Count >= 3 ? $"Used in {string.Join(", ", functions.Take(2).ToArray())} and {functions.Count - 2} other function{(functions.Count() - 2 > 1 ? "s" : string.Empty)}" : functions.Count() >= 1 ? $"Used in {string.Join(", ", functions.ToArray())}" : "Not used directly.")}");
+                            sw.WriteLine("/// </summary>");
+
+                            if (@enum.IsObsolete)
+                            {
+                                sw.WriteLine($"[Obsolete(\"{@enum.Obsolete}\")]");
+                            }
+
+                            if (@enum.IsFlagCollection)
+                            {
+                                sw.WriteLine("[Flags]");
+                            }
+
+                            var enumTypeString = string.Empty;
+                            if (@enum.Type != "int")
+                            {
+                                enumTypeString = $" : {@enum.Type}";
+                            }
+
+                            sw.WriteLine($"public enum {@enum.Name}{enumTypeString}");
+                            using (sw.BeginBlock())
+                            {
+                                WriteConstants(sw, @enum.ConstantCollection.Values);
+                            }
+                        }
+                    }
                 }
 
-                if (@enum.IsFlagCollection)
+                var outputEnumPath = Path.Combine(enumOutputDirectory, $"{@enum.Name}.cs");
+
+                if (File.Exists(outputEnumPath))
                 {
-                    sw.WriteLine("[Flags]");
+                    File.Delete(outputEnumPath);
                 }
 
-                var enumTypeString = string.Empty;
-                if (@enum.Type != "int")
-                {
-                    enumTypeString = $" : {@enum.Type}";
-                }
-
-                sw.WriteLine($"public enum {@enum.Name}{enumTypeString}");
-                using (sw.BeginBlock())
-                {
-                    WriteConstants(sw, @enum.ConstantCollection.Values);
-                }
-
-                if (@enum != enums.Values.Last())
-                {
-                    sw.WriteLineNoTabs();
-                }
+                File.Move(tempEnumFilePath, outputEnumPath);
             }
         }
 
