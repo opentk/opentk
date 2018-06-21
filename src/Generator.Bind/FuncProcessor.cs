@@ -788,30 +788,30 @@ namespace Bind
 
                 // Check for IntPtr parameters that correspond to size_t (e.g. GLsizei)
                 // and add Int32 overloads for convenience.
+                if (d.Parameters.Any(p => p.ParameterType.WrapperType.HasFlag(WrapperTypes.SizeParameter)))
                 {
-                    FunctionDefinition f = null;
-                    var i = 0;
-                    foreach (var p in d.Parameters)
-                    {
-                        var type = p.ParameterType;
-
-                        if ((type.WrapperType & WrapperTypes.SizeParameter) != 0)
-                        {
-                            f = f ?? new FunctionDefinition(d);
-                            f.Parameters[i].ParameterType.QualifiedTypeName = "Int32";
-                        }
-
-                        i++;
-                    }
-
-                    if (f != null)
-                    {
-                        convenienceWrappers.Add(f);
-                    }
+                    var sizeConvenienceOverload = CreateSizeParameterConvenienceWrapper(d);
+                    convenienceWrappers.Add(sizeConvenienceOverload);
                 }
             }
 
             return convenienceWrappers;
+        }
+
+        private static FunctionDefinition CreateSizeParameterConvenienceWrapper(FunctionDefinition d)
+        {
+            var sizeConvenienceOverload = new FunctionDefinition(d);
+
+            for (var i = 0; i < d.Parameters.Count; ++i)
+            {
+                var type = d.Parameters[i].ParameterType;
+                if ((type.WrapperType & WrapperTypes.SizeParameter) != 0)
+                {
+                    sizeConvenienceOverload.Parameters[i].ParameterType.QualifiedTypeName = "Int32";
+                }
+            }
+
+            return sizeConvenienceOverload;
         }
 
         private static FunctionDefinition CreateReturnTypeConvenienceWrapper(FunctionDefinition d)

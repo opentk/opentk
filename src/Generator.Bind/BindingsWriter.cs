@@ -535,7 +535,11 @@ namespace Bind
         {
             var sb = new StringBuilder();
 
-            sb.Append(f.RequiresUnsafeDeclaration ? "unsafe " : string.Empty);
+            if (f.RequiresUnsafeDeclaration)
+            {
+                sb.Append("unsafe ");
+            }
+
             sb.Append(f.ReturnTypeDefinition.GetDeclarationString());
             sb.Append(" ");
 
