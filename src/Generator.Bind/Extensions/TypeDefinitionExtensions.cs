@@ -11,6 +11,8 @@ namespace Bind.Extensions
     {
         private static readonly Dictionary<string, string> Aliases = new Dictionary<string, string>
         {
+            { nameof(SByte), "sbyte" },
+            { nameof(Byte), "byte" },
             { nameof(Int16), "short" },
             { nameof(UInt16), "ushort" },
             { nameof(Int32), "int" },
@@ -18,7 +20,9 @@ namespace Bind.Extensions
             { nameof(Int64), "long" },
             { nameof(UInt64), "ulong" },
             { nameof(Single), "float" },
-            { nameof(Double), "double" }
+            { nameof(Double), "double" },
+            { nameof(String), "string" },
+            { nameof(Boolean), "bool" },
         };
 
         /// <summary>
