@@ -1432,6 +1432,11 @@
       </param>
     </function>
 
+    <function name="ReadnPixels" extension="Arb">
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
+    </function>
+
     <!-- Ext -->
 
     <function name="GetIntegerIndexed" extension="Ext">
