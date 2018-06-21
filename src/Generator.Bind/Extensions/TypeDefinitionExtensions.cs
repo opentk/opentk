@@ -22,7 +22,7 @@ namespace Bind.Extensions
             { nameof(Single), "float" },
             { nameof(Double), "double" },
             { nameof(String), "string" },
-            { nameof(Boolean), "bool" },
+            { nameof(Boolean), "bool" }
         };
 
         /// <summary>
