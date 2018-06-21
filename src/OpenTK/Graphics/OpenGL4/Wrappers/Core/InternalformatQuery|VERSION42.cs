@@ -47,7 +47,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="bufSize">
         /// Specifies the maximum number of basic machine units that may be written to params by the function.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: bufSize]
         /// Specifies the address of a variable into which to write the retrieved information.
         /// </param>
@@ -73,7 +73,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="bufSize">
         /// Specifies the maximum number of basic machine units that may be written to params by the function.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: bufSize]
         /// Specifies the address of a variable into which to write the retrieved information.
         /// </param>
@@ -99,7 +99,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="bufSize">
         /// Specifies the maximum number of basic machine units that may be written to params by the function.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: bufSize]
         /// Specifies the address of a variable into which to write the retrieved information.
         /// </param>

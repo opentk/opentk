@@ -500,7 +500,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the parameter of attachment to query.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Specifies the address of a variable receive the value of pname for attachment.
         /// </param>
@@ -523,7 +523,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the parameter of attachment to query.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Specifies the address of a variable receive the value of pname for attachment.
         /// </param>
@@ -546,7 +546,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the parameter of attachment to query.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Specifies the address of a variable receive the value of pname for attachment.
         /// </param>
@@ -566,7 +566,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the parameter whose value to retrieve from the renderbuffer bound to target.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Specifies the address of an array to receive the value of the queried parameter.
         /// </param>
@@ -586,7 +586,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the parameter whose value to retrieve from the renderbuffer bound to target.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Specifies the address of an array to receive the value of the queried parameter.
         /// </param>
@@ -606,7 +606,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the parameter whose value to retrieve from the renderbuffer bound to target.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Specifies the address of an array to receive the value of the queried parameter.
         /// </param>

@@ -637,7 +637,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a texture parameter. TextureWidth, TextureHeight, TextureDepth, TextureInternalFormat, TextureRedSize, TextureGreenSize, TextureBlueSize, TextureAlphaSize, TextureDepthSize, TextureCompressed, TextureCompressedImageSize, and TextureBufferOffset are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested data.
         /// </param>
@@ -660,7 +660,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a texture parameter. TextureWidth, TextureHeight, TextureDepth, TextureInternalFormat, TextureRedSize, TextureGreenSize, TextureBlueSize, TextureAlphaSize, TextureDepthSize, TextureCompressed, TextureCompressedImageSize, and TextureBufferOffset are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested data.
         /// </param>
@@ -683,7 +683,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a texture parameter. TextureWidth, TextureHeight, TextureDepth, TextureInternalFormat, TextureRedSize, TextureGreenSize, TextureBlueSize, TextureAlphaSize, TextureDepthSize, TextureCompressed, TextureCompressedImageSize, and TextureBufferOffset are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested data.
         /// </param>
@@ -706,7 +706,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a texture parameter. TextureWidth, TextureHeight, TextureDepth, TextureInternalFormat, TextureRedSize, TextureGreenSize, TextureBlueSize, TextureAlphaSize, TextureDepthSize, TextureCompressed, TextureCompressedImageSize, and TextureBufferOffset are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested data.
         /// </param>
@@ -729,7 +729,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a texture parameter. TextureWidth, TextureHeight, TextureDepth, TextureInternalFormat, TextureRedSize, TextureGreenSize, TextureBlueSize, TextureAlphaSize, TextureDepthSize, TextureCompressed, TextureCompressedImageSize, and TextureBufferOffset are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested data.
         /// </param>
@@ -752,7 +752,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a texture parameter. TextureWidth, TextureHeight, TextureDepth, TextureInternalFormat, TextureRedSize, TextureGreenSize, TextureBlueSize, TextureAlphaSize, TextureDepthSize, TextureCompressed, TextureCompressedImageSize, and TextureBufferOffset are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested data.
         /// </param>
@@ -772,7 +772,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a texture parameter. DepthStencilTextureMode, TextureBaseLevel, TextureBorderColor, TextureCompareMode, TextureCompareFunc, TextureImmutableFormat, TextureImmutableLevels, TextureLodBias, TextureMagFilter, TextureMaxLevel, TextureMaxLod, TextureMinFilter, TextureMinLod, TextureSwizzleR, TextureSwizzleG, TextureSwizzleB, TextureSwizzleA, TextureSwizzleRgba, TextureViewMinLayer, TextureViewMinLevel, TextureViewNumLayers, TextureViewNumLevels, TextureWrapS, TextureWrapT, and TextureWrapR are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the texture parameters.
         /// </param>
@@ -792,7 +792,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a texture parameter. DepthStencilTextureMode, TextureBaseLevel, TextureBorderColor, TextureCompareMode, TextureCompareFunc, TextureImmutableFormat, TextureImmutableLevels, TextureLodBias, TextureMagFilter, TextureMaxLevel, TextureMaxLod, TextureMinFilter, TextureMinLod, TextureSwizzleR, TextureSwizzleG, TextureSwizzleB, TextureSwizzleA, TextureSwizzleRgba, TextureViewMinLayer, TextureViewMinLevel, TextureViewNumLayers, TextureViewNumLevels, TextureWrapS, TextureWrapT, and TextureWrapR are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the texture parameters.
         /// </param>
@@ -812,7 +812,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a texture parameter. DepthStencilTextureMode, TextureBaseLevel, TextureBorderColor, TextureCompareMode, TextureCompareFunc, TextureImmutableFormat, TextureImmutableLevels, TextureLodBias, TextureMagFilter, TextureMaxLevel, TextureMaxLod, TextureMinFilter, TextureMinLod, TextureSwizzleR, TextureSwizzleG, TextureSwizzleB, TextureSwizzleA, TextureSwizzleRgba, TextureViewMinLayer, TextureViewMinLevel, TextureViewNumLayers, TextureViewNumLevels, TextureWrapS, TextureWrapT, and TextureWrapR are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the texture parameters.
         /// </param>
@@ -832,7 +832,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a texture parameter. DepthStencilTextureMode, TextureBaseLevel, TextureBorderColor, TextureCompareMode, TextureCompareFunc, TextureImmutableFormat, TextureImmutableLevels, TextureLodBias, TextureMagFilter, TextureMaxLevel, TextureMaxLod, TextureMinFilter, TextureMinLod, TextureSwizzleR, TextureSwizzleG, TextureSwizzleB, TextureSwizzleA, TextureSwizzleRgba, TextureViewMinLayer, TextureViewMinLevel, TextureViewNumLayers, TextureViewNumLevels, TextureWrapS, TextureWrapT, and TextureWrapR are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the texture parameters.
         /// </param>
@@ -852,7 +852,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a texture parameter. DepthStencilTextureMode, TextureBaseLevel, TextureBorderColor, TextureCompareMode, TextureCompareFunc, TextureImmutableFormat, TextureImmutableLevels, TextureLodBias, TextureMagFilter, TextureMaxLevel, TextureMaxLod, TextureMinFilter, TextureMinLod, TextureSwizzleR, TextureSwizzleG, TextureSwizzleB, TextureSwizzleA, TextureSwizzleRgba, TextureViewMinLayer, TextureViewMinLevel, TextureViewNumLayers, TextureViewNumLevels, TextureWrapS, TextureWrapT, and TextureWrapR are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the texture parameters.
         /// </param>
@@ -872,7 +872,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a texture parameter. DepthStencilTextureMode, TextureBaseLevel, TextureBorderColor, TextureCompareMode, TextureCompareFunc, TextureImmutableFormat, TextureImmutableLevels, TextureLodBias, TextureMagFilter, TextureMaxLevel, TextureMaxLod, TextureMinFilter, TextureMinLod, TextureSwizzleR, TextureSwizzleG, TextureSwizzleB, TextureSwizzleA, TextureSwizzleRgba, TextureViewMinLayer, TextureViewMinLevel, TextureViewNumLayers, TextureViewNumLevels, TextureWrapS, TextureWrapT, and TextureWrapR are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the texture parameters.
         /// </param>
@@ -1204,7 +1204,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="func">
         /// Specifies the test function. Eight symbolic constants are valid: Never, Less, Lequal, Greater, Gequal, Equal, Notequal, and Always. The initial value is Always.
         /// </param>
-        /// <param name="@ref">
+        /// <param name="ref">
         /// Specifies the reference value for the stencil test. ref is clamped to the range [0, 2 sup n - 1], where  is the number of bitplanes in the stencil buffer. The initial value is 0.
         /// </param>
         /// <param name="mask">
@@ -1650,7 +1650,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: DepthStencilTextureMode, TextureBaseLevel, TextureCompareFunc, TextureCompareMode, TextureLodBias, TextureMinFilter, TextureMagFilter, TextureMinLod, TextureMaxLod, TextureMaxLevel, TextureSwizzleR, TextureSwizzleG, TextureSwizzleB, TextureSwizzleA, TextureWrapS, TextureWrapT, or TextureWrapR.  For the vector commands (glTexParameter*v), pname can also be one of TextureBorderColor or TextureSwizzleRgba.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// For the scalar commands, specifies the value of pname.
         /// </param>
@@ -1670,7 +1670,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: DepthStencilTextureMode, TextureBaseLevel, TextureCompareFunc, TextureCompareMode, TextureLodBias, TextureMinFilter, TextureMagFilter, TextureMinLod, TextureMaxLod, TextureMaxLevel, TextureSwizzleR, TextureSwizzleG, TextureSwizzleB, TextureSwizzleA, TextureWrapS, TextureWrapT, or TextureWrapR.  For the vector commands (glTexParameter*v), pname can also be one of TextureBorderColor or TextureSwizzleRgba.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// For the scalar commands, specifies the value of pname.
         /// </param>
@@ -1690,7 +1690,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: DepthStencilTextureMode, TextureBaseLevel, TextureCompareFunc, TextureCompareMode, TextureLodBias, TextureMinFilter, TextureMagFilter, TextureMinLod, TextureMaxLod, TextureMaxLevel, TextureSwizzleR, TextureSwizzleG, TextureSwizzleB, TextureSwizzleA, TextureWrapS, TextureWrapT, or TextureWrapR.  For the vector commands (glTexParameter*v), pname can also be one of TextureBorderColor or TextureSwizzleRgba.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// For the scalar commands, specifies the value of pname.
         /// </param>
@@ -1729,7 +1729,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: DepthStencilTextureMode, TextureBaseLevel, TextureCompareFunc, TextureCompareMode, TextureLodBias, TextureMinFilter, TextureMagFilter, TextureMinLod, TextureMaxLod, TextureMaxLevel, TextureSwizzleR, TextureSwizzleG, TextureSwizzleB, TextureSwizzleA, TextureWrapS, TextureWrapT, or TextureWrapR.  For the vector commands (glTexParameter*v), pname can also be one of TextureBorderColor or TextureSwizzleRgba.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// For the scalar commands, specifies the value of pname.
         /// </param>
@@ -1749,7 +1749,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: DepthStencilTextureMode, TextureBaseLevel, TextureCompareFunc, TextureCompareMode, TextureLodBias, TextureMinFilter, TextureMagFilter, TextureMinLod, TextureMaxLod, TextureMaxLevel, TextureSwizzleR, TextureSwizzleG, TextureSwizzleB, TextureSwizzleA, TextureWrapS, TextureWrapT, or TextureWrapR.  For the vector commands (glTexParameter*v), pname can also be one of TextureBorderColor or TextureSwizzleRgba.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// For the scalar commands, specifies the value of pname.
         /// </param>
@@ -1769,7 +1769,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: DepthStencilTextureMode, TextureBaseLevel, TextureCompareFunc, TextureCompareMode, TextureLodBias, TextureMinFilter, TextureMagFilter, TextureMinLod, TextureMaxLod, TextureMaxLevel, TextureSwizzleR, TextureSwizzleG, TextureSwizzleB, TextureSwizzleA, TextureWrapS, TextureWrapT, or TextureWrapR.  For the vector commands (glTexParameter*v), pname can also be one of TextureBorderColor or TextureSwizzleRgba.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// For the scalar commands, specifies the value of pname.
         /// </param>

@@ -60,7 +60,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// A token indicating the parameter to be retrieved.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// The address of a variable to receive the value of the parameter named pname.
         /// </param>
@@ -80,7 +80,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// A token indicating the parameter to be retrieved.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// The address of a variable to receive the value of the parameter named pname.
         /// </param>
@@ -100,7 +100,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// A token indicating the parameter to be retrieved.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// The address of a variable to receive the value of the parameter named pname.
         /// </param>

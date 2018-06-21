@@ -38,7 +38,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the array or buffer pointer to be returned. Symbolic constants ColorArrayPointer, EdgeFlagArrayPointer, FogCoordArrayPointer, FeedbackBufferPointer, IndexArrayPointer, NormalArrayPointer, SecondaryColorArrayPointer, SelectionBufferPointer, TextureCoordArrayPointer, or VertexArrayPointer are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 1]
         /// Returns the pointer value specified by pname.
         /// </param>
@@ -55,7 +55,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the array or buffer pointer to be returned. Symbolic constants ColorArrayPointer, EdgeFlagArrayPointer, FogCoordArrayPointer, FeedbackBufferPointer, IndexArrayPointer, NormalArrayPointer, SecondaryColorArrayPointer, SelectionBufferPointer, TextureCoordArrayPointer, or VertexArrayPointer are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 1]
         /// Returns the pointer value specified by pname.
         /// </param>
@@ -73,7 +73,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the array or buffer pointer to be returned. Symbolic constants ColorArrayPointer, EdgeFlagArrayPointer, FogCoordArrayPointer, FeedbackBufferPointer, IndexArrayPointer, NormalArrayPointer, SecondaryColorArrayPointer, SelectionBufferPointer, TextureCoordArrayPointer, or VertexArrayPointer are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 1]
         /// Returns the pointer value specified by pname.
         /// </param>
@@ -91,7 +91,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the array or buffer pointer to be returned. Symbolic constants ColorArrayPointer, EdgeFlagArrayPointer, FogCoordArrayPointer, FeedbackBufferPointer, IndexArrayPointer, NormalArrayPointer, SecondaryColorArrayPointer, SelectionBufferPointer, TextureCoordArrayPointer, or VertexArrayPointer are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 1]
         /// Returns the pointer value specified by pname.
         /// </param>
@@ -109,7 +109,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the array or buffer pointer to be returned. Symbolic constants ColorArrayPointer, EdgeFlagArrayPointer, FogCoordArrayPointer, FeedbackBufferPointer, IndexArrayPointer, NormalArrayPointer, SecondaryColorArrayPointer, SelectionBufferPointer, TextureCoordArrayPointer, or VertexArrayPointer are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 1]
         /// Returns the pointer value specified by pname.
         /// </param>

@@ -323,7 +323,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="location">
         /// Specifies the location of the subroutine uniform.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 1]
         /// Specifies the address of a variable to receive the value or values of the subroutine uniform.
         /// </param>
@@ -343,7 +343,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="location">
         /// Specifies the location of the subroutine uniform.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 1]
         /// Specifies the address of a variable to receive the value or values of the subroutine uniform.
         /// </param>

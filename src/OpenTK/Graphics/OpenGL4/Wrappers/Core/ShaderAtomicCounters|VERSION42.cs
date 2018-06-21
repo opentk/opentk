@@ -44,7 +44,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies which parameter of the atomic counter buffer to retrieve.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Specifies the address of a variable into which to write the retrieved information.
         /// </param>
@@ -67,7 +67,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies which parameter of the atomic counter buffer to retrieve.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Specifies the address of a variable into which to write the retrieved information.
         /// </param>
@@ -90,7 +90,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies which parameter of the atomic counter buffer to retrieve.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Specifies the address of a variable into which to write the retrieved information.
         /// </param>

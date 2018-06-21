@@ -43,7 +43,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// <param name="type">
             /// The namespace from which the name of the object is allocated.
             /// </param>
-            /// <param name="@object">
+            /// <param name="object">
             /// The name of the object whose label to retrieve.
             /// </param>
             /// <param name="bufSize">
@@ -70,7 +70,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// <param name="type">
             /// The namespace from which the name of the object is allocated.
             /// </param>
-            /// <param name="@object">
+            /// <param name="object">
             /// The name of the object whose label to retrieve.
             /// </param>
             /// <param name="bufSize">
@@ -95,7 +95,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// </summary>
             /// <param name="type">
             /// </param>
-            /// <param name="@object">
+            /// <param name="object">
             /// </param>
             /// <param name="length">
             /// </param>

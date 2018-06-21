@@ -565,7 +565,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies a single-valued point parameter. PointFadeThresholdSize, and PointSpriteCoordOrigin are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// For glPointParameterf and glPointParameteri, specifies the value that pname will be set to.
         /// </param>
@@ -582,7 +582,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies a single-valued point parameter. PointFadeThresholdSize, and PointSpriteCoordOrigin are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// For glPointParameterf and glPointParameteri, specifies the value that pname will be set to.
         /// </param>
@@ -599,7 +599,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies a single-valued point parameter. PointFadeThresholdSize, and PointSpriteCoordOrigin are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// For glPointParameterf and glPointParameteri, specifies the value that pname will be set to.
         /// </param>
@@ -632,7 +632,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies a single-valued point parameter. PointFadeThresholdSize, and PointSpriteCoordOrigin are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// For glPointParameterf and glPointParameteri, specifies the value that pname will be set to.
         /// </param>
@@ -649,7 +649,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies a single-valued point parameter. PointFadeThresholdSize, and PointSpriteCoordOrigin are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// For glPointParameterf and glPointParameteri, specifies the value that pname will be set to.
         /// </param>
@@ -666,7 +666,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies a single-valued point parameter. PointFadeThresholdSize, and PointSpriteCoordOrigin are accepted.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// For glPointParameterf and glPointParameteri, specifies the value that pname will be set to.
         /// </param>

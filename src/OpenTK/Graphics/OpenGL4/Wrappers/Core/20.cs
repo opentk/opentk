@@ -521,7 +521,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the object parameter. Accepted symbolic names are DeleteStatus, LinkStatus, ValidateStatus, InfoLogLength, AttachedShaders, ActiveAtomicCounterBuffers, ActiveAttributes, ActiveAttributeMaxLength, ActiveUniforms, ActiveUniformBlocks, ActiveUniformBlockMaxNameLength, ActiveUniformMaxLength, ComputeWorkGroupSizeProgramBinaryLength, TransformFeedbackBufferMode, TransformFeedbackVaryings, TransformFeedbackVaryingMaxLength, GeometryVerticesOut, GeometryInputType, and GeometryOutputType.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested object parameter.
         /// </param>
@@ -541,7 +541,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the object parameter. Accepted symbolic names are DeleteStatus, LinkStatus, ValidateStatus, InfoLogLength, AttachedShaders, ActiveAtomicCounterBuffers, ActiveAttributes, ActiveAttributeMaxLength, ActiveUniforms, ActiveUniformBlocks, ActiveUniformBlockMaxNameLength, ActiveUniformMaxLength, ComputeWorkGroupSizeProgramBinaryLength, TransformFeedbackBufferMode, TransformFeedbackVaryings, TransformFeedbackVaryingMaxLength, GeometryVerticesOut, GeometryInputType, and GeometryOutputType.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested object parameter.
         /// </param>
@@ -561,7 +561,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the object parameter. Accepted symbolic names are DeleteStatus, LinkStatus, ValidateStatus, InfoLogLength, AttachedShaders, ActiveAtomicCounterBuffers, ActiveAttributes, ActiveAttributeMaxLength, ActiveUniforms, ActiveUniformBlocks, ActiveUniformBlockMaxNameLength, ActiveUniformMaxLength, ComputeWorkGroupSizeProgramBinaryLength, TransformFeedbackBufferMode, TransformFeedbackVaryings, TransformFeedbackVaryingMaxLength, GeometryVerticesOut, GeometryInputType, and GeometryOutputType.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested object parameter.
         /// </param>
@@ -677,7 +677,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the object parameter. Accepted symbolic names are ShaderType, DeleteStatus, CompileStatus, InfoLogLength, ShaderSourceLength.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested object parameter.
         /// </param>
@@ -697,7 +697,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the object parameter. Accepted symbolic names are ShaderType, DeleteStatus, CompileStatus, InfoLogLength, ShaderSourceLength.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested object parameter.
         /// </param>
@@ -717,7 +717,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the object parameter. Accepted symbolic names are ShaderType, DeleteStatus, CompileStatus, InfoLogLength, ShaderSourceLength.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested object parameter.
         /// </param>
@@ -753,7 +753,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="location">
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(program,location)]
         /// Returns the value of the specified uniform variable.
         /// </param>
@@ -773,7 +773,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="location">
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(program,location)]
         /// Returns the value of the specified uniform variable.
         /// </param>
@@ -793,7 +793,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="location">
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(program,location)]
         /// Returns the value of the specified uniform variable.
         /// </param>
@@ -813,7 +813,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="location">
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(program,location)]
         /// Returns the value of the specified uniform variable.
         /// </param>
@@ -833,7 +833,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="location">
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(program,location)]
         /// Returns the value of the specified uniform variable.
         /// </param>
@@ -853,7 +853,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="location">
         /// Specifies the location of the uniform variable to be queried.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(program,location)]
         /// Returns the value of the specified uniform variable.
         /// </param>
@@ -977,7 +977,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are VertexAttribArrayBufferBinding, VertexAttribArrayEnabled, VertexAttribArraySize, VertexAttribArrayStride, VertexAttribArrayType, VertexAttribArrayNormalized, VertexAttribArrayInteger, VertexAttribArrayDivisor, or CurrentVertexAttrib.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 4]
         /// Returns the requested data.
         /// </param>
@@ -997,7 +997,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are VertexAttribArrayBufferBinding, VertexAttribArrayEnabled, VertexAttribArraySize, VertexAttribArrayStride, VertexAttribArrayType, VertexAttribArrayNormalized, VertexAttribArrayInteger, VertexAttribArrayDivisor, or CurrentVertexAttrib.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 4]
         /// Returns the requested data.
         /// </param>
@@ -1017,7 +1017,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are VertexAttribArrayBufferBinding, VertexAttribArrayEnabled, VertexAttribArraySize, VertexAttribArrayStride, VertexAttribArrayType, VertexAttribArrayNormalized, VertexAttribArrayInteger, VertexAttribArrayDivisor, or CurrentVertexAttrib.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 4]
         /// Returns the requested data.
         /// </param>
@@ -1037,7 +1037,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are VertexAttribArrayBufferBinding, VertexAttribArrayEnabled, VertexAttribArraySize, VertexAttribArrayStride, VertexAttribArrayType, VertexAttribArrayNormalized, VertexAttribArrayInteger, VertexAttribArrayDivisor, or CurrentVertexAttrib.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 4]
         /// Returns the requested data.
         /// </param>
@@ -1057,7 +1057,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are VertexAttribArrayBufferBinding, VertexAttribArrayEnabled, VertexAttribArraySize, VertexAttribArrayStride, VertexAttribArrayType, VertexAttribArrayNormalized, VertexAttribArrayInteger, VertexAttribArrayDivisor, or CurrentVertexAttrib.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 4]
         /// Returns the requested data.
         /// </param>
@@ -1077,7 +1077,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are VertexAttribArrayBufferBinding, VertexAttribArrayEnabled, VertexAttribArraySize, VertexAttribArrayStride, VertexAttribArrayType, VertexAttribArrayNormalized, VertexAttribArrayInteger, VertexAttribArrayDivisor, or CurrentVertexAttrib.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 4]
         /// Returns the requested data.
         /// </param>
@@ -1097,7 +1097,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are VertexAttribArrayBufferBinding, VertexAttribArrayEnabled, VertexAttribArraySize, VertexAttribArrayStride, VertexAttribArrayType, VertexAttribArrayNormalized, VertexAttribArrayInteger, VertexAttribArrayDivisor, or CurrentVertexAttrib.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 4]
         /// Returns the requested data.
         /// </param>
@@ -1117,7 +1117,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are VertexAttribArrayBufferBinding, VertexAttribArrayEnabled, VertexAttribArraySize, VertexAttribArrayStride, VertexAttribArrayType, VertexAttribArrayNormalized, VertexAttribArrayInteger, VertexAttribArrayDivisor, or CurrentVertexAttrib.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 4]
         /// Returns the requested data.
         /// </param>
@@ -1137,7 +1137,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are VertexAttribArrayBufferBinding, VertexAttribArrayEnabled, VertexAttribArraySize, VertexAttribArrayStride, VertexAttribArrayType, VertexAttribArrayNormalized, VertexAttribArrayInteger, VertexAttribArrayDivisor, or CurrentVertexAttrib.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 4]
         /// Returns the requested data.
         /// </param>
@@ -1196,7 +1196,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="count">
         /// Specifies the number of elements in the string and length arrays.
         /// </param>
-        /// <param name="@string">
+        /// <param name="string">
         /// [length: count]
         /// Specifies an array of pointers to strings containing the source code to be loaded into the shader.
         /// </param>
@@ -1220,7 +1220,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="count">
         /// Specifies the number of elements in the string and length arrays.
         /// </param>
-        /// <param name="@string">
+        /// <param name="string">
         /// [length: count]
         /// Specifies an array of pointers to strings containing the source code to be loaded into the shader.
         /// </param>
@@ -1244,7 +1244,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="count">
         /// Specifies the number of elements in the string and length arrays.
         /// </param>
-        /// <param name="@string">
+        /// <param name="string">
         /// [length: count]
         /// Specifies an array of pointers to strings containing the source code to be loaded into the shader.
         /// </param>
@@ -1268,7 +1268,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="func">
         /// Specifies the test function. Eight symbolic constants are valid: Never, Less, Lequal, Greater, Gequal, Equal, Notequal, and Always. The initial value is Always.
         /// </param>
-        /// <param name="@ref">
+        /// <param name="ref">
         /// Specifies the reference value for the stencil test. ref is clamped to the range [0, 2 sup n - 1], where  is the number of bitplanes in the stencil buffer. The initial value is 0.
         /// </param>
         /// <param name="mask">

@@ -46,7 +46,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// <param name="location">
             /// Specifies the location of the uniform variable to be queried.
             /// </param>
-            /// <param name="@params">
+            /// <param name="params">
             /// [length: COMPSIZE(program,location)]
             /// Returns the value of the specified uniform variable.
             /// </param>
@@ -66,7 +66,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// <param name="location">
             /// Specifies the location of the uniform variable to be queried.
             /// </param>
-            /// <param name="@params">
+            /// <param name="params">
             /// [length: COMPSIZE(program,location)]
             /// Returns the value of the specified uniform variable.
             /// </param>
@@ -86,7 +86,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// <param name="location">
             /// Specifies the location of the uniform variable to be queried.
             /// </param>
-            /// <param name="@params">
+            /// <param name="params">
             /// [length: COMPSIZE(program,location)]
             /// Returns the value of the specified uniform variable.
             /// </param>

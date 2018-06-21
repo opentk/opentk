@@ -335,6 +335,9 @@ namespace Bind
             {
                 var param = f.Parameters[i];
 
+                // XML documentation doesn't require keyword escaping.
+                var docParameterName = param.Name.TrimStart('@');
+
                 var length = string.Empty;
                 if (!string.IsNullOrEmpty(param.ComputeSize))
                 {
@@ -362,7 +365,7 @@ namespace Bind
 
                     // Note: we use param.Name, because the documentation sometimes
                     // uses different names than the specification.
-                    sw.WriteLine($"/// <param name=\"{param.Name}\">");
+                    sw.WriteLine($"/// <param name=\"{docParameterName}\">");
                     if (!string.IsNullOrEmpty(length))
                     {
                         sw.WriteLine($"/// {length}");
@@ -383,7 +386,8 @@ namespace Bind
                     (
                         $"[Warning] Parameter '{param.Name}' in function '{f.Name}' not found in documentation '{docstring}'"
                     );
-                    sw.WriteLine($"/// <param name=\"{param.Name}\">{length}</param>");
+
+                    sw.WriteLine($"/// <param name=\"{docParameterName}\">{length}</param>");
                 }
             }
         }

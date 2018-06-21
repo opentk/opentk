@@ -812,7 +812,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a buffer object parameter. Accepted values are BufferAccess, BufferMapped, BufferSize, or BufferUsage.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested parameter.
         /// </param>
@@ -832,7 +832,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a buffer object parameter. Accepted values are BufferAccess, BufferMapped, BufferSize, or BufferUsage.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested parameter.
         /// </param>
@@ -852,7 +852,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a buffer object parameter. Accepted values are BufferAccess, BufferMapped, BufferSize, or BufferUsage.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested parameter.
         /// </param>
@@ -872,7 +872,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the pointer to be returned.  The symbolic constant must be BufferMapPointer.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 1]
         /// Returns the pointer value specified by pname.
         /// </param>
@@ -892,7 +892,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the pointer to be returned.  The symbolic constant must be BufferMapPointer.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 1]
         /// Returns the pointer value specified by pname.
         /// </param>
@@ -913,7 +913,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the pointer to be returned.  The symbolic constant must be BufferMapPointer.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 1]
         /// Returns the pointer value specified by pname.
         /// </param>
@@ -934,7 +934,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the pointer to be returned.  The symbolic constant must be BufferMapPointer.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 1]
         /// Returns the pointer value specified by pname.
         /// </param>
@@ -955,7 +955,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the pointer to be returned.  The symbolic constant must be BufferMapPointer.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: 1]
         /// Returns the pointer value specified by pname.
         /// </param>
@@ -1214,7 +1214,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a query object parameter. Accepted values are QueryResult or QueryResultAvailable.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// If a buffer is bound to the QueryResultBuffer target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to QueryResultBuffer, then params is treated as an address in client memory of a variable to receive the resulting data.
         /// </param>
@@ -1234,7 +1234,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a query object parameter. Accepted values are QueryResult or QueryResultAvailable.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// If a buffer is bound to the QueryResultBuffer target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to QueryResultBuffer, then params is treated as an address in client memory of a variable to receive the resulting data.
         /// </param>
@@ -1254,7 +1254,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a query object parameter. Accepted values are QueryResult or QueryResultAvailable.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// If a buffer is bound to the QueryResultBuffer target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to QueryResultBuffer, then params is treated as an address in client memory of a variable to receive the resulting data.
         /// </param>
@@ -1274,7 +1274,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a query object parameter. Accepted values are QueryResult or QueryResultAvailable.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// If a buffer is bound to the QueryResultBuffer target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to QueryResultBuffer, then params is treated as an address in client memory of a variable to receive the resulting data.
         /// </param>
@@ -1294,7 +1294,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a query object parameter. Accepted values are QueryResult or QueryResultAvailable.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// If a buffer is bound to the QueryResultBuffer target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to QueryResultBuffer, then params is treated as an address in client memory of a variable to receive the resulting data.
         /// </param>
@@ -1314,7 +1314,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a query object parameter. Accepted values are QueryResult or QueryResultAvailable.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// If a buffer is bound to the QueryResultBuffer target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to QueryResultBuffer, then params is treated as an address in client memory of a variable to receive the resulting data.
         /// </param>
@@ -1334,7 +1334,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a query object target parameter. Accepted values are CurrentQuery or QueryCounterBits.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested data.
         /// </param>
@@ -1354,7 +1354,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a query object target parameter. Accepted values are CurrentQuery or QueryCounterBits.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested data.
         /// </param>
@@ -1374,7 +1374,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a query object target parameter. Accepted values are CurrentQuery or QueryCounterBits.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested data.
         /// </param>

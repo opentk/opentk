@@ -264,7 +264,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the name of the parameter to retrieve.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Specifies the address of a variable into which will be written the value or values of pname for pipeline.
         /// </param>
@@ -284,7 +284,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the name of the parameter to retrieve.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Specifies the address of a variable into which will be written the value or values of pname for pipeline.
         /// </param>
@@ -304,7 +304,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the name of the parameter to retrieve.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Specifies the address of a variable into which will be written the value or values of pname for pipeline.
         /// </param>

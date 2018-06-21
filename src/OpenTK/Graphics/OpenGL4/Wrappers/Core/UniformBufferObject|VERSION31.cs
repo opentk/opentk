@@ -98,7 +98,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the name of the parameter to query.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(program,uniformBlockIndex,pname)]
         /// Specifies the address of a variable to receive the result of the query.
         /// </param>
@@ -121,7 +121,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the name of the parameter to query.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(program,uniformBlockIndex,pname)]
         /// Specifies the address of a variable to receive the result of the query.
         /// </param>
@@ -144,7 +144,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the name of the parameter to query.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(program,uniformBlockIndex,pname)]
         /// Specifies the address of a variable to receive the result of the query.
         /// </param>
@@ -225,7 +225,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the property of each uniform in uniformIndices that should be written into the corresponding element of params.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(uniformCount,pname)]
         /// Specifies the address of an array of uniformCount integers which are to receive the value of pname for each uniform in uniformIndices.
         /// </param>
@@ -252,7 +252,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the property of each uniform in uniformIndices that should be written into the corresponding element of params.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(uniformCount,pname)]
         /// Specifies the address of an array of uniformCount integers which are to receive the value of pname for each uniform in uniformIndices.
         /// </param>
@@ -279,7 +279,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the property of each uniform in uniformIndices that should be written into the corresponding element of params.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(uniformCount,pname)]
         /// Specifies the address of an array of uniformCount integers which are to receive the value of pname for each uniform in uniformIndices.
         /// </param>

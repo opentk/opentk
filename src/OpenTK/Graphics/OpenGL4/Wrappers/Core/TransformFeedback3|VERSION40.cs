@@ -95,7 +95,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a query object target parameter. Accepted values are CurrentQuery or QueryCounterBits.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested data.
         /// </param>
@@ -118,7 +118,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a query object target parameter. Accepted values are CurrentQuery or QueryCounterBits.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested data.
         /// </param>
@@ -141,7 +141,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <param name="pname">
         /// Specifies the symbolic name of a query object target parameter. Accepted values are CurrentQuery or QueryCounterBits.
         /// </param>
-        /// <param name="@params">
+        /// <param name="params">
         /// [length: COMPSIZE(pname)]
         /// Returns the requested data.
         /// </param>

@@ -41,7 +41,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// </summary>
             /// <param name="context">
             /// </param>
-            /// <param name="@event">
+            /// <param name="event">
             /// </param>
             /// <param name="flags">
             /// </param>
@@ -56,7 +56,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// </summary>
             /// <param name="context">
             /// </param>
-            /// <param name="@event">
+            /// <param name="event">
             /// </param>
             /// <param name="flags">
             /// </param>
@@ -71,7 +71,7 @@ namespace OpenTK.Graphics.OpenGL4
             /// </summary>
             /// <param name="context">
             /// </param>
-            /// <param name="@event">
+            /// <param name="event">
             /// </param>
             /// <param name="flags">
             /// </param>
