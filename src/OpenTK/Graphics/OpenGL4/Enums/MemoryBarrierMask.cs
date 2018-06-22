@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -36,147 +38,147 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT = 0x00000001
         /// </summary>
-        VertexAttribArrayBarrierBit = ((int)0x00000001),
+        VertexAttribArrayBarrierBit = 0x00000001,
 
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT_EXT = 0x00000001
         /// </summary>
-        VertexAttribArrayBarrierBitExt = ((int)0x00000001),
+        VertexAttribArrayBarrierBitExt = 0x00000001,
 
         /// <summary>
         /// Original was GL_ELEMENT_ARRAY_BARRIER_BIT = 0x00000002
         /// </summary>
-        ElementArrayBarrierBit = ((int)0x00000002),
+        ElementArrayBarrierBit = 0x00000002,
 
         /// <summary>
         /// Original was GL_ELEMENT_ARRAY_BARRIER_BIT_EXT = 0x00000002
         /// </summary>
-        ElementArrayBarrierBitExt = ((int)0x00000002),
+        ElementArrayBarrierBitExt = 0x00000002,
 
         /// <summary>
         /// Original was GL_UNIFORM_BARRIER_BIT = 0x00000004
         /// </summary>
-        UniformBarrierBit = ((int)0x00000004),
+        UniformBarrierBit = 0x00000004,
 
         /// <summary>
         /// Original was GL_UNIFORM_BARRIER_BIT_EXT = 0x00000004
         /// </summary>
-        UniformBarrierBitExt = ((int)0x00000004),
+        UniformBarrierBitExt = 0x00000004,
 
         /// <summary>
         /// Original was GL_TEXTURE_FETCH_BARRIER_BIT = 0x00000008
         /// </summary>
-        TextureFetchBarrierBit = ((int)0x00000008),
+        TextureFetchBarrierBit = 0x00000008,
 
         /// <summary>
         /// Original was GL_TEXTURE_FETCH_BARRIER_BIT_EXT = 0x00000008
         /// </summary>
-        TextureFetchBarrierBitExt = ((int)0x00000008),
+        TextureFetchBarrierBitExt = 0x00000008,
 
         /// <summary>
         /// Original was GL_SHADER_GLOBAL_ACCESS_BARRIER_BIT_NV = 0x00000010
         /// </summary>
-        ShaderGlobalAccessBarrierBitNv = ((int)0x00000010),
+        ShaderGlobalAccessBarrierBitNv = 0x00000010,
 
         /// <summary>
         /// Original was GL_SHADER_IMAGE_ACCESS_BARRIER_BIT = 0x00000020
         /// </summary>
-        ShaderImageAccessBarrierBit = ((int)0x00000020),
+        ShaderImageAccessBarrierBit = 0x00000020,
 
         /// <summary>
         /// Original was GL_SHADER_IMAGE_ACCESS_BARRIER_BIT_EXT = 0x00000020
         /// </summary>
-        ShaderImageAccessBarrierBitExt = ((int)0x00000020),
+        ShaderImageAccessBarrierBitExt = 0x00000020,
 
         /// <summary>
         /// Original was GL_COMMAND_BARRIER_BIT = 0x00000040
         /// </summary>
-        CommandBarrierBit = ((int)0x00000040),
+        CommandBarrierBit = 0x00000040,
 
         /// <summary>
         /// Original was GL_COMMAND_BARRIER_BIT_EXT = 0x00000040
         /// </summary>
-        CommandBarrierBitExt = ((int)0x00000040),
+        CommandBarrierBitExt = 0x00000040,
 
         /// <summary>
         /// Original was GL_PIXEL_BUFFER_BARRIER_BIT = 0x00000080
         /// </summary>
-        PixelBufferBarrierBit = ((int)0x00000080),
+        PixelBufferBarrierBit = 0x00000080,
 
         /// <summary>
         /// Original was GL_PIXEL_BUFFER_BARRIER_BIT_EXT = 0x00000080
         /// </summary>
-        PixelBufferBarrierBitExt = ((int)0x00000080),
+        PixelBufferBarrierBitExt = 0x00000080,
 
         /// <summary>
         /// Original was GL_TEXTURE_UPDATE_BARRIER_BIT = 0x00000100
         /// </summary>
-        TextureUpdateBarrierBit = ((int)0x00000100),
+        TextureUpdateBarrierBit = 0x00000100,
 
         /// <summary>
         /// Original was GL_TEXTURE_UPDATE_BARRIER_BIT_EXT = 0x00000100
         /// </summary>
-        TextureUpdateBarrierBitExt = ((int)0x00000100),
+        TextureUpdateBarrierBitExt = 0x00000100,
 
         /// <summary>
         /// Original was GL_BUFFER_UPDATE_BARRIER_BIT = 0x00000200
         /// </summary>
-        BufferUpdateBarrierBit = ((int)0x00000200),
+        BufferUpdateBarrierBit = 0x00000200,
 
         /// <summary>
         /// Original was GL_BUFFER_UPDATE_BARRIER_BIT_EXT = 0x00000200
         /// </summary>
-        BufferUpdateBarrierBitExt = ((int)0x00000200),
+        BufferUpdateBarrierBitExt = 0x00000200,
 
         /// <summary>
         /// Original was GL_FRAMEBUFFER_BARRIER_BIT = 0x00000400
         /// </summary>
-        FramebufferBarrierBit = ((int)0x00000400),
+        FramebufferBarrierBit = 0x00000400,
 
         /// <summary>
         /// Original was GL_FRAMEBUFFER_BARRIER_BIT_EXT = 0x00000400
         /// </summary>
-        FramebufferBarrierBitExt = ((int)0x00000400),
+        FramebufferBarrierBitExt = 0x00000400,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_BARRIER_BIT = 0x00000800
         /// </summary>
-        TransformFeedbackBarrierBit = ((int)0x00000800),
+        TransformFeedbackBarrierBit = 0x00000800,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_BARRIER_BIT_EXT = 0x00000800
         /// </summary>
-        TransformFeedbackBarrierBitExt = ((int)0x00000800),
+        TransformFeedbackBarrierBitExt = 0x00000800,
 
         /// <summary>
         /// Original was GL_ATOMIC_COUNTER_BARRIER_BIT = 0x00001000
         /// </summary>
-        AtomicCounterBarrierBit = ((int)0x00001000),
+        AtomicCounterBarrierBit = 0x00001000,
 
         /// <summary>
         /// Original was GL_ATOMIC_COUNTER_BARRIER_BIT_EXT = 0x00001000
         /// </summary>
-        AtomicCounterBarrierBitExt = ((int)0x00001000),
+        AtomicCounterBarrierBitExt = 0x00001000,
 
         /// <summary>
         /// Original was GL_SHADER_STORAGE_BARRIER_BIT = 0x00002000
         /// </summary>
-        ShaderStorageBarrierBit = ((int)0x00002000),
+        ShaderStorageBarrierBit = 0x00002000,
 
         /// <summary>
         /// Original was GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT = 0x00004000
         /// </summary>
-        ClientMappedBufferBarrierBit = ((int)0x00004000),
+        ClientMappedBufferBarrierBit = 0x00004000,
 
         /// <summary>
         /// Original was GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT_EXT = 0x00004000
         /// </summary>
-        ClientMappedBufferBarrierBitExt = ((int)0x00004000),
+        ClientMappedBufferBarrierBitExt = 0x00004000,
 
         /// <summary>
         /// Original was GL_QUERY_BUFFER_BARRIER_BIT = 0x00008000
         /// </summary>
-        QueryBufferBarrierBit = ((int)0x00008000),
+        QueryBufferBarrierBit = 0x00008000,
 
         /// <summary>
         /// Original was GL_ALL_BARRIER_BITS = 0xFFFFFFFF

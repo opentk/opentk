@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -35,62 +37,62 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT = 0x00000001
         /// </summary>
-        VertexAttribArrayBarrierBit = ((int)0x00000001),
+        VertexAttribArrayBarrierBit = 0x00000001,
 
         /// <summary>
         /// Original was GL_ELEMENT_ARRAY_BARRIER_BIT = 0x00000002
         /// </summary>
-        ElementArrayBarrierBit = ((int)0x00000002),
+        ElementArrayBarrierBit = 0x00000002,
 
         /// <summary>
         /// Original was GL_UNIFORM_BARRIER_BIT = 0x00000004
         /// </summary>
-        UniformBarrierBit = ((int)0x00000004),
+        UniformBarrierBit = 0x00000004,
 
         /// <summary>
         /// Original was GL_TEXTURE_FETCH_BARRIER_BIT = 0x00000008
         /// </summary>
-        TextureFetchBarrierBit = ((int)0x00000008),
+        TextureFetchBarrierBit = 0x00000008,
 
         /// <summary>
         /// Original was GL_SHADER_IMAGE_ACCESS_BARRIER_BIT = 0x00000020
         /// </summary>
-        ShaderImageAccessBarrierBit = ((int)0x00000020),
+        ShaderImageAccessBarrierBit = 0x00000020,
 
         /// <summary>
         /// Original was GL_COMMAND_BARRIER_BIT = 0x00000040
         /// </summary>
-        CommandBarrierBit = ((int)0x00000040),
+        CommandBarrierBit = 0x00000040,
 
         /// <summary>
         /// Original was GL_PIXEL_BUFFER_BARRIER_BIT = 0x00000080
         /// </summary>
-        PixelBufferBarrierBit = ((int)0x00000080),
+        PixelBufferBarrierBit = 0x00000080,
 
         /// <summary>
         /// Original was GL_TEXTURE_UPDATE_BARRIER_BIT = 0x00000100
         /// </summary>
-        TextureUpdateBarrierBit = ((int)0x00000100),
+        TextureUpdateBarrierBit = 0x00000100,
 
         /// <summary>
         /// Original was GL_BUFFER_UPDATE_BARRIER_BIT = 0x00000200
         /// </summary>
-        BufferUpdateBarrierBit = ((int)0x00000200),
+        BufferUpdateBarrierBit = 0x00000200,
 
         /// <summary>
         /// Original was GL_FRAMEBUFFER_BARRIER_BIT = 0x00000400
         /// </summary>
-        FramebufferBarrierBit = ((int)0x00000400),
+        FramebufferBarrierBit = 0x00000400,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_BARRIER_BIT = 0x00000800
         /// </summary>
-        TransformFeedbackBarrierBit = ((int)0x00000800),
+        TransformFeedbackBarrierBit = 0x00000800,
 
         /// <summary>
         /// Original was GL_ATOMIC_COUNTER_BARRIER_BIT = 0x00001000
         /// </summary>
-        AtomicCounterBarrierBit = ((int)0x00001000),
+        AtomicCounterBarrierBit = 0x00001000,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_PAUSED = 0x8E23

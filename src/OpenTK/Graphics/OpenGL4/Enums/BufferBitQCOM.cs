@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -35,157 +37,157 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_BUFFER_BIT0_QCOM = 0x00000001
         /// </summary>
-        ColorBufferBit0Qcom = ((int)0x00000001),
+        ColorBufferBit0Qcom = 0x00000001,
 
         /// <summary>
         /// Original was GL_COLOR_BUFFER_BIT1_QCOM = 0x00000002
         /// </summary>
-        ColorBufferBit1Qcom = ((int)0x00000002),
+        ColorBufferBit1Qcom = 0x00000002,
 
         /// <summary>
         /// Original was GL_COLOR_BUFFER_BIT2_QCOM = 0x00000004
         /// </summary>
-        ColorBufferBit2Qcom = ((int)0x00000004),
+        ColorBufferBit2Qcom = 0x00000004,
 
         /// <summary>
         /// Original was GL_COLOR_BUFFER_BIT3_QCOM = 0x00000008
         /// </summary>
-        ColorBufferBit3Qcom = ((int)0x00000008),
+        ColorBufferBit3Qcom = 0x00000008,
 
         /// <summary>
         /// Original was GL_COLOR_BUFFER_BIT4_QCOM = 0x00000010
         /// </summary>
-        ColorBufferBit4Qcom = ((int)0x00000010),
+        ColorBufferBit4Qcom = 0x00000010,
 
         /// <summary>
         /// Original was GL_COLOR_BUFFER_BIT5_QCOM = 0x00000020
         /// </summary>
-        ColorBufferBit5Qcom = ((int)0x00000020),
+        ColorBufferBit5Qcom = 0x00000020,
 
         /// <summary>
         /// Original was GL_COLOR_BUFFER_BIT6_QCOM = 0x00000040
         /// </summary>
-        ColorBufferBit6Qcom = ((int)0x00000040),
+        ColorBufferBit6Qcom = 0x00000040,
 
         /// <summary>
         /// Original was GL_COLOR_BUFFER_BIT7_QCOM = 0x00000080
         /// </summary>
-        ColorBufferBit7Qcom = ((int)0x00000080),
+        ColorBufferBit7Qcom = 0x00000080,
 
         /// <summary>
         /// Original was GL_DEPTH_BUFFER_BIT0_QCOM = 0x00000100
         /// </summary>
-        DepthBufferBit0Qcom = ((int)0x00000100),
+        DepthBufferBit0Qcom = 0x00000100,
 
         /// <summary>
         /// Original was GL_DEPTH_BUFFER_BIT1_QCOM = 0x00000200
         /// </summary>
-        DepthBufferBit1Qcom = ((int)0x00000200),
+        DepthBufferBit1Qcom = 0x00000200,
 
         /// <summary>
         /// Original was GL_DEPTH_BUFFER_BIT2_QCOM = 0x00000400
         /// </summary>
-        DepthBufferBit2Qcom = ((int)0x00000400),
+        DepthBufferBit2Qcom = 0x00000400,
 
         /// <summary>
         /// Original was GL_DEPTH_BUFFER_BIT3_QCOM = 0x00000800
         /// </summary>
-        DepthBufferBit3Qcom = ((int)0x00000800),
+        DepthBufferBit3Qcom = 0x00000800,
 
         /// <summary>
         /// Original was GL_DEPTH_BUFFER_BIT4_QCOM = 0x00001000
         /// </summary>
-        DepthBufferBit4Qcom = ((int)0x00001000),
+        DepthBufferBit4Qcom = 0x00001000,
 
         /// <summary>
         /// Original was GL_DEPTH_BUFFER_BIT5_QCOM = 0x00002000
         /// </summary>
-        DepthBufferBit5Qcom = ((int)0x00002000),
+        DepthBufferBit5Qcom = 0x00002000,
 
         /// <summary>
         /// Original was GL_DEPTH_BUFFER_BIT6_QCOM = 0x00004000
         /// </summary>
-        DepthBufferBit6Qcom = ((int)0x00004000),
+        DepthBufferBit6Qcom = 0x00004000,
 
         /// <summary>
         /// Original was GL_DEPTH_BUFFER_BIT7_QCOM = 0x00008000
         /// </summary>
-        DepthBufferBit7Qcom = ((int)0x00008000),
+        DepthBufferBit7Qcom = 0x00008000,
 
         /// <summary>
         /// Original was GL_STENCIL_BUFFER_BIT0_QCOM = 0x00010000
         /// </summary>
-        StencilBufferBit0Qcom = ((int)0x00010000),
+        StencilBufferBit0Qcom = 0x00010000,
 
         /// <summary>
         /// Original was GL_STENCIL_BUFFER_BIT1_QCOM = 0x00020000
         /// </summary>
-        StencilBufferBit1Qcom = ((int)0x00020000),
+        StencilBufferBit1Qcom = 0x00020000,
 
         /// <summary>
         /// Original was GL_STENCIL_BUFFER_BIT2_QCOM = 0x00040000
         /// </summary>
-        StencilBufferBit2Qcom = ((int)0x00040000),
+        StencilBufferBit2Qcom = 0x00040000,
 
         /// <summary>
         /// Original was GL_STENCIL_BUFFER_BIT3_QCOM = 0x00080000
         /// </summary>
-        StencilBufferBit3Qcom = ((int)0x00080000),
+        StencilBufferBit3Qcom = 0x00080000,
 
         /// <summary>
         /// Original was GL_STENCIL_BUFFER_BIT4_QCOM = 0x00100000
         /// </summary>
-        StencilBufferBit4Qcom = ((int)0x00100000),
+        StencilBufferBit4Qcom = 0x00100000,
 
         /// <summary>
         /// Original was GL_STENCIL_BUFFER_BIT5_QCOM = 0x00200000
         /// </summary>
-        StencilBufferBit5Qcom = ((int)0x00200000),
+        StencilBufferBit5Qcom = 0x00200000,
 
         /// <summary>
         /// Original was GL_STENCIL_BUFFER_BIT6_QCOM = 0x00400000
         /// </summary>
-        StencilBufferBit6Qcom = ((int)0x00400000),
+        StencilBufferBit6Qcom = 0x00400000,
 
         /// <summary>
         /// Original was GL_STENCIL_BUFFER_BIT7_QCOM = 0x00800000
         /// </summary>
-        StencilBufferBit7Qcom = ((int)0x00800000),
+        StencilBufferBit7Qcom = 0x00800000,
 
         /// <summary>
         /// Original was GL_MULTISAMPLE_BUFFER_BIT0_QCOM = 0x01000000
         /// </summary>
-        MultisampleBufferBit0Qcom = ((int)0x01000000),
+        MultisampleBufferBit0Qcom = 0x01000000,
 
         /// <summary>
         /// Original was GL_MULTISAMPLE_BUFFER_BIT1_QCOM = 0x02000000
         /// </summary>
-        MultisampleBufferBit1Qcom = ((int)0x02000000),
+        MultisampleBufferBit1Qcom = 0x02000000,
 
         /// <summary>
         /// Original was GL_MULTISAMPLE_BUFFER_BIT2_QCOM = 0x04000000
         /// </summary>
-        MultisampleBufferBit2Qcom = ((int)0x04000000),
+        MultisampleBufferBit2Qcom = 0x04000000,
 
         /// <summary>
         /// Original was GL_MULTISAMPLE_BUFFER_BIT3_QCOM = 0x08000000
         /// </summary>
-        MultisampleBufferBit3Qcom = ((int)0x08000000),
+        MultisampleBufferBit3Qcom = 0x08000000,
 
         /// <summary>
         /// Original was GL_MULTISAMPLE_BUFFER_BIT4_QCOM = 0x10000000
         /// </summary>
-        MultisampleBufferBit4Qcom = ((int)0x10000000),
+        MultisampleBufferBit4Qcom = 0x10000000,
 
         /// <summary>
         /// Original was GL_MULTISAMPLE_BUFFER_BIT5_QCOM = 0x20000000
         /// </summary>
-        MultisampleBufferBit5Qcom = ((int)0x20000000),
+        MultisampleBufferBit5Qcom = 0x20000000,
 
         /// <summary>
         /// Original was GL_MULTISAMPLE_BUFFER_BIT6_QCOM = 0x40000000
         /// </summary>
-        MultisampleBufferBit6Qcom = ((int)0x40000000),
+        MultisampleBufferBit6Qcom = 0x40000000,
 
         /// <summary>
         /// Original was GL_MULTISAMPLE_BUFFER_BIT7_QCOM = 0x80000000

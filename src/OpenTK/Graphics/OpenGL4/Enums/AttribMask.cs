@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -36,36 +38,36 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEPTH_BUFFER_BIT = 0x00000100
         /// </summary>
-        DepthBufferBit = ((int)0x00000100),
+        DepthBufferBit = 0x00000100,
 
         /// <summary>
         /// Original was GL_STENCIL_BUFFER_BIT = 0x00000400
         /// </summary>
-        StencilBufferBit = ((int)0x00000400),
+        StencilBufferBit = 0x00000400,
 
         /// <summary>
         /// Original was GL_COLOR_BUFFER_BIT = 0x00004000
         /// </summary>
-        ColorBufferBit = ((int)0x00004000),
+        ColorBufferBit = 0x00004000,
 
         /// <summary>
         /// Original was GL_MULTISAMPLE_BIT = 0x20000000
         /// </summary>
-        MultisampleBit = ((int)0x20000000),
+        MultisampleBit = 0x20000000,
 
         /// <summary>
         /// Original was GL_MULTISAMPLE_BIT_3DFX = 0x20000000
         /// </summary>
-        MultisampleBit3Dfx = ((int)0x20000000),
+        MultisampleBit3Dfx = 0x20000000,
 
         /// <summary>
         /// Original was GL_MULTISAMPLE_BIT_ARB = 0x20000000
         /// </summary>
-        MultisampleBitArb = ((int)0x20000000),
+        MultisampleBitArb = 0x20000000,
 
         /// <summary>
         /// Original was GL_MULTISAMPLE_BIT_EXT = 0x20000000
         /// </summary>
-        MultisampleBitExt = ((int)0x20000000)
+        MultisampleBitExt = 0x20000000
     }
 }

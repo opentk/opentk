@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -36,11 +38,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_CONTEXT_CORE_PROFILE_BIT = 0x00000001
         /// </summary>
-        ContextCoreProfileBit = ((int)0x00000001),
+        ContextCoreProfileBit = 0x00000001,
 
         /// <summary>
         /// Original was GL_CONTEXT_COMPATIBILITY_PROFILE_BIT = 0x00000002
         /// </summary>
-        ContextCompatibilityProfileBit = ((int)0x00000002)
+        ContextCompatibilityProfileBit = 0x00000002
     }
 }

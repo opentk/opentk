@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -35,7 +37,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_SHADER_STORAGE_BARRIER_BIT = 0x00002000
         /// </summary>
-        ShaderStorageBarrierBit = ((int)0x00002000),
+        ShaderStorageBarrierBit = 0x00002000,
 
         /// <summary>
         /// Original was GL_MAX_COMBINED_IMAGE_UNITS_AND_FRAGMENT_OUTPUTS = 0x8F39

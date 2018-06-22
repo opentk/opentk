@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -35,27 +37,27 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_GL_UNIFORM_BARRIER_BIT = 0x00000004
         /// </summary>
-        GlUniformBarrierBit = ((int)0x00000004),
+        GlUniformBarrierBit = 0x00000004,
 
         /// <summary>
         /// Original was GL_GL_TEXTURE_FETCH_BARRIER_BIT = 0x00000008
         /// </summary>
-        GlTextureFetchBarrierBit = ((int)0x00000008),
+        GlTextureFetchBarrierBit = 0x00000008,
 
         /// <summary>
         /// Original was GL_GL_SHADER_IMAGE_ACCESS_BARRIER_BIT = 0x00000020
         /// </summary>
-        GlShaderImageAccessBarrierBit = ((int)0x00000020),
+        GlShaderImageAccessBarrierBit = 0x00000020,
 
         /// <summary>
         /// Original was GL_GL_FRAMEBUFFER_BARRIER_BIT = 0x00000400
         /// </summary>
-        GlFramebufferBarrierBit = ((int)0x00000400),
+        GlFramebufferBarrierBit = 0x00000400,
 
         /// <summary>
         /// Original was GL_GL_ATOMIC_COUNTER_BARRIER_BIT = 0x00001000
         /// </summary>
-        GlAtomicCounterBarrierBit = ((int)0x00001000),
+        GlAtomicCounterBarrierBit = 0x00001000,
 
         /// <summary>
         /// Original was GL_GL_ALL_BARRIER_BITS = 0xFFFFFFFF

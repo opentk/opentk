@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -36,41 +38,41 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_CONTEXT_FLAG_FORWARD_COMPATIBLE_BIT = 0x00000001
         /// </summary>
-        ContextFlagForwardCompatibleBit = ((int)0x00000001),
+        ContextFlagForwardCompatibleBit = 0x00000001,
 
         /// <summary>
         /// Original was GL_CONTEXT_FLAG_DEBUG_BIT = 0x00000002
         /// </summary>
-        ContextFlagDebugBit = ((int)0x00000002),
+        ContextFlagDebugBit = 0x00000002,
 
         /// <summary>
         /// Original was GL_CONTEXT_FLAG_DEBUG_BIT_KHR = 0x00000002
         /// </summary>
-        ContextFlagDebugBitKhr = ((int)0x00000002),
+        ContextFlagDebugBitKhr = 0x00000002,
 
         /// <summary>
         /// Original was GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT = 0x00000004
         /// </summary>
-        ContextFlagRobustAccessBit = ((int)0x00000004),
+        ContextFlagRobustAccessBit = 0x00000004,
 
         /// <summary>
         /// Original was GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT_ARB = 0x00000004
         /// </summary>
-        ContextFlagRobustAccessBitArb = ((int)0x00000004),
+        ContextFlagRobustAccessBitArb = 0x00000004,
 
         /// <summary>
         /// Original was GL_CONTEXT_FLAG_NO_ERROR_BIT = 0x00000008
         /// </summary>
-        ContextFlagNoErrorBit = ((int)0x00000008),
+        ContextFlagNoErrorBit = 0x00000008,
 
         /// <summary>
         /// Original was GL_CONTEXT_FLAG_NO_ERROR_BIT_KHR = 0x00000008
         /// </summary>
-        ContextFlagNoErrorBitKhr = ((int)0x00000008),
+        ContextFlagNoErrorBitKhr = 0x00000008,
 
         /// <summary>
         /// Original was GL_CONTEXT_FLAG_PROTECTED_CONTENT_BIT_EXT = 0x00000010
         /// </summary>
-        ContextFlagProtectedContentBitExt = ((int)0x00000010)
+        ContextFlagProtectedContentBitExt = 0x00000010
     }
 }

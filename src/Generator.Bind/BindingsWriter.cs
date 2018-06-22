@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -421,7 +422,10 @@ namespace Bind
                 {
                     valueString = valueString.ToLowerInvariant();
 
-                    var needsCasting = c.Value.SkipWhile(ch => ch != 'x').Count() > 7;
+                    var hexValue = new string(c.Value.SkipWhile(ch => ch != 'x').Skip(1).ToArray());
+                    long integerValue = long.Parse(hexValue, NumberStyles.HexNumber);
+
+                    var needsCasting = integerValue > int.MaxValue || integerValue < 0;
                     if (needsCasting)
                     {
                         // We need to cast this to a straight integer
@@ -490,6 +494,9 @@ namespace Bind
                         sw.WriteLineNoTabs();
 
                         sw.WriteLine("using System;");
+                        sw.WriteLineNoTabs();
+
+                        sw.WriteLine("#pragma warning disable SA1139 // Use literal suffix notation instead of casting");
                         sw.WriteLineNoTabs();
 
                         sw.WriteLine($"namespace {Generator.Namespace}");

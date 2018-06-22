@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -35,12 +37,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PERFQUERY_SINGLE_CONTEXT_INTEL = 0x00000000
         /// </summary>
-        PerfquerySingleContextIntel = ((int)0x00000000),
+        PerfquerySingleContextIntel = 0x00000000,
 
         /// <summary>
         /// Original was GL_PERFQUERY_GLOBAL_CONTEXT_INTEL = 0x00000001
         /// </summary>
-        PerfqueryGlobalContextIntel = ((int)0x00000001),
+        PerfqueryGlobalContextIntel = 0x00000001,
 
         /// <summary>
         /// Original was GL_PERFQUERY_DONOT_FLUSH_INTEL = 0x83F9

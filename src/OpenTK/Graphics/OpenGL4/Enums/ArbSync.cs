@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -35,7 +37,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_SYNC_FLUSH_COMMANDS_BIT = 0x00000001
         /// </summary>
-        SyncFlushCommandsBit = ((int)0x00000001),
+        SyncFlushCommandsBit = 0x00000001,
 
         /// <summary>
         /// Original was GL_MAX_SERVER_WAIT_TIMEOUT = 0x9111

@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -36,6 +38,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_STORAGE_SPARSE_BIT_AMD = 0x00000001
         /// </summary>
-        TextureStorageSparseBitAmd = ((int)0x00000001)
+        TextureStorageSparseBitAmd = 0x00000001
     }
 }

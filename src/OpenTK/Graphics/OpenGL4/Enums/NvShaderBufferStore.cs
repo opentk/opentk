@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -35,7 +37,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_SHADER_GLOBAL_ACCESS_BARRIER_BIT_NV = 0x00000010
         /// </summary>
-        ShaderGlobalAccessBarrierBitNv = ((int)0x00000010),
+        ShaderGlobalAccessBarrierBitNv = 0x00000010,
 
         /// <summary>
         /// Original was GL_WRITE_ONLY = 0x88B9

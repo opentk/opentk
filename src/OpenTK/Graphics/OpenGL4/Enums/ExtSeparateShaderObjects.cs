@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -35,12 +37,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_VERTEX_SHADER_BIT_EXT = 0x00000001
         /// </summary>
-        VertexShaderBitExt = ((int)0x00000001),
+        VertexShaderBitExt = 0x00000001,
 
         /// <summary>
         /// Original was GL_FRAGMENT_SHADER_BIT_EXT = 0x00000002
         /// </summary>
-        FragmentShaderBitExt = ((int)0x00000002),
+        FragmentShaderBitExt = 0x00000002,
 
         /// <summary>
         /// Original was GL_PROGRAM_SEPARABLE_EXT = 0x8258

@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -35,6 +37,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_CONTEXT_FLAG_NO_ERROR_BIT_KHR = 0x00000008
         /// </summary>
-        ContextFlagNoErrorBitKhr = ((int)0x00000008)
+        ContextFlagNoErrorBitKhr = 0x00000008
     }
 }

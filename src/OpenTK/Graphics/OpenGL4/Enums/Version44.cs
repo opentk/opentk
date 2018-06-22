@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -35,12 +37,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT = 0x00004000
         /// </summary>
-        ClientMappedBufferBarrierBit = ((int)0x00004000),
+        ClientMappedBufferBarrierBit = 0x00004000,
 
         /// <summary>
         /// Original was GL_QUERY_BUFFER_BARRIER_BIT = 0x00008000
         /// </summary>
-        QueryBufferBarrierBit = ((int)0x00008000),
+        QueryBufferBarrierBit = 0x00008000,
 
         /// <summary>
         /// Original was GL_MAP_READ_BIT = 0x0001

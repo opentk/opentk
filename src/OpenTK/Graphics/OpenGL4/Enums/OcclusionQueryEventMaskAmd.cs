@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -36,22 +38,22 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_QUERY_DEPTH_PASS_EVENT_BIT_AMD = 0x00000001
         /// </summary>
-        QueryDepthPassEventBitAmd = ((int)0x00000001),
+        QueryDepthPassEventBitAmd = 0x00000001,
 
         /// <summary>
         /// Original was GL_QUERY_DEPTH_FAIL_EVENT_BIT_AMD = 0x00000002
         /// </summary>
-        QueryDepthFailEventBitAmd = ((int)0x00000002),
+        QueryDepthFailEventBitAmd = 0x00000002,
 
         /// <summary>
         /// Original was GL_QUERY_STENCIL_FAIL_EVENT_BIT_AMD = 0x00000004
         /// </summary>
-        QueryStencilFailEventBitAmd = ((int)0x00000004),
+        QueryStencilFailEventBitAmd = 0x00000004,
 
         /// <summary>
         /// Original was GL_QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD = 0x00000008
         /// </summary>
-        QueryDepthBoundsFailEventBitAmd = ((int)0x00000008),
+        QueryDepthBoundsFailEventBitAmd = 0x00000008,
 
         /// <summary>
         /// Original was GL_QUERY_ALL_EVENT_BITS_AMD = 0xFFFFFFFF

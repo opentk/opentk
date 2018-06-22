@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -41,26 +43,26 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEPTH_BUFFER_BIT = 0x00000100
         /// </summary>
-        DepthBufferBit = ((int)0x00000100),
+        DepthBufferBit = 0x00000100,
 
         /// <summary>
         /// Original was GL_ACCUM_BUFFER_BIT = 0x00000200
         /// </summary>
-        AccumBufferBit = ((int)0x00000200),
+        AccumBufferBit = 0x00000200,
 
         /// <summary>
         /// Original was GL_STENCIL_BUFFER_BIT = 0x00000400
         /// </summary>
-        StencilBufferBit = ((int)0x00000400),
+        StencilBufferBit = 0x00000400,
 
         /// <summary>
         /// Original was GL_COLOR_BUFFER_BIT = 0x00004000
         /// </summary>
-        ColorBufferBit = ((int)0x00004000),
+        ColorBufferBit = 0x00004000,
 
         /// <summary>
         /// Original was GL_COVERAGE_BUFFER_BIT_NV = 0x00008000
         /// </summary>
-        CoverageBufferBitNv = ((int)0x00008000)
+        CoverageBufferBitNv = 0x00008000
     }
 }

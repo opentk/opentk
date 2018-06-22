@@ -25,6 +25,8 @@
 
 using System;
 
+#pragma warning disable SA1139 // Use literal suffix notation instead of casting
+
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
@@ -35,7 +37,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COMPUTE_SHADER_BIT = 0x00000020
         /// </summary>
-        ComputeShaderBit = ((int)0x00000020),
+        ComputeShaderBit = 0x00000020,
 
         /// <summary>
         /// Original was GL_MAX_COMPUTE_SHARED_MEMORY_SIZE = 0x8262
