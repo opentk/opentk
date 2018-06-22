@@ -227,6 +227,9 @@ namespace Bind
 
                                     sw.WriteLineNoTabs();
 
+                                    sw.WriteLine("#pragma warning disable SA1300 // Element should begin with an upper-case letter");
+                                    sw.WriteLineNoTabs();
+
                                     // Emit native signatures.
                                     // These are required by the patcher.
                                     var categoryNatives = categoryWrappers.Select(w => w.WrappedDelegateDefinition).Distinct().ToList();
@@ -394,6 +397,13 @@ namespace Bind
 
                     sw.WriteLine($"/// <param name=\"{docParameterName}\">{length}</param>");
                 }
+            }
+
+            // Write generic parameter documentation
+            var genericParameterNames = f.Parameters.Where(p => p.Generic).Select(p => p.ParameterType.TypeName).Distinct();
+            foreach (var genericParameterName in genericParameterNames)
+            {
+                sw.WriteLine($"/// <typeparam name=\"{genericParameterName}\"></typeparam>");
             }
         }
 
