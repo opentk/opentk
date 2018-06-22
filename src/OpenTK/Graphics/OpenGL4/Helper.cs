@@ -127,9 +127,9 @@ namespace OpenTK.Graphics.OpenGL4
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix2(location, 1, transpose, matrix_ptr);
+                    UniformMatrix2(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -138,9 +138,9 @@ namespace OpenTK.Graphics.OpenGL4
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix3(location, 1, transpose, matrix_ptr);
+                    UniformMatrix3(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -149,9 +149,9 @@ namespace OpenTK.Graphics.OpenGL4
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix4(location, 1, transpose, matrix_ptr);
+                    UniformMatrix4(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -200,9 +200,9 @@ namespace OpenTK.Graphics.OpenGL4
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix2(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix2(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -211,9 +211,9 @@ namespace OpenTK.Graphics.OpenGL4
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix3(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix3(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -222,9 +222,9 @@ namespace OpenTK.Graphics.OpenGL4
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix4(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix4(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -300,7 +300,7 @@ namespace OpenTK.Graphics.OpenGL4
                     return;
                 }
 
-                GetProgramInfoLog((uint)program, length * 2, &length, out info);
+                GetProgramInfoLog(program, length * 2, &length, out info);
             }
         }
 

@@ -176,7 +176,8 @@ namespace Bind
                 var wrappersByCategory = extensionWrappers.GroupBy(w => w.Category);
                 foreach (var category in wrappersByCategory)
                 {
-                    var categoryNameWithoutExtensionPrefix = category.Key.Substring(category.Key.IndexOf('_') + 1);
+                    var safeCategoryName = category.Key.Replace('|', '-');
+                    var categoryNameWithoutExtensionPrefix = safeCategoryName.Substring(category.Key.IndexOf('_') + 1);
                     var titleCaseCategoryName = categoryNameWithoutExtensionPrefix.Pascalize();
 
                     var tempWrapperOutputPath = Path.GetTempFileName();

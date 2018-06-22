@@ -2653,8 +2653,7 @@ namespace OpenTK.Graphics.OpenGL
         /// Specifies the first component of the first generic vertex attribute in the array in the data store of the
         /// buffer currently bound to the ArrayBuffer target. The initial value is 0.
         /// </param>
-        public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized,
-            int stride, int offset)
+        public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, int offset)
         {
             VertexAttribPointer(index, size, type, normalized, stride, (IntPtr)offset);
         }

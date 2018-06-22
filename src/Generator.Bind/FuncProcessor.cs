@@ -860,7 +860,7 @@ namespace Bind
             return function;
         }
 
-        private List<FunctionDefinition> GetWrapper(IDictionary<WrapperTypes, List<FunctionDefinition>> dictionary, WrapperTypes key, FunctionDefinition raw)
+        private List<FunctionDefinition> GetOrAddWrapperTypeGroup(IDictionary<WrapperTypes, List<FunctionDefinition>> dictionary, WrapperTypes key, FunctionDefinition raw)
         {
             if (!dictionary.ContainsKey(key))
             {
@@ -896,7 +896,7 @@ namespace Bind
                 {
                     if ((parameterType.WrapperType & WrapperTypes.ArrayParameter) != 0)
                     {
-                        foreach (var wrapper in GetWrapper(wrappers, WrapperTypes.ArrayParameter, func))
+                        foreach (var wrapper in GetOrAddWrapperTypeGroup(wrappers, WrapperTypes.ArrayParameter, func))
                         {
                             var wrapperParameter = wrapper.Parameters[i];
                             var wrapperParameterType = wrapperParameter.ParameterType;
@@ -916,7 +916,7 @@ namespace Bind
 
                     if ((parameterType.WrapperType & WrapperTypes.ReferenceParameter) != 0)
                     {
-                        foreach (var wrapper in GetWrapper(wrappers, WrapperTypes.ReferenceParameter, func))
+                        foreach (var wrapper in GetOrAddWrapperTypeGroup(wrappers, WrapperTypes.ReferenceParameter, func))
                         {
                             var wrapperParameter = wrapper.Parameters[i];
                             var wrapperParameterType = wrapperParameter.ParameterType;
@@ -928,7 +928,7 @@ namespace Bind
 
                     if ((parameterType.WrapperType & WrapperTypes.PointerParameter) != 0)
                     {
-                        GetWrapper(wrappers, WrapperTypes.PointerParameter, func);
+                        GetOrAddWrapperTypeGroup(wrappers, WrapperTypes.PointerParameter, func);
                     }
 
                     if (parameterType.WrapperType == 0 ||
@@ -938,7 +938,7 @@ namespace Bind
                     {
                         // We don't need to do anything, just add this function directly
                         // to the list of wrappers.
-                        GetWrapper(wrappers, parameterType.WrapperType, func);
+                        GetOrAddWrapperTypeGroup(wrappers, parameterType.WrapperType, func);
                     }
                 }
             }
@@ -1026,7 +1026,7 @@ namespace Bind
                 }
             }
 
-            GetWrapper(wrappers, WrapperTypes.GenericParameter, null)
+            GetOrAddWrapperTypeGroup(wrappers, WrapperTypes.GenericParameter, null)
                 .AddRange(list);
 
             // Handle string parameters
