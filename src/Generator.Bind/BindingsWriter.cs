@@ -265,7 +265,11 @@ namespace Bind
         {
             WriteDocumentation(sw, f);
 
-            if (f.IsObsolete)
+            if (f.IsDeprecated)
+            {
+                sw.WriteLine($"[Obsolete(\"Deprecated in version {f.DeprecatedVersion}\".)");
+            }
+            else if (f.IsObsolete)
             {
                 sw.WriteLine($"[Obsolete(\"{f.ObsoletionReason}\")]");
             }
