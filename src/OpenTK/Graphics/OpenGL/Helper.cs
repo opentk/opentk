@@ -441,9 +441,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (float* m_ptr = &mat.Row0.X)
+                fixed (float* matrixPtr = &mat.Row0.X)
                 {
-                    MultMatrix(m_ptr);
+                    MultMatrix(matrixPtr);
                 }
             }
         }
@@ -459,9 +459,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (float* m_ptr = &mat.Row0.X)
+                fixed (float* matrixPtr = &mat.Row0.X)
                 {
-                    LoadMatrix(m_ptr);
+                    LoadMatrix(matrixPtr);
                 }
             }
         }
@@ -477,9 +477,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (float* m_ptr = &mat.Row0.X)
+                fixed (float* matrixPtr = &mat.Row0.X)
                 {
-                    LoadTransposeMatrix(m_ptr);
+                    LoadTransposeMatrix(matrixPtr);
                 }
             }
         }
@@ -495,9 +495,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (float* m_ptr = &mat.Row0.X)
+                fixed (float* matrixPtr = &mat.Row0.X)
                 {
-                    MultTransposeMatrix(m_ptr);
+                    MultTransposeMatrix(matrixPtr);
                 }
             }
         }
@@ -673,9 +673,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (double* m_ptr = &mat.Row0.X)
+                fixed (double* matrixPtr = &mat.Row0.X)
                 {
-                    MultMatrix(m_ptr);
+                    MultMatrix(matrixPtr);
                 }
             }
         }
@@ -691,9 +691,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (double* m_ptr = &mat.Row0.X)
+                fixed (double* matrixPtr = &mat.Row0.X)
                 {
-                    LoadMatrix(m_ptr);
+                    LoadMatrix(matrixPtr);
                 }
             }
         }
@@ -709,9 +709,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (double* m_ptr = &mat.Row0.X)
+                fixed (double* matrixPtr = &mat.Row0.X)
                 {
-                    LoadTransposeMatrix(m_ptr);
+                    LoadTransposeMatrix(matrixPtr);
                 }
             }
         }
@@ -727,9 +727,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (double* m_ptr = &mat.Row0.X)
+                fixed (double* matrixPtr = &mat.Row0.X)
                 {
-                    MultTransposeMatrix(m_ptr);
+                    MultTransposeMatrix(matrixPtr);
                 }
             }
         }
@@ -873,9 +873,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix2(location, 1, transpose, matrix_ptr);
+                    UniformMatrix2(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -897,9 +897,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix2(location, 1, transpose, matrix_ptr);
+                    UniformMatrix2(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -921,9 +921,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix2x3(location, 1, transpose, matrix_ptr);
+                    UniformMatrix2x3(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -945,9 +945,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix2x3(location, 1, transpose, matrix_ptr);
+                    UniformMatrix2x3(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -969,9 +969,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix2x4(location, 1, transpose, matrix_ptr);
+                    UniformMatrix2x4(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -993,9 +993,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix2x4(location, 1, transpose, matrix_ptr);
+                    UniformMatrix2x4(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1017,9 +1017,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix3x2(location, 1, transpose, matrix_ptr);
+                    UniformMatrix3x2(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1041,9 +1041,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix3x2(location, 1, transpose, matrix_ptr);
+                    UniformMatrix3x2(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1065,9 +1065,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix3(location, 1, transpose, matrix_ptr);
+                    UniformMatrix3(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1089,9 +1089,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix3(location, 1, transpose, matrix_ptr);
+                    UniformMatrix3(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1113,9 +1113,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix3x4(location, 1, transpose, matrix_ptr);
+                    UniformMatrix3x4(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1137,9 +1137,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix3x4(location, 1, transpose, matrix_ptr);
+                    UniformMatrix3x4(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1161,9 +1161,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix4x2(location, 1, transpose, matrix_ptr);
+                    UniformMatrix4x2(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1185,9 +1185,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix4x2(location, 1, transpose, matrix_ptr);
+                    UniformMatrix4x2(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1209,9 +1209,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix4x3(location, 1, transpose, matrix_ptr);
+                    UniformMatrix4x3(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1233,9 +1233,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix4x3(location, 1, transpose, matrix_ptr);
+                    UniformMatrix4x3(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1257,9 +1257,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix4(location, 1, transpose, matrix_ptr);
+                    UniformMatrix4(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1281,9 +1281,9 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix4(location, 1, transpose, matrix_ptr);
+                    UniformMatrix4(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1301,7 +1301,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="vector">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniform2(int program, int location, ref Vector2 vector)
+        public static void ProgramUniform2(uint program, int location, ref Vector2 vector)
         {
             ProgramUniform2(program, location, vector.X, vector.Y);
         }
@@ -1319,7 +1319,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="vector">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniform3(int program, int location, ref Vector3 vector)
+        public static void ProgramUniform3(uint program, int location, ref Vector3 vector)
         {
             ProgramUniform3(program, location, vector.X, vector.Y, vector.Z);
         }
@@ -1337,7 +1337,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="vector">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniform4(int program, int location, ref Vector4 vector)
+        public static void ProgramUniform4(uint program, int location, ref Vector4 vector)
         {
             ProgramUniform4(program, location, vector.X, vector.Y, vector.Z, vector.W);
         }
@@ -1355,7 +1355,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="vector">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniform2(int program, int location, Vector2 vector)
+        public static void ProgramUniform2(uint program, int location, Vector2 vector)
         {
             ProgramUniform2(program, location, vector.X, vector.Y);
         }
@@ -1373,7 +1373,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="vector">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniform3(int program, int location, Vector3 vector)
+        public static void ProgramUniform3(uint program, int location, Vector3 vector)
         {
             ProgramUniform3(program, location, vector.X, vector.Y, vector.Z);
         }
@@ -1391,7 +1391,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="vector">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniform4(int program, int location, Vector4 vector)
+        public static void ProgramUniform4(uint program, int location, Vector4 vector)
         {
             ProgramUniform4(program, location, vector.X, vector.Y, vector.Z, vector.W);
         }
@@ -1410,7 +1410,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="color">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniform4(int program, int location, Color4 color)
+        public static void ProgramUniform4(uint program, int location, Color4 color)
         {
             ProgramUniform4(program, location, color.R, color.G, color.B, color.A);
         }
@@ -1429,7 +1429,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="quaternion">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniform4(int program, int location, Quaternion quaternion)
+        public static void ProgramUniform4(uint program, int location, Quaternion quaternion)
         {
             ProgramUniform4(program, location, quaternion.X, quaternion.Y, quaternion.Z, quaternion.W);
         }
@@ -1450,13 +1450,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix2(int program, int location, bool transpose, ref Matrix2 matrix)
+        public static void ProgramUniformMatrix2(uint program, int location, bool transpose, ref Matrix2 matrix)
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix2(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix2(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1477,13 +1477,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix2(int program, int location, bool transpose, ref Matrix2d matrix)
+        public static void ProgramUniformMatrix2(uint program, int location, bool transpose, ref Matrix2d matrix)
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix2(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix2(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1504,13 +1504,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix2x3(int program, int location, bool transpose, ref Matrix2x3 matrix)
+        public static void ProgramUniformMatrix2x3(uint program, int location, bool transpose, ref Matrix2x3 matrix)
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix2x3(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix2x3(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1531,13 +1531,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix2x3(int program, int location, bool transpose, ref Matrix2x3d matrix)
+        public static void ProgramUniformMatrix2x3(uint program, int location, bool transpose, ref Matrix2x3d matrix)
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix2x3(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix2x3(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1558,13 +1558,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix2x4(int program, int location, bool transpose, ref Matrix2x4 matrix)
+        public static void ProgramUniformMatrix2x4(uint program, int location, bool transpose, ref Matrix2x4 matrix)
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix2x4(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix2x4(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1585,13 +1585,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix2x4(int program, int location, bool transpose, ref Matrix2x4d matrix)
+        public static void ProgramUniformMatrix2x4(uint program, int location, bool transpose, ref Matrix2x4d matrix)
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix2x4(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix2x4(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1612,13 +1612,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix3x2(int program, int location, bool transpose, ref Matrix3x2 matrix)
+        public static void ProgramUniformMatrix3x2(uint program, int location, bool transpose, ref Matrix3x2 matrix)
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix3x2(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix3x2(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1639,13 +1639,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix3x2(int program, int location, bool transpose, ref Matrix3x2d matrix)
+        public static void ProgramUniformMatrix3x2(uint program, int location, bool transpose, ref Matrix3x2d matrix)
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix3x2(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix3x2(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1666,13 +1666,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix3(int program, int location, bool transpose, ref Matrix3 matrix)
+        public static void ProgramUniformMatrix3(uint program, int location, bool transpose, ref Matrix3 matrix)
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix3(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix3(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1693,13 +1693,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix3(int program, int location, bool transpose, ref Matrix3d matrix)
+        public static void ProgramUniformMatrix3(uint program, int location, bool transpose, ref Matrix3d matrix)
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix3(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix3(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1720,13 +1720,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix3x4(int program, int location, bool transpose, ref Matrix3x4 matrix)
+        public static void ProgramUniformMatrix3x4(uint program, int location, bool transpose, ref Matrix3x4 matrix)
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix3x4(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix3x4(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1747,13 +1747,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix3x4(int program, int location, bool transpose, ref Matrix3x4d matrix)
+        public static void ProgramUniformMatrix3x4(uint program, int location, bool transpose, ref Matrix3x4d matrix)
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix3x4(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix3x4(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1774,13 +1774,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix4x2(int program, int location, bool transpose, ref Matrix4x2 matrix)
+        public static void ProgramUniformMatrix4x2(uint program, int location, bool transpose, ref Matrix4x2 matrix)
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix4x2(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix4x2(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1801,13 +1801,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix4x2(int program, int location, bool transpose, ref Matrix4x2d matrix)
+        public static void ProgramUniformMatrix4x2(uint program, int location, bool transpose, ref Matrix4x2d matrix)
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix4x2(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix4x2(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1828,13 +1828,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix4x3(int program, int location, bool transpose, ref Matrix4x3 matrix)
+        public static void ProgramUniformMatrix4x3(uint program, int location, bool transpose, ref Matrix4x3 matrix)
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix4x3(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix4x3(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1855,13 +1855,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix4x3(int program, int location, bool transpose, ref Matrix4x3d matrix)
+        public static void ProgramUniformMatrix4x3(uint program, int location, bool transpose, ref Matrix4x3d matrix)
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix4x3(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix4x3(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1882,13 +1882,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix4(int program, int location, bool transpose, ref Matrix4 matrix)
+        public static void ProgramUniformMatrix4(uint program, int location, bool transpose, ref Matrix4 matrix)
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix4(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix4(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1909,13 +1909,13 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="matrix">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        public static void ProgramUniformMatrix4(int program, int location, bool transpose, ref Matrix4d matrix)
+        public static void ProgramUniformMatrix4(uint program, int location, bool transpose, ref Matrix4d matrix)
         {
             unsafe
             {
-                fixed (double* matrix_ptr = &matrix.Row0.X)
+                fixed (double* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix4(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix4(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -1939,7 +1939,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <returns>
         /// The name of the attribute variable.
         /// </returns>
-        public static string GetActiveAttrib(int program, int index, out int size, out ActiveAttribType type)
+        public static string GetActiveAttrib(uint program, uint index, out int size, out ActiveAttribType type)
         {
             int length;
             GetProgram(program, GetProgramParameterName.ActiveAttributeMaxLength, out length);
@@ -1971,7 +1971,7 @@ namespace OpenTK.Graphics.OpenGL
         /// [length: bufSize]
         /// The name of the uniform variable.
         /// </returns>
-        public static string GetActiveUniform(int program, int uniformIndex, out int size, out ActiveUniformType type)
+        public static string GetActiveUniform(uint program, uint uniformIndex, out int size, out ActiveUniformType type)
         {
             int length;
             GetProgram(program, GetProgramParameterName.ActiveUniformMaxLength, out length);
@@ -1994,7 +1994,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <returns>
         /// The name of the active uniform at uniformIndex within program.
         /// </returns>
-        public static string GetActiveUniformName(int program, int uniformIndex)
+        public static string GetActiveUniformName(uint program, uint uniformIndex)
         {
             int length;
             GetProgram(program, GetProgramParameterName.ActiveUniformMaxLength, out length);
@@ -2017,7 +2017,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <returns>
         /// The name of the uniform block at uniformIndex.
         /// </returns>
-        public static string GetActiveUniformBlockName(int program, int uniformIndex)
+        public static string GetActiveUniformBlockName(uint program, uint uniformIndex)
         {
             int length;
             GetProgram(program, GetProgramParameterName.ActiveUniformBlockMaxNameLength, out length);
@@ -2037,12 +2037,12 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="string">
         /// Specifies a string containing the source code to be loaded into the shader.
         /// </param>
-        public static void ShaderSource(int shader, string @string)
+        public static void ShaderSource(uint shader, string @string)
         {
             unsafe
             {
                 var length = @string.Length;
-                ShaderSource((uint)shader, 1, new[] { @string }, &length);
+                ShaderSource(shader, 1, new[] { @string }, &length);
             }
         }
 
@@ -2056,7 +2056,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <returns>
         /// The information log.
         /// </returns>
-        public static string GetShaderInfoLog(int shader)
+        public static string GetShaderInfoLog(uint shader)
         {
             string info;
             GetShaderInfoLog(shader, out info);
@@ -2074,7 +2074,7 @@ namespace OpenTK.Graphics.OpenGL
         /// [length: bufSize]
         /// Specifies a string that is used to return the information log.
         /// </param>
-        public static void GetShaderInfoLog(int shader, out string info)
+        public static void GetShaderInfoLog(uint shader, out string info)
         {
             unsafe
             {
@@ -2086,7 +2086,7 @@ namespace OpenTK.Graphics.OpenGL
                     return;
                 }
 
-                GetShaderInfoLog((uint)shader, length * 2, &length, out info);
+                GetShaderInfoLog(shader, length * 2, &length, out info);
             }
         }
 
@@ -2100,7 +2100,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <returns>
         /// The information log.
         /// </returns>
-        public static string GetProgramInfoLog(int program)
+        public static string GetProgramInfoLog(uint program)
         {
             string info;
             GetProgramInfoLog(program, out info);
@@ -2118,7 +2118,7 @@ namespace OpenTK.Graphics.OpenGL
         /// [length: bufSize]
         /// Specifies a string that is used to return the information log.
         /// </param>
-        public static void GetProgramInfoLog(int program, out string info)
+        public static void GetProgramInfoLog(uint program, out string info)
         {
             unsafe
             {
@@ -2130,7 +2130,7 @@ namespace OpenTK.Graphics.OpenGL
                     return;
                 }
 
-                GetProgramInfoLog((uint)program, length * 2, &length, out info);
+                GetProgramInfoLog(program, length * 2, &length, out info);
             }
         }
 
@@ -2156,7 +2156,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x and y values to be used for the specified vertex attribute.
         /// </param>
-        public static void VertexAttrib2(int index, ref Vector2 v)
+        public static void VertexAttrib2(uint index, ref Vector2 v)
         {
             VertexAttrib2(index, v.X, v.Y);
         }
@@ -2171,7 +2171,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x, y and z values to be used for the specified vertex attribute.
         /// </param>
-        public static void VertexAttrib3(int index, ref Vector3 v)
+        public static void VertexAttrib3(uint index, ref Vector3 v)
         {
             VertexAttrib3(index, v.X, v.Y, v.Z);
         }
@@ -2186,7 +2186,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x, y, z and w values to be used for the specified vertex attribute.
         /// </param>
-        public static void VertexAttrib4(int index, ref Vector4 v)
+        public static void VertexAttrib4(uint index, ref Vector4 v)
         {
             VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
@@ -2201,7 +2201,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x and y values to be used for the specified vertex attribute.
         /// </param>
-        public static void VertexAttrib2(int index, Vector2 v)
+        public static void VertexAttrib2(uint index, Vector2 v)
         {
             VertexAttrib2(index, v.X, v.Y);
         }
@@ -2216,7 +2216,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x, y and z values to be used for the specified vertex attribute.
         /// </param>
-        public static void VertexAttrib3(int index, Vector3 v)
+        public static void VertexAttrib3(uint index, Vector3 v)
         {
             VertexAttrib3(index, v.X, v.Y, v.Z);
         }
@@ -2231,7 +2231,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x, y, z and w values to be used for the specified vertex attribute.
         /// </param>
-        public static void VertexAttrib4(int index, Vector4 v)
+        public static void VertexAttrib4(uint index, Vector4 v)
         {
             VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
@@ -2297,7 +2297,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x and y values to be used for the specified vertex attribute.
         /// </param>
-        public static void VertexAttrib2(int index, ref Vector2d v)
+        public static void VertexAttrib2(uint index, ref Vector2d v)
         {
             VertexAttrib2(index, v.X, v.Y);
         }
@@ -2312,7 +2312,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x, y and z values to be used for the specified vertex attribute.
         /// </param>
-        public static void VertexAttrib3(int index, ref Vector3d v)
+        public static void VertexAttrib3(uint index, ref Vector3d v)
         {
             VertexAttrib3(index, v.X, v.Y, v.Z);
         }
@@ -2327,7 +2327,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x, y, z and w values to be used for the specified vertex attribute.
         /// </param>
-        public static void VertexAttrib4(int index, ref Vector4d v)
+        public static void VertexAttrib4(uint index, ref Vector4d v)
         {
             VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
@@ -2342,7 +2342,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x and y values to be used for the specified vertex attribute.
         /// </param>
-        public static void VertexAttrib2(int index, Vector2d v)
+        public static void VertexAttrib2(uint index, Vector2d v)
         {
             VertexAttrib2(index, v.X, v.Y);
         }
@@ -2357,7 +2357,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x, y and z values to be used for the specified vertex attribute.
         /// </param>
-        public static void VertexAttrib3(int index, Vector3d v)
+        public static void VertexAttrib3(uint index, Vector3d v)
         {
             VertexAttrib3(index, v.X, v.Y, v.Z);
         }
@@ -2372,7 +2372,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x, y, z and w values to be used for the specified vertex attribute.
         /// </param>
-        public static void VertexAttrib4(int index, Vector4d v)
+        public static void VertexAttrib4(uint index, Vector4d v)
         {
             VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
@@ -2653,7 +2653,7 @@ namespace OpenTK.Graphics.OpenGL
         /// Specifies the first component of the first generic vertex attribute in the array in the data store of the
         /// buffer currently bound to the ArrayBuffer target. The initial value is 0.
         /// </param>
-        public static void VertexAttribPointer(int index, int size, VertexAttribPointerType type, bool normalized,
+        public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized,
             int stride, int offset)
         {
             VertexAttribPointer(index, size, type, normalized, stride, (IntPtr)offset);
@@ -2868,36 +2868,6 @@ namespace OpenTK.Graphics.OpenGL
         {
             Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
-#if MINIMAL
-/// <summary>
-/// [requires: v1.0]
-/// Set the viewport.
-/// </summary>
-/// <param name="location">
-/// Specifies the lower left corner of the viewport.
-/// </param>
-/// <param name="size">
-/// Specifies the width and height of the viewport. When a GL context is first attached to a window,
-/// width and height are set to the dimensions of that window.
-/// </param>
-        public static void Viewport(OpenTK.Point location, OpenTK.Size size)
-        {
-            GL.Viewport(location.X, location.Y, size.Width, size.Height);
-        }
-
-        /// <summary>
-        /// [requires: v1.0]
-        /// Set the viewport.
-        /// </summary>
-        /// <param name="rectangle">
-        /// Specifies the lower left corner, as well as the width and height of the viewport. When a GL context is
-        /// first attached to a window, width and height are set to the dimensions of that window.
-        /// </param>
-        public static void Viewport(OpenTK.Rectangle rectangle)
-        {
-            GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
-        }
-#endif
 
         /// <summary>
         /// [requires: v1.0][deprecated: v3.2]
@@ -2949,8 +2919,6 @@ namespace OpenTK.Graphics.OpenGL
         }
     }
 
-#pragma warning disable 1574 // XML comment cref attribute could not be resolved, compiler bug in Mono 3.4.0
-
     /// <summary>
     /// Defines the signature of a debug callback for
     ///  <see cref="GL.Amd.DebugMessageCallback" />.
@@ -2962,9 +2930,15 @@ namespace OpenTK.Graphics.OpenGL
     /// <param name="message">A pointer to a null-terminated ASCII C string, representing the content of this debug message.</param>
     /// <param name="userParam">A pointer to a user-specified parameter.</param>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate void DebugProcAmd(int id,
-        AmdDebugOutput category, AmdDebugOutput severity,
-        int length, IntPtr message, IntPtr userParam);
+    public delegate void DebugProcAmd
+    (
+        int id,
+        AmdDebugOutput category,
+        AmdDebugOutput severity,
+        int length,
+        IntPtr message,
+        IntPtr userParam
+    );
 
     /// <summary>
     /// Defines the signature of a debug callback for
@@ -2978,10 +2952,16 @@ namespace OpenTK.Graphics.OpenGL
     /// <param name="message">A pointer to a null-terminated ASCII C string, representing the content of this debug message.</param>
     /// <param name="userParam">A pointer to a user-specified parameter.</param>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate void DebugProcArb(
-        DebugSource source, DebugType type, int id,
-        DebugSeverity severity, int length, IntPtr message,
-        IntPtr userParam);
+    public delegate void DebugProcArb
+    (
+        DebugSource source,
+        DebugType type,
+        int id,
+        DebugSeverity severity,
+        int length,
+        IntPtr message,
+        IntPtr userParam
+    );
 
     /// <summary>
     /// Defines the signature of a debug callback for
@@ -2995,10 +2975,16 @@ namespace OpenTK.Graphics.OpenGL
     /// <param name="message">A pointer to a null-terminated ASCII C string, representing the content of this debug message.</param>
     /// <param name="userParam">A pointer to a user-specified parameter.</param>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate void DebugProc(
-        DebugSource source, DebugType type, int id,
-        DebugSeverity severity, int length, IntPtr message,
-        IntPtr userParam);
+    public delegate void DebugProc
+    (
+        DebugSource source,
+        DebugType type,
+        int id,
+        DebugSeverity severity,
+        int length,
+        IntPtr message,
+        IntPtr userParam
+    );
 
     /// <summary>
     /// Defines the signature of a debug callback for
@@ -3012,10 +2998,14 @@ namespace OpenTK.Graphics.OpenGL
     /// <param name="message">A pointer to a null-terminated ASCII C string, representing the content of this debug message.</param>
     /// <param name="userParam">A pointer to a user-specified parameter.</param>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate void DebugProcKhr(
-        DebugSource source, DebugType type, int id,
-        DebugSeverity severity, int length, IntPtr message,
-        IntPtr userParam);
-
-#pragma warning restore 1574 // XML comment cref attribute could not be resolved, compiler bug in Mono 3.4.0
+    public delegate void DebugProcKhr
+    (
+        DebugSource source,
+        DebugType type,
+        int id,
+        DebugSeverity severity,
+        int length,
+        IntPtr message,
+        IntPtr userParam
+    );
 }
