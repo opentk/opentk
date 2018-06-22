@@ -926,6 +926,11 @@ namespace Bind
                         }
                     }
 
+                    if ((parameterType.WrapperType & WrapperTypes.PointerParameter) != 0)
+                    {
+                        GetWrapper(wrappers, WrapperTypes.PointerParameter, func);
+                    }
+
                     if (parameterType.WrapperType == 0 ||
                         (parameterType.WrapperType & WrapperTypes.ConvenienceArrayType) != 0 ||
                         (parameterType.WrapperType & WrapperTypes.ConvenienceReturnType) != 0 ||

@@ -102,6 +102,8 @@ namespace OpenTK.Graphics.OpenGL4
                 throw new BindingsNotRewrittenException();
             }
 
+            #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
             [Slot(386)]
             [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
             private static extern unsafe void glGetInternalformatSampleivNV(OpenTK.Graphics.OpenGL4.TextureTarget target, OpenTK.Graphics.OpenGL4.InternalFormat internalformat, int samples, OpenTK.Graphics.OpenGL4.InternalFormatPName pname, int bufSize, [OutAttribute, CountAttribute(Parameter = "bufSize")] int* @params);

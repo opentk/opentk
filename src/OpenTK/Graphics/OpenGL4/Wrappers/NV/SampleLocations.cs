@@ -147,6 +147,8 @@ namespace OpenTK.Graphics.OpenGL4
                 throw new BindingsNotRewrittenException();
             }
 
+            #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
             [Slot(291)]
             [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
             private static extern unsafe void glFramebufferSampleLocationsfvNV(OpenTK.Graphics.OpenGL4.FramebufferTarget target, uint start, int count, float* v);

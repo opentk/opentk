@@ -151,6 +151,8 @@ namespace OpenTK.Graphics.OpenGL4
             throw new BindingsNotRewrittenException();
         }
 
+        #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
         [Slot(11)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glBeginQueryIndexed(OpenTK.Graphics.OpenGL4.QueryTarget target, uint index, uint id);

@@ -112,6 +112,8 @@ namespace OpenTK.Graphics.OpenGL4
                 throw new BindingsNotRewrittenException();
             }
 
+            #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
             [Slot(258)]
             [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
             private static extern void glDrawVkImageNV(ulong vkImage, uint sampler, float x0, float y0, float x1, float y1, float z, float s0, float t0, float s1, float t1);

@@ -277,6 +277,8 @@ namespace OpenTK.Graphics.OpenGL4
                 throw new BindingsNotRewrittenException();
             }
 
+            #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
             [Slot(376)]
             [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
             private static extern ulong glGetImageHandleNV(uint texture, int level, bool layered, int layer, OpenTK.Graphics.OpenGL4.PixelFormat format);

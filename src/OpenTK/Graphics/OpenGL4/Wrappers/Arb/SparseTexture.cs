@@ -63,6 +63,8 @@ namespace OpenTK.Graphics.OpenGL4
                 throw new BindingsNotRewrittenException();
             }
 
+            #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
             [Slot(1054)]
             [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
             private static extern void glTexPageCommitmentARB(OpenTK.Graphics.OpenGL4.ArbSparseTexture target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit);

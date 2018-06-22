@@ -243,6 +243,8 @@ namespace OpenTK.Graphics.OpenGL4
                 throw new BindingsNotRewrittenException();
             }
 
+            #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
             [Slot(103)]
             [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
             private static extern unsafe void glCompileShaderIncludeARB(uint shader, int count, [CountAttribute(Parameter = "count")] IntPtr path, [CountAttribute(Parameter = "count")] int* length);

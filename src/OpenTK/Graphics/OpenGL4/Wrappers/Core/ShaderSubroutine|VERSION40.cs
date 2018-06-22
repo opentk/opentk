@@ -413,6 +413,8 @@ namespace OpenTK.Graphics.OpenGL4
             throw new BindingsNotRewrittenException();
         }
 
+        #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
         [Slot(320)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGetActiveSubroutineName(uint program, OpenTK.Graphics.OpenGL4.ShaderType shadertype, uint index, int bufsize, [OutAttribute, CountAttribute(Count = 1)] int* length, [OutAttribute, CountAttribute(Parameter = "bufsize")] IntPtr name);

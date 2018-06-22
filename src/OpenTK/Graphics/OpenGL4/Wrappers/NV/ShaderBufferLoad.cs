@@ -491,6 +491,8 @@ namespace OpenTK.Graphics.OpenGL4
                 throw new BindingsNotRewrittenException();
             }
 
+            #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
             [Slot(335)]
             [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
             private static extern unsafe void glGetBufferParameterui64vNV(OpenTK.Graphics.OpenGL4.BufferTargetArb target, OpenTK.Graphics.OpenGL4.NvShaderBufferLoad pname, [OutAttribute, CountAttribute(Computed = "pname")] ulong* @params);

@@ -55,6 +55,8 @@ namespace OpenTK.Graphics.OpenGL4
                 throw new BindingsNotRewrittenException();
             }
 
+            #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
             [Slot(1355)]
             [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
             private static extern void glViewportSwizzleNV(uint index, OpenTK.Graphics.OpenGL4.NvViewportSwizzle swizzlex, OpenTK.Graphics.OpenGL4.NvViewportSwizzle swizzley, OpenTK.Graphics.OpenGL4.NvViewportSwizzle swizzlez, OpenTK.Graphics.OpenGL4.NvViewportSwizzle swizzlew);

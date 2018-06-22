@@ -286,6 +286,8 @@ namespace OpenTK.Graphics.OpenGL4
             throw new BindingsNotRewrittenException();
         }
 
+        #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
         [Slot(501)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGetProgramInterfaceiv(uint program, OpenTK.Graphics.OpenGL4.ProgramInterface programInterface, OpenTK.Graphics.OpenGL4.ProgramInterfaceParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] int* @params);

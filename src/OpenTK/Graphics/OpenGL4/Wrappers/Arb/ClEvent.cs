@@ -81,6 +81,8 @@ namespace OpenTK.Graphics.OpenGL4
                 throw new BindingsNotRewrittenException();
             }
 
+            #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
             [Slot(179)]
             [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
             private static extern unsafe IntPtr glCreateSyncFromCLeventARB([OutAttribute] IntPtr* context, [OutAttribute] IntPtr* @event, uint flags);

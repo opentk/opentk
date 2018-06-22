@@ -270,7 +270,7 @@ namespace Bind
 
             if (f.IsDeprecated)
             {
-                sw.WriteLine($"[Obsolete(\"Deprecated in version {f.DeprecatedVersion}\".)");
+                sw.WriteLine($"[Obsolete(\"Deprecated in version {f.DeprecatedVersion}.\")");
             }
             else if (f.IsObsolete)
             {

@@ -106,6 +106,8 @@ namespace OpenTK.Graphics.OpenGL4
             throw new BindingsNotRewrittenException();
         }
 
+        #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
         [Slot(1061)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glTexStorage1D(OpenTK.Graphics.OpenGL4.TextureTarget1d target, int levels, OpenTK.Graphics.OpenGL4.SizedInternalFormat internalformat, int width);

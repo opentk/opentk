@@ -100,6 +100,8 @@ namespace OpenTK.Graphics.OpenGL4
             throw new BindingsNotRewrittenException();
         }
 
+        #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
         [Slot(318)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGetActiveAtomicCounterBufferiv(uint program, uint bufferIndex, OpenTK.Graphics.OpenGL4.AtomicCounterBufferParameter pname, [OutAttribute, CountAttribute(Computed = "pname")] int* @params);

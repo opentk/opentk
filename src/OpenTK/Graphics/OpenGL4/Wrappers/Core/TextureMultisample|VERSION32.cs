@@ -166,6 +166,8 @@ namespace OpenTK.Graphics.OpenGL4
             throw new BindingsNotRewrittenException();
         }
 
+        #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
         [Slot(390)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern unsafe void glGetMultisamplefv(OpenTK.Graphics.OpenGL4.GetMultisamplePName pname, uint index, [OutAttribute, CountAttribute(Computed = "pname")] float* val);

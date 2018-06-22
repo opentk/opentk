@@ -86,6 +86,8 @@ namespace OpenTK.Graphics.OpenGL4
             throw new BindingsNotRewrittenException();
         }
 
+        #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
         [Slot(138)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glCopyImageSubData(uint srcName, OpenTK.Graphics.OpenGL4.ImageTarget srcTarget, int srcLevel, int srcX, int srcY, int srcZ, uint dstName, OpenTK.Graphics.OpenGL4.ImageTarget dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int srcWidth, int srcHeight, int srcDepth);

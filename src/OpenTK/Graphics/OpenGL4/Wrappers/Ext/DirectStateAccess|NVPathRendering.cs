@@ -557,6 +557,8 @@ namespace OpenTK.Graphics.OpenGL4
                 throw new BindingsNotRewrittenException();
             }
 
+            #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
             [Slot(664)]
             [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
             private static extern void glMatrixFrustumEXT(OpenTK.Graphics.OpenGL4.MatrixMode mode, double left, double right, double bottom, double top, double zNear, double zFar);

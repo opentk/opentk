@@ -148,6 +148,8 @@ namespace OpenTK.Graphics.OpenGL4
             throw new BindingsNotRewrittenException();
         }
 
+        #pragma warning disable SA1300 // Element should begin with an upper-case letter
+
         [Slot(15)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         private static extern void glBindBufferBase(OpenTK.Graphics.OpenGL4.BufferRangeTarget target, uint index, uint buffer);
