@@ -65,6 +65,7 @@ namespace Bind
             {
                 Generators.Add(new GL2Generator());
                 Generators.Add(new GL4Generator());
+                Generators.Add(new ES10Generator());
                 Generators.Add(new ES11Generator());
                 Generators.Add(new ES2Generator());
                 Generators.Add(new ES3Generator());
@@ -89,7 +90,7 @@ namespace Bind
                         }
                         case TargetAPI.ES10:
                         {
-                            Generators.Add(new ES11Generator());
+                            Generators.Add(new ES10Generator());
                             break;
                         }
                         case TargetAPI.ES11:
