@@ -574,28 +574,25 @@ $RECYCLE.BIN/
 ### XamarinStudio ###
 .packages
 
-### Paket ###
-Paket.Restore.targets
-
 ### Mono Code Coverage ###
 TestResults.xml
 
 ### OpenTK Binding files ###
 .bindingsGenerated
-src/OpenTK/Graphics/ES11/ES10.cs
-src/OpenTK/Graphics/ES11/ES10.Enums.cs
-src/OpenTK/Graphics/ES11/ES11.cs
-src/OpenTK/Graphics/ES11/ES11.Enums.cs
-src/OpenTK/Graphics/ES20/ES20.cs
-src/OpenTK/Graphics/ES20/ES20.Enums.cs
-src/OpenTK/Graphics/ES30/ES30.cs
-src/OpenTK/Graphics/ES30/ES30.Enums.cs
-src/OpenTK/Graphics/ES31/ES31.cs
-src/OpenTK/Graphics/ES31/ES31.Enums.cs
-src/OpenTK/Graphics/OpenGL/GL2.cs
-src/OpenTK/Graphics/OpenGL/GL2.Enums.cs
-#src/OpenTK/Graphics/OpenGL4/GL4.cs
-#src/OpenTK/Graphics/OpenGL4/GL4Enums.cs
+src/OpenTK/Graphics/ES10/Enums
+src/OpenTK/Graphics/ES10/Wrappers
+src/OpenTK/Graphics/ES11/Enums
+src/OpenTK/Graphics/ES11/Wrappers
+src/OpenTK/Graphics/ES20/Enums
+src/OpenTK/Graphics/ES20/Wrappers
+src/OpenTK/Graphics/ES30/Enums
+src/OpenTK/Graphics/ES30/Wrappers
+src/OpenTK/Graphics/ES31/Enums
+src/OpenTK/Graphics/ES31/Wrappers
+src/OpenTK/Graphics/OpenGL/Enums
+src/OpenTK/Graphics/OpenGL/Wrappers
+#src/OpenTK/Graphics/OpenGL4/Enums
+#src/OpenTK/Graphics/OpenGL4/Wrappers
 
 ### OpenTK AssemblyInfo files ###
 **/AssemblyInfo.cs
