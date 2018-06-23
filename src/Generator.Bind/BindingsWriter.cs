@@ -210,7 +210,13 @@ namespace Bind
                                     sw.WriteLine("/// <summary>");
                                     sw.WriteLine($"/// Contains native bindings to functions in the category \"{titleCaseCategoryName}\" in the extension \"{extensionName}\".");
                                     sw.WriteLine("/// </summary>");
-                                    sw.WriteLine($"public static partial class {extensionName}");
+
+                                    // Identifiers can't begin with numbers
+                                    var safeExtensionName = char.IsDigit(extensionName[0])
+                                        ? $"{Generator.ConstantPrefix}{extensionName}"
+                                        : extensionName;
+
+                                    sw.WriteLine($"public static partial class {safeExtensionName}");
                                 }
 
                                 using (sw.BeginBlock())
@@ -271,7 +277,7 @@ namespace Bind
 
             if (f.IsDeprecated)
             {
-                sw.WriteLine($"[Obsolete(\"Deprecated in version {f.DeprecatedVersion}.\")");
+                sw.WriteLine($"[Obsolete(\"Deprecated in version {f.DeprecatedVersion}.\")]");
             }
             else if (f.IsObsolete)
             {
