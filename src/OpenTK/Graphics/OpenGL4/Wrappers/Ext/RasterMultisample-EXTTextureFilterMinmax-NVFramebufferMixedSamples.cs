@@ -32,7 +32,7 @@ namespace OpenTK.Graphics.OpenGL4
     public sealed partial class GL
     {
         /// <summary>
-        /// Contains native bindings to functions in the category "RasterMultisample|EXTTextureFilterMinmax|NVFramebufferMixedSamples" in the extension "Ext".
+        /// Contains native bindings to functions in the category "RasterMultisample-EXTTextureFilterMinmax-NVFramebufferMixedSamples" in the extension "Ext".
         /// </summary>
         public static partial class Ext
         {
