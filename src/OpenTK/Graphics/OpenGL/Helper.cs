@@ -23,15 +23,10 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-
 using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using OpenTK.Mathematics;
-#if !MINIMAL
-using System.Drawing;
-
-#endif
-
 
 namespace OpenTK.Graphics.OpenGL
 {
@@ -62,16 +57,19 @@ namespace OpenTK.Graphics.OpenGL
     /// <see href="http://opengl.org/registry/" />
     public sealed partial class GL : GraphicsBindingsBase
     {
+        /// <summary>
+        /// Gets the name of the native library where the OpenGL functions are defined.
+        /// </summary>
         internal const string Library = "opengl32.dll";
 
-        private static readonly object sync_root = new object();
+        private static readonly object InternalSyncRoot = new object();
 
         private static readonly IntPtr[] EntryPoints;
         private static readonly byte[] EntryPointNames;
         private static readonly int[] EntryPointNameOffsets;
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="GL"/> class.
         /// </summary>
         public GL()
         {
@@ -81,9 +79,9 @@ namespace OpenTK.Graphics.OpenGL
         }
 
         /// <summary>
-        /// Returns a synchronization token unique for the GL class.
+        /// Gets a synchronization token unique for the GL class.
         /// </summary>
-        protected override object SyncRoot => sync_root;
+        protected override object SyncRoot => InternalSyncRoot;
 
         // Note: Mono 1.9.1 truncates StringBuilder results (for 'out string' parameters).
         // We work around this issue by doubling the StringBuilder capacity.
@@ -93,6 +91,7 @@ namespace OpenTK.Graphics.OpenGL
         /// Set the RGB values of the current color.
         /// </summary>
         /// <param name="color">The color to set.</param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Color3(Color color)
         {
             Color3(color.R, color.G, color.B);
@@ -103,6 +102,7 @@ namespace OpenTK.Graphics.OpenGL
         /// Set the current color.
         /// </summary>
         /// <param name="color">The color to set.</param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Color4(Color color)
         {
             Color4(color.R, color.G, color.B, color.A);
@@ -113,6 +113,7 @@ namespace OpenTK.Graphics.OpenGL
         /// Set the RGB values of the current color.
         /// </summary>
         /// <param name="color">The color to set.</param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Color3(Vector3 color)
         {
             Color3(color.X, color.Y, color.Z);
@@ -123,6 +124,7 @@ namespace OpenTK.Graphics.OpenGL
         /// Set the current color.
         /// </summary>
         /// <param name="color">The color to set.</param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Color4(Vector4 color)
         {
             Color4(color.X, color.Y, color.Z, color.W);
@@ -133,6 +135,7 @@ namespace OpenTK.Graphics.OpenGL
         /// Set the current color.
         /// </summary>
         /// <param name="color">The color to set.</param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Color4(Color4 color)
         {
             Color4(color.R, color.G, color.B, color.A);
@@ -192,6 +195,7 @@ namespace OpenTK.Graphics.OpenGL
         /// [length: pname]
         /// Specifies the value that parameter Shininess will be set to.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Material(MaterialFace face, MaterialParameter pname, Vector4 @params)
         {
             unsafe
@@ -214,6 +218,7 @@ namespace OpenTK.Graphics.OpenGL
         /// [length: pname]
         /// Specifies the value that parameter Shininess will be set to.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Material(MaterialFace face, MaterialParameter pname, Color4 @params)
         {
             unsafe
@@ -238,6 +243,7 @@ namespace OpenTK.Graphics.OpenGL
         /// [length: pname]
         /// Specifies the value that parameter pname of light source light will be set to.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Light(LightName name, LightParameter pname, Vector4 @params)
         {
             unsafe
@@ -262,6 +268,7 @@ namespace OpenTK.Graphics.OpenGL
         /// [length: pname]
         /// Specifies the value that parameter pname of light source light will be set to.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Light(LightName name, LightParameter pname, Color4 @params)
         {
             unsafe
@@ -278,6 +285,7 @@ namespace OpenTK.Graphics.OpenGL
         /// Specify the x, y, and z coordinates of the new current normal. The initial value of the current normal is the unit
         /// vector, (0, 0, 1).
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Normal3(Vector3 normal)
         {
             Normal3(normal.X, normal.Y, normal.Z);
@@ -290,6 +298,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="pos">
         /// Specify the x and y object coordinates (if present) for the raster position.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void RasterPos2(Vector2 pos)
         {
             RasterPos2(pos.X, pos.Y);
@@ -302,6 +311,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="pos">
         /// Specify the x, y, and z object coordinates (if present) for the raster position.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void RasterPos3(Vector3 pos)
         {
             RasterPos3(pos.X, pos.Y, pos.Z);
@@ -314,6 +324,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="pos">
         /// Specify the x, y, z, and w object coordinates (if present) for the raster position.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void RasterPos4(Vector4 pos)
         {
             RasterPos4(pos.X, pos.Y, pos.Z, pos.W);
@@ -326,6 +337,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the x and y coordinates of a vertex.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Vertex2(Vector2 v)
         {
             Vertex2(v.X, v.Y);
@@ -338,6 +350,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the x, y and z coordinates of a vertex.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Vertex3(Vector3 v)
         {
             Vertex3(v.X, v.Y, v.Z);
@@ -350,6 +363,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the x, y, z and w coordinates of a vertex.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Vertex4(Vector4 v)
         {
             Vertex4(v.X, v.Y, v.Z, v.W);
@@ -362,6 +376,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the s and t texture coordinates.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void TexCoord2(Vector2 v)
         {
             TexCoord2(v.X, v.Y);
@@ -374,6 +389,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the s, t and r texture coordinates.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void TexCoord3(Vector3 v)
         {
             TexCoord3(v.X, v.Y, v.Z);
@@ -386,6 +402,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the s, t, r and q texture coordinates.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void TexCoord4(Vector4 v)
         {
             TexCoord4(v.X, v.Y, v.Z, v.W);
@@ -401,6 +418,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="axis">
         /// Specifies the axis of rotation.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Rotate(float angle, Vector3 axis)
         {
             Rotate(angle, axis.X, axis.Y, axis.Z);
@@ -413,6 +431,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="scale">
         /// Specifies scale factors along the x, y, and z axes.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Scale(Vector3 scale)
         {
             Scale(scale.X, scale.Y, scale.Z);
@@ -425,6 +444,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="trans">
         /// Specifies the x, y, and z coordinates with which to translate.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Translate(Vector3 trans)
         {
             Translate(trans.X, trans.Y, trans.Z);
@@ -437,6 +457,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="mat">
         /// The matrix to multiply the current one with.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void MultMatrix(ref Matrix4 mat)
         {
             unsafe
@@ -455,6 +476,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="mat">
         /// The matrix to replace the current one with.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void LoadMatrix(ref Matrix4 mat)
         {
             unsafe
@@ -473,6 +495,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="mat">
         /// The matrix to replace the current one with.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void LoadTransposeMatrix(ref Matrix4 mat)
         {
             unsafe
@@ -491,6 +514,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="mat">
         /// The matrix to multiply the current one with.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void MultTransposeMatrix(ref Matrix4 mat)
         {
             unsafe
@@ -510,6 +534,7 @@ namespace OpenTK.Graphics.OpenGL
         /// Specify the x, y, and z coordinates of the new current normal. The initial value of the current normal is the unit
         /// vector, (0, 0, 1).
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Normal3(Vector3d normal)
         {
             Normal3(normal.X, normal.Y, normal.Z);
@@ -522,6 +547,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="pos">
         /// Specify the x and y object coordinates (if present) for the raster position.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void RasterPos2(Vector2d pos)
         {
             RasterPos2(pos.X, pos.Y);
@@ -534,6 +560,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="pos">
         /// Specify the x, y and z object coordinates (if present) for the raster position.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void RasterPos3(Vector3d pos)
         {
             RasterPos3(pos.X, pos.Y, pos.Z);
@@ -546,6 +573,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="pos">
         /// Specify the x, y, z and w object coordinates (if present) for the raster position.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void RasterPos4(Vector4d pos)
         {
             RasterPos4(pos.X, pos.Y, pos.Z, pos.W);
@@ -558,6 +586,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the x and y coordinates of a vertex.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Vertex2(Vector2d v)
         {
             Vertex2(v.X, v.Y);
@@ -570,6 +599,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the x, y and z coordinates of a vertex.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Vertex3(Vector3d v)
         {
             Vertex3(v.X, v.Y, v.Z);
@@ -582,6 +612,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the x, y, z and w coordinates of a vertex.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Vertex4(Vector4d v)
         {
             Vertex4(v.X, v.Y, v.Z, v.W);
@@ -594,6 +625,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the s and t texture coordinates.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void TexCoord2(Vector2d v)
         {
             TexCoord2(v.X, v.Y);
@@ -606,6 +638,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the s, t and r texture coordinates.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void TexCoord3(Vector3d v)
         {
             TexCoord3(v.X, v.Y, v.Z);
@@ -618,6 +651,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the s, t, r and q texture coordinates.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void TexCoord4(Vector4d v)
         {
             TexCoord4(v.X, v.Y, v.Z, v.W);
@@ -633,6 +667,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="axis">
         /// Specifies the axis of rotation.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Rotate(double angle, Vector3d axis)
         {
             Rotate(angle, axis.X, axis.Y, axis.Z);
@@ -645,6 +680,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="scale">
         /// Specifies scale factors along the x, y, and z axes.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Scale(Vector3d scale)
         {
             Scale(scale.X, scale.Y, scale.Z);
@@ -657,6 +693,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="trans">
         /// Specifies the x, y, and z coordinates with which to translate.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Translate(Vector3d trans)
         {
             Translate(trans.X, trans.Y, trans.Z);
@@ -669,6 +706,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="mat">
         /// The matrix to multiply the current one with.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void MultMatrix(ref Matrix4d mat)
         {
             unsafe
@@ -687,6 +725,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="mat">
         /// The matrix to replace the current one with.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void LoadMatrix(ref Matrix4d mat)
         {
             unsafe
@@ -705,6 +744,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="mat">
         /// The matrix to replace the current one with.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void LoadTransposeMatrix(ref Matrix4d mat)
         {
             unsafe
@@ -723,6 +763,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="mat">
         /// The matrix to multiply the current one with.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void MultTransposeMatrix(ref Matrix4d mat)
         {
             unsafe
@@ -1941,11 +1982,9 @@ namespace OpenTK.Graphics.OpenGL
         /// </returns>
         public static string GetActiveAttrib(uint program, uint index, out int size, out ActiveAttribType type)
         {
-            int length;
-            GetProgram(program, GetProgramParameterName.ActiveAttributeMaxLength, out length);
-            string str;
+            GetProgram(program, GetProgramParameterName.ActiveAttributeMaxLength, out var length);
 
-            GetActiveAttrib(program, index, length == 0 ? 1 : length * 2, out length, out size, out type, out str);
+            GetActiveAttrib(program, index, length == 0 ? 1 : length * 2, out length, out size, out type, out var str);
             return str;
         }
 
@@ -1973,11 +2012,9 @@ namespace OpenTK.Graphics.OpenGL
         /// </returns>
         public static string GetActiveUniform(uint program, uint uniformIndex, out int size, out ActiveUniformType type)
         {
-            int length;
-            GetProgram(program, GetProgramParameterName.ActiveUniformMaxLength, out length);
+            GetProgram(program, GetProgramParameterName.ActiveUniformMaxLength, out var length);
 
-            string str;
-            GetActiveUniform(program, uniformIndex, length == 0 ? 1 : length, out length, out size, out type, out str);
+            GetActiveUniform(program, uniformIndex, length == 0 ? 1 : length, out length, out size, out type, out var str);
             return str;
         }
 
@@ -1996,11 +2033,9 @@ namespace OpenTK.Graphics.OpenGL
         /// </returns>
         public static string GetActiveUniformName(uint program, uint uniformIndex)
         {
-            int length;
-            GetProgram(program, GetProgramParameterName.ActiveUniformMaxLength, out length);
-            string str;
+            GetProgram(program, GetProgramParameterName.ActiveUniformMaxLength, out var length);
 
-            GetActiveUniformName(program, uniformIndex, length == 0 ? 1 : length * 2, out length, out str);
+            GetActiveUniformName(program, uniformIndex, length == 0 ? 1 : length * 2, out length, out var str);
             return str;
         }
 
@@ -2019,11 +2054,9 @@ namespace OpenTK.Graphics.OpenGL
         /// </returns>
         public static string GetActiveUniformBlockName(uint program, uint uniformIndex)
         {
-            int length;
-            GetProgram(program, GetProgramParameterName.ActiveUniformBlockMaxNameLength, out length);
-            string str;
+            GetProgram(program, GetProgramParameterName.ActiveUniformBlockMaxNameLength, out var length);
 
-            GetActiveUniformBlockName(program, uniformIndex, length == 0 ? 1 : length * 2, out length, out str);
+            GetActiveUniformBlockName(program, uniformIndex, length == 0 ? 1 : length * 2, out length, out var str);
             return str;
         }
 
@@ -2058,8 +2091,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </returns>
         public static string GetShaderInfoLog(uint shader)
         {
-            string info;
-            GetShaderInfoLog(shader, out info);
+            GetShaderInfoLog(shader, out var info);
             return info;
         }
 
@@ -2078,8 +2110,7 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                int length;
-                GetShader(shader, ShaderParameter.InfoLogLength, out length);
+                GetShader(shader, ShaderParameter.InfoLogLength, out var length);
                 if (length == 0)
                 {
                     info = string.Empty;
@@ -2102,8 +2133,7 @@ namespace OpenTK.Graphics.OpenGL
         /// </returns>
         public static string GetProgramInfoLog(uint program)
         {
-            string info;
-            GetProgramInfoLog(program, out info);
+            GetProgramInfoLog(program, out var info);
             return info;
         }
 
@@ -2122,8 +2152,7 @@ namespace OpenTK.Graphics.OpenGL
         {
             unsafe
             {
-                int length;
-                GetProgram(program, GetProgramParameterName.InfoLogLength, out length);
+                GetProgram(program, GetProgramParameterName.InfoLogLength, out var length);
                 if (length == 0)
                 {
                     info = string.Empty;
@@ -2248,6 +2277,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the s and t texture coordinates for target texture unit.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void MultiTexCoord2(TextureUnit target, ref Vector2 v)
         {
             MultiTexCoord2(target, v.X, v.Y);
@@ -2265,6 +2295,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the s, t, and r texture coordinates for target texture unit.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void MultiTexCoord3(TextureUnit target, ref Vector3 v)
         {
             MultiTexCoord3(target, v.X, v.Y, v.Z);
@@ -2282,6 +2313,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the s, t, r, and q texture coordinates for target texture unit.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void MultiTexCoord4(TextureUnit target, ref Vector4 v)
         {
             MultiTexCoord4(target, v.X, v.Y, v.Z, v.W);
@@ -2297,6 +2329,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x and y values to be used for the specified vertex attribute.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void VertexAttrib2(uint index, ref Vector2d v)
         {
             VertexAttrib2(index, v.X, v.Y);
@@ -2312,6 +2345,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x, y and z values to be used for the specified vertex attribute.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void VertexAttrib3(uint index, ref Vector3d v)
         {
             VertexAttrib3(index, v.X, v.Y, v.Z);
@@ -2389,6 +2423,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the s and t texture coordinates for target texture unit.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void MultiTexCoord2(TextureUnit target, ref Vector2d v)
         {
             MultiTexCoord2(target, v.X, v.Y);
@@ -2406,6 +2441,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the s, t, and r texture coordinates for target texture unit.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void MultiTexCoord3(TextureUnit target, ref Vector3d v)
         {
             MultiTexCoord3(target, v.X, v.Y, v.Z);
@@ -2423,6 +2459,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the s, t, r, and q texture coordinates for target texture unit.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void MultiTexCoord4(TextureUnit target, ref Vector4d v)
         {
             MultiTexCoord4(target, v.X, v.Y, v.Z, v.W);
@@ -2435,6 +2472,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="rect">
         /// Specifies the vertices of the rectangle.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Rect(RectangleF rect)
         {
             Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
@@ -2447,6 +2485,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="rect">
         /// Specifies the vertices of the rectangle.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Rect(Rectangle rect)
         {
             Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
@@ -2459,6 +2498,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="rect">
         /// Specifies the vertices of the rectangle.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Rect(ref RectangleF rect)
         {
             Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
@@ -2471,6 +2511,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="rect">
         /// Specifies the vertices of the rectangle.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void Rect(ref Rectangle rect)
         {
             Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
@@ -2494,6 +2535,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="offset">
         /// Specifies the first coordinate of the first vertex in the array. The initial value is 0.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void VertexPointer(int size, VertexPointerType type, int stride, int offset)
         {
             VertexPointer(size, type, stride, (IntPtr)offset);
@@ -2515,6 +2557,7 @@ namespace OpenTK.Graphics.OpenGL
         /// [length: type,stride]
         /// Specifies the first coordinate of the first normal in the array. The initial value is 0.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void NormalPointer(NormalPointerType type, int stride, int offset)
         {
             NormalPointer(type, stride, (IntPtr)offset);
@@ -2535,6 +2578,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="offset">
         /// Specifies the first index in the array. The initial value is 0.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void IndexPointer(IndexPointerType type, int stride, int offset)
         {
             IndexPointer(type, stride, (IntPtr)offset);
@@ -2558,6 +2602,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="offset">
         /// Specifies the first component of the first color element in the array. The initial value is 0.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void ColorPointer(int size, ColorPointerType type, int stride, int offset)
         {
             ColorPointer(size, type, stride, (IntPtr)offset);
@@ -2578,6 +2623,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="offset">
         /// Specifies the first coordinate of the first fog coordinate in the array. The initial value is 0.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void FogCoordPointer(FogPointerType type, int stride, int offset)
         {
             FogCoordPointer(type, stride, (IntPtr)offset);
@@ -2594,6 +2640,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="offset">
         /// Specifies the first edge flag in the array. The initial value is 0.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void EdgeFlagPointer(int stride, int offset)
         {
             EdgeFlagPointer(stride, (IntPtr)offset);
@@ -2617,6 +2664,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="offset">
         /// Specifies the first coordinate of the first texture coordinate set in the array. The initial value is 0.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void TexCoordPointer(int size, TexCoordPointerType type, int stride, int offset)
         {
             TexCoordPointer(size, type, stride, (IntPtr)offset);
@@ -2653,6 +2701,7 @@ namespace OpenTK.Graphics.OpenGL
         /// Specifies the first component of the first generic vertex attribute in the array in the data store of the
         /// buffer currently bound to the ArrayBuffer target. The initial value is 0.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, int offset)
         {
             VertexAttribPointer(index, size, type, normalized, stride, (IntPtr)offset);
@@ -2884,6 +2933,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="color">
         /// Specifies the color to apply.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void TexEnv(TextureEnvTarget target, TextureEnvParameter pname, Color color)
         {
             var c = new Color4(color.R, color.G, color.B, color.A);
@@ -2909,6 +2959,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="color">
         /// Specifies the color to apply.
         /// </param>
+        [Obsolete("Deprecated in version 3.2")]
         public static void TexEnv(TextureEnvTarget target, TextureEnvParameter pname, Color4 color)
         {
             unsafe
