@@ -68,8 +68,8 @@ namespace Bind.Structures
                 }
                 else
                 {
-                    TypeName = value;
                     CurrentQualifier = string.Empty;
+                    TypeName = value;
                 }
             }
         }

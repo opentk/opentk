@@ -309,10 +309,10 @@ namespace Bind
                 typeDefinition.WrapperType |= WrapperTypes.SizeParameter;
             }
 
-            typeDefinition.TypeName =
-                Generator.LanguageTypes.ContainsKey(typeDefinition.TypeName)
-                    ? Generator.LanguageTypes[typeDefinition.TypeName]
-                    : typeDefinition.TypeName;
+            if (Generator.LanguageTypes.TryGetValue(typeDefinition.TypeName, out var value))
+            {
+                typeDefinition.QualifiedTypeName = value;
+            }
 
             // Make sure that enum parameters follow enum overrides, i.e.
             // if enum ErrorCodes is overriden to ErrorCode, then parameters
@@ -342,7 +342,8 @@ namespace Bind
                     $"[Error] Type '{typeDefinition}' has a high pointer level. Bindings will be incorrect.");
             }
 
-            if (!typeDefinition.IsEnum)
+            // Half override is an ugly hack, since we need to preserve the qualifier for this type.
+            if (!typeDefinition.IsEnum && typeDefinition.TypeName != "Half")
             {
                 // Remove qualifier if type is not an enum
                 // Resolves issues when replacing / overriding

@@ -28,8 +28,8 @@ PixelInternalFormat,    PixelInternalFormat
 GLsizeiptrARB,      IntPtr
 GLintptrARB,        IntPtr
 GLhandleARB,        UInt32
-GLhalfARB,          Half
-GLhalfNV,           Half
+GLhalfARB,          OpenTK.Mathematics.Half
+GLhalfNV,           OpenTK.Mathematics.Half
 GLcharARB,          Char
 
 # ARB_texture_compression (introduced in 1.3)
