@@ -11,7 +11,8 @@ namespace OpenTK.NT.Native
         public static class Device
         {
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern HDEVNOTIFY RegisterDeviceNotification(
+            public static extern HDEVNOTIFY RegisterDeviceNotification
+            (
                 [In] HANDLE hRecipient,
                 [In] LPVOID NotificationFilter,
                 [In] DeviceNotificationEnum Flags

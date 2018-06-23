@@ -12,18 +12,20 @@ namespace OpenTK.NT.Native
         public static class Cursor
         {
             public static HCURSOR LoadCursor(CursorName lpCursorName)
-                => LoadCursor(IntPtr.Zero, new IntPtr((int)lpCursorName));
+                => LoadCursor(IntPtr.Zero, (int)lpCursorName);
 
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern HCURSOR LoadCursor(
+            public static extern HCURSOR LoadCursor
+            (
                 [In] [Optional] HINSTANCE hInstance,
                 [In] [MarshalAs(UnmanagedType.LPTStr)] string lpCursorName
             );
 
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern HCURSOR LoadCursor(
+            private static extern HCURSOR LoadCursor
+            (
                 [In] [Optional] HINSTANCE hInstance,
-                [In] IntPtr lpCursorName
+                [In] int lpCursorName
             );
 
             [DllImport("user32.dll", SetLastError = true)]

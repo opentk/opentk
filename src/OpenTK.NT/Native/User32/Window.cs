@@ -48,28 +48,31 @@ namespace OpenTK.NT.Native
             /// </remarks>
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
-            public static extern bool AdjustWindowRect(
+            public static extern bool AdjustWindowRect
+            (
                 [In] [Out] ref Rect lpRect,
-                [In] WindowStyles dwStyle,
+                [In] WindowStyleFlags dwStyle,
                 [In] bool bMenu
             );
 
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool AdjustWindowRectEx(
+            public static extern bool AdjustWindowRectEx
+            (
                 [In] [Out] ref Rect lpRect,
-                [In] WindowStyles dwStyle,
+                [In] WindowStyleFlags dwStyle,
                 [In] [MarshalAs(UnmanagedType.Bool)] bool bMenu,
-                [In] WindowStylesEx dwExStyle
+                [In] ExtendedWindowStyleFlags dwExStyle
             );
 
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-            public static extern HWND CreateWindowEx(
-                [In] WindowStylesEx dwExStyle,
+            public static extern HWND CreateWindowEx
+            (
+                [In] ExtendedWindowStyleFlags dwExStyle,
                 [In] [Optional] [MarshalAs(UnmanagedType.LPTStr)] string lpClassName,
                 [In] [Optional] [MarshalAs(UnmanagedType.LPTStr)] string lpWindowName,
-                [In] WindowStyles dwStyle,
+                [In] WindowStyleFlags dwStyle,
                 [In] int x,
                 [In] int y,
                 [In] int nWidth,
@@ -81,11 +84,12 @@ namespace OpenTK.NT.Native
             );
 
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-            public static extern HWND CreateWindowEx(
-                [In] WindowStylesEx dwExStyle,
+            public static extern HWND CreateWindowEx
+            (
+                [In] ExtendedWindowStyleFlags dwExStyle,
                 [In] [Optional] IntPtr lpClassAtom,
                 [In] [Optional] string lpWindowName,
-                [In] WindowStyles dwStyle,
+                [In] WindowStyleFlags dwStyle,
                 [In] int x,
                 [In] int y,
                 [In] int nWidth,
@@ -102,7 +106,8 @@ namespace OpenTK.NT.Native
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern LRESULT CallWindowProc(
+            public static extern LRESULT CallWindowProc
+            (
                 [In] WNDPROC lpPrevWndFunc,
                 [In] HWND hWnd,
                 [In] WindowMessage Msg,
@@ -155,7 +160,8 @@ namespace OpenTK.NT.Native
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLong")]
-            private static extern int SetWindowLongInternal(
+            private static extern int SetWindowLongInternal
+            (
                 [In] HWND hWnd,
                 [In] int nIndex,
                 [In] int dwNewLong
@@ -163,7 +169,8 @@ namespace OpenTK.NT.Native
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLong")]
-            private static extern int SetWindowLongInternal(
+            private static extern int SetWindowLongInternal
+            (
                 [In] HWND hWnd,
                 [In] int nIndex,
                 [In] [MarshalAs(UnmanagedType.FunctionPtr)] WindowProc dwNewLong
@@ -171,7 +178,8 @@ namespace OpenTK.NT.Native
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtr")]
-            private static extern LONG_PTR SetWindowLongPtrInternal(
+            private static extern LONG_PTR SetWindowLongPtrInternal
+            (
                 [In] HWND hWnd,
                 [In] int nIndex,
                 [In] LONG_PTR dwNewLong
@@ -179,7 +187,8 @@ namespace OpenTK.NT.Native
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtr")]
-            private static extern LONG_PTR SetWindowLongPtrInternal(
+            private static extern LONG_PTR SetWindowLongPtrInternal
+            (
                 [In] HWND hWnd,
                 [In] int nIndex,
                 [In] [MarshalAs(UnmanagedType.FunctionPtr)] WindowProc dwNewLong
@@ -208,7 +217,8 @@ namespace OpenTK.NT.Native
             private static extern IntPtr GetWindowLongPtrInternal([In] HWND hWnd, [In] int nIndex);
 
             [DllImport("User32.dll", CharSet = CharSet.Auto)]
-            public static extern LRESULT DefWindowProc(
+            public static extern LRESULT DefWindowProc
+            (
                 [In] HWND hWnd,
                 [In] WindowMessage Msg,
                 [In] WPARAM wParam,
@@ -293,7 +303,8 @@ namespace OpenTK.NT.Native
             ///  </para>
             /// </remarks>
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-            public static extern int GetWindowText(
+            public static extern int GetWindowText
+            (
                 [In] HWND hWnd,
                 [In] [Out] [MarshalAs(UnmanagedType.LPTStr)] LPTSTR lpString,
                 [In] int nMaxCount
@@ -332,14 +343,16 @@ namespace OpenTK.NT.Native
             /// </remarks>
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool SetWindowText(
+            public static extern bool SetWindowText
+            (
                 [In] HWND hWnd,
                 [In] [Optional] [MarshalAs(UnmanagedType.LPTStr)] string lpString
             );
 
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool SetWindowPos(
+            public static extern bool SetWindowPos
+            (
                 [In] HWND hWnd,
                 [In] [Optional] HWND hWndInsertAfter,
                 [In] int x,
@@ -358,7 +371,8 @@ namespace OpenTK.NT.Native
             public static extern bool BringWindowToTop([In] HWND hWnd);
 
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern HWND SetParent(
+            public static extern HWND SetParent
+            (
                 [In] HWND hWndChild,
                 [In] [Optional] HWND newParent
             );

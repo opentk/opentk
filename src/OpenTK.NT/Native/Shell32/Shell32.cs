@@ -14,24 +14,26 @@ namespace OpenTK.NT.Native
 {
     public static class Shell32
     {
-        private const string Lib = "shell32.dll";
+        private const string Library = "shell32.dll";
 
-        [DllImport(Lib)]
+        [DllImport(Library)]
         public static extern void DragAcceptFiles(HWND handle, [MarshalAs(UnmanagedType.Bool)] BOOL fAccept);
 
-        [DllImport(Lib, CharSet = CharSet.Auto)]
-        public static extern UINT DragQueryFile(
+        [DllImport(Library, CharSet = CharSet.Auto)]
+        public static extern UINT DragQueryFile
+        (
             [In] HDROP hDrop,
             [In] UINT iFile,
             [Out] LPTSTR lpszFile,
             UINT cch
         );
 
-        [DllImport(Lib)]
+        [DllImport(Library)]
         public static extern void DragFinish(HDROP hDrop);
 
-        [DllImport(Lib)]
-        public static extern DWORD_PTR SHGetFileInfo(
+        [DllImport(Library)]
+        public static extern DWORD_PTR SHGetFileInfo
+        (
             [In] LPCTSTR pszPath,
             DWORD dwFileAttributes,
             [In] [Out] ref SHFileInfo psfi,

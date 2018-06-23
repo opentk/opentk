@@ -10,7 +10,8 @@ namespace OpenTK.NT.Native
 {
     [SuppressUnmanagedCodeSecurity]
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate LRESULT WindowProc(
+    public delegate LRESULT WindowProc
+    (
         [In] HWND hWnd,
         [In] WindowMessage message,
         [In] WPARAM wParam, 

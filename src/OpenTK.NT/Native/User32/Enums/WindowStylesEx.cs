@@ -5,11 +5,11 @@ using DWORD = System.UInt32;
 namespace OpenTK.NT.Native
 {
     [Flags]
-    public enum WindowStylesEx : DWORD
+    public enum ExtendedWindowStyleFlags : DWORD
     {
         /// <summary>
         /// The window has a double border; the window can, optionally, be created with a title bar
-        /// by specifying the <see cref="WindowStyles.Caption"/> style in the dwStyle parameter.
+        /// by specifying the <see cref="WindowStyleFlags.Caption"/> style in the dwStyle parameter.
         /// </summary>
         DialogModalFrame = 0x00000001,
 
@@ -71,7 +71,7 @@ namespace OpenTK.NT.Native
         /// the child receives a <see cref="WindowMessage.Help"/> message. The child window should pass the message to the parent
         /// window procedure, which should call the WinHelp function using the HELP_WM_HELP command. 
         /// The Help application displays a pop-up window that typically contains help for the child window.<br/>
-        /// <see cref="ContextHelp"/> cannot be used with the <see cref="WindowStyles.MaximizeBox"/> or <see cref="WindowStyles.MinimizeBox"/> styles.
+        /// <see cref="ContextHelp"/> cannot be used with the <see cref="WindowStyleFlags.MaximizeBox"/> or <see cref="WindowStyleFlags.MinimizeBox"/> styles.
         /// </summary>
         ContextHelp = 0x00000400,
 

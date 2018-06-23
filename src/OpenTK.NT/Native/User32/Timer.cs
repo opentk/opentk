@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 
 using HWND = System.IntPtr;
-using UINT_PTR = System.IntPtr;
+using UINT_PTR = System.UIntPtr;
 using TIMERPROC = OpenTK.NT.Native.TimerProc;
 
 namespace OpenTK.NT.Native
@@ -11,7 +11,8 @@ namespace OpenTK.NT.Native
         public static class Timer
         {
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern UINT_PTR SetTimer(
+            public static extern UINT_PTR SetTimer
+            (
                 [In] [Optional] HWND hWnd,
                 [In] UINT_PTR nIDEvent,
                 [In] uint uElapse,
@@ -20,7 +21,8 @@ namespace OpenTK.NT.Native
 
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool KillTimer(
+            public static extern bool KillTimer
+            (
                 [In] [Optional] HWND hWnd,
                 [In] UINT_PTR uIDEvent
             );

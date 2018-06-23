@@ -18,13 +18,7 @@ namespace OpenTK.NT.Native
         public USHORT MakeCode;
 
         /// <summary>
-        /// Flags for scan code information. It can be one or more of the following.
-        /// RI_KEY_MAKE
-        /// RI_KEY_BREAK
-        /// RI_KEY_E0
-        /// RI_KEY_E1
-        /// RI_KEY_TERMSRV_SET_LED
-        /// RI_KEY_TERMSRV_SHADOW
+        /// Flags for scan code information.
         /// </summary>
         public RawKeyboardFlags Flags;
 

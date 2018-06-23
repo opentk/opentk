@@ -5,7 +5,7 @@ using DWORD = System.UInt32;
 namespace OpenTK.NT.Native
 {
     [Flags]
-    public enum WindowStyles : DWORD
+    public enum WindowStyleFlags : DWORD
     {
         Overlapped = 0x00000000,
         Popup = 0x80000000,
@@ -16,7 +16,7 @@ namespace OpenTK.NT.Native
         ClipSiblings = 0x04000000,
         ClipChildren = 0x02000000,
         Maximize = 0x01000000,
-        Caption = 0x00C00000, // Border | DialogFrame
+        Caption = Border | DialogFrame,
         Border = 0x00800000,
         DialogFrame = 0x00400000,
         VScroll = 0x00200000,

@@ -25,9 +25,9 @@ namespace OpenTK.NT.Native
             /// <summary>
             /// Retrieves a history of up to 64 previous coordinates of the mouse or pen.
             /// </summary>
-            /// <param name="cbSize">The size, in bytes, of the MouseMovePoint structure.</param>
+            /// <param name="cbSize">The size, in bytes, of the <see cref="MouseMovePoint"/> structure.</param>
             /// <param name="pointsIn">
-            /// A pointer to a MOUSEMOVEPOINT structure containing valid mouse
+            /// A pointer to a <see cref="MouseMovePoint"/> structure containing valid mouse
             /// coordinates (in screen coordinates). It may also contain a time
             /// stamp.
             /// </param>
@@ -37,12 +37,13 @@ namespace OpenTK.NT.Native
             /// </param>
             /// <param name="nBufPoints">The number of points to be retrieved.</param>
             /// <param name="resolution">
-            /// The resolution desired. This parameter can GMMP_USE_DISPLAY_POINTS
-            /// or GMMP_USE_HIGH_RESOLUTION_POINTS.
+            /// The resolution desired. This parameter can <see cref="GetMouseMovePointsResolution.UseDisplayPoints"/>
+            /// or <see cref="GetMouseMovePointsResolution.UseHighResolutionPoints"/>.
             /// </param>
             /// <returns></returns>
             [DllImport("user32", SetLastError = true)]
-            public static extern int GetMouseMovePointsEx(
+            public static extern int GetMouseMovePointsEx
+            (
                 [In] uint cbSize,
                 [In] ref MouseMovePoint lppt,
                 [Out] out MouseMovePoint lpptBuf,
@@ -51,7 +52,8 @@ namespace OpenTK.NT.Native
             );
 
             [DllImport("user32", SetLastError = true)]
-            public static unsafe extern int GetMouseMovePointsEx(
+            public static unsafe extern int GetMouseMovePointsEx
+            (
                 [In] uint cbSize,
                 [In] ref MouseMovePoint lppt,
                 [Out] MouseMovePoint* lpptBuf,

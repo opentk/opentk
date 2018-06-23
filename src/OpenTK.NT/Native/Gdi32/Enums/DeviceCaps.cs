@@ -93,7 +93,7 @@
         /// <summary>
         /// Reserved.
         /// </summary>
-        PDEVICESIZE = 26,
+        PDeviceSize = 26,
 
         /// <summary>
         /// Flag that indicates the clipping capabilities of the device. 

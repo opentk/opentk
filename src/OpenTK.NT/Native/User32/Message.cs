@@ -24,7 +24,8 @@ namespace OpenTK.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool PeekMessage(
+            public static extern bool PeekMessage
+            (
                 [Out] out Msg lpMsg,
                 [In] [Optional] HWND hWnd,
                 [In] uint wMsgFilterMin,
@@ -47,7 +48,8 @@ namespace OpenTK.NT.Native
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport("User32.dll", SetLastError = true)]
-            public static extern int GetMessage(
+            public static extern int GetMessage
+            (
                 [Out] out Msg msg,
                 [In] [Optional] HWND hWnd,
                 [In] uint wMsgFilterMin,
@@ -66,7 +68,8 @@ namespace OpenTK.NT.Native
             public static extern int GetMessageTime();
 
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-            public static extern LRESULT SendMessage(
+            public static extern LRESULT SendMessage
+            (
                 [In] HWND hWnd,
                 [In] WindowMessage Msg,
                 [In] WPARAM wParam,
@@ -76,7 +79,8 @@ namespace OpenTK.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Auto)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool PostMessage(
+            public static extern bool PostMessage
+            (
                 [In] [Optional] HWND hWnd,
                 [In] WindowMessage Msg,
                 [In] WPARAM wParam,

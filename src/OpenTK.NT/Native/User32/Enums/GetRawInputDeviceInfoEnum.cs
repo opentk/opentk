@@ -1,6 +1,8 @@
-﻿namespace OpenTK.NT.Native
+﻿using UINT = System.UInt32;
+
+namespace OpenTK.NT.Native
 {
-    public enum GetRawInputDeviceInfoEnum : uint
+    public enum GetRawInputDeviceInfoEnum : UINT
     {
         /// <summary>
         /// pData points to the previously parsed data.

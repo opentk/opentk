@@ -1,13 +1,15 @@
 ﻿using System.Runtime.InteropServices;
 
+using DWORD = System.UInt32;
 using HINSTANCE = System.IntPtr;
 using HMENU = System.IntPtr;
 using HWND = System.IntPtr;
 using LPVOID = System.IntPtr;
 
-namespace OpenTK.Platform.Windows
+namespace OpenTK.NT.Native
 {
-    internal struct CreateStruct
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    public struct CreateStruct
     {
         /// <summary>
         /// Contains additional data which may be used to create the window.
@@ -33,58 +35,59 @@ namespace OpenTK.Platform.Windows
         /// may not be DWORD aligned.
         ///  </para>
         /// </remarks>
-        internal LPVOID lpCreateParams;
+        public LPVOID CreateParams;
 
         /// <summary>
         /// Handle to the module that owns the new window.
         /// </summary>
-        internal HINSTANCE hInstance;
+        public HINSTANCE Instance;
 
         /// <summary>
         /// Handle to the menu to be used by the new window.
         /// </summary>
-        internal HMENU hMenu;
+        public HMENU Menu;
 
         /// <summary>
         /// Handle to the parent window, if the window is a child window.
         /// If the window is owned, this member identifies the owner window.
         /// If the window is not a child or owned window, this member is NULL.
         /// </summary>
-        internal HWND hwndParent;
+        public HWND Parent;
 
         /// <summary>
         /// Specifies the height of the new window, in pixels.
         /// </summary>
-        internal int cy;
+        public int Height;
 
         /// <summary>
         /// Specifies the width of the new window, in pixels.
         /// </summary>
-        internal int cx;
+        public int Width;
 
         /// <summary>
         /// Specifies the y-coordinate of the upper left corner of the new window.
         /// If the new window is a child window, coordinates are relative to the parent window.
         /// Otherwise, the coordinates are relative to the screen origin.
         /// </summary>
-        internal int y;
+        public int Y;
 
         /// <summary>
         /// Specifies the x-coordinate of the upper left corner of the new window.
         /// If the new window is a child window, coordinates are relative to the parent window.
         /// Otherwise, the coordinates are relative to the screen origin.
         /// </summary>
-        internal int x;
+        public int X;
 
         /// <summary>
         /// Specifies the style for the new window.
         /// </summary>
-        internal int style;
+        public WindowStyleFlags Style;
 
         /// <summary>
         /// Pointer to a null-terminated string that specifies the name of the new window.
         /// </summary>
-        [MarshalAs(UnmanagedType.LPTStr)] internal string lpszName;
+        [MarshalAs(UnmanagedType.LPTStr)]
+        public string Name;
 
         /// <summary>
         /// Either a pointer to a null-terminated string or an atom that specifies the class name
@@ -94,11 +97,12 @@ namespace OpenTK.Platform.Windows
         /// do not obtain the class name by using this member. Use the GetClassName function instead.
         ///  </remarks>
         /// </summary>
-        [MarshalAs(UnmanagedType.LPTStr)] internal string lpszClass;
+        [MarshalAs(UnmanagedType.LPTStr)]
+        public string ClassName;
 
         /// <summary>
         /// Specifies the extended window style for the new window.
         /// </summary>
-        internal int dwExStyle;
+        public ExtendedWindowStyleFlags ExtendedStyle;
     }
 }

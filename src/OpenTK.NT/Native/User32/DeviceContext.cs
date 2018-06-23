@@ -42,13 +42,15 @@ namespace OpenTK.NT.Native
             ///  </para>
             /// </remarks>
             [DllImport("user32.dll")]
-            public static extern ChangeDisplaySettingsResult ChangeDisplaySettings(
+            public static extern ChangeDisplaySettingsResult ChangeDisplaySettings
+            (
                 [In] ref DeviceMode lpDevMode,
                 [In] ChangeDisplaySettingsFlags dwflags
             );
 
             [DllImport("user32.dll", CharSet = CharSet.Auto)]
-            public static extern ChangeDisplaySettingsResult ChangeDisplaySettingsEx(
+            public static extern ChangeDisplaySettingsResult ChangeDisplaySettingsEx
+            (
                 [In] [MarshalAs(UnmanagedType.LPTStr)] string lpszDeviceName,
                 [In] DEVMODE lpDevMode,
                 HWND hwnd,
@@ -58,7 +60,8 @@ namespace OpenTK.NT.Native
 
             [DllImport("user32.dll", CharSet = CharSet.Auto)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool EnumDisplaySettings(
+            public static extern bool EnumDisplaySettings
+            (
                 [In] [MarshalAs(UnmanagedType.LPTStr)] string lpszDeviceName,
                 [In] DisplayModeSettingsEnum iModeNum,
                 [Out] out DeviceMode lpDevMode
@@ -66,7 +69,8 @@ namespace OpenTK.NT.Native
 
             [DllImport("user32.dll", CharSet = CharSet.Auto)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool EnumDisplaySettingsEx(
+            public static extern bool EnumDisplaySettingsEx
+            (
                 [In] [MarshalAs(UnmanagedType.LPTStr)] string lpszDeviceName,
                 [In] DisplayModeSettingsEnum iModeNum,
                 [Out] out DeviceMode lpDevMode,
@@ -75,7 +79,8 @@ namespace OpenTK.NT.Native
 
             [DllImport("user32.dll", CharSet = CharSet.Auto)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool EnumDisplayDevices(
+            public static extern bool EnumDisplayDevices
+            (
                 [In] [MarshalAs(UnmanagedType.LPTStr)] string lpDevice,
                 [In] int iDevNum,
                 [Out] out DisplayDevice lpDisplayDevice,

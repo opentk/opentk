@@ -12,8 +12,7 @@ namespace OpenTK.NT.Native
         Activate = 0x0006,
         SetFocus = 0x0007,
         KillFocus = 0x0008,
-
-        //              public const uint SETVISIBLE           = 0x0009;
+        SetVisible = 0x0009,
         Enable = 0x000A,
         SetRedraw = 0x000B,
         SetText = 0x000C,
@@ -27,8 +26,7 @@ namespace OpenTK.NT.Native
         EraseBackground = 0x0014,
         SysColorChange = 0x0015,
         EndSession = 0x0016,
-
-        //              public const uint SYSTEMERROR          = 0x0017;
+        SystemError = 0x0017,
         ShowWindow = 0x0018,
         CtlColor = 0x0019,
         WinIniChange = 0x001A,
@@ -46,8 +44,7 @@ namespace OpenTK.NT.Native
         PaintIcon = 0x0026,
         IconEraseBackground = 0x0027,
         NextDialogCtl = 0x0028,
-
-        //              public const uint ALTTABACTIVE         = 0x0029;
+        AltTabActive = 0x0029,
         SpoolerStatus = 0x002A,
         DrawItem = 0x002B,
         MeasureItem = 0x002C,
@@ -58,18 +55,15 @@ namespace OpenTK.NT.Native
         GetFont = 0x0031,
         SetHotkey = 0x0032,
         GetHotkey = 0x0033,
-
-        //              public const uint FILESYSCHANGE        = 0x0034;
-        //              public const uint ISACTIVEICON         = 0x0035;
-        //              public const uint QUERYPARKICON        = 0x0036;
+        FileSysChange = 0x0034,
+        IsActiveIcon = 0x0035,
+        QueryParkIcon = 0x0036,
         QueryDragIcon = 0x0037,
         CompareItem = 0x0039,
-
-        //              public const uint TESTING              = 0x003a;
-        //              public const uint OTHERWINDOWCREATED = 0x003c;
+        Testing = 0x003a,
+        OtherWindowCreated = 0x003c,
         GetObject = 0x003D,
-
-        //                      public const uint ACTIVATESHELLWINDOW        = 0x003e;
+        ActivateShellWindow = 0x003e,
         Compacting = 0x0041,
         CommNotify = 0x0044,
         WindowPosChanging = 0x0046,
@@ -100,8 +94,7 @@ namespace OpenTK.NT.Native
         NCActivate = 0x0086,
         GetDialogCode = 0x0087,
         SyncPaint = 0x0088,
-
-        //              public const uint SYNCTASK       = 0x0089;
+        SyncTask = 0x0089,
         NCMouseMove = 0x00A0,
         NCLButtonDown = 0x00A1,
         NCLButtonUp = 0x00A2,
@@ -129,7 +122,6 @@ namespace OpenTK.NT.Native
         NXButtonDoubleClick = 0x00ad,
 
         Input = 0x00FF,
-
         KeyDown = 0x0100,
         KeyFirst = 0x0100,
         KeyUp = 0x0101,
@@ -152,8 +144,7 @@ namespace OpenTK.NT.Native
         VScroll = 0x0115,
         InitMenu = 0x0116,
         InitMenuPopup = 0x0117,
-
-        //              public const uint SYSTIMER       = 0x0118;
+        SysTimer = 0x0118,
         MenuSelect = 0x011F,
         MenuChar = 0x0120,
         EnterIdle = 0x0121,
@@ -162,12 +153,10 @@ namespace OpenTK.NT.Native
         MenuGetObject = 0x0124,
         UninitMenuPopup = 0x0125,
         MenuCommand = 0x0126,
-
         ChangeUIState = 0x0127,
         UpdateUIState = 0x0128,
         QueryUIState = 0x0129,
-
-        //              public const uint LBTRACKPOINT     = 0x0131;
+        LBTrackPoint = 0x0131,
         CtlColorMsgBox = 0x0132,
         CtlColorEdit = 0x0133,
         CtlColorListBox = 0x0134,
@@ -214,8 +203,7 @@ namespace OpenTK.NT.Native
         Sizing = 0x0214,
         CaptureChanged = 0x0215,
         Moving = 0x0216,
-
-        //              public const uint POWERBROADCAST   = 0x0218;
+        PowerBroadcast = 0x0218,
         DeviceChange = 0x0219,
         MdiCreate = 0x0220,
         MdiDestroy = 0x0221,
@@ -228,13 +216,13 @@ namespace OpenTK.NT.Native
         MdiIconArrange = 0x0228,
         MdiGetActive = 0x0229,
 
-        /* D&D messages */
-        //              public const uint DROPOBJECT     = 0x022A;
-        //              public const uint QUERYDROPOBJECT  = 0x022B;
-        //              public const uint BEGINDRAG      = 0x022C;
-        //              public const uint DRAGLOOP       = 0x022D;
-        //              public const uint DRAGSELECT     = 0x022E;
-        //              public const uint DRAGMOVE       = 0x022F;
+        // D&D messages
+        DropObject = 0x022A,
+        QueryDropObject = 0x022B,
+        BeginDrag = 0x022C,
+        DragLoop = 0x022D,
+        DragSelect = 0x022E,
+        DragMove = 0x022F,
         MdiSetMenu = 0x0230,
         EnterSizeMove = 0x0231,
         ExitSizeMove = 0x0232,

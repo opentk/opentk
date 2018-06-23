@@ -30,7 +30,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Input;
 using OpenTK.NT.Native;
-using OpenTK.Core.Platform;
 #if !MINIMAL
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -46,8 +45,8 @@ namespace OpenTK.Platform.Windows
     /// </summary>
     internal sealed class WinGLNative : NativeWindowBase
     {
-        private const WindowStylesEx ParentStyleEx = WindowStylesEx.WindowEdge | WindowStylesEx.AppWindow;
-        private const WindowStylesEx ChildStyleEx = 0;
+        private const ExtendedWindowStyleFlags ParentStyleEx = ExtendedWindowStyleFlags.WindowEdge | ExtendedWindowStyleFlags.AppWindow;
+        private const ExtendedWindowStyleFlags ChildStyleEx = 0;
         private const WindowClassStyleFlags DefaultClassStyle = WindowClassStyleFlags.OwnDC;
 
         private const long ExtendedBit = 1 << 24; // Used to distinguish left and right control, alt and enter keys.
@@ -104,7 +103,7 @@ namespace OpenTK.Platform.Windows
         // Used in WindowBorder and WindowState in order to avoid rapid, consecutive resize events.
         private int suppress_resize;
 
-        private IntPtr timer_handle;
+        private UIntPtr timer_handle;
         private WindowBorder windowBorder = WindowBorder.Resizable;
         private WindowState windowState = WindowState.Normal;
 
@@ -185,7 +184,7 @@ namespace OpenTK.Platform.Windows
             get => client_rectangle.Size;
             set
             {
-                var style = (WindowStyles)User32.Window.GetWindowLong(window.Handle, GetWindowLongIndex.Style);
+                var style = (WindowStyleFlags)User32.Window.GetWindowLong(window.Handle, GetWindowLongIndex.Style);
                 Rect rect = Rect.From(value);
                 User32.Window.AdjustWindowRect(ref rect, style, false);
                 Size = new Size(rect.Width, rect.Height);
@@ -499,22 +498,22 @@ namespace OpenTK.Platform.Windows
                 var state = WindowState;
                 ResetWindowState();
 
-                var old_style = WindowStyles.ClipChildren | WindowStyles.ClipSiblings;
+                var old_style = WindowStyleFlags.ClipChildren | WindowStyleFlags.ClipSiblings;
                 var new_style = old_style;
 
                 switch (value)
                 {
                     case WindowBorder.Resizable:
-                        new_style |= WindowStyles.OverlappedWindow;
+                        new_style |= WindowStyleFlags.OverlappedWindow;
                         break;
 
                     case WindowBorder.Fixed:
-                        new_style |= WindowStyles.OverlappedWindow &
-                            ~(WindowStyles.ThickFrame | WindowStyles.MaximizeBox | WindowStyles.SizeBox);
+                        new_style |= WindowStyleFlags.OverlappedWindow &
+                            ~(WindowStyleFlags.ThickFrame | WindowStyleFlags.MaximizeBox | WindowStyleFlags.SizeBox);
                         break;
 
                     case WindowBorder.Hidden:
-                        new_style |= WindowStyles.Popup;
+                        new_style |= WindowStyleFlags.Popup;
                         break;
                 }
 
@@ -553,8 +552,8 @@ namespace OpenTK.Platform.Windows
                 {
                     var style = new StyleStruct
                     {
-                        New = new_style,
-                        Old = old_style
+                        StyleNew = (uint)new_style,
+                        StyleOld = (uint)old_style
                     };
 
                     var ptr = IntPtr.Zero;
@@ -720,12 +719,13 @@ namespace OpenTK.Platform.Windows
             var get_window_style = (GetWindowLongIndex)wParam.ToInt32();
             if ((get_window_style & (GetWindowLongIndex.Style | GetWindowLongIndex.ExStyle)) != 0)
             {
-                var style = Marshal.PtrToStructure<StyleStruct>(lParam).New;
-                if ((style & WindowStyles.Popup) != 0)
+                var style = (WindowStyleFlags)Marshal.PtrToStructure<StyleStruct>(lParam).StyleNew;
+
+                if ((style & WindowStyleFlags.Popup) != 0)
                     new_border = WindowBorder.Hidden;
-                else if ((style & WindowStyles.ThickFrame) != 0)
+                else if ((style & WindowStyleFlags.ThickFrame) != 0)
                     new_border = WindowBorder.Resizable;
-                else if ((style & ~(WindowStyles.ThickFrame | WindowStyles.MaximizeBox)) != 0)
+                else if ((style & ~(WindowStyleFlags.ThickFrame | WindowStyleFlags.MaximizeBox)) != 0)
                     new_border = WindowBorder.Fixed;
             }
 
@@ -1037,12 +1037,12 @@ namespace OpenTK.Platform.Windows
         private void HandleCreate(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             var cs = Marshal.PtrToStructure<CreateStruct>(lParam);
-            if (cs.hwndParent == IntPtr.Zero)
+            if (cs.Parent == IntPtr.Zero)
             {
-                bounds.X = cs.x;
-                bounds.Y = cs.y;
-                bounds.Width = cs.cx;
-                bounds.Height = cs.cy;
+                bounds.X = cs.X;
+                bounds.Y = cs.Y;
+                bounds.Width = cs.Width;
+                bounds.Height = cs.Height;
 
                 User32.Window.GetClientRect(handle, out Rect rect);
                 client_rectangle = rect.ToRectangle();
@@ -1266,10 +1266,10 @@ namespace OpenTK.Platform.Windows
 
         private void StartTimer(IntPtr handle)
         {
-            if (timer_handle == IntPtr.Zero)
+            if (timer_handle == UIntPtr.Zero)
             {
-                timer_handle = User32.Timer.SetTimer(handle, new IntPtr(1), ModalLoopTimerPeriod, null);
-                if (timer_handle == IntPtr.Zero)
+                timer_handle = User32.Timer.SetTimer(handle, new UIntPtr(1), ModalLoopTimerPeriod, null);
+                if (timer_handle == UIntPtr.Zero)
                 {
                     Debug.Print("[Warning] Failed to set modal loop timer callback ({0}:{1}->{2}).",
                         GetType().Name, handle, Marshal.GetLastWin32Error());
@@ -1279,7 +1279,7 @@ namespace OpenTK.Platform.Windows
 
         private void StopTimer(IntPtr handle)
         {
-            if (timer_handle != IntPtr.Zero)
+            if (timer_handle != UIntPtr.Zero)
             {
                 if (!User32.Timer.KillTimer(handle, timer_handle))
                 {
@@ -1287,7 +1287,7 @@ namespace OpenTK.Platform.Windows
                         GetType().Name, handle, Marshal.GetLastWin32Error());
                 }
 
-                timer_handle = IntPtr.Zero;
+                timer_handle = UIntPtr.Zero;
             }
         }
 
@@ -1307,16 +1307,16 @@ namespace OpenTK.Platform.Windows
 
             // The style of a parent window is different than that of a child window.
             // Note: the child window should always be visible, even if the parent isn't.
-            WindowStyles style = 0;
-            WindowStylesEx ex_style = 0;
+            WindowStyleFlags style = 0;
+            ExtendedWindowStyleFlags ex_style = 0;
             if (parentHandle == IntPtr.Zero)
             {
-                style |= WindowStyles.OverlappedWindow | WindowStyles.ClipChildren;
+                style |= WindowStyleFlags.OverlappedWindow | WindowStyleFlags.ClipChildren;
                 ex_style = ParentStyleEx;
             }
             else
             {
-                style |= WindowStyles.Visible | WindowStyles.Child | WindowStyles.ClipSiblings;
+                style |= WindowStyleFlags.Visible | WindowStyleFlags.Child | WindowStyleFlags.ClipSiblings;
                 ex_style = ChildStyleEx;
             }
 

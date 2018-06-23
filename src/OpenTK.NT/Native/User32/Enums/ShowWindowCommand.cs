@@ -15,7 +15,6 @@
         /// size and position. An application should specify this flag when displaying the window for the first time.
         /// </summary>
         ShowNormal = 1,
-        Normal = 1,
 
         /// <summary>
         /// Activates the window and displays it as a minimized window.
@@ -26,6 +25,10 @@
         /// Activates the window and displays it as a maximized window.
         /// </summary>
         ShowMaximized = 3,
+
+        /// <summary>
+        /// Maximizes the specified window.
+        /// </summary>
         Maximize = 3,
 
         /// <summary>
@@ -73,13 +76,5 @@
         /// only be used when minimizing windows from a different thread.
         /// </summary>
         ForceMinimize = 11
-        //MAX             = 11,
-
-        // Old ShowWindow() Commands
-        //HIDE_WINDOW        = 0,
-        //SHOW_OPENWINDOW    = 1,
-        //SHOW_ICONWINDOW    = 2,
-        //SHOW_FULLSCREEN    = 3,
-        //SHOW_OPENNOACTIVATE= 4,
     }
 }

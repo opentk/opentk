@@ -87,7 +87,8 @@ namespace OpenTK.NT.Native
             public static extern bool GetIconInfo([In] HICON hIcon, [Out] out IconInfo pIconInfo);
 
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern HICON LoadIcon(
+            public static extern HICON LoadIcon
+            (
                 [In] [Optional] HINSTANCE hInstance,
                 [In] [MarshalAs(UnmanagedType.LPTStr)] string lpIconName
             );

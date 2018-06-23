@@ -1,6 +1,8 @@
-﻿namespace OpenTK.NT.Native
+﻿using DWORD = System.UInt32;
+
+namespace OpenTK.NT.Native
 {
-    public enum DeviceBroadcastType
+    public enum DeviceBroadcastType : DWORD
     {
         Oem = 0,
         Volume = 2,
