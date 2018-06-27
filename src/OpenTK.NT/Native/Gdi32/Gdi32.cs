@@ -17,7 +17,8 @@ namespace OpenTK.NT.Native
         public static extern int ChoosePixelFormat(HDC hdc, ref PixelFormatDescriptor ppfd);
 
         [DllImport(Library, SetLastError = true)]
-        public static extern int DescribePixelFormat(
+        public static extern int DescribePixelFormat
+        (
             HDC hdc,
             int iPixelFormat,
             UINT nBytes,
@@ -26,7 +27,8 @@ namespace OpenTK.NT.Native
 
         [DllImport(Library, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern BOOL SetPixelFormat(
+        public static extern BOOL SetPixelFormat
+        (
             HDC hdc,
             int iPixelFormat,
             ref PixelFormatDescriptor ppfd
