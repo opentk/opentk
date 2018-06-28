@@ -29,7 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using OpenTK.Core.Platform.Common;
+using OpenTK.Input.Hid;
 using OpenTK.Input;
 using OpenTK.NT.Native;
 

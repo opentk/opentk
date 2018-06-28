@@ -29,7 +29,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Input;
-using OpenTK.Core.Platform.Common;
+using OpenTK.Input.Hid;
 using OpenTK.Platform.MacOS.Carbon;
 
 namespace OpenTK.Platform.MacOS

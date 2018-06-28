@@ -28,7 +28,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
-using OpenTK.Core.Platform.Common;
+using OpenTK.Input.Hid;
 
 namespace OpenTK.Platform.Windows
 {

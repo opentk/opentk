@@ -1,13 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <PropertyGroup>
+    <PropertyGroup>
     <Version>1.0.0</Version>
     <Authors>OpenTK</Authors>
     <Copyright>Copyright (c) 2006 - 2016 Stefanos Apostolopoulos (stapostol@gmail.com) for the Open Toolkit library.</Copyright>
-    <Description>Windows API structures, enumerations and functions for the OpenTK library.</Description>
+    <Description>Shared input functionality for the OpenTK library.</Description>
   </PropertyGroup>
   <PropertyGroup>
     <PackageIconUrl>https://raw.githubusercontent.com/opentk/opentk/master/docs/files/img/logo.png</PackageIconUrl>
@@ -19,9 +18,7 @@
     <IncludeSource>true</IncludeSource>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
-    <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
-    <ProjectReference Include="..\OpenTK.Input\OpenTK.Input.csproj" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" />
   </ItemGroup>
   <Import Project="..\..\build\targets\stylecop.props" />
 </Project>

@@ -26,6 +26,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
+    <ProjectReference Include="..\OpenTK.Input\OpenTK.Input.csproj" />
     <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
     <ProjectReference Include="..\OpenTK.NT\OpenTK.NT.csproj" />
   </ItemGroup>

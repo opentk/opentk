@@ -1,5 +1,6 @@
-﻿namespace OpenTK.Core.Platform.Common
+﻿namespace OpenTK.Input.Hid
 {
+    //todo: XMLdoc here
     public enum HidPage : ushort
     {
         Undefined = 0x00,

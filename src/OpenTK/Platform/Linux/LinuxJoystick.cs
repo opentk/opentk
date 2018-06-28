@@ -27,7 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using OpenTK.Core.Platform.Common;
+using OpenTK.Input.Hid;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.Linux

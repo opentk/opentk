@@ -1,4 +1,4 @@
-﻿namespace OpenTK.Core.Platform.Common
+﻿namespace OpenTK.Input.Hid
 {
     // Generic desktop usage
     public enum HidUsageGD : ushort

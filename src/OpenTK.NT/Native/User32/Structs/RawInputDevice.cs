@@ -1,4 +1,4 @@
-﻿using OpenTK.Core.Platform.Common;
+﻿using OpenTK.Input.Hid;
 using System.Runtime.InteropServices;
 
 using HWND = System.IntPtr;

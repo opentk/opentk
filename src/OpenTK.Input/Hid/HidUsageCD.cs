@@ -1,4 +1,4 @@
-﻿namespace OpenTK.Core.Platform.Common
+﻿namespace OpenTK.Input.Hid
 {
     // Consumer electronic devices
     public enum HidUsageCD

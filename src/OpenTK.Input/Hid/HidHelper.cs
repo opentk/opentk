@@ -1,9 +1,13 @@
 ﻿using System.Diagnostics;
 
-namespace OpenTK.Core.Platform.Common
+namespace OpenTK.Input.Hid
 {
+    /// <summary>
+    /// Static class that provides helper functions for consuming HID input.
+    /// </summary>
     public static class HidHelper
     {
+        //todo: XMLdoc here
         public static int TranslateJoystickAxis(HidPage page, int usage)
         {
             switch (page)
@@ -44,7 +48,7 @@ namespace OpenTK.Core.Platform.Common
                     break;
             }
 
-            Debug.Print("[Input] Unknown axis with HID page/usage {0}/{1}", page, usage);
+            Debug.Print($"[Input] Unknown axis with HID page/usage {page}/{usage}");
             return 0;
         }
     }

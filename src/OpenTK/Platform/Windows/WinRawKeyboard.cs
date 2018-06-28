@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 using OpenTK.Core;
 using OpenTK.Input;
 using OpenTK.NT.Native;
-using OpenTK.Core.Platform.Common;
+using OpenTK.Input.Hid;
 #if !(ANDROID || IPHONE || MINIMAL)
 using Microsoft.Win32;
 
