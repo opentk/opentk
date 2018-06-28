@@ -13,8 +13,8 @@ namespace OpenTK.NT.Native
         PrimaryDevice = 0x00000004,
 
         /// <summary>
-        /// Represents a pseudo device used to mirror application drawing for remoting or other purposes.<br/>
-        /// An invisible pseudo monitor is associated with this device. For example, NetMeeting uses it.<br/>
+        /// Represents a pseudo device used to mirror application drawing for remoting or other purposes.<para/>
+        /// An invisible pseudo monitor is associated with this device. For example, NetMeeting uses it.<para/>
         /// Note that GetSystemMetrics (SM_MONITORS) only accounts for visible display monitors.
         /// </summary>
         MirroringDriver = 0x00000008,
@@ -38,7 +38,7 @@ namespace OpenTK.NT.Native
         Disconnect = 0x02000000,
 
         /// <summary>
-        /// DISPLAY_DEVICE_ACTIVE specifies whether a monitor is presented as being "on" by the respective GDI view.<br/>
+        /// DISPLAY_DEVICE_ACTIVE specifies whether a monitor is presented as being "on" by the respective GDI view.<para/>
         /// Windows Vista: EnumDisplayDevices will only enumerate monitors that can be presented as being "on."
         /// </summary>
         Active = 0x00000001,

@@ -57,13 +57,13 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// If set, this enables the caller to receive input in the background only if the foreground application
         /// does not process it. In other words, if the foreground application is not registered for raw input,
-        /// then the background application that is registered will receive the input.<br/>
+        /// then the background application that is registered will receive the input.<para/>
         /// Only supported on Vista later.
         /// </summary>
         ExInputSink = 0x00001000,
 
         /// <summary>
-        /// If set, this enables the caller to receive WM_INPUT_DEVICE_CHANGE notifications for device arrival and device removal.<br/>
+        /// If set, this enables the caller to receive WM_INPUT_DEVICE_CHANGE notifications for device arrival and device removal.<para/>
         /// Only supported on Vista and later.
         /// </summary>
         DevNotify = 0x00002000

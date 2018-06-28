@@ -23,7 +23,7 @@ namespace OpenTK.NT.Native
         Test = 0x00000002,
 
         /// <summary>
-        /// The mode is temporary in nature.<br/>
+        /// The mode is temporary in nature.<para/>
         /// If you change to and from another desktop, this mode will not be reset.
         /// </summary>
         Fullscreen = 0x00000004,
@@ -40,19 +40,19 @@ namespace OpenTK.NT.Native
         SetPrimary = 0x00000010,
 
         /// <summary>
-        /// Not supported by <see cref="User32.DeviceContext.ChangeDisplaySettings"/>.<br/>
+        /// Not supported by <see cref="User32.DeviceContext.ChangeDisplaySettings"/>.<para/>
         /// Only supported on Vista and higher.
         /// </summary>
         VideoParameters = 0x00000020,
 
         /// <summary>
-        /// Not supported by <see cref="User32.DeviceContext.ChangeDisplaySettings"/>.<br/>
+        /// Not supported by <see cref="User32.DeviceContext.ChangeDisplaySettings"/>.<para/>
         /// Only supported on Vista and higher.
         /// </summary>
         EnableUnsafeModes = 0x00000100,
 
         /// <summary>
-        /// Not supported by <see cref="User32.DeviceContext.ChangeDisplaySettings"/>.<br/>
+        /// Not supported by <see cref="User32.DeviceContext.ChangeDisplaySettings"/>.<para/>
         /// Only supported on Vista and higher.
         /// </summary>
         DisableUnsafeModes = 0x00000200,

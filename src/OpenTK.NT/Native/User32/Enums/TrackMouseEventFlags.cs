@@ -8,8 +8,8 @@ namespace OpenTK.NT.Native
     public enum TrackMouseEventFlags : DWORD
     {
         /// <summary>
-        /// The caller wants hover notification. Notification is delivered as a <see cref="WindowMessage.MouseHover"/> message.<br/>
-        /// If the caller requests hover tracking while hover tracking is already active, the hover timer will be reset.<br/>
+        /// The caller wants hover notification. Notification is delivered as a <see cref="WindowMessage.MouseHover"/> message.<para/>
+        /// If the caller requests hover tracking while hover tracking is already active, the hover timer will be reset.<para/>
         /// This flag is ignored if the mouse pointer is not over the specified window or area.
         /// </summary>
         Hover = 0x00000001,

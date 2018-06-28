@@ -35,7 +35,7 @@ namespace OpenTK.NT.Native
         /// The window should not be painted until siblings beneath the window 
         /// (that were created by the same thread) have been painted.
         /// The window appears transparent because the bits of underlying
-        /// sibling windows have already been painted.<br/>
+        /// sibling windows have already been painted.<para/>
         /// To achieve transparency without these restrictions, use the SetWindowRgn function.
         /// </summary>
         Transparent = 0x00000020,
@@ -70,7 +70,7 @@ namespace OpenTK.NT.Native
         /// the cursor changes to a question mark with a pointer. If the user then clicks a child window,
         /// the child receives a <see cref="WindowMessage.Help"/> message. The child window should pass the message to the parent
         /// window procedure, which should call the WinHelp function using the HELP_WM_HELP command. 
-        /// The Help application displays a pop-up window that typically contains help for the child window.<br/>
+        /// The Help application displays a pop-up window that typically contains help for the child window.<para/>
         /// <see cref="ContextHelp"/> cannot be used with the <see cref="WindowStyleFlags.MaximizeBox"/> or <see cref="WindowStyleFlags.MinimizeBox"/> styles.
         /// </summary>
         ContextHelp = 0x00000400,
@@ -79,7 +79,7 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// The window has generic "right-aligned" properties. This depends on the window class.
         /// This style has an effect only if the shell language is Hebrew, Arabic, or another language
-        /// that supports reading-order alignment; otherwise, the style is ignored.<br/>
+        /// that supports reading-order alignment; otherwise, the style is ignored.<para/>
         /// Using the <see cref="Right"/> style for static or edit controls has the same effect as using the SS_RIGHT
         /// or ES_RIGHT style, respectively. Using this style with button controls has the same effect
         /// as using BS_RIGHT and BS_RIGHTBUTTON styles. 
@@ -116,7 +116,7 @@ namespace OpenTK.NT.Native
 
 
         /// <summary>
-        /// The window itself contains child windows that should take part in dialog box navigation.<br/>
+        /// The window itself contains child windows that should take part in dialog box navigation.<para/>
         /// If this style is specified, the dialog manager recurses into children of this window when performing
         /// navigation operations such as handling the TAB key, an arrow key, or a keyboard mnemonic.
         /// </summary>
@@ -146,46 +146,46 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// The window is a layered window. This style cannot be used if the window has
-        /// a class style of either <see cref="WindowClassStyleFlags.OwnDC"/> or <see cref="WindowClassStyleFlags.ClassDC"/>.<br/>
+        /// a class style of either <see cref="WindowClassStyleFlags.OwnDC"/> or <see cref="WindowClassStyleFlags.ClassDC"/>.<para/>
         /// Only supported on Windows 2000 and higher.
         /// </summary>
         Layered = 0x00080000,
 
 
         /// <summary>
-        /// The window does not pass its window layout to its child windows.<br/>
+        /// The window does not pass its window layout to its child windows.<para/>
         /// Only supported on Windows 2000 and higher.
         /// </summary>
         NoInheritLayout = 0x00100000, // Disable inheritence of mirroring by children
 
         /// <summary>
         /// The window does not render to a redirection surface. This is for windows that do not have visible
-        /// content or that use mechanisms other than surfaces to provide their visual.<br/>
+        /// content or that use mechanisms other than surfaces to provide their visual.<para/>
         /// Only supported on Windows 2000 and higher.
         /// </summary>
         NoRedirectionBitmap = 0x00200000,
 
         /// <summary>
         /// If the shell language is Hebrew, Arabic, or another language that supports reading order alignment,
-        /// the horizontal origin of the window is on the right edge. Increasing horizontal values advance to the left.<br/>
+        /// the horizontal origin of the window is on the right edge. Increasing horizontal values advance to the left.<para/>
         /// Only supported on Windows 2000 and higher.
         /// </summary>
         LayoutRtl = 0x00400000, // Right to left mirroring
 
 
         /// <summary>
-        /// Paints all descendants of a window in bottom-to-top painting order using double-buffering.<br/>
-        /// This cannot be used if the window has a class style of either <see cref="WindowClassStyleFlags.OwnDC"/> or <see cref="WindowClassStyleFlags.ClassDC"/>.<br/>
+        /// Paints all descendants of a window in bottom-to-top painting order using double-buffering.<para/>
+        /// This cannot be used if the window has a class style of either <see cref="WindowClassStyleFlags.OwnDC"/> or <see cref="WindowClassStyleFlags.ClassDC"/>.<para/>
         /// Only supported on Windows XP and higher.
         /// </summary>
         Composited = 0x02000000,
 
         /// <summary>
         /// A top-level window created with this style does not become the foreground window when the user clicks it.
-        /// The system does not bring this window to the foreground when the user minimizes or closes the foreground window.<br/>
-        /// The window should not be activated through programmatic access or via keyboard navigation by accessible technology, such as Narrator.<br/>
-        /// To activate the window, use the SetActiveWindow or <see cref="User32.Window.SetForegroundWindow"/> function.<br/>
-        /// The window does not appear on the taskbar by default. To force the window to appear on the taskbar, use the WS_EX_APPWINDOW style.<br/>
+        /// The system does not bring this window to the foreground when the user minimizes or closes the foreground window.<para/>
+        /// The window should not be activated through programmatic access or via keyboard navigation by accessible technology, such as Narrator.<para/>
+        /// To activate the window, use the SetActiveWindow or <see cref="User32.Window.SetForegroundWindow"/> function.<para/>
+        /// The window does not appear on the taskbar by default. To force the window to appear on the taskbar, use the WS_EX_APPWINDOW style.<para/>
         /// Only supported on Windows 2000 and higher.
         /// </summary>
         NoActivate = 0x08000000

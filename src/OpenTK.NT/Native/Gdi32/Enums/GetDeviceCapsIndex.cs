@@ -153,7 +153,7 @@
         PhysicalOffsetY = 113,
 
         /// <summary>
-        /// For display devices: the current vertical refresh rate of the device, in cycles per second (Hz).<br/>
+        /// For display devices: the current vertical refresh rate of the device, in cycles per second (Hz).<para/>
         /// A vertical refresh rate value of 0 or 1 represents the display hardware's default refresh rate.
         /// This default rate is typically set by switches on a display card or computer motherboard, 
         /// or by a configuration program that does not use display functions such as 

@@ -17,7 +17,7 @@ namespace OpenTK.NT.Native
         HInstance = -6,
 
         /// <summary>
-        /// Retrieves a handle to the parent window, if any.<br/>
+        /// Retrieves a handle to the parent window, if any.<para/>
         /// Not supported in <see cref="User32.Window.SetWindowLong"/>.
         /// </summary>
         HWndParent = -8,

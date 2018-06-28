@@ -58,11 +58,11 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Defined in the pixel format descriptors of hardware that supports one hardware palette in 256-color
         /// mode only. For such systems to use hardware acceleration, the hardware palette must be in a fixed 
-        /// order (for example, 3-3-2) when in RGBA mode or must match the logical palette when in color-index mode.<br/>
+        /// order (for example, 3-3-2) when in RGBA mode or must match the logical palette when in color-index mode.<para/>
         /// When this flag is set, you must call SetSystemPaletteUse in your program to force a one-to-one
         /// mapping of the logical palette and the system palette. If your OpenGL hardware supports multiple
         /// hardware palettes and the device driver can allocate spare hardware palettes for OpenGL,
-        /// this flag is typically clear.<br/>
+        /// this flag is typically clear.<para/>
         /// This flag is not set in the generic pixel formats.
         /// </summary>
         NeedSystemPalette = 0x100,
@@ -105,7 +105,7 @@ namespace OpenTK.NT.Native
         SupportComposition = 0x8000,
 
         /// <summary>
-        /// For use in <see cref="Gdi32.ChoosePixelFormat"/> only.<br/>
+        /// For use in <see cref="Gdi32.ChoosePixelFormat"/> only.<para/>
         /// The requested pixel format can either have or not have a depth buffer. To select a pixel format 
         /// without a depth buffer, you must specify this flag. The requested pixel format can be with or 
         /// without a depth buffer. Otherwise, only pixel formats with a depth buffer are considered.
@@ -113,13 +113,13 @@ namespace OpenTK.NT.Native
         DepthDontCare = 0x20000000,
 
         /// <summary>
-        /// For use in <see cref="Gdi32.ChoosePixelFormat"/> only.<br/>
+        /// For use in <see cref="Gdi32.ChoosePixelFormat"/> only.<para/>
         /// The requested pixel format can be either single- or double-buffered.
         /// </summary>
         DoubleBufferDontCare = 0x40000000,
 
         /// <summary>
-        /// For use in <see cref="Gdi32.ChoosePixelFormat"/> only.<br/>
+        /// For use in <see cref="Gdi32.ChoosePixelFormat"/> only.<para/>
         /// The requested pixel format can be either monoscopic or stereoscopic.
         /// </summary>
         StereoDontCare = 0x80000000
