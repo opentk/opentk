@@ -4,6 +4,9 @@ using DWORD = System.UInt32;
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// A set of bit flags that specify properties of the pixel buffer. The properties are generally not mutually exclusive; you can set any combination of bit flags, with the exceptions noted.
+    /// </summary>
     [Flags]
     public enum PixelFormatDescriptorFlags : DWORD
     {
@@ -100,7 +103,6 @@ namespace OpenTK.NT.Native
 
         SupportDirectDraw = 0x2000,
         SupportComposition = 0x8000,
-
 
         /// <summary>
         /// For use in <see cref="Gdi32.ChoosePixelFormat"/> only.<br/>

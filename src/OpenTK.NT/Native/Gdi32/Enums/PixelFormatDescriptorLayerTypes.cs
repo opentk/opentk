@@ -6,6 +6,6 @@ namespace OpenTK.NT.Native
     {
         MainPlane = 0,
         OverlayPlane = 1,
-        UnderlayPlane = unchecked((byte)-1)
+        UnderlayPlane = unchecked((BYTE)(-1))
     }
 }
