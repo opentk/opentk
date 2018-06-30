@@ -33,7 +33,7 @@ namespace OpenTK.Rewrite.Method
                 {
                     generatedVariables.Add(EmitStringOutParameter(parameter));
                 }
-                else if (paramType.Name == "String" && !paramType.IsArray)
+                else if (paramType.FullNameEquals<string>() && !paramType.IsArray)
                 {
                     generatedVariables.Add(EmitStringParameter(parameter));
                 }
@@ -343,7 +343,7 @@ namespace OpenTK.Rewrite.Method
 
         private CountAttribute GetCountAttribute(ParameterDefinition parameter)
         {
-            var attribute = parameter.GetCustomAttribute("CountAttribute", throwIfNoneFound: false);
+            var attribute = parameter.GetCustomAttribute(AttributeNames.Count, throwIfNoneFound: false);
 
             if (attribute == null)
             {

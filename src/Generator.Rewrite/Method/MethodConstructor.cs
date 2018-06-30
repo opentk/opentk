@@ -3,11 +3,9 @@ using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace OpenTK.Rewrite.Method
 {
-    // todo: check whether wrapper has been rewritten in _this_ class
     public partial class MethodConstructor
     {
         private readonly MethodDefinition _wrapper;
@@ -15,7 +13,7 @@ namespace OpenTK.Rewrite.Method
         private readonly RewriteOptions _options;
 
         private readonly TypeDefinition _arrayType;
-        private readonly TypeDefinition _bindingsBaseType; //todo: fill this in
+        private readonly TypeDefinition _bindingsBaseType;
         private readonly TypeDefinition _int32Type;
         private readonly TypeDefinition _intPtrType;
         private readonly TypeDefinition _marshalType;
@@ -25,7 +23,7 @@ namespace OpenTK.Rewrite.Method
         private readonly MethodBody _body;
         private readonly ILProcessor _ilProcessor;
 
-        public MethodConstructor(AssemblyDefinition mscorlib, MethodDefinition wrapper, MethodDefinition native, RewriteOptions options)
+        public MethodConstructor(AssemblyDefinition mscorlib, MethodDefinition wrapper, MethodDefinition native, TypeDefinition bindingsBaseType, RewriteOptions options)
         {
             if (mscorlib == null)
             {
@@ -34,6 +32,7 @@ namespace OpenTK.Rewrite.Method
 
             _wrapper = wrapper ?? throw new ArgumentNullException(nameof(wrapper));
             _native = _native ?? throw new ArgumentNullException(nameof(_native));
+            _bindingsBaseType = bindingsBaseType ?? throw new ArgumentNullException(nameof(bindingsBaseType));
             _options = options ?? throw new ArgumentNullException(nameof(options));
 
             _arrayType = mscorlib.MainModule.GetType(typeof(Array).FullName);

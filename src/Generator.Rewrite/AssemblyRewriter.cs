@@ -13,12 +13,10 @@ namespace OpenTK.Rewrite
     {
         private readonly RewriteOptions _options;
 
-        private readonly ReaderParameters _readerParams;
-        private readonly WriterParameters _writerParams;
-
         private AssemblyDefinition _mscorlib;
 
         private TypeDefinition _boolType;
+        private TypeDefinition _bindingsBaseType;
 
         public AssemblyRewriter(RewriteOptions options)
         {
@@ -27,7 +25,6 @@ namespace OpenTK.Rewrite
                 throw new ArgumentNullException(nameof(options));
             }
 
-            // todo: exit when these checks fail
             if (!File.Exists(options.TargetAssembly))
             {
                 throw new ArgumentException($"Target assembly not found.\nPlease check the given path ({options.TargetAssembly})", nameof(options.TargetAssembly));
@@ -46,7 +43,7 @@ namespace OpenTK.Rewrite
             // we want to keep a valid symbols file (pdb/mdb)
             var readerParams = new ReaderParameters
             {
-                AssemblyResolver = new OpenTKAssemblyResolver(),
+                AssemblyResolver = new AssemblyResolver(),
                 ReadSymbols = true,
                 ReadWrite = true,
             };
@@ -94,6 +91,7 @@ namespace OpenTK.Rewrite
                     }
 
                     _boolType = _mscorlib.MainModule.GetType(typeof(bool).FullName);
+                    _bindingsBaseType = assemblyDef.Modules.First().GetType("OpenTK.BindingsBase");
 
                     if (_mscorlib == null)
                     {
@@ -181,7 +179,7 @@ namespace OpenTK.Rewrite
                     var signature = entrySignatures.FirstOrDefault(s => s.Name == signatureName);
                     var slot = GetSlot(signature);
 
-                    new MethodConstructor(_mscorlib, wrapper, signature, _options).ConstructBody(slot, entryPoints);
+                    new MethodConstructor(_mscorlib, wrapper, signature, _bindingsBaseType, _options).ConstructBody(slot, entryPoints);
                 }
             }
 

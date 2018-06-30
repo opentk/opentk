@@ -58,7 +58,7 @@ namespace OpenTK.Rewrite.Method
             // Get the constructor that takes a GraphicsContext parameter
             var ctor = errorHelperType.GetConstructors().FirstOrDefault(c =>
                 c.Parameters.Count == 1 &&
-                c.Parameters[0].ParameterType.FullName == iGraphicsContext.FullName);
+                c.Parameters[0].ParameterType.FullNameEquals(iGraphicsContext));
 
             if (ctor == null)
             {

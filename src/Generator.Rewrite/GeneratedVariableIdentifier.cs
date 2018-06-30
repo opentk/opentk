@@ -18,23 +18,13 @@ namespace OpenTK.Rewrite
         /// <exception cref="ArgumentException"></exception>
         public GeneratedVariableIdentifier(MethodBody body, VariableDefinition definition, string name)
         {
-            if (body == null)
-            {
-                throw new ArgumentException("The body argument cannot be null.", nameof(body));
-            }
-
-            if (definition == null)
-            {
-                throw new ArgumentException("The definition argument cannot be null.", nameof(definition));
-            }
-
             if (string.IsNullOrEmpty(name))
             {
                 throw new ArgumentException("The name argument cannot be null or empty", nameof(name));
             }
 
-            Body = body;
-            Definition = definition;
+            Body = body ?? throw new ArgumentNullException(nameof(body));
+            Definition = definition ?? throw new ArgumentNullException(nameof(definition));
             Name = name;
         }
 
