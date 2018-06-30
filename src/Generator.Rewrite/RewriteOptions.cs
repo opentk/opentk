@@ -3,9 +3,9 @@
 namespace OpenTK.Rewrite
 {
     /// <summary>
-    /// A container class used by <see cref="CommandLine.Parser" /> to parse command line arguments.
+    /// A class containing all command line options used when rewriting an assembly.
     /// </summary>
-    public class Options
+    public class RewriteOptions
     {
         /// <summary>
         /// Gets or sets the path to the target assembly that should be rewritten.
@@ -33,6 +33,6 @@ namespace OpenTK.Rewrite
         /// </summary>
         [Option("dllimport", Default = false,
             HelpText = "Force native calls to use DllImport instead of GetProcAddress.")]
-        public bool UseDLLImport { get; set; }
+        public bool UseDllImport { get; set; }
     }
 }
