@@ -7,41 +7,46 @@ namespace OpenTK.Input.Hid
     /// </summary>
     public static class HidHelper
     {
-        //todo: XMLdoc here
+        /// <summary>
+        /// Translates a generic HID usage value to a specific joystick axis for the specified <see cref="HidPage"/>.
+        /// </summary>
+        /// <param name="page">The HID usage page.</param>
+        /// <param name="usage">The generic usage value.</param>
+        /// <returns>An <see cref="int"/> that maps the HID usage value to a joystick axis.</returns>
         public static int TranslateJoystickAxis(HidPage page, int usage)
         {
             switch (page)
             {
                 case HidPage.GenericDesktop:
-                    switch ((HidUsageGD)usage)
+                    switch ((HidGenericDesktopUsage)usage)
                     {
-                        case HidUsageGD.X:
+                        case HidGenericDesktopUsage.X:
                             return 0;
-                        case HidUsageGD.Y:
+                        case HidGenericDesktopUsage.Y:
                             return 1;
-                        case HidUsageGD.Z:
+                        case HidGenericDesktopUsage.Z:
                             return 2;
-                        case HidUsageGD.Rz:
+                        case HidGenericDesktopUsage.Rz:
                             return 3;
-                        case HidUsageGD.Rx:
+                        case HidGenericDesktopUsage.Rx:
                             return 4;
-                        case HidUsageGD.Ry:
+                        case HidGenericDesktopUsage.Ry:
                             return 5;
-                        case HidUsageGD.Slider:
+                        case HidGenericDesktopUsage.Slider:
                             return 6;
-                        case HidUsageGD.Dial:
+                        case HidGenericDesktopUsage.Dial:
                             return 7;
-                        case HidUsageGD.Wheel:
+                        case HidGenericDesktopUsage.Wheel:
                             return 8;
                     }
 
                     break;
                 case HidPage.Simulation:
-                    switch ((HidUsageSim)usage)
+                    switch ((HidSimulationUsage)usage)
                     {
-                        case HidUsageSim.Rudder:
+                        case HidSimulationUsage.Rudder:
                             return 9;
-                        case HidUsageSim.Throttle:
+                        case HidSimulationUsage.Throttle:
                             return 10;
                     }
 

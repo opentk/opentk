@@ -32,6 +32,7 @@ using System.Runtime.InteropServices;
 using OpenTK.Input.Hid;
 using OpenTK.Input;
 using OpenTK.NT.Native;
+using OpenTK.Mathematics;
 
 namespace OpenTK.Platform.Windows
 {
@@ -61,11 +62,11 @@ namespace OpenTK.Platform.Windows
 
             DeviceTypes = new[]
             {
-                new RawInputDevice(HidUsageGD.Joystick, RawInputDeviceFlags.DevNotify | RawInputDeviceFlags.InputSink,
+                new RawInputDevice(HidGenericDesktopUsage.Joystick, RawInputDeviceFlags.DevNotify | RawInputDeviceFlags.InputSink,
                     window),
-                new RawInputDevice(HidUsageGD.GamePad, RawInputDeviceFlags.DevNotify | RawInputDeviceFlags.InputSink,
+                new RawInputDevice(HidGenericDesktopUsage.GamePad, RawInputDeviceFlags.DevNotify | RawInputDeviceFlags.InputSink,
                     window),
-                new RawInputDevice(HidUsageCD.ConsumerControl,
+                new RawInputDevice(HidConsumerUsage.ConsumerControl,
                     RawInputDeviceFlags.DevNotify | RawInputDeviceFlags.InputSink, window)
             };
 
@@ -331,13 +332,13 @@ namespace OpenTK.Platform.Windows
                     continue;
                 }
 
-                if (page == HidPage.GenericDesktop && (HidUsageGD)usage == HidUsageGD.Hatswitch)
+                if (page == HidPage.GenericDesktop && (HidGenericDesktopUsage)usage == HidGenericDesktopUsage.Hatswitch)
                 {
                     stick.SetHat(collection, page, usage, GetHatPosition(value, stick.AxisCaps[i]));
                 }
                 else if (stick.AxisCaps[i].LogicalMin > 0)
                 {
-                    short scaled_value = (short)HidHelper.ScaleValue(
+                    short scaled_value = (short)MathHelper.ScaleValue(
                         (int)(value + stick.AxisCaps[i].LogicalMin),
                         stick.AxisCaps[i].LogicalMin,
                         stick.AxisCaps[i].LogicalMax,
@@ -351,7 +352,7 @@ namespace OpenTK.Platform.Windows
                 {
                     //If our stick returns a minimum value below zero, we should not add this to our value
                     //before attempting to scale it, as this then inverts the value
-                    var scaled_value = (short)HidHelper.ScaleValue(
+                    var scaled_value = (short)MathHelper.ScaleValue(
                         (int)value,
                         stick.AxisCaps[i].LogicalMin,
                         stick.AxisCaps[i].LogicalMax,
@@ -466,28 +467,28 @@ namespace OpenTK.Platform.Windows
                         switch (page)
                         {
                             case HidPage.GenericDesktop:
-                                var gd_usage = (HidUsageGD)stick.AxisCaps[i].NotRange.Usage;
+                                var gd_usage = (HidGenericDesktopUsage)stick.AxisCaps[i].NotRange.Usage;
                                 switch (gd_usage)
                                 {
-                                    case HidUsageGD.X:
-                                    case HidUsageGD.Y:
-                                    case HidUsageGD.Z:
-                                    case HidUsageGD.Rx:
-                                    case HidUsageGD.Ry:
-                                    case HidUsageGD.Rz:
-                                    case HidUsageGD.Slider:
-                                    case HidUsageGD.Dial:
-                                    case HidUsageGD.Wheel:
+                                    case HidGenericDesktopUsage.X:
+                                    case HidGenericDesktopUsage.Y:
+                                    case HidGenericDesktopUsage.Z:
+                                    case HidGenericDesktopUsage.Rx:
+                                    case HidGenericDesktopUsage.Ry:
+                                    case HidGenericDesktopUsage.Rz:
+                                    case HidGenericDesktopUsage.Slider:
+                                    case HidGenericDesktopUsage.Dial:
+                                    case HidGenericDesktopUsage.Wheel:
                                         Debug.Print("Found axis {0} ({1} / {2})",
                                             stick.GetCapabilities().AxisCount,
-                                            page, (HidUsageGD)stick.AxisCaps[i].NotRange.Usage);
+                                            page, (HidGenericDesktopUsage)stick.AxisCaps[i].NotRange.Usage);
                                         stick.SetAxis(collection, page, stick.AxisCaps[i].NotRange.Usage, 0);
                                         break;
 
-                                    case HidUsageGD.Hatswitch:
+                                    case HidGenericDesktopUsage.Hatswitch:
                                         Debug.Print("Found hat {0} ({1} / {2})",
                                             JoystickHat.Hat0 + stick.GetCapabilities().HatCount,
-                                            page, (HidUsageGD)stick.AxisCaps[i].NotRange.Usage);
+                                            page, (HidGenericDesktopUsage)stick.AxisCaps[i].NotRange.Usage);
                                         stick.SetHat(collection, page, stick.AxisCaps[i].NotRange.Usage,
                                             HatPosition.Centered);
                                         break;
@@ -501,13 +502,13 @@ namespace OpenTK.Platform.Windows
                                 break;
 
                             case HidPage.Simulation:
-                                switch ((HidUsageSim)stick.AxisCaps[i].NotRange.Usage)
+                                switch ((HidSimulationUsage)stick.AxisCaps[i].NotRange.Usage)
                                 {
-                                    case HidUsageSim.Rudder:
-                                    case HidUsageSim.Throttle:
+                                    case HidSimulationUsage.Rudder:
+                                    case HidSimulationUsage.Throttle:
                                         Debug.Print("Found simulation axis {0} ({1} / {2})",
                                             stick.GetCapabilities().AxisCount,
-                                            page, (HidUsageSim)stick.AxisCaps[i].NotRange.Usage);
+                                            page, (HidSimulationUsage)stick.AxisCaps[i].NotRange.Usage);
                                         stick.SetAxis(collection, page, stick.AxisCaps[i].NotRange.Usage, 0);
                                         break;
                                 }

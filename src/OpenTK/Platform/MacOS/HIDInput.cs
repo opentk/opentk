@@ -560,14 +560,14 @@ namespace OpenTK.Platform.MacOS
                 if (NativeMethods.IOHIDDeviceOpen(device, IOOptionBits.Zero) == IOReturn.Zero)
                 {
                     if (NativeMethods.IOHIDDeviceConformsTo(device,
-                        HidPage.GenericDesktop, (int)HidUsageGD.Mouse))
+                        HidPage.GenericDesktop, (int)HidGenericDesktopUsage.Mouse))
                     {
                         AddMouse(sender, device);
                         recognized = true;
                     }
 
                     if (NativeMethods.IOHIDDeviceConformsTo(device,
-                        HidPage.GenericDesktop, (int)HidUsageGD.Keyboard))
+                        HidPage.GenericDesktop, (int)HidGenericDesktopUsage.Keyboard))
                     {
                         AddKeyboard(sender, device);
                         recognized = true;
@@ -575,14 +575,14 @@ namespace OpenTK.Platform.MacOS
 
                     var is_joystick = false;
                     is_joystick |= NativeMethods.IOHIDDeviceConformsTo(device,
-                        HidPage.GenericDesktop, (int)HidUsageGD.Joystick);
+                        HidPage.GenericDesktop, (int)HidGenericDesktopUsage.Joystick);
                     is_joystick |= NativeMethods.IOHIDDeviceConformsTo(device,
-                        HidPage.GenericDesktop, (int)HidUsageGD.GamePad);
+                        HidPage.GenericDesktop, (int)HidGenericDesktopUsage.GamePad);
                     is_joystick |= NativeMethods.IOHIDDeviceConformsTo(device,
-                        HidPage.GenericDesktop, (int)HidUsageGD.MultiAxisController);
+                        HidPage.GenericDesktop, (int)HidGenericDesktopUsage.MultiAxisController);
                     is_joystick |= NativeMethods.IOHIDDeviceConformsTo(device,
-                        HidPage.GenericDesktop, (int)HidUsageGD.Wheel);
-                    // Todo: any other interesting devices under HidPage.Simulation + HidUsageSim?
+                        HidPage.GenericDesktop, (int)HidGenericDesktopUsage.Wheel);
+                    // Todo: any other interesting devices under HidPage.Simulation + HidSimulationUsage?
                     if (is_joystick)
                     {
                         AddJoystick(sender, device);
@@ -709,22 +709,22 @@ namespace OpenTK.Platform.MacOS
             switch (page)
             {
                 case HidPage.GenericDesktop:
-                    switch ((HidUsageGD)usage)
+                    switch ((HidGenericDesktopUsage)usage)
                     {
-                        case HidUsageGD.X:
+                        case HidGenericDesktopUsage.X:
                             mouse.State.X += v_int;
                             break;
 
-                        case HidUsageGD.Y:
+                        case HidGenericDesktopUsage.Y:
                             mouse.State.Y += v_int;
                             break;
 
-                        case HidUsageGD.Z:
+                        case HidGenericDesktopUsage.Z:
                             // Horizontal scrolling for apple mouse (old-style with trackball)
                             mouse.State.SetScrollRelative(v_int, 0);
                             break;
 
-                        case HidUsageGD.Wheel:
+                        case HidGenericDesktopUsage.Wheel:
                             mouse.State.SetScrollRelative(0, v_int);
                             break;
                     }
@@ -736,9 +736,9 @@ namespace OpenTK.Platform.MacOS
                     break;
 
                 case HidPage.Consumer:
-                    switch ((HidUsageCD)usage)
+                    switch ((HidConsumerUsage)usage)
                     {
-                        case HidUsageCD.ACPan:
+                        case HidConsumerUsage.ACPan:
                             mouse.State.SetScrollRelative(v_int, 0);
                             break;
                     }
@@ -953,17 +953,17 @@ namespace OpenTK.Platform.MacOS
                             switch (page)
                             {
                                 case HidPage.GenericDesktop:
-                                    switch ((HidUsageGD)usage)
+                                    switch ((HidGenericDesktopUsage)usage)
                                     {
-                                        case HidUsageGD.X:
-                                        case HidUsageGD.Y:
-                                        case HidUsageGD.Z:
-                                        case HidUsageGD.Rx:
-                                        case HidUsageGD.Ry:
-                                        case HidUsageGD.Rz:
-                                        case HidUsageGD.Slider:
-                                        case HidUsageGD.Dial:
-                                        case HidUsageGD.Wheel:
+                                        case HidGenericDesktopUsage.X:
+                                        case HidGenericDesktopUsage.Y:
+                                        case HidGenericDesktopUsage.Z:
+                                        case HidGenericDesktopUsage.Rx:
+                                        case HidGenericDesktopUsage.Ry:
+                                        case HidGenericDesktopUsage.Rz:
+                                        case HidGenericDesktopUsage.Slider:
+                                        case HidGenericDesktopUsage.Dial:
+                                        case HidGenericDesktopUsage.Wheel:
                                             e = new JoystickElement(element_ref, cookie, page, usage, 0, 0);
                                             if (!axis_elements.Contains(e))
                                             {
@@ -972,7 +972,7 @@ namespace OpenTK.Platform.MacOS
 
                                             break;
 
-                                        case HidUsageGD.Hatswitch:
+                                        case HidGenericDesktopUsage.Hatswitch:
                                             e = new JoystickElement(element_ref, cookie, page, usage, 0, 0);
                                             if (!hat_elements.Contains(e))
                                             {
@@ -985,10 +985,10 @@ namespace OpenTK.Platform.MacOS
                                     break;
 
                                 case HidPage.Simulation:
-                                    switch ((HidUsageSim)usage)
+                                    switch ((HidSimulationUsage)usage)
                                     {
-                                        case HidUsageSim.Rudder:
-                                        case HidUsageSim.Throttle:
+                                        case HidSimulationUsage.Rudder:
+                                        case HidSimulationUsage.Throttle:
                                             e = new JoystickElement(element_ref, cookie, page, usage, 0, 0);
                                             if (!axis_elements.Contains(e))
                                             {
@@ -1082,17 +1082,17 @@ namespace OpenTK.Platform.MacOS
             {
                 case HidPage.GenericDesktop:
                 {
-                    switch ((HidUsageGD)usage)
+                    switch ((HidGenericDesktopUsage)usage)
                     {
-                        case HidUsageGD.X:
-                        case HidUsageGD.Y:
-                        case HidUsageGD.Z:
-                        case HidUsageGD.Rx:
-                        case HidUsageGD.Ry:
-                        case HidUsageGD.Rz:
-                        case HidUsageGD.Slider:
-                        case HidUsageGD.Dial:
-                        case HidUsageGD.Wheel:
+                        case HidGenericDesktopUsage.X:
+                        case HidGenericDesktopUsage.Y:
+                        case HidGenericDesktopUsage.Z:
+                        case HidGenericDesktopUsage.Rx:
+                        case HidGenericDesktopUsage.Ry:
+                        case HidGenericDesktopUsage.Rz:
+                        case HidGenericDesktopUsage.Slider:
+                        case HidGenericDesktopUsage.Dial:
+                        case HidGenericDesktopUsage.Wheel:
                             var offset = GetJoystickAxis(val, elem);
                             var axis = joy.Elements[cookie].Index;
                             if (axis >= 0 && axis <= JoystickState.MaxAxes)
@@ -1102,7 +1102,7 @@ namespace OpenTK.Platform.MacOS
 
                             break;
 
-                        case HidUsageGD.Hatswitch:
+                        case HidGenericDesktopUsage.Hatswitch:
                             var position = GetJoystickHat(val, elem);
                             var hat = JoystickHat.Hat0 + joy.Elements[cookie].Index;
                             if (hat >= JoystickHat.Hat0 && hat <= JoystickHat.Last)
@@ -1117,10 +1117,10 @@ namespace OpenTK.Platform.MacOS
                 }
                 case HidPage.Simulation:
                 {
-                    switch ((HidUsageSim)usage)
+                    switch ((HidSimulationUsage)usage)
                     {
-                        case HidUsageSim.Rudder:
-                        case HidUsageSim.Throttle:
+                        case HidSimulationUsage.Rudder:
+                        case HidSimulationUsage.Throttle:
                             var offset = GetJoystickAxis(val, elem);
                             var axis = joy.Elements[cookie].Index;
                             if (axis >= 0 && axis <= JoystickState.MaxAxes)

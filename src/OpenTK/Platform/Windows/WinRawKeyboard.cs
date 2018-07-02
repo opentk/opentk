@@ -260,7 +260,7 @@ namespace OpenTK.Platform.Windows
         {
             var rid = new[]
             {
-                new RawInputDevice(HidUsageGD.Keyboard, RawInputDeviceFlags.InputSink, window)
+                new RawInputDevice(HidGenericDesktopUsage.Keyboard, RawInputDeviceFlags.InputSink, window)
             };
 
             if (!User32.RawInput.RegisterRawInputDevices(rid, 1, RawInputDevice.SizeInBytes))

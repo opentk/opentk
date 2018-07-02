@@ -40,17 +40,17 @@ namespace OpenTK.NT.Native
         /// </summary>
         public HWND Target;
 
-        public RawInputDevice(HidUsageGD usage, RawInputDeviceFlags flags, HWND target)
+        public RawInputDevice(HidGenericDesktopUsage usage, RawInputDeviceFlags flags, HWND target)
             : this((ushort)usage, flags, target, HidPage.GenericDesktop)
         {
         }
 
-        public RawInputDevice(HidUsageCD usage, RawInputDeviceFlags flags, HWND target)
+        public RawInputDevice(HidConsumerUsage usage, RawInputDeviceFlags flags, HWND target)
             : this((ushort)usage, flags, target, HidPage.Consumer)
         {
         }
 
-        public RawInputDevice(HidUsageSim usage, RawInputDeviceFlags flags, HWND target)
+        public RawInputDevice(HidSimulationUsage usage, RawInputDeviceFlags flags, HWND target)
             : this((ushort)usage, flags, target, HidPage.Simulation)
         {
         }
