@@ -84,6 +84,11 @@ $ git remote add upstream https://github.com/opentk/opentk.git
 ```
 
 #### 2. Create a working branch
+**IMPORTANT**  
+At the moment, the `develop` branch is frozen while we work on the 4.0 
+release. All pull requests should be based on the 4.0 branch, not the 
+`develop` branch. Swap `develop` for 4.0 in the upcoming sections.
+
 Development is done against the `develop` branch - this is where all the
 magic happens. Your changes should always be based on this branch, so in
 order to start working, create a new branch with an appropriate name and
