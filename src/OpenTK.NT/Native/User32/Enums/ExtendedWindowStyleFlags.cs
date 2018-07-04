@@ -40,7 +40,6 @@ namespace OpenTK.NT.Native
         /// </summary>
         Transparent = 0x00000020,
 
-
         /// <summary>
         /// The window is a MDI child window.
         /// </summary>
@@ -74,7 +73,6 @@ namespace OpenTK.NT.Native
         /// <see cref="ContextHelp"/> cannot be used with the <see cref="WindowStyleFlags.MaximizeBox"/> or <see cref="WindowStyleFlags.MinimizeBox"/> styles.
         /// </summary>
         ContextHelp = 0x00000400,
-
 
         /// <summary>
         /// The window has generic "right-aligned" properties. This depends on the window class.
@@ -114,7 +112,6 @@ namespace OpenTK.NT.Native
         /// </summary>
         RightScrollbar = 0x00000000,
 
-
         /// <summary>
         /// The window itself contains child windows that should take part in dialog box navigation.<para/>
         /// If this style is specified, the dialog manager recurses into children of this window when performing
@@ -132,7 +129,6 @@ namespace OpenTK.NT.Native
         /// </summary>
         AppWindow = 0x00040000,
 
-
         /// <summary>
         /// The window is an overlapped window.
         /// </summary>
@@ -143,7 +139,6 @@ namespace OpenTK.NT.Native
         /// </summary>
         PaletteWindow = WindowEdge | ToolWindow | Topmost,
 
-
         /// <summary>
         /// The window is a layered window. This style cannot be used if the window has
         /// a class style of either <see cref="WindowClassStyleFlags.OwnDC"/> or <see cref="WindowClassStyleFlags.ClassDC"/>.<para/>
@@ -151,12 +146,11 @@ namespace OpenTK.NT.Native
         /// </summary>
         Layered = 0x00080000,
 
-
         /// <summary>
         /// The window does not pass its window layout to its child windows.<para/>
         /// Only supported on Windows 2000 and higher.
         /// </summary>
-        NoInheritLayout = 0x00100000, // Disable inheritence of mirroring by children
+        NoInheritLayout = 0x00100000,
 
         /// <summary>
         /// The window does not render to a redirection surface. This is for windows that do not have visible
@@ -170,8 +164,7 @@ namespace OpenTK.NT.Native
         /// the horizontal origin of the window is on the right edge. Increasing horizontal values advance to the left.<para/>
         /// Only supported on Windows 2000 and higher.
         /// </summary>
-        LayoutRtl = 0x00400000, // Right to left mirroring
-
+        LayoutRtl = 0x00400000,
 
         /// <summary>
         /// Paints all descendants of a window in bottom-to-top painting order using double-buffering.<para/>

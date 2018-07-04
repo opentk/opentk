@@ -55,22 +55,22 @@
         /// <summary>
         /// Double-pointed arrow pointing northeast and southwest.
         /// </summary>
-        SizeNesw = 32643,
+        SizeNortheastSouthwest = 32643,
 
         /// <summary>
         /// Double-pointed arrow pointing north and south.
         /// </summary>
-        SizeNs = 32645,
+        SizeNorthSouth = 32645,
 
         /// <summary>
         /// Double-pointed arrow pointing northwest and southeast.
         /// </summary>
-        SizeNwse = 32642,
+        SizeNorthwestSoutheast = 32642,
 
         /// <summary>
         /// Double-pointed arrow pointing west and east.
         /// </summary>
-        SizeWe = 32644,
+        SizeWestEast = 32644,
 
         /// <summary>
         /// Vertical arrow.

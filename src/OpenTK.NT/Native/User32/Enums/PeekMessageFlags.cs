@@ -23,7 +23,6 @@ namespace OpenTK.NT.Native
         /// </summary>
         NoYield = 2,
 
-
         /// <summary>
         /// Process mouse and keyboard messages.
         /// </summary>

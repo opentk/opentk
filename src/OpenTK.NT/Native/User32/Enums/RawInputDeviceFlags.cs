@@ -67,6 +67,5 @@ namespace OpenTK.NT.Native
         /// Only supported on Vista and later.
         /// </summary>
         DevNotify = 0x00002000
-        //EXMODEMASK      = 0x000000F0
     }
 }

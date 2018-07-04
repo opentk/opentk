@@ -320,28 +320,30 @@ namespace OpenTK.Mathematics
         /// Scales the specified number linearly between a minimum and a maximum.
         /// </summary>
         /// <param name="value">The number to scale.</param>
-        /// <param name="value_min">The minimum expected number (inclusive).</param>
-        /// <param name="value_max">The maximum expected number (inclusive).</param>
-        /// <param name="result_min">The minimum output number (inclusive).</param>
-        /// <param name="result_max">The maximum output number (inclusive).</param>
+        /// <param name="valueMin">The minimum expected number (inclusive).</param>
+        /// <param name="valueMax">The maximum expected number (inclusive).</param>
+        /// <param name="resultMin">The minimum output number (inclusive).</param>
+        /// <param name="resultMax">The maximum output number (inclusive).</param>
         /// <returns>The number, scaled linearly between min and max.</returns>
         public static int ScaleValue
         (
             int value,
-            int value_min,
-            int value_max,
-            int result_min,
-            int result_max
+            int valueMin,
+            int valueMax,
+            int resultMin,
+            int resultMax
         )
         {
-            if (value_min >= value_max || result_min >= result_max)
+            if (valueMin >= valueMax || resultMin >= resultMax)
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
-            value = Clamp(value, value_min, value_max);
+            value = Clamp(value, valueMin, valueMax);
 
-            var range = result_max - result_min;
-            long temp = (value - value_min) * range; // need long to avoid overflow
-            return (int)(temp / (value_max - value_min) + result_min);
+            var range = resultMax - resultMin;
+            long temp = (value - valueMin) * range; // need long to avoid overflow
+            return (int)(temp / (valueMax - valueMin) + resultMin);
         }
 
         /// <summary>

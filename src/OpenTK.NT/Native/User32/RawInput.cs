@@ -132,8 +132,6 @@ namespace OpenTK.NT.Native
                 [In] uint cbSizeHeader
             );
 
-            
-
             /// <summary>
             /// Enumerates the raw input devices attached to the system.
             /// </summary>
