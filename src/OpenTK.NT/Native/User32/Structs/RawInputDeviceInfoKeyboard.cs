@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-using DWORD = System.UInt32;
+﻿using DWORD = System.UInt32;
 
 namespace OpenTK.NT.Native
 {
@@ -10,7 +8,6 @@ namespace OpenTK.NT.Native
     /// <remarks>
     /// For the keyboard, the Usage Page is 1 and the Usage is 6.
     /// </remarks>
-    [StructLayout(LayoutKind.Sequential)]
     public struct RawInputDeviceInfoKeyboard
     {
         /// <summary>

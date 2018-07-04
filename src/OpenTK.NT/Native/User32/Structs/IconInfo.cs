@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-using BOOL = System.Boolean;
+﻿using BOOL = System.Boolean;
 using DWORD = System.UInt32;
 using HBITMAP = System.IntPtr;
 
@@ -9,7 +7,6 @@ namespace OpenTK.NT.Native
     /// <summary>
     /// Contains information about an icon or a cursor.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
     public struct IconInfo
     {
         /// <summary>

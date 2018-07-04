@@ -12,7 +12,6 @@ namespace OpenTK.NT.Native
     /// <remarks>
     /// To get more information on the device, use hDevice in a call to GetRawInputDeviceInfo.
     /// </remarks>
-    [StructLayout(LayoutKind.Sequential)]
     public struct RawInputHeader
     {
         /// <summary>

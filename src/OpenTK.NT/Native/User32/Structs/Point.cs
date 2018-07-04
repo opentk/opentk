@@ -1,8 +1,5 @@
-﻿using System.Runtime.InteropServices;
-
-namespace OpenTK.NT.Native
+﻿namespace OpenTK.NT.Native
 {
-    [StructLayout(LayoutKind.Sequential)]
     public struct Point
     {
         public int X;

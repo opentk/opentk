@@ -7,7 +7,6 @@ namespace OpenTK.NT.Native
     /// <summary>
     /// Contains information about a raw input device.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
     public struct RawInputDeviceList
     {
         /// <summary>

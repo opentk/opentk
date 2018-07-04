@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-using UINT = System.UInt32;
+﻿using UINT = System.UInt32;
 using ULONG = System.UInt32;
 using USHORT = System.UInt16;
 
@@ -9,7 +7,6 @@ namespace OpenTK.NT.Native
     /// <summary>
     /// Contains information about the state of the keyboard.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
     public struct RawKeyboard
     {
         /// <summary>

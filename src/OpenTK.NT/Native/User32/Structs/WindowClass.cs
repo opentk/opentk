@@ -7,7 +7,6 @@ using HCURSOR = System.IntPtr;
 
 namespace OpenTK.NT.Native
 {
-    [StructLayout(LayoutKind.Sequential)]
     public struct WindowClass
     {
         public WindowClassStyleFlags Style;

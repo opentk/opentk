@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 
 using DWORD = System.UInt32;
 
@@ -14,7 +13,6 @@ namespace OpenTK.NT.Native
     /// come from the same HID. The size of the bRawData array is
     /// dwSizeHid * dwCount.
     /// </remarks>
-    [StructLayout(LayoutKind.Sequential)]
     public struct RawHid
     {
         /// <summary>

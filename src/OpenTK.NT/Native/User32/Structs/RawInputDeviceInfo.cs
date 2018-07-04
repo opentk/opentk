@@ -7,7 +7,6 @@ namespace OpenTK.NT.Native
     /// <summary>
     /// Defines the raw input data coming from any device.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
     public struct RawInputDeviceInfo
     {
         public DeviceStruct Device;

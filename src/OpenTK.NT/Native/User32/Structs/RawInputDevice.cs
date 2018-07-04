@@ -15,7 +15,6 @@ namespace OpenTK.NT.Native
     /// mouse messages are not generated. Likewise, if the keyboard TLC is set with RIDEV_NOLEGACY, WM_KEYDOWN and related
     /// legacy keyboard messages are not generated.
     /// </remarks>
-    [StructLayout(LayoutKind.Sequential)]
     public struct RawInputDevice
     {
         /// <summary>

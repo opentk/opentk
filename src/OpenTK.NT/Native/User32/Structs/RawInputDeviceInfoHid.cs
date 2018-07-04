@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-using DWORD = System.UInt32;
+﻿using DWORD = System.UInt32;
 using USHORT = System.UInt16;
 
 namespace OpenTK.NT.Native
@@ -8,7 +6,6 @@ namespace OpenTK.NT.Native
     /// <summary>
     /// Defines the raw input data coming from the specified Human Interface Device (HID).
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
     public struct RawInputDeviceInfoHid
     {
         /// <summary>

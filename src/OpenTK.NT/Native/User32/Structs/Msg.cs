@@ -1,12 +1,9 @@
-﻿using System.Runtime.InteropServices;
-
-using HWND = System.IntPtr;
+﻿using HWND = System.IntPtr;
 using LPARAM = System.IntPtr;
 using WPARAM = System.IntPtr;
 
 namespace OpenTK.NT.Native
 {
-    [StructLayout(LayoutKind.Sequential)]
     public struct Msg
     {
         public HWND HWnd;

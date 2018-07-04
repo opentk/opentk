@@ -9,8 +9,9 @@ namespace OpenTK.NT.Native
     /// <summary>
     /// Describes the pixel format of a drawing surface.
     /// </summary>
-    /// <remarks>Please notice carefully that certain pixel format properties are not supported in the current generic implementation. The generic implementation is the Microsoft GDI software implementation of OpenGL. Hardware manufacturers may enhance parts of OpenGL, and may support some pixel format properties not supported by the generic implementation.</remarks>
-    [StructLayout(LayoutKind.Sequential)]
+    /// <remarks>
+    /// Please notice carefully that certain pixel format properties are not supported in the current generic implementation. The generic implementation is the Microsoft GDI software implementation of OpenGL. Hardware manufacturers may enhance parts of OpenGL, and may support some pixel format properties not supported by the generic implementation.
+    /// </remarks>
     public struct PixelFormatDescriptor
     {
         /// <summary>

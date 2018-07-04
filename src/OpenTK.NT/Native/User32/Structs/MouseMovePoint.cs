@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 using DWORD = System.UInt32;
 using ULONG_PTR = System.IntPtr;
@@ -9,7 +8,6 @@ namespace OpenTK.NT.Native
     /// <summary>
     /// Contains information about the mouse's location in screen coordinates.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]
     public struct MouseMovePoint
     {
         /// <summary>

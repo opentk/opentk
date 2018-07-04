@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-using BOOL = System.Boolean;
+﻿using BOOL = System.Boolean;
 using DWORD = System.UInt32;
 
 namespace OpenTK.NT.Native
@@ -11,7 +9,6 @@ namespace OpenTK.NT.Native
     /// <remarks>
     /// For the keyboard, the Usage Page is 1 and the Usage is 2.
     /// </remarks>
-    [StructLayout(LayoutKind.Sequential)]
     public struct RawInputDeviceInfoMouse
     {
         /// <summary>

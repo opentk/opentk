@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Runtime.InteropServices;
 
 using LONG = System.Int32;
 
@@ -14,7 +13,6 @@ namespace OpenTK.NT.Native
     /// is passed to the FillRect function, the rectangle is filled up to, but not including, the right column and bottom
     /// row of pixels. This structure is identical to the RECTL structure.
     /// </remarks>
-    [StructLayout(LayoutKind.Sequential)]
     public struct Rect
     {
         /// <summary>
