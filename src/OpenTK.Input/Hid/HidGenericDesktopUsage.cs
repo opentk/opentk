@@ -65,17 +65,17 @@
         /// <summary>
         /// A rotation about the X axis. Angular position report values follow the righthand rule. 
         /// </summary>
-        Rx = 0x33,
+        RotationX = 0x33,
 
         /// <summary>
         /// A rotation about the Y axis. Angular position report values follow the righthand rule. 
         /// </summary>
-        Ry = 0x34,
+        RotationY = 0x34,
 
         /// <summary>
         /// A rotation about the Z axis. Angular position report values follow the righthand rule. 
         /// </summary>
-        Rz = 0x35,
+        RotationZ = 0x35,
 
         /// <summary>
         /// A linear control for generating a variable value, normally in the form of a thumb slide in a slot.
@@ -127,37 +127,37 @@
         /// <summary>
         /// A vector in the X direction.
         /// </summary>
-        Vx = 0x40,
+        VectorX = 0x40,
 
         /// <summary>
         /// A vector in the Y direction.
         /// </summary>
-        Vy = 0x41,
+        VectorY = 0x41,
 
         /// <summary>
         /// A vector in the Z direction.
         /// </summary>
-        Vz = 0x42,
+        VectorZ = 0x42,
 
         /// <summary>
         /// A vector in the X direction relative to the body of an object.
         /// </summary>
-        Vbrx = 0x43,
+        VectorXBodyRelative = 0x43,
 
         /// <summary>
         /// A vector in the Y direction relative to the body of an object.
         /// </summary>
-        Vbry = 0x44,
+        VectorYBodyRelative = 0x44,
 
         /// <summary>
         /// A vector in the Z direction relative to the body of an object.
         /// </summary>
-        Vbrz = 0x45,
+        VectorZBodyRelative = 0x45,
 
         /// <summary>
         /// A non oriented vector or value.
         /// </summary>
-        Vno = 0x46,
+        VectorNonOriented = 0x46,
 
         // 0x47 - 0x7F              // Reserved
 

@@ -26,11 +26,11 @@ namespace OpenTK.Input.Hid
                             return 1;
                         case HidGenericDesktopUsage.Z:
                             return 2;
-                        case HidGenericDesktopUsage.Rz:
+                        case HidGenericDesktopUsage.RotationZ:
                             return 3;
-                        case HidGenericDesktopUsage.Rx:
+                        case HidGenericDesktopUsage.RotationX:
                             return 4;
-                        case HidGenericDesktopUsage.Ry:
+                        case HidGenericDesktopUsage.RotationY:
                             return 5;
                         case HidGenericDesktopUsage.Slider:
                             return 6;

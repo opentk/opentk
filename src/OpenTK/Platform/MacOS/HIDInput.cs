@@ -958,9 +958,9 @@ namespace OpenTK.Platform.MacOS
                                         case HidGenericDesktopUsage.X:
                                         case HidGenericDesktopUsage.Y:
                                         case HidGenericDesktopUsage.Z:
-                                        case HidGenericDesktopUsage.Rx:
-                                        case HidGenericDesktopUsage.Ry:
-                                        case HidGenericDesktopUsage.Rz:
+                                        case HidGenericDesktopUsage.RotationX:
+                                        case HidGenericDesktopUsage.RotationY:
+                                        case HidGenericDesktopUsage.RotationZ:
                                         case HidGenericDesktopUsage.Slider:
                                         case HidGenericDesktopUsage.Dial:
                                         case HidGenericDesktopUsage.Wheel:
@@ -1087,9 +1087,9 @@ namespace OpenTK.Platform.MacOS
                         case HidGenericDesktopUsage.X:
                         case HidGenericDesktopUsage.Y:
                         case HidGenericDesktopUsage.Z:
-                        case HidGenericDesktopUsage.Rx:
-                        case HidGenericDesktopUsage.Ry:
-                        case HidGenericDesktopUsage.Rz:
+                        case HidGenericDesktopUsage.RotationX:
+                        case HidGenericDesktopUsage.RotationY:
+                        case HidGenericDesktopUsage.RotationZ:
                         case HidGenericDesktopUsage.Slider:
                         case HidGenericDesktopUsage.Dial:
                         case HidGenericDesktopUsage.Wheel:
