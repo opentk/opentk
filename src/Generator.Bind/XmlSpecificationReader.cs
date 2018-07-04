@@ -26,91 +26,110 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.XPath;
 using Bind.Structures;
-using Delegate = Bind.Structures.Delegate;
-using Enum = Bind.Structures.Enum;
 
 namespace Bind
 {
+    /// <summary>
+    /// Reader class for the XML API specifications.
+    /// </summary>
     internal class XmlSpecificationReader : ISpecificationReader
     {
-        public void ReadDelegates(string file, DelegateCollection delegates, string apiname, string apiversions)
+        /// <inheritdoc />
+        public DelegateCollection ReadDelegates(string specFile, IEnumerable<string> overrideFiles, string apiname, string apiversions)
         {
-            var specs = new XPathDocument(file);
+            var delegates = new DelegateCollection();
 
-            // The pre-GL4.4 spec format does not distinguish between
-            // different apinames (it is assumed that different APIs
-            // are stored in distinct signature.xml files).
-            // To maintain compatibility, we detect the version of the
-            // signatures.xml file and ignore apiname if it is version 1.
-            var specversion = GetSpecVersion(specs);
-            if (specversion == "1")
+            var files = new[] { specFile }.Concat(overrideFiles);
+            foreach (var file in files)
             {
-                apiname = null;
-            }
+                var specs = new XPathDocument(file);
 
-            foreach (var apiversion in apiversions.Split('|'))
-            {
-                GetSignaturePaths(apiname, apiversion, out var xpathAdd, out var xpathDelete);
-
-                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathDelete))
+                // The pre-GL4.4 spec format does not distinguish between
+                // different apinames (it is assumed that different APIs
+                // are stored in distinct signature.xml files).
+                // To maintain compatibility, we detect the version of the
+                // signatures.xml file and ignore apiname if it is version 1.
+                var specversion = GetSpecVersion(specs);
+                if (specversion == "1")
                 {
-                    foreach (XPathNavigator node in nav.SelectChildren("function", string.Empty))
+                    apiname = null;
+                }
+
+                foreach (var apiversion in apiversions.Split('|'))
+                {
+                    GetSignaturePaths(apiname, apiversion, out var xpathAdd, out var xpathDelete);
+
+                    foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathDelete))
                     {
-                        delegates.Remove(node.GetAttribute("name", string.Empty));
+                        foreach (XPathNavigator node in nav.SelectChildren("function", string.Empty))
+                        {
+                            delegates.Remove(node.GetAttribute("name", string.Empty));
+                        }
+                    }
+                    foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathAdd))
+                    {
+                        delegates.AddRange(ReadDelegates(nav, apiversion));
                     }
                 }
-
-                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathAdd))
-                {
-                    delegates.AddRange(ReadDelegates(nav, apiversion));
-                }
             }
+
+            return delegates;
         }
 
-        public void ReadEnums(string file, EnumCollection enums, string apiname, string apiversions)
+        /// <inheritdoc/>
+        public EnumCollection ReadEnums(string specFile, IEnumerable<string> overrideFiles, string apiname, string apiversions)
         {
-            var specs = new XPathDocument(file);
+            var enums = new EnumCollection();
 
-            // The pre-GL4.4 spec format does not distinguish between
-            // different apinames (it is assumed that different APIs
-            // are stored in distinct signature.xml files).
-            // To maintain compatibility, we detect the version of the
-            // signatures.xml file and ignore apiname if it is version 1.
-            var specversion = GetSpecVersion(specs);
-            if (specversion == "1")
+            var files = new[] { specFile }.Concat(overrideFiles);
+            foreach (var file in files)
             {
-                apiname = null;
-            }
+                var specs = new XPathDocument(file);
 
-            foreach (var apiversion in apiversions.Split('|'))
-            {
-                GetSignaturePaths(apiname, apiversion, out var xpathAdd, out var xpathDelete);
-
-                // First, read all enum definitions from spec and override file.
-                // Afterwards, read all token/enum overrides from overrides file.
-                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathDelete))
+                // The pre-GL4.4 spec format does not distinguish between
+                // different apinames (it is assumed that different APIs
+                // are stored in distinct signature.xml files).
+                // To maintain compatibility, we detect the version of the
+                // signatures.xml file and ignore apiname if it is version 1.
+                var specversion = GetSpecVersion(specs);
+                if (specversion == "1")
                 {
-                    foreach (XPathNavigator node in nav.SelectChildren("enum", string.Empty))
+                    apiname = null;
+                }
+
+                foreach (var apiversion in apiversions.Split('|'))
+                {
+                    GetSignaturePaths(apiname, apiversion, out var xpathAdd, out var xpathDelete);
+
+                    // First, read all enum definitions from spec and override file.
+                    // Afterwards, read all token/enum overrides from overrides file.
+                    foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathDelete))
                     {
-                        enums.Remove(node.GetAttribute("name", string.Empty));
+                        foreach (XPathNavigator node in nav.SelectChildren("enum", string.Empty))
+                        {
+                            enums.Remove(node.GetAttribute("name", string.Empty));
+                        }
+                    }
+                    foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathAdd))
+                    {
+                        Utilities.Merge(enums, ReadEnums(nav));
                     }
                 }
-
-                foreach (XPathNavigator nav in specs.CreateNavigator().Select(xpathAdd))
-                {
-                    Utilities.Merge(enums, ReadEnums(nav));
-                }
             }
+
+            return enums;
         }
 
-        public Dictionary<string, string> ReadTypeMap(string file)
+        /// <inheritdoc/>
+        public Dictionary<string, string> ReadAPITypeMap(string file)
         {
             using (var sr = new StreamReader(file))
             {
-                Console.WriteLine("Reading opengl types.");
-                var glTypes = new Dictionary<string, string>();
+                Console.WriteLine("Reading OpenGL types.");
+                var apiTypes = new Dictionary<string, string>();
 
                 do
                 {
@@ -126,12 +145,12 @@ namespace Bind
                     if (words[0].ToLower() == "void")
                     {
                         // Special case for "void" -> "". We make it "void" -> "void"
-                        glTypes.Add(words[0], "void");
+                        apiTypes.Add(words[0], "void");
                     }
                     else if (words[0] == "VoidPointer" || words[0] == "ConstVoidPointer")
                     {
                         // "(Const)VoidPointer" -> "void*"
-                        glTypes.Add(words[0], "void*");
+                        apiTypes.Add(words[0], "void*");
                     }
                     else if (words[0] == "CharPointer" || words[0] == "charPointerARB" ||
                              words[0] == "ConstCharPointer")
@@ -140,7 +159,7 @@ namespace Bind
                         // Hence we give it a push.
                         // Note: When both CurrentType == "String" and Pointer == true, the typematching is hardcoded to use
                         // String[] or StringBuilder[].
-                        glTypes.Add(words[0], "String");
+                        apiTypes.Add(words[0], "String");
                     }
                     /*else if (words[0].Contains("Pointer"))
                     {
@@ -148,31 +167,33 @@ namespace Bind
                     }*/
                     else if (words[1].Contains("GLvoid"))
                     {
-                        glTypes.Add(words[0], "void");
+                        apiTypes.Add(words[0], "void");
                     }
                     else if (words[1] == "const" && words[2] == "GLubyte")
                     {
-                        glTypes.Add(words[0], "String");
+                        apiTypes.Add(words[0], "String");
                     }
                     else if (words[1] == "struct")
                     {
-                        glTypes.Add(words[0], words[2]);
+                        apiTypes.Add(words[0], words[2]);
                     }
                     else
                     {
-                        glTypes.Add(words[0], words[1]);
+                        apiTypes.Add(words[0], words[1]);
                     }
-                } while (!sr.EndOfStream);
+                }
+                while (!sr.EndOfStream);
 
-                return glTypes;
+                return apiTypes;
             }
         }
 
-        public Dictionary<string, string> ReadCSTypeMap(string file)
+        /// <inheritdoc/>
+        public Dictionary<string, string> ReadLanguageTypeMap(string file)
         {
             using (var sr = new StreamReader(file))
             {
-                var csTypes = new Dictionary<string, string>();
+                var languageTypes = new Dictionary<string, string>();
                 Console.WriteLine("Reading C# types.");
 
                 while (!sr.EndOfStream)
@@ -189,10 +210,10 @@ namespace Bind
                         continue;
                     }
 
-                    csTypes.Add(words[0], words[1]);
+                    languageTypes.Add(words[0], words[1]);
                 }
 
-                return csTypes;
+                return languageTypes;
             }
         }
 
@@ -220,13 +241,11 @@ namespace Bind
         {
             var version =
                 specs.CreateNavigator().SelectSingleNode("/signatures")
-                    .GetAttribute("version", string.Empty);
-
+                .GetAttribute("version", string.Empty);
             if (string.IsNullOrEmpty(version))
             {
                 version = "1";
             }
-
             return version;
         }
 
@@ -251,20 +270,19 @@ namespace Bind
                 }
 
                 // Check whether we are adding to an existing delegate or creating a new one.
-                var d = new Delegate
+                var d = new DelegateDefinition
                 {
                     Name = name,
                     EntryPoint = name,
                     Version = node.GetAttribute("version", string.Empty).Trim(),
                     Category = node.GetAttribute("category", string.Empty).Trim(),
                     DeprecatedVersion = node.GetAttribute("deprecated", string.Empty).Trim(),
-                    Deprecated = !string.IsNullOrEmpty(node.GetAttribute("deprecated", string.Empty)),
-                    Extension = node.GetAttribute("extension", string.Empty).Trim() ?? "Core",
-                    Obsolete = node.GetAttribute("obsolete", string.Empty).Trim()
+                    ExtensionName = node.GetAttribute("extension", string.Empty).Trim(),
+                    ObsoletionReason = node.GetAttribute("obsolete", string.Empty).Trim()
                 };
-                if (!extensions.Contains(d.Extension))
+                if (!extensions.Contains(d.ExtensionName))
                 {
-                    extensions.Add(d.Extension);
+                    extensions.Add(d.ExtensionName);
                 }
 
                 foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
@@ -272,22 +290,22 @@ namespace Bind
                     switch (param.Name)
                     {
                         case "returns":
-                            d.ReturnType.CurrentType = param.GetAttribute("type", string.Empty).Trim();
+                            d.ReturnTypeDefinition.TypeName = param.GetAttribute("type", string.Empty).Trim();
                             break;
 
                         case "param":
-                            var p = new Parameter();
-                            p.CurrentType = param.GetAttribute("type", string.Empty).Trim();
+                            var p = new ParameterDefinition();
+                            p.ParameterType.TypeName = param.GetAttribute("type", string.Empty).Trim();
                             p.Name = param.GetAttribute("name", string.Empty).Trim();
 
                             p.ComputeSize = param.GetAttribute("count", string.Empty).Trim();
 
-                            if (int.TryParse(p.ComputeSize, out var elementCount))
+                            if (uint.TryParse(p.ComputeSize, out var elementCount))
                             {
-                                p.ElementCount = elementCount;
+                                p.ParameterType.ElementCount = elementCount;
                             }
 
-                            p.Flow = Parameter.GetFlowDirection(param.GetAttribute("flow", string.Empty).Trim());
+                            p.Flow = ParameterDefinition.GetFlowDirection(param.GetAttribute("flow", string.Empty).Trim());
 
                             d.Parameters.Add(p);
                             break;
@@ -305,131 +323,129 @@ namespace Bind
         {
             var enums = new EnumCollection();
 
-            if (nav == null)
+            if (nav != null)
             {
-                return enums;
-            }
+                var reuseList = new List<KeyValuePair<EnumDefinition, string>>();
 
-            var reuseList = new List<KeyValuePair<Enum, string>>();
-
-            // First pass: collect all available tokens and enums
-            foreach (XPathNavigator node in nav.SelectChildren("enum", string.Empty))
-            {
-                var e = new Enum
+                // First pass: collect all available tokens and enums
+                foreach (XPathNavigator node in nav.SelectChildren("enum", string.Empty))
                 {
-                    Name = node.GetAttribute("name", string.Empty).Trim(),
-                    Type = node.GetAttribute("type", string.Empty).Trim(),
-                    Obsolete = node.GetAttribute("obsolete", string.Empty).Trim()
-                };
-
-                if (string.IsNullOrEmpty(e.Name))
-                {
-                    throw new InvalidOperationException($"Empty name for enum element {node}");
-                }
-
-                // It seems that all flag collections contain "Mask" in their names.
-                // This looks like a heuristic, but it holds 100% in practice
-                // (checked all enums to make sure).
-                e.IsFlagCollection = e.Name.ToLower().Contains("mask");
-
-                foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
-                {
-                    Constant c = null;
-                    switch (param.Name)
+                    var e = new EnumDefinition()
                     {
-                        case "token":
-                            c = new Constant
-                            {
-                                Name = param.GetAttribute("name", string.Empty).Trim(),
-                                Value = param.GetAttribute("value", string.Empty).Trim()
-                            };
-                            break;
+                        Name = node.GetAttribute("name", string.Empty).Trim(),
+                        Type = node.GetAttribute("type", string.Empty).Trim()
+                    };
 
-                        case "use":
-                            c = new Constant
-                            {
-                                Name = param.GetAttribute("token", string.Empty).Trim(),
-                                Reference = param.GetAttribute("enum", string.Empty).Trim(),
-                                Value = param.GetAttribute("token", string.Empty).Trim()
-                            };
-                            break;
+                    e.Obsolete = node.GetAttribute("obsolete", string.Empty).Trim();
 
-                        case "reuse":
-                            var reuseEnum = param.GetAttribute("enum", string.Empty).Trim();
-                            reuseList.Add(new KeyValuePair<Enum, string>(e, reuseEnum));
-                            break;
-
-                        default:
-                            throw new NotSupportedException();
+                    if (string.IsNullOrEmpty(e.Name))
+                    {
+                        throw new InvalidOperationException($"Empty name for enum element {node}");
                     }
 
-                    if (c == null)
-                    {
-                        continue;
-                    }
+                    // It seems that all flag collections contain "Mask" in their names.
+                    // This looks like a heuristic, but it holds 100% in practice
+                    // (checked all enums to make sure).
+                    e.IsFlagCollection = e.Name.ToLower().Contains("mask");
 
-                    try
+                    foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
                     {
-                        if (!e.ConstantCollection.ContainsKey(c.Name))
+                        ConstantDefinition c = null;
+                        switch (param.Name)
                         {
-                            e.ConstantCollection.Add(c.Name, c);
+                            case "token":
+                                c = new ConstantDefinition
+                                {
+                                    Name = param.GetAttribute("name", string.Empty).Trim(),
+                                    Value = param.GetAttribute("value", string.Empty).Trim()
+                                };
+                                break;
+
+                            case "use":
+                                c = new ConstantDefinition
+                                {
+                                    Name = param.GetAttribute("token", string.Empty).Trim(),
+                                    Reference = param.GetAttribute("enum", string.Empty).Trim(),
+                                    Value = param.GetAttribute("token", string.Empty).Trim(),
+                                };
+                                break;
+
+                            case "reuse":
+                                var reuseEnum = param.GetAttribute("enum", string.Empty).Trim();
+                                reuseList.Add(new KeyValuePair<EnumDefinition, string>(e, reuseEnum));
+                                break;
+
+                            default:
+                                throw new NotSupportedException();
                         }
-                        else if (e.ConstantCollection[c.Name].Value != c.Value)
+
+                        if (c != null)
                         {
-                            var existing = e.ConstantCollection[c.Name];
-                            if (existing.Reference != null && c.Reference == null)
+                            try
                             {
-                                e.ConstantCollection[c.Name] = c;
+                                if (!e.ConstantCollection.ContainsKey(c.Name))
+                                {
+                                    e.ConstantCollection.Add(c.Name, c);
+                                }
+                                else if (e.ConstantCollection[c.Name].Value != c.Value)
+                                {
+                                    var existing = e.ConstantCollection[c.Name];
+                                    if (existing.Reference != null && c.Reference == null)
+                                    {
+                                        e.ConstantCollection[c.Name] = c;
+                                    }
+                                    else if (existing.Reference == null && c.Reference != null)
+                                    {
+                                        // Keep existing
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine
+                                        (
+                                            $"[Warning] Conflicting token {e.Name}.{c.Name} with value {e.ConstantCollection[c.Name].Value} != {c.Value}"
+                                        );
+                                    }
+                                }
                             }
-                            else if (existing.Reference == null && c.Reference != null)
+                            catch (ArgumentException ex)
                             {
-                                // Keep existing
-                            }
-                            else
-                            {
-                                Console.WriteLine("[Warning] Conflicting token {0}.{1} with value {2} != {3}",
-                                    e.Name, c.Name, e.ConstantCollection[c.Name].Value, c.Value);
+                                Console.WriteLine("[Warning] Failed to add constant {0} to enum {1}: {2}", c.Name, e.Name, ex.Message);
                             }
                         }
                     }
-                    catch (ArgumentException ex)
+
+                    Utilities.Merge(enums, e);
+                }
+
+                // Second pass: resolve "reuse" directives
+restart:
+                foreach (var pair in reuseList)
+                {
+                    var e = pair.Key;
+                    var reuse = pair.Value;
+                    var count = e.ConstantCollection.Count;
+
+                    if (enums.ContainsKey(reuse))
                     {
-                        Console.WriteLine("[Warning] Failed to add constant {0} to enum {1}: {2}", c.Name,
-                            e.Name, ex.Message);
+                        var reuseEnum = enums[reuse];
+                        foreach (var token in reuseEnum.ConstantCollection.Values)
+                        {
+                            Utilities.Merge(e, token);
+                        }
                     }
-                }
-
-                Utilities.Merge(enums, e);
-            }
-
-            // Second pass: resolve "reuse" directives
-            restart:
-            foreach (var pair in reuseList)
-            {
-                var e = pair.Key;
-                var reuse = pair.Value;
-                var count = e.ConstantCollection.Count;
-
-                if (enums.ContainsKey(reuse))
-                {
-                    var reuseEnum = enums[reuse];
-                    foreach (var token in reuseEnum.ConstantCollection.Values)
+                    else
                     {
-                        Utilities.Merge(e, token);
+                        Console.WriteLine("[Warning] Reuse token not found: {0}", reuse);
                     }
-                }
-                else
-                {
-                    Console.WriteLine("[Warning] Reuse token not found: {0}", reuse);
-                }
 
-                if (count != e.ConstantCollection.Count)
-                {
-                    // Restart resolution of reuse directives whenever
-                    // we modify an enum. This is the simplest (brute) way
-                    // to resolve chains of reuse directives:
-                    // e.g. enum A reuses B which reuses C
-                    goto restart;
+                    if (count != e.ConstantCollection.Count)
+                    {
+                        // Restart resolution of reuse directives whenever
+                        // we modify an enum. This is the simplest (brute) way
+                        // to resolve chains of reuse directives:
+                        // e.g. enum A reuses B which reuses C
+                        goto restart;
+                    }
                 }
             }
 

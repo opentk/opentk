@@ -4,17 +4,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using Bind.ES;
-using Bind.GL2;
+using Bind.Generators;
+using Bind.Generators.ES;
+using Bind.Generators.GL2;
 using CommandLine;
 
 namespace Bind
 {
     /// <summary>
-    /// Main program class for the binder.
+    /// Main class for the program.
     /// </summary>
     internal static class Program
     {
@@ -25,7 +25,7 @@ namespace Bind
 
         private static readonly List<IGenerator> Generators = new List<IGenerator>();
 
-        private static void Main(string[] args)
+        private static int Main(string[] args)
         {
             Console.WriteLine($"OpenGL binding generator {Assembly.GetExecutingAssembly().GetName().Version} for OpenTK.");
             Console.WriteLine("For comments, bugs and suggestions visit http://github.com/opentk/opentk");
@@ -33,6 +33,11 @@ namespace Bind
 
             Parser.Default.ParseArguments<CommandLineArguments>(args)
                 .WithParsed(r => Arguments = r);
+
+            if (Arguments is null)
+            {
+                return 1;
+            }
 
             CreateGenerators();
 
@@ -50,6 +55,8 @@ namespace Bind
                 Console.WriteLine();
                 Console.WriteLine("Bindings generated in {0} seconds.", ticks / 10000000.0);
             }
+
+            return 0;
         }
 
         private static void CreateGenerators()
@@ -58,6 +65,7 @@ namespace Bind
             {
                 Generators.Add(new GL2Generator());
                 Generators.Add(new GL4Generator());
+                Generators.Add(new ES10Generator());
                 Generators.Add(new ES11Generator());
                 Generators.Add(new ES2Generator());
                 Generators.Add(new ES3Generator());
@@ -82,7 +90,7 @@ namespace Bind
                         }
                         case TargetAPI.ES10:
                         {
-                            Generators.Add(new ES11Generator());
+                            Generators.Add(new ES10Generator());
                             break;
                         }
                         case TargetAPI.ES11:

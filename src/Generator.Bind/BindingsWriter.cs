@@ -1,4 +1,4 @@
-﻿//
+﻿﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2010 the Open Toolkit library.
@@ -24,17 +24,17 @@
 //
 
 using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Bind.Extensions;
+using Bind.Generators;
 using Bind.Structures;
 using Bind.Writers;
-using Delegate = Bind.Structures.Delegate;
-using Enum = Bind.Structures.Enum;
-using Type = Bind.Structures.Type;
+using Humanizer;
 
 namespace Bind
 {
@@ -43,26 +43,12 @@ namespace Bind
     /// </summary>
     internal sealed class BindingsWriter
     {
-        // For example, if parameter foo has indirection level = 1, then it
-        // is consumed as 'foo*' in the fixed_statements and the call string.
-        private static readonly string[] PointerLevels = { "", "*", "**", "***", "****" };
-
-        private static readonly string[] ArrayLevels = { "", "[]", "[,]", "[,,]", "[,,,]" };
-
-        private static readonly Dictionary<string, string> Aliases = new Dictionary<string, string>
-        {
-            { nameof(Int16), "short" },
-            { nameof(UInt16), "ushort" },
-            { nameof(Int32), "int" },
-            { nameof(UInt32), "uint" },
-            { nameof(Int64), "long" },
-            { nameof(UInt64), "ulong" },
-            { nameof(Single), "float" },
-            { nameof(Double), "double" }
-        };
-
         private IGenerator Generator { get; set; }
 
+        /// <summary>
+        /// Writes the bindings for the given generator to file.
+        /// </summary>
+        /// <param name="generator">The generator.</param>
         public void WriteBindings(IGenerator generator)
         {
             Generator = generator;
@@ -80,211 +66,253 @@ namespace Bind
                 Directory.CreateDirectory(baseOutputPath);
             }
 
-            var tempEnumsFilePath = Path.GetTempFileName();
-            using (var tempEnumsFile = File.Open(tempEnumsFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            // Enums
+            WriteEnums(enums, wrappers);
+
+            // Wrappers
+            WriteWrappers(wrappers, delegates);
+        }
+
+        private void WriteWrappers(FunctionCollection wrappers, DelegateCollection delegates)
+        {
+            Trace.WriteLine($"Writing wrappers to:\t{Generator.Namespace}.{Generator.ClassName}");
+
+            var baseOutputPath = Path.Combine(Program.Arguments.OutputPath, Generator.OutputSubfolder);
+            var wrappersOutputDirectory = Path.Combine(baseOutputPath, "Wrappers");
+
+            if (!Directory.Exists(wrappersOutputDirectory))
             {
-                // Enums
-                using (var sw = new SourceWriter(new StreamWriter(tempEnumsFile)))
-                {
-                    WriteLicense(sw);
-
-                    sw.WriteLine("using System;");
-                    sw.WriteLine();
-
-                    sw.WriteLine($"namespace {Generator.Namespace}");
-                    using (sw.BeginBlock())
-                    {
-                        WriteEnums(sw, enums, wrappers);
-                    }
-                }
+                Directory.CreateDirectory(wrappersOutputDirectory);
             }
 
-            var tempWrappersFilePath = Path.GetTempFileName();
-            using (var tempWrappersFile = File.Open(tempWrappersFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            // Create the interop setup neccesary
+            var tempInteropFilePath = Path.GetTempFileName();
+            using (var outputFile = File.Open(tempInteropFilePath, FileMode.OpenOrCreate))
             {
-                // Wrappers
-                using (var sw = new SourceWriter(new StreamWriter(tempWrappersFile)))
+                using (var sw = new SourceWriter(new StreamWriter(outputFile)))
                 {
                     WriteLicense(sw);
+                    sw.WriteLineNoTabs();
 
                     sw.WriteLine("using System;");
                     sw.WriteLine("using System.Text;");
                     sw.WriteLine("using System.Runtime.InteropServices;");
-                    sw.WriteLine("using OpenTK.Mathematics;");
-                    sw.WriteLine();
+                    sw.WriteLineNoTabs();
 
-                    sw.WriteLine("namespace {0}", Generator.Namespace);
+                    sw.WriteLine($"namespace {Generator.Namespace}");
                     using (sw.BeginBlock())
                     {
-                        WriteWrappers(sw, wrappers, delegates);
-                    }
-                }
-            }
-
-            var outputEnums = Path.Combine(baseOutputPath, Generator.OutputSubfolder, $"{Generator.APIIdentifier}.Enums.cs");
-            var outputWrappers = Path.Combine(baseOutputPath, Generator.OutputSubfolder, $"{Generator.APIIdentifier}.cs");
-
-            if (File.Exists(outputEnums))
-            {
-                File.Delete(outputEnums);
-            }
-
-            if (File.Exists(outputWrappers))
-            {
-                File.Delete(outputWrappers);
-            }
-
-            File.Move(tempEnumsFilePath, outputEnums);
-            File.Move(tempWrappersFilePath, outputWrappers);
-        }
-
-        private void WriteWrappers(SourceWriter sw, FunctionCollection wrappers, DelegateCollection delegates)
-        {
-            Trace.WriteLine($"Writing wrappers to:\t{Generator.Namespace}.{Generator.ClassName}");
-
-            sw.WriteLine("#pragma warning disable 1591"); // Missing doc comments
-            sw.WriteLine("#pragma warning disable 1572"); // Wrong param comments
-            sw.WriteLine("#pragma warning disable 1573"); // Missing param comments
-            sw.WriteLine("#pragma warning disable 626"); // extern method without DllImport
-
-            sw.WriteLine();
-            sw.WriteLine("partial class {0}", Generator.ClassName);
-            using (sw.BeginBlock())
-            {
-                // Write constructor
-                sw.WriteLine($"static {Generator.ClassName}()");
-                using (sw.BeginBlock())
-                {
-                    // Write entry point names.
-                    // Instead of strings, which are costly to construct,
-                    // we use a 1d array of ASCII bytes. Names are laid out
-                    // sequentially, with a nul-terminator between them.
-                    sw.WriteLine("EntryPointNames = new byte[]");
-                    using (sw.BeginBlock())
-                    {
-                        foreach (var d in delegates.Values.Select(d => d.First()))
-                        {
-                            var name = Generator.FunctionPrefix + d.Name;
-                            var byteString = string.Join
-                            (
-                                ", ",
-                                Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()
-                            );
-
-                            sw.WriteLine($"{byteString}, 0,");
-                        }
-                    }
-
-                    sw.WriteLine();
-
-                    // Write entry point name offsets.
-                    // This is an array of offsets into the EntryPointNames[] array above.
-                    sw.WriteLine("EntryPointNameOffsets = new int[]");
-                    using (sw.BeginBlock())
-                    {
-                        var offset = 0;
-                        foreach (var d in delegates.Values.Select(d => d.First()))
-                        {
-                            sw.WriteLine(offset);
-                            var name = Generator.FunctionPrefix + d.Name;
-                            offset += name.Length + 1;
-                        }
-                    }
-
-                    sw.WriteLine("EntryPoints = new IntPtr[EntryPointNameOffsets.Length];");
-                }
-
-                foreach (var key in wrappers.Keys)
-                {
-                    if (key != "Core")
-                    {
+                        sw.WriteLine($"public sealed partial class {Generator.ClassName}");
                         using (sw.BeginBlock())
                         {
-                            if (!char.IsDigit(key[0]))
+                            // Write constructor
+                            sw.WriteLine($"static {Generator.ClassName}()");
+                            using (sw.BeginBlock())
                             {
-                                sw.WriteLine($"public static partial class {key}");
-                            }
-                            else
-                            {
-                                // Identifiers cannot start with a number:
-                                sw.WriteLine($"public static partial class {Generator.ConstantPrefix}{key}");
-                            }
+                                // Write entry point names.
+                                // Instead of strings, which are costly to construct,
+                                // we use a 1d array of ASCII bytes. Names are laid out
+                                // sequentially, with a nul-terminator between them.
+                                sw.WriteLine("EntryPointNames = new byte[]");
+                                using (sw.BeginBlock(true))
+                                {
+                                    foreach (var d in delegates.Values.Select(d => d.First()))
+                                    {
+                                        var name = Generator.FunctionPrefix + d.Name;
+                                        var byteString = string.Join
+                                        (
+                                            ", ",
+                                            Encoding.ASCII.GetBytes(name).Select(b => b.ToString()).ToArray()
+                                        );
 
-                            wrappers[key].Sort();
-                            foreach (var f in wrappers[key])
-                            {
-                                WriteMethod(sw, f);
-                                sw.WriteLine();
-                            }
+                                        sw.WriteLine($"{byteString}, 0,");
+                                    }
+                                }
 
-                            sw.WriteLine();
-                        }
-                    }
-                    else
-                    {
-                        wrappers[key].Sort();
-                        foreach (var f in wrappers[key])
-                        {
-                            WriteMethod(sw, f);
-                            sw.WriteLine();
+                                sw.WriteLineNoTabs();
+
+                                // Write entry point name offsets.
+                                // This is an array of offsets into the EntryPointNames[] array above.
+                                sw.WriteLine("EntryPointNameOffsets = new int[]");
+                                using (sw.BeginBlock(true))
+                                {
+                                    var offset = 0;
+                                    foreach (var d in delegates.Values.Select(d => d.First()))
+                                    {
+                                        sw.WriteLine($"{offset},");
+                                        var name = Generator.FunctionPrefix + d.Name;
+                                        offset += name.Length + 1;
+                                    }
+                                }
+
+                                sw.WriteLineNoTabs();
+
+                                sw.WriteLine("EntryPoints = new IntPtr[EntryPointNameOffsets.Length];");
+                            }
                         }
                     }
                 }
+            }
 
-                // Emit native signatures.
-                // These are required by the patcher.
-                var wrappersToWrite = wrappers.Values.SelectMany(e => e).Select(w => w.WrappedDelegate).Distinct().ToList();
-                foreach (var d in wrappersToWrite)
+            var outputFilePath = Path.Combine(wrappersOutputDirectory, $"{Generator.ClassName}.cs");
+
+            if (File.Exists(outputFilePath))
+            {
+                File.Delete(outputFilePath);
+            }
+
+            File.Move(tempInteropFilePath, outputFilePath);
+
+            // Next, we'll create the individual category files
+            foreach (var (extensionName, extensionWrappers) in wrappers)
+            {
+                var extensionOutputDirectory = Path.Combine(wrappersOutputDirectory, extensionName);
+
+                if (!Directory.Exists(extensionOutputDirectory))
                 {
-                    sw.WriteLine($"[Slot({d.Slot})]");
-                    sw.WriteLine("[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
-                    sw.WriteLine("private static extern {0};", GetDeclarationString(d, false));
+                    Directory.CreateDirectory(extensionOutputDirectory);
+                }
 
-                    if (d != wrappersToWrite.Last())
+                var wrappersByCategory = extensionWrappers.GroupBy(w => w.Category);
+                foreach (var category in wrappersByCategory)
+                {
+                    var safeCategoryName = category.Key.Replace('|', '-');
+                    var categoryNameWithoutExtensionPrefix = safeCategoryName.Substring(category.Key.IndexOf('_') + 1);
+                    var titleCaseCategoryName = categoryNameWithoutExtensionPrefix.Pascalize();
+
+                    var tempWrapperOutputPath = Path.GetTempFileName();
+                    using (var outputFile = File.Open(tempWrapperOutputPath, FileMode.OpenOrCreate))
                     {
-                        sw.WriteLine();
+                        using (var sw = new SourceWriter(new StreamWriter(outputFile)))
+                        {
+                            WriteLicense(sw);
+                            sw.WriteLineNoTabs();
+
+                            sw.WriteLine("using System;");
+                            sw.WriteLine("using System.Text;");
+                            sw.WriteLine("using System.Runtime.InteropServices;");
+                            sw.WriteLineNoTabs();
+
+                            sw.WriteLine($"namespace {Generator.Namespace}");
+                            using (sw.BeginBlock())
+                            {
+                                SourceWriterBlock outerBlock = null;
+                                if (extensionName == "Core")
+                                {
+                                    sw.WriteLine($"public sealed partial class {Generator.ClassName}");
+                                }
+                                else
+                                {
+                                    sw.WriteLine($"public sealed partial class {Generator.ClassName}");
+
+                                    outerBlock = sw.BeginBlock();
+
+                                    sw.WriteLine("/// <summary>");
+                                    sw.WriteLine($"/// Contains native bindings to functions in the category \"{titleCaseCategoryName}\" in the extension \"{extensionName}\".");
+                                    sw.WriteLine("/// </summary>");
+
+                                    // Identifiers can't begin with numbers
+                                    var safeExtensionName = char.IsDigit(extensionName[0])
+                                        ? $"{Generator.ConstantPrefix}{extensionName}"
+                                        : extensionName;
+
+                                    sw.WriteLine($"public static partial class {safeExtensionName}");
+                                }
+
+                                using (sw.BeginBlock())
+                                {
+                                    var categoryWrappers = category.OrderBy(w => w).ToList();
+                                    foreach (var wrapper in categoryWrappers)
+                                    {
+                                        WriteMethod(sw, wrapper);
+
+                                        if (wrapper != categoryWrappers.Last())
+                                        {
+                                            sw.WriteLineNoTabs();
+                                        }
+                                    }
+
+                                    sw.WriteLineNoTabs();
+
+                                    sw.WriteLine("#pragma warning disable SA1300 // Element should begin with an upper-case letter");
+                                    sw.WriteLineNoTabs();
+
+                                    // Emit native signatures.
+                                    // These are required by the patcher.
+                                    var categoryNatives = categoryWrappers.Select(w => w.WrappedDelegateDefinition).Distinct().ToList();
+                                    foreach (var native in categoryNatives)
+                                    {
+                                        sw.WriteLine($"[Slot({native.Slot})]");
+                                        sw.WriteLine("[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
+                                        sw.WriteLine($"private static extern {GetDeclarationString(native, false)};");
+
+                                        if (native != categoryNatives.Last())
+                                        {
+                                            sw.WriteLineNoTabs();
+                                        }
+                                    }
+                                }
+
+                                // We've got a nested class to close
+                                outerBlock?.Dispose();
+                            }
+                        }
                     }
+
+                    var outputCategorySubPath = Path.Combine(extensionOutputDirectory, $"{titleCaseCategoryName}.cs");
+
+                    if (File.Exists(outputCategorySubPath))
+                    {
+                        File.Delete(outputCategorySubPath);
+                    }
+
+                    File.Move(tempWrapperOutputPath, outputCategorySubPath);
                 }
             }
         }
 
-        private void WriteMethod(SourceWriter sw, Function f)
+        private void WriteMethod(SourceWriter sw, FunctionDefinition f)
         {
-            if (!Program.Arguments.NoDocumentation)
+            WriteDocumentation(sw, f);
+
+            if (f.IsDeprecated)
             {
-                WriteDocumentation(sw, f);
+                sw.WriteLine($"[Obsolete(\"Deprecated in version {f.DeprecatedVersion}.\")]");
+            }
+            else if (f.IsObsolete)
+            {
+                sw.WriteLine($"[Obsolete(\"{f.ObsoletionReason}\")]");
             }
 
-            if (!string.IsNullOrEmpty(f.Obsolete))
+            sw.WriteLine($"[AutoGenerated(Category = \"{f.Category}\", Version = \"{f.Version}\", EntryPoint = \"{Generator.FunctionPrefix}{f.WrappedDelegateDefinition.EntryPoint}\")]");
+
+            var declarationString = GetDeclarationString(f).TrimEnd();
+            var declarationStringLines = declarationString.Split('\n').ToList();
+
+            sw.WriteLine($"public static {declarationStringLines.First()}");
+            foreach (var line in declarationStringLines.Skip(1))
             {
-                sw.WriteLine($"[Obsolete(\"{f.Obsolete}\")]");
-            }
-            else if (f.Deprecated)
-            {
-                sw.WriteLine($"[Obsolete(\"Deprecated in OpenGL {f.DeprecatedVersion}\")]");
+                sw.WriteLine(line);
             }
 
-            sw.WriteLine($"[AutoGenerated(Category = \"{f.Category}\", Version = \"{f.Version}\", EntryPoint = \"{Generator.FunctionPrefix}{f.WrappedDelegate.EntryPoint}\")]");
-
-            sw.WriteLine($"public static {GetDeclarationString(f)}");
             using (sw.BeginBlock())
             {
                 sw.WriteLine("throw new BindingsNotRewrittenException();");
             }
         }
 
-        private void WriteDocumentation(SourceWriter sw, Function f)
+        private void WriteDocumentation(SourceWriter sw, FunctionDefinition f)
         {
-            var docs = f.Documentation;
+            var docs = f.DocumentationDefinition;
 
             var warning = string.Empty;
             var category = string.Empty;
-            if (f.Deprecated)
+            if (f.IsDeprecated)
             {
                 warning = $"[deprecated: v{f.DeprecatedVersion}]";
             }
 
-            if (f.Extension != "Core" && !string.IsNullOrEmpty(f.Category))
+            if (f.ExtensionName != "Core" && !string.IsNullOrEmpty(f.Category))
             {
                 category = $"[requires: {f.Category}]";
             }
@@ -304,20 +332,26 @@ namespace Bind
             sw.WriteLine("/// <summary>");
             if (!string.IsNullOrEmpty(category) || !string.IsNullOrEmpty(warning))
             {
-                sw.WriteLine("/// {0}{1}", category, warning);
+                sw.WriteLine($"/// {category}{warning}");
             }
 
             if (!string.IsNullOrEmpty(docs.Summary))
             {
-                sw.WriteLine("/// {0}", docs.Summary);
+                var summaryLines = docs.Summary.TrimEnd().Split('\n');
+                foreach (var summaryLine in summaryLines)
+                {
+                    sw.WriteLine($"/// {summaryLine}");
+                }
             }
-
             sw.WriteLine("/// </summary>");
 
             // Write function parameters
             for (var i = 0; i < f.Parameters.Count; i++)
             {
                 var param = f.Parameters[i];
+
+                // XML documentation doesn't require keyword escaping.
+                var docParameterName = param.Name.TrimStart('@');
 
                 var length = string.Empty;
                 if (!string.IsNullOrEmpty(param.ComputeSize))
@@ -346,15 +380,15 @@ namespace Bind
 
                     // Note: we use param.Name, because the documentation sometimes
                     // uses different names than the specification.
-                    sw.WriteLine("/// <param name=\"{0}\">", param.Name);
+                    sw.WriteLine($"/// <param name=\"{docParameterName}\">");
                     if (!string.IsNullOrEmpty(length))
                     {
-                        sw.WriteLine("/// {0}", length);
+                        sw.WriteLine($"/// {length}");
                     }
 
                     if (!string.IsNullOrEmpty(docparam.Documentation))
                     {
-                        sw.WriteLine("/// {0}", docparam.Documentation);
+                        sw.WriteLine($"/// {docparam.Documentation}");
                     }
 
                     sw.WriteLine("/// </param>");
@@ -367,12 +401,20 @@ namespace Bind
                     (
                         $"[Warning] Parameter '{param.Name}' in function '{f.Name}' not found in documentation '{docstring}'"
                     );
-                    sw.WriteLine($"/// <param name=\"{param.Name}\">{length}</param>");
+
+                    sw.WriteLine($"/// <param name=\"{docParameterName}\">{length}</param>");
                 }
+            }
+
+            // Write generic parameter documentation
+            var genericParameterNames = f.Parameters.Where(p => p.Generic).Select(p => p.ParameterType.TypeName).Distinct();
+            foreach (var genericParameterName in genericParameterNames)
+            {
+                sw.WriteLine($"/// <typeparam name=\"{genericParameterName}\"></typeparam>");
             }
         }
 
-        private void WriteConstants(SourceWriter sw, IEnumerable<Constant> constants)
+        private void WriteConstants(SourceWriter sw, IEnumerable<ConstantDefinition> constants)
         {
             // Make sure everything is sorted. This will avoid random changes between
             // consecutive runs of the program.
@@ -380,17 +422,9 @@ namespace Bind
 
             foreach (var c in constants)
             {
-                if (c != constants.First())
-                {
-                    sw.WriteLine();
-                }
-
-                if (!Program.Arguments.NoDocumentation)
-                {
-                    sw.WriteLine("/// <summary>");
-                    sw.WriteLine($"/// Original was {Generator.ConstantPrefix}{c.OriginalName} = {c.Value}");
-                    sw.WriteLine("/// </summary>");
-                }
+                sw.WriteLine("/// <summary>");
+                sw.WriteLine($"/// Original was {Generator.ConstantPrefix}{c.OriginalName} = {c.Value}");
+                sw.WriteLine("/// </summary>");
 
                 string valueString;
                 if (string.IsNullOrEmpty(c.Reference))
@@ -409,7 +443,10 @@ namespace Bind
                 {
                     valueString = valueString.ToLowerInvariant();
 
-                    var needsCasting = c.Value.SkipWhile(ch => ch != 'x').Count() > 7;
+                    var hexValue = new string(c.Value.SkipWhile(ch => ch != 'x').Skip(1).ToArray());
+                    long integerValue = long.Parse(hexValue, NumberStyles.HexNumber);
+
+                    var needsCasting = integerValue > int.MaxValue || integerValue < 0;
                     if (needsCasting)
                     {
                         // We need to cast this to a straight integer
@@ -424,121 +461,164 @@ namespace Bind
                     }
                 }
 
-                var constant = $"{c.Name} = {valueString}";
+                sw.Write($"{c.Name} = {valueString}");
 
-                sw.Write(constant);
-                if (!string.IsNullOrEmpty(constant))
+                if (c != constants.Last())
                 {
                     sw.WriteLine(",");
+                    sw.WriteLineNoTabs();
+                }
+                else
+                {
+                    sw.WriteLine();
                 }
             }
         }
 
-        private void WriteEnums(SourceWriter sw, EnumCollection enums, FunctionCollection wrappers)
+        private void WriteEnums(EnumCollection enums, FunctionCollection wrappers)
         {
             // Build a dictionary of which functions use which enums
-            var enumCounts = new Dictionary<Enum, List<Function>>();
+            var enumCounts = new Dictionary<EnumDefinition, List<FunctionDefinition>>();
             foreach (var e in enums.Values)
             {
                 // Initialize the dictionary
-                enumCounts.Add(e, new List<Function>());
+                enumCounts.Add(e, new List<FunctionDefinition>());
             }
 
             foreach (var wrapper in wrappers.Values.SelectMany(w => w))
             {
                 // Add every function to every enum parameter it references
-                foreach (var parameter in wrapper.Parameters.Where(p => p.IsEnum))
+                foreach (var parameter in wrapper.Parameters.Where(p => p.ParameterType.IsEnum))
                 {
-                    var e = enums[parameter.CurrentType];
+                    var e = enums[parameter.ParameterType.TypeName];
                     var list = enumCounts[e];
                     list.Add(wrapper);
                 }
             }
 
+            var baseOutputPath = Path.Combine(Program.Arguments.OutputPath, Generator.OutputSubfolder);
+            var enumOutputDirectory = Path.Combine(baseOutputPath, "Enums");
+
+            if (!Directory.Exists(enumOutputDirectory))
+            {
+                Directory.CreateDirectory(enumOutputDirectory);
+            }
+
             foreach (var @enum in enums.Values)
             {
-                if (!Program.Arguments.NoDocumentation)
+                var tempEnumFilePath = Path.GetTempFileName();
+                using (var outputFile = File.Open(tempEnumFilePath, FileMode.OpenOrCreate))
                 {
-                    // Document which functions use this enum.
-                    var functions = enumCounts[@enum]
-                        .Select(w =>
-                            Generator.ClassName + (w.Extension != "Core" ? "." + w.Extension : string.Empty) + "." +
-                            w.TrimmedName)
-                        .Distinct()
-                        .ToList();
+                    using (var sw = new SourceWriter(new StreamWriter(outputFile)))
+                    {
+                        WriteLicense(sw);
+                        sw.WriteLineNoTabs();
 
-                    sw.WriteLine("/// <summary>");
-                    sw.WriteLine(
-                        $"/// {(functions.Count >= 3 ? $"Used in {string.Join(", ", functions.Take(2).ToArray())} and {functions.Count - 2} other function{(functions.Count() - 2 > 1 ? "s" : "")}" : functions.Count() >= 1 ? $"Used in {string.Join(", ", functions.ToArray())}" : "Not used directly.")}");
-                    sw.WriteLine("/// </summary>");
+                        sw.WriteLine("using System;");
+                        sw.WriteLineNoTabs();
+
+                        sw.WriteLine("#pragma warning disable SA1139 // Use literal suffix notation instead of casting");
+                        sw.WriteLineNoTabs();
+
+                        sw.WriteLine($"namespace {Generator.Namespace}");
+                        using (sw.BeginBlock())
+                        {
+                            // Document which functions use this enum.
+                            var functions = enumCounts[@enum]
+                                .Select(w =>
+                                    Generator.ClassName + (w.ExtensionName != "Core" ? "." + w.ExtensionName : string.Empty) + "." +
+                                    w.TrimmedName)
+                                .Distinct()
+                                .ToList();
+
+                            sw.WriteLine("/// <summary>");
+                            sw.WriteLine(
+                                $"/// {(functions.Count >= 3 ? $"Used in {string.Join(", ", functions.Take(2).ToArray())} and {functions.Count - 2} other function{(functions.Count() - 2 > 1 ? "s" : string.Empty)}" : functions.Count() >= 1 ? $"Used in {string.Join(", ", functions.ToArray())}" : "Not used directly.")}");
+                            sw.WriteLine("/// </summary>");
+
+                            if (@enum.IsObsolete)
+                            {
+                                sw.WriteLine($"[Obsolete(\"{@enum.Obsolete}\")]");
+                            }
+
+                            if (@enum.IsFlagCollection)
+                            {
+                                sw.WriteLine("[Flags]");
+                            }
+
+                            var enumTypeString = string.Empty;
+                            if (@enum.Type != "int")
+                            {
+                                enumTypeString = $" : {@enum.Type}";
+                            }
+
+                            sw.WriteLine($"public enum {@enum.Name}{enumTypeString}");
+                            using (sw.BeginBlock())
+                            {
+                                WriteConstants(sw, @enum.ConstantCollection.Values);
+                            }
+                        }
+                    }
                 }
 
-                if (@enum.IsObsolete)
+                var outputEnumPath = Path.Combine(enumOutputDirectory, $"{@enum.Name}.cs");
+
+                if (File.Exists(outputEnumPath))
                 {
-                    sw.WriteLine("[Obsolete(\"{0}\")]", @enum.Obsolete);
+                    File.Delete(outputEnumPath);
                 }
 
-                if (@enum.IsFlagCollection)
-                {
-                    sw.WriteLine("[Flags]");
-                }
-
-                var enumTypeString = string.Empty;
-                if (@enum.Type != "int")
-                {
-                    enumTypeString = $" : {@enum.Type}";
-                }
-
-                sw.WriteLine($"public enum {@enum.Name}{enumTypeString}");
-                using (sw.BeginBlock())
-                {
-                    WriteConstants(sw, @enum.ConstantCollection.Values);
-                }
-                sw.WriteLine();
+                File.Move(tempEnumFilePath, outputEnumPath);
             }
         }
 
-        public void WriteLicense(SourceWriter sw)
+        private void WriteLicense(SourceWriter sw)
         {
-            sw.WriteLine(File.ReadAllText(Program.Arguments.LicenseFile));
-            sw.WriteLine();
+            var licenseFilePath = Path.Combine(Program.Arguments.LicenseFile);
+            var licenseContents = File.ReadAllText(licenseFilePath).TrimEnd();
+
+            sw.WriteLine(licenseContents);
         }
 
-        private string GetDeclarationString(Delegate d, bool isDelegate)
+        private string GetDeclarationString(DelegateDefinition d, bool isDelegate)
         {
             var sb = new StringBuilder();
 
-            sb.Append(d.Unsafe ? "unsafe " : string.Empty);
+            sb.Append(d.RequiresUnsafeDeclaration ? "unsafe " : string.Empty);
             if (isDelegate)
             {
                 sb.Append("delegate ");
             }
 
-            sb.Append(GetDeclarationString(d.ReturnType));
+            sb.Append(d.ReturnTypeDefinition.GetDeclarationString());
             sb.Append(" ");
             sb.Append(Generator.FunctionPrefix);
             sb.Append(d.Name);
-            sb.Append(GetDeclarationString(d.Parameters));
+            sb.Append(d.Parameters.GetDeclarationString());
 
             return sb.ToString();
         }
 
-        private string GetDeclarationString(Function f)
+        private string GetDeclarationString(FunctionDefinition f)
         {
             var sb = new StringBuilder();
 
-            sb.Append(f.Unsafe ? "unsafe " : "");
-            sb.Append(GetDeclarationString(f.ReturnType));
+            if (f.RequiresUnsafeDeclaration)
+            {
+                sb.Append("unsafe ");
+            }
+
+            sb.Append(f.ReturnTypeDefinition.GetDeclarationString());
             sb.Append(" ");
 
             sb.Append(!string.IsNullOrEmpty(f.TrimmedName) ? f.TrimmedName : f.Name);
 
-            if (f.Parameters.HasGenericParameters)
+            if (f.Parameters.Any(p => p.Generic))
             {
                 sb.Append("<");
                 foreach (var p in f.Parameters.Where(p => p.Generic))
                 {
-                    sb.Append(p.CurrentType);
+                    sb.Append(p.ParameterType.TypeName);
                     sb.Append(", ");
                 }
 
@@ -546,124 +626,18 @@ namespace Bind
                 sb.Append(">");
             }
 
-            sb.Append(GetDeclarationString(f.Parameters));
+            sb.Append(f.Parameters.GetDeclarationString());
 
-            if (f.Parameters.HasGenericParameters)
+            if (f.Parameters.Any(p => p.Generic))
             {
                 sb.AppendLine();
                 foreach (var p in f.Parameters.Where(p => p.Generic))
                 {
-                    sb.AppendLine($"    where {p.CurrentType} : struct");
+                    sb.AppendLine($"    where {p.ParameterType.TypeName} : struct");
                 }
             }
 
             return sb.ToString();
-        }
-
-        private string GetDeclarationString(Parameter p)
-        {
-            var sb = new StringBuilder();
-
-            var attributes = new List<string>();
-            if (p.Flow == FlowDirection.Out)
-            {
-                attributes.Add("OutAttribute");
-            }
-            else if (p.Flow == FlowDirection.Undefined)
-            {
-                attributes.Add("InAttribute");
-                attributes.Add("OutAttribute");
-            }
-
-            if (!string.IsNullOrEmpty(p.ComputeSize))
-            {
-                if (int.TryParse(p.ComputeSize, out var count))
-                {
-                    attributes.Add($"CountAttribute(Count = {count})");
-                }
-                else
-                {
-                    if (p.ComputeSize.StartsWith("COMPSIZE"))
-                    {
-                        //remove the compsize hint, just keep comma delimited param names
-                        var len = "COMPSIZE(".Length;
-                        var computed = p.ComputeSize.Substring(len, p.ComputeSize.Length - len - 1);
-                        attributes.Add($"CountAttribute(Computed = \"{computed}\")");
-                    }
-                    else
-                    {
-                        attributes.Add($"CountAttribute(Parameter = \"{p.ComputeSize}\")");
-                    }
-                }
-            }
-
-            if (attributes.Count != 0)
-            {
-                sb.Append("[");
-                sb.Append(string.Join(", ", attributes));
-                sb.Append("] ");
-            }
-
-            if (p.Reference)
-            {
-                if (p.Flow == FlowDirection.Out)
-                {
-                    sb.Append("out ");
-                }
-                else
-                {
-                    sb.Append("ref ");
-                }
-            }
-
-            sb.Append(GetDeclarationString((Type)p));
-
-            if (!string.IsNullOrEmpty(p.Name))
-            {
-                sb.Append(" ");
-                sb.Append(p.Name);
-            }
-
-            return sb.ToString();
-        }
-
-        private string GetDeclarationString(ParameterCollection parameters)
-        {
-            var sb = new StringBuilder();
-
-            sb.Append("(");
-            if (parameters.Count > 0)
-            {
-                foreach (var p in parameters)
-                {
-                    sb.Append(GetDeclarationString(p));
-                    sb.Append(", ");
-                }
-
-                sb.Replace(", ", ")", sb.Length - 2, 2);
-            }
-            else
-            {
-                sb.Append(")");
-            }
-
-            return sb.ToString();
-        }
-
-        private string GetDeclarationString(Type type)
-        {
-            var t = GetQualifiedTypeOrAlias(type);
-            return $"{t}{PointerLevels[type.Pointer]}{ArrayLevels[type.Array]}";
-        }
-
-        private string GetQualifiedTypeOrAlias(Type type)
-        {
-            if (Aliases.ContainsKey(type.QualifiedType))
-            {
-                return Aliases[type.QualifiedType];
-            }
-
-            return type.QualifiedType;
         }
     }
 }

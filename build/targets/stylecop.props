@@ -1,6 +1,5 @@
 <Project>
     <PropertyGroup>
-        <RunCodeAnalysis>true</RunCodeAnalysis>
         <CodeAnalysisRuleSet>..\..\stylecop.ruleset</CodeAnalysisRuleSet>
     </PropertyGroup>
     <ItemGroup>
@@ -12,5 +11,8 @@
             <Link>stylecop.ruleset</Link>
             <InProject>false</InProject>
         </AdditionalFiles>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta008" PrivateAssets="all" />
     </ItemGroup>
 </Project>

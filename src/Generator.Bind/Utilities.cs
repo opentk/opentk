@@ -2,167 +2,42 @@
  * See license.txt for license info
  */
 
-using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Bind.Structures;
-using Delegate = Bind.Structures.Delegate;
-using Enum = Bind.Structures.Enum;
 
 namespace Bind
 {
     /// <summary>
-    /// Defines different types of parameter wrapper identifiers, which are used for hinting at how the method
-    /// signatures should be generated.
+    /// Various utilities for use by the tool.
     /// </summary>
-    [Flags]
-    public enum WrapperTypes
-    {
-        /// <summary>
-        /// No wrapper needed.
-        /// </summary>
-        None = 0,
-
-        /// <summary>
-        /// Function takes bool parameter - C uses Int for bools, so we have to marshal.
-        /// </summary>
-        BoolParameter = 1 << 0,
-
-        /// <summary>
-        /// Function takes generic parameters - add ref/out generic and generic overloads.
-        /// </summary>
-        GenericParameter = 1 << 1,
-
-        /// <summary>
-        /// Function takes arrays as parameters - add ref/out and ([Out]) array overloads.
-        /// </summary>
-        ArrayParameter = 1 << 2,
-
-        /// <summary>
-        /// Function with bitmask parameters. Bitmask parameters map to UInt, but since we can only use signed
-        /// types (for CLS compliance), we must add the unchecked keyword.
-        /// Usually found in bitmasks
-        /// </summary>
-        UncheckedParameter = 1 << 3,
-
-        /// <summary>
-        /// Function that takes (in/ref/out) a naked pointer as a parameter - we pass an IntPtr.
-        /// </summary>
-        PointerParameter = 1 << 4,
-
-        /// <summary>
-        /// Function that takes a reference to a struct.
-        /// </summary>
-        ReferenceParameter = 1 << 5,
-
-        /// <summary>
-        /// Function returns string - needs manual marshalling through IntPtr to prevent the managed GC
-        /// from freeing memory allocated on the unmanaged side (e.g. glGetString).
-        /// </summary>
-        StringReturnType = 1 << 6,
-
-        /// <summary>
-        /// Function returns a void pointer - maps to IntPtr, and the user has to manually marshal the type.
-        /// </summary>
-        GenericReturnType = 1 << 7,
-
-        /// <summary>
-        /// Function returns a typed pointer - we have to copy the data to an array to protect it from the GC.
-        /// </summary>
-        ArrayReturnType = 1 << 8,
-
-        /// <summary>
-        /// Function normally returns a value via an out parameter.
-        /// This overload returns a single item directly.
-        /// e.g. void GetIntegerv(enum pname, out int value) => int GetInteger(enum pname)
-        /// </summary>
-        ConvenienceReturnType = 1 << 9,
-
-        /// <summary>
-        /// Function normally returns an array via an out parameter.
-        /// This overload returns a single item directly.
-        /// e.g. void GenBuffers(int count, int[] ids) => int GenBuffer()
-        /// </summary>
-        ConvenienceArrayReturnType = 1 << 10,
-
-        /// <summary>
-        /// Function normally takes an array in parameter.
-        /// This overload takes a single item directly.
-        /// e.g. void DeleteBuffers(int count, int[] ids) => DeleteBuffer(int id)
-        /// </summary>
-        ConvenienceArrayType = 1 << 11,
-
-        /// <summary>
-        /// Function takes a String or StringBuilder parameter
-        /// </summary>
-        StringParameter = 1 << 12,
-
-        /// <summary>
-        /// Function takes a String[] parameter
-        /// </summary>
-        StringArrayParameter = 1 << 13,
-
-        /// <summary>
-        /// Functions takes an IntPtr that corresponds to a size_t.
-        /// Add an int32 overload for convenience.
-        /// </summary>
-        SizeParameter = 1 << 14,
-
-        /// <summary>
-        /// Function takes a ref but we emit a legacy array overload to maintain backwards compatability.
-        /// </summary>
-        LegacyArrayParameter = 1 << 15
-    }
-
     internal static class Utilities
     {
+        /// <summary>
+        /// Gets a regex that matches known extension names in the specification.
+        /// </summary>
+        public static Regex Extensions { get; private set; }
+
+        /// <summary>
+        /// Gets a regex that matches known acronyms used by the specification.
+        /// </summary>
+        public static Regex Acronyms { get; private set; }
+
         // Both GL and ES contains SGI extension enums, even though no function
         // uses them. This is a remnant from the glory days of gl.spec and GL 1.1.
         // Note: REMOVING THESE WILL BREAK BINARY-COMPATIBILITY WITH OPENTK 1.0,
         // WRT THE ES 1.1 API.
         // You have been warned.
-        private static readonly List<string> _extensionNames = new List<string>
+        private static List<string> _extensionNames = new List<string>
         {
-            "SGI",
-            "SGIS",
-            "SGIX",
-            "IBM",
-            "AMD",
-            "INTEL"
+            "SGI", "SGIS", "SGIX", "IBM", "AMD", "INTEL",
         };
 
-        public static readonly List<string> CSharpKeywords = new List<string>(
-            new[]
-            {
-                "abstract", "event", "new", "struct",
-                "as", "explicit", "null", "switch",
-                "base", "extern", "object", "this",
-                "bool", "false", "operator", "throw",
-                "break", "finally", "out", "true",
-                "byte", "fixed", "override", "try",
-                "case", "float", "params", "typeof",
-                "catch", "for", "private", "uint",
-                "char", "foreach", "protected", "ulong",
-                "checked", "goto", "public", "unchecked",
-                "class", "if", "readonly", "unsafe",
-                "const", "implicit", "ref", "ushort",
-                "continue", "in", "return", "using",
-                "decimal", "int", "sbyte", "virtual",
-                "default", "interface", "sealed", "volatile",
-                "delegate", "internal", "short", "void",
-                "do", "is", "sizeof", "while",
-                "double", "lock", "stackalloc",
-                "else", "long", "static",
-                "enum", "namespace", "string"
-            }
-        );
-
-        public static Regex Extensions { get; private set; }
-        public static Regex Acronyms { get; private set; }
-
+        /// <summary>
+        /// Merges the given extensions into the current set of extensions.
+        /// </summary>
+        /// <param name="extensions">The extensions to merge in.</param>
         public static void AddExtensions(IEnumerable<string> extensions)
         {
             // Merge the new extensions with the current list of extensions
@@ -184,12 +59,13 @@ namespace Bind
 
                 var acronyms = new[]
                 {
-                    "EGL", "ES", "GL", "CL",
+                    "EGL",  "ES", "GL", "CL",
                     "RGBA", "BGRA", "RGB", "BGR",
                     "SRGB", "YCBCR",
                     "3TC", "DXT", "BPTC", "RGTC",
                     "3DC", "ATC", "ETC",
-                    "ANGLE", "MESAX", "MESA"
+                    "ANGLE",  "MESAX", "MESA",
+                    "ATI"
                 };
 
                 var acronymNames = extensions.Concat(acronyms).ToList();
@@ -198,26 +74,100 @@ namespace Bind
             }
         }
 
-        internal static StreamReader OpenSpecFile(string folder, string file)
+        /// <summary>
+        /// Gets a list of keywords in the C# language.
+        /// </summary>
+        public static List<string> CSharpKeywords => new List<string>
         {
-            if (string.IsNullOrEmpty(folder) || string.IsNullOrEmpty(file))
-            {
-                return null;
-            }
+            "abstract",
+            "event",
+            "new",
+            "struct",
+            "as",
+            "explicit",
+            "null",
+            "switch",
+            "base",
+            "extern",
+            "object",
+            "this",
+            "bool",
+            "false",
+            "operator",
+            "throw",
+            "break",
+            "finally",
+            "out",
+            "true",
+            "byte",
+            "fixed",
+            "override",
+            "try",
+            "case",
+            "float",
+            "params",
+            "typeof",
+            "catch",
+            "for",
+            "private",
+            "uint",
+            "char",
+            "foreach",
+            "protected",
+            "ulong",
+            "checked",
+            "goto",
+            "public",
+            "unchecked",
+            "class",
+            "if",
+            "readonly",
+            "unsafe",
+            "const",
+            "implicit",
+            "ref",
+            "ushort",
+            "continue",
+            "in",
+            "return",
+            "using",
+            "decimal",
+            "int",
+            "sbyte",
+            "virtual",
+            "default",
+            "interface",
+            "sealed",
+            "volatile",
+            "delegate",
+            "internal",
+            "short",
+            "void",
+            "do",
+            "is",
+            "sizeof",
+            "while",
+            "double",
+            "lock",
+            "stackalloc",
+            "else",
+            "long",
+            "static",
+            "enum",
+            "namespace",
+            "string"
+        };
 
-            Console.WriteLine(folder);
-            Console.WriteLine(file);
-            var path = Path.Combine(folder, file);
-            Console.WriteLine(path);
-            return new StreamReader(path);
-        }
-
-        // Merges the specified enum collections.
-        internal static void Merge(EnumCollection enums, EnumCollection newEnums)
+        /// <summary>
+        /// Merges one enum collection into another.
+        /// </summary>
+        /// <param name="currentEnums">The enum collection to merge into.</param>
+        /// <param name="newEnums">The enums to merge.</param>
+        internal static void Merge(EnumCollection currentEnums, EnumCollection newEnums)
         {
             foreach (var e in newEnums)
             {
-                Merge(enums, e.Value);
+                Merge(currentEnums, e.Value);
             }
         }
 
@@ -225,18 +175,18 @@ namespace Bind
         /// Merges the given enum into the enum list. If an enum of the same name exists,
         /// it merges their respective constants.
         /// </summary>
-        /// <param name="enums"></param>
-        /// <param name="t"></param>
-        internal static void Merge(EnumCollection enums, Enum t)
+        /// <param name="currentEnums">The enums.</param>
+        /// <param name="newEnum">The new enum.</param>
+        internal static void Merge(EnumCollection currentEnums, EnumDefinition newEnum)
         {
-            if (!enums.ContainsKey(t.Name))
+            if (!currentEnums.ContainsKey(newEnum.Name))
             {
-                enums.Add(t.Name, t);
+                currentEnums.Add(newEnum.Name, newEnum);
             }
             else
             {
-                var e = enums[t.Name];
-                foreach (var c in t.ConstantCollection.Values)
+                var e = currentEnums[newEnum.Name];
+                foreach (var c in newEnum.ConstantCollection.Values)
                 {
                     Merge(e, c);
                 }
@@ -245,65 +195,59 @@ namespace Bind
 
         /// <summary>
         /// Places a new constant in the specified enum, if it doesn't already exist.
-        /// The existing constant is replaced iff the new has a numeric value and the old
+        /// The existing constant is replaced if the new has a numeric value and the old
         /// has a reference value (eg 0x5 is preferred over AttribMask.Foo)
         /// </summary>
-        /// <param name="s"></param>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        internal static Enum Merge(Enum s, Constant t)
+        /// <param name="enumDefinition">The enumeration definiton.</param>
+        /// <param name="constantDefinition">The constant definition.</param>
+        internal static void Merge(EnumDefinition enumDefinition, ConstantDefinition constantDefinition)
         {
-            if (!s.ConstantCollection.ContainsKey(t.Name))
+            if (!enumDefinition.ConstantCollection.ContainsKey(constantDefinition.Name))
             {
-                s.ConstantCollection.Add(t.Name, t);
+                enumDefinition.ConstantCollection.Add(constantDefinition.Name, constantDefinition);
             }
             else
             {
                 // Tried to add a constant that already exists. If one constant
                 // is like: 'Foo = 0x5' and the other like: 'Foo = Bar.Foo', then
                 // keep the first one.
-                if (!string.IsNullOrEmpty(s.ConstantCollection[t.Name].Reference))
+                if (!string.IsNullOrEmpty(enumDefinition.ConstantCollection[constantDefinition.Name].Reference))
                 {
-                    s.ConstantCollection[t.Name] = t;
+                    enumDefinition.ConstantCollection[constantDefinition.Name] = constantDefinition;
                 }
             }
-
-            return s;
         }
 
-        internal static string GetGL2Extension(string name)
-        {
-            return GetExtension(name, false);
-        }
-
+        /// <summary>
+        /// Gets the name of the specification extension that the given name is a part of.
+        /// </summary>
+        /// <param name="name">The name to inspect.</param>
+        /// <param name="returnUnmodified">
+        /// Whether or not to return the extension name unmodified. If false, the extension name will be turned to title
+        /// case.
+        /// </param>
+        /// <returns>The extension name,</returns>
         internal static string GetExtension(string name, bool returnUnmodified)
         {
             var match = Extensions.Match(name);
-            if (match.Success)
+            if (!match.Success)
             {
-                var ext = match.Value;
-                if (!returnUnmodified)
-                {
-                    if (ext.Length > 2)
-                    {
-                        ext = ext[0] + ext.Substring(1).ToLower();
-                    }
-                }
+                return string.Empty;
+            }
 
+            var ext = match.Value;
+
+            if (returnUnmodified)
+            {
                 return ext;
             }
 
-            return string.Empty;
-        }
+            if (ext.Length > 2)
+            {
+                ext = ext[0] + ext.Substring(1).ToLower();
+            }
 
-        private static bool IsGL2Extension(string function)
-        {
-            return !string.IsNullOrEmpty(GetGL2Extension(function));
-        }
-
-        internal static string StripGL2Extension(string p)
-        {
-            return p.Substring(0, p.Length - GetGL2Extension(p).Length);
+            return ext;
         }
     }
 }

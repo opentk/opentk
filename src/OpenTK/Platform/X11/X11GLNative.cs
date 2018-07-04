@@ -1910,6 +1910,11 @@ namespace OpenTK.Platform.X11
                             DestroyWindow();
                         }
 
+                        if (window.Display != IntPtr.Zero)
+                        {
+                            Functions.XCloseDisplay(window.Display);
+                        }
+
                         window.Dispose();
                     }
                 }

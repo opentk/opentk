@@ -22,6 +22,14 @@ namespace Bind.Writers
         }
 
         /// <summary>
+        /// Writes an unindented line to the document.
+        /// </summary>
+        public void WriteLineNoTabs()
+        {
+            WriteLineNoTabs(string.Empty);
+        }
+
+        /// <summary>
         /// Indents the <see cref="SourceWriter"/> by one, and returns a handle that can be disposed to unindent the
         /// writer once the writing has been finished.
         /// </summary>
@@ -35,10 +43,18 @@ namespace Bind.Writers
         /// Indents the <see cref="SourceWriter"/> by one, writes an opening brace, and returns a handle that can be
         /// disposed to unindent and close the block once writing has been finished.
         /// </summary>
+        /// <param name="withSemicolon">Whether or not the closing brace should be terminated with a semicolon.</param>
         /// <returns>An indentation handle.</returns>
-        public SourceWriterBlock BeginBlock()
+        public SourceWriterBlock BeginBlock(bool withSemicolon = false)
         {
-            return new SourceWriterBlock(this);
+            return new SourceWriterBlock(this, withSemicolon);
+        }
+
+        /// <inheritdoc/>
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            Flush();
         }
     }
 
@@ -50,15 +66,18 @@ namespace Bind.Writers
     public class SourceWriterBlock : IDisposable
     {
         private readonly SourceWriter _sourceWriter;
+        private readonly bool _withSemicolon;
         private readonly SourceWriterIndentation _indentation;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SourceWriterBlock"/> class.
         /// </summary>
         /// <param name="sourceWriter">The source writer to manage the block of.</param>
-        public SourceWriterBlock(SourceWriter sourceWriter)
+        /// <param name="withSemicolon">Whether or not the closing brace should be terminated with a semicolon.</param>
+        public SourceWriterBlock(SourceWriter sourceWriter, bool withSemicolon)
         {
             _sourceWriter = sourceWriter;
+            _withSemicolon = withSemicolon;
 
             _sourceWriter.WriteLine("{");
             _indentation = _sourceWriter.BeginIndent();
@@ -67,8 +86,16 @@ namespace Bind.Writers
         /// <inheritdoc />
         public void Dispose()
         {
-            _sourceWriter.WriteLine("}");
             _indentation.Dispose();
+
+            if (_withSemicolon)
+            {
+                _sourceWriter.WriteLine("};");
+            }
+            else
+            {
+                _sourceWriter.WriteLine("}");
+            }
         }
     }
 

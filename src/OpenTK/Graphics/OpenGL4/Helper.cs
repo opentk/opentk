@@ -39,7 +39,7 @@ namespace OpenTK.Graphics.OpenGL4
     public sealed partial class GL : GraphicsBindingsBase
     {
         private const string Library = "opengl32.dll";
-        private static readonly object sync_root = new object();
+        private static readonly object Sync_root = new object();
 
         private static readonly IntPtr[] EntryPoints;
         private static readonly byte[] EntryPointNames;
@@ -58,12 +58,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Returns a synchronization token unique for the GL class.
         /// </summary>
-        protected override object SyncRoot => sync_root;
-
-#pragma warning disable 3019
-#pragma warning disable 1591
-#pragma warning disable 1572
-#pragma warning disable 1573
+        protected override object SyncRoot => Sync_root;
 
         // Note: Mono 1.9.1 truncates StringBuilder results (for 'out string' parameters).
         // We work around this issue by doubling the StringBuilder capacity.
@@ -132,9 +127,9 @@ namespace OpenTK.Graphics.OpenGL4
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix2(location, 1, transpose, matrix_ptr);
+                    UniformMatrix2(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -143,9 +138,9 @@ namespace OpenTK.Graphics.OpenGL4
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix3(location, 1, transpose, matrix_ptr);
+                    UniformMatrix3(location, 1, transpose, matrixPtr);
                 }
             }
         }
@@ -154,87 +149,87 @@ namespace OpenTK.Graphics.OpenGL4
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    UniformMatrix4(location, 1, transpose, matrix_ptr);
+                    UniformMatrix4(location, 1, transpose, matrixPtr);
                 }
             }
         }
 
-        public static void ProgramUniform2(int program, int location, ref Vector2 vector)
+        public static void ProgramUniform2(uint program, int location, ref Vector2 vector)
         {
             ProgramUniform2(program, location, vector.X, vector.Y);
         }
 
-        public static void ProgramUniform3(int program, int location, ref Vector3 vector)
+        public static void ProgramUniform3(uint program, int location, ref Vector3 vector)
         {
             ProgramUniform3(program, location, vector.X, vector.Y, vector.Z);
         }
 
-        public static void ProgramUniform4(int program, int location, ref Vector4 vector)
+        public static void ProgramUniform4(uint program, int location, ref Vector4 vector)
         {
             ProgramUniform4(program, location, vector.X, vector.Y, vector.Z, vector.W);
         }
 
-        public static void ProgramUniform2(int program, int location, Vector2 vector)
+        public static void ProgramUniform2(uint program, int location, Vector2 vector)
         {
             ProgramUniform2(program, location, vector.X, vector.Y);
         }
 
-        public static void ProgramUniform3(int program, int location, Vector3 vector)
+        public static void ProgramUniform3(uint program, int location, Vector3 vector)
         {
             ProgramUniform3(program, location, vector.X, vector.Y, vector.Z);
         }
 
-        public static void ProgramUniform4(int program, int location, Vector4 vector)
+        public static void ProgramUniform4(uint program, int location, Vector4 vector)
         {
             ProgramUniform4(program, location, vector.X, vector.Y, vector.Z, vector.W);
         }
 
-        public static void ProgramUniform4(int program, int location, Color4 color)
+        public static void ProgramUniform4(uint program, int location, Color4 color)
         {
             ProgramUniform4(program, location, color.R, color.G, color.B, color.A);
         }
 
-        public static void ProgramUniform4(int program, int location, Quaternion quaternion)
+        public static void ProgramUniform4(uint program, int location, Quaternion quaternion)
         {
             ProgramUniform4(program, location, quaternion.X, quaternion.Y, quaternion.Z, quaternion.W);
         }
 
-        public static void ProgramUniformMatrix2(int program, int location, bool transpose, ref Matrix2 matrix)
+        public static void ProgramUniformMatrix2(uint program, int location, bool transpose, ref Matrix2 matrix)
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix2(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix2(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
 
-        public static void ProgramUniformMatrix3(int program, int location, bool transpose, ref Matrix3 matrix)
+        public static void ProgramUniformMatrix3(uint program, int location, bool transpose, ref Matrix3 matrix)
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix3(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix3(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
 
-        public static void ProgramUniformMatrix4(int program, int location, bool transpose, ref Matrix4 matrix)
+        public static void ProgramUniformMatrix4(uint program, int location, bool transpose, ref Matrix4 matrix)
         {
             unsafe
             {
-                fixed (float* matrix_ptr = &matrix.Row0.X)
+                fixed (float* matrixPtr = &matrix.Row0.X)
                 {
-                    ProgramUniformMatrix4(program, location, 1, transpose, matrix_ptr);
+                    ProgramUniformMatrix4(program, location, 1, transpose, matrixPtr);
                 }
             }
         }
 
-        public static string GetActiveAttrib(int program, int index, out int size, out ActiveAttribType type)
+        public static string GetActiveAttrib(uint program, uint index, out int size, out ActiveAttribType type)
         {
             int length;
             GetProgram(program, GetProgramParameterName.ActiveAttributeMaxLength, out length);
@@ -244,7 +239,7 @@ namespace OpenTK.Graphics.OpenGL4
             return str;
         }
 
-        public static string GetActiveUniform(int program, int uniformIndex, out int size, out ActiveUniformType type)
+        public static string GetActiveUniform(uint program, int uniformIndex, out int size, out ActiveUniformType type)
         {
             int length;
             GetProgram(program, GetProgramParameterName.ActiveUniformMaxLength, out length);
@@ -286,14 +281,14 @@ namespace OpenTK.Graphics.OpenGL4
             }
         }
 
-        public static string GetProgramInfoLog(int program)
+        public static string GetProgramInfoLog(uint program)
         {
             string info;
             GetProgramInfoLog(program, out info);
             return info;
         }
 
-        public static void GetProgramInfoLog(int program, out string info)
+        public static void GetProgramInfoLog(uint program, out string info)
         {
             unsafe
             {
@@ -305,48 +300,46 @@ namespace OpenTK.Graphics.OpenGL4
                     return;
                 }
 
-                GetProgramInfoLog((uint)program, length * 2, &length, out info);
+                GetProgramInfoLog(program, length * 2, &length, out info);
             }
         }
 
-        public static void VertexAttrib2(int index, ref Vector2 v)
+        public static void VertexAttrib2(uint index, ref Vector2 v)
         {
             VertexAttrib2(index, v.X, v.Y);
         }
 
-        public static void VertexAttrib3(int index, ref Vector3 v)
+        public static void VertexAttrib3(uint index, ref Vector3 v)
         {
             VertexAttrib3(index, v.X, v.Y, v.Z);
         }
 
-        public static void VertexAttrib4(int index, ref Vector4 v)
+        public static void VertexAttrib4(uint index, ref Vector4 v)
         {
             VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
 
-        public static void VertexAttrib2(int index, Vector2 v)
+        public static void VertexAttrib2(uint index, Vector2 v)
         {
             VertexAttrib2(index, v.X, v.Y);
         }
 
-        public static void VertexAttrib3(int index, Vector3 v)
+        public static void VertexAttrib3(uint index, Vector3 v)
         {
             VertexAttrib3(index, v.X, v.Y, v.Z);
         }
 
-        public static void VertexAttrib4(int index, Vector4 v)
+        public static void VertexAttrib4(uint index, Vector4 v)
         {
             VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
 
-        public static void VertexAttribPointer(int index, int size, VertexAttribPointerType type, bool normalized,
-            int stride, int offset)
+        public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, int offset)
         {
             VertexAttribPointer(index, size, type, normalized, stride, (IntPtr)offset);
         }
 
-        public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized,
-            int stride, int offset)
+        public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, int offset)
         {
             VertexAttribPointer(index, size, type, normalized, stride, (IntPtr)offset);
         }
@@ -414,25 +407,7 @@ namespace OpenTK.Graphics.OpenGL4
         {
             Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
-#if MINIMAL
-        public static void Viewport(OpenTK.Point location, OpenTK.Size size)
-        {
-            GL.Viewport(location.X, location.Y, size.Width, size.Height);
-        }
-
-        public static void Viewport(OpenTK.Rectangle rectangle)
-        {
-            GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
-        }
-#endif
-
-#pragma warning restore 3019
-#pragma warning restore 1591
-#pragma warning restore 1572
-#pragma warning restore 1573
     }
-
-#pragma warning disable 1574 // XML comment cref attribute could not be resolved, compiler bug in Mono 3.4.0
 
     /// <summary>
     /// Defines the signature of a debug callback for
@@ -446,10 +421,16 @@ namespace OpenTK.Graphics.OpenGL4
     /// <param name="message">A pointer to a null-terminated ASCII C string, representing the content of this debug message.</param>
     /// <param name="userParam">A pointer to a user-specified parameter.</param>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate void DebugProcArb(
-        DebugSource source, DebugType type, int id,
-        DebugSeverity severity, int length, IntPtr message,
-        IntPtr userParam);
+    public delegate void DebugProcArb
+    (
+        DebugSource source,
+        DebugType type,
+        int id,
+        DebugSeverity severity,
+        int length,
+        IntPtr message,
+        IntPtr userParam
+    );
 
     /// <summary>
     /// Defines the signature of a debug callback for
@@ -463,10 +444,16 @@ namespace OpenTK.Graphics.OpenGL4
     /// <param name="message">A pointer to a null-terminated ASCII C string, representing the content of this debug message.</param>
     /// <param name="userParam">A pointer to a user-specified parameter.</param>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate void DebugProc(
-        DebugSource source, DebugType type, int id,
-        DebugSeverity severity, int length, IntPtr message,
-        IntPtr userParam);
+    public delegate void DebugProc
+    (
+        DebugSource source,
+        DebugType type,
+        int id,
+        DebugSeverity severity,
+        int length,
+        IntPtr message,
+        IntPtr userParam
+    );
 
     /// <summary>
     /// Defines the signature of a debug callback for
@@ -480,10 +467,14 @@ namespace OpenTK.Graphics.OpenGL4
     /// <param name="message">A pointer to a null-terminated ASCII C string, representing the content of this debug message.</param>
     /// <param name="userParam">A pointer to a user-specified parameter.</param>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate void DebugProcKhr(
-        DebugSource source, DebugType type, int id,
-        DebugSeverity severity, int length, IntPtr message,
-        IntPtr userParam);
-
-#pragma warning restore 1574 // XML comment cref attribute could not be resolved, compiler bug in Mono 3.4.0
+    public delegate void DebugProcKhr
+    (
+        DebugSource source,
+        DebugType type,
+        int id,
+        DebugSeverity severity,
+        int length,
+        IntPtr message,
+        IntPtr userParam
+    );
 }
