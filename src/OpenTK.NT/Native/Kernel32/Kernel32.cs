@@ -12,6 +12,9 @@ using LPCTSTR = System.String;
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Provides a subset of functions from the Windows API, specifically those that are imported from kernel32.dll.
+    /// </summary>
     public static class Kernel32
     {
         private const string Library = "kernel32.dll";

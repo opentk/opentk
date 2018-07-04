@@ -8,6 +8,9 @@ using UINT = System.UInt32;
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Provides a subset of functions from the Windows API, specifically those that are imported from gdi32.dll.
+    /// </summary>
     public static class Gdi32
     {
         private const string Library = "gdi32.dll";
