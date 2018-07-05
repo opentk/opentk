@@ -48,6 +48,11 @@ namespace OpenTK.Input
         /// <summary>
         /// The shift key modifier.
         /// </summary>
-        Shift = 1 << 2
+        Shift = 1 << 2,
+
+        /// <summary>
+        /// The command key modifier on a Mac
+        /// </summary>
+        Command = 1 << 3
     }
 }
