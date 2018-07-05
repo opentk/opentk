@@ -69,6 +69,10 @@ namespace OpenTK.Input
         /// <summary>The menu key.</summary>
         Menu,
 
+        /// <summary>The Command key.</summary>
+        /// <remarks>Valid on OS-X only</remarks>
+        Command,
+
         // Function keys (hopefully enough for most keyboards - mine has 26)
         // <keysymdef.h> on X11 reports up to 35 function keys.
         /// <summary>The F1 key.</summary>
