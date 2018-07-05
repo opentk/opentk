@@ -840,7 +840,7 @@ namespace OpenTK.Platform.Windows
             unsafe
             {
                 // GetMouseMovePointsEx works with screen coordinates
-                var screenPoint = NT.Native.Point.FromPoint(point);
+                NT.Native.Point screenPoint = point;
                 User32.Window.ClientToScreen(handle, ref screenPoint);
                 int timestamp = User32.Message.GetMessageTime();
 
@@ -1443,20 +1443,20 @@ namespace OpenTK.Platform.Windows
 
         public override System.Drawing.Point PointToClient(System.Drawing.Point point)
         {
-            var p = NT.Native.Point.FromPoint(point);
+            NT.Native.Point p = point;
             if (!User32.Window.ScreenToClient(window.Handle, ref p))
                 throw new InvalidOperationException($"Could not convert point {p} from screen to client coordinates. Windows error: {Marshal.GetLastWin32Error()}");
 
-            return p.ToPoint();
+            return p;
         }
 
         public override System.Drawing.Point PointToScreen(System.Drawing.Point point)
         {
-            var p = NT.Native.Point.FromPoint(point);
+            NT.Native.Point p = point;
             if (!User32.Window.ClientToScreen(window.Handle, ref p))
                 throw new InvalidOperationException($"Could not convert point {p} from screen to client coordinates. Windows error: {Marshal.GetLastWin32Error()}");
 
-            return p.ToPoint();
+            return p;
         }
 
         public override void ProcessEvents()

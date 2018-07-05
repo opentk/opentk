@@ -1,12 +1,14 @@
 ﻿using System;
 
+using USHORT = System.UInt16;
+
 namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Mouse indicator flags (found in winuser.h).
     /// </summary>
     [Flags]
-    public enum RawMouseFlags : ushort
+    public enum RawMouseFlags : USHORT
     {
         /// <summary>
         /// LastX/Y indicate relative motion.

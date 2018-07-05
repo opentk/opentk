@@ -11,9 +11,9 @@
             Y = y;
         }
 
-        public System.Drawing.Point ToPoint() => new System.Drawing.Point(X, Y);
+        public static implicit operator System.Drawing.Point(Point point) => new System.Drawing.Point(point.X, point.Y);
 
-        public static Point FromPoint(System.Drawing.Point point) => new Point(point.X, point.Y);
+        public static implicit operator Point(System.Drawing.Point point) => new Point(point.X, point.Y);
 
         public override string ToString() => "Point {" + X + ", " + Y + ")";
     }

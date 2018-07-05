@@ -1,9 +1,11 @@
 ﻿using System;
 
+using USHORT = System.UInt16;
+
 namespace OpenTK.NT.Native
 {
     [Flags]
-    public enum RawMouseButtonFlags : uint
+    public enum RawMouseButtonFlags : USHORT
     {
         LeftButtonDown = 0x0001, // Left Button changed to down.
         LeftButtonUp = 0x0002, // Left Button changed to up.

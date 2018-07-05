@@ -18,5 +18,7 @@ namespace OpenTK.NT.Native
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
         public TCHAR TypeName;
+
+        public static uint SizeInBytes = (uint)Marshal.SizeOf<SHFileInfo>();
     }
 }

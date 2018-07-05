@@ -35,7 +35,9 @@ namespace OpenTK.NT.Native
             get
             {
                 if (index < 0 || index > SizeHid * Count)
+                {
                     throw new ArgumentOutOfRangeException(nameof(index));
+                }
 
                 unsafe
                 {
