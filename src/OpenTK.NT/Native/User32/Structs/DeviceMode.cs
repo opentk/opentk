@@ -5,7 +5,7 @@ using WORD = System.UInt16;
 
 namespace OpenTK.NT.Native
 {
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct DeviceMode // unions aren't represented
     {
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]

@@ -8,7 +8,7 @@ using LPVOID = System.IntPtr;
 
 namespace OpenTK.NT.Native
 {
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct CreateStruct
     {
         /// <summary>

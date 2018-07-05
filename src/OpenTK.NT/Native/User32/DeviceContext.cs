@@ -48,7 +48,7 @@ namespace OpenTK.NT.Native
                 [In] ChangeDisplaySettingsFlags dwflags
             );
 
-            [DllImport("user32.dll", CharSet = CharSet.Auto)]
+            [DllImport("user32.dll", CharSet = CharSet.Unicode)]
             public static extern ChangeDisplaySettingsResult ChangeDisplaySettingsEx
             (
                 [In] [MarshalAs(UnmanagedType.LPTStr)] string lpszDeviceName,
@@ -58,7 +58,7 @@ namespace OpenTK.NT.Native
                 [In] LPVOID lParam
             );
 
-            [DllImport("user32.dll", CharSet = CharSet.Auto)]
+            [DllImport("user32.dll", CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool EnumDisplaySettings
             (
@@ -67,7 +67,7 @@ namespace OpenTK.NT.Native
                 [Out] out DeviceMode lpDevMode
             );
 
-            [DllImport("user32.dll", CharSet = CharSet.Auto)]
+            [DllImport("user32.dll", CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool EnumDisplaySettingsEx
             (
@@ -77,7 +77,7 @@ namespace OpenTK.NT.Native
                 [In] int dwFlags
             );
 
-            [DllImport("user32.dll", CharSet = CharSet.Auto)]
+            [DllImport("user32.dll", CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool EnumDisplayDevices
             (

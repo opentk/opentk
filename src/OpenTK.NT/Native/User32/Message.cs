@@ -67,7 +67,7 @@ namespace OpenTK.NT.Native
             [DllImport("User32.dll")]
             public static extern int GetMessageTime();
 
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern LRESULT SendMessage
             (
                 [In] HWND hWnd,
@@ -77,7 +77,7 @@ namespace OpenTK.NT.Native
             );
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool PostMessage
             (
@@ -87,7 +87,7 @@ namespace OpenTK.NT.Native
                 [In] LPARAM lParam
             );
 
-            [DllImport("User32.dll", CharSet = CharSet.Auto)]
+            [DllImport("User32.dll")]
             public static extern void PostQuitMessage([In] int nExitCode);
 
             [SuppressUnmanagedCodeSecurity]
@@ -123,7 +123,7 @@ namespace OpenTK.NT.Native
             ///  </para>
             /// </remarks>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("User32.dll", CharSet = CharSet.Auto)]
+            [DllImport("User32.dll")]
             public static extern int GetQueueStatus([In] QueueStatusFlags flags);
         }
     }

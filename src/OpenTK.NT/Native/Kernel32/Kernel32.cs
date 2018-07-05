@@ -48,7 +48,7 @@ namespace OpenTK.NT.Native
         /// <param name="lpProcName">The function or variable name.</param>
         /// <returns>If the function succeeds, the return value is the address of the exported function or variable.<para/>
         /// If the function fails, the return value is <see cref="IntPtr.Zero"/>. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.</returns>
-        [DllImport(Library, SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern FARPROC GetProcAddress
         (
             [In] HMODULE hModule,
@@ -62,7 +62,7 @@ namespace OpenTK.NT.Native
         /// <param name="lpProcName">The function's ordinal value. It must be in the low-order word; the high-order word must be zero.</param>
         /// <returns>If the function succeeds, the return value is the address of the exported function or variable.<para/>
         /// If the function fails, the return value is <see cref="IntPtr.Zero"/>. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.</returns>
-        [DllImport(Library, SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern FARPROC GetProcAddress([In] HMODULE hModule, [In] IntPtr lpProcName);
 
         /// <summary>

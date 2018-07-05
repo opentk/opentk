@@ -34,7 +34,7 @@ namespace OpenTK.NT.Native
         /// <param name="lpszFile">The address of a buffer that receives the file name of a dropped file when the function returns. This file name is a null-terminated string. If this parameter is null, <see cref="DragQueryFile(DWORD_PTR, DWORD, LPTSTR, DWORD)"/> returns the required size, in characters, of this buffer.</param>
         /// <param name="cch">The size, in characters, of the <paramref name="lpszFile"/> buffer.</param>
         /// <returns></returns>
-        [DllImport(Library, CharSet = CharSet.Auto)]
+        [DllImport(Library, CharSet = CharSet.Unicode)]
         public static extern UINT DragQueryFile
         (
             [In] HDROP hDrop,

@@ -9,7 +9,7 @@ namespace OpenTK.NT.Native
     {
         public static class WindowClass
         {
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool GetClassInfoEx
             (
@@ -18,7 +18,7 @@ namespace OpenTK.NT.Native
                 [Out] out WindowClassEx lpwcx
             );
 
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool GetClassInfoEx
             (
@@ -27,13 +27,13 @@ namespace OpenTK.NT.Native
                 [Out] out WindowClassEx lpwcx
             );
 
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("user32.dll", SetLastError = true)]
             public static extern ushort RegisterClass([In] ref Native.WindowClass lpWndClass);
 
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("user32.dll", SetLastError = true)]
             public static extern ushort RegisterClassEx([In] ref WindowClassEx lpwcx);
 
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool UnregisterClass
             (
@@ -41,7 +41,7 @@ namespace OpenTK.NT.Native
                 [In] [Optional] HINSTANCE hInstance
             );
 
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool UnregisterClass
             (

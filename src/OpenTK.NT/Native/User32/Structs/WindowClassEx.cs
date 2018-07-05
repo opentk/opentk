@@ -8,14 +8,13 @@ using UINT = System.UInt32;
 
 namespace OpenTK.NT.Native
 {
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode]
     public struct WindowClassEx
     {
         public UINT Size;
 
         public WindowClassStyleFlags Style;
 
-        //public WNDPROC WndProc;
         [MarshalAs(UnmanagedType.FunctionPtr)]
         public WindowProc WndProc;
 

@@ -6,7 +6,7 @@ using TCHAR = System.String;
 
 namespace OpenTK.NT.Native
 {
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct SHFileInfo
     {
         public HICON Icon;

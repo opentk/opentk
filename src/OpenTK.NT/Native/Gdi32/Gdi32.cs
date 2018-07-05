@@ -78,7 +78,7 @@ namespace OpenTK.NT.Native
         /// <param name="nIndex"></param>
         /// <returns>The return value specifies the value of the desired item.<para/>
         /// When <paramref name="nIndex"/> is <see cref="GetDeviceCapsIndex.BitsPerPixel"/> and the device has 15bpp or 16bpp, the return value is 16.</returns>
-        [DllImport(Library, CharSet = CharSet.Auto)]
+        [DllImport(Library)]
         public static extern int GetDeviceCaps([In] HDC hdc, [In] GetDeviceCapsIndex nIndex);
 
         /// <summary>

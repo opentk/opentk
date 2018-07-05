@@ -66,7 +66,7 @@ namespace OpenTK.NT.Native
                 [In] ExtendedWindowStyleFlags dwExStyle
             );
 
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern HWND CreateWindowEx
             (
                 [In] ExtendedWindowStyleFlags dwExStyle,
@@ -83,7 +83,7 @@ namespace OpenTK.NT.Native
                 [In] [Optional] LPVOID lpParam
             );
 
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern HWND CreateWindowEx
             (
                 [In] ExtendedWindowStyleFlags dwExStyle,
@@ -216,7 +216,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true, EntryPoint = "GetWindowLongPtr")]
             private static extern IntPtr GetWindowLongPtrInternal([In] HWND hWnd, [In] int nIndex);
 
-            [DllImport("User32.dll", CharSet = CharSet.Auto)]
+            [DllImport("User32.dll", CharSet = CharSet.Unicode)]
             public static extern LRESULT DefWindowProc
             (
                 [In] HWND hWnd,
@@ -302,7 +302,7 @@ namespace OpenTK.NT.Native
             /// must add certain files to your application, as outlined in Microsoft Layer for Unicode on Windows 95/98/Me
             ///  </para>
             /// </remarks>
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern int GetWindowText
             (
                 [In] HWND hWnd,
@@ -341,7 +341,7 @@ namespace OpenTK.NT.Native
             /// Systems .
             ///  </para>
             /// </remarks>
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SetWindowText
             (
