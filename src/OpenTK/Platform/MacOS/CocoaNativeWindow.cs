@@ -786,6 +786,11 @@ namespace OpenTK.Platform.MacOS
                 modifiers |= KeyModifiers.Alt;
             }
 
+            if ((mask & NSEventModifierMask.CommandKeyMask) != 0)
+            {
+                modifiers |= OpenTK.Input.KeyModifiers.Command;
+            }
+
             return modifiers;
         }
 

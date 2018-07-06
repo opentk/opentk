@@ -240,7 +240,7 @@ namespace OpenTK.Platform.MacOS
                 case MacOSKeyCode.W:
                     return Key.W;
                 case MacOSKeyCode.Command:
-                    return Key.WinLeft;
+                    return Key.Command;
                 // WinKeyRight
                 case MacOSKeyCode.X:
                     return Key.X;
