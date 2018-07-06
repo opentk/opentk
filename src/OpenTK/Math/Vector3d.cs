@@ -968,12 +968,12 @@ namespace OpenTK
             // Since vec.W == 0, we can optimize quat * vec * quat^-1 as follows:
             // vec + 2.0 * cross(quat.xyz, cross(quat.xyz, vec) + quat.w * vec)
             Vector3d xyz = quat.Xyz, temp, temp2;
-            Vector3d.Cross(ref xyz, ref vec, out temp);
-            Vector3d.Multiply(ref vec, quat.W, out temp2);
-            Vector3d.Add(ref temp, ref temp2, out temp);
-            Vector3d.Cross(ref xyz, ref temp, out temp);
-            Vector3d.Multiply(ref temp, 2, out temp);
-            Vector3d.Add(ref vec, ref temp, out result);
+            Cross(ref xyz, ref vec, out temp);
+            Multiply(ref vec, quat.W, out temp2);
+            Add(ref temp, ref temp2, out temp);
+            Cross(ref xyz, ref temp, out temp2);
+            Multiply(ref temp2, 2f, out temp2);
+            Add(ref vec, ref temp2, out result);
         }
 
         /// <summary>
