@@ -6,31 +6,25 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+
   <PropertyGroup>
     <Version>4.0.0</Version>
-    <Authors>OpenTK</Authors>
-    <Copyright>Copyright (c) 2006 - 2016 Stefanos Apostolopoulos (stapostol@gmail.com) for the Open Toolkit library.</Copyright>
     <Description>A set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL.</Description>
   </PropertyGroup>
-  <PropertyGroup>
-    <PackageIconUrl>https://raw.githubusercontent.com/opentk/opentk/master/docs/files/img/logo.png</PackageIconUrl>
-    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <PackageReleaseNotes>Initial 4.0 release.</PackageReleaseNotes>
-    <PackageTags>opentk;opengl;cross-platform;openal;csharp;fsharp;vb;dotnet;mono;graphics;game;scientific;science;3d;2d;math;input;gamepad;joystick</PackageTags>
-    <PackageProjectUrl>https://github.com/opentk/opentk</PackageProjectUrl>
-    <IncludeSymbols>true</IncludeSymbols>
-    <IncludeSource>true</IncludeSource>
-  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
     <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
   </ItemGroup>
+
   <Target Name="Rewrite" AfterTargets="AfterBuild">
     <Exec Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" Command="$(ProjectDir)..\..\src\Generator.Rewrite\bin\Debug\net461\Rewrite.exe --assembly $(OutputPath)OpenTK.dll --debug" />
     <Exec Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Release'" Command="$(ProjectDir)..\..\src\Generator.Rewrite\bin\Release\net461\Rewrite.exe --assembly $(OutputPath)OpenTK.dll" />
     <Exec Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" Command="mono $(ProjectDir)..\..\src\Generator.Rewrite/bin/Debug/net461\Rewrite.exe --assembly $(OutputPath)OpenTK.dll --debug" />
     <Exec Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Release'" Command="mono $(ProjectDir)..\..\src\Generator.Rewrite/bin/Release/net461\Rewrite.exe --assembly $(OutputPath)OpenTK.dll" />
   </Target>
+
+  <Import Project="..\..\build\targets\nuget-common.props" />
   <Import Project="..\..\build\targets\netfx-mono.props" />
   <Import Project="..\..\build\targets\stylecop.props" />
 </Project>
