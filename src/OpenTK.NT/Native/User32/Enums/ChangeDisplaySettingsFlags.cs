@@ -4,6 +4,9 @@ using DWORD = System.UInt32;
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Used in <see cref="User32.DeviceContext.ChangeDisplaySettings(ref DeviceMode, ChangeDisplaySettingsFlags)"/> and <see cref="User32.DeviceContext.ChangeDisplaySettingsEx(string, IntPtr, IntPtr, ChangeDisplaySettingsFlags, IntPtr)"/> to indicate how the graphics mode should be changed.
+    /// </summary>
     [Flags]
     public enum ChangeDisplaySettingsFlags : DWORD
     {
@@ -61,7 +64,6 @@ namespace OpenTK.NT.Native
         /// The settings should be changed, even if the requested settings are the same as the current settings.
         /// </summary>
         Reset = 0x40000000,
-        ResetEx = 0x20000000,
 
         /// <summary>
         /// The settings will be saved in the registry, but will not take effect. This flag is only valid when specified with the CDS_UPDATEREGISTRY flag.

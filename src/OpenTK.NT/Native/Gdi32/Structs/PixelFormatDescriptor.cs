@@ -146,6 +146,9 @@ namespace OpenTK.NT.Native
         /// </summary>
         public DWORD DamageMask;
 
+        /// <summary>
+        /// The size of this structure in bytes.
+        /// </summary>
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<PixelFormatDescriptor>();
     }
 }

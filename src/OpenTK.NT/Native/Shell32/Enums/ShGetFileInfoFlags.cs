@@ -4,6 +4,9 @@ using UINT = System.UInt32;
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Used in <see cref="Shell32.SHGetFileInfo(string, FileAttributeFlags, ref SHFileInfo, UINT, ShGetFileInfoFlags)"/> to specify the type of file information to retrieve.
+    /// </summary>
     [Flags]
     public enum ShGetFileInfoFlags : UINT
     {

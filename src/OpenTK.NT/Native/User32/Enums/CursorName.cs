@@ -1,5 +1,8 @@
 ﻿namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Used in <see cref="User32.Cursor.LoadCursor(CursorName)"/> as a resource identifier to load one of the pre-defined cursors.
+    /// </summary>
     public enum CursorName
     {
         /// <summary>

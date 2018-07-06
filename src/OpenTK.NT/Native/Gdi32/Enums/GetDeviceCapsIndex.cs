@@ -1,5 +1,8 @@
 ﻿namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Used in <see cref="Gdi32.GetDeviceCaps(System.IntPtr, GetDeviceCapsIndex)"/> to specify the type of information to retrieve for the specified device.
+    /// </summary>
     public enum GetDeviceCapsIndex
     {
         /// <summary>

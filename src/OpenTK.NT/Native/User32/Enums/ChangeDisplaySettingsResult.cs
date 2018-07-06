@@ -2,6 +2,9 @@
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Used in <see cref="User32.DeviceContext.ChangeDisplaySettings(ref DeviceMode, ChangeDisplaySettingsFlags)"/> and <see cref="User32.DeviceContext.ChangeDisplaySettingsEx(string, System.IntPtr, System.IntPtr, ChangeDisplaySettingsFlags, System.IntPtr)"/> to indicate the result of the function call.
+    /// </summary>
     public enum ChangeDisplaySettingsResult : LONG
     {
         /// <summary>

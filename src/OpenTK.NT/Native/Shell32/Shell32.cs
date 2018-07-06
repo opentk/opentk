@@ -58,7 +58,11 @@ namespace OpenTK.NT.Native
         /// <param name="psfi">Pointer to a <see cref="SHFileInfo"/> structure to receive the file information.</param>
         /// <param name="cbFileInfo">The size, in bytes, of the <see cref="SHFileInfo"/> structure pointed to by the <paramref name="psfi"/> parameter.</param>
         /// <param name="uFlags">The flags that specify the file information to retrieve. This parameter can be a combination of one or more <see cref="ShGetFileInfoFlags"/>.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// Returns a value whose meaning depends on the <paramref name="uFlags"/> parameter:<para/>
+        /// If <paramref name="uFlags"/> does not contain <see cref="ShGetFileInfoFlags.ExeType"/> or <see cref="ShGetFileInfoFlags.SysIconIndex"/>, the return value is nonzero if successful, or zero otherwise.<para/>
+        /// If <paramref name="uFlags"/> contains the <see cref="ShGetFileInfoFlags.ExeType"/> flag, the return value specifies the type of the executable file. Check the windows API documentation for more information.
+        /// </returns>
         [DllImport(Library)]
         public static extern DWORD_PTR SHGetFileInfo
         (

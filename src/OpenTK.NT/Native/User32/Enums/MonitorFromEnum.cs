@@ -5,7 +5,7 @@ namespace OpenTK.NT.Native
     public enum MonitorFromEnum : DWORD
     {
         /// <summary>
-        /// Returns <see cref="null"/>.
+        /// Returns null.
         /// </summary>
         DefaultToNull = 0,
 

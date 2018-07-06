@@ -8,7 +8,7 @@ using UINT = System.UInt32;
 
 namespace OpenTK.NT.Native
 {
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct WindowClassEx
     {
         public UINT Size;
