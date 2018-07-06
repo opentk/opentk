@@ -1,3 +1,11 @@
+### 3.0.1
+    * Hotfix release
+    * Fixed an issue with vector transformation
+
+### 3.0.0
+    * Final .NET Framework release
+    * Numerous bug fixes
+
 ### 3.0.0-pre
 	* Support for OpenGL 4.6
 	* Replaced JoystickButton enum with simple long. (breaking API change)
