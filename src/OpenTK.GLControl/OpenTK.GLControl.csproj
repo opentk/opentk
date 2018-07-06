@@ -5,7 +5,6 @@
     <Deterministic>true</Deterministic>
     <LangVersion>7</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup>
     <Version>4.0.0</Version>

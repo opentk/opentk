@@ -22,9 +22,6 @@
     <IncludeSource>true</IncludeSource>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" PrivateAssets="all" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
     <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
   </ItemGroup>

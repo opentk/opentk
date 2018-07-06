@@ -5,7 +5,6 @@
     <Deterministic>true</Deterministic>
     <LangVersion>7</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup>
     <Version>4.0.0</Version>
@@ -24,7 +23,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="GtkSharp" Version="3.22.24.36" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\OpenTK\OpenTK.csproj" />
