@@ -11,7 +11,7 @@ namespace OpenTK.NT.Native
     {
         /// <summary>
         /// Specifies whether this structure defines an icon or a cursor. A
-        /// value of TRUE specifies an icon; FALSE specifies a cursor
+        /// value of true specifies an icon; false specifies a cursor.
         /// </summary>
         public BOOL Icon;
 
@@ -42,7 +42,7 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// A handle to the icon color bitmap. This member can be optional if
         /// this structure defines a black and white icon. The AND bitmask of
-        /// hbmMask is applied with the SRCAND flag to the destination;
+        /// <see cref="BitmapMask"/> is applied with the SRCAND flag to the destination;
         /// subsequently, the color bitmap is applied (using XOR) to the
         /// destination by using the SRCINVERT flag.
         /// </summary>

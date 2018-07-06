@@ -1,40 +1,26 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
-using DWORD = System.UInt32;
 using HINSTANCE = System.IntPtr;
 using HMENU = System.IntPtr;
 using HWND = System.IntPtr;
+using LPCTSTR = System.String;
 using LPVOID = System.IntPtr;
+using SHORT = System.Int16;
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Defines the initialization parameters passed to the window procedure of an application. These members are identical to the parameters of the <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyleFlags, HINSTANCE, string, WindowStyleFlags, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/> function.
+    /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct CreateStruct
     {
         /// <summary>
-        /// Contains additional data which may be used to create the window.
+        /// Contains additional data which may be used to create the window. If the window is being created as a result of a call to the CreateWindow or <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyleFlags, HINSTANCE, string, WindowStyleFlags, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/> function, this member contains the value of the lpParam parameter specified in the function call.<para/>
+        /// If the window being created is a MDI client window, this member contains a pointer to a CLIENTCREATESTRUCT structure. If the window being created is a MDI child window, this member contains a pointer to an MDICREATESTRUCT structure.<para/>
+        ///  If the window is being created from a dialog template, this member is the address of a <see cref="SHORT"/> value that specifies the size, in bytes, of the window creation data. The value is immediately followed by the creation data.
         /// </summary>
-        /// <remarks>
-        /// If the window is being created as a result of a call to the CreateWindow
-        /// or CreateWindowEx function, this member contains the value of the lpParam
-        /// parameter specified in the function call.
-        ///  <para>
-        /// If the window being created is a multiple-document interface (MDI) client window,
-        /// this member contains a pointer to a CLIENTCREATESTRUCT structure. If the window
-        /// being created is a MDI child window, this member contains a pointer to an
-        /// MDICREATESTRUCT structure.
-        ///  </para>
-        ///  <para>
-        /// Windows NT/2000/XP: If the window is being created from a dialog template,
-        /// this member is the address of a SHORT value that specifies the size, in bytes,
-        /// of the window creation data. The value is immediately followed by the creation data.
-        ///  </para>
-        ///  <para>
-        /// Windows NT/2000/XP: You should access the data represented by the lpCreateParams member
-        /// using a pointer that has been declared using the UNALIGNED type, because the pointer
-        /// may not be DWORD aligned.
-        ///  </para>
-        /// </remarks>
         public LPVOID CreateParams;
 
         /// <summary>
@@ -50,7 +36,7 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Handle to the parent window, if the window is a child window.
         /// If the window is owned, this member identifies the owner window.
-        /// If the window is not a child or owned window, this member is NULL.
+        /// If the window is not a child or owned window, this member is null.
         /// </summary>
         public HWND Parent;
 
@@ -86,22 +72,17 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Pointer to a null-terminated string that specifies the name of the new window.
         /// </summary>
-        [MarshalAs(UnmanagedType.LPTStr)]
-        public string Name;
+        [MarshalAs(UnmanagedType.LPWStr)]
+        public LPCTSTR Name;
 
         /// <summary>
         /// Either a pointer to a null-terminated string or an atom that specifies the class name
         /// of the new window.
-        ///  <remarks>
-        /// Note  Because the lpszClass member can contain a pointer to a local (and thus inaccessable) atom,
-        /// do not obtain the class name by using this member. Use the GetClassName function instead.
-        ///  </remarks>
         /// </summary>
-        [MarshalAs(UnmanagedType.LPTStr)]
-        public string ClassName;
+        public IntPtr ClassName;
 
         /// <summary>
-        /// Specifies the extended window style for the new window.
+        /// The extended window style for the new window.
         /// </summary>
         public ExtendedWindowStyleFlags ExtendedStyle;
     }

@@ -4,18 +4,23 @@ using DWORD = System.UInt32;
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Used in <see cref="DisplayDevice"/> to represent the device state.
+    /// </summary>
     [Flags]
     public enum DisplayDeviceStateFlags : DWORD
     {
-        None = 0x00000000,
         AttachedToDesktop = 0x00000001,
         MultiDriver = 0x00000002,
+
+        /// <summary>
+        /// The primary desktop is on the device. For a system with a single display card, this is always set. For a system with multiple display cards, only one device can have this set.
+        /// </summary>
         PrimaryDevice = 0x00000004,
 
         /// <summary>
         /// Represents a pseudo device used to mirror application drawing for remoting or other purposes.<para/>
-        /// An invisible pseudo monitor is associated with this device. For example, NetMeeting uses it.<para/>
-        /// Note that GetSystemMetrics (SM_MONITORS) only accounts for visible display monitors.
+        /// An invisible pseudo monitor is associated with this device.
         /// </summary>
         MirroringDriver = 0x00000008,
 
@@ -33,16 +38,5 @@ namespace OpenTK.NT.Native
         /// The device has more display modes than its output devices support.
         /// </summary>
         ModesPruned = 0x08000000,
-
-        Remote = 0x04000000,
-        Disconnect = 0x02000000,
-
-        /// <summary>
-        /// DISPLAY_DEVICE_ACTIVE specifies whether a monitor is presented as being "on" by the respective GDI view.<para/>
-        /// Windows Vista: EnumDisplayDevices will only enumerate monitors that can be presented as being "on."
-        /// </summary>
-        Active = 0x00000001,
-
-        Attached = 0x00000002
     }
 }

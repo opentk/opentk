@@ -31,7 +31,7 @@ namespace OpenTK.NT.Native
         public ULONG_PTR ExtraInfo;
 
         /// <summary>
-        /// Returns the size of a MouseMovePoint in bytes.
+        /// The size of this structure in bytes.
         /// </summary>
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<MouseMovePoint>();
     }
