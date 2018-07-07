@@ -140,7 +140,7 @@ namespace Bind.Structures
         /// <summary>
         /// Gets a value indicating whether the type is an unsigned type.
         /// </summary>
-        public bool IsUnsigned => (TypeName.Contains("UInt") || TypeName.Contains("Byte"));
+        public bool IsUnsigned => TypeName.Contains("UInt") || TypeName.Contains("Byte");
 
         /// <summary>
         /// Gets or sets the wrapper type hinting information for this definition.

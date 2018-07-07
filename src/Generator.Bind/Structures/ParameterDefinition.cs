@@ -132,7 +132,10 @@ namespace Bind.Structures
             return direction == "out" ? FlowDirection.Out : direction == "in" ? FlowDirection.In : FlowDirection.Undefined;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a string that would declare this object in C# source code.
+        /// </summary>
+        /// <returns>The declaration string.</returns>
         public string GetDeclarationString()
         {
             var sb = new StringBuilder();

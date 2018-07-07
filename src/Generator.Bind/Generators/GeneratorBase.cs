@@ -112,14 +112,14 @@ namespace Bind.Generators
         /// <inheritdoc />
         public virtual void LoadData()
         {
-            var glTypemapPath = Path.Combine(Program.Arguments.InputPath, APITypemap);
-            var csTypemapPath = Path.Combine(Program.Arguments.InputPath, LanguageTypemap);
+            var apiTypemapPath = Path.Combine(Program.Arguments.InputPath, APITypemap);
+            var languageTypemapPath = Path.Combine(Program.Arguments.InputPath, LanguageTypemap);
 
             var specificationFilePath = Path.Combine(Program.Arguments.InputPath, SpecificationFile);
             var enumSpecificationPath = Path.Combine(Program.Arguments.InputPath, EnumSpecificationFile);
 
-            APITypes = SpecificationReader.ReadAPITypeMap(glTypemapPath);
-            LanguageTypes = SpecificationReader.ReadLanguageTypeMap(csTypemapPath);
+            APITypes = SpecificationReader.ReadAPITypeMap(apiTypemapPath);
+            LanguageTypes = SpecificationReader.ReadLanguageTypeMap(languageTypemapPath);
 
             // Read enum signatures
             Enums = SpecificationReader.ReadEnums(enumSpecificationPath, OverrideFiles, ProfileName, Version);

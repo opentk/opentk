@@ -26,8 +26,8 @@
 namespace Bind.Structures
 {
     /// <summary>
-    /// Enumarates the possible flows of a parameter (ie. is this parameter
-    /// used as input or as output?)
+    /// Enumerates the possible flows of a parameter (ie. is this parameter
+    /// used as input or as output?).
     /// </summary>
     public enum FlowDirection
     {

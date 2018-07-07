@@ -45,4 +45,3 @@ namespace Bind.Structures
         public List<DocumentationParameterDefinition> Parameters { get; set; }
     }
 }
-

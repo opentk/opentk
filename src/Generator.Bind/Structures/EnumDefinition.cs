@@ -12,7 +12,9 @@ namespace Bind.Structures
     /// </summary>
     internal class EnumDefinition
     {
-        private string _name, _type;
+        private string _name;
+
+        private string _type;
 
         /// <summary>
         /// Gets or sets a value indicating whether the enum contains a collection of flags, i.e. 1, 2, 4, 8, ...
