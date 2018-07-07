@@ -340,7 +340,14 @@ namespace Bind
                 var summaryLines = docs.Summary.TrimEnd().Split('\n');
                 foreach (var summaryLine in summaryLines)
                 {
-                    sw.WriteLine($"/// {summaryLine}");
+                    sw.Write($"/// {summaryLine}");
+
+                    if (summaryLine == summaryLines.Last() && !summaryLine.EndsWith("."))
+                    {
+                        sw.Write('.');
+                    }
+
+                    sw.WriteLine();
                 }
             }
             sw.WriteLine("/// </summary>");
