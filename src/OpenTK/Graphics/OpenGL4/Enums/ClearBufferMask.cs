@@ -30,7 +30,7 @@ using System;
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.BlitFramebuffer, GL.BlitNamedFramebuffer and 1 other function
+    /// Used in GL.BlitFramebuffer and GL.BlitNamedFramebuffer, as well as 1 other function.
     /// </summary>
     [Flags]
     public enum ClearBufferMask

@@ -30,7 +30,7 @@ using System;
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.UseProgramStages
+    /// Used in GL.UseProgramStages.
     /// </summary>
     [Flags]
     public enum ProgramStageMask

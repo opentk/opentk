@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.ColorP3, GL.ColorP4 and 17 other functions
+    /// Used in GL.ColorP3 and GL.ColorP4, as well as 17 other functions.
     /// </summary>
     public enum PackedPointerType
     {

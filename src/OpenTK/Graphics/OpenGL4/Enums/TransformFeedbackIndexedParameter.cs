@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.GetTransformFeedback, GL.GetTransformFeedbacki64_
+    /// Used in GL.GetTransformFeedback and GL.GetTransformFeedbacki64_.
     /// </summary>
     public enum TransformFeedbackIndexedParameter
     {

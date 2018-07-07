@@ -30,7 +30,7 @@ using System;
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.NV.GetPathMetricRange, GL.NV.GetPathMetric
+    /// Used in GL.NV.GetPathMetricRange and GL.NV.GetPathMetric.
     /// </summary>
     [Flags]
     public enum PathMetricMask

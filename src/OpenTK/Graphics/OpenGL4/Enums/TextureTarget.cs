@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.FramebufferTextureFace, GL.Arb.GetnCompressedTexImage and 96 other functions
+    /// Used in GL.Arb.FramebufferTextureFace and GL.Arb.GetnCompressedTexImage, as well as 96 other functions.
     /// </summary>
     public enum TextureTarget
     {

@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.VertexArrayAttribFormat, GL.VertexArrayAttribIFormat and 3 other functions
+    /// Used in GL.VertexArrayAttribFormat and GL.VertexArrayAttribIFormat, as well as 3 other functions.
     /// </summary>
     public enum VertexAttribType
     {

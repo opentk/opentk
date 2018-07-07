@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.ClearBuffer, GL.ClearNamedFramebuffer
+    /// Used in GL.ClearBuffer and GL.ClearNamedFramebuffer.
     /// </summary>
     public enum ClearBufferCombined
     {

@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.DebugMessageControl, GL.Arb.DebugMessageInsert and 6 other functions
+    /// Used in GL.Arb.DebugMessageControl and GL.Arb.DebugMessageInsert, as well as 6 other functions.
     /// </summary>
     public enum DebugSeverity
     {

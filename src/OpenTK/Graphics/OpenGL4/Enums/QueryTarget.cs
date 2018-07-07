@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.BeginQuery, GL.BeginQueryIndexed and 5 other functions
+    /// Used in GL.BeginQuery and GL.BeginQueryIndexed, as well as 5 other functions.
     /// </summary>
     public enum QueryTarget
     {

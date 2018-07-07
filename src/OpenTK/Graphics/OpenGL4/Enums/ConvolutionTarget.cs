@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.GetnConvolutionFilter, GL.ConvolutionFilter1D and 7 other functions
+    /// Used in GL.Arb.GetnConvolutionFilter and GL.ConvolutionFilter1D, as well as 7 other functions.
     /// </summary>
     public enum ConvolutionTarget
     {

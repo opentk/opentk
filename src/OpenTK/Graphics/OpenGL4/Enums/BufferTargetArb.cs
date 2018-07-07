@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.BufferPageCommitment, GL.Ext.GetBooleanIndexed and 1 other function
+    /// Used in GL.Arb.BufferPageCommitment and GL.Ext.GetBooleanIndexed, as well as 1 other function.
     /// </summary>
     public enum BufferTargetArb
     {

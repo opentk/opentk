@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.TexBuffer, GL.ColorTable and 32 other functions
+    /// Used in GL.Arb.TexBuffer and GL.ColorTable, as well as 32 other functions.
     /// </summary>
     public enum InternalFormat
     {

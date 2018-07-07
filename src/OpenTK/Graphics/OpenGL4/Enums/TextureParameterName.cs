@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.TexParameter, GL.TexParameterI and 6 other functions
+    /// Used in GL.TexParameter and GL.TexParameterI, as well as 6 other functions.
     /// </summary>
     public enum TextureParameterName
     {

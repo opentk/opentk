@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.BindImageTexture, GL.GetInternalformat and 21 other functions
+    /// Used in GL.BindImageTexture and GL.GetInternalformat, as well as 21 other functions.
     /// </summary>
     public enum SizedInternalFormat
     {

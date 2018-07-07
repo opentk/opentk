@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.NV.GetPathParameter, GL.NV.PathParameter
+    /// Used in GL.NV.GetPathParameter and GL.NV.PathParameter.
     /// </summary>
     public enum PathParameter
     {

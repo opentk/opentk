@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Khr.GetObjectLabel, GL.Khr.GetPointer
+    /// Used in GL.Khr.GetObjectLabel and GL.Khr.GetPointer.
     /// </summary>
     public enum KhrDebug
     {

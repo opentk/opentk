@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.BindRenderbuffer, GL.FramebufferRenderbuffer and 6 other functions
+    /// Used in GL.BindRenderbuffer and GL.FramebufferRenderbuffer, as well as 6 other functions.
     /// </summary>
     public enum RenderbufferTarget
     {

@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.NV.GetProgramResource, GL.NV.MatrixLoad3x2 and 18 other functions
+    /// Used in GL.NV.GetProgramResource and GL.NV.MatrixLoad3x2, as well as 18 other functions.
     /// </summary>
     public enum NvPathRendering
     {

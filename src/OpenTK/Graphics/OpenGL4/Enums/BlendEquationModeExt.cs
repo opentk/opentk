@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.BlendEquationSeparate
+    /// Used in GL.Arb.BlendEquationSeparate.
     /// </summary>
     public enum BlendEquationModeExt
     {

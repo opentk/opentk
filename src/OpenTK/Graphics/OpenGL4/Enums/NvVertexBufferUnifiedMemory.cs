@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.NV.BufferAddressRange, GL.NV.GetIntegerui64 and 5 other functions
+    /// Used in GL.NV.BufferAddressRange and GL.NV.GetIntegerui64, as well as 5 other functions.
     /// </summary>
     public enum NvVertexBufferUnifiedMemory
     {

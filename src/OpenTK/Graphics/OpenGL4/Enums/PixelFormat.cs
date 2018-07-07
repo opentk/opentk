@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.GetImageHandle, GL.Arb.GetnColorTable and 72 other functions
+    /// Used in GL.Arb.GetImageHandle and GL.Arb.GetnColorTable, as well as 72 other functions.
     /// </summary>
     public enum PixelFormat
     {

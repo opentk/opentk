@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.TexImage2DMultisample, GL.TexImage3DMultisample
+    /// Used in GL.TexImage2DMultisample and GL.TexImage3DMultisample.
     /// </summary>
     public enum TextureTargetMultisample
     {

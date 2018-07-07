@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.FramebufferTexture, GL.Arb.FramebufferTextureFace and 25 other functions
+    /// Used in GL.Arb.FramebufferTexture and GL.Arb.FramebufferTextureFace, as well as 25 other functions.
     /// </summary>
     public enum FramebufferAttachment
     {

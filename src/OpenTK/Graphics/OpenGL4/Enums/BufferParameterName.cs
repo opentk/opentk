@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.GetBufferParameter, GL.GetNamedBufferParameter and 2 other functions
+    /// Used in GL.GetBufferParameter and GL.GetNamedBufferParameter, as well as 2 other functions.
     /// </summary>
     public enum BufferParameterName
     {

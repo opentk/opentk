@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.NV.GetPathColorGen, GL.NV.GetPathTexGen and 3 other functions
+    /// Used in GL.NV.GetPathColorGen and GL.NV.GetPathTexGen, as well as 3 other functions.
     /// </summary>
     public enum PathGenMode
     {

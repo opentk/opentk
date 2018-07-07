@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.GetBoolean, GL.GetDouble and 4 other functions
+    /// Used in GL.GetBoolean and GL.GetDouble, as well as 4 other functions.
     /// </summary>
     public enum GetIndexedPName
     {

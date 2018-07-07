@@ -30,7 +30,7 @@ using System;
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.MapBufferRange, GL.MapNamedBufferRange and 1 other function
+    /// Used in GL.MapBufferRange and GL.MapNamedBufferRange, as well as 1 other function.
     /// </summary>
     [Flags]
     public enum BufferAccessMask

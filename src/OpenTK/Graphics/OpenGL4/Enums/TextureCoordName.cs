@@ -23,14 +23,12 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.GetMultiTexGen, GL.Ext.MultiTexGend and 1 other function
+    /// Used in GL.Ext.GetMultiTexGen and GL.Ext.MultiTexGend, as well as 1 other function.
     /// </summary>
     public enum TextureCoordName
     {
