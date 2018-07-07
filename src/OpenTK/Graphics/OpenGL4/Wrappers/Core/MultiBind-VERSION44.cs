@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind one or more buffer objects to a sequence of indexed buffer targets
+        /// Bind one or more buffer objects to a sequence of indexed buffer targets.
         /// </summary>
         /// <param name="target">
         /// Specify the target of the bind operation. target must be one of AtomicCounterBuffer, TransformFeedbackBuffer, UniformBuffer or ShaderStorageBuffer.
@@ -56,7 +56,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind one or more buffer objects to a sequence of indexed buffer targets
+        /// Bind one or more buffer objects to a sequence of indexed buffer targets.
         /// </summary>
         /// <param name="target">
         /// Specify the target of the bind operation. target must be one of AtomicCounterBuffer, TransformFeedbackBuffer, UniformBuffer or ShaderStorageBuffer.
@@ -79,7 +79,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind one or more buffer objects to a sequence of indexed buffer targets
+        /// Bind one or more buffer objects to a sequence of indexed buffer targets.
         /// </summary>
         /// <param name="target">
         /// Specify the target of the bind operation. target must be one of AtomicCounterBuffer, TransformFeedbackBuffer, UniformBuffer or ShaderStorageBuffer.
@@ -102,7 +102,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind ranges of one or more buffer objects to a sequence of indexed buffer targets
+        /// Bind ranges of one or more buffer objects to a sequence of indexed buffer targets.
         /// </summary>
         /// <param name="target">
         /// Specify the target of the bind operation. target must be one of AtomicCounterBuffer, TransformFeedbackBuffer, UniformBuffer or ShaderStorageBuffer.
@@ -127,7 +127,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind ranges of one or more buffer objects to a sequence of indexed buffer targets
+        /// Bind ranges of one or more buffer objects to a sequence of indexed buffer targets.
         /// </summary>
         /// <param name="target">
         /// Specify the target of the bind operation. target must be one of AtomicCounterBuffer, TransformFeedbackBuffer, UniformBuffer or ShaderStorageBuffer.
@@ -152,7 +152,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind ranges of one or more buffer objects to a sequence of indexed buffer targets
+        /// Bind ranges of one or more buffer objects to a sequence of indexed buffer targets.
         /// </summary>
         /// <param name="target">
         /// Specify the target of the bind operation. target must be one of AtomicCounterBuffer, TransformFeedbackBuffer, UniformBuffer or ShaderStorageBuffer.
@@ -177,7 +177,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind one or more named texture images to a sequence of consecutive image units
+        /// Bind one or more named texture images to a sequence of consecutive image units.
         /// </summary>
         /// <param name="first">
         /// Specifies the first image unit to which a texture is to be bound.
@@ -197,7 +197,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind one or more named texture images to a sequence of consecutive image units
+        /// Bind one or more named texture images to a sequence of consecutive image units.
         /// </summary>
         /// <param name="first">
         /// Specifies the first image unit to which a texture is to be bound.
@@ -217,7 +217,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind one or more named texture images to a sequence of consecutive image units
+        /// Bind one or more named texture images to a sequence of consecutive image units.
         /// </summary>
         /// <param name="first">
         /// Specifies the first image unit to which a texture is to be bound.
@@ -237,7 +237,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind one or more named sampler objects to a sequence of consecutive sampler units
+        /// Bind one or more named sampler objects to a sequence of consecutive sampler units.
         /// </summary>
         /// <param name="first">
         /// Specifies the first sampler unit to which a sampler object is to be bound.
@@ -257,7 +257,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind one or more named sampler objects to a sequence of consecutive sampler units
+        /// Bind one or more named sampler objects to a sequence of consecutive sampler units.
         /// </summary>
         /// <param name="first">
         /// Specifies the first sampler unit to which a sampler object is to be bound.
@@ -277,7 +277,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind one or more named sampler objects to a sequence of consecutive sampler units
+        /// Bind one or more named sampler objects to a sequence of consecutive sampler units.
         /// </summary>
         /// <param name="first">
         /// Specifies the first sampler unit to which a sampler object is to be bound.
@@ -297,7 +297,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind one or more named textures to a sequence of consecutive texture units
+        /// Bind one or more named textures to a sequence of consecutive texture units.
         /// </summary>
         /// <param name="first">
         /// Specifies the first texture unit to which a texture is to be bound.
@@ -317,7 +317,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind one or more named textures to a sequence of consecutive texture units
+        /// Bind one or more named textures to a sequence of consecutive texture units.
         /// </summary>
         /// <param name="first">
         /// Specifies the first texture unit to which a texture is to be bound.
@@ -337,7 +337,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind one or more named textures to a sequence of consecutive texture units
+        /// Bind one or more named textures to a sequence of consecutive texture units.
         /// </summary>
         /// <param name="first">
         /// Specifies the first texture unit to which a texture is to be bound.
@@ -357,7 +357,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind one or more named buffer objects to a sequence of consecutive vertex buffer binding points
+        /// Bind one or more named buffer objects to a sequence of consecutive vertex buffer binding points.
         /// </summary>
         /// <param name="first">
         /// Specifies the first vertex buffer binding point to which a buffer object is to be bound.
@@ -385,7 +385,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind one or more named buffer objects to a sequence of consecutive vertex buffer binding points
+        /// Bind one or more named buffer objects to a sequence of consecutive vertex buffer binding points.
         /// </summary>
         /// <param name="first">
         /// Specifies the first vertex buffer binding point to which a buffer object is to be bound.
@@ -413,7 +413,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_multi_bind|VERSION_4_4]
-        /// Bind one or more named buffer objects to a sequence of consecutive vertex buffer binding points
+        /// Bind one or more named buffer objects to a sequence of consecutive vertex buffer binding points.
         /// </summary>
         /// <param name="first">
         /// Specifies the first vertex buffer binding point to which a buffer object is to be bound.

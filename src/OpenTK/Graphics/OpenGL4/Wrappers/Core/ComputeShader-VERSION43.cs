@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.3 or ARB_compute_shader|VERSION_4_3]
-        /// Launch one or more compute work groups
+        /// Launch one or more compute work groups.
         /// </summary>
         /// <param name="num_groups_x">
         /// The number of work groups to be launched in the X dimension.
@@ -52,7 +52,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_compute_shader|VERSION_4_3]
-        /// Launch one or more compute work groups using parameters stored in a buffer
+        /// Launch one or more compute work groups using parameters stored in a buffer.
         /// </summary>
         /// <param name="indirect">
         /// The offset into the buffer object currently bound to the DispatchIndirectBuffer buffer target at which the dispatch parameters are stored.

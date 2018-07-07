@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.2 or ARB_shader_atomic_counters|VERSION_4_2]
-        /// Retrieve information about the set of active atomic counter buffers for a program
+        /// Retrieve information about the set of active atomic counter buffers for a program.
         /// </summary>
         /// <param name="program">
         /// The name of a program object from which to retrieve information.
@@ -56,7 +56,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.2 or ARB_shader_atomic_counters|VERSION_4_2]
-        /// Retrieve information about the set of active atomic counter buffers for a program
+        /// Retrieve information about the set of active atomic counter buffers for a program.
         /// </summary>
         /// <param name="program">
         /// The name of a program object from which to retrieve information.
@@ -79,7 +79,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.2 or ARB_shader_atomic_counters|VERSION_4_2]
-        /// Retrieve information about the set of active atomic counter buffers for a program
+        /// Retrieve information about the set of active atomic counter buffers for a program.
         /// </summary>
         /// <param name="program">
         /// The name of a program object from which to retrieve information.

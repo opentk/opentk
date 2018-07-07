@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v1.4 or ARB_imaging|VERSION_1_4]
-        /// Set the blend color
+        /// Set the blend color.
         /// </summary>
         /// <param name="red">
         /// specify the components of BlendColor
@@ -55,7 +55,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4 or ARB_imaging|VERSION_1_4]
-        /// Specify the equation used for both the RGB blend equation and the Alpha blend equation
+        /// Specify the equation used for both the RGB blend equation and the Alpha blend equation.
         /// </summary>
         /// <param name="mode">
         /// specifies how source and destination colors are combined. It must be FuncAdd, FuncSubtract, FuncReverseSubtract, Min, Max.

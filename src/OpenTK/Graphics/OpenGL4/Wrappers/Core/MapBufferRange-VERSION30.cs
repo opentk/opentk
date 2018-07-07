@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v3.0 or ARB_map_buffer_range|VERSION_3_0]
-        /// Indicate modifications to a range of a mapped buffer
+        /// Indicate modifications to a range of a mapped buffer.
         /// </summary>
         /// <param name="target">
         /// Specifies the target of the flush operation. target must be ArrayBuffer, CopyReadBuffer, CopyWriteBuffer, DispatchIndirectBuffer, DrawIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -52,7 +52,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_map_buffer_range|VERSION_3_0]
-        /// Indicate modifications to a range of a mapped buffer
+        /// Indicate modifications to a range of a mapped buffer.
         /// </summary>
         /// <param name="target">
         /// Specifies the target of the flush operation. target must be ArrayBuffer, CopyReadBuffer, CopyWriteBuffer, DispatchIndirectBuffer, DrawIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -71,7 +71,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_map_buffer_range|VERSION_3_0]
-        /// Map a section of a buffer object's data store
+        /// Map a section of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies a binding to which the target buffer is bound.
@@ -93,7 +93,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_map_buffer_range|VERSION_3_0]
-        /// Map a section of a buffer object's data store
+        /// Map a section of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies a binding to which the target buffer is bound.

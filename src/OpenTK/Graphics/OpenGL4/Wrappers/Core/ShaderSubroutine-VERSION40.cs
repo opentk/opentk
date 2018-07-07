@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.0 or ARB_shader_subroutine|VERSION_4_0]
-        /// Query the name of an active shader subroutine
+        /// Query the name of an active shader subroutine.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of the program containing the subroutine.
@@ -63,7 +63,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_shader_subroutine|VERSION_4_0]
-        /// Query the name of an active shader subroutine
+        /// Query the name of an active shader subroutine.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of the program containing the subroutine.
@@ -93,7 +93,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_shader_subroutine|VERSION_4_0]
-        /// Query the name of an active shader subroutine uniform
+        /// Query the name of an active shader subroutine uniform.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of the program containing the subroutine.
@@ -123,7 +123,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_shader_subroutine|VERSION_4_0]
-        /// Query the name of an active shader subroutine uniform
+        /// Query the name of an active shader subroutine uniform.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of the program containing the subroutine.
@@ -153,7 +153,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_shader_subroutine|VERSION_4_0]
-        /// Query a property of an active shader subroutine uniform
+        /// Query a property of an active shader subroutine uniform.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of the program containing the subroutine.
@@ -179,7 +179,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_shader_subroutine|VERSION_4_0]
-        /// Query a property of an active shader subroutine uniform
+        /// Query a property of an active shader subroutine uniform.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of the program containing the subroutine.
@@ -205,7 +205,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_shader_subroutine|VERSION_4_0]
-        /// Query a property of an active shader subroutine uniform
+        /// Query a property of an active shader subroutine uniform.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of the program containing the subroutine.
@@ -231,7 +231,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_shader_subroutine|VERSION_4_0]
-        /// Retrieve properties of a program object corresponding to a specified shader stage
+        /// Retrieve properties of a program object corresponding to a specified shader stage.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of the program containing shader stage.
@@ -254,7 +254,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_shader_subroutine|VERSION_4_0]
-        /// Retrieve properties of a program object corresponding to a specified shader stage
+        /// Retrieve properties of a program object corresponding to a specified shader stage.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of the program containing shader stage.
@@ -277,7 +277,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_shader_subroutine|VERSION_4_0]
-        /// Retrieve the index of a subroutine uniform of a given shader stage within a program
+        /// Retrieve the index of a subroutine uniform of a given shader stage within a program.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of the program containing shader stage.
@@ -296,7 +296,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_shader_subroutine|VERSION_4_0]
-        /// Retrieve the location of a subroutine uniform of a given shader stage within a program
+        /// Retrieve the location of a subroutine uniform of a given shader stage within a program.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of the program containing shader stage.
@@ -315,7 +315,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_shader_subroutine|VERSION_4_0]
-        /// Retrieve the value of a subroutine uniform of a given shader stage of the current program
+        /// Retrieve the value of a subroutine uniform of a given shader stage of the current program.
         /// </summary>
         /// <param name="shadertype">
         /// Specifies the shader stage from which to query for subroutine uniform index. shadertype must be one of VertexShader, TessControlShader, TessEvaluationShader, GeometryShader or FragmentShader.
@@ -335,7 +335,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_shader_subroutine|VERSION_4_0]
-        /// Retrieve the value of a subroutine uniform of a given shader stage of the current program
+        /// Retrieve the value of a subroutine uniform of a given shader stage of the current program.
         /// </summary>
         /// <param name="shadertype">
         /// Specifies the shader stage from which to query for subroutine uniform index. shadertype must be one of VertexShader, TessControlShader, TessEvaluationShader, GeometryShader or FragmentShader.
@@ -355,7 +355,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_shader_subroutine|VERSION_4_0]
-        /// Load active subroutine uniforms
+        /// Load active subroutine uniforms.
         /// </summary>
         /// <param name="shadertype">
         /// Specifies the shader stage from which to query for subroutine uniform index. shadertype must be one of VertexShader, TessControlShader, TessEvaluationShader, GeometryShader or FragmentShader.
@@ -375,7 +375,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_shader_subroutine|VERSION_4_0]
-        /// Load active subroutine uniforms
+        /// Load active subroutine uniforms.
         /// </summary>
         /// <param name="shadertype">
         /// Specifies the shader stage from which to query for subroutine uniform index. shadertype must be one of VertexShader, TessControlShader, TessEvaluationShader, GeometryShader or FragmentShader.
@@ -395,7 +395,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_shader_subroutine|VERSION_4_0]
-        /// Load active subroutine uniforms
+        /// Load active subroutine uniforms.
         /// </summary>
         /// <param name="shadertype">
         /// Specifies the shader stage from which to query for subroutine uniform index. shadertype must be one of VertexShader, TessControlShader, TessEvaluationShader, GeometryShader or FragmentShader.

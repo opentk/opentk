@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.0 or ARB_draw_indirect|VERSION_4_0]
-        /// Render primitives from array data, taking parameters from memory
+        /// Render primitives from array data, taking parameters from memory.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency, and Patches are accepted.
@@ -49,7 +49,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_draw_indirect|VERSION_4_0]
-        /// Render primitives from array data, taking parameters from memory
+        /// Render primitives from array data, taking parameters from memory.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency, and Patches are accepted.
@@ -67,7 +67,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_draw_indirect|VERSION_4_0]
-        /// Render primitives from array data, taking parameters from memory
+        /// Render primitives from array data, taking parameters from memory.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency, and Patches are accepted.
@@ -85,7 +85,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_draw_indirect|VERSION_4_0]
-        /// Render primitives from array data, taking parameters from memory
+        /// Render primitives from array data, taking parameters from memory.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency, and Patches are accepted.
@@ -103,7 +103,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_draw_indirect|VERSION_4_0]
-        /// Render primitives from array data, taking parameters from memory
+        /// Render primitives from array data, taking parameters from memory.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency, and Patches are accepted.
@@ -121,7 +121,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_draw_indirect|VERSION_4_0]
-        /// Render indexed primitives from array data, taking parameters from memory
+        /// Render indexed primitives from array data, taking parameters from memory.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency, and Patches are accepted.
@@ -140,7 +140,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_draw_indirect|VERSION_4_0]
-        /// Render indexed primitives from array data, taking parameters from memory
+        /// Render indexed primitives from array data, taking parameters from memory.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency, and Patches are accepted.
@@ -161,7 +161,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_draw_indirect|VERSION_4_0]
-        /// Render indexed primitives from array data, taking parameters from memory
+        /// Render indexed primitives from array data, taking parameters from memory.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency, and Patches are accepted.
@@ -182,7 +182,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_draw_indirect|VERSION_4_0]
-        /// Render indexed primitives from array data, taking parameters from memory
+        /// Render indexed primitives from array data, taking parameters from memory.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency, and Patches are accepted.
@@ -203,7 +203,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_draw_indirect|VERSION_4_0]
-        /// Render indexed primitives from array data, taking parameters from memory
+        /// Render indexed primitives from array data, taking parameters from memory.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency, and Patches are accepted.

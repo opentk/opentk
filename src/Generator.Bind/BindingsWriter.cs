@@ -95,8 +95,8 @@ namespace Bind
                     sw.WriteLineNoTabs();
 
                     sw.WriteLine("using System;");
-                    sw.WriteLine("using System.Text;");
                     sw.WriteLine("using System.Runtime.InteropServices;");
+                    sw.WriteLine("using System.Text;");
                     sw.WriteLineNoTabs();
 
                     sw.WriteLine($"namespace {Generator.Namespace}");
@@ -189,8 +189,8 @@ namespace Bind
                             sw.WriteLineNoTabs();
 
                             sw.WriteLine("using System;");
-                            sw.WriteLine("using System.Text;");
                             sw.WriteLine("using System.Runtime.InteropServices;");
+                            sw.WriteLine("using System.Text;");
                             sw.WriteLineNoTabs();
 
                             sw.WriteLine($"namespace {Generator.Namespace}");

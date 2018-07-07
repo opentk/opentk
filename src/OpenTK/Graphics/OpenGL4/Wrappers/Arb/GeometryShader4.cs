@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -38,7 +38,7 @@ namespace OpenTK.Graphics.OpenGL4
         {
             /// <summary>
             /// [requires: ARB_geometry_shader4]
-            /// Attach a level of a texture object as a logical buffer to the currently bound framebuffer object
+            /// Attach a level of a texture object as a logical buffer to the currently bound framebuffer object.
             /// </summary>
             /// <param name="target">
             /// Specifies the framebuffer target. target must be DrawFramebuffer, ReadFramebuffer, or Framebuffer. Framebuffer is equivalent to DrawFramebuffer.
@@ -79,7 +79,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_geometry_shader4]
-            /// Attach a single layer of a texture to a framebuffer
+            /// Attach a single layer of a texture to a framebuffer.
             /// </summary>
             /// <param name="target">
             /// Specifies the framebuffer target. target must be DrawFramebuffer, ReadFramebuffer, or Framebuffer. Framebuffer is equivalent to DrawFramebuffer.
@@ -104,7 +104,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_geometry_shader4]
-            /// Specify a parameter for a program object
+            /// Specify a parameter for a program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the name of a program object whose parameter to modify.

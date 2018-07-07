@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.0 or ARB_transform_feedback3|VERSION_4_0]
-        /// Delimit the boundaries of a query object on an indexed target
+        /// Delimit the boundaries of a query object on an indexed target.
         /// </summary>
         /// <param name="target">
         /// Specifies the target type of query object established between glBeginQueryIndexed and the subsequent glEndQueryIndexed. The symbolic constant must be one of SamplesPassed, AnySamplesPassed, PrimitivesGenerated, TransformFeedbackPrimitivesWritten, or TimeElapsed.
@@ -52,7 +52,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_transform_feedback3|VERSION_4_0]
-        /// Render primitives using a count derived from a specifed stream of a transform feedback object
+        /// Render primitives using a count derived from a specifed stream of a transform feedback object.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency, and Patches are accepted.
@@ -84,7 +84,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_transform_feedback3|VERSION_4_0]
-        /// Return parameters of an indexed query object target
+        /// Return parameters of an indexed query object target.
         /// </summary>
         /// <param name="target">
         /// Specifies a query object target. Must be SamplesPassed, AnySamplesPassed, AnySamplesPassedConservativePrimitivesGenerated, TransformFeedbackPrimitivesWritten, TimeElapsed, or Timestamp.
@@ -107,7 +107,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_transform_feedback3|VERSION_4_0]
-        /// Return parameters of an indexed query object target
+        /// Return parameters of an indexed query object target.
         /// </summary>
         /// <param name="target">
         /// Specifies a query object target. Must be SamplesPassed, AnySamplesPassed, AnySamplesPassedConservativePrimitivesGenerated, TransformFeedbackPrimitivesWritten, TimeElapsed, or Timestamp.
@@ -130,7 +130,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_transform_feedback3|VERSION_4_0]
-        /// Return parameters of an indexed query object target
+        /// Return parameters of an indexed query object target.
         /// </summary>
         /// <param name="target">
         /// Specifies a query object target. Must be SamplesPassed, AnySamplesPassed, AnySamplesPassedConservativePrimitivesGenerated, TransformFeedbackPrimitivesWritten, TimeElapsed, or Timestamp.

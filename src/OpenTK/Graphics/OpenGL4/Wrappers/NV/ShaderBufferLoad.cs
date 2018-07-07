@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -38,7 +38,7 @@ namespace OpenTK.Graphics.OpenGL4
         {
             /// <summary>
             /// [requires: NV_shader_buffer_load]
-            /// Return parameters of a buffer object
+            /// Return parameters of a buffer object.
             /// </summary>
             /// <param name="target">
             /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -58,7 +58,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: NV_shader_buffer_load]
-            /// Return parameters of a buffer object
+            /// Return parameters of a buffer object.
             /// </summary>
             /// <param name="target">
             /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -78,7 +78,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: NV_shader_buffer_load]
-            /// Return parameters of a buffer object
+            /// Return parameters of a buffer object.
             /// </summary>
             /// <param name="target">
             /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -199,7 +199,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: NV_shader_buffer_load]
-            /// Returns the value of a uniform variable
+            /// Returns the value of a uniform variable.
             /// </summary>
             /// <param name="program">
             /// Specifies the program object to be queried.
@@ -219,7 +219,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: NV_shader_buffer_load]
-            /// Returns the value of a uniform variable
+            /// Returns the value of a uniform variable.
             /// </summary>
             /// <param name="program">
             /// Specifies the program object to be queried.
@@ -239,7 +239,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: NV_shader_buffer_load]
-            /// Returns the value of a uniform variable
+            /// Returns the value of a uniform variable.
             /// </summary>
             /// <param name="program">
             /// Specifies the program object to be queried.
@@ -329,7 +329,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: NV_shader_buffer_load]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -348,7 +348,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: NV_shader_buffer_load]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -371,7 +371,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: NV_shader_buffer_load]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -394,7 +394,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: NV_shader_buffer_load]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -417,7 +417,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: NV_shader_buffer_load]
-            /// Specify the value of a uniform variable for the current program object
+            /// Specify the value of a uniform variable for the current program object.
             /// </summary>
             /// <param name="location">
             /// Specifies the location of the uniform variable to be modified.
@@ -433,7 +433,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: NV_shader_buffer_load]
-            /// Specify the value of a uniform variable for the current program object
+            /// Specify the value of a uniform variable for the current program object.
             /// </summary>
             /// <param name="location">
             /// Specifies the location of the uniform variable to be modified.
@@ -453,7 +453,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: NV_shader_buffer_load]
-            /// Specify the value of a uniform variable for the current program object
+            /// Specify the value of a uniform variable for the current program object.
             /// </summary>
             /// <param name="location">
             /// Specifies the location of the uniform variable to be modified.
@@ -473,7 +473,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: NV_shader_buffer_load]
-            /// Specify the value of a uniform variable for the current program object
+            /// Specify the value of a uniform variable for the current program object.
             /// </summary>
             /// <param name="location">
             /// Specifies the location of the uniform variable to be modified.

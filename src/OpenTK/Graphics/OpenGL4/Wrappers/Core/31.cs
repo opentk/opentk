@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v3.1]
-        /// Draw multiple instances of a range of elements
+        /// Draw multiple instances of a range of elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, TriangleStrip, TriangleFan, TrianglesLinesAdjacency, LineStripAdjacency, TrianglesAdjacency, TriangleStripAdjacency and Patches are accepted.
@@ -55,7 +55,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1]
-        /// Draw multiple instances of a set of elements
+        /// Draw multiple instances of a set of elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -81,7 +81,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1]
-        /// Draw multiple instances of a set of elements
+        /// Draw multiple instances of a set of elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -109,7 +109,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1]
-        /// Draw multiple instances of a set of elements
+        /// Draw multiple instances of a set of elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -137,7 +137,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1]
-        /// Draw multiple instances of a set of elements
+        /// Draw multiple instances of a set of elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -165,7 +165,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1]
-        /// Draw multiple instances of a set of elements
+        /// Draw multiple instances of a set of elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -193,7 +193,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1]
-        /// Specify the primitive restart index
+        /// Specify the primitive restart index.
         /// </summary>
         /// <param name="index">
         /// Specifies the value to be interpreted as the primitive restart index.
@@ -206,7 +206,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1]
-        /// Attach the storage for a buffer object to the active buffer texture
+        /// Attach the storage for a buffer object to the active buffer texture.
         /// </summary>
         /// <param name="target">
         /// Specifies the target of the operation and must be TextureBuffer.

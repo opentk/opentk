@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -38,7 +38,7 @@ namespace OpenTK.Graphics.OpenGL4
         {
             /// <summary>
             /// [requires: ARB_instanced_arrays]
-            /// Modify the rate at which generic vertex attributes advance during instanced rendering
+            /// Modify the rate at which generic vertex attributes advance during instanced rendering.
             /// </summary>
             /// <param name="index">
             /// Specify the index of the generic vertex attribute.

@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v3.1 or ARB_copy_buffer|VERSION_3_1]
-        /// Copy part of the data store of a buffer object to the data store of another buffer object
+        /// Copy part of the data store of a buffer object to the data store of another buffer object.
         /// </summary>
         /// <param name="readTarget">
         /// Specifies the target from whose data store data should be read.
@@ -58,7 +58,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1 or ARB_copy_buffer|VERSION_3_1]
-        /// Copy part of the data store of a buffer object to the data store of another buffer object
+        /// Copy part of the data store of a buffer object to the data store of another buffer object.
         /// </summary>
         /// <param name="readTarget">
         /// Specifies the target from whose data store data should be read.

@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v1.4]
-        /// Specify pixel arithmetic for RGB and alpha components separately
+        /// Specify pixel arithmetic for RGB and alpha components separately.
         /// </summary>
         /// <param name="sfactorRGB">
         /// For glBlendFuncSeparatei, specifies the index of the draw buffer for which to set the blend functions.
@@ -55,7 +55,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives from array data
+        /// Render multiple sets of primitives from array data.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -79,7 +79,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives from array data
+        /// Render multiple sets of primitives from array data.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -103,7 +103,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives from array data
+        /// Render multiple sets of primitives from array data.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -127,7 +127,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives by specifying indices of array data elements
+        /// Render multiple sets of primitives by specifying indices of array data elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -154,7 +154,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives by specifying indices of array data elements
+        /// Render multiple sets of primitives by specifying indices of array data elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -183,7 +183,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives by specifying indices of array data elements
+        /// Render multiple sets of primitives by specifying indices of array data elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -212,7 +212,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives by specifying indices of array data elements
+        /// Render multiple sets of primitives by specifying indices of array data elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -241,7 +241,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives by specifying indices of array data elements
+        /// Render multiple sets of primitives by specifying indices of array data elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -270,7 +270,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives by specifying indices of array data elements
+        /// Render multiple sets of primitives by specifying indices of array data elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -297,7 +297,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives by specifying indices of array data elements
+        /// Render multiple sets of primitives by specifying indices of array data elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -326,7 +326,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives by specifying indices of array data elements
+        /// Render multiple sets of primitives by specifying indices of array data elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -355,7 +355,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives by specifying indices of array data elements
+        /// Render multiple sets of primitives by specifying indices of array data elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -384,7 +384,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives by specifying indices of array data elements
+        /// Render multiple sets of primitives by specifying indices of array data elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -413,7 +413,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives by specifying indices of array data elements
+        /// Render multiple sets of primitives by specifying indices of array data elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -440,7 +440,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives by specifying indices of array data elements
+        /// Render multiple sets of primitives by specifying indices of array data elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -469,7 +469,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives by specifying indices of array data elements
+        /// Render multiple sets of primitives by specifying indices of array data elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -498,7 +498,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives by specifying indices of array data elements
+        /// Render multiple sets of primitives by specifying indices of array data elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -527,7 +527,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Render multiple sets of primitives by specifying indices of array data elements
+        /// Render multiple sets of primitives by specifying indices of array data elements.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -556,7 +556,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Specify point parameters
+        /// Specify point parameters.
         /// </summary>
         /// <param name="pname">
         /// Specifies a single-valued point parameter. PointFadeThresholdSize, and PointSpriteCoordOrigin are accepted.
@@ -572,7 +572,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Specify point parameters
+        /// Specify point parameters.
         /// </summary>
         /// <param name="pname">
         /// Specifies a single-valued point parameter. PointFadeThresholdSize, and PointSpriteCoordOrigin are accepted.
@@ -589,7 +589,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Specify point parameters
+        /// Specify point parameters.
         /// </summary>
         /// <param name="pname">
         /// Specifies a single-valued point parameter. PointFadeThresholdSize, and PointSpriteCoordOrigin are accepted.
@@ -606,7 +606,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Specify point parameters
+        /// Specify point parameters.
         /// </summary>
         /// <param name="pname">
         /// Specifies a single-valued point parameter. PointFadeThresholdSize, and PointSpriteCoordOrigin are accepted.
@@ -623,7 +623,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Specify point parameters
+        /// Specify point parameters.
         /// </summary>
         /// <param name="pname">
         /// Specifies a single-valued point parameter. PointFadeThresholdSize, and PointSpriteCoordOrigin are accepted.
@@ -639,7 +639,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Specify point parameters
+        /// Specify point parameters.
         /// </summary>
         /// <param name="pname">
         /// Specifies a single-valued point parameter. PointFadeThresholdSize, and PointSpriteCoordOrigin are accepted.
@@ -656,7 +656,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Specify point parameters
+        /// Specify point parameters.
         /// </summary>
         /// <param name="pname">
         /// Specifies a single-valued point parameter. PointFadeThresholdSize, and PointSpriteCoordOrigin are accepted.
@@ -673,7 +673,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.4]
-        /// Specify point parameters
+        /// Specify point parameters.
         /// </summary>
         /// <param name="pname">
         /// Specifies a single-valued point parameter. PointFadeThresholdSize, and PointSpriteCoordOrigin are accepted.

@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.1 or ARB_get_program_binary|ARB_separate_shader_objects|VERSION_4_1|VERSION_4_1]
-        /// Specify a parameter for a program object
+        /// Specify a parameter for a program object.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program object whose parameter to modify.

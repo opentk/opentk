@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.3 or ARB_shader_storage_buffer_object|VERSION_4_3]
-        /// Change an active shader storage block binding
+        /// Change an active shader storage block binding.
         /// </summary>
         /// <param name="program">
         /// The name of the program containing the block whose binding to change.

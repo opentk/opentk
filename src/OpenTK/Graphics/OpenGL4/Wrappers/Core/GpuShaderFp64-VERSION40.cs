@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Returns the value of a uniform variable
+        /// Returns the value of a uniform variable.
         /// </summary>
         /// <param name="program">
         /// Specifies the program object to be queried.
@@ -53,7 +53,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Returns the value of a uniform variable
+        /// Returns the value of a uniform variable.
         /// </summary>
         /// <param name="program">
         /// Specifies the program object to be queried.
@@ -73,7 +73,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Returns the value of a uniform variable
+        /// Returns the value of a uniform variable.
         /// </summary>
         /// <param name="program">
         /// Specifies the program object to be queried.
@@ -93,7 +93,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -109,7 +109,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -129,7 +129,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -149,7 +149,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -169,7 +169,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -188,7 +188,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -208,7 +208,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -228,7 +228,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -248,7 +248,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -270,7 +270,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -290,7 +290,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -310,7 +310,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -330,7 +330,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -355,7 +355,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -375,7 +375,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -395,7 +395,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_gpu_shader_fp64|VERSION_4_0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.

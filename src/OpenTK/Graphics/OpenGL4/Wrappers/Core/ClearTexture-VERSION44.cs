@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.4 or ARB_clear_texture|VERSION_4_4]
-        /// Fills all a texture image with a constant value
+        /// Fills all a texture image with a constant value.
         /// </summary>
         /// <param name="texture">
         /// The name of an existing texture object containing the image to be cleared.
@@ -59,7 +59,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_clear_texture|VERSION_4_4]
-        /// Fills all a texture image with a constant value
+        /// Fills all a texture image with a constant value.
         /// </summary>
         /// <param name="texture">
         /// The name of an existing texture object containing the image to be cleared.
@@ -87,7 +87,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_clear_texture|VERSION_4_4]
-        /// Fills all a texture image with a constant value
+        /// Fills all a texture image with a constant value.
         /// </summary>
         /// <param name="texture">
         /// The name of an existing texture object containing the image to be cleared.
@@ -115,7 +115,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_clear_texture|VERSION_4_4]
-        /// Fills all a texture image with a constant value
+        /// Fills all a texture image with a constant value.
         /// </summary>
         /// <param name="texture">
         /// The name of an existing texture object containing the image to be cleared.
@@ -143,7 +143,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_clear_texture|VERSION_4_4]
-        /// Fills all a texture image with a constant value
+        /// Fills all a texture image with a constant value.
         /// </summary>
         /// <param name="texture">
         /// The name of an existing texture object containing the image to be cleared.
@@ -171,7 +171,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_clear_texture|VERSION_4_4]
-        /// Fills all or part of a texture image with a constant value
+        /// Fills all or part of a texture image with a constant value.
         /// </summary>
         /// <param name="texture">
         /// The name of an existing texture object containing the image to be cleared.
@@ -215,7 +215,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_clear_texture|VERSION_4_4]
-        /// Fills all or part of a texture image with a constant value
+        /// Fills all or part of a texture image with a constant value.
         /// </summary>
         /// <param name="texture">
         /// The name of an existing texture object containing the image to be cleared.
@@ -261,7 +261,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_clear_texture|VERSION_4_4]
-        /// Fills all or part of a texture image with a constant value
+        /// Fills all or part of a texture image with a constant value.
         /// </summary>
         /// <param name="texture">
         /// The name of an existing texture object containing the image to be cleared.
@@ -307,7 +307,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_clear_texture|VERSION_4_4]
-        /// Fills all or part of a texture image with a constant value
+        /// Fills all or part of a texture image with a constant value.
         /// </summary>
         /// <param name="texture">
         /// The name of an existing texture object containing the image to be cleared.
@@ -353,7 +353,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_clear_texture|VERSION_4_4]
-        /// Fills all or part of a texture image with a constant value
+        /// Fills all or part of a texture image with a constant value.
         /// </summary>
         /// <param name="texture">
         /// The name of an existing texture object containing the image to be cleared.

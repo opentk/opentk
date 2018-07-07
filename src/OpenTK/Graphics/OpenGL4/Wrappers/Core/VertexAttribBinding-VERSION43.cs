@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.3 or ARB_vertex_attrib_binding|VERSION_4_3]
-        /// Bind a buffer to a vertex buffer bind point
+        /// Bind a buffer to a vertex buffer bind point.
         /// </summary>
         /// <param name="bindingindex">
         /// The index of the vertex buffer binding point to which to bind the buffer.
@@ -55,7 +55,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_vertex_attrib_binding|VERSION_4_3]
-        /// Associate a vertex attribute and a vertex buffer binding
+        /// Associate a vertex attribute and a vertex buffer binding.
         /// </summary>
         /// <param name="attribindex">
         /// The index of the attribute to associate with a vertex buffer binding.
@@ -71,7 +71,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_vertex_attrib_binding|VERSION_4_3]
-        /// Specify the organization of vertex arrays
+        /// Specify the organization of vertex arrays.
         /// </summary>
         /// <param name="attribindex">
         /// The generic vertex attribute array being described.
@@ -130,7 +130,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_vertex_attrib_binding|VERSION_4_3]
-        /// Modify the rate at which generic vertex attributes advance
+        /// Modify the rate at which generic vertex attributes advance.
         /// </summary>
         /// <param name="bindingindex">
         /// The index of the binding whose divisor to modify.

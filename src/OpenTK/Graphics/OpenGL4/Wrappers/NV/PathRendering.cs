@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -2279,7 +2279,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: NV_path_rendering]
-            /// Retrieve values for multiple properties of a single active resource within a program object
+            /// Retrieve values for multiple properties of a single active resource within a program object.
             /// </summary>
             /// <param name="program">
             /// The name of a program object whose resources to query.
@@ -2301,7 +2301,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: NV_path_rendering]
-            /// Retrieve values for multiple properties of a single active resource within a program object
+            /// Retrieve values for multiple properties of a single active resource within a program object.
             /// </summary>
             /// <param name="program">
             /// The name of a program object whose resources to query.
@@ -2323,7 +2323,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: NV_path_rendering]
-            /// Retrieve values for multiple properties of a single active resource within a program object
+            /// Retrieve values for multiple properties of a single active resource within a program object.
             /// </summary>
             /// <param name="program">
             /// The name of a program object whose resources to query.

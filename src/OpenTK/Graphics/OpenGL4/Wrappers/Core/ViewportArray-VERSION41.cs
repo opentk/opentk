@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Specify mapping of depth values from normalized device coordinates to window coordinates for a specified set of viewports
+        /// Specify mapping of depth values from normalized device coordinates to window coordinates for a specified set of viewports.
         /// </summary>
         /// <param name="first">
         /// Specifies the index of the first viewport whose depth range to update.
@@ -53,7 +53,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Specify mapping of depth values from normalized device coordinates to window coordinates for a specified set of viewports
+        /// Specify mapping of depth values from normalized device coordinates to window coordinates for a specified set of viewports.
         /// </summary>
         /// <param name="first">
         /// Specifies the index of the first viewport whose depth range to update.
@@ -73,7 +73,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Specify mapping of depth values from normalized device coordinates to window coordinates for a specified set of viewports
+        /// Specify mapping of depth values from normalized device coordinates to window coordinates for a specified set of viewports.
         /// </summary>
         /// <param name="first">
         /// Specifies the index of the first viewport whose depth range to update.
@@ -93,7 +93,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Specify mapping of depth values from normalized device coordinates to window coordinates for a specified viewport
+        /// Specify mapping of depth values from normalized device coordinates to window coordinates for a specified viewport.
         /// </summary>
         /// <param name="index">
         /// Specifies the index of the viewport whose depth range to update.
@@ -208,7 +208,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Define the scissor box for multiple viewports
+        /// Define the scissor box for multiple viewports.
         /// </summary>
         /// <param name="first">
         /// Specifies the index of the first viewport whose scissor box to modify.
@@ -228,7 +228,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Define the scissor box for multiple viewports
+        /// Define the scissor box for multiple viewports.
         /// </summary>
         /// <param name="first">
         /// Specifies the index of the first viewport whose scissor box to modify.
@@ -248,7 +248,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Define the scissor box for multiple viewports
+        /// Define the scissor box for multiple viewports.
         /// </summary>
         /// <param name="first">
         /// Specifies the index of the first viewport whose scissor box to modify.
@@ -268,7 +268,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Define the scissor box for a specific viewport
+        /// Define the scissor box for a specific viewport.
         /// </summary>
         /// <param name="index">
         /// Specifies the index of the viewport whose scissor box to modify.
@@ -293,7 +293,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Define the scissor box for a specific viewport
+        /// Define the scissor box for a specific viewport.
         /// </summary>
         /// <param name="index">
         /// Specifies the index of the viewport whose scissor box to modify.
@@ -310,7 +310,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Define the scissor box for a specific viewport
+        /// Define the scissor box for a specific viewport.
         /// </summary>
         /// <param name="index">
         /// Specifies the index of the viewport whose scissor box to modify.
@@ -327,7 +327,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Define the scissor box for a specific viewport
+        /// Define the scissor box for a specific viewport.
         /// </summary>
         /// <param name="index">
         /// Specifies the index of the viewport whose scissor box to modify.
@@ -344,7 +344,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Set multiple viewports
+        /// Set multiple viewports.
         /// </summary>
         /// <param name="first">
         /// Specify the first viewport to set.
@@ -364,7 +364,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Set multiple viewports
+        /// Set multiple viewports.
         /// </summary>
         /// <param name="first">
         /// Specify the first viewport to set.
@@ -384,7 +384,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Set multiple viewports
+        /// Set multiple viewports.
         /// </summary>
         /// <param name="first">
         /// Specify the first viewport to set.
@@ -404,7 +404,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Set a specified viewport
+        /// Set a specified viewport.
         /// </summary>
         /// <param name="index">
         /// Specify the first viewport to set.
@@ -429,7 +429,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Set a specified viewport
+        /// Set a specified viewport.
         /// </summary>
         /// <param name="index">
         /// Specify the first viewport to set.
@@ -446,7 +446,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Set a specified viewport
+        /// Set a specified viewport.
         /// </summary>
         /// <param name="index">
         /// Specify the first viewport to set.
@@ -463,7 +463,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_viewport_array|VERSION_4_1]
-        /// Set a specified viewport
+        /// Set a specified viewport.
         /// </summary>
         /// <param name="index">
         /// Specify the first viewport to set.

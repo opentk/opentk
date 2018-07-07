@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.4 or ARB_buffer_storage|VERSION_4_4]
-        /// Creates and initializes a buffer object's immutable data store
+        /// Creates and initializes a buffer object's immutable data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -56,7 +56,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_buffer_storage|VERSION_4_4]
-        /// Creates and initializes a buffer object's immutable data store
+        /// Creates and initializes a buffer object's immutable data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -81,7 +81,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_buffer_storage|VERSION_4_4]
-        /// Creates and initializes a buffer object's immutable data store
+        /// Creates and initializes a buffer object's immutable data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -106,7 +106,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_buffer_storage|VERSION_4_4]
-        /// Creates and initializes a buffer object's immutable data store
+        /// Creates and initializes a buffer object's immutable data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -131,7 +131,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_buffer_storage|VERSION_4_4]
-        /// Creates and initializes a buffer object's immutable data store
+        /// Creates and initializes a buffer object's immutable data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -156,7 +156,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_buffer_storage|VERSION_4_4]
-        /// Creates and initializes a buffer object's immutable data store
+        /// Creates and initializes a buffer object's immutable data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -179,7 +179,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_buffer_storage|VERSION_4_4]
-        /// Creates and initializes a buffer object's immutable data store
+        /// Creates and initializes a buffer object's immutable data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -204,7 +204,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_buffer_storage|VERSION_4_4]
-        /// Creates and initializes a buffer object's immutable data store
+        /// Creates and initializes a buffer object's immutable data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -229,7 +229,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_buffer_storage|VERSION_4_4]
-        /// Creates and initializes a buffer object's immutable data store
+        /// Creates and initializes a buffer object's immutable data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -254,7 +254,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.4 or ARB_buffer_storage|VERSION_4_4]
-        /// Creates and initializes a buffer object's immutable data store
+        /// Creates and initializes a buffer object's immutable data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.

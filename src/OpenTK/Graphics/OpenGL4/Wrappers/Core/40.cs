@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.0]
-        /// Set the RGB blend equation and the alpha blend equation separately
+        /// Set the RGB blend equation and the alpha blend equation separately.
         /// </summary>
         /// <param name="buf">
         /// for glBlendEquationSeparatei, specifies the index of the draw buffer for which to set the blend equations.
@@ -52,7 +52,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0]
-        /// Specify the equation used for both the RGB blend equation and the Alpha blend equation
+        /// Specify the equation used for both the RGB blend equation and the Alpha blend equation.
         /// </summary>
         /// <param name="buf">
         /// for glBlendEquationi, specifies the index of the draw buffer for which to set the blend equation.
@@ -68,7 +68,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0]
-        /// Specify pixel arithmetic for RGB and alpha components separately
+        /// Specify pixel arithmetic for RGB and alpha components separately.
         /// </summary>
         /// <param name="buf">
         /// For glBlendFuncSeparatei, specifies the index of the draw buffer for which to set the blend functions.
@@ -93,7 +93,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0]
-        /// Specify pixel arithmetic
+        /// Specify pixel arithmetic.
         /// </summary>
         /// <param name="buf">
         /// For glBlendFunci, specifies the index of the draw buffer for which to set the blend function.
@@ -112,7 +112,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0]
-        /// Specifies minimum rate at which sample shaing takes place
+        /// Specifies minimum rate at which sample shaing takes place.
         /// </summary>
         /// <param name="value">
         /// Specifies the rate at which samples are shaded within each covered pixel.

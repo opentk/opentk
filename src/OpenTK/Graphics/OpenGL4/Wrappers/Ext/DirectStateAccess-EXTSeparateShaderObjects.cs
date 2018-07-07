@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -38,7 +38,7 @@ namespace OpenTK.Graphics.OpenGL4
         {
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -57,7 +57,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -80,7 +80,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -103,7 +103,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -126,7 +126,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -145,7 +145,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -168,7 +168,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -191,7 +191,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -214,7 +214,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -233,7 +233,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -256,7 +256,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -279,7 +279,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -302,7 +302,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -324,7 +324,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -347,7 +347,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -370,7 +370,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -393,7 +393,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -415,7 +415,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -438,7 +438,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -461,7 +461,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -484,7 +484,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -506,7 +506,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -529,7 +529,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -552,7 +552,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -575,7 +575,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -600,7 +600,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -623,7 +623,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -646,7 +646,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -669,7 +669,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -694,7 +694,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -717,7 +717,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -740,7 +740,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -763,7 +763,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -788,7 +788,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -811,7 +811,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -834,7 +834,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -857,7 +857,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -885,7 +885,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -908,7 +908,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -931,7 +931,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -954,7 +954,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -982,7 +982,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -1005,7 +1005,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -1028,7 +1028,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -1051,7 +1051,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -1079,7 +1079,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -1102,7 +1102,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.
@@ -1125,7 +1125,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_direct_state_access|EXT_separate_shader_objects]
-            /// Specify the value of a uniform variable for a specified program object
+            /// Specify the value of a uniform variable for a specified program object.
             /// </summary>
             /// <param name="program">
             /// Specifies the handle of the program containing the uniform variable to be modified.

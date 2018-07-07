@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v3.3 or ARB_timer_query|VERSION_3_3]
-        /// Return parameters of a query object
+        /// Return parameters of a query object.
         /// </summary>
         /// <param name="id">
         /// Specifies the name of a query object.
@@ -53,7 +53,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.3 or ARB_timer_query|VERSION_3_3]
-        /// Return parameters of a query object
+        /// Return parameters of a query object.
         /// </summary>
         /// <param name="id">
         /// Specifies the name of a query object.
@@ -73,7 +73,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.3 or ARB_timer_query|VERSION_3_3]
-        /// Return parameters of a query object
+        /// Return parameters of a query object.
         /// </summary>
         /// <param name="id">
         /// Specifies the name of a query object.
@@ -93,7 +93,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.3 or ARB_timer_query|VERSION_3_3]
-        /// Return parameters of a query object
+        /// Return parameters of a query object.
         /// </summary>
         /// <param name="id">
         /// Specifies the name of a query object.
@@ -113,7 +113,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.3 or ARB_timer_query|VERSION_3_3]
-        /// Return parameters of a query object
+        /// Return parameters of a query object.
         /// </summary>
         /// <param name="id">
         /// Specifies the name of a query object.
@@ -133,7 +133,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.3 or ARB_timer_query|VERSION_3_3]
-        /// Return parameters of a query object
+        /// Return parameters of a query object.
         /// </summary>
         /// <param name="id">
         /// Specifies the name of a query object.

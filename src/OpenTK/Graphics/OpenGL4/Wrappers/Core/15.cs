@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v1.5]
-        /// Delimit the boundaries of a query object
+        /// Delimit the boundaries of a query object.
         /// </summary>
         /// <param name="target">
         /// Specifies the target type of query object established between glBeginQuery and the subsequent glEndQuery. The symbolic constant must be one of SamplesPassed, AnySamplesPassed, AnySamplesPassedConservative, PrimitivesGenerated, TransformFeedbackPrimitivesWritten, or TimeElapsed.
@@ -49,7 +49,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Bind a named buffer object
+        /// Bind a named buffer object.
         /// </summary>
         /// <param name="target">
         /// Specifies the target to which the buffer object is bound. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -65,7 +65,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Creates and initializes a buffer object's data store
+        /// Creates and initializes a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -88,7 +88,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Creates and initializes a buffer object's data store
+        /// Creates and initializes a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -113,7 +113,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Creates and initializes a buffer object's data store
+        /// Creates and initializes a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -138,7 +138,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Creates and initializes a buffer object's data store
+        /// Creates and initializes a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -163,7 +163,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Creates and initializes a buffer object's data store
+        /// Creates and initializes a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -188,7 +188,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Creates and initializes a buffer object's data store
+        /// Creates and initializes a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -211,7 +211,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Creates and initializes a buffer object's data store
+        /// Creates and initializes a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -236,7 +236,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Creates and initializes a buffer object's data store
+        /// Creates and initializes a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -261,7 +261,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Creates and initializes a buffer object's data store
+        /// Creates and initializes a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -286,7 +286,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Creates and initializes a buffer object's data store
+        /// Creates and initializes a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -311,7 +311,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Updates a subset of a buffer object's data store
+        /// Updates a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -334,7 +334,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Updates a subset of a buffer object's data store
+        /// Updates a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -359,7 +359,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Updates a subset of a buffer object's data store
+        /// Updates a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -384,7 +384,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Updates a subset of a buffer object's data store
+        /// Updates a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -409,7 +409,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Updates a subset of a buffer object's data store
+        /// Updates a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -434,7 +434,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Updates a subset of a buffer object's data store
+        /// Updates a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -457,7 +457,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Updates a subset of a buffer object's data store
+        /// Updates a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -482,7 +482,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Updates a subset of a buffer object's data store
+        /// Updates a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -507,7 +507,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Updates a subset of a buffer object's data store
+        /// Updates a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -532,7 +532,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Updates a subset of a buffer object's data store
+        /// Updates a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -557,7 +557,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Delete named buffer objects
+        /// Delete named buffer objects.
         /// </summary>
         /// <param name="buffers">
         /// [length: n]
@@ -571,7 +571,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Delete named buffer objects
+        /// Delete named buffer objects.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of buffer objects to be deleted.
@@ -588,7 +588,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Delete named buffer objects
+        /// Delete named buffer objects.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of buffer objects to be deleted.
@@ -605,7 +605,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Delete named buffer objects
+        /// Delete named buffer objects.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of buffer objects to be deleted.
@@ -622,7 +622,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Delete named query objects
+        /// Delete named query objects.
         /// </summary>
         /// <param name="ids">
         /// [length: n]
@@ -636,7 +636,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Delete named query objects
+        /// Delete named query objects.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of query objects to be deleted.
@@ -653,7 +653,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Delete named query objects
+        /// Delete named query objects.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of query objects to be deleted.
@@ -670,7 +670,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Delete named query objects
+        /// Delete named query objects.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of query objects to be deleted.
@@ -698,7 +698,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Generate buffer object names
+        /// Generate buffer object names.
         /// </summary>
         [AutoGenerated(Category = "VERSION_1_5", Version = "1.5", EntryPoint = "glGenBuffers")]
         public static uint GenBuffer()
@@ -708,7 +708,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Generate buffer object names
+        /// Generate buffer object names.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of buffer object names to be generated.
@@ -725,7 +725,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Generate buffer object names
+        /// Generate buffer object names.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of buffer object names to be generated.
@@ -742,7 +742,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Generate buffer object names
+        /// Generate buffer object names.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of buffer object names to be generated.
@@ -759,7 +759,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Generate query object names
+        /// Generate query object names.
         /// </summary>
         [AutoGenerated(Category = "VERSION_1_5", Version = "1.5", EntryPoint = "glGenQueries")]
         public static uint GenQuery()
@@ -769,7 +769,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Generate query object names
+        /// Generate query object names.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of query object names to be generated.
@@ -786,7 +786,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Generate query object names
+        /// Generate query object names.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of query object names to be generated.
@@ -803,7 +803,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Generate query object names
+        /// Generate query object names.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of query object names to be generated.
@@ -820,7 +820,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Return parameters of a buffer object
+        /// Return parameters of a buffer object.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, ElementArrayBuffer, PixelPackBuffer, or PixelUnpackBuffer.
@@ -840,7 +840,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Return parameters of a buffer object
+        /// Return parameters of a buffer object.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, ElementArrayBuffer, PixelPackBuffer, or PixelUnpackBuffer.
@@ -860,7 +860,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Return parameters of a buffer object
+        /// Return parameters of a buffer object.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, ElementArrayBuffer, PixelPackBuffer, or PixelUnpackBuffer.
@@ -880,7 +880,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Return the pointer to a mapped buffer object's data store
+        /// Return the pointer to a mapped buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -900,7 +900,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Return the pointer to a mapped buffer object's data store
+        /// Return the pointer to a mapped buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -922,7 +922,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Return the pointer to a mapped buffer object's data store
+        /// Return the pointer to a mapped buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -944,7 +944,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Return the pointer to a mapped buffer object's data store
+        /// Return the pointer to a mapped buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -966,7 +966,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Return the pointer to a mapped buffer object's data store
+        /// Return the pointer to a mapped buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -988,7 +988,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Returns a subset of a buffer object's data store
+        /// Returns a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryResultBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -1011,7 +1011,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Returns a subset of a buffer object's data store
+        /// Returns a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryResultBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -1036,7 +1036,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Returns a subset of a buffer object's data store
+        /// Returns a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryResultBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -1061,7 +1061,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Returns a subset of a buffer object's data store
+        /// Returns a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryResultBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -1086,7 +1086,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Returns a subset of a buffer object's data store
+        /// Returns a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryResultBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -1111,7 +1111,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Returns a subset of a buffer object's data store
+        /// Returns a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryResultBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -1134,7 +1134,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Returns a subset of a buffer object's data store
+        /// Returns a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryResultBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -1159,7 +1159,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Returns a subset of a buffer object's data store
+        /// Returns a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryResultBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -1184,7 +1184,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Returns a subset of a buffer object's data store
+        /// Returns a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryResultBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -1209,7 +1209,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Returns a subset of a buffer object's data store
+        /// Returns a subset of a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryResultBuffer, TextureBuffer, TransformFeedbackBuffer, or UniformBuffer.
@@ -1234,7 +1234,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Return parameters of a query object
+        /// Return parameters of a query object.
         /// </summary>
         /// <param name="id">
         /// Specifies the name of a query object.
@@ -1254,7 +1254,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Return parameters of a query object
+        /// Return parameters of a query object.
         /// </summary>
         /// <param name="id">
         /// Specifies the name of a query object.
@@ -1274,7 +1274,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Return parameters of a query object
+        /// Return parameters of a query object.
         /// </summary>
         /// <param name="id">
         /// Specifies the name of a query object.
@@ -1294,7 +1294,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Return parameters of a query object
+        /// Return parameters of a query object.
         /// </summary>
         /// <param name="id">
         /// Specifies the name of a query object.
@@ -1314,7 +1314,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Return parameters of a query object
+        /// Return parameters of a query object.
         /// </summary>
         /// <param name="id">
         /// Specifies the name of a query object.
@@ -1334,7 +1334,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Return parameters of a query object
+        /// Return parameters of a query object.
         /// </summary>
         /// <param name="id">
         /// Specifies the name of a query object.
@@ -1354,7 +1354,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Return parameters of a query object target
+        /// Return parameters of a query object target.
         /// </summary>
         /// <param name="target">
         /// Specifies a query object target. Must be SamplesPassed, AnySamplesPassed, AnySamplesPassedConservativePrimitivesGenerated, TransformFeedbackPrimitivesWritten, TimeElapsed, or Timestamp.
@@ -1374,7 +1374,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Return parameters of a query object target
+        /// Return parameters of a query object target.
         /// </summary>
         /// <param name="target">
         /// Specifies a query object target. Must be SamplesPassed, AnySamplesPassed, AnySamplesPassedConservativePrimitivesGenerated, TransformFeedbackPrimitivesWritten, TimeElapsed, or Timestamp.
@@ -1394,7 +1394,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Return parameters of a query object target
+        /// Return parameters of a query object target.
         /// </summary>
         /// <param name="target">
         /// Specifies a query object target. Must be SamplesPassed, AnySamplesPassed, AnySamplesPassedConservativePrimitivesGenerated, TransformFeedbackPrimitivesWritten, TimeElapsed, or Timestamp.
@@ -1414,7 +1414,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Determine if a name corresponds to a buffer object
+        /// Determine if a name corresponds to a buffer object.
         /// </summary>
         /// <param name="buffer">
         /// Specifies a value that may be the name of a buffer object.
@@ -1427,7 +1427,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Determine if a name corresponds to a query object
+        /// Determine if a name corresponds to a query object.
         /// </summary>
         /// <param name="id">
         /// Specifies a value that may be the name of a query object.
@@ -1440,7 +1440,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.5]
-        /// Map a buffer object's data store
+        /// Map a buffer object's data store.
         /// </summary>
         /// <param name="target">
         /// Specifies the target buffer object being mapped. The symbolic constant must be ArrayBuffer, AtomicCounterBuffer, CopyReadBuffer, CopyWriteBuffer, DrawIndirectBuffer, DispatchIndirectBuffer, ElementArrayBuffer, PixelPackBuffer, PixelUnpackBuffer, QueryBuffer, ShaderStorageBuffer, TextureBuffer, TransformFeedbackBuffer or UniformBuffer.

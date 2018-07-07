@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3|VERSION_4_3]
-        /// Return the address of the specified pointer
+        /// Return the address of the specified pointer.
         /// </summary>
         /// <param name="pname">
         /// Specifies the array or buffer pointer to be returned. Symbolic constants ColorArrayPointer, EdgeFlagArrayPointer, FogCoordArrayPointer, FeedbackBufferPointer, IndexArrayPointer, NormalArrayPointer, SecondaryColorArrayPointer, SelectionBufferPointer, TextureCoordArrayPointer, or VertexArrayPointer are accepted.
@@ -50,7 +50,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3|VERSION_4_3]
-        /// Return the address of the specified pointer
+        /// Return the address of the specified pointer.
         /// </summary>
         /// <param name="pname">
         /// Specifies the array or buffer pointer to be returned. Symbolic constants ColorArrayPointer, EdgeFlagArrayPointer, FogCoordArrayPointer, FeedbackBufferPointer, IndexArrayPointer, NormalArrayPointer, SecondaryColorArrayPointer, SelectionBufferPointer, TextureCoordArrayPointer, or VertexArrayPointer are accepted.
@@ -69,7 +69,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3|VERSION_4_3]
-        /// Return the address of the specified pointer
+        /// Return the address of the specified pointer.
         /// </summary>
         /// <param name="pname">
         /// Specifies the array or buffer pointer to be returned. Symbolic constants ColorArrayPointer, EdgeFlagArrayPointer, FogCoordArrayPointer, FeedbackBufferPointer, IndexArrayPointer, NormalArrayPointer, SecondaryColorArrayPointer, SelectionBufferPointer, TextureCoordArrayPointer, or VertexArrayPointer are accepted.
@@ -88,7 +88,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3|VERSION_4_3]
-        /// Return the address of the specified pointer
+        /// Return the address of the specified pointer.
         /// </summary>
         /// <param name="pname">
         /// Specifies the array or buffer pointer to be returned. Symbolic constants ColorArrayPointer, EdgeFlagArrayPointer, FogCoordArrayPointer, FeedbackBufferPointer, IndexArrayPointer, NormalArrayPointer, SecondaryColorArrayPointer, SelectionBufferPointer, TextureCoordArrayPointer, or VertexArrayPointer are accepted.
@@ -107,7 +107,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3|VERSION_4_3]
-        /// Return the address of the specified pointer
+        /// Return the address of the specified pointer.
         /// </summary>
         /// <param name="pname">
         /// Specifies the array or buffer pointer to be returned. Symbolic constants ColorArrayPointer, EdgeFlagArrayPointer, FogCoordArrayPointer, FeedbackBufferPointer, IndexArrayPointer, NormalArrayPointer, SecondaryColorArrayPointer, SelectionBufferPointer, TextureCoordArrayPointer, or VertexArrayPointer are accepted.

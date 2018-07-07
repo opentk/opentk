@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -38,7 +38,7 @@ namespace OpenTK.Graphics.OpenGL4
         {
             /// <summary>
             /// [requires: ARB_draw_instanced]
-            /// Draw multiple instances of a range of elements
+            /// Draw multiple instances of a range of elements.
             /// </summary>
             /// <param name="mode">
             /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, TriangleStrip, TriangleFan, TrianglesLinesAdjacency, LineStripAdjacency, TrianglesAdjacency, TriangleStripAdjacency and Patches are accepted.
@@ -60,7 +60,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_draw_instanced]
-            /// Draw multiple instances of a set of elements
+            /// Draw multiple instances of a set of elements.
             /// </summary>
             /// <param name="mode">
             /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -86,7 +86,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_draw_instanced]
-            /// Draw multiple instances of a set of elements
+            /// Draw multiple instances of a set of elements.
             /// </summary>
             /// <param name="mode">
             /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -114,7 +114,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_draw_instanced]
-            /// Draw multiple instances of a set of elements
+            /// Draw multiple instances of a set of elements.
             /// </summary>
             /// <param name="mode">
             /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -142,7 +142,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_draw_instanced]
-            /// Draw multiple instances of a set of elements
+            /// Draw multiple instances of a set of elements.
             /// </summary>
             /// <param name="mode">
             /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -170,7 +170,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_draw_instanced]
-            /// Draw multiple instances of a set of elements
+            /// Draw multiple instances of a set of elements.
             /// </summary>
             /// <param name="mode">
             /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.

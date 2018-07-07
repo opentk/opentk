@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v3.2 or ARB_sync|VERSION_3_2]
-        /// Block and wait for a sync object to become signaled
+        /// Block and wait for a sync object to become signaled.
         /// </summary>
         /// <param name="sync">
         /// The sync object whose status to wait on.
@@ -52,7 +52,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_sync|VERSION_3_2]
-        /// Delete a sync object
+        /// Delete a sync object.
         /// </summary>
         /// <param name="sync">
         /// The sync object to be deleted.
@@ -65,7 +65,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_sync|VERSION_3_2]
-        /// Create a new sync object and insert it into the GL command stream
+        /// Create a new sync object and insert it into the GL command stream.
         /// </summary>
         /// <param name="condition">
         /// Specifies the condition that must be met to set the sync object's state to signaled. condition must be SyncGpuCommandsComplete.
@@ -134,7 +134,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_sync|VERSION_3_2]
-        /// Query the properties of a sync object
+        /// Query the properties of a sync object.
         /// </summary>
         /// <param name="sync">
         /// Specifies the sync object whose properties to query.
@@ -161,7 +161,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_sync|VERSION_3_2]
-        /// Query the properties of a sync object
+        /// Query the properties of a sync object.
         /// </summary>
         /// <param name="sync">
         /// Specifies the sync object whose properties to query.
@@ -188,7 +188,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_sync|VERSION_3_2]
-        /// Query the properties of a sync object
+        /// Query the properties of a sync object.
         /// </summary>
         /// <param name="sync">
         /// Specifies the sync object whose properties to query.
@@ -215,7 +215,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_sync|VERSION_3_2]
-        /// Determine if a name corresponds to a sync object
+        /// Determine if a name corresponds to a sync object.
         /// </summary>
         /// <param name="sync">
         /// Specifies a value that may be the name of a sync object.
@@ -228,7 +228,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_sync|VERSION_3_2]
-        /// Instruct the GL server to block until the specified sync object becomes signaled
+        /// Instruct the GL server to block until the specified sync object becomes signaled.
         /// </summary>
         /// <param name="sync">
         /// Specifies the sync object whose status to wait on.

@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.1 or ARB_get_program_binary|VERSION_4_1]
-        /// Return a binary representation of a program object's compiled and linked executable source
+        /// Return a binary representation of a program object's compiled and linked executable source.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program object whose binary representation to retrieve.
@@ -61,7 +61,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_get_program_binary|VERSION_4_1]
-        /// Return a binary representation of a program object's compiled and linked executable source
+        /// Return a binary representation of a program object's compiled and linked executable source.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program object whose binary representation to retrieve.
@@ -91,7 +91,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_get_program_binary|VERSION_4_1]
-        /// Return a binary representation of a program object's compiled and linked executable source
+        /// Return a binary representation of a program object's compiled and linked executable source.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program object whose binary representation to retrieve.
@@ -121,7 +121,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_get_program_binary|VERSION_4_1]
-        /// Return a binary representation of a program object's compiled and linked executable source
+        /// Return a binary representation of a program object's compiled and linked executable source.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program object whose binary representation to retrieve.
@@ -151,7 +151,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_get_program_binary|VERSION_4_1]
-        /// Return a binary representation of a program object's compiled and linked executable source
+        /// Return a binary representation of a program object's compiled and linked executable source.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program object whose binary representation to retrieve.
@@ -181,7 +181,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_get_program_binary|VERSION_4_1]
-        /// Return a binary representation of a program object's compiled and linked executable source
+        /// Return a binary representation of a program object's compiled and linked executable source.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program object whose binary representation to retrieve.
@@ -209,7 +209,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_get_program_binary|VERSION_4_1]
-        /// Return a binary representation of a program object's compiled and linked executable source
+        /// Return a binary representation of a program object's compiled and linked executable source.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program object whose binary representation to retrieve.
@@ -239,7 +239,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_get_program_binary|VERSION_4_1]
-        /// Return a binary representation of a program object's compiled and linked executable source
+        /// Return a binary representation of a program object's compiled and linked executable source.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program object whose binary representation to retrieve.
@@ -269,7 +269,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_get_program_binary|VERSION_4_1]
-        /// Return a binary representation of a program object's compiled and linked executable source
+        /// Return a binary representation of a program object's compiled and linked executable source.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program object whose binary representation to retrieve.
@@ -299,7 +299,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_get_program_binary|VERSION_4_1]
-        /// Return a binary representation of a program object's compiled and linked executable source
+        /// Return a binary representation of a program object's compiled and linked executable source.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program object whose binary representation to retrieve.
@@ -329,7 +329,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_get_program_binary|VERSION_4_1]
-        /// Load a program object with a program binary
+        /// Load a program object with a program binary.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program object into which to load a program binary.
@@ -352,7 +352,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_get_program_binary|VERSION_4_1]
-        /// Load a program object with a program binary
+        /// Load a program object with a program binary.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program object into which to load a program binary.
@@ -377,7 +377,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_get_program_binary|VERSION_4_1]
-        /// Load a program object with a program binary
+        /// Load a program object with a program binary.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program object into which to load a program binary.
@@ -402,7 +402,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_get_program_binary|VERSION_4_1]
-        /// Load a program object with a program binary
+        /// Load a program object with a program binary.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program object into which to load a program binary.
@@ -427,7 +427,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_get_program_binary|VERSION_4_1]
-        /// Load a program object with a program binary
+        /// Load a program object with a program binary.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program object into which to load a program binary.

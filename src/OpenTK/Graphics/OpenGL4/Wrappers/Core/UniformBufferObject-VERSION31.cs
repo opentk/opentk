@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v3.1 or ARB_uniform_buffer_object|VERSION_3_1]
-        /// Retrieve the name of an active uniform block
+        /// Retrieve the name of an active uniform block.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program containing the uniform block.
@@ -60,7 +60,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1 or ARB_uniform_buffer_object|VERSION_3_1]
-        /// Retrieve the name of an active uniform block
+        /// Retrieve the name of an active uniform block.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program containing the uniform block.
@@ -87,7 +87,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1 or ARB_uniform_buffer_object|VERSION_3_1]
-        /// Query information about an active uniform block
+        /// Query information about an active uniform block.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program containing the uniform block.
@@ -110,7 +110,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1 or ARB_uniform_buffer_object|VERSION_3_1]
-        /// Query information about an active uniform block
+        /// Query information about an active uniform block.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program containing the uniform block.
@@ -133,7 +133,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1 or ARB_uniform_buffer_object|VERSION_3_1]
-        /// Query information about an active uniform block
+        /// Query information about an active uniform block.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program containing the uniform block.
@@ -156,7 +156,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1 or ARB_uniform_buffer_object|VERSION_3_1]
-        /// Query the name of an active uniform
+        /// Query the name of an active uniform.
         /// </summary>
         /// <param name="program">
         /// Specifies the program containing the active uniform index uniformIndex.
@@ -183,7 +183,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1 or ARB_uniform_buffer_object|VERSION_3_1]
-        /// Query the name of an active uniform
+        /// Query the name of an active uniform.
         /// </summary>
         /// <param name="program">
         /// Specifies the program containing the active uniform index uniformIndex.
@@ -210,7 +210,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1 or ARB_uniform_buffer_object|VERSION_3_1]
-        /// Returns information about several active uniform variables for the specified program object
+        /// Returns information about several active uniform variables for the specified program object.
         /// </summary>
         /// <param name="program">
         /// Specifies the program object to be queried.
@@ -237,7 +237,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1 or ARB_uniform_buffer_object|VERSION_3_1]
-        /// Returns information about several active uniform variables for the specified program object
+        /// Returns information about several active uniform variables for the specified program object.
         /// </summary>
         /// <param name="program">
         /// Specifies the program object to be queried.
@@ -264,7 +264,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1 or ARB_uniform_buffer_object|VERSION_3_1]
-        /// Returns information about several active uniform variables for the specified program object
+        /// Returns information about several active uniform variables for the specified program object.
         /// </summary>
         /// <param name="program">
         /// Specifies the program object to be queried.
@@ -291,7 +291,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1 or ARB_uniform_buffer_object|VERSION_3_1]
-        /// Retrieve the index of a named uniform block
+        /// Retrieve the index of a named uniform block.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program containing the uniform block.
@@ -308,7 +308,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1 or ARB_uniform_buffer_object|VERSION_3_1]
-        /// Retrieve the index of a named uniform block
+        /// Retrieve the index of a named uniform block.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program containing uniforms whose indices to query.
@@ -332,7 +332,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1 or ARB_uniform_buffer_object|VERSION_3_1]
-        /// Retrieve the index of a named uniform block
+        /// Retrieve the index of a named uniform block.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program containing uniforms whose indices to query.
@@ -356,7 +356,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1 or ARB_uniform_buffer_object|VERSION_3_1]
-        /// Retrieve the index of a named uniform block
+        /// Retrieve the index of a named uniform block.
         /// </summary>
         /// <param name="program">
         /// Specifies the name of a program containing uniforms whose indices to query.
@@ -380,7 +380,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.1 or ARB_uniform_buffer_object|VERSION_3_1]
-        /// Assign a binding point to an active uniform block
+        /// Assign a binding point to an active uniform block.
         /// </summary>
         /// <param name="program">
         /// The name of a program object containing the active uniform block whose binding to assign.

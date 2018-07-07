@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.3 or ARB_program_interface_query|VERSION_4_3]
-        /// Query a property of an interface in a program
+        /// Query a property of an interface in a program.
         /// </summary>
         /// <param name="program">
         /// The name of a program object whose interface to query.
@@ -56,7 +56,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_program_interface_query|VERSION_4_3]
-        /// Query a property of an interface in a program
+        /// Query a property of an interface in a program.
         /// </summary>
         /// <param name="program">
         /// The name of a program object whose interface to query.
@@ -79,7 +79,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_program_interface_query|VERSION_4_3]
-        /// Query a property of an interface in a program
+        /// Query a property of an interface in a program.
         /// </summary>
         /// <param name="program">
         /// The name of a program object whose interface to query.
@@ -102,7 +102,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_program_interface_query|VERSION_4_3]
-        /// Query the index of a named resource within a program
+        /// Query the index of a named resource within a program.
         /// </summary>
         /// <param name="program">
         /// The name of a program object whose resources to query.
@@ -122,7 +122,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_program_interface_query|VERSION_4_3]
-        /// Query the location of a named resource within a program
+        /// Query the location of a named resource within a program.
         /// </summary>
         /// <param name="program">
         /// The name of a program object whose resources to query.
@@ -142,7 +142,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_program_interface_query|VERSION_4_3]
-        /// Query the fragment color index of a named variable within a program
+        /// Query the fragment color index of a named variable within a program.
         /// </summary>
         /// <param name="program">
         /// The name of a program object whose resources to query.
@@ -162,7 +162,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_program_interface_query|VERSION_4_3]
-        /// Query the name of an indexed resource within a program
+        /// Query the name of an indexed resource within a program.
         /// </summary>
         /// <param name="program">
         /// The name of a program object whose resources to query.
@@ -192,7 +192,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_program_interface_query|VERSION_4_3]
-        /// Query the name of an indexed resource within a program
+        /// Query the name of an indexed resource within a program.
         /// </summary>
         /// <param name="program">
         /// The name of a program object whose resources to query.
@@ -222,7 +222,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_program_interface_query|VERSION_4_3]
-        /// Retrieve values for multiple properties of a single active resource within a program object
+        /// Retrieve values for multiple properties of a single active resource within a program object.
         /// </summary>
         /// <param name="program">
         /// The name of a program object whose resources to query.
@@ -244,7 +244,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_program_interface_query|VERSION_4_3]
-        /// Retrieve values for multiple properties of a single active resource within a program object
+        /// Retrieve values for multiple properties of a single active resource within a program object.
         /// </summary>
         /// <param name="program">
         /// The name of a program object whose resources to query.
@@ -266,7 +266,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_program_interface_query|VERSION_4_3]
-        /// Retrieve values for multiple properties of a single active resource within a program object
+        /// Retrieve values for multiple properties of a single active resource within a program object.
         /// </summary>
         /// <param name="program">
         /// The name of a program object whose resources to query.

@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v3.2 or ARB_provoking_vertex|VERSION_3_2]
-        /// Specifiy the vertex to be used as the source of data for flat shaded varyings
+        /// Specifiy the vertex to be used as the source of data for flat shaded varyings.
         /// </summary>
         /// <param name="mode">
         /// Specifies the vertex to be used as the source of data for flat shaded varyings.

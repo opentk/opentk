@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.3 or ARB_copy_image|VERSION_4_3]
-        /// Perform a raw data copy between two images
+        /// Perform a raw data copy between two images.
         /// </summary>
         /// <param name="srcName">
         /// The name of a texture or renderbuffer object from which to copy.

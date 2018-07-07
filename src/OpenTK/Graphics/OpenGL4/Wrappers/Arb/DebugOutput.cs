@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -38,7 +38,7 @@ namespace OpenTK.Graphics.OpenGL4
         {
             /// <summary>
             /// [requires: ARB_debug_output]
-            /// Specify a callback to receive debugging messages from the GL
+            /// Specify a callback to receive debugging messages from the GL.
             /// </summary>
             /// <param name="callback">
             /// The address of a callback function that will be called when a debug message is generated.
@@ -55,7 +55,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_debug_output]
-            /// Specify a callback to receive debugging messages from the GL
+            /// Specify a callback to receive debugging messages from the GL.
             /// </summary>
             /// <param name="callback">
             /// The address of a callback function that will be called when a debug message is generated.
@@ -74,7 +74,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_debug_output]
-            /// Specify a callback to receive debugging messages from the GL
+            /// Specify a callback to receive debugging messages from the GL.
             /// </summary>
             /// <param name="callback">
             /// The address of a callback function that will be called when a debug message is generated.
@@ -93,7 +93,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_debug_output]
-            /// Specify a callback to receive debugging messages from the GL
+            /// Specify a callback to receive debugging messages from the GL.
             /// </summary>
             /// <param name="callback">
             /// The address of a callback function that will be called when a debug message is generated.
@@ -112,7 +112,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_debug_output]
-            /// Specify a callback to receive debugging messages from the GL
+            /// Specify a callback to receive debugging messages from the GL.
             /// </summary>
             /// <param name="callback">
             /// The address of a callback function that will be called when a debug message is generated.
@@ -131,7 +131,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_debug_output]
-            /// Control the reporting of debug messages in a debug context
+            /// Control the reporting of debug messages in a debug context.
             /// </summary>
             /// <param name="source">
             /// The source of debug messages to enable or disable.
@@ -160,7 +160,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_debug_output]
-            /// Control the reporting of debug messages in a debug context
+            /// Control the reporting of debug messages in a debug context.
             /// </summary>
             /// <param name="source">
             /// The source of debug messages to enable or disable.
@@ -189,7 +189,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_debug_output]
-            /// Control the reporting of debug messages in a debug context
+            /// Control the reporting of debug messages in a debug context.
             /// </summary>
             /// <param name="source">
             /// The source of debug messages to enable or disable.
@@ -218,7 +218,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_debug_output]
-            /// Inject an application-supplied message into the debug message queue
+            /// Inject an application-supplied message into the debug message queue.
             /// </summary>
             /// <param name="source">
             /// The source of the debug message to insert.
@@ -247,7 +247,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_debug_output]
-            /// Retrieve messages from the debug message log
+            /// Retrieve messages from the debug message log.
             /// </summary>
             /// <param name="count">
             /// The number of debug messages to retrieve from the log.
@@ -287,7 +287,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_debug_output]
-            /// Retrieve messages from the debug message log
+            /// Retrieve messages from the debug message log.
             /// </summary>
             /// <param name="count">
             /// The number of debug messages to retrieve from the log.
@@ -327,7 +327,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: ARB_debug_output]
-            /// Retrieve messages from the debug message log
+            /// Retrieve messages from the debug message log.
             /// </summary>
             /// <param name="count">
             /// The number of debug messages to retrieve from the log.

@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.3 or ARB_framebuffer_no_attachments|VERSION_4_3]
-        /// Set a named parameter of a framebuffer
+        /// Set a named parameter of a framebuffer.
         /// </summary>
         /// <param name="target">
         /// The target of the operation, which must be ReadFramebuffer, DrawFramebuffer or Framebuffer.
@@ -52,7 +52,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_framebuffer_no_attachments|VERSION_4_3]
-        /// Retrieve a named parameter from a framebuffer
+        /// Retrieve a named parameter from a framebuffer.
         /// </summary>
         /// <param name="target">
         /// The target of the operation, which must be ReadFramebuffer, DrawFramebuffer or Framebuffer.
@@ -72,7 +72,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_framebuffer_no_attachments|VERSION_4_3]
-        /// Retrieve a named parameter from a framebuffer
+        /// Retrieve a named parameter from a framebuffer.
         /// </summary>
         /// <param name="target">
         /// The target of the operation, which must be ReadFramebuffer, DrawFramebuffer or Framebuffer.
@@ -92,7 +92,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_framebuffer_no_attachments|VERSION_4_3]
-        /// Retrieve a named parameter from a framebuffer
+        /// Retrieve a named parameter from a framebuffer.
         /// </summary>
         /// <param name="target">
         /// The target of the operation, which must be ReadFramebuffer, DrawFramebuffer or Framebuffer.

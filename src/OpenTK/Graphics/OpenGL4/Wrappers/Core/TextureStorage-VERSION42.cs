@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.2 or ARB_texture_storage|VERSION_4_2]
-        /// Simultaneously specify storage for all levels of a one-dimensional texture
+        /// Simultaneously specify storage for all levels of a one-dimensional texture.
         /// </summary>
         /// <param name="target">
         /// Specify the target of the operation. target must be either Texture1D or ProxyTexture1D.
@@ -55,7 +55,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.2 or ARB_texture_storage|VERSION_4_2]
-        /// Simultaneously specify storage for all levels of a two-dimensional or one-dimensional array texture
+        /// Simultaneously specify storage for all levels of a two-dimensional or one-dimensional array texture.
         /// </summary>
         /// <param name="target">
         /// Specify the target of the operation. target must be one of Texture2D, ProxyTexture2D, Texture1DArray, ProxyTexture1DArray, TextureRectangle, ProxyTextureRectangle, or ProxyTextureCubeMap.
@@ -80,7 +80,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.2 or ARB_texture_storage|VERSION_4_2]
-        /// Simultaneously specify storage for all levels of a three-dimensional, two-dimensional array or cube-map array texture
+        /// Simultaneously specify storage for all levels of a three-dimensional, two-dimensional array or cube-map array texture.
         /// </summary>
         /// <param name="target">
         /// Specify the target of the operation. target must be one of Texture3D, ProxyTexture3D, Texture2DArray, ProxyTexture2DArray, TextureCubeArray, or ProxyTextureCubeArray.

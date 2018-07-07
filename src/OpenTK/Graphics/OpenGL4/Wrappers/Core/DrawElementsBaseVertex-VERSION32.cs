@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render primitives from array data with a per-element offset
+        /// Render primitives from array data with a per-element offset.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, TriangleStrip, TriangleFan, Triangles, LinesAdjacency, LineStripAdjacency, TrianglesAdjacency, TriangleStripAdjacency and Patches are accepted.
@@ -59,7 +59,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render primitives from array data with a per-element offset
+        /// Render primitives from array data with a per-element offset.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, TriangleStrip, TriangleFan, Triangles, LinesAdjacency, LineStripAdjacency, TrianglesAdjacency, TriangleStripAdjacency and Patches are accepted.
@@ -87,7 +87,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render primitives from array data with a per-element offset
+        /// Render primitives from array data with a per-element offset.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, TriangleStrip, TriangleFan, Triangles, LinesAdjacency, LineStripAdjacency, TrianglesAdjacency, TriangleStripAdjacency and Patches are accepted.
@@ -115,7 +115,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render primitives from array data with a per-element offset
+        /// Render primitives from array data with a per-element offset.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, TriangleStrip, TriangleFan, Triangles, LinesAdjacency, LineStripAdjacency, TrianglesAdjacency, TriangleStripAdjacency and Patches are accepted.
@@ -143,7 +143,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render primitives from array data with a per-element offset
+        /// Render primitives from array data with a per-element offset.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, TriangleStrip, TriangleFan, Triangles, LinesAdjacency, LineStripAdjacency, TrianglesAdjacency, TriangleStripAdjacency and Patches are accepted.
@@ -171,7 +171,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple instances of a set of primitives from array data with a per-element offset
+        /// Render multiple instances of a set of primitives from array data with a per-element offset.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, TriangleStrip, TriangleFan, Triangles, LinesAdjacency, LineStripAdjacency, TrianglesAdjacency, TriangleStripAdjacency and Patches are accepted.
@@ -200,7 +200,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple instances of a set of primitives from array data with a per-element offset
+        /// Render multiple instances of a set of primitives from array data with a per-element offset.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, TriangleStrip, TriangleFan, Triangles, LinesAdjacency, LineStripAdjacency, TrianglesAdjacency, TriangleStripAdjacency and Patches are accepted.
@@ -231,7 +231,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple instances of a set of primitives from array data with a per-element offset
+        /// Render multiple instances of a set of primitives from array data with a per-element offset.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, TriangleStrip, TriangleFan, Triangles, LinesAdjacency, LineStripAdjacency, TrianglesAdjacency, TriangleStripAdjacency and Patches are accepted.
@@ -262,7 +262,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple instances of a set of primitives from array data with a per-element offset
+        /// Render multiple instances of a set of primitives from array data with a per-element offset.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, TriangleStrip, TriangleFan, Triangles, LinesAdjacency, LineStripAdjacency, TrianglesAdjacency, TriangleStripAdjacency and Patches are accepted.
@@ -293,7 +293,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple instances of a set of primitives from array data with a per-element offset
+        /// Render multiple instances of a set of primitives from array data with a per-element offset.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, TriangleStrip, TriangleFan, Triangles, LinesAdjacency, LineStripAdjacency, TrianglesAdjacency, TriangleStripAdjacency and Patches are accepted.
@@ -324,7 +324,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render primitives from array data with a per-element offset
+        /// Render primitives from array data with a per-element offset.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, TriangleStrip, TriangleFan, Triangles, LinesAdjacency, LineStripAdjacency, TrianglesAdjacency, TriangleStripAdjacency and Patches are accepted.
@@ -356,7 +356,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render primitives from array data with a per-element offset
+        /// Render primitives from array data with a per-element offset.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, TriangleStrip, TriangleFan, Triangles, LinesAdjacency, LineStripAdjacency, TrianglesAdjacency, TriangleStripAdjacency and Patches are accepted.
@@ -390,7 +390,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render primitives from array data with a per-element offset
+        /// Render primitives from array data with a per-element offset.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, TriangleStrip, TriangleFan, Triangles, LinesAdjacency, LineStripAdjacency, TrianglesAdjacency, TriangleStripAdjacency and Patches are accepted.
@@ -424,7 +424,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render primitives from array data with a per-element offset
+        /// Render primitives from array data with a per-element offset.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, TriangleStrip, TriangleFan, Triangles, LinesAdjacency, LineStripAdjacency, TrianglesAdjacency, TriangleStripAdjacency and Patches are accepted.
@@ -458,7 +458,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render primitives from array data with a per-element offset
+        /// Render primitives from array data with a per-element offset.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, TriangleStrip, TriangleFan, Triangles, LinesAdjacency, LineStripAdjacency, TrianglesAdjacency, TriangleStripAdjacency and Patches are accepted.
@@ -492,7 +492,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index
+        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -523,7 +523,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index
+        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -556,7 +556,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index
+        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -589,7 +589,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index
+        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -622,7 +622,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index
+        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -655,7 +655,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index
+        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -686,7 +686,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index
+        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -719,7 +719,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index
+        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -752,7 +752,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index
+        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -785,7 +785,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index
+        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -818,7 +818,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index
+        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -849,7 +849,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index
+        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -882,7 +882,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index
+        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -915,7 +915,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index
+        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -948,7 +948,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.2 or ARB_draw_elements_base_vertex|VERSION_3_2]
-        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index
+        /// Render multiple sets of primitives by specifying indices of array data elements and an index to apply to each index.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.

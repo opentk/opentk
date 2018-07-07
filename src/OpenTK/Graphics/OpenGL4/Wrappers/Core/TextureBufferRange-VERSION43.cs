@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.3 or ARB_texture_buffer_range|VERSION_4_3]
-        /// Bind a range of a buffer's data store to a buffer texture
+        /// Bind a range of a buffer's data store to a buffer texture.
         /// </summary>
         /// <param name="target">
         /// Specifies the target of the operation and must be TextureBuffer.
@@ -58,7 +58,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_texture_buffer_range|VERSION_4_3]
-        /// Bind a range of a buffer's data store to a buffer texture
+        /// Bind a range of a buffer's data store to a buffer texture.
         /// </summary>
         /// <param name="target">
         /// Specifies the target of the operation and must be TextureBuffer.

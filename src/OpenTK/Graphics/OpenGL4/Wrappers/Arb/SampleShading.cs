@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -38,7 +38,7 @@ namespace OpenTK.Graphics.OpenGL4
         {
             /// <summary>
             /// [requires: ARB_sample_shading]
-            /// Specifies minimum rate at which sample shaing takes place
+            /// Specifies minimum rate at which sample shaing takes place.
             /// </summary>
             /// <param name="value">
             /// Specifies the rate at which samples are shaded within each covered pixel.

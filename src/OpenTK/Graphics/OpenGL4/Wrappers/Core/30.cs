@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v3.0]
-        /// Start conditional rendering
+        /// Start conditional rendering.
         /// </summary>
         /// <param name="id">
         /// Specifies the name of an occlusion query object whose results are used to determine if the rendering commands are discarded.
@@ -49,7 +49,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Start transform feedback operation
+        /// Start transform feedback operation.
         /// </summary>
         /// <param name="primitiveMode">
         /// Specify the output type of the primitives that will be recorded into the buffer objects that are bound for transform feedback.
@@ -62,7 +62,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Bind a user-defined varying out variable to a fragment shader color number
+        /// Bind a user-defined varying out variable to a fragment shader color number.
         /// </summary>
         /// <param name="program">
         /// The name of the program containing varying out variable whose binding to modify
@@ -82,7 +82,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify whether data read via glReadPixels should be clamped
+        /// Specify whether data read via glReadPixels should be clamped.
         /// </summary>
         /// <param name="target">
         /// Target for color clamping. target must be ClampReadColor.
@@ -98,7 +98,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Clear individual buffers of the currently bound draw framebuffer
+        /// Clear individual buffers of the currently bound draw framebuffer.
         /// </summary>
         /// <param name="buffer">
         /// Specify the buffer to clear.
@@ -120,7 +120,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Clear individual buffers of the currently bound draw framebuffer
+        /// Clear individual buffers of the currently bound draw framebuffer.
         /// </summary>
         /// <param name="buffer">
         /// Specify the buffer to clear.
@@ -140,7 +140,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Clear individual buffers of the currently bound draw framebuffer
+        /// Clear individual buffers of the currently bound draw framebuffer.
         /// </summary>
         /// <param name="buffer">
         /// Specify the buffer to clear.
@@ -160,7 +160,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Clear individual buffers of the currently bound draw framebuffer
+        /// Clear individual buffers of the currently bound draw framebuffer.
         /// </summary>
         /// <param name="buffer">
         /// Specify the buffer to clear.
@@ -180,7 +180,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Clear individual buffers of the currently bound draw framebuffer
+        /// Clear individual buffers of the currently bound draw framebuffer.
         /// </summary>
         /// <param name="buffer">
         /// Specify the buffer to clear.
@@ -200,7 +200,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Clear individual buffers of the currently bound draw framebuffer
+        /// Clear individual buffers of the currently bound draw framebuffer.
         /// </summary>
         /// <param name="buffer">
         /// Specify the buffer to clear.
@@ -220,7 +220,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Clear individual buffers of the currently bound draw framebuffer
+        /// Clear individual buffers of the currently bound draw framebuffer.
         /// </summary>
         /// <param name="buffer">
         /// Specify the buffer to clear.
@@ -240,7 +240,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Clear individual buffers of the currently bound draw framebuffer
+        /// Clear individual buffers of the currently bound draw framebuffer.
         /// </summary>
         /// <param name="buffer">
         /// Specify the buffer to clear.
@@ -260,7 +260,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Clear individual buffers of the currently bound draw framebuffer
+        /// Clear individual buffers of the currently bound draw framebuffer.
         /// </summary>
         /// <param name="buffer">
         /// Specify the buffer to clear.
@@ -280,7 +280,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Clear individual buffers of the currently bound draw framebuffer
+        /// Clear individual buffers of the currently bound draw framebuffer.
         /// </summary>
         /// <param name="buffer">
         /// Specify the buffer to clear.
@@ -300,7 +300,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Enable and disable writing of frame buffer color components
+        /// Enable and disable writing of frame buffer color components.
         /// </summary>
         /// <param name="index">
         /// For glColorMaski, specifies the index of the draw buffer whose color mask to set.
@@ -338,7 +338,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Enable or disable server-side GL capabilities
+        /// Enable or disable server-side GL capabilities.
         /// </summary>
         /// <param name="target">
         /// Specifies a symbolic constant indicating a GL capability.
@@ -420,7 +420,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Query the bindings of color numbers to user-defined varying out variables
+        /// Query the bindings of color numbers to user-defined varying out variables.
         /// </summary>
         /// <param name="program">
         /// The name of the program containing varying out variable whose binding to query
@@ -437,7 +437,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Return a string describing the current GL connection
+        /// Return a string describing the current GL connection.
         /// </summary>
         /// <param name="name">
         /// Specifies a symbolic constant, one of Vendor, Renderer, Version, or ShadingLanguageVersion. Additionally, glGetStringi accepts the Extensions token.
@@ -549,7 +549,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Retrieve information about varying variables selected for transform feedback
+        /// Retrieve information about varying variables selected for transform feedback.
         /// </summary>
         /// <param name="program">
         /// The name of the target program object.
@@ -584,7 +584,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Retrieve information about varying variables selected for transform feedback
+        /// Retrieve information about varying variables selected for transform feedback.
         /// </summary>
         /// <param name="program">
         /// The name of the target program object.
@@ -619,7 +619,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Returns the value of a uniform variable
+        /// Returns the value of a uniform variable.
         /// </summary>
         /// <param name="program">
         /// Specifies the program object to be queried.
@@ -639,7 +639,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Returns the value of a uniform variable
+        /// Returns the value of a uniform variable.
         /// </summary>
         /// <param name="program">
         /// Specifies the program object to be queried.
@@ -659,7 +659,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Returns the value of a uniform variable
+        /// Returns the value of a uniform variable.
         /// </summary>
         /// <param name="program">
         /// Specifies the program object to be queried.
@@ -743,7 +743,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Test whether a capability is enabled
+        /// Test whether a capability is enabled.
         /// </summary>
         /// <param name="target">
         /// Specifies a symbolic constant indicating a GL capability.
@@ -855,7 +855,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify values to record in transform feedback buffers
+        /// Specify values to record in transform feedback buffers.
         /// </summary>
         /// <param name="program">
         /// The name of the target program object.
@@ -878,7 +878,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -894,7 +894,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -914,7 +914,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -934,7 +934,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -954,7 +954,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -973,7 +973,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -993,7 +993,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -1013,7 +1013,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -1033,7 +1033,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -1055,7 +1055,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -1075,7 +1075,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -1095,7 +1095,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -1115,7 +1115,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -1140,7 +1140,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -1160,7 +1160,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.
@@ -1180,7 +1180,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0]
-        /// Specify the value of a uniform variable for the current program object
+        /// Specify the value of a uniform variable for the current program object.
         /// </summary>
         /// <param name="location">
         /// Specifies the location of the uniform variable to be modified.

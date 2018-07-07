@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -215,7 +215,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: NV_vertex_buffer_unified_memory]
-            /// Specify the organization of vertex arrays
+            /// Specify the organization of vertex arrays.
             /// </summary>
             /// <param name="index">
             /// The generic vertex attribute array being described.

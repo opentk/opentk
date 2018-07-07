@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Specify a callback to receive debugging messages from the GL
+        /// Specify a callback to receive debugging messages from the GL.
         /// </summary>
         /// <param name="callback">
         /// The address of a callback function that will be called when a debug message is generated.
@@ -49,7 +49,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Specify a callback to receive debugging messages from the GL
+        /// Specify a callback to receive debugging messages from the GL.
         /// </summary>
         /// <param name="callback">
         /// The address of a callback function that will be called when a debug message is generated.
@@ -67,7 +67,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Specify a callback to receive debugging messages from the GL
+        /// Specify a callback to receive debugging messages from the GL.
         /// </summary>
         /// <param name="callback">
         /// The address of a callback function that will be called when a debug message is generated.
@@ -85,7 +85,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Specify a callback to receive debugging messages from the GL
+        /// Specify a callback to receive debugging messages from the GL.
         /// </summary>
         /// <param name="callback">
         /// The address of a callback function that will be called when a debug message is generated.
@@ -103,7 +103,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Specify a callback to receive debugging messages from the GL
+        /// Specify a callback to receive debugging messages from the GL.
         /// </summary>
         /// <param name="callback">
         /// The address of a callback function that will be called when a debug message is generated.
@@ -121,7 +121,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Control the reporting of debug messages in a debug context
+        /// Control the reporting of debug messages in a debug context.
         /// </summary>
         /// <param name="source">
         /// The source of debug messages to enable or disable.
@@ -150,7 +150,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Control the reporting of debug messages in a debug context
+        /// Control the reporting of debug messages in a debug context.
         /// </summary>
         /// <param name="source">
         /// The source of debug messages to enable or disable.
@@ -179,7 +179,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Control the reporting of debug messages in a debug context
+        /// Control the reporting of debug messages in a debug context.
         /// </summary>
         /// <param name="source">
         /// The source of debug messages to enable or disable.
@@ -208,7 +208,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Inject an application-supplied message into the debug message queue
+        /// Inject an application-supplied message into the debug message queue.
         /// </summary>
         /// <param name="source">
         /// The source of the debug message to insert.
@@ -237,7 +237,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Retrieve messages from the debug message log
+        /// Retrieve messages from the debug message log.
         /// </summary>
         /// <param name="count">
         /// The number of debug messages to retrieve from the log.
@@ -277,7 +277,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Retrieve messages from the debug message log
+        /// Retrieve messages from the debug message log.
         /// </summary>
         /// <param name="count">
         /// The number of debug messages to retrieve from the log.
@@ -317,7 +317,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Retrieve messages from the debug message log
+        /// Retrieve messages from the debug message log.
         /// </summary>
         /// <param name="count">
         /// The number of debug messages to retrieve from the log.
@@ -357,7 +357,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Retrieve the label of a named object identified within a namespace
+        /// Retrieve the label of a named object identified within a namespace.
         /// </summary>
         /// <param name="identifier">
         /// The namespace from which the name of the object is allocated.
@@ -384,7 +384,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Retrieve the label of a named object identified within a namespace
+        /// Retrieve the label of a named object identified within a namespace.
         /// </summary>
         /// <param name="identifier">
         /// The namespace from which the name of the object is allocated.
@@ -411,7 +411,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Retrieve the label of a sync object identified by a pointer
+        /// Retrieve the label of a sync object identified by a pointer.
         /// </summary>
         /// <param name="ptr">
         /// The name of the sync object whose label to retrieve.
@@ -435,7 +435,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Retrieve the label of a sync object identified by a pointer
+        /// Retrieve the label of a sync object identified by a pointer.
         /// </summary>
         /// <param name="ptr">
         /// The name of the sync object whose label to retrieve.
@@ -459,7 +459,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Retrieve the label of a sync object identified by a pointer
+        /// Retrieve the label of a sync object identified by a pointer.
         /// </summary>
         /// <param name="ptr">
         /// The name of the sync object whose label to retrieve.
@@ -485,7 +485,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Retrieve the label of a sync object identified by a pointer
+        /// Retrieve the label of a sync object identified by a pointer.
         /// </summary>
         /// <param name="ptr">
         /// The name of the sync object whose label to retrieve.
@@ -511,7 +511,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Retrieve the label of a sync object identified by a pointer
+        /// Retrieve the label of a sync object identified by a pointer.
         /// </summary>
         /// <param name="ptr">
         /// The name of the sync object whose label to retrieve.
@@ -537,7 +537,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Retrieve the label of a sync object identified by a pointer
+        /// Retrieve the label of a sync object identified by a pointer.
         /// </summary>
         /// <param name="ptr">
         /// The name of the sync object whose label to retrieve.
@@ -563,7 +563,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Retrieve the label of a sync object identified by a pointer
+        /// Retrieve the label of a sync object identified by a pointer.
         /// </summary>
         /// <param name="ptr">
         /// The name of the sync object whose label to retrieve.
@@ -589,7 +589,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Retrieve the label of a sync object identified by a pointer
+        /// Retrieve the label of a sync object identified by a pointer.
         /// </summary>
         /// <param name="ptr">
         /// The name of the sync object whose label to retrieve.
@@ -615,7 +615,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Retrieve the label of a sync object identified by a pointer
+        /// Retrieve the label of a sync object identified by a pointer.
         /// </summary>
         /// <param name="ptr">
         /// The name of the sync object whose label to retrieve.
@@ -641,7 +641,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Retrieve the label of a sync object identified by a pointer
+        /// Retrieve the label of a sync object identified by a pointer.
         /// </summary>
         /// <param name="ptr">
         /// The name of the sync object whose label to retrieve.
@@ -667,7 +667,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Label a named object identified within a namespace
+        /// Label a named object identified within a namespace.
         /// </summary>
         /// <param name="identifier">
         /// The namespace from which the name of the object is allocated.
@@ -690,7 +690,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Label a a sync object identified by a pointer
+        /// Label a a sync object identified by a pointer.
         /// </summary>
         /// <param name="ptr">
         /// A pointer identifying a sync object.
@@ -710,7 +710,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Label a a sync object identified by a pointer
+        /// Label a a sync object identified by a pointer.
         /// </summary>
         /// <param name="ptr">
         /// A pointer identifying a sync object.
@@ -732,7 +732,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Label a a sync object identified by a pointer
+        /// Label a a sync object identified by a pointer.
         /// </summary>
         /// <param name="ptr">
         /// A pointer identifying a sync object.
@@ -754,7 +754,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Label a a sync object identified by a pointer
+        /// Label a a sync object identified by a pointer.
         /// </summary>
         /// <param name="ptr">
         /// A pointer identifying a sync object.
@@ -776,7 +776,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Label a a sync object identified by a pointer
+        /// Label a a sync object identified by a pointer.
         /// </summary>
         /// <param name="ptr">
         /// A pointer identifying a sync object.
@@ -798,7 +798,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Pop the active debug group
+        /// Pop the active debug group.
         /// </summary>
         [AutoGenerated(Category = "KHR_debug|VERSION_4_3", Version = "4.3", EntryPoint = "glPopDebugGroup")]
         public static void PopDebugGroup()
@@ -808,7 +808,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or KHR_debug|VERSION_4_3]
-        /// Push a named debug group into the command stream
+        /// Push a named debug group into the command stream.
         /// </summary>
         /// <param name="source">
         /// The source of the debug message.

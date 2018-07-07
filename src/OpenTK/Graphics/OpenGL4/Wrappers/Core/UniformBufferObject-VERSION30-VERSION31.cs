@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v3.0 or ARB_uniform_buffer_object|VERSION_3_0|VERSION_3_1]
-        /// Bind a buffer object to an indexed buffer target
+        /// Bind a buffer object to an indexed buffer target.
         /// </summary>
         /// <param name="target">
         /// Specify the target of the bind operation. target must be one of AtomicCounterBuffer, TransformFeedbackBuffer, UniformBuffer or ShaderStorageBuffer.
@@ -52,7 +52,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_uniform_buffer_object|VERSION_3_0|VERSION_3_1]
-        /// Bind a range within a buffer object to an indexed buffer target
+        /// Bind a range within a buffer object to an indexed buffer target.
         /// </summary>
         /// <param name="target">
         /// Specify the target of the bind operation. target must be one of AtomicCounterBuffer, TransformFeedbackBuffer, UniformBuffer, or ShaderStorageBuffer.
@@ -77,7 +77,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_uniform_buffer_object|VERSION_3_0|VERSION_3_1]
-        /// Bind a range within a buffer object to an indexed buffer target
+        /// Bind a range within a buffer object to an indexed buffer target.
         /// </summary>
         /// <param name="target">
         /// Specify the target of the bind operation. target must be one of AtomicCounterBuffer, TransformFeedbackBuffer, UniformBuffer, or ShaderStorageBuffer.

@@ -24,15 +24,15 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
     public sealed partial class GL
     {
         /// <summary>
-        /// Respecify a portion of a color table
+        /// Respecify a portion of a color table.
         /// </summary>
         /// <param name="target">
         /// Must be one of ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -60,7 +60,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Respecify a portion of a color table
+        /// Respecify a portion of a color table.
         /// </summary>
         /// <param name="target">
         /// Must be one of ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -90,7 +90,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Respecify a portion of a color table
+        /// Respecify a portion of a color table.
         /// </summary>
         /// <param name="target">
         /// Must be one of ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -120,7 +120,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Respecify a portion of a color table
+        /// Respecify a portion of a color table.
         /// </summary>
         /// <param name="target">
         /// Must be one of ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -150,7 +150,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Respecify a portion of a color table
+        /// Respecify a portion of a color table.
         /// </summary>
         /// <param name="target">
         /// Must be one of ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -180,7 +180,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a color lookup table
+        /// Define a color lookup table.
         /// </summary>
         /// <param name="target">
         /// Must be one of ColorTable, PostConvolutionColorTable, PostColorMatrixColorTable, ProxyColorTable, ProxyPostConvolutionColorTable, or ProxyPostColorMatrixColorTable.
@@ -208,7 +208,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a color lookup table
+        /// Define a color lookup table.
         /// </summary>
         /// <param name="target">
         /// Must be one of ColorTable, PostConvolutionColorTable, PostColorMatrixColorTable, ProxyColorTable, ProxyPostConvolutionColorTable, or ProxyPostColorMatrixColorTable.
@@ -238,7 +238,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a color lookup table
+        /// Define a color lookup table.
         /// </summary>
         /// <param name="target">
         /// Must be one of ColorTable, PostConvolutionColorTable, PostColorMatrixColorTable, ProxyColorTable, ProxyPostConvolutionColorTable, or ProxyPostColorMatrixColorTable.
@@ -268,7 +268,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a color lookup table
+        /// Define a color lookup table.
         /// </summary>
         /// <param name="target">
         /// Must be one of ColorTable, PostConvolutionColorTable, PostColorMatrixColorTable, ProxyColorTable, ProxyPostConvolutionColorTable, or ProxyPostColorMatrixColorTable.
@@ -298,7 +298,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a color lookup table
+        /// Define a color lookup table.
         /// </summary>
         /// <param name="target">
         /// Must be one of ColorTable, PostConvolutionColorTable, PostColorMatrixColorTable, ProxyColorTable, ProxyPostConvolutionColorTable, or ProxyPostColorMatrixColorTable.
@@ -328,7 +328,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Set color lookup table parameters
+        /// Set color lookup table parameters.
         /// </summary>
         /// <param name="target">
         /// The target color table. Must be ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -347,7 +347,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Set color lookup table parameters
+        /// Set color lookup table parameters.
         /// </summary>
         /// <param name="target">
         /// The target color table. Must be ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -366,7 +366,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Set color lookup table parameters
+        /// Set color lookup table parameters.
         /// </summary>
         /// <param name="target">
         /// The target color table. Must be ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -385,7 +385,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Set color lookup table parameters
+        /// Set color lookup table parameters.
         /// </summary>
         /// <param name="target">
         /// The target color table. Must be ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -404,7 +404,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Set color lookup table parameters
+        /// Set color lookup table parameters.
         /// </summary>
         /// <param name="target">
         /// The target color table. Must be ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -423,7 +423,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Set color lookup table parameters
+        /// Set color lookup table parameters.
         /// </summary>
         /// <param name="target">
         /// The target color table. Must be ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -442,7 +442,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a one-dimensional convolution filter
+        /// Define a one-dimensional convolution filter.
         /// </summary>
         /// <param name="target">
         /// Must be Convolution1D.
@@ -470,7 +470,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a one-dimensional convolution filter
+        /// Define a one-dimensional convolution filter.
         /// </summary>
         /// <param name="target">
         /// Must be Convolution1D.
@@ -500,7 +500,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a one-dimensional convolution filter
+        /// Define a one-dimensional convolution filter.
         /// </summary>
         /// <param name="target">
         /// Must be Convolution1D.
@@ -530,7 +530,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a one-dimensional convolution filter
+        /// Define a one-dimensional convolution filter.
         /// </summary>
         /// <param name="target">
         /// Must be Convolution1D.
@@ -560,7 +560,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a one-dimensional convolution filter
+        /// Define a one-dimensional convolution filter.
         /// </summary>
         /// <param name="target">
         /// Must be Convolution1D.
@@ -590,7 +590,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a two-dimensional convolution filter
+        /// Define a two-dimensional convolution filter.
         /// </summary>
         /// <param name="target">
         /// Must be Convolution2D.
@@ -621,7 +621,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a two-dimensional convolution filter
+        /// Define a two-dimensional convolution filter.
         /// </summary>
         /// <param name="target">
         /// Must be Convolution2D.
@@ -654,7 +654,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a two-dimensional convolution filter
+        /// Define a two-dimensional convolution filter.
         /// </summary>
         /// <param name="target">
         /// Must be Convolution2D.
@@ -687,7 +687,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a two-dimensional convolution filter
+        /// Define a two-dimensional convolution filter.
         /// </summary>
         /// <param name="target">
         /// Must be Convolution2D.
@@ -720,7 +720,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a two-dimensional convolution filter
+        /// Define a two-dimensional convolution filter.
         /// </summary>
         /// <param name="target">
         /// Must be Convolution2D.
@@ -753,7 +753,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Set convolution parameters
+        /// Set convolution parameters.
         /// </summary>
         /// <param name="target">
         /// The target for the convolution parameter. Must be one of Convolution1D, Convolution2D, or Separable2D.
@@ -771,7 +771,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Set convolution parameters
+        /// Set convolution parameters.
         /// </summary>
         /// <param name="target">
         /// The target for the convolution parameter. Must be one of Convolution1D, Convolution2D, or Separable2D.
@@ -790,7 +790,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Set convolution parameters
+        /// Set convolution parameters.
         /// </summary>
         /// <param name="target">
         /// The target for the convolution parameter. Must be one of Convolution1D, Convolution2D, or Separable2D.
@@ -809,7 +809,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Set convolution parameters
+        /// Set convolution parameters.
         /// </summary>
         /// <param name="target">
         /// The target for the convolution parameter. Must be one of Convolution1D, Convolution2D, or Separable2D.
@@ -828,7 +828,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Set convolution parameters
+        /// Set convolution parameters.
         /// </summary>
         /// <param name="target">
         /// The target for the convolution parameter. Must be one of Convolution1D, Convolution2D, or Separable2D.
@@ -846,7 +846,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Set convolution parameters
+        /// Set convolution parameters.
         /// </summary>
         /// <param name="target">
         /// The target for the convolution parameter. Must be one of Convolution1D, Convolution2D, or Separable2D.
@@ -865,7 +865,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Set convolution parameters
+        /// Set convolution parameters.
         /// </summary>
         /// <param name="target">
         /// The target for the convolution parameter. Must be one of Convolution1D, Convolution2D, or Separable2D.
@@ -884,7 +884,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Set convolution parameters
+        /// Set convolution parameters.
         /// </summary>
         /// <param name="target">
         /// The target for the convolution parameter. Must be one of Convolution1D, Convolution2D, or Separable2D.
@@ -903,7 +903,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Respecify a portion of a color table
+        /// Respecify a portion of a color table.
         /// </summary>
         /// <param name="target">
         /// Must be one of ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -927,7 +927,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Copy pixels into a color table
+        /// Copy pixels into a color table.
         /// </summary>
         /// <param name="target">
         /// The color table target. Must be ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -951,7 +951,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Copy pixels into a one-dimensional convolution filter
+        /// Copy pixels into a one-dimensional convolution filter.
         /// </summary>
         /// <param name="target">
         /// Must be Convolution1D.
@@ -975,7 +975,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Copy pixels into a two-dimensional convolution filter
+        /// Copy pixels into a two-dimensional convolution filter.
         /// </summary>
         /// <param name="target">
         /// Must be Convolution2D.
@@ -1002,7 +1002,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Retrieve contents of a color lookup table
+        /// Retrieve contents of a color lookup table.
         /// </summary>
         /// <param name="target">
         /// Must be ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -1024,7 +1024,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Retrieve contents of a color lookup table
+        /// Retrieve contents of a color lookup table.
         /// </summary>
         /// <param name="target">
         /// Must be ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -1048,7 +1048,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Retrieve contents of a color lookup table
+        /// Retrieve contents of a color lookup table.
         /// </summary>
         /// <param name="target">
         /// Must be ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -1072,7 +1072,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Retrieve contents of a color lookup table
+        /// Retrieve contents of a color lookup table.
         /// </summary>
         /// <param name="target">
         /// Must be ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -1096,7 +1096,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Retrieve contents of a color lookup table
+        /// Retrieve contents of a color lookup table.
         /// </summary>
         /// <param name="target">
         /// Must be ColorTable, PostConvolutionColorTable, or PostColorMatrixColorTable.
@@ -1120,7 +1120,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get color lookup table parameters
+        /// Get color lookup table parameters.
         /// </summary>
         /// <param name="target">
         /// The target color table. Must be ColorTable, PostConvolutionColorTable, PostColorMatrixColorTable, ProxyColorTable, ProxyPostConvolutionColorTable, or ProxyPostColorMatrixColorTable.
@@ -1139,7 +1139,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get color lookup table parameters
+        /// Get color lookup table parameters.
         /// </summary>
         /// <param name="target">
         /// The target color table. Must be ColorTable, PostConvolutionColorTable, PostColorMatrixColorTable, ProxyColorTable, ProxyPostConvolutionColorTable, or ProxyPostColorMatrixColorTable.
@@ -1158,7 +1158,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get color lookup table parameters
+        /// Get color lookup table parameters.
         /// </summary>
         /// <param name="target">
         /// The target color table. Must be ColorTable, PostConvolutionColorTable, PostColorMatrixColorTable, ProxyColorTable, ProxyPostConvolutionColorTable, or ProxyPostColorMatrixColorTable.
@@ -1177,7 +1177,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get color lookup table parameters
+        /// Get color lookup table parameters.
         /// </summary>
         /// <param name="target">
         /// The target color table. Must be ColorTable, PostConvolutionColorTable, PostColorMatrixColorTable, ProxyColorTable, ProxyPostConvolutionColorTable, or ProxyPostColorMatrixColorTable.
@@ -1196,7 +1196,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get color lookup table parameters
+        /// Get color lookup table parameters.
         /// </summary>
         /// <param name="target">
         /// The target color table. Must be ColorTable, PostConvolutionColorTable, PostColorMatrixColorTable, ProxyColorTable, ProxyPostConvolutionColorTable, or ProxyPostColorMatrixColorTable.
@@ -1215,7 +1215,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get color lookup table parameters
+        /// Get color lookup table parameters.
         /// </summary>
         /// <param name="target">
         /// The target color table. Must be ColorTable, PostConvolutionColorTable, PostColorMatrixColorTable, ProxyColorTable, ProxyPostConvolutionColorTable, or ProxyPostColorMatrixColorTable.
@@ -1234,7 +1234,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get current 1D or 2D convolution filter kernel
+        /// Get current 1D or 2D convolution filter kernel.
         /// </summary>
         /// <param name="target">
         /// The filter to be retrieved. Must be one of Convolution1D or Convolution2D.
@@ -1256,7 +1256,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get current 1D or 2D convolution filter kernel
+        /// Get current 1D or 2D convolution filter kernel.
         /// </summary>
         /// <param name="target">
         /// The filter to be retrieved. Must be one of Convolution1D or Convolution2D.
@@ -1280,7 +1280,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get current 1D or 2D convolution filter kernel
+        /// Get current 1D or 2D convolution filter kernel.
         /// </summary>
         /// <param name="target">
         /// The filter to be retrieved. Must be one of Convolution1D or Convolution2D.
@@ -1304,7 +1304,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get current 1D or 2D convolution filter kernel
+        /// Get current 1D or 2D convolution filter kernel.
         /// </summary>
         /// <param name="target">
         /// The filter to be retrieved. Must be one of Convolution1D or Convolution2D.
@@ -1328,7 +1328,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get current 1D or 2D convolution filter kernel
+        /// Get current 1D or 2D convolution filter kernel.
         /// </summary>
         /// <param name="target">
         /// The filter to be retrieved. Must be one of Convolution1D or Convolution2D.
@@ -1352,7 +1352,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get convolution parameters
+        /// Get convolution parameters.
         /// </summary>
         /// <param name="target">
         /// The filter whose parameters are to be retrieved. Must be one of Convolution1D, Convolution2D, or Separable2D.
@@ -1371,7 +1371,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get convolution parameters
+        /// Get convolution parameters.
         /// </summary>
         /// <param name="target">
         /// The filter whose parameters are to be retrieved. Must be one of Convolution1D, Convolution2D, or Separable2D.
@@ -1390,7 +1390,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get convolution parameters
+        /// Get convolution parameters.
         /// </summary>
         /// <param name="target">
         /// The filter whose parameters are to be retrieved. Must be one of Convolution1D, Convolution2D, or Separable2D.
@@ -1409,7 +1409,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get convolution parameters
+        /// Get convolution parameters.
         /// </summary>
         /// <param name="target">
         /// The filter whose parameters are to be retrieved. Must be one of Convolution1D, Convolution2D, or Separable2D.
@@ -1428,7 +1428,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get convolution parameters
+        /// Get convolution parameters.
         /// </summary>
         /// <param name="target">
         /// The filter whose parameters are to be retrieved. Must be one of Convolution1D, Convolution2D, or Separable2D.
@@ -1447,7 +1447,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get convolution parameters
+        /// Get convolution parameters.
         /// </summary>
         /// <param name="target">
         /// The filter whose parameters are to be retrieved. Must be one of Convolution1D, Convolution2D, or Separable2D.
@@ -1466,7 +1466,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get histogram table
+        /// Get histogram table.
         /// </summary>
         /// <param name="target">
         /// Must be Histogram.
@@ -1491,7 +1491,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get histogram table
+        /// Get histogram table.
         /// </summary>
         /// <param name="target">
         /// Must be Histogram.
@@ -1518,7 +1518,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get histogram table
+        /// Get histogram table.
         /// </summary>
         /// <param name="target">
         /// Must be Histogram.
@@ -1545,7 +1545,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get histogram table
+        /// Get histogram table.
         /// </summary>
         /// <param name="target">
         /// Must be Histogram.
@@ -1572,7 +1572,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get histogram table
+        /// Get histogram table.
         /// </summary>
         /// <param name="target">
         /// Must be Histogram.
@@ -1599,7 +1599,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get histogram parameters
+        /// Get histogram parameters.
         /// </summary>
         /// <param name="target">
         /// Must be one of Histogram or ProxyHistogram.
@@ -1618,7 +1618,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get histogram parameters
+        /// Get histogram parameters.
         /// </summary>
         /// <param name="target">
         /// Must be one of Histogram or ProxyHistogram.
@@ -1637,7 +1637,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get histogram parameters
+        /// Get histogram parameters.
         /// </summary>
         /// <param name="target">
         /// Must be one of Histogram or ProxyHistogram.
@@ -1656,7 +1656,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get histogram parameters
+        /// Get histogram parameters.
         /// </summary>
         /// <param name="target">
         /// Must be one of Histogram or ProxyHistogram.
@@ -1675,7 +1675,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get histogram parameters
+        /// Get histogram parameters.
         /// </summary>
         /// <param name="target">
         /// Must be one of Histogram or ProxyHistogram.
@@ -1694,7 +1694,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get histogram parameters
+        /// Get histogram parameters.
         /// </summary>
         /// <param name="target">
         /// Must be one of Histogram or ProxyHistogram.
@@ -1713,7 +1713,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get minimum and maximum pixel values
+        /// Get minimum and maximum pixel values.
         /// </summary>
         /// <param name="target">
         /// Must be Minmax.
@@ -1738,7 +1738,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get minimum and maximum pixel values
+        /// Get minimum and maximum pixel values.
         /// </summary>
         /// <param name="target">
         /// Must be Minmax.
@@ -1765,7 +1765,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get minimum and maximum pixel values
+        /// Get minimum and maximum pixel values.
         /// </summary>
         /// <param name="target">
         /// Must be Minmax.
@@ -1792,7 +1792,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get minimum and maximum pixel values
+        /// Get minimum and maximum pixel values.
         /// </summary>
         /// <param name="target">
         /// Must be Minmax.
@@ -1819,7 +1819,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get minimum and maximum pixel values
+        /// Get minimum and maximum pixel values.
         /// </summary>
         /// <param name="target">
         /// Must be Minmax.
@@ -1846,7 +1846,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get minmax parameters
+        /// Get minmax parameters.
         /// </summary>
         /// <param name="target">
         /// Must be Minmax.
@@ -1865,7 +1865,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get minmax parameters
+        /// Get minmax parameters.
         /// </summary>
         /// <param name="target">
         /// Must be Minmax.
@@ -1884,7 +1884,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get minmax parameters
+        /// Get minmax parameters.
         /// </summary>
         /// <param name="target">
         /// Must be Minmax.
@@ -1903,7 +1903,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get minmax parameters
+        /// Get minmax parameters.
         /// </summary>
         /// <param name="target">
         /// Must be Minmax.
@@ -1922,7 +1922,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get minmax parameters
+        /// Get minmax parameters.
         /// </summary>
         /// <param name="target">
         /// Must be Minmax.
@@ -1941,7 +1941,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get minmax parameters
+        /// Get minmax parameters.
         /// </summary>
         /// <param name="target">
         /// Must be Minmax.
@@ -1960,7 +1960,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get separable convolution filter kernel images
+        /// Get separable convolution filter kernel images.
         /// </summary>
         /// <param name="target">
         /// The separable filter to be retrieved. Must be Separable2D.
@@ -1990,7 +1990,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get separable convolution filter kernel images
+        /// Get separable convolution filter kernel images.
         /// </summary>
         /// <param name="target">
         /// The separable filter to be retrieved. Must be Separable2D.
@@ -2026,7 +2026,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get separable convolution filter kernel images
+        /// Get separable convolution filter kernel images.
         /// </summary>
         /// <param name="target">
         /// The separable filter to be retrieved. Must be Separable2D.
@@ -2062,7 +2062,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get separable convolution filter kernel images
+        /// Get separable convolution filter kernel images.
         /// </summary>
         /// <param name="target">
         /// The separable filter to be retrieved. Must be Separable2D.
@@ -2098,7 +2098,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Get separable convolution filter kernel images
+        /// Get separable convolution filter kernel images.
         /// </summary>
         /// <param name="target">
         /// The separable filter to be retrieved. Must be Separable2D.
@@ -2134,7 +2134,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define histogram table
+        /// Define histogram table.
         /// </summary>
         /// <param name="target">
         /// The histogram whose parameters are to be set. Must be one of Histogram or ProxyHistogram.
@@ -2155,7 +2155,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define minmax table
+        /// Define minmax table.
         /// </summary>
         /// <param name="target">
         /// The minmax table whose parameters are to be set. Must be Minmax.
@@ -2173,7 +2173,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Reset histogram table entries to zero
+        /// Reset histogram table entries to zero.
         /// </summary>
         /// <param name="target">
         /// Must be Histogram.
@@ -2185,7 +2185,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Reset minmax table entries to initial values
+        /// Reset minmax table entries to initial values.
         /// </summary>
         /// <param name="target">
         /// Must be Minmax.
@@ -2197,7 +2197,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a separable two-dimensional convolution filter
+        /// Define a separable two-dimensional convolution filter.
         /// </summary>
         /// <param name="target">
         /// Must be Separable2D.
@@ -2232,7 +2232,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a separable two-dimensional convolution filter
+        /// Define a separable two-dimensional convolution filter.
         /// </summary>
         /// <param name="target">
         /// Must be Separable2D.
@@ -2271,7 +2271,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a separable two-dimensional convolution filter
+        /// Define a separable two-dimensional convolution filter.
         /// </summary>
         /// <param name="target">
         /// Must be Separable2D.
@@ -2310,7 +2310,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a separable two-dimensional convolution filter
+        /// Define a separable two-dimensional convolution filter.
         /// </summary>
         /// <param name="target">
         /// Must be Separable2D.
@@ -2349,7 +2349,7 @@ namespace OpenTK.Graphics.OpenGL4
         }
 
         /// <summary>
-        /// Define a separable two-dimensional convolution filter
+        /// Define a separable two-dimensional convolution filter.
         /// </summary>
         /// <param name="target">
         /// Must be Separable2D.

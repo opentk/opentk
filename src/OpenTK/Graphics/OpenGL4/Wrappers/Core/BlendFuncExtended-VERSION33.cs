@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v3.3 or ARB_blend_func_extended|VERSION_3_3]
-        /// Bind a user-defined varying out variable to a fragment shader color number and index
+        /// Bind a user-defined varying out variable to a fragment shader color number and index.
         /// </summary>
         /// <param name="program">
         /// The name of the program containing varying out variable whose binding to modify
@@ -55,7 +55,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.3 or ARB_blend_func_extended|VERSION_3_3]
-        /// Query the bindings of color indices to user-defined varying out variables
+        /// Query the bindings of color indices to user-defined varying out variables.
         /// </summary>
         /// <param name="program">
         /// The name of the program containing varying out variable whose binding to query

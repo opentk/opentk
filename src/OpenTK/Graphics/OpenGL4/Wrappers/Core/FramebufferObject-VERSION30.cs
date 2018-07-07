@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Bind a framebuffer to a framebuffer target
+        /// Bind a framebuffer to a framebuffer target.
         /// </summary>
         /// <param name="target">
         /// Specifies the framebuffer target of the binding operation.
@@ -49,7 +49,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Bind a renderbuffer to a renderbuffer target
+        /// Bind a renderbuffer to a renderbuffer target.
         /// </summary>
         /// <param name="target">
         /// Specifies the renderbuffer target of the binding operation. target must be Renderbuffer.
@@ -65,7 +65,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Copy a block of pixels from the read framebuffer to the draw framebuffer
+        /// Copy a block of pixels from the read framebuffer to the draw framebuffer.
         /// </summary>
         /// <param name="srcX0">
         /// Specify the bounds of the source rectangle within the read buffer of the read framebuffer.
@@ -105,7 +105,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Check the completeness status of a framebuffer
+        /// Check the completeness status of a framebuffer.
         /// </summary>
         /// <param name="target">
         /// Specify the target of the framebuffer completeness check.
@@ -118,7 +118,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Delete framebuffer objects
+        /// Delete framebuffer objects.
         /// </summary>
         /// <param name="framebuffers">
         /// [length: n]
@@ -132,7 +132,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Delete framebuffer objects
+        /// Delete framebuffer objects.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of framebuffer objects to be deleted.
@@ -149,7 +149,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Delete framebuffer objects
+        /// Delete framebuffer objects.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of framebuffer objects to be deleted.
@@ -166,7 +166,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Delete framebuffer objects
+        /// Delete framebuffer objects.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of framebuffer objects to be deleted.
@@ -183,7 +183,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Delete renderbuffer objects
+        /// Delete renderbuffer objects.
         /// </summary>
         /// <param name="renderbuffers">
         /// [length: n]
@@ -197,7 +197,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Delete renderbuffer objects
+        /// Delete renderbuffer objects.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of renderbuffer objects to be deleted.
@@ -214,7 +214,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Delete renderbuffer objects
+        /// Delete renderbuffer objects.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of renderbuffer objects to be deleted.
@@ -231,7 +231,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Delete renderbuffer objects
+        /// Delete renderbuffer objects.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of renderbuffer objects to be deleted.
@@ -248,7 +248,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Attach a renderbuffer as a logical buffer to the currently bound framebuffer object
+        /// Attach a renderbuffer as a logical buffer to the currently bound framebuffer object.
         /// </summary>
         /// <param name="target">
         /// Specifies the framebuffer target. target must be DrawFramebuffer, ReadFramebuffer, or Framebuffer. Framebuffer is equivalent to DrawFramebuffer.
@@ -329,7 +329,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Attach a single layer of a texture to a framebuffer
+        /// Attach a single layer of a texture to a framebuffer.
         /// </summary>
         /// <param name="target">
         /// Specifies the framebuffer target. target must be DrawFramebuffer, ReadFramebuffer, or Framebuffer. Framebuffer is equivalent to DrawFramebuffer.
@@ -354,7 +354,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Generate framebuffer object names
+        /// Generate framebuffer object names.
         /// </summary>
         [AutoGenerated(Category = "ARB_framebuffer_object|VERSION_3_0", Version = "3.0", EntryPoint = "glGenFramebuffers")]
         public static uint GenFramebuffer()
@@ -364,7 +364,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Generate framebuffer object names
+        /// Generate framebuffer object names.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of framebuffer object names to generate.
@@ -381,7 +381,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Generate framebuffer object names
+        /// Generate framebuffer object names.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of framebuffer object names to generate.
@@ -398,7 +398,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Generate framebuffer object names
+        /// Generate framebuffer object names.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of framebuffer object names to generate.
@@ -415,7 +415,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Generate renderbuffer object names
+        /// Generate renderbuffer object names.
         /// </summary>
         [AutoGenerated(Category = "ARB_framebuffer_object|VERSION_3_0", Version = "3.0", EntryPoint = "glGenRenderbuffers")]
         public static uint GenRenderbuffer()
@@ -425,7 +425,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Generate renderbuffer object names
+        /// Generate renderbuffer object names.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of renderbuffer object names to generate.
@@ -442,7 +442,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Generate renderbuffer object names
+        /// Generate renderbuffer object names.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of renderbuffer object names to generate.
@@ -459,7 +459,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Generate renderbuffer object names
+        /// Generate renderbuffer object names.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of renderbuffer object names to generate.
@@ -476,7 +476,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Generate mipmaps for a specified texture target
+        /// Generate mipmaps for a specified texture target.
         /// </summary>
         /// <param name="target">
         /// Specifies the target to which the texture whose mimaps to generate is bound. target must be Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray or TextureCubeMap.
@@ -489,7 +489,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Retrieve information about attachments of a bound framebuffer object
+        /// Retrieve information about attachments of a bound framebuffer object.
         /// </summary>
         /// <param name="target">
         /// Specifies the target of the query operation.
@@ -512,7 +512,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Retrieve information about attachments of a bound framebuffer object
+        /// Retrieve information about attachments of a bound framebuffer object.
         /// </summary>
         /// <param name="target">
         /// Specifies the target of the query operation.
@@ -535,7 +535,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Retrieve information about attachments of a bound framebuffer object
+        /// Retrieve information about attachments of a bound framebuffer object.
         /// </summary>
         /// <param name="target">
         /// Specifies the target of the query operation.
@@ -558,7 +558,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Retrieve information about a bound renderbuffer object
+        /// Retrieve information about a bound renderbuffer object.
         /// </summary>
         /// <param name="target">
         /// Specifies the target of the query operation. target must be Renderbuffer.
@@ -578,7 +578,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Retrieve information about a bound renderbuffer object
+        /// Retrieve information about a bound renderbuffer object.
         /// </summary>
         /// <param name="target">
         /// Specifies the target of the query operation. target must be Renderbuffer.
@@ -598,7 +598,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Retrieve information about a bound renderbuffer object
+        /// Retrieve information about a bound renderbuffer object.
         /// </summary>
         /// <param name="target">
         /// Specifies the target of the query operation. target must be Renderbuffer.
@@ -618,7 +618,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Determine if a name corresponds to a framebuffer object
+        /// Determine if a name corresponds to a framebuffer object.
         /// </summary>
         /// <param name="framebuffer">
         /// Specifies a value that may be the name of a framebuffer object.
@@ -631,7 +631,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Determine if a name corresponds to a renderbuffer object
+        /// Determine if a name corresponds to a renderbuffer object.
         /// </summary>
         /// <param name="renderbuffer">
         /// Specifies a value that may be the name of a renderbuffer object.
@@ -644,7 +644,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Establish data storage, format and dimensions of a renderbuffer object's image
+        /// Establish data storage, format and dimensions of a renderbuffer object's image.
         /// </summary>
         /// <param name="target">
         /// Specifies a binding to which the target of the allocation and must be Renderbuffer.
@@ -666,7 +666,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v3.0 or ARB_framebuffer_object|VERSION_3_0]
-        /// Establish data storage, format, dimensions and sample count of a renderbuffer object's image
+        /// Establish data storage, format, dimensions and sample count of a renderbuffer object's image.
         /// </summary>
         /// <param name="target">
         /// Specifies a binding to which the target of the allocation and must be Renderbuffer.

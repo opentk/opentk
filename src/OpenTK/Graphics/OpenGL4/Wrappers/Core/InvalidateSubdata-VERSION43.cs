@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.3 or ARB_invalidate_subdata|VERSION_4_3]
-        /// Invalidate the content of a buffer object's data store
+        /// Invalidate the content of a buffer object's data store.
         /// </summary>
         /// <param name="buffer">
         /// The name of a buffer object whose data store to invalidate.
@@ -46,7 +46,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_invalidate_subdata|VERSION_4_3]
-        /// Invalidate a region of a buffer object's data store
+        /// Invalidate a region of a buffer object's data store.
         /// </summary>
         /// <param name="buffer">
         /// The name of a buffer object, a subrange of whose data store to invalidate.
@@ -65,7 +65,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_invalidate_subdata|VERSION_4_3]
-        /// Invalidate a region of a buffer object's data store
+        /// Invalidate a region of a buffer object's data store.
         /// </summary>
         /// <param name="buffer">
         /// The name of a buffer object, a subrange of whose data store to invalidate.
@@ -84,7 +84,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_invalidate_subdata|VERSION_4_3]
-        /// Invalidate the content some or all of a framebuffer object's attachments
+        /// Invalidate the content some or all of a framebuffer object's attachments.
         /// </summary>
         /// <param name="target">
         /// The target to which the framebuffer is attached. target must be Framebuffer, DrawFramebuffer, or ReadFramebuffer.
@@ -104,7 +104,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_invalidate_subdata|VERSION_4_3]
-        /// Invalidate the content some or all of a framebuffer object's attachments
+        /// Invalidate the content some or all of a framebuffer object's attachments.
         /// </summary>
         /// <param name="target">
         /// The target to which the framebuffer is attached. target must be Framebuffer, DrawFramebuffer, or ReadFramebuffer.
@@ -124,7 +124,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_invalidate_subdata|VERSION_4_3]
-        /// Invalidate the content some or all of a framebuffer object's attachments
+        /// Invalidate the content some or all of a framebuffer object's attachments.
         /// </summary>
         /// <param name="target">
         /// The target to which the framebuffer is attached. target must be Framebuffer, DrawFramebuffer, or ReadFramebuffer.
@@ -144,7 +144,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_invalidate_subdata|VERSION_4_3]
-        /// Invalidate the content of a region of some or all of a framebuffer object's attachments
+        /// Invalidate the content of a region of some or all of a framebuffer object's attachments.
         /// </summary>
         /// <param name="target">
         /// The target to which the framebuffer is attached. target must be Framebuffer, DrawFramebuffer, or ReadFramebuffer.
@@ -176,7 +176,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_invalidate_subdata|VERSION_4_3]
-        /// Invalidate the content of a region of some or all of a framebuffer object's attachments
+        /// Invalidate the content of a region of some or all of a framebuffer object's attachments.
         /// </summary>
         /// <param name="target">
         /// The target to which the framebuffer is attached. target must be Framebuffer, DrawFramebuffer, or ReadFramebuffer.
@@ -208,7 +208,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_invalidate_subdata|VERSION_4_3]
-        /// Invalidate the content of a region of some or all of a framebuffer object's attachments
+        /// Invalidate the content of a region of some or all of a framebuffer object's attachments.
         /// </summary>
         /// <param name="target">
         /// The target to which the framebuffer is attached. target must be Framebuffer, DrawFramebuffer, or ReadFramebuffer.
@@ -240,7 +240,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_invalidate_subdata|VERSION_4_3]
-        /// Invalidate the entirety a texture image
+        /// Invalidate the entirety a texture image.
         /// </summary>
         /// <param name="texture">
         /// The name of a texture object to invalidate.
@@ -256,7 +256,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_invalidate_subdata|VERSION_4_3]
-        /// Invalidate a region of a texture image
+        /// Invalidate a region of a texture image.
         /// </summary>
         /// <param name="texture">
         /// The name of a texture object a subregion of which to invalidate.

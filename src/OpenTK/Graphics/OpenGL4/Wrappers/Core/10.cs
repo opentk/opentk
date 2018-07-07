@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v1.0]
-        /// Specify pixel arithmetic
+        /// Specify pixel arithmetic.
         /// </summary>
         /// <param name="sfactor">
         /// Specifies how the red, green, blue, and alpha source blending factors are computed. The initial value is One.
@@ -49,7 +49,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Clear buffers to preset values
+        /// Clear buffers to preset values.
         /// </summary>
         /// <param name="mask">
         /// Bitwise OR of masks that indicate the buffers to be cleared. The three masks are ColorBufferBit, DepthBufferBit, and StencilBufferBit.
@@ -62,7 +62,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify clear values for the color buffers
+        /// Specify clear values for the color buffers.
         /// </summary>
         /// <param name="red">
         /// Specify the red, green, blue, and alpha values used when the color buffers are cleared. The initial values are all 0.
@@ -84,7 +84,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify the clear value for the depth buffer
+        /// Specify the clear value for the depth buffer.
         /// </summary>
         /// <param name="depth">
         /// Specifies the depth value used when the depth buffer is cleared. The initial value is 1.
@@ -97,7 +97,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify the clear value for the stencil buffer
+        /// Specify the clear value for the stencil buffer.
         /// </summary>
         /// <param name="s">
         /// Specifies the index used when the stencil buffer is cleared. The initial value is 0.
@@ -110,7 +110,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Enable and disable writing of frame buffer color components
+        /// Enable and disable writing of frame buffer color components.
         /// </summary>
         /// <param name="red">
         /// Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all True, indicating that the color components are written.
@@ -132,7 +132,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify whether front- or back-facing facets can be culled
+        /// Specify whether front- or back-facing facets can be culled.
         /// </summary>
         /// <param name="mode">
         /// Specifies whether front- or back-facing facets are candidates for culling. Symbolic constants Front, Back, and FrontAndBack are accepted. The initial value is Back.
@@ -145,7 +145,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify the value used for depth buffer comparisons
+        /// Specify the value used for depth buffer comparisons.
         /// </summary>
         /// <param name="func">
         /// Specifies the depth comparison function. Symbolic constants Never, Less, Equal, Lequal, Greater, Notequal, Gequal, and Always are accepted. The initial value is Less.
@@ -158,7 +158,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Enable or disable writing into the depth buffer
+        /// Enable or disable writing into the depth buffer.
         /// </summary>
         /// <param name="flag">
         /// Specifies whether the depth buffer is enabled for writing. If flag is False, depth buffer writing is disabled. Otherwise, it is enabled. Initially, depth buffer writing is enabled.
@@ -171,7 +171,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify mapping of depth values from normalized device coordinates to window coordinates
+        /// Specify mapping of depth values from normalized device coordinates to window coordinates.
         /// </summary>
         /// <param name="near">
         /// Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0.
@@ -198,7 +198,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify which color buffers are to be drawn into
+        /// Specify which color buffers are to be drawn into.
         /// </summary>
         /// <param name="buf">
         /// Specifies up to four color buffers to be drawn into. Symbolic constants None, FrontLeft, FrontRight, BackLeft, BackRight, Front, Back, Left, Right, and FrontAndBack are accepted. The initial value is Front for single-buffered contexts, and Back for double-buffered contexts.
@@ -211,7 +211,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Enable or disable server-side GL capabilities
+        /// Enable or disable server-side GL capabilities.
         /// </summary>
         /// <param name="cap">
         /// Specifies a symbolic constant indicating a GL capability.
@@ -224,7 +224,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Block until all GL execution is complete
+        /// Block until all GL execution is complete.
         /// </summary>
         [AutoGenerated(Category = "VERSION_1_0", Version = "1.0", EntryPoint = "glFinish")]
         public static void Finish()
@@ -234,7 +234,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Force execution of GL commands in finite time
+        /// Force execution of GL commands in finite time.
         /// </summary>
         [AutoGenerated(Category = "VERSION_1_0", Version = "1.0", EntryPoint = "glFlush")]
         public static void Flush()
@@ -244,7 +244,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Define front- and back-facing polygons
+        /// Define front- and back-facing polygons.
         /// </summary>
         /// <param name="mode">
         /// Specifies the orientation of front-facing polygons. Cw and Ccw are accepted. The initial value is Ccw.
@@ -363,7 +363,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return error information
+        /// Return error information.
         /// </summary>
         [AutoGenerated(Category = "VERSION_1_0", Version = "1.0", EntryPoint = "glGetError")]
         public static OpenTK.Graphics.OpenGL4.ErrorCode GetError()
@@ -479,7 +479,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return a string describing the current GL connection
+        /// Return a string describing the current GL connection.
         /// </summary>
         /// <param name="name">
         /// Specifies a symbolic constant, one of Vendor, Renderer, Version, or ShadingLanguageVersion. Additionally, glGetStringi accepts the Extensions token.
@@ -492,7 +492,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return a texture image
+        /// Return a texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
@@ -518,7 +518,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return a texture image
+        /// Return a texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
@@ -546,7 +546,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return a texture image
+        /// Return a texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
@@ -574,7 +574,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return a texture image
+        /// Return a texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
@@ -602,7 +602,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return a texture image
+        /// Return a texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
@@ -630,7 +630,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return texture parameter values for a specific level of detail
+        /// Return texture parameter values for a specific level of detail.
         /// </summary>
         /// <param name="target">
         /// Specifies the symbolic name of the target texture, one of Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, Texture2DMultisample, Texture2DMultisampleArray, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, ProxyTexture1D, ProxyTexture2D, ProxyTexture3D, ProxyTexture1DArray, ProxyTexture2DArray, ProxyTextureRectangle, ProxyTexture2DMultisample, ProxyTexture2DMultisampleArray, ProxyTextureCubeMap, or TextureBuffer.
@@ -653,7 +653,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return texture parameter values for a specific level of detail
+        /// Return texture parameter values for a specific level of detail.
         /// </summary>
         /// <param name="target">
         /// Specifies the symbolic name of the target texture, one of Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, Texture2DMultisample, Texture2DMultisampleArray, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, ProxyTexture1D, ProxyTexture2D, ProxyTexture3D, ProxyTexture1DArray, ProxyTexture2DArray, ProxyTextureRectangle, ProxyTexture2DMultisample, ProxyTexture2DMultisampleArray, ProxyTextureCubeMap, or TextureBuffer.
@@ -676,7 +676,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return texture parameter values for a specific level of detail
+        /// Return texture parameter values for a specific level of detail.
         /// </summary>
         /// <param name="target">
         /// Specifies the symbolic name of the target texture, one of Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, Texture2DMultisample, Texture2DMultisampleArray, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, ProxyTexture1D, ProxyTexture2D, ProxyTexture3D, ProxyTexture1DArray, ProxyTexture2DArray, ProxyTextureRectangle, ProxyTexture2DMultisample, ProxyTexture2DMultisampleArray, ProxyTextureCubeMap, or TextureBuffer.
@@ -699,7 +699,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return texture parameter values for a specific level of detail
+        /// Return texture parameter values for a specific level of detail.
         /// </summary>
         /// <param name="target">
         /// Specifies the symbolic name of the target texture, one of Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, Texture2DMultisample, Texture2DMultisampleArray, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, ProxyTexture1D, ProxyTexture2D, ProxyTexture3D, ProxyTexture1DArray, ProxyTexture2DArray, ProxyTextureRectangle, ProxyTexture2DMultisample, ProxyTexture2DMultisampleArray, ProxyTextureCubeMap, or TextureBuffer.
@@ -722,7 +722,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return texture parameter values for a specific level of detail
+        /// Return texture parameter values for a specific level of detail.
         /// </summary>
         /// <param name="target">
         /// Specifies the symbolic name of the target texture, one of Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, Texture2DMultisample, Texture2DMultisampleArray, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, ProxyTexture1D, ProxyTexture2D, ProxyTexture3D, ProxyTexture1DArray, ProxyTexture2DArray, ProxyTextureRectangle, ProxyTexture2DMultisample, ProxyTexture2DMultisampleArray, ProxyTextureCubeMap, or TextureBuffer.
@@ -745,7 +745,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return texture parameter values for a specific level of detail
+        /// Return texture parameter values for a specific level of detail.
         /// </summary>
         /// <param name="target">
         /// Specifies the symbolic name of the target texture, one of Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, Texture2DMultisample, Texture2DMultisampleArray, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, ProxyTexture1D, ProxyTexture2D, ProxyTexture3D, ProxyTexture1DArray, ProxyTexture2DArray, ProxyTextureRectangle, ProxyTexture2DMultisample, ProxyTexture2DMultisampleArray, ProxyTextureCubeMap, or TextureBuffer.
@@ -768,7 +768,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return texture parameter values
+        /// Return texture parameter values.
         /// </summary>
         /// <param name="target">
         /// Specifies the symbolic name of the target texture. Texture1D, Texture2D, Texture1DArray, Texture2DArray, Texture3D, TextureRectangle, TextureCubeMap, and TextureCubeMapArray are accepted.
@@ -788,7 +788,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return texture parameter values
+        /// Return texture parameter values.
         /// </summary>
         /// <param name="target">
         /// Specifies the symbolic name of the target texture. Texture1D, Texture2D, Texture1DArray, Texture2DArray, Texture3D, TextureRectangle, TextureCubeMap, and TextureCubeMapArray are accepted.
@@ -808,7 +808,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return texture parameter values
+        /// Return texture parameter values.
         /// </summary>
         /// <param name="target">
         /// Specifies the symbolic name of the target texture. Texture1D, Texture2D, Texture1DArray, Texture2DArray, Texture3D, TextureRectangle, TextureCubeMap, and TextureCubeMapArray are accepted.
@@ -828,7 +828,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return texture parameter values
+        /// Return texture parameter values.
         /// </summary>
         /// <param name="target">
         /// Specifies the symbolic name of the target texture. Texture1D, Texture2D, Texture1DArray, Texture2DArray, Texture3D, TextureRectangle, TextureCubeMap, and TextureCubeMapArray are accepted.
@@ -848,7 +848,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return texture parameter values
+        /// Return texture parameter values.
         /// </summary>
         /// <param name="target">
         /// Specifies the symbolic name of the target texture. Texture1D, Texture2D, Texture1DArray, Texture2DArray, Texture3D, TextureRectangle, TextureCubeMap, and TextureCubeMapArray are accepted.
@@ -868,7 +868,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Return texture parameter values
+        /// Return texture parameter values.
         /// </summary>
         /// <param name="target">
         /// Specifies the symbolic name of the target texture. Texture1D, Texture2D, Texture1DArray, Texture2DArray, Texture3D, TextureRectangle, TextureCubeMap, and TextureCubeMapArray are accepted.
@@ -888,7 +888,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify implementation-specific hints
+        /// Specify implementation-specific hints.
         /// </summary>
         /// <param name="target">
         /// Specifies a symbolic constant indicating the behavior to be controlled. LineSmoothHint, PolygonSmoothHint, TextureCompressionHint, and FragmentShaderDerivativeHint are accepted.
@@ -904,7 +904,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Test whether a capability is enabled
+        /// Test whether a capability is enabled.
         /// </summary>
         /// <param name="cap">
         /// Specifies a symbolic constant indicating a GL capability.
@@ -917,7 +917,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify the width of rasterized lines
+        /// Specify the width of rasterized lines.
         /// </summary>
         /// <param name="width">
         /// Specifies the width of rasterized lines. The initial value is 1.
@@ -930,7 +930,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify a logical pixel operation for rendering
+        /// Specify a logical pixel operation for rendering.
         /// </summary>
         /// <param name="opcode">
         /// Specifies a symbolic constant that selects a logical operation. The following symbols are accepted: Clear, Set, Copy, CopyInverted, Noop, Invert, And, Nand, Or, Nor, Xor, Equiv, AndReverse, AndInverted, OrReverse, and OrInverted. The initial value is Copy.
@@ -943,7 +943,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Set pixel storage modes
+        /// Set pixel storage modes.
         /// </summary>
         /// <param name="pname">
         /// Specifies the symbolic name of the parameter to be set. Six values affect the packing of pixel data into memory: PackSwapBytes, PackLsbFirst, PackRowLength, PackImageHeight, PackSkipPixels, PackSkipRows, PackSkipImages, and PackAlignment. Six more affect the unpacking of pixel data from memory: UnpackSwapBytes, UnpackLsbFirst, UnpackRowLength, UnpackImageHeight, UnpackSkipPixels, UnpackSkipRows, UnpackSkipImages, and UnpackAlignment.
@@ -959,7 +959,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Set pixel storage modes
+        /// Set pixel storage modes.
         /// </summary>
         /// <param name="pname">
         /// Specifies the symbolic name of the parameter to be set. Six values affect the packing of pixel data into memory: PackSwapBytes, PackLsbFirst, PackRowLength, PackImageHeight, PackSkipPixels, PackSkipRows, PackSkipImages, and PackAlignment. Six more affect the unpacking of pixel data from memory: UnpackSwapBytes, UnpackLsbFirst, UnpackRowLength, UnpackImageHeight, UnpackSkipPixels, UnpackSkipRows, UnpackSkipImages, and UnpackAlignment.
@@ -975,7 +975,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify the diameter of rasterized points
+        /// Specify the diameter of rasterized points.
         /// </summary>
         /// <param name="size">
         /// Specifies the diameter of rasterized points. The initial value is 1.
@@ -988,7 +988,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Select a polygon rasterization mode
+        /// Select a polygon rasterization mode.
         /// </summary>
         /// <param name="face">
         /// Specifies the polygons that mode applies to. Must be FrontAndBack for front- and back-facing polygons.
@@ -1004,7 +1004,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Select a color buffer source for pixels
+        /// Select a color buffer source for pixels.
         /// </summary>
         /// <param name="src">
         /// Specifies a color buffer. Accepted values are FrontLeft, FrontRight, BackLeft, BackRight, Front, Back, Left, Right, and the constants ColorAttachmenti.
@@ -1017,7 +1017,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Read a block of pixels from the frame buffer
+        /// Read a block of pixels from the frame buffer.
         /// </summary>
         /// <param name="x">
         /// Specify the window coordinates of the first pixel that is read from the frame buffer. This location is the lower left corner of a rectangular block of pixels.
@@ -1049,7 +1049,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Read a block of pixels from the frame buffer
+        /// Read a block of pixels from the frame buffer.
         /// </summary>
         /// <param name="x">
         /// Specify the window coordinates of the first pixel that is read from the frame buffer. This location is the lower left corner of a rectangular block of pixels.
@@ -1083,7 +1083,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Read a block of pixels from the frame buffer
+        /// Read a block of pixels from the frame buffer.
         /// </summary>
         /// <param name="x">
         /// Specify the window coordinates of the first pixel that is read from the frame buffer. This location is the lower left corner of a rectangular block of pixels.
@@ -1117,7 +1117,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Read a block of pixels from the frame buffer
+        /// Read a block of pixels from the frame buffer.
         /// </summary>
         /// <param name="x">
         /// Specify the window coordinates of the first pixel that is read from the frame buffer. This location is the lower left corner of a rectangular block of pixels.
@@ -1151,7 +1151,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Read a block of pixels from the frame buffer
+        /// Read a block of pixels from the frame buffer.
         /// </summary>
         /// <param name="x">
         /// Specify the window coordinates of the first pixel that is read from the frame buffer. This location is the lower left corner of a rectangular block of pixels.
@@ -1185,7 +1185,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Define the scissor box
+        /// Define the scissor box.
         /// </summary>
         /// <param name="x">
         /// Specify the lower left corner of the scissor box. Initially (0, 0).
@@ -1207,7 +1207,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Set front and back function and reference value for stencil testing
+        /// Set front and back function and reference value for stencil testing.
         /// </summary>
         /// <param name="func">
         /// Specifies the test function. Eight symbolic constants are valid: Never, Less, Lequal, Greater, Gequal, Equal, Notequal, and Always. The initial value is Always.
@@ -1226,7 +1226,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Control the front and back writing of individual bits in the stencil planes
+        /// Control the front and back writing of individual bits in the stencil planes.
         /// </summary>
         /// <param name="mask">
         /// Specifies a bit mask to enable and disable writing of individual bits in the stencil planes. Initially, the mask is all 1's.
@@ -1239,7 +1239,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Set front and back stencil test actions
+        /// Set front and back stencil test actions.
         /// </summary>
         /// <param name="fail">
         /// Specifies the action to take when the stencil test fails. Eight symbolic constants are accepted: Keep, Zero, Replace, Incr, IncrWrap, Decr, DecrWrap, and Invert. The initial value is Keep.
@@ -1258,7 +1258,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify a one-dimensional texture image
+        /// Specify a one-dimensional texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D or ProxyTexture1D.
@@ -1286,51 +1286,14 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies a pointer to the image data in memory.
         /// </param>
         [AutoGenerated(Category = "VERSION_1_0", Version = "1.0", EntryPoint = "glTexImage1D")]
-        public static void TexImage1D(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, int width, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [CountAttribute(Computed = "format,type,width")] IntPtr pixels)
+        public static void TexImage1D(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, PixelInternalFormat internalformat, int width, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [CountAttribute(Computed = "format,type,width")] IntPtr pixels)
         {
             throw new BindingsNotRewrittenException();
         }
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify a one-dimensional texture image
-        /// </summary>
-        /// <param name="target">
-        /// Specifies the target texture. Must be Texture1D or ProxyTexture1D.
-        /// </param>
-        /// <param name="level">
-        /// Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
-        /// </param>
-        /// <param name="internalformat">
-        /// Specifies the number of color components in the texture. Must be one of base internal formats given in Table 1, one of the sized internal formats given in Table 2, or one of the compressed internal formats given in Table 3, below.
-        /// </param>
-        /// <param name="width">
-        /// Specifies the width of the texture image. All implementations support texture images that are at least 1024 texels wide. The height of the 1D texture image is 1.
-        /// </param>
-        /// <param name="border">
-        /// This value must be 0.
-        /// </param>
-        /// <param name="format">
-        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, Rg, Rgb, Bgr, Rgba, Bgra, RedInteger, RgInteger, RgbInteger, BgrInteger, RgbaInteger, BgraInteger, StencilIndex, DepthComponent, DepthStencil.
-        /// </param>
-        /// <param name="type">
-        /// Specifies the data type of the pixel data. The following symbolic values are accepted: UnsignedByte, Byte, UnsignedShort, Short, UnsignedInt, Int, Float, UnsignedByte332, UnsignedByte233Rev, UnsignedShort565, UnsignedShort565Rev, UnsignedShort4444, UnsignedShort4444Rev, UnsignedShort5551, UnsignedShort1555Rev, UnsignedInt8888, UnsignedInt8888Rev, UnsignedInt1010102, and UnsignedInt2101010Rev.
-        /// </param>
-        /// <param name="pixels">
-        /// [length: COMPSIZE(format,type,width)]
-        /// Specifies a pointer to the image data in memory.
-        /// </param>
-        /// <typeparam name="T7"></typeparam>
-        [AutoGenerated(Category = "VERSION_1_0", Version = "1.0", EntryPoint = "glTexImage1D")]
-        public static void TexImage1D<T7>(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, int width, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width")] T7[] pixels)
-            where T7 : struct
-        {
-            throw new BindingsNotRewrittenException();
-        }
-
-        /// <summary>
-        /// [requires: v1.0]
-        /// Specify a one-dimensional texture image
+        /// Specify a one-dimensional texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D or ProxyTexture1D.
@@ -1359,7 +1322,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// </param>
         /// <typeparam name="T7"></typeparam>
         [AutoGenerated(Category = "VERSION_1_0", Version = "1.0", EntryPoint = "glTexImage1D")]
-        public static void TexImage1D<T7>(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, int width, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width")] T7[,] pixels)
+        public static void TexImage1D<T7>(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, PixelInternalFormat internalformat, int width, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width")] T7[] pixels)
             where T7 : struct
         {
             throw new BindingsNotRewrittenException();
@@ -1367,7 +1330,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify a one-dimensional texture image
+        /// Specify a one-dimensional texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D or ProxyTexture1D.
@@ -1396,7 +1359,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// </param>
         /// <typeparam name="T7"></typeparam>
         [AutoGenerated(Category = "VERSION_1_0", Version = "1.0", EntryPoint = "glTexImage1D")]
-        public static void TexImage1D<T7>(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, int width, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width")] T7[,,] pixels)
+        public static void TexImage1D<T7>(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, PixelInternalFormat internalformat, int width, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width")] T7[,] pixels)
             where T7 : struct
         {
             throw new BindingsNotRewrittenException();
@@ -1404,7 +1367,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify a one-dimensional texture image
+        /// Specify a one-dimensional texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D or ProxyTexture1D.
@@ -1433,7 +1396,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// </param>
         /// <typeparam name="T7"></typeparam>
         [AutoGenerated(Category = "VERSION_1_0", Version = "1.0", EntryPoint = "glTexImage1D")]
-        public static void TexImage1D<T7>(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, int width, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width")] ref T7 pixels)
+        public static void TexImage1D<T7>(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, PixelInternalFormat internalformat, int width, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width")] T7[,,] pixels)
             where T7 : struct
         {
             throw new BindingsNotRewrittenException();
@@ -1441,7 +1404,44 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify a two-dimensional texture image
+        /// Specify a one-dimensional texture image.
+        /// </summary>
+        /// <param name="target">
+        /// Specifies the target texture. Must be Texture1D or ProxyTexture1D.
+        /// </param>
+        /// <param name="level">
+        /// Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.
+        /// </param>
+        /// <param name="internalformat">
+        /// Specifies the number of color components in the texture. Must be one of base internal formats given in Table 1, one of the sized internal formats given in Table 2, or one of the compressed internal formats given in Table 3, below.
+        /// </param>
+        /// <param name="width">
+        /// Specifies the width of the texture image. All implementations support texture images that are at least 1024 texels wide. The height of the 1D texture image is 1.
+        /// </param>
+        /// <param name="border">
+        /// This value must be 0.
+        /// </param>
+        /// <param name="format">
+        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, Rg, Rgb, Bgr, Rgba, Bgra, RedInteger, RgInteger, RgbInteger, BgrInteger, RgbaInteger, BgraInteger, StencilIndex, DepthComponent, DepthStencil.
+        /// </param>
+        /// <param name="type">
+        /// Specifies the data type of the pixel data. The following symbolic values are accepted: UnsignedByte, Byte, UnsignedShort, Short, UnsignedInt, Int, Float, UnsignedByte332, UnsignedByte233Rev, UnsignedShort565, UnsignedShort565Rev, UnsignedShort4444, UnsignedShort4444Rev, UnsignedShort5551, UnsignedShort1555Rev, UnsignedInt8888, UnsignedInt8888Rev, UnsignedInt1010102, and UnsignedInt2101010Rev.
+        /// </param>
+        /// <param name="pixels">
+        /// [length: COMPSIZE(format,type,width)]
+        /// Specifies a pointer to the image data in memory.
+        /// </param>
+        /// <typeparam name="T7"></typeparam>
+        [AutoGenerated(Category = "VERSION_1_0", Version = "1.0", EntryPoint = "glTexImage1D")]
+        public static void TexImage1D<T7>(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, PixelInternalFormat internalformat, int width, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width")] ref T7 pixels)
+            where T7 : struct
+        {
+            throw new BindingsNotRewrittenException();
+        }
+
+        /// <summary>
+        /// [requires: v1.0]
+        /// Specify a two-dimensional texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, ProxyTexture2D, Texture1DArray, ProxyTexture1DArray, TextureRectangle, ProxyTextureRectangle, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, or ProxyTextureCubeMap.
@@ -1472,14 +1472,14 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies a pointer to the image data in memory.
         /// </param>
         [AutoGenerated(Category = "VERSION_1_0", Version = "1.0", EntryPoint = "glTexImage2D")]
-        public static void TexImage2D(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, int width, int height, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [CountAttribute(Computed = "format,type,width,height")] IntPtr pixels)
+        public static void TexImage2D(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, PixelInternalFormat internalformat, int width, int height, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [CountAttribute(Computed = "format,type,width,height")] IntPtr pixels)
         {
             throw new BindingsNotRewrittenException();
         }
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify a two-dimensional texture image
+        /// Specify a two-dimensional texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, ProxyTexture2D, Texture1DArray, ProxyTexture1DArray, TextureRectangle, ProxyTextureRectangle, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, or ProxyTextureCubeMap.
@@ -1511,7 +1511,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// </param>
         /// <typeparam name="T8"></typeparam>
         [AutoGenerated(Category = "VERSION_1_0", Version = "1.0", EntryPoint = "glTexImage2D")]
-        public static void TexImage2D<T8>(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, int width, int height, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[] pixels)
+        public static void TexImage2D<T8>(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, PixelInternalFormat internalformat, int width, int height, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[] pixels)
             where T8 : struct
         {
             throw new BindingsNotRewrittenException();
@@ -1519,7 +1519,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify a two-dimensional texture image
+        /// Specify a two-dimensional texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, ProxyTexture2D, Texture1DArray, ProxyTexture1DArray, TextureRectangle, ProxyTextureRectangle, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, or ProxyTextureCubeMap.
@@ -1551,7 +1551,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// </param>
         /// <typeparam name="T8"></typeparam>
         [AutoGenerated(Category = "VERSION_1_0", Version = "1.0", EntryPoint = "glTexImage2D")]
-        public static void TexImage2D<T8>(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, int width, int height, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[,] pixels)
+        public static void TexImage2D<T8>(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, PixelInternalFormat internalformat, int width, int height, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[,] pixels)
             where T8 : struct
         {
             throw new BindingsNotRewrittenException();
@@ -1559,7 +1559,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify a two-dimensional texture image
+        /// Specify a two-dimensional texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, ProxyTexture2D, Texture1DArray, ProxyTexture1DArray, TextureRectangle, ProxyTextureRectangle, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, or ProxyTextureCubeMap.
@@ -1591,7 +1591,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// </param>
         /// <typeparam name="T8"></typeparam>
         [AutoGenerated(Category = "VERSION_1_0", Version = "1.0", EntryPoint = "glTexImage2D")]
-        public static void TexImage2D<T8>(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, int width, int height, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[,,] pixels)
+        public static void TexImage2D<T8>(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, PixelInternalFormat internalformat, int width, int height, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] T8[,,] pixels)
             where T8 : struct
         {
             throw new BindingsNotRewrittenException();
@@ -1599,7 +1599,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Specify a two-dimensional texture image
+        /// Specify a two-dimensional texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, ProxyTexture2D, Texture1DArray, ProxyTexture1DArray, TextureRectangle, ProxyTextureRectangle, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, or ProxyTextureCubeMap.
@@ -1631,7 +1631,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// </param>
         /// <typeparam name="T8"></typeparam>
         [AutoGenerated(Category = "VERSION_1_0", Version = "1.0", EntryPoint = "glTexImage2D")]
-        public static void TexImage2D<T8>(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, int width, int height, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] ref T8 pixels)
+        public static void TexImage2D<T8>(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, PixelInternalFormat internalformat, int width, int height, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [InAttribute, OutAttribute, CountAttribute(Computed = "format,type,width,height")] ref T8 pixels)
             where T8 : struct
         {
             throw new BindingsNotRewrittenException();
@@ -1639,7 +1639,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Set texture parameters
+        /// Set texture parameters.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture, which must be either Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, or TextureCubeMap.
@@ -1658,7 +1658,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Set texture parameters
+        /// Set texture parameters.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture, which must be either Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, or TextureCubeMap.
@@ -1678,7 +1678,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Set texture parameters
+        /// Set texture parameters.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture, which must be either Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, or TextureCubeMap.
@@ -1698,7 +1698,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Set texture parameters
+        /// Set texture parameters.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture, which must be either Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, or TextureCubeMap.
@@ -1718,7 +1718,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Set texture parameters
+        /// Set texture parameters.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture, which must be either Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, or TextureCubeMap.
@@ -1737,7 +1737,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Set texture parameters
+        /// Set texture parameters.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture, which must be either Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, or TextureCubeMap.
@@ -1757,7 +1757,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Set texture parameters
+        /// Set texture parameters.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture, which must be either Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, or TextureCubeMap.
@@ -1777,7 +1777,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Set texture parameters
+        /// Set texture parameters.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture, which must be either Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, or TextureCubeMap.
@@ -1797,7 +1797,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.0]
-        /// Set the viewport
+        /// Set the viewport.
         /// </summary>
         /// <param name="x">
         /// Specify the lower left corner of the viewport rectangle, in pixels. The initial value is (0,0).
@@ -1985,11 +1985,11 @@ namespace OpenTK.Graphics.OpenGL4
 
         [Slot(1049)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexImage1D(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, int width, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [CountAttribute(Computed = "format,type,width")] IntPtr pixels);
+        private static extern void glTexImage1D(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, PixelInternalFormat internalformat, int width, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [CountAttribute(Computed = "format,type,width")] IntPtr pixels);
 
         [Slot(1050)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
-        private static extern void glTexImage2D(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, OpenTK.Graphics.OpenGL4.PixelInternalFormat internalformat, int width, int height, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [CountAttribute(Computed = "format,type,width,height")] IntPtr pixels);
+        private static extern void glTexImage2D(OpenTK.Graphics.OpenGL4.TextureTarget target, int level, PixelInternalFormat internalformat, int width, int height, int border, OpenTK.Graphics.OpenGL4.PixelFormat format, OpenTK.Graphics.OpenGL4.PixelType type, [CountAttribute(Computed = "format,type,width,height")] IntPtr pixels);
 
         [Slot(1055)]
         [DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]

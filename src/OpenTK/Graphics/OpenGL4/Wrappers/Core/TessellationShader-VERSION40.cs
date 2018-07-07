@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.0 or ARB_tessellation_shader|VERSION_4_0]
-        /// Specifies the parameters for patch primitives
+        /// Specifies the parameters for patch primitives.
         /// </summary>
         /// <param name="pname">
         /// Specifies the name of the parameter to set. The symbolc constants PatchVertices, PatchDefaultOuterLevel, and PatchDefaultInnerLevel are accepted.
@@ -50,7 +50,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_tessellation_shader|VERSION_4_0]
-        /// Specifies the parameters for patch primitives
+        /// Specifies the parameters for patch primitives.
         /// </summary>
         /// <param name="pname">
         /// Specifies the name of the parameter to set. The symbolc constants PatchVertices, PatchDefaultOuterLevel, and PatchDefaultInnerLevel are accepted.
@@ -67,7 +67,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_tessellation_shader|VERSION_4_0]
-        /// Specifies the parameters for patch primitives
+        /// Specifies the parameters for patch primitives.
         /// </summary>
         /// <param name="pname">
         /// Specifies the name of the parameter to set. The symbolc constants PatchVertices, PatchDefaultOuterLevel, and PatchDefaultInnerLevel are accepted.
@@ -84,7 +84,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.0 or ARB_tessellation_shader|VERSION_4_0]
-        /// Specifies the parameters for patch primitives
+        /// Specifies the parameters for patch primitives.
         /// </summary>
         /// <param name="pname">
         /// Specifies the name of the parameter to set. The symbolc constants PatchVertices, PatchDefaultOuterLevel, and PatchDefaultInnerLevel are accepted.

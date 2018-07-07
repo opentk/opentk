@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -38,7 +38,7 @@ namespace OpenTK.Graphics.OpenGL4
         {
             /// <summary>
             /// [requires: EXT_debug_label]
-            /// Retrieve the label of a named object identified within a namespace
+            /// Retrieve the label of a named object identified within a namespace.
             /// </summary>
             /// <param name="type">
             /// The namespace from which the name of the object is allocated.
@@ -65,7 +65,7 @@ namespace OpenTK.Graphics.OpenGL4
 
             /// <summary>
             /// [requires: EXT_debug_label]
-            /// Retrieve the label of a named object identified within a namespace
+            /// Retrieve the label of a named object identified within a namespace.
             /// </summary>
             /// <param name="type">
             /// The namespace from which the name of the object is allocated.

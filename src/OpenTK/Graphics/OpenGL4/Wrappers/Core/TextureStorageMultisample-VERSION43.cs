@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.3 or ARB_texture_storage_multisample|VERSION_4_3]
-        /// Specify storage for a two-dimensional multisample texture
+        /// Specify storage for a two-dimensional multisample texture.
         /// </summary>
         /// <param name="target">
         /// Specify the target of the operation. target must be Texture2DMultisample or ProxyTexture2DMultisample.
@@ -61,7 +61,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_texture_storage_multisample|VERSION_4_3]
-        /// Specify storage for a two-dimensional multisample array texture
+        /// Specify storage for a two-dimensional multisample array texture.
         /// </summary>
         /// <param name="target">
         /// Specify the target of the operation. target must be Texture2DMultisampleArray or ProxyTexture2DMultisampleMultisample.

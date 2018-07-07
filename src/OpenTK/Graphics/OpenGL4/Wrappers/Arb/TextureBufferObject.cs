@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -38,7 +38,7 @@ namespace OpenTK.Graphics.OpenGL4
         {
             /// <summary>
             /// [requires: ARB_texture_buffer_object]
-            /// Attach the storage for a buffer object to the active buffer texture
+            /// Attach the storage for a buffer object to the active buffer texture.
             /// </summary>
             /// <param name="target">
             /// Specifies the target of the operation and must be TextureBuffer.

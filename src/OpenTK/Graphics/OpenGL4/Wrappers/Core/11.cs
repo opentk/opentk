@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v1.1]
-        /// Bind a named texture to a texturing target
+        /// Bind a named texture to a texturing target.
         /// </summary>
         /// <param name="target">
         /// Specifies the target to which the texture is bound. Must be one of Texture1D, Texture2D, Texture3D, Texture1DArray, Texture2DArray, TextureRectangle, TextureCubeMap, TextureCubeMapArray, TextureBuffer, Texture2DMultisample or Texture2DMultisampleArray.
@@ -49,7 +49,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Copy pixels into a 1D texture image
+        /// Copy pixels into a 1D texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D.
@@ -80,7 +80,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Copy pixels into a 2D texture image
+        /// Copy pixels into a 2D texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, or TextureCubeMapNegativeZ.
@@ -114,7 +114,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Copy a one-dimensional texture subimage
+        /// Copy a one-dimensional texture subimage.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D.
@@ -142,7 +142,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Copy a two-dimensional texture subimage
+        /// Copy a two-dimensional texture subimage.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, or Texture1DArray.
@@ -176,7 +176,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Delete named textures
+        /// Delete named textures.
         /// </summary>
         /// <param name="textures">
         /// [length: n]
@@ -190,7 +190,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Delete named textures
+        /// Delete named textures.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of textures to be deleted.
@@ -207,7 +207,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Delete named textures
+        /// Delete named textures.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of textures to be deleted.
@@ -224,7 +224,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Delete named textures
+        /// Delete named textures.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of textures to be deleted.
@@ -241,7 +241,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Render primitives from array data
+        /// Render primitives from array data.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -260,7 +260,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Render primitives from array data
+        /// Render primitives from array data.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -283,7 +283,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Render primitives from array data
+        /// Render primitives from array data.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -306,7 +306,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Render primitives from array data
+        /// Render primitives from array data.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -331,7 +331,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Render primitives from array data
+        /// Render primitives from array data.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -356,7 +356,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Render primitives from array data
+        /// Render primitives from array data.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -381,7 +381,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Render primitives from array data
+        /// Render primitives from array data.
         /// </summary>
         /// <param name="mode">
         /// Specifies what kind of primitives to render. Symbolic constants Points, LineStrip, LineLoop, Lines, LineStripAdjacency, LinesAdjacency, TriangleStrip, TriangleFan, Triangles, TriangleStripAdjacency, TrianglesAdjacency and Patches are accepted.
@@ -406,7 +406,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Generate texture names
+        /// Generate texture names.
         /// </summary>
         [AutoGenerated(Category = "VERSION_1_1", Version = "1.1", EntryPoint = "glGenTextures")]
         public static uint GenTexture()
@@ -416,7 +416,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Generate texture names
+        /// Generate texture names.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of texture names to be generated.
@@ -433,7 +433,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Generate texture names
+        /// Generate texture names.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of texture names to be generated.
@@ -450,7 +450,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Generate texture names
+        /// Generate texture names.
         /// </summary>
         /// <param name="n">
         /// Specifies the number of texture names to be generated.
@@ -467,7 +467,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Determine if a name corresponds to a texture
+        /// Determine if a name corresponds to a texture.
         /// </summary>
         /// <param name="texture">
         /// Specifies a value that may be the name of a texture.
@@ -480,7 +480,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Set the scale and units used to calculate depth values
+        /// Set the scale and units used to calculate depth values.
         /// </summary>
         /// <param name="factor">
         /// Specifies a scale factor that is used to create a variable depth offset for each polygon. The initial value is 0.
@@ -496,7 +496,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Specify a one-dimensional texture subimage
+        /// Specify a one-dimensional texture subimage.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D.
@@ -528,7 +528,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Specify a one-dimensional texture subimage
+        /// Specify a one-dimensional texture subimage.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D.
@@ -562,7 +562,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Specify a one-dimensional texture subimage
+        /// Specify a one-dimensional texture subimage.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D.
@@ -596,7 +596,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Specify a one-dimensional texture subimage
+        /// Specify a one-dimensional texture subimage.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D.
@@ -630,7 +630,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Specify a one-dimensional texture subimage
+        /// Specify a one-dimensional texture subimage.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D.
@@ -664,7 +664,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Specify a two-dimensional texture subimage
+        /// Specify a two-dimensional texture subimage.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, or Texture1DArray.
@@ -702,7 +702,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Specify a two-dimensional texture subimage
+        /// Specify a two-dimensional texture subimage.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, or Texture1DArray.
@@ -742,7 +742,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Specify a two-dimensional texture subimage
+        /// Specify a two-dimensional texture subimage.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, or Texture1DArray.
@@ -782,7 +782,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Specify a two-dimensional texture subimage
+        /// Specify a two-dimensional texture subimage.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, or Texture1DArray.
@@ -822,7 +822,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.1]
-        /// Specify a two-dimensional texture subimage
+        /// Specify a two-dimensional texture subimage.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, or Texture1DArray.

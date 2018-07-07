@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.3 or ARB_internalformat_query2|VERSION_4_3]
-        /// Retrieve information about implementation-dependent support for internal formats
+        /// Retrieve information about implementation-dependent support for internal formats.
         /// </summary>
         /// <param name="target">
         /// Indicates the usage of the internal format. target must be Texture1D, Texture1DArray, Texture2D, Texture2DArray, Texture3D, TextureCubeMap, TextureCubeMapArray, TextureRectangle, TextureBuffer, Renderbuffer, Texture2DMultisample or Texture2DMultisampleArray.
@@ -59,7 +59,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_internalformat_query2|VERSION_4_3]
-        /// Retrieve information about implementation-dependent support for internal formats
+        /// Retrieve information about implementation-dependent support for internal formats.
         /// </summary>
         /// <param name="target">
         /// Indicates the usage of the internal format. target must be Texture1D, Texture1DArray, Texture2D, Texture2DArray, Texture3D, TextureCubeMap, TextureCubeMapArray, TextureRectangle, TextureBuffer, Renderbuffer, Texture2DMultisample or Texture2DMultisampleArray.
@@ -85,7 +85,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.3 or ARB_internalformat_query2|VERSION_4_3]
-        /// Retrieve information about implementation-dependent support for internal formats
+        /// Retrieve information about implementation-dependent support for internal formats.
         /// </summary>
         /// <param name="target">
         /// Indicates the usage of the internal format. target must be Texture1D, Texture1DArray, Texture2D, Texture2DArray, Texture3D, TextureCubeMap, TextureCubeMapArray, TextureRectangle, TextureBuffer, Renderbuffer, Texture2DMultisample or Texture2DMultisampleArray.

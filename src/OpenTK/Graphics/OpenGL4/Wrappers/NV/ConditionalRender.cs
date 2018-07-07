@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -38,7 +38,7 @@ namespace OpenTK.Graphics.OpenGL4
         {
             /// <summary>
             /// [requires: NV_conditional_render]
-            /// Start conditional rendering
+            /// Start conditional rendering.
             /// </summary>
             /// <param name="id">
             /// Specifies the name of an occlusion query object whose results are used to determine if the rendering commands are discarded.

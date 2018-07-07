@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v1.3]
-        /// Select active texture unit
+        /// Select active texture unit.
         /// </summary>
         /// <param name="texture">
         /// Specifies which texture unit to make active. The number of texture units is implementation dependent, but must be at least 80. texture must be one of Texturei, where i ranges from zero to the value of MaxCombinedTextureImageUnits minus one. The initial value is Texture0.
@@ -46,7 +46,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a one-dimensional texture image in a compressed format
+        /// Specify a one-dimensional texture image in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D or ProxyTexture1D.
@@ -78,7 +78,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a one-dimensional texture image in a compressed format
+        /// Specify a one-dimensional texture image in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D or ProxyTexture1D.
@@ -112,7 +112,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a one-dimensional texture image in a compressed format
+        /// Specify a one-dimensional texture image in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D or ProxyTexture1D.
@@ -146,7 +146,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a one-dimensional texture image in a compressed format
+        /// Specify a one-dimensional texture image in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D or ProxyTexture1D.
@@ -180,7 +180,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a one-dimensional texture image in a compressed format
+        /// Specify a one-dimensional texture image in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D or ProxyTexture1D.
@@ -214,7 +214,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a two-dimensional texture image in a compressed format
+        /// Specify a two-dimensional texture image in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, ProxyTexture2D, Texture1DArray, ProxyTexture1DArray, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, or ProxyTextureCubeMap.
@@ -249,7 +249,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a two-dimensional texture image in a compressed format
+        /// Specify a two-dimensional texture image in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, ProxyTexture2D, Texture1DArray, ProxyTexture1DArray, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, or ProxyTextureCubeMap.
@@ -286,7 +286,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a two-dimensional texture image in a compressed format
+        /// Specify a two-dimensional texture image in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, ProxyTexture2D, Texture1DArray, ProxyTexture1DArray, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, or ProxyTextureCubeMap.
@@ -323,7 +323,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a two-dimensional texture image in a compressed format
+        /// Specify a two-dimensional texture image in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, ProxyTexture2D, Texture1DArray, ProxyTexture1DArray, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, or ProxyTextureCubeMap.
@@ -360,7 +360,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a two-dimensional texture image in a compressed format
+        /// Specify a two-dimensional texture image in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, ProxyTexture2D, Texture1DArray, ProxyTexture1DArray, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, TextureCubeMapNegativeZ, or ProxyTextureCubeMap.
@@ -397,7 +397,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a three-dimensional texture image in a compressed format
+        /// Specify a three-dimensional texture image in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture3D, ProxyTexture3D, Texture2DArray or ProxyTexture2DArray.
@@ -435,7 +435,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a three-dimensional texture image in a compressed format
+        /// Specify a three-dimensional texture image in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture3D, ProxyTexture3D, Texture2DArray or ProxyTexture2DArray.
@@ -475,7 +475,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a three-dimensional texture image in a compressed format
+        /// Specify a three-dimensional texture image in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture3D, ProxyTexture3D, Texture2DArray or ProxyTexture2DArray.
@@ -515,7 +515,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a three-dimensional texture image in a compressed format
+        /// Specify a three-dimensional texture image in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture3D, ProxyTexture3D, Texture2DArray or ProxyTexture2DArray.
@@ -555,7 +555,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a three-dimensional texture image in a compressed format
+        /// Specify a three-dimensional texture image in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture3D, ProxyTexture3D, Texture2DArray or ProxyTexture2DArray.
@@ -595,7 +595,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a one-dimensional texture subimage in a compressed format
+        /// Specify a one-dimensional texture subimage in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D.
@@ -627,7 +627,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a one-dimensional texture subimage in a compressed format
+        /// Specify a one-dimensional texture subimage in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D.
@@ -661,7 +661,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a one-dimensional texture subimage in a compressed format
+        /// Specify a one-dimensional texture subimage in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D.
@@ -695,7 +695,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a one-dimensional texture subimage in a compressed format
+        /// Specify a one-dimensional texture subimage in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D.
@@ -729,7 +729,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a one-dimensional texture subimage in a compressed format
+        /// Specify a one-dimensional texture subimage in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture1D.
@@ -763,7 +763,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a two-dimensional texture subimage in a compressed format
+        /// Specify a two-dimensional texture subimage in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, or TextureCubeMapNegativeZ.
@@ -801,7 +801,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a two-dimensional texture subimage in a compressed format
+        /// Specify a two-dimensional texture subimage in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, or TextureCubeMapNegativeZ.
@@ -841,7 +841,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a two-dimensional texture subimage in a compressed format
+        /// Specify a two-dimensional texture subimage in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, or TextureCubeMapNegativeZ.
@@ -881,7 +881,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a two-dimensional texture subimage in a compressed format
+        /// Specify a two-dimensional texture subimage in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, or TextureCubeMapNegativeZ.
@@ -921,7 +921,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a two-dimensional texture subimage in a compressed format
+        /// Specify a two-dimensional texture subimage in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture2D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, or TextureCubeMapNegativeZ.
@@ -961,7 +961,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a three-dimensional texture subimage in a compressed format
+        /// Specify a three-dimensional texture subimage in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture3D.
@@ -1005,7 +1005,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a three-dimensional texture subimage in a compressed format
+        /// Specify a three-dimensional texture subimage in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture3D.
@@ -1051,7 +1051,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a three-dimensional texture subimage in a compressed format
+        /// Specify a three-dimensional texture subimage in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture3D.
@@ -1097,7 +1097,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a three-dimensional texture subimage in a compressed format
+        /// Specify a three-dimensional texture subimage in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture3D.
@@ -1143,7 +1143,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify a three-dimensional texture subimage in a compressed format
+        /// Specify a three-dimensional texture subimage in a compressed format.
         /// </summary>
         /// <param name="target">
         /// Specifies the target texture. Must be Texture3D.
@@ -1189,7 +1189,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Return a compressed texture image
+        /// Return a compressed texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
@@ -1209,7 +1209,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Return a compressed texture image
+        /// Return a compressed texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
@@ -1231,7 +1231,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Return a compressed texture image
+        /// Return a compressed texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
@@ -1253,7 +1253,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Return a compressed texture image
+        /// Return a compressed texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
@@ -1275,7 +1275,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Return a compressed texture image
+        /// Return a compressed texture image.
         /// </summary>
         /// <param name="target">
         /// Specifies which texture is to be obtained. Texture1D, Texture2D, Texture3D, TextureCubeMapPositiveX, TextureCubeMapNegativeX, TextureCubeMapPositiveY, TextureCubeMapNegativeY, TextureCubeMapPositiveZ, and TextureCubeMapNegativeZ are accepted.
@@ -1297,7 +1297,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v1.3]
-        /// Specify multisample coverage parameters
+        /// Specify multisample coverage parameters.
         /// </summary>
         /// <param name="value">
         /// Specify a single floating-point sample coverage value.  The value is clamped to the range [0 ,1]. The initial value is 1.0.

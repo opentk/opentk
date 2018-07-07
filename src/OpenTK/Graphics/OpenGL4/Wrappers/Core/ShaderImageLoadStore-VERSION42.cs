@@ -24,8 +24,8 @@
 //
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Graphics.OpenGL4
 {
@@ -33,7 +33,7 @@ namespace OpenTK.Graphics.OpenGL4
     {
         /// <summary>
         /// [requires: v4.2 or ARB_shader_image_load_store|VERSION_4_2]
-        /// Bind a level of a texture to an image unit
+        /// Bind a level of a texture to an image unit.
         /// </summary>
         /// <param name="unit">
         /// Specifies the index of the image unit to which to bind the texture
@@ -64,7 +64,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.2 or ARB_shader_image_load_store|VERSION_4_2]
-        /// Defines a barrier ordering memory transactions
+        /// Defines a barrier ordering memory transactions.
         /// </summary>
         /// <param name="barriers">
         /// Specifies the barriers to insert. Must be a bitwise combination of VertexAttribArrayBarrierBit, ElementArrayBarrierBit, UniformBarrierBit, TextureFetchBarrierBit, ShaderImageAccessBarrierBit, CommandBarrierBit, PixelBufferBarrierBit, TextureUpdateBarrierBit, BufferUpdateBarrierBit, FramebufferBarrierBit, TransformFeedbackBarrierBit, AtomicCounterBarrierBit, or ShaderStorageBarrierBit. If the special value AllBarrierBits is specified, all supported barriers will be inserted.
