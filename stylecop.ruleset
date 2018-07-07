@@ -104,8 +104,8 @@
     <Rule Id="SA1306" Action="None" Intentional="true" Reason="Field names should begin with upper-case latter"/> <!-- Field names must begin with lower-case letter -->
     <Rule Id="SA1307" Action="Error" /> <!-- Accessible fields must begin with upper-case letter -->
     <Rule Id="SA1308" Action="Error" /> <!-- Variable names must not be prefixed -->
-    <Rule Id="SA1309" Action="Error" /> <!-- Field names must not begin with underscore -->
-    <Rule Id="SX1309" Action="None" Intentional="true" /> <!-- Field names must begin with underscore -->
+    <Rule Id="SA1309" Action="None" /> <!-- Field names must not begin with underscore -->
+    <Rule Id="SX1309" Action="Error" Intentional="true" /> <!-- Field names must begin with underscore -->
     <Rule Id="SX1309S" Action="None" Intentional="true" /> <!-- Static field names must begin with underscore -->
     <Rule Id="SA1310" Action="Error" /> <!-- Field names must not contain underscore -->
     <Rule Id="SA1311" Action="Error" /> <!-- Static readonly fields must begin with upper-case letter -->
