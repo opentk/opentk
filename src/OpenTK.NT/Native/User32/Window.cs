@@ -6,6 +6,7 @@ using System.Security;
 using HINSTANCE = System.IntPtr;
 using HMENU = System.IntPtr;
 using HWND = System.IntPtr;
+using LONG = System.Int32;
 using LONG_PTR = System.IntPtr;
 using LPARAM = System.IntPtr;
 using LPTSTR = System.Text.StringBuilder;
@@ -136,85 +137,144 @@ namespace OpenTK.NT.Native
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SetProcessDPIAware();
 
-            // SetWindowLongPtr does not exist on x86 platforms (it's a macro that resolves to SetWindowLong).
-            // We need to detect if we are on x86 or x64 at runtime and call the correct function
-            public static IntPtr SetWindowLong(HWND hWnd, int nIndex, LONG_PTR dwNewLong)
+            /// <summary>
+            /// Changes the window procedure of the specified window.
+            /// </summary>
+            /// <param name="hWnd">A handle to the window and, indirectly, the class to which the window belongs.</param>
+            /// <param name="newProc">The replacement window procedure.</param>
+            /// <returns>
+            /// If the function succeeds, the return value is the previous value of the specified 32-bit integer.<para/>
+            /// If the function fails, the return value is zero. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
+            /// </returns>
+            public static LONG_PTR SetWindowLong(HWND hWnd, WindowProc newProc)
             {
-                Kernel32.SetLastError(0); // not sure we have to do this
+                return SetWindowLong(hWnd, GetWindowLongIndex.WindowProcedure, Marshal.GetFunctionPointerForDelegate(newProc));
+            }
+
+            /// <summary>
+            /// Changes an attribute of the specified window. The function also sets a value at the specified offset in the extra window memory. 
+            /// </summary>
+            /// <param name="hWnd">A handle to the window and, indirectly, the class to which the window belongs.</param>
+            /// <param name="nIndex">One of the pre-defined values specifying the offset to the value to be set.</param>
+            /// <param name="dwNewLong">The replacement value.</param>
+            /// <returns>
+            /// If the function succeeds, the return value is the previous value of the specified 32-bit integer.<para/>
+            /// If the function fails, the return value is zero. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
+            /// </returns>
+            public static LONG_PTR SetWindowLong(HWND hWnd, GetWindowLongIndex nIndex, LONG_PTR dwNewLong)
+            {
+                return SetWindowLong(hWnd, (int)nIndex, dwNewLong);
+            }
+
+            /// <summary>
+            /// Changes an attribute of the specified window. The function also sets a value at the specified offset in the extra window memory. 
+            /// </summary>
+            /// <param name="hWnd">A handle to the window and, indirectly, the class to which the window belongs.</param>
+            /// <param name="nIndex">The zero-based offset to the value to be set. Valid values are in the range zero through the number of bytes of extra window memory, minus the size of an <see cref="IntPtr"/>.</param>
+            /// <param name="dwNewLong">The replacement value.</param>
+            /// <returns>
+            /// If the function succeeds, the return value is the previous value of the specified 32-bit integer.<para/>
+            /// If the function fails, the return value is zero. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
+            /// </returns>
+            /// <remarks>
+            /// This method is a wrapper around both the SetWindowLong (32-bit) and the SetWindowLongPtr (64-bit) version of these functions.<para/>
+            /// This method will always call the "correct" function for this machine, and return the value wrapped in an <see cref="IntPtr"/>.
+            /// This method will throw a <see cref="Win32Exception"/> if the Windows API function returns a value that indicates failure.
+            /// </remarks>
+            /// <exception cref="Win32Exception"/>
+            public static LONG_PTR SetWindowLong(HWND hWnd, int nIndex, LONG_PTR dwNewLong)
+            {
+                Kernel32.SetLastError(0);
 
                 IntPtr result;
-                if (IntPtr.Size == 4)
-                    result = new IntPtr(SetWindowLongInternal(hWnd, nIndex, dwNewLong.ToInt32()));
+                if (IntPtr.Size == 8)
+                {
+                    result = SetWindowLongPtr(hWnd, nIndex, dwNewLong);
+                }
                 else
-                    result = SetWindowLongPtrInternal(hWnd, nIndex, dwNewLong);
+                {
+                    result = new IntPtr(SetWindowLong(hWnd, nIndex, dwNewLong.ToInt32()));
+                }
 
                 int error;
                 if (result == IntPtr.Zero && (error = Marshal.GetLastWin32Error()) != 0)
-                    new Win32Exception(error, "Failed to modify window border.");
+                {
+                    throw new Win32Exception(error, "Failed to modify window border.");
+                }
 
                 return result;
             }
 
-            public static IntPtr SetWindowLong(HWND hWnd, GetWindowLongIndex nIndex, LONG_PTR dwNewLong)
-                => SetWindowLong(hWnd, (int)nIndex, dwNewLong);
-
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLong")]
-            private static extern int SetWindowLongInternal
+            [DllImport("user32.dll", SetLastError = true)]
+            private static extern int SetWindowLong
             (
                 [In] HWND hWnd,
                 [In] int nIndex,
-                [In] int dwNewLong
+                [In] LONG dwNewLong
             );
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLong")]
-            private static extern int SetWindowLongInternal
-            (
-                [In] HWND hWnd,
-                [In] int nIndex,
-                [In] [MarshalAs(UnmanagedType.FunctionPtr)] WindowProc dwNewLong
-            );
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtr")]
-            private static extern LONG_PTR SetWindowLongPtrInternal
+            [DllImport("user32.dll", SetLastError = true)]
+            private static extern LONG_PTR SetWindowLongPtr
             (
                 [In] HWND hWnd,
                 [In] int nIndex,
                 [In] LONG_PTR dwNewLong
             );
 
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtr")]
-            private static extern LONG_PTR SetWindowLongPtrInternal
-            (
-                [In] HWND hWnd,
-                [In] int nIndex,
-                [In] [MarshalAs(UnmanagedType.FunctionPtr)] WindowProc dwNewLong
-            );
-
-            public static IntPtr SetWindowLong(HWND hWnd, WindowProc newValue)
-                => SetWindowLong(hWnd, GetWindowLongIndex.WindowProcedure, Marshal.GetFunctionPointerForDelegate(newValue));
-
-            public static IntPtr GetWindowLong(HWND hWnd, GetWindowLongIndex nIndex)
-                => GetWindowLong(hWnd, (int)nIndex);
-
-            public static IntPtr GetWindowLong(HWND hWnd, int nIndex)
+            /// <summary>
+            /// Retrieves information about the specified window. The function also retrieves the value at a specified offset into the extra window memory.
+            /// </summary>
+            /// <param name="hWnd">A handle to the window and, indirectly, the class to which the window belongs.</param>
+            /// <param name="nIndex">One of the pre-defined values specifying the offset to the value to be retrieved.</param>
+            /// <returns>
+            /// If the function succeeds, the return value is the requested value.<para/>
+            /// If the function fails, the return value is zero. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.<para/>
+            /// If SetWindowLong or SetWindowLongPtr has not been called previously, GetWindowLongPtr returns zero for values in the extra window or class memory.
+            /// </returns>
+            /// <remarks>
+            /// This method is a wrapper around both the GetWindowLong (32-bit) and the GetWindowLongPtr (64-bit) version of these functions.<para/>
+            /// This method will always call the "correct" function for this machine, and return the value wrapped in an <see cref="IntPtr"/>.
+            /// </remarks>
+            public static LONG_PTR GetWindowLong(HWND hWnd, GetWindowLongIndex nIndex)
             {
-                if (IntPtr.Size == 4)
-                    return new IntPtr(GetWindowLongInternal(hWnd, nIndex));
+                return GetWindowLong(hWnd, (int)nIndex);
+            }
 
-                return GetWindowLongPtrInternal(hWnd, nIndex);
+            /// <summary>
+            /// Retrieves information about the specified window. The function also retrieves the value at a specified offset into the extra window memory.
+            /// </summary>
+            /// <param name="hWnd">A handle to the window and, indirectly, the class to which the window belongs.</param>
+            /// <param name="nIndex">The zero-based offset to the value to be retrieved. Valid values are in the range zero through the number of bytes of extra window memory, minus the size of a <see cref="IntPtr"/>.</param>
+            /// <returns>
+            /// If the function succeeds, the return value is the requested value.<para/>
+            /// If the function fails, the return value is zero. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.<para/>
+            /// If SetWindowLong or SetWindowLongPtr has not been called previously, GetWindowLongPtr returns zero for values in the extra window or class memory.
+            /// </returns>
+            /// <remarks>
+            /// This method is a wrapper around both the GetWindowLong (32-bit) and the GetWindowLongPtr (64-bit) version of these functions.<para/>
+            /// This method will always call the "correct" function for this machine, and return the value wrapped in an <see cref="IntPtr"/>.
+            /// </remarks>
+            public static LONG_PTR GetWindowLong(HWND hWnd, int nIndex)
+            {
+                if (IntPtr.Size == 8)
+                {
+                    return GetWindowLongPtr(hWnd, nIndex);
+                }
+                else
+                {
+                    return new IntPtr(GetWindowLongPrivate(hWnd, nIndex));
+                }
             }
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true, EntryPoint = "GetWindowLong")]
-            private static extern int GetWindowLongInternal([In] HWND hWnd, [In] int nIndex);
+            [DllImport("user32.dll", SetLastError = true)]
+            private static extern LONG GetWindowLongPrivate([In] HWND hWnd, [In] int nIndex);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true, EntryPoint = "GetWindowLongPtr")]
-            private static extern IntPtr GetWindowLongPtrInternal([In] HWND hWnd, [In] int nIndex);
+            [DllImport("user32.dll", SetLastError = true)]
+            private static extern LONG_PTR GetWindowLongPtr([In] HWND hWnd, [In] int nIndex);
 
             [DllImport("User32.dll", CharSet = CharSet.Unicode)]
             public static extern LRESULT DefWindowProc
