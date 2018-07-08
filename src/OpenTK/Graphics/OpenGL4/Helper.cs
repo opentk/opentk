@@ -334,7 +334,7 @@ namespace OpenTK.Graphics.OpenGL4
             VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
 
-        public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, int offset)
+        public static void VertexAttribPointer(int index, int size, VertexAttribPointerType type, bool normalized, int stride, int offset)
         {
             VertexAttribPointer(index, size, type, normalized, stride, (IntPtr)offset);
         }
