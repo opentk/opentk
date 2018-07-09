@@ -18,7 +18,7 @@ namespace OpenTK.NT.Native
             public static extern HCURSOR LoadCursor
             (
                 [In] [Optional] HINSTANCE hInstance,
-                [In] [MarshalAs(UnmanagedType.LPTStr)] string lpCursorName
+                [In] string lpCursorName
             );
 
             [DllImport("user32.dll", SetLastError = true)]

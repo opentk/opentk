@@ -7,9 +7,11 @@ using HCURSOR = System.IntPtr;
 
 namespace OpenTK.NT.Native
 {
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct WindowClass
     {
         public WindowClassStyleFlags Style;
+
         [MarshalAs(UnmanagedType.FunctionPtr)]
         public WindowProc WndProc;
 
@@ -22,10 +24,8 @@ namespace OpenTK.NT.Native
 
         public HBRUSH Background;
 
-        [MarshalAs(UnmanagedType.LPTStr)]
         public string MenuName;
 
-        [MarshalAs(UnmanagedType.LPTStr)]
         public string ClassName;
 
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<WindowClass>();

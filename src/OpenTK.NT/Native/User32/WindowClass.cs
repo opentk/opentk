@@ -27,7 +27,7 @@ namespace OpenTK.NT.Native
             public static extern bool GetClassInfoEx
             (
                 [In] [Optional] HINSTANCE hinst,
-                [MarshalAs(UnmanagedType.LPTStr)] string lpszClass,
+                [In] string lpszClass,
                 [Out] out WindowClassEx lpwcx
             );
 
@@ -98,7 +98,7 @@ namespace OpenTK.NT.Native
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool UnregisterClass
             (
-                [In] [MarshalAs(UnmanagedType.LPTStr)] string lpClassName,
+                [In] string lpClassName,
                 [In] [Optional] HINSTANCE hInstance
             );
 

@@ -52,7 +52,7 @@ namespace OpenTK.NT.Native
         public static extern FARPROC GetProcAddress
         (
             [In] HMODULE hModule,
-            [In] [MarshalAs(UnmanagedType.LPTStr)] LPCSTR lpProcName
+            [In] LPCSTR lpProcName
         );
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace OpenTK.NT.Native
         [DllImport(Library, SetLastError = true)]
         public static extern HMODULE GetModuleHandle
         (
-            [In] [Optional] [MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpModuleName
+            [In] [Optional] LPCTSTR lpModuleName
         );
 
         /// <summary>

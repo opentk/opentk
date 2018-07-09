@@ -51,7 +51,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", CharSet = CharSet.Unicode)]
             public static extern ChangeDisplaySettingsResult ChangeDisplaySettingsEx
             (
-                [In] [MarshalAs(UnmanagedType.LPTStr)] string lpszDeviceName,
+                [In] string lpszDeviceName,
                 [In] DEVMODE lpDevMode,
                 HWND hwnd,
                 [In] ChangeDisplaySettingsFlags dwflags,
@@ -62,7 +62,7 @@ namespace OpenTK.NT.Native
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool EnumDisplaySettings
             (
-                [In] [MarshalAs(UnmanagedType.LPTStr)] string lpszDeviceName,
+                [In] string lpszDeviceName,
                 [In] DisplayModeSettingsEnum iModeNum,
                 [Out] out DeviceMode lpDevMode
             );
@@ -71,7 +71,7 @@ namespace OpenTK.NT.Native
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool EnumDisplaySettingsEx
             (
-                [In] [MarshalAs(UnmanagedType.LPTStr)] string lpszDeviceName,
+                [In] string lpszDeviceName,
                 [In] DisplayModeSettingsEnum iModeNum,
                 [Out] out DeviceMode lpDevMode,
                 [In] int dwFlags
@@ -81,7 +81,7 @@ namespace OpenTK.NT.Native
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool EnumDisplayDevices
             (
-                [In] [MarshalAs(UnmanagedType.LPTStr)] string lpDevice,
+                [In] string lpDevice,
                 [In] int iDevNum,
                 [Out] out DisplayDevice lpDisplayDevice,
                 [In] int dwFlags

@@ -26,9 +26,7 @@ namespace OpenTK.NT.Native
         public HCURSOR Cursor;
         public HBRUSH Background;
 
-        [MarshalAs(UnmanagedType.LPTStr)]
         public string MenuName;
-        [MarshalAs(UnmanagedType.LPTStr)]
         public string ClassName;
 
         public HICON IconSm;

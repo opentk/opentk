@@ -71,8 +71,8 @@ namespace OpenTK.NT.Native
             public static extern HWND CreateWindowEx
             (
                 [In] ExtendedWindowStyleFlags dwExStyle,
-                [In] [Optional] [MarshalAs(UnmanagedType.LPTStr)] string lpClassName,
-                [In] [Optional] [MarshalAs(UnmanagedType.LPTStr)] string lpWindowName,
+                [In] [Optional] string lpClassName,
+                [In] [Optional] string lpWindowName,
                 [In] WindowStyleFlags dwStyle,
                 [In] int x,
                 [In] int y,
@@ -366,7 +366,7 @@ namespace OpenTK.NT.Native
             public static extern int GetWindowText
             (
                 [In] HWND hWnd,
-                [In] [Out] [MarshalAs(UnmanagedType.LPTStr)] LPTSTR lpString,
+                [In] [Out] LPTSTR lpString,
                 [In] int nMaxCount
             );
 

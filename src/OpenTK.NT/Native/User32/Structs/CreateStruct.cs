@@ -72,7 +72,6 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Pointer to a null-terminated string that specifies the name of the new window.
         /// </summary>
-        [MarshalAs(UnmanagedType.LPWStr)]
         public LPCTSTR Name;
 
         /// <summary>
