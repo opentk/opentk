@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Runtime.InteropServices;
 using DWORD = System.UInt32;
 
 namespace OpenTK.NT.Native
@@ -33,5 +33,10 @@ namespace OpenTK.NT.Native
         /// start at this field's position and read until you encounter a \0 character.
         /// </summary>
         public char Name;
+
+        /// <summary>
+        /// The size of this structure in bytes.
+        /// </summary>
+        public static uint SizeInBytes = (uint)Marshal.SizeOf<BroadcastDeviceInterface>();
     }
 }

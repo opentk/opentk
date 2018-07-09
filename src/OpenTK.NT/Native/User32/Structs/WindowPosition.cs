@@ -1,51 +1,50 @@
-﻿using OpenTK.NT.Native;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 using HWND = System.IntPtr;
 
-namespace OpenTK.Platform.Windows
+namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// The WindowPosition structure contains information about the size and position of a window.
+    /// Contains information about the size and position of a window.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    internal struct WindowPosition
+    public struct WindowPosition
     {
         /// <summary>
         /// Handle to the window.
         /// </summary>
-        internal HWND hwnd;
+        public HWND HWnd;
 
         /// <summary>
         /// Specifies the position of the window in Z order (front-to-back position).
         /// This member can be a handle to the window behind which this window is placed,
         /// or can be one of the special values listed with the SetWindowPos function.
         /// </summary>
-        internal HWND hwndInsertAfter;
+        public HWND HWndInsertAfter;
 
         /// <summary>
         /// Specifies the position of the left edge of the window.
         /// </summary>
-        internal int x;
+        public int X;
 
         /// <summary>
         /// Specifies the position of the top edge of the window.
         /// </summary>
-        internal int y;
+        public int Y;
 
         /// <summary>
         /// Specifies the window width, in pixels.
         /// </summary>
-        internal int cx;
+        public int Width;
 
         /// <summary>
         /// Specifies the window height, in pixels.
         /// </summary>
-        internal int cy;
+        public int Height;
 
         /// <summary>
         /// Specifies the window position.
         /// </summary>
-        internal SetWindowPosFlags flags;
+        public SetWindowPosFlags Flags;
     }
 }

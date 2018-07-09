@@ -103,7 +103,7 @@ namespace OpenTK.Platform.Windows
                 // Get available video adapters and enumerate all monitors
                 while (User32.DeviceContext.EnumDisplayDevices(null, device_count++, out var dev1, 0))
                 {
-                    if ((dev1.StateFlags & DisplayDeviceStateFlags.AttachedToDesktop) == DisplayDeviceStateFlags.None)
+                    if ((dev1.StateFlags & DisplayDeviceStateFlags.AttachedToDesktop) == 0)
                         continue;
 
                     // The second function should only be executed when the first one fails
@@ -125,7 +125,7 @@ namespace OpenTK.Platform.Windows
                             monitor_mode.DisplayFrequency
                         );
 
-                        opentk_dev_primary = (dev1.StateFlags & DisplayDeviceStateFlags.PrimaryDevice) != DisplayDeviceStateFlags.None;
+                        opentk_dev_primary = (dev1.StateFlags & DisplayDeviceStateFlags.PrimaryDevice) != 0;
                     }
 
                     opentk_dev_available_res.Clear();

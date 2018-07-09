@@ -68,10 +68,13 @@ namespace OpenTK.Platform.Windows
         private static IntPtr RegisterForDeviceNotifications(WinWindowInfo parent)
         {
             IntPtr dev_notify_handle;
-            var bdi = new BroadcastDeviceInterface();
-            bdi.Size = BlittableValueType.StrideOf(bdi);
-            bdi.DeviceType = DeviceBroadcastType.Interface;
-            bdi.ClassGuid = DeviceInterfaceHid;
+            var bdi = new BroadcastDeviceInterface
+            {
+                Size = BroadcastDeviceInterface.SizeInBytes,
+                DeviceType = DeviceBroadcastType.Interface,
+                ClassGuid = DeviceInterfaceHid
+            };
+
             unsafe
             {
                 dev_notify_handle = User32.Device.RegisterDeviceNotification(parent.Handle,

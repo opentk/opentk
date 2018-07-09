@@ -22,7 +22,7 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// The window should be placed above all non-topmost windows and should stay above them,
         /// even when the window is deactivated. To add or remove this style, use the
-        /// <see cref="User32.Window.SetWindowPos"/> function.
+        /// <see cref="User32.Window.SetWindowPos(IntPtr, IntPtr, int, int, int, int, SetWindowPosFlags)"/> function.
         /// </summary>
         Topmost = 0x00000008,
 

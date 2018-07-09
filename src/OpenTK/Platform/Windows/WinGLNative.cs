@@ -185,7 +185,7 @@ namespace OpenTK.Platform.Windows
             set
             {
                 var style = (WindowStyleFlags)User32.Window.GetWindowLong(window.Handle, GetWindowLongIndex.Style);
-                Rect rect = Rect.From(value);
+                Rect rect = value;
                 User32.Window.AdjustWindowRect(ref rect, style, false);
                 Size = new Size(rect.Width, rect.Height);
             }
@@ -424,7 +424,7 @@ namespace OpenTK.Platform.Windows
 
                             previous_bounds = Bounds;
                             borderless_maximized_window_state = true;
-                            Bounds = info.Work.ToRectangle();
+                            Bounds = info.Work;
                         }
                         else
                         {
@@ -519,7 +519,7 @@ namespace OpenTK.Platform.Windows
 
                 // Make sure client size doesn't change when changing the border style.
                 var client_size = ClientSize;
-                var rect = Rect.From(bounds);
+                Rect rect = bounds;
                 User32.Window.AdjustWindowRectEx(ref rect, new_style, false, ParentStyleEx);
 
                 // This avoids leaving garbage on the background window.
@@ -668,25 +668,26 @@ namespace OpenTK.Platform.Windows
         private void HandleWindowPositionChanged(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
             var pos = Marshal.PtrToStructure<WindowPosition>(lParam);
-            if (window != null && pos.hwnd == window.Handle)
+            if (window != null && pos.HWnd == window.Handle)
             {
-                var new_location = new System.Drawing.Point(pos.x, pos.y);
+                var new_location = new System.Drawing.Point(pos.X, pos.Y);
                 if (Location != new_location)
                 {
                     bounds.Location = new_location;
                     OnMove(EventArgs.Empty);
                 }
 
-                var new_size = new Size(pos.cx, pos.cy);
+                var new_size = new Size(pos.Width, pos.Height);
                 if (Size != new_size)
                 {
-                    bounds.Width = pos.cx;
-                    bounds.Height = pos.cy;
+                    bounds.Width = pos.Width;
+                    bounds.Height = pos.Height;
 
                     User32.Window.GetClientRect(handle, out Rect rect);
-                    client_rectangle = rect.ToRectangle();
+                    client_rectangle = rect;
 
-                    User32.Window.SetWindowPos(
+                    User32.Window.SetWindowPos
+                    (
                         window.Handle, 
                         IntPtr.Zero, 
                         bounds.X, 
@@ -1045,7 +1046,7 @@ namespace OpenTK.Platform.Windows
                 bounds.Height = cs.Height;
 
                 User32.Window.GetClientRect(handle, out Rect rect);
-                client_rectangle = rect.ToRectangle();
+                client_rectangle = rect;
 
                 invisible_since_creation = true;
             }
