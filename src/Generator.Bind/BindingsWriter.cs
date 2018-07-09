@@ -527,6 +527,7 @@ namespace Bind
                             sw.WriteLineNoTabs();
                         }
 
+                        sw.WriteLine("// ReSharper disable InconsistentNaming");
                         sw.WriteLine("#pragma warning disable SA1139 // Use literal suffix notation instead of casting");
                         sw.WriteLineNoTabs();
 
