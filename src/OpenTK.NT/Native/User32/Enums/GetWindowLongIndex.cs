@@ -1,8 +1,6 @@
-﻿using LONG = System.Int32;
-
-namespace OpenTK.NT.Native
+﻿namespace OpenTK.NT.Native
 {
-    public enum GetWindowLongIndex : LONG
+    public enum GetWindowLongIndex
     {
         /// <summary>
         /// Retrieves the address of the window procedure, or a handle
@@ -18,7 +16,7 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// Retrieves a handle to the parent window, if any.<para/>
-        /// Not supported in <see cref="User32.Window.SetWindowLong"/>.
+        /// Not supported in <see cref="User32.Window.SetWindowLong(System.IntPtr, int, System.IntPtr)"/>.
         /// </summary>
         HWndParent = -8,
 

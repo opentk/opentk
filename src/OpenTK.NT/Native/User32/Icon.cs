@@ -90,7 +90,7 @@ namespace OpenTK.NT.Native
             public static extern HICON LoadIcon
             (
                 [In] [Optional] HINSTANCE hInstance,
-                [In] [MarshalAs(UnmanagedType.LPTStr)] string lpIconName
+                [In] string lpIconName
             );
         }
     }

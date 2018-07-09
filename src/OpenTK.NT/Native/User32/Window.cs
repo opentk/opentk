@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Security;
 
+using BOOL = System.Boolean;
 using HINSTANCE = System.IntPtr;
 using HMENU = System.IntPtr;
 using HWND = System.IntPtr;
@@ -19,54 +20,69 @@ namespace OpenTK.NT.Native
 {
     public static partial class User32
     {
+        /// <summary>
+        /// Provides a subset of functions from the Windows API, specifically those imported from user32.dll that deal with windows.
+        /// </summary>
         public static class Window
         {
             /// <summary>
-            /// Calculates the required size of the window rectangle, based on the desired client-rectangle size. The window
-            /// rectangle can then be passed to the CreateWindow function to create a window whose client area is the desired size.
+            /// Calculates the required size of the window rectangle, based on the desired client-rectangle size. The window rectangle can then be passed to the CreateWindow function to create a window whose client area is the desired size.
             /// </summary>
-            /// <param name="lpRect">
-            /// [in, out] Pointer to a RECT structure that contains the coordinates of the top-left and
-            /// bottom-right corners of the desired client area. When the function returns, the structure contains the coordinates
-            /// of the top-left and bottom-right corners of the window to accommodate the desired client area.
-            /// </param>
-            /// <param name="dwStyle">
-            /// [in] Specifies the window style of the window whose required size is to be calculated. Note that
-            /// you cannot specify the WS_OVERLAPPED style.
-            /// </param>
-            /// <param name="bMenu">[in] Specifies whether the window has a menu.</param>
+            /// <param name="lpRect">A pointer to a <see cref="Rect"/> structure that contains the coordinates of the top-left and bottom-right corners of the desired client area. When the function returns, the structure contains the coordinates of the top-left and bottom-right corners of the window to accommodate the desired client area.</param>
+            /// <param name="dwStyle">The window style of the window whose required size is to be calculated. Note that you cannot specify the <see cref="WindowStyleFlags.Overlapped"/> style.</param>
+            /// <param name="bMenu">Indicates whether the window has a menu.</param>
             /// <returns>
             /// If the function succeeds, the return value is nonzero.
-            /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+            /// If the function fails, the return value is zero. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            /// <remarks>
-            /// A client rectangle is the smallest rectangle that completely encloses a client area. A window rectangle is the
-            /// smallest rectangle that completely encloses the window, which includes the client area and the nonclient area.
-            /// The AdjustWindowRect function does not add extra space when a menu bar wraps to two or more rows.
-            /// The AdjustWindowRect function does not take the WS_VSCROLL or WS_HSCROLL styles into account. To account for the
-            /// scroll bars, call the GetSystemMetrics function with SM_CXVSCROLL or SM_CYHSCROLL.
-            /// Found Winuser.h, user32.dll
-            /// </remarks>
-            [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
-            public static extern bool AdjustWindowRect
+            [DllImport("user32.dll", SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern BOOL AdjustWindowRect
             (
                 [In] [Out] ref Rect lpRect,
                 [In] WindowStyleFlags dwStyle,
-                [In] bool bMenu
+                [In] BOOL bMenu
             );
 
-            [DllImport("user32.dll", SetLastError = true)]
+            /// <summary>
+            /// Calculates the required size of the window rectangle, based on the desired client-rectangle size. The window rectangle can then be passed to the <see cref="CreateWindowEx(ExtendedWindowStyleFlags, string, string, WindowStyleFlags, LONG, LONG, LONG, LONG, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/> function to create a window whose client area is the desired size.
+            /// </summary>
+            /// <param name="lpRect">A pointer to a <see cref="Rect"/> structure that contains the coordinates of the top-left and bottom-right corners of the desired client area. When the function returns, the structure contains the coordinates of the top-left and bottom-right corners of the window to accommodate the desired client area.</param>
+            /// <param name="dwStyle">The window style of the window whose required size is to be calculated. Note that you cannot specify the <see cref="WindowStyleFlags.Overlapped"/> style.</param>
+            /// <param name="bMenu">Indicates whether the window has a menu.</param>
+            /// <param name="dwExStyle">The extended window style of the window whose required size is to be calculated.</param>
+            /// <returns>
+            /// If the function succeeds, the return value is nonzero.
+            /// If the function fails, the return value is zero. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
+            /// </returns>
             [SuppressUnmanagedCodeSecurity]
+            [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool AdjustWindowRectEx
+            public static extern BOOL AdjustWindowRectEx
             (
                 [In] [Out] ref Rect lpRect,
                 [In] WindowStyleFlags dwStyle,
-                [In] [MarshalAs(UnmanagedType.Bool)] bool bMenu,
+                [In] BOOL bMenu,
                 [In] ExtendedWindowStyleFlags dwExStyle
             );
 
+            /// <summary>
+            /// Creates an overlapped, pop-up, or child window with an extended window style; otherwise, this function is identical to the CreateWindow function.
+            /// </summary>
+            /// <param name="dwExStyle">The extended window style of the window being created.</param>
+            /// <param name="lpClassName">A string specifying the window class name.</param>
+            /// <param name="lpWindowName">The window name. If the window style specifies a title bar, the window title pointed to by <paramref name="lpWindowName"/> is displayed in the title bar.</param>
+            /// <param name="dwStyle">The style of the window being created.</param>
+            /// <param name="x">
+            /// The initial horizontal position of the window. For an overlapped or pop-up window, the x parameter is the initial x-coordinate of the window's upper-left corner, in screen coordinates. For a child window, x is the x-coordinate of the upper-left corner of the window relative to the upper-left corner of the parent window's client area.<para/>
+            /// If x is set to <see cref="int.MinValue"/>, the system selects the default position for the window's upper-left corner and ignores the y parameter. <see cref="int.MinValue"/> is valid only for overlapped windows; if it is specified for a pop-up or child window, the x and y parameters are set to zero.
+            /// </param>
+            /// <param name="y">
+            /// The initial vertical position of the window. For an overlapped or pop-up window, the y parameter is the initial y-coordinate of the window's upper-left corner, in screen coordinates. For a child window, y is the initial y-coordinate of the upper-left corner of the child window relative to the upper-left corner of the parent window's client area. For a list box y is the initial y-coordinate of the upper-left corner of the list box's client area relative to the upper-left corner of the parent window's client area.<para/>
+            /// If an overlapped window is created with the <see cref="WindowStyleFlags.Visible"/> style bit set and the x parameter is set to <see cref="int.MinValue"/>, then the y parameter determines how the window is shown. If the y parameter is <see cref="int.MinValue"/>, then the window manager calls <see cref="ShowWindow(HINSTANCE, ShowWindowCommand)"/> with the <see cref="ShowWindowCommand.Show"/> flag after the window has been created. If the y parameter is some other value, then the window manager calls <see cref="ShowWindow(HINSTANCE, ShowWindowCommand)"/> with that value as the nCmdShow parameter.
+            /// </param>
+            /// <returns></returns>
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern HWND CreateWindowEx
             (
@@ -88,7 +104,7 @@ namespace OpenTK.NT.Native
             public static extern HWND CreateWindowEx
             (
                 [In] ExtendedWindowStyleFlags dwExStyle,
-                [In] [Optional] IntPtr lpClassAtom,
+                [In] [Optional] IntPtr lpClassName,
                 [In] [Optional] string lpWindowName,
                 [In] WindowStyleFlags dwStyle,
                 [In] int x,
@@ -101,10 +117,52 @@ namespace OpenTK.NT.Native
                 [In] [Optional] LPVOID lpParam
             );
 
+            public static HWND CreateWindowEx
+            (
+                [In] ExtendedWindowStyleFlags dwExStyle,
+                [In] [Optional] ushort lpClassAtom,
+                [In] [Optional] string lpWindowName,
+                [In] WindowStyleFlags dwStyle,
+                [In] int x,
+                [In] int y,
+                [In] int nWidth,
+                [In] int nHeight,
+                [In] [Optional] HWND hWndParent,
+                [In] [Optional] HMENU hMenu,
+                [In] [Optional] HINSTANCE hInstance,
+                [In] [Optional] LPVOID lpParam
+            )
+            {
+                return CreateWindowEx
+                (
+                    dwExStyle,
+                    new IntPtr(lpClassAtom),
+                    lpWindowName,
+                    dwStyle,
+                    x,
+                    y,
+                    nWidth,
+                    nHeight,
+                    hWndParent,
+                    hMenu,
+                    hInstance,
+                    lpParam
+                );
+            }
+
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool DestroyWindow([In] HWND hWnd);
+            public static extern BOOL DestroyWindow([In] HWND hWnd);
 
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="lpPrevWndFunc"></param>
+            /// <param name="hWnd"></param>
+            /// <param name="Msg"></param>
+            /// <param name="wParam"></param>
+            /// <param name="lParam"></param>
+            /// <returns></returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
             public static extern LRESULT CallWindowProc
@@ -135,7 +193,7 @@ namespace OpenTK.NT.Native
             /// </remarks>
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool SetProcessDPIAware();
+            public static extern BOOL SetProcessDPIAware();
 
             /// <summary>
             /// Changes the window procedure of the specified window.
@@ -276,6 +334,14 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             private static extern LONG_PTR GetWindowLongPtr([In] HWND hWnd, [In] int nIndex);
 
+            /// <summary>
+            /// Calls the default window procedure to provide default processing for any window messages that an application does not process. This function ensures that every message is processed.
+            /// </summary>
+            /// <param name="hWnd">A handle to the window procedure that received the message.</param>
+            /// <param name="Msg">The message.</param>
+            /// <param name="wParam">Additional message information. The content of this parameter depends on the value of the <paramref name="Msg"/> parameter.</param>
+            /// <param name="lParam">Additional message information. The content of this parameter depends on the value of the <paramref name="Msg"/> parameter.</param>
+            /// <returns>The return value is the result of the message processing and depends on the message.</returns>
             [DllImport("User32.dll", CharSet = CharSet.Unicode)]
             public static extern LRESULT DefWindowProc
             (
@@ -286,82 +352,23 @@ namespace OpenTK.NT.Native
             );
 
             /// <summary>
-            /// The ShowWindow function sets the specified window's show state.
+            /// Sets the specified window's show state.
             /// </summary>
-            /// <param name="hWnd">[in] Handle to the window.</param>
-            /// <param name="nCmdShow">
-            /// [in] Specifies how the window is to be shown. This parameter is ignored the first time an
-            /// application calls ShowWindow, if the program that launched the application provides a STARTUPINFO structure.
-            /// Otherwise, the first time ShowWindow is called, the value should be the value obtained by the WinMain function in
-            /// its nCmdShow parameter. In subsequent calls, this parameter can be one of the ShowWindowEnum values.
-            /// </param>
+            /// <param name="hWnd">A handle to the window.</param>
+            /// <param name="nCmdShow">Controls how the window is to be shown.</param>
             /// <returns>If the window was previously visible, the return value is true. Otherwise false.</returns>
-            /// <remarks>
-            ///  <para>To perform certain special effects when showing or hiding a window, use AnimateWindow.</para>
-            ///  <para>
-            /// The first time an application calls ShowWindow, it should use the WinMain function's nCmdShow parameter as
-            /// its nCmdShow parameter. Subsequent calls to ShowWindow must use one of the values in the given list, instead of
-            /// the one specified by the WinMain function's nCmdShow parameter.
-            ///  </para>
-            ///  <para>
-            /// As noted in the discussion of the nCmdShow parameter, the nCmdShow value is ignored in the first call to
-            /// ShowWindow if the program that launched the application specifies startup information in the structure. In this
-            /// case, ShowWindow uses the information specified in the STARTUPINFO structure to show the window. On subsequent
-            /// calls, the application must call ShowWindow with nCmdShow set to SW_SHOWDEFAULT to use the startup information
-            /// provided by the program that launched the application. This behavior is designed for the following situations:
-            ///  </para>
-            ///  <list type="">
-            ///  <item>Applications create their main window by calling CreateWindow with the WS_VISIBLE flag set.</item>
-            ///  <item>
-            /// Applications create their main window by calling CreateWindow with the WS_VISIBLE flag cleared, and later
-            /// call ShowWindow with the SW_SHOW flag set to make it visible.
-            ///  </item>
-            ///  </list>
-            /// </remarks>
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ShowWindow([In] HWND hWnd, [In] ShowWindowCommand nCmdShow);
+            public static extern BOOL ShowWindow([In] HWND hWnd, [In] ShowWindowCommand nCmdShow);
 
             /// <summary>
-            /// The GetWindowText function copies the text of the specified window's title bar (if it has one) into a buffer. If
-            /// the specified window is a control, the text of the control is copied. However, GetWindowText cannot retrieve the
-            /// text of a control in another application.
+            /// Copies the text of the specified window's title bar (if it has one) into a buffer. If the specified window is a control, the text of the control is copied. However, <see cref="GetWindowText(HINSTANCE, LPTSTR, LONG)"/> cannot retrieve the text of a control in another application.
             /// </summary>
-            /// <param name="hWnd">[in] Handle to the window or control containing the text.</param>
-            /// <param name="lpString">
-            /// [out] Pointer to the buffer that will receive the text. If the string is as long or longer than
-            /// the buffer, the string is truncated and terminated with a NULL character.
-            /// </param>
-            /// <param name="nMaxCount">
-            /// [in] Specifies the maximum number of characters to copy to the buffer, including the NULL
-            /// character. If the text exceeds this limit, it is truncated.
-            /// </param>
-            /// <returns>
-            /// If the function succeeds, the return value is the length, in characters, of the copied string, not including the
-            /// terminating NULL character. If the window has no title bar or text, if the title bar is empty, or if the window or
-            /// control handle is invalid, the return value is zero. To get extended error information, call GetLastError.
-            ///  <para>This function cannot retrieve the text of an edit control in another application.</para>
-            /// </returns>
-            /// <remarks>
-            ///  <para>
-            /// If the target window is owned by the current process, GetWindowText causes a WM_GETTEXT message to be sent to
-            /// the specified window or control. If the target window is owned by another process and has a caption,
-            /// GetWindowText retrieves the window caption text. If the window does not have a caption, the return value is a
-            /// null string. This behavior is by design. It allows applications to call GetWindowText without becoming
-            /// unresponsive if the process that owns the target window is not responding. However, if the target window is not
-            /// responding and it belongs to the calling application, GetWindowText will cause the calling application to
-            /// become unresponsive.
-            ///  </para>
-            ///  <para>
-            /// To retrieve the text of a control in another process, send a WM_GETTEXT message directly instead of calling
-            /// GetWindowText.
-            ///  </para>
-            ///  <para>
-            /// Windows 95/98/Me: GetWindowTextW is supported by the Microsoft Layer for Unicode (MSLU). To use this, you
-            /// must add certain files to your application, as outlined in Microsoft Layer for Unicode on Windows 95/98/Me
-            ///  </para>
-            /// </remarks>
+            /// <param name="hWnd">A handle to the window or control containing the text. </param>
+            /// <param name="lpString">The buffer that will receive the text. If the string is as long or longer than the buffer, the string is truncated and terminated with a null character.</param>
+            /// <param name="nMaxCount">The maximum number of characters to copy to the buffer, including the null character. If the text exceeds this limit, it is truncated.</param>
+            /// <returns>If the function succeeds, the return value is the length, in characters, of the copied string, not including the terminating null character. If the window has no title bar or text, if the title bar is empty, or if the window or control handle is invalid, the return value is zero. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.</returns>
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern int GetWindowText
             (
@@ -371,47 +378,39 @@ namespace OpenTK.NT.Native
             );
 
             /// <summary>
-            /// The SetWindowText function changes the text of the specified window's title bar (if it has one). If the specified
-            /// window is a control, the text of the control is changed. However, SetWindowText cannot change the text of a control
-            /// in another application.
+            /// Changes the text of the specified window's title bar (if it has one). If the specified window is a control, the text of the control is changed. However, <see cref="SetWindowText(HINSTANCE, string)"/> cannot change the text of a control in another application.
             /// </summary>
-            /// <param name="hWnd">[in] Handle to the window or control whose text is to be changed.</param>
-            /// <param name="lpString">[in] Pointer to a null-terminated string to be used as the new title or control text.</param>
+            /// <param name="hWnd">A handle to the window or control whose text is to be changed.</param>
+            /// <param name="lpString">The new title or control text.</param>
             /// <returns>
-            ///  <para>If the function succeeds, the return value is nonzero.</para>
-            ///  <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
+            /// If the function succeeds, the return value is nonzero.<para/>
+            /// If the function fails, the return value is zero. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            /// <remarks>
-            ///  <para>
-            /// If the target window is owned by the current process, SetWindowText causes a WM_SETTEXT message to be sent to
-            /// the specified window or control. If the control is a list box control created with the WS_CAPTION style,
-            /// however, SetWindowText sets the text for the control, not for the list box entries.
-            ///  </para>
-            ///  <para>
-            /// To set the text of a control in another process, send the WM_SETTEXT message directly instead of calling
-            /// SetWindowText.
-            ///  </para>
-            ///  <para>
-            /// The SetWindowText function does not expand tab characters (ASCII code 0x09). Tab characters are displayed as
-            /// vertical bar (|) characters.
-            ///  </para>
-            ///  <para>
-            /// Windows 95/98/Me: SetWindowTextW is supported by the Microsoft Layer for Unicode (MSLU). To use this, you
-            /// must add certain files to your application, as outlined in Microsoft Layer for Unicode on Windows 95/98/Me
-            /// Systems .
-            ///  </para>
-            /// </remarks>
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool SetWindowText
+            public static extern BOOL SetWindowText
             (
                 [In] HWND hWnd,
-                [In] [Optional] [MarshalAs(UnmanagedType.LPTStr)] string lpString
+                [In] [Optional] string lpString
             );
 
+            /// <summary>
+            /// Changes the size, position, and Z order of a child, pop-up, or top-level window. These windows are ordered according to their appearance on the screen. The topmost window receives the highest rank and is the first window in the Z order.
+            /// </summary>
+            /// <param name="hWnd">A handle to the window.</param>
+            /// <param name="hWndInsertAfter">A handle to the window to precede the positioned window in the Z order. This parameter must be a window handle.</param>
+            /// <param name="x">The new position of the left side of the window, in client coordinates.</param>
+            /// <param name="y">The new position of the top of the window, in client coordinates.</param>
+            /// <param name="cx">The new width of the window, in pixels.</param>
+            /// <param name="cy">The new height of the window, in pixels.</param>
+            /// <param name="flags">The window sizing and positioning flags.</param>
+            /// <returns>
+            /// If the function succeeds, the return value is true.<para/>
+            /// If the function fails, the return value is false. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
+            /// </returns>
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool SetWindowPos
+            public static extern BOOL SetWindowPos
             (
                 [In] HWND hWnd,
                 [In] [Optional] HWND hWndInsertAfter,
@@ -422,14 +421,66 @@ namespace OpenTK.NT.Native
                 [In] SetWindowPosFlags flags
             );
 
+            /// <summary>
+            /// Changes the size, position, and Z order of a child, pop-up, or top-level window. These windows are ordered according to their appearance on the screen. The topmost window receives the highest rank and is the first window in the Z order.
+            /// </summary>
+            /// <param name="hWnd">One of the pre-defined values for window Z order positioning.</param>
+            /// <param name="hWndInsertAfter">A handle to the window to precede the positioned window in the Z order. This parameter must be a window handle.</param>
+            /// <param name="x">The new position of the left side of the window, in client coordinates.</param>
+            /// <param name="y">The new position of the top of the window, in client coordinates.</param>
+            /// <param name="cx">The new width of the window, in pixels.</param>
+            /// <param name="cy">The new height of the window, in pixels.</param>
+            /// <param name="flags">The window sizing and positioning flags.</param>
+            /// <returns>
+            /// If the function succeeds, the return value is true.<para/>
+            /// If the function fails, the return value is false. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
+            /// </returns>
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool SetForegroundWindow([In] HWND hWnd);
+            public static extern BOOL SetWindowPos
+            (
+                [In] HWND hWnd,
+                [In] [Optional] SetWindowPosHwndEnum hWndInsertAfter,
+                [In] int x,
+                [In] int y,
+                [In] int cx,
+                [In] int cy,
+                [In] SetWindowPosFlags flags
+            );
 
+            /// <summary>
+            /// Brings the thread that created the specified window into the foreground and activates the window. Keyboard input is directed to the window, and various visual cues are changed for the user. The system assigns a slightly higher priority to the thread that created the foreground window than it does to other threads.
+            /// </summary>
+            /// <param name="hWnd">A handle to the window that should be activated and brought to the foreground.</param>
+            /// <returns>
+            /// If the window was brought to the foreground, the return value is true.<para/>
+            /// If the window was not brought to the foreground, the return value is false.
+            /// </returns>
+            [DllImport("user32.dll")]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern BOOL SetForegroundWindow([In] HWND hWnd);
+
+            /// <summary>
+            /// Brings the specified window to the top of the Z order. If the window is a top-level window, it is activated. If the window is a child window, the top-level parent window associated with the child window is activated.
+            /// </summary>
+            /// <param name="hWnd">A handle to the window to bring to the top of the Z order.</param>
+            /// <returns>
+            /// If the function succeeds, the return value is true.<para/>
+            /// If the function fails, the return value is false. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
+            /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool BringWindowToTop([In] HWND hWnd);
+            public static extern BOOL BringWindowToTop([In] HWND hWnd);
 
+            /// <summary>
+            /// Changes the parent window of the specified child window.
+            /// </summary>
+            /// <param name="hWndChild">A handle to the child window.</param>
+            /// <param name="newParent">A handle to the new parent window. If this parameter is <see cref="IntPtr.Zero"/>, the desktop window becomes the new parent window.</param>
+            /// <returns>
+            /// If the function succeeds, the return value is a handle to the previous parent window.<para/>
+            /// If the function fails, the return value is null. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
+            /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
             public static extern HWND SetParent
             (
@@ -437,113 +488,87 @@ namespace OpenTK.NT.Native
                 [In] [Optional] HWND newParent
             );
 
-            [DllImport("user32.dll", SetLastError = true)]
+            /// <summary>
+            /// Retrieves information about the specified window.
+            /// </summary>
+            /// <param name="hwnd">A handle to the window whose information is to be retrieved.</param>
+            /// <param name="wi">A pointer to a <see cref="WindowInfo"/> structure to receive the information. Note that you must set the <see cref="WindowInfo.Size"/> member to <see cref="WindowInfo.SizeInBytes"/> before calling this function.</param>
+            /// <returns>
+            /// If the function succeeds, the return value is true.<para/>
+            /// If the function fails, the return value is false. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
+            /// </returns>
             [SuppressUnmanagedCodeSecurity]
+            [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool GetWindowInfo([In] HWND hwnd, [In] [Out] ref WindowInfo wi);
+            public static extern BOOL GetWindowInfo([In] HWND hwnd, [In] [Out] ref WindowInfo wi);
 
+            /// <summary>
+            /// Determines the visibility state of the specified window.
+            /// </summary>
+            /// <param name="hWNd">A handle to the window to be tested.</param>
+            /// <returns>
+            /// If the specified window, its parent window, its parent's parent window, and so forth, have the <see cref="WindowStyleFlags.Visible"/> style, the return value is true. Otherwise, the return value is false.<para/>
+            /// Because the return value specifies whether the window has the <see cref="WindowStyleFlags.Visible"/> style, it may be true even if the window is totally obscured by other windows.
+            /// </returns>
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool IsWindowVisible([In] HWND hWNd);
+            public static extern BOOL IsWindowVisible([In] HWND hWNd);
 
             /// <summary>
-            /// The GetWindowRect function retrieves the dimensions of the bounding rectangle of the specified window. The
-            /// dimensions are given in screen coordinates that are relative to the upper-left corner of the screen.
+            /// Retrieves the dimensions of the bounding rectangle of the specified window. The dimensions are given in screen coordinates that are relative to the upper-left corner of the screen.
             /// </summary>
             /// <param name="windowHandle">Handle to the window whose client coordinates are to be retrieved.</param>
-            /// <param name="windowRectangle">
-            /// Pointer to a structure that receives the screen coordinates of the upper-left and
-            /// lower-right corners of the window.
-            /// </param>
+            /// <param name="windowRectangle">Pointer to a structure that receives the screen coordinates of the upper-left and lower-right corners of the window.</param>
             /// <returns>
-            ///  <para>If the function succeeds, the return value is nonzero.</para>
-            ///  <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
+            /// If the function succeeds, the return value is true.<para/>
+            /// If the function fails, the return value is false. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            /// <remarks>
-            /// In conformance with conventions for the RECT structure, the bottom-right coordinates of the returned rectangle
-            /// are exclusive. In other words, the pixel at (right, bottom) lies immediately outside the rectangle.
-            /// </remarks>
-            [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
+            [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool GetWindowRect([In] HWND windowHandle, [Out] out Rect windowRectangle);
+            public static extern BOOL GetWindowRect([In] HWND windowHandle, [Out] out Rect windowRectangle);
 
             /// <summary>
-            /// The GetClientRect function retrieves the coordinates of a window's client area. The client coordinates specify the
-            /// upper-left and lower-right corners of the client area. Because client coordinates are relative to the upper-left
-            /// corner of a window's client area, the coordinates of the upper-left corner are (0,0).
+            /// Retrieves the coordinates of a window's client area. The client coordinates specify the upper-left and lower-right corners of the client area. Because client coordinates are relative to the upper-left corner of a window's client area, the coordinates of the upper-left corner are (0,0).
             /// </summary>
             /// <param name="windowHandle">Handle to the window whose client coordinates are to be retrieved.</param>
-            /// <param name="clientRectangle">
-            /// Pointer to a RECT structure that receives the client coordinates. The left and top
-            /// members are zero. The right and bottom members contain the width and height of the window.
-            /// </param>
+            /// <param name="clientRectangle">Pointer to a <see cref="Rect"/> structure that receives the client coordinates. The <see cref="Rect.Left"/> and <see cref="Rect.Top"/> members are zero. The <see cref="Rect.Right"/> and <see cref="Rect.Bottom"/> members contain the width and height of the window.</param>
             /// <returns>
-            ///  <para>If the function succeeds, the return value is nonzero.</para>
-            ///  <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
+            /// If the function succeeds, the return value is true.<para/>
+            /// If the function fails, the return value is false. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            /// <remarks>
-            /// In conformance with conventions for the RECT structure, the bottom-right coordinates of the returned rectangle
-            /// are exclusive. In other words, the pixel at (right, bottom) lies immediately outside the rectangle.
-            /// </remarks>
-            [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
+            [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool GetClientRect([In] HWND windowHandle, [Out] out Rect clientRectangle);
+            public static extern BOOL GetClientRect([In] HWND windowHandle, [Out] out Rect clientRectangle);
 
             /// <summary>
             /// Converts the screen coordinates of a specified point on the screen to client-area coordinates.
             /// </summary>
             /// <param name="hWnd">Handle to the window whose client area will be used for the conversion.</param>
-            /// <param name="point">Pointer to a POINT structure that specifies the screen coordinates to be converted.</param>
+            /// <param name="lpPoint">Pointer to a <see cref="Point"/> structure that specifies the screen coordinates to be converted.</param>
             /// <returns>
-            /// If the function succeeds, the return value is nonzero. If the function fails, the return value is zero.
-            /// Windows NT/2000/XP: To get extended error information, call GetLastError.
+            /// If the function succeeds, the return value is true.<para/>
+            /// If the function fails, the return value is false.
             /// </returns>
-            /// <remarks>
-            ///  <para>
-            /// The function uses the window identified by the hWnd parameter and the screen coordinates given in the POINT
-            /// structure to compute client coordinates. It then replaces the screen coordinates with the client coordinates.
-            /// The new coordinates are relative to the upper-left corner of the specified window's client area.
-            ///  </para>
-            ///  <para>The ScreenToClient function assumes the specified point is in screen coordinates. </para>
-            ///  <para>All coordinates are in device units.</para>
-            ///  <para>
-            /// Do not use ScreenToClient when in a mirroring situation, that is, when changing from left-to-right layout to
-            /// right-to-left layout. Instead, use MapWindowPoints. For more information, see "Window Layout and Mirroring" in
-            /// Window Features.
-            ///  </para>
-            /// </remarks>
-            [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
+            [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ScreenToClient([In] HWND hWnd, ref Point lpPoint);
+            public static extern BOOL ScreenToClient([In] HWND hWnd, ref Point lpPoint);
 
             /// <summary>
             /// Converts the client-area coordinates of a specified point to screen coordinates.
             /// </summary>
             /// <param name="hWnd">Handle to the window whose client area will be used for the conversion.</param>
-            /// <param name="point">
-            /// Pointer to a POINT structure that contains the client coordinates to be converted. The new screen
-            /// coordinates are copied into this structure if the function succeeds.
-            /// </param>
+            /// <param name="lpPoint">Pointer to a <see cref="Point"/> structure that contains the client coordinates to be converted. The new screen coordinates are copied into this structure if the function succeeds.</param>
             /// <returns>
-            /// If the function succeeds, the return value is nonzero. If the function fails, the return value is zero.
-            /// Windows NT/2000/XP: To get extended error information, call GetLastError.
+            /// If the function succeeds, the return value is true.<para/>
+            /// If the function fails, the return value is false.
             /// </returns>
-            /// <remarks>
-            ///  <para>
-            /// The ClientToScreen function replaces the client-area coordinates in the POINT structure with the screen
-            /// coordinates. The screen coordinates are relative to the upper-left corner of the screen. Note, a
-            /// screen-coordinate point that is above the window's client area has a negative y-coordinate. Similarly, a screen
-            /// coordinate to the left of a client area has a negative x-coordinate.
-            ///  </para>
-            ///  <para>All coordinates are device coordinates.</para>
-            /// </remarks>
-            [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
+            [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ClientToScreen([In] HWND hWnd, [In] [Out] ref Point point);
+            public static extern BOOL ClientToScreen([In] HWND hWnd, [In] [Out] ref Point lpPoint);
         }
     }
 }

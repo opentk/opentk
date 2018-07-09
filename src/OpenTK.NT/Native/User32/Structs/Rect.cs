@@ -11,7 +11,7 @@ namespace OpenTK.NT.Native
     /// By convention, the right and bottom edges of the rectangle are normally considered exclusive. In other words, the
     /// pixel whose coordinates are (right, bottom) lies immediately outside of the the rectangle. For example, when RECT
     /// is passed to the FillRect function, the rectangle is filled up to, but not including, the right column and bottom
-    /// row of pixels. This structure is identical to the RECTL structure.
+    /// row of pixels.
     /// </remarks>
     public struct Rect
     {
@@ -35,14 +35,22 @@ namespace OpenTK.NT.Native
         /// </summary>
         public LONG Bottom;
 
+        /// <summary>
+        /// Gets the width of the rectangle.
+        /// </summary>
         public LONG Width => Right - Left;
+
+        /// <summary>
+        /// Gets the height of the rectangle.
+        /// </summary>
         public LONG Height => Bottom - Top;
 
-        public override string ToString() => $"({Left},{Top})-({Right},{Bottom})";
+        /// <inheritdoc/>
+        public override string ToString() => $"({Left}, {Top})-({Right}, {Bottom})";
 
-        public Rectangle ToRectangle() => Rectangle.FromLTRB(Left, Top, Right, Bottom);
+        public static implicit operator Rectangle(Rect rect) => Rectangle.FromLTRB(rect.Left, rect.Top, rect.Right, rect.Bottom);
 
-        public static Rect From(Rectangle value)
+        public static implicit operator Rect(Rectangle value)
             => new Rect
             {
                 Left = value.Left,
@@ -51,7 +59,7 @@ namespace OpenTK.NT.Native
                 Bottom = value.Bottom
             };
 
-        public static Rect From(Size value)
+        public static implicit operator Rect(Size value)
             => new Rect
             {
                 Left = 0,
