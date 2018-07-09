@@ -6,22 +6,26 @@
     public enum HidSimulationUsage : ushort
     {
         /// <summary>
-        /// This usage definition allows a device to be generally classified as one that uses the standard controls found on an airplane. 
+        /// This usage definition allows a device to be generally classified as one that uses the
+        /// standard controls found on an airplane. 
         /// </summary>
         FlightSimulationDevice = 0x01,
 
         /// <summary>
-        /// This usage definition allows a device to be generally classified as one that uses the standard controls found in an automobile or truck.
+        /// This usage definition allows a device to be generally classified as one that uses the
+        /// standard controls found in an automobile or truck.
         /// </summary>
         AutomobileSimulationDevice = 0x02,
 
         /// <summary>
-        /// This usage definition allows a device to be generally classified as one that uses standard controls found in a tank or a treaded vehicle.
+        /// This usage definition allows a device to be generally classified as one that uses
+        /// standard controls found in a tank or a treaded vehicle.
         /// </summary>
         TankSimulationDevice = 0x03,
 
         /// <summary>
-        /// This usage definition allows a device to be generally classified as one that uses standard controls found on a spaceship. 
+        /// This usage definition allows a device to be generally classified as one that uses
+        /// standard controls found on a spaceship. 
         /// </summary>
         SpaceshipSimulationDevice = 0x04,
 
@@ -41,17 +45,20 @@
         MotorcycleSimulationDevice = 0x07,
 
         /// <summary>
-        /// This usage definition allows a device to be generally classified as one that uses standard controls found on a sports simulation device.
+        /// This usage definition allows a device to be generally classified as one that uses
+        /// standard controls found on a sports simulation device.
         /// </summary>
         SportsSimulationDevice = 0x08,
 
         /// <summary>
-        /// This usage definition allows a device to be generally classified as one that uses standard controls found on an airplane.
+        /// This usage definition allows a device to be generally classified as one that uses
+        /// standard controls found on an airplane.
         /// </summary>
         AirplaneSimulationDevice = 0x09,
 
         /// <summary>
-        /// This usage definition allows a device to be generally classified as one that uses standard controls found on a helicopter. 
+        /// This usage definition allows a device to be generally classified as one that uses
+        /// standard controls found on a helicopter. 
         /// </summary>
         HelicopterSimulationDevice = 0x0A,
 
@@ -102,7 +109,8 @@
         // 0x26 - 0xAF                      // Reserved
 
         /// <summary>
-        /// An aileron is one of two movable flaps on the wings of an airplane that can be used to control the plane’s rolling and banking movements.
+        /// An aileron is one of two movable flaps on the wings of an airplane that can be used
+        /// to control the plane’s rolling and banking movements.
         /// </summary>
         Aileron = 0xB0,
 
@@ -127,7 +135,8 @@
         ChaffRelease = 0xB4,
 
         /// <summary>
-        /// This control is specifically for a helicopter. It controls the vertical acceleration or lift of the helicopter.
+        /// This control is specifically for a helicopter.
+        /// It controls the vertical acceleration or lift of the helicopter.
         /// </summary>
         CollectiveControl = 0xB5,
 
@@ -142,7 +151,8 @@
         ElectronicCountermeasures = 0xB7,
 
         /// <summary>
-        /// A movable control surface, usually attached to the horizontal stabilizer of an aircraft, that is used to produce motion up or down.
+        /// A movable control surface, usually attached to the horizontal stabilizer of an aircraft,
+        /// that is used to produce motion up or down.
         /// </summary>
         Elevator = 0xB8,
 
@@ -157,17 +167,20 @@
         Rudder = 0xBA,
 
         /// <summary>
-        /// A valve that regulates the flow of a fluid, such as the valve in an internal-combustion engine that controls the amount of vaporized fuel entering the cylinders.
+        /// A valve that regulates the flow of a fluid, such as the valve in an internal-combustion engine
+        /// that controls the amount of vaporized fuel entering the cylinders.
         /// </summary>
         Throttle = 0xBB,
 
         /// <summary>
-        /// Typically this is a two-position pushbutton where the first position enables communications with the crew and the second position enables the transmitter for communication external to the plane.
+        /// Typically this is a two-position pushbutton where the first position enables communications with the
+        /// crew and the second position enables the transmitter for communication external to the plane.
         /// </summary>
         FlightCommunications = 0xBC,
 
         /// <summary>
-        /// A flare is a device that produces a bright light for signaling, illumination, identification, or heat for infrared missile countermeasures.
+        /// A flare is a device that produces a bright light for signaling, illumination, identification,
+        /// or heat for infrared missile countermeasures.
         /// </summary>
         FlareRelease = 0xBD,
 
@@ -192,12 +205,14 @@
         WeaponsArm = 0xC1,
 
         /// <summary>
-        /// This device can either be a pushbutton that steps through the available weapons or a radio button that selects them individually.
+        /// This device can either be a pushbutton that steps through the available weapons or
+        /// a radio button that selects them individually.
         /// </summary>
         WeaponsSelect = 0xC2,
 
         /// <summary>
-        /// Wing flap controls are usually powered either hydraulically or by electric motors, and are used for low-speed control of an airplane.
+        /// Wing flap controls are usually powered either hydraulically or by electric motors,
+        /// and are used for low-speed control of an airplane.
         /// </summary>
         WingFlaps = 0xC3,
 

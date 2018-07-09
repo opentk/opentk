@@ -44,23 +44,27 @@
         /// This page is for key codes to be used in implementing a USB keyboard.
         /// </summary>
         /// <remarks>
-        /// The usage type of all key codes is Selectors (Sel), except for the modifier keys 'Keyboard Left Control' (0x224) to 'Keyboard Right GUI' (0x231) which are Dynamic Flags (DV).
+        /// The usage type of all key codes is Selectors (Sel), except for the modifier keys 'Keyboard Left Control'
+        /// (0x224) to 'Keyboard Right GUI' (0x231) which are Dynamic Flags (DV).
         /// </remarks>
         KeyboardOrKeypad = 0x07,
 
         /// <summary>
-        /// This page describes an LED or indicator that is implemented as an On/Off control (OOC) using the "Single button toggle" mode,
+        /// This page describes an LED or indicator that is implemented as an On/Off control (OOC)
+        /// using the "Single button toggle" mode,
         /// where a value of 1 will turn on the indicator, and a value of 0 will turn it off.
         /// </summary>
         LEDs = 0x08,
 
         /// <summary>
-        /// This page describes a set of buttons which can be defined as Sel, OOC, MC or OSC depending on the context of their declaration.
+        /// This page describes a set of buttons which can be defined as Sel, OOC, MC or OSC depending on
+        /// the context of their declaration.
         /// </summary>
         Button = 0x09,
 
         /// <summary>
-        /// This page allows multiple instances of a control or sets of controls to be declared without requiring indiviual enumeration in the native usage page.
+        /// This page allows multiple instances of a control or sets of controls to be declared without
+        /// requiring indiviual enumeration in the native usage page.
         /// </summary>
         Ordinal = 0x0A,
 
@@ -68,12 +72,14 @@
         /// This page defines the keytop and control usages for telephony devices.
         /// </summary>
         /// <remarks>
-        /// Note that in many cases usage definitions are intentionally vague, since it is assumed that the controls are interpreted by the telephone software application.
+        /// Note that in many cases usage definitions are intentionally vague, since it is assumed that
+        /// the controls are interpreted by the telephone software application.
         /// </remarks>
         Telephony = 0x0B,
 
         /// <summary>
-        /// This page describes application-specific controls. They only affect a specific device, not the system as a whole.
+        /// This page describes application-specific controls.
+        /// They only affect a specific device, not the system as a whole.
         /// </summary>
         Consumer = 0x0C,
 
@@ -97,7 +103,8 @@
         // 0x11 - 0x13              // Reserved
 
         /// <summary>
-        /// The Alphanumeric display page is intended for use by simple alphanumeric displays that are used on consumer devices.
+        /// The Alphanumeric display page is intended for use by simple alphanumeric
+        /// displays that are used on consumer devices.
         /// </summary>
         AlphanumericDisplay = 0x14,
 
@@ -137,7 +144,8 @@
         Scale = 0x8D,
 
         /// <summary>
-        /// This page describes the USB Device Class definition for a magnetic stripe reading device ("Point of Sale" device).
+        /// This page describes the USB Device Class definition for a magnetic stripe reading device
+        /// ("Point of Sale" device).
         /// </summary>
         MagneticStripeReader = 0x8E,
 

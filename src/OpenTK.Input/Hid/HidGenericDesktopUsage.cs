@@ -83,7 +83,8 @@
         Slider = 0x36,
 
         /// <summary>
-        /// A rotary control for generating a variable value, normally in the form of a knob spun by the index finger and thumb.
+        /// A rotary control for generating a variable value,
+        /// normally in the form of a knob spun by the index finger and thumb.
         /// </summary>
         Dial = 0x37,
 
@@ -103,7 +104,8 @@
         CountedBuffer = 0x3A,
 
         /// <summary>
-        /// Defines a report field that indicates the number of meaningful data bytes in an associated buffered-byte field.
+        /// Defines a report field that indicates the number of meaningful data bytes
+        /// in an associated buffered-byte field.
         /// </summary>
         ByteCount = 0x3B,
 
@@ -167,7 +169,8 @@
         SystemControl = 0x80,
 
         /// <summary>
-        /// Asserted when the intended action is to initiate system-wide power down now from Full Power or Sleep states.
+        /// Asserted when the intended action is to initiate system-wide power down now from 
+        /// Full Power or Sleep states.
         /// </summary>
         SystemPowerDown = 0x81,
 
