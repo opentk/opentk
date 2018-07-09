@@ -419,6 +419,12 @@ namespace Bind
             {
                 sw.WriteLine($"/// <typeparam name=\"{genericParameterName}\"></typeparam>");
             }
+
+            if (!f.ReturnTypeDefinition.TypeName.Equals(typeof(void).Name, StringComparison.OrdinalIgnoreCase))
+            {
+                // TODO: Return value documentation
+                sw.WriteLine("/// <returns></returns>");
+            }
         }
 
         private void WriteConstants(SourceWriter sw, IEnumerable<ConstantDefinition> constants)
