@@ -5,7 +5,9 @@ using UINT = System.UInt32;
 namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// Used in <see cref="Shell32.SHGetFileInfo(string, FileAttributeFlags, ref SHFileInfo, UINT, ShGetFileInfoFlags)"/> to specify the type of file information to retrieve.
+    /// Used in 
+    /// <see cref="Shell32.SHGetFileInfo(string, FileAttributeFlags, ref SHFileInfo, UINT, ShGetFileInfoFlags)"/> to 
+    /// specify the type of file information to retrieve.
     /// </summary>
     [Flags]
     public enum ShGetFileInfoFlags : UINT
@@ -129,10 +131,11 @@ namespace OpenTK.NT.Native
         Selected = 0x000010000,
 
         /// <summary>
-        /// Modify <see cref="Attributes"/> to indicate that the dwAttributes member of the <see cref="SHFileInfo"/> structure 
-        /// at psfi contains the specific attributes that are desired. These attributes are passed to 
-        /// IShellFolder::GetAttributesOf. If this flag is not specified, 0xFFFFFFFF is passed to IShellFolder::GetAttributesOf,
-        /// requesting all attributes. This flag cannot be specified with the <see cref="Icon"/> flag.
+        /// Modify <see cref="Attributes"/> to indicate that the dwAttributes member of the <see cref="SHFileInfo"/>
+        /// structure at psfi contains the specific attributes that are desired. These attributes are passed to 
+        /// IShellFolder::GetAttributesOf. If this flag is not specified, 0xFFFFFFFF is passed to 
+        /// IShellFolder::GetAttributesOf, requesting all attributes. This flag cannot be specified with the
+        /// <see cref="Icon"/> flag.
         /// </summary>
         AttributeSpecified = 0x000020000,
     }

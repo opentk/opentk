@@ -11,15 +11,25 @@ using SHORT = System.Int16;
 namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// Defines the initialization parameters passed to the window procedure of an application. These members are identical to the parameters of the <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyleFlags, HINSTANCE, string, WindowStyleFlags, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/> function.
+    /// Defines the initialization parameters passed to the window procedure of an application. These members are
+    /// identical to the parameters of the 
+    /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyleFlags, HINSTANCE, string, WindowStyleFlags, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
+    /// function.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct CreateStruct
     {
         /// <summary>
-        /// Contains additional data which may be used to create the window. If the window is being created as a result of a call to the CreateWindow or <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyleFlags, HINSTANCE, string, WindowStyleFlags, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/> function, this member contains the value of the lpParam parameter specified in the function call.<para/>
-        /// If the window being created is a MDI client window, this member contains a pointer to a CLIENTCREATESTRUCT structure. If the window being created is a MDI child window, this member contains a pointer to an MDICREATESTRUCT structure.<para/>
-        ///  If the window is being created from a dialog template, this member is the address of a <see cref="SHORT"/> value that specifies the size, in bytes, of the window creation data. The value is immediately followed by the creation data.
+        /// Contains additional data which may be used to create the window. If the window is being created as a
+        /// result of a call to the CreateWindow or 
+        /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyleFlags, HINSTANCE, string, WindowStyleFlags, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
+        /// function, this member contains the value of the lpParam parameter specified in the function call.<para/>
+        /// If the window being created is a MDI client window, this member contains a pointer to a CLIENTCREATESTRUCT 
+        /// structure. If the window being created is a MDI child window, this member contains a pointer to an
+        /// MDICREATESTRUCT structure.<para/>
+        /// If the window is being created from a dialog template, this member is the address of a <see cref="SHORT"/>
+        /// value that specifies the size, in bytes, of the window creation data. The value is immediately followed
+        /// by the creation data.
         /// </summary>
         public LPVOID CreateParams;
 

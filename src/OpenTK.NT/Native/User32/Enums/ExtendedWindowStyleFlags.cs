@@ -14,8 +14,8 @@ namespace OpenTK.NT.Native
         DialogModalFrame = 0x00000001,
 
         /// <summary>
-        /// The child window created with this style does not send the <see cref="WindowMessage.ParentNotify"/> message to
-        /// its parent window when it is created or destroyed.
+        /// The child window created with this style does not send the <see cref="WindowMessage.ParentNotify"/> message
+        /// to its parent window when it is created or destroyed.
         /// </summary>
         NoParentModify = 0x00000004,
 
@@ -67,10 +67,11 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// The title bar of the window includes a question mark. When the user clicks the question mark,
         /// the cursor changes to a question mark with a pointer. If the user then clicks a child window,
-        /// the child receives a <see cref="WindowMessage.Help"/> message. The child window should pass the message to the parent
-        /// window procedure, which should call the WinHelp function using the HELP_WM_HELP command. 
+        /// the child receives a <see cref="WindowMessage.Help"/> message. The child window should pass the message to
+        /// the parent window procedure, which should call the WinHelp function using the HELP_WM_HELP command. 
         /// The Help application displays a pop-up window that typically contains help for the child window.<para/>
-        /// <see cref="ContextHelp"/> cannot be used with the <see cref="WindowStyleFlags.MaximizeBox"/> or <see cref="WindowStyleFlags.MinimizeBox"/> styles.
+        /// <see cref="ContextHelp"/> cannot be used with the <see cref="WindowStyleFlags.MaximizeBox"/> 
+        /// or <see cref="WindowStyleFlags.MinimizeBox"/> styles.
         /// </summary>
         ContextHelp = 0x00000400,
 
@@ -103,7 +104,8 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// If the shell language is Hebrew, Arabic, or another language that supports reading order alignment,
-        /// the vertical scroll bar (if present) is to the left of the client area. For other languages, the style is ignored.
+        /// the vertical scroll bar (if present) is to the left of the client area. 
+        /// For other languages, the style is ignored.
         /// </summary>
         LeftScrollbar = 0x00004000,
 
@@ -120,7 +122,8 @@ namespace OpenTK.NT.Native
         ControlParent = 0x00010000,
 
         /// <summary>
-        /// The window has a three-dimensional border style intended to be used for items that do not accept user input.
+        /// The window has a three-dimensional border style intended to be used for items 
+        /// that do not accept user input.
         /// </summary>
         StaticEdge = 0x00020000,
         
@@ -141,7 +144,8 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// The window is a layered window. This style cannot be used if the window has
-        /// a class style of either <see cref="WindowClassStyleFlags.OwnDC"/> or <see cref="WindowClassStyleFlags.ClassDC"/>.<para/>
+        /// a class style of either <see cref="WindowClassStyleFlags.OwnDC"/> or
+        /// <see cref="WindowClassStyleFlags.ClassDC"/>.<para/>
         /// Only supported on Windows 2000 and higher.
         /// </summary>
         Layered = 0x00080000,
@@ -161,24 +165,30 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// If the shell language is Hebrew, Arabic, or another language that supports reading order alignment,
-        /// the horizontal origin of the window is on the right edge. Increasing horizontal values advance to the left.<para/>
+        /// the horizontal origin of the window is on the right edge.
+        /// Increasing horizontal values advance to the left.<para/>
         /// Only supported on Windows 2000 and higher.
         /// </summary>
         LayoutRtl = 0x00400000,
 
         /// <summary>
         /// Paints all descendants of a window in bottom-to-top painting order using double-buffering.<para/>
-        /// This cannot be used if the window has a class style of either <see cref="WindowClassStyleFlags.OwnDC"/> or <see cref="WindowClassStyleFlags.ClassDC"/>.<para/>
+        /// This cannot be used if the window has a class style of either <see cref="WindowClassStyleFlags.OwnDC"/> 
+        /// or <see cref="WindowClassStyleFlags.ClassDC"/>.<para/>
         /// Only supported on Windows XP and higher.
         /// </summary>
         Composited = 0x02000000,
 
         /// <summary>
         /// A top-level window created with this style does not become the foreground window when the user clicks it.
-        /// The system does not bring this window to the foreground when the user minimizes or closes the foreground window.<para/>
-        /// The window should not be activated through programmatic access or via keyboard navigation by accessible technology, such as Narrator.<para/>
-        /// To activate the window, use the SetActiveWindow or <see cref="User32.Window.SetForegroundWindow"/> function.<para/>
-        /// The window does not appear on the taskbar by default. To force the window to appear on the taskbar, use the WS_EX_APPWINDOW style.<para/>
+        /// The system does not bring this window to the foreground when the user minimizes or closes 
+        /// the foreground window.<para/>
+        /// The window should not be activated through programmatic access or via keyboard navigation by accessible
+        /// technology, such as Narrator.<para/>
+        /// To activate the window, use the SetActiveWindow or <see cref="User32.Window.SetForegroundWindow"/> 
+        /// function.<para/>
+        /// The window does not appear on the taskbar by default. To force the window to appear on the taskbar, 
+        /// use the <see cref="ExtendedWindowStyleFlags.AppWindow"/> style.<para/>
         /// Only supported on Windows 2000 and higher.
         /// </summary>
         NoActivate = 0x08000000

@@ -63,7 +63,8 @@ namespace OpenTK.NT.Native
         ExInputSink = 0x00001000,
 
         /// <summary>
-        /// If set, this enables the caller to receive WM_INPUT_DEVICE_CHANGE notifications for device arrival and device removal.<para/>
+        /// If set, this enables the caller to receive WM_INPUT_DEVICE_CHANGE notifications for device arrival and
+        /// device removal.<para/>
         /// Only supported on Vista and later.
         /// </summary>
         DevNotify = 0x00002000

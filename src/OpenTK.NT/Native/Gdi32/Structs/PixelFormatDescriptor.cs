@@ -10,7 +10,10 @@ namespace OpenTK.NT.Native
     /// Describes the pixel format of a drawing surface.
     /// </summary>
     /// <remarks>
-    /// Please notice carefully that certain pixel format properties are not supported in the current generic implementation. The generic implementation is the Microsoft GDI software implementation of OpenGL. Hardware manufacturers may enhance parts of OpenGL, and may support some pixel format properties not supported by the generic implementation.
+    /// Please notice carefully that certain pixel format properties are not supported in the current generic
+    /// implementation. The generic implementation is the Microsoft GDI software implementation of OpenGL.
+    /// Hardware manufacturers may enhance parts of OpenGL, and may support some pixel format properties
+    /// not supported by the generic implementation.
     /// </remarks>
     public struct PixelFormatDescriptor
     {
@@ -25,7 +28,8 @@ namespace OpenTK.NT.Native
         public WORD Version;
 
         /// <summary>
-        /// A set of bit flags that specify properties of the pixel buffer. The properties are generally not mutually exclusive; you can set any combination of bit flags, with the exceptions noted.
+        /// A set of bit flags that specify properties of the pixel buffer. The properties are generally
+        /// not mutually exclusive; you can set any combination of bit flags, with the exceptions noted.
         /// <seealso cref="PixelFormatDescriptorFlags"/>
         /// </summary>
         public PixelFormatDescriptorFlags Flags;
@@ -37,7 +41,9 @@ namespace OpenTK.NT.Native
         public PixelFormatDescriptorPixelTypes PixelType;
 
         /// <summary>
-        /// Specifies the number of color bitplanes in each color buffer. For RGBA pixel types, it is the size of the color buffer, excluding the alpha bitplanes. For color-index pixels, it is the size of the color-index buffer.
+        /// Specifies the number of color bitplanes in each color buffer. For RGBA pixel types, it is the size of the 
+        /// color buffer, excluding the alpha bitplanes. 
+        /// For color-index pixels, it is the size of the color-index buffer.
         /// </summary>
         public BYTE ColorBits;
 
@@ -127,7 +133,8 @@ namespace OpenTK.NT.Native
         public PixelFormatDescriptorLayerTypes LayerType;
 
         /// <summary>
-        /// Specifies the number of overlay and underlay planes. Bits 0 through 3 specify up to 15 overlay planes and bits 4 through 7 specify up to 15 underlay planes.
+        /// Specifies the number of overlay and underlay planes. Bits 0 through 3 specify up to 15 overlay planes
+        /// and bits 4 through 7 specify up to 15 underlay planes.
         /// </summary>
         public BYTE Reserved;
 
@@ -137,7 +144,9 @@ namespace OpenTK.NT.Native
         public DWORD LayerMask;
 
         /// <summary>
-        /// Specifies the transparent color or index of an underlay plane. When the pixel type is RGBA, <see cref="VisibleMask"/> is a transparent RGB color value. When the pixel type is color index, it is a transparent index value.
+        /// Specifies the transparent color or index of an underlay plane. When the pixel type is RGBA,
+        /// <see cref="VisibleMask"/> is a transparent RGB color value. When the pixel type is color index,
+        /// it is a transparent index value.
         /// </summary>
         public DWORD VisibleMask;
 

@@ -1,7 +1,8 @@
 ﻿namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// Used in <see cref="Gdi32.GetDeviceCaps(System.IntPtr, GetDeviceCapsIndex)"/> to specify the type of information to retrieve for the specified device.
+    /// Used in <see cref="Gdi32.GetDeviceCaps(System.IntPtr, GetDeviceCapsIndex)"/> to specify the type of 
+    /// information to retrieve for the specified device.
     /// </summary>
     public enum GetDeviceCapsIndex
     {
@@ -31,7 +32,8 @@
         HorizontalResolution = 8,
 
         /// <summary>
-        /// Height, in raster lines, of the screen; or for printers, the height, in pixels, of the printable area of the page.
+        /// Height, in raster lines, of the screen; or for printers, the height, in pixels, 
+        /// of the printable area of the page.
         /// </summary>
         VerticalResolution = 10,
 
@@ -126,16 +128,16 @@
         ColorResolution = 108,
 
         /// <summary>
-        /// For printing devices: the width of the physical page, in device units. For example,
-        /// a printer set to print at 600 dpi on 8.5-x11-inch paper has a physical width value of 5100 device units. 
-        /// Note that the physical page is almost always greater than the printable area of the page, and never smaller.
+        /// For printing devices: the width of the physical page, in device units. For example, a printer set to print
+        /// at 600 dpi on 8.5-x11-inch paper has a physical width value of 5100 device units. Note that the physical
+        /// page is almost always greater than the printable area of the page, and never smaller.
         /// </summary>
         PhysicalWidth = 110,
 
         /// <summary>
-        /// For printing devices: the height of the physical page, in device units. For example,
-        /// a printer set to print at 600 dpi on 8.5-by-11-inch paper has a physical height value of 6600 device units.
-        /// Note that the physical page is almost always greater than the printable area of the page, and never smaller.
+        /// For printing devices: the height of the physical page, in device units. For example, a printer set to print
+        /// at 600 dpi on 8.5-by-11-inch paper has a physical height value of 6600 device units. Note that the physical
+        /// page is almost always greater than the printable area of the page, and never smaller.
         /// </summary>
         PhysicalHeight = 111,
 

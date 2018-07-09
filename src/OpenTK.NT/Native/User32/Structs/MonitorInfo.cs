@@ -10,23 +10,29 @@ namespace OpenTK.NT.Native
     public struct MonitorInfo
     {
         /// <summary>
-        /// The size of the structure, in bytes. Set this member to <see cref="SizeInBytes"/> before calling the <see cref="User32.Monitor.GetMonitorInfo(System.IntPtr, out MonitorInfo)"/> function.
+        /// The size of the structure, in bytes. Set this member to <see cref="SizeInBytes"/> before calling the
+        /// <see cref="User32.Monitor.GetMonitorInfo(System.IntPtr, out MonitorInfo)"/> function.
         /// </summary>
         public DWORD Size;
 
         /// <summary>
-        /// A <see cref="Rect"/> structure that specifies the display monitor rectangle, expressed in virtual-screen coordinates. Note that if the monitor is not the primary display monitor, some of the rectangle's coordinates may be negative values.
+        /// A <see cref="Rect"/> structure that specifies the display monitor rectangle, expressed in virtual-screen
+        /// coordinates. Note that if the monitor is not the primary display monitor, some of the rectangle's
+        /// coordinates may be negative values.
         /// </summary>
         public Rect Monitor;
 
         /// <summary>
-        /// A <see cref="Rect"/> structure that specifies the work area rectangle of the display monitor, expressed in virtual-screen coordinates. Note that if the monitor is not the primary display monitor, some of the rectangle's coordinates may be negative values.
+        /// A <see cref="Rect"/> structure that specifies the work area rectangle of the display monitor,
+        /// expressed in virtual-screen coordinates. Note that if the monitor is not the primary display monitor,
+        /// some of the rectangle's coordinates may be negative values.
         /// </summary>
         public Rect Work;
 
         /// <summary>
         /// A set of flags that represent attributes of the display monitor.<para/>
-        /// The (currently only) defined flag is "Primary" with a value of 1, so a value of 1 means the display is primary while a value of 0 means that it is not.
+        /// The (currently only) defined flag is "Primary" with a value of 1, so a value of 1 means the display is
+        /// primary while a value of 0 means that it is not.
         /// </summary>
         public DWORD Flags;
 

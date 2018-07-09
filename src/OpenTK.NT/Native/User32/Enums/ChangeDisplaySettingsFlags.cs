@@ -5,7 +5,9 @@ using DWORD = System.UInt32;
 namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// Used in <see cref="User32.DeviceContext.ChangeDisplaySettings(ref DeviceMode, ChangeDisplaySettingsFlags)"/> and <see cref="User32.DeviceContext.ChangeDisplaySettingsEx(string, IntPtr, IntPtr, ChangeDisplaySettingsFlags, IntPtr)"/> to indicate how the graphics mode should be changed.
+    /// Used in <see cref="User32.DeviceContext.ChangeDisplaySettings(ref DeviceMode, ChangeDisplaySettingsFlags)"/> 
+    /// and <see cref="User32.DeviceContext.ChangeDisplaySettingsEx(string, IntPtr, IntPtr, ChangeDisplaySettingsFlags,
+    /// IntPtr)"/> to indicate how the graphics mode should be changed.
     /// </summary>
     [Flags]
     public enum ChangeDisplaySettingsFlags : DWORD
@@ -16,7 +18,8 @@ namespace OpenTK.NT.Native
         Dynamic = 0,
 
         /// <summary>
-        /// The graphics mode for the current screen will be changed dynamically and the graphics mode will be updated in the registry. The mode information is stored in the USER profile.
+        /// The graphics mode for the current screen will be changed dynamically and the graphics mode will be
+        /// updated in the registry. The mode information is stored in the USER profile.
         /// </summary>
         UpdateRegistry = 0x00000001,
 
@@ -33,7 +36,8 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// The settings will be saved in the global settings area so that they will affect all users on the machine. 
-        /// Otherwise, only the settings for the user are modified. This flag is only valid when specified with the CDS_UPDATEREGISTRY flag.
+        /// Otherwise, only the settings for the user are modified. 
+        /// This flag is only valid when specified with the <see cref="UpdateRegistry"/> flag.
         /// </summary>
         Global = 0x00000008,
 
@@ -66,7 +70,8 @@ namespace OpenTK.NT.Native
         Reset = 0x40000000,
 
         /// <summary>
-        /// The settings will be saved in the registry, but will not take effect. This flag is only valid when specified with the CDS_UPDATEREGISTRY flag.
+        /// The settings will be saved in the registry, but will not take effect. 
+        /// This flag is only valid when specified with the <see cref="UpdateRegistry"/> flag.
         /// </summary>
         NoReset = 0x10000000
     }

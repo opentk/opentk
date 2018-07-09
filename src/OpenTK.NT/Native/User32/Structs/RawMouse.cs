@@ -13,15 +13,7 @@ namespace OpenTK.NT.Native
     public struct RawMouse
     {
         /// <summary>
-        /// Mouse state. This member can be any reasonable combination of the following.
-        /// MOUSE_ATTRIBUTES_CHANGED
-        /// Mouse attributes changed; application needs to query the mouse attributes.
-        /// MOUSE_MOVE_RELATIVE
-        /// Mouse movement data is relative to the last mouse position.
-        /// MOUSE_MOVE_ABSOLUTE
-        /// Mouse movement data is based on absolute position.
-        /// MOUSE_VIRTUAL_DESKTOP
-        /// Mouse coordinates are mapped to the virtual desktop (for a multiple monitor system).
+        /// Mouse state.
         /// </summary>
         [FieldOffset(0)]
         public RawMouseFlags Flags;
@@ -36,7 +28,8 @@ namespace OpenTK.NT.Native
         public RawMouseButtonFlags ButtonFlags;
 
         /// <summary>
-        /// If <see cref="ButtonFlags"/> is <see cref="RawMouseButtonFlags.Wheel"/>, this member is a signed value that specifies the wheel delta.
+        /// If <see cref="ButtonFlags"/> is <see cref="RawMouseButtonFlags.Wheel"/>,
+        /// this member is a signed value that specifies the wheel delta.
         /// </summary>
         [FieldOffset(6)]
         public USHORT ButtonData;
@@ -48,13 +41,15 @@ namespace OpenTK.NT.Native
         public ULONG RawButtons;
 
         /// <summary>
-        /// Motion in the X direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
+        /// Motion in the X direction. This is signed relative motion or absolute motion,
+        /// depending on the value of <see cref="Flags"/>.
         /// </summary>
         [FieldOffset(12)]
         public LONG LastX;
 
         /// <summary>
-        /// Motion in the Y direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
+        /// Motion in the Y direction. This is signed relative motion or absolute motion,
+        /// depending on the value of <see cref="Flags"/>.
         /// </summary>
         [FieldOffset(16)]
         public LONG LastY;
@@ -65,6 +60,9 @@ namespace OpenTK.NT.Native
         [FieldOffset(20)]
         public ULONG ExtraInformation;
 
+        /// <summary>
+        /// The size of this structure in bytes.
+        /// </summary>
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawMouse>();
     }
 }

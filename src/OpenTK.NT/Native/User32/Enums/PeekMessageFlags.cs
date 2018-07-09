@@ -18,8 +18,8 @@ namespace OpenTK.NT.Native
         Remove = 1,
 
         /// <summary>
-        /// Prevents the system from releasing any thread that is waiting for the caller to go idle (see WaitForInputIdle).
-        /// Combine this value with either <see cref="NoRemove"/> or <see cref="Remove"/>.
+        /// Prevents the system from releasing any thread that is waiting for the caller to go idle 
+        /// (see WaitForInputIdle). Combine this value with either <see cref="NoRemove"/> or <see cref="Remove"/>.
         /// </summary>
         NoYield = 2,
 

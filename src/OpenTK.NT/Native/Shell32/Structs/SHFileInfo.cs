@@ -13,7 +13,8 @@ namespace OpenTK.NT.Native
     public struct SHFileInfo
     {
         /// <summary>
-        /// A handle to the icon that represents the file. You are responsible for destroying this handle with <see cref="User32.Icon.DestroyIcon(HICON)"/> when you no longer need it.
+        /// A handle to the icon that represents the file. You are responsible for destroying this handle with 
+        /// <see cref="User32.Icon.DestroyIcon(HICON)"/> when you no longer need it.
         /// </summary>
         public HICON Icon;
 
@@ -23,12 +24,14 @@ namespace OpenTK.NT.Native
         public int IconIndex;
 
         /// <summary>
-        /// An array of values that indicates the attributes of the file object. For information about these values, see the IShellFolder::GetAttributesOf method.
+        /// An array of values that indicates the attributes of the file object. For information about these values,
+        /// see the IShellFolder::GetAttributesOf method.
         /// </summary>
         public DWORD Attributes;
 
         /// <summary>
-        /// A string that contains the name of the file as it appears in the Windows Shell, or the path and file name of the file that contains the icon representing the file.
+        /// A string that contains the name of the file as it appears in the Windows Shell, or the path and file 
+        /// name of the file that contains the icon representing the file.
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
         public TCHAR DisplayName;

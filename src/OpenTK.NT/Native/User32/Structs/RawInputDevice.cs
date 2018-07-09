@@ -6,15 +6,6 @@ using USHORT = System.UInt16;
 
 namespace OpenTK.NT.Native
 {
-    /// <summary>
-    /// Defines information for the raw input devices.
-    /// </summary>
-    /// <remarks>
-    /// If RIDEV_NOLEGACY is set for a mouse or a keyboard, the system does not generate any legacy message for that device
-    /// for the application. For example, if the mouse TLC is set with RIDEV_NOLEGACY, WM_LBUTTONDOWN and related legacy
-    /// mouse messages are not generated. Likewise, if the keyboard TLC is set with RIDEV_NOLEGACY, WM_KEYDOWN and related
-    /// legacy keyboard messages are not generated.
-    /// </remarks>
     public struct RawInputDevice
     {
         /// <summary>

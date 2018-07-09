@@ -3,8 +3,11 @@
 namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// Used in the <see cref="DeviceMode"/> structure to specify whether certain members of the structure have been initialized.<para/>
-    /// If a member is initialized, its corresponding bit is set, otherwise the bit is clear. A driver supports only those <see cref="DeviceMode"/> members that are appropriate for the printer or display technology.
+    /// Used in the <see cref="DeviceMode"/> structure to specify whether certain members of the structure
+    /// have been initialized.<para/>
+    /// If a member is initialized, its corresponding bit is set, otherwise the bit is clear.
+    /// A driver supports only those <see cref="DeviceMode"/> members that are appropriate for the 
+    /// printer or display technology.
     /// </summary>
     public enum DeviceModeFieldFlags : DWORD
     {

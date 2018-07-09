@@ -5,7 +5,8 @@ using DWORD = System.UInt32;
 namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// A set of bit flags that specify properties of the pixel buffer. The properties are generally not mutually exclusive; you can set any combination of bit flags, with the exceptions noted.
+    /// A set of bit flags that specify properties of the pixel buffer. The properties are generally 
+    /// not mutually exclusive; you can set any combination of bit flags, with the exceptions noted.
     /// </summary>
     [Flags]
     public enum PixelFormatDescriptorFlags : DWORD
@@ -32,7 +33,8 @@ namespace OpenTK.NT.Native
         DrawToBitmap = 0x08,
 
         /// <summary>
-        /// The buffer supports GDI drawing. This flag and <see cref="DoubleBuffer"/> are mutually exclusive in the current generic implementation.
+        /// The buffer supports GDI drawing. This flag and <see cref="DoubleBuffer"/> are
+        /// mutually exclusive in the current generic implementation.
         /// </summary>
         SupportGdi = 0x10,
 
@@ -56,9 +58,9 @@ namespace OpenTK.NT.Native
         NeedPalette = 0x80,
 
         /// <summary>
-        /// Defined in the pixel format descriptors of hardware that supports one hardware palette in 256-color
-        /// mode only. For such systems to use hardware acceleration, the hardware palette must be in a fixed 
-        /// order (for example, 3-3-2) when in RGBA mode or must match the logical palette when in color-index mode.<para/>
+        /// Defined in the pixel format descriptors of hardware that supports one hardware palette in 256-color mode 
+        /// only. For such systems to use hardware acceleration, the hardware palette must be in a fixed order
+        /// (for example, 3-3-2) when in RGBA mode or must match the logical palette when in color-index mode.<para/>
         /// When this flag is set, you must call SetSystemPaletteUse in your program to force a one-to-one
         /// mapping of the logical palette and the system palette. If your OpenGL hardware supports multiple
         /// hardware palettes and the device driver can allocate spare hardware palettes for OpenGL,
@@ -97,7 +99,8 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// The pixel format is supported by a device driver that accelerates the generic implementation. 
-        /// If this flag is clear and the <see cref="GenericFormat"/> flag is set, the pixel format is supported by the generic implementation only.
+        /// If this flag is clear and the <see cref="GenericFormat"/> flag is set, 
+        /// the pixel format is supported by the generic implementation only.
         /// </summary>
         GenericAccelerated = 0x1000,
 

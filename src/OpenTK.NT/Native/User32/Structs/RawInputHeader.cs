@@ -9,9 +9,6 @@ namespace OpenTK.NT.Native
     /// <summary>
     /// Contains the header information that is part of the raw input data.
     /// </summary>
-    /// <remarks>
-    /// To get more information on the device, use hDevice in a call to GetRawInputDeviceInfo.
-    /// </remarks>
     public struct RawInputHeader
     {
         /// <summary>
@@ -19,10 +16,6 @@ namespace OpenTK.NT.Native
         /// </summary>
         public RawInputDeviceType Type;
 
-        /// <summary>
-        /// Size, in bytes, of the entire input packet of data. This includes the RawInput struct plus possible extra input
-        /// reports in the RAWHID variable length array.
-        /// </summary>
         public DWORD Size;
 
         /// <summary>

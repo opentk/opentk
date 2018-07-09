@@ -14,7 +14,8 @@ namespace OpenTK.NT.Native
         MultiDriver = 0x00000002,
 
         /// <summary>
-        /// The primary desktop is on the device. For a system with a single display card, this is always set. For a system with multiple display cards, only one device can have this set.
+        /// The primary desktop is on the device. For a system with a single display card, this is always set. For a 
+        /// system with multiple display cards, only one device can have this set.
         /// </summary>
         PrimaryDevice = 0x00000004,
 

@@ -38,7 +38,8 @@ namespace OpenTK.NT.Native
         public ExtendedWindowStyleFlags ExtendedStyle;
 
         /// <summary>
-        /// The window status. If this member is WS_ACTIVECAPTION, the window is active. Otherwise, this member is zero.
+        /// The window status. If this member is WS_ACTIVECAPTION, the window is active.
+        /// Otherwise, this member is zero.
         /// </summary>
         public DWORD WindowStatus;
 

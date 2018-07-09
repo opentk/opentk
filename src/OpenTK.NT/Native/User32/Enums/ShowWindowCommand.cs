@@ -11,8 +11,9 @@
         Hide = 0,
 
         /// <summary>
-        /// Activates and displays a window. If the window is minimized or maximized, the system restores it to its original
-        /// size and position. An application should specify this flag when displaying the window for the first time.
+        /// Activates and displays a window. If the window is minimized or maximized, the system restores it to
+        /// its original size and position. 
+        /// An application should specify this flag when displaying the window for the first time.
         /// </summary>
         ShowNormal = 1,
 
@@ -48,32 +49,33 @@
         Minimize = 6,
 
         /// <summary>
-        /// Displays the window as a minimized window. This value is similar to <see cref="ShowMinimized"/>, except the window is not
-        /// activated.
+        /// Displays the window as a minimized window. This value is similar to <see cref="ShowMinimized"/>,
+        /// except the window is not activated.
         /// </summary>
         ShowMinimizedNoActivate = 7,
 
         /// <summary>
-        /// Displays the window in its current size and position. This value is similar to <see cref="ShowNormal"/>, except the window is not
-        /// activated.
+        /// Displays the window in its current size and position. This value is similar to <see cref="ShowNormal"/>,
+        /// except the window is not activated.
         /// </summary>
         ShowNA = 8,
 
         /// <summary>
-        /// Activates and displays the window. If the window is minimized or maximized, the system restores it to its original
-        /// size and position. An application should specify this flag when restoring a minimized window.
+        /// Activates and displays the window. If the window is minimized or maximized, the system restores it to
+        /// its original size and position.
+        /// An application should specify this flag when restoring a minimized window.
         /// </summary>
         Restore = 9,
 
         /// <summary>
-        /// Sets the show state based on the <see cref="ShowWindowCommand"/> value specified in the STARTUPINFO structure passed to the CreateProcess
-        /// function by the program that started the application.
+        /// Sets the show state based on the <see cref="ShowWindowCommand"/> value specified in the STARTUPINFO
+        /// structure passed to the CreateProcess function by the program that started the application.
         /// </summary>
         ShowDefault = 10,
 
         /// <summary>
-        /// Windows 2000/XP: Minimizes a window, even if the thread that owns the window is not responding. This flag should
-        /// only be used when minimizing windows from a different thread.
+        /// Windows 2000/XP: Minimizes a window, even if the thread that owns the window is not responding. 
+        /// This flag should only be used when minimizing windows from a different thread.
         /// </summary>
         ForceMinimize = 11
     }

@@ -27,7 +27,7 @@ namespace OpenTK.NT.Native
         Button5Up = 0x0200,
 
         /// <summary>
-        /// Raw input comes from a mouse wheel. The wheel delta is stored in <see cref="RawMouse.usButtonData"/>.
+        /// Raw input comes from a mouse wheel. The wheel delta is stored in <see cref="RawMouse.ButtonData"/>.
         /// </summary>
         Wheel = 0x0400,
         HWheel = 0x0800

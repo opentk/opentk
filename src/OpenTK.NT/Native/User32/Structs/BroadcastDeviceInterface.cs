@@ -10,7 +10,9 @@ namespace OpenTK.NT.Native
     public struct BroadcastDeviceInterface
     {
         /// <summary>
-        /// The size of this structure, in bytes. This is the size of the members plus the actual length of the <see cref="Name"/> string (the null character is accounted for by the declaration of <see cref="Name"/> as a one-character array.)
+        /// The size of this structure, in bytes. This is the size of the members plus the actual length of the 
+        /// <see cref="Name"/> string (the null character is accounted for by the declaration of <see cref="Name"/>
+        /// as a one-character array.)
         /// </summary>
         public DWORD Size;
 
@@ -27,8 +29,8 @@ namespace OpenTK.NT.Native
         public Guid ClassGuid;
 
         /// <summary>
-        /// A null-terminated string that specifies the name of the device.
-        /// If you want to read this string, start at this field's position and read until you encounter a \0 character.
+        /// A null-terminated string that specifies the name of the device. If you want to read this string,
+        /// start at this field's position and read until you encounter a \0 character.
         /// </summary>
         public char Name;
     }

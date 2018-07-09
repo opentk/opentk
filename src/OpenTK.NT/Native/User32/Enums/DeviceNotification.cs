@@ -13,7 +13,8 @@
         ServiceHandle = 0x00000001,
 
         /// <summary>
-        /// Notifies the recipient of device interface events for all device interface classes. (The dbcc_classguid member is ignored.)<para/>
+        /// Notifies the recipient of device interface events for all device interface classes. 
+        /// (The dbcc_classguid member is ignored.)<para/>
         /// This value can be used only if the dbch_devicetype member is DBT_DEVTYP_DEVICEINTERFACE.
         /// </summary>
         AllInterfaceClasses = 0x00000004

@@ -11,7 +11,8 @@ namespace OpenTK.NT.Native
     public struct Msg
     {
         /// <summary>
-        /// A handle to the window whose window procedure receives the message. This member is <see cref="HWND.Zero"/> when the message is a thread message.
+        /// A handle to the window whose window procedure receives the message. This member is 
+        /// <see cref="System.IntPtr.Zero"/> when the message is a thread message.
         /// </summary>
         public HWND HWnd;
 
@@ -21,12 +22,14 @@ namespace OpenTK.NT.Native
         public WindowMessage Message;
 
         /// <summary>
-        /// Additional information about the message.The exact meaning depends on the value of the <see cref="Message"/> member.
+        /// Additional information about the message.The exact meaning depends on the value of the
+        /// <see cref="Message"/> member.
         /// </summary>
         public WPARAM WParam;
 
         /// <summary>
-        /// Additional information about the message.The exact meaning depends on the value of the <see cref="Message"/> member.
+        /// Additional information about the message.The exact meaning depends on the value of the
+        /// <see cref="Message"/> member.
         /// </summary>
         public LPARAM LParam;
 
@@ -42,6 +45,9 @@ namespace OpenTK.NT.Native
 
         /// <inheritdoc/>
         public override string ToString()
-            => $"msg=0x{(int)Message:x} ({Message.ToString()}) hwnd=0x{HWnd.ToInt32():x} wparam=0x{WParam.ToInt32():x} lparam=0x{LParam.ToInt32():x} pt={Point}";
+        {
+            return $"msg=0x{(int)Message:x} ({Message.ToString()}) hwnd=0x{HWnd.ToInt32():x}"
+                + $"wparam=0x{WParam.ToInt32():x} lparam=0x{LParam.ToInt32():x} pt={Point}";
+        }
     }
 }

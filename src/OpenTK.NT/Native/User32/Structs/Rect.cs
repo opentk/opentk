@@ -8,10 +8,10 @@ namespace OpenTK.NT.Native
     /// Defines the coordinates of the upper-left and lower-right corners of a rectangle.
     /// </summary>
     /// <remarks>
-    /// By convention, the right and bottom edges of the rectangle are normally considered exclusive. In other words, the
-    /// pixel whose coordinates are (right, bottom) lies immediately outside of the the rectangle. For example, when RECT
-    /// is passed to the FillRect function, the rectangle is filled up to, but not including, the right column and bottom
-    /// row of pixels.
+    /// By convention, the right and bottom edges of the rectangle are normally considered exclusive. In other words,
+    /// the pixel whose coordinates are (right, bottom) lies immediately outside of the the rectangle. For example,
+    /// when RECT is passed to the FillRect function, the rectangle is filled up to, but not including, the right
+    /// column and bottom row of pixels.
     /// </remarks>
     public struct Rect
     {
@@ -48,24 +48,31 @@ namespace OpenTK.NT.Native
         /// <inheritdoc/>
         public override string ToString() => $"({Left}, {Top})-({Right}, {Bottom})";
 
-        public static implicit operator Rectangle(Rect rect) => Rectangle.FromLTRB(rect.Left, rect.Top, rect.Right, rect.Bottom);
+        public static implicit operator Rectangle(Rect rect)
+        {
+            return Rectangle.FromLTRB(rect.Left, rect.Top, rect.Right, rect.Bottom);
+        }
 
         public static implicit operator Rect(Rectangle value)
-            => new Rect
+        {
+            return new Rect
             {
                 Left = value.Left,
                 Right = value.Right,
                 Top = value.Top,
                 Bottom = value.Bottom
             };
+        }
 
         public static implicit operator Rect(Size value)
-            => new Rect
+        {
+            return new Rect
             {
                 Left = 0,
                 Right = value.Width,
                 Top = 0,
                 Bottom = value.Height
             };
+        }
     }
 }
