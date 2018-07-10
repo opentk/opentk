@@ -41,7 +41,7 @@ namespace OpenTK.NT.Native
             public static extern LRESULT SendMessage
             (
                 [In] HWND hWnd,
-                [In] WindowMessage Msg,
+                [In] WindowMessage msg,
                 [In] WPARAM wParam,
                 [In] LPARAM lParam
             );
@@ -52,7 +52,7 @@ namespace OpenTK.NT.Native
             public static extern bool PostMessage
             (
                 [In] [Optional] HWND hWnd,
-                [In] WindowMessage Msg,
+                [In] WindowMessage msg,
                 [In] WPARAM wParam,
                 [In] LPARAM lParam
             );

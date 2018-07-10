@@ -13,7 +13,7 @@ namespace OpenTK.NT.Native
     public struct SHFileInfo
     {
         /// <summary>
-        /// A handle to the icon that represents the file. You are responsible for destroying this handle with 
+        /// A handle to the icon that represents the file. You are responsible for destroying this handle with
         /// <see cref="User32.Icon.DestroyIcon(HICON)"/> when you no longer need it.
         /// </summary>
         public HICON Icon;
@@ -30,7 +30,7 @@ namespace OpenTK.NT.Native
         public DWORD Attributes;
 
         /// <summary>
-        /// A string that contains the name of the file as it appears in the Windows Shell, or the path and file 
+        /// A string that contains the name of the file as it appears in the Windows Shell, or the path and file
         /// name of the file that contains the icon representing the file.
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]

@@ -10,7 +10,7 @@ namespace OpenTK.NT.Native
     public static partial class User32
     {
         /// <summary>
-        /// Provides a subset of functions from the Windows API, 
+        /// Provides a subset of functions from the Windows API,
         /// specifically those imported from user32.dll that deal with the cursor.
         /// </summary>
         public static class Cursor
@@ -21,7 +21,7 @@ namespace OpenTK.NT.Native
             /// <param name="cursorName">An identifier for one of the pre-defined cursors.</param>
             /// <returns>
             /// If the function succeeds, the return value is the handle to the newly loaded cursor.
-            /// If the function fails, the return value is <see cref="IntPtr.Zero"/>. 
+            /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             public static HCURSOR LoadCursor(CursorName cursorName)
@@ -134,15 +134,15 @@ namespace OpenTK.NT.Native
             /// screen rectangle set by the most recent <see cref="ClipCursor(ref Rect)"/> function call, the system
             /// automatically adjusts the coordinates so that the cursor stays within the rectangle.
             /// </summary>
-            /// <param name="X">The new x-coordinate of the cursor, in screen coordinates.</param>
-            /// <param name="Y">The new y-coordinate of the cursor, in screen coordinates.</param>
+            /// <param name="x">The new x-coordinate of the cursor, in screen coordinates.</param>
+            /// <param name="y">The new y-coordinate of the cursor, in screen coordinates.</param>
             /// <returns>
             /// Returns true if successful or false otherwise.<para/>
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool SetCursorPos([In] int X, [In] int Y);
+            public static extern bool SetCursorPos([In] int x, [In] int y);
 
             /// <summary>
             /// Retrieves a handle to the current cursor.

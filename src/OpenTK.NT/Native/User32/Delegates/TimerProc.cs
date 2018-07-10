@@ -8,7 +8,7 @@ namespace OpenTK.NT.Native
 {
     /// <summary>
     /// An application-defined callback function that processes <see cref="WindowMessage.Timer"/> messages. TimerProc
-    /// is a placeholder for the application-defined function name. 
+    /// is a placeholder for the application-defined function name.
     /// </summary>
     /// <param name="hwnd">A handle to the window associated with the timer. </param>
     /// <param name="uMsg">The <see cref="WindowMessage.Timer"/> message.</param>

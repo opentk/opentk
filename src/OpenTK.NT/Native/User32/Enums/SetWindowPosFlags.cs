@@ -40,7 +40,7 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// Sends a <see cref="WindowMessage.NCCalcSize"/> message to the window, even if the window's size is not
-        /// being changed. If this flag is not specified, <see cref="WindowMessage.NCCalcSize"/> is sent only when 
+        /// being changed. If this flag is not specified, <see cref="WindowMessage.NCCalcSize"/> is sent only when
         /// the window's size is being changed.
         /// </summary>
         FrameChanged = 0x0020,

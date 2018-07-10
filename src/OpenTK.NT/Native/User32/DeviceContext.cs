@@ -16,7 +16,7 @@ namespace OpenTK.NT.Native
 
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ReleaseDC([In] HWND hWnd, [In] HDC DC);
+            public static extern bool ReleaseDC([In] HWND hWnd, [In] HDC dc);
 
             [DllImport("user32.dll")]
             public static extern ChangeDisplaySettingsResult ChangeDisplaySettings

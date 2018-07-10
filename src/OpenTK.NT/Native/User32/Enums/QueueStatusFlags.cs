@@ -11,8 +11,8 @@ namespace OpenTK.NT.Native
     public enum QueueStatusFlags : DWORD
     {
         /// <summary>
-        /// A <see cref="WindowMessage.KeyUp"/>, <see cref="WindowMessage.KeyDown"/>, 
-        /// <see cref="WindowMessage.SystemKeyUp"/>, or <see cref="WindowMessage.SystemKeyDown"/> message 
+        /// A <see cref="WindowMessage.KeyUp"/>, <see cref="WindowMessage.KeyDown"/>,
+        /// <see cref="WindowMessage.SystemKeyUp"/>, or <see cref="WindowMessage.SystemKeyDown"/> message
         /// is in the queue.
         /// </summary>
         Key = 0x0001,
@@ -23,7 +23,7 @@ namespace OpenTK.NT.Native
         MouseMove = 0x0002,
 
         /// <summary>
-        /// A mouse-button message (<see cref="WindowMessage.LButtonUp"/>, 
+        /// A mouse-button message (<see cref="WindowMessage.LButtonUp"/>,
         /// <see cref="WindowMessage.RButtonDown"/>, and so on).
         /// </summary>
         MouseButton = 0x0004,
@@ -65,13 +65,13 @@ namespace OpenTK.NT.Native
         RawInput = 0x0400,
 
         /// <summary>
-        /// A <see cref="WindowMessage.MouseMove"/> message or mouse-button message 
+        /// A <see cref="WindowMessage.MouseMove"/> message or mouse-button message
         /// (<see cref="WindowMessage.LButtonUp"/>, <see cref="WindowMessage.RButtonDown"/>, and so on).
         /// </summary>
         Mouse = MouseMove | MouseButton,
 
         /// <summary>
-        /// An input message is in the queue. This is composed of <see cref="Key"/>, 
+        /// An input message is in the queue. This is composed of <see cref="Key"/>,
         /// <see cref="Mouse"/> and <see cref="RawInput"/>.
         /// Windows XP and higher only.
         /// </summary>
@@ -84,7 +84,7 @@ namespace OpenTK.NT.Native
         InputLegacy = Mouse | Key,
 
         /// <summary>
-        /// An input, <see cref="WindowMessage.Timer"/>, <see cref="WindowMessage.Paint"/>, 
+        /// An input, <see cref="WindowMessage.Timer"/>, <see cref="WindowMessage.Paint"/>,
         /// <see cref="WindowMessage.Hotkey"/>, or posted message is in the queue.
         /// </summary>
         AllEvents = Input | PostMessage | Timer | Paint | Hotkey,

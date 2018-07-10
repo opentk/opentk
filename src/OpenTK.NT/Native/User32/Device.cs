@@ -14,13 +14,13 @@ namespace OpenTK.NT.Native
             public static extern HDEVNOTIFY RegisterDeviceNotification
             (
                 [In] HANDLE hRecipient,
-                [In] LPVOID NotificationFilter,
-                [In] DeviceNotificationEnum Flags
+                [In] LPVOID notificationFilter,
+                [In] DeviceNotificationEnum flags
             );
 
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool UnregisterDeviceNotification([In] HDEVNOTIFY Handle);
+            public static extern bool UnregisterDeviceNotification([In] HDEVNOTIFY handle);
         }
     }
 }

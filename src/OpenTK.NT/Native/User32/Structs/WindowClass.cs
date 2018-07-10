@@ -1,9 +1,9 @@
 ﻿using System.Runtime.InteropServices;
 
-using HINSTANCE = System.IntPtr;
-using HICON = System.IntPtr;
 using HBRUSH = System.IntPtr;
 using HCURSOR = System.IntPtr;
+using HICON = System.IntPtr;
+using HINSTANCE = System.IntPtr;
 
 namespace OpenTK.NT.Native
 {

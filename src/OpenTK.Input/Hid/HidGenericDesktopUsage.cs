@@ -6,8 +6,8 @@
     public enum HidGenericDesktopUsage : ushort
     {
         /// <summary>
-        /// A collection of axes that generates a value to direct, indicate, or point 
-        /// user intentions to an application. 
+        /// A collection of axes that generates a value to direct, indicate, or point
+        /// user intentions to an application.
         /// </summary>
         Pointer = 0x01,
 
@@ -63,17 +63,17 @@
         Z = 0x32,
 
         /// <summary>
-        /// A rotation about the X axis. Angular position report values follow the righthand rule. 
+        /// A rotation about the X axis. Angular position report values follow the righthand rule.
         /// </summary>
         RotationX = 0x33,
 
         /// <summary>
-        /// A rotation about the Y axis. Angular position report values follow the righthand rule. 
+        /// A rotation about the Y axis. Angular position report values follow the righthand rule.
         /// </summary>
         RotationY = 0x34,
 
         /// <summary>
-        /// A rotation about the Z axis. Angular position report values follow the righthand rule. 
+        /// A rotation about the Z axis. Angular position report values follow the righthand rule.
         /// </summary>
         RotationZ = 0x35,
 
@@ -169,7 +169,7 @@
         SystemControl = 0x80,
 
         /// <summary>
-        /// Asserted when the intended action is to initiate system-wide power down now from 
+        /// Asserted when the intended action is to initiate system-wide power down now from
         /// Full Power or Sleep states.
         /// </summary>
         SystemPowerDown = 0x81,
@@ -220,7 +220,7 @@
         SystemMenuRight = 0x8A,
 
         /// <summary>
-        /// Menu select left. 
+        /// Menu select left.
         /// </summary>
         SystemMenuLeft = 0x8B,
 
@@ -242,17 +242,17 @@
         DPadUp = 0x90,
 
         /// <summary>
-        /// Indicates that bottom of a Direction Pad is pressed 
+        /// Indicates that bottom of a Direction Pad is pressed
         /// </summary>
         DPadDown = 0x91,
 
         /// <summary>
-        /// Indicates that right side of a Direction Pad is pressed 
+        /// Indicates that right side of a Direction Pad is pressed
         /// </summary>
         DPadRight = 0x92,
 
         /// <summary>
-        /// Indicates that left side of a Direction Pad is pressed 
+        /// Indicates that left side of a Direction Pad is pressed
         /// </summary>
         DPadLeft = 0x93,
 

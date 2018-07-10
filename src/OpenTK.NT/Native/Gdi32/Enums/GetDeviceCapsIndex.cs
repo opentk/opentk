@@ -1,7 +1,7 @@
 ﻿namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// Used in <see cref="Gdi32.GetDeviceCaps(System.IntPtr, GetDeviceCapsIndex)"/> to specify the type of 
+    /// Used in <see cref="Gdi32.GetDeviceCaps(System.IntPtr, GetDeviceCapsIndex)"/> to specify the type of
     /// information to retrieve for the specified device.
     /// </summary>
     public enum GetDeviceCapsIndex
@@ -32,7 +32,7 @@
         HorizontalResolution = 8,
 
         /// <summary>
-        /// Height, in raster lines, of the screen; or for printers, the height, in pixels, 
+        /// Height, in raster lines, of the screen; or for printers, the height, in pixels,
         /// of the printable area of the page.
         /// </summary>
         VerticalResolution = 10,
@@ -44,7 +44,7 @@
         LogicalPixelsX = 88,
 
         /// <summary>
-        /// Number of pixels per logical inch along the screen height. 
+        /// Number of pixels per logical inch along the screen height.
         /// In a system with multiple display monitors, this value is the same for all monitors.
         /// </summary>
         LogicalPixelsY = 90,
@@ -101,7 +101,7 @@
         PDeviceSize = 26,
 
         /// <summary>
-        /// Flag that indicates the clipping capabilities of the device. 
+        /// Flag that indicates the clipping capabilities of the device.
         /// If the device can clip to a rectangle, it is 1. Otherwise, it is 0.
         /// </summary>
         ClippingCapabilities = 36,
@@ -114,7 +114,7 @@
         SizePalette = 104,
 
         /// <summary>
-        /// Number of reserved entries in the system palette. 
+        /// Number of reserved entries in the system palette.
         /// This index is valid only if the device driver sets the RC_PALETTE bit
         /// in the RASTERCAPS index and is available only if the driver is compatible with 16-bit Windows.
         /// </summary>
@@ -142,7 +142,7 @@
         PhysicalHeight = 111,
 
         /// <summary>
-        /// For printing devices: the distance from the left edge of the physical page to the left edge 
+        /// For printing devices: the distance from the left edge of the physical page to the left edge
         /// of the printable area, in device units. For example, a printer set to print at 600 dpi on
         /// 8.5-by-11-inch paper, that cannot print on the leftmost 0.25-inch of paper,
         /// has a horizontal physical offset of 150 device units.
@@ -150,9 +150,9 @@
         PhysicalOffsetX = 112,
 
         /// <summary>
-        /// For printing devices: the distance from the top edge of the physical page to the top edge 
+        /// For printing devices: the distance from the top edge of the physical page to the top edge
         /// of the printable area, in device units. For example, a printer set to print at 600 dpi on
-        /// 8.5-by-11-inch paper, that cannot print on the topmost 0.5-inch of paper, 
+        /// 8.5-by-11-inch paper, that cannot print on the topmost 0.5-inch of paper,
         /// has a vertical physical offset of 300 device units.
         /// </summary>
         PhysicalOffsetY = 113,
@@ -160,8 +160,8 @@
         /// <summary>
         /// For display devices: the current vertical refresh rate of the device, in cycles per second (Hz).<para/>
         /// A vertical refresh rate value of 0 or 1 represents the display hardware's default refresh rate.
-        /// This default rate is typically set by switches on a display card or computer motherboard, 
-        /// or by a configuration program that does not use display functions such as 
+        /// This default rate is typically set by switches on a display card or computer motherboard,
+        /// or by a configuration program that does not use display functions such as
         /// <see cref="User32.DeviceContext.ChangeDisplaySettings"/>.
         /// </summary>
         VRefreshRate = 116,
@@ -177,7 +177,7 @@
         ScalingFactorY = 115,
 
         /// <summary>
-        /// Preferred horizontal drawing alignment, expressed as a multiple of pixels. 
+        /// Preferred horizontal drawing alignment, expressed as a multiple of pixels.
         /// For best drawing performance, windows should be horizontally aligned to a multiple of this value.
         /// A value of zero indicates that the device is accelerated, and any alignment may be used.
         /// </summary>

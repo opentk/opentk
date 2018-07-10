@@ -1,5 +1,5 @@
-﻿using OpenTK.Input.Hid;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
+using OpenTK.Input.Hid;
 
 using HWND = System.IntPtr;
 using USHORT = System.UInt16;

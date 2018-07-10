@@ -1,8 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 
 using HWND = System.IntPtr;
-using UINT_PTR = System.UIntPtr;
 using TIMERPROC = OpenTK.NT.Native.TimerProc;
+using UINT_PTR = System.UIntPtr;
 
 namespace OpenTK.NT.Native
 {

@@ -24,9 +24,12 @@ namespace OpenTK.NT.Native
         [StructLayout(LayoutKind.Explicit)]
         public struct DeviceStruct
         {
-            [FieldOffset(0)] public RawInputDeviceInfoMouse Mouse;
-            [FieldOffset(0)] public RawInputDeviceInfoKeyboard Keyboard;
-            [FieldOffset(0)] public RawInputDeviceInfoHid Hid;
+            [FieldOffset(0)]
+            public RawInputDeviceInfoMouse Mouse;
+            [FieldOffset(0)]
+            public RawInputDeviceInfoKeyboard Keyboard;
+            [FieldOffset(0)]
+            public RawInputDeviceInfoHid Hid;
         }
 
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawInputDeviceInfo>();

@@ -7,7 +7,7 @@
     {
         /// <summary>
         /// This usage definition allows a device to be generally classified as one that uses the
-        /// standard controls found on an airplane. 
+        /// standard controls found on an airplane.
         /// </summary>
         FlightSimulationDevice = 0x01,
 
@@ -25,12 +25,12 @@
 
         /// <summary>
         /// This usage definition allows a device to be generally classified as one that uses
-        /// standard controls found on a spaceship. 
+        /// standard controls found on a spaceship.
         /// </summary>
         SpaceshipSimulationDevice = 0x04,
 
         /// <summary>
-        /// Allows a device to be generally classified as one that uses the standard controls of a submarine. 
+        /// Allows a device to be generally classified as one that uses the standard controls of a submarine.
         /// </summary>
         SubmarineSimulationDevice = 0x05,
 
@@ -58,7 +58,7 @@
 
         /// <summary>
         /// This usage definition allows a device to be generally classified as one that uses
-        /// standard controls found on a helicopter. 
+        /// standard controls found on a helicopter.
         /// </summary>
         HelicopterSimulationDevice = 0x0A,
 
@@ -68,7 +68,7 @@
         MagicCarpetSimulationDevice = 0x0B,
 
         /// <summary>
-        /// Allows a device to be generally classified as one that uses the standard controls of a bicycle. 
+        /// Allows a device to be generally classified as one that uses the standard controls of a bicycle.
         /// </summary>
         BicycleSimulationDevice = 0x0C,
 
@@ -162,7 +162,7 @@
         ElevatorTrim = 0xB9,
 
         /// <summary>
-        /// The zero position is centered, positive values turn right, and negative values turn left. 
+        /// The zero position is centered, positive values turn right, and negative values turn left.
         /// </summary>
         Rudder = 0xBA,
 

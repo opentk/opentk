@@ -25,7 +25,7 @@ namespace OpenTK.NT.Native
         /// The identifier of the window that is registering whether it will accept dropped files.
         /// </param>
         /// <param name="fAccept">
-        /// A value that indicates if the window identified by the <paramref name="hWnd"/> parameter accepts dropped 
+        /// A value that indicates if the window identified by the <paramref name="hWnd"/> parameter accepts dropped
         /// files. This value is true to accept dropped files or false to discontinue accepting dropped files.
         /// </param>
         [DllImport(Library)]
@@ -36,16 +36,16 @@ namespace OpenTK.NT.Native
         /// </summary>
         /// <param name="hDrop">Identifier of the structure that contains the file names of the dropped files.</param>
         /// <param name="iFile">
-        /// Index of the file to query. If the value of this parameter is 0xFFFFFFFF, 
-        /// <see cref="DragQueryFile(DWORD_PTR, DWORD, LPTSTR, DWORD)"/> returns a count of the files dropped. 
+        /// Index of the file to query. If the value of this parameter is 0xFFFFFFFF,
+        /// <see cref="DragQueryFile(DWORD_PTR, DWORD, LPTSTR, DWORD)"/> returns a count of the files dropped.
         /// If the value of this parameter is between zero and the total number of files dropped,
         /// <see cref="DragQueryFile(DWORD_PTR, DWORD, LPTSTR, DWORD)"/> copies the file name with the corresponding
         /// value to the buffer pointed to by the <paramref name="lpszFile"/> parameter.
         /// </param>
         /// <param name="lpszFile">
-        /// The address of a buffer that receives the file name of a dropped file when the function returns. This 
-        /// file name is a null-terminated string. If this parameter is null, 
-        /// <see cref="DragQueryFile(DWORD_PTR, DWORD, LPTSTR, DWORD)"/> returns the required size, in characters, 
+        /// The address of a buffer that receives the file name of a dropped file when the function returns. This
+        /// file name is a null-terminated string. If this parameter is null,
+        /// <see cref="DragQueryFile(DWORD_PTR, DWORD, LPTSTR, DWORD)"/> returns the required size, in characters,
         /// of this buffer.
         /// </param>
         /// <param name="cch">The size, in characters, of the <paramref name="lpszFile"/> buffer.</param>
@@ -63,7 +63,7 @@ namespace OpenTK.NT.Native
         /// Releases memory that the system allocated for use in transferring file names to the application.
         /// </summary>
         /// <param name="hDrop">
-        /// Identifier of the structure that describes dropped files. This handle is retrieved from the wParam 
+        /// Identifier of the structure that describes dropped files. This handle is retrieved from the wParam
         /// parameter of the <see cref="WindowMessage.DropFiles"/> message.
         /// </param>
         [DllImport(Library)]
@@ -77,22 +77,22 @@ namespace OpenTK.NT.Native
         /// Both absolute and relative paths are valid.
         /// </param>
         /// <param name="dwFileAttributes">
-        /// A combination of one or more <see cref="FileAttributeFlags"/>. If <paramref name="uFlags"/> does not 
+        /// A combination of one or more <see cref="FileAttributeFlags"/>. If <paramref name="uFlags"/> does not
         /// include the <see cref="ShGetFileInfoFlags.UseFileAttributes"/> flag, this parameter is ignored.
         /// </param>
         /// <param name="psfi">Pointer to a <see cref="SHFileInfo"/> structure to receive the file information.</param>
         /// <param name="cbFileInfo">
-        /// The size, in bytes, of the <see cref="SHFileInfo"/> structure pointed to by the 
+        /// The size, in bytes, of the <see cref="SHFileInfo"/> structure pointed to by the
         /// <paramref name="psfi"/> parameter.
         /// </param>
         /// <param name="uFlags">
-        /// The flags that specify the file information to retrieve. 
+        /// The flags that specify the file information to retrieve.
         /// This parameter can be a combination of one or more <see cref="ShGetFileInfoFlags"/>.
         /// </param>
         /// <returns>
         /// Returns a value whose meaning depends on the <paramref name="uFlags"/> parameter:<para/>
-        /// If <paramref name="uFlags"/> does not contain <see cref="ShGetFileInfoFlags.ExeType"/> or 
-        /// <see cref="ShGetFileInfoFlags.SysIconIndex"/>, the return value is nonzero if successful, 
+        /// If <paramref name="uFlags"/> does not contain <see cref="ShGetFileInfoFlags.ExeType"/> or
+        /// <see cref="ShGetFileInfoFlags.SysIconIndex"/>, the return value is nonzero if successful,
         /// or zero otherwise.<para/>
         /// If <paramref name="uFlags"/> contains the <see cref="ShGetFileInfoFlags.ExeType"/> flag, the return value
         /// specifies the type of the executable file. Check the windows API documentation for more information.

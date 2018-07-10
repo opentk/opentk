@@ -221,7 +221,6 @@
 
         IcoClear = 0xE6,
 
-
         Packet = 0xE7,
 
         /*

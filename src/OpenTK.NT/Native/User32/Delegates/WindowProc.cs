@@ -1,15 +1,15 @@
 ﻿using System.Runtime.InteropServices;
 using System.Security;
 
-using LRESULT = System.IntPtr;
 using HWND = System.IntPtr;
 using LPARAM = System.IntPtr;
+using LRESULT = System.IntPtr;
 using WPARAM = System.IntPtr;
 
 namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// An application-defined function that processes messages sent to a window. WindowProc is a placeholder for the 
+    /// An application-defined function that processes messages sent to a window. WindowProc is a placeholder for the
     /// application-defined function name.
     /// </summary>
     /// <param name="hwnd">A handle to the window.</param>
@@ -29,7 +29,7 @@ namespace OpenTK.NT.Native
     (
         [In] HWND hwnd,
         [In] WindowMessage uMsg,
-        [In] WPARAM wParam, 
+        [In] WPARAM wParam,
         [In] LPARAM lParam
     );
 }

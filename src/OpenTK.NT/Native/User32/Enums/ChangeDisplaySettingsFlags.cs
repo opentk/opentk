@@ -5,7 +5,7 @@ using DWORD = System.UInt32;
 namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// Used in <see cref="User32.DeviceContext.ChangeDisplaySettings(ref DeviceMode, ChangeDisplaySettingsFlags)"/> 
+    /// Used in <see cref="User32.DeviceContext.ChangeDisplaySettings(ref DeviceMode, ChangeDisplaySettingsFlags)"/>
     /// and <see cref="User32.DeviceContext.ChangeDisplaySettingsEx(string, IntPtr, IntPtr, ChangeDisplaySettingsFlags,
     /// IntPtr)"/> to indicate how the graphics mode should be changed.
     /// </summary>
@@ -35,8 +35,8 @@ namespace OpenTK.NT.Native
         Fullscreen = 0x00000004,
 
         /// <summary>
-        /// The settings will be saved in the global settings area so that they will affect all users on the machine. 
-        /// Otherwise, only the settings for the user are modified. 
+        /// The settings will be saved in the global settings area so that they will affect all users on the machine.
+        /// Otherwise, only the settings for the user are modified.
         /// This flag is only valid when specified with the <see cref="UpdateRegistry"/> flag.
         /// </summary>
         Global = 0x00000008,
@@ -70,7 +70,7 @@ namespace OpenTK.NT.Native
         Reset = 0x40000000,
 
         /// <summary>
-        /// The settings will be saved in the registry, but will not take effect. 
+        /// The settings will be saved in the registry, but will not take effect.
         /// This flag is only valid when specified with the <see cref="UpdateRegistry"/> flag.
         /// </summary>
         NoReset = 0x10000000

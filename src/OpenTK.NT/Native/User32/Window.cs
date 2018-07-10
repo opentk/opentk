@@ -33,7 +33,7 @@ namespace OpenTK.NT.Native
             /// </summary>
             /// <param name="lpRect">
             /// A pointer to a <see cref="Rect"/> structure that contains the coordinates of the top-left and
-            /// bottom-right corners of the desired client area. When the function returns, the structure contains 
+            /// bottom-right corners of the desired client area. When the function returns, the structure contains
             /// the coordinates of the top-left and bottom-right corners of the window to accommodate the desired
             /// client area.
             /// </param>
@@ -59,7 +59,7 @@ namespace OpenTK.NT.Native
 
             /// <summary>
             /// Calculates the required size of the window rectangle, based on the desired client-rectangle size.
-            /// The window rectangle can then be passed to the 
+            /// The window rectangle can then be passed to the
             /// <see cref="CreateWindowEx(ExtendedWindowStyleFlags, string, string, WindowStyleFlags, LONG, LONG, LONG,
             /// LONG, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
             /// function to create a window whose client area is the desired size.
@@ -254,7 +254,7 @@ namespace OpenTK.NT.Native
 
             /// <summary>
             /// Changes an attribute of the specified window.
-            /// The function also sets a value at the specified offset in the extra window memory. 
+            /// The function also sets a value at the specified offset in the extra window memory.
             /// </summary>
             /// <param name="hWnd">
             /// A handle to the window and, indirectly, the class to which the window belongs.
@@ -264,7 +264,7 @@ namespace OpenTK.NT.Native
             /// </param>
             /// <param name="dwNewLong">The replacement value.</param>
             /// <returns>
-            /// If the function succeeds, the return value is the previous value of the 
+            /// If the function succeeds, the return value is the previous value of the
             /// specified 32-bit integer.<para/>
             /// If the function fails, the return value is zero.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
@@ -276,7 +276,7 @@ namespace OpenTK.NT.Native
 
             /// <summary>
             /// Changes an attribute of the specified window. The function also sets a value at the specified offset
-            /// in the extra window memory. 
+            /// in the extra window memory.
             /// </summary>
             /// <param name="hWnd">
             /// A handle to the window and, indirectly, the class to which the window belongs.
@@ -297,10 +297,10 @@ namespace OpenTK.NT.Native
             /// version of these functions.<para/>
             /// This method will always call the "correct" function for this machine,
             /// and return the value wrapped in an <see cref="IntPtr"/>.
-            /// This method will throw a <see cref="Win32Exception"/> if the Windows API function returns a value 
+            /// This method will throw a <see cref="Win32Exception"/> if the Windows API function returns a value
             /// that indicates failure.
             /// </remarks>
-            /// <exception cref="Win32Exception"/>
+            /// <exception cref="Win32Exception"></exception>
             public static LONG_PTR SetWindowLong(HWND hWnd, int nIndex, LONG_PTR dwNewLong)
             {
                 Kernel32.SetLastError(0);
@@ -362,7 +362,7 @@ namespace OpenTK.NT.Native
             /// <remarks>
             /// This method is a wrapper around both the GetWindowLong (32-bit) and the GetWindowLongPtr
             /// (64-bit) version of these functions.<para/>
-            /// This method will always call the "correct" function for this machine, 
+            /// This method will always call the "correct" function for this machine,
             /// and return the value wrapped in an <see cref="IntPtr"/>.
             /// </remarks>
             public static LONG_PTR GetWindowLong(HWND hWnd, GetWindowLongIndex nIndex)
@@ -419,21 +419,21 @@ namespace OpenTK.NT.Native
             /// application does not process. This function ensures that every message is processed.
             /// </summary>
             /// <param name="hWnd">A handle to the window procedure that received the message.</param>
-            /// <param name="Msg">The message.</param>
+            /// <param name="msg">The message.</param>
             /// <param name="wParam">
             /// Additional message information. The content of this parameter depends on the value of the
-            /// <paramref name="Msg"/> parameter.
+            /// <paramref name="msg"/> parameter.
             /// </param>
             /// <param name="lParam">
             /// Additional message information. The content of this parameter depends on the value of the
-            /// <paramref name="Msg"/> parameter.
+            /// <paramref name="msg"/> parameter.
             /// </param>
             /// <returns>The return value is the result of the message processing and depends on the message.</returns>
             [DllImport("User32.dll", CharSet = CharSet.Unicode)]
             public static extern LRESULT DefWindowProc
             (
                 [In] HWND hWnd,
-                [In] WindowMessage Msg,
+                [In] WindowMessage msg,
                 [In] WPARAM wParam,
                 [In] LPARAM lParam
             );
@@ -451,7 +451,7 @@ namespace OpenTK.NT.Native
 
             /// <summary>
             /// Copies the text of the specified window's title bar (if it has one) into a buffer. If the specified
-            /// window is a control, the text of the control is copied. However, 
+            /// window is a control, the text of the control is copied. However,
             /// <see cref="GetWindowText(HINSTANCE, LPTSTR, LONG)"/> cannot retrieve the text of a control in another
             /// application.
             /// </summary>

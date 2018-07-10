@@ -32,7 +32,7 @@ namespace OpenTK.NT.Native
         AcceptFiles = 0x00000010,
 
         /// <summary>
-        /// The window should not be painted until siblings beneath the window 
+        /// The window should not be painted until siblings beneath the window
         /// (that were created by the same thread) have been painted.
         /// The window appears transparent because the bits of underlying
         /// sibling windows have already been painted.<para/>
@@ -50,7 +50,7 @@ namespace OpenTK.NT.Native
         /// that is shorter than a normal title bar, and the window title is drawn using a smaller font.
         /// A tool window does not appear in the taskbar or in the dialog that appears when the user presses ALT+TAB.
         /// If a tool window has a system menu, its icon is not displayed on the title bar. However,
-        /// you can display the system menu by right-clicking or by typing ALT+SPACE. 
+        /// you can display the system menu by right-clicking or by typing ALT+SPACE.
         /// </summary>
         ToolWindow = 0x00000080,
 
@@ -68,9 +68,9 @@ namespace OpenTK.NT.Native
         /// The title bar of the window includes a question mark. When the user clicks the question mark,
         /// the cursor changes to a question mark with a pointer. If the user then clicks a child window,
         /// the child receives a <see cref="WindowMessage.Help"/> message. The child window should pass the message to
-        /// the parent window procedure, which should call the WinHelp function using the HELP_WM_HELP command. 
+        /// the parent window procedure, which should call the WinHelp function using the HELP_WM_HELP command.
         /// The Help application displays a pop-up window that typically contains help for the child window.<para/>
-        /// <see cref="ContextHelp"/> cannot be used with the <see cref="WindowStyleFlags.MaximizeBox"/> 
+        /// <see cref="ContextHelp"/> cannot be used with the <see cref="WindowStyleFlags.MaximizeBox"/>
         /// or <see cref="WindowStyleFlags.MinimizeBox"/> styles.
         /// </summary>
         ContextHelp = 0x00000400,
@@ -81,7 +81,7 @@ namespace OpenTK.NT.Native
         /// that supports reading-order alignment; otherwise, the style is ignored.<para/>
         /// Using the <see cref="Right"/> style for static or edit controls has the same effect as using the SS_RIGHT
         /// or ES_RIGHT style, respectively. Using this style with button controls has the same effect
-        /// as using BS_RIGHT and BS_RIGHTBUTTON styles. 
+        /// as using BS_RIGHT and BS_RIGHTBUTTON styles.
         /// </summary>
         Right = 0x00001000,
 
@@ -104,7 +104,7 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// If the shell language is Hebrew, Arabic, or another language that supports reading order alignment,
-        /// the vertical scroll bar (if present) is to the left of the client area. 
+        /// the vertical scroll bar (if present) is to the left of the client area.
         /// For other languages, the style is ignored.
         /// </summary>
         LeftScrollbar = 0x00004000,
@@ -122,13 +122,13 @@ namespace OpenTK.NT.Native
         ControlParent = 0x00010000,
 
         /// <summary>
-        /// The window has a three-dimensional border style intended to be used for items 
+        /// The window has a three-dimensional border style intended to be used for items
         /// that do not accept user input.
         /// </summary>
         StaticEdge = 0x00020000,
-        
+
         /// <summary>
-        /// Forces a top-level window onto the taskbar when the window is visible. 
+        /// Forces a top-level window onto the taskbar when the window is visible.
         /// </summary>
         AppWindow = 0x00040000,
 
@@ -138,7 +138,7 @@ namespace OpenTK.NT.Native
         OverlappedWindow = WindowEdge | ClientEdge,
 
         /// <summary>
-        /// The window is palette window, which is a modeless dialog box that presents an array of commands. 
+        /// The window is palette window, which is a modeless dialog box that presents an array of commands.
         /// </summary>
         PaletteWindow = WindowEdge | ToolWindow | Topmost,
 
@@ -173,7 +173,7 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// Paints all descendants of a window in bottom-to-top painting order using double-buffering.<para/>
-        /// This cannot be used if the window has a class style of either <see cref="WindowClassStyleFlags.OwnDC"/> 
+        /// This cannot be used if the window has a class style of either <see cref="WindowClassStyleFlags.OwnDC"/>
         /// or <see cref="WindowClassStyleFlags.ClassDC"/>.<para/>
         /// Only supported on Windows XP and higher.
         /// </summary>
@@ -181,13 +181,13 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// A top-level window created with this style does not become the foreground window when the user clicks it.
-        /// The system does not bring this window to the foreground when the user minimizes or closes 
+        /// The system does not bring this window to the foreground when the user minimizes or closes
         /// the foreground window.<para/>
         /// The window should not be activated through programmatic access or via keyboard navigation by accessible
         /// technology, such as Narrator.<para/>
-        /// To activate the window, use the SetActiveWindow or <see cref="User32.Window.SetForegroundWindow"/> 
+        /// To activate the window, use the SetActiveWindow or <see cref="User32.Window.SetForegroundWindow"/>
         /// function.<para/>
-        /// The window does not appear on the taskbar by default. To force the window to appear on the taskbar, 
+        /// The window does not appear on the taskbar by default. To force the window to appear on the taskbar,
         /// use the <see cref="ExtendedWindowStyleFlags.AppWindow"/> style.<para/>
         /// Only supported on Windows 2000 and higher.
         /// </summary>

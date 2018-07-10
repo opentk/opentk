@@ -27,43 +27,43 @@ namespace OpenTK.NT.Native
         /// Pointer to a <see cref="PixelFormatDescriptor"/> structure that specifies the requested pixel format.
         /// </param>
         /// <returns>
-        /// If the function succeeds, the return value is a pixel format index (one-based) 
+        /// If the function succeeds, the return value is a pixel format index (one-based)
         /// that is the closest match to the given pixel format descriptor.<para/>
-        /// If the function fails, the return value is zero. To get extended error information, 
+        /// If the function fails, the return value is zero. To get extended error information,
         /// call <see cref="Marshal.GetLastWin32Error"/>.
         /// </returns>
         [DllImport(Library, SetLastError = true)]
         public static extern int ChoosePixelFormat(HDC hdc, ref PixelFormatDescriptor ppfd);
 
         /// <summary>
-        /// Obtains information about the pixel format identified by <paramref name="iPixelFormat"/> of the device 
-        /// associated with <paramref name="hdc"/>. The function sets the members of the 
-        /// <see cref="PixelFormatDescriptor"/> structure pointed to by <paramref name="ppfd"/> 
+        /// Obtains information about the pixel format identified by <paramref name="iPixelFormat"/> of the device
+        /// associated with <paramref name="hdc"/>. The function sets the members of the
+        /// <see cref="PixelFormatDescriptor"/> structure pointed to by <paramref name="ppfd"/>
         /// with that pixel format data.
         /// </summary>
         /// <param name="hdc">Specifies the device context.</param>
         /// <param name="iPixelFormat">
-        /// Index that specifies the pixel format. The pixel formats that a device context supports 
+        /// Index that specifies the pixel format. The pixel formats that a device context supports
         /// are identified by positive one-based integer indexes.
         /// </param>
         /// <param name="nBytes">
-        /// The size, in bytes, of the structure pointed to by <paramref name="ppfd"/>. The 
+        /// The size, in bytes, of the structure pointed to by <paramref name="ppfd"/>. The
         /// <see cref="DescribePixelFormat(HDC, int, UINT, ref PixelFormatDescriptor)"/> function stores no more than
-        /// <paramref name="nBytes"/> bytes of data to that structure. 
+        /// <paramref name="nBytes"/> bytes of data to that structure.
         /// Set this value to <see cref="PixelFormatDescriptor.SizeInBytes"/>.
         /// </param>
         /// <param name="ppfd">
-        /// Pointer to a <see cref="PixelFormatDescriptor"/> structure whose members the function sets with pixel 
-        /// format data. The function stores the number of bytes copied to the structure in the structure's 
-        /// <see cref="PixelFormatDescriptor.Size"/> member. If, upon entry, <paramref name="ppfd"/> is null, the 
-        /// function writes no data to the structure. This is useful when you only want to obtain the maximum pixel 
+        /// Pointer to a <see cref="PixelFormatDescriptor"/> structure whose members the function sets with pixel
+        /// format data. The function stores the number of bytes copied to the structure in the structure's
+        /// <see cref="PixelFormatDescriptor.Size"/> member. If, upon entry, <paramref name="ppfd"/> is null, the
+        /// function writes no data to the structure. This is useful when you only want to obtain the maximum pixel
         /// format index of a device context.
         /// </param>
         /// <returns>
         /// If the function succeeds, the return value is the maximum pixel format index of the device context.
         /// In addition, the function sets the members of the <see cref="PixelFormatDescriptor"/> structure pointed
         /// to by <paramref name="ppfd"/> according to the specified pixel format.<para/>
-        /// If the function fails, the return value is zero. 
+        /// If the function fails, the return value is zero.
         /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
         /// </returns>
         [DllImport(Library, SetLastError = true)]
@@ -85,9 +85,9 @@ namespace OpenTK.NT.Native
         /// identified by positive one-based integer indexes.
         /// </param>
         /// <param name="ppfd">
-        /// Pointer to a <see cref="PixelFormatDescriptor"/> structure that contains the logical pixel format 
-        /// specification. The system's metafile component uses this structure to record the logical pixel 
-        /// format specification. The structure has no other effect upon the behavior of the 
+        /// Pointer to a <see cref="PixelFormatDescriptor"/> structure that contains the logical pixel format
+        /// specification. The system's metafile component uses this structure to record the logical pixel
+        /// format specification. The structure has no other effect upon the behavior of the
         /// <see cref="SetPixelFormat(HDC, int, ref PixelFormatDescriptor)"/> function.
         /// </param>
         /// <returns>
@@ -143,7 +143,7 @@ namespace OpenTK.NT.Native
         public static extern HGDIOBJ GetStockObject(GetStockObjectType fnObject);
 
         /// <summary>
-        /// Deletes a logical pen, brush, font, bitmap, region, or palette, freeing all system resources associated 
+        /// Deletes a logical pen, brush, font, bitmap, region, or palette, freeing all system resources associated
         /// with the object. After the object is deleted, the specified handle is no longer valid.
         /// </summary>
         /// <param name="hObject"></param>

@@ -6,11 +6,18 @@ using WORD = System.UInt16;
 namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// Specifies characteristics of display and print devices.
+    /// Specifies characteristics of display and print devices.<para/>
+    /// Before accessing a field, check the <see cref="Fields"/> field to determine whether any given field is set.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Unicode)]
     public struct DeviceMode
     {
+        /// <summary>
+        /// Default value for <see cref="SpecVersion"/> and <see cref="DriverVersion"/> (see the documentation of those
+        /// fields for more information).
+        /// </summary>
+        public const WORD SPECVERSION = 800;
+
         /// <summary>
         /// A zero-terminated character array that specifies the "friendly" name of the printer or display.
         /// </summary>
@@ -20,14 +27,14 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// The version number of the initialization data specification on which the structure is based.
-        /// The current version number is identified by <see cref="SPEC_VERSION"/>.
+        /// The current version number is identified by <see cref="SPECVERSION"/>.
         /// </summary>
         [FieldOffset(64)]
         public WORD SpecVersion;
 
         /// <summary>
         /// For a printer, specifies the printer driver version number assigned by the printer driver developer.<para/>
-        /// Display drivers can set this member to <see cref="SPEC_VERSION"/>.
+        /// Display drivers can set this member to <see cref="SPECVERSION"/>.
         /// </summary>
         [FieldOffset(66)]
         public WORD DriverVersion;
@@ -49,18 +56,28 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// Specifies bit flags identifying which of the following members are in use.
-        /// For example, the <see cref="DeviceModeFieldFlags.Orientation"/> flag is set when the 
+        /// For example, the <see cref="DeviceModeFieldFlags.Orientation"/> flag is set when the
         /// <see cref="PrinterDeviceOptions.Orientation"/> member contains valid data.
         /// </summary>
         [FieldOffset(72)]
         public DeviceModeFieldFlags Fields;
 
+        /// <summary>
+        /// Provides printer-specific device mode options.
+        /// </summary>
         [FieldOffset(80)]
         public PrinterDeviceOptions PrinterOptions;
 
+        /// <summary>
+        /// For displays, indicates the positional coordinates of the display device in reference to the desktop area.
+        /// The primary display device is always located at coordinates (0, 0).
+        /// </summary>
         [FieldOffset(80)]
         public Point Position;
 
+        /// <summary>
+        /// Provides display-specific device mode options.
+        /// </summary>
         [FieldOffset(80)]
         public DisplayDeviceOptions DisplayOptions;
 
@@ -93,7 +110,7 @@ namespace OpenTK.NT.Native
         /// For printers, specifies whether multiple copies should be collated.
         /// </summary>
         /// <remarks>
-        /// This is a <see cref="short"/> in the windows API (and has pre-defined values for true (1) and false (0)), 
+        /// This is a <see cref="short"/> in the windows API (and has pre-defined values for true (1) and false (0)),
         /// but I abused this fact to represent this as a bool in our struct. Might have to be changed when
         /// there are more possible values than true and false.
         /// </remarks>
@@ -138,7 +155,7 @@ namespace OpenTK.NT.Native
         /// For displays, specifies a display device's display mode.
         /// </summary>
         [FieldOffset(184)]
-        public DWORD DisplayFlags; //todo: find enum type for this (docs don't show it >:[ )
+        public DisplayFlags DisplayFlags;
 
         /// <summary>
         /// For printers, specifies whether the print system handles "N-up" printing
@@ -153,50 +170,73 @@ namespace OpenTK.NT.Native
         [FieldOffset(188)]
         public DWORD DisplayFrequency;
 
+        /// <summary>
+        /// For printers, specifies how Image Color Management (ICM) is handled. For a non-ICM application, this field
+        /// determines if ICM is enabled or disabled. For ICM applications, the system examines this field to determine
+        /// how to handle ICM support.<para/>
+        /// The value of this field can be one of the pre-defined <see cref="PrinterIcmMethod"/> values or a printer
+        /// driver-defined value greater than or equal to <see cref="PrinterIcmMethod.User"/>.
+        /// </summary>
         [FieldOffset(192)]
-        public DWORD ICMMethod;
-
-        [FieldOffset(196)]
-        public DWORD ICMIntent;
-
-        [FieldOffset(200)]
-        public DWORD MediaType;
-
-        [FieldOffset(204)]
-        public DWORD DitherType;
+        public PrinterIcmMethod IcmMethod;
 
         /// <summary>
-        /// Is reserved for system use and should be ignored by the driver.
+        /// For printers, specifies which color matching method, or intent, is used by default. This field is primarily
+        /// for non-ICM applications. ICM applications can establish intents by using the ICM functions.<para/>
+        /// The value of this field can be one of the pre-defined <see cref="PrinterIcmIntent"/> values or a printer
+        /// driver-defined value greater than or equal to <see cref="PrinterIcmIntent.User"/>.
+        /// </summary>
+        [FieldOffset(196)]
+        public PrinterIcmIntent IcmIntent;
+
+        /// <summary>
+        /// For printers, specifies the type of media being printed on.<para/>
+        /// The value of this field can be one of the pre-defined <see cref="PrinterMediaType"/> values or a printer
+        /// driver-defined value greater than or equal to <see cref="PrinterMediaType.User"/>.
+        /// </summary>
+        [FieldOffset(200)]
+        public PrinterMediaType MediaType;
+
+        /// <summary>
+        /// Specifies how dithering is to be done.<para/>
+        /// The value of this field can be one of the pre-defined <see cref="PrinterDitherType"/> values or a printer
+        /// driver-defined value greater than or equal to <see cref="PrinterDitherType.User"/>.
+        /// </summary>
+        [FieldOffset(204)]
+        public PrinterDitherType DitherType;
+
+        /// <summary>
+        /// Is reserved for system use and must be zero.
         /// </summary>
         [FieldOffset(208)]
         public DWORD Reserved1;
 
         /// <summary>
-        /// Is reserved for system use and should be ignored by the driver.
+        /// Is reserved for system use and must be zero.
         /// </summary>
         [FieldOffset(212)]
         public DWORD Reserved2;
 
         /// <summary>
-        /// Is reserved for system use and should be ignored by the driver.
+        /// Must be zero.
         /// </summary>
         [FieldOffset(216)]
         public DWORD PanningWidth;
 
         /// <summary>
-        /// Is reserved for system use and should be ignored by the driver.
+        /// Must be zero.
         /// </summary>
         [FieldOffset(220)]
         public DWORD PanningHeight;
-
-
-        public const WORD SPEC_VERSION = 800;
 
         /// <summary>
         /// The size of the structure in bytes.
         /// </summary>
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<DeviceMode>();
 
+        /// <summary>
+        /// Contains printer-specific device options.
+        /// </summary>
         public struct PrinterDeviceOptions
         {
             /// <summary>
@@ -206,7 +246,7 @@ namespace OpenTK.NT.Native
 
             /// <summary>
             /// For printers, specifies the size of the paper to be printed on. This member must be zero if the length
-            /// and width of the paper are specified by the <see cref="PaperLength"/> and <see cref="PaperWidth"/> 
+            /// and width of the paper are specified by the <see cref="PaperLength"/> and <see cref="PaperWidth"/>
             /// members.
             /// </summary>
             public PrinterPaperSize PaperSize;
@@ -240,19 +280,22 @@ namespace OpenTK.NT.Native
             public short Copies;
 
             /// <summary>
-            /// For printers, specifies the printer's default input bin. If the specified constant is 
+            /// For printers, specifies the printer's default input bin. If the specified constant is
             /// <see cref="PrinterDefaultSource.FormSource"/>, the input bin should be selected automatically.
             /// </summary>
             public PrinterDefaultSource DefaultSource;
 
             /// <summary>
-            /// For printers, specifies the printer resolution. Either set this to one of the 
+            /// For printers, specifies the printer resolution. Either set this to one of the
             /// <see cref="PrinterPrintQuality"/> values, or use a positive value specifying the number of DPI for the
             /// x resolution, with the y resolution being specified by <see cref="YResolution"/>.
             /// </summary>
             public PrinterPrintQuality PrintQuality;
         }
 
+        /// <summary>
+        /// Contains display-specific device options.
+        /// </summary>
         public struct DisplayDeviceOptions
         {
             /// <summary>

@@ -41,8 +41,8 @@ namespace OpenTK.NT.Native
         public PixelFormatDescriptorPixelTypes PixelType;
 
         /// <summary>
-        /// Specifies the number of color bitplanes in each color buffer. For RGBA pixel types, it is the size of the 
-        /// color buffer, excluding the alpha bitplanes. 
+        /// Specifies the number of color bitplanes in each color buffer. For RGBA pixel types, it is the size of the
+        /// color buffer, excluding the alpha bitplanes.
         /// For color-index pixels, it is the size of the color-index buffer.
         /// </summary>
         public BYTE ColorBits;

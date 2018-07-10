@@ -12,7 +12,7 @@ namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Defines the initialization parameters passed to the window procedure of an application. These members are
-    /// identical to the parameters of the 
+    /// identical to the parameters of the
     /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyleFlags, HINSTANCE, string, WindowStyleFlags, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
     /// function.
     /// </summary>
@@ -21,10 +21,10 @@ namespace OpenTK.NT.Native
     {
         /// <summary>
         /// Contains additional data which may be used to create the window. If the window is being created as a
-        /// result of a call to the CreateWindow or 
+        /// result of a call to the CreateWindow or
         /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyleFlags, HINSTANCE, string, WindowStyleFlags, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
         /// function, this member contains the value of the lpParam parameter specified in the function call.<para/>
-        /// If the window being created is a MDI client window, this member contains a pointer to a CLIENTCREATESTRUCT 
+        /// If the window being created is a MDI client window, this member contains a pointer to a CLIENTCREATESTRUCT
         /// structure. If the window being created is a MDI child window, this member contains a pointer to an
         /// MDICREATESTRUCT structure.<para/>
         /// If the window is being created from a dialog template, this member is the address of a <see cref="SHORT"/>

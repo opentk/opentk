@@ -11,12 +11,12 @@ namespace OpenTK.NT.Native
         Default = 0,
 
         /// <summary>
-        /// The display device presents a lower-resolution mode image by stretching it to fill the larger screen space. 
+        /// The display device presents a lower-resolution mode image by stretching it to fill the larger screen space.
         /// </summary>
         Stretch = 1,
 
         /// <summary>
-        /// The display device presents a lower resolution mode image by centering it in the larger screen space. 
+        /// The display device presents a lower resolution mode image by centering it in the larger screen space.
         /// </summary>
         Center = 2,
     }

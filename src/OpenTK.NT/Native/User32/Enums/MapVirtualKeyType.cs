@@ -6,7 +6,7 @@ namespace OpenTK.NT.Native
     {
         /// <summary>
         /// uCode is a virtual-key code and is translated into a scan code. If it is a virtual-key code that does not
-        /// distinguish between left- and right-hand keys, the left-hand scan code is returned. 
+        /// distinguish between left- and right-hand keys, the left-hand scan code is returned.
         /// If there is no translation, the function returns 0.
         /// </summary>
         VirtualKeyToScanCode = 0,

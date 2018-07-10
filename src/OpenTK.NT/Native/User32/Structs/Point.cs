@@ -16,7 +16,7 @@
         public int Y;
 
         /// <summary>
-        /// Creates a point with the given X and Y coordinates.
+        /// Initializes a new instance of the <see cref="Point"/> struct with the given X and Y coordinates.
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>

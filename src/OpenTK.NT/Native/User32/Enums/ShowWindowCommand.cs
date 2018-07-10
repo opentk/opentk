@@ -12,7 +12,7 @@
 
         /// <summary>
         /// Activates and displays a window. If the window is minimized or maximized, the system restores it to
-        /// its original size and position. 
+        /// its original size and position.
         /// An application should specify this flag when displaying the window for the first time.
         /// </summary>
         ShowNormal = 1,
@@ -74,7 +74,7 @@
         ShowDefault = 10,
 
         /// <summary>
-        /// Windows 2000/XP: Minimizes a window, even if the thread that owns the window is not responding. 
+        /// Windows 2000/XP: Minimizes a window, even if the thread that owns the window is not responding.
         /// This flag should only be used when minimizing windows from a different thread.
         /// </summary>
         ForceMinimize = 11

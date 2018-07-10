@@ -10,12 +10,16 @@ namespace OpenTK.NT.Native
     public struct BroadcastDeviceInterface
     {
         /// <summary>
-        /// The size of this structure, in bytes. This is the size of the members plus the actual length of the 
+        /// The size of this structure, in bytes. This is the size of the members plus the actual length of the
         /// <see cref="Name"/> string (the null character is accounted for by the declaration of <see cref="Name"/>
         /// as a one-character array.)
         /// </summary>
         public DWORD Size;
 
+        /// <summary>
+        /// Official documentation states "Set to <see cref="DeviceBroadcastType.Interface"/>."<para/>
+        /// Only set to something else if you know what you're doing!
+        /// </summary>
         public DeviceBroadcastType DeviceType;
 
         /// <summary>

@@ -9,12 +9,12 @@ namespace OpenTK.NT.Native
     {
         /// <summary>
         /// The current mode's display device orientation is the natural orientation of the device,
-        /// and should be used as the default. 
+        /// and should be used as the default.
         /// </summary>
         Default = 0,
 
         /// <summary>
-        /// The display device orientation is 90 degrees (measured clockwise) from that of <see cref="Default"/>. 
+        /// The display device orientation is 90 degrees (measured clockwise) from that of <see cref="Default"/>.
         /// </summary>
         Rotated90 = 1,
 

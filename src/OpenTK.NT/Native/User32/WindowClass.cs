@@ -111,9 +111,8 @@ namespace OpenTK.NT.Native
 
             /// <summary>
             /// Registers a window class for subsequent use in calls to the CreateWindow or
-            /// <see cref="Window.CreateWindowEx(ExtendedWindowStyleFlags, HINSTANCE, string, WindowStyleFlags, int, 
-            /// int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
-            /// function. 
+            /// <see cref="Window.CreateWindowEx(ExtendedWindowStyleFlags, HINSTANCE, string, WindowStyleFlags, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
+            /// function.
             /// </summary>
             /// <param name="lpwcx">
             /// A pointer to a <see cref="WindowClassEx"/> structure. You must fill the structure with the
@@ -122,8 +121,7 @@ namespace OpenTK.NT.Native
             /// <returns>
             /// If the function succeeds, the return value is a class atom that uniquely identifies the class being
             /// registered. This atom can only be used by the CreateWindow,
-            /// <see cref="Window.CreateWindowEx(ExtendedWindowStyleFlags, HINSTANCE, string, WindowStyleFlags, int, 
-            /// int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>,
+            /// <see cref="Window.CreateWindowEx(ExtendedWindowStyleFlags, HINSTANCE, string, WindowStyleFlags, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>,
             /// GetClassInfo, <see cref="GetClassInfoEx(HINSTANCE, HINSTANCE, out WindowClassEx)"/>, FindWindow,
             /// FindWindowEx, and <see cref="UnregisterClass(string, HINSTANCE)"/> functions
             /// and the IActiveIMMap::FilterClientWindows method.<para/>
@@ -165,7 +163,7 @@ namespace OpenTK.NT.Native
             /// </summary>
             /// <param name="lpClassName">
             /// A pointer to a string specifying the window class name. This class name must
-            /// have been registered by a previous call to the RegisterClass or 
+            /// have been registered by a previous call to the RegisterClass or
             /// <see cref="RegisterClassEx(ref WindowClassEx)"/> function.
             /// </param>
             /// <param name="hInstance">A handle to the instance of the module that created the class.</param>

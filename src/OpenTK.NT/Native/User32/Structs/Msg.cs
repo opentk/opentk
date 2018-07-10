@@ -11,7 +11,7 @@ namespace OpenTK.NT.Native
     public struct Msg
     {
         /// <summary>
-        /// A handle to the window whose window procedure receives the message. This member is 
+        /// A handle to the window whose window procedure receives the message. This member is
         /// <see cref="System.IntPtr.Zero"/> when the message is a thread message.
         /// </summary>
         public HWND HWnd;
