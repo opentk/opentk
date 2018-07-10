@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<signatures version="2">
+<signatures version="2"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="../overrides.xsd">
 
 	<!-- gl and glcore -->
   <replace name="gl|glcore">
@@ -3017,18 +3019,18 @@
       <token name="PROXY_HISTOGRAM" value="0x8025" />
     </enum>
     <enum name="ImageTarget">
-      <use name="VERSION_1_1" token="TEXTURE_1D" />
-      <use name="VERSION_1_1" token="TEXTURE_2D" />
-      <use name="VERSION_1_2" token="TEXTURE_3D" />
-      <use name="VERSION_3_0" token="TEXTURE_1D_ARRAY" />
-      <use name="VERSION_3_0" token="TEXTURE_2D_ARRAY" />
-      <use name="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE" />
-      <use name="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE_ARRAY" />
-      <use name="VERSION_3_1" token="TEXTURE_BUFFER" />
-      <use name="VERSION_3_1" token="TEXTURE_RECTANGLE" />
-      <use name="VERSION_1_3" token="TEXTURE_CUBE_MAP" />
-      <use name="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY" />
-      <use name="VERSION_3_0" token="RENDERBUFFER" />
+      <use enum="VERSION_1_1" token="TEXTURE_1D" />
+      <use enum="VERSION_1_1" token="TEXTURE_2D" />
+      <use enum="VERSION_1_2" token="TEXTURE_3D" />
+      <use enum="VERSION_3_0" token="TEXTURE_1D_ARRAY" />
+      <use enum="VERSION_3_0" token="TEXTURE_2D_ARRAY" />
+      <use enum="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE" />
+      <use enum="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE_ARRAY" />
+      <use enum="VERSION_3_1" token="TEXTURE_BUFFER" />
+      <use enum="VERSION_3_1" token="TEXTURE_RECTANGLE" />
+      <use enum="VERSION_1_3" token="TEXTURE_CUBE_MAP" />
+      <use enum="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY" />
+      <use enum="VERSION_3_0" token="RENDERBUFFER" />
     </enum>
     <enum name="IndexedEnableCap">
       <use enum="GetPName" token="BLEND" />

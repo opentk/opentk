@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<signatures version="2">
+<signatures version="2"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="../signatures.xsd">
+
   <add name="disabled">
     <enum name="NVX_cross_process_interop">
       <token name="EXTERNAL_STORAGE_BIT_NVX" value="0x2000" />
