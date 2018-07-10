@@ -11,9 +11,6 @@ namespace OpenTK.NT.Native
     /// </summary>
     public enum DeviceModeFieldFlags : DWORD
     {
-        /// <summary>
-        /// 
-        /// </summary>
         Orientation = 0x00000001,
         PaperSize = 0x00000002,
         PaperLength = 0x00000004,
@@ -32,9 +29,9 @@ namespace OpenTK.NT.Native
         Collate = 0x00008000,
         FormName = 0x00010000,
         LogPixels = 0x00020000,
-        BitsPerPel = 0x00040000,
-        PelsWidth = 0x00080000,
-        PelsHeight = 0x00100000,
+        BitsPerPixel = 0x00040000,
+        WidthInPixels = 0x00080000,
+        HeightInPixels = 0x00100000,
         DisplayFlags = 0x00200000,
         DisplayFrequency = 0x00400000,
         IcmMethod = 0x00800000,

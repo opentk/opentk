@@ -53,13 +53,13 @@ namespace OpenTK.Platform.Windows
             {
                 var mode = new DeviceMode
                 {
-                    PelsWidth = (uint)resolution.Width,
-                    PelsHeight = (uint)resolution.Height,
-                    BitsPerPel = (uint)resolution.BitsPerPixel,
+                    WidthInPixels = (uint)resolution.Width,
+                    HeightInPixels = (uint)resolution.Height,
+                    BitsPerPixel = (uint)resolution.BitsPerPixel,
                     DisplayFrequency = (uint)Math.Round(resolution.RefreshRate),
-                    Fields = DeviceModeFieldFlags.BitsPerPel
-                            | DeviceModeFieldFlags.PelsWidth
-                            | DeviceModeFieldFlags.PelsHeight
+                    Fields = DeviceModeFieldFlags.BitsPerPixel
+                            | DeviceModeFieldFlags.WidthInPixels
+                            | DeviceModeFieldFlags.HeightInPixels
                             | DeviceModeFieldFlags.DisplayFrequency
                 };
 
@@ -119,9 +119,9 @@ namespace OpenTK.Platform.Windows
                         opentk_dev_current_res = new DisplayResolution(
                             (int)(monitor_mode.Position.X / scale),
                             (int)(monitor_mode.Position.Y / scale),
-                            (int)(monitor_mode.PelsWidth / scale),
-                            (int)(monitor_mode.PelsHeight / scale),
-                            (int)monitor_mode.BitsPerPel,
+                            (int)(monitor_mode.WidthInPixels / scale),
+                            (int)(monitor_mode.HeightInPixels / scale),
+                            (int)monitor_mode.BitsPerPixel,
                             monitor_mode.DisplayFrequency
                         );
 
@@ -138,9 +138,9 @@ namespace OpenTK.Platform.Windows
                         var res = new DisplayResolution(
                             (int)(monitor_mode.Position.X / scale),
                             (int)(monitor_mode.Position.Y / scale),
-                            (int)(monitor_mode.PelsWidth / scale),
-                            (int)(monitor_mode.PelsHeight / scale),
-                            (int)monitor_mode.BitsPerPel,
+                            (int)(monitor_mode.WidthInPixels / scale),
+                            (int)(monitor_mode.HeightInPixels / scale),
+                            (int)monitor_mode.BitsPerPixel,
                             monitor_mode.DisplayFrequency
                         );
 
@@ -188,12 +188,12 @@ namespace OpenTK.Platform.Windows
 
         private static void VerifyMode(NT.Native.DisplayDevice device, DeviceMode mode)
         {
-            if (mode.BitsPerPel == 0)
+            if (mode.BitsPerPixel == 0)
             {
                 Debug.Print(
                     "[Warning] DisplayDevice '{0}' reported a mode with 0 bpp. Please create a bug report at https://github.com/opentk/opentk/issues",
                     device.DeviceName);
-                mode.BitsPerPel = 32;
+                mode.BitsPerPixel = 32;
             }
         }
 
