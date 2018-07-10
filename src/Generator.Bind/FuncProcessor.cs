@@ -95,54 +95,69 @@ namespace Bind
                 Console.WriteLine("Processing funcs in {0}.", file);
 
                 var nav = new XPathDocument(file).CreateNavigator();
-                foreach (var version in apiversion.Split('|'))
+                // Translate each delegate:
+                // 1st using the <replace> elements in overrides.xml
+
+                // 2nd using the hardcoded rules in FuncProcessor (e.g. char* -> string)
+                foreach (var signatures in delegates.Values)
                 {
-                    // Translate each delegate:
-                    // 1st using the <replace> elements in overrides.xml
-
-                    // 2nd using the hardcoded rules in FuncProcessor (e.g. char* -> string)
-                    foreach (var signatures in delegates.Values)
+                    foreach (var d in signatures)
                     {
-                        foreach (var d in signatures)
-                        {
-                            var funcOverride = GetFuncOverride(nav, d, apiname, apiversion);
-                            if (funcOverride is null)
-                            {
-                                continue;
-                            }
+                        TranslateExtension(d);
 
-                            TranslateExtension(d);
-                            TranslateReturnType(d, funcOverride, nav, enumProcessor, enums, apiname);
-                            TranslateParameters(d, funcOverride, nav, enumProcessor, enums, apiname);
+                        var funcOverride = GetFuncOverride(nav, d, apiname, apiversion);
+
+                        if (!(funcOverride is null))
+                        {
+                            ApplyReturnTypeReplacement(d, funcOverride);
+                        }
+
+                        TranslateReturnType(d, nav, enumProcessor, enums, apiname);
+
+                        if (!(funcOverride is null))
+                        {
+                            ApplyParameterReplacement(d, funcOverride);
+                        }
+
+                        TranslateParameters(d, nav, enumProcessor, enums, apiname);
+
+                        if (!(funcOverride is null))
+                        {
                             TranslateAttributes(d, funcOverride);
                         }
                     }
+                }
 
-                    // Create overloads for backwards compatibility,
-                    // by resolving <overload> elements
-                    var overloadList = new List<DelegateDefinition>();
-                    foreach (var d in delegates.Values.Select(v => v.First()))
+                // Create overloads for backwards compatibility,
+                // by resolving <overload> elements
+                var overloadList = new List<DelegateDefinition>();
+                foreach (var d in delegates.Values.Select(v => v.First()))
+                {
+                    var funcOverloads = GetFuncOverload(nav, d, apiname, apiversion);
+                    if (funcOverloads is null)
                     {
-                        var funcOverloads = GetFuncOverload(nav, d, apiname, apiversion);
-                        if (funcOverloads is null)
-                        {
-                            continue;
-                        }
-
-                        foreach (XPathNavigator funcOverload in funcOverloads)
-                        {
-                            var overload = new DelegateDefinition(d);
-                            TranslateReturnType(overload, funcOverload, nav, enumProcessor, enums, apiname);
-                            TranslateParameters(overload, funcOverload, nav, enumProcessor, enums, apiname);
-                            TranslateAttributes(overload, funcOverload);
-                            overloadList.Add(overload);
-                        }
+                        continue;
                     }
 
-                    foreach (var overload in overloadList)
+                    foreach (XPathNavigator funcOverload in funcOverloads)
                     {
-                        delegates.Add(overload);
+                        var overload = new DelegateDefinition(d);
+
+                        ApplyReturnTypeReplacement(overload, funcOverload);
+                        TranslateReturnType(overload, nav, enumProcessor, enums, apiname);
+
+                        ApplyParameterReplacement(overload, funcOverload);
+                        TranslateParameters(overload, nav, enumProcessor, enums, apiname);
+
+                        TranslateAttributes(overload, funcOverload);
+
+                        overloadList.Add(overload);
                     }
+                }
+
+                foreach (var overload in overloadList)
+                {
+                    delegates.Add(overload);
                 }
             }
 
@@ -604,15 +619,12 @@ namespace Bind
         private void TranslateReturnType
         (
             [NotNull] DelegateDefinition d,
-            [NotNull] XPathNavigator functionOverride,
             [NotNull] XPathNavigator nav,
             [NotNull] EnumProcessor enumProcessor,
             [NotNull] EnumCollection enums,
             [NotNull] string apiname
         )
         {
-            ApplyReturnTypeReplacement(d, functionOverride);
-
             TranslateType(d.ReturnTypeDefinition, nav, enumProcessor, enums, d.Category, apiname);
 
             if (d.ReturnTypeDefinition.TypeName.ToLower() == "void" && d.ReturnTypeDefinition.IsPointer)
@@ -649,15 +661,12 @@ namespace Bind
         private void TranslateParameters
         (
             [NotNull] DelegateDefinition d,
-            [NotNull] XPathNavigator functionOverride,
             [NotNull] XPathNavigator nav,
             [NotNull] EnumProcessor enumProcessor,
             [NotNull] EnumCollection enums,
             [NotNull] string apiname
         )
         {
-            ApplyParameterReplacement(d, functionOverride);
-
             for (var i = 0; i < d.Parameters.Count; i++)
             {
                 TranslateParameter(d.Parameters[i], nav, enumProcessor, enums, d.Category, apiname);

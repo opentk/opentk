@@ -1,2 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<assembly name="Bind" />
+<assembly name="Bind">
+  <member name="M:Bind.Extensions.TypeDefinitionExtensions.GetQualifiedTypeOrAlias(Bind.Structures.TypeDefinition)">
+    <parameter name="this">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Structures.IDeclarable.GetDeclarationString">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.Structures.TypeDefinition.#ctor(Bind.Structures.TypeDefinition)">
+    <parameter name="t">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Structures.TypeDefinition.CompareTo(Bind.Structures.TypeDefinition)">
+    <parameter name="other">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Writers.SourceWriter.#ctor(System.IO.TextWriter)">
+    <parameter name="writer">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Writers.SourceWriter.#ctor(System.IO.TextWriter,System.String)">
+    <parameter name="writer">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="tabString">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Writers.SourceWriter.BeginBlock(System.Boolean)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.Writers.SourceWriter.BeginIndent">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.Writers.SourceWriterBlock.#ctor(Bind.Writers.SourceWriter,System.Boolean)">
+    <parameter name="sourceWriter">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Writers.SourceWriterIndentation.#ctor(Bind.Writers.SourceWriter)">
+    <parameter name="sourceWriter">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+</assembly>

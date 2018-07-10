@@ -266,14 +266,16 @@ namespace Bind
                 e.ConstantCollection = processedConstants;
 
                 var enumOverride = nav.SelectSingleNode(GetOverridesNodePath(apiname, e.Name));
-                if (enumOverride is null)
+                if (!(enumOverride is null))
                 {
-                    continue;
+                    foreach (var c in e.ConstantCollection.Values)
+                    {
+                        ReplaceConstant(enumOverride, c);
+                    }
                 }
 
                 foreach (var c in e.ConstantCollection.Values)
                 {
-                    ReplaceConstant(enumOverride, c);
                     ResolveBareAlias(c, enums);
                 }
             }

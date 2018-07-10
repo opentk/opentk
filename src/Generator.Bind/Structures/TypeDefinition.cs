@@ -144,17 +144,7 @@ namespace Bind.Structures
         public WrapperTypes WrapperType { get; set; } = WrapperTypes.None;
 
         /// <inheritdoc/>
-        public override string ToString()
-        {
-            var pointerLevelString = new string('*', (int)IndirectionLevel);
-            var arrayLevelString = ArrayDimensions > 0
-                ? ArrayDimensions == 1
-                    ? "[]"
-                    : $"[{new string(',', (int)ArrayDimensions - 1)}]"
-                : string.Empty;
-
-            return $"{TypeName}{pointerLevelString}{arrayLevelString}";
-        }
+        public override string ToString() => GetDeclarationString();
 
         /// <inheritdoc/>
         public virtual string GetDeclarationString()

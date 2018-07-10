@@ -217,7 +217,7 @@ namespace Bind.Structures
         {
             var modifier = ParameterType.IsReference ? Flow == FlowDirection.Out ? "out " : "ref " : string.Empty;
 
-            return $"{modifier}{base.ToString()} {Name}";
+            return $"{modifier}{ParameterType} {Name}";
         }
 
         /// <inheritdoc/>
