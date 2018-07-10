@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Security;
 
+using BOOL = System.Boolean;
 using HWND = System.IntPtr;
 using LPARAM = System.IntPtr;
 using LRESULT = System.IntPtr;
@@ -15,10 +16,10 @@ namespace OpenTK.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool PeekMessage
+            public static extern BOOL PeekMessage
             (
-                [Out] out Msg lpMsg,
-                [In] [Optional] HWND hWnd,
+                [Out] out Msg msg,
+                [In] [Optional] HWND window,
                 [In] uint wMsgFilterMin,
                 [In] uint wMsgFilterMax,
                 [In] PeekMessageFlags wRemoveMsg
@@ -29,7 +30,7 @@ namespace OpenTK.NT.Native
             public static extern int GetMessage
             (
                 [Out] out Msg msg,
-                [In] [Optional] HWND hWnd,
+                [In] [Optional] HWND window,
                 [In] uint wMsgFilterMin,
                 [In] uint wMsgFilterMax
             );
@@ -37,28 +38,28 @@ namespace OpenTK.NT.Native
             [DllImport("User32.dll")]
             public static extern int GetMessageTime();
 
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+            [DllImport("user32.dll", SetLastError = true)]
             public static extern LRESULT SendMessage
             (
-                [In] HWND hWnd,
+                [In] HWND window,
                 [In] WindowMessage msg,
                 [In] WPARAM wParam,
                 [In] LPARAM lParam
             );
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+            [DllImport("User32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool PostMessage
+            public static extern BOOL PostMessage
             (
-                [In] [Optional] HWND hWnd,
+                [In] [Optional] HWND window,
                 [In] WindowMessage msg,
                 [In] WPARAM wParam,
                 [In] LPARAM lParam
             );
 
             [DllImport("User32.dll")]
-            public static extern void PostQuitMessage([In] int nExitCode);
+            public static extern void PostQuitMessage([In] int exitCode);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("User32.dll")]
@@ -67,11 +68,11 @@ namespace OpenTK.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport("User32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool TranslateMessage([In] ref Msg lpMsg);
+            public static extern BOOL TranslateMessage([In] ref Msg msg);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("User32.dll")]
-            public static extern int GetQueueStatus([In] QueueStatusFlags flags);
+            public static extern int GetQueueStatus([In] GetQueueStatusFlags flags);
         }
     }
 }

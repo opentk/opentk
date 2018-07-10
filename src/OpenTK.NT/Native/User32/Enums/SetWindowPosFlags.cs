@@ -4,6 +4,9 @@ using UINT = System.UInt32;
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Window sizing and positioning flags.
+    /// </summary>
     [Flags]
     public enum SetWindowPosFlags : UINT
     {
@@ -82,7 +85,16 @@ namespace OpenTK.NT.Native
         /// </summary>
         NoReposition = NoOwnerZOrder,
 
+        /// <summary>
+        /// Prevents generation of the <see cref="WindowMessage.SyncPaint"/> message.
+        /// </summary>
         DeferErase = 0x2000,
+
+        /// <summary>
+        /// If the calling thread and the thread that owns the window are attached to different input queues,
+        /// the system posts the request to the thread that owns the window. This prevents the calling thread
+        /// from blocking its execution while other threads process the request.
+        /// </summary>
         AsyncWindowPos = 0x4000
     }
 }

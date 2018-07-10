@@ -17,17 +17,17 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Flags for scan code information.
         /// </summary>
-        public RawKeyboardFlags Flags;
+        public RawKeyboardScanCodeFlags Flags;
 
         /// <summary>
         /// Reserved; must be zero.
         /// </summary>
-        private readonly USHORT Reserved;
+        public USHORT Reserved;
 
         /// <summary>
         /// Microsoft Windows message compatible virtual-key code. For more information, see Virtual-Key Codes.
         /// </summary>
-        public VirtualKeys VKey;
+        public VirtualKey VKey;
 
         /// <summary>
         /// Corresponding window message, for example WM_KEYDOWN, WM_SYSKEYDOWN, and so forth.

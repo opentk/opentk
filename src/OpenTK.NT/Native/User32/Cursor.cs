@@ -31,10 +31,10 @@ namespace OpenTK.NT.Native
             /// Loads the specified cursor resource from the executable (.EXE) file associated
             /// with an application instance.
             /// </summary>
-            /// <param name="hInstance">
+            /// <param name="moduleInstance">
             /// A handle to an instance of the module whose executable file contains the cursor to be loaded.
             /// </param>
-            /// <param name="lpCursorName">The name of the cursor resource to be loaded.</param>
+            /// <param name="cursorName">The name of the cursor resource to be loaded.</param>
             /// <returns>
             /// If the function succeeds, the return value is the handle to the newly loaded cursor.
             /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
@@ -43,15 +43,15 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern HCURSOR LoadCursor
             (
-                [In] HINSTANCE hInstance,
-                [In] string lpCursorName
+                [In] HINSTANCE moduleInstance,
+                [In] string cursorName
             );
 
             /// <summary>
             /// Loads the specified cursor resource from a set of pre-defined cursors (see <see cref="CursorName"/>).
             /// </summary>
-            /// <param name="hInstance">Usually a handle to an instance, but null in this overload.</param>
-            /// <param name="lpCursorName">
+            /// <param name="moduleInstance">Usually a handle to an instance, but null in this overload.</param>
+            /// <param name="cursorIdentifier">
             /// An integer consisting of the resource identifier in the low-order word and zero in the high-order word.
             /// </param>
             /// <returns>
@@ -62,8 +62,8 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             private static extern HCURSOR LoadCursor
             (
-                [In] [Optional] HINSTANCE hInstance,
-                [In] int lpCursorName
+                [In] [Optional] HINSTANCE moduleInstance,
+                [In] int cursorIdentifier
             );
 
             /// <summary>
@@ -71,7 +71,7 @@ namespace OpenTK.NT.Native
             /// (set by the <see cref="SetCursorPos(int, int)"/> function or the mouse) lies outside the rectangle,
             /// the system automatically adjusts the position to keep the cursor inside the rectangular area.
             /// </summary>
-            /// <param name="lpRect">
+            /// <param name="rect">
             /// A pointer to the structure that contains the screen coordinates of the upper-left and lower-right
             /// corners of the confining rectangle. If this parameter is null,
             /// the cursor is free to move anywhere on the screen.
@@ -83,14 +83,14 @@ namespace OpenTK.NT.Native
             /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ClipCursor([In] [Optional] ref Rect lpRect);
+            public static extern bool ClipCursor([In] [Optional] ref Rect rect);
 
             /// <summary>
             /// Confines the cursor to a rectangular area on the screen. If a subsequent cursor position
             /// (set by the <see cref="SetCursorPos(int, int)"/> function or the mouse) lies outside the rectangle,
             /// the system automatically adjusts the position to keep the cursor inside the rectangular area.
             /// </summary>
-            /// <param name="lpRect">
+            /// <param name="rect">
             /// A pointer to the structure that contains the screen coordinates of the upper-left and lower-right
             /// corners of the confining rectangle. If this parameter is null,
             /// the cursor is free to move anywhere on the screen.
@@ -102,22 +102,22 @@ namespace OpenTK.NT.Native
             /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ClipCursor([In] [Optional] IntPtr lpRect);
+            public static extern bool ClipCursor([In] [Optional] IntPtr rect);
 
             /// <summary>
             /// Displays or hides the cursor.
             /// </summary>
-            /// <param name="bShow">
+            /// <param name="show">
             /// If true, the display count is incremented by one. If false, the display count is decremented by one.
             /// </param>
             /// <returns>The return value specifies the new display counter.</returns>
             [DllImport("user32.dll")]
-            public static extern int ShowCursor([In] bool bShow);
+            public static extern int ShowCursor([In] bool show);
 
             /// <summary>
             /// Retrieves the cursor's position, in screen coordinates.
             /// </summary>
-            /// <param name="lpPoint">
+            /// <param name="point">
             /// A pointer to a <see cref="Point"/> structure that receives the screen coordinates of the cursor.
             /// </param>
             /// <returns>
@@ -127,7 +127,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool GetCursorPos([Out] out Point lpPoint);
+            public static extern bool GetCursorPos([Out] out Point point);
 
             /// <summary>
             /// Moves the cursor to the specified screen coordinates. If the new coordinates are not within the
@@ -157,7 +157,7 @@ namespace OpenTK.NT.Native
             /// <summary>
             /// Sets the cursor shape.
             /// </summary>
-            /// <param name="hCursor">
+            /// <param name="cursor">
             /// A handle to the cursor. The cursor must have been created by the CreateCursor function or loaded by
             /// the <see cref="LoadCursor(HCURSOR, string)"/> or LoadImage function. If this parameter is null,
             /// the cursor is removed from the screen.
@@ -167,7 +167,7 @@ namespace OpenTK.NT.Native
             /// If there was no previous cursor, the return value is null.
             /// </returns>
             [DllImport("user32.dll")]
-            public static extern HCURSOR SetCursor([In] [Optional] HCURSOR hCursor);
+            public static extern HCURSOR SetCursor([In] [Optional] HCURSOR cursor);
         }
     }
 }

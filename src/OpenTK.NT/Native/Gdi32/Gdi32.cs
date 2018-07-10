@@ -36,20 +36,20 @@ namespace OpenTK.NT.Native
         public static extern int ChoosePixelFormat(HDC hdc, ref PixelFormatDescriptor ppfd);
 
         /// <summary>
-        /// Obtains information about the pixel format identified by <paramref name="iPixelFormat"/> of the device
+        /// Obtains information about the pixel format identified by <paramref name="pixelFormatIndex"/> of the device
         /// associated with <paramref name="hdc"/>. The function sets the members of the
         /// <see cref="PixelFormatDescriptor"/> structure pointed to by <paramref name="ppfd"/>
         /// with that pixel format data.
         /// </summary>
         /// <param name="hdc">Specifies the device context.</param>
-        /// <param name="iPixelFormat">
+        /// <param name="pixelFormatIndex">
         /// Index that specifies the pixel format. The pixel formats that a device context supports
         /// are identified by positive one-based integer indexes.
         /// </param>
-        /// <param name="nBytes">
+        /// <param name="descriptorSize">
         /// The size, in bytes, of the structure pointed to by <paramref name="ppfd"/>. The
         /// <see cref="DescribePixelFormat(HDC, int, UINT, ref PixelFormatDescriptor)"/> function stores no more than
-        /// <paramref name="nBytes"/> bytes of data to that structure.
+        /// <paramref name="descriptorSize"/> bytes of data to that structure.
         /// Set this value to <see cref="PixelFormatDescriptor.SizeInBytes"/>.
         /// </param>
         /// <param name="ppfd">
@@ -70,19 +70,19 @@ namespace OpenTK.NT.Native
         public static extern int DescribePixelFormat
         (
             HDC hdc,
-            int iPixelFormat,
-            UINT nBytes,
+            int pixelFormatIndex,
+            UINT descriptorSize,
             ref PixelFormatDescriptor ppfd
         );
 
         /// <summary>
         /// Sets the pixel format of the specified device context to the format specified
-        /// by the <paramref name="iPixelFormat"/> index.
+        /// by the <paramref name="pixelFormatIndex"/> index.
         /// </summary>
         /// <param name="hdc">Specifies the device context whose pixel format the function attempts to set.</param>
-        /// <param name="iPixelFormat">
+        /// <param name="pixelFormatIndex">
         /// Index that specifies the pixel format. The pixel formats that a device context supports are
-        /// identified by positive one-based integer indexes.
+        /// identified by positive one-based integer indices.
         /// </param>
         /// <param name="ppfd">
         /// Pointer to a <see cref="PixelFormatDescriptor"/> structure that contains the logical pixel format
@@ -100,7 +100,7 @@ namespace OpenTK.NT.Native
         public static extern BOOL SetPixelFormat
         (
             HDC hdc,
-            int iPixelFormat,
+            int pixelFormatIndex,
             ref PixelFormatDescriptor ppfd
         );
 
@@ -123,30 +123,31 @@ namespace OpenTK.NT.Native
         /// Retrieves device-specific information for the specified device.
         /// </summary>
         /// <param name="hdc">Specifies the device context.</param>
+        /// <param name="capIndex">An identifier for the type of the requested device capability value.</param>
         /// <returns>
         /// The return value specifies the value of the desired item.<para/>
-        /// When <paramref name="nIndex"/> is <see cref="GetDeviceCapsIndex.BitsPerPixel"/> and the device
+        /// When <paramref name="capIndex"/> is <see cref="GetDeviceCapsIndex.BitsPerPixel"/> and the device
         /// has 15bpp or 16bpp, the return value is 16.
         /// </returns>
         [DllImport(Library)]
-        public static extern int GetDeviceCaps([In] HDC hdc, [In] GetDeviceCapsIndex nIndex);
+        public static extern int GetDeviceCaps([In] HDC hdc, [In] GetDeviceCapsIndex capIndex);
 
         /// <summary>
         /// Retrieves a handle to one of the stock pens, brushes, fonts, or palettes.
         /// </summary>
-        /// <param name="fnObject"></param>
+        /// <param name="objectType">An identifier for the requested stock object.</param>
         /// <returns>
         /// If the function succeeds, the return value is a handle to the requested logical object.<para/>
         /// If the function fails, the return value is null.
         /// </returns>
         [DllImport(Library)]
-        public static extern HGDIOBJ GetStockObject(GetStockObjectType fnObject);
+        public static extern HGDIOBJ GetStockObject(GetStockObjectType objectType);
 
         /// <summary>
         /// Deletes a logical pen, brush, font, bitmap, region, or palette, freeing all system resources associated
         /// with the object. After the object is deleted, the specified handle is no longer valid.
         /// </summary>
-        /// <param name="hObject"></param>
+        /// <param name="obj">A handle to the object that should be deleted.</param>
         /// <returns>
         /// If the function succeeds, the return value is true.<para/>
         /// If the specified handle is not valid or is currently selected into a DC, the return value is false.
@@ -158,6 +159,6 @@ namespace OpenTK.NT.Native
         /// </remarks>
         [DllImport(Library)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern BOOL DeleteObject([In] HGDIOBJ hObject);
+        public static extern BOOL DeleteObject([In] HGDIOBJ obj);
     }
 }

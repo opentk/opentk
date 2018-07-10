@@ -26,21 +26,21 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Process mouse and keyboard messages.
         /// </summary>
-        QSInput = QueueStatusFlags.Input << 16,
+        QSInput = GetQueueStatusFlags.Input << 16,
 
         /// <summary>
         /// Process paint messages.
         /// </summary>
-        QSPaint = QueueStatusFlags.Paint << 16,
+        QSPaint = GetQueueStatusFlags.Paint << 16,
 
         /// <summary>
         /// Process all posted messages, including timers and hotkeys.
         /// </summary>
-        QSPostMessage = (QueueStatusFlags.PostMessage | QueueStatusFlags.Hotkey | QueueStatusFlags.Timer) << 16,
+        QSPostMessage = (GetQueueStatusFlags.PostMessage | GetQueueStatusFlags.Hotkey | GetQueueStatusFlags.Timer) << 16,
 
         /// <summary>
         /// Process all sent messages.
         /// </summary>
-        QSSendMessage = QueueStatusFlags.SendMessage << 16
+        QSSendMessage = GetQueueStatusFlags.SendMessage << 16
     }
 }

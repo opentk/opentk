@@ -1,5 +1,10 @@
 ﻿namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Pre-defines memory offsets in extra window memory for specific pieces information to be used in
+    /// <see cref="User32.Window.GetWindowLong(System.IntPtr, GetWindowLongIndex)"/> and
+    /// <see cref="User32.Window.SetWindowLong(System.IntPtr, GetWindowLongIndex, System.IntPtr)"/>.
+    /// </summary>
     public enum GetWindowLongIndex
     {
         /// <summary>

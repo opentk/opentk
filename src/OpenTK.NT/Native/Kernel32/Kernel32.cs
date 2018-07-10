@@ -24,7 +24,7 @@ namespace OpenTK.NT.Native
         /// system boot and is consistent across all processors. Therefore, the frequency need only be queried upon
         /// application initialization, and the result can be cached.
         /// </summary>
-        /// <param name="lpFrequency">
+        /// <param name="frequency">
         /// A pointer to a variable that receives the current performance-counter frequency, in counts per second.
         /// If the installed hardware doesn't support a high-resolution performance counter, this parameter can be
         /// zero (this will not occur on systems that run Windows XP or later).
@@ -38,13 +38,13 @@ namespace OpenTK.NT.Native
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Library, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern BOOL QueryPerformanceFrequency([Out] out LARGE_INTEGER lpFrequency);
+        public static extern BOOL QueryPerformanceFrequency([Out] out LARGE_INTEGER frequency);
 
         /// <summary>
         /// Retrieves the current value of the performance counter, which is a high resolution (&lt;1us) time stamp
         /// that can be used for time-interval measurements.
         /// </summary>
-        /// <param name="lpPerformanceCount">
+        /// <param name="performanceCount">
         /// A pointer to a variable that receives the current performance-counter value, in counts.
         /// </param>
         /// <returns>
@@ -56,36 +56,32 @@ namespace OpenTK.NT.Native
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Library, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern BOOL QueryPerformanceCounter([Out] out LARGE_INTEGER lpPerformanceCount);
+        public static extern BOOL QueryPerformanceCounter([Out] out LARGE_INTEGER performanceCount);
 
         /// <summary>
         /// Retrieves the address of an exported function or variable from the specified dynamic-link library (DLL).
         /// </summary>
-        /// <param name="hModule">
+        /// <param name="module">
         /// A handle to the DLL module that contains the function or variable. The <see cref="LoadLibrary"/>,
         /// LoadLibraryEx, LoadPackagedLibrary, or <see cref="GetModuleHandle"/> functions return this handle.
         /// </param>
-        /// <param name="lpProcName">The function or variable name.</param>
+        /// <param name="procName">The function or variable name.</param>
         /// <returns>
         /// If the function succeeds, the return value is the address of the exported function or variable.<para/>
         /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
         /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
         /// </returns>
         [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
-        public static extern FARPROC GetProcAddress
-        (
-            [In] HMODULE hModule,
-            [In] LPCSTR lpProcName
-        );
+        public static extern FARPROC GetProcAddress([In] HMODULE module, [In] LPCSTR procName);
 
         /// <summary>
         /// Retrieves the address of an exported function or variable from the specified dynamic-link library (DLL).
         /// </summary>
-        /// <param name="hModule">
+        /// <param name="module">
         /// A handle to the DLL module that contains the function or variable. The <see cref="LoadLibrary(LPCSTR)"/>,
         /// LoadLibraryEx, LoadPackagedLibrary, or <see cref="GetModuleHandle(LPCSTR)"/> functions return this handle.
         /// </param>
-        /// <param name="lpProcName">
+        /// <param name="procName">
         /// The function's ordinal value. It must be in the low-order word; the high-order word must be zero.
         /// </param>
         /// <returns>
@@ -94,20 +90,20 @@ namespace OpenTK.NT.Native
         /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
         /// </returns>
         [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
-        public static extern FARPROC GetProcAddress([In] HMODULE hModule, [In] IntPtr lpProcName);
+        public static extern FARPROC GetProcAddress([In] HMODULE module, [In] IntPtr procName);
 
         /// <summary>
         /// Sets the last-error code for the calling thread.
         /// </summary>
-        /// <param name="dwErrCode">The last-error code for the thread.</param>
+        /// <param name="errorCode">The last-error code for the thread.</param>
         [DllImport(Library)]
-        public static extern void SetLastError(DWORD dwErrCode);
+        public static extern void SetLastError(DWORD errorCode);
 
         /// <summary>
         /// Retrieves a module handle for the specified module.
         /// The module must have been loaded by the calling process.
         /// </summary>
-        /// <param name="lpModuleName">
+        /// <param name="moduleName">
         /// The name of the loaded module (either a .dll or .exe file). If the file name extension is omitted, the
         /// default library extension .dll is appended. The file name string can include a trailing point character (.)
         /// to indicate that the module name has no extension. The string does not have to specify a path. When
@@ -123,16 +119,13 @@ namespace OpenTK.NT.Native
         /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
         /// </returns>
         [DllImport(Library, SetLastError = true)]
-        public static extern HMODULE GetModuleHandle
-        (
-            [In] [Optional] LPCTSTR lpModuleName
-        );
+        public static extern HMODULE GetModuleHandle([In] [Optional] LPCTSTR moduleName);
 
         /// <summary>
         /// Loads the specified module into the address space of the calling process.
         /// The specified module may cause other modules to be loaded.
         /// </summary>
-        /// <param name="lpFileName">
+        /// <param name="fileName">
         /// The name of the module. This can be either a library module (a .dll file) or an executable module (an
         /// .exe file). The name specified is the file name of the module and is not related to the name stored in the
         /// library module itself, as specified by the LIBRARY keyword in the module-definition (.def) file.<para/>
@@ -151,14 +144,14 @@ namespace OpenTK.NT.Native
         /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
         /// </returns>
         [DllImport(Library, SetLastError = true)]
-        public static extern HMODULE LoadLibrary([In] LPCTSTR lpFileName);
+        public static extern HMODULE LoadLibrary([In] LPCTSTR fileName);
 
         /// <summary>
         /// Frees the loaded dynamic-link library (DLL) module and, if necessary, decrements its reference count.
         /// When the reference count reaches zero, the module is unloaded from the address space of the calling
         /// process and the handle is no longer valid.
         /// </summary>
-        /// <param name="hModule">
+        /// <param name="module">
         /// A handle to the loaded library module. The <see cref="LoadLibrary(LPCSTR)"/>, LoadLibraryEx,
         /// <see cref="GetModuleHandle(LPCSTR)"/>, or GetModuleHandleEx functions return this handle.
         /// </param>
@@ -169,6 +162,6 @@ namespace OpenTK.NT.Native
         /// </returns>
         [DllImport(Library)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern BOOL FreeLibrary([In] HMODULE hModule);
+        public static extern BOOL FreeLibrary([In] HMODULE module);
     }
 }

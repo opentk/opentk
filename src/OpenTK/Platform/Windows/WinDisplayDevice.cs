@@ -70,7 +70,7 @@ namespace OpenTK.Platform.Windows
                 (string)device.Id,
                 ptr,
                 IntPtr.Zero,
-                ChangeDisplaySettingsFlags.Fullscreen,
+                DisplaySettingsChanges.Fullscreen,
                 IntPtr.Zero
             );
 
@@ -108,9 +108,9 @@ namespace OpenTK.Platform.Windows
 
                     // The second function should only be executed when the first one fails
                     // (e.g. when the monitor is disabled)
-                    if (User32.DeviceContext.EnumDisplaySettingsEx(dev1.DeviceName, DisplayModeSettingsEnum.CurrentSettings,
+                    if (User32.DeviceContext.EnumDisplaySettingsEx(dev1.DeviceName, DisplayModeSetting.CurrentSettings,
                             out DeviceMode monitor_mode, 0) ||
-                        User32.DeviceContext.EnumDisplaySettingsEx(dev1.DeviceName, DisplayModeSettingsEnum.RegistrySettings,
+                        User32.DeviceContext.EnumDisplaySettingsEx(dev1.DeviceName, DisplayModeSetting.RegistrySettings,
                             out monitor_mode, 0))
                     {
                         VerifyMode(dev1, monitor_mode);
@@ -130,7 +130,7 @@ namespace OpenTK.Platform.Windows
 
                     opentk_dev_available_res.Clear();
                     mode_count = 0;
-                    while (User32.DeviceContext.EnumDisplaySettingsEx(dev1.DeviceName, (DisplayModeSettingsEnum)mode_count++, out monitor_mode, 0))
+                    while (User32.DeviceContext.EnumDisplaySettingsEx(dev1.DeviceName, (DisplayModeSetting)mode_count++, out monitor_mode, 0))
                     {
                         VerifyMode(dev1, monitor_mode);
 

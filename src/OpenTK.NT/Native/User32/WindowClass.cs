@@ -24,11 +24,11 @@ namespace OpenTK.NT.Native
             /// </param>
             /// <param name="lpszClass">
             /// A string containing the class name. The name must be that of a preregistered class or a class
-            /// registered by a previous call to the RegisterClass or <see cref="RegisterClassEx(ref WindowClassEx)"/>
+            /// registered by a previous call to the RegisterClass or <see cref="RegisterClassEx(ref ExtendedWindowClass)"/>
             /// function.
             /// </param>
             /// <param name="lpwcx">
-            /// A pointer to a <see cref="WindowClassEx"/> structure that receives the information about the class.
+            /// A pointer to a <see cref="ExtendedWindowClass"/> structure that receives the information about the class.
             /// </param>
             /// <returns>
             /// If the function finds a matching class and successfully copies the data, the return value is
@@ -42,7 +42,7 @@ namespace OpenTK.NT.Native
             (
                 [In] [Optional] HINSTANCE hinst,
                 [In] string lpszClass,
-                [Out] out WindowClassEx lpwcx
+                [Out] out ExtendedWindowClass lpwcx
             );
 
             /// <summary>
@@ -57,10 +57,10 @@ namespace OpenTK.NT.Native
             /// <param name="lpszClass">
             /// A pointer to a string containing the class name.
             /// The name must be that of a preregistered class or a class registered by a previous call to the
-            /// RegisterClass or <see cref="RegisterClassEx(ref WindowClassEx)"/> function.
+            /// RegisterClass or <see cref="RegisterClassEx(ref ExtendedWindowClass)"/> function.
             /// </param>
             /// <param name="lpwcx">
-            /// A pointer to a <see cref="WindowClassEx"/> structure that receives the information about the class.
+            /// A pointer to a <see cref="ExtendedWindowClass"/> structure that receives the information about the class.
             /// </param>
             /// <returns>
             /// If the function finds a matching class and successfully copies the data, the return value is
@@ -74,7 +74,7 @@ namespace OpenTK.NT.Native
             (
                 [In] HINSTANCE hinst,
                 [In] IntPtr lpszClass,
-                [Out] out WindowClassEx lpwcx
+                [Out] out ExtendedWindowClass lpwcx
             );
 
             /// <summary>
@@ -88,10 +88,10 @@ namespace OpenTK.NT.Native
             /// </param>
             /// <param name="classAtom">
             /// A class atom created by a previous call to RegisterClass
-            /// or <see cref="RegisterClassEx(ref WindowClassEx)"/>.
+            /// or <see cref="RegisterClassEx(ref ExtendedWindowClass)"/>.
             /// </param>
             /// <param name="lpwcx">
-            /// A pointer to a <see cref="WindowClassEx"/> structure that receives the information about the class.
+            /// A pointer to a <see cref="ExtendedWindowClass"/> structure that receives the information about the class.
             /// </param>
             /// <returns>
             /// If the function finds a matching class and successfully copies the data, the return value is
@@ -103,7 +103,7 @@ namespace OpenTK.NT.Native
             (
                 [In] HINSTANCE hinst,
                 [In] ushort classAtom,
-                [Out] out WindowClassEx lpwcx
+                [Out] out ExtendedWindowClass lpwcx
             )
             {
                 return GetClassInfoEx(hinst, new IntPtr(classAtom), out lpwcx);
@@ -111,35 +111,35 @@ namespace OpenTK.NT.Native
 
             /// <summary>
             /// Registers a window class for subsequent use in calls to the CreateWindow or
-            /// <see cref="Window.CreateWindowEx(ExtendedWindowStyleFlags, HINSTANCE, string, WindowStyleFlags, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
+            /// <see cref="Window.CreateWindowEx(ExtendedWindowStyles, HINSTANCE, string, WindowStyles, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
             /// function.
             /// </summary>
             /// <param name="lpwcx">
-            /// A pointer to a <see cref="WindowClassEx"/> structure. You must fill the structure with the
+            /// A pointer to a <see cref="ExtendedWindowClass"/> structure. You must fill the structure with the
             /// appropriate class attributes before passing it to the function.
             /// </param>
             /// <returns>
             /// If the function succeeds, the return value is a class atom that uniquely identifies the class being
             /// registered. This atom can only be used by the CreateWindow,
-            /// <see cref="Window.CreateWindowEx(ExtendedWindowStyleFlags, HINSTANCE, string, WindowStyleFlags, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>,
-            /// GetClassInfo, <see cref="GetClassInfoEx(HINSTANCE, HINSTANCE, out WindowClassEx)"/>, FindWindow,
+            /// <see cref="Window.CreateWindowEx(ExtendedWindowStyles, HINSTANCE, string, WindowStyles, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>,
+            /// GetClassInfo, <see cref="GetClassInfoEx(HINSTANCE, HINSTANCE, out ExtendedWindowClass)"/>, FindWindow,
             /// FindWindowEx, and <see cref="UnregisterClass(string, HINSTANCE)"/> functions
             /// and the IActiveIMMap::FilterClientWindows method.<para/>
             /// If the function fails, the return value is zero.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern ushort RegisterClassEx([In] ref WindowClassEx lpwcx);
+            public static extern ushort RegisterClassEx([In] ref ExtendedWindowClass lpwcx);
 
             /// <summary>
             /// Unregisters a window class, freeing the memory required for the class.
             /// </summary>
-            /// <param name="lpClassName">
+            /// <param name="className">
             /// A string specifying the window class name. This class name must have been
-            /// registered by a previous call to the RegisterClass or <see cref="RegisterClassEx(ref WindowClassEx)"/>
+            /// registered by a previous call to the RegisterClass or <see cref="RegisterClassEx(ref ExtendedWindowClass)"/>
             /// function.
             /// </param>
-            /// <param name="hInstance">A handle to the instance of the module that created the class.</param>
+            /// <param name="moduleInstance">A handle to the instance of the module that created the class.</param>
             /// <returns>
             /// If the function succeeds, the return value is true.<para/>
             /// If the class could not be found or if a window still exists that was created with the class, the return
@@ -154,8 +154,8 @@ namespace OpenTK.NT.Native
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool UnregisterClass
             (
-                [In] string lpClassName,
-                [In] [Optional] HINSTANCE hInstance
+                [In] string className,
+                [In] [Optional] HINSTANCE moduleInstance
             );
 
             /// <summary>
@@ -164,7 +164,7 @@ namespace OpenTK.NT.Native
             /// <param name="lpClassName">
             /// A pointer to a string specifying the window class name. This class name must
             /// have been registered by a previous call to the RegisterClass or
-            /// <see cref="RegisterClassEx(ref WindowClassEx)"/> function.
+            /// <see cref="RegisterClassEx(ref ExtendedWindowClass)"/> function.
             /// </param>
             /// <param name="hInstance">A handle to the instance of the module that created the class.</param>
             /// <returns>
@@ -190,7 +190,7 @@ namespace OpenTK.NT.Native
             /// </summary>
             /// <param name="classAtom">
             /// A class atom created by a previous call to the RegisterClass or
-            /// <see cref="RegisterClassEx(ref WindowClassEx)"/> function.
+            /// <see cref="RegisterClassEx(ref ExtendedWindowClass)"/> function.
             /// </param>
             /// <param name="hInstance">A handle to the instance of the module that created the class.</param>
             /// <returns>

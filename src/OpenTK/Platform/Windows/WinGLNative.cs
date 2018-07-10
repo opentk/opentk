@@ -45,18 +45,18 @@ namespace OpenTK.Platform.Windows
     /// </summary>
     internal sealed class WinGLNative : NativeWindowBase
     {
-        private const ExtendedWindowStyleFlags ParentStyleEx = ExtendedWindowStyleFlags.WindowEdge | ExtendedWindowStyleFlags.AppWindow;
-        private const ExtendedWindowStyleFlags ChildStyleEx = 0;
-        private const WindowClassStyleFlags DefaultClassStyle = WindowClassStyleFlags.OwnDC;
+        private const ExtendedWindowStyles ParentStyleEx = ExtendedWindowStyles.WindowEdge | ExtendedWindowStyles.AppWindow;
+        private const ExtendedWindowStyles ChildStyleEx = 0;
+        private const WindowClassStyles DefaultClassStyle = WindowClassStyles.OwnDC;
 
         private const long ExtendedBit = 1 << 24; // Used to distinguish left and right control, alt and enter keys.
 
-        public static readonly uint ShiftLeftScanCode = User32.Keyboard.MapVirtualKey(VirtualKeys.LShift, 0);
-        public static readonly uint ShiftRightScanCode = User32.Keyboard.MapVirtualKey(VirtualKeys.RShift, 0);
-        public static readonly uint ControlLeftScanCode = User32.Keyboard.MapVirtualKey(VirtualKeys.LControl, 0);
-        public static readonly uint ControlRightScanCode = User32.Keyboard.MapVirtualKey(VirtualKeys.RControl, 0);
-        public static readonly uint AltLeftScanCode = User32.Keyboard.MapVirtualKey(VirtualKeys.LMenu, 0);
-        public static readonly uint AltRightScanCode = User32.Keyboard.MapVirtualKey(VirtualKeys.RMenu, 0);
+        public static readonly uint ShiftLeftScanCode = User32.Keyboard.MapVirtualKey(VirtualKey.LShift, 0);
+        public static readonly uint ShiftRightScanCode = User32.Keyboard.MapVirtualKey(VirtualKey.RShift, 0);
+        public static readonly uint ControlLeftScanCode = User32.Keyboard.MapVirtualKey(VirtualKey.LControl, 0);
+        public static readonly uint ControlRightScanCode = User32.Keyboard.MapVirtualKey(VirtualKey.RControl, 0);
+        public static readonly uint AltLeftScanCode = User32.Keyboard.MapVirtualKey(VirtualKey.LMenu, 0);
+        public static readonly uint AltRightScanCode = User32.Keyboard.MapVirtualKey(VirtualKey.RMenu, 0);
 
         private static readonly object SyncRoot = new object();
 
@@ -184,7 +184,7 @@ namespace OpenTK.Platform.Windows
             get => client_rectangle.Size;
             set
             {
-                var style = (WindowStyleFlags)User32.Window.GetWindowLong(window.Handle, GetWindowLongIndex.Style);
+                var style = (WindowStyles)User32.Window.GetWindowLong(window.Handle, GetWindowLongIndex.Style);
                 Rect rect = value;
                 User32.Window.AdjustWindowRect(ref rect, style, false);
                 Size = new Size(rect.Width, rect.Height);
@@ -418,7 +418,7 @@ namespace OpenTK.Platform.Windows
 
                         if (WindowBorder == WindowBorder.Hidden)
                         {
-                            var current_monitor = User32.Monitor.MonitorFromWindow(window.Handle, MonitorFromEnum.DefaultToNearest);
+                            var current_monitor = User32.Monitor.MonitorFromWindow(window.Handle, MonitorFromDefaultValue.DefaultToNearest);
                             var info = new MonitorInfo { Size = MonitorInfo.SizeInBytes };
                             User32.Monitor.GetMonitorInfo(current_monitor, out info);
 
@@ -498,22 +498,22 @@ namespace OpenTK.Platform.Windows
                 var state = WindowState;
                 ResetWindowState();
 
-                var old_style = WindowStyleFlags.ClipChildren | WindowStyleFlags.ClipSiblings;
+                var old_style = WindowStyles.ClipChildren | WindowStyles.ClipSiblings;
                 var new_style = old_style;
 
                 switch (value)
                 {
                     case WindowBorder.Resizable:
-                        new_style |= WindowStyleFlags.OverlappedWindow;
+                        new_style |= WindowStyles.OverlappedWindow;
                         break;
 
                     case WindowBorder.Fixed:
-                        new_style |= WindowStyleFlags.OverlappedWindow &
-                            ~(WindowStyleFlags.ThickFrame | WindowStyleFlags.MaximizeBox | WindowStyleFlags.SizeBox);
+                        new_style |= WindowStyles.OverlappedWindow &
+                            ~(WindowStyles.ThickFrame | WindowStyles.MaximizeBox | WindowStyles.SizeBox);
                         break;
 
                     case WindowBorder.Hidden:
-                        new_style |= WindowStyleFlags.Popup;
+                        new_style |= WindowStyles.Popup;
                         break;
                 }
 
@@ -720,13 +720,13 @@ namespace OpenTK.Platform.Windows
             var get_window_style = (GetWindowLongIndex)wParam.ToInt32();
             if ((get_window_style & (GetWindowLongIndex.Style | GetWindowLongIndex.ExStyle)) != 0)
             {
-                var style = (WindowStyleFlags)Marshal.PtrToStructure<StyleStruct>(lParam).StyleNew;
+                var style = (WindowStyles)Marshal.PtrToStructure<StyleStruct>(lParam).StyleNew;
 
-                if ((style & WindowStyleFlags.Popup) != 0)
+                if ((style & WindowStyles.Popup) != 0)
                     new_border = WindowBorder.Hidden;
-                else if ((style & WindowStyleFlags.ThickFrame) != 0)
+                else if ((style & WindowStyles.ThickFrame) != 0)
                     new_border = WindowBorder.Resizable;
-                else if ((style & ~(WindowStyleFlags.ThickFrame | WindowStyleFlags.MaximizeBox)) != 0)
+                else if ((style & ~(WindowStyles.ThickFrame | WindowStyles.MaximizeBox)) != 0)
                     new_border = WindowBorder.Fixed;
             }
 
@@ -1014,7 +1014,7 @@ namespace OpenTK.Platform.Windows
             bool extended = (lParam.ToInt64() & ExtendedBit) != 0;
             short scancode = (short)((lParam.ToInt64() >> 16) & 0xFF);
             //ushort repeat_count = unchecked((ushort)((ulong)lParam.ToInt64() & 0xffffu));
-            var vkey = (VirtualKeys)wParam;
+            var vkey = (VirtualKey)wParam;
             var key = WinKeyMap.TranslateKey(scancode, vkey, extended, false, out bool is_valid);
 
             if (is_valid)
@@ -1254,7 +1254,7 @@ namespace OpenTK.Platform.Windows
             {
                 Size = TrackMouseEvent.SizeInBytes,
                 TrackWindowHandle = window.Handle,
-                Flags = TrackMouseEventFlags.Leave
+                Flags = TrackMouseEvents.Leave
             };
             
 
@@ -1308,16 +1308,16 @@ namespace OpenTK.Platform.Windows
 
             // The style of a parent window is different than that of a child window.
             // Note: the child window should always be visible, even if the parent isn't.
-            WindowStyleFlags style = 0;
-            ExtendedWindowStyleFlags ex_style = 0;
+            WindowStyles style = 0;
+            ExtendedWindowStyles ex_style = 0;
             if (parentHandle == IntPtr.Zero)
             {
-                style |= WindowStyleFlags.OverlappedWindow | WindowStyleFlags.ClipChildren;
+                style |= WindowStyles.OverlappedWindow | WindowStyles.ClipChildren;
                 ex_style = ParentStyleEx;
             }
             else
             {
-                style |= WindowStyleFlags.Visible | WindowStyleFlags.Child | WindowStyleFlags.ClipSiblings;
+                style |= WindowStyles.Visible | WindowStyles.Child | WindowStyles.ClipSiblings;
                 ex_style = ChildStyleEx;
             }
 
@@ -1336,18 +1336,18 @@ namespace OpenTK.Platform.Windows
             // The current approach is to register a new class for each top-level WinGLWindow we create.
             if (!class_registered)
             {
-                var wc = new WindowClassEx
+                var wc = new ExtendedWindowClass
                 {
-                    Size = WindowClassEx.SizeInBytes,
+                    Size = ExtendedWindowClass.SizeInBytes,
                     // Setting the background here ensures the window doesn't flash gray/white until the first frame is rendered.
                     Background = Gdi32.GetStockObject(GetStockObjectType.BlackBrush),
                     Style = DefaultClassStyle,
                     Instance = Instance,
-                    WndProc = WindowProcedureDelegate,
+                    WindowProc = WindowProcedureDelegate,
                     ClassName = ClassName,
                     Icon = Icon?.Handle ?? IntPtr.Zero,
                     // Todo: the following line appears to resize one of the 'large' icons, rather than using a small icon directly (multi-icon files). Investigate!
-                    IconSm = Icon != null ? new Icon(Icon, 16, 16).Handle : IntPtr.Zero,
+                    IconSmall = Icon != null ? new Icon(Icon, 16, 16).Handle : IntPtr.Zero,
                     Cursor = User32.Cursor.LoadCursor(CursorName.Arrow),
                 };
                 

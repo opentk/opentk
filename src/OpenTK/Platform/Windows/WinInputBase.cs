@@ -38,7 +38,7 @@ namespace OpenTK.Platform.Windows
         private static readonly IntPtr Unhandled = new IntPtr(-1);
         private readonly AutoResetEvent InputReady = new AutoResetEvent(false);
         private readonly Thread InputThread;
-        private readonly WindowProc WndProc;
+        private readonly WindowProc WindowProc;
 
         protected bool Disposed;
 
@@ -46,7 +46,7 @@ namespace OpenTK.Platform.Windows
 
         public WinInputBase()
         {
-            WndProc = WindowProcedure;
+            WindowProc = WindowProcedure;
 
             InputThread = new Thread(ProcessEvents);
             InputThread.SetApartmentState(ApartmentState.STA);
@@ -89,7 +89,7 @@ namespace OpenTK.Platform.Windows
             CreateDrivers();
 
             // Subclass the window to retrieve the events we are interested in.
-            OldWndProc = User32.Window.SetWindowLong(Parent.Handle, WndProc);
+            OldWndProc = User32.Window.SetWindowLong(Parent.Handle, WindowProc);
             Debug.Print("Input window attached to {0}", Parent);
 
             InputReady.Set();

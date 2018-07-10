@@ -186,8 +186,8 @@ namespace OpenTK.Platform.Windows
                 short scancode = (short)rin.Data.Keyboard.MakeCode;
                 var vkey = rin.Data.Keyboard.VKey;
 
-                bool extended0 = (int)(rin.Data.Keyboard.Flags & RawKeyboardFlags.E0) != 0;
-                bool extended1 = (int)(rin.Data.Keyboard.Flags & RawKeyboardFlags.E1) != 0;
+                bool extended0 = (int)(rin.Data.Keyboard.Flags & RawKeyboardScanCodeFlags.E0) != 0;
+                bool extended1 = (int)(rin.Data.Keyboard.Flags & RawKeyboardScanCodeFlags.E1) != 0;
 
                 var handle = new ContextHandle(rin.Header.Device);
                 KeyboardState keyboard;

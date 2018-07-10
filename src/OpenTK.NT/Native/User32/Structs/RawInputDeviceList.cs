@@ -19,9 +19,12 @@ namespace OpenTK.NT.Native
         /// </summary>
         public RawInputDeviceType Type;
 
+        /// <summary>
+        /// The size of this structure in bytes.
+        /// </summary>
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawInputDeviceList>();
 
-        public override string ToString()
-            => $"{Type}, Handle: {Device}";
+        /// <inheritdoc/>
+        public override string ToString() => $"{Type}, Handle: {Device}";
     }
 }

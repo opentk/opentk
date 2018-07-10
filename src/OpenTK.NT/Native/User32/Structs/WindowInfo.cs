@@ -30,12 +30,12 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// The window styles. For a table of window styles, see CreateWindowEx.
         /// </summary>
-        public WindowStyleFlags Style;
+        public WindowStyles Style;
 
         /// <summary>
         /// The extended window styles. For a table of extended window styles, see CreateWindowEx.
         /// </summary>
-        public ExtendedWindowStyleFlags ExtendedStyle;
+        public ExtendedWindowStyles ExtendedStyle;
 
         /// <summary>
         /// The window status. If this member is WS_ACTIVECAPTION, the window is active.

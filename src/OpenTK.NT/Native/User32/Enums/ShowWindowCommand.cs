@@ -1,7 +1,8 @@
 ﻿namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// ShowWindow() Commands
+    /// Used in <see cref="User32.Window.ShowWindow(System.IntPtr, ShowWindowCommand)"/> to control
+    /// how a window is to be shown.
     /// </summary>
     public enum ShowWindowCommand
     {

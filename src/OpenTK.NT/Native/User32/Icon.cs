@@ -14,18 +14,14 @@ namespace OpenTK.NT.Native
 
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool DestroyIcon([In] HICON hIcon);
+            public static extern bool DestroyIcon([In] HICON icon);
 
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool GetIconInfo([In] HICON hIcon, [Out] out IconInfo pIconInfo);
+            public static extern bool GetIconInfo([In] HICON icon, [Out] out IconInfo iconInfo);
 
-            [DllImport("user32.dll", SetLastError = true)]
-            public static extern HICON LoadIcon
-            (
-                [In] [Optional] HINSTANCE hInstance,
-                [In] string lpIconName
-            );
+            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+            public static extern HICON LoadIcon([In] [Optional] HINSTANCE moduleInstance, [In] string iconName);
         }
     }
 }

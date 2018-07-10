@@ -1,6 +1,9 @@
 ﻿namespace OpenTK.NT.Native
 {
-    public enum RawKeyboardFlags : ushort
+    /// <summary>
+    /// Flags for scan code information.
+    /// </summary>
+    public enum RawKeyboardScanCodeFlags : ushort
     {
         /// <summary>
         /// The key is down.
@@ -22,7 +25,14 @@
         /// </summary>
         E1 = 0x4,
 
+        /// <summary>
+        /// This member is not officially documented. Use with care.
+        /// </summary>
         TermsrvSetLed = 0x8,
+
+        /// <summary>
+        /// This member is not officially documented. Use with care.
+        /// </summary>
         TermsrvShadow = 0x10
     }
 }

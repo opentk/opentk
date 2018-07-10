@@ -13,7 +13,7 @@ namespace OpenTK.NT.Native
     /// <summary>
     /// Defines the initialization parameters passed to the window procedure of an application. These members are
     /// identical to the parameters of the
-    /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyleFlags, HINSTANCE, string, WindowStyleFlags, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
+    /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyles, HINSTANCE, string, WindowStyles, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
     /// function.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
@@ -22,7 +22,7 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Contains additional data which may be used to create the window. If the window is being created as a
         /// result of a call to the CreateWindow or
-        /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyleFlags, HINSTANCE, string, WindowStyleFlags, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
+        /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyles, HINSTANCE, string, WindowStyles, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
         /// function, this member contains the value of the lpParam parameter specified in the function call.<para/>
         /// If the window being created is a MDI client window, this member contains a pointer to a CLIENTCREATESTRUCT
         /// structure. If the window being created is a MDI child window, this member contains a pointer to an
@@ -77,7 +77,7 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Specifies the style for the new window.
         /// </summary>
-        public WindowStyleFlags Style;
+        public WindowStyles Style;
 
         /// <summary>
         /// Pointer to a null-terminated string that specifies the name of the new window.
@@ -93,6 +93,6 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// The extended window style for the new window.
         /// </summary>
-        public ExtendedWindowStyleFlags ExtendedStyle;
+        public ExtendedWindowStyles ExtendedStyle;
     }
 }

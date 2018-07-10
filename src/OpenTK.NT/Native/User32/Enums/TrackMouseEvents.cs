@@ -5,7 +5,7 @@ using DWORD = System.UInt32;
 namespace OpenTK.NT.Native
 {
     [Flags]
-    public enum TrackMouseEventFlags : DWORD
+    public enum TrackMouseEvents : DWORD
     {
         /// <summary>
         /// The caller wants hover notification. Notification is delivered as a <see cref="WindowMessage.MouseHover"/>
@@ -18,8 +18,7 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// The caller wants leave notification. Notification is delivered as a <see cref="WindowMessage.MouseLeave"/>
-        /// message.
-        /// If the mouse is not over the specified window or area,
+        /// message. If the mouse is not over the specified window or area,
         /// a leave notification is generated immediately and no further tracking is performed.
         /// </summary>
         Leave = 0x00000002,

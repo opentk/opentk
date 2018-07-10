@@ -28,6 +28,9 @@ namespace OpenTK.NT.Native
         /// </summary>
         public WPARAM Param;
 
+        /// <summary>
+        /// The size of this structure in bytes.
+        /// </summary>
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawInputHeader>();
     }
 }

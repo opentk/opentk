@@ -4,12 +4,17 @@ using DWORD = System.UInt32;
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Defines extended window style flags for usage in
+    /// <see cref="User32.Window.AdjustWindowRectEx(ref Rect, WindowStyles, bool, ExtendedWindowStyles)"/> and
+    /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyles, string, string, WindowStyles, int, int, int, int, IntPtr, IntPtr, IntPtr, IntPtr)"/>.
+    /// </summary>
     [Flags]
-    public enum ExtendedWindowStyleFlags : DWORD
+    public enum ExtendedWindowStyles : DWORD
     {
         /// <summary>
         /// The window has a double border; the window can, optionally, be created with a title bar
-        /// by specifying the <see cref="WindowStyleFlags.Caption"/> style in the dwStyle parameter.
+        /// by specifying the <see cref="WindowStyles.Caption"/> style in the dwStyle parameter.
         /// </summary>
         DialogModalFrame = 0x00000001,
 
@@ -70,8 +75,8 @@ namespace OpenTK.NT.Native
         /// the child receives a <see cref="WindowMessage.Help"/> message. The child window should pass the message to
         /// the parent window procedure, which should call the WinHelp function using the HELP_WM_HELP command.
         /// The Help application displays a pop-up window that typically contains help for the child window.<para/>
-        /// <see cref="ContextHelp"/> cannot be used with the <see cref="WindowStyleFlags.MaximizeBox"/>
-        /// or <see cref="WindowStyleFlags.MinimizeBox"/> styles.
+        /// <see cref="ContextHelp"/> cannot be used with the <see cref="WindowStyles.MaximizeBox"/>
+        /// or <see cref="WindowStyles.MinimizeBox"/> styles.
         /// </summary>
         ContextHelp = 0x00000400,
 
@@ -144,22 +149,19 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// The window is a layered window. This style cannot be used if the window has
-        /// a class style of either <see cref="WindowClassStyleFlags.OwnDC"/> or
-        /// <see cref="WindowClassStyleFlags.ClassDC"/>.<para/>
-        /// Only supported on Windows 2000 and higher.
+        /// a class style of either <see cref="WindowClassStyles.OwnDC"/> or
+        /// <see cref="WindowClassStyles.ClassDC"/>.<para/>
         /// </summary>
         Layered = 0x00080000,
 
         /// <summary>
         /// The window does not pass its window layout to its child windows.<para/>
-        /// Only supported on Windows 2000 and higher.
         /// </summary>
         NoInheritLayout = 0x00100000,
 
         /// <summary>
         /// The window does not render to a redirection surface. This is for windows that do not have visible
         /// content or that use mechanisms other than surfaces to provide their visual.<para/>
-        /// Only supported on Windows 2000 and higher.
         /// </summary>
         NoRedirectionBitmap = 0x00200000,
 
@@ -167,15 +169,13 @@ namespace OpenTK.NT.Native
         /// If the shell language is Hebrew, Arabic, or another language that supports reading order alignment,
         /// the horizontal origin of the window is on the right edge.
         /// Increasing horizontal values advance to the left.<para/>
-        /// Only supported on Windows 2000 and higher.
         /// </summary>
         LayoutRtl = 0x00400000,
 
         /// <summary>
         /// Paints all descendants of a window in bottom-to-top painting order using double-buffering.<para/>
-        /// This cannot be used if the window has a class style of either <see cref="WindowClassStyleFlags.OwnDC"/>
-        /// or <see cref="WindowClassStyleFlags.ClassDC"/>.<para/>
-        /// Only supported on Windows XP and higher.
+        /// This cannot be used if the window has a class style of either <see cref="WindowClassStyles.OwnDC"/>
+        /// or <see cref="WindowClassStyles.ClassDC"/>.<para/>
         /// </summary>
         Composited = 0x02000000,
 
@@ -188,8 +188,7 @@ namespace OpenTK.NT.Native
         /// To activate the window, use the SetActiveWindow or <see cref="User32.Window.SetForegroundWindow"/>
         /// function.<para/>
         /// The window does not appear on the taskbar by default. To force the window to appear on the taskbar,
-        /// use the <see cref="ExtendedWindowStyleFlags.AppWindow"/> style.<para/>
-        /// Only supported on Windows 2000 and higher.
+        /// use the <see cref="ExtendedWindowStyles.AppWindow"/> style.<para/>
         /// </summary>
         NoActivate = 0x08000000
     }

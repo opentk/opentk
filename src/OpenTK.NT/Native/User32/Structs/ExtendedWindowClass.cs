@@ -5,15 +5,29 @@ using HBRUSH = System.IntPtr;
 using HCURSOR = System.IntPtr;
 using HICON = System.IntPtr;
 using HINSTANCE = System.IntPtr;
+using UINT = System.UInt32;
 
 namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// Contains the window class attributes that are registered by the RegisterClass function.
+    /// Contains window class information. It is used with the
+    /// <see cref="User32.WindowClass.RegisterClassEx(ref ExtendedWindowClass)"/> and
+    /// <see cref="User32.WindowClass.GetClassInfoEx(HBRUSH, string, out ExtendedWindowClass)"/> functions.<para/>
+    /// The <see cref="ExtendedWindowClass"/> structure is similar to the <see cref="WindowClass"/> structure.
+    /// There are two differences. <see cref="ExtendedWindowClass"/> includes the <see cref="Size"/> member, which
+    /// specifies the size of the structure, and the <see cref="IconSmall"/> member, which contains a handle
+    /// to a small icon associated with the window class.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public struct WindowClass
+    public struct ExtendedWindowClass
     {
+        /// <summary>
+        /// The size, in bytes, of this structure. Set this member to <see cref="SizeInBytes"/>.<para/>
+        /// Be sure to set this member before calling the
+        /// <see cref="User32.WindowClass.GetClassInfoEx(HBRUSH, HBRUSH, out ExtendedWindowClass)"/> function.
+        /// </summary>
+        public UINT Size;
+
         /// <summary>
         /// The class style(s). This member can be any combination of <see cref="WindowClassStyles"/>.
         /// </summary>
@@ -32,7 +46,7 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// The number of extra bytes to allocate following the window instance. The system initializes the bytes
-        /// to zero. If an application uses <see cref="WindowClass"/> to register a dialog box created by
+        /// to zero. If an application uses <see cref="ExtendedWindowClass"/> to register a dialog box created by
         /// using the CLASS directive in the resource file, it must set this member to DLGWINDOWEXTRA.
         /// </summary>
         public int WindowExtra;
@@ -71,8 +85,15 @@ namespace OpenTK.NT.Native
         public string ClassName;
 
         /// <summary>
+        /// A handle to a small icon that is associated with the window class. If this member is
+        /// <see cref="IntPtr.Zero"/>, the system searches the icon resource specified by the hIcon member for an icon
+        /// of the appropriate size to use as the small icon.
+        /// </summary>
+        public HICON IconSmall;
+
+        /// <summary>
         /// The size of this structure in bytes.
         /// </summary>
-        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<WindowClass>();
+        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<ExtendedWindowClass>();
     }
 }

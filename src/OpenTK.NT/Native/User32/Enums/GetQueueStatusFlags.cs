@@ -5,10 +5,11 @@ using DWORD = System.UInt32;
 namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// Queue status flags for GetQueueStatus() and MsgWaitForMultipleObjects()
+    /// Flags used in <see cref="User32.Message.GetQueueStatus(GetQueueStatusFlags)"/>
+    /// to specify the types of messages to check for.
     /// </summary>
     [Flags]
-    public enum QueueStatusFlags : DWORD
+    public enum GetQueueStatusFlags : DWORD
     {
         /// <summary>
         /// A <see cref="WindowMessage.KeyUp"/>, <see cref="WindowMessage.KeyDown"/>,

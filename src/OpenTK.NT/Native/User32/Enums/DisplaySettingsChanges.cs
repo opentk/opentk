@@ -5,12 +5,12 @@ using DWORD = System.UInt32;
 namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// Used in <see cref="User32.DeviceContext.ChangeDisplaySettings(ref DeviceMode, ChangeDisplaySettingsFlags)"/>
-    /// and <see cref="User32.DeviceContext.ChangeDisplaySettingsEx(string, IntPtr, IntPtr, ChangeDisplaySettingsFlags,
+    /// Used in <see cref="User32.DeviceContext.ChangeDisplaySettings(ref DeviceMode, DisplaySettingsChanges)"/>
+    /// and <see cref="User32.DeviceContext.ChangeDisplaySettingsEx(string, IntPtr, IntPtr, DisplaySettingsChanges,
     /// IntPtr)"/> to indicate how the graphics mode should be changed.
     /// </summary>
     [Flags]
-    public enum ChangeDisplaySettingsFlags : DWORD
+    public enum DisplaySettingsChanges : DWORD
     {
         /// <summary>
         /// The graphics mode for the current screen will be changed dynamically.
