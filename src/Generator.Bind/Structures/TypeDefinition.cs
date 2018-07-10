@@ -4,6 +4,7 @@
 
 using System;
 using Bind.Extensions;
+using JetBrains.Annotations;
 
 namespace Bind.Structures
 {
@@ -25,13 +26,8 @@ namespace Bind.Structures
         /// This constructor performs a deep copy of the given definition.
         /// </summary>
         /// <param name="t">The definition to copy.</param>
-        public TypeDefinition(TypeDefinition t)
+        public TypeDefinition([NotNull] TypeDefinition t)
         {
-            if (t == null)
-            {
-                return;
-            }
-
             QualifiedTypeName = t.QualifiedTypeName ?? t.TypeName; // Covers current type and qualifier
             WrapperType = t.WrapperType;
             ArrayDimensions = t.ArrayDimensions;
@@ -175,35 +171,44 @@ namespace Bind.Structures
         }
 
         /// <inheritdoc/>
-        public int CompareTo(TypeDefinition other)
+        public int CompareTo([NotNull] TypeDefinition other)
         {
             // Make sure that Pointer parameters are sorted last to avoid bug [#1098].
             // The rest of the comparisons help maintain a stable order (useful for source control).
             // Note that CompareTo is stricter than Equals and that there is code in
             // DelegateCollection.Add that depends on this fact.
-            var result = TypeName.CompareTo(other.TypeName);
+            var result = string.Compare(TypeName, other.TypeName, StringComparison.Ordinal);
             if (result == 0)
             {
                 result = IndirectionLevel.CompareTo(other.IndirectionLevel); // Must come after array/ref, see issue [#1098]
             }
+
             if (result == 0)
             {
                 result = IsReference.CompareTo(other.IsReference);
             }
+
             if (result == 0)
             {
                 result = ArrayDimensions.CompareTo(other.ArrayDimensions);
             }
+
             if (result == 0)
             {
                 result = ElementCount.CompareTo(other.ElementCount);
             }
+
             return result;
         }
 
         /// <inheritdoc/>
         public bool Equals(TypeDefinition other)
         {
+            if (other is null)
+            {
+                return false;
+            }
+
             var result =
                 TypeName.Equals(other.TypeName) &&
                 IndirectionLevel.Equals(other.IndirectionLevel) &&

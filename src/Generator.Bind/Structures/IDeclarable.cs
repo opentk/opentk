@@ -1,4 +1,6 @@
-﻿namespace Bind.Structures
+﻿using JetBrains.Annotations;
+
+namespace Bind.Structures
 {
     /// <summary>
     /// Represents a type that can declare itself in source code.
@@ -9,6 +11,7 @@
         /// Converts the object into a valid declaration string.
         /// </summary>
         /// <returns>The declaration string.</returns>
+        [NotNull]
         string GetDeclarationString();
     }
 }

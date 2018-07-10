@@ -29,6 +29,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.XPath;
 using Bind.Structures;
+using JetBrains.Annotations;
 
 namespace Bind
 {
@@ -38,7 +39,13 @@ namespace Bind
     internal class XmlSpecificationReader : ISpecificationReader
     {
         /// <inheritdoc />
-        public DelegateCollection ReadDelegates(string specFile, IEnumerable<string> overrideFiles, string apiname, string apiversions)
+        public DelegateCollection ReadDelegates
+        (
+            string specFile,
+            IEnumerable<string> overrideFiles,
+            string apiname,
+            string apiversions
+        )
         {
             var delegates = new DelegateCollection();
 
@@ -80,7 +87,13 @@ namespace Bind
         }
 
         /// <inheritdoc/>
-        public EnumCollection ReadEnums(string specFile, IEnumerable<string> overrideFiles, string apiname, string apiversions)
+        public EnumCollection ReadEnums
+        (
+            string specFile,
+            IEnumerable<string> overrideFiles,
+            string apiname,
+            string apiversions
+        )
         {
             var enums = new EnumCollection();
 
@@ -217,7 +230,13 @@ namespace Bind
             }
         }
 
-        private static void GetSignaturePaths(string apiname, string apiversion, out string xpathAdd, out string xpathDelete)
+        private static void GetSignaturePaths
+        (
+            [CanBeNull] string apiname,
+            [CanBeNull] string apiversion,
+            [NotNull] out string xpathAdd,
+            [NotNull] out string xpathDelete
+        )
         {
             xpathAdd = "/signatures/add";
             xpathDelete = "/signatures/delete";
@@ -237,11 +256,14 @@ namespace Bind
             }
         }
 
-        private string GetSpecVersion(XPathDocument specs)
+        [NotNull]
+        private string GetSpecVersion([NotNull] IXPathNavigable specs)
         {
-            var version =
-                specs.CreateNavigator().SelectSingleNode("/signatures")
-                .GetAttribute("version", string.Empty);
+            var version = specs
+                .CreateNavigator()
+                ?.SelectSingleNode("/signatures")
+                ?.GetAttribute("version", string.Empty);
+
             if (string.IsNullOrEmpty(version))
             {
                 version = "1";
@@ -249,7 +271,8 @@ namespace Bind
             return version;
         }
 
-        private DelegateCollection ReadDelegates(XPathNavigator specs, string apiversion)
+        [NotNull]
+        private DelegateCollection ReadDelegates([NotNull] XPathNavigator specs, [CanBeNull] string apiversion)
         {
             var delegates = new DelegateCollection();
             var extensions = new List<string>();
@@ -319,133 +342,137 @@ namespace Bind
             return delegates;
         }
 
-        private EnumCollection ReadEnums(XPathNavigator nav)
+        [NotNull]
+        private EnumCollection ReadEnums([CanBeNull] XPathNavigator nav)
         {
             var enums = new EnumCollection();
 
-            if (nav != null)
+            if (nav == null)
             {
-                var reuseList = new List<KeyValuePair<EnumDefinition, string>>();
+                return enums;
+            }
 
-                // First pass: collect all available tokens and enums
-                foreach (XPathNavigator node in nav.SelectChildren("enum", string.Empty))
+            var reuseList = new List<KeyValuePair<EnumDefinition, string>>();
+
+            // First pass: collect all available tokens and enums
+            foreach (XPathNavigator node in nav.SelectChildren("enum", string.Empty))
+            {
+                var e = new EnumDefinition
                 {
-                    var e = new EnumDefinition()
-                    {
-                        Name = node.GetAttribute("name", string.Empty).Trim(),
-                        Type = node.GetAttribute("type", string.Empty).Trim()
-                    };
+                    Name = node.GetAttribute("name", string.Empty).Trim(),
+                    Type = node.GetAttribute("type", string.Empty).Trim(),
+                    Obsolete = node.GetAttribute("obsolete", string.Empty).Trim()
+                };
 
-                    e.Obsolete = node.GetAttribute("obsolete", string.Empty).Trim();
-
-                    if (string.IsNullOrEmpty(e.Name))
-                    {
-                        throw new InvalidOperationException($"Empty name for enum element {node}");
-                    }
-
-                    // It seems that all flag collections contain "Mask" in their names.
-                    // This looks like a heuristic, but it holds 100% in practice
-                    // (checked all enums to make sure).
-                    e.IsFlagCollection = e.Name.ToLower().Contains("mask");
-
-                    foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
-                    {
-                        ConstantDefinition c = null;
-                        switch (param.Name)
-                        {
-                            case "token":
-                                c = new ConstantDefinition
-                                {
-                                    Name = param.GetAttribute("name", string.Empty).Trim(),
-                                    Value = param.GetAttribute("value", string.Empty).Trim()
-                                };
-                                break;
-
-                            case "use":
-                                c = new ConstantDefinition
-                                {
-                                    Name = param.GetAttribute("token", string.Empty).Trim(),
-                                    Reference = param.GetAttribute("enum", string.Empty).Trim(),
-                                    Value = param.GetAttribute("token", string.Empty).Trim(),
-                                };
-                                break;
-
-                            case "reuse":
-                                var reuseEnum = param.GetAttribute("enum", string.Empty).Trim();
-                                reuseList.Add(new KeyValuePair<EnumDefinition, string>(e, reuseEnum));
-                                break;
-
-                            default:
-                                throw new NotSupportedException();
-                        }
-
-                        if (c != null)
-                        {
-                            try
-                            {
-                                if (!e.ConstantCollection.ContainsKey(c.Name))
-                                {
-                                    e.ConstantCollection.Add(c.Name, c);
-                                }
-                                else if (e.ConstantCollection[c.Name].Value != c.Value)
-                                {
-                                    var existing = e.ConstantCollection[c.Name];
-                                    if (existing.Reference != null && c.Reference == null)
-                                    {
-                                        e.ConstantCollection[c.Name] = c;
-                                    }
-                                    else if (existing.Reference == null && c.Reference != null)
-                                    {
-                                        // Keep existing
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine
-                                        (
-                                            $"[Warning] Conflicting token {e.Name}.{c.Name} with value {e.ConstantCollection[c.Name].Value} != {c.Value}"
-                                        );
-                                    }
-                                }
-                            }
-                            catch (ArgumentException ex)
-                            {
-                                Console.WriteLine("[Warning] Failed to add constant {0} to enum {1}: {2}", c.Name, e.Name, ex.Message);
-                            }
-                        }
-                    }
-
-                    Utilities.Merge(enums, e);
+                if (string.IsNullOrEmpty(e.Name))
+                {
+                    throw new InvalidOperationException($"Empty name for enum element {node}");
                 }
 
-                // Second pass: resolve "reuse" directives
-restart:
-                foreach (var pair in reuseList)
-                {
-                    var e = pair.Key;
-                    var reuse = pair.Value;
-                    var count = e.ConstantCollection.Count;
+                // It seems that all flag collections contain "Mask" in their names.
+                // This looks like a heuristic, but it holds 100% in practice
+                // (checked all enums to make sure).
+                e.IsFlagCollection = e.Name.ToLower().Contains("mask");
 
-                    if (enums.ContainsKey(reuse))
+                foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
+                {
+                    ConstantDefinition c = null;
+                    switch (param.Name)
                     {
-                        var reuseEnum = enums[reuse];
-                        foreach (var token in reuseEnum.ConstantCollection.Values)
+                        case "token":
+                            c = new ConstantDefinition
+                            {
+                                Name = param.GetAttribute("name", string.Empty).Trim(),
+                                Value = param.GetAttribute("value", string.Empty).Trim()
+                            };
+                            break;
+
+                        case "use":
+                            c = new ConstantDefinition
+                            {
+                                Name = param.GetAttribute("token", string.Empty).Trim(),
+                                Reference = param.GetAttribute("enum", string.Empty).Trim(),
+                                Value = param.GetAttribute("token", string.Empty).Trim(),
+                            };
+                            break;
+
+                        case "reuse":
+                            var reuseEnum = param.GetAttribute("enum", string.Empty).Trim();
+                            reuseList.Add(new KeyValuePair<EnumDefinition, string>(e, reuseEnum));
+                            break;
+
+                        default:
+                            throw new NotSupportedException();
+                    }
+
+                    if (c == null)
+                    {
+                        continue;
+                    }
+
+                    try
+                    {
+                        if (!e.ConstantCollection.ContainsKey(c.Name))
                         {
-                            Utilities.Merge(e, token);
+                            e.ConstantCollection.Add(c.Name, c);
+                        }
+                        else if (e.ConstantCollection[c.Name].Value != c.Value)
+                        {
+                            var existing = e.ConstantCollection[c.Name];
+                            if (existing.Reference != null && c.Reference == null)
+                            {
+                                e.ConstantCollection[c.Name] = c;
+                            }
+                            else if (existing.Reference == null && c.Reference != null)
+                            {
+                                // Keep existing
+                            }
+                            else
+                            {
+                                Console.WriteLine
+                                (
+                                    $"[Warning] Conflicting token {e.Name}.{c.Name} with value {e.ConstantCollection[c.Name].Value} != {c.Value}"
+                                );
+                            }
                         }
                     }
-                    else
+                    catch (ArgumentException ex)
                     {
-                        Console.WriteLine("[Warning] Reuse token not found: {0}", reuse);
+                        Console.WriteLine("[Warning] Failed to add constant {0} to enum {1}: {2}", c.Name, e.Name, ex.Message);
                     }
+                }
 
-                    if (count != e.ConstantCollection.Count)
+                Utilities.Merge(enums, e);
+            }
+
+            // Second pass: resolve "reuse" directives
+            restart:
+            foreach (var pair in reuseList)
+            {
+                var e = pair.Key;
+                var reuse = pair.Value;
+                var count = e.ConstantCollection.Count;
+
+                if (enums.ContainsKey(reuse))
+                {
+                    var reuseEnum = enums[reuse];
+                    foreach (var token in reuseEnum.ConstantCollection.Values)
                     {
-                        // Restart resolution of reuse directives whenever
-                        // we modify an enum. This is the simplest (brute) way
-                        // to resolve chains of reuse directives:
-                        // e.g. enum A reuses B which reuses C
-                        goto restart;
+                        Utilities.Merge(e, token);
                     }
+                }
+                else
+                {
+                    Console.WriteLine("[Warning] Reuse token not found: {0}", reuse);
+                }
+
+                if (count != e.ConstantCollection.Count)
+                {
+                    // Restart resolution of reuse directives whenever
+                    // we modify an enum. This is the simplest (brute) way
+                    // to resolve chains of reuse directives:
+                    // e.g. enum A reuses B which reuses C
+                    goto restart;
                 }
             }
 

@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Bind.Structures;
+using JetBrains.Annotations;
 
 namespace Bind.Generators
 {
@@ -42,32 +43,38 @@ namespace Bind.Generators
         /// <summary>
         /// Gets the path to the file that contains the language typemap.
         /// </summary>
+        [NotNull]
         protected virtual string LanguageTypemap => "csharp.tm";
 
         /// <summary>
         /// Gets the path to the file that contains the API typemap.
         /// </summary>
+        [NotNull]
         protected virtual string APITypemap => Path.Combine("GL2", "gl.tm");
 
         /// <summary>
         /// Gets the path to the file that contains the API specification.
         /// </summary>
+        [NotNull]
         protected virtual string SpecificationFile => Path.Combine("GL2", "signatures.xml");
 
         /// <summary>
         /// Gets the path to the file that contains the API enum specification.
         /// </summary>
+        [NotNull]
         protected virtual string EnumSpecificationFile => Path.Combine("GL2", "signatures.xml");
 
         /// <summary>
         /// Gets the name of the function that loads all entrypoints.
         /// </summary>
+        [NotNull]
         protected const string LoadAllFuncName = "LoadAll";
 
         /// <summary>
         /// Gets the name that corresponds to the "profile" attribute in the OpenGL registry. We use this to distinguish
         /// between different profiles (e.g. "gl", "glcore", "gles1", "gles2").
         /// </summary>
+        [NotNull]
         protected virtual string ProfileName => "gl";
 
         /// <summary>
@@ -75,11 +82,13 @@ namespace Bind.Generators
         /// distinguish between OpenGL ES 2.0 and 3.0, which share the same profile "gles2". If empty, then all elements
         /// of a profile will be parsed, and their version number will be ignored.
         /// </summary>
+        [NotNull]
         protected virtual string Version => string.Empty;
 
         /// <summary>
         /// Gets the specification reader associated with this generator.
         /// </summary>
+        [NotNull]
         protected ISpecificationReader SpecificationReader { get; }
 
         /// <inheritdoc />
@@ -100,7 +109,7 @@ namespace Bind.Generators
         /// <summary>
         /// Initializes a new instance of the <see cref="GeneratorBase"/> class.
         /// </summary>
-        public GeneratorBase()
+        protected GeneratorBase()
         {
             OverrideFiles = new List<string>();
 

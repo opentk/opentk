@@ -31,6 +31,7 @@ using System.Text;
 using System.Xml.XPath;
 using Bind.Generators;
 using Bind.Structures;
+using JetBrains.Annotations;
 
 namespace Bind
 {
@@ -46,7 +47,7 @@ namespace Bind
         /// </summary>
         /// <param name="generator">The API generator.</param>
         /// <param name="overrides">The override file paths.</param>
-        public EnumProcessor(IGenerator generator, IEnumerable<string> overrides)
+        public EnumProcessor([NotNull] IGenerator generator, [NotNull] IEnumerable<string> overrides)
         {
             Generator = generator ?? throw new ArgumentNullException(nameof(generator));
             _overrides = overrides ?? throw new ArgumentNullException(nameof(overrides));
@@ -60,7 +61,8 @@ namespace Bind
         /// <param name="enums">The base enum collection to use.</param>
         /// <param name="apiname">The name of the API.</param>
         /// <returns>A collection of enums.</returns>
-        public EnumCollection Process(EnumCollection enums, string apiname)
+        [NotNull]
+        public EnumCollection Process([NotNull] EnumCollection enums, [NotNull] string apiname)
         {
             foreach (var file in _overrides)
             {
@@ -81,7 +83,8 @@ namespace Bind
         /// <param name="enumeration">The enumeration name.</param>
         /// <returns>The node path.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="enumeration"/> is null.</exception>
-        public static string GetOverridesNodePath(string apiname, string enumeration)
+        [NotNull]
+        public static string GetOverridesNodePath([CanBeNull] string apiname, [NotNull] string enumeration)
         {
             if (enumeration == null)
             {
@@ -100,7 +103,8 @@ namespace Bind
             return path.ToString();
         }
 
-        private EnumCollection ProcessNames(EnumCollection enums, XPathNavigator nav, string apiname)
+        [NotNull]
+        private EnumCollection ProcessNames([NotNull] EnumCollection enums, [NotNull] XPathNavigator nav, [NotNull] string apiname)
         {
             var processedEnums = new EnumCollection();
             foreach (var e in enums.Values)
@@ -118,22 +122,21 @@ namespace Bind
             return processedEnums;
         }
 
-        private static string ReplaceName(XPathNavigator nav, string apiname, string name)
+        [NotNull]
+        private static string ReplaceName([NotNull] XPathNavigator nav, [NotNull] string apiname, [NotNull] string name)
         {
             var enumOverride = nav.SelectSingleNode(GetOverridesNodePath(apiname, name));
-            if (enumOverride != null)
+            var nameOverride = enumOverride?.SelectSingleNode("name");
+
+            if (nameOverride != null)
             {
-                var nameOverride = enumOverride.SelectSingleNode("name");
-                if (nameOverride != null)
-                {
-                    name = nameOverride.Value;
-                }
+                name = nameOverride.Value;
             }
 
             return name;
         }
 
-        private static bool IsAlreadyProcessed(string name)
+        private static bool IsAlreadyProcessed([NotNull] string name)
         {
             var extension = Utilities.GetExtension(name, true);
             var unprocessed = false;
@@ -149,7 +152,8 @@ namespace Bind
         /// </summary>
         /// <param name="name">The original name.</param>
         /// <returns>The translated name.</returns>
-        public string TranslateEnumName(string name)
+        [NotNull]
+        public string TranslateEnumName([NotNull] string name)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -161,86 +165,89 @@ namespace Bind
                 return name;
             }
 
-            if (!IsAlreadyProcessed(name))
+            if (IsAlreadyProcessed(name))
             {
-                if (char.IsDigit(name[0]))
-                {
-                    name = $"{Generator.ConstantPrefix}{name}";
-                }
-
-                var translator = new StringBuilder(name);
-
-                // Split on IHV names and acronyms, to ensure that characters appearing after these name are uppercase.
-                var match = Utilities.Acronyms.Match(name);
-                var offset = 0; // Everytime we insert a match, we must increase offset to compensate.
-                while (match.Success)
-                {
-                    var insertPos = match.Index + match.Length + offset++;
-                    translator.Insert(insertPos, "_");
-                    match = match.NextMatch();
-                }
-
-                name = translator.ToString();
-                translator.Remove(0, translator.Length);
-
-                // Process according to these rules:
-                //     1. if current char is '_', '-' remove it and make next char uppercase
-                //     2. if current char is  or '0-9' keep it and make next char uppercase.
-                //     3. if current char is uppercase make next char lowercase.
-                //     4. if current char is lowercase, respect next char case.
-                var isAfterUnderscoreOrNumber = true;
-                var isPreviousUppercase = false;
-                foreach (var c in name)
-                {
-                    char charToAdd;
-                    if (c == '_' || c == '-')
-                    {
-                        isAfterUnderscoreOrNumber = true;
-                        continue; // skip this character
-                    }
-
-                    if (char.IsDigit(c))
-                    {
-                        isAfterUnderscoreOrNumber = true;
-                    }
-
-                    if (isAfterUnderscoreOrNumber)
-                    {
-                        charToAdd = char.ToUpper(c);
-                    }
-                    else if (isPreviousUppercase)
-                    {
-                        charToAdd = char.ToLower(c);
-                    }
-                    else
-                    {
-                        charToAdd = c;
-                    }
-
-                    translator.Append(charToAdd);
-
-                    isPreviousUppercase = char.IsUpper(c);
-                    isAfterUnderscoreOrNumber = false;
-                }
-
-                // First letter should always be uppercase in order
-                // to conform to .Net style guidelines.
-                translator[0] = char.ToUpper(translator[0]);
-
-                // Replace a number of words that do not play well
-                // with the previous process (i.e. they have two
-                // consecutive uppercase letters).
-                translator.Replace("Pname", "PName");
-                translator.Replace("AttribIp", "AttribIP");
-                translator.Replace("SRgb", "Srgb");
-
-                name = translator.ToString();
+                return name;
             }
+
+            if (char.IsDigit(name[0]))
+            {
+                name = $"{Generator.ConstantPrefix}{name}";
+            }
+
+            var translator = new StringBuilder(name);
+
+            // Split on IHV names and acronyms, to ensure that characters appearing after these name are uppercase.
+            var match = Utilities.Acronyms.Match(name);
+            var offset = 0; // Every time we insert a match, we must increase offset to compensate.
+            while (match.Success)
+            {
+                var insertPos = match.Index + match.Length + offset++;
+                translator.Insert(insertPos, "_");
+                match = match.NextMatch();
+            }
+
+            name = translator.ToString();
+            translator.Remove(0, translator.Length);
+
+            // Process according to these rules:
+            //     1. if current char is '_', '-' remove it and make next char uppercase
+            //     2. if current char is  or '0-9' keep it and make next char uppercase.
+            //     3. if current char is uppercase make next char lowercase.
+            //     4. if current char is lowercase, respect next char case.
+            var isAfterUnderscoreOrNumber = true;
+            var isPreviousUppercase = false;
+            foreach (var c in name)
+            {
+                char charToAdd;
+                if (c == '_' || c == '-')
+                {
+                    isAfterUnderscoreOrNumber = true;
+                    continue; // skip this character
+                }
+
+                if (char.IsDigit(c))
+                {
+                    isAfterUnderscoreOrNumber = true;
+                }
+
+                if (isAfterUnderscoreOrNumber)
+                {
+                    charToAdd = char.ToUpper(c);
+                }
+                else if (isPreviousUppercase)
+                {
+                    charToAdd = char.ToLower(c);
+                }
+                else
+                {
+                    charToAdd = c;
+                }
+
+                translator.Append(charToAdd);
+
+                isPreviousUppercase = char.IsUpper(c);
+                isAfterUnderscoreOrNumber = false;
+            }
+
+            // First letter should always be uppercase in order
+            // to conform to .Net style guidelines.
+            translator[0] = char.ToUpper(translator[0]);
+
+            // Replace a number of words that do not play well
+            // with the previous process (i.e. they have two
+            // consecutive uppercase letters).
+            translator.Replace("Pname", "PName");
+            translator.Replace("AttribIp", "AttribIP");
+            translator.Replace("SRgb", "Srgb");
+
+            name = translator.ToString();
 
             return name;
         }
 
-        private EnumCollection ProcessConstants(EnumCollection enums, XPathNavigator nav, string apiname)
+        [NotNull]
+        private EnumCollection ProcessConstants([NotNull] EnumCollection enums, [NotNull] XPathNavigator nav, [NotNull] string apiname)
         {
             foreach (var e in enums.Values)
             {
@@ -259,6 +266,11 @@ namespace Bind
                 e.ConstantCollection = processedConstants;
 
                 var enumOverride = nav.SelectSingleNode(GetOverridesNodePath(apiname, e.Name));
+                if (enumOverride is null)
+                {
+                    continue;
+                }
+
                 foreach (var c in e.ConstantCollection.Values)
                 {
                     ReplaceConstant(enumOverride, c);
@@ -274,29 +286,29 @@ namespace Bind
             return enums;
         }
 
-        private static void ReplaceConstant(XPathNavigator enumOverride, ConstantDefinition c)
+        private static void ReplaceConstant([NotNull] XPathNavigator enumOverride, [NotNull] ConstantDefinition c)
         {
-            if (enumOverride != null)
+            var constantOverride = enumOverride.SelectSingleNode($"token[@name='{c.OriginalName}']") ??
+                                   enumOverride.SelectSingleNode($"token[@name={c.Name}]");
+
+            if (constantOverride == null)
             {
-                var constantOverride = enumOverride.SelectSingleNode($"token[@name='{c.OriginalName}']") ??
-                                       enumOverride.SelectSingleNode($"token[@name={c.Name}]");
-                if (constantOverride != null)
+                return;
+            }
+
+            foreach (XPathNavigator node in constantOverride.SelectChildren(XPathNodeType.Element))
+            {
+                switch (node.Name)
                 {
-                    foreach (XPathNavigator node in constantOverride.SelectChildren(XPathNodeType.Element))
-                    {
-                        switch (node.Name)
-                        {
-                            case "name":
-                                c.Name = (string)node.TypedValue;
-                                break;
-                            case "value":
-                                c.Value = (string)node.TypedValue;
-                                break;
-                            case "reference":
-                                c.Reference = (string)node.TypedValue;
-                                break;
-                        }
-                    }
+                    case "name":
+                        c.Name = (string)node.TypedValue;
+                        break;
+                    case "value":
+                        c.Value = (string)node.TypedValue;
+                        break;
+                    case "reference":
+                        c.Reference = (string)node.TypedValue;
+                        break;
                 }
             }
         }
@@ -307,7 +319,8 @@ namespace Bind
         /// <param name="s">The original string.</param>
         /// <param name="isValue">Whether or not the string is a value.</param>
         /// <returns>The translated name.</returns>
-        public string TranslateConstantName(string s, bool isValue)
+        [NotNull]
+        public string TranslateConstantName([NotNull] string s, bool isValue)
         {
             if (string.IsNullOrEmpty(s))
             {
@@ -330,7 +343,7 @@ namespace Bind
                     var nextCharUppercase = true;
                     var isAfterDigit = false;
 
-                    if (!isValue && char.IsDigit(s[0]))
+                    if (char.IsDigit(s[0]))
                     {
                         s = Generator.ConstantPrefix + s;
                     }
@@ -372,7 +385,8 @@ namespace Bind
             return translator.ToString();
         }
 
-        private string TranslateConstantValue(string value)
+        [NotNull]
+        private string TranslateConstantValue([NotNull] string value)
         {
             // Remove decorations to get a pure number (e.g. 0x80u -> 0x80).
             if (value.ToLower().StartsWith("0x"))
@@ -402,28 +416,32 @@ namespace Bind
         // (e.g. FOG_COORD_ARRAY_TYPE = GL_FOG_COORDINATE_ARRAY_TYPE)
         // In this case try searching all enums for the correct constant to alias (stupid opengl specs).
         // This turns every bare alias into a normal alias that is processed afterwards.
-        private static void ResolveBareAlias(ConstantDefinition c, EnumCollection enums)
+        private static void ResolveBareAlias([NotNull] ConstantDefinition c, [NotNull] EnumCollection enums)
         {
             // Constants are considered bare aliases when they don't have a reference and
             // their values are non-numeric.
-            if (string.IsNullOrEmpty(c.Reference) && !char.IsDigit(c.Value[0]))
+            if (!string.IsNullOrEmpty(c.Reference) || char.IsDigit(c.Value[0]))
             {
-                // Skip generic GLenum, as this doesn't help resolve references.
-                foreach (var e in enums.Values.Where(e => e.Name != "GLenum"))
+                return;
+            }
+
+            // Skip generic GLenum, as this doesn't help resolve references.
+            foreach (var e in enums.Values.Where(e => e.Name != "GLenum"))
+            {
+                if (!e.ConstantCollection.ContainsKey(c.Value))
                 {
-                    if (e.ConstantCollection.ContainsKey(c.Value))
-                    {
-                        c.Reference = e.Name;
-                        break;
-                    }
+                    continue;
                 }
+
+                c.Reference = e.Name;
+                break;
             }
         }
 
         // Resolve 'use' tokens by searching and replacing the correct
         // value from the enum collection.
         // Tokens that can't be resolved are removed.
-        private static void ResolveAliases(EnumDefinition e, EnumCollection enums)
+        private static void ResolveAliases([NotNull] EnumDefinition e, [NotNull] EnumCollection enums)
         {
             // Note that we have the removal must be a separate step, since
             // we cannot modify a collection while iterating with foreach.
@@ -437,10 +455,9 @@ namespace Bind
             }
         }
 
-        private static bool IsValue(string test)
+        private static bool IsValue([NotNull] string test)
         {
             // Check if the result is a number.
-            long number;
             bool isNumber;
             if (test.ToLower().StartsWith("0x"))
             {
@@ -452,7 +469,7 @@ namespace Bind
                     test,
                     NumberStyles.Number,
                     CultureInfo.InvariantCulture,
-                    out number);
+                    out _);
             }
 
             return isNumber;

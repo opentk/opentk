@@ -4,6 +4,7 @@
 
 using System;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace Bind.Structures
 {
@@ -26,7 +27,7 @@ namespace Bind.Structures
         /// This constructor performs a deep copy of the given delegate definition.
         /// </summary>
         /// <param name="d">The definition to copy.</param>
-        public DelegateDefinition(DelegateDefinition d)
+        public DelegateDefinition([NotNull] DelegateDefinition d)
         {
             Category = d.Category;
             ExtensionName = d.ExtensionName;
@@ -156,7 +157,7 @@ namespace Bind.Structures
         }
 
         /// <inheritdoc/>
-        public int CompareTo(DelegateDefinition other)
+        public int CompareTo([NotNull] DelegateDefinition other)
         {
             var ret = string.Compare(Name, other.Name, StringComparison.Ordinal);
 

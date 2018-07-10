@@ -35,6 +35,7 @@ using Bind.Generators;
 using Bind.Structures;
 using Bind.Writers;
 using Humanizer;
+using JetBrains.Annotations;
 
 namespace Bind
 {
@@ -49,13 +50,18 @@ namespace Bind
         /// Writes the bindings for the given generator to file.
         /// </summary>
         /// <param name="generator">The generator.</param>
-        public void WriteBindings(IGenerator generator)
+        public void WriteBindings([NotNull] IGenerator generator)
         {
             Generator = generator;
             WriteBindings(generator.Delegates, generator.Wrappers, generator.Enums);
         }
 
-        private void WriteBindings(DelegateCollection delegates, FunctionCollection wrappers, EnumCollection enums)
+        private void WriteBindings
+        (
+            [NotNull] DelegateCollection delegates,
+            [NotNull] FunctionCollection wrappers,
+            [NotNull] EnumCollection enums
+        )
         {
             var baseOutputPath = Program.Arguments.OutputPath;
 
@@ -73,7 +79,7 @@ namespace Bind
             WriteWrappers(wrappers, delegates);
         }
 
-        private void WriteWrappers(FunctionCollection wrappers, DelegateCollection delegates)
+        private void WriteWrappers([NotNull] FunctionCollection wrappers, [NotNull] DelegateCollection delegates)
         {
             Trace.WriteLine($"Writing wrappers to:\t{Generator.Namespace}.{Generator.ClassName}");
 
@@ -85,7 +91,7 @@ namespace Bind
                 Directory.CreateDirectory(wrappersOutputDirectory);
             }
 
-            // Create the interop setup neccesary
+            // Create the interop setup necessary
             var tempInteropFilePath = Path.GetTempFileName();
             using (var outputFile = File.Open(tempInteropFilePath, FileMode.OpenOrCreate))
             {
@@ -271,7 +277,7 @@ namespace Bind
             }
         }
 
-        private void WriteMethod(SourceWriter sw, FunctionDefinition f)
+        private void WriteMethod([NotNull] SourceWriter sw, [NotNull] FunctionDefinition f)
         {
             WriteDocumentation(sw, f);
 
@@ -301,7 +307,7 @@ namespace Bind
             }
         }
 
-        private void WriteDocumentation(SourceWriter sw, FunctionDefinition f)
+        private void WriteDocumentation([NotNull] SourceWriter sw, [NotNull] FunctionDefinition f)
         {
             var docs = f.DocumentationDefinition;
 
@@ -427,7 +433,11 @@ namespace Bind
             }
         }
 
-        private void WriteConstants(SourceWriter sw, IEnumerable<ConstantDefinition> constants)
+        private void WriteConstants
+        (
+            [NotNull] SourceWriter sw,
+            [NotNull] IEnumerable<ConstantDefinition> constants
+        )
         {
             // Make sure everything is sorted. This will avoid random changes between
             // consecutive runs of the program.
@@ -488,7 +498,7 @@ namespace Bind
             }
         }
 
-        private void WriteEnums(EnumCollection enums, FunctionCollection wrappers)
+        private void WriteEnums([NotNull] EnumCollection enums, [NotNull] FunctionCollection wrappers)
         {
             // Build a dictionary of which functions use which enums
             var enumCounts = new Dictionary<EnumDefinition, List<FunctionDefinition>>();
@@ -588,7 +598,12 @@ namespace Bind
         /// <param name="enumCounts">A dictionary of the functions in which the enum is used.</param>
         /// <param name="enum">The enum definition.</param>
         /// <returns>The usage string.</returns>
-        private string GetEnumUsageString(IReadOnlyDictionary<EnumDefinition, List<FunctionDefinition>> enumCounts, EnumDefinition @enum)
+        [NotNull]
+        private string GetEnumUsageString
+        (
+            [NotNull] IReadOnlyDictionary<EnumDefinition, List<FunctionDefinition>> enumCounts,
+            [NotNull] EnumDefinition @enum
+        )
         {
             var functions = enumCounts[@enum]
                 .Select(w =>
@@ -614,7 +629,7 @@ namespace Bind
             return "Not used directly.";
         }
 
-        private void WriteLicense(SourceWriter sw)
+        private void WriteLicense([NotNull] SourceWriter sw)
         {
             var licenseFilePath = Path.Combine(Program.Arguments.LicenseFile);
             var licenseContents = File.ReadAllText(licenseFilePath).TrimEnd();
@@ -622,7 +637,8 @@ namespace Bind
             sw.WriteLine(licenseContents);
         }
 
-        private string GetDeclarationString(DelegateDefinition d, bool isDelegate)
+        [NotNull]
+        private string GetDeclarationString([NotNull] DelegateDefinition d, bool isDelegate)
         {
             var sb = new StringBuilder();
 
@@ -641,7 +657,8 @@ namespace Bind
             return sb.ToString();
         }
 
-        private string GetDeclarationString(FunctionDefinition f)
+        [NotNull]
+        private string GetDeclarationString([NotNull] FunctionDefinition f)
         {
             var sb = new StringBuilder();
 

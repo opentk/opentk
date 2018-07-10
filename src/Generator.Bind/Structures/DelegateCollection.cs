@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Bind.Structures
 {
@@ -16,7 +17,7 @@ namespace Bind.Structures
         /// already in the collection, or adding it to an existing one if there is.
         /// </summary>
         /// <param name="d">The delegate definition.</param>
-        public void Add(DelegateDefinition d)
+        public void Add([NotNull] DelegateDefinition d)
         {
             if (!ContainsKey(d.Name))
             {
@@ -54,7 +55,7 @@ namespace Bind.Structures
         /// one if there is.
         /// </summary>
         /// <param name="delegates">The set of delegate definitions.</param>
-        public void AddRange(DelegateCollection delegates)
+        public void AddRange([NotNull] DelegateCollection delegates)
         {
             foreach (var d in delegates.Values.SelectMany(v => v))
             {
@@ -63,7 +64,7 @@ namespace Bind.Structures
         }
 
         /// <inheritdoc/>
-        public void Add(string key, List<DelegateDefinition> value)
+        public void Add(string key, [NotNull] List<DelegateDefinition> value)
         {
             _delegates.Add(key, value.ToList());
         }

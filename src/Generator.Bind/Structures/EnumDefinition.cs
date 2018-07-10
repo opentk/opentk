@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Bind.Structures
 {
@@ -27,6 +28,7 @@ namespace Bind.Structures
         /// <summary>
         /// Gets or sets the name of the enum.
         /// </summary>
+        [NotNull]
         public string Name
         {
             get => _name ?? string.Empty;
@@ -36,6 +38,7 @@ namespace Bind.Structures
         /// <summary>
         /// Gets or sets the type of the enum. Typically 'int', but can be 'long'.
         /// </summary>
+        [NotNull]
         public string Type
         {
             get => string.IsNullOrEmpty(_type) ? "int" : _type;

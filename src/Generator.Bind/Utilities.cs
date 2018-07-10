@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Bind.Structures;
+using JetBrains.Annotations;
 
 namespace Bind
 {
@@ -38,7 +39,7 @@ namespace Bind
         /// Merges the given extensions into the current set of extensions.
         /// </summary>
         /// <param name="extensions">The extensions to merge in.</param>
-        public static void AddExtensions(IEnumerable<string> extensions)
+        public static void AddExtensions([NotNull] IReadOnlyCollection<string> extensions)
         {
             // Merge the new extensions with the current list of extensions
             var extensionCount = _extensionNames.Count;
@@ -77,6 +78,7 @@ namespace Bind
         /// <summary>
         /// Gets a list of keywords in the C# language.
         /// </summary>
+        [NotNull]
         public static List<string> CSharpKeywords => new List<string>
         {
             "abstract",
@@ -163,7 +165,7 @@ namespace Bind
         /// </summary>
         /// <param name="currentEnums">The enum collection to merge into.</param>
         /// <param name="newEnums">The enums to merge.</param>
-        internal static void Merge(EnumCollection currentEnums, EnumCollection newEnums)
+        internal static void Merge(EnumCollection currentEnums, [NotNull] EnumCollection newEnums)
         {
             foreach (var e in newEnums)
             {
@@ -177,7 +179,7 @@ namespace Bind
         /// </summary>
         /// <param name="currentEnums">The enums.</param>
         /// <param name="newEnum">The new enum.</param>
-        internal static void Merge(EnumCollection currentEnums, EnumDefinition newEnum)
+        internal static void Merge([NotNull] EnumCollection currentEnums, [NotNull] EnumDefinition newEnum)
         {
             if (!currentEnums.ContainsKey(newEnum.Name))
             {
@@ -200,7 +202,7 @@ namespace Bind
         /// </summary>
         /// <param name="enumDefinition">The enumeration definiton.</param>
         /// <param name="constantDefinition">The constant definition.</param>
-        internal static void Merge(EnumDefinition enumDefinition, ConstantDefinition constantDefinition)
+        internal static void Merge([NotNull] EnumDefinition enumDefinition, [NotNull] ConstantDefinition constantDefinition)
         {
             if (!enumDefinition.ConstantCollection.ContainsKey(constantDefinition.Name))
             {
@@ -227,7 +229,8 @@ namespace Bind
         /// case.
         /// </param>
         /// <returns>The extension name.</returns>
-        internal static string GetExtension(string name, bool returnUnmodified)
+        [NotNull]
+        internal static string GetExtension([NotNull] string name, bool returnUnmodified)
         {
             var match = Extensions.Match(name);
             if (!match.Success)

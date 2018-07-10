@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Bind.Structures;
+using JetBrains.Annotations;
 
 namespace Bind.Extensions
 {
@@ -30,7 +31,7 @@ namespace Bind.Extensions
         /// </summary>
         /// <param name="this">The type definition.</param>
         /// <returns>The qualified type name or alias.</returns>
-        public static string GetQualifiedTypeOrAlias(this TypeDefinition @this)
+        public static string GetQualifiedTypeOrAlias([NotNull] this TypeDefinition @this)
         {
             if (Aliases.ContainsKey(@this.QualifiedTypeName))
             {

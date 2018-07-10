@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using JetBrains.Annotations;
 
 namespace Bind.Structures
 {
@@ -11,7 +12,7 @@ namespace Bind.Structures
     {
         private Regex _unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
 
-        private void Add(FunctionDefinition f)
+        private void Add([NotNull] FunctionDefinition f)
         {
             if (!ContainsKey(f.ExtensionName))
             {
@@ -28,7 +29,7 @@ namespace Bind.Structures
         /// Adds a range of function definitions to the collection.
         /// </summary>
         /// <param name="functions">The functions.</param>
-        public void AddRange(IEnumerable<FunctionDefinition> functions)
+        public void AddRange([NotNull] IEnumerable<FunctionDefinition> functions)
         {
             foreach (var f in functions)
             {
@@ -40,7 +41,7 @@ namespace Bind.Structures
         /// Adds the function to the collection, if a function with the same name and parameters doesn't already exist.
         /// </summary>
         /// <param name="f">The Function to add.</param>
-        private void AddChecked(FunctionDefinition f)
+        private void AddChecked([NotNull] FunctionDefinition f)
         {
             if (ContainsKey(f.ExtensionName))
             {

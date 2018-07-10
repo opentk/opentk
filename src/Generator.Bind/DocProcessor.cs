@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using Bind.Generators;
 using Bind.Structures;
+using JetBrains.Annotations;
 
 namespace Bind
 {
@@ -43,7 +44,7 @@ namespace Bind
         /// Initializes a new instance of the <see cref="DocProcessor"/> class.
         /// </summary>
         /// <param name="generator">The API generator.</param>
-        public DocProcessor(IGenerator generator)
+        public DocProcessor([NotNull] IGenerator generator)
         {
             Generator = generator ?? throw new ArgumentNullException();
 
@@ -57,6 +58,11 @@ namespace Bind
             foreach (var file in docFiles)
             {
                 var name = Path.GetFileName(file);
+                if (name is null)
+                {
+                    continue;
+                }
+
                 if (!_documentationFiles.ContainsKey(name))
                 {
                     _documentationFiles.Add(name, file);
@@ -64,6 +70,7 @@ namespace Bind
             }
         }
 
+        [NotNull]
         private IGenerator Generator { get; }
 
         /// <summary>
@@ -72,7 +79,8 @@ namespace Bind
         /// <param name="f">The function.</param>
         /// <param name="processor">The enumeration processor.</param>
         /// <returns>A documentation definition.</returns>
-        public DocumentationDefinition Process(FunctionDefinition f, EnumProcessor processor)
+        [NotNull]
+        public DocumentationDefinition Process([NotNull] FunctionDefinition f, [NotNull] EnumProcessor processor)
         {
             if (_documentationCache.ContainsKey(f.WrappedDelegateDefinition.Name))
             {
@@ -111,7 +119,12 @@ namespace Bind
         // found in the <!-- eqn: :--> comments in the docs.
         // Todo: Some simple MathML tags do not include comments, find a solution.
         // Todo: Some files include more than 1 function - find a way to map these extra functions.
-        private DocumentationDefinition ProcessFile(string file, EnumProcessor processor)
+        [NotNull]
+        private DocumentationDefinition ProcessFile
+        (
+            [NotNull, PathReference] string file,
+            [NotNull] EnumProcessor processor
+        )
         {
             if (_lastFile == file)
             {
@@ -158,22 +171,14 @@ namespace Bind
                 m = RemoveMathml.Match(text);
             }
 
-            XDocument doc = null;
-            try
-            {
-                doc = XDocument.Parse(text);
-                _cached = ToInlineDocs(doc, processor);
-                return _cached;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                Console.WriteLine(doc.ToString());
-                return null;
-            }
+            var doc = XDocument.Parse(text);
+            _cached = ToInlineDocs(doc, processor);
+
+            return _cached;
         }
 
-        private DocumentationDefinition ToInlineDocs(XDocument doc, EnumProcessor enumProcessor)
+        [NotNull]
+        private DocumentationDefinition ToInlineDocs([NotNull] XNode doc, [NotNull] EnumProcessor enumProcessor)
         {
             if (doc == null || enumProcessor == null)
             {
@@ -215,7 +220,8 @@ namespace Bind
             return inline;
         }
 
-        private static string Cleanup(string text)
+        [NotNull]
+        private static string Cleanup([NotNull] string text)
         {
             return
                 string.Join(" ", text

@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Bind.Structures
 {
@@ -98,7 +99,7 @@ namespace Bind.Structures
         /// <param name="c">The Constant to translate.</param>
         /// <param name="enums">The list of enums to check.</param>
         /// <returns>True if the reference was found; false otherwise.</returns>
-        public static bool TranslateConstantWithReference(ConstantDefinition c, EnumCollection enums)
+        public static bool TranslateConstantWithReference([NotNull] ConstantDefinition c, [NotNull] EnumCollection enums)
         {
             if (c == null)
             {
@@ -155,7 +156,7 @@ namespace Bind.Structures
         }
 
         /// <inheritdoc/>
-        public int CompareTo(ConstantDefinition other)
+        public int CompareTo([NotNull] ConstantDefinition other)
         {
             var ret = string.Compare(Value, other.Value, StringComparison.Ordinal);
             if (ret == 0)

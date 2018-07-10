@@ -1,0 +1,17 @@
+<Project>
+    <PropertyGroup>
+        <DefineConstants>$(DefineConstants);JETBRAINS_ANNOTATIONS</DefineConstants>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Content Include="$(AssemblyName).ExternalAnnotations.xml">
+            <InProject>false</InProject>
+            <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations" Version="11.1.0" PrivateAssets="all" />
+        <PackageReference Include="JetBrainsAnnotations.Fody" Version="2.2.0" PrivateAssets="all" />
+    </ItemGroup>
+</Project>

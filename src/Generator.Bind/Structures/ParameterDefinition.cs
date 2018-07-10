@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace Bind.Structures
 {
@@ -27,13 +28,8 @@ namespace Bind.Structures
         /// Creates a new parameter from the parameter passed (deep copy).
         /// </summary>
         /// <param name="p">The parameter to copy from.</param>
-        public ParameterDefinition(ParameterDefinition p)
+        public ParameterDefinition([NotNull] ParameterDefinition p)
         {
-            if (p == null)
-            {
-                return;
-            }
-
             Name = p.Name;
             UnmanagedType = p.UnmanagedType;
             Generic = p.Generic;
@@ -127,7 +123,7 @@ namespace Bind.Structures
         /// </summary>
         /// <param name="direction">The raw direction to parse.</param>
         /// <returns>A flow direction, based on the input.</returns>
-        public static FlowDirection GetFlowDirection(string direction)
+        public static FlowDirection GetFlowDirection([NotNull] string direction)
         {
             return direction == "out" ? FlowDirection.Out : direction == "in" ? FlowDirection.In : FlowDirection.Undefined;
         }
@@ -136,6 +132,7 @@ namespace Bind.Structures
         /// Gets a string that would declare this object in C# source code.
         /// </summary>
         /// <returns>The declaration string.</returns>
+        [NotNull]
         public string GetDeclarationString()
         {
             var sb = new StringBuilder();
@@ -204,7 +201,7 @@ namespace Bind.Structures
         }
 
         /// <inheritdoc/>
-        public int CompareTo(ParameterDefinition other)
+        public int CompareTo([NotNull] ParameterDefinition other)
         {
             var result = ParameterType.CompareTo(other.ParameterType);
 

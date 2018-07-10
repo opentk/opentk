@@ -20,4 +20,5 @@
 
   <Import Project="..\..\build\targets\netfx-mono.props" />
   <Import Project="..\..\build\targets\stylecop.props" />
+  <Import Project="..\..\build\targets\jetbrains.props" />
 </Project>

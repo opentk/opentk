@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace Bind.Writers
 {
@@ -8,13 +9,14 @@ namespace Bind.Writers
     /// </summary>
     public class SourceWriterIndentation : IDisposable
     {
+        [NotNull]
         private readonly SourceWriter _sourceWriter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SourceWriterIndentation"/> class.
         /// </summary>
         /// <param name="sourceWriter">The source writer to manage the indentation of.</param>
-        public SourceWriterIndentation(SourceWriter sourceWriter)
+        public SourceWriterIndentation([NotNull] SourceWriter sourceWriter)
         {
             _sourceWriter = sourceWriter;
 

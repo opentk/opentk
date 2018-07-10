@@ -3,6 +3,7 @@
  */
 
 using System;
+using JetBrains.Annotations;
 
 namespace Bind.Structures
 {
@@ -15,7 +16,7 @@ namespace Bind.Structures
         /// Initializes a new instance of the <see cref="FunctionDefinition"/> class.
         /// </summary>
         /// <param name="d">The delegate definition to wrap.</param>
-        public FunctionDefinition(DelegateDefinition d)
+        public FunctionDefinition([NotNull] DelegateDefinition d)
             : base(d)
         {
             TrimmedName = Name = d.Name;
@@ -27,7 +28,7 @@ namespace Bind.Structures
         /// This constructor performs a deep copy of the given definition.
         /// </summary>
         /// <param name="f">The definition to copy.</param>
-        public FunctionDefinition(FunctionDefinition f)
+        public FunctionDefinition([NotNull] FunctionDefinition f)
             : this(f.WrappedDelegateDefinition)
         {
             Parameters = new ParameterCollection(f.Parameters);
@@ -61,6 +62,11 @@ namespace Bind.Structures
         /// <inheritdoc/>
         public bool Equals(FunctionDefinition other)
         {
+            if (other is null)
+            {
+                return false;
+            }
+
             var result =
                 !string.IsNullOrEmpty(TrimmedName) && !string.IsNullOrEmpty(other.TrimmedName) &&
                 TrimmedName.Equals(other.TrimmedName) &&
@@ -69,7 +75,7 @@ namespace Bind.Structures
         }
 
         /// <inheritdoc/>
-        public int CompareTo(FunctionDefinition other)
+        public int CompareTo([NotNull] FunctionDefinition other)
         {
             var ret = string.Compare(Name, other.Name, StringComparison.Ordinal);
             if (ret == 0)

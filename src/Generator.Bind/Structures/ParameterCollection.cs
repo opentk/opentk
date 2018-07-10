@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace Bind.Structures
 {
@@ -23,7 +24,7 @@ namespace Bind.Structures
         /// Initializes a new instance of the <see cref="ParameterCollection"/> class.
         /// </summary>
         /// <param name="pc">The existing <see cref="ParameterCollection"/> to copy from.</param>
-        public ParameterCollection(ParameterCollection pc)
+        public ParameterCollection([NotNull] ParameterCollection pc)
         {
             foreach (var p in pc)
             {
@@ -151,7 +152,7 @@ namespace Bind.Structures
         }
 
         /// <inheritdoc/>
-        public int CompareTo(ParameterCollection other)
+        public int CompareTo([NotNull] ParameterCollection other)
         {
             if (Count < other.Count)
             {
@@ -177,6 +178,11 @@ namespace Bind.Structures
         /// <inheritdoc/>
         public bool Equals(ParameterCollection other)
         {
+            if (other is null)
+            {
+                return false;
+            }
+
             if (Count != other.Count)
             {
                 return false;
