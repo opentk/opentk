@@ -35,7 +35,7 @@
             ]
         },
         "layoutRules" : {
-            "newlineAtEndOfFile" : "omit",
+            "newlineAtEndOfFile" : "require",
             "allowConsecutiveUsings" : false
         },
         "documentationRules" : {

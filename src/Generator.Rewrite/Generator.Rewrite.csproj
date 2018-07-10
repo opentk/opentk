@@ -6,12 +6,17 @@
     <TargetFramework>net461</TargetFramework>
     <Deterministic>true</Deterministic>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.2.1" />
     <PackageReference Include="Mono.Cecil" Version="0.10.0" />
   </ItemGroup>
+
   <Import Project="..\..\build\targets\netfx-mono.props" />
   <Import Project="..\..\build\targets\stylecop.props" />
 </Project>

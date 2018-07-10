@@ -2,16 +2,22 @@
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
     <Name>OpenTK.Tests.Integration</Name>
-    <Deterministic>true</Deterministic>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="GameWindowTests.fs" />
   </ItemGroup>
+
   <ItemGroup>
     <Reference Include="System.Runtime"/>
     <Reference Include="System.Threading.Tasks"/>
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="FsCheck.Xunit" Version="2.10.9" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
@@ -19,8 +25,10 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\src\OpenTK\OpenTK.csproj" />
   </ItemGroup>
+
   <Import Project="..\..\build\targets\netfx-mono.props" />
 </Project>

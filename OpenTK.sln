@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{2E399A9C
 	ProjectSection(SolutionItems) = preProject
 		build/targets/netfx-mono.props = build/targets/netfx-mono.props
 		build/targets/stylecop.props = build/targets/stylecop.props
+		build/targets/nuget-common.props = build/targets/nuget-common.props
 	EndProjectSection
 EndProject
 
