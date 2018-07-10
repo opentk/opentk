@@ -987,9 +987,9 @@ namespace OpenTK.Mathematics
             Cross(ref xyz, ref vec, out temp);
             Multiply(ref vec, quat.W, out temp2);
             Add(ref temp, ref temp2, out temp);
-            Cross(ref xyz, ref temp, out temp);
-            Multiply(ref temp, 2, out temp);
-            Add(ref vec, ref temp, out result);
+            Cross(ref xyz, ref temp, out temp2);
+            Multiply(ref temp2, 2f, out temp2);
+            Add(ref vec, ref temp2, out result);
         }
 
         /// <summary>

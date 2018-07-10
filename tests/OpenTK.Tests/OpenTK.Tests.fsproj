@@ -2,8 +2,12 @@
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
     <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Assertions.fs" />
@@ -15,10 +19,12 @@
     <Compile Include="Vector3Tests.fs" />
     <Compile Include="Vector4Tests.fs" />
   </ItemGroup>
+
   <ItemGroup>
     <Reference Include="System.Runtime"/>
     <Reference Include="System.Threading.Tasks"/>
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="FsCheck.Xunit" Version="2.10.9" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
@@ -26,8 +32,10 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\src\OpenTK\OpenTK.csproj" />
   </ItemGroup>
+
   <Import Project="..\..\build\targets\netfx-mono.props" />
 </Project>
