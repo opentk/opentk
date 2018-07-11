@@ -11,16 +11,16 @@ namespace OpenTK.NT.Native
     /// is a placeholder for the application-defined function name.
     /// </summary>
     /// <param name="hwnd">A handle to the window associated with the timer. </param>
-    /// <param name="uMsg">The <see cref="WindowMessage.Timer"/> message.</param>
-    /// <param name="idEvent">The timer's identifier.</param>
-    /// <param name="dwTime">The number of milliseconds that have elapsed since the system was started. This is the
+    /// <param name="msg">The <see cref="WindowMessage.Timer"/> message.</param>
+    /// <param name="timerID">The timer's identifier.</param>
+    /// <param name="elapsedTime">The number of milliseconds that have elapsed since the system was started. This is the
     /// value returned by the GetTickCount function.</param>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void TimerProc
     (
         [In] HWND hwnd,
-        [In] WindowMessage uMsg,
-        [In] UINT_PTR idEvent,
-        [In] DWORD dwTime
+        [In] WindowMessage msg,
+        [In] UINT_PTR timerID,
+        [In] DWORD elapsedTime
     );
 }

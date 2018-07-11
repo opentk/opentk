@@ -26,16 +26,24 @@
             Y = y;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Converts a <see cref="Point"/> structure used for interoperability with the Windows API to a
+        /// <see cref="System.Drawing.Point"/>.
+        /// </summary>
+        /// <param name="point">The OpenTK.NT.Native.Point structure to convert.</param>
         public static implicit operator System.Drawing.Point(Point point)
         {
             return new System.Drawing.Point(point.X, point.Y);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Converts a <see cref="System.Drawing.Point"/> to a <see cref="Point"/>
+        /// structure meant for interoperability with the Windows API.
+        /// </summary>
+        /// <param name="point">The System.Drawing.Point structure to convert.</param>
         public static implicit operator Point(System.Drawing.Point point) => new Point(point.X, point.Y);
 
         /// <inheritdoc/>
-        public override string ToString() => $"Point ({X}, {Y})";
+        public override string ToString() => $"{{X={X},Y={Y}}}";
     }
 }

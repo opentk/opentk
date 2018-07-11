@@ -5,7 +5,7 @@ namespace OpenTK.NT.Native
     /// <summary>
     /// Specifies what values to return if
     /// <see cref="User32.Monitor.MonitorFromPoint(Point, MonitorFromDefaultValue)"/> and
-    /// <see cref="User32.Monitor.MonitorFromWindow(System.IntPtr, MonitorFromDefaultValue)"/> 
+    /// <see cref="User32.Monitor.MonitorFromWindow(System.IntPtr, MonitorFromDefaultValue)"/>
     /// fail to find a monitor for the given arguments.
     /// </summary>
     public enum MonitorFromDefaultValue : DWORD

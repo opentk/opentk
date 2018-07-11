@@ -5,7 +5,7 @@ using UINT = System.UInt32;
 namespace OpenTK.NT.Native
 {
     [Flags]
-    public enum PeekMessageFlags : UINT
+    public enum PeekMessageActions : UINT
     {
         /// <summary>
         /// Messages are not removed from the queue after processing by <see cref="User32.Message.PeekMessage"/>.

@@ -1463,7 +1463,7 @@ namespace OpenTK.Platform.Windows
         public override void ProcessEvents()
         {
             base.ProcessEvents();
-            while (User32.Message.PeekMessage(out Msg msg, IntPtr.Zero, 0, 0, PeekMessageFlags.Remove))
+            while (User32.Message.PeekMessage(out Msg msg, IntPtr.Zero, 0, 0, PeekMessageActions.Remove))
             {
                 User32.Message.TranslateMessage(ref msg);
                 User32.Message.DispatchMessage(ref msg);

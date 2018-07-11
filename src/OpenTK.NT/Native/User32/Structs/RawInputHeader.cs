@@ -16,6 +16,10 @@ namespace OpenTK.NT.Native
         /// </summary>
         public RawInputDeviceType Type;
 
+        /// <summary>
+        /// The size, in bytes, of the entire input packet of data. This includes <see cref="RawInput"/> plus
+        /// possible extra input reports in the <see cref="RawHid"/> variable length array.
+        /// </summary>
         public DWORD Size;
 
         /// <summary>

@@ -94,7 +94,11 @@ namespace OpenTK.NT.Native
                 [In] ExtendedWindowStyles extendedStyle
             );
 
-            public const int USEDEFAULT = unchecked((int)0x80000000); // todo: maybe create overloads instead of exposing this?
+            /// <summary>
+            /// A constant that can be used in all CreateWindowEx overloads to specify special behavior.<para/>
+            /// For more information, see any CreateWindowEx overload.
+            /// </summary>
+            public const int USEDEFAULT = unchecked((int)0x80000000);
 
             /// <summary>
             /// Creates an overlapped, pop-up, or child window with an extended window style; otherwise,
@@ -533,7 +537,7 @@ namespace OpenTK.NT.Native
             /// This method will throw a <see cref="Win32Exception"/> if the Windows API function returns a value
             /// that indicates failure.
             /// </remarks>
-            /// <exception cref="Win32Exception"></exception>
+            /// <exception cref="Win32Exception">An error occurs in the native function call.</exception>
             public static LONG_PTR SetWindowLong(HWND window, int index, LONG_PTR newLong)
             {
                 Kernel32.SetLastError(0);

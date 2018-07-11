@@ -2,10 +2,13 @@
 using System.Runtime.InteropServices;
 using System.Security;
 
+using BOOL = System.Boolean;
 using HANDLE = System.IntPtr;
 using HRAWINPUT = System.IntPtr;
+using INT = System.Int32;
 using LPVOID = System.IntPtr;
 using LRESULT = System.IntPtr;
+using UINT = System.UInt32;
 
 namespace OpenTK.NT.Native
 {
@@ -37,8 +40,8 @@ namespace OpenTK.NT.Native
             public static extern LRESULT DefRawInputProc
             (
                 [In] Native.RawInput[] rawInputArrayOut,
-                [In] int rawInputAmount,
-                [In] uint headerSize
+                [In] INT rawInputAmount,
+                [In] UINT headerSize
             );
 
             /// <summary>
@@ -63,8 +66,8 @@ namespace OpenTK.NT.Native
             public static unsafe extern LRESULT DefRawInputProc
             (
                 [In] Native.RawInput* rawInputArrayOut,
-                [In] int rawInputAmount,
-                [In] uint headerSize
+                [In] INT rawInputAmount,
+                [In] UINT headerSize
             );
 
             /// <summary>
@@ -84,11 +87,11 @@ namespace OpenTK.NT.Native
             /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool RegisterRawInputDevices
+            public static extern BOOL RegisterRawInputDevices
             (
                 [In] RawInputDevice[] rawInputDevices,
-                [In] uint deviceAmount,
-                [In] uint size
+                [In] UINT deviceAmount,
+                [In] UINT size
             );
 
             /// <summary>
@@ -110,143 +113,263 @@ namespace OpenTK.NT.Native
             /// For more details, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern uint GetRegisteredRawInputDevices
+            public static extern UINT GetRegisteredRawInputDevices
             (
                 [Out] [Optional] Native.RawInput[] rawInputDevicesOut,
-                [In] [Out] ref uint deviceAmount,
-                [In] uint size
+                [In] [Out] ref UINT deviceAmount,
+                [In] UINT size
             );
 
+            /// <summary>
+            /// Performs a buffered read of the raw input data.
+            /// </summary>
+            /// <param name="data">
+            /// A buffer of <see cref="RawInput"/> structures that contain the raw input data.
+            /// If null, the minimum required buffer, in bytes, is returned in <paramref name="rawInputSize"/>.
+            /// </param>
+            /// <param name="rawInputSize">The size, in bytes, of a <see cref="RawInput"/> structure.</param>
+            /// <param name="headerSize">The size, in bytes, of the <see cref="RawInputHeader"/> structure.</param>
+            /// <returns>
+            /// If <paramref name="data"/> is null and the function is successful, the return value is zero.
+            /// If <paramref name="data"/> is not null and the function is successful, the return value is the
+            /// number of <see cref="RawInput"/> structures written to <paramref name="data"/>.<para/>
+            /// If an error occurs, the return value is -1.
+            /// Call <see cref="Marshal.GetLastWin32Error"/> for the error code.
+            /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern uint GetRawInputBuffer
+            public static extern UINT GetRawInputBuffer
             (
-                [Out] [Optional] Native.RawInput[] pData,
-                [In] [Out] ref uint pcbSize,
-                [In] uint cbSizeHeader
+                [Out] [Optional] Native.RawInput[] data,
+                [In] [Out] ref UINT rawInputSize,
+                [In] UINT headerSize
             );
 
+            /// <summary>
+            /// Performs a buffered read of the raw input data.
+            /// </summary>
+            /// <param name="data">
+            /// A pointer to a buffer of <see cref="RawInput"/> structures that contain the raw input data.
+            /// If null, the minimum required buffer, in bytes, is returned in <paramref name="rawInputSize"/>.
+            /// </param>
+            /// <param name="rawInputSize">The size, in bytes, of a <see cref="RawInput"/> structure.</param>
+            /// <param name="headerSize">The size, in bytes, of the <see cref="RawInputHeader"/> structure.</param>
+            /// <returns>
+            /// If <paramref name="data"/> is null and the function is successful, the return value is zero.
+            /// If <paramref name="data"/> is not null and the function is successful, the return value is the
+            /// number of <see cref="RawInput"/> structures written to <paramref name="data"/>.<para/>
+            /// If an error occurs, the return value is (UINT)-1.
+            /// Call <see cref="Marshal.GetLastWin32Error"/> for the error code.
+            /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            public static unsafe extern int GetRawInputBuffer
+            public static unsafe extern UINT GetRawInputBuffer
             (
-                [Out] [Optional] Native.RawInput* pData,
-                [In] [Out] ref uint pcbSize,
-                [In] uint cbSizeHeader
+                [Out] [Optional] Native.RawInput* data,
+                [In] [Out] ref UINT rawInputSize,
+                [In] UINT headerSize
             );
 
+            /// <summary>
+            /// Enumerates the raw input devices attached to the system.
+            /// </summary>
+            /// <param name="deviceListArrayOut">
+            /// An array of <see cref="RawInputDeviceList"/> structures for the devices attached to the system.
+            /// If null, the number of devices are returned in <paramref name="deviceListAmount"/>.
+            /// </param>
+            /// <param name="deviceListAmount">
+            /// If <paramref name="deviceListArrayOut"/> is null, the function populates this variable with
+            /// the number of devices attached to the system; otherwise, this variable specifies the number of
+            /// <see cref="RawInputDeviceList"/> structures that can be contained in the buffer to which
+            /// <paramref name="deviceListArrayOut"/> points. If this value is less than the number of devices
+            /// attached to the system, the function returns the actual number of devices in this variable
+            /// and fails with ERROR_INSUFFICIENT_BUFFER.
+            /// </param>
+            /// <param name="deviceListSize">
+            /// The size of a <see cref="RawInputDeviceList"/> structure, in bytes.
+            /// </param>
+            /// <returns>
+            /// If the function is successful, the return value is the number of devices stored in the buffer
+            /// pointed to by <paramref name="deviceListArrayOut"/>.<para/>
+            /// On any other error, the function returns (UINT)-1 and
+            /// <see cref="Marshal.GetLastWin32Error"/> returns the error indication.
+            /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern uint GetRawInputDeviceList
+            public static extern UINT GetRawInputDeviceList
             (
-                [Out] [Optional] RawInputDeviceList[] pRawInputDeviceList,
-                [In] [Out] ref uint puiNumDevices,
-                [In] uint cbSize
+                [Out] [Optional] RawInputDeviceList[] deviceListArrayOut,
+                [In] [Out] ref UINT deviceListAmount,
+                [In] UINT deviceListSize
             );
 
+            /// <summary>
+            /// Enumerates the raw input devices attached to the system.
+            /// </summary>
+            /// <param name="deviceListArrayOut">
+            /// A pointer to an array of <see cref="RawInputDeviceList"/> structures for the devices attached to the
+            /// system. If null, the number of devices are returned in <paramref name="deviceListAmount"/>.
+            /// </param>
+            /// <param name="deviceListAmount">
+            /// If <paramref name="deviceListArrayOut"/> is null, the function populates this variable with
+            /// the number of devices attached to the system; otherwise, this variable specifies the number of
+            /// <see cref="RawInputDeviceList"/> structures that can be contained in the buffer to which
+            /// <paramref name="deviceListArrayOut"/> points. If this value is less than the number of devices
+            /// attached to the system, the function returns the actual number of devices in this variable
+            /// and fails with ERROR_INSUFFICIENT_BUFFER.
+            /// </param>
+            /// <param name="deviceListSize">
+            /// The size of a <see cref="RawInputDeviceList"/> structure, in bytes.
+            /// </param>
+            /// <returns>
+            /// If the function is successful, the return value is the number of devices stored in the buffer
+            /// pointed to by <paramref name="deviceListArrayOut"/>.<para/>
+            /// On any other error, the function returns (UINT)-1 and
+            /// <see cref="Marshal.GetLastWin32Error"/> returns the error indication.
+            /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern uint GetRawInputDeviceList
+            public static unsafe extern UINT GetRawInputDeviceList
             (
-                [Out] [Optional] IntPtr pRawInputDeviceList,
-                [In] [Out] ref uint puiNumDevices,
-                [In] uint cbSize
+                [Out] [Optional] RawInputDeviceList* deviceListArrayOut,
+                [In] [Out] ref UINT deviceListAmount,
+                [In] UINT deviceListSize
             );
 
+            /// <summary>
+            /// Retrieves information about the raw input device.
+            /// </summary>
+            /// <param name="device">
+            /// A handle to the raw input device. This comes from the <see cref="RawInputHeader.Device"/> or
+            /// from <see cref="GetRawInputDeviceList(RawInputDeviceList[], ref UINT, UINT)"/>.
+            /// </param>
+            /// <param name="command">Specifies what data will be returned in <paramref name="data"/>.</param>
+            /// <param name="data">
+            /// A buffer that contains the information specified by <paramref name="command"/>.
+            /// If <paramref name="command"/> is <see cref="GetRawInputDeviceInfoEnum.DeviceInfo"/>, set the
+            /// <see cref="RawInputDeviceInfo.Size"/> to <see cref="RawInputDeviceInfo.SizeInBytes"/> before calling
+            /// <see cref="GetRawInputDeviceInfo(HANDLE, GetRawInputDeviceInfoEnum, HANDLE, ref UINT)"/>.
+            /// </param>
+            /// <param name="dataSize">The size, in bytes, of the data in <paramref name="data"/>.</param>
+            /// <returns>
+            /// If successful, this function returns a non-negative number indicating the number
+            /// of bytes copied to <paramref name="data"/>.<para/>
+            /// If pData is not large enough for the data, the function returns -1. If <paramref name="data"/> is
+            /// <see cref="IntPtr.Zero"/>, the function returns a value of zero. In both of these cases,
+            /// <paramref name="dataSize"/> is set to the minimum size required for the <paramref name="data"/> buffer.
+            /// <para/>
+            /// Call <see cref="Marshal.GetLastWin32Error"/> to identify any other errors.
+            /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern int GetRawInputDeviceInfo
+            public static extern UINT GetRawInputDeviceInfo
             (
-                [In] [Optional] HANDLE hDevice,
-                [In] GetRawInputDeviceInfoEnum uiCommand,
-                [In] [Out] [Optional] byte[] pData,
-                [In] [Out] ref uint pcbSize
+                [In] [Optional] HANDLE device,
+                [In] GetRawInputDeviceInfoEnum command,
+                [In] [Out] [Optional] byte[] data,
+                [In] [Out] ref uint dataSize
             );
 
+            /// <summary>
+            /// Retrieves information about the raw input device.
+            /// </summary>
+            /// <param name="device">
+            /// A handle to the raw input device. This comes from the <see cref="RawInputHeader.Device"/> or
+            /// from <see cref="GetRawInputDeviceList(RawInputDeviceList[], ref UINT, UINT)"/>.
+            /// </param>
+            /// <param name="command">Specifies what data will be returned in <paramref name="data"/>.</param>
+            /// <param name="data">
+            /// A pointer to a buffer that contains the information specified by <paramref name="command"/>.
+            /// If <paramref name="command"/> is <see cref="GetRawInputDeviceInfoEnum.DeviceInfo"/>, set the
+            /// <see cref="RawInputDeviceInfo.Size"/> to <see cref="RawInputDeviceInfo.SizeInBytes"/> before calling
+            /// <see cref="GetRawInputDeviceInfo(HANDLE, GetRawInputDeviceInfoEnum, LPVOID, ref UINT)"/>.
+            /// </param>
+            /// <param name="dataSize">The size, in bytes, of the data in <paramref name="data"/>.</param>
+            /// <returns>
+            /// If successful, this function returns a non-negative number indicating the number
+            /// of bytes copied to <paramref name="data"/>.<para/>
+            /// If pData is not large enough for the data, the function returns -1. If <paramref name="data"/> is
+            /// <see cref="IntPtr.Zero"/>, the function returns a value of zero. In both of these cases,
+            /// <paramref name="dataSize"/> is set to the minimum size required for the <paramref name="data"/> buffer.
+            /// <para/>
+            /// Call <see cref="Marshal.GetLastWin32Error"/> to identify any other errors.
+            /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern int GetRawInputDeviceInfo
+            public static unsafe extern UINT GetRawInputDeviceInfo
             (
-                [In] [Optional] HANDLE hDevice,
-                [In] GetRawInputDeviceInfoEnum uiCommand,
-                [In] [Out] [Optional] LPVOID pData,
-                [In] [Out] ref uint pcbSize
+                [In] [Optional] HANDLE device,
+                [In] GetRawInputDeviceInfoEnum command,
+                [In] [Out] [Optional] LPVOID data,
+                [In] [Out] ref UINT dataSize
             );
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
             public static extern uint GetRawInputDeviceInfo
             (
-                [In] [Optional] HANDLE hDevice,
-                [In] GetRawInputDeviceInfoEnum uiCommand,
-                [In] [Out] [Optional] RawInputDeviceInfo pData,
+                [In] [Optional] HANDLE device,
+                [In] GetRawInputDeviceInfoEnum command,
+                [In] [Out] [Optional] RawInputDeviceInfo data,
                 [In] [Out] ref uint pcbSize
             );
 
-            public static uint GetRawInputData(IntPtr raw, out RawInputHeader header)
+            public static unsafe uint GetRawInputData(IntPtr raw, out RawInputHeader header)
             {
                 var size = RawInputHeader.SizeInBytes;
-                unsafe
-                {
-                    fixed (RawInputHeader* pheader = &header)
-                    {
-                        uint dataSize = GetRawInputData
-                        (
-                            raw,
-                            GetRawInputDataCommand.Header,
-                            (IntPtr)pheader,
-                            ref size,
-                            RawInputHeader.SizeInBytes
-                        );
 
-                        if (dataSize != RawInputHeader.SizeInBytes)
-                        {
-                            System.Diagnostics.Debug.Print
-                            (
-                                $"[Error] Failed to retrieve raw input header. Error: {Marshal.GetLastWin32Error()}"
-                            );
-                        }
+                fixed (RawInputHeader* pheader = &header)
+                {
+                    uint dataSize = GetRawInputData
+                    (
+                        raw,
+                        GetRawInputDataCommand.Header,
+                        (IntPtr)pheader,
+                        ref size,
+                        RawInputHeader.SizeInBytes
+                    );
+
+                    if (dataSize != RawInputHeader.SizeInBytes)
+                    {
+                        System.Diagnostics.Debug.Print
+                        (
+                            $"[Error] Failed to retrieve raw input header. Error: {Marshal.GetLastWin32Error()}"
+                        );
                     }
                 }
 
                 return size;
             }
 
-            public static uint GetRawInputData(IntPtr raw, out Native.RawInput data)
+            public static unsafe uint GetRawInputData(IntPtr raw, out Native.RawInput data)
             {
                 var size = Native.RawInput.SizeInBytes;
-                unsafe
+                fixed (Native.RawInput* pdata = &data)
                 {
-                    fixed (Native.RawInput* pdata = &data)
-                    {
-                        GetRawInputData
-                        (
-                            raw,
-                            GetRawInputDataCommand.Input,
-                            (LPVOID)pdata,
-                            ref size,
-                            RawInputHeader.SizeInBytes
-                        );
-                    }
+                    GetRawInputData
+                    (
+                        raw,
+                        GetRawInputDataCommand.Input,
+                        (LPVOID)pdata,
+                        ref size,
+                        RawInputHeader.SizeInBytes
+                    );
                 }
 
                 return size;
             }
 
-            public static uint GetRawInputData(IntPtr raw, byte[] data)
+            public static unsafe uint GetRawInputData(IntPtr raw, byte[] data)
             {
                 var size = (uint)data.Length;
-                unsafe
+                fixed (byte* pdata = data)
                 {
-                    fixed (byte* pdata = data)
-                    {
-                        GetRawInputData
-                        (
-                            raw,
-                            GetRawInputDataCommand.Input,
-                            (IntPtr)pdata,
-                            ref size,
-                            RawInputHeader.SizeInBytes
-                        );
-                    }
+                    GetRawInputData
+                    (
+                        raw,
+                        GetRawInputDataCommand.Input,
+                        (IntPtr)pdata,
+                        ref size,
+                        RawInputHeader.SizeInBytes
+                    );
                 }
 
                 return size;
@@ -254,51 +377,45 @@ namespace OpenTK.NT.Native
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern uint GetRawInputData
+            public static extern UINT GetRawInputData
             (
-                [In] HRAWINPUT hRawInput,
-                [In] GetRawInputDataCommand uiCommand,
-                [Out] [Optional] LPVOID pData,
-                [In] [Out] ref uint pcbSize,
-                [In] uint cbSizeHeader
+                [In] HRAWINPUT rawInput,
+                [In] GetRawInputDataCommand command,
+                [Out] [Optional] LPVOID data,
+                [In] [Out] ref UINT size,
+                [In] UINT headerSize
             );
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern uint GetRawInputData
+            public static extern UINT GetRawInputData
             (
-                [In] HRAWINPUT hRawInput,
-                [In] GetRawInputDataCommand uiCommand,
-                [Out] [Optional] out Native.RawInput pData,
-                [In] [Out] ref uint pcbSize,
-                [In] uint cbSizeHeader
+                [In] HRAWINPUT rawInput,
+                [In] GetRawInputDataCommand command,
+                [Out] [Optional] out Native.RawInput data,
+                [In] [Out] ref UINT size,
+                [In] UINT headerSize
             );
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern unsafe int GetRawInputData
+            public static extern unsafe UINT GetRawInputData
             (
-                HRAWINPUT rawInput,
-                GetRawInputDataCommand command,
-                Native.RawInput* data,
-                [In] [Out] ref int size,
-                int sizeHeader
+                [In] HRAWINPUT rawInput,
+                [In] GetRawInputDataCommand command,
+                [Out] [Optional] Native.RawInput* data,
+                [In] [Out] ref UINT size,
+                [In] UINT sizeHeader
             );
 
-            public static IntPtr NextRawInputStructure(IntPtr data)
+            public static unsafe IntPtr NextRawInputStructure(IntPtr data)
             {
-                unsafe
-                {
-                    return RawInputAlign((IntPtr)((byte*)data + RawInputHeader.SizeInBytes));
-                }
+                return RawInputAlign((IntPtr)((byte*)data + RawInputHeader.SizeInBytes));
             }
 
-            private static IntPtr RawInputAlign(IntPtr data)
+            private static unsafe IntPtr RawInputAlign(IntPtr data)
             {
-                unsafe
-                {
-                    return (IntPtr)((byte*)data + ((IntPtr.Size - 1) & ~(IntPtr.Size - 1)));
-                }
+                return (IntPtr)((byte*)data + ((IntPtr.Size - 1) & ~(IntPtr.Size - 1)));
             }
         }
     }

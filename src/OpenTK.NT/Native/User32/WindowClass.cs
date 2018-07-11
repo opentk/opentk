@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
+using BOOL = System.Boolean;
 using HINSTANCE = System.IntPtr;
 
 namespace OpenTK.NT.Native
@@ -17,18 +18,19 @@ namespace OpenTK.NT.Native
             /// Retrieves information about a window class,
             /// including a handle to the small icon associated with the window class.
             /// </summary>
-            /// <param name="hinst">
+            /// <param name="instance">
             /// A handle to the instance of the application that created the class.
             /// To retrieve information about classes defined by the system (such as buttons or list boxes),
             /// set this parameter to <see cref="IntPtr.Zero"/>.
             /// </param>
-            /// <param name="lpszClass">
+            /// <param name="className">
             /// A string containing the class name. The name must be that of a preregistered class or a class
             /// registered by a previous call to the RegisterClass or <see cref="RegisterClassEx(ref ExtendedWindowClass)"/>
             /// function.
             /// </param>
-            /// <param name="lpwcx">
-            /// A pointer to a <see cref="ExtendedWindowClass"/> structure that receives the information about the class.
+            /// <param name="extendedWindowClass">
+            /// A pointer to a <see cref="ExtendedWindowClass"/> structure
+            /// that receives the information about the class.
             /// </param>
             /// <returns>
             /// If the function finds a matching class and successfully copies the data, the return value is
@@ -38,28 +40,28 @@ namespace OpenTK.NT.Native
             /// </returns>
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool GetClassInfoEx
+            public static extern BOOL GetClassInfoEx
             (
-                [In] [Optional] HINSTANCE hinst,
-                [In] string lpszClass,
-                [Out] out ExtendedWindowClass lpwcx
+                [In] [Optional] HINSTANCE instance,
+                [In] string className,
+                [Out] out ExtendedWindowClass extendedWindowClass
             );
 
             /// <summary>
             /// Retrieves information about a window class,
             /// including a handle to the small icon associated with the window class.
             /// </summary>
-            /// <param name="hinst">
+            /// <param name="instance">
             /// A handle to the instance of the application that created the class.
             /// To retrieve information about classes defined by the system (such as buttons or list boxes),
             /// set this parameter to <see cref="IntPtr.Zero"/>.
             /// </param>
-            /// <param name="lpszClass">
+            /// <param name="className">
             /// A pointer to a string containing the class name.
             /// The name must be that of a preregistered class or a class registered by a previous call to the
             /// RegisterClass or <see cref="RegisterClassEx(ref ExtendedWindowClass)"/> function.
             /// </param>
-            /// <param name="lpwcx">
+            /// <param name="extendedWindowClass">
             /// A pointer to a <see cref="ExtendedWindowClass"/> structure that receives the information about the class.
             /// </param>
             /// <returns>
@@ -70,18 +72,18 @@ namespace OpenTK.NT.Native
             /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool GetClassInfoEx
+            public static extern BOOL GetClassInfoEx
             (
-                [In] HINSTANCE hinst,
-                [In] IntPtr lpszClass,
-                [Out] out ExtendedWindowClass lpwcx
+                [In] HINSTANCE instance,
+                [In] IntPtr className,
+                [Out] out ExtendedWindowClass extendedWindowClass
             );
 
             /// <summary>
             /// Retrieves information about a window class,
             /// including a handle to the small icon associated with the window class.
             /// </summary>
-            /// <param name="hinst">
+            /// <param name="instance">
             /// A handle to the instance of the application that created the class.
             /// To retrieve information about classes defined by the system (such as buttons or list boxes),
             /// set this parameter to <see cref="IntPtr.Zero"/>.
@@ -90,7 +92,7 @@ namespace OpenTK.NT.Native
             /// A class atom created by a previous call to RegisterClass
             /// or <see cref="RegisterClassEx(ref ExtendedWindowClass)"/>.
             /// </param>
-            /// <param name="lpwcx">
+            /// <param name="extendedWindowStyle">
             /// A pointer to a <see cref="ExtendedWindowClass"/> structure that receives the information about the class.
             /// </param>
             /// <returns>
@@ -99,14 +101,14 @@ namespace OpenTK.NT.Native
             /// If the function does not find a matching class and successfully copy the data, the return value is
             /// false. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            public static bool GetClassInfoEx
+            public static BOOL GetClassInfoEx
             (
-                [In] HINSTANCE hinst,
+                [In] HINSTANCE instance,
                 [In] ushort classAtom,
-                [Out] out ExtendedWindowClass lpwcx
+                [Out] out ExtendedWindowClass extendedWindowStyle
             )
             {
-                return GetClassInfoEx(hinst, new IntPtr(classAtom), out lpwcx);
+                return GetClassInfoEx(instance, new IntPtr(classAtom), out extendedWindowStyle);
             }
 
             /// <summary>
@@ -114,7 +116,7 @@ namespace OpenTK.NT.Native
             /// <see cref="Window.CreateWindowEx(ExtendedWindowStyles, HINSTANCE, string, WindowStyles, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
             /// function.
             /// </summary>
-            /// <param name="lpwcx">
+            /// <param name="extendedWindowStyle">
             /// A pointer to a <see cref="ExtendedWindowClass"/> structure. You must fill the structure with the
             /// appropriate class attributes before passing it to the function.
             /// </param>
@@ -129,7 +131,7 @@ namespace OpenTK.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [DllImport("user32.dll", SetLastError = true)]
-            public static extern ushort RegisterClassEx([In] ref ExtendedWindowClass lpwcx);
+            public static extern ushort RegisterClassEx([In] ref ExtendedWindowClass extendedWindowStyle);
 
             /// <summary>
             /// Unregisters a window class, freeing the memory required for the class.
@@ -152,21 +154,17 @@ namespace OpenTK.NT.Native
             /// </remarks>
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool UnregisterClass
-            (
-                [In] string className,
-                [In] [Optional] HINSTANCE moduleInstance
-            );
+            public static extern BOOL UnregisterClass([In] string className, [In] [Optional] HINSTANCE moduleInstance);
 
             /// <summary>
             /// Unregisters a window class, freeing the memory required for the class.
             /// </summary>
-            /// <param name="lpClassName">
+            /// <param name="className">
             /// A pointer to a string specifying the window class name. This class name must
             /// have been registered by a previous call to the RegisterClass or
             /// <see cref="RegisterClassEx(ref ExtendedWindowClass)"/> function.
             /// </param>
-            /// <param name="hInstance">A handle to the instance of the module that created the class.</param>
+            /// <param name="moduleInstance">A handle to the instance of the module that created the class.</param>
             /// <returns>
             /// If the function succeeds, the return value is true.<para/>
             /// If the class could not be found or if a window still exists that was created with the class, the return
@@ -179,10 +177,10 @@ namespace OpenTK.NT.Native
             /// </remarks>
             [DllImport("user32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool UnregisterClass
+            public static extern BOOL UnregisterClass
             (
-                [In] IntPtr lpClassName,
-                [In] [Optional] HINSTANCE hInstance
+                [In] IntPtr className,
+                [In] [Optional] HINSTANCE moduleInstance
             );
 
             /// <summary>
@@ -192,7 +190,7 @@ namespace OpenTK.NT.Native
             /// A class atom created by a previous call to the RegisterClass or
             /// <see cref="RegisterClassEx(ref ExtendedWindowClass)"/> function.
             /// </param>
-            /// <param name="hInstance">A handle to the instance of the module that created the class.</param>
+            /// <param name="moduleInstance">A handle to the instance of the module that created the class.</param>
             /// <returns>
             /// If the function succeeds, the return value is true.<para/>
             /// If the class could not be found or if a window still exists that was created with the class, the return
@@ -203,13 +201,9 @@ namespace OpenTK.NT.Native
             /// specified class.<para/>
             /// All window classes that an application registers are unregistered when it terminates.
             /// </remarks>
-            public static bool UnregisterClass
-            (
-                [In] ushort classAtom,
-                [In] [Optional] HINSTANCE hInstance
-            )
+            public static BOOL UnregisterClass([In] ushort classAtom, [In] [Optional] HINSTANCE moduleInstance)
             {
-                return UnregisterClass(new IntPtr(classAtom), hInstance);
+                return UnregisterClass(new IntPtr(classAtom), moduleInstance);
             }
         }
     }
