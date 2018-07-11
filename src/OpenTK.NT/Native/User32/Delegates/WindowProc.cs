@@ -14,11 +14,11 @@ namespace OpenTK.NT.Native
     /// </summary>
     /// <param name="hwnd">A handle to the window.</param>
     /// <param name="msg">The message.</param>
-    /// <param name="wParam">
+    /// <param name="wparam">
     /// Additional message information. The contents of this parameter depend on the value of the
     /// <paramref name="msg"/> parameter.
     /// </param>
-    /// <param name="lParam">
+    /// <param name="lparam">
     /// Additional message information. The contents of this parameter depend on the value of the
     /// <paramref name="msg"/> parameter.
     /// </param>
@@ -29,7 +29,7 @@ namespace OpenTK.NT.Native
     (
         [In] HWND hwnd,
         [In] WindowMessage msg,
-        [In] WPARAM wParam,
-        [In] LPARAM lParam
+        [In] WPARAM wparam,
+        [In] LPARAM lparam
     );
 }

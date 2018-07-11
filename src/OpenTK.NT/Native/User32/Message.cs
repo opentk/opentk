@@ -158,8 +158,8 @@ namespace OpenTK.NT.Native
             /// of threads in processes of lesser or equal integrity level.
             /// </param>
             /// <param name="msg">The message to be sent.</param>
-            /// <param name="wParam">Additional message-specific information.</param>
-            /// <param name="lParam">Additional message-specific information.</param>
+            /// <param name="wparam">Additional message-specific information.</param>
+            /// <param name="lparam">Additional message-specific information.</param>
             /// <returns>
             /// The return value specifies the result of the message processing; it depends on the message sent.
             /// </returns>
@@ -168,8 +168,8 @@ namespace OpenTK.NT.Native
             (
                 [In] HWND window,
                 [In] WindowMessage msg,
-                [In] WPARAM wParam,
-                [In] LPARAM lParam
+                [In] WPARAM wparam,
+                [In] LPARAM lparam
             );
 
             /// <summary>
@@ -177,17 +177,17 @@ namespace OpenTK.NT.Native
             /// windows, overlapped windows, and pop-up windows; but not to child windows.
             /// </summary>
             /// <param name="msg">The message to be sent.</param>
-            /// <param name="wParam">Additional message-specific information.</param>
-            /// <param name="lParam">Additional message-specific information.</param>
+            /// <param name="wparam">Additional message-specific information.</param>
+            /// <param name="lparam">Additional message-specific information.</param>
             /// <returns>
             /// The return value specifies the result of the message processing; it depends on the message sent.
             /// </returns>
             /// <remarks>
             /// This method uses the constant HWND_BROADCAST (0xFFFF) for this special behavior.
             /// </remarks>
-            public static LRESULT SendMessageAsBroadcast(WindowMessage msg, WPARAM wParam, LPARAM lParam)
+            public static LRESULT SendMessageAsBroadcast(WindowMessage msg, WPARAM wparam, LPARAM lparam)
             {
-                return SendMessage(new HWND(0xFFFF), msg, wParam, lParam);
+                return SendMessage(new HWND(0xFFFF), msg, wparam, lparam);
             }
 
             /// <summary>
@@ -202,8 +202,8 @@ namespace OpenTK.NT.Native
             /// PostThreadMessage with the dwThreadId parameter set to the identifier of the current thread.
             /// </param>
             /// <param name="msg">The message to be posted.</param>
-            /// <param name="wParam">Additional message-specific information.</param>
-            /// <param name="lParam">Additional message-specific information.</param>
+            /// <param name="wparam">Additional message-specific information.</param>
+            /// <param name="lparam">Additional message-specific information.</param>
             /// <returns>
             /// If the function succeeds, the return value is true.<para/>
             /// If the function fails, the return value is false.
@@ -216,8 +216,8 @@ namespace OpenTK.NT.Native
             (
                 [In] [Optional] HWND window,
                 [In] WindowMessage msg,
-                [In] WPARAM wParam,
-                [In] LPARAM lParam
+                [In] WPARAM wparam,
+                [In] LPARAM lparam
             );
 
             /// <summary>
@@ -225,8 +225,8 @@ namespace OpenTK.NT.Native
             /// unowned windows, overlapped windows, and pop-up windows. The message is not posted to child windows.
             /// </summary>
             /// <param name="msg">The message to be posted.</param>
-            /// <param name="wParam">Additional message-specific information.</param>
-            /// <param name="lParam">Additional message-specific information.</param>
+            /// <param name="wparam">Additional message-specific information.</param>
+            /// <param name="lparam">Additional message-specific information.</param>
             /// <returns>
             /// If the function succeeds, the return value is true.<para/>
             /// If the function fails, the return value is false.
@@ -235,9 +235,9 @@ namespace OpenTK.NT.Native
             /// <remarks>
             /// This method uses the constant HWND_BROADCAST (0xFFFF) for this special behavior.
             /// </remarks>
-            public static BOOL PostMessageAsBroadcast(WindowMessage msg, WPARAM wParam, LPARAM lParam)
+            public static BOOL PostMessageAsBroadcast(WindowMessage msg, WPARAM wparam, LPARAM lparam)
             {
-                return PostMessage(new HWND(0xFFFF), msg, wParam, lParam);
+                return PostMessage(new HWND(0xFFFF), msg, wparam, lparam);
             }
 
             /// <summary>
