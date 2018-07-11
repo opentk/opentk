@@ -4,6 +4,9 @@ using DWORD = System.UInt32;
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Used in <see cref="TrackMouseEvent"/> to request specific services.
+    /// </summary>
     [Flags]
     public enum TrackMouseEvents : DWORD
     {

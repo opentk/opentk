@@ -8,8 +8,6 @@ namespace OpenTK.NT.Native
     /// </summary>
     public enum DisplayFixedOutputType : DWORD
     {
-        Default = 0,
-
         /// <summary>
         /// The display device presents a lower-resolution mode image by stretching it to fill the larger screen space.
         /// </summary>

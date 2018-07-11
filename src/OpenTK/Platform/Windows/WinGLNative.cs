@@ -47,7 +47,7 @@ namespace OpenTK.Platform.Windows
     {
         private const ExtendedWindowStyles ParentStyleEx = ExtendedWindowStyles.WindowEdge | ExtendedWindowStyles.AppWindow;
         private const ExtendedWindowStyles ChildStyleEx = 0;
-        private const WindowClassStyles DefaultClassStyle = WindowClassStyles.OwnDC;
+        private const WindowClassStyles DefaultClassStyle = WindowClassStyles.OwnDeviceContext;
 
         private const long ExtendedBit = 1 << 24; // Used to distinguish left and right control, alt and enter keys.
 
@@ -743,19 +743,19 @@ namespace OpenTK.Platform.Windows
 
         private void HandleSize(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
-            var state = (WindowMessageSize)wParam.ToInt64();
+            var state = (WindowMessageSizeType)wParam.ToInt64();
             var new_state = windowState;
             switch (state)
             {
-                case WindowMessageSize.Restored:
+                case WindowMessageSizeType.Restored:
                     new_state = borderless_maximized_window_state ? WindowState.Maximized : WindowState.Normal;
                     break;
 
-                case WindowMessageSize.Minimized:
+                case WindowMessageSizeType.Minimized:
                     new_state = WindowState.Minimized;
                     break;
 
-                case WindowMessageSize.Maximized:
+                case WindowMessageSizeType.Maximized:
                     new_state = WindowBorder == WindowBorder.Hidden ? WindowState.Fullscreen : WindowState.Maximized;
                     break;
             }

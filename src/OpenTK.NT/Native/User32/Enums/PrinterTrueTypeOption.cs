@@ -19,6 +19,10 @@
         /// Device will substitute device fonts for TrueType fonts.
         /// </summary>
         SubstituteDevice = 3,
+
+        /// <summary>
+        /// Downloads TrueType fonts as outline soft fonts.
+        /// </summary>
         DownloadOutline = 4,
     }
 }

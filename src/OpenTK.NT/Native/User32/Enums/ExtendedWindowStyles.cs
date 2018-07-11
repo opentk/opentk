@@ -149,8 +149,8 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// The window is a layered window. This style cannot be used if the window has
-        /// a class style of either <see cref="WindowClassStyles.OwnDC"/> or
-        /// <see cref="WindowClassStyles.ClassDC"/>.<para/>
+        /// a class style of either <see cref="WindowClassStyles.OwnDeviceContext"/> or
+        /// <see cref="WindowClassStyles.ClassDeviceContext"/>.<para/>
         /// </summary>
         Layered = 0x00080000,
 
@@ -174,8 +174,8 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// Paints all descendants of a window in bottom-to-top painting order using double-buffering.<para/>
-        /// This cannot be used if the window has a class style of either <see cref="WindowClassStyles.OwnDC"/>
-        /// or <see cref="WindowClassStyles.ClassDC"/>.<para/>
+        /// This cannot be used if the window has a class style of either <see cref="WindowClassStyles.OwnDeviceContext"/>
+        /// or <see cref="WindowClassStyles.ClassDeviceContext"/>.<para/>
         /// </summary>
         Composited = 0x02000000,
 

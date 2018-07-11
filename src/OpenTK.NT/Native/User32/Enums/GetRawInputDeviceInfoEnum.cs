@@ -2,6 +2,11 @@
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Used in
+    /// <see cref="User32.RawInput.GetRawInputDeviceInfo(System.IntPtr, GetRawInputDeviceInfoEnum, byte[], ref UINT)"/>
+    /// to specify what data to return in the data parameter.
+    /// </summary>
     public enum GetRawInputDeviceInfoEnum : UINT
     {
         /// <summary>

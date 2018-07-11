@@ -102,7 +102,14 @@ namespace OpenTK.NT.Native
         /// </summary>
         GenericAccelerated = 0x1000,
 
+        /// <summary>
+        /// This member is not officially documented. Use with care.
+        /// </summary>
         SupportDirectDraw = 0x2000,
+
+        /// <summary>
+        /// This member is not officially documented. Use with care.
+        /// </summary>
         SupportComposition = 0x8000,
 
         /// <summary>

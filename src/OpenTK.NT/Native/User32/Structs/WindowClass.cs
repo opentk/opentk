@@ -68,6 +68,11 @@ namespace OpenTK.NT.Native
         /// </summary>
         public string MenuName;
 
+        /// <summary>
+        /// A string specifying the window class name. The class name can be any name registered with
+        /// RegisterClass or <see cref="User32.WindowClass.RegisterClassEx(ref ExtendedWindowClass)"/>,
+        /// or any of the predefined control-class names.
+        /// </summary>
         public string ClassName;
 
         /// <summary>

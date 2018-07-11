@@ -6,6 +6,9 @@ using USHORT = System.UInt16;
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Defines information for the raw input devices.
+    /// </summary>
     public struct RawInputDevice
     {
         /// <summary>
@@ -30,16 +33,34 @@ namespace OpenTK.NT.Native
         /// </summary>
         public HWND Target;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RawInputDevice"/> struct for generic desktop usage.
+        /// </summary>
+        /// <param name="usage">HID usage for the Generic Desktop page.</param>
+        /// <param name="flags">Specifies how to interpret the raw input data.</param>
+        /// <param name="target">Handle to the target window.</param>
         public RawInputDevice(HidGenericDesktopUsage usage, RawInputDeviceFlags flags, HWND target)
             : this((ushort)usage, flags, target, HidPage.GenericDesktop)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RawInputDevice"/> struct for consumer usage.
+        /// </summary>
+        /// <param name="usage">HID usage for the Consumer page.</param>
+        /// <param name="flags">Specifies how to interpret the raw input data.</param>
+        /// <param name="target">Handle to the target window.</param>
         public RawInputDevice(HidConsumerUsage usage, RawInputDeviceFlags flags, HWND target)
             : this((ushort)usage, flags, target, HidPage.Consumer)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RawInputDevice"/> struct for simulation usage.
+        /// </summary>
+        /// <param name="usage">HID usage for the Simulation page.</param>
+        /// <param name="flags">Specifies how to interpret the raw input data.</param>
+        /// <param name="target">Handle to the target window.</param>
         public RawInputDevice(HidSimulationUsage usage, RawInputDeviceFlags flags, HWND target)
             : this((ushort)usage, flags, target, HidPage.Simulation)
         {
@@ -53,9 +74,12 @@ namespace OpenTK.NT.Native
             UsagePage = usagePage;
         }
 
+        /// <summary>
+        /// The size of this structure in bytes.
+        /// </summary>
         public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<RawInputDevice>();
 
-        public override string ToString()
-            => $"{UsagePage}/{Usage}, flags: {Flags}, window: {Target}";
+        /// <inheritdoc/>
+        public override string ToString() => $"{UsagePage}/{Usage}, flags: {Flags}, window: {Target}";
     }
 }

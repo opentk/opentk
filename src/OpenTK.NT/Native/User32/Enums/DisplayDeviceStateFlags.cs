@@ -10,7 +10,14 @@ namespace OpenTK.NT.Native
     [Flags]
     public enum DisplayDeviceStateFlags : DWORD
     {
+        /// <summary>
+        /// This member is not officially documented. Use with care.
+        /// </summary>
         AttachedToDesktop = 0x00000001,
+
+        /// <summary>
+        /// This member is not officially documented. Use with care.
+        /// </summary>
         MultiDriver = 0x00000002,
 
         /// <summary>

@@ -296,13 +296,13 @@ namespace OpenTK.NT.Native
             /// <returns>
             /// The high-order word of the return value indicates the types of messages currently in the queue.
             /// The low-order word indicates the types of messages that have been added to the queue and that are
-            /// still in the queue since the last call to the <see cref="GetQueueStatus(GetQueueStatusFlags)"/>,
+            /// still in the queue since the last call to the <see cref="GetQueueStatus(QueueMessageTypes)"/>,
             /// <see cref="GetMessage(out Msg, HWND, DWORD, DWORD)"/>, or
             /// <see cref="PeekMessage(out Msg, HWND, DWORD, DWORD, PeekMessageActions)"/> function.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport("User32.dll")]
-            public static extern DWORD GetQueueStatus([In] GetQueueStatusFlags flags);
+            public static extern DWORD GetQueueStatus([In] QueueMessageTypes flags);
         }
     }
 }

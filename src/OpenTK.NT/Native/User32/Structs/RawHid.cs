@@ -5,13 +5,11 @@ using DWORD = System.UInt32;
 namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// The RawHID structure describes the format of the raw input
-    /// from a Human Interface Device (HID).
+    /// The RawHID structure describes the format of the raw input from a Human Interface Device (HID).
     /// </summary>
     /// <remarks>
-    /// Each WM_INPUT can indicate several inputs, but all of the inputs
-    /// come from the same HID. The size of the bRawData array is
-    /// dwSizeHid * dwCount.
+    /// Each <see cref="WindowMessage.Input"/> can indicate several inputs, but all of the inputs come from the same
+    /// HID. The size of the <see cref="RawData"/> array is <see cref="SizeHid"/> * <see cref="Count"/>.
     /// </remarks>
     public struct RawHid
     {
@@ -30,7 +28,12 @@ namespace OpenTK.NT.Native
         /// </summary>
         public byte RawData;
 
-        public byte this[int index]
+        /// <summary>
+        /// Access the raw input data at a given index.
+        /// </summary>
+        /// <param name="index">The index at which to access the raw input data.</param>
+        /// <returns>A byte of raw input data at the given index.</returns>
+        public unsafe byte this[int index]
         {
             get
             {
@@ -39,12 +42,9 @@ namespace OpenTK.NT.Native
                     throw new ArgumentOutOfRangeException(nameof(index));
                 }
 
-                unsafe
+                fixed (byte* data = &RawData)
                 {
-                    fixed (byte* data = &RawData)
-                    {
-                        return *(data + index);
-                    }
+                    return *(data + index);
                 }
             }
         }

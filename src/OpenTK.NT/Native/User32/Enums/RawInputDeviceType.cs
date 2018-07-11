@@ -2,6 +2,9 @@
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Specifies the type of raw input device.
+    /// </summary>
     public enum RawInputDeviceType : DWORD
     {
         /// <summary>

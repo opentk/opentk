@@ -1,5 +1,10 @@
 ﻿namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Used in
+    /// <see cref="User32.Device.RegisterDeviceNotification(System.IntPtr, System.IntPtr, DeviceNotificationEnum)"/>
+    /// to specify additional information.
+    /// </summary>
     public enum DeviceNotificationEnum
     {
         /// <summary>

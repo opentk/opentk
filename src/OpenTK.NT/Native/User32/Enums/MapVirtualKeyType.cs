@@ -2,6 +2,9 @@
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Used in <see cref="MapVirtualKeyType"/> to specify the translation to be performed.
+    /// </summary>
     public enum MapVirtualKeyType : UINT
     {
         /// <summary>
@@ -29,6 +32,10 @@ namespace OpenTK.NT.Native
         /// between left- and right-hand keys. If there is no translation, the function returns 0.
         /// </summary>
         ScanCodeToVirtualKeyExtended = 3,
+
+        /// <summary>
+        /// This member is not officially documented. Use with care.
+        /// </summary>
         VirtualKeyToScanCodeExtended = 4
     }
 }

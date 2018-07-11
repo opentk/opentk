@@ -1,5 +1,8 @@
 ﻿namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Lists all virtual keys.
+    /// </summary>
     public enum VirtualKey : uint
     {
         /// <summary>

@@ -24,6 +24,9 @@ namespace OpenTK.NT.Native
         [FieldOffset(4)]
         public ULONG Buttons;
 
+        /// <summary>
+        /// The transition state of the mouse buttons.
+        /// </summary>
         [FieldOffset(4)]
         public RawMouseButtonFlags ButtonFlags;
 

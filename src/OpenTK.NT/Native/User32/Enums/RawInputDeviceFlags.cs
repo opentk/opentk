@@ -2,6 +2,9 @@
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Used in <see cref="RawInputDevice"/> to specify how to interpret the data in the structure.
+    /// </summary>
     [Flags]
     public enum RawInputDeviceFlags : uint
     {

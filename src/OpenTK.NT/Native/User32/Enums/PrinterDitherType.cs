@@ -2,6 +2,9 @@
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// For printers, specifies types of dithering.
+    /// </summary>
     public enum PrinterDitherType : DWORD
     {
         /// <summary>

@@ -4,6 +4,10 @@ using UINT = System.UInt32;
 
 namespace OpenTK.NT.Native
 {
+    /// <summary>
+    /// Used in <see cref="User32.Message.PeekMessage(out Msg, IntPtr, UINT, UINT, PeekMessageActions)"/>
+    /// to define what actions to take for retrieved messages.
+    /// </summary>
     [Flags]
     public enum PeekMessageActions : UINT
     {
@@ -26,21 +30,21 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Process mouse and keyboard messages.
         /// </summary>
-        QSInput = GetQueueStatusFlags.Input << 16,
+        QSInput = QueueMessageTypes.Input << 16,
 
         /// <summary>
         /// Process paint messages.
         /// </summary>
-        QSPaint = GetQueueStatusFlags.Paint << 16,
+        QSPaint = QueueMessageTypes.Paint << 16,
 
         /// <summary>
         /// Process all posted messages, including timers and hotkeys.
         /// </summary>
-        QSPostMessage = (GetQueueStatusFlags.PostMessage | GetQueueStatusFlags.Hotkey | GetQueueStatusFlags.Timer) << 16,
+        QSPostMessage = (QueueMessageTypes.PostMessage | QueueMessageTypes.Hotkey | QueueMessageTypes.Timer) << 16,
 
         /// <summary>
         /// Process all sent messages.
         /// </summary>
-        QSSendMessage = GetQueueStatusFlags.SendMessage << 16
+        QSSendMessage = QueueMessageTypes.SendMessage << 16
     }
 }
