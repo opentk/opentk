@@ -10,8 +10,8 @@ namespace OpenTK.NT.Native
     /// <remarks>
     /// By convention, the right and bottom edges of the rectangle are normally considered exclusive. In other words,
     /// the pixel whose coordinates are (right, bottom) lies immediately outside of the the rectangle. For example,
-    /// when RECT is passed to the FillRect function, the rectangle is filled up to, but not including, the right
-    /// column and bottom row of pixels.
+    /// when <see cref="Rect"/> is passed to the FillRect function, the rectangle is filled up to, but not including,
+    /// the right column and bottom row of pixels.
     /// </remarks>
     public struct Rect
     {
@@ -46,7 +46,7 @@ namespace OpenTK.NT.Native
         public LONG Height => Bottom - Top;
 
         /// <inheritdoc/>
-        public override string ToString() => $"({Left}, {Top})-({Right}, {Bottom})";
+        public override string ToString() => $"{{X={Left},Y={Top},Width={Width},Height={Height}}}";
 
         public static implicit operator Rectangle(Rect rect)
         {
@@ -64,7 +64,12 @@ namespace OpenTK.NT.Native
             };
         }
 
-        public static implicit operator Rect(Size value)
+        /// <summary>
+        /// Creates a <see cref="Rect"/> structure with the specified Size at location (0,0).
+        /// </summary>
+        /// <param name="value">The size from which to construct the new <see cref="Rect"/> structure.</param>
+        /// <returns>A <see cref="Rect"/> structure with the given size.</returns>
+        public static Rect FromSize(Size value)
         {
             return new Rect
             {
