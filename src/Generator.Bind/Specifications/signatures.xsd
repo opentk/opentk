@@ -152,7 +152,7 @@
             </xs:attribute>
             <xs:attribute name="deprecated" type="versionType">
               <xs:annotation>
-                <xs:documentation>The deprecation text of the token.</xs:documentation>
+                <xs:documentation>The deprecation version of the token.</xs:documentation>
               </xs:annotation>
             </xs:attribute>
             <xs:attribute name="remark" type="xs:normalizedString">
