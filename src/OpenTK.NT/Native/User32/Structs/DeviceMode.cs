@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 using DWORD = System.UInt32;
 using WORD = System.UInt16;
@@ -12,6 +13,16 @@ namespace OpenTK.NT.Native
     [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Unicode)]
     public struct DeviceMode
     {
+        /// <summary>
+        /// Length of the <see cref="DeviceName"/> in characters.
+        /// </summary>
+        public const int DeviceNameLength = 32;
+
+        /// <summary>
+        /// Length of the <see cref="FormName"/> in characters.
+        /// </summary>
+        public const int FormNameLength = 32;
+
         /// <summary>
         /// Default value for <see cref="SpecVersion"/> and <see cref="DriverVersion"/> (see the documentation of those
         /// fields for more information).
@@ -65,109 +76,113 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Provides printer-specific device mode options.
         /// </summary>
-        [FieldOffset(80)]
+        [FieldOffset(76)]
         public PrinterDeviceOptions PrinterOptions;
-
-        /// <summary>
-        /// For displays, indicates the positional coordinates of the display device in reference to the desktop area.
-        /// The primary display device is always located at coordinates (0, 0).
-        /// </summary>
-        [FieldOffset(80)]
-        public Point Position;
 
         /// <summary>
         /// Provides display-specific device mode options.
         /// </summary>
-        [FieldOffset(80)]
+        [FieldOffset(76)]
         public DisplayDeviceOptions DisplayOptions;
 
         /// <summary>
         /// For printers, specifies whether a color printer should print color or monochrome.
         /// </summary>
-        [FieldOffset(96)]
+        [FieldOffset(92)]
         public PrinterColor Color;
 
         /// <summary>
         /// For printers, specifies duplex (double-sided) printing for duplex-capable printers.
         /// </summary>
-        [FieldOffset(98)]
+        [FieldOffset(94)]
         public PrinterDuplex Duplex;
 
         /// <summary>
         /// For printers, specifies the y resolution of the printer, in DPI. If this member is used,
         /// the <see cref="PrinterDeviceOptions.PrintQuality"/> member specifies the x resolution.
         /// </summary>
-        [FieldOffset(100)]
+        [FieldOffset(96)]
         public short YResolution;
 
         /// <summary>
         /// For printers, specifies how TrueType fonts should be printed.
         /// </summary>
-        [FieldOffset(102)]
+        [FieldOffset(98)]
         public PrinterTrueTypeOption TrueTypeOption;
 
         /// <summary>
-        /// For printers, specifies whether multiple copies should be collated.
+        /// For printers, specifies whether multiple copies should be collated. 1 == true, 0 == false.
         /// </summary>
-        /// <remarks>
-        /// This is a <see cref="short"/> in the windows API (and has pre-defined values for true (1) and false (0)),
-        /// but I abused this fact to represent this as a bool in our struct. Might have to be changed when
-        /// there are more possible values than true and false.
-        /// </remarks>
-        [FieldOffset(104)]
-        [MarshalAs(UnmanagedType.I2)]
-        public bool Collate;
+        [FieldOffset(100)]
+        public short Collate;
 
         /// <summary>
-        /// For printers, specifies the name of the form to use; such as "Letter" or "Legal".
+        /// Gets the name of the printer form to use; such as "Letter" or "Legal".
         /// This must be a name that can be obtain by calling the Win32 EnumForms function.
         /// </summary>
-        [FieldOffset(106)]
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-        public string FormName;
+        public unsafe string FormName
+        {
+            get
+            {
+                fixed (char* formNamePtr = &_formName)
+                {
+                    return Marshal.PtrToStringUni((IntPtr)formNamePtr);
+                }
+            }
+        }
+
+        /// <summary>
+        /// With the current struct layout (which is set in stone because of interoperability with the Windows API),
+        /// there is no way to put a `string` type at this position(string is a reference type -> there is a pointer
+        /// here, which is either 4 or 8 bytes depending on the platform). This means that a string can never be
+        /// properly aligned at position 102 (which, again, can't be changed). This is why the <see cref="FormName"/>
+        /// property exists.
+        /// </summary>
+        [FieldOffset(102)]
+        private readonly char _formName;
 
         /// <summary>
         /// For displays, specifies the number of logical pixels per inch of a display device and should be equal
         /// to the ulLogPixels member of the GDIINFO structure.
         /// </summary>
-        [FieldOffset(170)]
+        [FieldOffset(166)]
         public WORD LogPixels;
 
         /// <summary>
         /// For displays, specifies the color resolution, in bits per pixel, of a display device.
         /// </summary>
-        [FieldOffset(172)]
+        [FieldOffset(168)]
         public DWORD BitsPerPixel;
 
         /// <summary>
         /// For displays, specifies the width, in pixels, of the visible device surface.
         /// </summary>
-        [FieldOffset(176)]
+        [FieldOffset(172)]
         public DWORD WidthInPixels;
 
         /// <summary>
         /// For displays, specifies the height, in pixels, of the visible device surface.
         /// </summary>
-        [FieldOffset(180)]
+        [FieldOffset(176)]
         public DWORD HeightInPixels;
 
         /// <summary>
         /// For displays, specifies a display device's display mode.
         /// </summary>
-        [FieldOffset(184)]
+        [FieldOffset(180)]
         public DisplayFlags DisplayFlags;
 
         /// <summary>
         /// For printers, specifies whether the print system handles "N-up" printing
         /// (playing multiple EMF logical pages onto a single physical page).
         /// </summary>
-        [FieldOffset(184)]
+        [FieldOffset(180)]
         public DWORD Nup;
 
         /// <summary>
         /// For displays, specifies the frequency, in hertz, of a display device in its current mode.
         /// </summary>
-        [FieldOffset(188)]
+        [FieldOffset(184)]
         public DWORD DisplayFrequency;
 
         /// <summary>
@@ -177,7 +192,7 @@ namespace OpenTK.NT.Native
         /// The value of this field can be one of the pre-defined <see cref="PrinterIcmMethod"/> values or a printer
         /// driver-defined value greater than or equal to <see cref="PrinterIcmMethod.User"/>.
         /// </summary>
-        [FieldOffset(192)]
+        [FieldOffset(188)]
         public PrinterIcmMethod IcmMethod;
 
         /// <summary>
@@ -186,7 +201,7 @@ namespace OpenTK.NT.Native
         /// The value of this field can be one of the pre-defined <see cref="PrinterIcmIntent"/> values or a printer
         /// driver-defined value greater than or equal to <see cref="PrinterIcmIntent.User"/>.
         /// </summary>
-        [FieldOffset(196)]
+        [FieldOffset(192)]
         public PrinterIcmIntent IcmIntent;
 
         /// <summary>
@@ -194,7 +209,7 @@ namespace OpenTK.NT.Native
         /// The value of this field can be one of the pre-defined <see cref="PrinterMediaType"/> values or a printer
         /// driver-defined value greater than or equal to <see cref="PrinterMediaType.User"/>.
         /// </summary>
-        [FieldOffset(200)]
+        [FieldOffset(196)]
         public PrinterMediaType MediaType;
 
         /// <summary>
@@ -202,37 +217,37 @@ namespace OpenTK.NT.Native
         /// The value of this field can be one of the pre-defined <see cref="PrinterDitherType"/> values or a printer
         /// driver-defined value greater than or equal to <see cref="PrinterDitherType.User"/>.
         /// </summary>
-        [FieldOffset(204)]
+        [FieldOffset(200)]
         public PrinterDitherType DitherType;
 
         /// <summary>
         /// Is reserved for system use and must be zero.
         /// </summary>
-        [FieldOffset(208)]
+        [FieldOffset(204)]
         public DWORD Reserved1;
 
         /// <summary>
         /// Is reserved for system use and must be zero.
         /// </summary>
-        [FieldOffset(212)]
+        [FieldOffset(208)]
         public DWORD Reserved2;
 
         /// <summary>
         /// Must be zero.
         /// </summary>
-        [FieldOffset(216)]
+        [FieldOffset(212)]
         public DWORD PanningWidth;
 
         /// <summary>
         /// Must be zero.
         /// </summary>
-        [FieldOffset(220)]
+        [FieldOffset(216)]
         public DWORD PanningHeight;
 
         /// <summary>
         /// The size of the structure in bytes.
         /// </summary>
-        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<DeviceMode>();
+        public static readonly ushort SizeInBytes = (ushort)Marshal.SizeOf<DeviceMode>();
 
         /// <summary>
         /// Contains printer-specific device options.
