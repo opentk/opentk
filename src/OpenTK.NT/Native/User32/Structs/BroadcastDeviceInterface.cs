@@ -33,10 +33,23 @@ namespace OpenTK.NT.Native
         public Guid ClassGuid;
 
         /// <summary>
-        /// A null-terminated string that specifies the name of the device. If you want to read this string,
-        /// start at this field's position and read until you encounter a \0 character.
+        /// Gets a string that specifies the name of the device.
         /// </summary>
-        public char Name;
+        public unsafe string Name
+        {
+            get
+            {
+                fixed (char* namePtr = &_name)
+                {
+                    return Marshal.PtrToStringUni((IntPtr)namePtr);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The first character of the <see cref="Name"/>.
+        /// </summary>
+        private readonly char _name;
 
         /// <summary>
         /// The size of this structure in bytes.
