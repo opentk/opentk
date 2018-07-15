@@ -159,7 +159,7 @@ namespace OpenTK.Platform.Windows
                             User32.RawInput.GetRawInputDeviceInfo(
                                 dev.Device,
                                 GetRawInputDeviceInfoEnum.DeviceInfo,
-                                info,
+                                ref info,
                                 ref devInfoSize
                             );
 

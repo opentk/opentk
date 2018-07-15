@@ -30,6 +30,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Input;
 using OpenTK.Input.Hid;
+using OpenTK.Mathematics;
 using OpenTK.Platform.MacOS.Carbon;
 
 namespace OpenTK.Platform.MacOS
@@ -1152,7 +1153,7 @@ namespace OpenTK.Platform.MacOS
             var max = NativeMethods.IOHIDElementGetLogicalMax(element).ToInt32();
             var min = NativeMethods.IOHIDElementGetLogicalMin(element).ToInt32();
             var offset = NativeMethods.IOHIDValueGetIntegerValue(val).ToInt32();
-            return (short)HidHelper.ScaleValue(offset, min, max, short.MinValue, short.MaxValue);
+            return (short)MathHelper.ScaleValue(offset, min, max, short.MinValue, short.MaxValue);
         }
 
         private static bool GetJoystickButton(IOHIDValueRef val, IOHIDElementRef element)

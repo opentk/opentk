@@ -29,6 +29,7 @@ using System.Diagnostics;
 using System.IO;
 using OpenTK.Input.Hid;
 using OpenTK.Input;
+using OpenTK.Mathematics;
 
 namespace OpenTK.Platform.Linux
 {
@@ -457,7 +458,7 @@ namespace OpenTK.Platform.Linux
                                             // This axis represents a regular axis or trigger
                                             js.State.SetAxis(
                                                 axis.Axis,
-                                                (short)HidHelper.ScaleValue(e->Value,
+                                                (short)MathHelper.ScaleValue(e->Value,
                                                     axis.Info.Minimum, axis.Info.Maximum,
                                                     short.MinValue, short.MaxValue));
                                         }
@@ -484,7 +485,7 @@ namespace OpenTK.Platform.Linux
                         var msec = (int)e->Time.MicroSeconds / 1000;
                         var packet =
                             ((sec & 0x00ffffff) << 24) |
-                            HidHelper.ScaleValue(msec, 0, 1000, 0, 255);
+                            MathHelper.ScaleValue(msec, 0, 1000, 0, 255);
                         js.State.SetPacketNumber(packet);
                     }
                 }

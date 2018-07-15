@@ -179,7 +179,7 @@ namespace OpenTK.Platform.Windows
                                 var info = new RawInputDeviceInfo();
                                 var devInfoSize = RawInputDeviceInfo.SizeInBytes;
                                 User32.RawInput.GetRawInputDeviceInfo(dev.Device, GetRawInputDeviceInfoEnum.DeviceInfo,
-                                    info, ref devInfoSize);
+                                    ref info, ref devInfoSize);
 
                                 RegisterRawDevice(Window, deviceDesc);
                                 var state = new MouseState();

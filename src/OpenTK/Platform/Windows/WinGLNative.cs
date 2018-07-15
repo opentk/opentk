@@ -185,7 +185,7 @@ namespace OpenTK.Platform.Windows
             set
             {
                 var style = (WindowStyles)User32.Window.GetWindowLong(window.Handle, GetWindowLongIndex.Style);
-                Rect rect = value;
+                Rect rect = Rect.FromSize(value);
                 User32.Window.AdjustWindowRect(ref rect, style, false);
                 Size = new Size(rect.Width, rect.Height);
             }

@@ -98,7 +98,7 @@ namespace OpenTK.Platform.Windows
                 DisplayResolution opentk_dev_current_res = null;
                 var opentk_dev_available_res = new List<DisplayResolution>();
                 bool opentk_dev_primary = false;
-                int device_count = 0, mode_count = 0;
+                uint device_count = 0, mode_count = 0;
 
                 // Get available video adapters and enumerate all monitors
                 while (User32.DeviceContext.EnumDisplayDevices(null, device_count++, out var dev1, 0))
@@ -117,8 +117,8 @@ namespace OpenTK.Platform.Windows
 
                         var scale = GetScale(ref monitor_mode);
                         opentk_dev_current_res = new DisplayResolution(
-                            (int)(monitor_mode.Position.X / scale),
-                            (int)(monitor_mode.Position.Y / scale),
+                            (int)(monitor_mode.DisplayOptions.Position.X / scale),
+                            (int)(monitor_mode.DisplayOptions.Position.Y / scale),
                             (int)(monitor_mode.WidthInPixels / scale),
                             (int)(monitor_mode.HeightInPixels / scale),
                             (int)monitor_mode.BitsPerPixel,
@@ -136,8 +136,8 @@ namespace OpenTK.Platform.Windows
 
                         var scale = GetScale(ref monitor_mode);
                         var res = new DisplayResolution(
-                            (int)(monitor_mode.Position.X / scale),
-                            (int)(monitor_mode.Position.Y / scale),
+                            (int)(monitor_mode.DisplayOptions.Position.X / scale),
+                            (int)(monitor_mode.DisplayOptions.Position.Y / scale),
                             (int)(monitor_mode.WidthInPixels / scale),
                             (int)(monitor_mode.HeightInPixels / scale),
                             (int)monitor_mode.BitsPerPixel,

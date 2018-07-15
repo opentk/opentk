@@ -865,5 +865,10 @@
         /// Clear key.
         /// </summary>
         OemClear = 0xFE,
+
+        /// <summary>
+        /// The highest possible value for virtual keys.
+        /// </summary>
+        Last = 0xFF,
     }
 }
