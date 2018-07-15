@@ -21,6 +21,13 @@ namespace OpenTK.NT.Native
         public static class Message
         {
             /// <summary>
+            /// A special constant value that can be used to send a message to all top-level windows, including
+            /// disabled or invisible unowned windows, overlapped windows, and pop-up windows;
+            /// but not to child windows.
+            /// </summary>
+            public static readonly HWND BroadcastHandle = new HWND(0xFFFF);
+
+            /// <summary>
             /// Dispatches incoming sent messages, checks the thread message queue for a posted message,
             /// and retrieves the message (if any exist).
             /// </summary>
@@ -183,11 +190,11 @@ namespace OpenTK.NT.Native
             /// The return value specifies the result of the message processing; it depends on the message sent.
             /// </returns>
             /// <remarks>
-            /// This method uses the constant HWND_BROADCAST (0xFFFF) for this special behavior.
+            /// This method uses the constant <see cref="BroadcastHandle"/> for this special behavior.
             /// </remarks>
             public static LRESULT SendMessageAsBroadcast(WindowMessage msg, WPARAM wparam, LPARAM lparam)
             {
-                return SendMessage(new HWND(0xFFFF), msg, wparam, lparam);
+                return SendMessage(BroadcastHandle, msg, wparam, lparam);
             }
 
             /// <summary>
@@ -233,11 +240,11 @@ namespace OpenTK.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             /// <remarks>
-            /// This method uses the constant HWND_BROADCAST (0xFFFF) for this special behavior.
+            /// This method uses the constant <see cref="BroadcastHandle"/> for this special behavior.
             /// </remarks>
             public static BOOL PostMessageAsBroadcast(WindowMessage msg, WPARAM wparam, LPARAM lparam)
             {
-                return PostMessage(new HWND(0xFFFF), msg, wparam, lparam);
+                return PostMessage(BroadcastHandle, msg, wparam, lparam);
             }
 
             /// <summary>

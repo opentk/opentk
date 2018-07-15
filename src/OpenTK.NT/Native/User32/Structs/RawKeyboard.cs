@@ -30,7 +30,8 @@ namespace OpenTK.NT.Native
         public VirtualKey VKey;
 
         /// <summary>
-        /// Corresponding window message, for example WM_KEYDOWN, WM_SYSKEYDOWN, and so forth.
+        /// Corresponding window message, for example <see cref="WindowMessage.KeyDown"/>,
+        /// <see cref="WindowMessage.SystemKeyDown"/>, and so forth.
         /// </summary>
         public UINT Message;
 

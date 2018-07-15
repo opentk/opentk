@@ -37,8 +37,9 @@ namespace OpenTK.NT.Native
         /// The function fills in the structure instead of treating it as a tracking request.
         /// The structure is filled such that had that structure been passed to TrackMouseEvent,
         /// it would generate the current tracking. The only anomaly is that the hover time-out
-        /// returned is always the actual time-out and not HOVER_DEFAULT, if HOVER_DEFAULT was
-        /// specified during the original <see cref="User32.Mouse.TrackMouseEvent"/> request.
+        /// returned is always the actual time-out and not <see cref="TrackMouseEvent.DefaultHoverTime"/>, if
+        /// <see cref="TrackMouseEvent.DefaultHoverTime"/> was specified during the original
+        /// <see cref="User32.Mouse.TrackMouseEvent"/> request.
         /// </summary>
         Query = 0x40000000,
 

@@ -107,9 +107,8 @@
         ClippingCapabilities = 36,
 
         /// <summary>
-        /// Number of entries in the system palette. This index is valid only if
-        /// the device driver sets the RC_PALETTE bit in the RASTERCAPS index and is
-        /// available only if the driver is compatible with 16-bit Windows.
+        /// Number of entries in the system palette. This index is valid only if the device driver sets the RC_PALETTE
+        /// bit in the RASTERCAPS index and is available only if the driver is compatible with 16-bit Windows.
         /// </summary>
         SizePalette = 104,
 

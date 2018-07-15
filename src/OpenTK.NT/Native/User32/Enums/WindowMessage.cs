@@ -145,7 +145,7 @@ namespace OpenTK.NT.Native
         ShowWindow = 0x0018,
 
         /// <summary>
-        /// An application sends the WM_WININICHANGE message to all top-level windows after making a change to the
+        /// Sent by an application to all top-level windows after making a change to the
         /// WIN.INI file. The SystemParametersInfo function sends this message
         /// after an application uses the function to change a setting in WIN.INI.
         /// </summary>
@@ -157,7 +157,7 @@ namespace OpenTK.NT.Native
         /// Applications should send <see cref="SettingChange"/> to all top-level windows when they make changes to
         /// system parameters. (This message cannot be sent directly to a window.) To send the
         /// <see cref="SettingChange"/> message to all top-level windows, use the SendMessageTimeout function with the
-        /// hwnd parameter set to HWND_BROADCAST (0xFFFF).
+        /// hwnd parameter set to <see cref="User32.Message.BroadcastHandle"/>.
         /// </summary>
         SettingChange = WinIniChange,
 

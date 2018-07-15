@@ -28,7 +28,7 @@ namespace OpenTK.NT.Native
         public HANDLE Device;
 
         /// <summary>
-        /// Value passed in the wParam parameter of the WM_INPUT message.
+        /// Value passed in the wParam parameter of the <see cref="WindowMessage.Input"/> message.
         /// </summary>
         public WPARAM Param;
 

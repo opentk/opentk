@@ -19,7 +19,7 @@ namespace OpenTK.NT.Native
         LargeIcon = 0x000000000,
 
         /// <summary>
-        /// Modify SHGFI_ICON, causing the function to retrieve the file's small icon.
+        /// Modify <see cref="Icon"/>, causing the function to retrieve the file's small icon.
         /// Also used to modify <see cref="SysIconIndex"/>, causing the function to return the handle
         /// to the system image list that contains small icon images. The <see cref="Icon"/>
         /// and/or <see cref="SysIconIndex"/> flag must also be set.

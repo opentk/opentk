@@ -12,6 +12,11 @@ namespace OpenTK.NT.Native
     public struct TrackMouseEvent
     {
         /// <summary>
+        /// Set <see cref="HoverTime"/> to this value to use the system default hover time-out.
+        /// </summary>
+        public const DWORD DefaultHoverTime = 0xFFFFFFFF;
+
+        /// <summary>
         /// The size of the <see cref="TrackMouseEvent"/> structure, in bytes.<para/>
         /// Set this to <see cref="SizeInBytes"/>.
         /// </summary>
@@ -28,8 +33,8 @@ namespace OpenTK.NT.Native
         public HWND TrackWindowHandle;
 
         /// <summary>
-        /// The hover time-out (if <see cref="TrackMouseEvents.Hover"/> was specified in <see cref="Flags"/>),
-        /// in milliseconds. Can be 0xFFFFFFFF ('HOVER_DEFAULT'), which means to use the system default hover time-out.
+        /// The hover time-out (if <see cref="TrackMouseEvents.Hover"/> was specified in <see cref="Flags"/>), in
+        /// milliseconds. Can be <see cref="DefaultHoverTime"/>, which means to use the system default hover time-out.
         /// </summary>
         public DWORD HoverTime;
 

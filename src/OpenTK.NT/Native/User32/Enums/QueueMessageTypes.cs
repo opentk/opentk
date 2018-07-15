@@ -79,7 +79,7 @@ namespace OpenTK.NT.Native
         Input = Mouse | Key | RawInput,
 
         /// <summary>
-        /// An input message is in the queue. This is composed of QS_KEY and QS_MOUSE.
+        /// An input message is in the queue. This is composed of <see cref="Key"/> and <see cref="Mouse"/>.
         /// Windows 2000 and earlier.
         /// </summary>
         InputLegacy = Mouse | Key,

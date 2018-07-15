@@ -22,6 +22,11 @@ namespace OpenTK.NT.Native
         public const string Library = "shell32.dll";
 
         /// <summary>
+        /// Defines the maximum length for a path name in characters (including the terminating null character).
+        /// </summary>
+        public const uint MaxPathLength = 260;
+
+        /// <summary>
         /// Registers whether a window accepts dropped files.
         /// </summary>
         /// <param name="window">
@@ -85,8 +90,8 @@ namespace OpenTK.NT.Native
         /// Retrieves information about an object in the file system, such as a file, folder, directory, or drive root.
         /// </summary>
         /// <param name="pszPath">
-        /// A pointer to a null-terminated string of maximum length MAX_PATH that contains the path and file name.
-        /// Both absolute and relative paths are valid.
+        /// A pointer to a null-terminated string of maximum length <see cref="MaxPathLength"/> that contains the path
+        /// and file name. Both absolute and relative paths are valid.
         /// </param>
         /// <param name="fileAttributes">
         /// A combination of one or more <see cref="FileAttributeFlags"/>. If <paramref name="flags"/> does not
