@@ -302,79 +302,120 @@ namespace OpenTK.NT.Native
                 [In] [Out] ref UINT dataSize
             );
 
+            /// <summary>
+            /// Retrieves information about the raw input device.
+            /// </summary>
+            /// <param name="device">
+            /// A handle to the raw input device. This comes from <see cref="RawInputHeader.Device"/> or from
+            /// <see cref="GetRawInputDeviceList(RawInputDeviceList[], ref UINT, UINT)"/>.
+            /// </param>
+            /// <param name="command">Specifies what data will be returned in <paramref name="data"/>.</param>
+            /// <param name="data">
+            /// A pointer to a buffer that contains the information specified by <paramref name="command"/>. If
+            /// <paramref name="command"/> is <see cref="GetRawInputDeviceInfoEnum.DeviceInfo"/>, set the
+            /// <see cref="RawInputDeviceInfo.Size"/> to <see cref="RawInputDeviceInfo.SizeInBytes"/>
+            /// before calling this.
+            /// </param>
+            /// <param name="size">The size, in bytes, of the data in <paramref name="data"/>.</param>
+            /// <returns>
+            /// If successful, this function returns a non-negative number
+            /// indicating the number of bytes copied to <paramref name="data"/>.<para/>
+            /// If <paramref name="data"/> is not large enough for the data, the function returns -1. If
+            /// <paramref name="data"/> is null, the function returns a value of zero. In both of these cases,
+            /// <paramref name="size"/> is set to the minimum size required for the <paramref name="data"/> buffer.
+            /// <para/>
+            /// Call <see cref="Marshal.GetLastWin32Error"/> to identify any other errors.
+            /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
             public static extern uint GetRawInputDeviceInfo
             (
                 [In] [Optional] HANDLE device,
                 [In] GetRawInputDeviceInfoEnum command,
-                [In] [Out] [Optional] RawInputDeviceInfo data,
-                [In] [Out] ref uint pcbSize
+                [In] [Out] [Optional] ref RawInputDeviceInfo data,
+                [In] [Out] ref uint size
             );
 
-            public static unsafe uint GetRawInputData(IntPtr raw, out RawInputHeader header)
+            /// <summary>
+            /// Retrieves the raw input header from the specified device.
+            /// </summary>
+            /// <param name="rawInput">
+            /// A handle to the <see cref="Native.RawInput"/> structure. This comes from the lParam in
+            /// <see cref="WindowMessage.Input"/>.
+            /// </param>
+            /// <param name="header">The <see cref="RawInputHeader"/> structure to receive the raw data.</param>
+            /// <returns>
+            /// If the function is successful, the return value is the number of bytes copied into
+            /// <paramref name="header"/>.<para/>
+            /// If there is an error, the return value is (UINT)-1 [== <see cref="uint.MaxValue"/>].
+            /// </returns>
+            public static unsafe UINT GetRawInputData(HRAWINPUT rawInput, out RawInputHeader header)
             {
-                var size = RawInputHeader.SizeInBytes;
-
-                fixed (RawInputHeader* pheader = &header)
+                uint size = RawInputHeader.SizeInBytes;
+                fixed (RawInputHeader* headerPtr = &header)
                 {
-                    uint dataSize = GetRawInputData
+                    return GetRawInputData
                     (
-                        raw,
+                        rawInput,
                         GetRawInputDataCommand.Header,
-                        (IntPtr)pheader,
+                        (IntPtr)headerPtr,
                         ref size,
                         RawInputHeader.SizeInBytes
                     );
-
-                    if (dataSize != RawInputHeader.SizeInBytes)
-                    {
-                        System.Diagnostics.Debug.Print
-                        (
-                            $"[Error] Failed to retrieve raw input header. Error: {Marshal.GetLastWin32Error()}"
-                        );
-                    }
                 }
-
-                return size;
             }
 
-            public static unsafe uint GetRawInputData(IntPtr raw, out Native.RawInput data)
+            /// <summary>
+            /// Retrieves raw input data from the specified device.
+            /// </summary>
+            /// <param name="rawInput">
+            /// A handle to the <see cref="Native.RawInput"/> structure. This comes from the lParam in
+            /// <see cref="WindowMessage.Input"/>.
+            /// </param>
+            /// <param name="data">The <see cref="Native.RawInput"/> structure to receive the raw data.</param>
+            /// <returns>
+            /// If the function is successful, the return value is the number of bytes copied into
+            /// <paramref name="data"/>.<para/>
+            /// If there is an error, the return value is (UINT)-1 [== <see cref="uint.MaxValue"/>].
+            /// </returns>
+            public static unsafe UINT GetRawInputData(HRAWINPUT rawInput, out Native.RawInput data)
             {
-                var size = Native.RawInput.SizeInBytes;
-                fixed (Native.RawInput* pdata = &data)
+                uint size = Native.RawInput.SizeInBytes;
+                fixed (Native.RawInput* dataPtr = &data)
                 {
-                    GetRawInputData
+                    return GetRawInputData
                     (
-                        raw,
+                        rawInput,
                         GetRawInputDataCommand.Input,
-                        (LPVOID)pdata,
+                        (IntPtr)dataPtr,
                         ref size,
                         RawInputHeader.SizeInBytes
                     );
                 }
-
-                return size;
             }
 
-            public static unsafe uint GetRawInputData(IntPtr raw, byte[] data)
-            {
-                var size = (uint)data.Length;
-                fixed (byte* pdata = data)
-                {
-                    GetRawInputData
-                    (
-                        raw,
-                        GetRawInputDataCommand.Input,
-                        (IntPtr)pdata,
-                        ref size,
-                        RawInputHeader.SizeInBytes
-                    );
-                }
-
-                return size;
-            }
-
+            /// <summary>
+            /// Retrieves the raw input from the specified device.<para/>
+            /// Consider using one of the other overloads for a better experience.
+            /// </summary>
+            /// <param name="rawInput">
+            /// A handle to the <see cref="Native.RawInput"/> structure. This comes from the lParam in
+            /// <see cref="WindowMessage.Input"/>.
+            /// </param>
+            /// <param name="command">The command flag.</param>
+            /// <param name="data">
+            /// A pointer to the data that comes from the <see cref="Native.RawInput"/> structure. This depends on the
+            /// value of <paramref name="command"/>. If <paramref name="data"/> is <see cref="IntPtr.Zero"/>,
+            /// the required size of the buffer is returned in <paramref name="size"/>.
+            /// </param>
+            /// <param name="size">The size, in bytes, of the data in <paramref name="data"/>.</param>
+            /// <param name="headerSize">The size, in bytes, of the <see cref="RawInputHeader"/> structure.</param>
+            /// <returns>
+            /// If <paramref name="data"/> is <see cref="IntPtr.Zero"/> and the function is successful, the return
+            /// value is 0. If <paramref name="data"/> is not <see cref="IntPtr.Zero"/> and the function is successful,
+            /// the return value is the number of bytes copied into <paramref name="data"/>.<para/>
+            /// If there is an error, the return value is (UINT)-1 [== <see cref="uint.MaxValue"/>].
+            /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport("user32.dll", SetLastError = true)]
             public static extern UINT GetRawInputData
@@ -385,38 +426,6 @@ namespace OpenTK.NT.Native
                 [In] [Out] ref UINT size,
                 [In] UINT headerSize
             );
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
-            public static extern UINT GetRawInputData
-            (
-                [In] HRAWINPUT rawInput,
-                [In] GetRawInputDataCommand command,
-                [Out] [Optional] out Native.RawInput data,
-                [In] [Out] ref UINT size,
-                [In] UINT headerSize
-            );
-
-            [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
-            public static extern unsafe UINT GetRawInputData
-            (
-                [In] HRAWINPUT rawInput,
-                [In] GetRawInputDataCommand command,
-                [Out] [Optional] Native.RawInput* data,
-                [In] [Out] ref UINT size,
-                [In] UINT sizeHeader
-            );
-
-            public static unsafe IntPtr NextRawInputStructure(IntPtr data)
-            {
-                return RawInputAlign((IntPtr)((byte*)data + RawInputHeader.SizeInBytes));
-            }
-
-            private static unsafe IntPtr RawInputAlign(IntPtr data)
-            {
-                return (IntPtr)((byte*)data + ((IntPtr.Size - 1) & ~(IntPtr.Size - 1)));
-            }
         }
     }
 }

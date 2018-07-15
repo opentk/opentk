@@ -49,7 +49,7 @@ namespace OpenTK.Platform.Windows
         private readonly XInputJoystick XInput = new XInputJoystick();
         private HidProtocolData[] DataBuffer = new HidProtocolData[16];
 
-        private byte[] HidData = new byte[1024];
+        private RawInput _rawData = default(RawInput);
         private byte[] PreparsedData = new byte[1024];
 
         public WinRawJoystick(IntPtr window)
@@ -206,16 +206,11 @@ namespace OpenTK.Platform.Windows
             User32.RawInput.GetRawInputData(raw, GetRawInputDataCommand.Input, IntPtr.Zero, ref size,
                 RawInputHeader.SizeInBytes);
 
-            if (size > HidData.Length)
-                Array.Resize(ref HidData, (int)size);
-
             // Retrieve the raw HID data buffer
-            if (User32.RawInput.GetRawInputData(raw, HidData) > 0)
+            if (User32.RawInput.GetRawInputData(raw, out _rawData) > 0)
             {
-                fixed (byte* pdata = HidData)
+                fixed (RawInput* rin = &_rawData)
                 {
-                    var rin = (RawInput*)pdata;
-
                     var handle = rin->Header.Device;
                     var stick = GetDevice(handle);
                     if (stick == null)
@@ -634,7 +629,7 @@ namespace OpenTK.Platform.Windows
             // Retrieve a RID_DEVICE_INFO struct which contains the VID and PID
             var info = new RawInputDeviceInfo();
             var size = info.Size;
-            if (User32.RawInput.GetRawInputDeviceInfo(handle, GetRawInputDeviceInfoEnum.DeviceInfo, info, ref size) < 0)
+            if (User32.RawInput.GetRawInputDeviceInfo(handle, GetRawInputDeviceInfoEnum.DeviceInfo, ref info, ref size) < 0)
             {
                 Debug.Print("[WinRawJoystick] GetRawInputDeviceInfo(DEVICEINFO) failed with error {0}",
                     Marshal.GetLastWin32Error());
@@ -646,8 +641,8 @@ namespace OpenTK.Platform.Windows
             // different PID/VID format in DirectInput.
             // Do we need to use the same guid or could we simply use PID/VID
             // there too? (Test with an OUYA controller.)
-            var vid = info.Device.Hid.VendorId;
-            var pid = info.Device.Hid.ProductId;
+            var vid = info.Hid.VendorId;
+            var pid = info.Hid.ProductId;
             return new Guid(
                 (pid << 16) | vid,
                 0, 0,

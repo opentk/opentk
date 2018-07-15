@@ -54,7 +54,7 @@ namespace OpenTK.Platform.Windows
             get
             {
                 uint deviceCount = 0;
-                User32.RawInput.GetRawInputDeviceList(null, ref deviceCount, RawInputDeviceList.SizeInBytes);
+                User32.RawInput.GetRawInputDeviceList((RawInputDeviceList[])null, ref deviceCount, RawInputDeviceList.SizeInBytes);
                 return deviceCount;
             }
         }
@@ -71,7 +71,7 @@ namespace OpenTK.Platform.Windows
             var bdi = new BroadcastDeviceInterface
             {
                 Size = BroadcastDeviceInterface.SizeInBytes,
-                DeviceType = DeviceBroadcastType.Interface,
+                DeviceType = DeviceBroadcastType.DeviceInterface,
                 ClassGuid = DeviceInterfaceHid
             };
 

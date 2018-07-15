@@ -24,28 +24,44 @@ namespace OpenTK.NT.Native
         public DWORD Count;
 
         /// <summary>
-        /// Raw input data as an array of bytes.
+        /// The first byte of the raw input data.
         /// </summary>
         public byte RawData;
+
+        /// <summary>
+        /// Gets the raw input data as an array of bytes.
+        /// </summary>
+        /// <returns>An array of raw input data.</returns>
+        public unsafe byte[] GetRawData()
+        {
+            byte[] result = new byte[SizeHid * Count];
+
+            fixed (byte* dataPtr = &RawData)
+            {
+                for (int i = 0; i < result.Length; i++)
+                {
+                    result[i] = *(dataPtr + i);
+                }
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// Access the raw input data at a given index.
         /// </summary>
         /// <param name="index">The index at which to access the raw input data.</param>
         /// <returns>A byte of raw input data at the given index.</returns>
-        public unsafe byte this[int index]
+        public unsafe byte GetRawDataAt(int index)
         {
-            get
+            if (index < 0 || index > SizeHid * Count)
             {
-                if (index < 0 || index > SizeHid * Count)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(index));
-                }
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
 
-                fixed (byte* data = &RawData)
-                {
-                    return *(data + index);
-                }
+            fixed (byte* dataPtr = &RawData)
+            {
+                return *(dataPtr + index);
             }
         }
     }

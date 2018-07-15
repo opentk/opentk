@@ -5,7 +5,7 @@ namespace OpenTK.NT.Native
     /// <summary>
     /// Contains the raw input from a device.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    [StructLayout(LayoutKind.Sequential)]
     public struct RawInput
     {
         /// <summary>
