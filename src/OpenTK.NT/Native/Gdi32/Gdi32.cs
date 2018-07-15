@@ -13,7 +13,10 @@ namespace OpenTK.NT.Native
     /// </summary>
     public static class Gdi32
     {
-        private const string Library = "gdi32.dll";
+        /// <summary>
+        /// The filename of the dynamic link library (DLL) that contains these functions.
+        /// </summary>
+        public const string Library = "gdi32.dll";
 
         /// <summary>
         /// Attempts to match an appropriate pixel format supported by a device context to a given

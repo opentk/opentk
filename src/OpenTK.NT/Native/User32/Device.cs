@@ -38,7 +38,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.<para/>
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static extern HDEVNOTIFY RegisterDeviceNotification
             (
                 [In] HANDLE recipient,
@@ -58,7 +58,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is false.<para/>
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL UnregisterDeviceNotification([In] HDEVNOTIFY handle);
         }

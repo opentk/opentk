@@ -62,7 +62,7 @@ namespace OpenTK.NT.Native
             /// If no messages are available, the return value is false.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL PeekMessage
             (
@@ -128,7 +128,7 @@ namespace OpenTK.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("User32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static extern int GetMessage
             (
                 [Out] out Msg msg,
@@ -144,7 +144,7 @@ namespace OpenTK.NT.Native
             /// message was created (that is, placed in the thread's message queue).
             /// </summary>
             /// <returns>The return value specifies the message time.</returns>
-            [DllImport("User32.dll")]
+            [DllImport(Library)]
             public static extern LONG GetMessageTime();
 
             /// <summary>
@@ -163,7 +163,7 @@ namespace OpenTK.NT.Native
             /// <returns>
             /// The return value specifies the result of the message processing; it depends on the message sent.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static extern LRESULT SendMessage
             (
                 [In] HWND window,
@@ -210,7 +210,7 @@ namespace OpenTK.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("User32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL PostMessage
             (
@@ -248,7 +248,7 @@ namespace OpenTK.NT.Native
             /// The application exit code. This value is used as the
             /// wParam parameter of the <see cref="WindowMessage.Quit"/> message.
             /// </param>
-            [DllImport("User32.dll")]
+            [DllImport(Library)]
             public static extern void PostQuitMessage([In] int exitCode);
 
             /// <summary>
@@ -261,7 +261,7 @@ namespace OpenTK.NT.Native
             /// Although its meaning depends on the message being dispatched, the return value generally is ignored.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("User32.dll")]
+            [DllImport(Library)]
             public static extern LRESULT DispatchMessage([In] ref Msg msg);
 
             /// <summary>
@@ -285,7 +285,7 @@ namespace OpenTK.NT.Native
             /// thread's message queue), the return value is false.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("User32.dll")]
+            [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL TranslateMessage([In] ref Msg msg);
 
@@ -301,7 +301,7 @@ namespace OpenTK.NT.Native
             /// <see cref="PeekMessage(out Msg, HWND, DWORD, DWORD, PeekMessageActions)"/> function.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("User32.dll")]
+            [DllImport(Library)]
             public static extern DWORD GetQueueStatus([In] QueueMessageTypes flags);
         }
     }

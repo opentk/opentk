@@ -40,7 +40,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+            [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern HCURSOR LoadCursor
             (
                 [In] HINSTANCE moduleInstance,
@@ -59,7 +59,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             private static extern HCURSOR LoadCursor
             (
                 [In] [Optional] HINSTANCE moduleInstance,
@@ -81,7 +81,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is false.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool ClipCursor([In] [Optional] ref Rect rect);
 
@@ -100,7 +100,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is false.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool ClipCursor([In] [Optional] IntPtr rect);
 
@@ -111,7 +111,7 @@ namespace OpenTK.NT.Native
             /// If true, the display count is incremented by one. If false, the display count is decremented by one.
             /// </param>
             /// <returns>The return value specifies the new display counter.</returns>
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             public static extern int ShowCursor([In] bool show);
 
             /// <summary>
@@ -124,7 +124,7 @@ namespace OpenTK.NT.Native
             /// Returns true if successful or false otherwise.<para/>
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool GetCursorPos([Out] out Point point);
@@ -140,7 +140,7 @@ namespace OpenTK.NT.Native
             /// Returns true if successful or false otherwise.<para/>
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SetCursorPos([In] int x, [In] int y);
 
@@ -151,7 +151,7 @@ namespace OpenTK.NT.Native
             /// The return value is the handle to the current cursor. If there is
             /// no cursor, the return value is null.
             /// </returns>
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             public static extern HCURSOR GetCursor();
 
             /// <summary>
@@ -166,7 +166,7 @@ namespace OpenTK.NT.Native
             /// The return value is the handle to the previous cursor, if there was one.
             /// If there was no previous cursor, the return value is null.
             /// </returns>
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             public static extern HCURSOR SetCursor([In] [Optional] HCURSOR cursor);
         }
     }

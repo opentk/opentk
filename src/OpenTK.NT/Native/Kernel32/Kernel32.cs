@@ -17,7 +17,10 @@ namespace OpenTK.NT.Native
     /// </summary>
     public static class Kernel32
     {
-        private const string Library = "kernel32.dll";
+        /// <summary>
+        /// The filename of the dynamic link library (DLL) that contains these functions.
+        /// </summary>
+        public const string Library = "kernel32.dll";
 
         /// <summary>
         /// Retrieves the frequency of the performance counter. The frequency of the performance counter is fixed at

@@ -38,7 +38,7 @@ namespace OpenTK.NT.Native
             /// If the function does not find a matching class and successfully copy the data, the return value is
             /// false. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+            [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL GetClassInfoEx
             (
@@ -70,7 +70,7 @@ namespace OpenTK.NT.Native
             /// If the function does not find a matching class and successfully copy the data, the return value
             /// is false. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL GetClassInfoEx
             (
@@ -130,7 +130,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is zero.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+            [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern ushort RegisterClassEx([In] ref ExtendedWindowClass extendedWindowClass);
 
             /// <summary>
@@ -152,7 +152,7 @@ namespace OpenTK.NT.Native
             /// specified class.<para/>
             /// All window classes that an application registers are unregistered when it terminates.
             /// </remarks>
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+            [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL UnregisterClass([In] string className, [In] [Optional] HINSTANCE moduleInstance);
 
@@ -175,7 +175,7 @@ namespace OpenTK.NT.Native
             /// specified class.<para/>
             /// All window classes that an application registers are unregistered when it terminates.
             /// </remarks>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL UnregisterClass
             (

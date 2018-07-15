@@ -48,7 +48,7 @@ namespace OpenTK.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL AdjustWindowRect
             (
@@ -84,7 +84,7 @@ namespace OpenTK.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL AdjustWindowRectEx
             (
@@ -176,7 +176,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+            [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern HWND CreateWindowEx
             (
                 [In] ExtendedWindowStyles extendedStyle,
@@ -269,7 +269,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+            [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern HWND CreateWindowEx
             (
                 [In] ExtendedWindowStyles extendedStyle,
@@ -414,7 +414,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is false.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL DestroyWindow([In] HWND window);
 
@@ -442,7 +442,7 @@ namespace OpenTK.NT.Native
             /// The return value specifies the result of the message processing and depends on the message sent.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static extern LRESULT CallWindowProc
             (
                 [In] WNDPROC previousWindowFunc,
@@ -462,7 +462,7 @@ namespace OpenTK.NT.Native
             /// If the function succeeds, the return value is true.<para/>
             /// Otherwise, the return value is false.
             /// </returns>
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL SetProcessDPIAware();
 
@@ -562,7 +562,7 @@ namespace OpenTK.NT.Native
             }
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             private static extern int SetWindowLong
             (
                 [In] HWND window,
@@ -571,7 +571,7 @@ namespace OpenTK.NT.Native
             );
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             private static extern LONG_PTR SetWindowLongPtr
             (
                 [In] HWND window,
@@ -644,11 +644,11 @@ namespace OpenTK.NT.Native
             }
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             private static extern LONG GetWindowLongPrivate([In] HWND window, [In] int index);
 
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             private static extern LONG_PTR GetWindowLongPtr([In] HWND window, [In] int index);
 
             /// <summary>
@@ -666,7 +666,7 @@ namespace OpenTK.NT.Native
             /// <paramref name="msg"/> parameter.
             /// </param>
             /// <returns>The return value is the result of the message processing and depends on the message.</returns>
-            [DllImport("User32.dll", CharSet = CharSet.Unicode)]
+            [DllImport(Library, CharSet = CharSet.Unicode)]
             public static extern LRESULT DefWindowProc
             (
                 [In] HWND window,
@@ -681,7 +681,7 @@ namespace OpenTK.NT.Native
             /// <param name="window">A handle to the window.</param>
             /// <param name="showCommand">Controls how the window is to be shown.</param>
             /// <returns>If the window was previously visible, the return value is true. Otherwise false.</returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL ShowWindow([In] HWND window, [In] ShowWindowCommand showCommand);
@@ -707,7 +707,7 @@ namespace OpenTK.NT.Native
             /// is empty, or if the window or control handle is invalid, the return value is zero. To get extended
             /// error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+            [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern int GetWindowText
             (
                 [In] HWND window,
@@ -727,7 +727,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is zero.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+            [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL SetWindowText
             (
@@ -755,7 +755,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is false.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL SetWindowPos
             (
@@ -788,7 +788,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is false.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL SetWindowPos
             (
@@ -814,7 +814,7 @@ namespace OpenTK.NT.Native
             /// If the window was brought to the foreground, the return value is true.<para/>
             /// If the window was not brought to the foreground, the return value is false.
             /// </returns>
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL SetForegroundWindow([In] HWND window);
 
@@ -829,7 +829,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is false.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL BringWindowToTop([In] HWND window);
 
@@ -846,7 +846,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is null.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static extern HWND SetParent
             (
                 [In] HWND childWindow,
@@ -868,7 +868,7 @@ namespace OpenTK.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL GetWindowInfo([In] HWND hwnd, [In] [Out] ref WindowInfo wi);
 
@@ -883,7 +883,7 @@ namespace OpenTK.NT.Native
             /// Because the return value specifies whether the window has the <see cref="WindowStyles.Visible"/>
             /// style, it may be true even if the window is totally obscured by other windows.
             /// </returns>
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL IsWindowVisible([In] HWND window);
 
@@ -902,7 +902,7 @@ namespace OpenTK.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL GetWindowRect([In] HWND windowHandle, [Out] out Rect windowRectangle);
 
@@ -923,7 +923,7 @@ namespace OpenTK.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL GetClientRect([In] HWND windowHandle, [Out] out Rect clientRectangle);
 
@@ -939,7 +939,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is false.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL ScreenToClient([In] HWND window, ref Point point);
 
@@ -956,7 +956,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is false.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL ClientToScreen([In] HWND window, [In] [Out] ref Point point);
         }

@@ -51,7 +51,7 @@ namespace OpenTK.NT.Native
             /// the return value is an integer identifying the new timer. An application can pass this value to the
             /// <see cref="KillTimer(HWND, UINT_PTR)"/> function to destroy the timer.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static extern UINT_PTR SetTimer
             (
                 [In] [Optional] HWND window,
@@ -81,7 +81,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is false.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL KillTimer
             (

@@ -31,7 +31,7 @@ namespace OpenTK.NT.Native
             /// to the DC for the specified window's client area.
             /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
             /// </returns>
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             public static extern HDC GetDC([In] [Optional] HWND window);
 
             /// <summary>
@@ -46,7 +46,7 @@ namespace OpenTK.NT.Native
             /// If the DC was released, the return value is true.<para/>
             /// If the DC was not released, the return value is false.
             /// </returns>
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL ReleaseDC([In] HWND window, [In] HDC dc);
 
@@ -67,7 +67,7 @@ namespace OpenTK.NT.Native
             /// <returns>
             /// A <see cref="ChangeDisplaySettingsResult"/> indicating the status of the change operation.
             /// </returns>
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             public static extern ChangeDisplaySettingsResult ChangeDisplaySettings
             (
                 [In] ref DeviceMode deviceMode,
@@ -99,7 +99,7 @@ namespace OpenTK.NT.Native
             /// <returns>
             /// A <see cref="ChangeDisplaySettingsResult"/> indicating the status of the change operation.
             /// </returns>
-            [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+            [DllImport(Library, CharSet = CharSet.Unicode)]
             public static extern ChangeDisplaySettingsResult ChangeDisplaySettingsEx
             (
                 [In] [Optional] string deviceName,
@@ -133,7 +133,7 @@ namespace OpenTK.NT.Native
             /// If the function succeeds, the return value is true.
             /// If the function fails, the return value is false.
             /// </returns>
-            [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+            [DllImport(Library, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL EnumDisplaySettings
             (
@@ -169,7 +169,7 @@ namespace OpenTK.NT.Native
             /// If the function succeeds, the return value is true.
             /// If the function fails, the return value is false.
             /// </returns>
-            [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+            [DllImport(Library, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL EnumDisplaySettingsEx
             (
@@ -206,7 +206,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is false.
             /// The function fails if <paramref name="deviceIndex"/> is greater than the largest device index.
             /// </returns>
-            [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+            [DllImport(Library, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL EnumDisplayDevices
             (

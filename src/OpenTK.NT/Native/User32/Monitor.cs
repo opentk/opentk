@@ -29,7 +29,7 @@ namespace OpenTK.NT.Native
             /// If the function succeeds, the return value is nonzero.<para/>
             /// If the function fails, the return value is zero.
             /// </returns>
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL GetMonitorInfo([In] HMONITOR monitor, [Out] out MonitorInfo monitorInfo);
 
@@ -48,7 +48,7 @@ namespace OpenTK.NT.Native
             /// If the point is not contained by a display monitor,
             /// the return value depends on the value of <paramref name="defaultTo"/>.
             /// </returns>
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             public static extern HMONITOR MonitorFromPoint([In] Point pt, [In] MonitorFromDefaultValue defaultTo);
 
             /// <summary>
@@ -66,7 +66,7 @@ namespace OpenTK.NT.Native
             /// If the window does not intersect a display monitor,
             /// the return value depends on the value of <paramref name="defaultTo"/>.
             /// </returns>
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             public static extern HMONITOR MonitorFromWindow([In] HWND window, [In] MonitorFromDefaultValue defaultTo);
         }
     }

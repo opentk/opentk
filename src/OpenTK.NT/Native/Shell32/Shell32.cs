@@ -16,7 +16,10 @@ namespace OpenTK.NT.Native
     /// </summary>
     public static class Shell32
     {
-        private const string Library = "shell32.dll";
+        /// <summary>
+        /// The filename of the dynamic link library (DLL) that contains these functions.
+        /// </summary>
+        public const string Library = "shell32.dll";
 
         /// <summary>
         /// Registers whether a window accepts dropped files.

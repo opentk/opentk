@@ -29,7 +29,7 @@ namespace OpenTK.NT.Native
             /// (if any) on the keyboard will be on when the key is toggled, and off when the key is untoggled.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static extern SHORT GetKeyState([In] VirtualKey key);
 
             /// <summary>
@@ -45,7 +45,7 @@ namespace OpenTK.NT.Native
             /// behavior; for more information, see the Remarks section in the official documentation.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static extern SHORT GetAsyncKeyState([In] VirtualKey key);
 
             /// <summary>
@@ -57,7 +57,7 @@ namespace OpenTK.NT.Native
             /// queue does not have an associated window with the keyboard focus,
             /// the return value is <see cref="IntPtr.Zero"/>.
             /// </returns>
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             public static extern HWND GetFocus();
 
             /// <summary>
@@ -72,7 +72,7 @@ namespace OpenTK.NT.Native
             /// to the calling thread's message queue, the return value is <see cref="IntPtr.Zero"/>.<para/>
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static extern HWND SetFocus([In] [Optional] HWND window);
 
             /// <summary>
@@ -90,7 +90,7 @@ namespace OpenTK.NT.Native
             /// If there is no translation, the return value is zero.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static extern UINT MapVirtualKey([In] VirtualKey vkey, [In] MapVirtualKeyType mapType);
         }
     }

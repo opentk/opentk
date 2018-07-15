@@ -26,7 +26,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static extern HICON CreateIconIndirect([In] ref IconInfo iconInfo);
 
             /// <summary>
@@ -38,7 +38,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is false.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL DestroyIcon([In] HICON icon);
 
@@ -55,7 +55,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is false.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL GetIconInfo([In] HICON icon, [Out] out IconInfo iconInfo);
 
@@ -109,7 +109,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+            [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern HICON LoadIcon([In] [Optional] HINSTANCE moduleInstance, [In] string iconName);
 
             /// <summary>
@@ -126,7 +126,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+            [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern HICON LoadIcon([In] [Optional] HINSTANCE moduleInstance, [In] IntPtr iconName);
 
             /// <summary>

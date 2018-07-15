@@ -21,7 +21,7 @@ namespace OpenTK.NT.Native
             /// The return value is a handle to the capture window associated with the current thread.<para/>
             /// If no window in the thread has captured the mouse, the return value is <see cref="IntPtr.Zero"/>.
             /// </returns>
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             public static extern HWND GetCapture();
 
             /// <summary>
@@ -39,7 +39,7 @@ namespace OpenTK.NT.Native
             /// The return value is a handle to the window that had previously captured the mouse.
             /// If there is no such window, the return value is <see cref="IntPtr.Zero"/>.
             /// </returns>
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             public static extern HWND SetCapture(HWND window);
 
             /// <summary>
@@ -53,7 +53,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is false.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool ReleaseCapture();
 
@@ -69,7 +69,7 @@ namespace OpenTK.NT.Native
             /// If the function fails, return value is false.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool TrackMouseEvent([In] [Out] ref TrackMouseEvent trackMouseEvent);
 

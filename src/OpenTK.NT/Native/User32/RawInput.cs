@@ -36,7 +36,7 @@ namespace OpenTK.NT.Native
             /// If successful, the function returns <see cref="IntPtr.Zero"/>. Otherwise it returns an error value.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             public static extern LRESULT DefRawInputProc
             (
                 [In] Native.RawInput[] rawInputArrayOut,
@@ -62,7 +62,7 @@ namespace OpenTK.NT.Native
             /// If successful, the function returns <see cref="IntPtr.Zero"/>. Otherwise it returns an error value.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll")]
+            [DllImport(Library)]
             public static unsafe extern LRESULT DefRawInputProc
             (
                 [In] Native.RawInput* rawInputArrayOut,
@@ -85,7 +85,7 @@ namespace OpenTK.NT.Native
             /// True if the function succeeds; otherwise, false.<para/>
             /// If the function fails, call <see cref="Marshal.GetLastWin32Error"/> for more information.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern BOOL RegisterRawInputDevices
             (
@@ -112,7 +112,7 @@ namespace OpenTK.NT.Native
             /// required number of devices. If the function fails for any other reason, it returns -1.<para/>
             /// For more details, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static extern UINT GetRegisteredRawInputDevices
             (
                 [Out] [Optional] RawInputDevice[] rawInputDevicesOut,
@@ -137,7 +137,7 @@ namespace OpenTK.NT.Native
             /// Call <see cref="Marshal.GetLastWin32Error"/> for the error code.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static extern UINT GetRawInputBuffer
             (
                 [Out] [Optional] Native.RawInput[] data,
@@ -162,7 +162,7 @@ namespace OpenTK.NT.Native
             /// Call <see cref="Marshal.GetLastWin32Error"/> for the error code.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static unsafe extern UINT GetRawInputBuffer
             (
                 [Out] [Optional] Native.RawInput* data,
@@ -194,7 +194,7 @@ namespace OpenTK.NT.Native
             /// On any other error, the function returns (UINT)-1 and
             /// <see cref="Marshal.GetLastWin32Error"/> returns the error indication.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static extern UINT GetRawInputDeviceList
             (
                 [Out] [Optional] RawInputDeviceList[] deviceListArrayOut,
@@ -226,7 +226,7 @@ namespace OpenTK.NT.Native
             /// On any other error, the function returns (UINT)-1 and
             /// <see cref="Marshal.GetLastWin32Error"/> returns the error indication.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static unsafe extern UINT GetRawInputDeviceList
             (
                 [Out] [Optional] RawInputDeviceList* deviceListArrayOut,
@@ -259,7 +259,7 @@ namespace OpenTK.NT.Native
             /// Call <see cref="Marshal.GetLastWin32Error"/> to identify any other errors.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static extern UINT GetRawInputDeviceInfo
             (
                 [In] [Optional] HANDLE device,
@@ -293,7 +293,7 @@ namespace OpenTK.NT.Native
             /// Call <see cref="Marshal.GetLastWin32Error"/> to identify any other errors.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static unsafe extern UINT GetRawInputDeviceInfo
             (
                 [In] [Optional] HANDLE device,
@@ -327,7 +327,7 @@ namespace OpenTK.NT.Native
             /// Call <see cref="Marshal.GetLastWin32Error"/> to identify any other errors.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static extern uint GetRawInputDeviceInfo
             (
                 [In] [Optional] HANDLE device,
@@ -417,7 +417,7 @@ namespace OpenTK.NT.Native
             /// If there is an error, the return value is (UINT)-1 [== <see cref="uint.MaxValue"/>].
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
-            [DllImport("user32.dll", SetLastError = true)]
+            [DllImport(Library, SetLastError = true)]
             public static extern UINT GetRawInputData
             (
                 [In] HRAWINPUT rawInput,
