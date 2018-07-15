@@ -48,11 +48,19 @@ namespace OpenTK.NT.Native
         /// <inheritdoc/>
         public override string ToString() => $"{{X={Left},Y={Top},Width={Width},Height={Height}}}";
 
-        public static implicit operator Rectangle(Rect rect)
+        /// <summary>
+        /// Implicitly converts a <see cref="Rect"/> structure into a <see cref="Rectangle"/> structure.
+        /// </summary>
+        /// <param name="value">A <see cref="Rectangle"/> with the same values as the given <see cref="Rect"/>.</param>
+        public static implicit operator Rectangle(Rect value)
         {
-            return Rectangle.FromLTRB(rect.Left, rect.Top, rect.Right, rect.Bottom);
+            return Rectangle.FromLTRB(value.Left, value.Top, value.Right, value.Bottom);
         }
 
+        /// <summary>
+        /// Implicitly converts a <see cref="Rectangle"/> structure into a <see cref="Rect"/> structure.
+        /// </summary>
+        /// <param name="value">A <see cref="Rect"/> with the same values as the given <see cref="Rectangle"/>.</param>
         public static implicit operator Rect(Rectangle value)
         {
             return new Rect

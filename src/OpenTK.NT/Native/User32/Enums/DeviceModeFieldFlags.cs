@@ -40,7 +40,7 @@ namespace OpenTK.NT.Native
         Scale = 0x00000010,
 
         /// <summary>
-        /// Specifies whether the <see cref="DeviceMode.Position"/> field is set.
+        /// Specifies whether the <see cref="DeviceMode.DisplayDeviceOptions.Position"/> field is set.
         /// </summary>
         Position = 0x00000020,
 
