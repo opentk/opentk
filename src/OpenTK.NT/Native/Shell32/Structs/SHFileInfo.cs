@@ -45,6 +45,6 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// The size of this structure in bytes.
         /// </summary>
-        public static uint SizeInBytes = (uint)Marshal.SizeOf<SHFileInfo>();
+        public static readonly uint SizeInBytes = (uint)Marshal.SizeOf<SHFileInfo>();
     }
 }

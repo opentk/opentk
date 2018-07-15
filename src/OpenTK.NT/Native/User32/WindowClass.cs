@@ -116,7 +116,7 @@ namespace OpenTK.NT.Native
             /// <see cref="Window.CreateWindowEx(ExtendedWindowStyles, HINSTANCE, string, WindowStyles, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
             /// function.
             /// </summary>
-            /// <param name="extendedWindowStyle">
+            /// <param name="extendedWindowClass">
             /// A pointer to a <see cref="ExtendedWindowClass"/> structure. You must fill the structure with the
             /// appropriate class attributes before passing it to the function.
             /// </param>
@@ -130,8 +130,8 @@ namespace OpenTK.NT.Native
             /// If the function fails, the return value is zero.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            [DllImport("user32.dll", SetLastError = true)]
-            public static extern ushort RegisterClassEx([In] ref ExtendedWindowClass extendedWindowStyle);
+            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+            public static extern ushort RegisterClassEx([In] ref ExtendedWindowClass extendedWindowClass);
 
             /// <summary>
             /// Unregisters a window class, freeing the memory required for the class.

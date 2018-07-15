@@ -115,7 +115,7 @@ namespace OpenTK.NT.Native
             [DllImport("user32.dll", SetLastError = true)]
             public static extern UINT GetRegisteredRawInputDevices
             (
-                [Out] [Optional] Native.RawInput[] rawInputDevicesOut,
+                [Out] [Optional] RawInputDevice[] rawInputDevicesOut,
                 [In] [Out] ref UINT deviceAmount,
                 [In] UINT size
             );
