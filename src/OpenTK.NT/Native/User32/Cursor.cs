@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Security;
 
+using BOOL = System.Boolean;
 using HCURSOR = System.IntPtr;
 using HINSTANCE = System.IntPtr;
 
@@ -83,7 +84,7 @@ namespace OpenTK.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ClipCursor([In] [Optional] ref Rect rect);
+            public static extern BOOL ClipCursor([In] [Optional] ref Rect rect);
 
             /// <summary>
             /// Confines the cursor to a rectangular area on the screen. If a subsequent cursor position
@@ -102,7 +103,7 @@ namespace OpenTK.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ClipCursor([In] [Optional] IntPtr rect);
+            public static extern BOOL ClipCursor([In] [Optional] IntPtr rect);
 
             /// <summary>
             /// Displays or hides the cursor.
@@ -112,7 +113,7 @@ namespace OpenTK.NT.Native
             /// </param>
             /// <returns>The return value specifies the new display counter.</returns>
             [DllImport(Library)]
-            public static extern int ShowCursor([In] bool show);
+            public static extern int ShowCursor([In] BOOL show);
 
             /// <summary>
             /// Retrieves the cursor's position, in screen coordinates.
@@ -127,7 +128,7 @@ namespace OpenTK.NT.Native
             [DllImport(Library, SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool GetCursorPos([Out] out Point point);
+            public static extern BOOL GetCursorPos([Out] out Point point);
 
             /// <summary>
             /// Moves the cursor to the specified screen coordinates. If the new coordinates are not within the
@@ -142,7 +143,7 @@ namespace OpenTK.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool SetCursorPos([In] int x, [In] int y);
+            public static extern BOOL SetCursorPos([In] int x, [In] int y);
 
             /// <summary>
             /// Retrieves a handle to the current cursor.

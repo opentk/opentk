@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
+using BOOL = System.Boolean;
 using HWND = System.IntPtr;
 
 namespace OpenTK.NT.Native
@@ -55,7 +56,7 @@ namespace OpenTK.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ReleaseCapture();
+            public static extern BOOL ReleaseCapture();
 
             /// <summary>
             /// Posts messages when the mouse pointer leaves a window or hovers
@@ -71,7 +72,7 @@ namespace OpenTK.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool TrackMouseEvent([In] [Out] ref TrackMouseEvent trackMouseEvent);
+            public static extern BOOL TrackMouseEvent([In] [Out] ref TrackMouseEvent trackMouseEvent);
 
             /// <summary>
             /// Retrieves a history of up to 64 previous coordinates of the mouse or pen.

@@ -27,7 +27,7 @@ namespace OpenTK.NT.Native
         /// Default value for <see cref="SpecVersion"/> and <see cref="DriverVersion"/> (see the documentation of those
         /// fields for more information).
         /// </summary>
-        public const WORD SPECVERSION = 800;
+        public const WORD DefaultSpecVersion = 800;
 
         /// <summary>
         /// A zero-terminated character array that specifies the "friendly" name of the printer or display.
@@ -38,14 +38,14 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// The version number of the initialization data specification on which the structure is based.
-        /// The current version number is identified by <see cref="SPECVERSION"/>.
+        /// The current version number is identified by <see cref="DefaultSpecVersion"/>.
         /// </summary>
         [FieldOffset(64)]
         public WORD SpecVersion;
 
         /// <summary>
         /// For a printer, specifies the printer driver version number assigned by the printer driver developer.<para/>
-        /// Display drivers can set this member to <see cref="SPECVERSION"/>.
+        /// Display drivers can set this member to <see cref="DefaultSpecVersion"/>.
         /// </summary>
         [FieldOffset(66)]
         public WORD DriverVersion;

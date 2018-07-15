@@ -35,7 +35,7 @@ namespace OpenTK
     {
         private readonly GraphicsMode mode;
 
-        private Msg message;
+        private Msg _message;
 
         public WinGLControl(GraphicsMode mode, Control control)
         {
@@ -49,7 +49,7 @@ namespace OpenTK
             return new GraphicsContext(mode, WindowInfo, major, minor, flags);
         }
 
-        public bool IsIdle => !User32.Message.PeekMessage(out message, IntPtr.Zero, 0, 0, 0);
+        public bool IsIdle => !User32.Message.PeekMessage(out _message, IntPtr.Zero, 0, 0, 0);
 
         public IWindowInfo WindowInfo { get; }
     }

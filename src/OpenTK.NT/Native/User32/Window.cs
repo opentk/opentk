@@ -98,7 +98,7 @@ namespace OpenTK.NT.Native
             /// A constant that can be used in all CreateWindowEx overloads to specify special behavior.<para/>
             /// For more information, see any CreateWindowEx overload.
             /// </summary>
-            public const int USEDEFAULT = unchecked((int)0x80000000);
+            public const int UseDefault = unchecked((int)0x80000000);
 
             /// <summary>
             /// Creates an overlapped, pop-up, or child window with an extended window style; otherwise,
@@ -136,18 +136,18 @@ namespace OpenTK.NT.Native
             /// </param>
             /// <param name="width">
             /// The width, in device units, of the window. For overlapped windows, nWidth is the window's width, in
-            /// screen coordinates, or <see cref="USEDEFAULT"/>.<para/>
-            /// If nWidth is <see cref="USEDEFAULT"/>, the system selects a default width and height for the window;
+            /// screen coordinates, or <see cref="UseDefault"/>.<para/>
+            /// If nWidth is <see cref="UseDefault"/>, the system selects a default width and height for the window;
             /// the default width extends from the initial x-coordinates to the right edge of the screen; the default
             /// height extends from the initial y-coordinate to the top of the icon area.<para/>
-            /// <see cref="USEDEFAULT"/> is valid only for overlapped windows; if <see cref="USEDEFAULT"/> is
+            /// <see cref="UseDefault"/> is valid only for overlapped windows; if <see cref="UseDefault"/> is
             /// specified for a pop-up or child window, the <paramref name="width"/> and <paramref name="height"/>
             /// parameter are set to zero.
             /// </param>
             /// <param name="height">
             /// The height, in device units, of the window. For overlapped windows, <paramref name="height"/> is the
             /// window's height, in screen coordinates.<para/>
-            /// If the <paramref name="width"/> parameter is set to <see cref="USEDEFAULT"/>,
+            /// If the <paramref name="width"/> parameter is set to <see cref="UseDefault"/>,
             /// the system ignores <paramref name="height"/>.
             /// </param>
             /// <param name="parentWindow">
@@ -229,18 +229,18 @@ namespace OpenTK.NT.Native
             /// </param>
             /// <param name="width">
             /// The width, in device units, of the window. For overlapped windows, nWidth is the window's width, in
-            /// screen coordinates, or <see cref="USEDEFAULT"/>.<para/>
-            /// If nWidth is <see cref="USEDEFAULT"/>, the system selects a default width and height for the window;
+            /// screen coordinates, or <see cref="UseDefault"/>.<para/>
+            /// If nWidth is <see cref="UseDefault"/>, the system selects a default width and height for the window;
             /// the default width extends from the initial x-coordinates to the right edge of the screen; the default
             /// height extends from the initial y-coordinate to the top of the icon area.<para/>
-            /// <see cref="USEDEFAULT"/> is valid only for overlapped windows; if <see cref="USEDEFAULT"/> is
+            /// <see cref="UseDefault"/> is valid only for overlapped windows; if <see cref="UseDefault"/> is
             /// specified for a pop-up or child window, the <paramref name="width"/> and <paramref name="height"/>
             /// parameter are set to zero.
             /// </param>
             /// <param name="height">
             /// The height, in device units, of the window. For overlapped windows, <paramref name="height"/> is the
             /// window's height, in screen coordinates.<para/>
-            /// If the <paramref name="width"/> parameter is set to <see cref="USEDEFAULT"/>,
+            /// If the <paramref name="width"/> parameter is set to <see cref="UseDefault"/>,
             /// the system ignores <paramref name="height"/>.
             /// </param>
             /// <param name="parentWindow">
@@ -325,18 +325,18 @@ namespace OpenTK.NT.Native
             /// </param>
             /// <param name="width">
             /// The width, in device units, of the window. For overlapped windows, nWidth is the window's width, in
-            /// screen coordinates, or <see cref="USEDEFAULT"/>.<para/>
-            /// If nWidth is <see cref="USEDEFAULT"/>, the system selects a default width and height for the window;
+            /// screen coordinates, or <see cref="UseDefault"/>.<para/>
+            /// If nWidth is <see cref="UseDefault"/>, the system selects a default width and height for the window;
             /// the default width extends from the initial x-coordinates to the right edge of the screen; the default
             /// height extends from the initial y-coordinate to the top of the icon area.<para/>
-            /// <see cref="USEDEFAULT"/> is valid only for overlapped windows; if <see cref="USEDEFAULT"/> is
+            /// <see cref="UseDefault"/> is valid only for overlapped windows; if <see cref="UseDefault"/> is
             /// specified for a pop-up or child window, the <paramref name="width"/> and <paramref name="height"/>
             /// parameter are set to zero.
             /// </param>
             /// <param name="height">
             /// The height, in device units, of the window. For overlapped windows, <paramref name="height"/> is the
             /// window's height, in screen coordinates.<para/>
-            /// If the <paramref name="width"/> parameter is set to <see cref="USEDEFAULT"/>,
+            /// If the <paramref name="width"/> parameter is set to <see cref="UseDefault"/>,
             /// the system ignores <paramref name="height"/>.
             /// </param>
             /// <param name="parentWindow">
