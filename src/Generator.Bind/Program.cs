@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Bind.Generators;
 using Bind.Generators.ES;
 using Bind.Generators.GL2;
+using Bind.XML;
 using CommandLine;
 
 namespace Bind
@@ -38,6 +40,9 @@ namespace Bind
             {
                 return 1;
             }
+
+            var signatureReader = new SignatureReader(Path.Combine(Arguments.InputPath, "GL2", "signatures.xml"));
+            var profiles = signatureReader.GetAvailableProfiles().GroupBy(p => p.Name).ToList();
 
             CreateGenerators();
 

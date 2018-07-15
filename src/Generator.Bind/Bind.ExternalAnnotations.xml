@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <assembly name="Bind">
-  <member name="M:Bind.Extensions.ApiProfileExtensions.GetFriendlyName(Bind.XML.ApiProfile)">
+  <member name="M:Bind.Extensions.ApiProfileExtensions.GetFriendlyName(Bind.XML.Signatures.ApiProfile)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <parameter name="profile">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
@@ -53,7 +53,39 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="M:Bind.XML.ApiProfile.#ctor(System.String,System.Version,System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.FunctionSignature},System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Enumerations.EnumerationSignature})">
+  <member name="M:Bind.XML.OverrideReader.#ctor(System.String)">
+    <parameter name="signatureFilePath">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.PathReferenceAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.XML.OverrideReader.GetProfileOverrides">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+  </member>
+  <member name="P:Bind.XML.Overrides.ApiProfileOverride.AddedEnumerations">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="P:Bind.XML.Overrides.ApiProfileOverride.AddedFunctions">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="P:Bind.XML.Overrides.ApiProfileOverride.Name">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="P:Bind.XML.Overrides.ApiProfileOverride.Version">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.XML.SignatureReader.#ctor(System.String)">
+    <parameter name="signatureFilePath">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.PathReferenceAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.XML.SignatureReader.GetAvailableProfiles">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.XML.Signatures.ApiProfile.#ctor(System.String,System.Version,System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.FunctionSignature},System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Enumerations.EnumerationSignature})">
     <parameter name="name">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
@@ -67,27 +99,17 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="P:Bind.XML.ApiProfile.Enumerations">
+  <member name="P:Bind.XML.Signatures.ApiProfile.Enumerations">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
-  <member name="P:Bind.XML.ApiProfile.Functions">
+  <member name="P:Bind.XML.Signatures.ApiProfile.Functions">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
-  <member name="P:Bind.XML.ApiProfile.Name">
+  <member name="P:Bind.XML.Signatures.ApiProfile.Name">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
-  <member name="P:Bind.XML.ApiProfile.Version">
+  <member name="P:Bind.XML.Signatures.ApiProfile.Version">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-  </member>
-  <member name="M:Bind.XML.SignatureReader.#ctor(System.String)">
-    <parameter name="signatureFilePath">
-      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-      <attribute ctor="M:JetBrains.Annotations.PathReferenceAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Bind.XML.SignatureReader.GetAvailableProfiles">
-    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
   </member>
   <member name="M:Bind.XML.Signatures.Enumerations.EnumerationSignature.#ctor(System.String,System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Enumerations.TokenSignature},System.Version)">
     <parameter name="name">

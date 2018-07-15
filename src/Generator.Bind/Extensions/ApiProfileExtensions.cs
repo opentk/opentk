@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Bind.XML;
+using Bind.XML.Signatures;
 using JetBrains.Annotations;
 
 namespace Bind.Extensions

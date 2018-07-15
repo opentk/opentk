@@ -5,7 +5,7 @@ using Bind.XML.Signatures.Enumerations;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
 
-namespace Bind.XML
+namespace Bind.XML.Signatures
 {
     /// <summary>
     /// Represents an available API profile of a specific version.

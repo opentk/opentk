@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Bind.Structures;
+using Bind.XML.Signatures;
 using Bind.XML.Signatures.Enumerations;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
@@ -360,7 +361,7 @@ namespace Bind.XML
         /// <summary>
         /// Retrieves the available profiles in the signatures.
         /// </summary>
-        /// <returns>A set profiles.</returns>
+        /// <returns>A set of profiles.</returns>
         [NotNull, ItemNotNull]
         public IEnumerable<ApiProfile> GetAvailableProfiles()
         {

@@ -19,10 +19,6 @@
     <PackageReference Include="System.Memory" Version="4.5.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="XML\Overrides" />
-  </ItemGroup>
-
   <Import Project="..\..\build\targets\netfx-mono.props" />
   <Import Project="..\..\build\targets\stylecop.props" />
   <Import Project="..\..\build\targets\jetbrains.props" />
