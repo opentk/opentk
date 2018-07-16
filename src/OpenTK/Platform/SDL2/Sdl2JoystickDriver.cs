@@ -475,7 +475,7 @@ namespace OpenTK.Platform.SDL2
                                 GamePadType.GamePad,
                                 GetBoundAxes(joystick),
                                 GetBoundButtons(joystick),
-                                true);
+                                true, true);
                             pad.State.SetConnected(true);
 
                             // Connect this device and add the relevant device index
@@ -554,7 +554,7 @@ namespace OpenTK.Platform.SDL2
         }
 #endif
 
-#if USE_SDL2_GAMECONTOLLER
+#if USE_SDL2_GAMECONTROLLER
         public GamePadCapabilities GetCapabilities(int index)
         {
             if (IsControllerValid(index))
@@ -575,7 +575,16 @@ namespace OpenTK.Platform.SDL2
 
         public string GetName(int index)
         {
-            return String.Empty;
+            if (IsControllerValid(index))
+            {
+                return SDL.GameControllerName(controllers[index].Handle);
+            }
+            return string.Empty;
+        }
+
+        public bool SetVibration(int index, float left, float right)
+        {
+            return false;
         }
 #else
         public GamePadCapabilities GetCapabilities(int index)

@@ -96,6 +96,14 @@ namespace OpenTK.Platform.SDL2
             return GetInputDriver().JoystickDriver;
         }
 
+
+#if USE_SDL2_GAMECONTROLLER
+        public override IGamePadDriver CreateGamePadDriver()
+        {
+            return GetInputDriver().GamePadDriver;
+        }
+#endif
+
         protected override void Dispose(bool manual)
         {
             if (!IsDisposed)
