@@ -36,11 +36,9 @@ namespace OpenTK.Rewrite.Method
             {
                 // String return-type wrapper
                 // return new string((sbyte*)((void*)GetString()));
-                var opExplicit = _intPtrType.GetMethod("op_Explicit");
-                if (!opExplicit.ReturnType.FullNameEquals(typeof(void*)))
-                {
-                    throw new InvalidOperationException();
-                }
+                var opExplicit = _wrapper.Module.ImportReference(
+                    _intPtrType.Methods.First(m => m.Name == "op_Explicit" && m.ReturnType.FullNameEquals(typeof(void*)))
+                );
 
                 var stringConstructor = _wrapper.Module.ImportReference(_stringType
                     .GetConstructors()

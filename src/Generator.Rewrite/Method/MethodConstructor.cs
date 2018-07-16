@@ -56,7 +56,7 @@ namespace OpenTK.Rewrite.Method
             }
 
             IEnumerable<GeneratedVariableIdentifier> generatedVariables;
-            int paramCountDifference = _wrapper.Parameters.Count - _native.Parameters.Count;
+            int paramCountDifference = _native.Parameters.Count - _wrapper.Parameters.Count;
             if (paramCountDifference == 0)
             {
                 generatedVariables = EmitParameters();

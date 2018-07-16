@@ -127,7 +127,7 @@ namespace OpenTK.Rewrite
             if (entryPoints != null)
             {
                 // Build list of entry point signatures (one per entry point)
-                var entrySignatures = type.Methods.Where(t => t.CustomAttributes.Any(a => a.AttributeType.Name == AttributeNames.Slot));
+                var entrySignatures = type.Methods.Where(t => t.CustomAttributes.Any(a => a.AttributeType.Name == AttributeNames.Slot)).ToList();
 
                 RewriteWrapperMethods(type, entryPoints, entrySignatures);
 

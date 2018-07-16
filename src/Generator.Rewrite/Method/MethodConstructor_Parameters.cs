@@ -11,11 +11,6 @@ namespace OpenTK.Rewrite.Method
     {
         private IEnumerable<GeneratedVariableIdentifier> EmitParameters()
         {
-            if (_wrapper.Parameters.Count != _native.Parameters.Count)
-            {
-                throw new InvalidOperationException($"{nameof(EmitParameters)} only works when the native and wrapper method have the same number of parameters!");
-            }
-
             var generatedVariables = new List<GeneratedVariableIdentifier>();
             for (int i = 0; i < _wrapper.Parameters.Count; i++)
             {
@@ -74,7 +69,7 @@ namespace OpenTK.Rewrite.Method
 
                     // Pin the array and pass the address
                     // of its first element.
-                    var arrayType = paramType.MakeArrayType();
+                    var arrayType = (ArrayType)paramType;
                     var elementType = paramType.GetElementType();
                     _body.Variables.Add(new VariableDefinition(new PinnedType(new ByReferenceType(elementType))));
                     int pinnedIndex = _body.Variables.Count - 1;
@@ -331,14 +326,7 @@ namespace OpenTK.Rewrite.Method
 
         private T GetAttributeField<T>(CustomAttribute attribute, string name)
         {
-            try
-            {
-                return (T)attribute.Fields.First(f => f.Name == name).Argument.Value;
-            }
-            catch (InvalidOperationException)
-            {
-                return default(T);
-            }
+            return (T)(attribute.Fields.FirstOrDefault(f => f.Name == name).Argument.Value ?? default(T));
         }
 
         private CountAttribute GetCountAttribute(ParameterDefinition parameter)
