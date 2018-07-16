@@ -4,6 +4,7 @@ using Mono.Cecil.Rocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Rewrite.Method
 {
@@ -185,7 +186,7 @@ namespace OpenTK.Rewrite.Method
             _ilProcessor.Emit(OpCodes.Pop);
 
             // Make sure we have imported Marshal::AllocHGlobal
-            var allocHGlobal = _wrapper.Module.ImportReference(_marshalType.GetMethod("AllocHGlobal"));
+            var allocHGlobal = _wrapper.Module.ImportReference(_marshalType.GetMethod(nameof(Marshal.AllocHGlobal)));
 
             // IntPtr ptr;
             var variableDefinition = new VariableDefinition(_intPtrType);
@@ -263,7 +264,7 @@ namespace OpenTK.Rewrite.Method
 
             // Make sure we have imported BindingsBase::MarshalPtrToString and Marshal::FreeHGlobal
             var ptrToString = _wrapper.Module.ImportReference(_bindingsBaseType.GetMethod("MarshalPtrToString"));
-            var freeHGlobal = _wrapper.Module.ImportReference(_marshalType.GetMethod("FreeHGlobal"));
+            var freeHGlobal = _wrapper.Module.ImportReference(_marshalType.GetMethod(nameof(Marshal.FreeHGlobal)));
 
             var block = new ExceptionHandler(ExceptionHandlerType.Finally)
             {
