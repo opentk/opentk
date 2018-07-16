@@ -173,7 +173,7 @@ on to creating your [Pull Request][4].
 Pull requests are without a doubt one of the more involved contribution
 types. Primarily, in order for a pull request to be accepted, it must
 maintain a high quality, be well tested, and not have any major breaking
-changes (unless absolutely neccesary). There's going to be a lot of
+changes (unless absolutely necessary). There's going to be a lot of
 stuff dumped on you in the next few paragraphs, but keep in mind that
 most are *guidelines*, not hard rules. Stick to them as best you can,
 and when in doubt - just ask.
@@ -193,7 +193,7 @@ All pull requests should have the following:
 * If applicable, a compilable example which demonstrates the changes. A
 git repository is preferred, and your changed branch should be included
 as a submodule.
-* A short explanation of why you think these changes are neccesary, if
+* A short explanation of why you think these changes are necessary, if
 it is not readily apparent from the rest of the pull request.
 
 All code changes must follow these rules:
