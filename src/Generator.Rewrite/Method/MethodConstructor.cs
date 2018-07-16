@@ -31,7 +31,7 @@ namespace OpenTK.Rewrite.Method
             }
 
             _wrapper = wrapper ?? throw new ArgumentNullException(nameof(wrapper));
-            _native = _native ?? throw new ArgumentNullException(nameof(_native));
+            _native = native ?? throw new ArgumentNullException(nameof(_native));
             _bindingsBaseType = bindingsBaseType ?? throw new ArgumentNullException(nameof(bindingsBaseType));
             _options = options ?? throw new ArgumentNullException(nameof(options));
 
