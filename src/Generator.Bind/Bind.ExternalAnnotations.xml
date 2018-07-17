@@ -167,10 +167,30 @@
   <member name="P:Bind.XML.Overrides.Enumerations.UseTokenOverride.Token">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
-  <member name="P:Bind.XML.Overrides.Functions.FunctionOverride.Extension">
+  <member name="M:Bind.XML.Overrides.Functions.FunctionOverride.#ctor(System.String,System.String,System.Version,System.String,Bind.XML.Signatures.Functions.TypeSignature,System.Collections.Generic.IReadOnlyList{Bind.XML.Overrides.Functions.ParameterOverride})">
+    <parameter name="baseName">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="baseExtensions">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="newVersion">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="obsoletionReason">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="newReturnType">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="parameterOverrides">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="P:Bind.XML.Overrides.Functions.FunctionOverride.BaseExtensions">
     <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
   </member>
-  <member name="P:Bind.XML.Overrides.Functions.FunctionOverride.Name">
+  <member name="P:Bind.XML.Overrides.Functions.FunctionOverride.BaseName">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
   <member name="P:Bind.XML.Overrides.Functions.FunctionOverride.NewReturnType">
@@ -185,8 +205,19 @@
   <member name="P:Bind.XML.Overrides.Functions.FunctionOverride.ParameterOverrides">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
-  <member name="P:Bind.XML.Overrides.Functions.FunctionOverride.Version">
-    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  <member name="M:Bind.XML.Overrides.Functions.ParameterOverride.#ctor(System.String,System.String,Bind.XML.Signatures.Functions.TypeSignature,System.Nullable{Bind.Structures.FlowDirection},System.String)">
+    <parameter name="name">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="newName">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="newType">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="newCount">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="P:Bind.XML.Overrides.Functions.ParameterOverride.Name">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
@@ -219,6 +250,18 @@
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <parameter name="typeElement">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.XML.ParsingHelpers.ParseVersion(System.String,System.Version)">
+    <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ContractAnnotationAttribute.#ctor(System.String)">
+      <argument>defaultVersion : null =&gt; canbenull; defaultVersion : notnull =&gt; notnull</argument>
+    </attribute>
+    <parameter name="versionString">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="defaultVersion">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
     </parameter>
   </member>
   <member name="M:Bind.XML.ParsingHelpers.ParseVersion(System.Xml.Linq.XElement,System.String,System.Version)">

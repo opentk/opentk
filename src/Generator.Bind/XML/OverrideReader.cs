@@ -148,6 +148,11 @@ namespace Bind.XML
             }
         }
 
+        /// <summary>
+        /// Parses a function override from the given <see cref="XElement"/>.
+        /// </summary>
+        /// <param name="functionElement">The element.</param>
+        /// <returns>A parsed override.</returns>
         [NotNull]
         private FunctionOverride ParseFunctionOverride([NotNull] XElement functionElement)
         {
@@ -162,7 +167,7 @@ namespace Bind.XML
             var returnElement = functionElement.Element("returns");
             var newReturnType = returnElement is null
                 ? null
-                : ParseTypeSignature(returnElement);
+                : new TypeSignature(returnElement.Value);
 
             return new FunctionOverride
             (
