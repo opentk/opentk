@@ -8522,7 +8522,7 @@
       <param name="value" type="VertexShaderParameterEXT" flow="in" />
       <returns type="GLuint" />
     </function>
-    <function name="BindProgramARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="BindProgramARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="target" type="ProgramTargetARB" flow="in" />
       <param name="program" type="GLuint" flow="in" />
       <returns type="void" />
@@ -10510,7 +10510,7 @@
       <param name="pipelines" type="GLuint *" flow="in" count="n" />
       <returns type="void" />
     </function>
-    <function name="DeleteProgramsARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="DeleteProgramsARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="n" type="GLsizei" flow="in" />
       <param name="programs" type="GLuint *" flow="in" count="n" />
       <returns type="void" />
@@ -10651,7 +10651,7 @@
       <param name="index" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="DisableIndexedEXT" category="EXT_direct_state_access|EXT_draw_buffers2" extension="EXT" version="">
+    <function name="DisableIndexedEXT" category="EXT_direct_state_access|EXT_draw_buffers2" extension="EXT">
       <param name="target" type="EnableCap" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <returns type="void" />
@@ -10680,7 +10680,7 @@
       <param name="pname" type="GLenum" flow="in" />
       <returns type="void" />
     </function>
-    <function name="DisableVertexAttribArrayARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="DisableVertexAttribArrayARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
@@ -10981,7 +10981,7 @@
       <param name="index" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="EnableIndexedEXT" category="EXT_direct_state_access|EXT_draw_buffers2" extension="EXT" version="">
+    <function name="EnableIndexedEXT" category="EXT_direct_state_access|EXT_draw_buffers2" extension="EXT">
       <param name="target" type="EnableCap" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <returns type="void" />
@@ -11010,7 +11010,7 @@
       <param name="pname" type="GLenum" flow="in" />
       <returns type="void" />
     </function>
-    <function name="EnableVertexAttribArrayARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="EnableVertexAttribArrayARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
@@ -11461,7 +11461,7 @@
       <param name="layer" type="CheckedInt32" flow="in" />
       <returns type="void" />
     </function>
-    <function name="FramebufferTextureLayerEXT" category="EXT_texture_array|NV_geometry_program4" extension="EXT" version="">
+    <function name="FramebufferTextureLayerEXT" category="EXT_texture_array|NV_geometry_program4" extension="EXT">
       <param name="target" type="FramebufferTarget" flow="in" />
       <param name="attachment" type="FramebufferAttachment" flow="in" />
       <param name="texture" type="Texture" flow="in" />
@@ -11592,7 +11592,7 @@
       <param name="pipelines" type="GLuint *" flow="out" count="n" />
       <returns type="void" />
     </function>
-    <function name="GenProgramsARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="GenProgramsARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="n" type="GLsizei" flow="in" />
       <param name="programs" type="GLuint *" flow="out" count="n" />
       <returns type="void" />
@@ -11786,7 +11786,7 @@
       <param name="name" type="GLcharARB *" flow="in" />
       <returns type="GLint" />
     </function>
-    <function name="GetBooleanIndexedvEXT" category="EXT_direct_state_access|EXT_draw_buffers2" extension="EXT" version="">
+    <function name="GetBooleanIndexedvEXT" category="EXT_direct_state_access|EXT_draw_buffers2" extension="EXT">
       <param name="target" type="BufferTargetARB" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="data" type="Boolean *" flow="out" count="COMPSIZE(target)" />
@@ -12306,7 +12306,7 @@
       <param name="data" type="GLint *" flow="out" count="COMPSIZE(target)" />
       <returns type="void" />
     </function>
-    <function name="GetIntegerIndexedvEXT" category="EXT_direct_state_access|EXT_draw_buffers2" extension="EXT" version="">
+    <function name="GetIntegerIndexedvEXT" category="EXT_direct_state_access|EXT_draw_buffers2" extension="EXT">
       <param name="target" type="GLenum" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="data" type="GLint *" flow="out" count="COMPSIZE(target)" />
@@ -13268,13 +13268,13 @@
       <param name="binary" type="void *" flow="out" count="bufSize" />
       <returns type="void" />
     </function>
-    <function name="GetProgramEnvParameterdvARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="GetProgramEnvParameterdvARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="target" type="ProgramTargetARB" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="params" type="GLdouble *" flow="out" count="4" />
       <returns type="void" />
     </function>
-    <function name="GetProgramEnvParameterfvARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="GetProgramEnvParameterfvARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="target" type="ProgramTargetARB" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="params" type="GLfloat *" flow="out" count="4" />
@@ -13299,7 +13299,7 @@
       <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
-    <function name="GetProgramivARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="GetProgramivARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="target" type="ProgramTargetARB" flow="in" />
       <param name="pname" type="ProgramPropertyARB" flow="in" />
       <param name="params" type="GLint *" flow="out" count="1" />
@@ -13311,13 +13311,13 @@
       <param name="params" type="GLint *" flow="out" count="4" />
       <returns type="void" />
     </function>
-    <function name="GetProgramLocalParameterdvARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="GetProgramLocalParameterdvARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="target" type="ProgramTargetARB" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="params" type="GLdouble *" flow="out" count="4" />
       <returns type="void" />
     </function>
-    <function name="GetProgramLocalParameterfvARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="GetProgramLocalParameterfvARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="target" type="ProgramTargetARB" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="params" type="GLfloat *" flow="out" count="4" />
@@ -13445,7 +13445,7 @@
       <param name="values" type="GLint *" flow="out" count="1" />
       <returns type="void" />
     </function>
-    <function name="GetProgramStringARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="GetProgramStringARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="target" type="ProgramTargetARB" flow="in" />
       <param name="pname" type="ProgramStringPropertyARB" flow="in" />
       <param name="string" type="void *" flow="out" count="COMPSIZE(target,pname)" />
@@ -13906,7 +13906,7 @@
       <param name="params" type="GLint64 *" flow="out" count="COMPSIZE(program,location)" />
       <returns type="void" />
     </function>
-    <function name="GetUniformi64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="GetUniformi64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="params" type="GLint64EXT *" flow="out" count="COMPSIZE(program,location)" />
@@ -13947,7 +13947,7 @@
       <param name="params" type="GLuint64 *" flow="out" count="COMPSIZE(program,location)" />
       <returns type="void" />
     </function>
-    <function name="GetUniformui64vNV" category="AMD_gpu_shader_int64|NV_shader_buffer_load" extension="NV" version="">
+    <function name="GetUniformui64vNV" category="AMD_gpu_shader_int64|NV_shader_buffer_load" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="params" type="GLuint64EXT *" flow="out" count="COMPSIZE(program,location)" />
@@ -13959,13 +13959,13 @@
       <param name="params" type="GLuint *" flow="out" count="COMPSIZE(program,location)" />
       <returns type="void" />
     </function>
-    <function name="GetUnsignedBytei_vEXT" category="EXT_memory_object|EXT_semaphore" extension="EXT" version="">
+    <function name="GetUnsignedBytei_vEXT" category="EXT_memory_object|EXT_semaphore" extension="EXT">
       <param name="target" type="GLenum" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="data" type="GLubyte *" flow="out" count="COMPSIZE(target)" />
       <returns type="void" />
     </function>
-    <function name="GetUnsignedBytevEXT" category="EXT_memory_object|EXT_semaphore" extension="EXT" version="">
+    <function name="GetUnsignedBytevEXT" category="EXT_memory_object|EXT_semaphore" extension="EXT">
       <param name="pname" type="GetPName" flow="in" />
       <param name="data" type="GLubyte *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
@@ -14069,7 +14069,7 @@
       <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
-    <function name="GetVertexAttribdvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="GetVertexAttribdvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="pname" type="VertexAttribPropertyARB" flow="in" />
       <param name="params" type="GLdouble *" flow="out" count="4" />
@@ -14081,7 +14081,7 @@
       <param name="params" type="GLdouble *" flow="out" count="1" />
       <returns type="void" />
     </function>
-    <function name="GetVertexAttribfvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="GetVertexAttribfvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="pname" type="VertexAttribPropertyARB" flow="in" />
       <param name="params" type="GLfloat *" flow="out" count="4" />
@@ -14105,7 +14105,7 @@
       <param name="params" type="GLuint *" flow="out" count="1" />
       <returns type="void" />
     </function>
-    <function name="GetVertexAttribivARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="GetVertexAttribivARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="pname" type="VertexAttribPropertyARB" flow="in" />
       <param name="params" type="GLint *" flow="out" count="4" />
@@ -14147,7 +14147,7 @@
       <param name="params" type="GLuint64EXT *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
-    <function name="GetVertexAttribPointervARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="GetVertexAttribPointervARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="pname" type="VertexAttribPointerPropertyARB" flow="in" />
       <param name="pointer" type="void **" flow="out" count="1" />
@@ -14473,7 +14473,7 @@
       <param name="list" type="GLuint" flow="in" />
       <returns type="GLboolean" />
     </function>
-    <function name="IsEnabledIndexedEXT" category="EXT_direct_state_access|EXT_draw_buffers2" extension="EXT" version="">
+    <function name="IsEnabledIndexedEXT" category="EXT_direct_state_access|EXT_draw_buffers2" extension="EXT">
       <param name="target" type="EnableCap" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <returns type="Boolean" />
@@ -14545,7 +14545,7 @@
       <param name="y" type="GLfloat" flow="in" />
       <returns type="Boolean" />
     </function>
-    <function name="IsProgramARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="IsProgramARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="program" type="GLuint" flow="in" />
       <returns type="Boolean" />
     </function>
@@ -14986,7 +14986,7 @@
       <param name="param" type="GLfixed *" flow="in" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
-    <function name="MatrixFrustumEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixFrustumEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="left" type="GLdouble" flow="in" />
       <param name="right" type="GLdouble" flow="in" />
@@ -15028,17 +15028,17 @@
       <param name="m" type="GLfloat *" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixLoaddEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixLoaddEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="m" type="GLdouble *" flow="in" count="16" />
       <returns type="void" />
     </function>
-    <function name="MatrixLoadfEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixLoadfEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="m" type="GLfloat *" flow="in" count="16" />
       <returns type="void" />
     </function>
-    <function name="MatrixLoadIdentityEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixLoadIdentityEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <returns type="void" />
     </function>
@@ -15047,12 +15047,12 @@
       <param name="m" type="GLfloat *" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixLoadTransposedEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixLoadTransposedEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="m" type="GLdouble *" flow="in" count="16" />
       <returns type="void" />
     </function>
-    <function name="MatrixLoadTransposefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixLoadTransposefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="m" type="GLfloat *" flow="in" count="16" />
       <returns type="void" />
@@ -15067,12 +15067,12 @@
       <param name="m" type="GLfloat *" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixMultdEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixMultdEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="m" type="GLdouble *" flow="in" count="16" />
       <returns type="void" />
     </function>
-    <function name="MatrixMultfEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixMultfEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="m" type="GLfloat *" flow="in" count="16" />
       <returns type="void" />
@@ -15082,17 +15082,17 @@
       <param name="m" type="GLfloat *" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixMultTransposedEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixMultTransposedEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="m" type="GLdouble *" flow="in" count="16" />
       <returns type="void" />
     </function>
-    <function name="MatrixMultTransposefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixMultTransposefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="m" type="GLfloat *" flow="in" count="16" />
       <returns type="void" />
     </function>
-    <function name="MatrixOrthoEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixOrthoEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="left" type="GLdouble" flow="in" />
       <param name="right" type="GLdouble" flow="in" />
@@ -15102,15 +15102,15 @@
       <param name="zFar" type="GLdouble" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixPopEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixPopEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixPushEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixPushEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixRotatedEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixRotatedEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="angle" type="GLdouble" flow="in" />
       <param name="x" type="GLdouble" flow="in" />
@@ -15118,7 +15118,7 @@
       <param name="z" type="GLdouble" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixRotatefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixRotatefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="angle" type="GLfloat" flow="in" />
       <param name="x" type="GLfloat" flow="in" />
@@ -15126,28 +15126,28 @@
       <param name="z" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixScaledEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixScaledEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="x" type="GLdouble" flow="in" />
       <param name="y" type="GLdouble" flow="in" />
       <param name="z" type="GLdouble" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixScalefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixScalefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="x" type="GLfloat" flow="in" />
       <param name="y" type="GLfloat" flow="in" />
       <param name="z" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixTranslatedEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixTranslatedEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="x" type="GLdouble" flow="in" />
       <param name="y" type="GLdouble" flow="in" />
       <param name="z" type="GLdouble" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixTranslatefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixTranslatefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="x" type="GLfloat" flow="in" />
       <param name="y" type="GLfloat" flow="in" />
@@ -17040,7 +17040,7 @@
       <param name="params" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="ProgramEnvParameter4dARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="ProgramEnvParameter4dARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="target" type="ProgramTargetARB" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="x" type="GLdouble" flow="in" />
@@ -17049,13 +17049,13 @@
       <param name="w" type="GLdouble" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramEnvParameter4dvARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="ProgramEnvParameter4dvARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="target" type="ProgramTargetARB" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="params" type="GLdouble *" flow="in" count="4" />
       <returns type="void" />
     </function>
-    <function name="ProgramEnvParameter4fARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="ProgramEnvParameter4fARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="target" type="ProgramTargetARB" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="x" type="GLfloat" flow="in" />
@@ -17064,7 +17064,7 @@
       <param name="w" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramEnvParameter4fvARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="ProgramEnvParameter4fvARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="target" type="ProgramTargetARB" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="params" type="GLfloat *" flow="in" count="4" />
@@ -17121,7 +17121,7 @@
       <param name="params" type="GLuint *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
-    <function name="ProgramLocalParameter4dARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="ProgramLocalParameter4dARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="target" type="ProgramTargetARB" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="x" type="GLdouble" flow="in" />
@@ -17130,13 +17130,13 @@
       <param name="w" type="GLdouble" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramLocalParameter4dvARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="ProgramLocalParameter4dvARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="target" type="ProgramTargetARB" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="params" type="GLdouble *" flow="in" count="4" />
       <returns type="void" />
     </function>
-    <function name="ProgramLocalParameter4fARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="ProgramLocalParameter4fARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="target" type="ProgramTargetARB" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="x" type="GLfloat" flow="in" />
@@ -17145,7 +17145,7 @@
       <param name="w" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramLocalParameter4fvARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="ProgramLocalParameter4fvARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="target" type="ProgramTargetARB" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="params" type="GLfloat *" flow="in" count="4" />
@@ -17266,7 +17266,7 @@
       <param name="v" type="GLfloat *" flow="in" count="4" />
       <returns type="void" />
     </function>
-    <function name="ProgramParameteri" category="ARB_get_program_binary|ARB_separate_shader_objects" extension="Core" version="">
+    <function name="ProgramParameteri" category="ARB_get_program_binary|ARB_separate_shader_objects" extension="Core">
       <param name="program" type="GLuint" flow="in" />
       <param name="pname" type="ProgramParameterPName" flow="in" />
       <param name="value" type="GLint" flow="in" />
@@ -17278,7 +17278,7 @@
       <param name="value" type="GLint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramParameteriEXT" category="EXT_geometry_shader4|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramParameteriEXT" category="EXT_geometry_shader4|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="pname" type="ProgramParameterPName" flow="in" />
       <param name="value" type="GLint" flow="in" />
@@ -17306,7 +17306,7 @@
       <param name="coeffs" type="GLfloat *" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramStringARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB" version="">
+    <function name="ProgramStringARB" category="ARB_fragment_program|ARB_vertex_program" extension="ARB">
       <param name="target" type="ProgramTargetARB" flow="in" />
       <param name="format" type="ProgramFormatARB" flow="in" />
       <param name="len" type="GLsizei" flow="in" />
@@ -17351,7 +17351,7 @@
       <param name="v0" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1fEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform1fEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLfloat" flow="in" />
@@ -17364,7 +17364,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform1fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -17383,7 +17383,7 @@
       <param name="x" type="GLint64" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="ProgramUniform1i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLint64EXT" flow="in" />
@@ -17396,14 +17396,14 @@
       <param name="value" type="GLint64 *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="ProgramUniform1i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLint64EXT *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform1iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLint" flow="in" />
@@ -17416,7 +17416,7 @@
       <param name="value" type="GLint *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1ivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform1ivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -17435,7 +17435,7 @@
       <param name="x" type="GLuint64" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="ProgramUniform1ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLuint64EXT" flow="in" />
@@ -17448,14 +17448,14 @@
       <param name="value" type="GLuint64 *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="ProgramUniform1ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLuint64EXT *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform1uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLuint" flow="in" />
@@ -17468,7 +17468,7 @@
       <param name="value" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1uivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform1uivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -17510,7 +17510,7 @@
       <param name="v1" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2fEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform2fEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLfloat" flow="in" />
@@ -17524,7 +17524,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform2fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -17545,7 +17545,7 @@
       <param name="y" type="GLint64" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="ProgramUniform2i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLint64EXT" flow="in" />
@@ -17559,14 +17559,14 @@
       <param name="value" type="GLint64 *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="ProgramUniform2i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLint64EXT *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform2iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLint" flow="in" />
@@ -17580,7 +17580,7 @@
       <param name="value" type="GLint *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2ivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform2ivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -17601,7 +17601,7 @@
       <param name="y" type="GLuint64" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="ProgramUniform2ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLuint64EXT" flow="in" />
@@ -17615,14 +17615,14 @@
       <param name="value" type="GLuint64 *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="ProgramUniform2ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLuint64EXT *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform2uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLuint" flow="in" />
@@ -17636,7 +17636,7 @@
       <param name="value" type="GLuint *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2uivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform2uivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -17681,7 +17681,7 @@
       <param name="v2" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3fEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform3fEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLfloat" flow="in" />
@@ -17696,7 +17696,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform3fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -17719,7 +17719,7 @@
       <param name="z" type="GLint64" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="ProgramUniform3i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLint64EXT" flow="in" />
@@ -17734,14 +17734,14 @@
       <param name="value" type="GLint64 *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="ProgramUniform3i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLint64EXT *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform3iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLint" flow="in" />
@@ -17756,7 +17756,7 @@
       <param name="value" type="GLint *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3ivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform3ivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -17779,7 +17779,7 @@
       <param name="z" type="GLuint64" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="ProgramUniform3ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLuint64EXT" flow="in" />
@@ -17794,14 +17794,14 @@
       <param name="value" type="GLuint64 *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="ProgramUniform3ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLuint64EXT *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform3uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLuint" flow="in" />
@@ -17816,7 +17816,7 @@
       <param name="value" type="GLuint *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3uivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform3uivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -17864,7 +17864,7 @@
       <param name="v3" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4fEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform4fEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLfloat" flow="in" />
@@ -17880,7 +17880,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform4fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -17905,7 +17905,7 @@
       <param name="w" type="GLint64" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="ProgramUniform4i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLint64EXT" flow="in" />
@@ -17921,14 +17921,14 @@
       <param name="value" type="GLint64 *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="ProgramUniform4i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLint64EXT *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform4iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLint" flow="in" />
@@ -17944,7 +17944,7 @@
       <param name="value" type="GLint *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4ivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform4ivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -17969,7 +17969,7 @@
       <param name="w" type="GLuint64" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="ProgramUniform4ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLuint64EXT" flow="in" />
@@ -17985,14 +17985,14 @@
       <param name="value" type="GLuint64 *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="ProgramUniform4ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLuint64EXT *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform4uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLuint" flow="in" />
@@ -18008,7 +18008,7 @@
       <param name="value" type="GLuint *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4uivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform4uivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -18065,7 +18065,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix2fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix2fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -18097,7 +18097,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix2x3fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix2x3fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -18129,7 +18129,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix2x4fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix2x4fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -18161,7 +18161,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*9" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix3fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix3fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -18193,7 +18193,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix3x2fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix3x2fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -18225,7 +18225,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix3x4fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix3x4fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -18257,7 +18257,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*16" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix4fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix4fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -18289,7 +18289,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix4x2fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix4x2fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -18321,7 +18321,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix4x3fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix4x3fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -18437,7 +18437,7 @@
       <param name="coords" type="GLfixed *" flow="in" count="4" />
       <returns type="void" />
     </function>
-    <function name="RasterSamplesEXT" category="EXT_raster_multisample|EXT_texture_filter_minmax|NV_framebuffer_mixed_samples" extension="EXT" version="">
+    <function name="RasterSamplesEXT" category="EXT_raster_multisample|EXT_texture_filter_minmax|NV_framebuffer_mixed_samples" extension="EXT">
       <param name="samples" type="GLuint" flow="in" />
       <param name="fixedsamplelocations" type="GLboolean" flow="in" />
       <returns type="void" />
@@ -20566,7 +20566,7 @@
       <param name="x" type="GLint64" flow="in" />
       <returns type="void" />
     </function>
-    <function name="Uniform1i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="Uniform1i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLint64EXT" flow="in" />
       <returns type="void" />
@@ -20577,7 +20577,7 @@
       <param name="value" type="GLint64 *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
-    <function name="Uniform1i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="Uniform1i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLint64EXT *" flow="in" count="count*1" />
@@ -20599,7 +20599,7 @@
       <param name="x" type="GLuint64" flow="in" />
       <returns type="void" />
     </function>
-    <function name="Uniform1ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="Uniform1ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLuint64EXT" flow="in" />
       <returns type="void" />
@@ -20610,7 +20610,7 @@
       <param name="value" type="GLuint64 *" flow="in" count="count*1" />
       <returns type="void" />
     </function>
-    <function name="Uniform1ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="Uniform1ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLuint64EXT *" flow="in" count="count*1" />
@@ -20657,7 +20657,7 @@
       <param name="y" type="GLint64" flow="in" />
       <returns type="void" />
     </function>
-    <function name="Uniform2i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="Uniform2i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLint64EXT" flow="in" />
       <param name="y" type="GLint64EXT" flow="in" />
@@ -20669,7 +20669,7 @@
       <param name="value" type="GLint64 *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
-    <function name="Uniform2i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="Uniform2i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLint64EXT *" flow="in" count="count*2" />
@@ -20693,7 +20693,7 @@
       <param name="y" type="GLuint64" flow="in" />
       <returns type="void" />
     </function>
-    <function name="Uniform2ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="Uniform2ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLuint64EXT" flow="in" />
       <param name="y" type="GLuint64EXT" flow="in" />
@@ -20705,7 +20705,7 @@
       <param name="value" type="GLuint64 *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
-    <function name="Uniform2ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="Uniform2ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLuint64EXT *" flow="in" count="count*2" />
@@ -20756,7 +20756,7 @@
       <param name="z" type="GLint64" flow="in" />
       <returns type="void" />
     </function>
-    <function name="Uniform3i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="Uniform3i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLint64EXT" flow="in" />
       <param name="y" type="GLint64EXT" flow="in" />
@@ -20769,7 +20769,7 @@
       <param name="value" type="GLint64 *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
-    <function name="Uniform3i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="Uniform3i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLint64EXT *" flow="in" count="count*3" />
@@ -20795,7 +20795,7 @@
       <param name="z" type="GLuint64" flow="in" />
       <returns type="void" />
     </function>
-    <function name="Uniform3ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="Uniform3ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLuint64EXT" flow="in" />
       <param name="y" type="GLuint64EXT" flow="in" />
@@ -20808,7 +20808,7 @@
       <param name="value" type="GLuint64 *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
-    <function name="Uniform3ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="Uniform3ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLuint64EXT *" flow="in" count="count*3" />
@@ -20863,7 +20863,7 @@
       <param name="w" type="GLint64" flow="in" />
       <returns type="void" />
     </function>
-    <function name="Uniform4i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="Uniform4i64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLint64EXT" flow="in" />
       <param name="y" type="GLint64EXT" flow="in" />
@@ -20877,7 +20877,7 @@
       <param name="value" type="GLint64 *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
-    <function name="Uniform4i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="Uniform4i64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLint64EXT *" flow="in" count="count*4" />
@@ -20905,7 +20905,7 @@
       <param name="w" type="GLuint64" flow="in" />
       <returns type="void" />
     </function>
-    <function name="Uniform4ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="Uniform4ui64NV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="x" type="GLuint64EXT" flow="in" />
       <param name="y" type="GLuint64EXT" flow="in" />
@@ -20919,7 +20919,7 @@
       <param name="value" type="GLuint64 *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
-    <function name="Uniform4ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV" version="">
+    <function name="Uniform4ui64vNV" category="AMD_gpu_shader_int64|NV_gpu_shader5" extension="NV">
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="value" type="GLuint64EXT *" flow="in" count="count*4" />
@@ -21567,7 +21567,7 @@
       <param name="offset" type="GLintptr" flow="in" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib1dARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib1dARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="x" type="GLdouble" flow="in" />
       <returns type="void" />
@@ -21577,7 +21577,7 @@
       <param name="x" type="GLdouble" flow="in" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib1dvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib1dvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLdouble *" flow="in" count="1" />
       <returns type="void" />
@@ -21587,7 +21587,7 @@
       <param name="v" type="GLdouble *" flow="in" count="1" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib1fARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib1fARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="x" type="GLfloat" flow="in" />
       <returns type="void" />
@@ -21597,7 +21597,7 @@
       <param name="x" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib1fvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib1fvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLfloat *" flow="in" count="1" />
       <returns type="void" />
@@ -21617,7 +21617,7 @@
       <param name="v" type="Half16NV *" flow="in" count="1" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib1sARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib1sARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="x" type="GLshort" flow="in" />
       <returns type="void" />
@@ -21627,7 +21627,7 @@
       <param name="x" type="GLshort" flow="in" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib1svARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib1svARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLshort *" flow="in" count="1" />
       <returns type="void" />
@@ -21637,7 +21637,7 @@
       <param name="v" type="GLshort *" flow="in" count="1" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib2dARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib2dARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="x" type="GLdouble" flow="in" />
       <param name="y" type="GLdouble" flow="in" />
@@ -21649,7 +21649,7 @@
       <param name="y" type="GLdouble" flow="in" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib2dvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib2dvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLdouble *" flow="in" count="2" />
       <returns type="void" />
@@ -21659,7 +21659,7 @@
       <param name="v" type="GLdouble *" flow="in" count="2" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib2fARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib2fARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="x" type="GLfloat" flow="in" />
       <param name="y" type="GLfloat" flow="in" />
@@ -21671,7 +21671,7 @@
       <param name="y" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib2fvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib2fvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLfloat *" flow="in" count="2" />
       <returns type="void" />
@@ -21692,7 +21692,7 @@
       <param name="v" type="Half16NV *" flow="in" count="2" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib2sARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib2sARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="x" type="GLshort" flow="in" />
       <param name="y" type="GLshort" flow="in" />
@@ -21704,7 +21704,7 @@
       <param name="y" type="GLshort" flow="in" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib2svARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib2svARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLshort *" flow="in" count="2" />
       <returns type="void" />
@@ -21714,7 +21714,7 @@
       <param name="v" type="GLshort *" flow="in" count="2" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib3dARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib3dARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="x" type="GLdouble" flow="in" />
       <param name="y" type="GLdouble" flow="in" />
@@ -21728,7 +21728,7 @@
       <param name="z" type="GLdouble" flow="in" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib3dvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib3dvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLdouble *" flow="in" count="3" />
       <returns type="void" />
@@ -21738,7 +21738,7 @@
       <param name="v" type="GLdouble *" flow="in" count="3" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib3fARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib3fARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="x" type="GLfloat" flow="in" />
       <param name="y" type="GLfloat" flow="in" />
@@ -21752,7 +21752,7 @@
       <param name="z" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib3fvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib3fvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLfloat *" flow="in" count="3" />
       <returns type="void" />
@@ -21774,7 +21774,7 @@
       <param name="v" type="Half16NV *" flow="in" count="3" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib3sARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib3sARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="x" type="GLshort" flow="in" />
       <param name="y" type="GLshort" flow="in" />
@@ -21788,7 +21788,7 @@
       <param name="z" type="GLshort" flow="in" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib3svARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib3svARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLshort *" flow="in" count="3" />
       <returns type="void" />
@@ -21798,12 +21798,12 @@
       <param name="v" type="GLshort *" flow="in" count="3" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4bvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4bvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLbyte *" flow="in" count="4" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4dARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4dARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="x" type="GLdouble" flow="in" />
       <param name="y" type="GLdouble" flow="in" />
@@ -21819,7 +21819,7 @@
       <param name="w" type="GLdouble" flow="in" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4dvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4dvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLdouble *" flow="in" count="4" />
       <returns type="void" />
@@ -21829,7 +21829,7 @@
       <param name="v" type="GLdouble *" flow="in" count="4" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4fARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4fARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="x" type="GLfloat" flow="in" />
       <param name="y" type="GLfloat" flow="in" />
@@ -21845,7 +21845,7 @@
       <param name="w" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4fvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4fvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLfloat *" flow="in" count="4" />
       <returns type="void" />
@@ -21868,27 +21868,27 @@
       <param name="v" type="Half16NV *" flow="in" count="4" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4ivARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4ivARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLint *" flow="in" count="4" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4NbvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4NbvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLbyte *" flow="in" count="4" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4NivARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4NivARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLint *" flow="in" count="4" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4NsvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4NsvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLshort *" flow="in" count="4" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4NubARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4NubARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="x" type="GLubyte" flow="in" />
       <param name="y" type="GLubyte" flow="in" />
@@ -21896,22 +21896,22 @@
       <param name="w" type="GLubyte" flow="in" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4NubvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4NubvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLubyte *" flow="in" count="4" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4NuivARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4NuivARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLuint *" flow="in" count="4" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4NusvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4NusvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLushort *" flow="in" count="4" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4sARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4sARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="x" type="GLshort" flow="in" />
       <param name="y" type="GLshort" flow="in" />
@@ -21927,7 +21927,7 @@
       <param name="w" type="GLshort" flow="in" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4svARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4svARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLshort *" flow="in" count="4" />
       <returns type="void" />
@@ -21945,7 +21945,7 @@
       <param name="w" type="ColorUB" flow="in" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4ubvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4ubvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLubyte *" flow="in" count="4" />
       <returns type="void" />
@@ -21955,12 +21955,12 @@
       <param name="v" type="ColorUB *" flow="in" count="4" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4uivARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4uivARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLuint *" flow="in" count="4" />
       <returns type="void" />
     </function>
-    <function name="VertexAttrib4usvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttrib4usvARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="v" type="GLushort *" flow="in" count="4" />
       <returns type="void" />
@@ -22421,7 +22421,7 @@
       <param name="param" type="GLint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="VertexAttribPointerARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB" version="">
+    <function name="VertexAttribPointerARB" category="ARB_vertex_program|ARB_vertex_shader" extension="ARB">
       <param name="index" type="GLuint" flow="in" />
       <param name="size" type="GLint" flow="in" />
       <param name="type" type="VertexAttribPointerType" flow="in" />
@@ -39530,7 +39530,7 @@
       <param name="access" type="BufferAccessMask" flow="in" />
       <returns type="void *" />
     </function>
-    <function name="MatrixFrustumEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixFrustumEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="left" type="GLdouble" flow="in" />
       <param name="right" type="GLdouble" flow="in" />
@@ -39550,17 +39550,17 @@
       <param name="m" type="GLfloat *" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixLoaddEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixLoaddEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="m" type="GLdouble *" flow="in" count="16" />
       <returns type="void" />
     </function>
-    <function name="MatrixLoadfEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixLoadfEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="m" type="GLfloat *" flow="in" count="16" />
       <returns type="void" />
     </function>
-    <function name="MatrixLoadIdentityEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixLoadIdentityEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <returns type="void" />
     </function>
@@ -39569,12 +39569,12 @@
       <param name="m" type="GLfloat *" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixLoadTransposedEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixLoadTransposedEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="m" type="GLdouble *" flow="in" count="16" />
       <returns type="void" />
     </function>
-    <function name="MatrixLoadTransposefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixLoadTransposefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="m" type="GLfloat *" flow="in" count="16" />
       <returns type="void" />
@@ -39589,12 +39589,12 @@
       <param name="m" type="GLfloat *" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixMultdEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixMultdEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="m" type="GLdouble *" flow="in" count="16" />
       <returns type="void" />
     </function>
-    <function name="MatrixMultfEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixMultfEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="m" type="GLfloat *" flow="in" count="16" />
       <returns type="void" />
@@ -39604,17 +39604,17 @@
       <param name="m" type="GLfloat *" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixMultTransposedEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixMultTransposedEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="m" type="GLdouble *" flow="in" count="16" />
       <returns type="void" />
     </function>
-    <function name="MatrixMultTransposefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixMultTransposefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="m" type="GLfloat *" flow="in" count="16" />
       <returns type="void" />
     </function>
-    <function name="MatrixOrthoEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixOrthoEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="left" type="GLdouble" flow="in" />
       <param name="right" type="GLdouble" flow="in" />
@@ -39624,15 +39624,15 @@
       <param name="zFar" type="GLdouble" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixPopEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixPopEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixPushEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixPushEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixRotatedEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixRotatedEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="angle" type="GLdouble" flow="in" />
       <param name="x" type="GLdouble" flow="in" />
@@ -39640,7 +39640,7 @@
       <param name="z" type="GLdouble" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixRotatefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixRotatefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="angle" type="GLfloat" flow="in" />
       <param name="x" type="GLfloat" flow="in" />
@@ -39648,28 +39648,28 @@
       <param name="z" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixScaledEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixScaledEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="x" type="GLdouble" flow="in" />
       <param name="y" type="GLdouble" flow="in" />
       <param name="z" type="GLdouble" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixScalefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixScalefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="x" type="GLfloat" flow="in" />
       <param name="y" type="GLfloat" flow="in" />
       <param name="z" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixTranslatedEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixTranslatedEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="x" type="GLdouble" flow="in" />
       <param name="y" type="GLdouble" flow="in" />
       <param name="z" type="GLdouble" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MatrixTranslatefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT" version="">
+    <function name="MatrixTranslatefEXT" category="EXT_direct_state_access|NV_path_rendering" extension="EXT">
       <param name="mode" type="MatrixMode" flow="in" />
       <param name="x" type="GLfloat" flow="in" />
       <param name="y" type="GLfloat" flow="in" />
@@ -40634,7 +40634,7 @@
       <param name="length" type="GLsizei" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramParameteri" category="ARB_get_program_binary|ARB_separate_shader_objects" extension="Core" version="">
+    <function name="ProgramParameteri" category="ARB_get_program_binary|ARB_separate_shader_objects" extension="Core">
       <param name="program" type="GLuint" flow="in" />
       <param name="pname" type="ProgramParameterPName" flow="in" />
       <param name="value" type="GLint" flow="in" />
@@ -40692,7 +40692,7 @@
       <param name="v0" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1fEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform1fEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLfloat" flow="in" />
@@ -40705,7 +40705,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform1fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -40744,7 +40744,7 @@
       <param name="value" type="GLint64EXT *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform1iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLint" flow="in" />
@@ -40757,7 +40757,7 @@
       <param name="value" type="GLint *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1ivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform1ivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -40796,7 +40796,7 @@
       <param name="value" type="GLuint64EXT *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform1uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLuint" flow="in" />
@@ -40809,7 +40809,7 @@
       <param name="value" type="GLuint *" flow="in" count="count" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform1uivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform1uivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -40851,7 +40851,7 @@
       <param name="v1" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2fEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform2fEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLfloat" flow="in" />
@@ -40865,7 +40865,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform2fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -40907,7 +40907,7 @@
       <param name="value" type="GLint64EXT *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform2iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLint" flow="in" />
@@ -40921,7 +40921,7 @@
       <param name="value" type="GLint *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2ivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform2ivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -40963,7 +40963,7 @@
       <param name="value" type="GLuint64EXT *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform2uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLuint" flow="in" />
@@ -40977,7 +40977,7 @@
       <param name="value" type="GLuint *" flow="in" count="count*2" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform2uivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform2uivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -41022,7 +41022,7 @@
       <param name="v2" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3fEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform3fEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLfloat" flow="in" />
@@ -41037,7 +41037,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform3fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -41082,7 +41082,7 @@
       <param name="value" type="GLint64EXT *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform3iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLint" flow="in" />
@@ -41097,7 +41097,7 @@
       <param name="value" type="GLint *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3ivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform3ivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -41142,7 +41142,7 @@
       <param name="value" type="GLuint64EXT *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform3uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLuint" flow="in" />
@@ -41157,7 +41157,7 @@
       <param name="value" type="GLuint *" flow="in" count="count*3" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform3uivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform3uivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -41205,7 +41205,7 @@
       <param name="v3" type="GLfloat" flow="in" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4fEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform4fEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLfloat" flow="in" />
@@ -41221,7 +41221,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform4fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -41269,7 +41269,7 @@
       <param name="value" type="GLint64EXT *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform4iEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLint" flow="in" />
@@ -41285,7 +41285,7 @@
       <param name="value" type="GLint *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4ivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform4ivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -41333,7 +41333,7 @@
       <param name="value" type="GLuint64EXT *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform4uiEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="v0" type="GLuint" flow="in" />
@@ -41349,7 +41349,7 @@
       <param name="value" type="GLuint *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniform4uivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniform4uivEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -41406,7 +41406,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*4" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix2fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix2fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -41438,7 +41438,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix2x3fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix2x3fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -41470,7 +41470,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix2x4fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix2x4fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -41502,7 +41502,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*9" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix3fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix3fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -41534,7 +41534,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*6" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix3x2fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix3x2fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -41566,7 +41566,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix3x4fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix3x4fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -41598,7 +41598,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*16" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix4fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix4fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -41630,7 +41630,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*8" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix4x2fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix4x2fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -41662,7 +41662,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix4x3fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix4x3fvEXT" category="EXT_direct_state_access|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -41715,7 +41715,7 @@
       <param name="target" type="QueryTarget" flow="in" />
       <returns type="void" />
     </function>
-    <function name="RasterSamplesEXT" category="EXT_raster_multisample|EXT_texture_filter_minmax|NV_framebuffer_mixed_samples" extension="EXT" version="">
+    <function name="RasterSamplesEXT" category="EXT_raster_multisample|EXT_texture_filter_minmax|NV_framebuffer_mixed_samples" extension="EXT">
       <param name="samples" type="GLuint" flow="in" />
       <param name="fixedsamplelocations" type="GLboolean" flow="in" />
       <returns type="void" />
@@ -53769,7 +53769,7 @@
       <param name="params" type="GLint *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
-    <function name="GetTexGenxvOES" category="OES_fixed_point|OES_texture_cube_map" extension="OES" version="">
+    <function name="GetTexGenxvOES" category="OES_fixed_point|OES_texture_cube_map" extension="OES">
       <param name="coord" type="TextureCoordName" flow="in" />
       <param name="pname" type="TextureGenParameter" flow="in" />
       <param name="params" type="GLfixed *" flow="out" count="COMPSIZE(pname)" />
@@ -54417,13 +54417,13 @@
       <param name="params" type="GLint *" flow="in" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
-    <function name="TexGenxOES" category="OES_fixed_point|OES_texture_cube_map" extension="OES" version="">
+    <function name="TexGenxOES" category="OES_fixed_point|OES_texture_cube_map" extension="OES">
       <param name="coord" type="TextureCoordName" flow="in" />
       <param name="pname" type="TextureGenParameter" flow="in" />
       <param name="param" type="GLfixed" flow="in" />
       <returns type="void" />
     </function>
-    <function name="TexGenxvOES" category="OES_fixed_point|OES_texture_cube_map" extension="OES" version="">
+    <function name="TexGenxvOES" category="OES_fixed_point|OES_texture_cube_map" extension="OES">
       <param name="coord" type="TextureCoordName" flow="in" />
       <param name="pname" type="TextureGenParameter" flow="in" />
       <param name="params" type="GLfixed *" flow="in" count="COMPSIZE(pname)" />
@@ -60767,7 +60767,7 @@
       <param name="queryHandle" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="BeginQueryEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT" version="">
+    <function name="BeginQueryEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT">
       <param name="target" type="QueryTarget" flow="in" />
       <param name="id" type="GLuint" flow="in" />
       <returns type="void" />
@@ -61203,7 +61203,7 @@
       <param name="pipelines" type="GLuint *" flow="in" count="n" />
       <returns type="void" />
     </function>
-    <function name="DeleteQueriesEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT" version="">
+    <function name="DeleteQueriesEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT">
       <param name="n" type="GLsizei" flow="in" />
       <param name="ids" type="GLuint *" flow="in" count="n" />
       <returns type="void" />
@@ -61260,7 +61260,7 @@
       <param name="index" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="DisableiOES" category="OES_draw_buffers_indexed|OES_viewport_array" extension="OES" version="">
+    <function name="DisableiOES" category="OES_draw_buffers_indexed|OES_viewport_array" extension="OES">
       <param name="target" type="EnableCap" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <returns type="void" />
@@ -61286,7 +61286,7 @@
       <param name="baseinstance" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="DrawArraysInstancedEXT" category="EXT_draw_instanced|EXT_instanced_arrays" extension="EXT" version="">
+    <function name="DrawArraysInstancedEXT" category="EXT_draw_instanced|EXT_instanced_arrays" extension="EXT">
       <param name="mode" type="PrimitiveType" flow="in" />
       <param name="start" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -61377,7 +61377,7 @@
       <param name="basevertex" type="GLint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="DrawElementsInstancedEXT" category="EXT_draw_instanced|EXT_instanced_arrays" extension="EXT" version="">
+    <function name="DrawElementsInstancedEXT" category="EXT_draw_instanced|EXT_instanced_arrays" extension="EXT">
       <param name="mode" type="PrimitiveType" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="type" type="DrawElementsType" flow="in" />
@@ -61462,7 +61462,7 @@
       <param name="index" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="EnableiOES" category="OES_draw_buffers_indexed|OES_viewport_array" extension="OES" version="">
+    <function name="EnableiOES" category="OES_draw_buffers_indexed|OES_viewport_array" extension="OES">
       <param name="target" type="EnableCap" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <returns type="void" />
@@ -61478,7 +61478,7 @@
       <param name="queryHandle" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
-    <function name="EndQueryEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT" version="">
+    <function name="EndQueryEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT">
       <param name="target" type="QueryTarget" flow="in" />
       <returns type="void" />
     </function>
@@ -61718,7 +61718,7 @@
       <param name="pipelines" type="GLuint *" flow="out" count="n" />
       <returns type="void" />
     </function>
-    <function name="GenQueriesEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT" version="">
+    <function name="GenQueriesEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT">
       <param name="n" type="GLsizei" flow="in" />
       <param name="ids" type="GLuint *" flow="out" count="n" />
       <returns type="void" />
@@ -62168,7 +62168,7 @@
       <param name="name" type="GLchar *" flow="in" count="COMPSIZE(name)" />
       <returns type="GLint" />
     </function>
-    <function name="GetQueryivEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT" version="">
+    <function name="GetQueryivEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT">
       <param name="target" type="QueryTarget" flow="in" />
       <param name="pname" type="QueryParameterName" flow="in" />
       <param name="params" type="GLint *" flow="out" />
@@ -62192,7 +62192,7 @@
       <param name="params" type="GLuint64 *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
     </function>
-    <function name="GetQueryObjectuivEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT" version="">
+    <function name="GetQueryObjectuivEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT">
       <param name="id" type="GLuint" flow="in" />
       <param name="pname" type="QueryObjectParameterName" flow="in" />
       <param name="params" type="GLuint *" flow="out" />
@@ -62291,13 +62291,13 @@
       <param name="params" type="GLint64EXT *" flow="out" count="COMPSIZE(program,location)" />
       <returns type="void" />
     </function>
-    <function name="GetUnsignedBytei_vEXT" category="EXT_memory_object|EXT_semaphore" extension="EXT" version="">
+    <function name="GetUnsignedBytei_vEXT" category="EXT_memory_object|EXT_semaphore" extension="EXT">
       <param name="target" type="GLenum" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="data" type="GLubyte *" flow="out" count="COMPSIZE(target)" />
       <returns type="void" />
     </function>
-    <function name="GetUnsignedBytevEXT" category="EXT_memory_object|EXT_semaphore" extension="EXT" version="">
+    <function name="GetUnsignedBytevEXT" category="EXT_memory_object|EXT_semaphore" extension="EXT">
       <param name="pname" type="GetPName" flow="in" />
       <param name="data" type="GLubyte *" flow="out" count="COMPSIZE(pname)" />
       <returns type="void" />
@@ -62367,7 +62367,7 @@
       <param name="index" type="GLuint" flow="in" />
       <returns type="Boolean" />
     </function>
-    <function name="IsEnablediOES" category="OES_draw_buffers_indexed|OES_viewport_array" extension="OES" version="">
+    <function name="IsEnablediOES" category="OES_draw_buffers_indexed|OES_viewport_array" extension="OES">
       <param name="target" type="EnableCap" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <returns type="Boolean" />
@@ -62405,7 +62405,7 @@
       <param name="pipeline" type="GLuint" flow="in" />
       <returns type="GLboolean" />
     </function>
-    <function name="IsQueryEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT" version="">
+    <function name="IsQueryEXT" category="EXT_disjoint_timer_query|EXT_occlusion_query_boolean" extension="EXT">
       <param name="id" type="GLuint" flow="in" />
       <returns type="GLboolean" />
     </function>
@@ -62635,7 +62635,7 @@
       <param name="stride" type="GLsizei" flow="in" />
       <returns type="void" />
     </function>
-    <function name="MultiDrawElementsBaseVertexEXT" category="EXT_draw_elements_base_vertex|OES_draw_elements_base_vertex" extension="EXT" version="">
+    <function name="MultiDrawElementsBaseVertexEXT" category="EXT_draw_elements_base_vertex|OES_draw_elements_base_vertex" extension="EXT">
       <param name="mode" type="PrimitiveType" flow="in" />
       <param name="count" type="GLsizei *" flow="in" count="COMPSIZE(drawcount)" />
       <param name="type" type="DrawElementsType" flow="in" />
@@ -63318,7 +63318,7 @@
       <param name="value" type="GLfloat *" flow="in" count="count*12" />
       <returns type="void" />
     </function>
-    <function name="ProgramUniformMatrix4fvEXT" category="EXT_separate_shader_objects|EXT_separate_shader_objects" extension="EXT" version="">
+    <function name="ProgramUniformMatrix4fvEXT" category="EXT_separate_shader_objects|EXT_separate_shader_objects" extension="EXT">
       <param name="program" type="GLuint" flow="in" />
       <param name="location" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
@@ -63366,7 +63366,7 @@
       <param name="target" type="QueryTarget" flow="in" />
       <returns type="void" />
     </function>
-    <function name="RasterSamplesEXT" category="EXT_raster_multisample|EXT_texture_filter_minmax|NV_framebuffer_mixed_samples" extension="EXT" version="">
+    <function name="RasterSamplesEXT" category="EXT_raster_multisample|EXT_texture_filter_minmax|NV_framebuffer_mixed_samples" extension="EXT">
       <param name="samples" type="GLuint" flow="in" />
       <param name="fixedsamplelocations" type="GLboolean" flow="in" />
       <returns type="void" />

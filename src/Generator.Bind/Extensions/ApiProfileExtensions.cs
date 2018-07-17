@@ -27,7 +27,7 @@ namespace Bind.Extensions
         /// <returns>The friendly name.</returns>
         /// <exception cref="InvalidOperationException">Thrown if no friendly name is available.</exception>
         [NotNull]
-        public static string GetFriendlyName([NotNull] this ApiProfile profile)
+        public static string GetFriendlyName([NotNull] this IApiProfile profile)
         {
             if (FriendlyNames.TryGetValue(profile.Name, out var value))
             {

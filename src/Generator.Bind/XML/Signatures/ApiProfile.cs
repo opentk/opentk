@@ -10,18 +10,12 @@ namespace Bind.XML.Signatures
     /// <summary>
     /// Represents an available API profile of a specific version.
     /// </summary>
-    public class ApiProfile
+    public class ApiProfile : IApiProfile
     {
-        /// <summary>
-        /// Gets the name of the profile.
-        /// </summary>
-        [NotNull]
+        /// <inheritdoc/>
         public string Name { get; }
 
-        /// <summary>
-        /// Gets the version of the profile.
-        /// </summary>
-        [NotNull]
+        /// <inheritdoc/>
         public Version Version { get; }
 
         /// <summary>

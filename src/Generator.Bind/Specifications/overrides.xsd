@@ -125,11 +125,6 @@
           <xs:documentation>The extension to search for the function in.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute ref="version">
-        <xs:annotation>
-          <xs:documentation>The version to place the new function in.</xs:documentation>
-        </xs:annotation>
-      </xs:attribute>
     </xs:complexType>
   </xs:element>
 
@@ -139,63 +134,69 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="token">
-          <xs:annotation>
-            <xs:documentation>An explicit token in the enumeration.</xs:documentation>
-          </xs:annotation>
-          <xs:complexType>
-            <xs:attribute ref="name" use="required">
+        <xs:choice>
+          <xs:sequence>
+            <xs:element name="token">
               <xs:annotation>
-                <xs:documentation>The name of the token.</xs:documentation>
+                <xs:documentation>An explicit token in the enumeration.</xs:documentation>
               </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="value" type="hexType" use="required">
-              <xs:annotation>
-                <xs:documentation>The value assigned to the token.</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="deprecated" type="versionType">
-              <xs:annotation>
-                <xs:documentation>The deprecation text of the token.</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="remark" type="xs:normalizedString">
-              <xs:annotation>
-                <xs:documentation>Remarks or comments about the token.</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="use">
-          <xs:annotation>
-            <xs:documentation>A reference to another token to include in this enumeration.</xs:documentation>
-          </xs:annotation>
-          <xs:complexType>
-            <xs:attribute name="enum" type="identifierType">
-              <xs:annotation>
-                <xs:documentation>The enumeration to search for the token.</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="token" type="identifierType" use="required">
-              <xs:annotation>
-                <xs:documentation>The name of the token to use.</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
-          </xs:complexType>
-        </xs:element>
+              <xs:complexType>
+                <xs:attribute ref="name" use="required">
+                  <xs:annotation>
+                    <xs:documentation>The name of the token.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="value" type="hexType" use="required">
+                  <xs:annotation>
+                    <xs:documentation>The value assigned to the token.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="deprecated" type="versionType">
+                  <xs:annotation>
+                    <xs:documentation>The version (if any) that the token was deprecated in.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="remark" type="xs:normalizedString">
+                  <xs:annotation>
+                    <xs:documentation>Remarks or comments about the token.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
 
-        <xs:element name="reuse">
-          <xs:annotation>
-            <xs:documentation>A full inclusion of all members in another enumeration.</xs:documentation>
-          </xs:annotation>
-          <xs:complexType>
-            <xs:attribute name="enum" type="identifierType" use="required">
+            <xs:element name="use">
               <xs:annotation>
-                <xs:documentation>The enumeration to include.</xs:documentation>
+                <xs:documentation>A reference to another token to include in this enumeration.</xs:documentation>
               </xs:annotation>
-            </xs:attribute>
-          </xs:complexType>
-        </xs:element>
+              <xs:complexType>
+                <xs:attribute name="enum" type="identifierType">
+                  <xs:annotation>
+                    <xs:documentation>The enumeration to search for the token.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="token" type="identifierType" use="required">
+                  <xs:annotation>
+                    <xs:documentation>The name of the token to use.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:sequence>
+            <xs:element name="reuse">
+              <xs:annotation>
+                <xs:documentation>A full inclusion of all members in another enumeration.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="enum" type="identifierType" use="required">
+                  <xs:annotation>
+                    <xs:documentation>The enumeration to include.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:choice>
       </xs:sequence>
       <xs:attribute name="name" use="required">
         <xs:annotation>
@@ -240,7 +241,6 @@
           <xs:complexType>
             <xs:sequence>
               <xs:element ref="function" minOccurs="0" maxOccurs="unbounded" />
-              <xs:element ref="enum"  minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
             <xs:attribute ref="name" use="required">
               <xs:annotation>
@@ -257,12 +257,11 @@
 
         <xs:element name="overload" minOccurs="0" maxOccurs="unbounded">
           <xs:annotation>
-            <xs:documentation>Definitions that should overload existing definitions in the set.</xs:documentation>
+            <xs:documentation>Function definitions that should overload existing definitions in the set.</xs:documentation>
           </xs:annotation>
           <xs:complexType>
             <xs:sequence>
               <xs:element ref="function" minOccurs="0" maxOccurs="unbounded" />
-              <xs:element ref="enum"  minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
             <xs:attribute ref="name" use="required">
               <xs:annotation>

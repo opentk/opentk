@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using Bind.Extensions;
 using Bind.Structures;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Enumerations;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
+using static Bind.XML.ParsingHelpers;
 
 namespace Bind.XML
 {
@@ -31,34 +32,41 @@ namespace Bind.XML
         private static readonly Regex CountParameterReferenceRegex =
             new Regex("^[[:alpha:]]+?$", RegexOptions.Compiled);
 
-        [NotNull]
-        private XDocument _signatures;
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="SignatureReader"/> class.
+        /// Retrieves the available profiles in the signatures.
         /// </summary>
-        /// <param name="signatureFilePath">The path to the signatures file.</param>
-        public SignatureReader([NotNull, PathReference] string signatureFilePath)
+        /// <param name="signatureFilePath">The path to the document.</param>
+        /// <returns>A set of profiles.</returns>
+        [NotNull, ItemNotNull]
+        public IEnumerable<ApiProfile> GetAvailableProfiles([NotNull, PathReference] string signatureFilePath)
         {
             if (!File.Exists(signatureFilePath))
             {
                 throw new FileNotFoundException("Couldn't find the given signatures file.", signatureFilePath);
             }
 
+            XDocument doc;
             using (var s = File.OpenRead(signatureFilePath))
             {
-                _signatures = XDocument.Load(s);
+                doc = XDocument.Load(s);
             }
+
+            return GetAvailableProfiles(doc);
         }
 
         /// <summary>
-        /// Gets the root element of the signature file.
+        /// Retrieves the available profiles in the signatures.
         /// </summary>
-        /// <returns>The root element.</returns>
-        [NotNull]
-        private XElement GetSignatureRoot()
+        /// <param name="signatureDocument">The signature document.</param>
+        /// <returns>A set of profiles.</returns>
+        [NotNull, ItemNotNull]
+        public IEnumerable<ApiProfile> GetAvailableProfiles([NotNull] XDocument signatureDocument)
         {
-            return _signatures.Element("signatures") ?? throw new InvalidDataException("No root element found.");
+            var profileElements = GetSignatureRoot(signatureDocument).Elements().Where(e => e.Name == "add");
+            foreach (var profileElement in profileElements)
+            {
+                yield return ParseApiProfile(profileElement);
+            }
         }
 
         /// <summary>
@@ -69,13 +77,9 @@ namespace Bind.XML
         [NotNull]
         private ApiProfile ParseApiProfile([NotNull] XElement profileElement)
         {
-            var profileName = profileElement.Attribute("name")?.Value
-                              ?? throw new InvalidDataException("Profile name attribute not found.");
+            var profileName = profileElement.GetRequiredAttribute("name").Value;
 
-            var profileVersionStr = profileElement.Attribute("version")?.Value;
-            var profileVersion = string.IsNullOrWhiteSpace(profileVersionStr)
-                ? new Version("0.0")
-                : new Version(profileVersionStr);
+            var profileVersion = ParseVersion(profileElement, defaultVersion: new Version(0, 0));
 
             var functionElements = profileElement.Elements().Where(e => e.Name == "function");
             var functions = functionElements.Select(ParseFunctionSignature).ToList();
@@ -94,29 +98,16 @@ namespace Bind.XML
         [NotNull]
         private FunctionSignature ParseFunctionSignature([NotNull] XElement functionElement)
         {
-            var functionName = functionElement.Attribute("name")?.Value
-                               ?? throw new InvalidDataException("Function name attribute not found.");
+            var functionName = functionElement.GetRequiredAttribute("name").Value;
+            var functionCategory = functionElement.GetRequiredAttribute("category").Value;
+            var functionExtensions = functionElement.GetRequiredAttribute("extension").Value;
 
-            var functionCategory = functionElement.Attribute("category")?.Value
-                                   ?? throw new InvalidDataException("Function category not found.");
-
-            var functionExtensions = functionElement.Attribute("extension")?.Value
-                                     ?? throw new InvalidDataException("Function extension not found.");
-
-            var functionVersionStr = functionElement.Attribute("version")?.Value;
-            var functionVersion = string.IsNullOrWhiteSpace(functionVersionStr)
-                ? new Version("0.0")
-                : new Version(functionVersionStr);
-
-            var functionDeprecationVersionStr = functionElement.Attribute("deprecated")?.Value;
-            var functionDeprecationVersion = string.IsNullOrWhiteSpace(functionDeprecationVersionStr)
-                ? null
-                : new Version(functionDeprecationVersionStr);
+            var functionVersion = ParseVersion(functionElement, defaultVersion: new Version(0, 0));
+            var functionDeprecationVersion = ParseVersion(functionElement, "deprecated");
 
             var parameters = ParseParameterSignatures(functionElement);
 
-            var returnElement = functionElement.Element("returns")
-                                ?? throw new InvalidDataException("Function return value not found.");
+            var returnElement = functionElement.GetRequiredElement("returns");
             var returnType = ParseTypeSignature(returnElement);
 
             return new FunctionSignature
@@ -217,14 +208,12 @@ namespace Bind.XML
             hasComputedCount = false;
             hasValueReference = false;
 
-            var paramName = paramElement.Attribute("name")?.Value
-                            ?? throw new InvalidDataException("Parameter name not found.");
+            var paramName = paramElement.GetRequiredAttribute("name").Value;
 
             // A parameter is technically a type signature (think of it as ParameterSignature : ITypeSignature)
             var paramType = ParseTypeSignature(paramElement);
 
-            var paramFlowStr = paramElement.Attribute("flow")?.Value
-                               ?? throw new InvalidDataException("Parameter flow not found.");
+            var paramFlowStr = paramElement.GetRequiredAttribute("flow").Value;
 
             if (!Enum.TryParse<FlowDirection>(paramFlowStr, true, out var paramFlow))
             {
@@ -273,20 +262,6 @@ namespace Bind.XML
         }
 
         /// <summary>
-        /// Parses a type signature from the given <see cref="XElement"/>.
-        /// </summary>
-        /// <param name="typeElement">The type element.</param>
-        /// <returns>A parsed type.</returns>
-        [NotNull]
-        private TypeSignature ParseTypeSignature([NotNull] XElement typeElement)
-        {
-            var typeName = typeElement.Attribute("type")?.Value
-                           ?? throw new InvalidDataException("Type attribute not found.");
-
-            return new TypeSignature(typeName);
-        }
-
-        /// <summary>
         /// Parses a function signature from the given <see cref="XElement"/>.
         /// </summary>
         /// <param name="enumElement">The enum element.</param>
@@ -294,8 +269,7 @@ namespace Bind.XML
         [NotNull]
         private EnumerationSignature ParseEnumerationSignature([NotNull] XElement enumElement)
         {
-            var enumName = enumElement.Attribute("name")?.Value
-                           ?? throw new InvalidDataException("Enumeration name not found.");
+            var enumName = enumElement.GetRequiredAttribute("name").Value;
 
             var tokenElements = enumElement.Elements().Where(e => e.Name == "token");
             var tokens = tokenElements.Select(ParseTokenSignature).ToList();
@@ -304,72 +278,9 @@ namespace Bind.XML
             var profileElement = enumElement.Parent
                                  ?? throw new InvalidDataException("No parent element for the enum found.");
 
-            var profileVersionStr = profileElement.Attribute("version")?.Value;
-            var enumVersion = profileVersionStr is null
-                ? new Version("0.0")
-                : new Version(profileVersionStr);
+            var enumVersion = ParseVersion(profileElement, defaultVersion: new Version(0, 0));
 
-            return new EnumerationSignature(enumName, tokens, enumVersion);
-        }
-
-        /// <summary>
-        /// Parses a token signatures from the given <see cref="XElement"/>.
-        /// </summary>
-        /// <param name="tokenElement">The token element.</param>
-        /// <returns>A parsed token.</returns>
-        [NotNull]
-        private TokenSignature ParseTokenSignature([NotNull] XElement tokenElement)
-        {
-            var tokenName = tokenElement.Attribute("name")?.Value
-                           ?? throw new InvalidDataException("Token name not found.");
-
-            var tokenValueHexStr = tokenElement.Attribute("value")?.Value
-                           ?? throw new InvalidDataException("Token value not found.");
-
-            if (tokenValueHexStr.StartsWith("0x"))
-            {
-                tokenValueHexStr = tokenValueHexStr.Substring(2);
-            }
-
-            if (!long.TryParse(tokenValueHexStr, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var tokenValue))
-            {
-                if (!long.TryParse(tokenValueHexStr, out tokenValue))
-                {
-                    throw new InvalidDataException("Token value was not in a valid format.");
-                }
-            }
-
-            var tokenDeprecationVersionStr = tokenElement.Attribute("deprecated")?.Value;
-            var tokenDeprecationVersion = string.IsNullOrWhiteSpace(tokenDeprecationVersionStr)
-                ? null
-                : new Version(tokenDeprecationVersionStr);
-
-            var tokenRemarks = tokenElement.Attribute("remark")?.Value;
-
-            // We'll do a bit of a cheeky up-tree walk here to get the version.
-            var profileElement = tokenElement.Parent?.Parent
-                                 ?? throw new InvalidDataException("No parent element for the enum found.");
-
-            var profileVersionStr = profileElement.Attribute("version")?.Value;
-            var tokenVersion = string.IsNullOrWhiteSpace(profileVersionStr)
-                ? new Version("0.0")
-                : new Version(profileVersionStr);
-
-            return new TokenSignature(tokenName, tokenValue, tokenVersion, tokenDeprecationVersion, tokenRemarks);
-        }
-
-        /// <summary>
-        /// Retrieves the available profiles in the signatures.
-        /// </summary>
-        /// <returns>A set of profiles.</returns>
-        [NotNull, ItemNotNull]
-        public IEnumerable<ApiProfile> GetAvailableProfiles()
-        {
-            var profileElements = GetSignatureRoot().Elements().Where(e => e.Name == "add");
-            foreach (var profileElement in profileElements)
-            {
-                yield return ParseApiProfile(profileElement);
-            }
+            return new EnumerationSignature(enumName, enumVersion, tokens);
         }
     }
 }

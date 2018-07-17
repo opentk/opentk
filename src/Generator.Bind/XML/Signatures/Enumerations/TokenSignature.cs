@@ -23,7 +23,7 @@ namespace Bind.XML.Signatures.Enumerations
         /// Gets the version the token was introduced in.
         /// </summary>
         [NotNull]
-        public Version IntroducedIn { get; internal set; }
+        public Version IntroducedIn { get; }
 
         /// <summary>
         /// Gets the version that the token was deprecated in.

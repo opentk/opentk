@@ -710,21 +710,21 @@
       </param>
     </function>
 
-    <function name="VertexAttribP2" extension="Core" version="3.3">
+    <function name="VertexAttribP2" extension="Core">
       <version>3.3</version>
       <param name="type">
         <type>PackedPointerType</type>
       </param>
     </function>
 
-    <function name="VertexAttribP3" extension="Core" version="3.3">
+    <function name="VertexAttribP3" extension="Core">
       <version>3.3</version>
       <param name="type">
         <type>PackedPointerType</type>
       </param>
     </function>
 
-    <function name="VertexAttribP4" extension="Core" version="3.3">
+    <function name="VertexAttribP4" extension="Core">
       <version>3.3</version>
       <param name="type">
         <type>PackedPointerType</type>
@@ -2117,6 +2117,9 @@
       <token name="MIN" value="0x8007" />
     </enum>
     <enum name="BlendingFactorDest">
+      <use token="ZERO" />
+      <use token="ONE" />
+      <use token="SRC_ALPHA_SATURATE" />
       <token name="CONSTANT_ALPHA" value="0x8003" />
       <token name="CONSTANT_COLOR" value="0x8001" />
       <token name="ONE_MINUS_CONSTANT_ALPHA" value="0x8004" />
@@ -2129,27 +2132,14 @@
       <use enum="VERSION_3_3" token="SRC1_COLOR" />
       <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_ALPHA" />
       <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_COLOR" />
-    </enum>
-    <enum name="BlendingFactorDest">
-      <use token="ZERO" />
-      <use token="ONE" />
-      <use token="SRC_ALPHA_SATURATE" />
-      <use token="SRC_COLOR" />
-      <use token="SRC_ALPHA" />
-      <use token="SRC1_COLOR" />
-      <use token="SRC1_ALPHA" />
       <use token="DST_COLOR" />
       <use token="DST_ALPHA" />
-      <use token="CONSTANT_COLOR" />
-      <use token="CONSTANT_ALPHA" />
       <use token="ONE_MINUS_SRC_COLOR" />
       <use token="ONE_MINUS_SRC_ALPHA" />
       <use token="ONE_MINUS_SRC1_COLOR" />
       <use token="ONE_MINUS_SRC1_ALPHA" />
       <use token="ONE_MINUS_DST_COLOR" />
       <use token="ONE_MINUS_DST_ALPHA" />
-      <use token="ONE_MINUS_CONSTANT_COLOR" />
-      <use token="ONE_MINUS_CONSTANT_ALPHA" />
     </enum>
     <enum name="BlendingFactorSrc">
       <reuse enum="BlendingFactorDest" />
@@ -5815,8 +5805,8 @@
       <use token="UNIFORM_BUFFER" />
     </enum>
     <enum name="BufferTarget">
-      <use  token="ARRAY_BUFFER" />
-      <use  token="ELEMENT_ARRAY_BUFFER" />
+      <use token="ARRAY_BUFFER" />
+      <use token="ELEMENT_ARRAY_BUFFER" />
       <use token="PIXEL_PACK_BUFFER" />
       <use token="PIXEL_UNPACK_BUFFER" />
       <use token="COPY_READ_BUFFER" />
