@@ -11,6 +11,7 @@
     <Description>Mathematical structures and algorithms, provided and used by OpenTK.</Description>
   </PropertyGroup>
 
+  <Import Project="..\..\build\targets\common.props" />
   <Import Project="..\..\build\targets\nuget-common.props" />
   <Import Project="..\..\build\targets\stylecop.props" />
 </Project>
