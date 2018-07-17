@@ -10,8 +10,7 @@ namespace OpenTK.Rewrite
         /// <summary>
         /// Gets or sets the path to the target assembly that should be rewritten.
         /// </summary>
-        [Option
-        (
+        [Option(
             'a',
             "assembly",
             Required = true,
@@ -22,8 +21,7 @@ namespace OpenTK.Rewrite
         /// <summary>
         /// Gets or sets the path to the strong name key which should be used to sign or resign the assembly.
         /// </summary>
-        [Option
-        (
+        [Option(
             'k',
             "signing-key",
             HelpText = "The path to the strong name key which should be used to sign or resign the assembly."
@@ -33,8 +31,7 @@ namespace OpenTK.Rewrite
         /// <summary>
         /// Gets or sets a value indicating whether calls to GL.GetError() are wrapped around each native call.
         /// </summary>
-        [Option
-        (
+        [Option(
             'd',
             "debug",
             Default = false,
@@ -45,8 +42,7 @@ namespace OpenTK.Rewrite
         /// <summary>
         /// Gets or sets a value indicating whether native calls are forced to use DllImport instead of GetProcAddress.
         /// </summary>
-        [Option
-        (
+        [Option(
             "dllimport",
             Default = false,
             HelpText = "Force native calls to use DllImport instead of GetProcAddress."
