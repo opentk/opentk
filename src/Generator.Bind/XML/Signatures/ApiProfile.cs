@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Bind.Extensions;
+using Bind.Versioning;
 using Bind.XML.Signatures.Enumerations;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
@@ -16,7 +17,7 @@ namespace Bind.XML.Signatures
         public string Name { get; }
 
         /// <inheritdoc/>
-        public Version Version { get; }
+        public VersionRange Versions { get; }
 
         /// <summary>
         /// Gets the available functions in the profile.
@@ -34,19 +35,19 @@ namespace Bind.XML.Signatures
         /// Initializes a new instance of the <see cref="ApiProfile"/> class.
         /// </summary>
         /// <param name="name">The profile name.</param>
-        /// <param name="version">The profile version.</param>
+        /// <param name="versions">The versions the profile encompasses.</param>
         /// <param name="functions">The functions in the profile.</param>
         /// <param name="enumerations">The enumerations in the profile.</param>
         public ApiProfile
         (
             [NotNull] string name,
-            [NotNull] Version version,
+            [NotNull] VersionRange versions,
             [NotNull] IReadOnlyList<FunctionSignature> functions,
             [NotNull] IReadOnlyList<EnumerationSignature> enumerations
         )
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
-            Version = version ?? throw new ArgumentNullException(nameof(version));
+            Versions = versions ?? throw new ArgumentNullException(nameof(versions));
             Functions = functions ?? throw new ArgumentNullException(nameof(functions));
             Enumerations = enumerations ?? throw new ArgumentNullException(nameof(enumerations));
         }
@@ -54,7 +55,7 @@ namespace Bind.XML.Signatures
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{Name} - {this.GetFriendlyName()}, v{Version}";
+            return $"{Name} - {this.GetFriendlyName()}, v{Versions}";
         }
     }
 }

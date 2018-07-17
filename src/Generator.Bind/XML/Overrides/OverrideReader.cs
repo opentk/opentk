@@ -5,6 +5,7 @@ using System.Linq;
 using System.Xml.Linq;
 using Bind.Extensions;
 using Bind.Structures;
+using Bind.Versioning;
 using Bind.XML.Overrides.Enumerations;
 using Bind.XML.Overrides.Functions;
 using Bind.XML.Signatures.Functions;
@@ -136,7 +137,7 @@ namespace Bind.XML.Overrides
                     yield return new ApiProfileOverride
                     (
                         profileName,
-                        version,
+                        new VersionRange(version, version),
                         functionAdditions,
                         enumerationAdditions,
                         functionReplacements,

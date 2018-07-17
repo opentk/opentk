@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Bind.Extensions;
 using Bind.Structures;
+using Bind.Versioning;
 using Bind.XML.Signatures.Enumerations;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
@@ -85,7 +86,7 @@ namespace Bind.XML.Signatures
             var enumElements = profileElement.Elements().Where(e => e.Name == "enum");
             var enums = enumElements.Select(ParseEnumerationSignature).ToList();
 
-            return new ApiProfile(profileName, profileVersion, functions, enums);
+            return new ApiProfile(profileName, new VersionRange(profileVersion, profileVersion), functions, enums);
         }
 
         /// <summary>

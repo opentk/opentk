@@ -1,4 +1,5 @@
 using System;
+using Bind.Versioning;
 using JetBrains.Annotations;
 
 namespace Bind.XML
@@ -15,9 +16,9 @@ namespace Bind.XML
         string Name { get; }
 
         /// <summary>
-        /// Gets the version of the profile.
+        /// Gets the version range of the profile, that is, which versions it encompasses.
         /// </summary>
         [NotNull]
-        Version Version { get; }
+        VersionRange Versions { get; }
     }
 }

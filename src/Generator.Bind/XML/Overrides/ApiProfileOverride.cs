@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Bind.Extensions;
+using Bind.Versioning;
 using Bind.XML.Overrides.Enumerations;
 using Bind.XML.Overrides.Functions;
 using Bind.XML.Signatures.Enumerations;
@@ -18,7 +19,7 @@ namespace Bind.XML.Overrides
         public string Name { get; }
 
         /// <inheritdoc/>
-        public Version Version { get; }
+        public VersionRange Versions { get; }
 
         /// <summary>
         /// Gets the functions that were added to the profile.
@@ -48,7 +49,7 @@ namespace Bind.XML.Overrides
         /// Initializes a new instance of the <see cref="ApiProfileOverride"/> class.
         /// </summary>
         /// <param name="name">The name of the profile.</param>
-        /// <param name="version">The version of the profile.</param>
+        /// <param name="versions">The versions the profile encompasses.</param>
         /// <param name="addedFunctions">The added functions.</param>
         /// <param name="addedEnumerations">The added enumerations.</param>
         /// <param name="replacedFunctions">The replaced functions.</param>
@@ -56,7 +57,7 @@ namespace Bind.XML.Overrides
         public ApiProfileOverride
         (
             [NotNull] string name,
-            [NotNull] Version version,
+            [NotNull] VersionRange versions,
             [NotNull] IReadOnlyList<FunctionOverride> addedFunctions,
             [NotNull] IReadOnlyList<EnumerationOverride> addedEnumerations,
             [NotNull] IReadOnlyList<FunctionOverride> replacedFunctions,
@@ -64,7 +65,7 @@ namespace Bind.XML.Overrides
         )
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
-            Version = version ?? throw new ArgumentNullException(nameof(version));
+            Versions = versions ?? throw new ArgumentNullException(nameof(versions));
             AddedFunctions = addedFunctions ?? throw new ArgumentNullException(nameof(addedFunctions));
             AddedEnumerations = addedEnumerations ?? throw new ArgumentNullException(nameof(addedEnumerations));
             ReplacedFunctions = replacedFunctions ?? throw new ArgumentNullException(nameof(replacedFunctions));
@@ -74,7 +75,7 @@ namespace Bind.XML.Overrides
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{Name} - {this.GetFriendlyName()}, v{Version}";
+            return $"{Name} - {this.GetFriendlyName()}, v{Versions}";
         }
     }
 }
