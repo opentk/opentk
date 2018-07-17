@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
+using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Method
 {

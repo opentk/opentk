@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Rocks;
+using OpenTK.Rewrite.Extensions;
 using OpenTK.Rewrite.Method;
 
 namespace OpenTK.Rewrite
