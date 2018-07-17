@@ -77,9 +77,19 @@
       <attribute ctor="M:JetBrains.Annotations.PathReferenceAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="M:Bind.XML.OverrideReader.GetProfileOverrides">
+  <member name="M:Bind.XML.OverrideReader.GetProfileOverrides(System.String)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+    <parameter name="overrideFilePath">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.XML.OverrideReader.GetProfileOverrides(System.Xml.Linq.XDocument)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+    <parameter name="signatureDocument">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Bind.XML.Overrides.ApiProfileOverride.#ctor(System.String,System.Version,System.Collections.Generic.IReadOnlyList{Bind.XML.Overrides.Functions.FunctionOverride},System.Collections.Generic.IReadOnlyList{Bind.XML.Overrides.Enumerations.EnumerationOverride},System.Collections.Generic.IReadOnlyList{Bind.XML.Overrides.Functions.FunctionOverride},System.Collections.Generic.IReadOnlyList{Bind.XML.Overrides.Functions.FunctionOverride})">
     <parameter name="name">

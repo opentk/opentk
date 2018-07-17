@@ -11,6 +11,8 @@ using Bind.Generators;
 using Bind.Generators.ES;
 using Bind.Generators.GL2;
 using Bind.XML;
+using Bind.XML.Overrides;
+using Bind.XML.Signatures;
 using CommandLine;
 
 namespace Bind
@@ -41,11 +43,8 @@ namespace Bind
                 return 1;
             }
 
-            var signatureReader = new SignatureReader();
-            var profiles = signatureReader.GetAvailableProfiles(Path.Combine(Arguments.InputPath, "GL2", "signatures.xml")).ToList();
-
-            var overrideReader = new OverrideReader(Path.Combine(Arguments.InputPath, "GL2", "overrides.xml"));
-            var profileOverrides = overrideReader.GetProfileOverrides().GroupBy(p => p.Name).ToList();
+            var profiles = SignatureReader.GetAvailableProfiles(Path.Combine(Arguments.InputPath, "GL2", "signatures.xml")).ToList();
+            var profileOverrides = OverrideReader.GetProfileOverrides(Path.Combine(Arguments.InputPath, "GL2", "overrides.xml")).ToList();
 
             CreateGenerators();
 

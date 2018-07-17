@@ -2,52 +2,50 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Bind.Extensions;
 using Bind.Structures;
-using Bind.XML.Overrides;
 using Bind.XML.Overrides.Enumerations;
 using Bind.XML.Overrides.Functions;
-using Bind.XML.Signatures;
-using Bind.XML.Signatures.Enumerations;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
-using static Bind.XML.ParsingHelpers;
 
-namespace Bind.XML
+namespace Bind.XML.Overrides
 {
     /// <summary>
     /// Reads and organizes override signatures from an XML document.
     /// </summary>
-    public class OverrideReader
+    public static class OverrideReader
     {
-        [NotNull]
-        private XDocument _overrides;
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="OverrideReader"/> class.
+        /// Retrieves the overridden profiles in the signatures.
         /// </summary>
-        /// <param name="signatureFilePath">The path to the overrides file.</param>
-        public OverrideReader([NotNull, PathReference] string signatureFilePath)
+        /// <param name="overrideFilePath">The document containing the overrides.</param>
+        /// <returns>A set of profiles.</returns>
+        [NotNull, ItemNotNull]
+        public static IEnumerable<ApiProfileOverride> GetProfileOverrides([NotNull] string overrideFilePath)
         {
-            if (!File.Exists(signatureFilePath))
+            if (!File.Exists(overrideFilePath))
             {
-                throw new FileNotFoundException("Couldn't find the given signatures file.", signatureFilePath);
+                throw new FileNotFoundException("Couldn't find the given signatures file.", overrideFilePath);
             }
 
-            using (var s = File.OpenRead(signatureFilePath))
+            XDocument doc;
+            using (var s = File.OpenRead(overrideFilePath))
             {
-                _overrides = XDocument.Load(s);
+                doc = XDocument.Load(s);
             }
+
+            return GetProfileOverrides(doc);
         }
 
         /// <summary>
         /// Retrieves the overridden profiles in the signatures.
         /// </summary>
+        /// <param name="signatureDocument">The document containing the signatures.</param>
         /// <returns>A set of profiles.</returns>
         [NotNull, ItemNotNull]
-        public IEnumerable<ApiProfileOverride> GetProfileOverrides()
+        public static IEnumerable<ApiProfileOverride> GetProfileOverrides([NotNull] XDocument signatureDocument)
         {
             var foundProfiles = new Dictionary
             <
@@ -59,7 +57,7 @@ namespace Bind.XML
                 >
             >();
 
-            var profileElements = GetOverridesRoot().Elements().Where(e => e.Name == "add" || e.Name == "overload" || e.Name == "replace");
+            var profileElements = GetOverridesRoot(signatureDocument).Elements().Where(e => e.Name == "add" || e.Name == "overload" || e.Name == "replace");
             foreach (var profileElement in profileElements)
             {
                 var profileNamesAndVersions = (Names: ParseProfileNames(profileElement), Versions: ParseProfileVersions(profileElement));
@@ -154,14 +152,14 @@ namespace Bind.XML
         /// <param name="functionElement">The element.</param>
         /// <returns>A parsed override.</returns>
         [NotNull]
-        private FunctionOverride ParseFunctionOverride([NotNull] XElement functionElement)
+        private static FunctionOverride ParseFunctionOverride([NotNull] XElement functionElement)
         {
             var baseFunctionName = functionElement.GetRequiredAttribute("name").Value;
             var baseFunctionExtensions = functionElement.Attribute("extension")?.Value;
 
             var parameters = functionElement.Elements("param").Select(ParseParameterSignature).ToList();
 
-            var newVersion = ParseVersion(functionElement.Element("version")?.Value);
+            var newVersion = ParsingHelpers.ParseVersion(functionElement.Element("version")?.Value);
             var obsoletionReason = functionElement.Element("obsolete")?.Value;
 
             var returnElement = functionElement.Element("returns");
@@ -186,7 +184,7 @@ namespace Bind.XML
         /// <param name="paramElement">The parameter element.</param>
         /// <returns>A parsed parameter.</returns>
         [NotNull]
-        private ParameterOverride ParseParameterSignature
+        private static ParameterOverride ParseParameterSignature
         (
             [NotNull] XElement paramElement
         )
@@ -224,11 +222,11 @@ namespace Bind.XML
         }
 
         [NotNull]
-        private EnumerationOverride ParseEnumeration([NotNull] XElement enumElement)
+        private static EnumerationOverride ParseEnumeration([NotNull] XElement enumElement)
         {
             var enumName = enumElement.GetRequiredAttribute("name").Value;
 
-            var directTokens = enumElement.Elements("token").Select(ParseTokenSignature).ToList();
+            var directTokens = enumElement.Elements("token").Select(ParsingHelpers.ParseTokenSignature).ToList();
             var useTokens = enumElement.Elements("use").Select(ParseUseTokenOverride).ToList();
             var reuseTokens = enumElement.Elements("reuse").Select(ParseReuseEnumerationOverride).ToList();
 
@@ -241,7 +239,7 @@ namespace Bind.XML
         /// <param name="reuseElement">The element.</param>
         /// <returns>A parsed token.</returns>
         [NotNull]
-        private ReuseEnumerationOverride ParseReuseEnumerationOverride([NotNull] XElement reuseElement)
+        private static ReuseEnumerationOverride ParseReuseEnumerationOverride([NotNull] XElement reuseElement)
         {
             var enumName = reuseElement.GetRequiredAttribute("enum").Value;
 
@@ -254,7 +252,7 @@ namespace Bind.XML
         /// <param name="useElement">The element.</param>
         /// <returns>A parsed token.</returns>
         [NotNull]
-        private UseTokenOverride ParseUseTokenOverride([NotNull] XElement useElement)
+        private static UseTokenOverride ParseUseTokenOverride([NotNull] XElement useElement)
         {
             var tokenName = useElement.GetRequiredAttribute("token").Value;
             var enumName = useElement.Attribute("enum")?.Value;
@@ -265,15 +263,22 @@ namespace Bind.XML
         /// <summary>
         /// Gets the root element of the overrides file.
         /// </summary>
+        /// <param name="overrides">The document containing the overrides.</param>
         /// <returns>The root element.</returns>
         [NotNull]
-        private XElement GetOverridesRoot()
+        private static XElement GetOverridesRoot([NotNull] XDocument overrides)
         {
-            return _overrides.Element("signatures") ?? throw new InvalidDataException("No root element found.");
+            return overrides.Element("signatures") ?? throw new InvalidDataException("No root element found.");
         }
 
+        /// <summary>
+        /// Parses a set of pipe-delimited profile names from a given element, reading them from an attribute named
+        /// "name".
+        /// </summary>
+        /// <param name="profileElement">The element.</param>
+        /// <returns>The names.</returns>
         [NotNull, ItemNotNull]
-        private IEnumerable<string> ParseProfileNames([NotNull] XElement profileElement)
+        private static IEnumerable<string> ParseProfileNames([NotNull] XElement profileElement)
         {
             var profileNameString = profileElement.Attribute("name")?.Value
                                     ?? throw new InvalidDataException("Profile name attribute not found.");
@@ -281,8 +286,14 @@ namespace Bind.XML
             return profileNameString.Split('|');
         }
 
+        /// <summary>
+        /// Parses a set of pipe-delimited profile versions from a given element, reading them from an attribute named
+        /// "version".
+        /// </summary>
+        /// <param name="profileElement">The element.</param>
+        /// <returns>The versions.</returns>
         [NotNull, ItemNotNull]
-        private IEnumerable<Version> ParseProfileVersions([NotNull] XElement profileElement)
+        private static IEnumerable<Version> ParseProfileVersions([NotNull] XElement profileElement)
         {
             var profileVersionString = profileElement.Attribute("version")?.Value ?? string.Empty;
             var profileVersionStrings = profileVersionString.Split('|');
@@ -291,7 +302,7 @@ namespace Bind.XML
             (
                 s =>
                     string.IsNullOrWhiteSpace(s)
-                        ? new Version("0.0")
+                        ? new Version(0, 0)
                         : new Version(s)
             );
         }

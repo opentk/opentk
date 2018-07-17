@@ -22,5 +22,11 @@ namespace Bind.XML.Overrides.Enumerations
         {
             Enumeration = enumeration ?? throw new ArgumentNullException(nameof(enumeration));
         }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return Enumeration;
+        }
     }
 }

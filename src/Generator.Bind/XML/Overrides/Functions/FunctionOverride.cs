@@ -72,5 +72,11 @@ namespace Bind.XML.Overrides.Functions
             NewReturnType = newReturnType;
             ParameterOverrides = parameterOverrides ?? throw new ArgumentNullException(nameof(parameterOverrides));
         }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"{NewReturnType} {BaseName}({string.Join(", ", ParameterOverrides)})".Trim();
+        }
     }
 }

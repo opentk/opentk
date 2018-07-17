@@ -31,5 +31,11 @@ namespace Bind.XML.Overrides.Enumerations
             Token = token ?? throw new ArgumentNullException(nameof(token));
             Enumeration = enumeration;
         }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"{(Enumeration is null ? string.Empty : $"{Enumeration}::")}{Token}";
+        }
     }
 }

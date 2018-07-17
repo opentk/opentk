@@ -64,5 +64,11 @@ namespace Bind.XML.Overrides.Functions
             NewFlow = newFlow;
             NewCount = newCount;
         }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"{NewType} {NewName ?? Name}".Trim();
+        }
     }
 }

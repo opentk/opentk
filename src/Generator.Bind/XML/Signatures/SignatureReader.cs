@@ -6,18 +6,16 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Bind.Extensions;
 using Bind.Structures;
-using Bind.XML.Signatures;
 using Bind.XML.Signatures.Enumerations;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
-using static Bind.XML.ParsingHelpers;
 
-namespace Bind.XML
+namespace Bind.XML.Signatures
 {
     /// <summary>
     /// Reads signature definitions from an XML document.
     /// </summary>
-    public class SignatureReader
+    public static class SignatureReader
     {
         /// <summary>
         /// A regular expression that matches the parameter names inside of a COMPSIZE(a,b,c) expression.
@@ -38,7 +36,7 @@ namespace Bind.XML
         /// <param name="signatureFilePath">The path to the document.</param>
         /// <returns>A set of profiles.</returns>
         [NotNull, ItemNotNull]
-        public IEnumerable<ApiProfile> GetAvailableProfiles([NotNull, PathReference] string signatureFilePath)
+        public static IEnumerable<ApiProfile> GetAvailableProfiles([NotNull, PathReference] string signatureFilePath)
         {
             if (!File.Exists(signatureFilePath))
             {
@@ -60,9 +58,9 @@ namespace Bind.XML
         /// <param name="signatureDocument">The signature document.</param>
         /// <returns>A set of profiles.</returns>
         [NotNull, ItemNotNull]
-        public IEnumerable<ApiProfile> GetAvailableProfiles([NotNull] XDocument signatureDocument)
+        public static IEnumerable<ApiProfile> GetAvailableProfiles([NotNull] XDocument signatureDocument)
         {
-            var profileElements = GetSignatureRoot(signatureDocument).Elements().Where(e => e.Name == "add");
+            var profileElements = ParsingHelpers.GetSignatureRoot(signatureDocument).Elements().Where(e => e.Name == "add");
             foreach (var profileElement in profileElements)
             {
                 yield return ParseApiProfile(profileElement);
@@ -75,11 +73,11 @@ namespace Bind.XML
         /// <param name="profileElement">The profile element.</param>
         /// <returns>A parsed profile.</returns>
         [NotNull]
-        private ApiProfile ParseApiProfile([NotNull] XElement profileElement)
+        private static ApiProfile ParseApiProfile([NotNull] XElement profileElement)
         {
             var profileName = profileElement.GetRequiredAttribute("name").Value;
 
-            var profileVersion = ParseVersion(profileElement, defaultVersion: new Version(0, 0));
+            var profileVersion = ParsingHelpers.ParseVersion(profileElement, defaultVersion: new Version(0, 0));
 
             var functionElements = profileElement.Elements().Where(e => e.Name == "function");
             var functions = functionElements.Select(ParseFunctionSignature).ToList();
@@ -96,19 +94,19 @@ namespace Bind.XML
         /// <param name="functionElement">The function element.</param>
         /// <returns>A parsed function.</returns>
         [NotNull]
-        private FunctionSignature ParseFunctionSignature([NotNull] XElement functionElement)
+        private static FunctionSignature ParseFunctionSignature([NotNull] XElement functionElement)
         {
             var functionName = functionElement.GetRequiredAttribute("name").Value;
             var functionCategory = functionElement.GetRequiredAttribute("category").Value;
             var functionExtensions = functionElement.GetRequiredAttribute("extension").Value;
 
-            var functionVersion = ParseVersion(functionElement, defaultVersion: new Version(0, 0));
-            var functionDeprecationVersion = ParseVersion(functionElement, "deprecated");
+            var functionVersion = ParsingHelpers.ParseVersion(functionElement, defaultVersion: new Version(0, 0));
+            var functionDeprecationVersion = ParsingHelpers.ParseVersion(functionElement, "deprecated");
 
             var parameters = ParseParameterSignatures(functionElement);
 
             var returnElement = functionElement.GetRequiredElement("returns");
-            var returnType = ParseTypeSignature(returnElement);
+            var returnType = ParsingHelpers.ParseTypeSignature(returnElement);
 
             return new FunctionSignature
             (
@@ -123,7 +121,7 @@ namespace Bind.XML
         }
 
         [NotNull, ItemNotNull]
-        private IReadOnlyList<ParameterSignature> ParseParameterSignatures([NotNull] XElement functionElement)
+        private static IReadOnlyList<ParameterSignature> ParseParameterSignatures([NotNull] XElement functionElement)
         {
             var parameterElements = functionElement.Elements().Where(e => e.Name == "param");
             var parametersWithComputedCounts =
@@ -193,7 +191,7 @@ namespace Bind.XML
         /// <param name="valueReferenceName">The name of the parameter that the count value references.</param>
         /// <returns>A parsed parameter.</returns>
         [NotNull]
-        private ParameterSignature ParseParameterSignature
+        private static ParameterSignature ParseParameterSignature
         (
             [NotNull] XElement paramElement,
             out bool hasComputedCount,
@@ -211,7 +209,7 @@ namespace Bind.XML
             var paramName = paramElement.GetRequiredAttribute("name").Value;
 
             // A parameter is technically a type signature (think of it as ParameterSignature : ITypeSignature)
-            var paramType = ParseTypeSignature(paramElement);
+            var paramType = ParsingHelpers.ParseTypeSignature(paramElement);
 
             var paramFlowStr = paramElement.GetRequiredAttribute("flow").Value;
 
@@ -267,18 +265,18 @@ namespace Bind.XML
         /// <param name="enumElement">The enum element.</param>
         /// <returns>A parsed enumeration.</returns>
         [NotNull]
-        private EnumerationSignature ParseEnumerationSignature([NotNull] XElement enumElement)
+        private static EnumerationSignature ParseEnumerationSignature([NotNull] XElement enumElement)
         {
             var enumName = enumElement.GetRequiredAttribute("name").Value;
 
             var tokenElements = enumElement.Elements().Where(e => e.Name == "token");
-            var tokens = tokenElements.Select(ParseTokenSignature).ToList();
+            var tokens = tokenElements.Select(ParsingHelpers.ParseTokenSignature).ToList();
 
             // We'll do a bit of a cheeky up-tree walk here to get the version.
             var profileElement = enumElement.Parent
                                  ?? throw new InvalidDataException("No parent element for the enum found.");
 
-            var enumVersion = ParseVersion(profileElement, defaultVersion: new Version(0, 0));
+            var enumVersion = ParsingHelpers.ParseVersion(profileElement, defaultVersion: new Version(0, 0));
 
             return new EnumerationSignature(enumName, enumVersion, tokens);
         }
