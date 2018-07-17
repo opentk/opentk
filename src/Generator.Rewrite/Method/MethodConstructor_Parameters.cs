@@ -1,10 +1,10 @@
-﻿using Mono.Cecil;
-using Mono.Cecil.Cil;
-using Mono.Cecil.Rocks;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Mono.Cecil;
+using Mono.Cecil.Cil;
+using Mono.Cecil.Rocks;
 
 namespace OpenTK.Rewrite.Method
 {
@@ -158,7 +158,12 @@ namespace OpenTK.Rewrite.Method
             _body.Variables.Add(variableDefinition);
             int generatedPointerVarIndex = _body.Variables.Count - 1;
 
-            var stringPtrVar = new GeneratedVariableIdentifier(_body, variableDefinition, parameter.Name + paramNameSuffix);
+            var stringPtrVar = new GeneratedVariableIdentifier
+            (
+                _body,
+                variableDefinition,
+                parameter.Name + paramNameSuffix
+            );
 
             // ptr = Marshal.StringToHGlobalAnsi(str);
             _ilProcessor.Emit(OpCodes.Call, marshalStringToPtr);
@@ -193,7 +198,12 @@ namespace OpenTK.Rewrite.Method
             _body.Variables.Add(variableDefinition);
             var stringPtrIndex = _body.Variables.Count - 1;
 
-            var stringPtrVar = new GeneratedVariableIdentifier(_body, variableDefinition, parameter.Name + "_string_ptr");
+            var stringPtrVar = new GeneratedVariableIdentifier
+            (
+                _body,
+                variableDefinition,
+                parameter.Name + "_string_ptr"
+            );
 
             // ptr = Marshal.AllocHGlobal(count + 1);
             var count = GetCountAttribute(parameter);
@@ -203,7 +213,10 @@ namespace OpenTK.Rewrite.Method
                 // string buffer. Currently every string out parameter has a
                 // count attribute but this check is in place to make things
                 // clearer if this case is ever hit.
-                throw new InvalidOperationException($"{_wrapper.Name} ({parameter.Name}) doesn't have a count attribute.");
+                throw new InvalidOperationException
+                (
+                    $"{_wrapper.Name} ({parameter.Name}) doesn't have a count attribute."
+                );
             }
 
             if (count.Count != 0)
@@ -221,14 +234,18 @@ namespace OpenTK.Rewrite.Method
             {
                 if (_wrapper.Name == "GetActiveVarying")
                 {
-                    // GetActiveVaryingNV's name parameter has a count of "COMPSIZE(program,index,bufSize)" but really it should be bufSize.
+                    // GetActiveVaryingNV's name parameter has a count of "COMPSIZE(program,index,bufSize)"
+                    // but really it should be bufSize.
                     var countVariable = EmitCountVariable("bufSize");
                     _ilProcessor.Emit(OpCodes.Ldloc, countVariable.Index);
                 }
                 else
                 {
                     // Computed counts are hard and require manual reading of the specification for each one.
-                    throw new NotSupportedException($"{_wrapper.Name} ({parameter.Name}) requires a computed count: {count.Computed}.");
+                    throw new NotSupportedException
+                    (
+                        $"{_wrapper.Name} ({parameter.Name}) requires a computed count: {count.Computed}."
+                    );
                 }
             }
 
@@ -320,9 +337,18 @@ namespace OpenTK.Rewrite.Method
             return countVariable;
         }
 
-        private GeneratedVariableIdentifier GetGeneratedVariable(IEnumerable<GeneratedVariableIdentifier> identifiers, string name)
+        private GeneratedVariableIdentifier GetGeneratedVariable
+        (
+            IEnumerable<GeneratedVariableIdentifier> identifiers,
+            string name
+        )
         {
-            return identifiers.FirstOrDefault(v => v.Name == name && v.Body == _body && _body.Variables.Contains(v.Definition));
+            return identifiers.FirstOrDefault(v =>
+            {
+                return v.Name == name &&
+                    v.Body == _body &&
+                    _body.Variables.Contains(v.Definition);
+            });
         }
 
         private T GetAttributeField<T>(CustomAttribute attribute, string name)
@@ -368,7 +394,12 @@ namespace OpenTK.Rewrite.Method
             }
         }
 
-        private void EmitStringEpilogue(ParameterDefinition parameter, GeneratedVariableIdentifier generatedPtrVar, bool isArray = false)
+        private void EmitStringEpilogue
+        (
+            ParameterDefinition parameter,
+            GeneratedVariableIdentifier generatedPtrVar,
+            bool isArray = false
+        )
         {
             string freePtrName = isArray ? "FreeStringArrayPtr" : "FreeStringPtr";
 

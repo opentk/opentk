@@ -19,8 +19,9 @@ using CommandLine;
 
 namespace OpenTK.Rewrite
 {
-    // Replaces OpenTK.InteropHelper method instances
-    // with the s IL instructions.
+    /// <summary>
+    /// A commandline tool that replaces OpenTK.InteropHelper method instances with the correct IL instructions.
+    /// </summary>
     internal class Program
     {
         private static RewriteOptions Options;

@@ -1,8 +1,8 @@
-﻿using Mono.Cecil.Cil;
-using Mono.Cecil.Rocks;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Mono.Cecil.Cil;
+using Mono.Cecil.Rocks;
 
 namespace OpenTK.Rewrite.Method
 {
@@ -36,8 +36,11 @@ namespace OpenTK.Rewrite.Method
             {
                 // String return-type wrapper
                 // return new string((sbyte*)((void*)GetString()));
-                var opExplicit = _wrapper.Module.ImportReference(
-                    _intPtrType.Methods.First(m => m.Name == "op_Explicit" && m.ReturnType.FullNameEquals(typeof(void*)))
+                var explicitOperator = _wrapper.Module.ImportReference(
+                    _intPtrType.Methods.First(m =>
+                    {
+                        return m.Name == "op_Explicit" && m.ReturnType.FullNameEquals(typeof(void*));
+                    })
                 );
 
                 var stringConstructor = _wrapper.Module.ImportReference(_stringType
@@ -48,12 +51,15 @@ namespace OpenTK.Rewrite.Method
                         return p.Count > 0 && p[0].ParameterType.FullNameEquals(typeof(sbyte*));
                     }));
 
-                _ilProcessor.Emit(OpCodes.Call, opExplicit);
+                _ilProcessor.Emit(OpCodes.Call, explicitOperator);
                 _ilProcessor.Emit(OpCodes.Newobj, stringConstructor);
             }
             else
             {
-                Console.Error.WriteLine($"Return wrapper for '{_wrapper.ReturnType.FullName}' not implemented yet ({_native.Name}).");
+                Console.Error.WriteLine
+                (
+                    $"Return wrapper for '{_wrapper.ReturnType.FullName}' not implemented yet ({_native.Name})."
+                );
             }
         }
 

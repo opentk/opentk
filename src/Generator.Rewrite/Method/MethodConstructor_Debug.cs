@@ -1,9 +1,9 @@
-﻿using Mono.Cecil;
-using Mono.Cecil.Cil;
-using Mono.Cecil.Rocks;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Mono.Cecil;
+using Mono.Cecil.Cil;
+using Mono.Cecil.Rocks;
 
 namespace OpenTK.Rewrite.Method
 {
@@ -21,11 +21,30 @@ namespace OpenTK.Rewrite.Method
 
         private class DebugVariables
         {
-            public Instruction BeginTry;
-            public VariableDefinition ErrorHelperLocal;
-            public TypeDefinition ErrorHelperType;
-            public MethodReference Get_CurrentContext;
-            public MethodReference Set_ErrorChecking;
+            public DebugVariables
+            (
+                Instruction beginTry,
+                TypeDefinition errorHelperType,
+                MethodReference get_currentContext,
+                MethodReference set_errorChecking
+            )
+            {
+                BeginTry = beginTry;
+                ErrorHelperType = errorHelperType;
+                ErrorHelperLocal = new VariableDefinition(errorHelperType);
+                Get_CurrentContext = get_currentContext;
+                Set_ErrorChecking = set_errorChecking;
+            }
+
+            public Instruction BeginTry { get; }
+
+            public TypeDefinition ErrorHelperType { get; }
+
+            public VariableDefinition ErrorHelperLocal { get; }
+
+            public MethodReference Get_CurrentContext { get; }
+
+            public MethodReference Set_ErrorChecking { get; }
         }
 
         private DebugVariables EmitDebugPrologue()
@@ -53,26 +72,30 @@ namespace OpenTK.Rewrite.Method
             }
 
             var graphicsContext = _wrapper.Module.GetType("OpenTK.Graphics.GraphicsContext");
-            var iGraphicsContext = _wrapper.Module.GetType("OpenTK.Graphics.IGraphicsContext");
+            var graphicsContextInterface = _wrapper.Module.GetType("OpenTK.Graphics.IGraphicsContext");
 
             // Get the constructor that takes a GraphicsContext parameter
             var ctor = errorHelperType.GetConstructors().FirstOrDefault(c =>
-                c.Parameters.Count == 1 &&
-                c.Parameters[0].ParameterType.FullNameEquals(iGraphicsContext));
+            {
+                return c.Parameters.Count == 1 &&
+                    c.Parameters[0].ParameterType.FullNameEquals(graphicsContextInterface);
+            });
 
             if (ctor == null)
             {
-                throw new InvalidOperationException($"{errorHelperType} needs a constructor taking {graphicsContext}!");
+                throw new InvalidOperationException
+                (
+                    $"{errorHelperType} needs a constructor taking {graphicsContext}!"
+                );
             }
 
             var debugVars = new DebugVariables
-            {
-                ErrorHelperType = errorHelperType,
-                Get_CurrentContext = graphicsContext.GetMethod("get_CurrentContext"),
-                Set_ErrorChecking = graphicsContext.GetMethod("set_ErrorChecking"),
-                ErrorHelperLocal = new VariableDefinition(errorHelperType),
-                BeginTry = Instruction.Create(OpCodes.Nop),
-            };
+            (
+                Instruction.Create(OpCodes.Nop),
+                errorHelperType,
+                graphicsContext.GetMethod("get_CurrentContext"),
+                graphicsContext.GetMethod("set_ErrorChecking")
+            );
 
             // using (new ErrorHelper(GraphicsContext.CurrentContext)) { ...
             _ilProcessor.Body.Variables.Add(debugVars.ErrorHelperLocal);

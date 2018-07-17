@@ -1,8 +1,8 @@
-﻿using Mono.Cecil;
+﻿using System;
+using System.Collections.Generic;
+using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
-using System;
-using System.Collections.Generic;
 
 namespace OpenTK.Rewrite.Method
 {
@@ -23,7 +23,25 @@ namespace OpenTK.Rewrite.Method
         private readonly MethodBody _body;
         private readonly ILProcessor _ilProcessor;
 
-        public MethodConstructor(AssemblyDefinition mscorlib, MethodDefinition wrapper, MethodDefinition native, TypeDefinition bindingsBaseType, RewriteOptions options)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MethodConstructor"/> class.
+        /// </summary>
+        /// <param name="mscorlib">The mscorlib assembly definition to use for base types.</param>
+        /// <param name="wrapper">The wrapper method that should be rewritten.</param>
+        /// <param name="native">The native function definition that will be called by the wrapper method.</param>
+        /// <param name="bindingsBaseType">
+        /// The "BindingsBase" type which provides additional types and methods
+        /// that help with wrapping around native functions.
+        /// </param>
+        /// <param name="options">The rewriter CLI options.</param>
+        public MethodConstructor
+        (
+            AssemblyDefinition mscorlib,
+            MethodDefinition wrapper,
+            MethodDefinition native,
+            TypeDefinition bindingsBaseType,
+            RewriteOptions options
+        )
         {
             if (mscorlib == null)
             {
@@ -47,6 +65,17 @@ namespace OpenTK.Rewrite.Method
             _body.Instructions.Clear();
         }
 
+        /// <summary>
+        /// Constructs the method body with a given slot and entry points.
+        /// </summary>
+        /// <param name="slot">
+        /// The index of the entry point to use in the EntryPoints array.<para/>
+        /// Should be -1 if DllImport is used.
+        /// </param>
+        /// <param name="entryPoints">
+        /// The field called "EntryPoints" that contains the entry points for the native function calls.
+        /// </param>
+        /// <returns>The rewritten wrapper method definition.</returns>
         public MethodDefinition ConstructBody(int slot, FieldDefinition entryPoints)
         {
             DebugVariables vars = null;

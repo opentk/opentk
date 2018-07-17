@@ -15,7 +15,12 @@ namespace OpenTK.Rewrite
         /// <param name="body">The method body which the variable is in.</param>
         /// <param name="definition">The definition of the generated variable.</param>
         /// <param name="name">The name of the generated variable.</param>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentException">
+        /// If <paramref name="name"/> is null or an empty string.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// If either <paramref name="body"/> or <paramref name="definition"/> are null.
+        /// </exception>
         public GeneratedVariableIdentifier(MethodBody body, VariableDefinition definition, string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -29,17 +34,17 @@ namespace OpenTK.Rewrite
         }
 
         /// <summary>
-        /// The <see cref="MethodBody" /> which the variable is in.
+        /// Gets the <see cref="MethodBody"/> which the variable is in.
         /// </summary>
         public MethodBody Body { get; }
 
         /// <summary>
-        /// The <see cref="VariableDefinition" /> which the variable idetifier maps to.
+        /// Gets the <see cref="VariableDefinition"/> which the variable idetifier maps to.
         /// </summary>
         public VariableDefinition Definition { get; }
 
         /// <summary>
-        /// The name of the generated variable.
+        /// Gets the name of the generated variable.
         /// </summary>
         public string Name { get; }
     }
