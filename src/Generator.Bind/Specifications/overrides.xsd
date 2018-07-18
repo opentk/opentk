@@ -218,7 +218,6 @@
           </xs:annotation>
           <xs:complexType>
             <xs:sequence>
-              <xs:element ref="function" minOccurs="0" maxOccurs="unbounded" />
               <xs:element ref="enum" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
             <xs:attribute ref="name" use="required">

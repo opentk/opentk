@@ -452,30 +452,34 @@ namespace Bind
             // Note: some endings should not be trimmed, for example: 'b' from Attrib.
             // Check the endingsNotToTrim regex for details.
             var m = EndingsNotToTrim.Match(trimmedName);
-            if (m.Index + m.Length != trimmedName.Length)
+            if (m.Index + m.Length == trimmedName.Length)
             {
-                m = Endings.Match(trimmedName);
+                return trimmedName;
+            }
 
-                if (m.Length > 0 && m.Index + m.Length == trimmedName.Length)
+            m = Endings.Match(trimmedName);
+
+            if (m.Length <= 0 || m.Index + m.Length != trimmedName.Length)
+            {
+                return trimmedName;
+            }
+
+            // Only trim endings, not internal matches.
+            if (m.Value[m.Length - 1] == 'v' && EndingsAddV.IsMatch(name) &&
+                !name.StartsWith("Get") && !name.StartsWith("MatrixIndex"))
+            {
+                // Only trim ending 'v' when there is a number
+                trimmedName = trimmedName.Substring(0, m.Index) + "v";
+            }
+            else
+            {
+                if (!trimmedName.EndsWith("xedv"))
                 {
-                    // Only trim endings, not internal matches.
-                    if (m.Value[m.Length - 1] == 'v' && EndingsAddV.IsMatch(name) &&
-                        !name.StartsWith("Get") && !name.StartsWith("MatrixIndex"))
-                    {
-                        // Only trim ending 'v' when there is a number
-                        trimmedName = trimmedName.Substring(0, m.Index) + "v";
-                    }
-                    else
-                    {
-                        if (!trimmedName.EndsWith("xedv"))
-                        {
-                            trimmedName = trimmedName.Substring(0, m.Index);
-                        }
-                        else
-                        {
-                            trimmedName = trimmedName.Substring(0, m.Index + 1);
-                        }
-                    }
+                    trimmedName = trimmedName.Substring(0, m.Index);
+                }
+                else
+                {
+                    trimmedName = trimmedName.Substring(0, m.Index + 1);
                 }
             }
 

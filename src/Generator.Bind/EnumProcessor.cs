@@ -138,13 +138,28 @@ namespace Bind
 
         private static bool IsAlreadyProcessed([NotNull] string name)
         {
+            if (name.Contains("_") || name.Contains("-"))
+            {
+                return false;
+            }
+
+            if (char.IsDigit(name[0]))
+            {
+                return false;
+            }
+
+            if (name.All(char.IsUpper))
+            {
+                return false;
+            }
+
             var extension = Utilities.GetExtension(name, true);
-            var unprocessed = false;
-            unprocessed |= name.Contains("_") || name.Contains("-");
-            unprocessed |= char.IsDigit(name[0]);
-            unprocessed |= name.All(c => char.IsUpper(c));
-            unprocessed |= !string.IsNullOrEmpty(extension) && extension.All(c => char.IsUpper(c));
-            return !unprocessed;
+            if (!string.IsNullOrEmpty(extension) && extension.All(char.IsUpper))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>

@@ -28,26 +28,17 @@ namespace Bind.XML.Signatures.Enumerations
         public IReadOnlyList<TokenSignature> Tokens { get; internal set; }
 
         /// <summary>
-        /// Gets the version the enumeration was introduced in.
-        /// </summary>
-        [NotNull]
-        public Version IntroducedIn { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="EnumerationSignature"/> class.
         /// </summary>
         /// <param name="name">The name of the enumeration.</param>
-        /// <param name="introducedIn">The version the enumeration was introduced in.</param>
         /// <param name="tokens">The tokens contained in the enumeration.</param>
         public EnumerationSignature
         (
             [NotNull] string name,
-            [NotNull] Version introducedIn,
-            [CanBeNull] List<TokenSignature> tokens = null
+            [CanBeNull] IReadOnlyList<TokenSignature> tokens = null
         )
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
-            IntroducedIn = introducedIn ?? throw new ArgumentNullException(nameof(introducedIn));
             Tokens = tokens ?? new List<TokenSignature>();
         }
 

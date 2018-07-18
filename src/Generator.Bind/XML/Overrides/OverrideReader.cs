@@ -100,7 +100,6 @@ namespace Bind.XML.Overrides
             {
                 foreach (var (version, elements) in elementsByVersion)
                 {
-                    var functionAdditions = new List<FunctionOverride>();
                     var enumerationAdditions = new List<EnumerationOverride>();
 
                     var functionReplacements = new List<FunctionOverride>();
@@ -112,9 +111,7 @@ namespace Bind.XML.Overrides
                         {
                             case "add":
                             {
-                                functionAdditions.AddRange(element.Elements("function").Select(ParseFunctionOverride));
                                 enumerationAdditions.AddRange(element.Elements("enum").Select(ParseEnumeration));
-
                                 break;
                             }
                             case "replace":
@@ -138,7 +135,6 @@ namespace Bind.XML.Overrides
                     (
                         profileName,
                         new VersionRange(version, version),
-                        functionAdditions,
                         enumerationAdditions,
                         functionReplacements,
                         functionOverloads
@@ -210,7 +206,7 @@ namespace Bind.XML.Overrides
                 newFlow = parsedFlow;
             }
 
-            var newCount = paramElement.Attribute("count")?.Value;
+            var newCount = paramElement.Element("count")?.Value;
 
             return new ParameterOverride
             (

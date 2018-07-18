@@ -22,12 +22,6 @@ namespace Bind.XML.Overrides
         public VersionRange Versions { get; }
 
         /// <summary>
-        /// Gets the functions that were added to the profile.
-        /// </summary>
-        [NotNull]
-        public IReadOnlyList<FunctionOverride> AddedFunctions { get; }
-
-        /// <summary>
         /// Gets the enumerations that were added to the profile.
         /// </summary>
         [NotNull]
@@ -50,7 +44,6 @@ namespace Bind.XML.Overrides
         /// </summary>
         /// <param name="name">The name of the profile.</param>
         /// <param name="versions">The versions the profile encompasses.</param>
-        /// <param name="addedFunctions">The added functions.</param>
         /// <param name="addedEnumerations">The added enumerations.</param>
         /// <param name="replacedFunctions">The replaced functions.</param>
         /// <param name="functionOverloads">The function overloads.</param>
@@ -58,7 +51,6 @@ namespace Bind.XML.Overrides
         (
             [NotNull] string name,
             [NotNull] VersionRange versions,
-            [NotNull] IReadOnlyList<FunctionOverride> addedFunctions,
             [NotNull] IReadOnlyList<EnumerationOverride> addedEnumerations,
             [NotNull] IReadOnlyList<FunctionOverride> replacedFunctions,
             [NotNull] IReadOnlyList<FunctionOverride> functionOverloads
@@ -66,7 +58,6 @@ namespace Bind.XML.Overrides
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Versions = versions ?? throw new ArgumentNullException(nameof(versions));
-            AddedFunctions = addedFunctions ?? throw new ArgumentNullException(nameof(addedFunctions));
             AddedEnumerations = addedEnumerations ?? throw new ArgumentNullException(nameof(addedEnumerations));
             ReplacedFunctions = replacedFunctions ?? throw new ArgumentNullException(nameof(replacedFunctions));
             FunctionOverloads = functionOverloads ?? throw new ArgumentNullException(nameof(functionOverloads));

@@ -10,6 +10,7 @@ using Bind.Versioning;
 using Bind.XML.Signatures.Enumerations;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
+using static Bind.XML.ParsingHelpers;
 
 namespace Bind.XML.Signatures
 {
@@ -18,19 +19,6 @@ namespace Bind.XML.Signatures
     /// </summary>
     public static class SignatureReader
     {
-        /// <summary>
-        /// A regular expression that matches the parameter names inside of a COMPSIZE(a,b,c) expression.
-        /// </summary>
-        private static readonly Regex ComputedSizeParametersRegex =
-            new Regex("(?<=COMPSIZE\\()(\\w+?,?)+?(?=\\))", RegexOptions.Compiled);
-
-        /// <summary>
-        /// A regular expression that matches a single parameter name, used as a reference for the count. Typically
-        /// points to an "n", "count", "min", or "max" parameter.
-        /// </summary>
-        private static readonly Regex CountParameterReferenceRegex =
-            new Regex("^[[:alpha:]]+?$", RegexOptions.Compiled);
-
         /// <summary>
         /// Retrieves the available profiles in the signatures.
         /// </summary>
@@ -61,7 +49,7 @@ namespace Bind.XML.Signatures
         [NotNull, ItemNotNull]
         public static IEnumerable<ApiProfile> GetAvailableProfiles([NotNull] XDocument signatureDocument)
         {
-            var profileElements = ParsingHelpers.GetSignatureRoot(signatureDocument).Elements().Where(e => e.Name == "add");
+            var profileElements = GetSignatureRoot(signatureDocument).Elements().Where(e => e.Name == "add");
             foreach (var profileElement in profileElements)
             {
                 yield return ParseApiProfile(profileElement);
@@ -78,7 +66,7 @@ namespace Bind.XML.Signatures
         {
             var profileName = profileElement.GetRequiredAttribute("name").Value;
 
-            var profileVersion = ParsingHelpers.ParseVersion(profileElement, defaultVersion: new Version(0, 0));
+            var profileVersion = ParseVersion(profileElement, defaultVersion: new Version(0, 0));
 
             var functionElements = profileElement.Elements().Where(e => e.Name == "function");
             var functions = functionElements.Select(ParseFunctionSignature).ToList();
@@ -101,13 +89,13 @@ namespace Bind.XML.Signatures
             var functionCategory = functionElement.GetRequiredAttribute("category").Value;
             var functionExtensions = functionElement.GetRequiredAttribute("extension").Value;
 
-            var functionVersion = ParsingHelpers.ParseVersion(functionElement, defaultVersion: new Version(0, 0));
-            var functionDeprecationVersion = ParsingHelpers.ParseVersion(functionElement, "deprecated");
+            var functionVersion = ParseVersion(functionElement, defaultVersion: new Version(0, 0));
+            var functionDeprecationVersion = ParseVersion(functionElement, "deprecated");
 
             var parameters = ParseParameterSignatures(functionElement);
 
             var returnElement = functionElement.GetRequiredElement("returns");
-            var returnType = ParsingHelpers.ParseTypeSignature(returnElement);
+            var returnType = ParseTypeSignature(returnElement);
 
             return new FunctionSignature
             (
@@ -140,7 +128,8 @@ namespace Bind.XML.Signatures
                     out var hasComputedCount,
                     out var computedCountParameterNames,
                     out var hasValueReference,
-                    out var valueReferenceName
+                    out var valueReferenceName,
+                    out var valueReferenceExpression
                 );
 
                 if (hasComputedCount)
@@ -151,31 +140,16 @@ namespace Bind.XML.Signatures
                 if (hasValueReference)
                 {
                     parametersWithValueReferenceCounts.Add((parameter, valueReferenceName));
+
+                    // TODO: Pass on the mathematical expression
                 }
 
                 resultParameters.Add(parameter);
             }
 
-            foreach (var (parameter, computedCountNames) in parametersWithComputedCounts)
-            {
-                var computedParameters = resultParameters.Where(p => computedCountNames.Contains(p.Name)).ToList();
-                var countSignature = new CountSignature(computedParameters);
+            ResolveComputedCountSignatures(resultParameters, parametersWithComputedCounts);
 
-                parameter.Count = countSignature;
-            }
-
-            foreach (var (parameter, valueReferenceName) in parametersWithValueReferenceCounts)
-            {
-                var referenceParameter = resultParameters.FirstOrDefault(p => p.Name == valueReferenceName)
-                                         ?? throw new InvalidDataException
-                                         (
-                                             "Referenced parameter in count attribute not found."
-                                         );
-
-                var countSignature = new CountSignature(referenceParameter);
-
-                parameter.Count = countSignature;
-            }
+            ResolveReferenceCountSignatures(resultParameters, parametersWithValueReferenceCounts);
 
             return resultParameters;
         }
@@ -192,25 +166,21 @@ namespace Bind.XML.Signatures
         /// <param name="valueReferenceName">The name of the parameter that the count value references.</param>
         /// <returns>A parsed parameter.</returns>
         [NotNull]
+        [ContractAnnotation("hasComputedCount : true => computedCountParameterNames : notnull; hasValueReference : true => valueReferenceName : notnull")]
         private static ParameterSignature ParseParameterSignature
         (
             [NotNull] XElement paramElement,
             out bool hasComputedCount,
             [CanBeNull] out IReadOnlyList<string> computedCountParameterNames,
             out bool hasValueReference,
-            [CanBeNull] out string valueReferenceName
+            [CanBeNull] out string valueReferenceName,
+            [CanBeNull] out string valueReferenceExpression
         )
         {
-            computedCountParameterNames = null;
-            valueReferenceName = null;
-
-            hasComputedCount = false;
-            hasValueReference = false;
-
             var paramName = paramElement.GetRequiredAttribute("name").Value;
 
             // A parameter is technically a type signature (think of it as ParameterSignature : ITypeSignature)
-            var paramType = ParsingHelpers.ParseTypeSignature(paramElement);
+            var paramType = ParseTypeSignature(paramElement);
 
             var paramFlowStr = paramElement.GetRequiredAttribute("flow").Value;
 
@@ -220,44 +190,17 @@ namespace Bind.XML.Signatures
             }
 
             var paramCountStr = paramElement.Attribute("count")?.Value;
-            if (paramCountStr is null)
-            {
-                return new ParameterSignature(paramName, paramType, paramFlow);
-            }
+            var countSignature = ParseCountSignature
+            (
+                paramCountStr,
+                out hasComputedCount,
+                out computedCountParameterNames,
+                out hasValueReference,
+                out valueReferenceName,
+                out valueReferenceExpression
+            );
 
-            if (int.TryParse(paramCountStr, out var staticCount))
-            {
-                var countSignature = new CountSignature(staticCount);
-                return new ParameterSignature(paramName, paramType, paramFlow, countSignature);
-            }
-
-            if (ComputedSizeParametersRegex.IsMatch(paramCountStr))
-            {
-                // It's a computed count, so we'll extract the names and let the count signature resolve in the second pass
-                var countParamNames = ComputedSizeParametersRegex
-                    .Matches(paramCountStr)
-                    .Cast<Match>()
-                    .Select(m => m.Value)
-                    .First()
-                    .Split(',');
-
-                computedCountParameterNames = countParamNames.ToList();
-
-                hasComputedCount = true;
-            }
-            else if (CountParameterReferenceRegex.IsMatch(paramCountStr))
-            {
-                // It's a parameter value reference count (that is, taken from the value of another parameter)
-                valueReferenceName = ComputedSizeParametersRegex
-                    .Matches(paramCountStr)
-                    .Cast<Match>()
-                    .Select(m => m.Value)
-                    .First();
-
-                hasValueReference = true;
-            }
-
-            return new ParameterSignature(paramName, paramType, paramFlow);
+            return new ParameterSignature(paramName, paramType, paramFlow, countSignature);
         }
 
         /// <summary>
@@ -271,15 +214,9 @@ namespace Bind.XML.Signatures
             var enumName = enumElement.GetRequiredAttribute("name").Value;
 
             var tokenElements = enumElement.Elements().Where(e => e.Name == "token");
-            var tokens = tokenElements.Select(ParsingHelpers.ParseTokenSignature).ToList();
+            var tokens = tokenElements.Select(ParseTokenSignature).ToList();
 
-            // We'll do a bit of a cheeky up-tree walk here to get the version.
-            var profileElement = enumElement.Parent
-                                 ?? throw new InvalidDataException("No parent element for the enum found.");
-
-            var enumVersion = ParsingHelpers.ParseVersion(profileElement, defaultVersion: new Version(0, 0));
-
-            return new EnumerationSignature(enumName, enumVersion, tokens);
+            return new EnumerationSignature(enumName, tokens);
         }
     }
 }

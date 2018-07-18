@@ -14,7 +14,7 @@ namespace Bind.XML.Overrides.Functions
         /// Gets the name of the parameter that the override affects.
         /// </summary>
         [NotNull]
-        public string Name { get; }
+        public string BaseName { get; }
 
         /// <summary>
         /// Gets the new name of the parameter.
@@ -58,7 +58,7 @@ namespace Bind.XML.Overrides.Functions
             [CanBeNull] string newCount
         )
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
+            BaseName = name ?? throw new ArgumentNullException(nameof(name));
             NewName = newName;
             NewType = newType;
             NewFlow = newFlow;
@@ -68,7 +68,7 @@ namespace Bind.XML.Overrides.Functions
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{NewType} {NewName ?? Name}".Trim();
+            return $"{NewType} {NewName ?? BaseName}".Trim();
         }
     }
 }

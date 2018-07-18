@@ -20,12 +20,6 @@ namespace Bind.XML.Signatures.Enumerations
         public long Value { get; }
 
         /// <summary>
-        /// Gets the version the token was introduced in.
-        /// </summary>
-        [NotNull]
-        public Version IntroducedIn { get; }
-
-        /// <summary>
         /// Gets the version that the token was deprecated in.
         /// </summary>
         [CanBeNull]
@@ -49,14 +43,12 @@ namespace Bind.XML.Signatures.Enumerations
         (
             [NotNull] string name,
             long value,
-            [NotNull] Version introducedIn,
             [CanBeNull] Version deprecatedIn = null,
             [CanBeNull] string remarks = null
         )
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Value = value;
-            IntroducedIn = introducedIn ?? throw new ArgumentNullException(nameof(introducedIn));
             DeprecatedIn = deprecatedIn;
             Remarks = remarks;
         }

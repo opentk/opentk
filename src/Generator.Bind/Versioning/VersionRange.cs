@@ -1,11 +1,12 @@
 using System;
+using JetBrains.Annotations;
 
 namespace Bind.Versioning
 {
     /// <summary>
     /// Represents a range of versions, with a minimum version and a maximum version.
     /// </summary>
-    public class VersionRange : IComparable<Version>
+    public class VersionRange : IComparable<Version>, IComparable<VersionRange>
     {
         /// <summary>
         /// Gets the minimum version, that is, the lower bound of the version range.
@@ -127,8 +128,32 @@ namespace Bind.Versioning
             return true;
         }
 
+        /// <summary>
+        /// Determines if <paramref name="a"/> is considered lesser than <paramref name="b"/>. In principle, this
+        /// determines if a spans a range of versions that are less than the range of versions in b.
+        /// </summary>
+        /// <param name="a">The first range.</param>
+        /// <param name="b">The second range.</param>
+        /// <returns>true if a spans a lesser range of versions than b.</returns>
+        public static bool operator <([NotNull] VersionRange a, [NotNull] VersionRange b)
+        {
+            return a.CompareTo(b) <= -1;
+        }
+
+        /// <summary>
+        /// Determines if <paramref name="a"/> is considered greater than <paramref name="b"/>. In principle, this
+        /// determines if a spans a range of versions that are greater than the range of versions in b.
+        /// </summary>
+        /// <param name="a">The first range.</param>
+        /// <param name="b">The second range.</param>
+        /// <returns>true if a spans a greater range of versions than b.</returns>
+        public static bool operator >([NotNull] VersionRange a, [NotNull] VersionRange b)
+        {
+            return a.CompareTo(b) >= 1;
+        }
+
         /// <inheritdoc/>
-        public int CompareTo(Version other)
+        public int CompareTo([NotNull] Version other)
         {
             if (IsInRange(other))
             {
@@ -141,6 +166,32 @@ namespace Bind.Versioning
             }
 
             return -1;
+        }
+
+        /// <inheritdoc/>
+        public int CompareTo([NotNull] VersionRange other)
+        {
+            if (other.Maximum > Maximum)
+            {
+                return -1;
+            }
+
+            if (other.Maximum < Maximum)
+            {
+                return 1;
+            }
+
+            if (other.Minimum > Minimum)
+            {
+                return -1;
+            }
+
+            if (other.Minimum < Minimum)
+            {
+                return 1;
+            }
+
+            return 0;
         }
 
         /// <inheritdoc/>

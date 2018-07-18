@@ -10,6 +10,7 @@ using System.Reflection;
 using Bind.Generators;
 using Bind.Generators.ES;
 using Bind.Generators.GL2;
+using Bind.Versioning;
 using Bind.XML;
 using Bind.XML.Overrides;
 using Bind.XML.Signatures;
@@ -45,6 +46,9 @@ namespace Bind
 
             var profiles = SignatureReader.GetAvailableProfiles(Path.Combine(Arguments.InputPath, "GL2", "signatures.xml")).ToList();
             var profileOverrides = OverrideReader.GetProfileOverrides(Path.Combine(Arguments.InputPath, "GL2", "overrides.xml")).ToList();
+
+            var baker = new ProfileBaker(profiles, profileOverrides);
+            baker.BakeProfile("gles2", new VersionRange(new Version(3, 1)));
 
             CreateGenerators();
 

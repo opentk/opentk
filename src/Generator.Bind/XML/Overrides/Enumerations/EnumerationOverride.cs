@@ -20,20 +20,20 @@ namespace Bind.XML.Overrides.Enumerations
         /// Gets the set of tokens contained in the enumeration.
         /// </summary>
         [NotNull, ItemNotNull]
-        public IReadOnlyList<TokenSignature> DirectTokens { get; }
+        public IReadOnlyList<TokenSignature> DirectTokens { get; internal set; }
 
         /// <summary>
         /// Gets the set of token references contained in the enumeration. These are resolved in the baking step.
         /// </summary>
         [NotNull, ItemNotNull]
-        public IReadOnlyList<UseTokenOverride> UseTokens { get; }
+        public IReadOnlyList<UseTokenOverride> UseTokens { get; internal set; }
 
         /// <summary>
         /// Gets the set of enumeration reuse references contained in the enumeration. These are resolved in the baking
         /// step.
         /// </summary>
         [NotNull, ItemNotNull]
-        public IReadOnlyList<ReuseEnumerationOverride> ReuseEnumerations { get; }
+        public IReadOnlyList<ReuseEnumerationOverride> ReuseEnumerations { get; internal set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumerationOverride"/> class.
@@ -45,15 +45,16 @@ namespace Bind.XML.Overrides.Enumerations
         public EnumerationOverride
         (
             [NotNull] string name,
-            [NotNull, ItemNotNull] List<TokenSignature> directTokens,
-            [NotNull, ItemNotNull] IReadOnlyList<UseTokenOverride> useTokens,
-            [NotNull, ItemNotNull] IReadOnlyList<ReuseEnumerationOverride> reuseEnumerations)
+            [CanBeNull, ItemNotNull] List<TokenSignature> directTokens = null,
+            [CanBeNull, ItemNotNull] IReadOnlyList<UseTokenOverride> useTokens = null,
+            [CanBeNull, ItemNotNull] IReadOnlyList<ReuseEnumerationOverride> reuseEnumerations = null
+        )
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
 
-            DirectTokens = directTokens ?? throw new ArgumentNullException(nameof(directTokens));
-            UseTokens = useTokens ?? throw new ArgumentNullException(nameof(useTokens));
-            ReuseEnumerations = reuseEnumerations ?? throw new ArgumentNullException(nameof(reuseEnumerations));
+            DirectTokens = directTokens ?? new List<TokenSignature>();
+            UseTokens = useTokens ?? new List<UseTokenOverride>();
+            ReuseEnumerations = reuseEnumerations ?? new List<ReuseEnumerationOverride>();
         }
 
         /// <inheritdoc/>

@@ -40,6 +40,12 @@ namespace Bind.XML.Signatures.Functions
         public Version DeprecatedIn { get; }
 
         /// <summary>
+        /// Gets the reason the function was deprecated. Typically given via additional annotations in override files.
+        /// </summary>
+        [CanBeNull]
+        public string DeprecationReason { get; }
+
+        /// <summary>
         /// Gets the parameters of the function.
         /// </summary>
         [NotNull]
@@ -61,6 +67,7 @@ namespace Bind.XML.Signatures.Functions
         /// <param name="returnType">The return type of the function.</param>
         /// <param name="parameters">The parameters the function accepts. Optional.</param>
         /// <param name="deprecatedIn">The version the function was deprecated in, if any.</param>
+        /// <param name="deprecationReason">The reason the function was deprecated.</param>
         public FunctionSignature
         (
             [NotNull] string name,
@@ -69,7 +76,8 @@ namespace Bind.XML.Signatures.Functions
             [NotNull] Version introducedIn,
             [NotNull] TypeSignature returnType,
             [CanBeNull] IReadOnlyList<ParameterSignature> parameters = null,
-            [CanBeNull] Version deprecatedIn = null
+            [CanBeNull] Version deprecatedIn = null,
+            [CanBeNull] string deprecationReason = null
         )
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
@@ -77,6 +85,7 @@ namespace Bind.XML.Signatures.Functions
             Extension = extension ?? throw new ArgumentNullException(nameof(extension));
             IntroducedIn = introducedIn ?? throw new ArgumentNullException(nameof(introducedIn));
             DeprecatedIn = deprecatedIn;
+            DeprecationReason = deprecationReason;
             Parameters = parameters ?? new List<ParameterSignature>();
             ReturnType = returnType ?? throw new ArgumentNullException(nameof(returnType));
         }

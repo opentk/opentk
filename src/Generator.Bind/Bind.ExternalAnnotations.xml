@@ -36,6 +36,32 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
+  <member name="M:Bind.Versioning.VersionRange.CompareTo(Bind.Versioning.VersionRange)">
+    <parameter name="other">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Versioning.VersionRange.CompareTo(System.Version)">
+    <parameter name="other">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Versioning.VersionRange.op_GreaterThan(Bind.Versioning.VersionRange,Bind.Versioning.VersionRange)">
+    <parameter name="a">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="b">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Versioning.VersionRange.op_LessThan(Bind.Versioning.VersionRange,Bind.Versioning.VersionRange)">
+    <parameter name="a">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="b">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
   <member name="M:Bind.Writers.SourceWriter.#ctor(System.IO.TextWriter)">
     <parameter name="writer">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
@@ -71,14 +97,11 @@
   <member name="P:Bind.XML.IApiProfile.Versions">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
-  <member name="M:Bind.XML.Overrides.ApiProfileOverride.#ctor(System.String,Bind.Versioning.VersionRange,System.Collections.Generic.IReadOnlyList{Bind.XML.Overrides.Functions.FunctionOverride},System.Collections.Generic.IReadOnlyList{Bind.XML.Overrides.Enumerations.EnumerationOverride},System.Collections.Generic.IReadOnlyList{Bind.XML.Overrides.Functions.FunctionOverride},System.Collections.Generic.IReadOnlyList{Bind.XML.Overrides.Functions.FunctionOverride})">
+  <member name="M:Bind.XML.Overrides.ApiProfileOverride.#ctor(System.String,Bind.Versioning.VersionRange,System.Collections.Generic.IReadOnlyList{Bind.XML.Overrides.Enumerations.EnumerationOverride},System.Collections.Generic.IReadOnlyList{Bind.XML.Overrides.Functions.FunctionOverride},System.Collections.Generic.IReadOnlyList{Bind.XML.Overrides.Functions.FunctionOverride})">
     <parameter name="name">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
     <parameter name="versions">
-      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-    </parameter>
-    <parameter name="addedFunctions">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
     <parameter name="addedEnumerations">
@@ -94,9 +117,6 @@
   <member name="P:Bind.XML.Overrides.ApiProfileOverride.AddedEnumerations">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
-  <member name="P:Bind.XML.Overrides.ApiProfileOverride.AddedFunctions">
-    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-  </member>
   <member name="P:Bind.XML.Overrides.ApiProfileOverride.FunctionOverloads">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
@@ -108,15 +128,15 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
     <parameter name="directTokens">
-      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
       <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
     </parameter>
     <parameter name="useTokens">
-      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
       <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
     </parameter>
     <parameter name="reuseEnumerations">
-      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
       <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
     </parameter>
   </member>
@@ -209,7 +229,7 @@
       <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="P:Bind.XML.Overrides.Functions.ParameterOverride.Name">
+  <member name="P:Bind.XML.Overrides.Functions.ParameterOverride.BaseName">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
   <member name="P:Bind.XML.Overrides.Functions.ParameterOverride.NewCount">
@@ -242,6 +262,24 @@
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <parameter name="signatures">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.XML.ParsingHelpers.ParseCountSignature(System.String,System.Boolean@,System.Collections.Generic.IReadOnlyList{System.String}@,System.Boolean@,System.String@,System.String@)">
+    <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ContractAnnotationAttribute.#ctor(System.String)">
+      <argument>hasComputedCount : true =&gt; computedCountParameterNames : notnull; hasValueReference : true =&gt; valueReferenceName : notnull</argument>
+    </attribute>
+    <parameter name="countData">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="computedCountParameterNames">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="valueReferenceName">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="valueReferenceExpression">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
     </parameter>
   </member>
   <member name="M:Bind.XML.ParsingHelpers.ParseTokenSignature(System.Xml.Linq.XElement)">
@@ -283,6 +321,43 @@
       <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
     </parameter>
   </member>
+  <member name="M:Bind.XML.ParsingHelpers.ResolveComputedCountSignatures(System.Collections.Generic.IReadOnlyCollection{Bind.XML.Signatures.Functions.ParameterSignature},System.Collections.Generic.IEnumerable{System.ValueTuple{Bind.XML.Signatures.Functions.ParameterSignature,System.Collections.Generic.IReadOnlyList{System.String}}})">
+    <parameter name="parameters">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="parametersWithComputedCounts">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.XML.ParsingHelpers.ResolveReferenceCountSignatures(System.Collections.Generic.IReadOnlyCollection{Bind.XML.Signatures.Functions.ParameterSignature},System.Collections.Generic.IEnumerable{System.ValueTuple{Bind.XML.Signatures.Functions.ParameterSignature,System.String}})">
+    <parameter name="parameters">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="parametersWithValueReferenceCounts">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.XML.ProfileBaker.#ctor(System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.ApiProfile},System.Collections.Generic.IReadOnlyList{Bind.XML.Overrides.ApiProfileOverride})">
+    <parameter name="profiles">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="overrides">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.XML.ProfileBaker.BakeProfile(System.String,Bind.Versioning.VersionRange)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="profileName">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="versionRange">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
   <member name="M:Bind.XML.Signatures.ApiProfile.#ctor(System.String,Bind.Versioning.VersionRange,System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.FunctionSignature},System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Enumerations.EnumerationSignature})">
     <parameter name="name">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
@@ -303,19 +378,13 @@
   <member name="P:Bind.XML.Signatures.ApiProfile.Functions">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
-  <member name="M:Bind.XML.Signatures.Enumerations.EnumerationSignature.#ctor(System.String,System.Version,System.Collections.Generic.List{Bind.XML.Signatures.Enumerations.TokenSignature})">
+  <member name="M:Bind.XML.Signatures.Enumerations.EnumerationSignature.#ctor(System.String,System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Enumerations.TokenSignature})">
     <parameter name="name">
-      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-    </parameter>
-    <parameter name="introducedIn">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
     <parameter name="tokens">
       <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
     </parameter>
-  </member>
-  <member name="P:Bind.XML.Signatures.Enumerations.EnumerationSignature.IntroducedIn">
-    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
   <member name="P:Bind.XML.Signatures.Enumerations.EnumerationSignature.Name">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
@@ -323,11 +392,8 @@
   <member name="P:Bind.XML.Signatures.Enumerations.EnumerationSignature.Tokens">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
-  <member name="M:Bind.XML.Signatures.Enumerations.TokenSignature.#ctor(System.String,System.Int64,System.Version,System.Version,System.String)">
+  <member name="M:Bind.XML.Signatures.Enumerations.TokenSignature.#ctor(System.String,System.Int64,System.Version,System.String)">
     <parameter name="name">
-      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-    </parameter>
-    <parameter name="introducedIn">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
     <parameter name="deprecatedIn">
@@ -339,9 +405,6 @@
   </member>
   <member name="P:Bind.XML.Signatures.Enumerations.TokenSignature.DeprecatedIn">
     <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
-  </member>
-  <member name="P:Bind.XML.Signatures.Enumerations.TokenSignature.IntroducedIn">
-    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
   <member name="P:Bind.XML.Signatures.Enumerations.TokenSignature.Name">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
@@ -365,7 +428,7 @@
   <member name="P:Bind.XML.Signatures.Functions.CountSignature.ValueReference">
     <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
   </member>
-  <member name="M:Bind.XML.Signatures.Functions.FunctionSignature.#ctor(System.String,System.String,System.String,System.Version,Bind.XML.Signatures.Functions.TypeSignature,System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.ParameterSignature},System.Version)">
+  <member name="M:Bind.XML.Signatures.Functions.FunctionSignature.#ctor(System.String,System.String,System.String,System.Version,Bind.XML.Signatures.Functions.TypeSignature,System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.ParameterSignature},System.Version,System.String)">
     <parameter name="name">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
@@ -387,11 +450,17 @@
     <parameter name="deprecatedIn">
       <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
     </parameter>
+    <parameter name="deprecationReason">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="P:Bind.XML.Signatures.Functions.FunctionSignature.Category">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
   <member name="P:Bind.XML.Signatures.Functions.FunctionSignature.DeprecatedIn">
+    <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+  </member>
+  <member name="P:Bind.XML.Signatures.Functions.FunctionSignature.DeprecationReason">
     <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
   </member>
   <member name="P:Bind.XML.Signatures.Functions.FunctionSignature.Extension">
