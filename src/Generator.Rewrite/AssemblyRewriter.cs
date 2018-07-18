@@ -62,7 +62,7 @@ namespace OpenTK.Rewrite
             // we want to keep a valid symbols file (pdb/mdb)
             var readerParams = new ReaderParameters
             {
-                AssemblyResolver = new AssemblyResolver(),
+                AssemblyResolver = new DefaultAssemblyResolver(),
                 ReadSymbols = true,
                 ReadWrite = true,
             };
