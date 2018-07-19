@@ -169,17 +169,9 @@ namespace Bind
                         // String[] or StringBuilder[].
                         apiTypes.Add(words[0], "String");
                     }
-                    /*else if (words[0].Contains("Pointer"))
-                    {
-                        GLTypes.Add(words[0], words[1].Replace("Pointer", "*"));
-                    }*/
                     else if (words[1].Contains("GLvoid"))
                     {
                         apiTypes.Add(words[0], "void");
-                    }
-                    else if (words[1] == "const" && words[2] == "GLubyte")
-                    {
-                        apiTypes.Add(words[0], "String");
                     }
                     else if (words[1] == "struct")
                     {
