@@ -7,6 +7,7 @@ using Mono.Cecil;
 using Mono.Cecil.Rocks;
 using OpenTK.Rewrite.Extensions;
 using OpenTK.Rewrite.Method;
+using OpenTK.Rewrite.Method.Processors;
 
 namespace OpenTK.Rewrite
 {
@@ -218,11 +219,23 @@ namespace OpenTK.Rewrite
                         .Argument
                         .Value;
 
-                    var signature = entrySignatures.FirstOrDefault(s => s.Name == signatureName);
-                    int slot = GetSlot(signature);
+                    var nativeSignature = entrySignatures.FirstOrDefault(s => s.Name == signatureName);
+                    int slot = GetSlot(nativeSignature);
 
-                    var builder = new MethodConstructor(_mscorlib, wrapper, signature, _bindingsBaseType, _options);
-                    builder.ConstructBody(slot, entryPoints);
+                    var processors = new IMethodProcessor[]
+                    {
+                        new ParameterProcessor(_mscorlib, _bindingsBaseType),
+                        new NativeCallProcessor(slot, entryPoints),
+                        new ReturnTypeProcessor(_mscorlib),
+                    };
+
+                    if (_options.EnableDebugCalls)
+                    {
+                        processors = processors.Prepend(new DebugPrologueProcessor()).ToArray();
+                    }
+
+                    var methodRewriter = new MethodRewriter(processors);
+                    methodRewriter.ProcessWrapper(nativeSignature, wrapper);
                 }
             }
 
