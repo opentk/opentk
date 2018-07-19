@@ -27,7 +27,7 @@ namespace Bind.Typemap
                         break;
                     }
 
-                    if (line.StartsWith("#"))
+                    if (line.StartsWith("#") || string.IsNullOrWhiteSpace(line))
                     {
                         continue;
                     }
