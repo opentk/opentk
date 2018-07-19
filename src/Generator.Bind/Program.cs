@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Bind.Baking;
 using Bind.Generators;
 using Bind.Generators.ES;
 using Bind.Generators.GL2;
@@ -48,7 +49,7 @@ namespace Bind
             var profileOverrides = OverrideReader.GetProfileOverrides(Path.Combine(Arguments.InputPath, "GL2", "overrides.xml")).ToList();
 
             var baker = new ProfileBaker(profiles, profileOverrides);
-            baker.BakeProfile("gles2", new VersionRange(new Version(3, 1)));
+            //baker.BakeProfile("gles2", new VersionRange(new Version(3, 1)));
 
             CreateGenerators();
 

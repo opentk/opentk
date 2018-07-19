@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
+using System.Reflection;
 using Bind.Versioning;
+using Bind.XML;
 using Bind.XML.Overrides;
 using Bind.XML.Overrides.Enumerations;
 using Bind.XML.Overrides.Functions;
@@ -12,9 +13,8 @@ using Bind.XML.Signatures.Enumerations;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
 using MoreLinq;
-using static Bind.XML.ParsingHelpers;
 
-namespace Bind.XML
+namespace Bind.Baking
 {
     /// <summary>
     /// This class is responsible for taking the full set of signatures and the full set of overrides, and then
@@ -118,6 +118,12 @@ namespace Bind.XML
             );
         }
 
+        /// <summary>
+        /// Creates an overridden function based on the given function and its override.
+        /// </summary>
+        /// <param name="functionBase">The base function.</param>
+        /// <param name="functionOverride">The function override.</param>
+        /// <returns>An overridden function.</returns>
         [NotNull, Pure]
         private FunctionSignature CreateOverriddenFunction
         (
@@ -145,6 +151,12 @@ namespace Bind.XML
             );
         }
 
+        /// <summary>
+        /// Creates an overridden set of function parameters based on the given function and its override.
+        /// </summary>
+        /// <param name="functionBase">The base function.</param>
+        /// <param name="functionOverride">The function override.</param>
+        /// <returns>The set of overridden parameter.</returns>
         [NotNull, ItemNotNull]
         private static IReadOnlyList<ParameterSignature> CreateOverriddenParameters
         (
@@ -197,13 +209,26 @@ namespace Bind.XML
                 resultParameters.Add(overriddenParameter);
             }
 
-            ResolveComputedCountSignatures(resultParameters, parametersWithComputedCounts);
+            ParsingHelpers.ResolveComputedCountSignatures(resultParameters, parametersWithComputedCounts);
 
-            ResolveReferenceCountSignatures(resultParameters, parametersWithValueReferenceCounts);
+            ParsingHelpers.ResolveReferenceCountSignatures(resultParameters, parametersWithValueReferenceCounts);
 
             return resultParameters;
         }
 
+        /// <summary>
+        /// Creates an overridden <see cref="ParameterSignature"/> from a given parameter override.
+        /// </summary>
+        /// <param name="baseParameter">The base parameter.</param>
+        /// <param name="parameterOverride">The parameter override.</param>
+        /// <param name="hasComputedCount">Whether or not the signature has a computed count.</param>
+        /// <param name="computedCountParameterNames">The names of the parameters used in the computed count. </param>
+        /// <param name="hasValueReference">Whether or not the signature has a value reference.</param>
+        /// <param name="valueReferenceName">The name of the referenced parameter.</param>
+        /// <param name="valueReferenceExpression">
+        /// The mathematical expression to apply to the name of the referenced parameter.
+        /// </param>
+        /// <returns>An overriden parameter.</returns>
         [NotNull]
         [ContractAnnotation("hasComputedCount : true => computedCountParameterNames : notnull; hasValueReference : true => valueReferenceName : notnull")]
         private static ParameterSignature CreateOverriddenParameter
@@ -230,7 +255,7 @@ namespace Bind.XML
 
             var newCount = parameterOverride.NewCount is null
                 ? baseParameter.Count
-                : ParseCountSignature
+                : ParsingHelpers.ParseCountSignature
                 (
                     parameterOverride.NewCount,
                     out hasComputedCount,
@@ -243,30 +268,50 @@ namespace Bind.XML
             return new ParameterSignature(newName, newType, newFlow, newCount);
         }
 
+        /// <summary>
+        /// Searches a set of existing functions for the base function a function override refers to.
+        /// This method identifies the base method by its name and parameters.
+        /// </summary>
+        /// <param name="existingFunctions">The set of existing functions.</param>
+        /// <param name="functionOverride">The override.</param>
+        /// <returns>The base function of the override.</returns>
+        /// <exception cref="InvalidDataException">Thrown if no base function could be found.</exception>
+        /// <exception cref="AmbiguousMatchException">Thrown if multiple accepted bases were found.</exception>
         [NotNull]
         private static FunctionSignature FindBaseFunction
         (
             [NotNull, ItemNotNull] IReadOnlyCollection<FunctionSignature> existingFunctions,
-            [NotNull] FunctionOverride functionReplacement
+            [NotNull] FunctionOverride functionOverride
         )
         {
-            var baseFunction = existingFunctions.FirstOrDefault
+            var baseFunctionCandidates = existingFunctions.Where
             (
                 f =>
-                    f.Name == functionReplacement.BaseName && f.Extension == functionReplacement.BaseExtensions
-            );
+                    f.Name == functionOverride.BaseName && f.Extension == functionOverride.BaseExtensions
+            ).ToList();
 
-            if (baseFunction is null)
+            if (!baseFunctionCandidates.Any())
             {
-                baseFunction = existingFunctions.FirstOrDefault(f => f.Name == functionReplacement.BaseName);
+                baseFunctionCandidates = existingFunctions.Where(f => f.Name == functionOverride.BaseName).ToList();
             }
 
-            if (baseFunction is null)
+            baseFunctionCandidates = baseFunctionCandidates.Where
+            (
+                f =>
+                    functionOverride.ParameterOverrides.All(po => f.Parameters.Any(p => p.Name == po.BaseName))
+            ).ToList();
+
+            if (!baseFunctionCandidates.Any())
             {
                 throw new InvalidDataException("Base function not found for override.");
             }
 
-            return baseFunction;
+            if (baseFunctionCandidates.Count > 1)
+            {
+                throw new AmbiguousMatchException("Base function reference is ambiguous. Specify more parameter names.");
+            }
+
+            return baseFunctionCandidates.First();
         }
 
         /// <summary>
