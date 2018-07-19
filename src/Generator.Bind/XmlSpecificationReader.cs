@@ -153,7 +153,7 @@ namespace Bind
                         continue;
                     }
 
-                    var words = line.Split(" ,*\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    var words = line.Split(" ,\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
                     if (words[0] == "VoidPointer" || words[0] == "ConstVoidPointer")
                     {
