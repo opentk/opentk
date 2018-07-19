@@ -51,7 +51,6 @@ ReplacementCodeSUN,		    GLuint
 SelectName,			    GLuint
 SizeI,			    GLsizei
 StencilValue,		    GLint
-String,			    const GLubyte *
 Texture,			    GLuint
 TextureComponentCount,	    GLint
 UInt16,			    GLushort
