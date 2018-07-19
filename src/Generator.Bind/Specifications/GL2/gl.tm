@@ -61,66 +61,60 @@ Void,*,*,			    GLvoid,*,*
 VoidPointer,*,*,		    GLvoid*,*,*
 ConstVoidPointer,*,*,		    GLvoid* const,*,*
 WinCoord,*,*,			    GLint,*,*
-void,*,*,			    *,*,*
 ConstByte,*,*,			    GLbyte,*,*
 ConstUByte,*,*,			    GLubyte,*,*
 ConstFloat32,*,*,		    GLfloat,*,*
 ConstInt32,*,*,			    GLint,*,*
 ConstUInt32,*,*,		    GLuint,*,*
 ConstVoid,*,*,			    GLvoid,*,*
+
 # ARB_vertex_buffer_object types and core equivalents for new types
 BufferOffset,*,*,		    GLintptr,*,*
 BufferSize,*,*,			    GLsizeiptr,*,*
 BufferOffsetARB,*,*,		    GLintptrARB,*,*
 BufferSizeARB,*,*,		    GLsizeiptrARB,*,*
-# APPLE_fence
-# APPLE_vertex_array_range
-# ATI_draw_buffers
+
 # NV_half
 Half16NV,*,*,			    GLhalfNV,*,*
-# NV_pixel_data_range
+
 # Generic types for as-yet-unspecified enums
 TypeEnum,*,*,			    GLenum,*,*
 GLbitfield,*,*,			    GLbitfield,*,*
 GLenum,*,*,			    GLenum,*,*
 Int64,*,*,			    GLint64,*,*
 UInt64,*,*,			    GLuint64,*,*
+
 # Object handle & data pointers
 handleARB,*,*,			    GLhandleARB,*,*
 charARB,*,*,			    GLcharARB,*,*
 charPointerARB,*,*,		    GLcharARB*,*,*
 sync,*,*,			    GLsync,*,*
+
 # EXT_timer_query
 Int64EXT,*,*,			    GLint64EXT,*,*
 UInt64EXT,*,*,			    GLuint64EXT,*,*
+
 # EXT_direct_state_access
 Framebuffer,*,*,		    GLuint,*,*
 Intptr,*,*,			    GLintptr,*,*
 Renderbuffer,*,*,		    GLuint,*,*
 Sizeiptr,*,*,			    GLsizeiptr,*,*
-# ARB_map_buffer_range
-# NV_explicit_multisample
+
 # ARB_debug_output
 GLDEBUGPROC,*,*,		    GLDEBUGPROC,*,*
+
 # ARB_debug_output
 GLDEBUGPROCARB,*,*,		    GLDEBUGPROCARB,*,*
+
 # AMD_debug_output
 GLDEBUGPROCAMD,*,*,		    GLDEBUGPROCAMD,*,*
+
 # NV_vdpau_interop
 vdpauSurfaceNV,*,*,		    GLvdpauSurfaceNV,*,*
+
 # External API types
 cl_context,*,*,			    struct _cl_context *,*,*
 cl_event,*,*,			    struct _cl_event *,*,*
 Path,*,*,			    GLuint,*,*
 PathCommand,*,*,		    GLubyte,*,*
 PathElement,*,*,		    GLvoid,*,*
-
-# No longer used in gl.spec
-# ClampedColorF,*,*,		      GLclampf,*,*
-# ControlPointNV,*,*,		      GLvoid,*,*
-# ProgramNV,*,*,		      GLuint,*,*
-
-# Used only in glu.spec
-# NurbsObj,*,*,			      GLUnurbs*,*,*
-# QuadricObj,*,*,		      GLUquadric*,*,*
-# TesselatorObj,*,*,		      GLUtesselator*,*,*

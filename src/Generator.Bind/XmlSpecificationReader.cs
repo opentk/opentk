@@ -155,12 +155,7 @@ namespace Bind
 
                     var words = line.Split(" ,*\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
-                    if (words[0].ToLower() == "void")
-                    {
-                        // Special case for "void" -> "". We make it "void" -> "void"
-                        apiTypes.Add(words[0], "void");
-                    }
-                    else if (words[0] == "VoidPointer" || words[0] == "ConstVoidPointer")
+                    if (words[0] == "VoidPointer" || words[0] == "ConstVoidPointer")
                     {
                         // "(Const)VoidPointer" -> "void*"
                         apiTypes.Add(words[0], "void*");
