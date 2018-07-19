@@ -11,6 +11,7 @@ using Bind.Baking;
 using Bind.Generators;
 using Bind.Generators.ES;
 using Bind.Generators.GL2;
+using Bind.Typemap;
 using Bind.Versioning;
 using Bind.XML;
 using Bind.XML.Overrides;
@@ -50,6 +51,19 @@ namespace Bind
 
             var baker = new ProfileBaker(profiles, profileOverrides);
             //baker.BakeProfile("gles2", new VersionRange(new Version(3, 1)));
+
+            using (var csharpFs = File.OpenRead(Path.Combine(Arguments.InputPath, "csharp.tm")))
+            {
+                using (var apiFs = File.OpenRead(Path.Combine(Arguments.InputPath, "GL2", "gl.tm")))
+                {
+                    var mappingReader = new TypemapReader();
+
+                    var csharpMap = mappingReader.ReadTypemap(csharpFs);
+                    var apiMap = mappingReader.ReadTypemap(apiFs);
+
+                    var bakedMap = TypemapBaker.BakeTypemaps(apiMap, csharpMap);
+                }
+            }
 
             CreateGenerators();
 

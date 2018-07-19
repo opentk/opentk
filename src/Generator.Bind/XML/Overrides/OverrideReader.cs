@@ -8,7 +8,6 @@ using Bind.Structures;
 using Bind.Versioning;
 using Bind.XML.Overrides.Enumerations;
 using Bind.XML.Overrides.Functions;
-using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
 using static Bind.XML.ParsingHelpers;
 
