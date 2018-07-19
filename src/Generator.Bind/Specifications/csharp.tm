@@ -1,77 +1,75 @@
 # Normal types.
-GLsizei,            Int32
-GLsizeiptr,         IntPtr
+GLsizei,            uint
+GLsizeiptr,         UIntPtr
 GLintptr,           IntPtr
 GLboolean,          bool        # Boolean # Int32
-GLbitfield,         UInt32
-GLvoid,             Void    #Object
-GLchar,             Char
-GLbyte,             SByte
-GLubyte,            Byte
-GLshort,            Int16
-GLushort,           UInt16
-GLint,              Int32
-GLuint,             UInt32
-GLfloat,            Single
-GLclampf,           Single
-GLdouble,           Double
-GLclampd,           Double
-GLstring,           String
+GLbitfield,         uint
+GLvoid,             void    #Object
+GLchar,             char
+GLbyte,             sbyte
+GLubyte,            byte
+GLshort,            short
+GLushort,           ushort
+GLint,              int
+GLuint,             uint
+GLfloat,            float
+GLclampf,           float
+GLdouble,           double
+GLclampd,           double
+GLstring,           string
 
 PixelInternalFormat,    PixelInternalFormat
 
 # ARB and NV types.
-GLsizeiptrARB,      IntPtr
+GLsizeiptrARB,      UIntPtr
 GLintptrARB,        IntPtr
-GLhandleARB,        UInt32
+GLhandleARB,        uint
 GLhalfARB,          OpenTK.Mathematics.Half
 GLhalfNV,           OpenTK.Mathematics.Half
-GLcharARB,          Char
+GLcharARB,          char
 
 # ARB_texture_compression (introduced in 1.3)
 CompressedTextureARB, IntPtr
 
 # 64 bit types (introduced in 2.1)
-GLint64EXT,         Int64
-GLuint64EXT,        UInt64
-GLint64,            Int64
-GLuint64,           UInt64
+GLint64EXT,         long
+GLuint64EXT,        ulong
+GLint64,            long
+GLuint64,           ulong
 
 # ARB_sync (introduced in 3.2)
-sync,           IntPtr
-GLsync,		IntPtr
+sync,               IntPtr
+GLsync,		        IntPtr
 
 # Debug callbacks
-GLDEBUGPROC, DebugProc
-GLDEBUGPROCAMD, DebugProcAmd
-GLDEBUGPROCARB, DebugProcArb
-GLDEBUGPROCKHR, DebugProcKhr
+GLDEBUGPROC,        DebugProc
+GLDEBUGPROCAMD,     DebugProcAmd
+GLDEBUGPROCARB,     DebugProcArb
+GLDEBUGPROCKHR,     DebugProcKhr
 
 # NV_vdpau
-GLvdpauSurfaceNV, IntPtr
+GLvdpauSurfaceNV,   IntPtr
 
 # Wgl types.
 PROC,           IntPtr
-LPCSTR,         String
-COLORREF,       Int32
-BOOL,           Boolean
-DWORD,          Int32
-FLOAT,          Single
+LPCSTR,         string
+COLORREF,       int
+BOOL,           bool
+DWORD,          int
+FLOAT,          float
 HANDLE,         IntPtr
 HDC,            IntPtr
 HGLRC,          IntPtr
 HPBUFFERARB,    IntPtr        #HPBUFFERARB
 HPBUFFEREXT,    IntPtr        #HPBUFFEREXT
-INT32,          Int32
-INT64,          Int64
+INT32,          int
+INT64,          long
 LPVOID,         void*
-#String,         const char *
-UINT,           UInt32
-USHORT,         UInt16
+UINT,           uint
+USHORT,         ushort
 VOID,           void
 VoidPointer,    void*
 float,          Single
-#void,           *
 
 # Glu types.
 Float64         double
@@ -82,28 +80,28 @@ Float32Pointer  float*
 # Glx types.
 Void            void
 Bool            bool
-int64_t            long
-int32_t            int
+int64_t         long
+int32_t         int
 
-Display            IntPtr
-Window            IntPtr
-Pixmap            IntPtr
+Display         IntPtr
+Window          IntPtr
+Pixmap          IntPtr
 Colormap        IntPtr
 
-GLXWindow        IntPtr
-GLXContext        IntPtr
-GLXDrawable        IntPtr
-GLXPixmap        IntPtr
+GLXWindow       IntPtr
+GLXContext      IntPtr
+GLXDrawable     IntPtr
+GLXPixmap       IntPtr
 __GLXextFuncPtr IntPtr
 
 VLServer        IntPtr
-VLPath            IntPtr
-VLNode            IntPtr
+VLPath          IntPtr
+VLNode          IntPtr
 
 # OpenGL|ES types.
-GLclampx, int
-GLfixed, int
-GLeglImageOES, IntPtr
+GLclampx,       int
+GLfixed,        int
+GLeglImageOES,  IntPtr
 
 # External egl buffer type added in OpenGL 4.6
 GLeglClientBufferEXT, IntPtr
@@ -112,23 +110,23 @@ GLeglClientBufferEXT, IntPtr
 GLVULKANPROCNV, IntPtr
 
 # OpenCL types.
-_cl_context, IntPtr
-_cl_event, IntPtr
+_cl_context,    IntPtr
+_cl_event,      IntPtr
 cl_command_queue, IntPtr
-cl_context, IntPtr
-cl_device_id, IntPtr
-cl_event, IntPtr
-cl_kernel, IntPtr
-cl_mem, IntPtr
+cl_context,     IntPtr
+cl_device_id,   IntPtr
+cl_event,       IntPtr
+cl_kernel,      IntPtr
+cl_mem,         IntPtr
 cl_platform_id, IntPtr
-cl_program, IntPtr
-cl_sampler, IntPtr
-size_t, IntPtr
+cl_program,     IntPtr
+cl_sampler,     IntPtr
+size_t,         IntPtr
 
-cl_bool, bool
-cl_int, int
-cl_uint, uint
-uchar, byte
+cl_bool,        bool
+cl_int,         int
+cl_uint,        uint
+uchar,          byte
 
 cl_addressing_mode, AddressingMode
 cl_command_queue_info, CommandQueueInfo
