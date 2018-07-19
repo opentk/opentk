@@ -10,6 +10,7 @@ using Bind.XML.Overrides.Enumerations;
 using Bind.XML.Overrides.Functions;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
+using static Bind.XML.ParsingHelpers;
 
 namespace Bind.XML.Overrides
 {
@@ -156,13 +157,13 @@ namespace Bind.XML.Overrides
 
             var parameters = functionElement.Elements("param").Select(ParseParameterSignature).ToList();
 
-            var newVersion = ParsingHelpers.ParseVersion(functionElement.Element("version")?.Value);
+            var newVersion = ParseVersion(functionElement.Element("version")?.Value);
             var obsoletionReason = functionElement.Element("obsolete")?.Value;
 
             var returnElement = functionElement.Element("returns");
             var newReturnType = returnElement is null
                 ? null
-                : new TypeSignature(returnElement.Value);
+                : ParseTypeSignature(returnElement.Value);
 
             return new FunctionOverride
             (
@@ -192,7 +193,7 @@ namespace Bind.XML.Overrides
             var newTypeElement = paramElement.Element("type");
             var newType = newTypeElement is null
                 ? null
-                : new TypeSignature(newTypeElement.Value);
+                : ParseTypeSignature(newTypeElement.Value);
 
             var newFlowElement = paramElement.Element("flow");
             FlowDirection? newFlow = null;
@@ -223,7 +224,7 @@ namespace Bind.XML.Overrides
         {
             var enumName = enumElement.GetRequiredAttribute("name").Value;
 
-            var directTokens = enumElement.Elements("token").Select(ParsingHelpers.ParseTokenSignature).ToList();
+            var directTokens = enumElement.Elements("token").Select(ParseTokenSignature).ToList();
             var useTokens = enumElement.Elements("use").Select(ParseUseTokenOverride).ToList();
             var reuseTokens = enumElement.Elements("reuse").Select(ParseReuseEnumerationOverride).ToList();
 

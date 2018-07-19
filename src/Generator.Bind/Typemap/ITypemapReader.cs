@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Bind.XML.Signatures.Functions;
 
 namespace Bind.Typemap
 {
@@ -13,6 +14,6 @@ namespace Bind.Typemap
         /// </summary>
         /// <param name="stream">The stream.</param>
         /// <returns>The type map.</returns>
-        IReadOnlyDictionary<string, string> ReadTypemap(Stream stream);
+        IReadOnlyDictionary<TypeSignature, TypeSignature> ReadTypemap(Stream stream);
     }
 }

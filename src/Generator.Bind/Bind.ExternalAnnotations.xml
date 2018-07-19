@@ -73,6 +73,12 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
+  <member name="M:Bind.Typemap.TypemapReader.ReadTypemap(System.IO.Stream)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="stream">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
   <member name="M:Bind.Versioning.VersionRange.CompareTo(Bind.Versioning.VersionRange)">
     <parameter name="other">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
@@ -325,6 +331,12 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
+  <member name="M:Bind.XML.ParsingHelpers.ParseTypeSignature(System.String)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="type">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
   <member name="M:Bind.XML.ParsingHelpers.ParseTypeSignature(System.Xml.Linq.XElement)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <parameter name="typeElement">
@@ -516,7 +528,7 @@
   <member name="P:Bind.XML.Signatures.Functions.ParameterSignature.Type">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
-  <member name="M:Bind.XML.Signatures.Functions.TypeSignature.#ctor(System.String)">
+  <member name="M:Bind.XML.Signatures.Functions.TypeSignature.#ctor(System.String,System.Int32,System.Int32)">
     <parameter name="name">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>

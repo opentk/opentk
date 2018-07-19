@@ -104,20 +104,16 @@ VLServer        IntPtr
 VLPath            IntPtr
 VLNode            IntPtr
 
-
 # OpenGL|ES types.
 GLclampx, int
 GLfixed, int
 GLeglImageOES, IntPtr
 
-
 # External egl buffer type added in OpenGL 4.6
 GLeglClientBufferEXT, IntPtr
 
-
 # nVidia vulkan entry point, added by NV_draw_vulkan_image extension
 GLVULKANPROCNV, IntPtr
-
 
 # OpenCL types.
 _cl_context, IntPtr

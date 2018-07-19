@@ -114,9 +114,75 @@ namespace Bind.XML
         [NotNull]
         public static TypeSignature ParseTypeSignature([NotNull] XElement typeElement)
         {
-            var typeName = typeElement.GetRequiredAttribute("type").Value;
+            var typeString = typeElement.GetRequiredAttribute("type").Value;
 
-            return new TypeSignature(typeName);
+            return ParseTypeSignature(typeString);
+        }
+
+        /// <summary>
+        /// Parses a type signature from the given string.
+        /// </summary>
+        /// <param name="type">The type string.</param>
+        /// <returns>A parsed type.</returns>
+        [NotNull]
+        public static TypeSignature ParseTypeSignature([NotNull] string type)
+        {
+            if (type.Contains('*') && (type.Contains('[') || type.Contains(']')))
+            {
+                throw new InvalidDataException("A type cannot be both a pointer and an array at the same time.");
+            }
+
+            const string constValueSpecifier = "const ";
+            const string constPointerSpecifier = " const";
+            const string structSpecifier = "struct ";
+
+            // We'll ignore struct and const specifiers for the moment
+            var isConstValue = type.StartsWith(constValueSpecifier);
+            if (isConstValue)
+            {
+                type = type.Remove(0, constValueSpecifier.Length);
+            }
+
+            var isConstPointer = type.EndsWith(constPointerSpecifier);
+            if (isConstPointer)
+            {
+                var specifierIndex = type.LastIndexOf(constPointerSpecifier, StringComparison.Ordinal);
+                type = type.Remove(specifierIndex);
+            }
+
+            var isStruct = type.StartsWith(structSpecifier);
+            if (isStruct)
+            {
+                type = type.Remove(0, structSpecifier.Length);
+            }
+
+            var typeName = new string(type.ToCharArray().Where(c => !char.IsWhiteSpace(c)).ToArray());
+
+            var pointerLevel = 0;
+            var isPointer = type.EndsWith("*");
+            if (isPointer)
+            {
+                var firstPointerLevelIndex = typeName.IndexOf('*');
+                var lastPointerLevelIndex = typeName.LastIndexOf('*');
+
+                pointerLevel = Math.Abs(lastPointerLevelIndex - firstPointerLevelIndex) + 1;
+
+                typeName = typeName.Remove(firstPointerLevelIndex);
+            }
+
+            var arrayLevel = 0;
+            var isArray = typeName.EndsWith("]");
+            if (isArray)
+            {
+                var firstArrayIndex = typeName.IndexOf('[');
+                var lastArrayIndex = typeName.IndexOf(']');
+
+                arrayLevel = Math.Abs(firstArrayIndex - lastArrayIndex);
+
+                typeName = typeName.Remove(firstArrayIndex);
+            }
+
+            return new TypeSignature(typeName, pointerLevel, arrayLevel);
         }
 
         /// <summary>
