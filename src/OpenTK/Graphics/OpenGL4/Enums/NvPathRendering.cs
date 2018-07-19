@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.NV.GetProgramResource and GL.NV.MatrixLoad3x2, as well as 18 other functions.
+    /// Used in GL.NV.GetProgramResource and GL.NV.MatrixLoad3x2, as well as 13 other functions.
     /// </summary>
     public enum NvPathRendering
     {

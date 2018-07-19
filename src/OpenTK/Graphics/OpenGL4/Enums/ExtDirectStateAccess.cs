@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.GetNamedProgram and GL.Ext.GetNamedProgramLocalParameter, as well as 16 other functions.
+    /// Used in GL.Ext.TextureStorage1D and GL.Ext.TextureStorage2D, as well as 7 other functions.
     /// </summary>
     public enum ExtDirectStateAccess
     {
