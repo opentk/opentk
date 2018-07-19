@@ -22,6 +22,9 @@ GLstring,           string
 GLvoid*,            void*
 GLchar*,            string
 GLcharARB*,         string
+GLfloat*,           float*
+GLdouble*,          double*
+GLboolean*,         bool*
 
 # ARB and NV types.
 GLsizeiptrARB,      UIntPtr
@@ -69,7 +72,6 @@ UINT,           uint
 USHORT,         ushort
 VOID,           void
 VoidPointer,    void*
-float,          Single
 
 # Glu types.
 Float64,        double

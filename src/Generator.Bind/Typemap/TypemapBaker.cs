@@ -24,6 +24,7 @@ namespace Bind.Typemap
         )
         {
             // First, we combine the typemaps into one monolithic map
+            var ambiguousEntries = new List<KeyValuePair<TypeSignature, TypeSignature>>();
             var newTypemap = new Dictionary<TypeSignature, TypeSignature>();
             foreach (var typemap in typemaps)
             {
@@ -35,18 +36,18 @@ namespace Bind.Typemap
                         continue;
                     }
 
-                    if (newTypemap[fromType] != toType)
+                    if (newTypemap[fromType] == toType)
                     {
-                        throw new AmbiguousMatchException
-                        (
-                            "Same-type remapping found in two or more maps, but they didn't map to the same type."
-                        );
+                        continue;
                     }
+
+                    ambiguousEntries.Add(new KeyValuePair<TypeSignature, TypeSignature>(fromType, toType));
                 }
             }
 
-            // Now, we'll reduce the new typemap, resolving chains of mappings
+            // Then, we'll reduce the typemap, resolving chains of mappings
             int condensedEntries;
+            var entryUpdates = new List<(TypeSignature Key, TypeSignature Value)>();
             do
             {
                 condensedEntries = 0;
@@ -59,12 +60,36 @@ namespace Bind.Typemap
 
                     foreach (var nestedMapping in newTypemap.Where(kvp => kvp.Value == fromType))
                     {
-                        newTypemap[nestedMapping.Key] = toType;
+                        entryUpdates.Add((nestedMapping.Key, toType));
                         ++condensedEntries;
                     }
                 }
+
+                foreach (var (key, value) in entryUpdates)
+                {
+                    newTypemap[key] = value;
+                }
+
+                entryUpdates.Clear();
             }
             while (condensedEntries > 0);
+
+            // And finally, we'll try to discard the ambiguous entries
+            foreach (var (fromType, toType) in ambiguousEntries)
+            {
+                var existingMapping = newTypemap[fromType];
+
+                if (existingMapping == toType)
+                {
+                    // If the mappings are now the same, we've resolved the ambiguity when reducing the map
+                    continue;
+                }
+
+                throw new AmbiguousMatchException
+                (
+                    "Same-type remapping found in two or more maps, but they didn't map to the same type."
+                );
+            }
 
             return newTypemap;
         }

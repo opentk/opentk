@@ -97,21 +97,10 @@ Intptr,			    GLintptr
 Renderbuffer,		    GLuint
 Sizeiptr,			    GLsizeiptr
 
-# ARB_debug_output
-GLDEBUGPROC,		    GLDEBUGPROC
-
-# ARB_debug_output
-GLDEBUGPROCARB,		    GLDEBUGPROCARB
-
-# AMD_debug_output
-GLDEBUGPROCAMD,		    GLDEBUGPROCAMD
-
 # NV_vdpau_interop
 vdpauSurfaceNV,		    GLvdpauSurfaceNV
 
 # External API types
-cl_context,			    struct _cl_context *
-cl_event,			    struct _cl_event *
 Path,			    GLuint
 PathCommand,		    GLubyte
 PathElement,		    GLvoid*
