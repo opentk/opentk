@@ -17,8 +17,9 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// Sent when an application requests that a window be created by calling the
-        /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyles, string, string, WindowStyles, int, int, int, int, IntPtr, IntPtr, IntPtr, IntPtr)"/>
-        /// or CreateWindow function. (The message is sent before the function returns.) The window procedure of the
+        /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyles, string, string,
+        /// WindowStyles, int, int, int, int, IntPtr, IntPtr, IntPtr, IntPtr)"/> or CreateWindow function.
+        /// (The message is sent before the function returns.) The window procedure of the
         /// new window receives this message after the window is created, but before the window becomes visible.
         /// </summary>
         Create = 0x0001,
@@ -331,16 +332,15 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// Sent to a window whose size, position, or place in the Z order is about to change as a result of a
-        /// call to the
-        /// <see cref="User32.Window.SetWindowPos(IntPtr, SetWindowPosHwndEnum, int, int, int, int, SetWindowPosFlags)"/>
-        /// function or another window-management function.
+        /// call to the <see cref="User32.Window.SetWindowPos(IntPtr, SetWindowPosHwndEnum, int, int, int, int,
+        /// SetWindowPosFlags)"/> function or another window-management function.
         /// </summary>
         WindowPosChanging = 0x0046,
 
         /// <summary>
         /// Sent to a window whose size, position, or place in the Z order has changed as a result of a call to the
-        /// <see cref="User32.Window.SetWindowPos(IntPtr, SetWindowPosHwndEnum, int, int, int, int, SetWindowPosFlags)"/>
-        /// function or another window-management function.
+        /// <see cref="User32.Window.SetWindowPos(IntPtr, SetWindowPosHwndEnum, int, int, int, int,
+        /// SetWindowPosFlags)"/> function or another window-management function.
         /// </summary>
         WindowPosChanged = 0x0047,
 
@@ -1000,7 +1000,8 @@ namespace OpenTK.NT.Native
         /// Sent to the parent of a child window when the child window is created or destroyed, or when the user
         /// clicks a mouse button while the cursor is over the child window. When the child window is being created,
         /// the system sends <see cref="ParentNotify"/> just before the CreateWindow or
-        /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyles, string, string, WindowStyles, int, int, int, int, IntPtr, IntPtr, IntPtr, IntPtr)"/>
+        /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyles, string, string,
+        /// WindowStyles, int, int, int, int, IntPtr, IntPtr, IntPtr, IntPtr)"/>
         /// function that creates the window returns. When the child window is being destroyed, the system sends the
         /// message before any processing to destroy the window takes place.
         /// </summary>

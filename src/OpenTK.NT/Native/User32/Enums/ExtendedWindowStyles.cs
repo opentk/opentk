@@ -5,9 +5,9 @@ using DWORD = System.UInt32;
 namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// Defines extended window style flags for usage in
-    /// <see cref="User32.Window.AdjustWindowRectEx(ref Rect, WindowStyles, bool, ExtendedWindowStyles)"/> and
-    /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyles, string, string, WindowStyles, int, int, int, int, IntPtr, IntPtr, IntPtr, IntPtr)"/>.
+    /// Defines extended window style flags for usage in <see cref="User32.Window.AdjustWindowRectEx(ref Rect,
+    /// WindowStyles, bool, ExtendedWindowStyles)"/> and <see cref="User32.Window.CreateWindowEx(
+    /// ExtendedWindowStyles, string, string, WindowStyles, int, int, int, int, IntPtr, IntPtr, IntPtr, IntPtr)"/>.
     /// </summary>
     [Flags]
     public enum ExtendedWindowStyles : DWORD

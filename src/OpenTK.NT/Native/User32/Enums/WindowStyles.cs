@@ -131,9 +131,8 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// The window is initially visible.<para/>
         /// This style can be turned on and off by using the
-        /// <see cref="User32.Window.ShowWindow(IntPtr, ShowWindowCommand)"/> or
-        /// <see cref="User32.Window.SetWindowPos(IntPtr, SetWindowPosHwndEnum, int, int, int, int, SetWindowPosFlags)"/>
-        /// function.
+        /// <see cref="User32.Window.ShowWindow(IntPtr, ShowWindowCommand)"/> or <see cref="User32.Window.SetWindowPos(
+        /// IntPtr, SetWindowPosHwndEnum, int, int, int, int, SetWindowPosFlags)"/> function.
         /// </summary>
         Visible = 0x10000000,
 

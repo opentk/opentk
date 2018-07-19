@@ -1,7 +1,7 @@
 ﻿namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// Identifiers for the GetStockObject method.
+    /// Identifiers for the <see cref="Gdi32.GetStockObject(GetStockObjectType)"/> function.
     /// </summary>
     public enum GetStockObjectType
     {

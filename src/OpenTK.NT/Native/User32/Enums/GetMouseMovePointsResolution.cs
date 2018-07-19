@@ -3,8 +3,8 @@
 namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// Specifies the resolution desired by
-    /// <see cref="User32.Mouse.GetMouseMovePointsEx(DWORD, ref MouseMovePoint, MouseMovePoint*, int, GetMouseMovePointsResolution)"/>.
+    /// Specifies the resolution desired by <see cref="User32.Mouse.GetMouseMovePointsEx(DWORD, ref MouseMovePoint,
+    /// MouseMovePoint*, int, GetMouseMovePointsResolution)"/>.
     /// </summary>
     public enum GetMouseMovePointsResolution : DWORD
     {

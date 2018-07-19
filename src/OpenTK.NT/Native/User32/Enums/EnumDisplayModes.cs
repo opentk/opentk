@@ -3,9 +3,8 @@
 namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// Flags used in
-    /// <see cref="User32.DeviceContext.EnumDisplaySettingsEx(string, DisplayModeSetting, out DeviceMode, EnumDisplayModes)"/>
-    /// to specify which graphics modes to return.
+    /// Flags used in <see cref="User32.DeviceContext.EnumDisplaySettingsEx(string, DisplayModeSetting, out DeviceMode,
+    /// EnumDisplayModes)"/> to specify which graphics modes to return.
     /// </summary>
     [Flags]
     public enum EnumDisplayModes

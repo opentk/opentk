@@ -1,8 +1,8 @@
 ﻿namespace OpenTK.NT.Native
 {
     /// <summary>
-    /// Specifies a set of pre-defined values for special behavior in
-    /// <see cref="User32.Window.SetWindowPos(System.IntPtr, SetWindowPosHwndEnum, int, int, int, int, SetWindowPosFlags)"/>.
+    /// Specifies a set of pre-defined values for special behavior in <see cref="User32.Window.SetWindowPos(
+    /// System.IntPtr, SetWindowPosHwndEnum, int, int, int, int, SetWindowPosFlags)"/>.
     /// </summary>
     public enum SetWindowPosHwndEnum
     {

@@ -13,8 +13,10 @@ namespace OpenTK.NT.Native
     /// <param name="hwnd">A handle to the window associated with the timer. </param>
     /// <param name="msg">The <see cref="WindowMessage.Timer"/> message.</param>
     /// <param name="timerID">The timer's identifier.</param>
-    /// <param name="elapsedTime">The number of milliseconds that have elapsed since the system was started. This is the
-    /// value returned by the GetTickCount function.</param>
+    /// <param name="elapsedTime">
+    /// The number of milliseconds that have elapsed since the system was started. This is the
+    /// value returned by the GetTickCount function.
+    /// </param>
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void TimerProc
     (

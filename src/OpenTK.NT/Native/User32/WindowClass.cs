@@ -25,8 +25,8 @@ namespace OpenTK.NT.Native
             /// </param>
             /// <param name="className">
             /// A string containing the class name. The name must be that of a preregistered class or a class
-            /// registered by a previous call to the RegisterClass or <see cref="RegisterClassEx(ref ExtendedWindowClass)"/>
-            /// function.
+            /// registered by a previous call to the RegisterClass or
+            /// <see cref="RegisterClassEx(ref ExtendedWindowClass)"/> function.
             /// </param>
             /// <param name="extendedWindowClass">
             /// A pointer to a <see cref="ExtendedWindowClass"/> structure
@@ -62,7 +62,8 @@ namespace OpenTK.NT.Native
             /// RegisterClass or <see cref="RegisterClassEx(ref ExtendedWindowClass)"/> function.
             /// </param>
             /// <param name="extendedWindowClass">
-            /// A pointer to a <see cref="ExtendedWindowClass"/> structure that receives the information about the class.
+            /// A pointer to a <see cref="ExtendedWindowClass"/> structure
+            /// that receives the information about the class.
             /// </param>
             /// <returns>
             /// If the function finds a matching class and successfully copies the data, the return value is
@@ -93,7 +94,8 @@ namespace OpenTK.NT.Native
             /// or <see cref="RegisterClassEx(ref ExtendedWindowClass)"/>.
             /// </param>
             /// <param name="extendedWindowStyle">
-            /// A pointer to a <see cref="ExtendedWindowClass"/> structure that receives the information about the class.
+            /// A pointer to a <see cref="ExtendedWindowClass"/> structure
+            /// that receives the information about the class.
             /// </param>
             /// <returns>
             /// If the function finds a matching class and successfully copies the data, the return value is
@@ -113,8 +115,8 @@ namespace OpenTK.NT.Native
 
             /// <summary>
             /// Registers a window class for subsequent use in calls to the CreateWindow or
-            /// <see cref="Window.CreateWindowEx(ExtendedWindowStyles, HINSTANCE, string, WindowStyles, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
-            /// function.
+            /// <see cref="Window.CreateWindowEx(ExtendedWindowStyles, HINSTANCE, string,
+            /// WindowStyles, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/> function.
             /// </summary>
             /// <param name="extendedWindowClass">
             /// A pointer to a <see cref="ExtendedWindowClass"/> structure. You must fill the structure with the
@@ -123,7 +125,8 @@ namespace OpenTK.NT.Native
             /// <returns>
             /// If the function succeeds, the return value is a class atom that uniquely identifies the class being
             /// registered. This atom can only be used by the CreateWindow,
-            /// <see cref="Window.CreateWindowEx(ExtendedWindowStyles, HINSTANCE, string, WindowStyles, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>,
+            /// <see cref="Window.CreateWindowEx(ExtendedWindowStyles, HINSTANCE, string,
+            /// WindowStyles, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>,
             /// GetClassInfo, <see cref="GetClassInfoEx(HINSTANCE, HINSTANCE, out ExtendedWindowClass)"/>, FindWindow,
             /// FindWindowEx, and <see cref="UnregisterClass(string, HINSTANCE)"/> functions
             /// and the IActiveIMMap::FilterClientWindows method.<para/>
@@ -138,8 +141,8 @@ namespace OpenTK.NT.Native
             /// </summary>
             /// <param name="className">
             /// A string specifying the window class name. This class name must have been
-            /// registered by a previous call to the RegisterClass or <see cref="RegisterClassEx(ref ExtendedWindowClass)"/>
-            /// function.
+            /// registered by a previous call to the RegisterClass or
+            /// <see cref="RegisterClassEx(ref ExtendedWindowClass)"/> function.
             /// </param>
             /// <param name="moduleInstance">A handle to the instance of the module that created the class.</param>
             /// <returns>
