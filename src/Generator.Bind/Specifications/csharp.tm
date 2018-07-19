@@ -18,6 +18,9 @@ GLdouble,           double
 GLclampd,           double
 GLstring,           string
 
+# Pointer types
+GLvoid*,            void*
+
 PixelInternalFormat,    PixelInternalFormat
 
 # ARB and NV types.

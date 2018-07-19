@@ -155,12 +155,7 @@ namespace Bind
 
                     var words = line.Split(" ,\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
-                    if (words[0] == "VoidPointer" || words[0] == "ConstVoidPointer")
-                    {
-                        // "(Const)VoidPointer" -> "void*"
-                        apiTypes.Add(words[0], "void*");
-                    }
-                    else if (words[0] == "CharPointer" || words[0] == "charPointerARB" ||
+                    if (words[0] == "CharPointer" || words[0] == "charPointerARB" ||
                              words[0] == "ConstCharPointer")
                     {
                         // The typematching logic cannot handle pointers to pointers, e.g. CharPointer* -> char** -> string* -> string[].
