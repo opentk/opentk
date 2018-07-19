@@ -155,20 +155,7 @@ namespace Bind
 
                     var words = line.Split(" ,\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
-                    if (words[0] == "CharPointer" || words[0] == "charPointerARB" ||
-                             words[0] == "ConstCharPointer")
-                    {
-                        // The typematching logic cannot handle pointers to pointers, e.g. CharPointer* -> char** -> string* -> string[].
-                        // Hence we give it a push.
-                        // Note: When both CurrentType == "String" and Pointer == true, the typematching is hardcoded to use
-                        // String[] or StringBuilder[].
-                        apiTypes.Add(words[0], "String");
-                    }
-                    else if (words[1].Contains("GLvoid"))
-                    {
-                        apiTypes.Add(words[0], "void");
-                    }
-                    else if (words[1] == "struct")
+                    if (words[1] == "struct")
                     {
                         apiTypes.Add(words[0], words[2]);
                     }

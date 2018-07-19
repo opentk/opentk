@@ -20,6 +20,8 @@ GLstring,           string
 
 # Pointer types
 GLvoid*,            void*
+GLchar*,            string
+GLcharARB*,         string
 
 PixelInternalFormat,    PixelInternalFormat
 
