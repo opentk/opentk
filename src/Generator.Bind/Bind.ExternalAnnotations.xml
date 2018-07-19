@@ -536,6 +536,22 @@
   <member name="P:Bind.XML.Signatures.Functions.TypeSignature.Name">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
+  <member name="M:Bind.XML.Signatures.Functions.TypeSignature.op_Equality(Bind.XML.Signatures.Functions.TypeSignature,Bind.XML.Signatures.Functions.TypeSignature)">
+    <parameter name="left">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="right">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.XML.Signatures.Functions.TypeSignature.op_Inequality(Bind.XML.Signatures.Functions.TypeSignature,Bind.XML.Signatures.Functions.TypeSignature)">
+    <parameter name="left">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="right">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+  </member>
   <member name="M:Bind.XML.Signatures.SignatureReader.GetAvailableProfiles(System.String)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />

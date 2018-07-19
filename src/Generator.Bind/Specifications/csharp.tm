@@ -2,10 +2,8 @@
 GLsizei,            Int32
 GLsizeiptr,         IntPtr
 GLintptr,           IntPtr
-# GLenum,             Int32
 GLboolean,          bool        # Boolean # Int32
 GLbitfield,         UInt32
-# GLvoid*,            IntPtr
 GLvoid,             Void    #Object
 GLchar,             Char
 GLbyte,             SByte
@@ -19,8 +17,6 @@ GLclampf,           Single
 GLdouble,           Double
 GLclampd,           Double
 GLstring,           String
-int,                Int32
-uint,               UInt32
 
 PixelInternalFormat,    PixelInternalFormat
 
