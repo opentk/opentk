@@ -73,6 +73,13 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
+  <member name="M:Bind.Typemap.TypemapBaker.BakeTypemaps(System.Collections.Generic.IReadOnlyDictionary{Bind.XML.Signatures.Functions.TypeSignature,Bind.XML.Signatures.Functions.TypeSignature}[])">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="typemaps">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+    </parameter>
+  </member>
   <member name="M:Bind.Typemap.TypemapReader.ReadTypemap(System.IO.Stream)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <parameter name="stream">

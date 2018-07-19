@@ -78,8 +78,6 @@ Half16NV,			    GLhalfNV
 
 # Generic types for as-yet-unspecified enums
 TypeEnum,			    GLenum
-GLbitfield,			    GLbitfield
-GLenum,			    GLenum
 Int64,			    GLint64
 UInt64,			    GLuint64
 

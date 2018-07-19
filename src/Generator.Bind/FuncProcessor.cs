@@ -328,36 +328,32 @@ namespace Bind
                 // Make sure we reference the enums rather than the functions.
                 typeDefinition.QualifiedTypeName = $"{Generator.Namespace}.{@enum.Name}";
             }
-            else if (Generator.APITypes.TryGetValue(typeDefinition.TypeName, out var s))
+            else if (typeDefinition.TypeName.Contains("GLenum"))
             {
-                // Check if the parameter is a generic GLenum. If it is, search for a better match,
-                // otherwise fallback to Settings.CompleteEnumName (named 'All' by default).
-                if (s.Contains("GLenum") /*&& !String.IsNullOrEmpty(category)*/)
+                // Check if the parameter is a generic GLenum. If it is, search for a better match.
+                typeDefinition.IsEnum = true;
+
+                // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
+                if (enums.ContainsKey(category))
                 {
-                    typeDefinition.IsEnum = true;
-
-                    // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
-                    if (enums.ContainsKey(category))
-                    {
-                        typeDefinition.QualifiedTypeName = enumProcessor.TranslateEnumName(category);
-                    }
-                    else
-                    {
-                        // Should have used the "All" enum, which is now gone.
-                        Trace.WriteLine
-                        (
-                            $"[Warning] Could not determine actual enum type for parameter {typeDefinition}. Using weakly typed" +
-                            $" integer instead - please specify an override in overrides.xml."
-                        );
-
-                        typeDefinition.IsEnum = false;
-                        typeDefinition.QualifiedTypeName = "int";
-                    }
+                    typeDefinition.QualifiedTypeName = enumProcessor.TranslateEnumName(category);
                 }
                 else
                 {
-                    typeDefinition.QualifiedTypeName = s;
+                    // Should have used the "All" enum, which is now gone.
+                    Trace.WriteLine
+                    (
+                        $"[Warning] Could not determine actual enum type for parameter {typeDefinition}. Using weakly typed" +
+                        $" integer instead - please specify an override in overrides.xml."
+                    );
+
+                    typeDefinition.IsEnum = false;
+                    typeDefinition.QualifiedTypeName = "int";
                 }
+            }
+            else if (Generator.APITypes.TryGetValue(typeDefinition.TypeName, out var s))
+            {
+                typeDefinition.QualifiedTypeName = s;
             }
 
             if (!typeDefinition.IsArray && !typeDefinition.IsPointer && !typeDefinition.IsReference &&
