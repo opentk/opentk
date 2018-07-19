@@ -77,31 +77,31 @@ VoidPointer,    void*
 float,          Single
 
 # Glu types.
-Float64         double
-Float64Pointer  double*
-Float32         float
-Float32Pointer  float*
+Float64,        double
+Float64Pointer, double*
+Float32,        float
+Float32Pointer, float*
 
 # Glx types.
-Void            void
-Bool            bool
-int64_t         long
-int32_t         int
+Void,           void
+Bool,           bool
+int64_t,        long
+int32_t,        int
 
-Display         IntPtr
-Window          IntPtr
-Pixmap          IntPtr
-Colormap        IntPtr
+Display,        IntPtr
+Window,         IntPtr
+Pixmap,         IntPtr
+Colormap,       IntPtr
 
-GLXWindow       IntPtr
-GLXContext      IntPtr
-GLXDrawable     IntPtr
-GLXPixmap       IntPtr
-__GLXextFuncPtr IntPtr
+GLXWindow,      IntPtr
+GLXContext,     IntPtr
+GLXDrawable,    IntPtr
+GLXPixmap,      IntPtr
+__GLXextFuncPtr,IntPtr
 
-VLServer        IntPtr
-VLPath          IntPtr
-VLNode          IntPtr
+VLServer,       IntPtr
+VLPath,         IntPtr
+VLNode,         IntPtr
 
 # OpenGL|ES types.
 GLclampx,       int
