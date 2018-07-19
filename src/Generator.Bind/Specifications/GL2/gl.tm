@@ -1,5 +1,4 @@
-﻿AttribMask,*,*,			    GLbitfield,*,*
-Boolean,*,*,			    GLboolean,*,*
+﻿Boolean,*,*,			    GLboolean,*,*
 BooleanPointer,*,*,		    GLboolean*,*,*
 Char,*,*,			    GLchar,*,*
 CharPointer,*,*,		    GLchar*,*,*
@@ -10,8 +9,6 @@ ClampedFixed,*,*,		    GLfixed,*,*
 ClampedFloat32,*,*,		    GLclampf,*,*
 ClampedFloat64,*,*,		    GLclampd,*,*
 ClampedStencilValue,*,*,	    GLint,*,*
-ClearBufferMask,*,*,		    GLbitfield,*,*
-ClientAttribMask,*,*,		    GLbitfield,*,*
 ColorB,*,*,			    GLbyte,*,*
 ColorD,*,*,			    GLdouble,*,*
 ColorF,*,*,			    GLfloat,*,*
@@ -33,7 +30,6 @@ CoordS,*,*,			    GLshort,*,*
 DrawBufferName,*,*,		    GLint,*,*
 FeedbackElement,*,*,		    GLfloat,*,*
 FenceNV,*,*,			    GLuint,*,*
-FfdMaskSGIX,*,*,		    GLbitfield,*,*
 Float32,*,*,			    GLfloat,*,*
 Float32Pointer,*,*,		    GLfloat*,*,*
 Float64,*,*,			    GLdouble,*,*
@@ -103,9 +99,7 @@ Intptr,*,*,			    GLintptr,*,*
 Renderbuffer,*,*,		    GLuint,*,*
 Sizeiptr,*,*,			    GLsizeiptr,*,*
 # ARB_map_buffer_range
-BufferAccessMask,*,*,		    GLbitfield,*,*
 # NV_explicit_multisample
-SampleMaskNV,*,*,		    GLbitfield,*,*
 # ARB_debug_output
 GLDEBUGPROC,*,*,		    GLDEBUGPROC,*,*
 # ARB_debug_output
@@ -120,8 +114,6 @@ cl_event,*,*,			    struct _cl_event *,*,*
 Path,*,*,			    GLuint,*,*
 PathCommand,*,*,		    GLubyte,*,*
 PathElement,*,*,		    GLvoid,*,*
-PathFontStyle,*,*,		    GLbitfield,*,*
-PathMetricMask,*,*,		    GLbitfield,*,*
 
 # No longer used in gl.spec
 # ClampedColorF,*,*,		      GLclampf,*,*
