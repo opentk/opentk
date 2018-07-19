@@ -22,7 +22,7 @@ ColorS,			    GLshort
 ColorUB,			    GLubyte
 ColorUI,			    GLuint
 ColorUS,			    GLushort
-CompressedTextureARB,	    GLvoid
+CompressedTextureARB,	    GLvoid*
 CoordD,			    GLdouble
 CoordF,			    GLfloat
 CoordI,			    GLint
@@ -37,7 +37,7 @@ Float64Pointer,		    GLdouble*
 Fixed,			    GLfixed
 ConstFixed,			    GLfixed
 FunctionPointer,		    _GLfuncptr
-IglooParameterSGIX,		    GLvoid
+IglooParameterSGIX,		    GLvoid*
 Int16,			    GLshort
 Int32,			    GLint
 Int8,			    GLbyte
@@ -114,4 +114,4 @@ cl_context,			    struct _cl_context *
 cl_event,			    struct _cl_event *
 Path,			    GLuint
 PathCommand,		    GLubyte
-PathElement,		    GLvoid
+PathElement,		    GLvoid*

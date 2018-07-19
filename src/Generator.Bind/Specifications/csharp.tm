@@ -23,8 +23,6 @@ GLvoid*,            void*
 GLchar*,            string
 GLcharARB*,         string
 
-PixelInternalFormat,    PixelInternalFormat
-
 # ARB and NV types.
 GLsizeiptrARB,      UIntPtr
 GLintptrARB,        IntPtr
@@ -32,9 +30,6 @@ GLhandleARB,        uint
 GLhalfARB,          OpenTK.Mathematics.Half
 GLhalfNV,           OpenTK.Mathematics.Half
 GLcharARB,          char
-
-# ARB_texture_compression (introduced in 1.3)
-CompressedTextureARB, IntPtr
 
 # 64 bit types (introduced in 2.1)
 GLint64EXT,         long
