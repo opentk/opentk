@@ -66,7 +66,7 @@ namespace OpenTK.Rewrite
 
             if (Options.EnableDebugCalls)
             {
-                methodProcessors = methodProcessors.Prepend(new DebugPrologueProcessor()).ToArray();
+                methodProcessors = methodProcessors.Prepend(new DebugPrologueProcessor(mscorlib)).ToArray();
             }
 
             var methodRewriter = new MethodRewriter(methodProcessors);

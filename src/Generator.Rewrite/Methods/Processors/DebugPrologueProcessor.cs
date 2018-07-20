@@ -20,12 +20,34 @@ namespace OpenTK.Rewrite.Methods.Processors
             "OpenTK.Graphics.ES30",
         };
 
-        private DebugVariables _debugVariables;
+        private readonly AssemblyDefinition _mscorlib;
 
-        public IMethodProcessor EpilogueProcessor => throw new System.NotImplementedException();
+        private DebugVariables _debugVariables;
+        private bool _hasProcessed;
+
+        public IMethodProcessor EpilogueProcessor
+        {
+            get
+            {
+                if (!_hasProcessed)
+                {
+                    throw new InvalidOperationException($"The {nameof(DebugPrologueProcessor)} has not run yet!");
+                }
+
+                return new DebugEpilogueProcessor(_mscorlib, _debugVariables);
+            }
+        }
+
+        public DebugPrologueProcessor(AssemblyDefinition mscorlib)
+        {
+            _mscorlib = mscorlib ?? throw new ArgumentNullException(nameof(mscorlib));
+        }
 
         public void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
+            _debugVariables = null;
+            _hasProcessed = true;
+
             if (ilProcessor.Body.Method.Name == "GetError")
             {
                 return;
