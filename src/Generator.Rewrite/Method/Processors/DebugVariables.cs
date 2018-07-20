@@ -3,7 +3,7 @@ using Mono.Cecil.Cil;
 
 namespace OpenTK.Rewrite.Method.Processors
 {
-    public class DebugVariables
+    public sealed class DebugVariables
     {
         public DebugVariables
         (

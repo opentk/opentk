@@ -4,7 +4,7 @@ using Mono.Cecil.Cil;
 
 namespace OpenTK.Rewrite.Method.Processors
 {
-    public class NativeCallProcessor : IMethodProcessor
+    public sealed class NativeCallProcessor : IMethodProcessor
     {
         private readonly int _slot;
         private readonly FieldDefinition _entryPoints;

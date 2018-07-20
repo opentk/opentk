@@ -3,7 +3,7 @@
     /// <summary>
     /// A copy of OpenTK.CountAttribute. Only for internal use.
     /// </summary>
-    internal class CountAttribute
+    internal sealed class CountAttribute
     {
         /// <summary>
         /// Gets or sets a computed count based on other parameters.

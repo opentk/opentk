@@ -4,7 +4,7 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Method.Processors
 {
-    public class DebugEpilogueProcessor : IMethodProcessor
+    public sealed class DebugEpilogueProcessor : IMethodProcessor
     {
         private readonly DebugVariables _debugVariables;
         private readonly TypeDefinition _voidType;

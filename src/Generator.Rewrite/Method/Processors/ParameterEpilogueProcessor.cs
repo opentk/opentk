@@ -8,7 +8,7 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Method.Processors
 {
-    public class ParameterEpilogueProcessor : IMethodProcessor
+    public sealed class ParameterEpilogueProcessor : IMethodProcessor
     {
         private readonly List<VariableIdentifier> _generatedVariables;
 

@@ -7,7 +7,7 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Method.Processors
 {
-    public class ReturnTypeProcessor : IMethodProcessor
+    public sealed class ReturnTypeProcessor : IMethodProcessor
     {
         private readonly TypeDefinition _intPtrType;
         private readonly TypeDefinition _stringType;
@@ -45,20 +45,24 @@ namespace OpenTK.Rewrite.Method.Processors
             {
                 // String return-type wrapper
                 // return new string((sbyte*)((void*)GetString()));
-                var explicitOperator = wrapper.Module.ImportReference(
+                var explicitOperator = wrapper.Module.ImportReference
+                (
                     _intPtrType.Methods.First(m =>
                     {
                         return m.Name == "op_Explicit" && m.ReturnType.FullNameEquals(typeof(void*));
                     })
                 );
 
-                var stringConstructor = wrapper.Module.ImportReference(_stringType
+                var stringConstructor = wrapper.Module.ImportReference
+                (
+                    _stringType
                     .GetConstructors()
                     .First(m =>
                     {
                         var p = m.Parameters;
                         return p.Count > 0 && p[0].ParameterType.FullNameEquals(typeof(sbyte*));
-                    }));
+                    })
+                );
 
                 ilProcessor.Emit(OpCodes.Call, explicitOperator);
                 ilProcessor.Emit(OpCodes.Newobj, stringConstructor);

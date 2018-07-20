@@ -8,7 +8,7 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Method.Processors
 {
-    public class DebugPrologueProcessor : IMethodProcessorWithEpilogue
+    public sealed class DebugPrologueProcessor : IMethodProcessorWithEpilogue
     {
         private readonly IReadOnlyList<string> _graphicsModules = new List<string>
         {
