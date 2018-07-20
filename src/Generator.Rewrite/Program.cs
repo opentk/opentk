@@ -34,8 +34,9 @@ namespace OpenTK.Rewrite
 
             try
             {
-                var rewriter = new AssemblyRewriter(Options);
-                rewriter.RewriteAssembly();
+                var resolver = new Mono.Cecil.DefaultAssemblyResolver();
+                var rewriter = new AssemblyRewriter(resolver, Options.StrongNameKey);
+                rewriter.RewriteAssembly(Options.TargetAssembly, Options.EnableDebugCalls, Options.UseDllImport);
             }
             catch (Exception exc)
             {
