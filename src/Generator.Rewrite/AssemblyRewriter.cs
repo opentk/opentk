@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
+using OpenTK.Rewrite.Methods;
+using OpenTK.Rewrite.Types;
 
 namespace OpenTK.Rewrite
 {
@@ -14,7 +16,14 @@ namespace OpenTK.Rewrite
         private readonly ReaderParameters _readerParams;
         private readonly WriterParameters _writerParams;
 
-        public AssemblyRewriter(IAssemblyResolver assemblyResolver)
+        private readonly Func<AssemblyDefinition, TypeDefinition, bool, ITypeRewriter> _typeRewriterFactory;
+
+        public AssemblyRewriter
+        (
+            IAssemblyResolver assemblyResolver,
+            Func<AssemblyDefinition, TypeDefinition, bool, ITypeRewriter> typeRewriterFactory,
+            string strongNameKeyPath
+        )
         {
             _readerParams = new ReaderParameters
             {
@@ -23,20 +32,7 @@ namespace OpenTK.Rewrite
                 ReadWrite = true,
             };
 
-            _writerParams = new WriterParameters
-            {
-                WriteSymbols = true,
-            };
-        }
-
-        public AssemblyRewriter(IAssemblyResolver assemblyResolver, string strongNameKeyPath)
-        {
-            _readerParams = new ReaderParameters
-            {
-                AssemblyResolver = assemblyResolver,
-                ReadSymbols = true,
-                ReadWrite = true,
-            };
+            _typeRewriterFactory = typeRewriterFactory ?? throw new ArgumentNullException(nameof(typeRewriterFactory));
 
             string absoluteKeyFilePath = Path.GetFullPath(strongNameKeyPath);
 
@@ -103,13 +99,7 @@ namespace OpenTK.Rewrite
                     }
 
                     var bindingsBaseType = assembly.Modules.First().GetType("OpenTK.BindingsBase");
-                    var typeRewriter = new TypeRewriter
-                    (
-                        mscorlib,
-                        bindingsBaseType,
-                        enableDebugCalls,
-                        useDllImport
-                    );
+                    var typeRewriter = _typeRewriterFactory(mscorlib, bindingsBaseType, useDllImport);
 
                     foreach (var module in assembly.Modules)
                     {

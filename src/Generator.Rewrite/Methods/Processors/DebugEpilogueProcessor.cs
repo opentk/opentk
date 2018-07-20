@@ -2,7 +2,7 @@
 using Mono.Cecil.Cil;
 using OpenTK.Rewrite.Extensions;
 
-namespace OpenTK.Rewrite.Method.Processors
+namespace OpenTK.Rewrite.Methods.Processors
 {
     public sealed class DebugEpilogueProcessor : IMethodProcessor
     {

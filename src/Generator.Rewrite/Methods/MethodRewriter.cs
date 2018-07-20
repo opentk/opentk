@@ -3,11 +3,11 @@ using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
-using OpenTK.Rewrite.Method.Processors;
+using OpenTK.Rewrite.Methods.Processors;
 
-namespace OpenTK.Rewrite.Method
+namespace OpenTK.Rewrite.Methods
 {
-    public sealed class MethodRewriter
+    public sealed class MethodRewriter : IMethodRewriter
     {
         private readonly IMethodProcessor[] _processors;
 
@@ -16,7 +16,7 @@ namespace OpenTK.Rewrite.Method
             _processors = methodProcessors ?? throw new ArgumentNullException(nameof(methodProcessors));
         }
 
-        public MethodDefinition RewriteWrapper(MethodDefinition native, MethodDefinition wrapper)
+        public MethodDefinition Rewrite(MethodDefinition wrapper, MethodDefinition native)
         {
             wrapper.Body.Instructions.Clear();
             var ilProcessor = wrapper.Body.GetILProcessor();

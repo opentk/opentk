@@ -1,32 +1,51 @@
 ﻿using System;
+using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
+using OpenTK.Rewrite.Extensions;
 
-namespace OpenTK.Rewrite.Method.Processors
+namespace OpenTK.Rewrite.Methods.Processors
 {
     public sealed class NativeCallProcessor : IMethodProcessor
     {
-        private readonly int _slot;
-        private readonly FieldDefinition _entryPoints;
+        private readonly bool _useDllImport;
 
-        public NativeCallProcessor(int slot, FieldDefinition entryPointsField)
+        public NativeCallProcessor(bool useDllImport)
         {
-            _slot = slot;
-            _entryPoints = entryPointsField ?? throw new ArgumentNullException(nameof(entryPointsField));
+            _useDllImport = useDllImport;
         }
 
         public void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
-            if (_slot == -1)
+            int slot = native.GetSlot();
+
+            if (slot == -1 || _useDllImport)
             {
                 // issue DllImport call
                 ilProcessor.Emit(OpCodes.Call, native);
             }
             else
             {
+                FieldDefinition entryPointsField = null;
+                TypeDefinition currentType = wrapper.DeclaringType;
+
+                do
+                {
+                    entryPointsField = currentType.Fields.FirstOrDefault(f => f.Name == "EntryPoints");
+                }
+                while (entryPointsField == null && !((currentType = currentType.DeclaringType) == null));
+
+                if (entryPointsField == null)
+                {
+                    throw new InvalidOperationException
+                    (
+                        "The 'EntryPoints' field could not be found in any enclosing class."
+                    );
+                }
+
                 // push the entry point address on the stack
-                ilProcessor.Emit(OpCodes.Ldsfld, _entryPoints);
-                ilProcessor.Emit(OpCodes.Ldc_I4, _slot);
+                ilProcessor.Emit(OpCodes.Ldsfld, entryPointsField);
+                ilProcessor.Emit(OpCodes.Ldc_I4, slot);
                 ilProcessor.Emit(OpCodes.Ldelem_I);
 
                 // issue calli

@@ -15,7 +15,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Linq;
 using CommandLine;
+using Mono.Cecil;
+using OpenTK.Rewrite.Methods;
+using OpenTK.Rewrite.Methods.Processors;
+using OpenTK.Rewrite.Types;
 
 namespace OpenTK.Rewrite
 {
@@ -34,8 +39,8 @@ namespace OpenTK.Rewrite
 
             try
             {
-                var resolver = new Mono.Cecil.DefaultAssemblyResolver();
-                var rewriter = new AssemblyRewriter(resolver, Options.StrongNameKey);
+                var resolver = new DefaultAssemblyResolver();
+                var rewriter = new AssemblyRewriter(resolver, createTypeRewriter, Options.StrongNameKey);
                 rewriter.RewriteAssembly(Options.TargetAssembly, Options.EnableDebugCalls, Options.UseDllImport);
             }
             catch (Exception exc)
@@ -43,6 +48,30 @@ namespace OpenTK.Rewrite
                 Console.Error.WriteLine("An error occurred:");
                 Console.Error.WriteLine(exc);
             }
+        }
+
+        private static ITypeRewriter createTypeRewriter
+        (
+            AssemblyDefinition mscorlib,
+            TypeDefinition bindingsBaseType,
+            bool useDllImport
+        )
+        {
+            var methodProcessors = new IMethodProcessor[]
+            {
+                new ParameterProcessor(mscorlib, bindingsBaseType),
+                new NativeCallProcessor(useDllImport),
+                new ReturnTypeProcessor(mscorlib),
+            };
+
+            if (Options.EnableDebugCalls)
+            {
+                methodProcessors = methodProcessors.Prepend(new DebugPrologueProcessor()).ToArray();
+            }
+
+            var methodRewriter = new MethodRewriter(methodProcessors);
+
+            return new TypeRewriter(mscorlib, useDllImport, methodRewriter);
         }
     }
 }

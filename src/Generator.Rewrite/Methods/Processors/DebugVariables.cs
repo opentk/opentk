@@ -1,7 +1,7 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace OpenTK.Rewrite.Method.Processors
+namespace OpenTK.Rewrite.Methods.Processors
 {
     public sealed class DebugVariables
     {

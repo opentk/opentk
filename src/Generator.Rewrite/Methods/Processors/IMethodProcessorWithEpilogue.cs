@@ -1,4 +1,4 @@
-﻿namespace OpenTK.Rewrite.Method.Processors
+﻿namespace OpenTK.Rewrite.Methods.Processors
 {
     public interface IMethodProcessorWithEpilogue : IMethodProcessor
     {
