@@ -86,14 +86,14 @@ namespace OpenTK.Rewrite
                         foreach (var reference in module.AssemblyReferences)
                         {
                             var resolved = module.AssemblyResolver.Resolve(reference);
-                            if (reference.Name == "mscorlib" && mscorlib == null)
+                            if (reference.Name == "mscorlib" && mscorlib is null)
                             {
                                 mscorlib = resolved;
                             }
                         }
                     }
 
-                    if (mscorlib == null)
+                    if (mscorlib is null)
                     {
                         throw new ArgumentException("Failed to locate mscorlib in the given target assembly.");
                     }

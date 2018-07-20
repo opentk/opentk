@@ -33,9 +33,9 @@ namespace OpenTK.Rewrite.Methods.Processors
                 {
                     entryPointsField = currentType.Fields.FirstOrDefault(f => f.Name == "EntryPoints");
                 }
-                while (entryPointsField == null && !((currentType = currentType.DeclaringType) == null));
+                while (entryPointsField is null && !((currentType = currentType.DeclaringType) is null));
 
-                if (entryPointsField == null)
+                if (entryPointsField is null)
                 {
                     throw new InvalidOperationException
                     (

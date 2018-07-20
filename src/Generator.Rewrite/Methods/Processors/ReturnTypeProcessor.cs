@@ -14,7 +14,7 @@ namespace OpenTK.Rewrite.Methods.Processors
 
         public ReturnTypeProcessor(AssemblyDefinition mscorlib)
         {
-            if (mscorlib == null)
+            if (mscorlib is null)
             {
                 throw new ArgumentNullException(nameof(mscorlib));
             }

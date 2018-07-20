@@ -17,7 +17,7 @@ namespace OpenTK.Rewrite.Methods.Processors
 
         public void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
-            if (_debugVariables == null)
+            if (_debugVariables is null)
             {
                 return;
             }

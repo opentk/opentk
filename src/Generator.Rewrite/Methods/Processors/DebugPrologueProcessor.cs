@@ -43,7 +43,7 @@ namespace OpenTK.Rewrite.Methods.Processors
             }
 
             var errorHelperType = wrapper.Module.GetType(moduleName, "ErrorHelper");
-            if (errorHelperType == null)
+            if (errorHelperType is null)
             {
                 return;
             }
@@ -58,7 +58,7 @@ namespace OpenTK.Rewrite.Methods.Processors
                     c.Parameters[0].ParameterType.FullNameEquals(graphicsContextInterface);
             });
 
-            if (ctor == null)
+            if (ctor is null)
             {
                 throw new InvalidOperationException
                 (

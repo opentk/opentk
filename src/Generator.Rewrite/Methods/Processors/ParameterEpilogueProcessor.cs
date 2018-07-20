@@ -58,7 +58,7 @@ namespace OpenTK.Rewrite.Methods.Processors
 
         private void EmitStringOutEpilogue(ParameterDefinition parameter, VariableIdentifier generatedPtrVar)
         {
-            if (generatedPtrVar == null)
+            if (generatedPtrVar is null)
             {
                 throw new ArgumentNullException(nameof(generatedPtrVar));
             }

@@ -251,7 +251,7 @@ namespace OpenTK.Rewrite.Methods.Processors
 
             // ptr = Marshal.AllocHGlobal(count + 1);
             var count = GetCountAttribute(parameter);
-            if (count == null)
+            if (count is null)
             {
                 // We need a count attribute so we know what size to make the
                 // string buffer. Currently every string out parameter has a
@@ -410,7 +410,7 @@ namespace OpenTK.Rewrite.Methods.Processors
         {
             var attribute = parameter.GetCustomAttribute(AttributeNames.Count, throwIfNoneFound: false);
 
-            if (attribute == null)
+            if (attribute is null)
             {
                 return null;
             }
