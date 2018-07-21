@@ -13,7 +13,7 @@ namespace Bind.Generators
     internal interface IGenerator
     {
         /// <summary>
-        /// Gets a short-name identifier for the API (such as GL, GL4, ES10, etc)
+        /// Gets a short-name identifier for the API (such as GL, GL4, ES10, etc).
         /// </summary>
         string APIIdentifier { get; }
 

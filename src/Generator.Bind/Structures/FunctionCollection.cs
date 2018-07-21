@@ -58,9 +58,9 @@ namespace Bind.Structures
                     replace |= !existing.Parameters.Any(p => p.ParameterType.IsUnsigned) &&
                                _unsignedFunctions.IsMatch(existing.Name) && !_unsignedFunctions.IsMatch(f.Name);
                     replace |=
-                        (from pOld in existing.Parameters
-                            join pNew in f.Parameters on pOld.Name equals pNew.Name
-                            where pNew.ParameterType.ElementCount == 0 && pOld.ParameterType.ElementCount != 0
+                        (from oldParameter in existing.Parameters
+                            join newParameter in f.Parameters on oldParameter.Name equals newParameter.Name
+                            where newParameter.ParameterType.ElementCount == 0 && oldParameter.ParameterType.ElementCount != 0
                             select true)
                         .Count() != 0;
                     if (replace)

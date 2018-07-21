@@ -12,7 +12,7 @@ namespace Bind.Structures
     /// <summary>
     /// Represents an opengl constant in C# format. Both the constant name and value
     /// can be retrieved or set. The value can be either a number, another constant
-    /// or an alias to a constant
+    /// or an alias to a constant.
     /// </summary>
     internal class ConstantDefinition : IComparable<ConstantDefinition>
     {
@@ -95,7 +95,7 @@ namespace Bind.Structures
         /// <summary>
         /// Replces the Value of the given constant with the value referenced by the [c.Reference, c.Value] pair.
         /// </summary>
-        /// <param name="c">The Constant to translate</param>
+        /// <param name="c">The Constant to translate.</param>
         /// <param name="enums">The list of enums to check.</param>
         /// <returns>True if the reference was found; false otherwise.</returns>
         public static bool TranslateConstantWithReference(ConstantDefinition c, EnumCollection enums)

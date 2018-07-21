@@ -831,8 +831,8 @@ namespace Bind
                 return f;
             }
 
-            var pSize = f.Parameters.Last().ParameterType;
-            if (!pSize.TypeName.ToLower().StartsWith("int") || pSize.IsPointer)
+            var sizeParameterType = f.Parameters.Last().ParameterType;
+            if (!sizeParameterType.TypeName.ToLower().StartsWith("int") || sizeParameterType.IsPointer)
             {
                 return f;
             }

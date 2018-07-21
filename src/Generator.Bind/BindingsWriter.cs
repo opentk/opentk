@@ -95,8 +95,8 @@ namespace Bind
                     sw.WriteLineNoTabs();
 
                     sw.WriteLine("using System;");
-                    sw.WriteLine("using System.Text;");
                     sw.WriteLine("using System.Runtime.InteropServices;");
+                    sw.WriteLine("using System.Text;");
                     sw.WriteLineNoTabs();
 
                     sw.WriteLine($"namespace {Generator.Namespace}");
@@ -189,8 +189,8 @@ namespace Bind
                             sw.WriteLineNoTabs();
 
                             sw.WriteLine("using System;");
-                            sw.WriteLine("using System.Text;");
                             sw.WriteLine("using System.Runtime.InteropServices;");
+                            sw.WriteLine("using System.Text;");
                             sw.WriteLineNoTabs();
 
                             sw.WriteLine($"namespace {Generator.Namespace}");
@@ -340,7 +340,14 @@ namespace Bind
                 var summaryLines = docs.Summary.TrimEnd().Split('\n');
                 foreach (var summaryLine in summaryLines)
                 {
-                    sw.WriteLine($"/// {summaryLine}");
+                    sw.Write($"/// {summaryLine}");
+
+                    if (summaryLine == summaryLines.Last() && !summaryLine.EndsWith("."))
+                    {
+                        sw.Write('.');
+                    }
+
+                    sw.WriteLine();
                 }
             }
             sw.WriteLine("/// </summary>");
@@ -411,6 +418,12 @@ namespace Bind
             foreach (var genericParameterName in genericParameterNames)
             {
                 sw.WriteLine($"/// <typeparam name=\"{genericParameterName}\"></typeparam>");
+            }
+
+            if (!f.ReturnTypeDefinition.TypeName.Equals(typeof(void).Name, StringComparison.OrdinalIgnoreCase))
+            {
+                // TODO: Return value documentation
+                sw.WriteLine("/// <returns></returns>");
             }
         }
 
@@ -514,9 +527,13 @@ namespace Bind
                         WriteLicense(sw);
                         sw.WriteLineNoTabs();
 
-                        sw.WriteLine("using System;");
-                        sw.WriteLineNoTabs();
+                        if (@enum.IsFlagCollection || @enum.IsObsolete)
+                        {
+                            sw.WriteLine("using System;");
+                            sw.WriteLineNoTabs();
+                        }
 
+                        sw.WriteLine("// ReSharper disable InconsistentNaming");
                         sw.WriteLine("#pragma warning disable SA1139 // Use literal suffix notation instead of casting");
                         sw.WriteLineNoTabs();
 
@@ -524,16 +541,8 @@ namespace Bind
                         using (sw.BeginBlock())
                         {
                             // Document which functions use this enum.
-                            var functions = enumCounts[@enum]
-                                .Select(w =>
-                                    Generator.ClassName + (w.ExtensionName != "Core" ? "." + w.ExtensionName : string.Empty) + "." +
-                                    w.TrimmedName)
-                                .Distinct()
-                                .ToList();
-
                             sw.WriteLine("/// <summary>");
-                            sw.WriteLine(
-                                $"/// {(functions.Count >= 3 ? $"Used in {string.Join(", ", functions.Take(2).ToArray())} and {functions.Count - 2} other function{(functions.Count() - 2 > 1 ? "s" : string.Empty)}" : functions.Count() >= 1 ? $"Used in {string.Join(", ", functions.ToArray())}" : "Not used directly.")}");
+                            sw.WriteLine($"/// {GetEnumUsageString(enumCounts, @enum)}");
                             sw.WriteLine("/// </summary>");
 
                             if (@enum.IsObsolete)
@@ -570,6 +579,39 @@ namespace Bind
 
                 File.Move(tempEnumFilePath, outputEnumPath);
             }
+        }
+
+        /// <summary>
+        /// Gets a usage string for enumeration documentation that lists a sampling of the functions that the enum is
+        /// used in.
+        /// </summary>
+        /// <param name="enumCounts">A dictionary of the functions in which the enum is used.</param>
+        /// <param name="enum">The enum definition.</param>
+        /// <returns>The usage string.</returns>
+        private string GetEnumUsageString(IReadOnlyDictionary<EnumDefinition, List<FunctionDefinition>> enumCounts, EnumDefinition @enum)
+        {
+            var functions = enumCounts[@enum]
+                .Select(w =>
+                    Generator.ClassName + (w.ExtensionName != "Core" ? "." + w.ExtensionName : string.Empty) + "." +
+                    w.TrimmedName)
+                .Distinct()
+                .ToList();
+
+            if (functions.Count >= 3)
+            {
+                var additionalReference = functions.Count - 2 > 1
+                    ? "functions"
+                    : "function";
+
+                return $"Used in {functions.Take(2).Humanize()}, as well as {functions.Count - 2} other {additionalReference}.";
+            }
+
+            if (functions.Count >= 1)
+            {
+                return $"Used in {functions.Humanize()}.";
+            }
+
+            return "Not used directly.";
         }
 
         private void WriteLicense(SourceWriter sw)

@@ -196,7 +196,7 @@ namespace Bind
         /// <summary>
         /// Places a new constant in the specified enum, if it doesn't already exist.
         /// The existing constant is replaced if the new has a numeric value and the old
-        /// has a reference value (eg 0x5 is preferred over AttribMask.Foo)
+        /// has a reference value (eg 0x5 is preferred over AttribMask.Foo).
         /// </summary>
         /// <param name="enumDefinition">The enumeration definiton.</param>
         /// <param name="constantDefinition">The constant definition.</param>
@@ -226,7 +226,7 @@ namespace Bind
         /// Whether or not to return the extension name unmodified. If false, the extension name will be turned to title
         /// case.
         /// </param>
-        /// <returns>The extension name,</returns>
+        /// <returns>The extension name.</returns>
         internal static string GetExtension(string name, bool returnUnmodified)
         {
             var match = Extensions.Match(name);

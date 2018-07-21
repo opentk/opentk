@@ -591,8 +591,8 @@ src/OpenTK/Graphics/ES31/Enums
 src/OpenTK/Graphics/ES31/Wrappers
 src/OpenTK/Graphics/OpenGL/Enums
 src/OpenTK/Graphics/OpenGL/Wrappers
-#src/OpenTK/Graphics/OpenGL4/Enums
-#src/OpenTK/Graphics/OpenGL4/Wrappers
+src/OpenTK/Graphics/OpenGL4/Enums
+src/OpenTK/Graphics/OpenGL4/Wrappers
 
 ### OpenTK AssemblyInfo files ###
 **/AssemblyInfo.cs
