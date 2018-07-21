@@ -139,48 +139,28 @@ namespace Bind
         /// <inheritdoc/>
         public Dictionary<string, string> ReadAPITypeMap(string file)
         {
-            using (var sr = new StreamReader(file))
-            {
-                Console.WriteLine("Reading OpenGL types.");
-                var apiTypes = new Dictionary<string, string>();
-
-                do
-                {
-                    var line = sr.ReadLine();
-
-                    if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
-                    {
-                        continue;
-                    }
-
-                    var words = line.Split(" ,\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-
-                    if (words[1] == "struct")
-                    {
-                        apiTypes.Add(words[0], words[2]);
-                    }
-                    else
-                    {
-                        apiTypes.Add(words[0], words[1]);
-                    }
-                }
-                while (!sr.EndOfStream);
-
-                return apiTypes;
-            }
+            Console.WriteLine("Reading OpenGL types.");
+            return ReadTypeMap(file);
         }
 
         /// <inheritdoc/>
         public Dictionary<string, string> ReadLanguageTypeMap(string file)
         {
+            Console.WriteLine("Reading C# types.");
+            return ReadTypeMap(file);
+        }
+
+        [NotNull]
+        private Dictionary<string, string> ReadTypeMap([NotNull, PathReference] string file)
+        {
             using (var sr = new StreamReader(file))
             {
                 var languageTypes = new Dictionary<string, string>();
-                Console.WriteLine("Reading C# types.");
 
                 while (!sr.EndOfStream)
                 {
                     var line = sr.ReadLine();
+
                     if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
                     {
                         continue;
