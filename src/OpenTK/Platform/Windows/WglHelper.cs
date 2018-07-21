@@ -5,6 +5,7 @@
  * Time: 6:43 ��
  */
 
+using OpenTK.NT.Native;
 using System;
 using System.Collections.Generic;
 
@@ -93,7 +94,7 @@ namespace OpenTK.Platform.Windows
             var address = GetProcAddress(function_string);
             if (!IsValid(address))
             {
-                address = Functions.GetProcAddress(WinFactory.OpenGLHandle, function_string);
+                address = Kernel32.GetProcAddress(WinFactory.OpenGLHandle, function_string);
             }
 
             return address;

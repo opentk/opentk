@@ -33,6 +33,7 @@ using System.Threading;
 using OpenTK.Graphics;
 using OpenTK.Input;
 using OpenTK.Mathematics;
+using OpenTK.Core.Platform;
 #if !MINIMAL
 using System.Drawing;
 

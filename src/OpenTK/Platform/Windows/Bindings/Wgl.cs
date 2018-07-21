@@ -23,6 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using OpenTK.NT.Native;
 using System;
 using System.Runtime.InteropServices;
 using System.Security;

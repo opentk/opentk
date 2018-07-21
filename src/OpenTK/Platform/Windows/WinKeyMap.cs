@@ -24,6 +24,7 @@
 //
 
 using OpenTK.Input;
+using OpenTK.NT.Native;
 
 namespace OpenTK.Platform.Windows
 {
@@ -158,7 +159,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public static Key TranslateKey(short scancode, VirtualKeys vkey, bool extended0, bool extended1,
+        public static Key TranslateKey(short scancode, VirtualKey vkey, bool extended0, bool extended1,
             out bool is_valid)
         {
             is_valid = true;
@@ -203,11 +204,11 @@ namespace OpenTK.Platform.Windows
                         key = Key.KeypadDecimal;
                         break;
                     case Key.NumLock:
-                        if (vkey == VirtualKeys.Last)
+                        if (vkey == VirtualKey.Last)
                         {
                             is_valid = false;
                         }
-                        else if (vkey == VirtualKeys.PAUSE)
+                        else if (vkey == VirtualKey.Pause)
                         {
                             key = Key.Pause;
                         }

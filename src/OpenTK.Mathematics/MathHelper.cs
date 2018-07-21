@@ -317,6 +317,36 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Scales the specified number linearly between a minimum and a maximum.
+        /// </summary>
+        /// <param name="value">The number to scale.</param>
+        /// <param name="valueMin">The minimum expected number (inclusive).</param>
+        /// <param name="valueMax">The maximum expected number (inclusive).</param>
+        /// <param name="resultMin">The minimum output number (inclusive).</param>
+        /// <param name="resultMax">The maximum output number (inclusive).</param>
+        /// <returns>The number, scaled linearly between min and max.</returns>
+        public static int ScaleValue
+        (
+            int value,
+            int valueMin,
+            int valueMax,
+            int resultMin,
+            int resultMax
+        )
+        {
+            if (valueMin >= valueMax || resultMin >= resultMax)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            value = Clamp(value, valueMin, valueMax);
+
+            var range = resultMax - resultMin;
+            long temp = (value - valueMin) * range; // need long to avoid overflow
+            return (int)(temp / (valueMax - valueMin) + resultMin);
+        }
+
+        /// <summary>
         /// Approximates floating point equality with a maximum number of different bits.
         /// This is typically used in place of an epsilon comparison.
         /// see: https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/

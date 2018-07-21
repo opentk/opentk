@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
+using OpenTK.NT.Native;
 
 namespace OpenTK.Platform.Windows
 {
@@ -228,9 +229,9 @@ namespace OpenTK.Platform.Windows
         private static AccelerationType GetAccelerationType(ref PixelFormatDescriptor pfd)
         {
             var type = AccelerationType.ICD;
-            if ((pfd.Flags & PixelFormatDescriptorFlags.GENERIC_FORMAT) != 0)
+            if ((pfd.Flags & PixelFormatDescriptorFlags.GenericFormat) != 0)
             {
-                if ((pfd.Flags & PixelFormatDescriptorFlags.GENERIC_ACCELERATED) != 0)
+                if ((pfd.Flags & PixelFormatDescriptorFlags.GenericAccelerated) != 0)
                 {
                     type = AccelerationType.MCD;
                 }
@@ -248,12 +249,12 @@ namespace OpenTK.Platform.Windows
         {
             var pfd = new PixelFormatDescriptor();
             PixelFormatDescriptorFlags flags = 0;
-            flags |= PixelFormatDescriptorFlags.DRAW_TO_WINDOW;
-            flags |= PixelFormatDescriptorFlags.SUPPORT_OPENGL;
+            flags |= PixelFormatDescriptorFlags.DrawToWindow;
+            flags |= PixelFormatDescriptorFlags.SupportOpenGL;
 
             if (mode.Stereo)
             {
-                flags |= PixelFormatDescriptorFlags.STEREO;
+                flags |= PixelFormatDescriptorFlags.Stereo;
             }
 
             if (Environment.OSVersion.Version.Major >= 6 &&
@@ -267,22 +268,22 @@ namespace OpenTK.Platform.Windows
                 // acceleration. Don't set this flag when running
                 // with software acceleration (e.g. over Remote Desktop
                 // as described in bug https://github.com/opentk/opentk/issues/35)
-                flags |= PixelFormatDescriptorFlags.SUPPORT_COMPOSITION;
+                flags |= PixelFormatDescriptorFlags.SupportComposition;
             }
 
-            var count = Functions.DescribePixelFormat(device, 1, API.PixelFormatDescriptorSize, ref pfd);
+            var count = Gdi32.DescribePixelFormat(device, 1, PixelFormatDescriptor.SizeInBytes, ref pfd);
 
             var best = 0;
             var best_dist = int.MaxValue;
             for (var index = 1; index <= count; index++)
             {
                 var dist = 0;
-                var valid = Functions.DescribePixelFormat(device, index, API.PixelFormatDescriptorSize, ref pfd) != 0;
+                var valid = Gdi32.DescribePixelFormat(device, index, PixelFormatDescriptor.SizeInBytes, ref pfd) != 0;
                 valid &= GetAccelerationType(ref pfd) == requested_acceleration_type;
                 valid &= (pfd.Flags & flags) == flags;
-                valid &= pfd.PixelType == PixelType.RGBA; // indexed modes not currently supported
+                valid &= pfd.PixelType == PixelFormatDescriptorPixelTypes.Rgba; // indexed modes not currently supported
                 // heavily penalize single-buffered modes when the user requests double buffering
-                if ((pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) == 0 && mode.Buffers > 1)
+                if ((pfd.Flags & PixelFormatDescriptorFlags.DoubleBuffer) == 0 && mode.Buffers > 1)
                 {
                     dist += 1000;
                 }
@@ -314,7 +315,7 @@ namespace OpenTK.Platform.Windows
             int pixelformat)
         {
             GraphicsMode created_mode = null;
-            if (Functions.DescribePixelFormat(device, pixelformat, pfd.Size, ref pfd) > 0)
+            if (Gdi32.DescribePixelFormat(device, pixelformat, pfd.Size, ref pfd) > 0)
             {
                 created_mode = new GraphicsMode(
                     new IntPtr(pixelformat),
@@ -323,8 +324,8 @@ namespace OpenTK.Platform.Windows
                     pfd.StencilBits,
                     0, // MSAA not supported when using PixelFormatDescriptor
                     new ColorFormat(pfd.AccumRedBits, pfd.AccumGreenBits, pfd.AccumBlueBits, pfd.AccumAlphaBits),
-                    (pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) != 0 ? 2 : 1,
-                    (pfd.Flags & PixelFormatDescriptorFlags.STEREO) != 0);
+                    (pfd.Flags & PixelFormatDescriptorFlags.DoubleBuffer) != 0 ? 2 : 1,
+                    (pfd.Flags & PixelFormatDescriptorFlags.Stereo) != 0);
             }
 
             return created_mode;

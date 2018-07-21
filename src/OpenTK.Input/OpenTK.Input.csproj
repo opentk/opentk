@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Deterministic>true</Deterministic>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+    <PropertyGroup>
+    <Version>1.0.0</Version>
+    <Authors>OpenTK</Authors>
+    <Copyright>Copyright (c) 2006 - 2016 Stefanos Apostolopoulos (stapostol@gmail.com) for the Open Toolkit library.</Copyright>
+    <Description>Shared input functionality for the OpenTK library.</Description>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PackageIconUrl>https://raw.githubusercontent.com/opentk/opentk/master/docs/files/img/logo.png</PackageIconUrl>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageReleaseNotes>Initial 4.0 release.</PackageReleaseNotes>
+    <PackageTags>opentk;opengl;cross-platform;openal;csharp;fsharp;vb;dotnet;mono;graphics;game;scientific;science;3d;2d;math;input;gamepad;joystick</PackageTags>
+    <PackageProjectUrl>https://github.com/opentk/opentk</PackageProjectUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>true</IncludeSource>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" />
+  </ItemGroup>
+  <Import Project="..\..\build\targets\stylecop.props" />
+</Project>

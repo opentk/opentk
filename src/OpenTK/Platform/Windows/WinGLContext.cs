@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Core;
 using OpenTK.Graphics;
+using OpenTK.NT.Native;
 
 namespace OpenTK.Platform.Windows
 {
@@ -239,7 +240,7 @@ namespace OpenTK.Platform.Windows
 
         public override void SwapBuffers()
         {
-            if (!Functions.SwapBuffers(DeviceContext))
+            if (!Gdi32.SwapBuffers(DeviceContext))
             {
                 throw new GraphicsContextException(
                     $"Failed to swap buffers for context {this} current. Error: {Marshal.GetLastWin32Error()}");
@@ -304,7 +305,7 @@ namespace OpenTK.Platform.Windows
             var address = Wgl.GetProcAddress(function_string);
             if (!IsValid(address))
             {
-                address = Functions.GetProcAddress(WinFactory.OpenGLHandle, function_string);
+                address = Kernel32.GetProcAddress(WinFactory.OpenGLHandle, function_string);
             }
 
             return address;
@@ -337,13 +338,13 @@ namespace OpenTK.Platform.Windows
             }
 
             var pfd = new PixelFormatDescriptor();
-            Functions.DescribePixelFormat(
+            Gdi32.DescribePixelFormat(
                 window.DeviceContext, (int)mode.Index.Value,
-                API.PixelFormatDescriptorSize, ref pfd);
+                PixelFormatDescriptor.SizeInBytes, ref pfd);
 
             Debug.WriteLine(mode.Index.ToString());
 
-            if (!Functions.SetPixelFormat(window.DeviceContext, (int)mode.Index.Value, ref pfd))
+            if (!Gdi32.SetPixelFormat(window.DeviceContext, (int)mode.Index.Value, ref pfd))
             {
                 throw new GraphicsContextException(
                     $"Requested GraphicsMode not available. SetPixelFormat error: {Marshal.GetLastWin32Error()}");
