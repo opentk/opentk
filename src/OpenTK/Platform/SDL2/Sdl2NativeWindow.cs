@@ -300,7 +300,7 @@ namespace OpenTK.Platform.SDL2
 
         private static void ProcessMouseWheelEvent(Sdl2NativeWindow window, MouseWheelEvent ev)
         {
-            window.OnMouseWheel(ev.X, ev.Y);
+            window.OnMouseWheel(ev.X, ev.Y, false);
         }
 
         private static unsafe void ProcessDropEvent(Sdl2NativeWindow window, DropEvent ev)
