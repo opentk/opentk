@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using Bind.XML.Signatures;
-using JetBrains.Annotations;
 
-namespace Bind.Baking
+namespace Bind.Translation.Translators
 {
     /// <summary>
     /// Translates OpenGL type names in a profile to their respective C# type names.
     /// </summary>
-    public class ProfileTypeTranslator
+    public class ProfileTypeTranslator : ITranslator<ApiProfile>
     {
         private readonly IReadOnlyDictionary<string, string> _apiTypeMap;
         private readonly IReadOnlyDictionary<string, string> _languageTypeMap;
@@ -28,13 +27,8 @@ namespace Bind.Baking
             _languageTypeMap = languageTypeMap;
         }
 
-        /// <summary>
-        /// Translates the OpenGL type names in the given profile.
-        /// </summary>
-        /// <param name="profile">The profile to translate.</param>
-        /// <returns>A translated profile.</returns>
-        [NotNull]
-        public ApiProfile TranslateProfile([NotNull] ApiProfile profile)
+        /// <inheritdoc/>
+        public ApiProfile TranslateProfile(ApiProfile profile)
         {
             throw new NotImplementedException();
         }

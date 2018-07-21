@@ -1,5 +1,7 @@
 using System;
+using Bind.XML;
 using Bind.XML.Signatures.Functions;
+using JetBrains.Annotations;
 
 namespace Bind.Translation.Trimmers
 {
@@ -11,18 +13,18 @@ namespace Bind.Translation.Trimmers
         /// <inheritdoc/>
         public bool IsRelevant(FunctionSignature trimmable)
         {
-            return trimmable.Name.EndsWith(trimmable.Extension);
+            return IsRelevant(trimmable as INamedExtensionScopedEntity);
         }
 
         /// <inheritdoc/>
         public FunctionSignature Trim(FunctionSignature trimmable)
         {
-            var extensionNameIndex = trimmable.Name.LastIndexOf(trimmable.Extension, StringComparison.Ordinal);
-            var newName = trimmable.Name.Remove(extensionNameIndex);
+            var newName = Trim(trimmable as INamedExtensionScopedEntity);
 
             return new FunctionSignature
             (
                 newName,
+                trimmable.NativeEntrypoint,
                 trimmable.Category,
                 trimmable.Extension,
                 trimmable.IntroducedIn,
@@ -31,6 +33,39 @@ namespace Bind.Translation.Trimmers
                 trimmable.DeprecatedIn,
                 trimmable.DeprecationReason
             );
+        }
+
+        /// <summary>
+        /// Determines if the name trimmer is relevant for the given type.
+        /// </summary>
+        /// <param name="trimmable">The type to check.</param>
+        /// <returns>true if the name trimmer is relevant; otherwise, false.</returns>
+        public bool IsRelevant([NotNull] INamedExtensionScopedEntity trimmable)
+        {
+            if (trimmable.Extension is null)
+            {
+                return false;
+            }
+
+            return trimmable.Name.EndsWith(trimmable.Extension);
+        }
+
+        /// <summary>
+        /// Trims the name of the given <see cref="INamedExtensionScopedEntity"/> without modifying the underlying
+        /// object.
+        /// </summary>
+        /// <param name="trimmable">The trimmable object.</param>
+        /// <returns>The trimmed name.</returns>
+        [NotNull, Pure]
+        public string Trim([NotNull] INamedExtensionScopedEntity trimmable)
+        {
+            if (trimmable.Extension is null)
+            {
+                throw new ArgumentException("Cannot trim a null extension.", nameof(trimmable.Extension));
+            }
+
+            var extensionNameIndex = trimmable.Name.LastIndexOf(trimmable.Extension, StringComparison.Ordinal);
+            return trimmable.Name.Remove(extensionNameIndex);
         }
     }
 }

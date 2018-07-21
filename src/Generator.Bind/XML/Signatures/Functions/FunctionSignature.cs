@@ -7,13 +7,16 @@ namespace Bind.XML.Signatures.Functions
     /// <summary>
     /// Represents a function signature in an API.
     /// </summary>
-    public class FunctionSignature
+    public class FunctionSignature : INamedExtensionScopedEntity
     {
-        /// <summary>
-        /// Gets the name of the function.
-        /// </summary>
-        [NotNull]
+        /// <inheritdoc />
         public string Name { get; }
+
+        /// <summary>
+        /// Gets the name of the native entrypoint of the function. Typically, this is the same name as
+        /// <see cref="Name"/>, but may diverge if the name is trimmed at any point to facilitate overloading.
+        /// </summary>
+        public string NativeEntrypoint { get; }
 
         /// <summary>
         /// Gets the category the function belongs to.
@@ -21,9 +24,7 @@ namespace Bind.XML.Signatures.Functions
         [NotNull]
         public string Category { get; }
 
-        /// <summary>
-        /// Gets the extension the function belongs to.
-        /// </summary>
+        /// <inheritdoc/>
         [NotNull]
         public string Extension { get; }
 
@@ -61,6 +62,7 @@ namespace Bind.XML.Signatures.Functions
         /// Initializes a new instance of the <see cref="FunctionSignature"/> class.
         /// </summary>
         /// <param name="name">The name of the function.</param>
+        /// <param name="nativeEntrypoint">The name of the native entrypoint of the function.</param>
         /// <param name="category">The category the function belongs to.</param>
         /// <param name="extension">The extension the function belongs to.</param>
         /// <param name="introducedIn">The version the function was introduced in.</param>
@@ -71,6 +73,7 @@ namespace Bind.XML.Signatures.Functions
         public FunctionSignature
         (
             [NotNull] string name,
+            [NotNull] string nativeEntrypoint,
             [NotNull] string category,
             [NotNull] string extension,
             [NotNull] Version introducedIn,
@@ -81,6 +84,7 @@ namespace Bind.XML.Signatures.Functions
         )
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
+            NativeEntrypoint = nativeEntrypoint;
             Category = category ?? throw new ArgumentNullException(nameof(category));
             Extension = extension ?? throw new ArgumentNullException(nameof(extension));
             IntroducedIn = introducedIn ?? throw new ArgumentNullException(nameof(introducedIn));

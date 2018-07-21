@@ -36,7 +36,6 @@ namespace Bind.XML.Signatures.Enumerations
         /// </summary>
         /// <param name="name">The name of the token.</param>
         /// <param name="value">The value of the token.</param>
-        /// <param name="introducedIn">The version the token was introduced in.</param>
         /// <param name="deprecatedIn">The version the token was deprecated in, if any.</param>
         /// <param name="remarks">Any remarks about the token. Optional.</param>
         public TokenSignature

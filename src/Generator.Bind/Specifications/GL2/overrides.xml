@@ -4429,10 +4429,16 @@
 
     <!-- Polygons [3.6] -->
     <function name="FrontFace">
-      <param name="dir"><type>FrontFaceDirection</type></param>
+      <param name="mode">
+        <name>dir</name>
+        <type>FrontFaceDirection</type>
+      </param>
     </function>
     <function name="CullFace">
-      <param name="face"><type>CullFaceMode</type></param>
+      <param name="mode">
+        <name>face</name>
+        <type>CullFaceMode</type>
+      </param>
     </function>
 
     <!-- Vertex Arrays [2.8] -->
@@ -4553,14 +4559,10 @@
     <function name="TexStorage2D">
       <param name="target"><type>TextureTarget2d</type></param>
       <param name="internalformat"><type>SizedInternalFormat</type></param>
-      <param name="format"><type>PixelFormat</type></param>
-      <param name="type"><type>PixelType</type></param>
     </function>
     <function name="TexStorage3D">
       <param name="target"><type>TextureTarget3d</type></param>
       <param name="internalformat"><type>SizedInternalFormat</type></param>
-      <param name="format"><type>PixelFormat</type></param>
-      <param name="type"><type>PixelType</type></param>
     </function>
 
     <!-- Alt. Texture Image Specification Commands [3.8.5] -->
@@ -4623,16 +4625,32 @@
        <param name="func"><type>StencilFunction</type></param>
      </function>
      <function name="StencilOp">
-      <param name="sfail"><type>StencilOp</type></param>
-      <param name="dpfail"><type>StencilOp</type></param>
-      <param name="dppass"><type>StencilOp</type></param>
+      <param name="fail">
+        <name>sfail</name>
+        <type>StencilOp</type>
+      </param>
+      <param name="zfail">
+        <name>dpfail</name>
+        <type>StencilOp</type>
+      </param>
+      <param name="zpass">
+        <name>dppass</name>
+        <type>StencilOp</type>
+      </param>
     </function>
     <function name="StencilOpSeparate">
-      <param name="face"><type>StencilFace</type></param>
-      <param name="func"><type>StencilFunction</type></param>
-      <param name="sfail"><type>StencilOp</type></param>
-      <param name="dpfail"><type>StencilOp</type></param>
-      <param name="dppass"><type>StencilOp</type></param>
+      <param name="face">
+        <type>StencilFace</type>
+      </param>
+      <param name="sfail">
+        <type>StencilOp</type>
+      </param>
+      <param name="dpfail">
+        <type>StencilOp</type>
+      </param>
+      <param name="dppass">
+        <type>StencilOp</type>
+      </param>
     </function>
 
     <!-- Depth Buffer Test [4.1.5] -->
@@ -4675,9 +4693,14 @@
     </function>
     <function name="ClearBuffer">
       <param name="buffer"><type>ClearBuffer</type></param>
+      <param name="drawbuffer"/>
+      <param name="value"/>
     </function>
-    <function name="ClearBufferfi">
+    <function name="ClearBuffer">
       <param name="buffer"><type>ClearBufferCombined</type></param>
+      <param name="drawbuffer"/>
+      <param name="depth"/>
+      <param name="stencil"/>
     </function>
 
     <!-- Sync Objects and Fences [5.2] -->
@@ -4737,7 +4760,10 @@
     <function name="FramebufferTextureLayer">
       <param name="target"><type>FramebufferTarget</type></param>
       <param name="attachment"><type>FramebufferAttachment</type></param>
-      <param name="textarget"><type>TextureTarget3d</type></param>
+      <param name="texture">
+        <name>textureTarget</name>
+        <type>TextureTarget3d</type>
+    </param>
     </function>
 
     <!-- Framebuffer Completeness [4.4.4] -->
@@ -6638,14 +6664,14 @@
   <!-- INTEL_performance_query -->
   <replace name="gl|glcore|gles1|gles2">
     <!-- GetPerfQueryIdByNameINTEL is not const-correct -->
-    <function name="GetPerfQueryIdByNameINTEL" extension="INTEL">
+    <function name="GetPerfQueryIdByName" extension="INTEL">
       <param name="queryName">
         <flow>in</flow>
       </param>
     </function>
 
     <!-- GetPerfCounterInfoINTEL is missing count attributes -->
-    <function name="GetPerfCounterInfoINTEL" extension="INTEL">
+    <function name="GetPerfCounterInfo" extension="INTEL">
       <param name="counterName">
         <count>counterNameLength</count>
       </param>
@@ -6655,7 +6681,7 @@
     </function>
 
     <!-- GetPerfQueryInfoINTEL is missing count attributes -->
-    <function name="GetPerfQueryInfoINTEL" extension="INTEL">
+    <function name="GetPerfQueryInfo" extension="INTEL">
       <param name="queryName">
         <count>queryNameLength</count>
       </param>
@@ -6665,9 +6691,9 @@
   <!-- ExtGetProgramBinarySourceQCOM -->
   <replace name="gl|glcore|gles1|gles2">
     <!-- ExtGetProgramBinarySourceQCOM is missing count attributes -->
-    <function name="ExtGetProgramBinarySourceQCOM" extension="QCOM">
+    <function name="ExtGetProgramBinarySource" extension="QCOM">
       <param name="source">
-        <count>*length</count>
+        <count>length</count>
       </param>
     </function>
   </replace>

@@ -25,12 +25,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml.XPath;
 using Bind.Generators;
 using Bind.Structures;
+using Humanizer;
 using JetBrains.Annotations;
 
 namespace Bind
@@ -170,6 +172,8 @@ namespace Bind
         [NotNull]
         public string TranslateEnumName([NotNull] string name)
         {
+            var originalName = name;
+
             if (string.IsNullOrEmpty(name))
             {
                 return name;
@@ -257,6 +261,11 @@ namespace Bind
             translator.Replace("SRgb", "Srgb");
 
             name = translator.ToString();
+
+            if (originalName.Pascalize() != name)
+            {
+                var s = string.Empty;
+            }
 
             return name;
         }

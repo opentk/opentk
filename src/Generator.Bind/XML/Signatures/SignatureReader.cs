@@ -100,6 +100,7 @@ namespace Bind.XML.Signatures
             return new FunctionSignature
             (
                 functionName,
+                functionName, // The function name in the specification is the entrypoint
                 functionCategory,
                 functionExtensions,
                 functionVersion,

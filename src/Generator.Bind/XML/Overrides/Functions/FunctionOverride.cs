@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
 
@@ -8,7 +9,7 @@ namespace Bind.XML.Overrides.Functions
     /// <summary>
     /// Represents a function with overridden properties.
     /// </summary>
-    public class FunctionOverride
+    public class FunctionOverride : INamedExtensionScopedEntity
     {
         /// <summary>
         /// Gets the name of the function that the override affects.
@@ -20,7 +21,7 @@ namespace Bind.XML.Overrides.Functions
         /// Gets the extension that the function that the override affects is in.
         /// </summary>
         [CanBeNull]
-        public string BaseExtensions { get; }
+        public string BaseExtension { get; }
 
         /// <summary>
         /// Gets the new version that introduced the function.
@@ -50,7 +51,7 @@ namespace Bind.XML.Overrides.Functions
         /// Initializes a new instance of the <see cref="FunctionOverride"/> class.
         /// </summary>
         /// <param name="baseName">The name of the base function.</param>
-        /// <param name="baseExtensions">The extensions of the base function.</param>
+        /// <param name="baseExtension">The extensions of the base function.</param>
         /// <param name="newVersion">The new version that the function was introduced in.</param>
         /// <param name="obsoletionReason">The reason the function has been made obsolete.</param>
         /// <param name="newReturnType">The new return type.</param>
@@ -58,7 +59,7 @@ namespace Bind.XML.Overrides.Functions
         public FunctionOverride
         (
             [NotNull] string baseName,
-            [CanBeNull] string baseExtensions,
+            [CanBeNull] string baseExtension,
             [CanBeNull] Version newVersion,
             [CanBeNull] string obsoletionReason,
             [CanBeNull] TypeSignature newReturnType,
@@ -66,11 +67,37 @@ namespace Bind.XML.Overrides.Functions
         )
         {
             BaseName = baseName ?? throw new ArgumentNullException(nameof(baseName));
-            BaseExtensions = baseExtensions;
+            BaseExtension = baseExtension;
             NewVersion = newVersion;
             ObsoletionReason = obsoletionReason;
             NewReturnType = newReturnType;
             ParameterOverrides = parameterOverrides ?? throw new ArgumentNullException(nameof(parameterOverrides));
+        }
+
+        /// <summary>
+        /// Determines if this instance has the same signature as the given instance.
+        /// </summary>
+        /// <param name="other">The other instance.</param>
+        /// <returns>true if the instances have the same signatures; otherwise, false.</returns>
+        public bool HasSameSignatureAs([NotNull] FunctionOverride other)
+        {
+            if (BaseName != other.BaseName)
+            {
+                return false;
+            }
+
+            if (NewReturnType != other.NewReturnType)
+            {
+                return false;
+            }
+
+            if (ParameterOverrides.Count != other.ParameterOverrides.Count)
+            {
+                return false;
+            }
+
+            // Parameters must match based on type and position
+            return !ParameterOverrides.Where((t, i) => t.NewType != other.ParameterOverrides[i].NewType).Any();
         }
 
         /// <inheritdoc/>
@@ -78,5 +105,13 @@ namespace Bind.XML.Overrides.Functions
         {
             return $"{NewReturnType} {BaseName}({string.Join(", ", ParameterOverrides)})".Trim();
         }
+
+        /// <inheritdoc/>
+        [NotNull]
+        string INamedExtensionScopedEntity.Name => BaseName;
+
+        /// <inheritdoc/>
+        [CanBeNull]
+        string INamedExtensionScopedEntity.Extension => BaseExtension;
     }
 }

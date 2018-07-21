@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Bind.Translation;
+using Bind.Translation.Translators;
+using Bind.Translation.Trimmers;
 using Bind.Versioning;
 using Bind.XML;
 using Bind.XML.Overrides;
@@ -64,12 +67,13 @@ namespace Bind.Baking
             ResolveEnumerationOverrides(coalescedOverrides, coalescedProfile);
 
             // Translate profile identifiers and types names
-            var translatedProfile = new ProfileIdentifierTranslator().TranslateProfile(coalescedProfile);
+            var translatedProfile = new ProfileFunctionTranslator().TranslateProfile(coalescedProfile);
+            translatedProfile = new ProfileEnumerationTranslator().TranslateProfile(translatedProfile);
 
             // Apply profile overrides
-            var bakedProfile = ApplyOverridesToProfile(translatedProfile, coalescedOverrides);
+            var overridenProfile = ApplyOverridesToProfile(translatedProfile, coalescedOverrides);
 
-            return bakedProfile;
+            return translatedProfile;
         }
 
         /// <summary>
@@ -94,19 +98,25 @@ namespace Bind.Baking
 
             foreach (var functionReplacement in coalescedOverrides.ReplacedFunctions)
             {
-                var baseFunction = FindBaseFunction(newFunctions, functionReplacement);
-                var overriddenFunction = CreateOverriddenFunction(baseFunction, functionReplacement);
+                var baseFunctions = FindBaseFunctions(newFunctions, functionReplacement);
+                foreach (var baseFunction in baseFunctions)
+                {
+                    var overriddenFunction = CreateOverriddenFunction(baseFunction, functionReplacement);
 
-                newFunctions.Remove(baseFunction);
-                newFunctions.Add(overriddenFunction);
+                    newFunctions.Remove(baseFunction);
+                    newFunctions.Add(overriddenFunction);
+                }
             }
 
             foreach (var functionOverload in coalescedOverrides.FunctionOverloads)
             {
-                var baseFunction = FindBaseFunction(newFunctions, functionOverload);
-                var overloadedFunction = CreateOverriddenFunction(baseFunction, functionOverload);
+                var baseFunctions = FindBaseFunctions(newFunctions, functionOverload);
+                foreach (var baseFunction in baseFunctions)
+                {
+                    var overloadedFunction = CreateOverriddenFunction(baseFunction, functionOverload);
 
-                newFunctions.Add(overloadedFunction);
+                    newFunctions.Add(overloadedFunction);
+                }
             }
 
             return new ApiProfile
@@ -141,6 +151,7 @@ namespace Bind.Baking
             return new FunctionSignature
             (
                 functionBase.Name,
+                functionBase.NativeEntrypoint,
                 functionBase.Category,
                 functionBase.Extension,
                 newVersion,
@@ -269,8 +280,12 @@ namespace Bind.Baking
         }
 
         /// <summary>
-        /// Searches a set of existing functions for the base function a function override refers to.
-        /// This method identifies the base method by its name and parameters.
+        /// Searches a set of existing functions for the base functions a function override refers to.
+        /// This method identifies the base method by its name and parameter names.
+        ///
+        /// Two options are considered when searching for the base function by name - its trimmed name, and its
+        /// untrimmed name. Effectively, this means overrides can be matched against the final name, the entrypoint, or
+        /// the entrypoint without its extension (if any).
         /// </summary>
         /// <param name="existingFunctions">The set of existing functions.</param>
         /// <param name="functionOverride">The override.</param>
@@ -278,40 +293,128 @@ namespace Bind.Baking
         /// <exception cref="InvalidDataException">Thrown if no base function could be found.</exception>
         /// <exception cref="AmbiguousMatchException">Thrown if multiple accepted bases were found.</exception>
         [NotNull]
-        private static FunctionSignature FindBaseFunction
+        private static IEnumerable<FunctionSignature> FindBaseFunctions
         (
             [NotNull, ItemNotNull] IReadOnlyCollection<FunctionSignature> existingFunctions,
             [NotNull] FunctionOverride functionOverride
         )
         {
-            var baseFunctionCandidates = existingFunctions.Where
-            (
-                f =>
-                    f.Name == functionOverride.BaseName && f.Extension == functionOverride.BaseExtensions
-            ).ToList();
-
-            if (!baseFunctionCandidates.Any())
+            // First, build the list of candidate names
+            var variations = GetNameVariations(functionOverride).ToList();
+            foreach (var variation in variations)
             {
-                baseFunctionCandidates = existingFunctions.Where(f => f.Name == functionOverride.BaseName).ToList();
+                var baseFunctionCandidates = existingFunctions.Where
+                (
+                    f =>
+                        (f.Name == variation || f.NativeEntrypoint == variation)
+                        && f.Extension == functionOverride.BaseExtension
+                ).ToList();
+
+                if (!baseFunctionCandidates.Any())
+                {
+                    baseFunctionCandidates = existingFunctions
+                        .Where
+                        (
+                            f => f.Name == variation || f.NativeEntrypoint == variation
+                        )
+                        .ToList();
+                }
+
+                baseFunctionCandidates = baseFunctionCandidates.Where
+                (
+                    f =>
+                        functionOverride.ParameterOverrides.All(po => f.Parameters.Any(p => p.Name == po.BaseName))
+                ).ToList();
+
+                // If we have a set of candidates at this point, we've found the most specific set of functions that are
+                // applicable.
+                if (baseFunctionCandidates.Any())
+                {
+                    return baseFunctionCandidates;
+                }
             }
 
-            baseFunctionCandidates = baseFunctionCandidates.Where
-            (
-                f =>
-                    functionOverride.ParameterOverrides.All(po => f.Parameters.Any(p => p.Name == po.BaseName))
-            ).ToList();
-
-            if (!baseFunctionCandidates.Any())
+            // If we've reached this point, we couldn't find any targets. Let's gather as much information for the end
+            // developer as possible.
+            foreach (var variation in variations)
             {
-                throw new InvalidDataException("Base function not found for override.");
+                var noFunctionsWithThatName = existingFunctions.All(f => f.Name != variation);
+                if (noFunctionsWithThatName)
+                {
+                    throw new InvalidDataException
+                    (
+                        $"No base function found for the override with the name \"{functionOverride.BaseName}\" when " +
+                        $"considering the variation \"{variation}\". " +
+                        $"Specify another name."
+                    );
+                }
+
+                var parameterNames = new List<string>();
+                var functionsWithThatName = existingFunctions.Where(f => f.Name == variation).ToList();
+                foreach (var functionWithThatName in functionsWithThatName)
+                {
+                    var parameterNamesNotFound = functionOverride.ParameterOverrides
+                        .Where
+                        (
+                            po =>
+                                functionWithThatName.Parameters
+                                    .All(p => p.Name != po.BaseName)
+                        )
+                        .Select(po => po.BaseName);
+
+                    parameterNames.AddRange(parameterNamesNotFound);
+                }
+
+                if (parameterNames.Any())
+                {
+                    throw new InvalidDataException
+                    (
+                        $"No base function found for the override with the name \"{functionOverride.BaseName}\" when " +
+                        $"considering the variation \"variation\" that had the following parameters: " +
+                        $"({string.Join(", ", parameterNames.ToArray())})" +
+                        $"Specify other parameter names."
+                    );
+                }
             }
 
-            if (baseFunctionCandidates.Count > 1)
+            throw new InvalidDataException("No base function found for override.");
+        }
+
+        /// <summary>
+        /// Gets the possible variations on the base name of the given override. Typically, this boils down to the
+        /// following three cases, in order:
+        ///
+        /// * FunctionNamefvEXT
+        /// * FunctionNamefv
+        /// * FunctionName
+        ///
+        /// Care should be taken when creating new overrides that the intended function is targeted.
+        /// </summary>
+        /// <param name="functionOverride">The override to create variations of.</param>
+        /// <returns>The name variations, ordered by length, starting with the longest.</returns>
+        [NotNull, ItemNotNull]
+        private static IEnumerable<string> GetNameVariations([NotNull] FunctionOverride functionOverride)
+        {
+            var extensionTrimmer = new OpenGLFunctionExtensionTrimmer();
+            var dataTypeTrimmer = new OpenGLFunctionDataTypeTrimmer();
+
+            var variations = new List<string>();
+            var currentVariation = functionOverride.BaseName;
+
+            variations.Add(currentVariation);
+
+            if (extensionTrimmer.IsRelevant(functionOverride))
             {
-                throw new AmbiguousMatchException("Base function reference is ambiguous. Specify more parameter names.");
+                currentVariation = extensionTrimmer.Trim(functionOverride);
+                variations.Add(currentVariation);
             }
 
-            return baseFunctionCandidates.First();
+            if (dataTypeTrimmer.IsRelevant(currentVariation))
+            {
+                variations.Add(dataTypeTrimmer.Trim(currentVariation));
+            }
+
+            return variations.Distinct().OrderByDescending(v => v.Length);
         }
 
         /// <summary>
@@ -539,13 +642,13 @@ namespace Bind.Baking
                 }
             }
 
-            var overloads = new Dictionary<string, FunctionOverride>();
-            var replacedFunctions = new Dictionary<string, FunctionOverride>();
+            var overloads = new List<FunctionOverride>();
+            var replacedFunctions = new List<FunctionOverride>();
             foreach (var profileOverride in profileOverrides)
             {
                 foreach (var function in profileOverride.FunctionOverloads)
                 {
-                    if (overloads.ContainsKey(function.BaseName))
+                    if (overloads.Any(f => f.HasSameSignatureAs(function)))
                     {
                         throw new InvalidOperationException
                         (
@@ -553,12 +656,12 @@ namespace Bind.Baking
                         );
                     }
 
-                    overloads.Add(function.BaseName, function);
+                    overloads.Add(function);
                 }
 
                 foreach (var function in profileOverride.ReplacedFunctions)
                 {
-                    if (replacedFunctions.ContainsKey(function.BaseName))
+                    if (replacedFunctions.Any(f => f.HasSameSignatureAs(function)))
                     {
                         throw new InvalidOperationException
                         (
@@ -566,7 +669,7 @@ namespace Bind.Baking
                         );
                     }
 
-                    replacedFunctions.Add(function.BaseName, function);
+                    replacedFunctions.Add(function);
                 }
             }
 
@@ -575,8 +678,8 @@ namespace Bind.Baking
                 profileName,
                 versionRange,
                 enums.Values.ToList(),
-                replacedFunctions.Values.ToList(),
-                overloads.Values.ToList()
+                replacedFunctions,
+                overloads
             );
         }
 

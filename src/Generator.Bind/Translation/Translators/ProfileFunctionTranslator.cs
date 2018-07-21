@@ -1,21 +1,16 @@
-using System;
 using System.Collections.Generic;
 using Bind.Translation.Trimmers;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Functions;
 
-namespace Bind.Translation
+namespace Bind.Translation.Translators
 {
     /// <summary>
-    /// Handles translation of identifier names in a profile, converting them into a more language-appropriate format.
+    /// Translates the OpenGL function signatures in a profile into their language-appropriate variants.
     /// </summary>
-    public class ProfileIdentifierTranslator
+    public class ProfileFunctionTranslator : ITranslator<ApiProfile>
     {
-        /// <summary>
-        /// Translates the identifiers in the given profile.
-        /// </summary>
-        /// <param name="profile">The profile to translate.</param>
-        /// <returns>The new profile.</returns>
+        /// <inheritdoc/>
         public ApiProfile TranslateProfile(ApiProfile profile)
         {
             var extensionTrimmer = new OpenGLFunctionExtensionTrimmer();
@@ -38,7 +33,13 @@ namespace Bind.Translation
                 newFunctions.Add(processingFunction);
             }
 
-            throw new NotImplementedException();
+            return new ApiProfile
+            (
+                profile.Name,
+                profile.Versions,
+                newFunctions,
+                profile.Enumerations
+            );
         }
     }
 }

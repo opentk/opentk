@@ -42,7 +42,7 @@ namespace Bind
     internal class FuncProcessor
     {
         private static readonly Regex Endings = new Regex(
-            @"([fd]v?|u?[isb](64)?v?|v|i_v|fi)$",
+            @"(?<!xe)([fd]v?|u?[isb](64)?v?|v|i_v|fi)$",
             RegexOptions.Compiled);
 
         private static readonly Regex EndingsNotToTrim = new Regex(
@@ -456,15 +456,7 @@ namespace Bind
                 return trimmedName;
             }
 
-            // Workaround for names ending with "Indexedv"
-            if (!trimmedName.EndsWith("xedv"))
-            {
-                trimmedName = trimmedName.Remove(match.Index);
-            }
-            else
-            {
-                trimmedName = trimmedName.Remove(match.Index + 1);
-            }
+            trimmedName = trimmedName.Remove(match.Index);
 
             return trimmedName;
         }
