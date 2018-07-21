@@ -18,6 +18,7 @@
     <PackageReference Include="System.CodeDom" Version="4.5.0-preview2-26406-04" />
   </ItemGroup>
 
+  <Import Project="..\..\build\targets\common.props" />
   <Import Project="..\..\build\targets\netfx-mono.props" />
   <Import Project="..\..\build\targets\stylecop.props" />
 </Project>

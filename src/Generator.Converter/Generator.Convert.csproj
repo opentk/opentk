@@ -16,6 +16,7 @@
     <PackageReference Include="CommandLineParser" Version="2.2.1" />
   </ItemGroup>
 
+  <Import Project="..\..\build\targets\common.props" />
   <Import Project="..\..\build\targets\netfx-mono.props" />
   <Import Project="..\..\build\targets\stylecop.props" />
 </Project>

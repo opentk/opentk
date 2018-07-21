@@ -1,7 +1,6 @@
 <Project>
     <PropertyGroup>
         <Authors>The OpenTK team.</Authors>
-        <Copyright>Copyright (c) 2006 - 2016 Stefanos Apostolopoulos (stapostol@gmail.com) for the Open Toolkit library.</Copyright>
         <PackageIconUrl>https://raw.githubusercontent.com/opentk/opentk/master/docs/files/img/logo.png</PackageIconUrl>
         <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
         <PackageReleaseNotes>Initial 4.0 release.</PackageReleaseNotes>

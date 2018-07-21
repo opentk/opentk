@@ -17,6 +17,7 @@
     <PackageReference Include="Mono.Cecil" Version="0.10.0" />
   </ItemGroup>
 
+  <Import Project="..\..\build\targets\common.props" />
   <Import Project="..\..\build\targets\netfx-mono.props" />
   <Import Project="..\..\build\targets\stylecop.props" />
 </Project>
