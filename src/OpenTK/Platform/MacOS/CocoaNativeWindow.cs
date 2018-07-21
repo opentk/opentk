@@ -143,6 +143,7 @@ namespace OpenTK.Platform.MacOS
         private IntPtr current_icon_handle;
         private bool disposed = false;
         private bool exists;
+        private bool cursorGrabbed = false;
         private bool cursorVisible = true;
         private Icon icon;
         private WindowBorder windowBorder = WindowBorder.Resizable;
@@ -721,30 +722,33 @@ namespace OpenTK.Platform.MacOS
                     case NSEventType.MouseMoved:
                         {
                             Point p = new Point(MouseState.X, MouseState.Y);
-                            if (CursorVisible)
+                            // Use absolute coordinates
+                            var pf = Cocoa.SendPoint(e, selLocationInWindowOwner);
+
+                            // Convert from points to pixel coordinates
+                            var rf = Cocoa.SendRect(
+                                windowInfo.Handle,
+                                selConvertRectToBacking,
+                                new RectangleF(pf.X, pf.Y, 0, 0));
+
+                            // See CocoaDrawingGuide under "Converting from Window to View Coordinates"
+                            p = new Point(
+                                MathHelper.Clamp((int)Math.Round(rf.X), 0, Width),
+                                MathHelper.Clamp((int)Math.Round(Height - rf.Y), 0, Height));
+
+                            // This code used for relative mouse movement which is currently disabled
+                            // Mouse has been disassociated,
+                            // use relative coordinates
+                            // var dx = Cocoa.SendFloat(e, selDeltaX);
+                            //   var dy = Cocoa.SendFloat(e, selDeltaY);
+
+                            //   p = new Point(
+                            //       MathHelper.Clamp((int)Math.Round(p.X + dx), 0, Width),
+                            //       MathHelper.Clamp((int)Math.Round(p.Y + dy), 0, Height);
+
+                            if (cursorGrabbed)
                             {
-                                // Use absolute coordinates
-                                var pf = Cocoa.SendPoint(e, selLocationInWindowOwner);
-
-                                // Convert from points to pixel coordinates
-                                var rf = Cocoa.SendRect(windowInfo.Handle, selConvertRectToBacking,
-                                    new RectangleF(pf.X, pf.Y, 0, 0));
-
-                                // See CocoaDrawingGuide under "Converting from Window to View Coordinates"
-                                p = new Point(
-                                    MathHelper.Clamp((int)Math.Round(rf.X), 0, Width),
-                                    MathHelper.Clamp((int)Math.Round(Height - rf.Y), 0, Height));
-                            }
-                            else
-                            {
-                                // Mouse has been disassociated,
-                                // use relative coordinates
-                                var dx = Cocoa.SendFloat(e, selDeltaX);
-                                var dy = Cocoa.SendFloat(e, selDeltaY);
-
-                                p = new Point(
-                                    MathHelper.Clamp((int)Math.Round(p.X + dx), 0, Width),
-                                    MathHelper.Clamp((int)Math.Round(p.Y + dy), 0, Height));
+                                MoveCursorInWindow(p);
                             }
 
                             // Only raise events when the mouse has actually moved
@@ -954,6 +958,22 @@ namespace OpenTK.Platform.MacOS
             suppressResize--;
         }
 
+        // Use when point use window related coordinate system
+        private void MoveCursorInWindow(Point p)
+        {
+            var r = Cocoa.SendRect(
+                windowInfo.Handle,
+                Selector.Get("contentRectForFrameRect:"),
+                Cocoa.SendRect(
+                    windowInfo.Handle,
+                    Selector.Get("frame")));
+
+            var screenPoint = new NSPoint();
+            screenPoint.X = r.X + p.X;
+            screenPoint.Y = r.Y + p.Y;
+            CG.DisplayMoveCursorToPoint(WindowInfo.Handle, screenPoint);
+        }
+
         private void RestoreBorder()
         {
             suppressResize++;
@@ -1124,6 +1144,10 @@ namespace OpenTK.Platform.MacOS
             }
             set
             {
+                if (value == selectedCursor)
+                {
+                    return;
+                }
                 selectedCursor = value;
                 InvalidateCursorRects();
             }
@@ -1213,7 +1237,11 @@ namespace OpenTK.Platform.MacOS
 
             // Inside this rectangle, the following NSCursor will be used
             var cursor = IntPtr.Zero;
-            if (selectedCursor == MouseCursor.Default)
+            if (!CursorVisible)
+            {
+                cursor = ToNSCursor(MouseCursor.Empty);
+            }
+            else if (selectedCursor == MouseCursor.Default)
             {
                 cursor = Cocoa.SendIntPtr(NSCursor, selArrowCursor);
             }
@@ -1234,6 +1262,23 @@ namespace OpenTK.Platform.MacOS
             Cocoa.SendVoid(windowInfo.Handle, selInvalidateCursorRectsForView, windowInfo.ViewHandle);
         }
 
+        public override bool CursorGrabbed
+        {
+            get
+            {
+                return cursorGrabbed;
+            }
+            set
+            {
+                if (value == cursorGrabbed)
+                {
+                    return;
+                }
+                SetCursorGrab(value);
+                cursorGrabbed = value;
+            }
+        }
+
         public override bool CursorVisible
         {
             get
@@ -1242,11 +1287,14 @@ namespace OpenTK.Platform.MacOS
             }
             set
             {
-                if (value != cursorVisible)
+                if (value == cursorVisible)
                 {
-                    SetCursorVisible(value);
-                    cursorVisible = value;
+                    return;
                 }
+                cursorVisible = value;
+                // Another approach will be use of hide and unhide methods
+                // of NSCursor
+                InvalidateCursorRects();
             }
         }
 
@@ -1318,27 +1366,15 @@ namespace OpenTK.Platform.MacOS
             return Cocoa.SendRect(GetCurrentScreen(), selVisibleFrame);
         }
 
-        private void SetCursorVisible(bool visible)
+        private void SetCursorGrab(bool shouldGrab)
         {
-            // If the mouse is outside the window and we want to hide it,
-            // move it inside the window first.
-            // Otherwise, if we are making the cursor visible again,
-            // we place it in the same spot as reported in the current
-            // MouseState to avoid sudden jumps.
-            if (!visible && !Bounds.Contains(new Point(MouseState.X, MouseState.Y)))
+            if (shouldGrab)
             {
-                Mouse.SetPosition(
-                    (Bounds.Left + Bounds.Right) / 2,
-                    (Bounds.Top + Bounds.Bottom) / 2);
+                var p = new Point();
+                p.X = MouseState.X;
+                p.Y = MouseState.Y;
+                MoveCursorInWindow(p);
             }
-            else if (visible)
-            {
-                var p = PointToScreen(new Point(MouseState.X, MouseState.Y));
-                Mouse.SetPosition((int)p.X, (int)p.Y);
-            }
-
-            CG.AssociateMouseAndMouseCursorPosition(visible);
-            Cocoa.SendVoid(NSCursor, visible ? selUnhide : selHide);
         }
 
         private void SetMenuVisible(bool visible)
