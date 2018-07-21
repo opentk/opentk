@@ -49,10 +49,8 @@ namespace Bind
             "(sh|ib|[tdrey]s|[eE]n[vd]|bled" +
             "|Attrib|Access|Boolean|Coord|Depth|Feedbacks|Finish|Flag" +
             "|Groups|IDs|Indexed|Instanced|Pixels|Queries|Status|Tess|Through" +
-            "|Uniforms|Varyings|Weight|Width)$",
+            "|Uniforms|Varyings|Weight|Width|Bias|Id)$",
             RegexOptions.Compiled);
-
-        private static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
 
         private readonly IEnumerable<string> _overrides;
 
@@ -447,36 +445,25 @@ namespace Bind
 
             // Note: some endings should not be trimmed, for example: 'b' from Attrib.
             // Check the endingsNotToTrim regex for details.
-            var m = EndingsNotToTrim.Match(trimmedName);
-            if (m.Index + m.Length == trimmedName.Length)
+            if (EndingsNotToTrim.IsMatch(trimmedName))
             {
                 return trimmedName;
             }
 
-            m = Endings.Match(trimmedName);
-
-            if (m.Length <= 0 || m.Index + m.Length != trimmedName.Length)
+            var match = Endings.Match(trimmedName);
+            if (!match.Success)
             {
                 return trimmedName;
             }
 
-            // Only trim endings, not internal matches.
-            if (m.Value[m.Length - 1] == 'v' && EndingsAddV.IsMatch(name) &&
-                !name.StartsWith("Get") && !name.StartsWith("MatrixIndex"))
+            // Workaround for names ending with "Indexedv"
+            if (!trimmedName.EndsWith("xedv"))
             {
-                // Only trim ending 'v' when there is a number
-                trimmedName = trimmedName.Substring(0, m.Index) + "v";
+                trimmedName = trimmedName.Remove(match.Index);
             }
             else
             {
-                if (!trimmedName.EndsWith("xedv"))
-                {
-                    trimmedName = trimmedName.Substring(0, m.Index);
-                }
-                else
-                {
-                    trimmedName = trimmedName.Substring(0, m.Index + 1);
-                }
+                trimmedName = trimmedName.Remove(match.Index + 1);
             }
 
             return trimmedName;

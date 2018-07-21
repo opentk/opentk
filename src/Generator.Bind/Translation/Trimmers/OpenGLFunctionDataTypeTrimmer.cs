@@ -32,12 +32,16 @@ namespace Bind.Translation.Trimmers
                 return false;
             }
 
-            var hasVectorParameter = trimmable.Parameters.Any(p => p.Type.Name.Contains('*'));
-            var hasIndexedVectorParameterPair = trimmable.Parameters.Any(p => p.Name == "index") && hasVectorParameter;
-
-            if (hasIndexedVectorParameterPair)
+            // Note: some endings should not be trimmed, for example: 'b' from Attrib.
+            // Check the endingsNotToTrim regex for details.
+            if (EndingsNotToTrim.IsMatch(trimmable.Name))
             {
-                return true;
+                return false;
+            }
+
+            if (!Endings.IsMatch(trimmable.Name))
+            {
+                return false;
             }
 
             return true;
@@ -46,44 +50,23 @@ namespace Bind.Translation.Trimmers
         /// <inheritdoc/>
         public FunctionSignature Trim(FunctionSignature trimmable)
         {
-            var trimmedName = trimmable.Name;
+            var name = trimmable.Name;
 
-            // Note: some endings should not be trimmed, for example: 'b' from Attrib.
-            // Check the endingsNotToTrim regex for details.
-            if (EndingsNotToTrim.IsMatch(trimmedName))
-            {
-                return trimmable;
-            }
+            var match = Endings.Match(name);
 
-            var match = Endings.Match(trimmedName);
-            if (!match.Success)
+            // Workaround for names ending with "Indexedv"
+            if (!name.EndsWith("xedv"))
             {
-                return trimmable;
-            }
-
-            // Only trim endings, not internal matches.
-            if (match.Value[match.Length - 1] == 'v' && EndingsAddV.IsMatch(trimmedName) &&
-                !trimmedName.StartsWith("Get") && !trimmedName.StartsWith("MatrixIndex"))
-            {
-                // Only trim ending 'v' when there is a number
-                trimmedName = trimmedName.Substring(0, match.Index) + "v";
+                name = name.Remove(match.Index);
             }
             else
             {
-                // Workaround for names ending with "Indexedv"
-                if (!trimmedName.EndsWith("xedv"))
-                {
-                    trimmedName = trimmedName.Substring(0, match.Index);
-                }
-                else
-                {
-                    trimmedName = trimmedName.Substring(0, match.Index + 1);
-                }
+                name = name.Remove(match.Index + 1);
             }
 
             using (var wr = new StreamWriter("/home/jarl/test.txt", true))
             {
-                wr.WriteLine(trimmedName);
+                wr.WriteLine(name);
             }
 
             return trimmable;
