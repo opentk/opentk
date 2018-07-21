@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Bind.Translation;
 using Bind.Versioning;
 using Bind.XML;
 using Bind.XML.Overrides;
@@ -62,12 +63,11 @@ namespace Bind.Baking
             // Perform the second resolution pass over the override enumerations
             ResolveEnumerationOverrides(coalescedOverrides, coalescedProfile);
 
-            // Translate profile identifier names
-
-            // Translate profile identifier types
+            // Translate profile identifiers and types names
+            var translatedProfile = new ProfileIdentifierTranslator().TranslateProfile(coalescedProfile);
 
             // Apply profile overrides
-            var bakedProfile = ApplyOverridesToProfile(coalescedProfile, coalescedOverrides);
+            var bakedProfile = ApplyOverridesToProfile(translatedProfile, coalescedOverrides);
 
             return bakedProfile;
         }

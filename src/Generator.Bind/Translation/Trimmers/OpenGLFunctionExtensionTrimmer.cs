@@ -18,7 +18,7 @@ namespace Bind.Translation.Trimmers
         public FunctionSignature Trim(FunctionSignature trimmable)
         {
             var extensionNameIndex = trimmable.Name.LastIndexOf(trimmable.Extension, StringComparison.Ordinal);
-            var newName = trimmable.Name.Substring(extensionNameIndex);
+            var newName = trimmable.Name.Remove(extensionNameIndex);
 
             return new FunctionSignature
             (
