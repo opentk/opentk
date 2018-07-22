@@ -8,7 +8,7 @@ using OpenTK.Rewrite.Types;
 namespace OpenTK.Rewrite
 {
     /// <summary>
-    /// Provides functionality to rewrite types in an assembly.
+    /// Provides functionality to rewrite types in an assembly with an implementation of <see cref="ITypeRewriter"/>.
     /// </summary>
     public sealed class AssemblyRewriter
     {
@@ -17,6 +17,20 @@ namespace OpenTK.Rewrite
 
         private readonly Func<AssemblyDefinition, TypeDefinition, bool, ITypeRewriter> _typeRewriterFactory;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AssemblyRewriter"/> class.
+        /// </summary>
+        /// <param name="assemblyResolver">
+        /// The <see cref="IAssemblyResolver"/> implementation that will be used to resolve the mscorlib assembly.
+        /// </param>
+        /// <param name="typeRewriterFactory">
+        /// A factory method that will create an <see cref="ITypeRewriter"/> implementation from a given mscorlib
+        /// definition, BindingsBase type definition and the useDllImport option. The resulting
+        /// <see cref="ITypeRewriter"/> will be cached and reused for all types.
+        /// </param>
+        /// <param name="strongNameKeyPath">
+        /// The relative or absolute path to the strong name key file that will be used for signing the assembly.
+        /// </param>
         public AssemblyRewriter
         (
             IAssemblyResolver assemblyResolver,
@@ -45,6 +59,18 @@ namespace OpenTK.Rewrite
             }
         }
 
+        /// <summary>
+        /// Rewrites an assembly by rewriting all types in the assembly with the given <see cref="ITypeRewriter"/>.
+        /// </summary>
+        /// <param name="targetAssemblyPath">
+        /// The path to the assembly file that should be rewritten.
+        /// </param>
+        /// <param name="enableDebugCalls">
+        /// Whether calls to GL.GetError() should be wrapped around each native function call.
+        /// </param>
+        /// <param name="useDllImport">
+        /// Whether native function calls are forced to use DllImport instead of GetProcAddress.
+        /// </param>
         public void RewriteAssembly(string targetAssemblyPath, bool enableDebugCalls, bool useDllImport)
         {
             if (!File.Exists(targetAssemblyPath))

@@ -40,7 +40,7 @@ namespace OpenTK.Rewrite
             try
             {
                 var resolver = new DefaultAssemblyResolver();
-                var rewriter = new AssemblyRewriter(resolver, createTypeRewriter, Options.StrongNameKey);
+                var rewriter = new AssemblyRewriter(resolver, CreateTypeRewriter, Options.StrongNameKey);
                 rewriter.RewriteAssembly(Options.TargetAssembly, Options.EnableDebugCalls, Options.UseDllImport);
             }
             catch (Exception exc)
@@ -50,7 +50,7 @@ namespace OpenTK.Rewrite
             }
         }
 
-        private static ITypeRewriter createTypeRewriter
+        private static ITypeRewriter CreateTypeRewriter
         (
             AssemblyDefinition mscorlib,
             TypeDefinition bindingsBaseType,

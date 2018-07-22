@@ -7,15 +7,28 @@ using OpenTK.Rewrite.Methods.Processors;
 
 namespace OpenTK.Rewrite.Methods
 {
+    /// <summary>
+    /// A class that provides functionality to rewrite the IL of an unfinished wrapper method to call a specified
+    /// native function either via DllImport or a given entry point.<para/>
+    /// This class uses multiple <see cref="IMethodProcessor"/> instances
+    /// that define the actual method rewriting process.
+    /// </summary>
     public sealed class MethodRewriter : IMethodRewriter
     {
         private readonly IMethodProcessor[] _processors;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MethodRewriter"/> class.
+        /// </summary>
+        /// <param name="methodProcessors">
+        /// An array of <see cref="IMethodProcessor"/> instances that define the actual rewriting process.
+        /// </param>
         public MethodRewriter(IMethodProcessor[] methodProcessors)
         {
             _processors = methodProcessors ?? throw new ArgumentNullException(nameof(methodProcessors));
         }
 
+        /// <inheritdoc/>
         public MethodDefinition Rewrite(MethodDefinition wrapper, MethodDefinition native)
         {
             wrapper.Body.Instructions.Clear();
