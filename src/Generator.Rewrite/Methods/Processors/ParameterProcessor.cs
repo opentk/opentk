@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -12,7 +13,7 @@ namespace OpenTK.Rewrite.Methods.Processors
     public sealed class ParameterProcessor : IMethodProcessorWithEpilogue
     {
         private readonly ParameterEpilogueProcessor _epilogueProcessor;
-        private readonly Dictionary<MethodDefinition, IEnumerable<VariableIdentifier>> _generatedVarsDictionary;
+        private readonly ConcurrentDictionary<MethodDefinition, IEnumerable<VariableIdentifier>> _generatedVarsDictionary;
 
         private readonly TypeDefinition _bindingsBaseType;
 
@@ -24,7 +25,7 @@ namespace OpenTK.Rewrite.Methods.Processors
         public ParameterProcessor(AssemblyDefinition mscorlib, TypeDefinition bindingsBaseType)
         {
             _epilogueProcessor = new ParameterEpilogueProcessor(mscorlib, bindingsBaseType);
-            _generatedVarsDictionary = new Dictionary<MethodDefinition, IEnumerable<VariableIdentifier>>();
+            _generatedVarsDictionary = new ConcurrentDictionary<MethodDefinition, IEnumerable<VariableIdentifier>>();
 
             _bindingsBaseType = bindingsBaseType ?? throw new ArgumentNullException(nameof(bindingsBaseType));
 
@@ -48,12 +49,12 @@ namespace OpenTK.Rewrite.Methods.Processors
                 generatedVariables = EmitConvenienceWrapper(ilProcessor, wrapper, native, paramCountDifference);
             }
 
-            _generatedVarsDictionary.Add(wrapper, generatedVariables);
+            _generatedVarsDictionary.TryAdd(wrapper, generatedVariables);
         }
 
         public void ProcessEpilogue(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
-            if (!_generatedVarsDictionary.TryGetValue(wrapper, out var generatedVariables))
+            if (!_generatedVarsDictionary.TryRemove(wrapper, out var generatedVariables))
             {
                 throw new InvalidOperationException();
             }

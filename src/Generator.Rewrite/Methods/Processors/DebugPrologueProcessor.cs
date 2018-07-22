@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
@@ -21,7 +22,7 @@ namespace OpenTK.Rewrite.Methods.Processors
         };
 
         private readonly DebugEpilogueProcessor _epilogueProcessor;
-        private readonly Dictionary<MethodDefinition, DebugVariables> _debugVariableDictionary;
+        private readonly ConcurrentDictionary<MethodDefinition, DebugVariables> _debugVariableDictionary;
 
         public DebugPrologueProcessor(AssemblyDefinition mscorlib)
         {
@@ -31,7 +32,7 @@ namespace OpenTK.Rewrite.Methods.Processors
             }
 
             _epilogueProcessor = new DebugEpilogueProcessor(mscorlib);
-            _debugVariableDictionary = new Dictionary<MethodDefinition, DebugVariables>();
+            _debugVariableDictionary = new ConcurrentDictionary<MethodDefinition, DebugVariables>();
         }
 
         public void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
@@ -100,12 +101,12 @@ namespace OpenTK.Rewrite.Methods.Processors
                 ilProcessor.Emit(OpCodes.Call, debugVariables.Set_ErrorChecking);
             }
 
-            _debugVariableDictionary.Add(wrapper, debugVariables);
+            _debugVariableDictionary.TryAdd(wrapper, debugVariables);
         }
 
         public void ProcessEpilogue(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
-            if (!_debugVariableDictionary.TryGetValue(wrapper, out var debugVariables))
+            if (!_debugVariableDictionary.TryRemove(wrapper, out var debugVariables))
             {
                 throw new InvalidOperationException();
             }
