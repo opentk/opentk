@@ -44,8 +44,7 @@ namespace OpenTK.Rewrite.Types
 
                 RemoveNativeSignatures(type, entrySignatures);
             }
-
-            if (type.Name == AttributeNames.Rewritten)
+            else if (type.Name == AttributeNames.Rewritten)
             {
                 var rewrittenConstructor = type.GetConstructors().First();
                 var rewritten = new CustomAttribute(rewrittenConstructor);

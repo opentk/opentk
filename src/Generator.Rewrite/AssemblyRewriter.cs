@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
-using OpenTK.Rewrite.Methods;
 using OpenTK.Rewrite.Types;
 
 namespace OpenTK.Rewrite
@@ -66,60 +65,55 @@ namespace OpenTK.Rewrite
                 );
             }
 
-            try
+            Console.WriteLine($"Reading target assembly from '{targetAssemblyPath}'...");
+            using (var assembly = AssemblyDefinition.ReadAssembly(targetAssemblyPath, _readerParams))
             {
-                using (var assembly = AssemblyDefinition.ReadAssembly(targetAssemblyPath, _readerParams))
+                if (assembly.CustomAttributes.Any(a => a.AttributeType.Name == AttributeNames.Rewritten))
                 {
-                    if (assembly.CustomAttributes.Any(a => a.AttributeType.Name == AttributeNames.Rewritten))
-                    {
-                        throw new InvalidOperationException
-                        (
-                            $"The '{AttributeNames.Rewritten}' is already present in the target assembly, " +
-                            "which means that it has already been rewritten."
-                        );
-                    }
-
-                    AssemblyDefinition mscorlib = null;
-
-                    foreach (var module in assembly.Modules)
-                    {
-                        foreach (var reference in module.AssemblyReferences)
-                        {
-                            var resolved = module.AssemblyResolver.Resolve(reference);
-                            if (reference.Name == "mscorlib" && mscorlib is null)
-                            {
-                                mscorlib = resolved;
-                            }
-                        }
-                    }
-
-                    if (mscorlib is null)
-                    {
-                        throw new ArgumentException("Failed to locate mscorlib in the given target assembly.");
-                    }
-
-                    var bindingsBaseType = assembly.Modules.First().GetType("OpenTK.BindingsBase");
-                    var typeRewriter = _typeRewriterFactory(mscorlib, bindingsBaseType, useDllImport);
-
-                    foreach (var module in assembly.Modules)
-                    {
-                        foreach (var type in module.Types)
-                        {
-                            typeRewriter.Rewrite(type);
-                        }
-                    }
-
-                    assembly.Write(_writerParams);
+                    throw new InvalidOperationException
+                    (
+                        $"The '{AttributeNames.Rewritten}' is already present in the target assembly, " +
+                        "which means that it has already been rewritten."
+                    );
                 }
-            }
-            catch (InvalidOperationException exc)
-            {
-                Console.Error.WriteLine
-                (
-                    "Failed to load the assembly. " +
-                    "It may already have been rewritten, and the debug symbols no longer match."
-                );
-                Console.Error.WriteLine(exc);
+
+                Console.WriteLine("Starting rewriting process...");
+                Console.WriteLine("Trying to locate mscorlib...");
+
+                AssemblyDefinition mscorlib = null;
+                foreach (var module in assembly.Modules)
+                {
+                    foreach (var reference in module.AssemblyReferences)
+                    {
+                        var resolved = module.AssemblyResolver.Resolve(reference);
+                        if (reference.Name == "mscorlib" && mscorlib is null)
+                        {
+                            mscorlib = resolved;
+                        }
+                    }
+                }
+
+                if (mscorlib is null)
+                {
+                    throw new ArgumentException("Failed to locate mscorlib in the given target assembly.");
+                }
+                Console.WriteLine($"Rewriting assembly with mscorlib: {mscorlib}");
+                Console.WriteLine();
+
+                var bindingsBaseType = assembly.Modules.First().GetType("OpenTK.BindingsBase");
+                var typeRewriter = _typeRewriterFactory(mscorlib, bindingsBaseType, useDllImport);
+
+                foreach (var module in assembly.Modules)
+                {
+                    foreach (var type in module.Types)
+                    {
+                        Console.WriteLine($"Rewriting type {type}...");
+                        typeRewriter.Rewrite(type);
+                    }
+                }
+
+                Console.WriteLine("Persisting rewritten assembly to file...");
+                assembly.Write(_writerParams);
             }
         }
     }
