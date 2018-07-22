@@ -4,25 +4,29 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Methods.Processors
 {
-    public sealed class DebugEpilogueProcessor : IMethodProcessor
+    public sealed class DebugEpilogueProcessor
     {
-        private readonly DebugVariables _debugVariables;
         private readonly TypeDefinition _voidType;
 
-        public DebugEpilogueProcessor(AssemblyDefinition mscorlib, DebugVariables debugVariables)
+        public DebugEpilogueProcessor(AssemblyDefinition mscorlib)
         {
             _voidType = mscorlib.MainModule.GetType(typeof(void).FullName);
-            _debugVariables = debugVariables;
         }
 
-        public void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
+        public void Process
+        (
+            ILProcessor ilProcessor,
+            MethodDefinition wrapper,
+            MethodDefinition native,
+            DebugVariables debugVariables
+        )
         {
-            if (_debugVariables is null)
+            if (debugVariables is null)
             {
                 return;
             }
 
-            var disposeMethod = _debugVariables.ErrorHelperType.GetMethod("Dispose");
+            var disposeMethod = debugVariables.ErrorHelperType.GetMethod("Dispose");
 
             // Store then reload the result from the call
             var resultLocal = new VariableDefinition(wrapper.ReturnType);
@@ -35,16 +39,16 @@ namespace OpenTK.Rewrite.Methods.Processors
             // Special case End to turn on error checking.
             if (ilProcessor.Body.Method.Name == "End")
             {
-                ilProcessor.Emit(OpCodes.Call, _debugVariables.Get_CurrentContext);
+                ilProcessor.Emit(OpCodes.Call, debugVariables.Get_CurrentContext);
                 ilProcessor.Emit(OpCodes.Ldc_I4_1);
                 ilProcessor.Emit(OpCodes.Conv_I1);
-                ilProcessor.Emit(OpCodes.Call, _debugVariables.Set_ErrorChecking);
+                ilProcessor.Emit(OpCodes.Call, debugVariables.Set_ErrorChecking);
             }
 
             // We need a NOP to set up the finally handler range correctly.
             var nopInstruction = Instruction.Create(OpCodes.Nop);
             var endTryInstruction = Instruction.Create(OpCodes.Leave, nopInstruction);
-            var loadInstruction = Instruction.Create(OpCodes.Ldloca, _debugVariables.ErrorHelperLocal);
+            var loadInstruction = Instruction.Create(OpCodes.Ldloca, debugVariables.ErrorHelperLocal);
             var disposeInstruction = Instruction.Create(OpCodes.Call, disposeMethod);
             var endFinallyInstruction = Instruction.Create(OpCodes.Endfinally);
 
@@ -56,7 +60,7 @@ namespace OpenTK.Rewrite.Methods.Processors
 
             var finallyHandler = new ExceptionHandler(ExceptionHandlerType.Finally)
             {
-                TryStart = _debugVariables.BeginTry,
+                TryStart = debugVariables.BeginTry,
                 TryEnd = loadInstruction,
                 HandlerStart = loadInstruction,
                 HandlerEnd = nopInstruction

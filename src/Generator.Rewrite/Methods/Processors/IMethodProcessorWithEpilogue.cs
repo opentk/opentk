@@ -1,7 +1,10 @@
-﻿namespace OpenTK.Rewrite.Methods.Processors
+﻿using Mono.Cecil;
+using Mono.Cecil.Cil;
+
+namespace OpenTK.Rewrite.Methods.Processors
 {
     public interface IMethodProcessorWithEpilogue : IMethodProcessor
     {
-        IMethodProcessor EpilogueProcessor { get; }
+        void ProcessEpilogue(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native);
     }
 }

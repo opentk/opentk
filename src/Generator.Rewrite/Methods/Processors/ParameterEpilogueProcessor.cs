@@ -8,10 +8,8 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Methods.Processors
 {
-    public sealed class ParameterEpilogueProcessor : IMethodProcessor
+    public sealed class ParameterEpilogueProcessor
     {
-        private readonly List<VariableIdentifier> _generatedVariables;
-
         private readonly TypeDefinition _bindingsBaseType;
 
         private readonly TypeDefinition _marshalType;
@@ -22,17 +20,20 @@ namespace OpenTK.Rewrite.Methods.Processors
         public ParameterEpilogueProcessor
         (
             AssemblyDefinition mscorlib,
-            TypeDefinition bindingsBaseType,
-            List<VariableIdentifier> generatedVariables
+            TypeDefinition bindingsBaseType
         )
         {
-            _generatedVariables = generatedVariables;
-
             _bindingsBaseType = bindingsBaseType ?? throw new ArgumentNullException(nameof(bindingsBaseType));
             _marshalType = mscorlib.MainModule.GetType(typeof(Marshal).FullName);
         }
 
-        public void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
+        public void Process
+        (
+            ILProcessor ilProcessor,
+            MethodDefinition wrapper,
+            MethodDefinition native,
+            IEnumerable<VariableIdentifier> generatedVariables
+        )
         {
             _ilProcessor = ilProcessor;
             _wrapper = wrapper;
@@ -40,7 +41,7 @@ namespace OpenTK.Rewrite.Methods.Processors
             foreach (var param in wrapper.Parameters)
             {
                 string name = param.Name + (param.ParameterType.IsArray ? "_string_array_ptr" : "_string_ptr");
-                var generatedVariable = GetGeneratedVariable(_generatedVariables, name);
+                var generatedVariable = GetGeneratedVariable(generatedVariables, name);
 
                 if (param.ParameterType.Name == "String&")
                 {
@@ -123,7 +124,7 @@ namespace OpenTK.Rewrite.Methods.Processors
             _ilProcessor.Emit(OpCodes.Call, free);
         }
 
-        private VariableIdentifier GetGeneratedVariable(List<VariableIdentifier> identifiers, string name)
+        private VariableIdentifier GetGeneratedVariable(IEnumerable<VariableIdentifier> identifiers, string name)
         {
             return identifiers.FirstOrDefault(v =>
             {

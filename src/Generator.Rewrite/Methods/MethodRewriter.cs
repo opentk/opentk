@@ -32,7 +32,7 @@ namespace OpenTK.Rewrite.Methods
             {
                 if (processor is IMethodProcessorWithEpilogue p)
                 {
-                    p.EpilogueProcessor.Process(ilProcessor, wrapper, native);
+                    p.ProcessEpilogue(ilProcessor, wrapper, native);
                 }
             }
 

@@ -11,7 +11,8 @@ namespace OpenTK.Rewrite.Methods.Processors
 {
     public sealed class ParameterProcessor : IMethodProcessorWithEpilogue
     {
-        private readonly List<VariableIdentifier> _generatedVariables = new List<VariableIdentifier>();
+        private readonly ParameterEpilogueProcessor _epilogueProcessor;
+        private readonly Dictionary<MethodDefinition, IEnumerable<VariableIdentifier>> _generatedVarsDictionary;
 
         private readonly TypeDefinition _bindingsBaseType;
 
@@ -20,15 +21,10 @@ namespace OpenTK.Rewrite.Methods.Processors
         private readonly TypeDefinition _intPtrType;
         private readonly TypeDefinition _marshalType;
 
-        private ILProcessor _ilProcessor;
-        private MethodDefinition _wrapper;
-        private MethodDefinition _native;
-
-        public IMethodProcessor EpilogueProcessor { get; }
-
         public ParameterProcessor(AssemblyDefinition mscorlib, TypeDefinition bindingsBaseType)
         {
-            EpilogueProcessor = new ParameterEpilogueProcessor(mscorlib, bindingsBaseType, _generatedVariables);
+            _epilogueProcessor = new ParameterEpilogueProcessor(mscorlib, bindingsBaseType);
+            _generatedVarsDictionary = new Dictionary<MethodDefinition, IEnumerable<VariableIdentifier>>();
 
             _bindingsBaseType = bindingsBaseType ?? throw new ArgumentNullException(nameof(bindingsBaseType));
 
@@ -40,56 +36,73 @@ namespace OpenTK.Rewrite.Methods.Processors
 
         public void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
-            _ilProcessor = ilProcessor;
-            _wrapper = wrapper;
-            _native = native;
+            IEnumerable<VariableIdentifier> generatedVariables;
 
             int paramCountDifference = native.Parameters.Count - wrapper.Parameters.Count;
             if (paramCountDifference == 0)
             {
-                EmitParameters();
+                generatedVariables = EmitParameters(ilProcessor, wrapper, native);
             }
             else
             {
-                EmitConvenienceWrapper(paramCountDifference);
+                generatedVariables = EmitConvenienceWrapper(ilProcessor, wrapper, native, paramCountDifference);
             }
+
+            _generatedVarsDictionary.Add(wrapper, generatedVariables);
         }
 
-        private List<VariableIdentifier> EmitParameters()
+        public void ProcessEpilogue(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
-            for (int i = 0; i < _wrapper.Parameters.Count; i++)
+            if (!_generatedVarsDictionary.TryGetValue(wrapper, out var generatedVariables))
             {
-                var parameter = _wrapper.Parameters[i];
-                var paramType = _wrapper.Module.ImportReference(parameter.ParameterType);
-                _ilProcessor.Emit(OpCodes.Ldarg, i);
+                throw new InvalidOperationException();
+            }
 
-                if (paramType.FullNameEquals<int>() && _native.Parameters[i].ParameterType.FullNameEquals<IntPtr>())
+            _epilogueProcessor.Process(ilProcessor, wrapper, native, generatedVariables);
+        }
+
+        private IEnumerable<VariableIdentifier> EmitParameters
+        (
+            ILProcessor ilProcessor,
+            MethodDefinition wrapper,
+            MethodDefinition native
+        )
+        {
+            var generatedVariables = new List<VariableIdentifier>();
+
+            for (int i = 0; i < wrapper.Parameters.Count; i++)
+            {
+                var parameter = wrapper.Parameters[i];
+                var paramType = wrapper.Module.ImportReference(parameter.ParameterType);
+                ilProcessor.Emit(OpCodes.Ldarg, i);
+
+                if (paramType.FullNameEquals<int>() && native.Parameters[i].ParameterType.FullNameEquals<IntPtr>())
                 {
                     // This is a convenience Int32 overload for an IntPtr (size_t) parameter.
                     // We need to convert the loaded argument to IntPtr.
-                    _ilProcessor.Emit(OpCodes.Conv_I);
+                    ilProcessor.Emit(OpCodes.Conv_I);
                 }
                 else if (paramType.Name == "String&" && !paramType.IsArray)
                 {
-                    _generatedVariables.Add(EmitStringOutParameter(parameter));
+                    generatedVariables.Add(EmitStringOutParameter(ilProcessor, wrapper, parameter));
                 }
                 else if (paramType.FullNameEquals<string>() && !paramType.IsArray)
                 {
-                    _generatedVariables.Add(EmitStringParameter(parameter));
+                    generatedVariables.Add(EmitStringParameter(ilProcessor, wrapper, parameter));
                 }
                 else if (paramType.IsByReference)
                 {
-                    _wrapper.Body.Variables.Add(new VariableDefinition(new PinnedType(paramType)));
-                    var index = _wrapper.Body.Variables.Count - 1;
-                    _ilProcessor.Emit(OpCodes.Stloc, index);
-                    _ilProcessor.Emit(OpCodes.Ldloc, index);
-                    _ilProcessor.Emit(OpCodes.Conv_I);
+                    wrapper.Body.Variables.Add(new VariableDefinition(new PinnedType(paramType)));
+                    var index = wrapper.Body.Variables.Count - 1;
+                    ilProcessor.Emit(OpCodes.Stloc, index);
+                    ilProcessor.Emit(OpCodes.Ldloc, index);
+                    ilProcessor.Emit(OpCodes.Conv_I);
                 }
                 else if (paramType.IsArray)
                 {
                     if (paramType.FullNameEquals<string[]>())
                     {
-                        _generatedVariables.Add(EmitStringParameter(parameter, isArray: true));
+                        generatedVariables.Add(EmitStringParameter(ilProcessor, wrapper, parameter, isArray: true));
                         continue;
                     }
 
@@ -116,43 +129,43 @@ namespace OpenTK.Rewrite.Methods.Processors
                     // of its first element.
                     var arrayType = (ArrayType)paramType;
                     var elementType = paramType.GetElementType();
-                    _wrapper.Body.Variables.Add(new VariableDefinition(new PinnedType(new ByReferenceType(elementType))));
-                    int pinnedIndex = _wrapper.Body.Variables.Count - 1;
+                    wrapper.Body.Variables.Add(new VariableDefinition(new PinnedType(new ByReferenceType(elementType))));
+                    int pinnedIndex = wrapper.Body.Variables.Count - 1;
 
-                    var empty = _ilProcessor.Create(OpCodes.Ldc_I4, 0);
-                    var pin = _ilProcessor.Create(OpCodes.Ldarg, i);
-                    var end = _ilProcessor.Create(OpCodes.Stloc, pinnedIndex);
+                    var empty = ilProcessor.Create(OpCodes.Ldc_I4, 0);
+                    var pin = ilProcessor.Create(OpCodes.Ldarg, i);
+                    var end = ilProcessor.Create(OpCodes.Stloc, pinnedIndex);
 
                     // if (arrayTypeType == null) goto empty
-                    _ilProcessor.Emit(OpCodes.Brfalse, empty);
+                    ilProcessor.Emit(OpCodes.Brfalse, empty);
 
                     // else if (arrayType.Length != 0) goto pin
-                    _ilProcessor.Emit(OpCodes.Ldarg, i);
+                    ilProcessor.Emit(OpCodes.Ldarg, i);
                     if (arrayType.Rank == 1)
                     {
-                        _ilProcessor.Emit(OpCodes.Ldlen);
-                        _ilProcessor.Emit(OpCodes.Conv_I4);
+                        ilProcessor.Emit(OpCodes.Ldlen);
+                        ilProcessor.Emit(OpCodes.Conv_I4);
                     }
                     else
                     {
-                        var getLength = _wrapper.Module.ImportReference(_arrayType.GetMethod("get_Length"));
-                        _ilProcessor.Emit(OpCodes.Callvirt, getLength);
+                        var getLength = wrapper.Module.ImportReference(_arrayType.GetMethod("get_Length"));
+                        ilProcessor.Emit(OpCodes.Callvirt, getLength);
                     }
 
-                    _ilProcessor.Emit(OpCodes.Brtrue, pin);
+                    ilProcessor.Emit(OpCodes.Brtrue, pin);
 
                     // empty: IntPtr ptr = IntPtr.Zero
-                    _ilProcessor.Append(empty);
-                    _ilProcessor.Emit(OpCodes.Conv_U);
-                    _ilProcessor.Emit(OpCodes.Br, end);
+                    ilProcessor.Append(empty);
+                    ilProcessor.Emit(OpCodes.Conv_U);
+                    ilProcessor.Emit(OpCodes.Br, end);
 
                     // pin: &arrayType[0]
-                    _ilProcessor.Append(pin);
+                    ilProcessor.Append(pin);
                     if (arrayType.Rank == 1)
                     {
                         // 1d arrayType (vector), address is taken by ldelema
-                        _ilProcessor.Emit(OpCodes.Ldc_I4, 0);
-                        _ilProcessor.Emit(OpCodes.Ldelema, elementType);
+                        ilProcessor.Emit(OpCodes.Ldc_I4, 0);
+                        ilProcessor.Emit(OpCodes.Ldelema, elementType);
                     }
                     else
                     {
@@ -170,23 +183,29 @@ namespace OpenTK.Rewrite.Methods.Processors
                         // emit the get_address call
                         for (int r = 0; r < arrayType.Rank; r++)
                         {
-                            _ilProcessor.Emit(OpCodes.Ldc_I4, 0);
+                            ilProcessor.Emit(OpCodes.Ldc_I4, 0);
                         }
 
-                        _ilProcessor.Emit(OpCodes.Call, getAddress);
+                        ilProcessor.Emit(OpCodes.Call, getAddress);
                     }
 
                     // end: fixed (IntPtr ptr = &arrayType[0])
-                    _ilProcessor.Append(end);
-                    _ilProcessor.Emit(OpCodes.Ldloc, pinnedIndex);
-                    _ilProcessor.Emit(OpCodes.Conv_I);
+                    ilProcessor.Append(end);
+                    ilProcessor.Emit(OpCodes.Ldloc, pinnedIndex);
+                    ilProcessor.Emit(OpCodes.Conv_I);
                 }
             }
 
-            return _generatedVariables;
+            return generatedVariables;
         }
 
-        private VariableIdentifier EmitStringParameter(ParameterDefinition parameter, bool isArray = false)
+        private VariableIdentifier EmitStringParameter
+        (
+            ILProcessor ilProcessor,
+            MethodDefinition wrapper,
+            ParameterDefinition parameter,
+            bool isArray = false
+        )
         {
             string marshalToPtrName = isArray ? "MarshalStringArrayToPtr" : "MarshalStringToPtr";
             string paramNameSuffix = isArray ? "_string_array_ptr" : "_string_ptr";
@@ -195,30 +214,35 @@ namespace OpenTK.Rewrite.Methods.Processors
             // IntPtr ptr = MarshalStringToPtr(str);
             // try { calli }
             // finally { Marshal.FreeHGlobal(ptr); }
-            var marshalStringToPtr = _wrapper.Module.ImportReference(_bindingsBaseType.GetMethod(marshalToPtrName));
+            var marshalStringToPtr = wrapper.Module.ImportReference(_bindingsBaseType.GetMethod(marshalToPtrName));
 
             // IntPtr ptr;
             var variableDefinition = new VariableDefinition(_intPtrType);
-            _wrapper.Body.Variables.Add(variableDefinition);
-            int generatedPointerVarIndex = _wrapper.Body.Variables.Count - 1;
+            wrapper.Body.Variables.Add(variableDefinition);
+            int generatedPointerVarIndex = wrapper.Body.Variables.Count - 1;
 
             var stringPtrVar = new VariableIdentifier
             (
-                _wrapper.Body,
+                wrapper.Body,
                 variableDefinition,
                 parameter.Name + paramNameSuffix
             );
 
             // ptr = Marshal.StringToHGlobalAnsi(str);
-            _ilProcessor.Emit(OpCodes.Call, marshalStringToPtr);
-            _ilProcessor.Emit(OpCodes.Stloc, generatedPointerVarIndex);
-            _ilProcessor.Emit(OpCodes.Ldloc, generatedPointerVarIndex);
+            ilProcessor.Emit(OpCodes.Call, marshalStringToPtr);
+            ilProcessor.Emit(OpCodes.Stloc, generatedPointerVarIndex);
+            ilProcessor.Emit(OpCodes.Ldloc, generatedPointerVarIndex);
 
             // The finally block will be emitted in the function epilogue
             return stringPtrVar;
         }
 
-        private VariableIdentifier EmitStringOutParameter(ParameterDefinition parameter)
+        private VariableIdentifier EmitStringOutParameter
+        (
+            ILProcessor ilProcessor,
+            MethodDefinition wrapper,
+            ParameterDefinition parameter
+        )
         {
             // void GetShaderInfoLog(..., out String foo)
             // IntPtr foo_string_ptr;
@@ -232,19 +256,19 @@ namespace OpenTK.Rewrite.Methods.Processors
             // }
 
             // Pop off the string parameter that would of just been loaded
-            _ilProcessor.Emit(OpCodes.Pop);
+            ilProcessor.Emit(OpCodes.Pop);
 
             // Make sure we have imported Marshal::AllocHGlobal
-            var allocHGlobal = _wrapper.Module.ImportReference(_marshalType.GetMethod(nameof(Marshal.AllocHGlobal)));
+            var allocHGlobal = wrapper.Module.ImportReference(_marshalType.GetMethod(nameof(Marshal.AllocHGlobal)));
 
             // IntPtr ptr;
             var variableDefinition = new VariableDefinition(_intPtrType);
-            _wrapper.Body.Variables.Add(variableDefinition);
-            var stringPtrIndex = _wrapper.Body.Variables.Count - 1;
+            wrapper.Body.Variables.Add(variableDefinition);
+            var stringPtrIndex = wrapper.Body.Variables.Count - 1;
 
             var stringPtrVar = new VariableIdentifier
             (
-                _wrapper.Body,
+                wrapper.Body,
                 variableDefinition,
                 parameter.Name + "_string_ptr"
             );
@@ -259,96 +283,106 @@ namespace OpenTK.Rewrite.Methods.Processors
                 // clearer if this case is ever hit.
                 throw new InvalidOperationException
                 (
-                    $"{_wrapper.Name} ({parameter.Name}) doesn't have a count attribute."
+                    $"{wrapper.Name} ({parameter.Name}) doesn't have a count attribute."
                 );
             }
 
             if (count.Count != 0)
             {
                 // Fixed size
-                _ilProcessor.Emit(OpCodes.Ldc_I4, count.Count);
+                ilProcessor.Emit(OpCodes.Ldc_I4, count.Count);
             }
             else if (count.Parameter != null)
             {
                 // Parameter sized
-                var countVariable = EmitCountVariable(count.Parameter);
-                _ilProcessor.Emit(OpCodes.Ldloc, countVariable.Index);
+                var countVariable = EmitCountVariable(ilProcessor, wrapper, count.Parameter);
+                ilProcessor.Emit(OpCodes.Ldloc, countVariable.Index);
             }
             else if (count.Computed != null)
             {
-                if (_wrapper.Name == "GetActiveVarying")
+                if (wrapper.Name == "GetActiveVarying")
                 {
                     // GetActiveVaryingNV's name parameter has a count of "COMPSIZE(program,index,bufSize)"
                     // but really it should be bufSize.
-                    var countVariable = EmitCountVariable("bufSize");
-                    _ilProcessor.Emit(OpCodes.Ldloc, countVariable.Index);
+                    var countVariable = EmitCountVariable(ilProcessor, wrapper, "bufSize");
+                    ilProcessor.Emit(OpCodes.Ldloc, countVariable.Index);
                 }
                 else
                 {
                     // Computed counts are hard and require manual reading of the specification for each one.
                     throw new NotSupportedException
                     (
-                        $"{_wrapper.Name} ({parameter.Name}) requires a computed count: {count.Computed}."
+                        $"{wrapper.Name} ({parameter.Name}) requires a computed count: {count.Computed}."
                     );
                 }
             }
 
-            _ilProcessor.Emit(OpCodes.Ldc_I4, 1);
-            _ilProcessor.Emit(OpCodes.Add);
-            _ilProcessor.Emit(OpCodes.Call, allocHGlobal);
-            _ilProcessor.Emit(OpCodes.Stloc, stringPtrIndex);
-            _ilProcessor.Emit(OpCodes.Ldloc, stringPtrIndex);
+            ilProcessor.Emit(OpCodes.Ldc_I4, 1);
+            ilProcessor.Emit(OpCodes.Add);
+            ilProcessor.Emit(OpCodes.Call, allocHGlobal);
+            ilProcessor.Emit(OpCodes.Stloc, stringPtrIndex);
+            ilProcessor.Emit(OpCodes.Ldloc, stringPtrIndex);
 
             // We'll emit the try-finally block in the epilogue implementation,
             // because we haven't yet emitted all necessary instructions here.
-
             return stringPtrVar;
         }
 
-        private VariableDefinition EmitCountVariable(string countParameter)
+        private VariableDefinition EmitCountVariable
+        (
+            ILProcessor ilProcessor,
+            MethodDefinition wrapper,
+            string countParameter
+        )
         {
             var countVariable = new VariableDefinition(_int32Type);
-            _wrapper.Body.Variables.Add(countVariable);
+            wrapper.Body.Variables.Add(countVariable);
 
             // Parameter will either by a simple name, a dereference of a name
             // like "*name" or an expression like "name*5"
-            var parameter = _wrapper.GetParameter(countParameter, throwIfNoneFound: false);
+            var parameter = wrapper.GetParameter(countParameter, throwIfNoneFound: false);
             if (parameter != null)
             {
-                _ilProcessor.Emit(OpCodes.Ldarg, parameter.Index);
-                _ilProcessor.Emit(OpCodes.Stloc, countVariable.Index);
+                ilProcessor.Emit(OpCodes.Ldarg, parameter.Index);
+                ilProcessor.Emit(OpCodes.Stloc, countVariable.Index);
             }
             else if (countParameter[0] == '*')
             {
-                var pointerParam = _wrapper.GetParameter(countParameter.Substring(1));
+                var pointerParam = wrapper.GetParameter(countParameter.Substring(1));
 
-                _ilProcessor.Emit(OpCodes.Ldarg, pointerParam.Index);
-                _ilProcessor.Emit(OpCodes.Ldind_I4);
+                ilProcessor.Emit(OpCodes.Ldarg, pointerParam.Index);
+                ilProcessor.Emit(OpCodes.Ldind_I4);
             }
             else
             {
                 var operands = countParameter.Split('*');
-                parameter = _wrapper.GetParameter(operands[0]);
+                parameter = wrapper.GetParameter(operands[0]);
                 var scale = int.Parse(operands[1]);
 
-                _ilProcessor.Emit(OpCodes.Ldarg, parameter.Index);
-                _ilProcessor.Emit(OpCodes.Ldc_I4, scale);
-                _ilProcessor.Emit(OpCodes.Mul);
-                _ilProcessor.Emit(OpCodes.Stloc, countVariable.Index);
+                ilProcessor.Emit(OpCodes.Ldarg, parameter.Index);
+                ilProcessor.Emit(OpCodes.Ldc_I4, scale);
+                ilProcessor.Emit(OpCodes.Mul);
+                ilProcessor.Emit(OpCodes.Stloc, countVariable.Index);
             }
 
             return countVariable;
         }
 
-        private IEnumerable<VariableIdentifier> EmitConvenienceWrapper(int difference)
+        private IEnumerable<VariableIdentifier> EmitConvenienceWrapper
+        (
+            ILProcessor ilProcessor,
+            MethodDefinition wrapper,
+            MethodDefinition native,
+            int difference
+        )
         {
-            if (_wrapper.Parameters.Count > 2)
+            if (wrapper.Parameters.Count > 2)
             {
                 // Todo: emit all parameters bar the last two
                 throw new NotImplementedException();
             }
 
-            bool returnsVoid = _wrapper.ReturnType.FullNameEquals(typeof(void));
+            bool returnsVoid = wrapper.ReturnType.FullNameEquals(typeof(void));
 
             if (difference == 1)
             {
@@ -360,8 +394,8 @@ namespace OpenTK.Rewrite.Methods.Processors
                     //   const int n = 1;
                     //   calli DeleteTextures(n, &textures);
                     // }
-                    _ilProcessor.Emit(OpCodes.Ldc_I4, 1); // const int n = 1
-                    _ilProcessor.Emit(OpCodes.Ldarga, _wrapper.Parameters.Last()); // &textures
+                    ilProcessor.Emit(OpCodes.Ldc_I4, 1); // const int n = 1
+                    ilProcessor.Emit(OpCodes.Ldarga, wrapper.Parameters.Last()); // &textures
                 }
                 else
                 {
@@ -372,10 +406,10 @@ namespace OpenTK.Rewrite.Methods.Processors
                     //   GetBooleanv(pname, &result);
                     //   return result;
                     // }
-                    _wrapper.Body.Variables.Add(new VariableDefinition(_wrapper.ReturnType));
+                    wrapper.Body.Variables.Add(new VariableDefinition(wrapper.ReturnType));
 
-                    var generatedVariables = EmitParameters();
-                    _ilProcessor.Emit(OpCodes.Ldloca, _wrapper.Body.Variables.Count - 1);
+                    var generatedVariables = EmitParameters(ilProcessor, wrapper, native);
+                    ilProcessor.Emit(OpCodes.Ldloca, wrapper.Body.Variables.Count - 1);
                     return generatedVariables;
                 }
             }
@@ -389,13 +423,13 @@ namespace OpenTK.Rewrite.Methods.Processors
                 //  calli GenTextures(n, &textures);
                 //  return result;
                 // }
-                _wrapper.Body.Variables.Add(new VariableDefinition(_wrapper.ReturnType));
-                _ilProcessor.Emit(OpCodes.Ldc_I4, 1); // const int n = 1
-                _ilProcessor.Emit(OpCodes.Ldloca, _wrapper.Body.Variables.Count - 1); // &buffers
+                wrapper.Body.Variables.Add(new VariableDefinition(wrapper.ReturnType));
+                ilProcessor.Emit(OpCodes.Ldc_I4, 1); // const int n = 1
+                ilProcessor.Emit(OpCodes.Ldloca, wrapper.Body.Variables.Count - 1); // &buffers
             }
             else
             {
-                Console.Error.WriteLine($"Unknown wrapper type for {_native.Name}.");
+                Console.Error.WriteLine($"Unknown wrapper type for {native.Name}.");
             }
 
             return Enumerable.Empty<VariableIdentifier>();

@@ -20,34 +20,22 @@ namespace OpenTK.Rewrite.Methods.Processors
             "OpenTK.Graphics.ES30",
         };
 
-        private readonly AssemblyDefinition _mscorlib;
-
-        private DebugVariables _debugVariables;
-        private bool _hasProcessed;
-
-        public IMethodProcessor EpilogueProcessor
-        {
-            get
-            {
-                if (!_hasProcessed)
-                {
-                    throw new InvalidOperationException($"The {nameof(DebugPrologueProcessor)} has not run yet!");
-                }
-
-                return new DebugEpilogueProcessor(_mscorlib, _debugVariables);
-            }
-        }
+        private readonly DebugEpilogueProcessor _epilogueProcessor;
+        private readonly Dictionary<MethodDefinition, DebugVariables> _debugVariableDictionary;
 
         public DebugPrologueProcessor(AssemblyDefinition mscorlib)
         {
-            _mscorlib = mscorlib ?? throw new ArgumentNullException(nameof(mscorlib));
+            if (mscorlib is null)
+            {
+                throw new ArgumentNullException(nameof(mscorlib));
+            }
+
+            _epilogueProcessor = new DebugEpilogueProcessor(mscorlib);
+            _debugVariableDictionary = new Dictionary<MethodDefinition, DebugVariables>();
         }
 
         public void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
-            _debugVariables = null;
-            _hasProcessed = true;
-
             if (ilProcessor.Body.Method.Name == "GetError")
             {
                 return;
@@ -88,7 +76,7 @@ namespace OpenTK.Rewrite.Methods.Processors
                 );
             }
 
-            _debugVariables = new DebugVariables
+            var debugVariables = new DebugVariables
             (
                 Instruction.Create(OpCodes.Nop),
                 errorHelperType,
@@ -97,20 +85,32 @@ namespace OpenTK.Rewrite.Methods.Processors
             );
 
             // using (new ErrorHelper(GraphicsContext.CurrentContext)) { ...
-            ilProcessor.Body.Variables.Add(_debugVariables.ErrorHelperLocal);
-            ilProcessor.Emit(OpCodes.Ldloca, _debugVariables.ErrorHelperLocal);
-            ilProcessor.Emit(OpCodes.Call, _debugVariables.Get_CurrentContext);
+            ilProcessor.Body.Variables.Add(debugVariables.ErrorHelperLocal);
+            ilProcessor.Emit(OpCodes.Ldloca, debugVariables.ErrorHelperLocal);
+            ilProcessor.Emit(OpCodes.Call, debugVariables.Get_CurrentContext);
             ilProcessor.Emit(OpCodes.Call, ctor);
-            ilProcessor.Append(_debugVariables.BeginTry);
+            ilProcessor.Append(debugVariables.BeginTry);
 
             // Special case Begin to turn off error checking.
             if (ilProcessor.Body.Method.Name == "Begin")
             {
-                ilProcessor.Emit(OpCodes.Call, _debugVariables.Get_CurrentContext);
+                ilProcessor.Emit(OpCodes.Call, debugVariables.Get_CurrentContext);
                 ilProcessor.Emit(OpCodes.Ldc_I4_0);
                 ilProcessor.Emit(OpCodes.Conv_I1);
-                ilProcessor.Emit(OpCodes.Call, _debugVariables.Set_ErrorChecking);
+                ilProcessor.Emit(OpCodes.Call, debugVariables.Set_ErrorChecking);
             }
+
+            _debugVariableDictionary.Add(wrapper, debugVariables);
+        }
+
+        public void ProcessEpilogue(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
+        {
+            if (!_debugVariableDictionary.TryGetValue(wrapper, out var debugVariables))
+            {
+                throw new InvalidOperationException();
+            }
+
+            _epilogueProcessor.Process(ilProcessor, wrapper, native, debugVariables);
         }
     }
 }
