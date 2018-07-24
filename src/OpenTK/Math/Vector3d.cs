@@ -826,8 +826,9 @@ namespace OpenTK
         /// <returns>The transformed normal</returns>
         public static Vector3d TransformNormal(Vector3d norm, Matrix4d mat)
         {
-            mat.Invert();
-            return TransformNormalInverse(norm, mat);
+            Vector3d result;
+            TransformNormal(ref norm, ref mat, out result);
+            return result;
         }
 
         /// <summary>Transform a Normal by the given Matrix</summary>
@@ -919,6 +920,27 @@ namespace OpenTK
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
         /// <returns>The transformed vector</returns>
+        public static Vector3d Transform(Vector3d vec, Matrix3d mat)
+        {
+            Vector3d result;
+            Transform(ref vec, ref mat, out result);
+            return result;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="vec">The vector to transform</param>
+        public static Vector3d Transform(Matrix3d mat, Vector3d vec)
+        {
+            Vector3d result;
+            Transform(ref vec, ref mat, out result);
+            return result;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix</summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed vector</returns>
         public static Vector3d Transform(Vector3d vec, Matrix4d mat)
         {
             Vector3d result;
@@ -942,6 +964,28 @@ namespace OpenTK
             result.X = v4.X;
             result.Y = v4.Y;
             result.Z = v4.Z;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="result">The transformed vector</param>
+        public static void Transform(ref Matrix3d mat, ref Vector3d vec, out Vector3d result)
+        {
+            result.X = mat.Row0.X * vec.X + mat.Row0.Y * vec.Y + mat.Row0.Z * vec.Z;
+            result.Y = mat.Row1.X * vec.X + mat.Row1.Y * vec.Y + mat.Row1.Z * vec.Z;
+            result.Z = mat.Row2.X * vec.X + mat.Row2.Y * vec.Y + mat.Row2.Z * vec.Z;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix</summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="result">The transformed vector</param>
+        public static void Transform(ref Vector3d vec, ref Matrix3d mat, out Vector3d result)
+        {
+            result.X = vec.X * mat.Row0.X + vec.Y * mat.Row1.X + vec.Z * mat.Row2.X;
+            result.Y = vec.X * mat.Row0.Y + vec.Y * mat.Row1.Y + vec.Z * mat.Row2.Y;
+            result.Z = vec.X * mat.Row0.Z + vec.Y * mat.Row1.Z + vec.Z * mat.Row2.Z;
         }
 
         /// <summary>
@@ -1026,6 +1070,112 @@ namespace OpenTK
             double temp;
             Vector3d.Dot(ref first, ref second, out temp);
             result = System.Math.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0, 1.0));
+        }
+
+        /// <summary>
+        /// Projects a vector from object space into screen space.
+        /// </summary>
+        /// <param name="vector">The vector to project.</param>
+        /// <param name="x">The X coordinate of the viewport.</param>
+        /// <param name="y">The Y coordinate of the viewport.</param>
+        /// <param name="width">The width of the viewport.</param>
+        /// <param name="height">The height of the viewport.</param>
+        /// <param name="minZ">The minimum depth of the viewport.</param>
+        /// <param name="maxZ">The maximum depth of the viewport.</param>
+        /// <param name="worldViewProjection">The world-view-projection matrix.</param>
+        /// <returns>The vector in screen space.</returns>
+        /// <remarks>
+        /// To project to normalized device coordinates (NDC) use the following parameters:
+        /// Project(vector, -1, -1, 2, 2, -1, 1, worldViewProjection).
+        /// </remarks>
+        public static Vector3d Project(Vector3d vector, double x, double y, double width, double height, double minZ, double maxZ, Matrix4d worldViewProjection)
+        {
+            Vector4d result;
+
+            result.X =
+                vector.X * worldViewProjection.M11 +
+                vector.Y * worldViewProjection.M21 +
+                vector.Z * worldViewProjection.M31 +
+                worldViewProjection.M41;
+
+            result.Y =
+                vector.X * worldViewProjection.M12 +
+                vector.Y * worldViewProjection.M22 +
+                vector.Z * worldViewProjection.M32 +
+                worldViewProjection.M42;
+
+            result.Z =
+                vector.X * worldViewProjection.M13 +
+                vector.Y * worldViewProjection.M23 +
+                vector.Z * worldViewProjection.M33 +
+                worldViewProjection.M43;
+
+            result.W =
+                vector.X * worldViewProjection.M14 +
+                vector.Y * worldViewProjection.M24 +
+                vector.Z * worldViewProjection.M34 +
+                worldViewProjection.M44;
+
+            result /= result.W;
+
+            result.X = x + (width * ((result.X + 1.0D) / 2.0D));
+            result.Y = y + (height * ((result.Y + 1.0D) / 2.0D));
+            result.Z = minZ + ((maxZ - minZ) * ((result.Z + 1.0D) / 2.0D));
+
+            return new Vector3d(result.X, result.Y, result.Z);
+        }
+
+        /// <summary>
+        /// Projects a vector from screen space into object space.
+        /// </summary>
+        /// <param name="vector">The vector to project.</param>
+        /// <param name="x">The X coordinate of the viewport.</param>
+        /// <param name="y">The Y coordinate of the viewport.</param>
+        /// <param name="width">The width of the viewport.</param>
+        /// <param name="height">The height of the viewport.</param>
+        /// <param name="minZ">The minimum depth of the viewport.</param>
+        /// <param name="maxZ">The maximum depth of the viewport.</param>
+        /// <param name="inverseWorldViewProjection">The inverse of the world-view-projection matrix.</param>
+        /// <returns>The vector in object space.</returns>
+        /// <remarks>
+        /// To project from normalized device coordinates (NDC) use the following parameters:
+        /// Project(vector, -1, -1, 2, 2, -1, 1, inverseWorldViewProjection).
+        /// </remarks>
+        public static Vector3d Unproject(Vector3d vector, double x, double y, double width, double height, double minZ, double maxZ, Matrix4d inverseWorldViewProjection)
+        {
+            Vector4d result;
+
+            result.X = ((((vector.X - x) / width) * 2.0D) - 1.0D);
+            result.Y = ((((vector.Y - y) / height) * 2.0D) - 1.0D);
+            result.Z = (((vector.Z / (maxZ - minZ)) * 2.0D) - 1.0D);
+
+            result.X =
+                result.X * inverseWorldViewProjection.M11 +
+                result.Y * inverseWorldViewProjection.M21 +
+                result.Z * inverseWorldViewProjection.M31 +
+                inverseWorldViewProjection.M41;
+
+            result.Y =
+                result.X * inverseWorldViewProjection.M12 +
+                result.Y * inverseWorldViewProjection.M22 +
+                result.Z * inverseWorldViewProjection.M32 +
+                inverseWorldViewProjection.M42;
+
+            result.Z =
+                result.X * inverseWorldViewProjection.M13 +
+                result.Y * inverseWorldViewProjection.M23 +
+                result.Z * inverseWorldViewProjection.M33 +
+                inverseWorldViewProjection.M43;
+
+            result.W =
+                result.X * inverseWorldViewProjection.M14 +
+                result.Y * inverseWorldViewProjection.M24 +
+                result.Z * inverseWorldViewProjection.M34 +
+                inverseWorldViewProjection.M44;
+
+            result /= result.W;
+
+            return new Vector3d(result.X, result.Y, result.Z);
         }
 
         /// <summary>
@@ -1133,6 +1283,45 @@ namespace OpenTK
             vec.Y = -vec.Y;
             vec.Z = -vec.Z;
             return vec;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector3d operator *(Vector3d vec, Matrix3d mat)
+        {
+            Vector3d result;
+            Vector3d.Transform(ref vec, ref mat, out result);
+            return result;
+        }
+
+        // <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation
+        /// </summary>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="vec">The vector to transform</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector3d operator *(Matrix3d mat, Vector3d vec)
+        {
+            Vector3d result;
+            Vector3d.Transform(ref mat, ref vec, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <returns></returns>
+        public static Vector3d operator *(Quaterniond quat, Vector3d vec)
+        {
+            Vector3d result;
+            Vector3d.Transform(ref vec, ref quat, out result);
+            return result;
         }
 
         /// <summary>
