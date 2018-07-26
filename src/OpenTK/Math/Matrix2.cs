@@ -648,7 +648,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Returns a System.String that represents the current Matrix4.
+        /// Returns a System.String that represents the current Matrix2.
         /// </summary>
         /// <returns>The string representation of the matrix.</returns>
         public override string ToString()

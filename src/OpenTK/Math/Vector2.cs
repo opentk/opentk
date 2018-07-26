@@ -867,6 +867,73 @@ namespace OpenTK
             return !left.Equals(right);
         }
 
+        /// <summary>
+        /// Transform a Vector by the given Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector2 operator *(Vector2 vec, Matrix2 mat)
+        {
+            Vector2 result;
+            Vector2.Transform(ref vec, ref mat, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation
+        /// </summary>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="vec">The vector to transform</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector2 operator *(Matrix2 mat, Vector2 vec)
+        {
+            Vector2 result;
+            Vector2.Transform(ref mat, ref vec, out result);
+            return result;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix</summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector2 Transform(Vector2 vec, Matrix2 mat)
+        {
+            Vector2 result;
+            Transform(ref vec, ref mat, out result);
+            return result;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix</summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="result">The transformed vector</param>
+        public static void Transform(ref Vector2 vec, ref Matrix2 mat, out Vector2 result)
+        {
+            result.X = vec.X * mat.Row0.X + vec.Y * mat.Row1.X;
+            result.Y = vec.X * mat.Row0.Y + vec.Y * mat.Row1.Y;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="vec">The vector to transform</param>
+        public static Vector2 Transform(Matrix2 mat, Vector2 vec)
+        {
+            Vector2 result;
+            Transform(ref mat, ref vec, out result);
+            return result;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="result">The transformed vector</param>
+        public static void Transform(ref Matrix2 mat, ref Vector2 vec, out Vector2 result)
+        {
+            result.X = vec.X * mat.Row0.X + vec.Y * mat.Row0.Y;
+            result.Y = vec.X * mat.Row1.X + vec.Y * mat.Row1.Y;
+        }
+
         private static string listSeparator = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator;
         /// <summary>
         /// Returns a System.String that represents the current Vector2.
