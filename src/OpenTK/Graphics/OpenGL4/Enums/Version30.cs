@@ -211,17 +211,17 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COMPRESSED_RG = 0x8226
         /// </summary>
-        CompressedRg = 0x8226,
+        CompressedRG = 0x8226,
 
         /// <summary>
         /// Original was GL_RG = 0x8227
         /// </summary>
-        Rg = 0x8227,
+        RG = 0x8227,
 
         /// <summary>
         /// Original was GL_RG_INTEGER = 0x8228
         /// </summary>
-        RgInteger = 0x8228,
+        RGInteger = 0x8228,
 
         /// <summary>
         /// Original was GL_R8 = 0x8229
@@ -236,12 +236,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RG8 = 0x822B
         /// </summary>
-        Rg8 = 0x822b,
+        RG8 = 0x822b,
 
         /// <summary>
         /// Original was GL_RG16 = 0x822C
         /// </summary>
-        Rg16 = 0x822c,
+        RG16 = 0x822c,
 
         /// <summary>
         /// Original was GL_R16F = 0x822D
@@ -256,12 +256,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RG16F = 0x822F
         /// </summary>
-        Rg16f = 0x822f,
+        RG16f = 0x822f,
 
         /// <summary>
         /// Original was GL_RG32F = 0x8230
         /// </summary>
-        Rg32f = 0x8230,
+        RG32f = 0x8230,
 
         /// <summary>
         /// Original was GL_R8I = 0x8231
@@ -296,32 +296,32 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RG8I = 0x8237
         /// </summary>
-        Rg8i = 0x8237,
+        RG8i = 0x8237,
 
         /// <summary>
         /// Original was GL_RG8UI = 0x8238
         /// </summary>
-        Rg8ui = 0x8238,
+        RG8ui = 0x8238,
 
         /// <summary>
         /// Original was GL_RG16I = 0x8239
         /// </summary>
-        Rg16i = 0x8239,
+        RG16i = 0x8239,
 
         /// <summary>
         /// Original was GL_RG16UI = 0x823A
         /// </summary>
-        Rg16ui = 0x823a,
+        RG16ui = 0x823a,
 
         /// <summary>
         /// Original was GL_RG32I = 0x823B
         /// </summary>
-        Rg32i = 0x823b,
+        RG32i = 0x823b,
 
         /// <summary>
         /// Original was GL_RG32UI = 0x823C
         /// </summary>
-        Rg32ui = 0x823c,
+        RG32ui = 0x823c,
 
         /// <summary>
         /// Original was GL_MAX_RENDERBUFFER_SIZE = 0x84E8
@@ -481,7 +481,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_UNSIGNED_INT_10F_11F_11F_REV = 0x8C3B
         /// </summary>
-        UnsignedInt10F11F11FRev = 0x8c3b,
+        UnsignedInt10f11f11fRev = 0x8c3b,
 
         /// <summary>
         /// Original was GL_RGB9_E5 = 0x8C3D
@@ -1051,12 +1051,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COMPRESSED_RG_RGTC2 = 0x8DBD
         /// </summary>
-        CompressedRgRgtc2 = 0x8dbd,
+        CompressedRGRgtc2 = 0x8dbd,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SIGNED_RG_RGTC2 = 0x8DBE
         /// </summary>
-        CompressedSignedRgRgtc2 = 0x8dbe,
+        CompressedSignedRGRgtc2 = 0x8dbe,
 
         /// <summary>
         /// Original was GL_SAMPLER_1D_ARRAY = 0x8DC0

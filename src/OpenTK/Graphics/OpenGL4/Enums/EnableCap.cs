@@ -336,7 +336,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_IR_INSTRUMENT1_SGIX = 0x817F
         /// </summary>
-        IrInstrument1Sgix = 0x817f,
+        IRInstrument1Sgix = 0x817f,
 
         /// <summary>
         /// Original was GL_CALLIGRAPHIC_FRAGMENT_SGIX = 0x8183

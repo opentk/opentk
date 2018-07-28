@@ -61,7 +61,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_BORDER_COLOR_NV = 0x1004
         /// </summary>
-        TextureBorderColorNv = 0x1004,
+        TextureBorderColorNV = 0x1004,
 
         /// <summary>
         /// Original was GL_TEXTURE_BORDER = 0x1005

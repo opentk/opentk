@@ -166,7 +166,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_UNSIGNED_INT_10F_11F_11F_REV = 0x8C3B
         /// </summary>
-        UnsignedInt10F11F11FRev = 0x8c3b,
+        UnsignedInt10f11f11fRev = 0x8c3b,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT_5_9_9_9_REV = 0x8C3E

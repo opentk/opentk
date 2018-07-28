@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_UTF8_NV = 0x909A
         /// </summary>
-        Utf8Nv = 0x909a,
+        Utf8NV = 0x909a,
 
         /// <summary>
         /// Original was GL_UTF16_NV = 0x909B
         /// </summary>
-        Utf16Nv = 0x909b
+        Utf16NV = 0x909b
     }
 }

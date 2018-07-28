@@ -41,6 +41,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PATH_OBJECT_BOUNDING_BOX_NV = 0x908A
         /// </summary>
-        PathObjectBoundingBoxNv = 0x908a
+        PathObjectBoundingBoxNV = 0x908a
     }
 }

@@ -281,42 +281,42 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_R8_SNORM = 0x8F94
         /// </summary>
-        R8Snorm = 0x8f94,
+        R8SNorm = 0x8f94,
 
         /// <summary>
         /// Original was GL_RG8_SNORM = 0x8F95
         /// </summary>
-        Rg8Snorm = 0x8f95,
+        RG8SNorm = 0x8f95,
 
         /// <summary>
         /// Original was GL_RGB8_SNORM = 0x8F96
         /// </summary>
-        Rgb8Snorm = 0x8f96,
+        Rgb8SNorm = 0x8f96,
 
         /// <summary>
         /// Original was GL_RGBA8_SNORM = 0x8F97
         /// </summary>
-        Rgba8Snorm = 0x8f97,
+        Rgba8SNorm = 0x8f97,
 
         /// <summary>
         /// Original was GL_R16_SNORM = 0x8F98
         /// </summary>
-        R16Snorm = 0x8f98,
+        R16SNorm = 0x8f98,
 
         /// <summary>
         /// Original was GL_RG16_SNORM = 0x8F99
         /// </summary>
-        Rg16Snorm = 0x8f99,
+        RG16SNorm = 0x8f99,
 
         /// <summary>
         /// Original was GL_RGB16_SNORM = 0x8F9A
         /// </summary>
-        Rgb16Snorm = 0x8f9a,
+        Rgb16SNorm = 0x8f9a,
 
         /// <summary>
         /// Original was GL_RGBA16_SNORM = 0x8F9B
         /// </summary>
-        Rgba16Snorm = 0x8f9b,
+        Rgba16SNorm = 0x8f9b,
 
         /// <summary>
         /// Original was GL_SIGNED_NORMALIZED = 0x8F9C

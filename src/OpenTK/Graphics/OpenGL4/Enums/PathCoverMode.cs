@@ -36,21 +36,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PATH_FILL_COVER_MODE_NV = 0x9082
         /// </summary>
-        PathFillCoverModeNv = 0x9082,
+        PathFillCoverModeNV = 0x9082,
 
         /// <summary>
         /// Original was GL_CONVEX_HULL_NV = 0x908B
         /// </summary>
-        ConvexHullNv = 0x908b,
+        ConvexHullNV = 0x908b,
 
         /// <summary>
         /// Original was GL_BOUNDING_BOX_NV = 0x908D
         /// </summary>
-        BoundingBoxNv = 0x908d,
+        BoundingBoxNV = 0x908d,
 
         /// <summary>
         /// Original was GL_BOUNDING_BOX_OF_BOUNDING_BOXES_NV = 0x909C
         /// </summary>
-        BoundingBoxOfBoundingBoxesNv = 0x909c
+        BoundingBoxOfBoundingBoxesNV = 0x909c
     }
 }

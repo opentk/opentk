@@ -41,41 +41,41 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TRANSLATE_X_NV = 0x908E
         /// </summary>
-        TranslateXNv = 0x908e,
+        TranslateXnv = 0x908e,
 
         /// <summary>
         /// Original was GL_TRANSLATE_Y_NV = 0x908F
         /// </summary>
-        TranslateYNv = 0x908f,
+        TranslateYnv = 0x908f,
 
         /// <summary>
         /// Original was GL_TRANSLATE_2D_NV = 0x9090
         /// </summary>
-        Translate2DNv = 0x9090,
+        Translate2Dnv = 0x9090,
 
         /// <summary>
         /// Original was GL_TRANSLATE_3D_NV = 0x9091
         /// </summary>
-        Translate3DNv = 0x9091,
+        Translate3Dnv = 0x9091,
 
         /// <summary>
         /// Original was GL_AFFINE_2D_NV = 0x9092
         /// </summary>
-        Affine2DNv = 0x9092,
+        Affine2Dnv = 0x9092,
 
         /// <summary>
         /// Original was GL_AFFINE_3D_NV = 0x9094
         /// </summary>
-        Affine3DNv = 0x9094,
+        Affine3Dnv = 0x9094,
 
         /// <summary>
         /// Original was GL_TRANSPOSE_AFFINE_2D_NV = 0x9096
         /// </summary>
-        TransposeAffine2DNv = 0x9096,
+        TransposeAffine2Dnv = 0x9096,
 
         /// <summary>
         /// Original was GL_TRANSPOSE_AFFINE_3D_NV = 0x9098
         /// </summary>
-        TransposeAffine3DNv = 0x9098
+        TransposeAffine3Dnv = 0x9098
     }
 }

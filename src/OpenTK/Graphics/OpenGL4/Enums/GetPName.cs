@@ -271,17 +271,17 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_ALPHA_TEST_QCOM = 0x0BC0
         /// </summary>
-        AlphaTestQcom = 0x0bc0,
+        AlphaTestQCom = 0x0bc0,
 
         /// <summary>
         /// Original was GL_ALPHA_TEST_FUNC_QCOM = 0x0BC1
         /// </summary>
-        AlphaTestFuncQcom = 0x0bc1,
+        AlphaTestFuncQCom = 0x0bc1,
 
         /// <summary>
         /// Original was GL_ALPHA_TEST_REF_QCOM = 0x0BC2
         /// </summary>
-        AlphaTestRefQcom = 0x0bc2,
+        AlphaTestRefQCom = 0x0bc2,
 
         /// <summary>
         /// Original was GL_DITHER = 0x0BD0
@@ -346,7 +346,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_READ_BUFFER_NV = 0x0C02
         /// </summary>
-        ReadBufferNv = 0x0c02,
+        ReadBufferNV = 0x0c02,
 
         /// <summary>
         /// Original was GL_SCISSOR_BOX = 0x0C10
@@ -1286,7 +1286,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_IR_INSTRUMENT1_SGIX = 0x817F
         /// </summary>
-        IrInstrument1Sgix = 0x817f,
+        IRInstrument1Sgix = 0x817f,
 
         /// <summary>
         /// Original was GL_INSTRUMENT_MEASUREMENTS_SGIX = 0x8181

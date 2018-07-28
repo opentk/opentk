@@ -661,22 +661,22 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_VIEW_CLASS_S3TC_DXT1_RGB = 0x82CC
         /// </summary>
-        ViewClassS3tcDxt1Rgb = 0x82cc,
+        ViewClassS3TCDxt1Rgb = 0x82cc,
 
         /// <summary>
         /// Original was GL_VIEW_CLASS_S3TC_DXT1_RGBA = 0x82CD
         /// </summary>
-        ViewClassS3tcDxt1Rgba = 0x82cd,
+        ViewClassS3TCDxt1Rgba = 0x82cd,
 
         /// <summary>
         /// Original was GL_VIEW_CLASS_S3TC_DXT3_RGBA = 0x82CE
         /// </summary>
-        ViewClassS3tcDxt3Rgba = 0x82ce,
+        ViewClassS3TCDxt3Rgba = 0x82ce,
 
         /// <summary>
         /// Original was GL_VIEW_CLASS_S3TC_DXT5_RGBA = 0x82CF
         /// </summary>
-        ViewClassS3tcDxt5Rgba = 0x82cf,
+        ViewClassS3TCDxt5Rgba = 0x82cf,
 
         /// <summary>
         /// Original was GL_VIEW_CLASS_RGTC1_RED = 0x82D0
@@ -686,7 +686,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_VIEW_CLASS_RGTC2_RG = 0x82D1
         /// </summary>
-        ViewClassRgtc2Rg = 0x82d1,
+        ViewClassRgtc2RG = 0x82d1,
 
         /// <summary>
         /// Original was GL_VIEW_CLASS_BPTC_UNORM = 0x82D2
@@ -1021,12 +1021,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COMPRESSED_RG11_EAC = 0x9272
         /// </summary>
-        CompressedRg11Eac = 0x9272,
+        CompressedRG11Eac = 0x9272,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SIGNED_RG11_EAC = 0x9273
         /// </summary>
-        CompressedSignedRg11Eac = 0x9273,
+        CompressedSignedRG11Eac = 0x9273,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGB8_ETC2 = 0x9274

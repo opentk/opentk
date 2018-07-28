@@ -36,12 +36,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PRIMARY_COLOR_NV = 0x852C
         /// </summary>
-        PrimaryColorNv = 0x852c,
+        PrimaryColorNV = 0x852c,
 
         /// <summary>
         /// Original was GL_SECONDARY_COLOR_NV = 0x852D
         /// </summary>
-        SecondaryColorNv = 0x852d,
+        SecondaryColorNV = 0x852d,
 
         /// <summary>
         /// Original was GL_PRIMARY_COLOR = 0x8577

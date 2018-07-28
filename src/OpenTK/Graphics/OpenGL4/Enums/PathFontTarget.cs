@@ -36,16 +36,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_STANDARD_FONT_NAME_NV = 0x9072
         /// </summary>
-        StandardFontNameNv = 0x9072,
+        StandardFontNameNV = 0x9072,
 
         /// <summary>
         /// Original was GL_SYSTEM_FONT_NAME_NV = 0x9073
         /// </summary>
-        SystemFontNameNv = 0x9073,
+        SystemFontNameNV = 0x9073,
 
         /// <summary>
         /// Original was GL_FILE_NAME_NV = 0x9074
         /// </summary>
-        FileNameNv = 0x9074
+        FileNameNV = 0x9074
     }
 }

@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PATH_FORMAT_SVG_NV = 0x9070
         /// </summary>
-        PathFormatSvgNv = 0x9070,
+        PathFormatSvgNV = 0x9070,
 
         /// <summary>
         /// Original was GL_PATH_FORMAT_PS_NV = 0x9071
         /// </summary>
-        PathFormatPsNv = 0x9071
+        PathFormatPsnv = 0x9071
     }
 }

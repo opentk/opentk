@@ -256,7 +256,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MULTISAMPLE_FILTER_HINT_NV = 0x8534
         /// </summary>
-        MultisampleFilterHintNv = 0x8534,
+        MultisampleFilterHintNV = 0x8534,
 
         /// <summary>
         /// Original was GL_TRANSFORM_HINT_APPLE = 0x85B1
@@ -286,6 +286,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_BINNING_CONTROL_HINT_QCOM = 0x8FB0
         /// </summary>
-        BinningControlHintQcom = 0x8fb0
+        BinningControlHintQCom = 0x8fb0
     }
 }

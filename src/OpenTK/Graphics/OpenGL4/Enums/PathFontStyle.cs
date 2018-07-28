@@ -41,11 +41,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_BOLD_BIT_NV = 0x01
         /// </summary>
-        BoldBitNv = 0x01,
+        BoldBitNV = 0x01,
 
         /// <summary>
         /// Original was GL_ITALIC_BIT_NV = 0x02
         /// </summary>
-        ItalicBitNv = 0x02
+        ItalicBitNV = 0x02
     }
 }

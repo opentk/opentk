@@ -46,11 +46,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COMPRESSED_RG_RGTC2 = 0x8DBD
         /// </summary>
-        CompressedRgRgtc2 = 0x8dbd,
+        CompressedRGRgtc2 = 0x8dbd,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SIGNED_RG_RGTC2 = 0x8DBE
         /// </summary>
-        CompressedSignedRgRgtc2 = 0x8dbe
+        CompressedSignedRGRgtc2 = 0x8dbe
     }
 }

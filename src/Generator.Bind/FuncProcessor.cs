@@ -307,14 +307,14 @@ namespace Bind
             [NotNull] string apiname
         )
         {
-            category = enumProcessor.TranslateEnumName(category);
+            category = Utilities.TranslateIdentifierName(category);
 
             // Try to find out if it is an enum. If the type exists in the normal GLEnums list, use this.
             // Special case for Boolean which is there simply because C89 does not support bool types.
             // We don't really need that in C#
             var normal =
                 enums.TryGetValue(typeDefinition.TypeName, out var @enum) ||
-                enums.TryGetValue(enumProcessor.TranslateEnumName(typeDefinition.TypeName), out @enum);
+                enums.TryGetValue(Utilities.TranslateIdentifierName(typeDefinition.TypeName), out @enum);
 
             // Translate enum types
             typeDefinition.IsEnum = false;
@@ -334,7 +334,7 @@ namespace Bind
                 // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
                 if (enums.ContainsKey(category))
                 {
-                    typeDefinition.QualifiedTypeName = enumProcessor.TranslateEnumName(category);
+                    typeDefinition.QualifiedTypeName = Utilities.TranslateIdentifierName(category);
                 }
                 else
                 {

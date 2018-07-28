@@ -287,7 +287,6 @@ namespace Bind
                 delegates.Add(d);
             }
 
-            Utilities.AddExtensions(extensions);
             return delegates;
         }
 

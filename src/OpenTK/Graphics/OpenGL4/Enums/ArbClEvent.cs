@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_SYNC_CL_EVENT_ARB = 0x8240
         /// </summary>
-        SyncClEventArb = 0x8240,
+        SyncCLEventArb = 0x8240,
 
         /// <summary>
         /// Original was GL_SYNC_CL_EVENT_COMPLETE_ARB = 0x8241
         /// </summary>
-        SyncClEventCompleteArb = 0x8241
+        SyncCLEventCompleteArb = 0x8241
     }
 }

@@ -36,7 +36,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_HANDLE_TYPE_OPAQUE_FD_EXT = 0x9586
         /// </summary>
-        HandleTypeOpaqueFdExt = 0x9586,
+        HandleTypeOpaqueFDExt = 0x9586,
 
         /// <summary>
         /// Original was GL_HANDLE_TYPE_OPAQUE_WIN32_EXT = 0x9587

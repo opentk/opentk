@@ -64,6 +64,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COVERAGE_BUFFER_BIT_NV = 0x00008000
         /// </summary>
-        CoverageBufferBitNv = 0x00008000
+        CoverageBufferBitNV = 0x00008000
     }
 }

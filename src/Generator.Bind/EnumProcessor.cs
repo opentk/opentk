@@ -27,8 +27,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml.XPath;
 using Bind.Generators;
 using Bind.Structures;
@@ -116,7 +118,7 @@ namespace Bind
                 // modified items to refresh their keys.
                 var name = e.Name;
                 name = ReplaceName(nav, apiname, name);
-                name = TranslateEnumName(name);
+                name = Utilities.TranslateIdentifierName(name);
                 e.Name = name;
                 processedEnums.Add(e.Name, e);
             }
@@ -138,138 +140,6 @@ namespace Bind
             return name;
         }
 
-        private static bool IsAlreadyProcessed([NotNull] string name)
-        {
-            if (name.Contains("_") || name.Contains("-"))
-            {
-                return false;
-            }
-
-            if (char.IsDigit(name[0]))
-            {
-                return false;
-            }
-
-            if (name.All(char.IsUpper))
-            {
-                return false;
-            }
-
-            var extension = Utilities.GetExtension(name, true);
-            if (!string.IsNullOrEmpty(extension) && extension.All(char.IsUpper))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Translates an enumeration member name into a C#-style name.
-        /// </summary>
-        /// <param name="name">The original name.</param>
-        /// <returns>The translated name.</returns>
-        [NotNull]
-        public string TranslateEnumName([NotNull] string name)
-        {
-            var originalName = name;
-
-            if (string.IsNullOrEmpty(name))
-            {
-                return name;
-            }
-
-            if (Utilities.CSharpKeywords.Contains(name))
-            {
-                return name;
-            }
-
-            if (IsAlreadyProcessed(name))
-            {
-                return name;
-            }
-
-            if (char.IsDigit(name[0]))
-            {
-                name = $"{Generator.ConstantPrefix}{name}";
-            }
-
-            var translator = new StringBuilder(name);
-
-            // Split on IHV names and acronyms, to ensure that characters appearing after these name are uppercase.
-            var match = Utilities.Acronyms.Match(name);
-            var offset = 0; // Every time we insert a match, we must increase offset to compensate.
-            while (match.Success)
-            {
-                var insertPos = match.Index + match.Length + offset++;
-                translator.Insert(insertPos, "_");
-                match = match.NextMatch();
-            }
-
-            name = translator.ToString();
-            translator.Remove(0, translator.Length);
-
-            // Process according to these rules:
-            //     1. if current char is '_', '-' remove it and make next char uppercase
-            //     2. if current char is  or '0-9' keep it and make next char uppercase.
-            //     3. if current char is uppercase make next char lowercase.
-            //     4. if current char is lowercase, respect next char case.
-            var isAfterUnderscoreOrNumber = true;
-            var isPreviousUppercase = false;
-            foreach (var c in name)
-            {
-                char charToAdd;
-                if (c == '_' || c == '-')
-                {
-                    isAfterUnderscoreOrNumber = true;
-                    continue; // skip this character
-                }
-
-                if (char.IsDigit(c))
-                {
-                    isAfterUnderscoreOrNumber = true;
-                }
-
-                if (isAfterUnderscoreOrNumber)
-                {
-                    charToAdd = char.ToUpper(c);
-                }
-                else if (isPreviousUppercase)
-                {
-                    charToAdd = char.ToLower(c);
-                }
-                else
-                {
-                    charToAdd = c;
-                }
-
-                translator.Append(charToAdd);
-
-                isPreviousUppercase = char.IsUpper(c);
-                isAfterUnderscoreOrNumber = false;
-            }
-
-            // First letter should always be uppercase in order
-            // to conform to .Net style guidelines.
-            translator[0] = char.ToUpper(translator[0]);
-
-            // Replace a number of words that do not play well
-            // with the previous process (i.e. they have two
-            // consecutive uppercase letters).
-            translator.Replace("Pname", "PName");
-            translator.Replace("AttribIp", "AttribIP");
-            translator.Replace("SRgb", "Srgb");
-
-            name = translator.ToString();
-
-            if (originalName.Pascalize() != name)
-            {
-                var s = string.Empty;
-            }
-
-            return name;
-        }
-
         [NotNull]
         private EnumCollection ProcessConstants([NotNull] EnumCollection enums, [NotNull] XPathNavigator nav, [NotNull] string apiname)
         {
@@ -278,9 +148,14 @@ namespace Bind
                 var processedConstants = new SortedDictionary<string, ConstantDefinition>();
                 foreach (var c in e.ConstantCollection.Values)
                 {
-                    c.Name = TranslateConstantName(c.Name, false);
+                    c.Name = Utilities.TranslateIdentifierName(c.Name);
                     c.Value = TranslateConstantValue(c.Value);
-                    c.Reference = TranslateEnumName(c.Reference);
+
+                    if (!string.IsNullOrWhiteSpace(c.Reference))
+                    {
+                        c.Reference = Utilities.TranslateIdentifierName(c.Reference);
+                    }
+
                     if (!processedConstants.ContainsKey(c.Name))
                     {
                         processedConstants.Add(c.Name, c);
@@ -339,78 +214,6 @@ namespace Bind
             }
         }
 
-        /// <summary>
-        /// Translates a given string into a C#-style identifier or value.
-        /// </summary>
-        /// <param name="s">The original string.</param>
-        /// <param name="isValue">Whether or not the string is a value.</param>
-        /// <returns>The translated name.</returns>
-        [NotNull]
-        public string TranslateConstantName([NotNull] string s, bool isValue)
-        {
-            if (string.IsNullOrEmpty(s))
-            {
-                return s;
-            }
-
-            var translator = new StringBuilder(s.Length);
-
-            if (isValue)
-            {
-                translator.Append(s);
-            }
-            else
-            {
-                // Translate the constant's name to match .Net naming conventions
-                var nameIsAllCaps = s.AsEnumerable().All(c => !char.IsLetter(c) || char.IsUpper(c));
-                var nameContainsUnderscore = s.Contains("_");
-                if (nameIsAllCaps || nameContainsUnderscore)
-                {
-                    var nextCharUppercase = true;
-                    var isAfterDigit = false;
-
-                    if (char.IsDigit(s[0]))
-                    {
-                        s = Generator.ConstantPrefix + s;
-                    }
-
-                    foreach (var c in s)
-                    {
-                        if (c == '_' || c == '-')
-                        {
-                            nextCharUppercase = true;
-                        }
-                        else if (char.IsDigit(c))
-                        {
-                            translator.Append(c);
-                            isAfterDigit = true;
-                        }
-                        else
-                        {
-                            // Check for common 'digit'-'letter' abbreviations:
-                            // 2D, 3D, R3G3B2, etc. The abbreviated characters
-                            // should be made upper case.
-                            if (isAfterDigit && (c == 'D' || c == 'R' || c == 'G' || c == 'B' || c == 'A'))
-                            {
-                                nextCharUppercase = true;
-                            }
-
-                            translator.Append(nextCharUppercase ? char.ToUpper(c) : char.ToLower(c));
-                            isAfterDigit = nextCharUppercase = false;
-                        }
-                    }
-
-                    translator[0] = char.ToUpper(translator[0]);
-                }
-                else
-                {
-                    translator.Append(s);
-                }
-            }
-
-            return translator.ToString();
-        }
-
         [NotNull]
         private string TranslateConstantValue([NotNull] string value)
         {
@@ -435,7 +238,12 @@ namespace Bind
                 value = value.Substring(Generator.ConstantPrefix.Length);
             }
 
-            return TranslateConstantName(value, IsValue(value));
+            if (IsValue(value))
+            {
+                return value;
+            }
+
+            return Utilities.TranslateIdentifierName(value);
         }
 
         // There are cases when a value is an aliased constant, with no enum specified.

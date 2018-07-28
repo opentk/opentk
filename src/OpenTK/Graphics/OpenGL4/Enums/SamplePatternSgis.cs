@@ -36,71 +36,71 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_1PASS_EXT = 0x80A1
         /// </summary>
-        Gl1PassExt = 0x80a1,
+        C1PassExt = 0x80a1,
 
         /// <summary>
         /// Original was GL_1PASS_SGIS = 0x80A1
         /// </summary>
-        Gl1PassSgis = 0x80a1,
+        C1PassSgis = 0x80a1,
 
         /// <summary>
         /// Original was GL_2PASS_0_EXT = 0x80A2
         /// </summary>
-        Gl2Pass0Ext = 0x80a2,
+        C2Pass0Ext = 0x80a2,
 
         /// <summary>
         /// Original was GL_2PASS_0_SGIS = 0x80A2
         /// </summary>
-        Gl2Pass0Sgis = 0x80a2,
+        C2Pass0Sgis = 0x80a2,
 
         /// <summary>
         /// Original was GL_2PASS_1_EXT = 0x80A3
         /// </summary>
-        Gl2Pass1Ext = 0x80a3,
+        C2Pass1Ext = 0x80a3,
 
         /// <summary>
         /// Original was GL_2PASS_1_SGIS = 0x80A3
         /// </summary>
-        Gl2Pass1Sgis = 0x80a3,
+        C2Pass1Sgis = 0x80a3,
 
         /// <summary>
         /// Original was GL_4PASS_0_EXT = 0x80A4
         /// </summary>
-        Gl4Pass0Ext = 0x80a4,
+        C4Pass0Ext = 0x80a4,
 
         /// <summary>
         /// Original was GL_4PASS_0_SGIS = 0x80A4
         /// </summary>
-        Gl4Pass0Sgis = 0x80a4,
+        C4Pass0Sgis = 0x80a4,
 
         /// <summary>
         /// Original was GL_4PASS_1_EXT = 0x80A5
         /// </summary>
-        Gl4Pass1Ext = 0x80a5,
+        C4Pass1Ext = 0x80a5,
 
         /// <summary>
         /// Original was GL_4PASS_1_SGIS = 0x80A5
         /// </summary>
-        Gl4Pass1Sgis = 0x80a5,
+        C4Pass1Sgis = 0x80a5,
 
         /// <summary>
         /// Original was GL_4PASS_2_EXT = 0x80A6
         /// </summary>
-        Gl4Pass2Ext = 0x80a6,
+        C4Pass2Ext = 0x80a6,
 
         /// <summary>
         /// Original was GL_4PASS_2_SGIS = 0x80A6
         /// </summary>
-        Gl4Pass2Sgis = 0x80a6,
+        C4Pass2Sgis = 0x80a6,
 
         /// <summary>
         /// Original was GL_4PASS_3_EXT = 0x80A7
         /// </summary>
-        Gl4Pass3Ext = 0x80a7,
+        C4Pass3Ext = 0x80a7,
 
         /// <summary>
         /// Original was GL_4PASS_3_SGIS = 0x80A7
         /// </summary>
-        Gl4Pass3Sgis = 0x80a7
+        C4Pass3Sgis = 0x80a7
     }
 }

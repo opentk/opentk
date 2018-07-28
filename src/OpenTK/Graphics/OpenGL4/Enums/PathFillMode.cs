@@ -41,16 +41,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PATH_FILL_MODE_NV = 0x9080
         /// </summary>
-        PathFillModeNv = 0x9080,
+        PathFillModeNV = 0x9080,
 
         /// <summary>
         /// Original was GL_COUNT_UP_NV = 0x9088
         /// </summary>
-        CountUpNv = 0x9088,
+        CountUpNV = 0x9088,
 
         /// <summary>
         /// Original was GL_COUNT_DOWN_NV = 0x9089
         /// </summary>
-        CountDownNv = 0x9089
+        CountDownNV = 0x9089
     }
 }

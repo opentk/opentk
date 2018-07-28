@@ -247,7 +247,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// This value must be 0.
         /// </param>
         /// <param name="format">
-        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, Rg, Rgb, Bgr, Rgba, Bgra, RedInteger, RgInteger, RgbInteger, BgrInteger, RgbaInteger, BgraInteger, StencilIndex, DepthComponent, DepthStencil.
+        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, RG, Rgb, Bgr, Rgba, Bgra, RedInteger, RGInteger, RgbInteger, BgrInteger, RgbaInteger, BgraInteger, StencilIndex, DepthComponent, DepthStencil.
         /// </param>
         /// <param name="type">
         /// Specifies the data type of the pixel data. The following symbolic values are accepted: UnsignedByte, Byte, UnsignedShort, Short, UnsignedInt, Int, Float, UnsignedByte332, UnsignedByte233Rev, UnsignedShort565, UnsignedShort565Rev, UnsignedShort4444, UnsignedShort4444Rev, UnsignedShort5551, UnsignedShort1555Rev, UnsignedInt8888, UnsignedInt8888Rev, UnsignedInt1010102, and UnsignedInt2101010Rev.
@@ -288,7 +288,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// This value must be 0.
         /// </param>
         /// <param name="format">
-        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, Rg, Rgb, Bgr, Rgba, Bgra, RedInteger, RgInteger, RgbInteger, BgrInteger, RgbaInteger, BgraInteger, StencilIndex, DepthComponent, DepthStencil.
+        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, RG, Rgb, Bgr, Rgba, Bgra, RedInteger, RGInteger, RgbInteger, BgrInteger, RgbaInteger, BgraInteger, StencilIndex, DepthComponent, DepthStencil.
         /// </param>
         /// <param name="type">
         /// Specifies the data type of the pixel data. The following symbolic values are accepted: UnsignedByte, Byte, UnsignedShort, Short, UnsignedInt, Int, Float, UnsignedByte332, UnsignedByte233Rev, UnsignedShort565, UnsignedShort565Rev, UnsignedShort4444, UnsignedShort4444Rev, UnsignedShort5551, UnsignedShort1555Rev, UnsignedInt8888, UnsignedInt8888Rev, UnsignedInt1010102, and UnsignedInt2101010Rev.
@@ -331,7 +331,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// This value must be 0.
         /// </param>
         /// <param name="format">
-        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, Rg, Rgb, Bgr, Rgba, Bgra, RedInteger, RgInteger, RgbInteger, BgrInteger, RgbaInteger, BgraInteger, StencilIndex, DepthComponent, DepthStencil.
+        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, RG, Rgb, Bgr, Rgba, Bgra, RedInteger, RGInteger, RgbInteger, BgrInteger, RgbaInteger, BgraInteger, StencilIndex, DepthComponent, DepthStencil.
         /// </param>
         /// <param name="type">
         /// Specifies the data type of the pixel data. The following symbolic values are accepted: UnsignedByte, Byte, UnsignedShort, Short, UnsignedInt, Int, Float, UnsignedByte332, UnsignedByte233Rev, UnsignedShort565, UnsignedShort565Rev, UnsignedShort4444, UnsignedShort4444Rev, UnsignedShort5551, UnsignedShort1555Rev, UnsignedInt8888, UnsignedInt8888Rev, UnsignedInt1010102, and UnsignedInt2101010Rev.
@@ -374,7 +374,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// This value must be 0.
         /// </param>
         /// <param name="format">
-        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, Rg, Rgb, Bgr, Rgba, Bgra, RedInteger, RgInteger, RgbInteger, BgrInteger, RgbaInteger, BgraInteger, StencilIndex, DepthComponent, DepthStencil.
+        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, RG, Rgb, Bgr, Rgba, Bgra, RedInteger, RGInteger, RgbInteger, BgrInteger, RgbaInteger, BgraInteger, StencilIndex, DepthComponent, DepthStencil.
         /// </param>
         /// <param name="type">
         /// Specifies the data type of the pixel data. The following symbolic values are accepted: UnsignedByte, Byte, UnsignedShort, Short, UnsignedInt, Int, Float, UnsignedByte332, UnsignedByte233Rev, UnsignedShort565, UnsignedShort565Rev, UnsignedShort4444, UnsignedShort4444Rev, UnsignedShort5551, UnsignedShort1555Rev, UnsignedInt8888, UnsignedInt8888Rev, UnsignedInt1010102, and UnsignedInt2101010Rev.
@@ -417,7 +417,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// This value must be 0.
         /// </param>
         /// <param name="format">
-        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, Rg, Rgb, Bgr, Rgba, Bgra, RedInteger, RgInteger, RgbInteger, BgrInteger, RgbaInteger, BgraInteger, StencilIndex, DepthComponent, DepthStencil.
+        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, RG, Rgb, Bgr, Rgba, Bgra, RedInteger, RGInteger, RgbInteger, BgrInteger, RgbaInteger, BgraInteger, StencilIndex, DepthComponent, DepthStencil.
         /// </param>
         /// <param name="type">
         /// Specifies the data type of the pixel data. The following symbolic values are accepted: UnsignedByte, Byte, UnsignedShort, Short, UnsignedInt, Int, Float, UnsignedByte332, UnsignedByte233Rev, UnsignedShort565, UnsignedShort565Rev, UnsignedShort4444, UnsignedShort4444Rev, UnsignedShort5551, UnsignedShort1555Rev, UnsignedInt8888, UnsignedInt8888Rev, UnsignedInt1010102, and UnsignedInt2101010Rev.
@@ -463,7 +463,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the depth of the texture subimage.
         /// </param>
         /// <param name="format">
-        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, Rg, Rgb, Bgr, Rgba, DepthComponent, and StencilIndex.
+        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, RG, Rgb, Bgr, Rgba, DepthComponent, and StencilIndex.
         /// </param>
         /// <param name="type">
         /// Specifies the data type of the pixel data. The following symbolic values are accepted: UnsignedByte, Byte, UnsignedShort, Short, UnsignedInt, Int, Float, UnsignedByte332, UnsignedByte233Rev, UnsignedShort565, UnsignedShort565Rev, UnsignedShort4444, UnsignedShort4444Rev, UnsignedShort5551, UnsignedShort1555Rev, UnsignedInt8888, UnsignedInt8888Rev, UnsignedInt1010102, and UnsignedInt2101010Rev.
@@ -507,7 +507,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the depth of the texture subimage.
         /// </param>
         /// <param name="format">
-        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, Rg, Rgb, Bgr, Rgba, DepthComponent, and StencilIndex.
+        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, RG, Rgb, Bgr, Rgba, DepthComponent, and StencilIndex.
         /// </param>
         /// <param name="type">
         /// Specifies the data type of the pixel data. The following symbolic values are accepted: UnsignedByte, Byte, UnsignedShort, Short, UnsignedInt, Int, Float, UnsignedByte332, UnsignedByte233Rev, UnsignedShort565, UnsignedShort565Rev, UnsignedShort4444, UnsignedShort4444Rev, UnsignedShort5551, UnsignedShort1555Rev, UnsignedInt8888, UnsignedInt8888Rev, UnsignedInt1010102, and UnsignedInt2101010Rev.
@@ -553,7 +553,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the depth of the texture subimage.
         /// </param>
         /// <param name="format">
-        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, Rg, Rgb, Bgr, Rgba, DepthComponent, and StencilIndex.
+        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, RG, Rgb, Bgr, Rgba, DepthComponent, and StencilIndex.
         /// </param>
         /// <param name="type">
         /// Specifies the data type of the pixel data. The following symbolic values are accepted: UnsignedByte, Byte, UnsignedShort, Short, UnsignedInt, Int, Float, UnsignedByte332, UnsignedByte233Rev, UnsignedShort565, UnsignedShort565Rev, UnsignedShort4444, UnsignedShort4444Rev, UnsignedShort5551, UnsignedShort1555Rev, UnsignedInt8888, UnsignedInt8888Rev, UnsignedInt1010102, and UnsignedInt2101010Rev.
@@ -599,7 +599,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the depth of the texture subimage.
         /// </param>
         /// <param name="format">
-        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, Rg, Rgb, Bgr, Rgba, DepthComponent, and StencilIndex.
+        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, RG, Rgb, Bgr, Rgba, DepthComponent, and StencilIndex.
         /// </param>
         /// <param name="type">
         /// Specifies the data type of the pixel data. The following symbolic values are accepted: UnsignedByte, Byte, UnsignedShort, Short, UnsignedInt, Int, Float, UnsignedByte332, UnsignedByte233Rev, UnsignedShort565, UnsignedShort565Rev, UnsignedShort4444, UnsignedShort4444Rev, UnsignedShort5551, UnsignedShort1555Rev, UnsignedInt8888, UnsignedInt8888Rev, UnsignedInt1010102, and UnsignedInt2101010Rev.
@@ -645,7 +645,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// Specifies the depth of the texture subimage.
         /// </param>
         /// <param name="format">
-        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, Rg, Rgb, Bgr, Rgba, DepthComponent, and StencilIndex.
+        /// Specifies the format of the pixel data. The following symbolic values are accepted: Red, RG, Rgb, Bgr, Rgba, DepthComponent, and StencilIndex.
         /// </param>
         /// <param name="type">
         /// Specifies the data type of the pixel data. The following symbolic values are accepted: UnsignedByte, Byte, UnsignedShort, Short, UnsignedInt, Int, Float, UnsignedByte332, UnsignedByte233Rev, UnsignedShort565, UnsignedShort565Rev, UnsignedShort4444, UnsignedShort4444Rev, UnsignedShort5551, UnsignedShort1555Rev, UnsignedInt8888, UnsignedInt8888Rev, UnsignedInt1010102, and UnsignedInt2101010Rev.

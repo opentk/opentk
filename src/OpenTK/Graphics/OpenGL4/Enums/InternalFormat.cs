@@ -366,12 +366,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COMPRESSED_RG = 0x8226
         /// </summary>
-        CompressedRg = 0x8226,
+        CompressedRG = 0x8226,
 
         /// <summary>
         /// Original was GL_RG = 0x8227
         /// </summary>
-        Rg = 0x8227,
+        RG = 0x8227,
 
         /// <summary>
         /// Original was GL_R8 = 0x8229
@@ -396,22 +396,22 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RG8 = 0x822B
         /// </summary>
-        Rg8 = 0x822b,
+        RG8 = 0x822b,
 
         /// <summary>
         /// Original was GL_RG8_EXT = 0x822B
         /// </summary>
-        Rg8Ext = 0x822b,
+        RG8Ext = 0x822b,
 
         /// <summary>
         /// Original was GL_RG16 = 0x822C
         /// </summary>
-        Rg16 = 0x822c,
+        RG16 = 0x822c,
 
         /// <summary>
         /// Original was GL_RG16_EXT = 0x822C
         /// </summary>
-        Rg16Ext = 0x822c,
+        RG16Ext = 0x822c,
 
         /// <summary>
         /// Original was GL_R16F = 0x822D
@@ -436,22 +436,22 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RG16F = 0x822F
         /// </summary>
-        Rg16f = 0x822f,
+        RG16f = 0x822f,
 
         /// <summary>
         /// Original was GL_RG16F_EXT = 0x822F
         /// </summary>
-        Rg16fExt = 0x822f,
+        RG16fExt = 0x822f,
 
         /// <summary>
         /// Original was GL_RG32F = 0x8230
         /// </summary>
-        Rg32f = 0x8230,
+        RG32f = 0x8230,
 
         /// <summary>
         /// Original was GL_RG32F_EXT = 0x8230
         /// </summary>
-        Rg32fExt = 0x8230,
+        RG32fExt = 0x8230,
 
         /// <summary>
         /// Original was GL_R8I = 0x8231
@@ -486,52 +486,52 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RG8I = 0x8237
         /// </summary>
-        Rg8i = 0x8237,
+        RG8i = 0x8237,
 
         /// <summary>
         /// Original was GL_RG8UI = 0x8238
         /// </summary>
-        Rg8ui = 0x8238,
+        RG8ui = 0x8238,
 
         /// <summary>
         /// Original was GL_RG16I = 0x8239
         /// </summary>
-        Rg16i = 0x8239,
+        RG16i = 0x8239,
 
         /// <summary>
         /// Original was GL_RG16UI = 0x823A
         /// </summary>
-        Rg16ui = 0x823a,
+        RG16ui = 0x823a,
 
         /// <summary>
         /// Original was GL_RG32I = 0x823B
         /// </summary>
-        Rg32i = 0x823b,
+        RG32i = 0x823b,
 
         /// <summary>
         /// Original was GL_RG32UI = 0x823C
         /// </summary>
-        Rg32ui = 0x823c,
+        RG32ui = 0x823c,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGB_S3TC_DXT1_EXT = 0x83F0
         /// </summary>
-        CompressedRgbS3tcDxt1Ext = 0x83f0,
+        CompressedRgbS3TCDxt1Ext = 0x83f0,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_S3TC_DXT1_EXT = 0x83F1
         /// </summary>
-        CompressedRgbaS3tcDxt1Ext = 0x83f1,
+        CompressedRgbaS3TCDxt1Ext = 0x83f1,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_S3TC_DXT3_EXT = 0x83F2
         /// </summary>
-        CompressedRgbaS3tcDxt3Ext = 0x83f2,
+        CompressedRgbaS3TCDxt3Ext = 0x83f2,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_S3TC_DXT5_EXT = 0x83F3
         /// </summary>
-        CompressedRgbaS3tcDxt5Ext = 0x83f3,
+        CompressedRgbaS3TCDxt5Ext = 0x83f3,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGB = 0x84ED
@@ -556,7 +556,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEPTH_STENCIL_NV = 0x84F9
         /// </summary>
-        DepthStencilNv = 0x84f9,
+        DepthStencilNV = 0x84f9,
 
         /// <summary>
         /// Original was GL_DEPTH_STENCIL_OES = 0x84F9
@@ -681,7 +681,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_SRGB8_NV = 0x8C41
         /// </summary>
-        Srgb8Nv = 0x8c41,
+        Srgb8NV = 0x8c41,
 
         /// <summary>
         /// Original was GL_SRGB_ALPHA = 0x8C42
@@ -716,22 +716,22 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB_S3TC_DXT1_EXT = 0x8C4C
         /// </summary>
-        CompressedSrgbS3tcDxt1Ext = 0x8c4c,
+        CompressedSrgbS3TCDxt1Ext = 0x8c4c,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT = 0x8C4D
         /// </summary>
-        CompressedSrgbAlphaS3tcDxt1Ext = 0x8c4d,
+        CompressedSrgbAlphaS3TCDxt1Ext = 0x8c4d,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT = 0x8C4E
         /// </summary>
-        CompressedSrgbAlphaS3tcDxt3Ext = 0x8c4e,
+        CompressedSrgbAlphaS3TCDxt3Ext = 0x8c4e,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT = 0x8C4F
         /// </summary>
-        CompressedSrgbAlphaS3tcDxt5Ext = 0x8c4f,
+        CompressedSrgbAlphaS3TCDxt5Ext = 0x8c4f,
 
         /// <summary>
         /// Original was GL_DEPTH_COMPONENT32F = 0x8CAC
@@ -806,12 +806,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEPTH_COMPONENT32F_NV = 0x8DAB
         /// </summary>
-        DepthComponent32fNv = 0x8dab,
+        DepthComponent32fNV = 0x8dab,
 
         /// <summary>
         /// Original was GL_DEPTH32F_STENCIL8_NV = 0x8DAC
         /// </summary>
-        Depth32fStencil8Nv = 0x8dac,
+        Depth32fStencil8NV = 0x8dac,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RED_RGTC1 = 0x8DBB
@@ -836,12 +836,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COMPRESSED_RG_RGTC2 = 0x8DBD
         /// </summary>
-        CompressedRgRgtc2 = 0x8dbd,
+        CompressedRGRgtc2 = 0x8dbd,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SIGNED_RG_RGTC2 = 0x8DBE
         /// </summary>
-        CompressedSignedRgRgtc2 = 0x8dbe,
+        CompressedSignedRGRgtc2 = 0x8dbe,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_BPTC_UNORM = 0x8E8C
@@ -866,52 +866,52 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_R8_SNORM = 0x8F94
         /// </summary>
-        R8Snorm = 0x8f94,
+        R8SNorm = 0x8f94,
 
         /// <summary>
         /// Original was GL_RG8_SNORM = 0x8F95
         /// </summary>
-        Rg8Snorm = 0x8f95,
+        RG8SNorm = 0x8f95,
 
         /// <summary>
         /// Original was GL_RGB8_SNORM = 0x8F96
         /// </summary>
-        Rgb8Snorm = 0x8f96,
+        Rgb8SNorm = 0x8f96,
 
         /// <summary>
         /// Original was GL_RGBA8_SNORM = 0x8F97
         /// </summary>
-        Rgba8Snorm = 0x8f97,
+        Rgba8SNorm = 0x8f97,
 
         /// <summary>
         /// Original was GL_R16_SNORM = 0x8F98
         /// </summary>
-        R16Snorm = 0x8f98,
+        R16SNorm = 0x8f98,
 
         /// <summary>
         /// Original was GL_R16_SNORM_EXT = 0x8F98
         /// </summary>
-        R16SnormExt = 0x8f98,
+        R16SNormExt = 0x8f98,
 
         /// <summary>
         /// Original was GL_RG16_SNORM = 0x8F99
         /// </summary>
-        Rg16Snorm = 0x8f99,
+        RG16SNorm = 0x8f99,
 
         /// <summary>
         /// Original was GL_RG16_SNORM_EXT = 0x8F99
         /// </summary>
-        Rg16SnormExt = 0x8f99,
+        RG16SNormExt = 0x8f99,
 
         /// <summary>
         /// Original was GL_RGB16_SNORM = 0x8F9A
         /// </summary>
-        Rgb16Snorm = 0x8f9a,
+        Rgb16SNorm = 0x8f9a,
 
         /// <summary>
         /// Original was GL_RGB16_SNORM_EXT = 0x8F9A
         /// </summary>
-        Rgb16SnormExt = 0x8f9a,
+        Rgb16SNormExt = 0x8f9a,
 
         /// <summary>
         /// Original was GL_RGB10_A2UI = 0x906F
@@ -931,12 +931,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COMPRESSED_RG11_EAC = 0x9272
         /// </summary>
-        CompressedRg11Eac = 0x9272,
+        CompressedRG11Eac = 0x9272,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SIGNED_RG11_EAC = 0x9273
         /// </summary>
-        CompressedSignedRg11Eac = 0x9273,
+        CompressedSignedRG11Eac = 0x9273,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGB8_ETC2 = 0x9274

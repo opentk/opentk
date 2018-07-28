@@ -2013,10 +2013,10 @@
       <token name="FOG_COORD_ARRAY" value="0x8457" />
       <token name="SECONDARY_COLOR_ARRAY" value="0x845E" />
     </enum>
-    <enum name="AssemblyProgramFormatARB">
+    <enum name="AssemblyProgramFormatArb">
       <token name="PROGRAM_FORMAT_ASCII_ARB" value="0x8875" />
     </enum>
-    <enum name="AssemblyProgramParameterARB">
+    <enum name="AssemblyProgramParameterArb">
       <token name="MAX_PROGRAM_ADDRESS_REGISTERS" value="0x88B1" />
       <token name="MAX_PROGRAM_ALU_INSTRUCTIONS_ARB" value="0x880B" />
       <token name="MAX_PROGRAM_ATTRIBS" value="0x88AD" />
@@ -2061,10 +2061,10 @@
       <use enum="VERSION_4_1" token="PROGRAM_SEPARABLE" />
       <use enum="VERSION_4_1" token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
     </enum>
-    <enum name="AssemblyProgramStringParameterARB">
+    <enum name="AssemblyProgramStringParameterArb">
       <token name="PROGRAM_STRING" value="0x8628" />
     </enum>
-    <enum name="AssemblyProgramTargetARB">
+    <enum name="AssemblyProgramTargetArb">
       <use enum="NV_geometry_program4" token="GEOMETRY_PROGRAM_NV" />
       <token name="FRAGMENT_PROGRAM" value="0x8804" />
       <token name="VERTEX_PROGRAM" value="0x8620" />
@@ -2157,7 +2157,7 @@
       <token name="READ_WRITE" value="0x88BA" />
       <token name="WRITE_ONLY" value="0x88B9" />
     </enum>
-    <enum name="BufferAccessARB">
+    <enum name="BufferAccessArb">
       <token name="READ_ONLY" value="0x88B8" />
       <token name="READ_WRITE" value="0x88BA" />
       <token name="WRITE_ONLY" value="0x88B9" />
@@ -2183,7 +2183,7 @@
       <use enum="VERSION_4_4" token="BUFFER_IMMUTABLE_STORAGE" />
       <use enum="VERSION_4_4" token="BUFFER_STORAGE_FLAGS" />
     </enum>
-    <enum name="BufferParameterNameARB">
+    <enum name="BufferParameterNameArb">
       <token name="BUFFER_ACCESS" value="0x88BB" />
       <token name="BUFFER_MAPPED" value="0x88BC" />
       <token name="BUFFER_SIZE" value="0x8764" />
@@ -2192,7 +2192,7 @@
     <enum name="BufferPointer">
       <token name="BUFFER_MAP_POINTER" value="0x88BD" />
     </enum>
-    <enum name="BufferPointerNameARB">
+    <enum name="BufferPointerNameArb">
       <token name="BUFFER_MAP_POINTER" value="0x88BD" />
     </enum>
     <enum name="BufferStorageFlags">
@@ -2226,12 +2226,12 @@
       <use enum="VERSION_4_3" token="SHADER_STORAGE_BUFFER" />
       <use enum="VERSION_4_4" token="TRANSFORM_FEEDBACK_BUFFER" />
     </enum>
-    <enum name="BufferTargetARB">
+    <enum name="BufferTargetArb">
       <token name="ARRAY_BUFFER" value="0x8892" />
       <token name="ELEMENT_ARRAY_BUFFER" value="0x8893" />
       <use enum="VERSION_3_1" token="TEXTURE_BUFFER" /> <!-- Arb_texture_buffer_object -->
     </enum>
-    <enum name="BufferUsageARB">
+    <enum name="BufferUsageArb">
       <token name="DYNAMIC_COPY" value="0x88EA" />
       <token name="DYNAMIC_DRAW" value="0x88E8" />
       <token name="DYNAMIC_READ" value="0x88E9" />
@@ -2498,12 +2498,12 @@
       <use enum="DataType" token="DOUBLE" />
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
     </enum>
-    <enum name="FogPointerTypeEXT">
+    <enum name="FogPointerTypeExt">
       <use enum="DataType" token="FLOAT" />
       <use enum="DataType" token="DOUBLE" />
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
     </enum>
-    <enum name="FogPointerTypeIBM">
+    <enum name="FogPointerTypeIbm">
       <use enum="DataType" token="FLOAT" />
       <use enum="DataType" token="DOUBLE" />
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
@@ -3109,7 +3109,7 @@
     <enum name="MatrixMode">
       <use enum="PixelCopyType" token="COLOR" />
     </enum>
-    <enum name="MatrixModeARB">
+    <enum name="MatrixModeArb">
       <use enum="MatrixMode" token="MODELVIEW" />
       <use enum="MatrixMode" token="PROJECTION" />
       <use enum="MatrixMode" token="TEXTURE" />
@@ -4201,7 +4201,7 @@
       <token name="VERTEX_ATTRIB_ARRAY_INTEGER" value="0x88FD" />
       <use enum="VERSION_3_3" token="VERTEX_ATTRIB_ARRAY_DIVISOR" />
     </enum>
-    <enum name="VertexAttribParameterARB">
+    <enum name="VertexAttribParameterArb">
       <token name="ARRAY_DIVISOR" value="0x88FE" />
       <token name="ARRAY_ENABLED" value="0x8622" />
       <token name="ARRAY_NORMALIZED" value="0x886A" />
@@ -4213,7 +4213,7 @@
     <enum name="VertexAttribPointerParameter">
       <token name="ARRAY_POINTER" value="0x8645" />
     </enum>
-    <enum name="VertexAttribPointerParameterARB">
+    <enum name="VertexAttribPointerParameterArb">
       <token name="ARRAY_POINTER" value="0x8645" />
     </enum>
     <enum name="VertexAttribType">
@@ -4247,7 +4247,7 @@
     <enum name="VertexAttribD_PointerType">
       <use enum="VERSION_1_1" token="DOUBLE" />
     </enum>
-    <enum name="VertexAttribPointerTypeARB">
+    <enum name="VertexAttribPointerTypeArb">
       <use enum="DataType" token="BYTE" />
       <use enum="DataType" token="UNSIGNED_BYTE" />
       <use enum="DataType" token="SHORT" />

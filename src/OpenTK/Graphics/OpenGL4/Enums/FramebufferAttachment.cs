@@ -106,7 +106,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MAX_COLOR_ATTACHMENTS_NV = 0x8CDF
         /// </summary>
-        MaxColorAttachmentsNv = 0x8cdf,
+        MaxColorAttachmentsNV = 0x8cdf,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT0 = 0x8CE0
@@ -121,7 +121,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT0_NV = 0x8CE0
         /// </summary>
-        ColorAttachment0Nv = 0x8ce0,
+        ColorAttachment0NV = 0x8ce0,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT0_OES = 0x8CE0
@@ -141,7 +141,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT1_NV = 0x8CE1
         /// </summary>
-        ColorAttachment1Nv = 0x8ce1,
+        ColorAttachment1NV = 0x8ce1,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT2 = 0x8CE2
@@ -156,7 +156,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT2_NV = 0x8CE2
         /// </summary>
-        ColorAttachment2Nv = 0x8ce2,
+        ColorAttachment2NV = 0x8ce2,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT3 = 0x8CE3
@@ -171,7 +171,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT3_NV = 0x8CE3
         /// </summary>
-        ColorAttachment3Nv = 0x8ce3,
+        ColorAttachment3NV = 0x8ce3,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT4 = 0x8CE4
@@ -186,7 +186,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT4_NV = 0x8CE4
         /// </summary>
-        ColorAttachment4Nv = 0x8ce4,
+        ColorAttachment4NV = 0x8ce4,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT5 = 0x8CE5
@@ -201,7 +201,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT5_NV = 0x8CE5
         /// </summary>
-        ColorAttachment5Nv = 0x8ce5,
+        ColorAttachment5NV = 0x8ce5,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT6 = 0x8CE6
@@ -216,7 +216,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT6_NV = 0x8CE6
         /// </summary>
-        ColorAttachment6Nv = 0x8ce6,
+        ColorAttachment6NV = 0x8ce6,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT7 = 0x8CE7
@@ -231,7 +231,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT7_NV = 0x8CE7
         /// </summary>
-        ColorAttachment7Nv = 0x8ce7,
+        ColorAttachment7NV = 0x8ce7,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT8 = 0x8CE8
@@ -246,7 +246,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT8_NV = 0x8CE8
         /// </summary>
-        ColorAttachment8Nv = 0x8ce8,
+        ColorAttachment8NV = 0x8ce8,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT9 = 0x8CE9
@@ -261,7 +261,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT9_NV = 0x8CE9
         /// </summary>
-        ColorAttachment9Nv = 0x8ce9,
+        ColorAttachment9NV = 0x8ce9,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT10 = 0x8CEA
@@ -276,7 +276,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT10_NV = 0x8CEA
         /// </summary>
-        ColorAttachment10Nv = 0x8cea,
+        ColorAttachment10NV = 0x8cea,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT11 = 0x8CEB
@@ -291,7 +291,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT11_NV = 0x8CEB
         /// </summary>
-        ColorAttachment11Nv = 0x8ceb,
+        ColorAttachment11NV = 0x8ceb,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT12 = 0x8CEC
@@ -306,7 +306,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT12_NV = 0x8CEC
         /// </summary>
-        ColorAttachment12Nv = 0x8cec,
+        ColorAttachment12NV = 0x8cec,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT13 = 0x8CED
@@ -321,7 +321,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT13_NV = 0x8CED
         /// </summary>
-        ColorAttachment13Nv = 0x8ced,
+        ColorAttachment13NV = 0x8ced,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT14 = 0x8CEE
@@ -336,7 +336,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT14_NV = 0x8CEE
         /// </summary>
-        ColorAttachment14Nv = 0x8cee,
+        ColorAttachment14NV = 0x8cee,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT15 = 0x8CEF
@@ -351,7 +351,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT15_NV = 0x8CEF
         /// </summary>
-        ColorAttachment15Nv = 0x8cef,
+        ColorAttachment15NV = 0x8cef,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT16 = 0x8CF0

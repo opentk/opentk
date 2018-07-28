@@ -2,11 +2,15 @@
  * See license.txt for license info
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using Bind.Structures;
+using Humanizer;
 using JetBrains.Annotations;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace Bind
 {
@@ -16,64 +20,14 @@ namespace Bind
     internal static class Utilities
     {
         /// <summary>
-        /// Gets a regex that matches known extension names in the specification.
+        /// Gets a set of overrides used for name translation when dealing with complicated extensions and acronyms.
         /// </summary>
-        public static Regex Extensions { get; private set; }
-
-        /// <summary>
-        /// Gets a regex that matches known acronyms used by the specification.
-        /// </summary>
-        public static Regex Acronyms { get; private set; }
-
-        // Both GL and ES contains SGI extension enums, even though no function
-        // uses them. This is a remnant from the glory days of gl.spec and GL 1.1.
-        // Note: REMOVING THESE WILL BREAK BINARY-COMPATIBILITY WITH OPENTK 1.0,
-        // WRT THE ES 1.1 API.
-        // You have been warned.
-        private static List<string> _extensionNames = new List<string>
+        public static readonly IReadOnlyDictionary<string, string> ExtensionAndAcronymOverrides = new Dictionary<string, string>
         {
-            "SGI", "SGIS", "SGIX", "IBM", "AMD", "INTEL",
+            { "CMAAINTEL", "CmaaIntel" },
+            { "QCOM", "QCom" },
+            { "SNORM", "SNorm" }
         };
-
-        /// <summary>
-        /// Merges the given extensions into the current set of extensions.
-        /// </summary>
-        /// <param name="extensions">The extensions to merge in.</param>
-        public static void AddExtensions([NotNull] IReadOnlyCollection<string> extensions)
-        {
-            // Merge the new extensions with the current list of extensions
-            var extensionCount = _extensionNames.Count;
-            _extensionNames.AddRange(
-                extensions.Where(n => !_extensionNames.Contains(n)));
-
-            // If any new extensions have been added,
-            // recreate the Extensions regex.
-            if (_extensionNames.Count != extensionCount)
-            {
-                // Sort longest extensions first, otherwise SGIS may be
-                // incorrectly matched as SGI.
-                _extensionNames.Sort((a, b) => b.Length.CompareTo(a.Length));
-
-                Extensions = new Regex(
-                    string.Join("|", _extensionNames.ToArray()),
-                    RegexOptions.Compiled);
-
-                var acronyms = new[]
-                {
-                    "EGL",  "ES", "GL", "CL",
-                    "RGBA", "BGRA", "RGB", "BGR",
-                    "SRGB", "YCBCR",
-                    "3TC", "DXT", "BPTC", "RGTC",
-                    "3DC", "ATC", "ETC",
-                    "ANGLE",  "MESAX", "MESA",
-                    "ATI"
-                };
-
-                var acronymNames = extensions.Concat(acronyms).ToList();
-                acronymNames.Sort((a, b) => b.Length.CompareTo(a.Length));
-                Acronyms = new Regex(string.Join("|", acronymNames.ToArray()), RegexOptions.Compiled);
-            }
-        }
 
         /// <summary>
         /// Gets a list of keywords in the C# language.
@@ -221,36 +175,80 @@ namespace Bind
         }
 
         /// <summary>
-        /// Gets the name of the specification extension that the given name is a part of.
+        /// Translates an identifer name into a C#-style PascalCase name.
         /// </summary>
-        /// <param name="name">The name to inspect.</param>
-        /// <param name="returnUnmodified">
-        /// Whether or not to return the extension name unmodified. If false, the extension name will be turned to title
-        /// case.
-        /// </param>
-        /// <returns>The extension name.</returns>
+        /// <param name="name">The name to translate.</param>
+        /// <returns>The translated name.</returns>
         [NotNull]
-        internal static string GetExtension([NotNull] string name, bool returnUnmodified)
+        public static string TranslateIdentifierName([NotNull] string name)
         {
-            var match = Extensions.Match(name);
-            if (!match.Success)
+            // TODO: Remove this once we're no longer calling this method more than once on a given name
+            if (IsIdentifierTranslated(name))
             {
-                return string.Empty;
+                return name;
             }
 
-            var ext = match.Value;
+            var builder = new StringBuilder(name);
 
-            if (returnUnmodified)
+            var longAcronymsRegex = new Regex("(?<![A-Z])[A-Z]{3,}(?![A-Z])");
+            foreach (var match in longAcronymsRegex.Matches(builder.ToString()).Cast<Match>())
             {
-                return ext;
+                if (!ExtensionAndAcronymOverrides.TryGetValue(match.Value, out var replacement))
+                {
+                    replacement = match.Value.Transform(To.LowerCase, To.TitleCase);
+                }
+
+                builder.Remove(match.Index, match.Length);
+                builder.Insert(match.Index, replacement);
             }
 
-            if (ext.Length > 2)
+            var shortNonAcronymsRegex = new Regex("(?<![A-Z])(IS|AS|NO|ON|TO|OP|BY|OF|IN|UP|OR)(?![A-Z])");
+            foreach (var match in shortNonAcronymsRegex.Matches(builder.ToString()).Cast<Match>())
             {
-                ext = ext[0] + ext.Substring(1).ToLower();
+                builder.Remove(match.Index, match.Length);
+                builder.Insert(match.Index, match.Value.Transform(To.LowerCase, To.TitleCase));
             }
 
-            return ext;
+            var dataTypeIdentifiersRegex = new Regex("\\dU?(F|I)");
+            foreach (var match in dataTypeIdentifiersRegex.Matches(builder.ToString()).Cast<Match>())
+            {
+                builder.Remove(match.Index, match.Length);
+                builder.Insert(match.Index, match.Value.Transform(To.LowerCase, To.TitleCase));
+            }
+
+            if (char.IsDigit(builder[0]))
+            {
+                builder.Insert(0, "C");
+            }
+
+            var newName = builder.ToString().Pascalize();
+            return newName;
+        }
+
+        private static bool IsIdentifierTranslated([NotNull] string identifier)
+        {
+            if (!SyntaxFacts.IsValidIdentifier(identifier))
+            {
+                return false;
+            }
+
+            if (identifier.Contains("_") || identifier.Contains("-"))
+            {
+                return false;
+            }
+
+            if (identifier.Where(c => !char.IsDigit(c)).All(char.IsUpper))
+            {
+                return false;
+            }
+
+            var unprocessedEndingRegex = new Regex("[A-Z]{3,}$");
+            if (unprocessedEndingRegex.IsMatch(identifier))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -71,11 +71,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PIXEL_TEX_GEN_ALPHA_LS_SGIX = 0x8189
         /// </summary>
-        PixelTexGenAlphaLsSgix = 0x8189,
+        PixelTexGenAlphaLSSgix = 0x8189,
 
         /// <summary>
         /// Original was GL_PIXEL_TEX_GEN_ALPHA_MS_SGIX = 0x818A
         /// </summary>
-        PixelTexGenAlphaMsSgix = 0x818a
+        PixelTexGenAlphaMSSgix = 0x818a
     }
 }

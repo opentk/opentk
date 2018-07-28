@@ -121,7 +121,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PROXY_TEXTURE_RECTANGLE_NV = 0x84F7
         /// </summary>
-        ProxyTextureRectangleNv = 0x84f7,
+        ProxyTextureRectangleNV = 0x84f7,
 
         /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP = 0x8513

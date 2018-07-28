@@ -51,7 +51,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_CLAMP_TO_BORDER_NV = 0x812D
         /// </summary>
-        ClampToBorderNv = 0x812d,
+        ClampToBorderNV = 0x812d,
 
         /// <summary>
         /// Original was GL_CLAMP_TO_BORDER_SGIS = 0x812D

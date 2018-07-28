@@ -36,31 +36,31 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_GL_UNIFORM_BARRIER_BIT = 0x00000004
         /// </summary>
-        GlUniformBarrierBit = 0x00000004,
+        GLUniformBarrierBit = 0x00000004,
 
         /// <summary>
         /// Original was GL_GL_TEXTURE_FETCH_BARRIER_BIT = 0x00000008
         /// </summary>
-        GlTextureFetchBarrierBit = 0x00000008,
+        GLTextureFetchBarrierBit = 0x00000008,
 
         /// <summary>
         /// Original was GL_GL_SHADER_IMAGE_ACCESS_BARRIER_BIT = 0x00000020
         /// </summary>
-        GlShaderImageAccessBarrierBit = 0x00000020,
+        GLShaderImageAccessBarrierBit = 0x00000020,
 
         /// <summary>
         /// Original was GL_GL_FRAMEBUFFER_BARRIER_BIT = 0x00000400
         /// </summary>
-        GlFramebufferBarrierBit = 0x00000400,
+        GLFramebufferBarrierBit = 0x00000400,
 
         /// <summary>
         /// Original was GL_GL_ATOMIC_COUNTER_BARRIER_BIT = 0x00001000
         /// </summary>
-        GlAtomicCounterBarrierBit = 0x00001000,
+        GLAtomicCounterBarrierBit = 0x00001000,
 
         /// <summary>
         /// Original was GL_GL_ALL_BARRIER_BITS = 0xFFFFFFFF
         /// </summary>
-        GlAllBarrierBits = unchecked((int)0xffffffff)
+        GLAllBarrierBits = unchecked((int)0xffffffff)
     }
 }

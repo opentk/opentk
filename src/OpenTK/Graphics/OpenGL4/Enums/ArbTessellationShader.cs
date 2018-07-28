@@ -51,7 +51,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_CW = 0x0900
         /// </summary>
-        Cw = 0x0900,
+        CW = 0x0900,
 
         /// <summary>
         /// Original was GL_CCW = 0x0901

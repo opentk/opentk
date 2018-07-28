@@ -261,7 +261,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FLOAT_MAT2x3_NV = 0x8B65
         /// </summary>
-        FloatMat2x3Nv = 0x8b65,
+        FloatMat2x3NV = 0x8b65,
 
         /// <summary>
         /// Original was GL_FLOAT_MAT2x4 = 0x8B66
@@ -271,7 +271,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FLOAT_MAT2x4_NV = 0x8B66
         /// </summary>
-        FloatMat2x4Nv = 0x8b66,
+        FloatMat2x4NV = 0x8b66,
 
         /// <summary>
         /// Original was GL_FLOAT_MAT3x2 = 0x8B67
@@ -281,7 +281,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FLOAT_MAT3x2_NV = 0x8B67
         /// </summary>
-        FloatMat3x2Nv = 0x8b67,
+        FloatMat3x2NV = 0x8b67,
 
         /// <summary>
         /// Original was GL_FLOAT_MAT3x4 = 0x8B68
@@ -291,7 +291,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FLOAT_MAT3x4_NV = 0x8B68
         /// </summary>
-        FloatMat3x4Nv = 0x8b68,
+        FloatMat3x4NV = 0x8b68,
 
         /// <summary>
         /// Original was GL_FLOAT_MAT4x2 = 0x8B69
@@ -301,7 +301,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FLOAT_MAT4x2_NV = 0x8B69
         /// </summary>
-        FloatMat4x2Nv = 0x8b69,
+        FloatMat4x2NV = 0x8b69,
 
         /// <summary>
         /// Original was GL_FLOAT_MAT4x3 = 0x8B6A
@@ -311,6 +311,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FLOAT_MAT4x3_NV = 0x8B6A
         /// </summary>
-        FloatMat4x3Nv = 0x8b6a
+        FloatMat4x3NV = 0x8b6a
     }
 }

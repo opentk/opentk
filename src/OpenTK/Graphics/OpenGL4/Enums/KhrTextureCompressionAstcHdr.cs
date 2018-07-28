@@ -36,141 +36,141 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_ASTC_4x4_KHR = 0x93B0
         /// </summary>
-        CompressedRgbaAstc4X4Khr = 0x93b0,
+        CompressedRgbaAstc4x4Khr = 0x93b0,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_ASTC_5x4_KHR = 0x93B1
         /// </summary>
-        CompressedRgbaAstc5X4Khr = 0x93b1,
+        CompressedRgbaAstc5x4Khr = 0x93b1,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_ASTC_5x5_KHR = 0x93B2
         /// </summary>
-        CompressedRgbaAstc5X5Khr = 0x93b2,
+        CompressedRgbaAstc5x5Khr = 0x93b2,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_ASTC_6x5_KHR = 0x93B3
         /// </summary>
-        CompressedRgbaAstc6X5Khr = 0x93b3,
+        CompressedRgbaAstc6x5Khr = 0x93b3,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_ASTC_6x6_KHR = 0x93B4
         /// </summary>
-        CompressedRgbaAstc6X6Khr = 0x93b4,
+        CompressedRgbaAstc6x6Khr = 0x93b4,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_ASTC_8x5_KHR = 0x93B5
         /// </summary>
-        CompressedRgbaAstc8X5Khr = 0x93b5,
+        CompressedRgbaAstc8x5Khr = 0x93b5,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_ASTC_8x6_KHR = 0x93B6
         /// </summary>
-        CompressedRgbaAstc8X6Khr = 0x93b6,
+        CompressedRgbaAstc8x6Khr = 0x93b6,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_ASTC_8x8_KHR = 0x93B7
         /// </summary>
-        CompressedRgbaAstc8X8Khr = 0x93b7,
+        CompressedRgbaAstc8x8Khr = 0x93b7,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_ASTC_10x5_KHR = 0x93B8
         /// </summary>
-        CompressedRgbaAstc10X5Khr = 0x93b8,
+        CompressedRgbaAstc10x5Khr = 0x93b8,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_ASTC_10x6_KHR = 0x93B9
         /// </summary>
-        CompressedRgbaAstc10X6Khr = 0x93b9,
+        CompressedRgbaAstc10x6Khr = 0x93b9,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_ASTC_10x8_KHR = 0x93BA
         /// </summary>
-        CompressedRgbaAstc10X8Khr = 0x93ba,
+        CompressedRgbaAstc10x8Khr = 0x93ba,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_ASTC_10x10_KHR = 0x93BB
         /// </summary>
-        CompressedRgbaAstc10X10Khr = 0x93bb,
+        CompressedRgbaAstc10x10Khr = 0x93bb,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_ASTC_12x10_KHR = 0x93BC
         /// </summary>
-        CompressedRgbaAstc12X10Khr = 0x93bc,
+        CompressedRgbaAstc12x10Khr = 0x93bc,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_ASTC_12x12_KHR = 0x93BD
         /// </summary>
-        CompressedRgbaAstc12X12Khr = 0x93bd,
+        CompressedRgbaAstc12x12Khr = 0x93bd,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR = 0x93D0
         /// </summary>
-        CompressedSrgb8Alpha8Astc4X4Khr = 0x93d0,
+        CompressedSrgb8Alpha8Astc4x4Khr = 0x93d0,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR = 0x93D1
         /// </summary>
-        CompressedSrgb8Alpha8Astc5X4Khr = 0x93d1,
+        CompressedSrgb8Alpha8Astc5x4Khr = 0x93d1,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR = 0x93D2
         /// </summary>
-        CompressedSrgb8Alpha8Astc5X5Khr = 0x93d2,
+        CompressedSrgb8Alpha8Astc5x5Khr = 0x93d2,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x5_KHR = 0x93D3
         /// </summary>
-        CompressedSrgb8Alpha8Astc6X5Khr = 0x93d3,
+        CompressedSrgb8Alpha8Astc6x5Khr = 0x93d3,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x6_KHR = 0x93D4
         /// </summary>
-        CompressedSrgb8Alpha8Astc6X6Khr = 0x93d4,
+        CompressedSrgb8Alpha8Astc6x6Khr = 0x93d4,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x5_KHR = 0x93D5
         /// </summary>
-        CompressedSrgb8Alpha8Astc8X5Khr = 0x93d5,
+        CompressedSrgb8Alpha8Astc8x5Khr = 0x93d5,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x6_KHR = 0x93D6
         /// </summary>
-        CompressedSrgb8Alpha8Astc8X6Khr = 0x93d6,
+        CompressedSrgb8Alpha8Astc8x6Khr = 0x93d6,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x8_KHR = 0x93D7
         /// </summary>
-        CompressedSrgb8Alpha8Astc8X8Khr = 0x93d7,
+        CompressedSrgb8Alpha8Astc8x8Khr = 0x93d7,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x5_KHR = 0x93D8
         /// </summary>
-        CompressedSrgb8Alpha8Astc10X5Khr = 0x93d8,
+        CompressedSrgb8Alpha8Astc10x5Khr = 0x93d8,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x6_KHR = 0x93D9
         /// </summary>
-        CompressedSrgb8Alpha8Astc10X6Khr = 0x93d9,
+        CompressedSrgb8Alpha8Astc10x6Khr = 0x93d9,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x8_KHR = 0x93DA
         /// </summary>
-        CompressedSrgb8Alpha8Astc10X8Khr = 0x93da,
+        CompressedSrgb8Alpha8Astc10x8Khr = 0x93da,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR = 0x93DB
         /// </summary>
-        CompressedSrgb8Alpha8Astc10X10Khr = 0x93db,
+        CompressedSrgb8Alpha8Astc10x10Khr = 0x93db,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR = 0x93DC
         /// </summary>
-        CompressedSrgb8Alpha8Astc12X10Khr = 0x93dc,
+        CompressedSrgb8Alpha8Astc12x10Khr = 0x93dc,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR = 0x93DD
         /// </summary>
-        CompressedSrgb8Alpha8Astc12X12Khr = 0x93dd
+        CompressedSrgb8Alpha8Astc12x12Khr = 0x93dd
     }
 }

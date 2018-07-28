@@ -149,6 +149,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PER_GPU_STORAGE_BIT_NV = 0x0800
         /// </summary>
-        PerGpuStorageBitNv = 0x0800
+        PerGpuStorageBitNV = 0x0800
     }
 }

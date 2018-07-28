@@ -36,16 +36,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_ACCUM_ADJACENT_PAIRS_NV = 0x90AD
         /// </summary>
-        AccumAdjacentPairsNv = 0x90ad,
+        AccumAdjacentPairsNV = 0x90ad,
 
         /// <summary>
         /// Original was GL_ADJACENT_PAIRS_NV = 0x90AE
         /// </summary>
-        AdjacentPairsNv = 0x90ae,
+        AdjacentPairsNV = 0x90ae,
 
         /// <summary>
         /// Original was GL_FIRST_TO_REST_NV = 0x90AF
         /// </summary>
-        FirstToRestNv = 0x90af
+        FirstToRestNV = 0x90af
     }
 }

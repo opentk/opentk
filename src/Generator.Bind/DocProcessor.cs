@@ -195,7 +195,7 @@ namespace Bind
                     c = c.Replace(Generator.ConstantPrefix, string.Empty);
                 }
 
-                e.Value = enumProcessor.TranslateConstantName(c, false);
+                e.Value = Utilities.TranslateIdentifierName(c);
             }
 
             // Create inline documentation

@@ -141,12 +141,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RG = 0x8227
         /// </summary>
-        Rg = 0x8227,
+        RG = 0x8227,
 
         /// <summary>
         /// Original was GL_RG_INTEGER = 0x8228
         /// </summary>
-        RgInteger = 0x8228,
+        RGInteger = 0x8228,
 
         /// <summary>
         /// Original was GL_R5_G6_B5_ICC_SGIX = 0x8466

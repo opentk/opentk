@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_SKIP_MISSING_GLYPH_NV = 0x90A9
         /// </summary>
-        SkipMissingGlyphNv = 0x90a9,
+        SkipMissingGlyphNV = 0x90a9,
 
         /// <summary>
         /// Original was GL_USE_MISSING_GLYPH_NV = 0x90AA
         /// </summary>
-        UseMissingGlyphNv = 0x90aa
+        UseMissingGlyphNV = 0x90aa
     }
 }

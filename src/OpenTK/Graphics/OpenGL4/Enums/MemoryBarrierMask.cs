@@ -79,7 +79,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_SHADER_GLOBAL_ACCESS_BARRIER_BIT_NV = 0x00000010
         /// </summary>
-        ShaderGlobalAccessBarrierBitNv = 0x00000010,
+        ShaderGlobalAccessBarrierBitNV = 0x00000010,
 
         /// <summary>
         /// Original was GL_SHADER_IMAGE_ACCESS_BARRIER_BIT = 0x00000020
