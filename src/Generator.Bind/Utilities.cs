@@ -20,6 +20,27 @@ namespace Bind
     internal static class Utilities
     {
         /// <summary>
+        /// Gets a regular expression that matches against isolated long acronyms (3+ capital characters).
+        /// </summary>
+        private static readonly Regex LongAcronymsRegex = new Regex("(?<![A-Z])[A-Z]{3,}(?![A-Z])", RegexOptions.Compiled);
+
+        /// <summary>
+        /// Gets a regular expression that matches against short acronym candidates, which should still be transformed.
+        /// </summary>
+        private static readonly Regex ShortNonAcronymsRegex = new Regex("(?<![A-Z])(IS|AS|NO|ON|TO|OP|BY|OF|IN|UP|OR)(?![A-Z])", RegexOptions.Compiled);
+
+        /// <summary>
+        /// Gets a regular expression that matches against simple data type identifiers in other identifiers.
+        /// </summary>
+        private static readonly Regex DataTypeIdentifersRegex = new Regex("\\dU?(F|I)", RegexOptions.Compiled);
+
+        /// <summary>
+        /// Gets a regular expression that matches against three or more consecutive capital characters at the end of a
+        /// string.
+        /// </summary>
+        private static readonly Regex UnprocessedEndingRegex = new Regex("[A-Z]{3,}$", RegexOptions.Compiled);
+
+        /// <summary>
         /// Gets a set of overrides used for name translation when dealing with complicated extensions and acronyms.
         /// </summary>
         public static readonly IReadOnlyDictionary<string, string> ExtensionAndAcronymOverrides = new Dictionary<string, string>
@@ -190,8 +211,7 @@ namespace Bind
 
             var builder = new StringBuilder(name);
 
-            var longAcronymsRegex = new Regex("(?<![A-Z])[A-Z]{3,}(?![A-Z])");
-            foreach (var match in longAcronymsRegex.Matches(builder.ToString()).Cast<Match>())
+            foreach (var match in LongAcronymsRegex.Matches(builder.ToString()).Cast<Match>())
             {
                 if (!ExtensionAndAcronymOverrides.TryGetValue(match.Value, out var replacement))
                 {
@@ -202,15 +222,13 @@ namespace Bind
                 builder.Insert(match.Index, replacement);
             }
 
-            var shortNonAcronymsRegex = new Regex("(?<![A-Z])(IS|AS|NO|ON|TO|OP|BY|OF|IN|UP|OR)(?![A-Z])");
-            foreach (var match in shortNonAcronymsRegex.Matches(builder.ToString()).Cast<Match>())
+            foreach (var match in ShortNonAcronymsRegex.Matches(builder.ToString()).Cast<Match>())
             {
                 builder.Remove(match.Index, match.Length);
                 builder.Insert(match.Index, match.Value.Transform(To.LowerCase, To.TitleCase));
             }
 
-            var dataTypeIdentifiersRegex = new Regex("\\dU?(F|I)");
-            foreach (var match in dataTypeIdentifiersRegex.Matches(builder.ToString()).Cast<Match>())
+            foreach (var match in DataTypeIdentifersRegex.Matches(builder.ToString()).Cast<Match>())
             {
                 builder.Remove(match.Index, match.Length);
                 builder.Insert(match.Index, match.Value.Transform(To.LowerCase, To.TitleCase));
@@ -242,8 +260,7 @@ namespace Bind
                 return false;
             }
 
-            var unprocessedEndingRegex = new Regex("[A-Z]{3,}$");
-            if (unprocessedEndingRegex.IsMatch(identifier))
+            if (UnprocessedEndingRegex.IsMatch(identifier))
             {
                 return false;
             }
