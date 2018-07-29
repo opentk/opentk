@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Bind.Translation;
 using Bind.Translation.Translators;
 using Bind.Translation.Trimmers;
 using Bind.Versioning;
@@ -67,13 +65,13 @@ namespace Bind.Baking
             ResolveEnumerationOverrides(coalescedOverrides, coalescedProfile);
 
             // Translate profile identifiers and types names
-            var translatedProfile = new ProfileFunctionTranslator().TranslateProfile(coalescedProfile);
-            translatedProfile = new ProfileEnumerationTranslator().TranslateProfile(translatedProfile);
+            var translatedProfile = new ProfileFunctionTranslator().Translate(coalescedProfile);
+            translatedProfile = new ProfileEnumerationTranslator().Translate(translatedProfile);
 
             // Apply profile overrides
             var overridenProfile = ApplyOverridesToProfile(translatedProfile, coalescedOverrides);
 
-            return translatedProfile;
+            return overridenProfile;
         }
 
         /// <summary>
