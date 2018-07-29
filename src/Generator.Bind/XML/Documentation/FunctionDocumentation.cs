@@ -44,5 +44,11 @@ namespace Bind.XML.Documentation
             Purpose = purpose ?? throw new ArgumentNullException(nameof(purpose));
             Parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
         }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"{Name} - {Purpose}";
+        }
     }
 }

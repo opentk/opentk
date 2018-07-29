@@ -1,4 +1,5 @@
 using System;
+using Humanizer;
 using JetBrains.Annotations;
 
 namespace Bind.XML.Documentation
@@ -29,6 +30,12 @@ namespace Bind.XML.Documentation
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Description = description ?? throw new ArgumentNullException(nameof(description));
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"{Name} - {Description.Truncate(64)}";
         }
     }
 }
