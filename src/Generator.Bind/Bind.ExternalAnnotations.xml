@@ -1,5 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <assembly name="Bind">
+  <member name="M:Bind.Baking.DocumentationBaker.#ctor(Bind.XML.Signatures.ApiProfile)">
+    <parameter name="apiProfile">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Baking.DocumentationBaker.BakeDocumentation(Bind.XML.Documentation.ProfileDocumentation)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="documentation">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
   <member name="M:Bind.Baking.ProfileBaker.#ctor(System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.ApiProfile},System.Collections.Generic.IReadOnlyList{Bind.XML.Overrides.ApiProfileOverride})">
     <parameter name="profiles">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
@@ -30,15 +41,55 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="M:Bind.Extensions.XContainerExtensions.GetRequiredElement(System.Xml.Linq.XContainer,System.String)">
+  <member name="M:Bind.Extensions.XContainerExtensions.GetRequiredElement(System.Xml.Linq.XContainer,System.String,System.Boolean)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <parameter name="container">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
+    <parameter name="elementName">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
   </member>
-  <member name="M:Bind.Extensions.XElementExtensions.GetRequiredAttribute(System.Xml.Linq.XElement,System.String)">
+  <member name="M:Bind.Extensions.XContainerExtensions.GetRequiredElements(System.Xml.Linq.XContainer,System.String,System.Boolean)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+    <parameter name="container">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="elementName">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Extensions.XContainerExtensions.GetRequiredSectionByClass(System.Xml.Linq.XContainer,System.String,System.String)">
+    <parameter name="container">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="className">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="sectionName">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Extensions.XContainerExtensions.GetRequiredSectionsByClass(System.Xml.Linq.XContainer,System.String,System.String)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+    <parameter name="container">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="className">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="sectionName">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Extensions.XElementExtensions.GetRequiredAttribute(System.Xml.Linq.XElement,System.String,System.Boolean)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <parameter name="element">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="attributeName">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
@@ -66,9 +117,15 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="M:Bind.Translation.Translators.ITranslator`1.TranslateProfile(`0)">
+  <member name="M:Bind.Translation.Translators.ITranslator`1.Translate(`0)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-    <parameter name="profile">
+    <parameter name="input">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Translation.Translators.NativeIdentifierTranslator.TranslateIdentifierName(System.String)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="name">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
@@ -162,6 +219,87 @@
   <member name="M:Bind.Writers.SourceWriterIndentation.#ctor(Bind.Writers.SourceWriter)">
     <parameter name="sourceWriter">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.XML.Documentation.DocumentationReader.ReadFunctionDocumentations(System.Xml.Linq.XDocument)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+    <parameter name="functionDocument">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.XML.Documentation.DocumentationReader.ReadProfileDocumentation(System.String)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="path">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.PathReferenceAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.XML.Documentation.FunctionDocumentation.#ctor(System.String,System.String,System.Collections.Generic.IReadOnlyList{Bind.XML.Documentation.ParameterDocumentation})">
+    <parameter name="name">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="purpose">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="parameters">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="P:Bind.XML.Documentation.FunctionDocumentation.Name">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="P:Bind.XML.Documentation.FunctionDocumentation.Parameters">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+  </member>
+  <member name="P:Bind.XML.Documentation.FunctionDocumentation.Purpose">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.XML.Documentation.ParameterDocumentation.#ctor(System.String,System.String)">
+    <parameter name="name">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="description">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="P:Bind.XML.Documentation.ParameterDocumentation.Description">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="P:Bind.XML.Documentation.ParameterDocumentation.Name">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.XML.Documentation.ProfileDocumentation.#ctor(System.Collections.Generic.IReadOnlyList{Bind.XML.Documentation.FunctionDocumentation})">
+    <parameter name="functions">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="P:Bind.XML.Documentation.ProfileDocumentation.Functions">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.XML.Documentation.ProfileDocumentation.GetDocumentation(Bind.XML.Signatures.Functions.FunctionSignature)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="function">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.XML.Documentation.ProfileDocumentation.HasDocumentation(Bind.XML.Signatures.Functions.FunctionSignature)">
+    <parameter name="function">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.XML.Documentation.ProfileDocumentation.TryGetDocumentation(Bind.XML.Signatures.Functions.FunctionSignature,Bind.XML.Documentation.FunctionDocumentation@)">
+    <attribute ctor="M:JetBrains.Annotations.ContractAnnotationAttribute.#ctor(System.String)">
+      <argument>true &lt;= documentation : notnull; false &lt;= documentation : null</argument>
+    </attribute>
+    <parameter name="function">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="documentation">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
     </parameter>
   </member>
   <member name="P:Bind.XML.IApiProfile.Name">
@@ -445,6 +583,12 @@
   </member>
   <member name="P:Bind.XML.Signatures.ApiProfile.Enumerations">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.XML.Signatures.ApiProfile.FindFunctionWithEntrypoint(System.String)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="entrypoint">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="P:Bind.XML.Signatures.ApiProfile.Functions">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />

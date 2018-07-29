@@ -13,7 +13,7 @@ using Bind.Generators.ES;
 using Bind.Generators.GL2;
 using Bind.Typemap;
 using Bind.Versioning;
-using Bind.XML;
+using Bind.XML.Documentation;
 using Bind.XML.Overrides;
 using Bind.XML.Signatures;
 using CommandLine;
@@ -50,7 +50,7 @@ namespace Bind
             var profileOverrides = OverrideReader.GetProfileOverrides(Path.Combine(Arguments.InputPath, "GL2", "overrides.xml")).ToList();
 
             var baker = new ProfileBaker(profiles, profileOverrides);
-            //baker.BakeProfile("gles2", new VersionRange(new Version(3, 1)));
+            var bakedProfile = baker.BakeProfile("gles2", new VersionRange(new Version(3, 1)));
 
             using (var csharpFs = File.OpenRead(Path.Combine(Arguments.InputPath, "csharp.tm")))
             {
@@ -64,6 +64,9 @@ namespace Bind
                     var bakedMap = TypemapBaker.BakeTypemaps(apiMap, csharpMap);
                 }
             }
+
+            var docs = DocumentationReader.ReadProfileDocumentation(Path.Combine(Arguments.InputPath, "Docs", "docs.gl", "es2"));
+            var bakedDocs = new DocumentationBaker(bakedProfile).BakeDocumentation(docs);
 
             CreateGenerators();
 
