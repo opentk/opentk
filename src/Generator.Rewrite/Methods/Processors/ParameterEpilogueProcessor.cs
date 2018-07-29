@@ -17,6 +17,12 @@ namespace OpenTK.Rewrite.Methods.Processors
         private ILProcessor _ilProcessor;
         private MethodDefinition _wrapper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParameterEpilogueProcessor"/> class with a given mscorlib
+        /// definition and bindings base type definition.
+        /// </summary>
+        /// <param name="mscorlib"></param>
+        /// <param name="bindingsBaseType"></param>
         public ParameterEpilogueProcessor
         (
             AssemblyDefinition mscorlib,
@@ -27,6 +33,7 @@ namespace OpenTK.Rewrite.Methods.Processors
             _marshalType = mscorlib.MainModule.GetType(typeof(Marshal).FullName);
         }
 
+        /// <inheritdoc/>
         protected override void ProcessEpilogue
         (
             ILProcessor ilProcessor,

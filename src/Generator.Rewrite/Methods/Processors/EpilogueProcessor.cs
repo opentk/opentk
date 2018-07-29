@@ -5,6 +5,13 @@ using Mono.Cecil.Cil;
 
 namespace OpenTK.Rewrite.Methods.Processors
 {
+    /// <summary>
+    /// Provides functionality for additional (epilogue) processing that is dependent
+    /// on an earlier (prologue) rewriting step.
+    /// </summary>
+    /// <typeparam name="T">
+    /// The type of the variable that will be passed from the prologue to the epilogue rewriting step.
+    /// </typeparam>
     public abstract class EpilogueProcessor<T> : IMethodProcessor
     {
         /// <summary>
@@ -32,6 +39,13 @@ namespace OpenTK.Rewrite.Methods.Processors
             ProcessEpilogue(ilProcessor, wrapper, native, variable);
         }
 
+        /// <summary>
+        /// Implements the actual epilogue rewriting step.
+        /// </summary>
+        /// <param name="ilProcessor">The IL processor for the wrapper method definition.</param>
+        /// <param name="wrapper">The method definition for the managed wrapper method.</param>
+        /// <param name="native">The method definition for the native function.</param>
+        /// <param name="argument">Additional information that was created in the epilogue rewriting step.</param>
         protected abstract void ProcessEpilogue
         (
             ILProcessor ilProcessor,

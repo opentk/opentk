@@ -8,6 +8,9 @@ using OpenTK.Rewrite.Methods;
 
 namespace OpenTK.Rewrite.Types
 {
+    /// <summary>
+    /// Rewrites all wrapper methods in a type according to a supplied <see cref="IMethodRewriter"/> implementation.
+    /// </summary>
     public sealed class TypeRewriter : ITypeRewriter
     {
         private readonly TypeDefinition _boolType;
@@ -15,6 +18,14 @@ namespace OpenTK.Rewrite.Types
         private readonly IMethodRewriter _methodRewriter;
         private readonly bool _useDllImport;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TypeRewriter"/> class.
+        /// </summary>
+        /// <param name="mscorlib">The mscorlib assembly definition used for setting up.</param>
+        /// <param name="useDllImport">Whether to use DllImport instead of GetProcAddress for native calls.</param>
+        /// <param name="methodRewriter">
+        /// The <see cref="IMethodRewriter"/> implementation to use for rewriting methods inside a type.
+        /// </param>
         public TypeRewriter
         (
             AssemblyDefinition mscorlib,
@@ -23,12 +34,16 @@ namespace OpenTK.Rewrite.Types
         )
         {
             _boolType = mscorlib.MainModule.GetType(typeof(bool).FullName);
-
             _useDllImport = useDllImport;
 
             _methodRewriter = methodRewriter ?? throw new ArgumentNullException(nameof(methodRewriter));
         }
 
+        /// <summary>
+        /// Rewrites a type definition by rewriting all wrapper methods.
+        /// </summary>
+        /// <param name="type">The type definition to rewrite.</param>
+        /// <returns>The rewritten type definition.</returns>
         public TypeDefinition Rewrite(TypeDefinition type)
         {
             var entryPoints = type.Fields.FirstOrDefault(f => f.Name == "EntryPoints");

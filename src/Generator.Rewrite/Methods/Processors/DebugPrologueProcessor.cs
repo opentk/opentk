@@ -20,11 +20,17 @@ namespace OpenTK.Rewrite.Methods.Processors
             "OpenTK.Graphics.ES30",
         };
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DebugPrologueProcessor"/> class
+        /// with a given mscorlib assembly definition.
+        /// </summary>
+        /// <param name="mscorlib">The assembly definition used for setting up the epilogue processor.</param>
         public DebugPrologueProcessor(AssemblyDefinition mscorlib)
             : base(new DebugEpilogueProcessor(mscorlib))
         {
         }
 
+        /// <inheritdoc/>
         public override void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
             if (ilProcessor.Body.Method.Name == "GetError")

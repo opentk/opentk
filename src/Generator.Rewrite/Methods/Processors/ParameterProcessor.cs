@@ -34,6 +34,7 @@ namespace OpenTK.Rewrite.Methods.Processors
             _marshalType = mscorlib.MainModule.GetType(typeof(Marshal).FullName);
         }
 
+        /// <inheritdoc/>
         public override void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
             IEnumerable<VariableIdentifier> generatedVariables;

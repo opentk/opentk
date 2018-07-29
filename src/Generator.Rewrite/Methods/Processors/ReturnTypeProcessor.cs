@@ -12,6 +12,11 @@ namespace OpenTK.Rewrite.Methods.Processors
         private readonly TypeDefinition _intPtrType;
         private readonly TypeDefinition _stringType;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReturnTypeProcessor"/> class
+        /// with a given mscorlib assembly definition.
+        /// </summary>
+        /// <param name="mscorlib">The mscorlib assembly definition to use when setting up.</param>
         public ReturnTypeProcessor(AssemblyDefinition mscorlib)
         {
             if (mscorlib is null)
@@ -23,6 +28,7 @@ namespace OpenTK.Rewrite.Methods.Processors
             _stringType = mscorlib.MainModule.GetType(typeof(string).FullName);
         }
 
+        /// <inheritdoc/>
         public void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
             if (wrapper.ReturnType.FullNameEquals(typeof(void)) ||

@@ -8,11 +8,17 @@ namespace OpenTK.Rewrite.Methods.Processors
     {
         private readonly TypeDefinition _voidType;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DebugEpilogueProcessor"/> class
+        /// with a given mscorlib assembly definition.
+        /// </summary>
+        /// <param name="mscorlib">The mscorlib assembly definition to set up this processor.</param>
         public DebugEpilogueProcessor(AssemblyDefinition mscorlib)
         {
             _voidType = mscorlib.MainModule.GetType(typeof(void).FullName);
         }
 
+        /// <inheritdoc/>
         protected override void ProcessEpilogue
         (
             ILProcessor ilProcessor,

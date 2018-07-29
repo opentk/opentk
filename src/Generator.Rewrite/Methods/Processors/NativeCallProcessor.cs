@@ -6,15 +6,23 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Methods.Processors
 {
+    /// <summary>
+    /// Rewrites wrapper method IL to call the native function, either via DllImport or the calli opcode.
+    /// </summary>
     public sealed class NativeCallProcessor : IMethodProcessor
     {
         private readonly bool _useDllImport;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NativeCallProcessor"/> class.
+        /// </summary>
+        /// <param name="useDllImport">Whether to use DllImport instead of GetProcAddress.</param>
         public NativeCallProcessor(bool useDllImport)
         {
             _useDllImport = useDllImport;
         }
 
+        /// <inheritdoc/>
         public void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
             int slot = native.GetSlot();
