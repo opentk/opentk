@@ -4,7 +4,7 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Methods.Processors
 {
-    public sealed class DebugEpilogueProcessor
+    public sealed class DebugEpilogueProcessor : EpilogueProcessor<DebugVariables>
     {
         private readonly TypeDefinition _voidType;
 
@@ -13,7 +13,7 @@ namespace OpenTK.Rewrite.Methods.Processors
             _voidType = mscorlib.MainModule.GetType(typeof(void).FullName);
         }
 
-        public void Process
+        protected override void ProcessEpilogue
         (
             ILProcessor ilProcessor,
             MethodDefinition wrapper,

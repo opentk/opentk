@@ -43,9 +43,9 @@ namespace OpenTK.Rewrite.Methods
             // if one of the processors has an epilogue associated, run it now
             foreach (var processor in _processors.Reverse())
             {
-                if (processor is IMethodProcessorWithEpilogue p)
+                if (processor is IMethodProcessorWithPostProcessor p)
                 {
-                    p.ProcessEpilogue(ilProcessor, wrapper, native);
+                    p.PostProcessor.Process(ilProcessor, wrapper, native);
                 }
             }
 

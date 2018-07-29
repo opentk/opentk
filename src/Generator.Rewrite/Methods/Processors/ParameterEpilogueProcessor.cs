@@ -8,7 +8,7 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Methods.Processors
 {
-    public sealed class ParameterEpilogueProcessor
+    public sealed class ParameterEpilogueProcessor : EpilogueProcessor<IEnumerable<VariableIdentifier>>
     {
         private readonly TypeDefinition _bindingsBaseType;
 
@@ -27,7 +27,7 @@ namespace OpenTK.Rewrite.Methods.Processors
             _marshalType = mscorlib.MainModule.GetType(typeof(Marshal).FullName);
         }
 
-        public void Process
+        protected override void ProcessEpilogue
         (
             ILProcessor ilProcessor,
             MethodDefinition wrapper,

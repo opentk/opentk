@@ -56,12 +56,12 @@ namespace OpenTK.Rewrite.Methods.Processors
                 var stringConstructor = wrapper.Module.ImportReference
                 (
                     _stringType
-                    .GetConstructors()
-                    .First(m =>
-                    {
-                        var p = m.Parameters;
-                        return p.Count > 0 && p[0].ParameterType.FullNameEquals(typeof(sbyte*));
-                    })
+                        .GetConstructors()
+                        .First(m =>
+                        {
+                            var p = m.Parameters;
+                            return p.Count > 0 && p[0].ParameterType.FullNameEquals(typeof(sbyte*));
+                        })
                 );
 
                 ilProcessor.Emit(OpCodes.Call, explicitOperator);

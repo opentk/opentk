@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -10,11 +9,8 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Methods.Processors
 {
-    public sealed class ParameterProcessor : IMethodProcessorWithEpilogue
+    public sealed class ParameterProcessor : MethodProcessorWithEpilogue<IEnumerable<VariableIdentifier>>
     {
-        private readonly ParameterEpilogueProcessor _epilogueProcessor;
-        private readonly ConcurrentDictionary<MethodDefinition, IEnumerable<VariableIdentifier>> _generatedVarsDictionary;
-
         private readonly TypeDefinition _bindingsBaseType;
 
         private readonly TypeDefinition _arrayType;
@@ -23,9 +19,12 @@ namespace OpenTK.Rewrite.Methods.Processors
         private readonly TypeDefinition _marshalType;
 
         public ParameterProcessor(AssemblyDefinition mscorlib, TypeDefinition bindingsBaseType)
+            : base(new ParameterEpilogueProcessor(mscorlib, bindingsBaseType))
         {
-            _epilogueProcessor = new ParameterEpilogueProcessor(mscorlib, bindingsBaseType);
-            _generatedVarsDictionary = new ConcurrentDictionary<MethodDefinition, IEnumerable<VariableIdentifier>>();
+            if (mscorlib is null)
+            {
+                throw new ArgumentNullException(nameof(mscorlib));
+            }
 
             _bindingsBaseType = bindingsBaseType ?? throw new ArgumentNullException(nameof(bindingsBaseType));
 
@@ -35,7 +34,7 @@ namespace OpenTK.Rewrite.Methods.Processors
             _marshalType = mscorlib.MainModule.GetType(typeof(Marshal).FullName);
         }
 
-        public void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
+        public override void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
             IEnumerable<VariableIdentifier> generatedVariables;
 
@@ -49,17 +48,7 @@ namespace OpenTK.Rewrite.Methods.Processors
                 generatedVariables = EmitConvenienceWrapper(ilProcessor, wrapper, native, paramCountDifference);
             }
 
-            _generatedVarsDictionary.TryAdd(wrapper, generatedVariables);
-        }
-
-        public void ProcessEpilogue(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
-        {
-            if (!_generatedVarsDictionary.TryRemove(wrapper, out var generatedVariables))
-            {
-                throw new InvalidOperationException();
-            }
-
-            _epilogueProcessor.Process(ilProcessor, wrapper, native, generatedVariables);
+            EpilogueProcessor.RewriteVariables.TryAdd(wrapper, generatedVariables);
         }
 
         private IEnumerable<VariableIdentifier> EmitParameters

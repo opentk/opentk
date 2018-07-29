@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
@@ -9,7 +8,7 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Methods.Processors
 {
-    public sealed class DebugPrologueProcessor : IMethodProcessorWithEpilogue
+    public sealed class DebugPrologueProcessor : MethodProcessorWithEpilogue<DebugVariables>
     {
         private readonly IReadOnlyList<string> _graphicsModules = new List<string>
         {
@@ -21,21 +20,12 @@ namespace OpenTK.Rewrite.Methods.Processors
             "OpenTK.Graphics.ES30",
         };
 
-        private readonly DebugEpilogueProcessor _epilogueProcessor;
-        private readonly ConcurrentDictionary<MethodDefinition, DebugVariables> _debugVariableDictionary;
-
         public DebugPrologueProcessor(AssemblyDefinition mscorlib)
+            : base(new DebugEpilogueProcessor(mscorlib))
         {
-            if (mscorlib is null)
-            {
-                throw new ArgumentNullException(nameof(mscorlib));
-            }
-
-            _epilogueProcessor = new DebugEpilogueProcessor(mscorlib);
-            _debugVariableDictionary = new ConcurrentDictionary<MethodDefinition, DebugVariables>();
         }
 
-        public void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
+        public override void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
             if (ilProcessor.Body.Method.Name == "GetError")
             {
@@ -101,17 +91,7 @@ namespace OpenTK.Rewrite.Methods.Processors
                 ilProcessor.Emit(OpCodes.Call, debugVariables.Set_ErrorChecking);
             }
 
-            _debugVariableDictionary.TryAdd(wrapper, debugVariables);
-        }
-
-        public void ProcessEpilogue(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
-        {
-            if (!_debugVariableDictionary.TryRemove(wrapper, out var debugVariables))
-            {
-                throw new InvalidOperationException();
-            }
-
-            _epilogueProcessor.Process(ilProcessor, wrapper, native, debugVariables);
+            EpilogueProcessor.RewriteVariables.TryAdd(wrapper, debugVariables);
         }
     }
 }
