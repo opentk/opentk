@@ -1,8 +1,6 @@
-using System;
-using System.Linq;
-using System.Text;
+using System.Collections.Generic;
 using Bind.XML.Signatures;
-using JetBrains.Annotations;
+using Bind.XML.Signatures.Enumerations;
 
 namespace Bind.Translation.Translators
 {
@@ -12,16 +10,29 @@ namespace Bind.Translation.Translators
     public class ProfileEnumerationTranslator : ITranslator<ApiProfile>
     {
         /// <inheritdoc/>
-        public ApiProfile TranslateProfile(ApiProfile profile)
+        public ApiProfile Translate(ApiProfile profile)
         {
             var enumerations = profile.Enumerations;
-            var knownExtensions = profile.Functions.Select(f => f.Extension).Distinct().ToList();
 
+            var identifierTranslator = new NativeIdentifierTranslator();
+
+            var newEnumerations = new List<EnumerationSignature>();
             foreach (var enumeration in enumerations)
             {
+                var newEnumerationName = identifierTranslator.Translate(enumeration.Name);
+
+                var newTokens = new List<TokenSignature>();
+                foreach (var token in enumeration.Tokens)
+                {
+                    var newTokenName = identifierTranslator.Translate(token.Name);
+
+                    newTokens.Add(new TokenSignature(newTokenName, token.Value, token.DeprecatedIn, token.Remarks));
+                }
+
+                newEnumerations.Add(new EnumerationSignature(newEnumerationName, newTokens));
             }
 
-            throw new NotImplementedException();
+            return new ApiProfile(profile.Name, profile.Versions, profile.Functions, newEnumerations);
         }
     }
 }

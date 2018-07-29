@@ -11,9 +11,9 @@ namespace Bind.Translation.Translators
         /// <summary>
         /// Translates the given instance.
         /// </summary>
-        /// <param name="profile">The instance to translate.</param>
+        /// <param name="input">The instance to translate.</param>
         /// <returns>The new, translated, instance.</returns>
         [NotNull]
-        TInput TranslateProfile([NotNull] TInput profile);
+        TInput Translate([NotNull] TInput input);
     }
 }

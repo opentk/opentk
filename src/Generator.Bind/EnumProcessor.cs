@@ -25,16 +25,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Xml.XPath;
 using Bind.Generators;
 using Bind.Structures;
-using Humanizer;
+using Bind.Translation.Translators;
 using JetBrains.Annotations;
 
 namespace Bind
@@ -118,7 +115,12 @@ namespace Bind
                 // modified items to refresh their keys.
                 var name = e.Name;
                 name = ReplaceName(nav, apiname, name);
-                name = Utilities.TranslateIdentifierName(name);
+
+                if (!Utilities.IsIdentifierTranslated(name))
+                {
+                    name = NativeIdentifierTranslator.TranslateIdentifierName(name);
+                }
+
                 e.Name = name;
                 processedEnums.Add(e.Name, e);
             }
@@ -148,12 +150,15 @@ namespace Bind
                 var processedConstants = new SortedDictionary<string, ConstantDefinition>();
                 foreach (var c in e.ConstantCollection.Values)
                 {
-                    c.Name = Utilities.TranslateIdentifierName(c.Name);
+                    c.Name = NativeIdentifierTranslator.TranslateIdentifierName(c.Name);
                     c.Value = TranslateConstantValue(c.Value);
 
                     if (!string.IsNullOrWhiteSpace(c.Reference))
                     {
-                        c.Reference = Utilities.TranslateIdentifierName(c.Reference);
+                        if (!Utilities.IsIdentifierTranslated(c.Reference))
+                        {
+                            c.Reference = NativeIdentifierTranslator.TranslateIdentifierName(c.Reference);
+                        }
                     }
 
                     if (!processedConstants.ContainsKey(c.Name))
@@ -243,7 +248,12 @@ namespace Bind
                 return value;
             }
 
-            return Utilities.TranslateIdentifierName(value);
+            if (!Utilities.IsIdentifierTranslated(value))
+            {
+                return NativeIdentifierTranslator.TranslateIdentifierName(value);
+            }
+
+            return value;
         }
 
         // There are cases when a value is an aliased constant, with no enum specified.

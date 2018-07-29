@@ -28,7 +28,7 @@ namespace Bind.Translation.Translators
         }
 
         /// <inheritdoc/>
-        public ApiProfile TranslateProfile(ApiProfile profile)
+        public ApiProfile Translate(ApiProfile profile)
         {
             throw new NotImplementedException();
         }

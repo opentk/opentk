@@ -32,6 +32,7 @@ using System.Text.RegularExpressions;
 using System.Xml.XPath;
 using Bind.Generators;
 using Bind.Structures;
+using Bind.Translation.Translators;
 using JetBrains.Annotations;
 
 namespace Bind
@@ -307,14 +308,23 @@ namespace Bind
             [NotNull] string apiname
         )
         {
-            category = Utilities.TranslateIdentifierName(category);
+            if (!Utilities.IsIdentifierTranslated(category))
+            {
+                category = NativeIdentifierTranslator.TranslateIdentifierName(category);
+            }
 
             // Try to find out if it is an enum. If the type exists in the normal GLEnums list, use this.
             // Special case for Boolean which is there simply because C89 does not support bool types.
             // We don't really need that in C#
+            var typeName = typeDefinition.TypeName;
+            if (!Utilities.IsIdentifierTranslated(typeName))
+            {
+                typeName = NativeIdentifierTranslator.TranslateIdentifierName(typeName);
+            }
+
             var normal =
                 enums.TryGetValue(typeDefinition.TypeName, out var @enum) ||
-                enums.TryGetValue(Utilities.TranslateIdentifierName(typeDefinition.TypeName), out @enum);
+                enums.TryGetValue(typeName, out @enum);
 
             // Translate enum types
             typeDefinition.IsEnum = false;
@@ -334,7 +344,14 @@ namespace Bind
                 // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
                 if (enums.ContainsKey(category))
                 {
-                    typeDefinition.QualifiedTypeName = Utilities.TranslateIdentifierName(category);
+                    if (!Utilities.IsIdentifierTranslated(category))
+                    {
+                        typeDefinition.QualifiedTypeName = NativeIdentifierTranslator.TranslateIdentifierName(category);
+                    }
+                    else
+                    {
+                        typeDefinition.QualifiedTypeName = category;
+                    }
                 }
                 else
                 {

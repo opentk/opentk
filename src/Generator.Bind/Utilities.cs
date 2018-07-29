@@ -2,13 +2,10 @@
  * See license.txt for license info
  */
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using Bind.Structures;
-using Humanizer;
 using JetBrains.Annotations;
 using Microsoft.CodeAnalysis.CSharp;
 
@@ -20,35 +17,10 @@ namespace Bind
     internal static class Utilities
     {
         /// <summary>
-        /// Gets a regular expression that matches against isolated long acronyms (3+ capital characters).
-        /// </summary>
-        private static readonly Regex LongAcronymsRegex = new Regex("(?<![A-Z])[A-Z]{3,}(?![A-Z])", RegexOptions.Compiled);
-
-        /// <summary>
-        /// Gets a regular expression that matches against short acronym candidates, which should still be transformed.
-        /// </summary>
-        private static readonly Regex ShortNonAcronymsRegex = new Regex("(?<![A-Z])(IS|AS|NO|ON|TO|OP|BY|OF|IN|UP|OR)(?![A-Z])", RegexOptions.Compiled);
-
-        /// <summary>
-        /// Gets a regular expression that matches against simple data type identifiers in other identifiers.
-        /// </summary>
-        private static readonly Regex DataTypeIdentifersRegex = new Regex("\\dU?(F|I)", RegexOptions.Compiled);
-
-        /// <summary>
         /// Gets a regular expression that matches against three or more consecutive capital characters at the end of a
         /// string.
         /// </summary>
-        private static readonly Regex UnprocessedEndingRegex = new Regex("[A-Z]{3,}$", RegexOptions.Compiled);
-
-        /// <summary>
-        /// Gets a set of overrides used for name translation when dealing with complicated extensions and acronyms.
-        /// </summary>
-        public static readonly IReadOnlyDictionary<string, string> ExtensionAndAcronymOverrides = new Dictionary<string, string>
-        {
-            { "CMAAINTEL", "CmaaIntel" },
-            { "QCOM", "QCom" },
-            { "SNORM", "SNorm" }
-        };
+        public static readonly Regex UnprocessedEndingRegex = new Regex("[A-Z]{3,}$", RegexOptions.Compiled);
 
         /// <summary>
         /// Gets a list of keywords in the C# language.
@@ -196,54 +168,11 @@ namespace Bind
         }
 
         /// <summary>
-        /// Translates an identifer name into a C#-style PascalCase name.
+        /// Determines whether or not the given identifier has already been translated.
         /// </summary>
-        /// <param name="name">The name to translate.</param>
-        /// <returns>The translated name.</returns>
-        [NotNull]
-        public static string TranslateIdentifierName([NotNull] string name)
-        {
-            // TODO: Remove this once we're no longer calling this method more than once on a given name
-            if (IsIdentifierTranslated(name))
-            {
-                return name;
-            }
-
-            var builder = new StringBuilder(name);
-
-            foreach (var match in LongAcronymsRegex.Matches(builder.ToString()).Cast<Match>())
-            {
-                if (!ExtensionAndAcronymOverrides.TryGetValue(match.Value, out var replacement))
-                {
-                    replacement = match.Value.Transform(To.LowerCase, To.TitleCase);
-                }
-
-                builder.Remove(match.Index, match.Length);
-                builder.Insert(match.Index, replacement);
-            }
-
-            foreach (var match in ShortNonAcronymsRegex.Matches(builder.ToString()).Cast<Match>())
-            {
-                builder.Remove(match.Index, match.Length);
-                builder.Insert(match.Index, match.Value.Transform(To.LowerCase, To.TitleCase));
-            }
-
-            foreach (var match in DataTypeIdentifersRegex.Matches(builder.ToString()).Cast<Match>())
-            {
-                builder.Remove(match.Index, match.Length);
-                builder.Insert(match.Index, match.Value.Transform(To.LowerCase, To.TitleCase));
-            }
-
-            if (char.IsDigit(builder[0]))
-            {
-                builder.Insert(0, "C");
-            }
-
-            var newName = builder.ToString().Pascalize();
-            return newName;
-        }
-
-        private static bool IsIdentifierTranslated([NotNull] string identifier)
+        /// <param name="identifier">The identifier.</param>
+        /// <returns>true if the identifier has been translated; otherwise, false.</returns>
+        public static bool IsIdentifierTranslated([NotNull] string identifier)
         {
             if (!SyntaxFacts.IsValidIdentifier(identifier))
             {

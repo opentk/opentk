@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using Bind.Generators;
 using Bind.Structures;
+using Bind.Translation.Translators;
 using JetBrains.Annotations;
 
 namespace Bind
@@ -195,7 +196,14 @@ namespace Bind
                     c = c.Replace(Generator.ConstantPrefix, string.Empty);
                 }
 
-                e.Value = Utilities.TranslateIdentifierName(c);
+                if (Utilities.IsIdentifierTranslated(c))
+                {
+                    e.Value = c;
+                }
+                else
+                {
+                    e.Value = NativeIdentifierTranslator.TranslateIdentifierName(c);
+                }
             }
 
             // Create inline documentation

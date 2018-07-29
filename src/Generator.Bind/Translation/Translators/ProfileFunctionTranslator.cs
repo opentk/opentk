@@ -11,7 +11,7 @@ namespace Bind.Translation.Translators
     public class ProfileFunctionTranslator : ITranslator<ApiProfile>
     {
         /// <inheritdoc/>
-        public ApiProfile TranslateProfile(ApiProfile profile)
+        public ApiProfile Translate(ApiProfile profile)
         {
             var extensionTrimmer = new OpenGLFunctionExtensionTrimmer();
             var dataTypeTrimmer = new OpenGLFunctionDataTypeTrimmer();
