@@ -1,0 +1,3 @@
+[submodule "src/Generator.Bind/Specifications/Docs/docs.gl"]
+	path = src/Generator.Bind/Specifications/Docs/docs.gl
+	url = https://github.com/BSVino/docs.gl.git
