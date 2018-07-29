@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Bind.Extensions;
 using Bind.Versioning;
 using Bind.XML.Signatures.Enumerations;
@@ -50,6 +51,45 @@ namespace Bind.XML.Signatures
             Versions = versions ?? throw new ArgumentNullException(nameof(versions));
             Functions = functions ?? throw new ArgumentNullException(nameof(functions));
             Enumerations = enumerations ?? throw new ArgumentNullException(nameof(enumerations));
+        }
+
+        /// <summary>
+        /// Looks up the function that has the given native entrypoint.
+        /// </summary>
+        /// <param name="entrypoint">The entry point.</param>
+        /// <returns>The function.</returns>
+        [NotNull]
+        public FunctionSignature FindFunctionWithEntrypoint([NotNull] string entrypoint)
+        {
+            return Functions.First(f => f.NativeEntrypoint == entrypoint);
+        }
+
+        /// <summary>
+        /// Looks up the enumeration that contains the given token name.
+        /// </summary>
+        /// <param name="tokenName">The name of the token.</param>
+        /// <returns>The enumeration that contains the token.</returns>
+        public EnumerationSignature FindContainingEnumeration(string tokenName)
+        {
+            var candidates = Enumerations
+                .Where(e => e.Tokens.Any(t => t.Name == tokenName))
+                .OrderBy(e => e.Name)
+                .ToList();
+
+            // Try to get the most specialized candidate
+            var specializedEnums = candidates.Where
+            (
+                c => !c.Name.Contains("Version")
+            )
+            .OrderByDescending(c => c.Name.Length)
+            .ToList(); // long enum names tend to be more specialized...
+
+            if (specializedEnums.Any())
+            {
+                return specializedEnums.First();
+            }
+
+            return candidates.First();
         }
 
         /// <inheritdoc/>
