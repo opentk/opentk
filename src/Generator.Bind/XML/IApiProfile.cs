@@ -1,4 +1,3 @@
-using System;
 using Bind.Versioning;
 using JetBrains.Annotations;
 

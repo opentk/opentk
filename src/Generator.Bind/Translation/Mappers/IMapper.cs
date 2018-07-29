@@ -1,4 +1,3 @@
-using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
 
 namespace Bind.Translation.Mappers
