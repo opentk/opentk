@@ -3,7 +3,6 @@
     <TargetFramework>net461</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Deterministic>true</Deterministic>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -16,7 +15,7 @@
     <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
   </ItemGroup>
 
-  <Import Project="..\..\build\targets\common.props" />
-  <Import Project="..\..\build\targets\nuget-common.props" />
-  <Import Project="..\..\build\targets\stylecop.props" />
+  <Import Project="..\..\props\common.props" />
+  <Import Project="..\..\props\nuget-common.props" />
+  <Import Project="..\..\props\stylecop.props" />
 </Project>

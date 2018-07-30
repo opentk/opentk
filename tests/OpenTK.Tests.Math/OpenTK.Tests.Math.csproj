@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="System.Runtime"/>
-    <Reference Include="System.Threading.Tasks"/>
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Threading.Tasks" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,5 +23,6 @@
     <ProjectReference Include="..\..\src\OpenTK\OpenTK.csproj" />
   </ItemGroup>
 
-  <Import Project="..\..\build\targets\netfx-mono.props"/>
+  <Import Project="..\..\props\common.props" />
+  <Import Project="..\..\props\netfx-mono.props" />
 </Project>

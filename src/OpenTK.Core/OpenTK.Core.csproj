@@ -9,7 +9,7 @@
     <Description>Core shared functionality for the OpenTK library.</Description>
   </PropertyGroup>
 
-  <Import Project="..\..\build\targets\common.props" />
-  <Import Project="..\..\build\targets\nuget-common.props" />
-  <Import Project="..\..\build\targets\stylecop.props" />
+  <Import Project="..\..\props\common.props" />
+  <Import Project="..\..\props\nuget-common.props" />
+  <Import Project="..\..\props\stylecop.props" />
 </Project>
