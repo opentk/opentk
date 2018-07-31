@@ -995,37 +995,37 @@ namespace OpenTK.Mathematics
             var X = C * (1.0f - Math.Abs(h % 2.0f - 1.0f));
 
             float r, g, b;
-            if (0.0f <= h && h < 1.0f)
+            if (h >= 0.0f && h < 1.0f)
             {
                 r = C;
                 g = X;
                 b = 0.0f;
             }
-            else if (1.0f <= h && h < 2.0f)
+            else if (h >= 1.0f && h < 2.0f)
             {
                 r = X;
                 g = C;
                 b = 0.0f;
             }
-            else if (2.0f <= h && h < 3.0f)
+            else if (h >= 2.0f && h < 3.0f)
             {
                 r = 0.0f;
                 g = C;
                 b = X;
             }
-            else if (3.0f <= h && h < 4.0f)
+            else if (h >= 3.0f && h < 4.0f)
             {
                 r = 0.0f;
                 g = X;
                 b = C;
             }
-            else if (4.0f <= h && h < 5.0f)
+            else if (h >= 4.0f && h < 5.0f)
             {
                 r = X;
                 g = 0.0f;
                 b = C;
             }
-            else if (5.0f <= h && h < 6.0f)
+            else if (h >= 5.0f && h < 6.0f)
             {
                 r = C;
                 g = 0.0f;
@@ -1081,7 +1081,7 @@ namespace OpenTK.Mathematics
             var lightness = (M + m) / 2.0f;
 
             var saturation = 0.0f;
-            if (0.0f != lightness && lightness != 1.0f)
+            if (lightness != 0.0f && lightness != 1.0f)
             {
                 saturation = C / (1.0f - Math.Abs(2.0f * lightness - 1.0f));
             }
@@ -1113,37 +1113,37 @@ namespace OpenTK.Mathematics
             var X = C * (1.0f - Math.Abs(h % 2.0f - 1.0f));
 
             float r, g, b;
-            if (0.0f <= h && h < 1.0f)
+            if (h >= 0.0f && h < 1.0f)
             {
                 r = C;
                 g = X;
                 b = 0.0f;
             }
-            else if (1.0f <= h && h < 2.0f)
+            else if (h >= 1.0f && h < 2.0f)
             {
                 r = X;
                 g = C;
                 b = 0.0f;
             }
-            else if (2.0f <= h && h < 3.0f)
+            else if (h >= 2.0f && h < 3.0f)
             {
                 r = 0.0f;
                 g = C;
                 b = X;
             }
-            else if (3.0f <= h && h < 4.0f)
+            else if (h >= 3.0f && h < 4.0f)
             {
                 r = 0.0f;
                 g = X;
                 b = C;
             }
-            else if (4.0f <= h && h < 5.0f)
+            else if (h >= 4.0f && h < 5.0f)
             {
                 r = X;
                 g = 0.0f;
                 b = C;
             }
-            else if (5.0f <= h && h < 6.0f)
+            else if (h >= 5.0f && h < 6.0f)
             {
                 r = C;
                 g = 0.0f;
@@ -1193,7 +1193,7 @@ namespace OpenTK.Mathematics
             var hue = h * 60.0f / 360.0f;
 
             var saturation = 0.0f;
-            if (0.0f != M)
+            if (M != 0.0f)
             {
                 saturation = C / M;
             }
@@ -1302,37 +1302,37 @@ namespace OpenTK.Mathematics
             var X = C * (1.0f - Math.Abs(h % 2.0f - 1.0f));
 
             float r, g, b;
-            if (0.0f <= h && h < 1.0f)
+            if (h >= 0.0f && h < 1.0f)
             {
                 r = C;
                 g = X;
                 b = 0.0f;
             }
-            else if (1.0f <= h && h < 2.0f)
+            else if (h >= 1.0f && h < 2.0f)
             {
                 r = X;
                 g = C;
                 b = 0.0f;
             }
-            else if (2.0f <= h && h < 3.0f)
+            else if (h >= 2.0f && h < 3.0f)
             {
                 r = 0.0f;
                 g = C;
                 b = X;
             }
-            else if (3.0f <= h && h < 4.0f)
+            else if (h >= 3.0f && h < 4.0f)
             {
                 r = 0.0f;
                 g = X;
                 b = C;
             }
-            else if (4.0f <= h && h < 5.0f)
+            else if (h >= 4.0f && h < 5.0f)
             {
                 r = X;
                 g = 0.0f;
                 b = C;
             }
-            else if (5.0f <= h && h < 6.0f)
+            else if (h >= 5.0f && h < 6.0f)
             {
                 r = C;
                 g = 0.0f;
