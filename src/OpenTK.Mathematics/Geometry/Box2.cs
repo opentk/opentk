@@ -78,8 +78,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Creates a new Box2 with the specified dimensions.
         /// </summary>
-        /// <param name="top">The position of the top boundary.</param>
         /// <param name="left">The position of the left boundary.</param>
+        /// <param name="top">The position of the top boundary.</param>
         /// <param name="width">The width of the box.</param>
         /// <param name="height">The height of the box.</param>
         /// <returns>A new OpenTK.Box2 with the specfied dimensions.</returns>
