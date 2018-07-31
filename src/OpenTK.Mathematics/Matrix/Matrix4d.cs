@@ -143,7 +143,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The determinant of this matrix
+        /// Gets the determinant of this matrix.
         /// </summary>
         public double Determinant => (Row0.X * Row1.Y * Row2.Z * Row3.W) - (Row0.X * Row1.Y * Row2.W * Row3.Z) +
                                      (Row0.X * Row1.Z * Row2.W * Row3.Y) - (Row0.X * Row1.Z * Row2.Y * Row3.W)
@@ -160,7 +160,7 @@ namespace OpenTK.Mathematics
                                      (Row0.W * Row1.Z * Row2.X * Row3.Y) + (Row0.W * Row1.Z * Row2.Y * Row3.X);
 
         /// <summary>
-        /// The first column of this matrix
+        /// Gets or sets the first column of this matrix.
         /// </summary>
         public Vector4d Column0
         {
@@ -175,7 +175,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The second column of this matrix
+        /// Gets or sets the second column of this matrix.
         /// </summary>
         public Vector4d Column1
         {
@@ -190,7 +190,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The third column of this matrix
+        /// Gets or sets the third column of this matrix.
         /// </summary>
         public Vector4d Column2
         {
@@ -205,7 +205,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The fourth column of this matrix
+        /// Gets or sets the fourth column of this matrix.
         /// </summary>
         public Vector4d Column3
         {

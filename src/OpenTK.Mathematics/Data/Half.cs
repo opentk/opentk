@@ -83,22 +83,22 @@ namespace OpenTK.Mathematics
         private ushort _bits;
 
         /// <summary>
-        /// Returns true if the Half is zero.
+        /// Gets a value indicating whether the Half is zero.
         /// </summary>
         public bool IsZero => _bits == 0 || _bits == 0x8000;
 
         /// <summary>
-        /// Returns true if the Half represents Not A Number (NaN)
+        /// Gets a value indicating whether the Half represents Not A Number (NaN).
         /// </summary>
         public bool IsNaN => (_bits & 0x7C00) == 0x7C00 && (_bits & 0x03FF) != 0x0000;
 
         /// <summary>
-        /// Returns true if the Half represents positive infinity.
+        /// Gets a value indicating whether the Half represents positive infinity.
         /// </summary>
         public bool IsPositiveInfinity => _bits == 31744;
 
         /// <summary>
-        /// Returns true if the Half represents negative infinity.
+        /// Gets a value indicating whether the Half represents negative infinity.
         /// </summary>
         public bool IsNegativeInfinity => _bits == 64512;
 

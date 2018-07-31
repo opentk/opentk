@@ -968,7 +968,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector2d with the Z and W components of this instance.
+        /// Gets or sets an OpenTK.Vector2d with the Z and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Zw
@@ -1189,7 +1189,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector3d with the Y, W, and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector3d with the Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Ywz
@@ -1496,7 +1496,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector4d with the Y, Y, Z, and W components of this instance.
+        /// Gets or sets an OpenTK.Vector4d with the Y, Y, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Yyzw
@@ -1512,7 +1512,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector4d with the Y, Y, W, and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector4d with the Y, Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Yywz
@@ -1688,7 +1688,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector4d with the Z, W, Z, and Y components of this instance.
+        /// Gets or sets an OpenTK.Vector4d with the Z, W, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Zwzy
@@ -1800,7 +1800,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector4d with the W, Z, Y, and W components of this instance.
+        /// Gets or sets an OpenTK.Vector4d with the W, Z, Y, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Wzyw

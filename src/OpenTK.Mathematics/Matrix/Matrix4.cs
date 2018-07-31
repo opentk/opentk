@@ -184,7 +184,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets the first column of this matrix.
+        /// Gets or sets the first column of this matrix.
         /// </summary>
         public Vector4 Column0
         {
@@ -199,7 +199,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets the second column of this matrix.
+        /// Gets or sets the second column of this matrix.
         /// </summary>
         public Vector4 Column1
         {
@@ -214,7 +214,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets the third column of this matrix.
+        /// Gets or sets the third column of this matrix.
         /// </summary>
         public Vector4 Column2
         {
@@ -229,7 +229,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets the fourth column of this matrix.
+        /// Gets or sets the fourth column of this matrix.
         /// </summary>
         public Vector4 Column3
         {

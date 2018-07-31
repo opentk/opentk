@@ -1002,7 +1002,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector2 with the Z and W components of this instance.
+        /// Gets or sets an OpenTK.Vector2 with the Z and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2 Zw
@@ -1223,7 +1223,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector3 with the Y, W, and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector3 with the Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3 Ywz
@@ -1530,7 +1530,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector4 with the Y, Y, Z, and W components of this instance.
+        /// Gets or sets an OpenTK.Vector4 with the Y, Y, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4 Yyzw
@@ -1546,7 +1546,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector4 with the Y, Y, W, and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector4 with the Y, Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4 Yywz
@@ -1722,7 +1722,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector4 with the Z, W, Z, and Y components of this instance.
+        /// Gets or sets an OpenTK.Vector4 with the Z, W, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4 Zwzy
@@ -1834,7 +1834,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector4 with the W, Z, Y, and W components of this instance.
+        /// Gets or sets an OpenTK.Vector4 with the W, Z, Y, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4 Wzyw

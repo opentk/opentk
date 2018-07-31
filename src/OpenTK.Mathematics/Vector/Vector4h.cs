@@ -341,7 +341,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector2h with the Z and W components of this instance.
+        /// Gets or sets an OpenTK.Vector2h with the Z and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Zw
@@ -562,7 +562,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector3h with the Y, W, and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector3h with the Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Ywz
@@ -869,7 +869,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector4h with the Y, Y, Z, and W components of this instance.
+        /// Gets or sets an OpenTK.Vector4h with the Y, Y, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Yyzw
@@ -885,7 +885,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector4h with the Y, Y, W, and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector4h with the Y, Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Yywz
@@ -1061,7 +1061,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector4h with the Z, W, Z, and Y components of this instance.
+        /// Gets or sets an OpenTK.Vector4h with the Z, W, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Zwzy
@@ -1173,7 +1173,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector4h with the W, Z, Y, and W components of this instance.
+        /// Gets or sets an OpenTK.Vector4h with the W, Z, Y, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Wzyw
