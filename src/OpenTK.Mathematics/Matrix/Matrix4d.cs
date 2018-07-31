@@ -668,8 +668,7 @@ namespace OpenTK.Mathematics
         /// <returns>A matrix instance.</returns>
         public static Matrix4d CreateFromAxisAngle(Vector3d axis, double angle)
         {
-            Matrix4d result;
-            CreateFromAxisAngle(axis, angle, out result);
+            CreateFromAxisAngle(axis, angle, out Matrix4d result);
             return result;
         }
 
@@ -696,8 +695,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix4d instance.</returns>
         public static Matrix4d CreateRotationX(double angle)
         {
-            Matrix4d result;
-            CreateRotationX(angle, out result);
+            CreateRotationX(angle, out Matrix4d result);
             return result;
         }
 
@@ -724,8 +722,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix4d instance.</returns>
         public static Matrix4d CreateRotationY(double angle)
         {
-            Matrix4d result;
-            CreateRotationY(angle, out result);
+            CreateRotationY(angle, out Matrix4d result);
             return result;
         }
 
@@ -752,8 +749,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix4d instance.</returns>
         public static Matrix4d CreateRotationZ(double angle)
         {
-            Matrix4d result;
-            CreateRotationZ(angle, out result);
+            CreateRotationZ(angle, out Matrix4d result);
             return result;
         }
 
@@ -790,8 +786,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix4d instance.</returns>
         public static Matrix4d CreateTranslation(double x, double y, double z)
         {
-            Matrix4d result;
-            CreateTranslation(x, y, z, out result);
+            CreateTranslation(x, y, z, out Matrix4d result);
             return result;
         }
 
@@ -802,8 +797,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix4d instance.</returns>
         public static Matrix4d CreateTranslation(Vector3d vector)
         {
-            Matrix4d result;
-            CreateTranslation(vector.X, vector.Y, vector.Z, out result);
+            CreateTranslation(vector.X, vector.Y, vector.Z, out Matrix4d result);
             return result;
         }
 
@@ -831,8 +825,7 @@ namespace OpenTK.Mathematics
         /// <rereturns>The resulting Matrix4d instance.</rereturns>
         public static Matrix4d CreateOrthographic(double width, double height, double zNear, double zFar)
         {
-            Matrix4d result;
-            CreateOrthographicOffCenter(-width / 2, width / 2, -height / 2, height / 2, zNear, zFar, out result);
+            CreateOrthographicOffCenter(-width / 2, width / 2, -height / 2, height / 2, zNear, zFar, out Matrix4d result);
             return result;
         }
 
@@ -878,8 +871,7 @@ namespace OpenTK.Mathematics
         public static Matrix4d CreateOrthographicOffCenter(double left, double right, double bottom, double top,
             double zNear, double zFar)
         {
-            Matrix4d result;
-            CreateOrthographicOffCenter(left, right, bottom, top, zNear, zFar, out result);
+            CreateOrthographicOffCenter(left, right, bottom, top, zNear, zFar, out Matrix4d result);
             return result;
         }
 
@@ -952,8 +944,7 @@ namespace OpenTK.Mathematics
         /// </exception>
         public static Matrix4d CreatePerspectiveFieldOfView(double fovy, double aspect, double zNear, double zFar)
         {
-            Matrix4d result;
-            CreatePerspectiveFieldOfView(fovy, aspect, zNear, zFar, out result);
+            CreatePerspectiveFieldOfView(fovy, aspect, zNear, zFar, out Matrix4d result);
             return result;
         }
 
@@ -1027,8 +1018,7 @@ namespace OpenTK.Mathematics
         public static Matrix4d CreatePerspectiveOffCenter(double left, double right, double bottom, double top,
             double zNear, double zFar)
         {
-            Matrix4d result;
-            CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar, out result);
+            CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar, out Matrix4d result);
             return result;
         }
 
@@ -1039,9 +1029,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Matrix result.</param>
         public static void CreateFromQuaternion(ref Quaterniond q, out Matrix4d result)
         {
-            Vector3d axis;
-            double angle;
-            q.ToAxisAngle(out axis, out angle);
+            q.ToAxisAngle(out Vector3d axis, out double angle);
             CreateFromAxisAngle(axis, angle, out result);
         }
 
@@ -1052,8 +1040,7 @@ namespace OpenTK.Mathematics
         /// <returns>A matrix instance.</returns>
         public static Matrix4d CreateFromQuaternion(Quaterniond q)
         {
-            Matrix4d result;
-            CreateFromQuaternion(ref q, out result);
+            CreateFromQuaternion(ref q, out Matrix4d result);
             return result;
         }
 
@@ -1180,9 +1167,7 @@ namespace OpenTK.Mathematics
         /// <returns>A rotation matrix</returns>
         public static Matrix4d Rotate(Quaterniond q)
         {
-            Vector3d axis;
-            double angle;
-            q.ToAxisAngle(out axis, out angle);
+            q.ToAxisAngle(out Vector3d axis, out double angle);
             return Rotate(axis, angle);
         }
 
@@ -1282,8 +1267,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the addition.</returns>
         public static Matrix4d Add(Matrix4d left, Matrix4d right)
         {
-            Matrix4d result;
-            Add(ref left, ref right, out result);
+            Add(ref left, ref right, out Matrix4d result);
             return result;
         }
 
@@ -1309,8 +1293,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the subraction.</returns>
         public static Matrix4d Subtract(Matrix4d left, Matrix4d right)
         {
-            Matrix4d result;
-            Subtract(ref left, ref right, out result);
+            Subtract(ref left, ref right, out Matrix4d result);
             return result;
         }
 
@@ -1336,8 +1319,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication</returns>
         public static Matrix4d Mult(Matrix4d left, Matrix4d right)
         {
-            Matrix4d result;
-            Mult(ref left, ref right, out result);
+            Mult(ref left, ref right, out Matrix4d result);
             return result;
         }
 
@@ -1408,8 +1390,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication</returns>
         public static Matrix4d Mult(Matrix4d left, double right)
         {
-            Matrix4d result;
-            Mult(ref left, right, out result);
+            Mult(ref left, right, out Matrix4d result);
             return result;
         }
 

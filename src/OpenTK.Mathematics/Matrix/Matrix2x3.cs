@@ -246,8 +246,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix2x3 instance.</returns>
         public static Matrix2x3 CreateRotation(float angle)
         {
-            Matrix2x3 result;
-            CreateRotation(angle, out result);
+            CreateRotation(angle, out Matrix2x3 result);
             return result;
         }
 
@@ -273,8 +272,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix2x3 CreateScale(float scale)
         {
-            Matrix2x3 result;
-            CreateScale(scale, out result);
+            CreateScale(scale, out Matrix2x3 result);
             return result;
         }
 
@@ -300,8 +298,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix2x3 CreateScale(Vector2 scale)
         {
-            Matrix2x3 result;
-            CreateScale(scale, out result);
+            CreateScale(scale, out Matrix2x3 result);
             return result;
         }
 
@@ -329,8 +326,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix2x3 CreateScale(float x, float y)
         {
-            Matrix2x3 result;
-            CreateScale(x, y, out result);
+            CreateScale(x, y, out Matrix2x3 result);
             return result;
         }
 
@@ -358,8 +354,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix2x3 Mult(Matrix2x3 left, float right)
         {
-            Matrix2x3 result;
-            Mult(ref left, right, out result);
+            Mult(ref left, right, out Matrix2x3 result);
             return result;
         }
 
@@ -398,8 +393,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix2 Mult(Matrix2x3 left, Matrix3x2 right)
         {
-            Matrix2 result;
-            Mult(ref left, ref right, out result);
+            Mult(ref left, ref right, out Matrix2 result);
             return result;
         }
 
@@ -443,8 +437,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix2x3 Mult(Matrix2x3 left, Matrix3 right)
         {
-            Matrix2x3 result;
-            Mult(ref left, ref right, out result);
+            Mult(ref left, ref right, out Matrix2x3 result);
             return result;
         }
 
@@ -493,8 +486,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix2x4 Mult(Matrix2x3 left, Matrix3x4 right)
         {
-            Matrix2x4 result;
-            Mult(ref left, ref right, out result);
+            Mult(ref left, ref right, out Matrix2x4 result);
             return result;
         }
 
@@ -522,8 +514,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the addition.</returns>
         public static Matrix2x3 Add(Matrix2x3 left, Matrix2x3 right)
         {
-            Matrix2x3 result;
-            Add(ref left, ref right, out result);
+            Add(ref left, ref right, out Matrix2x3 result);
             return result;
         }
 
@@ -551,8 +542,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the subtraction.</returns>
         public static Matrix2x3 Subtract(Matrix2x3 left, Matrix2x3 right)
         {
-            Matrix2x3 result;
-            Subtract(ref left, ref right, out result);
+            Subtract(ref left, ref right, out Matrix2x3 result);
             return result;
         }
 
@@ -578,8 +568,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transpose of the given matrix.</returns>
         public static Matrix3x2 Transpose(Matrix2x3 mat)
         {
-            Matrix3x2 result;
-            Transpose(ref mat, out result);
+            Transpose(ref mat, out Matrix3x2 result);
             return result;
         }
 

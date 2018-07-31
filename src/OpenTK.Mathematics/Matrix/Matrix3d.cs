@@ -490,8 +490,7 @@ namespace OpenTK.Mathematics
         /// <returns>A matrix instance.</returns>
         public static Matrix3d CreateFromAxisAngle(Vector3d axis, double angle)
         {
-            Matrix3d result;
-            CreateFromAxisAngle(axis, angle, out result);
+            CreateFromAxisAngle(axis, angle, out Matrix3d result);
             return result;
         }
 
@@ -503,9 +502,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Matrix result.</param>
         public static void CreateFromQuaternion(ref Quaterniond q, out Matrix3d result)
         {
-            Vector3d axis;
-            double angle;
-            q.ToAxisAngle(out axis, out angle);
+            q.ToAxisAngle(out Vector3d axis, out double angle);
             CreateFromAxisAngle(axis, angle, out result);
         }
 
@@ -516,8 +513,7 @@ namespace OpenTK.Mathematics
         /// <returns>A matrix instance.</returns>
         public static Matrix3d CreateFromQuaternion(Quaterniond q)
         {
-            Matrix3d result;
-            CreateFromQuaternion(ref q, out result);
+            CreateFromQuaternion(ref q, out Matrix3d result);
             return result;
         }
 
@@ -546,8 +542,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix3d instance.</returns>
         public static Matrix3d CreateRotationX(double angle)
         {
-            Matrix3d result;
-            CreateRotationX(angle, out result);
+            CreateRotationX(angle, out Matrix3d result);
             return result;
         }
 
@@ -575,8 +570,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix3d instance.</returns>
         public static Matrix3d CreateRotationY(double angle)
         {
-            Matrix3d result;
-            CreateRotationY(angle, out result);
+            CreateRotationY(angle, out Matrix3d result);
             return result;
         }
 
@@ -604,8 +598,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix3d instance.</returns>
         public static Matrix3d CreateRotationZ(double angle)
         {
-            Matrix3d result;
-            CreateRotationZ(angle, out result);
+            CreateRotationZ(angle, out Matrix3d result);
             return result;
         }
 
@@ -617,8 +610,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix3d CreateScale(double scale)
         {
-            Matrix3d result;
-            CreateScale(scale, out result);
+            CreateScale(scale, out Matrix3d result);
             return result;
         }
 
@@ -629,8 +621,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix3d CreateScale(Vector3d scale)
         {
-            Matrix3d result;
-            CreateScale(ref scale, out result);
+            CreateScale(ref scale, out Matrix3d result);
             return result;
         }
 
@@ -643,8 +634,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix3d CreateScale(double x, double y, double z)
         {
-            Matrix3d result;
-            CreateScale(x, y, z, out result);
+            CreateScale(x, y, z, out Matrix3d result);
             return result;
         }
 
@@ -698,8 +688,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the addition.</returns>
         public static Matrix3d Add(Matrix3d left, Matrix3d right)
         {
-            Matrix3d result;
-            Add(ref left, ref right, out result);
+            Add(ref left, ref right, out Matrix3d result);
             return result;
         }
 
@@ -724,8 +713,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication</returns>
         public static Matrix3d Mult(Matrix3d left, Matrix3d right)
         {
-            Matrix3d result;
-            Mult(ref left, ref right, out result);
+            Mult(ref left, ref right, out Matrix3d result);
             return result;
         }
 
@@ -891,8 +879,7 @@ namespace OpenTK.Mathematics
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
         public static Matrix3d Invert(Matrix3d mat)
         {
-            Matrix3d result;
-            Invert(ref mat, out result);
+            Invert(ref mat, out Matrix3d result);
             return result;
         }
 

@@ -575,8 +575,7 @@ namespace OpenTK.Mathematics
         /// <returns>Success.</returns>
         public static bool TryParse(string s, out Half result)
         {
-            float f;
-            var b = float.TryParse(s, out f);
+            var b = float.TryParse(s, out float f);
             result = (Half)f;
             return b;
         }
@@ -591,8 +590,7 @@ namespace OpenTK.Mathematics
         /// <returns>Success.</returns>
         public static bool TryParse(string s, NumberStyles style, IFormatProvider provider, out Half result)
         {
-            float f;
-            var b = float.TryParse(s, style, provider, out f);
+            var b = float.TryParse(s, style, provider, out float f);
             result = (Half)f;
             return b;
         }

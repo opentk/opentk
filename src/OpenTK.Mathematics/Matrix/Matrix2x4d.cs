@@ -281,8 +281,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix2x3d instance.</returns>
         public static Matrix2x4d CreateRotation(double angle)
         {
-            Matrix2x4d result;
-            CreateRotation(angle, out result);
+            CreateRotation(angle, out Matrix2x4d result);
             return result;
         }
 
@@ -310,8 +309,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix2x4d CreateScale(double scale)
         {
-            Matrix2x4d result;
-            CreateScale(scale, out result);
+            CreateScale(scale, out Matrix2x4d result);
             return result;
         }
 
@@ -339,8 +337,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix2x4d CreateScale(Vector2d scale)
         {
-            Matrix2x4d result;
-            CreateScale(scale, out result);
+            CreateScale(scale, out Matrix2x4d result);
             return result;
         }
 
@@ -370,8 +367,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix2x4d CreateScale(double x, double y)
         {
-            Matrix2x4d result;
-            CreateScale(x, y, out result);
+            CreateScale(x, y, out Matrix2x4d result);
             return result;
         }
 
@@ -401,8 +397,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix2x4d Mult(Matrix2x4d left, double right)
         {
-            Matrix2x4d result;
-            Mult(ref left, right, out result);
+            Mult(ref left, right, out Matrix2x4d result);
             return result;
         }
 
@@ -445,8 +440,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix2d Mult(Matrix2x4d left, Matrix4x2 right)
         {
-            Matrix2d result;
-            Mult(ref left, ref right, out result);
+            Mult(ref left, ref right, out Matrix2d result);
             return result;
         }
 
@@ -495,8 +489,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix2x3d Mult(Matrix2x4d left, Matrix4x3 right)
         {
-            Matrix2x3d result;
-            Mult(ref left, ref right, out result);
+            Mult(ref left, ref right, out Matrix2x3d result);
             return result;
         }
 
@@ -551,8 +544,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix2x4d Mult(Matrix2x4d left, Matrix4 right)
         {
-            Matrix2x4d result;
-            Mult(ref left, ref right, out result);
+            Mult(ref left, ref right, out Matrix2x4d result);
             return result;
         }
 
@@ -582,8 +574,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the addition.</returns>
         public static Matrix2x4d Add(Matrix2x4d left, Matrix2x4d right)
         {
-            Matrix2x4d result;
-            Add(ref left, ref right, out result);
+            Add(ref left, ref right, out Matrix2x4d result);
             return result;
         }
 
@@ -613,8 +604,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the subtraction.</returns>
         public static Matrix2x4d Subtract(Matrix2x4d left, Matrix2x4d right)
         {
-            Matrix2x4d result;
-            Subtract(ref left, ref right, out result);
+            Subtract(ref left, ref right, out Matrix2x4d result);
             return result;
         }
 
@@ -642,8 +632,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transpose of the given matrix.</returns>
         public static Matrix4x2d Transpose(Matrix2x4d mat)
         {
-            Matrix4x2d result;
-            Transpose(ref mat, out result);
+            Transpose(ref mat, out Matrix4x2d result);
             return result;
         }
 

@@ -807,8 +807,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed vector</returns>
         public static Vector4 Transform(Vector4 vec, Matrix4 mat)
         {
-            Vector4 result;
-            Transform(ref vec, ref mat, out result);
+            Transform(ref vec, ref mat, out Vector4 result);
             return result;
         }
 
@@ -835,8 +834,7 @@ namespace OpenTK.Mathematics
         /// <returns>The result of the operation.</returns>
         public static Vector4 Transform(Vector4 vec, Quaternion quat)
         {
-            Vector4 result;
-            Transform(ref vec, ref quat, out result);
+            Transform(ref vec, ref quat, out Vector4 result);
             return result;
         }
 
@@ -848,9 +846,9 @@ namespace OpenTK.Mathematics
         /// <param name="result">The result of the operation.</param>
         public static void Transform(ref Vector4 vec, ref Quaternion quat, out Vector4 result)
         {
-            Quaternion v = new Quaternion(vec.X, vec.Y, vec.Z, vec.W), i, t;
-            Quaternion.Invert(ref quat, out i);
-            Quaternion.Multiply(ref quat, ref v, out t);
+            Quaternion v = new Quaternion(vec.X, vec.Y, vec.Z, vec.W);
+            Quaternion.Invert(ref quat, out Quaternion i);
+            Quaternion.Multiply(ref quat, ref v, out Quaternion t);
             Quaternion.Multiply(ref t, ref i, out v);
 
             result.X = v.X;
@@ -866,8 +864,7 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The vector to transform</param>
         public static Vector4 Transform(Matrix4 mat, Vector4 vec)
         {
-            Vector4 result;
-            Transform(ref mat, ref vec, out result);
+            Transform(ref mat, ref vec, out Vector4 result);
             return result;
         }
 
@@ -1943,8 +1940,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed vector</returns>
         public static Vector4 operator *(Vector4 vec, Matrix4 mat)
         {
-            Vector4 result;
-            Transform(ref vec, ref mat, out result);
+            Transform(ref vec, ref mat, out Vector4 result);
             return result;
         }
 
@@ -1956,8 +1952,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed vector</returns>
         public static Vector4 operator *(Matrix4 mat, Vector4 vec)
         {
-            Vector4 result;
-            Transform(ref mat, ref vec, out result);
+            Transform(ref mat, ref vec, out Vector4 result);
             return result;
         }
 
@@ -1969,8 +1964,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed vector</returns>
         public static Vector4 operator *(Quaternion quat, Vector4 vec)
         {
-            Vector4 result;
-            Transform(ref vec, ref quat, out result);
+            Transform(ref vec, ref quat, out Vector4 result);
             return result;
         }
 

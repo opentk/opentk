@@ -526,8 +526,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>Pointer to an int value which will store the name of the new source.</returns>
         public static int GenSource()
         {
-            int temp;
-            GenSources(1, out temp);
+            GenSources(1, out int temp);
             return temp;
         }
 
@@ -940,8 +939,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="value">A pointer to the bool value being retrieved.</param>
         public static void GetSource(uint sid, ALSourceb param, out bool value)
         {
-            int result;
-            GetSource(sid, (ALGetSourcei)param, out result);
+            GetSource(sid, (ALGetSourcei)param, out int result);
             value = result != 0;
         }
 
@@ -953,8 +951,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="value">A pointer to the bool value being retrieved.</param>
         public static void GetSource(int sid, ALSourceb param, out bool value)
         {
-            int result;
-            GetSource((uint)sid, (ALGetSourcei)param, out result);
+            GetSource((uint)sid, (ALGetSourcei)param, out int result);
             value = result != 0;
         }
 
@@ -1576,8 +1573,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>Pointer to an uint value which will store the name of the new buffer.</returns>
         public static int GenBuffer()
         {
-            int temp;
-            GenBuffers(1, out temp);
+            GenBuffers(1, out int temp);
             return temp;
         }
 
@@ -1939,8 +1935,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>state information from OpenAL.</returns>
         public static ALSourceState GetSourceState(uint sid)
         {
-            int temp;
-            GetSource(sid, ALGetSourcei.SourceState, out temp);
+            GetSource(sid, ALGetSourcei.SourceState, out int temp);
             return (ALSourceState)temp;
         }
 
@@ -1951,8 +1946,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>state information from OpenAL.</returns>
         public static ALSourceState GetSourceState(int sid)
         {
-            int temp;
-            GetSource(sid, ALGetSourcei.SourceState, out temp);
+            GetSource(sid, ALGetSourcei.SourceState, out int temp);
             return (ALSourceState)temp;
         }
 
@@ -1963,8 +1957,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>type information from OpenAL.</returns>
         public static ALSourceType GetSourceType(uint sid)
         {
-            int temp;
-            GetSource(sid, ALGetSourcei.SourceType, out temp);
+            GetSource(sid, ALGetSourcei.SourceType, out int temp);
             return (ALSourceType)temp;
         }
 
@@ -1975,8 +1968,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>type information from OpenAL.</returns>
         public static ALSourceType GetSourceType(int sid)
         {
-            int temp;
-            GetSource(sid, ALGetSourcei.SourceType, out temp);
+            GetSource(sid, ALGetSourcei.SourceType, out int temp);
             return (ALSourceType)temp;
         }
 

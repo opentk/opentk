@@ -502,8 +502,7 @@ namespace OpenTK.Mathematics
         /// <returns>The distance</returns>
         public static float Distance(Vector2 vec1, Vector2 vec2)
         {
-            float result;
-            Distance(ref vec1, ref vec2, out result);
+            Distance(ref vec1, ref vec2, out float result);
             return result;
         }
 
@@ -526,8 +525,7 @@ namespace OpenTK.Mathematics
         /// <returns>The squared distance</returns>
         public static float DistanceSquared(Vector2 vec1, Vector2 vec2)
         {
-            float result;
-            DistanceSquared(ref vec1, ref vec2, out result);
+            DistanceSquared(ref vec1, ref vec2, out float result);
             return result;
         }
 
@@ -713,8 +711,7 @@ namespace OpenTK.Mathematics
         /// <returns>The result of the operation.</returns>
         public static Vector2 Transform(Vector2 vec, Quaternion quat)
         {
-            Vector2 result;
-            Transform(ref vec, ref quat, out result);
+            Transform(ref vec, ref quat, out Vector2 result);
             return result;
         }
 
@@ -726,9 +723,9 @@ namespace OpenTK.Mathematics
         /// <param name="result">The result of the operation.</param>
         public static void Transform(ref Vector2 vec, ref Quaternion quat, out Vector2 result)
         {
-            Quaternion v = new Quaternion(vec.X, vec.Y, 0, 0), i, t;
-            Quaternion.Invert(ref quat, out i);
-            Quaternion.Multiply(ref quat, ref v, out t);
+            Quaternion v = new Quaternion(vec.X, vec.Y, 0, 0);
+            Quaternion.Invert(ref quat, out Quaternion i);
+            Quaternion.Multiply(ref quat, ref v, out Quaternion t);
             Quaternion.Multiply(ref t, ref i, out v);
 
             result.X = v.X;

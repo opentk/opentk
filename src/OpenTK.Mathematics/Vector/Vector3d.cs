@@ -555,8 +555,7 @@ namespace OpenTK.Mathematics
         /// <returns>The distance</returns>
         public static double Distance(Vector3d vec1, Vector3d vec2)
         {
-            double result;
-            Distance(ref vec1, ref vec2, out result);
+            Distance(ref vec1, ref vec2, out double result);
             return result;
         }
 
@@ -580,8 +579,7 @@ namespace OpenTK.Mathematics
         /// <returns>The squared distance</returns>
         public static double DistanceSquared(Vector3d vec1, Vector3d vec2)
         {
-            double result;
-            DistanceSquared(ref vec1, ref vec2, out result);
+            DistanceSquared(ref vec1, ref vec2, out double result);
             return result;
         }
 
@@ -681,8 +679,7 @@ namespace OpenTK.Mathematics
         /// <returns>The cross product of the two inputs</returns>
         public static Vector3d Cross(Vector3d left, Vector3d right)
         {
-            Vector3d result;
-            Cross(ref left, ref right, out result);
+            Cross(ref left, ref right, out Vector3d result);
             return result;
         }
 
@@ -785,8 +782,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed vector</returns>
         public static Vector3d TransformVector(Vector3d vec, Matrix4d mat)
         {
-            Vector3d result;
-            TransformVector(ref vec, ref mat, out result);
+            TransformVector(ref vec, ref mat, out Vector3d result);
             return result;
         }
 
@@ -860,8 +856,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed normal</returns>
         public static Vector3d TransformNormalInverse(Vector3d norm, Matrix4d invMat)
         {
-            Vector3d result;
-            TransformNormalInverse(ref norm, ref invMat, out result);
+            TransformNormalInverse(ref norm, ref invMat, out Vector3d result);
             return result;
         }
 
@@ -898,8 +893,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed position</returns>
         public static Vector3d TransformPosition(Vector3d pos, Matrix4d mat)
         {
-            Vector3d result;
-            TransformPosition(ref pos, ref mat, out result);
+            TransformPosition(ref pos, ref mat, out Vector3d result);
             return result;
         }
 
@@ -935,8 +929,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed vector</returns>
         public static Vector3d Transform(Vector3d vec, Matrix4d mat)
         {
-            Vector3d result;
-            Transform(ref vec, ref mat, out result);
+            Transform(ref vec, ref mat, out Vector3d result);
             return result;
         }
 
@@ -968,8 +961,7 @@ namespace OpenTK.Mathematics
         /// <returns>The result of the operation.</returns>
         public static Vector3d Transform(Vector3d vec, Quaterniond quat)
         {
-            Vector3d result;
-            Transform(ref vec, ref quat, out result);
+            Transform(ref vec, ref quat, out Vector3d result);
             return result;
         }
 
@@ -983,9 +975,9 @@ namespace OpenTK.Mathematics
         {
             // Since vec.W == 0, we can optimize quat * vec * quat^-1 as follows:
             // vec + 2.0 * cross(quat.xyz, cross(quat.xyz, vec) + quat.w * vec)
-            Vector3d xyz = quat.Xyz, temp, temp2;
-            Cross(ref xyz, ref vec, out temp);
-            Multiply(ref vec, quat.W, out temp2);
+            Vector3d xyz = quat.Xyz;
+            Cross(ref xyz, ref vec, out Vector3d temp);
+            Multiply(ref vec, quat.W, out Vector3d temp2);
             Add(ref temp, ref temp2, out temp);
             Cross(ref xyz, ref temp, out temp2);
             Multiply(ref temp2, 2f, out temp2);
@@ -1000,8 +992,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed vector</returns>
         public static Vector3d TransformPerspective(Vector3d vec, Matrix4d mat)
         {
-            Vector3d result;
-            TransformPerspective(ref vec, ref mat, out result);
+            TransformPerspective(ref vec, ref mat, out Vector3d result);
             return result;
         }
 
@@ -1029,8 +1020,7 @@ namespace OpenTK.Mathematics
         /// <remarks>Note that the returned angle is never bigger than the constant Pi.</remarks>
         public static double CalculateAngle(Vector3d first, Vector3d second)
         {
-            double result;
-            CalculateAngle(ref first, ref second, out result);
+            CalculateAngle(ref first, ref second, out double result);
             return result;
         }
 
@@ -1043,8 +1033,7 @@ namespace OpenTK.Mathematics
         /// <remarks>Note that the returned angle is never bigger than the constant Pi.</remarks>
         public static void CalculateAngle(ref Vector3d first, ref Vector3d second, out double result)
         {
-            double temp;
-            Dot(ref first, ref second, out temp);
+            Dot(ref first, ref second, out double temp);
             result = Math.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0, 1.0));
         }
 

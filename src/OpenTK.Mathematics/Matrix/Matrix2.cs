@@ -248,8 +248,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix2 instance.</returns>
         public static Matrix2 CreateRotation(float angle)
         {
-            Matrix2 result;
-            CreateRotation(angle, out result);
+            CreateRotation(angle, out Matrix2 result);
             return result;
         }
 
@@ -273,8 +272,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix2 CreateScale(float scale)
         {
-            Matrix2 result;
-            CreateScale(scale, out result);
+            CreateScale(scale, out Matrix2 result);
             return result;
         }
 
@@ -298,8 +296,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix2 CreateScale(Vector2 scale)
         {
-            Matrix2 result;
-            CreateScale(scale, out result);
+            CreateScale(scale, out Matrix2 result);
             return result;
         }
 
@@ -325,8 +322,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix2 CreateScale(float x, float y)
         {
-            Matrix2 result;
-            CreateScale(x, y, out result);
+            CreateScale(x, y, out Matrix2 result);
             return result;
         }
 
@@ -352,8 +348,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix2 Mult(Matrix2 left, float right)
         {
-            Matrix2 result;
-            Mult(ref left, right, out result);
+            Mult(ref left, right, out Matrix2 result);
             return result;
         }
 
@@ -388,8 +383,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix2 Mult(Matrix2 left, Matrix2 right)
         {
-            Matrix2 result;
-            Mult(ref left, ref right, out result);
+            Mult(ref left, ref right, out Matrix2 result);
             return result;
         }
 
@@ -428,8 +422,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix2x3 Mult(Matrix2 left, Matrix2x3 right)
         {
-            Matrix2x3 result;
-            Mult(ref left, ref right, out result);
+            Mult(ref left, ref right, out Matrix2x3 result);
             return result;
         }
 
@@ -472,8 +465,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix2x4 Mult(Matrix2 left, Matrix2x4 right)
         {
-            Matrix2x4 result;
-            Mult(ref left, ref right, out result);
+            Mult(ref left, ref right, out Matrix2x4 result);
             return result;
         }
 
@@ -499,8 +491,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the addition.</returns>
         public static Matrix2 Add(Matrix2 left, Matrix2 right)
         {
-            Matrix2 result;
-            Add(ref left, ref right, out result);
+            Add(ref left, ref right, out Matrix2 result);
             return result;
         }
 
@@ -526,8 +517,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the subtraction.</returns>
         public static Matrix2 Subtract(Matrix2 left, Matrix2 right)
         {
-            Matrix2 result;
-            Subtract(ref left, ref right, out result);
+            Subtract(ref left, ref right, out Matrix2 result);
             return result;
         }
 
@@ -562,8 +552,7 @@ namespace OpenTK.Mathematics
         /// <exception cref="InvalidOperationException">Thrown if the Matrix2 is singular.</exception>
         public static Matrix2 Invert(Matrix2 mat)
         {
-            Matrix2 result;
-            Invert(ref mat, out result);
+            Invert(ref mat, out Matrix2 result);
             return result;
         }
 
@@ -588,8 +577,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transpose of the given matrix.</returns>
         public static Matrix2 Transpose(Matrix2 mat)
         {
-            Matrix2 result;
-            Transpose(ref mat, out result);
+            Transpose(ref mat, out Matrix2 result);
             return result;
         }
 

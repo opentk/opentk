@@ -296,8 +296,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance containing the result of the calculation.</returns>
         public static Quaterniond Multiply(Quaterniond left, Quaterniond right)
         {
-            Quaterniond result;
-            Multiply(ref left, ref right, out result);
+            Multiply(ref left, ref right, out Quaterniond result);
             return result;
         }
 
@@ -365,8 +364,7 @@ namespace OpenTK.Mathematics
         /// <returns>The inverse of the given Quaterniond</returns>
         public static Quaterniond Invert(Quaterniond q)
         {
-            Quaterniond result;
-            Invert(ref q, out result);
+            Invert(ref q, out Quaterniond result);
             return result;
         }
 
@@ -396,8 +394,7 @@ namespace OpenTK.Mathematics
         /// <returns>The normalized Quaterniond</returns>
         public static Quaterniond Normalize(Quaterniond q)
         {
-            Quaterniond result;
-            Normalize(ref q, out result);
+            Normalize(ref q, out Quaterniond result);
             return result;
         }
 
@@ -484,8 +481,7 @@ namespace OpenTK.Mathematics
         /// <returns>The equivalent quaternion</returns>
         public static Quaterniond FromMatrix(Matrix3d matrix)
         {
-            Quaterniond result;
-            FromMatrix(ref matrix, out result);
+            FromMatrix(ref matrix, out Quaterniond result);
             return result;
         }
 

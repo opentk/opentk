@@ -691,8 +691,7 @@ namespace OpenTK.Mathematics
         /// <returns>A matrix instance.</returns>
         public static Matrix4 CreateFromAxisAngle(Vector3 axis, float angle)
         {
-            Matrix4 result;
-            CreateFromAxisAngle(axis, angle, out result);
+            CreateFromAxisAngle(axis, angle, out Matrix4 result);
             return result;
         }
 
@@ -703,9 +702,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">A matrix instance.</param>
         public static void CreateFromQuaternion(ref Quaternion q, out Matrix4 result)
         {
-            Vector3 axis;
-            float angle;
-            q.ToAxisAngle(out axis, out angle);
+            q.ToAxisAngle(out Vector3 axis, out float angle);
             CreateFromAxisAngle(axis, angle, out result);
         }
 
@@ -716,8 +713,7 @@ namespace OpenTK.Mathematics
         /// <returns>A matrix instance.</returns>
         public static Matrix4 CreateFromQuaternion(Quaternion q)
         {
-            Matrix4 result;
-            CreateFromQuaternion(ref q, out result);
+            CreateFromQuaternion(ref q, out Matrix4 result);
             return result;
         }
 
@@ -745,8 +741,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix4 instance.</returns>
         public static Matrix4 CreateRotationX(float angle)
         {
-            Matrix4 result;
-            CreateRotationX(angle, out result);
+            CreateRotationX(angle, out Matrix4 result);
             return result;
         }
 
@@ -774,8 +769,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix4 instance.</returns>
         public static Matrix4 CreateRotationY(float angle)
         {
-            Matrix4 result;
-            CreateRotationY(angle, out result);
+            CreateRotationY(angle, out Matrix4 result);
             return result;
         }
 
@@ -803,8 +797,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix4 instance.</returns>
         public static Matrix4 CreateRotationZ(float angle)
         {
-            Matrix4 result;
-            CreateRotationZ(angle, out result);
+            CreateRotationZ(angle, out Matrix4 result);
             return result;
         }
 
@@ -845,8 +838,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix4 instance.</returns>
         public static Matrix4 CreateTranslation(float x, float y, float z)
         {
-            Matrix4 result;
-            CreateTranslation(x, y, z, out result);
+            CreateTranslation(x, y, z, out Matrix4 result);
             return result;
         }
 
@@ -857,8 +849,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix4 instance.</returns>
         public static Matrix4 CreateTranslation(Vector3 vector)
         {
-            Matrix4 result;
-            CreateTranslation(vector.X, vector.Y, vector.Z, out result);
+            CreateTranslation(vector.X, vector.Y, vector.Z, out Matrix4 result);
             return result;
         }
 
@@ -869,8 +860,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix4 CreateScale(float scale)
         {
-            Matrix4 result;
-            CreateScale(scale, out result);
+            CreateScale(scale, out Matrix4 result);
             return result;
         }
 
@@ -881,8 +871,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix4 CreateScale(Vector3 scale)
         {
-            Matrix4 result;
-            CreateScale(ref scale, out result);
+            CreateScale(ref scale, out Matrix4 result);
             return result;
         }
 
@@ -895,8 +884,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix4 CreateScale(float x, float y, float z)
         {
-            Matrix4 result;
-            CreateScale(x, y, z, out result);
+            CreateScale(x, y, z, out Matrix4 result);
             return result;
         }
 
@@ -964,8 +952,7 @@ namespace OpenTK.Mathematics
         /// <rereturns>The resulting Matrix4 instance.</rereturns>
         public static Matrix4 CreateOrthographic(float width, float height, float zNear, float zFar)
         {
-            Matrix4 result;
-            CreateOrthographicOffCenter(-width / 2, width / 2, -height / 2, height / 2, zNear, zFar, out result);
+            CreateOrthographicOffCenter(-width / 2, width / 2, -height / 2, height / 2, zNear, zFar, out Matrix4 result);
             return result;
         }
 
@@ -1010,8 +997,7 @@ namespace OpenTK.Mathematics
         public static Matrix4 CreateOrthographicOffCenter(float left, float right, float bottom, float top, float zNear,
             float zFar)
         {
-            Matrix4 result;
-            CreateOrthographicOffCenter(left, right, bottom, top, zNear, zFar, out result);
+            CreateOrthographicOffCenter(left, right, bottom, top, zNear, zFar, out Matrix4 result);
             return result;
         }
 
@@ -1084,8 +1070,7 @@ namespace OpenTK.Mathematics
         /// </exception>
         public static Matrix4 CreatePerspectiveFieldOfView(float fovy, float aspect, float zNear, float zFar)
         {
-            Matrix4 result;
-            CreatePerspectiveFieldOfView(fovy, aspect, zNear, zFar, out result);
+            CreatePerspectiveFieldOfView(fovy, aspect, zNear, zFar, out Matrix4 result);
             return result;
         }
 
@@ -1171,8 +1156,7 @@ namespace OpenTK.Mathematics
         public static Matrix4 CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float zNear,
             float zFar)
         {
-            Matrix4 result;
-            CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar, out result);
+            CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar, out Matrix4 result);
             return result;
         }
 
@@ -1239,8 +1223,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the addition.</returns>
         public static Matrix4 Add(Matrix4 left, Matrix4 right)
         {
-            Matrix4 result;
-            Add(ref left, ref right, out result);
+            Add(ref left, ref right, out Matrix4 result);
             return result;
         }
 
@@ -1266,8 +1249,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the subraction.</returns>
         public static Matrix4 Subtract(Matrix4 left, Matrix4 right)
         {
-            Matrix4 result;
-            Subtract(ref left, ref right, out result);
+            Subtract(ref left, ref right, out Matrix4 result);
             return result;
         }
 
@@ -1293,8 +1275,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix4 Mult(Matrix4 left, Matrix4 right)
         {
-            Matrix4 result;
-            Mult(ref left, ref right, out result);
+            Mult(ref left, ref right, out Matrix4 result);
             return result;
         }
 
@@ -1365,8 +1346,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication</returns>
         public static Matrix4 Mult(Matrix4 left, float right)
         {
-            Matrix4 result;
-            Mult(ref left, right, out result);
+            Mult(ref left, right, out Matrix4 result);
             return result;
         }
 
@@ -1520,8 +1500,7 @@ namespace OpenTK.Mathematics
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
         public static Matrix4 Invert(Matrix4 mat)
         {
-            Matrix4 result;
-            Invert(ref mat, out result);
+            Invert(ref mat, out Matrix4 result);
             return result;
         }
 

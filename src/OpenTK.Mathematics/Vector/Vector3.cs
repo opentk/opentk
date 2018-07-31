@@ -561,8 +561,7 @@ namespace OpenTK.Mathematics
         /// <returns>The distance</returns>
         public static float Distance(Vector3 vec1, Vector3 vec2)
         {
-            float result;
-            Distance(ref vec1, ref vec2, out result);
+            Distance(ref vec1, ref vec2, out float result);
             return result;
         }
 
@@ -586,8 +585,7 @@ namespace OpenTK.Mathematics
         /// <returns>The squared distance</returns>
         public static float DistanceSquared(Vector3 vec1, Vector3 vec2)
         {
-            float result;
-            DistanceSquared(ref vec1, ref vec2, out result);
+            DistanceSquared(ref vec1, ref vec2, out float result);
             return result;
         }
 
@@ -687,8 +685,7 @@ namespace OpenTK.Mathematics
         /// <returns>The cross product of the two inputs</returns>
         public static Vector3 Cross(Vector3 left, Vector3 right)
         {
-            Vector3 result;
-            Cross(ref left, ref right, out result);
+            Cross(ref left, ref right, out Vector3 result);
             return result;
         }
 
@@ -791,8 +788,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed vector</returns>
         public static Vector3 TransformVector(Vector3 vec, Matrix4 mat)
         {
-            Vector3 result;
-            TransformVector(ref vec, ref mat, out result);
+            TransformVector(ref vec, ref mat, out Vector3 result);
             return result;
         }
 
@@ -834,8 +830,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed normal</returns>
         public static Vector3 TransformNormal(Vector3 norm, Matrix4 mat)
         {
-            Vector3 result;
-            TransformNormal(ref norm, ref mat, out result);
+            TransformNormal(ref norm, ref mat, out Vector3 result);
             return result;
         }
 
@@ -867,8 +862,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed normal</returns>
         public static Vector3 TransformNormalInverse(Vector3 norm, Matrix4 invMat)
         {
-            Vector3 result;
-            TransformNormalInverse(ref norm, ref invMat, out result);
+            TransformNormalInverse(ref norm, ref invMat, out Vector3 result);
             return result;
         }
 
@@ -905,8 +899,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed position</returns>
         public static Vector3 TransformPosition(Vector3 pos, Matrix4 mat)
         {
-            Vector3 result;
-            TransformPosition(ref pos, ref mat, out result);
+            TransformPosition(ref pos, ref mat, out Vector3 result);
             return result;
         }
 
@@ -942,8 +935,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed vector</returns>
         public static Vector3 Transform(Vector3 vec, Matrix3 mat)
         {
-            Vector3 result;
-            Transform(ref vec, ref mat, out result);
+            Transform(ref vec, ref mat, out Vector3 result);
             return result;
         }
 
@@ -968,8 +960,7 @@ namespace OpenTK.Mathematics
         /// <returns>The result of the operation.</returns>
         public static Vector3 Transform(Vector3 vec, Quaternion quat)
         {
-            Vector3 result;
-            Transform(ref vec, ref quat, out result);
+            Transform(ref vec, ref quat, out Vector3 result);
             return result;
         }
 
@@ -983,9 +974,9 @@ namespace OpenTK.Mathematics
         {
             // Since vec.W == 0, we can optimize quat * vec * quat^-1 as follows:
             // vec + 2.0 * cross(quat.xyz, cross(quat.xyz, vec) + quat.w * vec)
-            Vector3 xyz = quat.Xyz, temp, temp2;
-            Cross(ref xyz, ref vec, out temp);
-            Multiply(ref vec, quat.W, out temp2);
+            Vector3 xyz = quat.Xyz;
+            Cross(ref xyz, ref vec, out Vector3 temp);
+            Multiply(ref vec, quat.W, out Vector3 temp2);
             Add(ref temp, ref temp2, out temp);
             Cross(ref xyz, ref temp, out temp2);
             Multiply(ref temp2, 2f, out temp2);
@@ -999,8 +990,7 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The vector to transform</param>
         public static Vector3 Transform(Matrix3 mat, Vector3 vec)
         {
-            Vector3 result;
-            Transform(ref vec, ref mat, out result);
+            Transform(ref vec, ref mat, out Vector3 result);
             return result;
         }
 
@@ -1025,8 +1015,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed vector</returns>
         public static Vector3 TransformPerspective(Vector3 vec, Matrix4 mat)
         {
-            Vector3 result;
-            TransformPerspective(ref vec, ref mat, out result);
+            TransformPerspective(ref vec, ref mat, out Vector3 result);
             return result;
         }
 
@@ -1054,8 +1043,7 @@ namespace OpenTK.Mathematics
         /// <remarks>Note that the returned angle is never bigger than the constant Pi.</remarks>
         public static float CalculateAngle(Vector3 first, Vector3 second)
         {
-            float result;
-            CalculateAngle(ref first, ref second, out result);
+            CalculateAngle(ref first, ref second, out float result);
             return result;
         }
 
@@ -1068,8 +1056,7 @@ namespace OpenTK.Mathematics
         /// <remarks>Note that the returned angle is never bigger than the constant Pi.</remarks>
         public static void CalculateAngle(ref Vector3 first, ref Vector3 second, out float result)
         {
-            float temp;
-            Dot(ref first, ref second, out temp);
+            Dot(ref first, ref second, out float temp);
             result = (float)Math.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0, 1.0));
         }
 
@@ -1431,8 +1418,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed vector</returns>
         public static Vector3 operator *(Vector3 vec, Matrix3 mat)
         {
-            Vector3 result;
-            Transform(ref vec, ref mat, out result);
+            Transform(ref vec, ref mat, out Vector3 result);
             return result;
         }
 
@@ -1444,8 +1430,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed vector</returns>
         public static Vector3 operator *(Matrix3 mat, Vector3 vec)
         {
-            Vector3 result;
-            Transform(ref mat, ref vec, out result);
+            Transform(ref mat, ref vec, out Vector3 result);
             return result;
         }
 
@@ -1457,8 +1442,7 @@ namespace OpenTK.Mathematics
         /// <returns></returns>
         public static Vector3 operator *(Quaternion quat, Vector3 vec)
         {
-            Vector3 result;
-            Transform(ref vec, ref quat, out result);
+            Transform(ref vec, ref quat, out Vector3 result);
             return result;
         }
 

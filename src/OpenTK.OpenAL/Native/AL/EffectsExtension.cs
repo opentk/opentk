@@ -412,8 +412,7 @@ namespace OpenTK.OpenAL.Native
         /// </remarks>
         public int GenEffect()
         {
-            int temp;
-            GenEffects(1, out temp);
+            GenEffects(1, out int temp);
             return temp;
         }
 
@@ -779,8 +778,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>Storage Int32 for the new filter name/handle.</returns>
         public int GenFilter()
         {
-            int filter;
-            GenFilters(1, out filter);
+            GenFilters(1, out int filter);
             return filter;
         }
 
@@ -1084,8 +1082,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>Storage Int32 for the new auxiliary effect slot name/handle.</returns>
         public int GenAuxiliaryEffectSlot()
         {
-            int temp;
-            GenAuxiliaryEffectSlots(1, out temp);
+            GenAuxiliaryEffectSlots(1, out int temp);
             return temp;
         }
 
