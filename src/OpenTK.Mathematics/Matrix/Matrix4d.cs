@@ -1199,10 +1199,13 @@ namespace OpenTK.Mathematics
             var x = Vector3d.Normalize(Vector3d.Cross(up, z));
             var y = Vector3d.Normalize(Vector3d.Cross(z, x));
 
-            var rot = new Matrix4d(new Vector4d(x.X, y.X, z.X, 0.0),
+            var rot = new Matrix4d
+            (
+                new Vector4d(x.X, y.X, z.X, 0.0),
                 new Vector4d(x.Y, y.Y, z.Y, 0.0),
                 new Vector4d(x.Z, y.Z, z.Z, 0.0),
-                Vector4d.UnitW);
+                Vector4d.UnitW
+            );
 
             var trans = CreateTranslation(-eye);
 
@@ -1244,10 +1247,13 @@ namespace OpenTK.Mathematics
             var invRL = 1.0 / (right - left);
             var invTB = 1.0 / (top - bottom);
             var invFN = 1.0 / (far - near);
-            return new Matrix4d(new Vector4d(2.0 * near * invRL, 0.0, 0.0, 0.0),
+            return new Matrix4d
+            (
+                new Vector4d(2.0 * near * invRL, 0.0, 0.0, 0.0),
                 new Vector4d(0.0, 2.0 * near * invTB, 0.0, 0.0),
                 new Vector4d((right + left) * invRL, (top + bottom) * invTB, -(far + near) * invFN, -1.0),
-                new Vector4d(0.0, 0.0, -2.0 * far * near * invFN, 0.0));
+                new Vector4d(0.0, 0.0, -2.0 * far * near * invFN, 0.0)
+            );
         }
 
         /// <summary>

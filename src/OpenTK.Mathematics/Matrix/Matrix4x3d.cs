@@ -874,8 +874,12 @@ namespace OpenTK.Mathematics
             result.Row0 = inverseRotation.Row0;
             result.Row1 = inverseRotation.Row1;
             result.Row2 = inverseRotation.Row2;
-            result.Row3 = new Vector3d(-Vector3d.Dot(inverseRotation.Row0, translation),
-                -Vector3d.Dot(inverseRotation.Row1, translation), -Vector3d.Dot(inverseRotation.Row2, translation));
+            result.Row3 = new Vector3d
+            (
+                -Vector3d.Dot(inverseRotation.Row0, translation),
+                -Vector3d.Dot(inverseRotation.Row1, translation),
+                -Vector3d.Dot(inverseRotation.Row2, translation)
+            );
         }
 
         /// <summary>
