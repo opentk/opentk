@@ -79,7 +79,7 @@ namespace OpenTK.OpenAL.Native
         [DllImport(Lib, EntryPoint = "alEnable", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
         public static extern void Enable(ALCapability capability);
-        //AL_API void AL_APIENTRY alEnable( ALenum capability );
+        // AL_API void AL_APIENTRY alEnable( ALenum capability );
 
         /// <summary>
         /// This function disables a feature of the OpenAL driver.

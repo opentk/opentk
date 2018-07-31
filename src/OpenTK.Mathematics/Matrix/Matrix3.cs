@@ -454,16 +454,16 @@ namespace OpenTK.Mathematics
         /// <param name="result">A matrix instance.</param>
         public static void CreateFromAxisAngle(Vector3 axis, float angle, out Matrix3 result)
         {
-            //normalize and create a local copy of the vector.
+            // normalize and create a local copy of the vector.
             axis.Normalize();
             float axisX = axis.X, axisY = axis.Y, axisZ = axis.Z;
 
-            //calculate angles
+            // calculate angles
             var cos = (float)Math.Cos(-angle);
             var sin = (float)Math.Sin(-angle);
             var t = 1.0f - cos;
 
-            //do the conversion math once
+            // do the conversion math once
             float tXX = t * axisX * axisX,
                 tXY = t * axisX * axisY,
                 tXZ = t * axisX * axisZ,

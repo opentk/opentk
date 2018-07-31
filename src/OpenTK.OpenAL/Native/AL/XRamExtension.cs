@@ -50,7 +50,7 @@ namespace OpenTK.OpenAL.Native
         private readonly int AL_STORAGE_HARDWARE;
 
         private readonly Delegate_GetBufferMode Imported_GetBufferMode;
-        //typedef ALenum    (__cdecl *EAXGetBufferMode)(ALuint buffer, ALint *value);
+        // typedef ALenum    (__cdecl *EAXGetBufferMode)(ALuint buffer, ALint *value);
 
         private readonly Delegate_SetBufferMode Imported_SetBufferMode;
 
@@ -195,7 +195,7 @@ namespace OpenTK.OpenAL.Native
         }
 
         private delegate bool Delegate_SetBufferMode(int n, ref uint buffers, int value);
-        //typedef ALboolean (__cdecl *EAXSetBufferMode)(ALsizei n, ALuint *buffers, ALint value);
+        // typedef ALboolean (__cdecl *EAXSetBufferMode)(ALsizei n, ALuint *buffers, ALint value);
 
         // [CLSCompliant( false )]
         private delegate int Delegate_GetBufferMode(uint buffer, IntPtr value);
