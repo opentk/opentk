@@ -87,6 +87,7 @@ namespace OpenTK.Mathematics
 
                 throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
             }
+
             set
             {
                 if (index == 0)
