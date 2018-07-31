@@ -557,7 +557,6 @@ namespace OpenTK.Mathematics
             return result;
         }
 
-
         /// <summary>
         /// Calculate the transpose of the given matrix.
         /// </summary>

@@ -615,7 +615,6 @@ namespace OpenTK.Mathematics
             return Column3;
         }
 
-
         /// <summary>
         /// Build a rotation matrix from the specified axis/angle rotation.
         /// </summary>
@@ -1537,7 +1536,6 @@ namespace OpenTK.Mathematics
         {
             return new Matrix4d(mat.Column0, mat.Column1, mat.Column2, mat.Column3);
         }
-
 
         /// <summary>
         /// Calculate the transpose of the given matrix

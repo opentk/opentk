@@ -205,7 +205,6 @@ namespace OpenTK.Mathematics
             }
         }
 
-
         private static readonly string listSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
         /// <summary>

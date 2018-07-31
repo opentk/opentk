@@ -23,7 +23,6 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-
 namespace OpenTK.OpenAL
 {
     /// <summary>

@@ -585,7 +585,6 @@ namespace OpenTK.Mathematics
                 return q1;
             }
 
-
             var cosHalfAngle = (q1.W * q2.W) + Vector3.Dot(q1.Xyz, q2.Xyz);
 
             if (cosHalfAngle >= 1.0f || cosHalfAngle <= -1.0f)

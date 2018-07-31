@@ -70,7 +70,6 @@ namespace OpenTK.Mathematics
             Row3 = row3;
         }
 
-
         /// <summary>
         /// Constructs a new instance
         /// </summary>

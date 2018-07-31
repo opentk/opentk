@@ -52,7 +52,6 @@ namespace OpenTK.Mathematics
         /// </summary>
         public static Matrix3d Identity = new Matrix3d(Vector3d.UnitX, Vector3d.UnitY, Vector3d.UnitZ);
 
-
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
@@ -98,7 +97,6 @@ namespace OpenTK.Mathematics
             Row1 = matrix.Row1.Xyz;
             Row2 = matrix.Row2.Xyz;
         }
-
 
         /// <summary>
         /// Gets the determinant of this matrix.
@@ -294,7 +292,6 @@ namespace OpenTK.Mathematics
             this = Invert(this);
         }
 
-
         /// <summary>
         /// Converts this instance into its transpose.
         /// </summary>
@@ -302,7 +299,6 @@ namespace OpenTK.Mathematics
         {
             this = Transpose(this);
         }
-
 
         /// <summary>
         /// Returns a normalised copy of this instance.
@@ -338,7 +334,6 @@ namespace OpenTK.Mathematics
 
             return m;
         }
-
 
         /// <summary>
         /// Returns a copy of this Matrix3 without scale.
@@ -441,7 +436,6 @@ namespace OpenTK.Mathematics
             return q;
         }
 
-
         /// <summary>
         /// Build a rotation matrix from the specified axis/angle rotation.
         /// </summary>
@@ -494,7 +488,6 @@ namespace OpenTK.Mathematics
             return result;
         }
 
-
         /// <summary>
         /// Build a rotation matrix from the specified quaternion.
         /// </summary>
@@ -516,7 +509,6 @@ namespace OpenTK.Mathematics
             CreateFromQuaternion(ref q, out Matrix3d result);
             return result;
         }
-
 
         /// <summary>
         /// Builds a rotation matrix for a rotation around the x-axis.
@@ -602,7 +594,6 @@ namespace OpenTK.Mathematics
             return result;
         }
 
-
         /// <summary>
         /// Creates a scale matrix.
         /// </summary>
@@ -679,7 +670,6 @@ namespace OpenTK.Mathematics
             result.Row2.Z = z;
         }
 
-
         /// <summary>
         /// Adds two instances.
         /// </summary>
@@ -754,7 +744,6 @@ namespace OpenTK.Mathematics
             result.Row2.Y = (lM31 * rM12) + (lM32 * rM22) + (lM33 * rM32);
             result.Row2.Z = (lM31 * rM13) + (lM32 * rM23) + (lM33 * rM33);
         }
-
 
         /// <summary>
         /// Calculate the inverse of the given matrix
@@ -883,7 +872,6 @@ namespace OpenTK.Mathematics
             return result;
         }
 
-
         /// <summary>
         /// Calculate the transpose of the given matrix
         /// </summary>
@@ -905,7 +893,6 @@ namespace OpenTK.Mathematics
             result.Row1 = mat.Column1;
             result.Row2 = mat.Column2;
         }
-
 
         /// <summary>
         /// Matrix multiplication
@@ -940,7 +927,6 @@ namespace OpenTK.Mathematics
             return !left.Equals(right);
         }
 
-
         /// <summary>
         /// Returns a System.String that represents the current Matrix3d.
         /// </summary>
@@ -949,7 +935,6 @@ namespace OpenTK.Mathematics
         {
             return $"{Row0}\n{Row1}\n{Row2}";
         }
-
 
         /// <summary>
         /// Returns the hashcode for this instance.
@@ -966,7 +951,6 @@ namespace OpenTK.Mathematics
             }
         }
 
-
         /// <summary>
         /// Indicates whether this instance and a specified object are equal.
         /// </summary>
@@ -981,7 +965,6 @@ namespace OpenTK.Mathematics
 
             return Equals((Matrix3d)obj);
         }
-
 
         /// <summary>
         /// Indicates whether the current matrix is equal to another matrix.

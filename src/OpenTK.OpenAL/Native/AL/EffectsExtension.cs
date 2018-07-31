@@ -747,7 +747,6 @@ namespace OpenTK.OpenAL.Native
             }
         }
 
-
         /// <summary>
         /// The GenFilters function is used to create one or more Filter objects. A Filter object stores a filter type and
         /// a set of parameter values to control that Filter. Filter objects can be attached to Sources as Direct Filters or

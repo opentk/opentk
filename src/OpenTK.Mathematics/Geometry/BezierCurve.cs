@@ -98,7 +98,6 @@ namespace OpenTK.Mathematics
             this._points = new List<Vector2>(points);
         }
 
-
         /// <summary>
         /// Calculates the point with the specified t.
         /// </summary>

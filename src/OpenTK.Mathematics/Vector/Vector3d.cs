@@ -106,7 +106,6 @@ namespace OpenTK.Mathematics
             Z = v.Z;
         }
 
-
         /// <summary>
         /// Gets or sets the value at the index of the Vector.
         /// </summary>

@@ -1515,7 +1515,6 @@ namespace OpenTK.Mathematics
             return new Matrix4(mat.Column0, mat.Column1, mat.Column2, mat.Column3);
         }
 
-
         /// <summary>
         /// Calculate the transpose of the given matrix
         /// </summary>
