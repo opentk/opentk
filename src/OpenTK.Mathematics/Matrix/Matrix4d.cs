@@ -558,7 +558,6 @@ namespace OpenTK.Mathematics
             }
 
             // code below adapted from Blender
-
             var q = new Quaterniond();
             var trace = 0.25 * (row0[0] + row1[1] + row2[2] + 1.0);
 
@@ -1475,10 +1474,12 @@ namespace OpenTK.Mathematics
                 colIdx[i] = icol;
 
                 var pivot = inverse[icol, icol];
+
                 // check for singular matrix
                 if (pivot == 0.0)
                 {
                     throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+
                     // return mat;
                 }
 

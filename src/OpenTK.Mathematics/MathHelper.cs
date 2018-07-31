@@ -193,6 +193,7 @@ namespace OpenTK.Mathematics
         public static double InverseSqrtFast(double x)
         {
             return InverseSqrtFast((float)x);
+
             // TODO: The following code is wrong. Fix it, to improve precision.
 #if false
             unsafe

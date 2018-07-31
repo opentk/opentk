@@ -182,13 +182,11 @@ namespace OpenTK.Mathematics
             // Disassemble that bit pattern into the sign, S, the exponent, E, and the significand, M.
             // Shift S into the position where it will go in in the resulting half number.
             // Adjust E, accounting for the different exponent bias of float and half (127 versus 15).
-
             var sign = (si32 >> 16) & 0x00008000;
             var exponent = ((si32 >> 23) & 0x000000ff) - (127 - 15);
             var mantissa = si32 & 0x007fffff;
 
             // Now reassemble S, E and M into a half:
-
             if (exponent <= 0)
             {
                 if (exponent < -10)
@@ -197,7 +195,6 @@ namespace OpenTK.Mathematics
                     // (F may be a small normalized float, a denormalized float or a zero).
                     //
                     // We convert F to a half zero with the same sign as F.
-
                     return (ushort)sign;
                 }
 
@@ -206,14 +203,12 @@ namespace OpenTK.Mathematics
                 // We convert F to a denormalized half.
 
                 // Add an explicit leading 1 to the significand.
-
                 mantissa = mantissa | 0x00800000;
 
                 // Round to M to the nearest (10+E)-bit value (with E between -10 and 0); in case of a tie, round to the nearest even value.
                 //
                 // Rounding may cause the significand to overflow and make our number normalized. Because of the way a half's bits
                 // are laid out, we don't have to treat this case separately; the code below will handle it correctly.
-
                 var t = 14 - exponent;
                 var a = (1 << (t - 1)) - 1;
                 var b = (mantissa >> t) & 1;
@@ -221,7 +216,6 @@ namespace OpenTK.Mathematics
                 mantissa = (mantissa + a + b) >> t;
 
                 // Assemble the half from S, E (==zero) and M.
-
                 return (ushort)(sign | mantissa);
             }
 
@@ -230,20 +224,19 @@ namespace OpenTK.Mathematics
                 if (mantissa == 0)
                 {
                     // F is an infinity; convert F to a half infinity with the same sign as F.
-
                     return (ushort)(sign | 0x7c00);
                 }
+
                 // F is a NAN; we produce a half NAN that preserves the sign bit and the 10 leftmost bits of the
                 // significand of F, with one exception: If the 10 leftmost bits are all zero, the NAN would turn
                 // into an infinity, so we have to set at least one bit in the significand.
-
                 mantissa >>= 13;
                 return (ushort)(sign | 0x7c00 | mantissa | (mantissa == 0 ? 1 : 0));
             }
+
             // E is greater than zero.  F is a normalized float. We try to convert F to a normalized half.
 
             // Round to M to the nearest 10-bit value. In case of a tie, round to the nearest even value.
-
             mantissa = mantissa + 0x00000fff + ((mantissa >> 13) & 1);
 
             if ((mantissa & 0x00800000) != 0)
@@ -259,7 +252,6 @@ namespace OpenTK.Mathematics
             }
 
             // Assemble the half from S, E and M.
-
             return (ushort)(sign | (exponent << 10) | (mantissa >> 13));
         }
 
@@ -291,11 +283,10 @@ namespace OpenTK.Mathematics
                 if (mantissa == 0)
                 {
                     // Plus or minus zero
-
                     return sign << 31;
                 }
-                // Denormalized number -- renormalize it
 
+                // Denormalized number -- renormalize it
                 while ((mantissa & 0x00000400) == 0)
                 {
                     mantissa <<= 1;
@@ -310,21 +301,18 @@ namespace OpenTK.Mathematics
                 if (mantissa == 0)
                 {
                     // Positive or negative infinity
-
                     return (sign << 31) | 0x7f800000;
                 }
-                // Nan -- preserve sign and significand bits
 
+                // Nan -- preserve sign and significand bits
                 return (sign << 31) | 0x7f800000 | (mantissa << 13);
             }
 
             // Normalized number
-
             exponent = exponent + (127 - 15);
             mantissa = mantissa << 13;
 
             // Assemble S, E and M.
-
             return (sign << 31) | (exponent << 23) | mantissa;
         }
 
