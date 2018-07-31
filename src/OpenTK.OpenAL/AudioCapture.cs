@@ -39,22 +39,21 @@ namespace OpenTK.OpenAL
     public sealed class AudioCapture : IDisposable
     {
         // This must stay private info so the end-user cannot call any Alc commands for the recording device.
-        private readonly IntPtr Handle;
+        private readonly IntPtr _handle;
 
-        private bool IsDisposed;
+        private bool _isDisposed;
 
         // Alc.CaptureStop should be called prior to device shutdown, this keeps track of Alc.CaptureStart/Stop calls.
-
-
         static AudioCapture()
         {
-            if (AudioDeviceEnumerator.IsOpenALSupported) // forces enumeration
+            // forces enumeration
+            if (AudioDeviceEnumerator.IsOpenALSupported)
             {
             }
         }
 
         /// <summary>
-        /// Opens the default device for audio recording.
+        /// Initializes a new instance of the <see cref="AudioCapture"/> class that opens a device for audio recording.
         /// Implicitly set parameters are: 22050Hz, 16Bit Mono, 4096 samples ringbuffer.
         /// </summary>
         public AudioCapture()
@@ -63,7 +62,7 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>
-        /// Opens a device for audio recording.
+        /// Initializes a new instance of the <see cref="AudioCapture"/> class that opens a device for audio recording.
         /// </summary>
         /// <param name="deviceName">The device name.</param>
         /// <param name="frequency">The frequency that the data should be captured at.</param>
@@ -91,32 +90,41 @@ namespace OpenTK.OpenAL
 
             // Try to open specified device. If it fails, try to open default device.
             CurrentDevice = deviceName;
-            Handle = Alc.CaptureOpenDevice(deviceName, frequency, sampleFormat, bufferSize);
+            _handle = Alc.CaptureOpenDevice(deviceName, frequency, sampleFormat, bufferSize);
 
-            if (Handle == IntPtr.Zero)
+            if (_handle == IntPtr.Zero)
             {
                 Debug.WriteLine(ErrorMessage(deviceName, frequency, sampleFormat, bufferSize));
                 CurrentDevice = "IntPtr.Zero";
-                Handle = Alc.CaptureOpenDevice(null, frequency, sampleFormat, bufferSize);
+                _handle = Alc.CaptureOpenDevice(null, frequency, sampleFormat, bufferSize);
             }
 
-            if (Handle == IntPtr.Zero)
+            if (_handle == IntPtr.Zero)
             {
                 Debug.WriteLine(ErrorMessage("IntPtr.Zero", frequency, sampleFormat, bufferSize));
                 CurrentDevice = AudioDeviceEnumerator.DefaultRecordingDevice;
-                Handle = Alc.CaptureOpenDevice(AudioDeviceEnumerator.DefaultRecordingDevice, frequency, sampleFormat,
-                    bufferSize);
+                _handle = Alc.CaptureOpenDevice
+                (
+                    AudioDeviceEnumerator.DefaultRecordingDevice,
+                    frequency,
+                    sampleFormat,
+                    bufferSize
+                );
             }
 
-            if (Handle == IntPtr.Zero)
+            if (_handle == IntPtr.Zero)
             {
                 // Everything we tried failed. Capture may not be supported, bail out.
-                Debug.WriteLine(ErrorMessage(AudioDeviceEnumerator.DefaultRecordingDevice, frequency, sampleFormat,
-                    bufferSize));
+                Debug.WriteLine
+                (
+                    ErrorMessage(AudioDeviceEnumerator.DefaultRecordingDevice, frequency, sampleFormat, bufferSize)
+                );
                 CurrentDevice = "None";
 
-                throw new AudioDeviceException(
-                    "All attempts to open capture devices returned IntPtr.Zero. See debug log for verbose list.");
+                throw new AudioDeviceException
+                (
+                    "All attempts to open capture devices returned IntPtr.Zero. See debug log for verbose list."
+                );
             }
 
             // handle is not null, check for some Alc Error
@@ -127,27 +135,27 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>
-        /// The name of the device associated with this instance.
+        /// Gets the name of the device associated with this instance.
         /// </summary>
         public string CurrentDevice { get; }
 
         /// <summary>
-        /// Returns a list of strings containing all known recording devices.
+        /// Gets a list of strings containing all known recording devices.
         /// </summary>
         public static IList<string> AvailableDevices => AudioDeviceEnumerator.AvailableRecordingDevices;
 
         /// <summary>
-        /// Returns the name of the device that will be used as recording default.
+        /// Gets the name of the device that will be used as recording default.
         /// </summary>
         public static string DefaultDevice => AudioDeviceEnumerator.DefaultRecordingDevice;
 
         /// <summary>
-        /// Returns the ALC error code for this device.
+        /// Gets the ALC error code for this device.
         /// </summary>
-        public AlcError CurrentError => Alc.GetError(Handle);
+        public AlcError CurrentError => Alc.GetError(_handle);
 
         /// <summary>
-        /// Returns the number of available samples for capture.
+        /// Gets the number of available samples for capture.
         /// </summary>
         public int AvailableSamples
         {
@@ -155,8 +163,7 @@ namespace OpenTK.OpenAL
             {
                 // TODO: Investigate inconsistency between documentation and actual usage.
                 // Doc claims the 3rd param is Number-of-Bytes, but it appears to be Number-of-Int32s
-                int result;
-                Alc.GetInteger(Handle, AlcGetInteger.CaptureSamples, 1, out result);
+                Alc.GetInteger(_handle, AlcGetInteger.CaptureSamples, 1, out int result);
                 return result;
             }
         }
@@ -194,7 +201,7 @@ namespace OpenTK.OpenAL
         /// <exception cref="AudioContextException">Raised when an invalid context is detected.</exception>
         public void CheckErrors()
         {
-            new AudioDeviceErrorChecker(Handle).Dispose();
+            new AudioDeviceErrorChecker(_handle).Dispose();
         }
 
         /// <summary>
@@ -204,7 +211,7 @@ namespace OpenTK.OpenAL
         /// </summary>
         public void Start()
         {
-            Alc.CaptureStart(Handle);
+            Alc.CaptureStart(_handle);
             IsRunning = true;
         }
 
@@ -213,7 +220,7 @@ namespace OpenTK.OpenAL
         /// </summary>
         public void Stop()
         {
-            Alc.CaptureStop(Handle);
+            Alc.CaptureStop(_handle);
             IsRunning = false;
         }
 
@@ -225,17 +232,18 @@ namespace OpenTK.OpenAL
         /// <param name="sampleCount">The number of samples to be written to the buffer.</param>
         public void ReadSamples(IntPtr buffer, int sampleCount)
         {
-            Alc.CaptureSamples(Handle, buffer, sampleCount);
+            Alc.CaptureSamples(_handle, buffer, sampleCount);
         }
 
         /// <summary>
-        /// Fills the specified buffer with samples from the internal capture ring-buffer. This method does not block: it
-        /// is an error to specify a sampleCount larger than AvailableSamples.
+        /// Fills the specified buffer with samples from the internal capture ring-buffer. This method does not block:
+        /// it is an error to specify a sampleCount larger than AvailableSamples.
         /// </summary>
+        /// <typeparam name="TBuffer"></typeparam>
         /// <param name="buffer">The buffer to fill.</param>
         /// <param name="sampleCount">The number of samples to be written to the buffer.</param>
-        /// <exception cref="System.ArgumentNullException">Raised when buffer is null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">Raised when sampleCount is larger than the buffer.</exception>
+        /// <exception cref="ArgumentNullException">Raised when buffer is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Raised when sampleCount is larger than the buffer.</exception>
         public void ReadSamples<TBuffer>(TBuffer[] buffer, int sampleCount)
             where TBuffer : struct
         {
@@ -245,6 +253,7 @@ namespace OpenTK.OpenAL
             }
 
             var buffer_size = BlittableValueType<TBuffer>.Stride * buffer.Length;
+
             // This is more of a heuristic than a 100% valid check. However, it will work
             // correctly for 99.9% of all use cases.
             // This should never produce a false positive, but a false negative might
@@ -328,7 +337,7 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>
-        /// Finalizes this instance.
+        /// Finalizes an instance of the <see cref="AudioCapture"/> class.
         /// </summary>
         ~AudioCapture()
         {
@@ -337,19 +346,19 @@ namespace OpenTK.OpenAL
 
         private void Dispose(bool manual)
         {
-            if (!IsDisposed)
+            if (!_isDisposed)
             {
-                if (Handle != IntPtr.Zero)
+                if (_handle != IntPtr.Zero)
                 {
                     if (IsRunning)
                     {
                         Stop();
                     }
 
-                    Alc.CaptureCloseDevice(Handle);
+                    Alc.CaptureCloseDevice(_handle);
                 }
 
-                IsDisposed = true;
+                _isDisposed = true;
             }
         }
     }

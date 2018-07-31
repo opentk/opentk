@@ -33,8 +33,8 @@ namespace OpenTK.OpenAL
 {
     internal static class AudioDeviceEnumerator
     {
-        private static readonly List<string> available_playback_devices = new List<string>();
-        private static readonly List<string> available_recording_devices = new List<string>();
+        private static readonly List<string> AvailablePlaybackDevicesValue = new List<string>();
+        private static readonly List<string> AvailableRecordingDevicesValue = new List<string>();
 
         // Loads all available audio devices into the available_*_devices lists.
         static AudioDeviceEnumerator()
@@ -67,14 +67,18 @@ namespace OpenTK.OpenAL
                     Version = AlcVersion.Alc1_1;
                     if (Alc.IsExtensionPresent(IntPtr.Zero, "ALC_ENUMERATE_ALL_EXT"))
                     {
-                        available_playback_devices.AddRange(Alc.GetString(IntPtr.Zero,
-                            AlcGetStringList.AllDevicesSpecifier));
+                        AvailablePlaybackDevicesValue.AddRange
+                        (
+                            Alc.GetString(IntPtr.Zero, AlcGetStringList.AllDevicesSpecifier)
+                        );
                         DefaultPlaybackDevice = Alc.GetString(IntPtr.Zero, AlcGetString.DefaultAllDevicesSpecifier);
                     }
                     else
                     {
-                        available_playback_devices.AddRange(
-                            Alc.GetString(IntPtr.Zero, AlcGetStringList.DeviceSpecifier));
+                        AvailablePlaybackDevicesValue.AddRange
+                        (
+                            Alc.GetString(IntPtr.Zero, AlcGetStringList.DeviceSpecifier)
+                        );
                         DefaultPlaybackDevice = Alc.GetString(IntPtr.Zero, AlcGetString.DefaultDeviceSpecifier);
                     }
                 }
@@ -87,15 +91,19 @@ namespace OpenTK.OpenAL
                 var playback_err = Alc.GetError(dummy_device);
                 if (playback_err != AlcError.NoError)
                 {
-                    throw new AudioContextException("Alc Error occured when querying available playback devices. " +
-                                                    playback_err);
+                    throw new AudioContextException
+                    (
+                        $"Alc Error occured when querying available playback devices: {playback_err}"
+                    );
                 }
 
                 // Get a list of all known recording devices, at least ALC_ENUMERATION_EXT is needed too
                 if (Version == AlcVersion.Alc1_1 && Alc.IsExtensionPresent(IntPtr.Zero, "ALC_EXT_CAPTURE"))
                 {
-                    available_recording_devices.AddRange(Alc.GetString(IntPtr.Zero,
-                        AlcGetStringList.CaptureDeviceSpecifier));
+                    AvailableRecordingDevicesValue.AddRange
+                    (
+                        Alc.GetString(IntPtr.Zero, AlcGetStringList.CaptureDeviceSpecifier)
+                    );
                     DefaultRecordingDevice = Alc.GetString(IntPtr.Zero, AlcGetString.CaptureDefaultDeviceSpecifier);
                 }
                 else
@@ -106,13 +114,15 @@ namespace OpenTK.OpenAL
                 var record_err = Alc.GetError(dummy_device);
                 if (record_err != AlcError.NoError)
                 {
-                    throw new AudioContextException("Alc Error occured when querying available recording devices. " +
-                                                    record_err);
+                    throw new AudioContextException
+                    (
+                        $"Alc Error occured when querying available recording devices: {record_err}"
+                    );
                 }
 
 #if DEBUG
                 Debug.WriteLine("Found playback devices:");
-                foreach (var s in available_playback_devices)
+                foreach (var s in AvailablePlaybackDevicesValue)
                 {
                     Debug.WriteLine(s);
                 }
@@ -120,7 +130,7 @@ namespace OpenTK.OpenAL
                 Debug.WriteLine("Default playback device: " + DefaultPlaybackDevice);
 
                 Debug.WriteLine("Found recording devices:");
-                foreach (var s in available_recording_devices)
+                foreach (var s in AvailableRecordingDevicesValue)
                 {
                     Debug.WriteLine(s);
                 }
@@ -166,9 +176,9 @@ namespace OpenTK.OpenAL
             }
         }
 
-        internal static IList<string> AvailablePlaybackDevices => available_playback_devices.AsReadOnly();
+        internal static IList<string> AvailablePlaybackDevices => AvailablePlaybackDevicesValue.AsReadOnly();
 
-        internal static IList<string> AvailableRecordingDevices => available_recording_devices.AsReadOnly();
+        internal static IList<string> AvailableRecordingDevices => AvailableRecordingDevicesValue.AsReadOnly();
 
         internal static string DefaultPlaybackDevice { get; }
 
