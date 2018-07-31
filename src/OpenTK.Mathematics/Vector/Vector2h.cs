@@ -314,14 +314,14 @@ namespace OpenTK.Mathematics
             return X.Equals(other.X) && Y.Equals(other.Y);
         }
 
-        private static readonly string listSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
         /// <summary>
         /// Returns a string that contains this Half2's numbers in human-legible form.
         /// </summary>
         public override string ToString()
         {
-            return string.Format("({0}{2} {1})", X, Y, listSeparator);
+            return string.Format("({0}{2} {1})", X, Y, ListSeparator);
         }
 
         /// <summary>

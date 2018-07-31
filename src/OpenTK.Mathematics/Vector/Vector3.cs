@@ -1504,7 +1504,7 @@ namespace OpenTK.Mathematics
             return !left.Equals(right);
         }
 
-        private static readonly string listSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
         /// <summary>
         /// Returns a System.String that represents the current Vector3.
@@ -1512,7 +1512,7 @@ namespace OpenTK.Mathematics
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("({0}{3} {1}{3} {2})", X, Y, Z, listSeparator);
+            return string.Format("({0}{3} {1}{3} {2})", X, Y, Z, ListSeparator);
         }
 
         /// <summary>

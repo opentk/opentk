@@ -1984,7 +1984,7 @@ namespace OpenTK.Mathematics
             return new Vector4((float)v4d.X, (float)v4d.Y, (float)v4d.Z, (float)v4d.W);
         }
 
-        private static readonly string listSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
         /// <summary>
         /// Returns a System.String that represents the current Vector4d.
@@ -1992,7 +1992,7 @@ namespace OpenTK.Mathematics
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("({0}{4} {1}{4} {2}{4} {3})", X, Y, Z, W, listSeparator);
+            return string.Format("({0}{4} {1}{4} {2}{4} {3})", X, Y, Z, W, ListSeparator);
         }
 
         /// <summary>

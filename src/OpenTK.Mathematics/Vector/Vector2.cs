@@ -864,7 +864,7 @@ namespace OpenTK.Mathematics
             return !left.Equals(right);
         }
 
-        private static readonly string listSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
         /// <summary>
         /// Returns a System.String that represents the current Vector2.
@@ -872,7 +872,7 @@ namespace OpenTK.Mathematics
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("({0}{2} {1})", X, Y, listSeparator);
+            return string.Format("({0}{2} {1})", X, Y, ListSeparator);
         }
 
         /// <summary>

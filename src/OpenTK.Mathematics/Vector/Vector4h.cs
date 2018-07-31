@@ -1318,15 +1318,22 @@ namespace OpenTK.Mathematics
             return X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z) && W.Equals(other.W);
         }
 
-        private static readonly string listSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
         /// <summary>
         /// Returns a string that contains this Half4's numbers in human-legible form.
         /// </summary>
         public override string ToString()
         {
-            return string.Format("({0}{4} {1}{4} {2}{4} {3})", X.ToString(), Y.ToString(), Z.ToString(), W.ToString(),
-                listSeparator);
+            return string.Format
+            (
+                "({0}{4} {1}{4} {2}{4} {3})",
+                X.ToString(),
+                Y.ToString(),
+                Z.ToString(),
+                W.ToString(),
+                ListSeparator
+            );
         }
 
         /// <summary>
