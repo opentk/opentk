@@ -331,7 +331,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="f">
         /// The value to convert.
-        /// A <see cref="System.Single" />
+        /// A <see cref="float" />
         /// </param>
         /// <returns>
         /// The result of the conversion.
@@ -347,7 +347,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="d">
         /// The value to convert.
-        /// A <see cref="System.Double" />
+        /// A <see cref="double" />
         /// </param>
         /// <returns>
         /// The result of the conversion.
@@ -367,7 +367,7 @@ namespace OpenTK.Mathematics
         /// </param>
         /// <returns>
         /// The result of the conversion.
-        /// A <see cref="System.Single" />
+        /// A <see cref="float" />
         /// </returns>
         public static implicit operator float(Half h)
         {
@@ -383,7 +383,7 @@ namespace OpenTK.Mathematics
         /// </param>
         /// <returns>
         /// The result of the conversion.
-        /// A <see cref="System.Double" />
+        /// A <see cref="double" />
         /// </returns>
         public static implicit operator double(Half h)
         {
