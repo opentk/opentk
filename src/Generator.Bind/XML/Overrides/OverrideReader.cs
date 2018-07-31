@@ -26,9 +26,34 @@ namespace Bind.XML.Overrides
         [NotNull, ItemNotNull]
         public static IEnumerable<ApiProfileOverride> GetProfileOverrides([NotNull] string overrideFilePath)
         {
+            var doc = LoadOverrideDocument(overrideFilePath);
+            return GetProfileOverrides(doc);
+        }
+
+        /// <summary>
+        /// Retrieves the overridden profiles in the override files..
+        /// </summary>
+        /// <param name="overrideFilePaths">The files to load.</param>
+        /// <returns>A set of profiles.</returns>
+        [NotNull, ItemNotNull]
+        public static IEnumerable<ApiProfileOverride> GetProfileOverrides([NotNull] params string[] overrideFilePaths)
+        {
+            var documents = overrideFilePaths.Select(LoadOverrideDocument);
+            return GetProfileOverrides(documents.ToArray());
+        }
+
+        /// <summary>
+        /// Loads an XDocument from the given file.
+        /// </summary>
+        /// <param name="overrideFilePath">A path to the file.</param>
+        /// <returns>The document.</returns>
+        /// <exception cref="FileNotFoundException">Thrown if no file was found at the path.</exception>
+        [NotNull]
+        private static XDocument LoadOverrideDocument([NotNull, PathReference] string overrideFilePath)
+        {
             if (!File.Exists(overrideFilePath))
             {
-                throw new FileNotFoundException("Couldn't find the given signatures file.", overrideFilePath);
+                throw new FileNotFoundException("Couldn't find the given override file.", overrideFilePath);
             }
 
             XDocument doc;
@@ -37,16 +62,19 @@ namespace Bind.XML.Overrides
                 doc = XDocument.Load(s);
             }
 
-            return GetProfileOverrides(doc);
+            return doc;
         }
 
         /// <summary>
         /// Retrieves the overridden profiles in the signatures.
         /// </summary>
-        /// <param name="signatureDocument">The document containing the signatures.</param>
+        /// <param name="signatureDocuments">The documents that contain overrides.</param>
         /// <returns>A set of profiles.</returns>
         [NotNull, ItemNotNull]
-        public static IEnumerable<ApiProfileOverride> GetProfileOverrides([NotNull] XDocument signatureDocument)
+        public static IEnumerable<ApiProfileOverride> GetProfileOverrides
+        (
+            [NotNull] params XDocument[] signatureDocuments
+        )
         {
             var foundProfiles = new Dictionary
             <
@@ -58,7 +86,7 @@ namespace Bind.XML.Overrides
                 >
             >();
 
-            var profileElements = GetOverridesRoot(signatureDocument).Elements().Where(e => e.Name == "add" || e.Name == "overload" || e.Name == "replace");
+            var profileElements = signatureDocuments.Select(GetOverridesRoot).Elements().Where(e => e.Name == "add" || e.Name == "overload" || e.Name == "replace");
             foreach (var profileElement in profileElements)
             {
                 var profileNamesAndVersions = (Names: ParseProfileNames(profileElement), Versions: ParseProfileVersions(profileElement));
