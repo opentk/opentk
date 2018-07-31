@@ -157,9 +157,11 @@ namespace OpenTK.Mathematics
                 q.Normalize();
             }
 
-            var result = new Vector4();
+            var result = new Vector4
+            {
+                W = 2.0f * (float)Math.Acos(q.W) // angle
+            };
 
-            result.W = 2.0f * (float)Math.Acos(q.W); // angle
             var den = (float)Math.Sqrt(1.0 - (q.W * q.W));
             if (den > 0.0001f)
             {

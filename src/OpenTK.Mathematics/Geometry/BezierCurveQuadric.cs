@@ -110,10 +110,11 @@ namespace OpenTK.Mathematics
         /// <returns>Resulting point.</returns>
         private Vector2 CalculatePointOfDerivative(float t)
         {
-            var r = new Vector2();
-
-            r.X = ((1.0f - t) * StartAnchor.X) + (t * ControlPoint.X);
-            r.Y = ((1.0f - t) * StartAnchor.Y) + (t * ControlPoint.Y);
+            var r = new Vector2
+            {
+                X = ((1.0f - t) * StartAnchor.X) + (t * ControlPoint.X),
+                Y = ((1.0f - t) * StartAnchor.Y) + (t * ControlPoint.Y)
+            };
 
             return r;
         }
