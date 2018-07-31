@@ -28,7 +28,7 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using OpenTK.Core;
+using OpenTK.Core.Utility;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.Linux
