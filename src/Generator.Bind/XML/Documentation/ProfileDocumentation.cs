@@ -36,7 +36,7 @@ namespace Bind.XML.Documentation
         /// <param name="function">The function.</param>
         /// <param name="documentation">The documentation, if any.</param>
         /// <returns>true if the function has documentation; otherwise, false.</returns>
-        [ContractAnnotation("true <= documentation : notnull; false <= documentation : null")]
+        [ContractAnnotation("true, documentation : notnull <=; false, documentation : null <=")]
         public bool TryGetDocumentation
         (
             [NotNull] FunctionSignature function,
