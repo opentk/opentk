@@ -17,7 +17,7 @@ namespace OpenTK.Mathematics
     [Serializable]
     public struct BezierCurve
     {
-        private readonly List<Vector2> points;
+        private readonly List<Vector2> _points;
 
         /// <summary>
         /// The parallel value.
@@ -34,7 +34,7 @@ namespace OpenTK.Mathematics
         /// Gets the points of this curve.
         /// </summary>
         /// <remarks>The first point and the last points represent the anchor points.</remarks>
-        public IList<Vector2> Points => points;
+        public IList<Vector2> Points => _points;
 
         /// <summary>
         /// Constructs a new <see cref="BezierCurve" />.
@@ -47,7 +47,7 @@ namespace OpenTK.Mathematics
                 throw new ArgumentNullException(nameof(points), "Must point to a valid list of Vector2 structures.");
             }
 
-            this.points = new List<Vector2>(points);
+            this._points = new List<Vector2>(points);
             Parallel = 0.0f;
         }
 
@@ -62,7 +62,7 @@ namespace OpenTK.Mathematics
                 throw new ArgumentNullException(nameof(points), "Must point to a valid list of Vector2 structures.");
             }
 
-            this.points = new List<Vector2>(points);
+            this._points = new List<Vector2>(points);
             Parallel = 0.0f;
         }
 
@@ -79,7 +79,7 @@ namespace OpenTK.Mathematics
             }
 
             Parallel = parallel;
-            this.points = new List<Vector2>(points);
+            this._points = new List<Vector2>(points);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace OpenTK.Mathematics
             }
 
             Parallel = parallel;
-            this.points = new List<Vector2>(points);
+            this._points = new List<Vector2>(points);
         }
 
 
@@ -106,7 +106,7 @@ namespace OpenTK.Mathematics
         /// <returns>Resulting point.</returns>
         public Vector2 CalculatePoint(float t)
         {
-            return CalculatePoint(points, t, Parallel);
+            return CalculatePoint(_points, t, Parallel);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         public float CalculateLength(float precision)
         {
-            return CalculateLength(points, precision, Parallel);
+            return CalculateLength(_points, precision, Parallel);
         }
 
         /// <summary>

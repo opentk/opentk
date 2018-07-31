@@ -80,27 +80,27 @@ namespace OpenTK.Mathematics
     [StructLayout(LayoutKind.Sequential)]
     public struct Half : ISerializable, IComparable<Half>, IFormattable, IEquatable<Half>
     {
-        private ushort bits;
+        private ushort _bits;
 
         /// <summary>
         /// Returns true if the Half is zero.
         /// </summary>
-        public bool IsZero => bits == 0 || bits == 0x8000;
+        public bool IsZero => _bits == 0 || _bits == 0x8000;
 
         /// <summary>
         /// Returns true if the Half represents Not A Number (NaN)
         /// </summary>
-        public bool IsNaN => (bits & 0x7C00) == 0x7C00 && (bits & 0x03FF) != 0x0000;
+        public bool IsNaN => (_bits & 0x7C00) == 0x7C00 && (_bits & 0x03FF) != 0x0000;
 
         /// <summary>
         /// Returns true if the Half represents positive infinity.
         /// </summary>
-        public bool IsPositiveInfinity => bits == 31744;
+        public bool IsPositiveInfinity => _bits == 31744;
 
         /// <summary>
         /// Returns true if the Half represents negative infinity.
         /// </summary>
-        public bool IsNegativeInfinity => bits == 64512;
+        public bool IsNegativeInfinity => _bits == 64512;
 
         /// <summary>
         /// The new Half instance will convert the parameter into 16-bit half-precision floating-point.
@@ -111,7 +111,7 @@ namespace OpenTK.Mathematics
         {
             unsafe
             {
-                bits = SingleToHalf(*(int*)&f);
+                _bits = SingleToHalf(*(int*)&f);
             }
         }
 
@@ -267,7 +267,7 @@ namespace OpenTK.Mathematics
         /// <returns>A single-precision floating-point number.</returns>
         public float ToSingle()
         {
-            var i = HalfToFloat(bits);
+            var i = HalfToFloat(_bits);
 
             unsafe
             {
@@ -422,7 +422,7 @@ namespace OpenTK.Mathematics
         /// <param name="context"></param>
         public Half(SerializationInfo info, StreamingContext context)
         {
-            bits = (ushort)info.GetValue("bits", typeof(ushort));
+            _bits = (ushort)info.GetValue("bits", typeof(ushort));
         }
 
         /// <summary>
@@ -432,7 +432,7 @@ namespace OpenTK.Mathematics
         /// <param name="context"></param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("bits", bits);
+            info.AddValue("bits", _bits);
         }
 
         /// <summary>
@@ -441,7 +441,7 @@ namespace OpenTK.Mathematics
         /// <param name="bin">A BinaryReader instance associated with an open Stream.</param>
         public void FromBinaryStream(BinaryReader bin)
         {
-            bits = bin.ReadUInt16();
+            _bits = bin.ReadUInt16();
         }
 
         /// <summary>
@@ -450,7 +450,7 @@ namespace OpenTK.Mathematics
         /// <param name="bin">A BinaryWriter instance associated with an open Stream.</param>
         public void ToBinaryStream(BinaryWriter bin)
         {
-            bin.Write(bits);
+            bin.Write(_bits);
         }
 
         private const int maxUlps = 1;
@@ -465,12 +465,12 @@ namespace OpenTK.Mathematics
             short aInt, bInt;
             unchecked
             {
-                aInt = (short)other.bits;
+                aInt = (short)other._bits;
             }
 
             unchecked
             {
-                bInt = (short)bits;
+                bInt = (short)_bits;
             }
 
             // Make aInt lexicographically ordered as a twos-complement int
@@ -602,7 +602,7 @@ namespace OpenTK.Mathematics
         /// <returns>The input as byte array.</returns>
         public static byte[] GetBytes(Half h)
         {
-            return BitConverter.GetBytes(h.bits);
+            return BitConverter.GetBytes(h._bits);
         }
 
         /// <summary>
@@ -614,7 +614,7 @@ namespace OpenTK.Mathematics
         public static Half FromBytes(byte[] value, int startIndex)
         {
             Half h;
-            h.bits = BitConverter.ToUInt16(value, startIndex);
+            h._bits = BitConverter.ToUInt16(value, startIndex);
             return h;
         }
     }
