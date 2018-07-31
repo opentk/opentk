@@ -8,7 +8,7 @@
       <param name="target"><type>FramebufferTarget</type></param>
       <param name="pname"><type>FramebufferDefaultParameter</type></param>
     </function>
-    <function name="glGetFramebufferParameteriv">
+    <function name="GetFramebufferParameteriv">
       <param name="target"><type>FramebufferTarget</type></param>
       <param name="pname"><type>FramebufferDefaultParameter</type></param>
     </function>
@@ -16,15 +16,15 @@
 
   <add name="gles2" version="3.1">
     <enum name="FramebufferDefaultParameter">
-      <use token="GL_FRAMEBUFFER_DEFAULT_WIDTH"/>
-      <use token="GL_FRAMEBUFFER_DEFAULT_HEIGHT"/>
-      <use token="GL_FRAMEBUFFER_DEFAULT_SAMPLES"/>
-      <use token="GL_FRAMEBUFFER_DEFAULT_FIXED_SAMPLE_LOCATIONS"/>
+      <use token="FRAMEBUFFER_DEFAULT_WIDTH"/>
+      <use token="FRAMEBUFFER_DEFAULT_HEIGHT"/>
+      <use token="FRAMEBUFFER_DEFAULT_SAMPLES"/>
+      <use token="FRAMEBUFFER_DEFAULT_FIXED_SAMPLE_LOCATIONS"/>
     </enum>
     <enum name="GetPName">
-      <use token="GL_MAX_FRAMEBUFFER_WIDTH"/>
-      <use token="GL_MAX_FRAMEBUFFER_HEIGHT"/>
-      <use token="GL_MAX_FRAMEBUFFER_SAMPLES"/>
+      <use token="MAX_FRAMEBUFFER_WIDTH"/>
+      <use token="MAX_FRAMEBUFFER_HEIGHT"/>
+      <use token="MAX_FRAMEBUFFER_SAMPLES"/>
     </enum>
   </add>
 

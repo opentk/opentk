@@ -11,12 +11,12 @@
 
   <add name="gl|glcore" version="4.5">
     <enum name="MemoryBarrierRegionFlags">
-      <use token="GL_ATOMIC_COUNTER_BARRIER_BIT"/>
-      <use token="GL_FRAMEBUFFER_BARRIER_BIT"/>
-      <use token="GL_SHADER_IMAGE_ACCESS_BARRIER_BIT"/>
-      <use token="GL_TEXTURE_FETCH_BARRIER_BIT"/>
-      <use token="GL_UNIFORM_BARRIER_BIT"/>
-      <use token="GL_ALL_BARRIER_BITS"/>
+      <use token="ATOMIC_COUNTER_BARRIER_BIT"/>
+      <use token="FRAMEBUFFER_BARRIER_BIT"/>
+      <use token="SHADER_IMAGE_ACCESS_BARRIER_BIT"/>
+      <use token="TEXTURE_FETCH_BARRIER_BIT"/>
+      <use token="UNIFORM_BARRIER_BIT"/>
+      <use token="ALL_BARRIER_BITS"/>
     </enum>
   </add>
 
