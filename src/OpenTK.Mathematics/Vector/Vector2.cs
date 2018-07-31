@@ -198,7 +198,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Defines the size of the Vector2 struct in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Marshal.SizeOf(new Vector2());
+        public static readonly int SizeInBytes = Marshal.SizeOf<Vector2>();
 
         /// <summary>
         /// Adds two vectors.

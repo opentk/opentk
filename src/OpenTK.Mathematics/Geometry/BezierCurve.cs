@@ -197,16 +197,17 @@ namespace OpenTK.Mathematics
         /// </remarks>
         public static Vector2 CalculatePoint(IList<Vector2> points, float t, float parallel)
         {
-            var r = new Vector2();
+            var r = default(Vector2);
             var c = 1.0d - t;
             float temp;
             var i = 0;
 
             foreach (var pt in points)
             {
-                temp = MathHelper.BinomialCoefficient(points.Count - 1, i) * (float)(Math.Pow(t, i) *
-                                                                                     Math.Pow(c, points.Count - 1 - i)
-                       );
+                temp = MathHelper.BinomialCoefficient
+                (
+                    points.Count - 1, i) * (float)(Math.Pow(t, i) * Math.Pow(c, points.Count - 1 - i)
+                );
 
                 r.X += temp * pt.X;
                 r.Y += temp * pt.Y;
@@ -218,7 +219,7 @@ namespace OpenTK.Mathematics
                 return r;
             }
 
-            var perpendicular = new Vector2();
+            Vector2 perpendicular;
 
             if (t != 0.0f)
             {
@@ -240,16 +241,17 @@ namespace OpenTK.Mathematics
         /// <returns>Resulting point.</returns>
         private static Vector2 CalculatePointOfDerivative(IList<Vector2> points, float t)
         {
-            var r = new Vector2();
+            var r = default(Vector2);
             var c = 1.0d - t;
             float temp;
             var i = 0;
 
             foreach (var pt in points)
             {
-                temp = MathHelper.BinomialCoefficient(points.Count - 2, i) * (float)(Math.Pow(t, i) *
-                                                                                     Math.Pow(c, points.Count - 2 - i)
-                       );
+                temp = MathHelper.BinomialCoefficient
+                (
+                    points.Count - 2, i) * (float)(Math.Pow(t, i) * Math.Pow(c, points.Count - 2 - i)
+                );
 
                 r.X += temp * pt.X;
                 r.Y += temp * pt.Y;

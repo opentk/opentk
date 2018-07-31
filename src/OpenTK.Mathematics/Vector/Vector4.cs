@@ -90,7 +90,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Defines the size of the Vector4 struct in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Marshal.SizeOf(new Vector4());
+        public static readonly int SizeInBytes = Marshal.SizeOf<Vector4>();
 
         /// <summary>
         /// Constructs a new instance.

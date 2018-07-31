@@ -559,7 +559,7 @@ namespace OpenTK.Mathematics
             }
 
             // code below adapted from Blender
-            var q = new Quaterniond();
+            var q = default(Quaterniond);
             var trace = 0.25 * (row0[0] + row1[1] + row2[2] + 1.0);
 
             if (trace > 0)
@@ -842,20 +842,21 @@ namespace OpenTK.Mathematics
         public static void CreateOrthographicOffCenter(double left, double right, double bottom, double top,
             double zNear, double zFar, out Matrix4d result)
         {
-            result = new Matrix4d();
-
             var invRL = 1 / (right - left);
             var invTB = 1 / (top - bottom);
             var invFN = 1 / (zFar - zNear);
 
-            result.M11 = 2 * invRL;
-            result.M22 = 2 * invTB;
-            result.M33 = -2 * invFN;
+            result = new Matrix4d
+            {
+                M11 = 2 * invRL,
+                M22 = 2 * invTB,
+                M33 = -2 * invFN,
 
-            result.M41 = -(right + left) * invRL;
-            result.M42 = -(top + bottom) * invTB;
-            result.M43 = -(zFar + zNear) * invFN;
-            result.M44 = 1;
+                M41 = -(right + left) * invRL,
+                M42 = -(top + bottom) * invTB,
+                M43 = -(zFar + zNear) * invFN,
+                M44 = 1
+            };
         }
 
         /// <summary>

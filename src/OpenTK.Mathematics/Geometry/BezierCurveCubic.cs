@@ -48,14 +48,19 @@ namespace OpenTK.Mathematics
         public float Parallel;
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurveCubic" />.
+        /// Initializes a new instance of the <see cref="BezierCurveCubic"/> struct.
         /// </summary>
         /// <param name="startAnchor">The start anchor point.</param>
         /// <param name="endAnchor">The end anchor point.</param>
         /// <param name="firstControlPoint">The first control point.</param>
         /// <param name="secondControlPoint">The second control point.</param>
-        public BezierCurveCubic(Vector2 startAnchor, Vector2 endAnchor, Vector2 firstControlPoint,
-            Vector2 secondControlPoint)
+        public BezierCurveCubic
+        (
+            Vector2 startAnchor,
+            Vector2 endAnchor,
+            Vector2 firstControlPoint,
+            Vector2 secondControlPoint
+        )
         {
             StartAnchor = startAnchor;
             EndAnchor = endAnchor;
@@ -65,15 +70,21 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurveCubic" />.
+        /// Initializes a new instance of the <see cref="BezierCurveCubic"/> struct.
         /// </summary>
         /// <param name="parallel">The parallel value.</param>
         /// <param name="startAnchor">The start anchor point.</param>
         /// <param name="endAnchor">The end anchor point.</param>
         /// <param name="firstControlPoint">The first control point.</param>
         /// <param name="secondControlPoint">The second control point.</param>
-        public BezierCurveCubic(float parallel, Vector2 startAnchor, Vector2 endAnchor, Vector2 firstControlPoint,
-            Vector2 secondControlPoint)
+        public BezierCurveCubic
+        (
+            float parallel,
+            Vector2 startAnchor,
+            Vector2 endAnchor,
+            Vector2 firstControlPoint,
+            Vector2 secondControlPoint
+        )
         {
             Parallel = parallel;
             StartAnchor = startAnchor;
@@ -89,20 +100,22 @@ namespace OpenTK.Mathematics
         /// <returns>Resulting point.</returns>
         public Vector2 CalculatePoint(float t)
         {
-            var r = new Vector2();
             var c = 1.0f - t;
 
-            r.X = (StartAnchor.X * c * c * c) + (FirstControlPoint.X * 3 * t * c * c) + (SecondControlPoint.X * 3 * t * t * c)
-                  + (EndAnchor.X * t * t * t);
-            r.Y = (StartAnchor.Y * c * c * c) + (FirstControlPoint.Y * 3 * t * c * c) + (SecondControlPoint.Y * 3 * t * t * c)
-                  + (EndAnchor.Y * t * t * t);
+            float x = (StartAnchor.X * c * c * c) + (FirstControlPoint.X * 3 * t * c * c) +
+                (SecondControlPoint.X * 3 * t * t * c) + (EndAnchor.X * t * t * t);
+
+            float y = (StartAnchor.Y * c * c * c) + (FirstControlPoint.Y * 3 * t * c * c) +
+                (SecondControlPoint.Y * 3 * t * t * c) + (EndAnchor.Y * t * t * t);
+
+            var r = new Vector2(x, y);
 
             if (Parallel == 0.0f)
             {
                 return r;
             }
 
-            var perpendicular = new Vector2();
+            Vector2 perpendicular;
 
             if (t == 0.0f)
             {
@@ -123,11 +136,12 @@ namespace OpenTK.Mathematics
         /// <returns>Resulting point.</returns>
         private Vector2 CalculatePointOfDerivative(float t)
         {
-            var r = new Vector2();
             var c = 1.0f - t;
-
-            r.X = (c * c * StartAnchor.X) + (2 * t * c * FirstControlPoint.X) + (t * t * SecondControlPoint.X);
-            r.Y = (c * c * StartAnchor.Y) + (2 * t * c * FirstControlPoint.Y) + (t * t * SecondControlPoint.Y);
+            var r = new Vector2
+            (
+                (c * c * StartAnchor.X) + (2 * t * c * FirstControlPoint.X) + (t * t * SecondControlPoint.X),
+                (c * c * StartAnchor.Y) + (2 * t * c * FirstControlPoint.Y) + (t * t * SecondControlPoint.Y)
+            );
 
             return r;
         }

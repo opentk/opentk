@@ -324,8 +324,13 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance containing the result of the calculation.</param>
         public static void Multiply(ref Quaternion quaternion, float scale, out Quaternion result)
         {
-            result = new Quaternion(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale,
-                quaternion.W * scale);
+            result = new Quaternion
+            (
+                quaternion.X * scale,
+                quaternion.Y * scale,
+                quaternion.Z * scale,
+                quaternion.W * scale
+            );
         }
 
         /// <summary>
@@ -336,8 +341,13 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance containing the result of the calculation.</returns>
         public static Quaternion Multiply(Quaternion quaternion, float scale)
         {
-            return new Quaternion(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale,
-                quaternion.W * scale);
+            return new Quaternion
+            (
+                quaternion.X * scale,
+                quaternion.Y * scale,
+                quaternion.Z * scale,
+                quaternion.W * scale
+            );
         }
 
         /// <summary>
@@ -676,8 +686,13 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance containing the result of the calculation.</returns>
         public static Quaternion operator *(float scale, Quaternion quaternion)
         {
-            return new Quaternion(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale,
-                quaternion.W * scale);
+            return new Quaternion
+            (
+                quaternion.X * scale,
+                quaternion.Y * scale,
+                quaternion.Z * scale,
+                quaternion.W * scale
+            );
         }
 
         /// <summary>

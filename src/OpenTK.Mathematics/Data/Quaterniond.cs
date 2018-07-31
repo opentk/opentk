@@ -321,8 +321,13 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance containing the result of the calculation.</param>
         public static void Multiply(ref Quaterniond quaternion, double scale, out Quaterniond result)
         {
-            result = new Quaterniond(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale,
-                quaternion.W * scale);
+            result = new Quaterniond
+            (
+                quaternion.X * scale,
+                quaternion.Y * scale,
+                quaternion.Z * scale,
+                quaternion.W * scale
+            );
         }
 
         /// <summary>

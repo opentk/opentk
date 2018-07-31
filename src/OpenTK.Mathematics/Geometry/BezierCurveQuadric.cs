@@ -78,18 +78,19 @@ namespace OpenTK.Mathematics
         /// <returns>Resulting point.</returns>
         public Vector2 CalculatePoint(float t)
         {
-            var r = new Vector2();
             var c = 1.0f - t;
-
-            r.X = (c * c * StartAnchor.X) + (2 * t * c * ControlPoint.X) + (t * t * EndAnchor.X);
-            r.Y = (c * c * StartAnchor.Y) + (2 * t * c * ControlPoint.Y) + (t * t * EndAnchor.Y);
+            var r = new Vector2
+            (
+                (c * c * StartAnchor.X) + (2 * t * c * ControlPoint.X) + (t * t * EndAnchor.X),
+                (c * c * StartAnchor.Y) + (2 * t * c * ControlPoint.Y) + (t * t * EndAnchor.Y)
+            );
 
             if (Parallel == 0.0f)
             {
                 return r;
             }
 
-            var perpendicular = new Vector2();
+            Vector2 perpendicular;
 
             if (t == 0.0f)
             {
