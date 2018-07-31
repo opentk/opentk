@@ -412,7 +412,6 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Half"/> struct.
         /// Used by <see cref="ISerializable"/> to serialize the object.
         /// </summary>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
