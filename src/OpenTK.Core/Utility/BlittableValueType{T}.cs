@@ -9,6 +9,7 @@ namespace OpenTK.Core.Utility
     /// <summary>
     /// Checks whether the specified type parameter is a blittable value type.
     /// </summary>
+    /// <typeparam name="T">The type to check.</typeparam>
     /// <remarks>
     /// A blittable value type is a struct that only references other value types recursively,
     /// which allows it to be passed to unmanaged code directly.
@@ -55,7 +56,8 @@ namespace OpenTK.Core.Utility
         {
             if (!CheckStructLayoutAttribute(type))
             {
-                Debug.Print(
+                Debug.Print
+                (
                     $"Warning: type {type.Name} does not specify a StructLayoutAttribute with Pack=1. " +
                     "The memory layout of the struct may change between platforms."
                 );

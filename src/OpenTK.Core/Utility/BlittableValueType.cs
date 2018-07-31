@@ -39,6 +39,7 @@ namespace OpenTK.Core.Utility
         /// <summary>
         /// Checks whether type is a blittable value type.
         /// </summary>
+        /// <typeparam name="T">The type to check.</typeparam>
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
         public static bool Check<T>(T type)
@@ -49,6 +50,7 @@ namespace OpenTK.Core.Utility
         /// <summary>
         /// Checks whether type is a blittable value type.
         /// </summary>
+        /// <typeparam name="T">The type to check.</typeparam>
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
         public static bool Check<T>(T[] type)
@@ -59,6 +61,7 @@ namespace OpenTK.Core.Utility
         /// <summary>
         /// Checks whether type is a blittable value type.
         /// </summary>
+        /// <typeparam name="T">The type to check.</typeparam>
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
         public static bool Check<T>(T[,] type)
@@ -69,6 +72,7 @@ namespace OpenTK.Core.Utility
         /// <summary>
         /// Checks whether type is a blittable value type.
         /// </summary>
+        /// <typeparam name="T">The type to check.</typeparam>
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
         public static bool Check<T>(T[,,] type)
@@ -79,6 +83,7 @@ namespace OpenTK.Core.Utility
         /// <summary>
         /// Checks whether type is a blittable value type.
         /// </summary>
+        /// <typeparam name="T">The type to check.</typeparam>
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
         public static bool Check<T>(T[][] type)
@@ -92,7 +97,7 @@ namespace OpenTK.Core.Utility
         /// <typeparam name="T">The value type. Must be blittable.</typeparam>
         /// <param name="type">An instance of the value type.</param>
         /// <returns>An integer, specifying the size of the type in bytes.</returns>
-        /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
+        /// <exception cref="ArgumentException">Occurs when type is not blittable.</exception>
         public static int StrideOf<T>(T type)
         {
             if (!Check(type))
@@ -109,7 +114,7 @@ namespace OpenTK.Core.Utility
         /// <typeparam name="T">The value type.</typeparam>
         /// <param name="type">An instance of the value type.</param>
         /// <returns>An integer, specifying the size of the type in bytes.</returns>
-        /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
+        /// <exception cref="ArgumentException">Occurs when type is not blittable.</exception>
         public static int StrideOf<T>(T[] type)
         {
             if (!Check(type))
@@ -126,7 +131,7 @@ namespace OpenTK.Core.Utility
         /// <typeparam name="T">The value type.</typeparam>
         /// <param name="type">An instance of the value type.</param>
         /// <returns>An integer, specifying the size of the type in bytes.</returns>
-        /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
+        /// <exception cref="ArgumentException">Occurs when type is not blittable.</exception>
         public static int StrideOf<T>(T[,] type)
         {
             if (!Check(type))
@@ -143,7 +148,7 @@ namespace OpenTK.Core.Utility
         /// <typeparam name="T">The value type.</typeparam>
         /// <param name="type">An instance of the value type.</param>
         /// <returns>An integer, specifying the size of the type in bytes.</returns>
-        /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
+        /// <exception cref="ArgumentException">Occurs when type is not blittable.</exception>
         public static int StrideOf<T>(T[,,] type)
         {
             if (!Check(type))
