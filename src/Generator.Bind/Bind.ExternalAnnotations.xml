@@ -235,7 +235,7 @@
       <attribute ctor="M:JetBrains.Annotations.PathReferenceAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="M:Bind.XML.Documentation.FunctionDocumentation.#ctor(System.String,System.String,System.Collections.Generic.IReadOnlyList{Bind.XML.Documentation.ParameterDocumentation})">
+  <member name="M:Bind.XML.Documentation.FunctionDocumentation.#ctor(System.String,System.String,System.Collections.Generic.IReadOnlyList{Bind.XML.Documentation.ParameterDocumentation},System.String)">
     <parameter name="name">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
@@ -246,6 +246,12 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
       <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
     </parameter>
+    <parameter name="functionGroup">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="P:Bind.XML.Documentation.FunctionDocumentation.Group">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
   <member name="P:Bind.XML.Documentation.FunctionDocumentation.Name">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
@@ -293,7 +299,7 @@
   </member>
   <member name="M:Bind.XML.Documentation.ProfileDocumentation.TryGetDocumentation(Bind.XML.Signatures.Functions.FunctionSignature,Bind.XML.Documentation.FunctionDocumentation@)">
     <attribute ctor="M:JetBrains.Annotations.ContractAnnotationAttribute.#ctor(System.String)">
-      <argument>true &lt;= documentation : notnull; false &lt;= documentation : null</argument>
+      <argument>true, documentation : notnull &lt;=; false, documentation : null &lt;=</argument>
     </attribute>
     <parameter name="function">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
@@ -473,10 +479,17 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="M:Bind.XML.Overrides.OverrideReader.GetProfileOverrides(System.Xml.Linq.XDocument)">
+  <member name="M:Bind.XML.Overrides.OverrideReader.GetProfileOverrides(System.String[])">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
-    <parameter name="signatureDocument">
+    <parameter name="overrideFilePaths">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.XML.Overrides.OverrideReader.GetProfileOverrides(System.Xml.Linq.XDocument[])">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+    <parameter name="signatureDocuments">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
@@ -585,7 +598,7 @@
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
   <member name="M:Bind.XML.Signatures.ApiProfile.FindFunctionWithEntrypoint(System.String)">
-    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
     <parameter name="entrypoint">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
