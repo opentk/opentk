@@ -158,7 +158,8 @@ namespace OpenTK.Mathematics
         /// The new Half instance will convert the parameter into 16-bit half-precision floating-point.
         /// </summary>
         /// <param name="d">64-bit double-precision floating-point number.</param>
-        public Half(double d) : this((float)d)
+        public Half(double d)
+            : this((float)d)
         {
         }
 
@@ -167,7 +168,8 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="d">64-bit double-precision floating-point number.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Half(double d, bool throwOnError) : this((float)d, throwOnError)
+        public Half(double d, bool throwOnError)
+            : this((float)d, throwOnError)
         {
         }
 
