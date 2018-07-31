@@ -58,10 +58,10 @@ namespace Bind.XML.Signatures
         /// </summary>
         /// <param name="entrypoint">The entry point.</param>
         /// <returns>The function.</returns>
-        [NotNull]
+        [CanBeNull]
         public FunctionSignature FindFunctionWithEntrypoint([NotNull] string entrypoint)
         {
-            return Functions.First(f => f.NativeEntrypoint == entrypoint);
+            return Functions.FirstOrDefault(f => f.NativeEntrypoint == entrypoint);
         }
 
         /// <summary>
