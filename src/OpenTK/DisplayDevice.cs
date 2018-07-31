@@ -223,6 +223,7 @@ namespace OpenTK
             if (resolution == null)
             {
                 RestoreResolution();
+                return;
             }
 
             if (resolution == current_resolution)
