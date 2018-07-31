@@ -71,7 +71,7 @@ namespace Bind.Baking
 
             var bakedParameters = function.Parameters.Select(p => BakeParameterDocumentation(function, p)).ToList();
 
-            return new FunctionDocumentation(function.Name, purposeBuilder.ToString(), bakedParameters);
+            return new FunctionDocumentation(function.Name, purposeBuilder.ToString(), bakedParameters, function.Group);
         }
 
         /// <summary>
@@ -139,7 +139,8 @@ namespace Bind.Baking
                                     break;
                                 }
 
-                                switch (element.GetRequiredAttribute("class").Value)
+                                var elementClass = element.GetRequiredAttribute("class").Value;
+                                switch (elementClass)
                                 {
                                     case "parameter":
                                     {
@@ -156,9 +157,15 @@ namespace Bind.Baking
                                         AppendEmphasisNode(descriptionBuilder, element);
                                         break;
                                     }
+                                    case "citerefentry":
                                     case "function":
                                     {
                                         AppendFunctionNode(descriptionBuilder, element);
+                                        break;
+                                    }
+                                    case "footnote":
+                                    {
+                                        // Skip footnotes
                                         break;
                                     }
                                     default:
@@ -166,7 +173,7 @@ namespace Bind.Baking
                                         throw new ArgumentOutOfRangeException
                                         (
                                             nameof(node),
-                                            "Unrecognized element class."
+                                            $"Unrecognized element class\"{elementClass}\"."
                                         );
                                     }
                                 }
@@ -234,10 +241,17 @@ namespace Bind.Baking
             var referencedFunction =
                 _apiProfile.FindFunctionWithEntrypoint(functionNameWithoutPrefix);
 
-            descriptionBuilder.Append
-            (
-                $"<see cref=\"{referencedFunction.Name}\"/>"
-            );
+            if (referencedFunction is null)
+            {
+                descriptionBuilder.Append($"a function in the {functionNode.Value} set");
+            }
+            else
+            {
+                descriptionBuilder.Append
+                (
+                    $"<see cref=\"{referencedFunction.Name}\"/>"
+                );
+            }
         }
 
         /// <summary>
@@ -266,16 +280,34 @@ namespace Bind.Baking
                     constantName.Remove(0, 3)
                 );
 
-                var hasArbitraryNumberInsert =
-                    constantNode.NextNode is XElement emphasisNode &&
-                    emphasisNode.Attribute("class")?.Value == "emphasis";
+                // Arbitrary number handling
+                string arbitraryNumberName = null;
+                var hasArbitraryNumberInsert = false;
+                if (translatedName.EndsWith("i"))
+                {
+                    translatedName = translatedName.Remove(translatedName.Length - 1);
+                    hasArbitraryNumberInsert = true;
+                    arbitraryNumberName = "i";
+                }
 
-                // See if it's followed by an emphasized number
+                var hasEmphasizedNumberInsert = constantNode.NextNode is XElement emphasisNode &&
+                                                emphasisNode.Attribute("class")?.Value == "emphasis";
+                if (hasEmphasizedNumberInsert)
+                {
+                    var nextNode = (XElement)constantNode.NextNode;
+                    arbitraryNumberName = nextNode.Value;
+                    hasArbitraryNumberInsert = true;
+                }
+
+                // See if it's followed by a number (emphasized)
                 if (hasArbitraryNumberInsert)
                 {
                     // It is a number, so we'll just stick a 0 on the end as a stand-in
                     translatedName = $"{translatedName}0";
+                }
 
+                if (hasEmphasizedNumberInsert)
+                {
                     greedilyConsumedNodes.Add(constantNode.NextNode);
                 }
 
@@ -285,6 +317,14 @@ namespace Bind.Baking
 
                 var actualFunction =
                     _apiProfile.FindFunctionWithEntrypoint(functionNameWithoutPrefix);
+
+                if (actualFunction is null)
+                {
+                    throw new InvalidOperationException
+                    (
+                        $"Could not find a function named \"{functionNameWithoutPrefix}\""
+                    );
+                }
 
                 var actualParameter =
                     actualFunction.Parameters.FirstOrDefault(p => p.Name == parameter.Name);
@@ -319,8 +359,7 @@ namespace Bind.Baking
 
                 if (hasArbitraryNumberInsert)
                 {
-                    var nextNode = (XElement)constantNode.NextNode;
-                    descriptionBuilder.Append($" (consider 0 as <i>{nextNode.Value}</i>)");
+                    descriptionBuilder.Append($" (consider 0 as <i>{arbitraryNumberName}</i>)");
                 }
             }
             else

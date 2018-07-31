@@ -83,7 +83,11 @@ namespace Bind.XML.Documentation
         {
             var root = GetDocumentationRoot(functionDocument);
 
-            var definedFunctions = ReadFunctionDefinitions(root);
+            var definedFunctions = ReadFunctionDefinitions(root).ToList();
+            if (!TryGetNameByID(root, out var groupName))
+            {
+                groupName = definedFunctions.First().Name;
+            }
 
             var purposeWithFunctionName = root.GetRequiredSectionByClass("refnamediv").GetRequiredElement("p").Value;
             var dashIndex = purposeWithFunctionName.IndexOf("—", StringComparison.Ordinal);
@@ -95,20 +99,12 @@ namespace Bind.XML.Documentation
                 (
                     e =>
                     {
-                        // There are two known permutations: one, the id is stored as an attribute, or as a subelement
-                        // with the attribute. Pricks.
-                        if (e.Elements("a").Any())
-                        {
-                            return ParameterSectionIDRegex
-                                .IsMatch(e.GetRequiredElement("a").GetRequiredAttribute("id").Value);
-                        }
-
-                        if (e.Attribute("id") is null)
+                        if (!TryGetNameByID(e, out var name))
                         {
                             return false;
                         }
 
-                        return ParameterSectionIDRegex.IsMatch(e.GetRequiredAttribute("id").Value);
+                        return ParameterSectionIDRegex.IsMatch(name);
                     }
                 );
 
@@ -156,8 +152,36 @@ namespace Bind.XML.Documentation
                     }
                 }
 
-                yield return new FunctionDocumentation(name, purpose, relevantParameters);
+                yield return new FunctionDocumentation(name, purpose, relevantParameters, groupName);
             }
+        }
+
+        /// <summary>
+        /// Attempts to get a name from a given element.
+        /// </summary>
+        /// <param name="element">The element to search.</param>
+        /// <param name="name">The name.</param>
+        /// <returns>True if a name was found; otherwise, false.</returns>
+        [ContractAnnotation("true, name : notnull <= ; false, name : null <=")]
+        private static bool TryGetNameByID([NotNull] XElement element, [CanBeNull] out string name)
+        {
+            name = null;
+
+            // There are two known permutations: one, the id is stored as an attribute, or as a subelement
+            // with the attribute. Pricks.
+            if (element.Elements("a").Any())
+            {
+                name = element.GetRequiredElement("a").GetRequiredAttribute("id").Value;
+                return true;
+            }
+
+            if (element.Attribute("id") is null)
+            {
+                return false;
+            }
+
+            name = element.GetRequiredAttribute("id").Value;
+            return true;
         }
 
         private static string FindPrecedingFunctionName(XElement parameterSetElement)

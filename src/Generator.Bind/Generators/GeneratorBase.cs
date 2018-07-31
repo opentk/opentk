@@ -38,7 +38,7 @@ namespace Bind.Generators
         /// <summary>
         /// Gets or sets a set of paths, indicating files to scan for specification overrides.
         /// </summary>
-        protected virtual IEnumerable<string> OverrideFiles { get; set; }
+        public virtual IEnumerable<string> OverrideFiles { get; set; }
 
         /// <summary>
         /// Gets the path to the file that contains the language typemap.
