@@ -130,7 +130,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the length (magnitude) of the vector.
         /// </summary>
-        /// <seealso cref="LengthSquared" />
+        /// <seealso cref="LengthSquared"/>
         public double Length => Math.Sqrt((X * X) + (Y * Y));
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace OpenTK.Mathematics
         /// This property avoids the costly square root operation required by the Length property. This makes it more suitable
         /// for comparisons.
         /// </remarks>
-        /// <see cref="Length" />
+        /// <see cref="Length"/>
         public double LengthSquared => (X * X) + (Y * Y);
 
         /// <summary>

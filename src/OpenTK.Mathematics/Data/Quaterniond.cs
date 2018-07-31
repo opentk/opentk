@@ -177,7 +177,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the length (magnitude) of the Quaterniond.
         /// </summary>
-        /// <seealso cref="LengthSquared" />
+        /// <seealso cref="LengthSquared"/>
         public double Length => Math.Sqrt((W * W) + Xyz.LengthSquared);
 
         /// <summary>

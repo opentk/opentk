@@ -158,8 +158,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the length (magnitude) of the vector.
         /// </summary>
-        /// <see cref="LengthFast" />
-        /// <seealso cref="LengthSquared" />
+        /// <see cref="LengthFast"/>
+        /// <seealso cref="LengthSquared"/>
         public float Length => (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
@@ -169,8 +169,8 @@ namespace OpenTK.Mathematics
         /// This property uses an approximation of the square root function to calculate vector magnitude, with
         /// an upper error bound of 0.001.
         /// </remarks>
-        /// <see cref="Length" />
-        /// <seealso cref="LengthSquared" />
+        /// <see cref="Length"/>
+        /// <seealso cref="LengthSquared"/>
         public float LengthFast => 1.0f / MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
@@ -180,8 +180,8 @@ namespace OpenTK.Mathematics
         /// This property avoids the costly square root operation required by the Length property. This makes it more suitable
         /// for comparisons.
         /// </remarks>
-        /// <see cref="Length" />
-        /// <seealso cref="LengthFast" />
+        /// <see cref="Length"/>
+        /// <seealso cref="LengthFast"/>
         public float LengthSquared => (X * X) + (Y * Y) + (Z * Z);
 
         /// <summary>
@@ -692,8 +692,8 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <remarks>
         /// It is incorrect to call this method passing the same variable for
-        ///  <paramref name="result" /> as for <paramref name="left" /> or
-        ///  <paramref name="right" />.
+        ///  <paramref name="result"/> as for <paramref name="left"/> or
+        ///  <paramref name="right"/>.
         /// </remarks>
         /// <param name="left">First operand</param>
         /// <param name="right">Second operand</param>
@@ -802,7 +802,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <remarks>
         /// It is incorrect to call this method passing the same variable for
-        ///  <paramref name="result" /> as for <paramref name="vec" />.
+        ///  <paramref name="result"/> as for <paramref name="vec"/>.
         /// </remarks>
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>

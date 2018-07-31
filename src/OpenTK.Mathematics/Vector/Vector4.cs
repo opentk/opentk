@@ -137,7 +137,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="v">The Vector3 to copy components from.</param>
         /// <remarks>
-        ///  <seealso cref="Vector4(Vector3, float)" />
+        ///  <seealso cref="Vector4(Vector3, float)"/>
         /// </remarks>
         public Vector4(Vector3 v)
         {
@@ -230,8 +230,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the length (magnitude) of the vector.
         /// </summary>
-        /// <see cref="LengthFast" />
-        /// <seealso cref="LengthSquared" />
+        /// <see cref="LengthFast"/>
+        /// <seealso cref="LengthSquared"/>
         public float Length => (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
@@ -241,8 +241,8 @@ namespace OpenTK.Mathematics
         /// This property uses an approximation of the square root function to calculate vector magnitude, with
         /// an upper error bound of 0.001.
         /// </remarks>
-        /// <see cref="Length" />
-        /// <seealso cref="LengthSquared" />
+        /// <see cref="Length"/>
+        /// <seealso cref="LengthSquared"/>
         public float LengthFast => 1.0f / MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
@@ -252,8 +252,8 @@ namespace OpenTK.Mathematics
         /// This property avoids the costly square root operation required by the Length property. This makes it more suitable
         /// for comparisons.
         /// </remarks>
-        /// <see cref="Length" />
-        /// <seealso cref="LengthFast" />
+        /// <see cref="Length"/>
+        /// <seealso cref="LengthFast"/>
         public float LengthSquared => (X * X) + (Y * Y) + (Z * Z) + (W * W);
 
         /// <summary>

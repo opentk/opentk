@@ -43,7 +43,7 @@ namespace OpenTK.Mathematics
         public float Parallel;
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurveQuadric" />.
+        /// Constructs a new <see cref="BezierCurveQuadric"/>.
         /// </summary>
         /// <param name="startAnchor">The start anchor.</param>
         /// <param name="endAnchor">The end anchor.</param>
@@ -57,7 +57,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurveQuadric" />.
+        /// Constructs a new <see cref="BezierCurveQuadric"/>.
         /// </summary>
         /// <param name="parallel">The parallel value.</param>
         /// <param name="startAnchor">The start anchor.</param>
@@ -126,7 +126,7 @@ namespace OpenTK.Mathematics
         /// <param name="precision">The precision.</param>
         /// <returns>Length of curve.</returns>
         /// <remarks>
-        /// The precision gets better when the <paramref name="precision" />
+        /// The precision gets better when the <paramref name="precision"/>
         /// value gets smaller.
         /// </remarks>
         public float CalculateLength(float precision)

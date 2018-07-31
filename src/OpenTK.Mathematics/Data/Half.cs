@@ -320,12 +320,10 @@ namespace OpenTK.Mathematics
         /// Converts a System.Single to a OpenTK.Half.
         /// </summary>
         /// <param name="f">
-        /// The value to convert.
-        /// A <see cref="float" />
+        /// The <see cref="float"/> value to convert.
         /// </param>
         /// <returns>
-        /// The result of the conversion.
-        /// A <see cref="Half" />
+        /// The <see cref="Half"/> result of the conversion.
         /// </returns>
         public static explicit operator Half(float f)
         {
@@ -336,12 +334,10 @@ namespace OpenTK.Mathematics
         /// Converts a System.Double to a OpenTK.Half.
         /// </summary>
         /// <param name="d">
-        /// The value to convert.
-        /// A <see cref="double" />
+        /// The <see cref="double"/> value to convert.
         /// </param>
         /// <returns>
-        /// The result of the conversion.
-        /// A <see cref="Half" />
+        /// The <see cref="Half"/> result of the conversion.
         /// </returns>
         public static explicit operator Half(double d)
         {
@@ -352,12 +348,10 @@ namespace OpenTK.Mathematics
         /// Converts a OpenTK.Half to a System.Single.
         /// </summary>
         /// <param name="h">
-        /// The value to convert.
-        /// A <see cref="Half" />
+        /// The <see cref="Half"/> value to convert.
         /// </param>
         /// <returns>
-        /// The result of the conversion.
-        /// A <see cref="float" />
+        /// The <see cref="float"/> result of the conversion.
         /// </returns>
         public static implicit operator float(Half h)
         {
@@ -368,12 +362,10 @@ namespace OpenTK.Mathematics
         /// Converts a OpenTK.Half to a System.Double.
         /// </summary>
         /// <param name="h">
-        /// The value to convert.
-        /// A <see cref="Half" />
+        /// The <see cref="Half"/> value to convert.
         /// </param>
         /// <returns>
-        /// The result of the conversion.
-        /// A <see cref="double" />
+        /// The <see cref="double"/> result of the conversion.
         /// </returns>
         public static implicit operator double(Half h)
         {

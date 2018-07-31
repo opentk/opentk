@@ -28,7 +28,7 @@ namespace OpenTK.Mathematics
     /// <summary>
     /// Represents a 4x4 matrix containing 3D rotation, scale, transform, and projection.
     /// </summary>
-    /// <seealso cref="Matrix4d" />
+    /// <seealso cref="Matrix4d"/>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix4 : IEquatable<Matrix4>
@@ -491,7 +491,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Divides each element in the Matrix by the <see cref="Determinant" />.
+        /// Divides each element in the Matrix by the <see cref="Determinant"/>.
         /// </summary>
         public void Normalize()
         {

@@ -17,43 +17,43 @@ namespace OpenTK.Mathematics
     public static class MathHelper
     {
         /// <summary>
-        /// Defines the value of Pi as a <see cref="float" />.
+        /// Defines the value of Pi as a <see cref="float"/>.
         /// </summary>
         public const float Pi =
             3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930382f;
 
         /// <summary>
-        /// Defines the value of Pi divided by two as a <see cref="float" />.
+        /// Defines the value of Pi divided by two as a <see cref="float"/>.
         /// </summary>
         public const float PiOver2 = Pi / 2;
 
         /// <summary>
-        /// Defines the value of Pi divided by three as a <see cref="float" />.
+        /// Defines the value of Pi divided by three as a <see cref="float"/>.
         /// </summary>
         public const float PiOver3 = Pi / 3;
 
         /// <summary>
-        /// Definesthe value of  Pi divided by four as a <see cref="float" />.
+        /// Definesthe value of  Pi divided by four as a <see cref="float"/>.
         /// </summary>
         public const float PiOver4 = Pi / 4;
 
         /// <summary>
-        /// Defines the value of Pi divided by six as a <see cref="float" />.
+        /// Defines the value of Pi divided by six as a <see cref="float"/>.
         /// </summary>
         public const float PiOver6 = Pi / 6;
 
         /// <summary>
-        /// Defines the value of Pi multiplied by two as a <see cref="float" />.
+        /// Defines the value of Pi multiplied by two as a <see cref="float"/>.
         /// </summary>
         public const float TwoPi = 2 * Pi;
 
         /// <summary>
-        /// Defines the value of Pi multiplied by 3 and divided by two as a <see cref="float" />.
+        /// Defines the value of Pi multiplied by 3 and divided by two as a <see cref="float"/>.
         /// </summary>
         public const float ThreePiOver2 = 3 * Pi / 2;
 
         /// <summary>
-        /// Defines the value of E as a <see cref="float" />.
+        /// Defines the value of E as a <see cref="float"/>.
         /// </summary>
         public const float E = 2.71828182845904523536f;
 
@@ -145,7 +145,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Calculates the binomial coefficient <paramref name="n" /> above <paramref name="k" />.
+        /// Calculates the binomial coefficient <paramref name="n"/> above <paramref name="k"/>.
         /// </summary>
         /// <param name="n">The n.</param>
         /// <param name="k">The k.</param>

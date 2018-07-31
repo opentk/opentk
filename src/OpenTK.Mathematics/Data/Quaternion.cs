@@ -180,7 +180,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the length (magnitude) of the quaternion.
         /// </summary>
-        /// <seealso cref="LengthSquared" />
+        /// <seealso cref="LengthSquared"/>
         public float Length => (float)Math.Sqrt((W * W) + Xyz.LengthSquared);
 
         /// <summary>

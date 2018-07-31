@@ -87,7 +87,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Converts this color to an integer representation with 8 bits per channel.
         /// </summary>
-        /// <returns>A <see cref="int" /> that represents this instance.</returns>
+        /// <returns>A <see cref="int"/> that represents this instance.</returns>
         /// <remarks>
         /// This method is intended only for compatibility with System.Drawing. It compresses the color into 8 bits per
         /// channel, which means color information is lost.

@@ -152,7 +152,7 @@ namespace OpenTK.Mathematics
         /// <param name="precision">The precision.</param>
         /// <returns>Length of the curve.</returns>
         /// <remarks>
-        /// The precision gets better when the <paramref name="precision" />
+        /// The precision gets better when the <paramref name="precision"/>
         /// value gets smaller.
         /// </remarks>
         public float CalculateLength(float precision)

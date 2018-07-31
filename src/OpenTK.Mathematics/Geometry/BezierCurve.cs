@@ -37,7 +37,7 @@ namespace OpenTK.Mathematics
         public IList<Vector2> Points => _points;
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurve" />.
+        /// Constructs a new <see cref="BezierCurve"/>.
         /// </summary>
         /// <param name="points">The points.</param>
         public BezierCurve(IEnumerable<Vector2> points)
@@ -52,7 +52,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurve" />.
+        /// Constructs a new <see cref="BezierCurve"/>.
         /// </summary>
         /// <param name="points">The points.</param>
         public BezierCurve(params Vector2[] points)
@@ -67,7 +67,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurve" />.
+        /// Constructs a new <see cref="BezierCurve"/>.
         /// </summary>
         /// <param name="parallel">The parallel value.</param>
         /// <param name="points">The points.</param>
@@ -83,7 +83,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurve" />.
+        /// Constructs a new <see cref="BezierCurve"/>.
         /// </summary>
         /// <param name="parallel">The parallel value.</param>
         /// <param name="points">The points.</param>
@@ -114,7 +114,7 @@ namespace OpenTK.Mathematics
         /// <param name="precision">The precision.</param>
         /// <returns>Length of curve.</returns>
         /// <remarks>
-        /// The precision gets better as the <paramref name="precision" />
+        /// The precision gets better as the <paramref name="precision"/>
         /// value gets smaller.
         /// </remarks>
         public float CalculateLength(float precision)
@@ -128,7 +128,7 @@ namespace OpenTK.Mathematics
         /// <param name="points">The points.</param>
         /// <param name="precision">The precision value.</param>
         /// <returns>
-        /// The precision gets better as the <paramref name="precision" />
+        /// The precision gets better as the <paramref name="precision"/>
         /// value gets smaller.
         /// </returns>
         public static float CalculateLength(IList<Vector2> points, float precision)
@@ -145,11 +145,11 @@ namespace OpenTK.Mathematics
         /// <returns>Length of curve.</returns>
         /// <remarks>
         ///  <para>
-        /// The precision gets better as the <paramref name="precision" />
+        /// The precision gets better as the <paramref name="precision"/>
         /// value gets smaller.
         ///  </para>
         ///  <para>
-        /// The <paramref name="parallel" /> parameter defines whether the curve should be calculated as a
+        /// The <paramref name="parallel"/> parameter defines whether the curve should be calculated as a
         /// parallel curve to the original bezier curve. A value of 0.0f represents
         /// the original curve, 5.0f represents a curve that has always a distance
         /// of 5.0f to the orignal curve.
@@ -189,7 +189,7 @@ namespace OpenTK.Mathematics
         /// <param name="parallel">The parallel value.</param>
         /// <returns>Resulting point.</returns>
         /// <remarks>
-        /// The <paramref name="parallel" /> parameter defines whether the curve should be calculated as a
+        /// The <paramref name="parallel"/> parameter defines whether the curve should be calculated as a
         /// parallel curve to the original bezier curve. A value of 0.0f represents
         /// the original curve, 5.0f represents a curve that has always a distance
         /// of 5.0f to the orignal curve.
