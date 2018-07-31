@@ -228,7 +228,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast" />
         /// <seealso cref="LengthSquared" />
-        public double Length => Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
+        public double Length => Math.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -239,7 +239,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length" />
         /// <seealso cref="LengthSquared" />
-        public double LengthFast => 1.0 / MathHelper.InverseSqrtFast(X * X + Y * Y + Z * Z + W * W);
+        public double LengthFast => 1.0 / MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -249,7 +249,7 @@ namespace OpenTK.Mathematics
         /// for comparisons.
         /// </remarks>
         /// <see cref="Length" />
-        public double LengthSquared => X * X + Y * Y + Z * Z + W * W;
+        public double LengthSquared => (X * X) + (Y * Y) + (Z * Z) + (W * W);
 
         /// <summary>
         /// Returns a copy of the Vector4d scaled to unit length.
@@ -278,7 +278,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            var scale = MathHelper.InverseSqrtFast(X * X + Y * Y + Z * Z + W * W);
+            var scale = MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z) + (W * W));
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -674,7 +674,7 @@ namespace OpenTK.Mathematics
         /// <returns>The normalized vector</returns>
         public static Vector4d NormalizeFast(Vector4d vec)
         {
-            var scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y + vec.Z * vec.Z + vec.W * vec.W);
+            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -689,7 +689,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector</param>
         public static void NormalizeFast(ref Vector4d vec, out Vector4d result)
         {
-            var scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y + vec.Z * vec.Z + vec.W * vec.W);
+            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
@@ -704,7 +704,7 @@ namespace OpenTK.Mathematics
         /// <returns>The dot product of the two inputs</returns>
         public static double Dot(Vector4d left, Vector4d right)
         {
-            return left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
+            return (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z) + (left.W * right.W);
         }
 
         /// <summary>
@@ -715,7 +715,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The dot product of the two inputs</param>
         public static void Dot(ref Vector4d left, ref Vector4d right, out double result)
         {
-            result = left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
+            result = (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z) + (left.W * right.W);
         }
 
         /// <summary>
@@ -727,10 +727,10 @@ namespace OpenTK.Mathematics
         /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise</returns>
         public static Vector4d Lerp(Vector4d a, Vector4d b, double blend)
         {
-            a.X = blend * (b.X - a.X) + a.X;
-            a.Y = blend * (b.Y - a.Y) + a.Y;
-            a.Z = blend * (b.Z - a.Z) + a.Z;
-            a.W = blend * (b.W - a.W) + a.W;
+            a.X = (blend * (b.X - a.X)) + a.X;
+            a.Y = (blend * (b.Y - a.Y)) + a.Y;
+            a.Z = (blend * (b.Z - a.Z)) + a.Z;
+            a.W = (blend * (b.W - a.W)) + a.W;
             return a;
         }
 
@@ -743,10 +743,10 @@ namespace OpenTK.Mathematics
         /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise</param>
         public static void Lerp(ref Vector4d a, ref Vector4d b, double blend, out Vector4d result)
         {
-            result.X = blend * (b.X - a.X) + a.X;
-            result.Y = blend * (b.Y - a.Y) + a.Y;
-            result.Z = blend * (b.Z - a.Z) + a.Z;
-            result.W = blend * (b.W - a.W) + a.W;
+            result.X = (blend * (b.X - a.X)) + a.X;
+            result.Y = (blend * (b.Y - a.Y)) + a.Y;
+            result.Z = (blend * (b.Z - a.Z)) + a.Z;
+            result.W = (blend * (b.W - a.W)) + a.W;
         }
 
         /// <summary>
@@ -760,7 +760,7 @@ namespace OpenTK.Mathematics
         /// <returns>a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise</returns>
         public static Vector4d BaryCentric(Vector4d a, Vector4d b, Vector4d c, double u, double v)
         {
-            return a + u * (b - a) + v * (c - a);
+            return a + (u * (b - a)) + (v * (c - a));
         }
 
         /// <summary>
@@ -813,10 +813,10 @@ namespace OpenTK.Mathematics
         public static void Transform(ref Vector4d vec, ref Matrix4d mat, out Vector4d result)
         {
             result = new Vector4d(
-                vec.X * mat.Row0.X + vec.Y * mat.Row1.X + vec.Z * mat.Row2.X + vec.W * mat.Row3.X,
-                vec.X * mat.Row0.Y + vec.Y * mat.Row1.Y + vec.Z * mat.Row2.Y + vec.W * mat.Row3.Y,
-                vec.X * mat.Row0.Z + vec.Y * mat.Row1.Z + vec.Z * mat.Row2.Z + vec.W * mat.Row3.Z,
-                vec.X * mat.Row0.W + vec.Y * mat.Row1.W + vec.Z * mat.Row2.W + vec.W * mat.Row3.W);
+                (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X) + (vec.W * mat.Row3.X),
+                (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y) + (vec.Z * mat.Row2.Y) + (vec.W * mat.Row3.Y),
+                (vec.X * mat.Row0.Z) + (vec.Y * mat.Row1.Z) + (vec.Z * mat.Row2.Z) + (vec.W * mat.Row3.Z),
+                (vec.X * mat.Row0.W) + (vec.Y * mat.Row1.W) + (vec.Z * mat.Row2.W) + (vec.W * mat.Row3.W));
         }
 
         /// <summary>

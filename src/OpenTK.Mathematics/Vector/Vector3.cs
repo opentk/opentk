@@ -160,7 +160,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast" />
         /// <seealso cref="LengthSquared" />
-        public float Length => (float)Math.Sqrt(X * X + Y * Y + Z * Z);
+        public float Length => (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -171,7 +171,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length" />
         /// <seealso cref="LengthSquared" />
-        public float LengthFast => 1.0f / MathHelper.InverseSqrtFast(X * X + Y * Y + Z * Z);
+        public float LengthFast => 1.0f / MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -182,7 +182,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length" />
         /// <seealso cref="LengthFast" />
-        public float LengthSquared => X * X + Y * Y + Z * Z;
+        public float LengthSquared => (X * X) + (Y * Y) + (Z * Z);
 
         /// <summary>
         /// Returns a copy of the Vector3 scaled to unit length.
@@ -210,7 +210,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            var scale = MathHelper.InverseSqrtFast(X * X + Y * Y + Z * Z);
+            var scale = MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z));
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -574,8 +574,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The distance</param>
         public static void Distance(ref Vector3 vec1, ref Vector3 vec2, out float result)
         {
-            result = (float)Math.Sqrt((vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y) +
-                                      (vec2.Z - vec1.Z) * (vec2.Z - vec1.Z));
+            result = (float)Math.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) +
+                                      ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)));
         }
 
         /// <summary>
@@ -599,8 +599,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The squared distance</param>
         public static void DistanceSquared(ref Vector3 vec1, ref Vector3 vec2, out float result)
         {
-            result = (vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y) +
-                     (vec2.Z - vec1.Z) * (vec2.Z - vec1.Z);
+            result = ((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) +
+                     ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z));
         }
 
         /// <summary>
@@ -637,7 +637,7 @@ namespace OpenTK.Mathematics
         /// <returns>The normalized vector</returns>
         public static Vector3 NormalizeFast(Vector3 vec)
         {
-            var scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y + vec.Z * vec.Z);
+            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -651,7 +651,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector</param>
         public static void NormalizeFast(ref Vector3 vec, out Vector3 result)
         {
-            var scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y + vec.Z * vec.Z);
+            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
@@ -665,7 +665,7 @@ namespace OpenTK.Mathematics
         /// <returns>The dot product of the two inputs</returns>
         public static float Dot(Vector3 left, Vector3 right)
         {
-            return left.X * right.X + left.Y * right.Y + left.Z * right.Z;
+            return (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z);
         }
 
         /// <summary>
@@ -676,7 +676,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The dot product of the two inputs</param>
         public static void Dot(ref Vector3 left, ref Vector3 right, out float result)
         {
-            result = left.X * right.X + left.Y * right.Y + left.Z * right.Z;
+            result = (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z);
         }
 
         /// <summary>
@@ -706,9 +706,9 @@ namespace OpenTK.Mathematics
         /// <param name="result">The cross product of the two inputs</param>
         public static void Cross(ref Vector3 left, ref Vector3 right, out Vector3 result)
         {
-            result.X = left.Y * right.Z - left.Z * right.Y;
-            result.Y = left.Z * right.X - left.X * right.Z;
-            result.Z = left.X * right.Y - left.Y * right.X;
+            result.X = (left.Y * right.Z) - (left.Z * right.Y);
+            result.Y = (left.Z * right.X) - (left.X * right.Z);
+            result.Z = (left.X * right.Y) - (left.Y * right.X);
         }
 
         /// <summary>
@@ -720,9 +720,9 @@ namespace OpenTK.Mathematics
         /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise</returns>
         public static Vector3 Lerp(Vector3 a, Vector3 b, float blend)
         {
-            a.X = blend * (b.X - a.X) + a.X;
-            a.Y = blend * (b.Y - a.Y) + a.Y;
-            a.Z = blend * (b.Z - a.Z) + a.Z;
+            a.X = (blend * (b.X - a.X)) + a.X;
+            a.Y = (blend * (b.Y - a.Y)) + a.Y;
+            a.Z = (blend * (b.Z - a.Z)) + a.Z;
             return a;
         }
 
@@ -735,9 +735,9 @@ namespace OpenTK.Mathematics
         /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise</param>
         public static void Lerp(ref Vector3 a, ref Vector3 b, float blend, out Vector3 result)
         {
-            result.X = blend * (b.X - a.X) + a.X;
-            result.Y = blend * (b.Y - a.Y) + a.Y;
-            result.Z = blend * (b.Z - a.Z) + a.Z;
+            result.X = (blend * (b.X - a.X)) + a.X;
+            result.Y = (blend * (b.Y - a.Y)) + a.Y;
+            result.Z = (blend * (b.Z - a.Z)) + a.Z;
         }
 
         /// <summary>
@@ -751,7 +751,7 @@ namespace OpenTK.Mathematics
         /// <returns>a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise</returns>
         public static Vector3 BaryCentric(Vector3 a, Vector3 b, Vector3 c, float u, float v)
         {
-            return a + u * (b - a) + v * (c - a);
+            return a + (u * (b - a)) + (v * (c - a));
         }
 
         /// <summary>
@@ -809,17 +809,17 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed vector</param>
         public static void TransformVector(ref Vector3 vec, ref Matrix4 mat, out Vector3 result)
         {
-            result.X = vec.X * mat.Row0.X +
-                       vec.Y * mat.Row1.X +
-                       vec.Z * mat.Row2.X;
+            result.X = (vec.X * mat.Row0.X) +
+                       (vec.Y * mat.Row1.X) +
+                       (vec.Z * mat.Row2.X);
 
-            result.Y = vec.X * mat.Row0.Y +
-                       vec.Y * mat.Row1.Y +
-                       vec.Z * mat.Row2.Y;
+            result.Y = (vec.X * mat.Row0.Y) +
+                       (vec.Y * mat.Row1.Y) +
+                       (vec.Z * mat.Row2.Y);
 
-            result.Z = vec.X * mat.Row0.Z +
-                       vec.Y * mat.Row1.Z +
-                       vec.Z * mat.Row2.Z;
+            result.Z = (vec.X * mat.Row0.Z) +
+                       (vec.Y * mat.Row1.Z) +
+                       (vec.Z * mat.Row2.Z);
         }
 
         /// <summary>
@@ -884,17 +884,17 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed normal</param>
         public static void TransformNormalInverse(ref Vector3 norm, ref Matrix4 invMat, out Vector3 result)
         {
-            result.X = norm.X * invMat.Row0.X +
-                       norm.Y * invMat.Row0.Y +
-                       norm.Z * invMat.Row0.Z;
+            result.X = (norm.X * invMat.Row0.X) +
+                       (norm.Y * invMat.Row0.Y) +
+                       (norm.Z * invMat.Row0.Z);
 
-            result.Y = norm.X * invMat.Row1.X +
-                       norm.Y * invMat.Row1.Y +
-                       norm.Z * invMat.Row1.Z;
+            result.Y = (norm.X * invMat.Row1.X) +
+                       (norm.Y * invMat.Row1.Y) +
+                       (norm.Z * invMat.Row1.Z);
 
-            result.Z = norm.X * invMat.Row2.X +
-                       norm.Y * invMat.Row2.Y +
-                       norm.Z * invMat.Row2.Z;
+            result.Z = (norm.X * invMat.Row2.X) +
+                       (norm.Y * invMat.Row2.Y) +
+                       (norm.Z * invMat.Row2.Z);
         }
 
         /// <summary>
@@ -918,19 +918,19 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed position</param>
         public static void TransformPosition(ref Vector3 pos, ref Matrix4 mat, out Vector3 result)
         {
-            result.X = pos.X * mat.Row0.X +
-                       pos.Y * mat.Row1.X +
-                       pos.Z * mat.Row2.X +
+            result.X = (pos.X * mat.Row0.X) +
+                       (pos.Y * mat.Row1.X) +
+                       (pos.Z * mat.Row2.X) +
                        mat.Row3.X;
 
-            result.Y = pos.X * mat.Row0.Y +
-                       pos.Y * mat.Row1.Y +
-                       pos.Z * mat.Row2.Y +
+            result.Y = (pos.X * mat.Row0.Y) +
+                       (pos.Y * mat.Row1.Y) +
+                       (pos.Z * mat.Row2.Y) +
                        mat.Row3.Y;
 
-            result.Z = pos.X * mat.Row0.Z +
-                       pos.Y * mat.Row1.Z +
-                       pos.Z * mat.Row2.Z +
+            result.Z = (pos.X * mat.Row0.Z) +
+                       (pos.Y * mat.Row1.Z) +
+                       (pos.Z * mat.Row2.Z) +
                        mat.Row3.Z;
         }
 
@@ -955,9 +955,9 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed vector</param>
         public static void Transform(ref Vector3 vec, ref Matrix3 mat, out Vector3 result)
         {
-            result.X = vec.X * mat.Row0.X + vec.Y * mat.Row1.X + vec.Z * mat.Row2.X;
-            result.Y = vec.X * mat.Row0.Y + vec.Y * mat.Row1.Y + vec.Z * mat.Row2.Y;
-            result.Z = vec.X * mat.Row0.Z + vec.Y * mat.Row1.Z + vec.Z * mat.Row2.Z;
+            result.X = (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X);
+            result.Y = (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y) + (vec.Z * mat.Row2.Y);
+            result.Z = (vec.X * mat.Row0.Z) + (vec.Y * mat.Row1.Z) + (vec.Z * mat.Row2.Z);
         }
 
         /// <summary>
@@ -1012,9 +1012,9 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed vector</param>
         public static void Transform(ref Matrix3 mat, ref Vector3 vec, out Vector3 result)
         {
-            result.X = mat.Row0.X * vec.X + mat.Row0.Y * vec.Y + mat.Row0.Z * vec.Z;
-            result.Y = mat.Row1.X * vec.X + mat.Row1.Y * vec.Y + mat.Row1.Z * vec.Z;
-            result.Z = mat.Row2.X * vec.X + mat.Row2.Y * vec.Y + mat.Row2.Z * vec.Z;
+            result.X = (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z);
+            result.Y = (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y) + (mat.Row1.Z * vec.Z);
+            result.Z = (mat.Row2.X * vec.X) + (mat.Row2.Y * vec.Y) + (mat.Row2.Z * vec.Z);
         }
 
         /// <summary>
@@ -1095,34 +1095,34 @@ namespace OpenTK.Mathematics
             Vector4 result;
 
             result.X =
-                vector.X * worldViewProjection.M11 +
-                vector.Y * worldViewProjection.M21 +
-                vector.Z * worldViewProjection.M31 +
+                (vector.X * worldViewProjection.M11) +
+                (vector.Y * worldViewProjection.M21) +
+                (vector.Z * worldViewProjection.M31) +
                 worldViewProjection.M41;
 
             result.Y =
-                vector.X * worldViewProjection.M12 +
-                vector.Y * worldViewProjection.M22 +
-                vector.Z * worldViewProjection.M32 +
+                (vector.X * worldViewProjection.M12) +
+                (vector.Y * worldViewProjection.M22) +
+                (vector.Z * worldViewProjection.M32) +
                 worldViewProjection.M42;
 
             result.Z =
-                vector.X * worldViewProjection.M13 +
-                vector.Y * worldViewProjection.M23 +
-                vector.Z * worldViewProjection.M33 +
+                (vector.X * worldViewProjection.M13) +
+                (vector.Y * worldViewProjection.M23) +
+                (vector.Z * worldViewProjection.M33) +
                 worldViewProjection.M43;
 
             result.W =
-                vector.X * worldViewProjection.M14 +
-                vector.Y * worldViewProjection.M24 +
-                vector.Z * worldViewProjection.M34 +
+                (vector.X * worldViewProjection.M14) +
+                (vector.Y * worldViewProjection.M24) +
+                (vector.Z * worldViewProjection.M34) +
                 worldViewProjection.M44;
 
             result /= result.W;
 
-            result.X = x + width * ((result.X + 1.0f) / 2.0f);
-            result.Y = y + height * ((result.Y + 1.0f) / 2.0f);
-            result.Z = minZ + (maxZ - minZ) * ((result.Z + 1.0f) / 2.0f);
+            result.X = x + (width * ((result.X + 1.0f) / 2.0f));
+            result.Y = y + (height * ((result.Y + 1.0f) / 2.0f));
+            result.Z = minZ + ((maxZ - minZ) * ((result.Z + 1.0f) / 2.0f));
 
             return new Vector3(result.X, result.Y, result.Z);
         }
@@ -1148,32 +1148,32 @@ namespace OpenTK.Mathematics
         {
             Vector4 result;
 
-            result.X = (vector.X - x) / width * 2.0f - 1.0f;
-            result.Y = (vector.Y - y) / height * 2.0f - 1.0f;
-            result.Z = vector.Z / (maxZ - minZ) * 2.0f - 1.0f;
+            result.X = ((vector.X - x) / width * 2.0f) - 1.0f;
+            result.Y = ((vector.Y - y) / height * 2.0f) - 1.0f;
+            result.Z = (vector.Z / (maxZ - minZ) * 2.0f) - 1.0f;
 
             result.X =
-                result.X * inverseWorldViewProjection.M11 +
-                result.Y * inverseWorldViewProjection.M21 +
-                result.Z * inverseWorldViewProjection.M31 +
+                (result.X * inverseWorldViewProjection.M11) +
+                (result.Y * inverseWorldViewProjection.M21) +
+                (result.Z * inverseWorldViewProjection.M31) +
                 inverseWorldViewProjection.M41;
 
             result.Y =
-                result.X * inverseWorldViewProjection.M12 +
-                result.Y * inverseWorldViewProjection.M22 +
-                result.Z * inverseWorldViewProjection.M32 +
+                (result.X * inverseWorldViewProjection.M12) +
+                (result.Y * inverseWorldViewProjection.M22) +
+                (result.Z * inverseWorldViewProjection.M32) +
                 inverseWorldViewProjection.M42;
 
             result.Z =
-                result.X * inverseWorldViewProjection.M13 +
-                result.Y * inverseWorldViewProjection.M23 +
-                result.Z * inverseWorldViewProjection.M33 +
+                (result.X * inverseWorldViewProjection.M13) +
+                (result.Y * inverseWorldViewProjection.M23) +
+                (result.Z * inverseWorldViewProjection.M33) +
                 inverseWorldViewProjection.M43;
 
             result.W =
-                result.X * inverseWorldViewProjection.M14 +
-                result.Y * inverseWorldViewProjection.M24 +
-                result.Z * inverseWorldViewProjection.M34 +
+                (result.X * inverseWorldViewProjection.M14) +
+                (result.Y * inverseWorldViewProjection.M24) +
+                (result.Z * inverseWorldViewProjection.M34) +
                 inverseWorldViewProjection.M44;
 
             result /= result.W;

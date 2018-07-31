@@ -92,10 +92,10 @@ namespace OpenTK.Mathematics
             var r = new Vector2();
             var c = 1.0f - t;
 
-            r.X = StartAnchor.X * c * c * c + FirstControlPoint.X * 3 * t * c * c + SecondControlPoint.X * 3 * t * t * c
-                  + EndAnchor.X * t * t * t;
-            r.Y = StartAnchor.Y * c * c * c + FirstControlPoint.Y * 3 * t * c * c + SecondControlPoint.Y * 3 * t * t * c
-                  + EndAnchor.Y * t * t * t;
+            r.X = (StartAnchor.X * c * c * c) + (FirstControlPoint.X * 3 * t * c * c) + (SecondControlPoint.X * 3 * t * t * c)
+                  + (EndAnchor.X * t * t * t);
+            r.Y = (StartAnchor.Y * c * c * c) + (FirstControlPoint.Y * 3 * t * c * c) + (SecondControlPoint.Y * 3 * t * t * c)
+                  + (EndAnchor.Y * t * t * t);
 
             if (Parallel == 0.0f)
             {
@@ -113,7 +113,7 @@ namespace OpenTK.Mathematics
                 perpendicular = r - CalculatePointOfDerivative(t);
             }
 
-            return r + Vector2.Normalize(perpendicular).PerpendicularRight * Parallel;
+            return r + (Vector2.Normalize(perpendicular).PerpendicularRight * Parallel);
         }
 
         /// <summary>
@@ -126,8 +126,8 @@ namespace OpenTK.Mathematics
             var r = new Vector2();
             var c = 1.0f - t;
 
-            r.X = c * c * StartAnchor.X + 2 * t * c * FirstControlPoint.X + t * t * SecondControlPoint.X;
-            r.Y = c * c * StartAnchor.Y + 2 * t * c * FirstControlPoint.Y + t * t * SecondControlPoint.Y;
+            r.X = (c * c * StartAnchor.X) + (2 * t * c * FirstControlPoint.X) + (t * t * SecondControlPoint.X);
+            r.Y = (c * c * StartAnchor.Y) + (2 * t * c * FirstControlPoint.Y) + (t * t * SecondControlPoint.Y);
 
             return r;
         }

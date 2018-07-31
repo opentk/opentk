@@ -947,7 +947,7 @@ namespace OpenTK.Mathematics
             }
             else
             {
-                r = (1.0f + 0.055f) * (float)Math.Pow(rgb.R, 1.0f / 2.4f) - 0.055f;
+                r = ((1.0f + 0.055f) * (float)Math.Pow(rgb.R, 1.0f / 2.4f)) - 0.055f;
             }
 
             if (rgb.G <= 0.0031308)
@@ -956,7 +956,7 @@ namespace OpenTK.Mathematics
             }
             else
             {
-                g = (1.0f + 0.055f) * (float)Math.Pow(rgb.G, 1.0f / 2.4f) - 0.055f;
+                g = ((1.0f + 0.055f) * (float)Math.Pow(rgb.G, 1.0f / 2.4f)) - 0.055f;
             }
 
             if (rgb.B <= 0.0031308)
@@ -965,7 +965,7 @@ namespace OpenTK.Mathematics
             }
             else
             {
-                b = (1.0f + 0.055f) * (float)Math.Pow(rgb.B, 1.0f / 2.4f) - 0.055f;
+                b = ((1.0f + 0.055f) * (float)Math.Pow(rgb.B, 1.0f / 2.4f)) - 0.055f;
             }
 
             return new Color4(r, g, b, rgb.A);
@@ -989,10 +989,10 @@ namespace OpenTK.Mathematics
             var saturation = hsl.Y;
             var lightness = hsl.Z;
 
-            var C = (1.0f - Math.Abs(2.0f * lightness - 1.0f)) * saturation;
+            var C = (1.0f - Math.Abs((2.0f * lightness) - 1.0f)) * saturation;
 
             var h = hue / 60.0f;
-            var X = C * (1.0f - Math.Abs(h % 2.0f - 1.0f));
+            var X = C * (1.0f - Math.Abs((h % 2.0f) - 1.0f));
 
             float r, g, b;
             if (h >= 0.0f && h < 1.0f)
@@ -1038,7 +1038,7 @@ namespace OpenTK.Mathematics
                 b = 0.0f;
             }
 
-            var m = lightness - C / 2.0f;
+            var m = lightness - (C / 2.0f);
             return new Color4(r + m, g + m, b + m, hsl.W);
         }
 
@@ -1065,11 +1065,11 @@ namespace OpenTK.Mathematics
             }
             else if (M == rgb.G)
             {
-                h = (rgb.B - rgb.R) / C + 2.0f;
+                h = ((rgb.B - rgb.R) / C) + 2.0f;
             }
             else if (M == rgb.B)
             {
-                h = (rgb.R - rgb.G) / C + 4.0f;
+                h = ((rgb.R - rgb.G) / C) + 4.0f;
             }
 
             var hue = h / 6.0f;
@@ -1083,7 +1083,7 @@ namespace OpenTK.Mathematics
             var saturation = 0.0f;
             if (lightness != 0.0f && lightness != 1.0f)
             {
-                saturation = C / (1.0f - Math.Abs(2.0f * lightness - 1.0f));
+                saturation = C / (1.0f - Math.Abs((2.0f * lightness) - 1.0f));
             }
 
             return new Vector4(hue, saturation, lightness, rgb.A);
@@ -1110,7 +1110,7 @@ namespace OpenTK.Mathematics
             var C = value * saturation;
 
             var h = hue / 60.0f;
-            var X = C * (1.0f - Math.Abs(h % 2.0f - 1.0f));
+            var X = C * (1.0f - Math.Abs((h % 2.0f) - 1.0f));
 
             float r, g, b;
             if (h >= 0.0f && h < 1.0f)
@@ -1179,15 +1179,15 @@ namespace OpenTK.Mathematics
             var h = 0.0f;
             if (M == rgb.R)
             {
-                h = (rgb.G - rgb.B) / C % 6.0f;
+                h = ((rgb.G - rgb.B) / C) % 6.0f;
             }
             else if (M == rgb.G)
             {
-                h = (rgb.B - rgb.R) / C + 2.0f;
+                h = ((rgb.B - rgb.R) / C) + 2.0f;
             }
             else if (M == rgb.B)
             {
-                h = (rgb.R - rgb.G) / C + 4.0f;
+                h = ((rgb.R - rgb.G) / C) + 4.0f;
             }
 
             var hue = h * 60.0f / 360.0f;
@@ -1215,9 +1215,9 @@ namespace OpenTK.Mathematics
         /// <remarks>Uses the CIE XYZ colorspace.</remarks>
         public static Color4 FromXyz(Vector4 xyz)
         {
-            var r = 0.41847f * xyz.X + -0.15866f * xyz.Y + -0.082835f * xyz.Z;
-            var g = -0.091169f * xyz.X + 0.25243f * xyz.Y + 0.015708f * xyz.Z;
-            var b = 0.00092090f * xyz.X + -0.0025498f * xyz.Y + 0.17860f * xyz.Z;
+            var r = (0.41847f * xyz.X) + (-0.15866f * xyz.Y) + (-0.082835f * xyz.Z);
+            var g = (-0.091169f * xyz.X) + (0.25243f * xyz.Y) + (0.015708f * xyz.Z);
+            var b = (0.00092090f * xyz.X) + (-0.0025498f * xyz.Y) + (0.17860f * xyz.Z);
             return new Color4(r, g, b, xyz.W);
         }
 
@@ -1233,9 +1233,9 @@ namespace OpenTK.Mathematics
         /// <remarks>Uses the CIE XYZ colorspace.</remarks>
         public static Vector4 ToXyz(Color4 rgb)
         {
-            var x = (0.49f * rgb.R + 0.31f * rgb.G + 0.20f * rgb.B) / 0.17697f;
-            var y = (0.17697f * rgb.R + 0.81240f * rgb.G + 0.01063f * rgb.B) / 0.17697f;
-            var z = (0.00f * rgb.R + 0.01f * rgb.G + 0.99f * rgb.B) / 0.17697f;
+            var x = ((0.49f * rgb.R) + (0.31f * rgb.G) + (0.20f * rgb.B)) / 0.17697f;
+            var y = ((0.17697f * rgb.R) + (0.81240f * rgb.G) + (0.01063f * rgb.B)) / 0.17697f;
+            var z = ((0.00f * rgb.R) + (0.01f * rgb.G) + (0.99f * rgb.B)) / 0.17697f;
             return new Vector4(x, y, z, rgb.A);
         }
 
@@ -1254,9 +1254,9 @@ namespace OpenTK.Mathematics
         /// <remarks>Converts using ITU-R BT.601/CCIR 601 W(r) = 0.299 W(b) = 0.114 U(max) = 0.436 V(max) = 0.615.</remarks>
         public static Color4 FromYcbcr(Vector4 ycbcr)
         {
-            var r = 1.0f * ycbcr.X + 0.0f * ycbcr.Y + 1.402f * ycbcr.Z;
-            var g = 1.0f * ycbcr.X + -0.344136f * ycbcr.Y + -0.714136f * ycbcr.Z;
-            var b = 1.0f * ycbcr.X + 1.772f * ycbcr.Y + 0.0f * ycbcr.Z;
+            var r = (1.0f * ycbcr.X) + (0.0f * ycbcr.Y) + (1.402f * ycbcr.Z);
+            var g = (1.0f * ycbcr.X) + (-0.344136f * ycbcr.Y) + (-0.714136f * ycbcr.Z);
+            var b = (1.0f * ycbcr.X) + (1.772f * ycbcr.Y) + (0.0f * ycbcr.Z);
             return new Color4(r, g, b, ycbcr.W);
         }
 
@@ -1274,9 +1274,9 @@ namespace OpenTK.Mathematics
         /// <remarks>Converts using ITU-R BT.601/CCIR 601 W(r) = 0.299 W(b) = 0.114 U(max) = 0.436 V(max) = 0.615.</remarks>
         public static Vector4 ToYcbcr(Color4 rgb)
         {
-            var y = 0.299f * rgb.R + 0.587f * rgb.G + 0.114f * rgb.B;
-            var u = -0.168736f * rgb.R + -0.331264f * rgb.G + 0.5f * rgb.B;
-            var v = 0.5f * rgb.R + -0.418688f * rgb.G + -0.081312f * rgb.B;
+            var y = (0.299f * rgb.R) + (0.587f * rgb.G) + (0.114f * rgb.B);
+            var u = (-0.168736f * rgb.R) + (-0.331264f * rgb.G) + (0.5f * rgb.B);
+            var v = (0.5f * rgb.R) + (-0.418688f * rgb.G) + (-0.081312f * rgb.B);
             return new Vector4(y, u, v, rgb.A);
         }
 
@@ -1299,7 +1299,7 @@ namespace OpenTK.Mathematics
             var luminance = hcy.Z;
 
             var h = hue / 60.0f;
-            var X = C * (1.0f - Math.Abs(h % 2.0f - 1.0f));
+            var X = C * (1.0f - Math.Abs((h % 2.0f) - 1.0f));
 
             float r, g, b;
             if (h >= 0.0f && h < 1.0f)
@@ -1345,7 +1345,7 @@ namespace OpenTK.Mathematics
                 b = 0.0f;
             }
 
-            var m = luminance - (0.30f * r + 0.59f * g + 0.11f * b);
+            var m = luminance - ((0.30f * r) + (0.59f * g) + (0.11f * b));
             return new Color4(r + m, g + m, b + m, hcy.W);
         }
 
@@ -1368,20 +1368,20 @@ namespace OpenTK.Mathematics
             var h = 0.0f;
             if (M == rgb.R)
             {
-                h = (rgb.G - rgb.B) / C % 6.0f;
+                h = ((rgb.G - rgb.B) / C) % 6.0f;
             }
             else if (M == rgb.G)
             {
-                h = (rgb.B - rgb.R) / C + 2.0f;
+                h = ((rgb.B - rgb.R) / C) + 2.0f;
             }
             else if (M == rgb.B)
             {
-                h = (rgb.R - rgb.G) / C + 4.0f;
+                h = ((rgb.R - rgb.G) / C) + 4.0f;
             }
 
             var hue = h * 60.0f / 360.0f;
 
-            var luminance = 0.30f * rgb.R + 0.59f * rgb.G + 0.11f * rgb.B;
+            var luminance = (0.30f * rgb.R) + (0.59f * rgb.G) + (0.11f * rgb.B);
 
             return new Vector4(hue, C, luminance, rgb.A);
         }

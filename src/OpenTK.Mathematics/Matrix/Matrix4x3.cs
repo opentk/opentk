@@ -684,22 +684,22 @@ namespace OpenTK.Mathematics
                 rM33 = right.Row2.Z,
                 rM34 = right.Row2.W;
 
-            result.Row0.X = lM11 * rM11 + lM12 * rM21 + lM13 * rM31;
-            result.Row0.Y = lM11 * rM12 + lM12 * rM22 + lM13 * rM32;
-            result.Row0.Z = lM11 * rM13 + lM12 * rM23 + lM13 * rM33;
-            result.Row0.W = lM11 * rM14 + lM12 * rM24 + lM13 * rM34;
-            result.Row1.X = lM21 * rM11 + lM22 * rM21 + lM23 * rM31;
-            result.Row1.Y = lM21 * rM12 + lM22 * rM22 + lM23 * rM32;
-            result.Row1.Z = lM21 * rM13 + lM22 * rM23 + lM23 * rM33;
-            result.Row1.W = lM21 * rM14 + lM22 * rM24 + lM23 * rM34;
-            result.Row2.X = lM31 * rM11 + lM32 * rM21 + lM33 * rM31;
-            result.Row2.Y = lM31 * rM12 + lM32 * rM22 + lM33 * rM32;
-            result.Row2.Z = lM31 * rM13 + lM32 * rM23 + lM33 * rM33;
-            result.Row2.W = lM31 * rM14 + lM32 * rM24 + lM33 * rM34;
-            result.Row3.X = lM41 * rM11 + lM42 * rM21 + lM43 * rM31;
-            result.Row3.Y = lM41 * rM12 + lM42 * rM22 + lM43 * rM32;
-            result.Row3.Z = lM41 * rM13 + lM42 * rM23 + lM43 * rM33;
-            result.Row3.W = lM41 * rM14 + lM42 * rM24 + lM43 * rM34;
+            result.Row0.X = (lM11 * rM11) + (lM12 * rM21) + (lM13 * rM31);
+            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22) + (lM13 * rM32);
+            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23) + (lM13 * rM33);
+            result.Row0.W = (lM11 * rM14) + (lM12 * rM24) + (lM13 * rM34);
+            result.Row1.X = (lM21 * rM11) + (lM22 * rM21) + (lM23 * rM31);
+            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22) + (lM23 * rM32);
+            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23) + (lM23 * rM33);
+            result.Row1.W = (lM21 * rM14) + (lM22 * rM24) + (lM23 * rM34);
+            result.Row2.X = (lM31 * rM11) + (lM32 * rM21) + (lM33 * rM31);
+            result.Row2.Y = (lM31 * rM12) + (lM32 * rM22) + (lM33 * rM32);
+            result.Row2.Z = (lM31 * rM13) + (lM32 * rM23) + (lM33 * rM33);
+            result.Row2.W = (lM31 * rM14) + (lM32 * rM24) + (lM33 * rM34);
+            result.Row3.X = (lM41 * rM11) + (lM42 * rM21) + (lM43 * rM31);
+            result.Row3.Y = (lM41 * rM12) + (lM42 * rM22) + (lM43 * rM32);
+            result.Row3.Z = (lM41 * rM13) + (lM42 * rM23) + (lM43 * rM33);
+            result.Row3.W = (lM41 * rM14) + (lM42 * rM24) + (lM43 * rM34);
         }
 
         /// <summary>
@@ -749,18 +749,18 @@ namespace OpenTK.Mathematics
                 rM42 = right.Row3.Y,
                 rM43 = right.Row3.Z;
 
-            result.Row0.X = lM11 * rM11 + lM12 * rM21 + lM13 * rM31 + rM41;
-            result.Row0.Y = lM11 * rM12 + lM12 * rM22 + lM13 * rM32 + rM42;
-            result.Row0.Z = lM11 * rM13 + lM12 * rM23 + lM13 * rM33 + rM43;
-            result.Row1.X = lM21 * rM11 + lM22 * rM21 + lM23 * rM31 + rM41;
-            result.Row1.Y = lM21 * rM12 + lM22 * rM22 + lM23 * rM32 + rM42;
-            result.Row1.Z = lM21 * rM13 + lM22 * rM23 + lM23 * rM33 + rM43;
-            result.Row2.X = lM31 * rM11 + lM32 * rM21 + lM33 * rM31 + rM41;
-            result.Row2.Y = lM31 * rM12 + lM32 * rM22 + lM33 * rM32 + rM42;
-            result.Row2.Z = lM31 * rM13 + lM32 * rM23 + lM33 * rM33 + rM43;
-            result.Row3.X = lM41 * rM11 + lM42 * rM21 + lM43 * rM31 + rM41;
-            result.Row3.Y = lM41 * rM12 + lM42 * rM22 + lM43 * rM32 + rM42;
-            result.Row3.Z = lM41 * rM13 + lM42 * rM23 + lM43 * rM33 + rM43;
+            result.Row0.X = (lM11 * rM11) + (lM12 * rM21) + (lM13 * rM31) + rM41;
+            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22) + (lM13 * rM32) + rM42;
+            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23) + (lM13 * rM33) + rM43;
+            result.Row1.X = (lM21 * rM11) + (lM22 * rM21) + (lM23 * rM31) + rM41;
+            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22) + (lM23 * rM32) + rM42;
+            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23) + (lM23 * rM33) + rM43;
+            result.Row2.X = (lM31 * rM11) + (lM32 * rM21) + (lM33 * rM31) + rM41;
+            result.Row2.Y = (lM31 * rM12) + (lM32 * rM22) + (lM33 * rM32) + rM42;
+            result.Row2.Z = (lM31 * rM13) + (lM32 * rM23) + (lM33 * rM33) + rM43;
+            result.Row3.X = (lM41 * rM11) + (lM42 * rM21) + (lM43 * rM31) + rM41;
+            result.Row3.Y = (lM41 * rM12) + (lM42 * rM22) + (lM43 * rM32) + rM42;
+            result.Row3.Z = (lM41 * rM13) + (lM42 * rM23) + (lM43 * rM33) + rM43;
         }
 
         /// <summary>

@@ -174,7 +174,7 @@ namespace OpenTK.Mathematics
                 var i = *(int*)&x; // Read bits as integer.
                 i = 0x5f375a86 - (i >> 1); // Make an initial guess for Newton-Raphson approximation
                 x = *(float*)&i; // Convert bits back to float
-                x = x * (1.5f - xhalf * x * x); // Perform left single Newton-Raphson step.
+                x = x * (1.5f - (xhalf * x * x)); // Perform left single Newton-Raphson step.
                 return x;
             }
         }
@@ -343,7 +343,7 @@ namespace OpenTK.Mathematics
 
             var range = resultMax - resultMin;
             long temp = (value - valueMin) * range; // need long to avoid overflow
-            return (int)(temp / (valueMax - valueMin) + resultMin);
+            return (int)((temp / (valueMax - valueMin)) + resultMin);
         }
 
         /// <summary>
