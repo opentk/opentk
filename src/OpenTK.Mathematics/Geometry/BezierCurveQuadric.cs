@@ -43,7 +43,7 @@ namespace OpenTK.Mathematics
         public float Parallel;
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurveQuadric" />.
+        /// Constructs a new <see cref="BezierCurveQuadric"/>.
         /// </summary>
         /// <param name="startAnchor">The start anchor.</param>
         /// <param name="endAnchor">The end anchor.</param>
@@ -57,7 +57,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurveQuadric" />.
+        /// Constructs a new <see cref="BezierCurveQuadric"/>.
         /// </summary>
         /// <param name="parallel">The parallel value.</param>
         /// <param name="startAnchor">The start anchor.</param>
@@ -78,18 +78,19 @@ namespace OpenTK.Mathematics
         /// <returns>Resulting point.</returns>
         public Vector2 CalculatePoint(float t)
         {
-            var r = new Vector2();
             var c = 1.0f - t;
-
-            r.X = c * c * StartAnchor.X + 2 * t * c * ControlPoint.X + t * t * EndAnchor.X;
-            r.Y = c * c * StartAnchor.Y + 2 * t * c * ControlPoint.Y + t * t * EndAnchor.Y;
+            var r = new Vector2
+            (
+                (c * c * StartAnchor.X) + (2 * t * c * ControlPoint.X) + (t * t * EndAnchor.X),
+                (c * c * StartAnchor.Y) + (2 * t * c * ControlPoint.Y) + (t * t * EndAnchor.Y)
+            );
 
             if (Parallel == 0.0f)
             {
                 return r;
             }
 
-            var perpendicular = new Vector2();
+            Vector2 perpendicular;
 
             if (t == 0.0f)
             {
@@ -100,7 +101,7 @@ namespace OpenTK.Mathematics
                 perpendicular = r - CalculatePointOfDerivative(t);
             }
 
-            return r + Vector2.Normalize(perpendicular).PerpendicularRight * Parallel;
+            return r + (Vector2.Normalize(perpendicular).PerpendicularRight * Parallel);
         }
 
         /// <summary>
@@ -110,10 +111,11 @@ namespace OpenTK.Mathematics
         /// <returns>Resulting point.</returns>
         private Vector2 CalculatePointOfDerivative(float t)
         {
-            var r = new Vector2();
-
-            r.X = (1.0f - t) * StartAnchor.X + t * ControlPoint.X;
-            r.Y = (1.0f - t) * StartAnchor.Y + t * ControlPoint.Y;
+            var r = new Vector2
+            {
+                X = ((1.0f - t) * StartAnchor.X) + (t * ControlPoint.X),
+                Y = ((1.0f - t) * StartAnchor.Y) + (t * ControlPoint.Y)
+            };
 
             return r;
         }
@@ -124,7 +126,7 @@ namespace OpenTK.Mathematics
         /// <param name="precision">The precision.</param>
         /// <returns>Length of curve.</returns>
         /// <remarks>
-        /// The precision gets better when the <paramref name="precision" />
+        /// The precision gets better when the <paramref name="precision"/>
         /// value gets smaller.
         /// </remarks>
         public float CalculateLength(float precision)

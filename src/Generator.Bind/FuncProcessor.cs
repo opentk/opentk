@@ -172,7 +172,6 @@ namespace Bind
             // Entry points without a slot are assigned the magic slot index -1.
             // Generator.Rewrite detects this and generates a static DllImport call
             // instead of a calli instruction for these functions.
-
             var slot = -1;
             foreach (var list in delegates.Values)
             {
@@ -757,6 +756,7 @@ namespace Bind
                         name.StartsWith("Get") || name.StartsWith("Gen") ||
                         name.StartsWith("Delete") || name.StartsWith("New");
                     isCandidate &= parameterType.IsPointer;
+
                     // if there is a specific count set, such as "4", then this function
                     // returns a vector of specific dimensions and it would be wrong
                     // to generate an overload that returns a value of different size.
@@ -850,6 +850,7 @@ namespace Bind
 
             function.Parameters.RemoveAt(function.Parameters.Count - 2);
             arrayParameterType.WrapperType |= WrapperTypes.ConvenienceArrayType;
+
             // Since this is a 1-element overload, we don't need
             // array or reference wrappers.
             arrayParameterType.WrapperType &= ~(

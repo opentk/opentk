@@ -28,7 +28,7 @@ namespace OpenTK.Mathematics
     /// <summary>
     /// Represents a 4x4 matrix containing 3D rotation, scale, transform, and projection with double-precision components.
     /// </summary>
-    /// <seealso cref="Matrix4" />
+    /// <seealso cref="Matrix4"/>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix4d : IEquatable<Matrix4d>
@@ -87,16 +87,30 @@ namespace OpenTK.Mathematics
         /// <param name="m20">First item of the third row.</param>
         /// <param name="m21">Second item of the third row.</param>
         /// <param name="m22">Third item of the third row.</param>
-        /// <param name="m23">First item of the third row.</param>
-        /// <param name="m30">Fourth item of the fourth row.</param>
+        /// <param name="m23">Fourth item of the third row.</param>
+        /// <param name="m30">First item of the fourth row.</param>
         /// <param name="m31">Second item of the fourth row.</param>
         /// <param name="m32">Third item of the fourth row.</param>
         /// <param name="m33">Fourth item of the fourth row.</param>
-        public Matrix4d(
-            double m00, double m01, double m02, double m03,
-            double m10, double m11, double m12, double m13,
-            double m20, double m21, double m22, double m23,
-            double m30, double m31, double m32, double m33)
+        public Matrix4d
+        (
+            double m00,
+            double m01,
+            double m02,
+            double m03,
+            double m10,
+            double m11,
+            double m12,
+            double m13,
+            double m20,
+            double m21,
+            double m22,
+            double m23,
+            double m30,
+            double m31,
+            double m32,
+            double m33
+        )
         {
             Row0 = new Vector4d(m00, m01, m02, m03);
             Row1 = new Vector4d(m10, m11, m12, m13);
@@ -129,24 +143,24 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The determinant of this matrix
+        /// Gets the determinant of this matrix.
         /// </summary>
-        public double Determinant => Row0.X * Row1.Y * Row2.Z * Row3.W - Row0.X * Row1.Y * Row2.W * Row3.Z +
-                                     Row0.X * Row1.Z * Row2.W * Row3.Y - Row0.X * Row1.Z * Row2.Y * Row3.W
-                                     + Row0.X * Row1.W * Row2.Y * Row3.Z - Row0.X * Row1.W * Row2.Z * Row3.Y -
-                                     Row0.Y * Row1.Z * Row2.W * Row3.X + Row0.Y * Row1.Z * Row2.X * Row3.W
-                                     - Row0.Y * Row1.W * Row2.X * Row3.Z + Row0.Y * Row1.W * Row2.Z * Row3.X -
-                                     Row0.Y * Row1.X * Row2.Z * Row3.W + Row0.Y * Row1.X * Row2.W * Row3.Z
-                                                                       + Row0.Z * Row1.W * Row2.X * Row3.Y -
-                                     Row0.Z * Row1.W * Row2.Y * Row3.X + Row0.Z * Row1.X * Row2.Y * Row3.W -
-                                     Row0.Z * Row1.X * Row2.W * Row3.Y
-                                     + Row0.Z * Row1.Y * Row2.W * Row3.X - Row0.Z * Row1.Y * Row2.X * Row3.W -
-                                     Row0.W * Row1.X * Row2.Y * Row3.Z + Row0.W * Row1.X * Row2.Z * Row3.Y
-                                     - Row0.W * Row1.Y * Row2.Z * Row3.X + Row0.W * Row1.Y * Row2.X * Row3.Z -
-                                     Row0.W * Row1.Z * Row2.X * Row3.Y + Row0.W * Row1.Z * Row2.Y * Row3.X;
+        public double Determinant => (Row0.X * Row1.Y * Row2.Z * Row3.W) - (Row0.X * Row1.Y * Row2.W * Row3.Z) +
+                                     (Row0.X * Row1.Z * Row2.W * Row3.Y) - (Row0.X * Row1.Z * Row2.Y * Row3.W)
+                                     + (Row0.X * Row1.W * Row2.Y * Row3.Z) - (Row0.X * Row1.W * Row2.Z * Row3.Y) -
+                                     (Row0.Y * Row1.Z * Row2.W * Row3.X) + (Row0.Y * Row1.Z * Row2.X * Row3.W)
+                                     - (Row0.Y * Row1.W * Row2.X * Row3.Z) + (Row0.Y * Row1.W * Row2.Z * Row3.X) -
+                                     (Row0.Y * Row1.X * Row2.Z * Row3.W) + (Row0.Y * Row1.X * Row2.W * Row3.Z)
+                                                                       + (Row0.Z * Row1.W * Row2.X * Row3.Y) -
+                                     (Row0.Z * Row1.W * Row2.Y * Row3.X) + (Row0.Z * Row1.X * Row2.Y * Row3.W) -
+                                     (Row0.Z * Row1.X * Row2.W * Row3.Y)
+                                     + (Row0.Z * Row1.Y * Row2.W * Row3.X) - (Row0.Z * Row1.Y * Row2.X * Row3.W) -
+                                     (Row0.W * Row1.X * Row2.Y * Row3.Z) + (Row0.W * Row1.X * Row2.Z * Row3.Y)
+                                     - (Row0.W * Row1.Y * Row2.Z * Row3.X) + (Row0.W * Row1.Y * Row2.X * Row3.Z) -
+                                     (Row0.W * Row1.Z * Row2.X * Row3.Y) + (Row0.W * Row1.Z * Row2.Y * Row3.X);
 
         /// <summary>
-        /// The first column of this matrix
+        /// Gets or sets the first column of this matrix.
         /// </summary>
         public Vector4d Column0
         {
@@ -161,7 +175,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The second column of this matrix
+        /// Gets or sets the second column of this matrix.
         /// </summary>
         public Vector4d Column1
         {
@@ -176,7 +190,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The third column of this matrix
+        /// Gets or sets the third column of this matrix.
         /// </summary>
         public Vector4d Column2
         {
@@ -191,7 +205,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The fourth column of this matrix
+        /// Gets or sets the fourth column of this matrix.
         /// </summary>
         public Vector4d Column3
         {
@@ -399,6 +413,7 @@ namespace OpenTK.Mathematics
                 throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
                                                    columnIndex + ")");
             }
+
             set
             {
                 if (rowIndex == 0)
@@ -452,7 +467,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Divides each element in the Matrix by the <see cref="Determinant" />.
+        /// Divides each element in the Matrix by the <see cref="Determinant"/>.
         /// </summary>
         public void Normalize()
         {
@@ -558,8 +573,7 @@ namespace OpenTK.Mathematics
             }
 
             // code below adapted from Blender
-
-            var q = new Quaterniond();
+            var q = default(Quaterniond);
             var trace = 0.25 * (row0[0] + row1[1] + row2[2] + 1.0);
 
             if (trace > 0)
@@ -615,7 +629,6 @@ namespace OpenTK.Mathematics
             return Column3;
         }
 
-
         /// <summary>
         /// Build a rotation matrix from the specified axis/angle rotation.
         /// </summary>
@@ -668,8 +681,7 @@ namespace OpenTK.Mathematics
         /// <returns>A matrix instance.</returns>
         public static Matrix4d CreateFromAxisAngle(Vector3d axis, double angle)
         {
-            Matrix4d result;
-            CreateFromAxisAngle(axis, angle, out result);
+            CreateFromAxisAngle(axis, angle, out Matrix4d result);
             return result;
         }
 
@@ -696,8 +708,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix4d instance.</returns>
         public static Matrix4d CreateRotationX(double angle)
         {
-            Matrix4d result;
-            CreateRotationX(angle, out result);
+            CreateRotationX(angle, out Matrix4d result);
             return result;
         }
 
@@ -724,8 +735,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix4d instance.</returns>
         public static Matrix4d CreateRotationY(double angle)
         {
-            Matrix4d result;
-            CreateRotationY(angle, out result);
+            CreateRotationY(angle, out Matrix4d result);
             return result;
         }
 
@@ -752,8 +762,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix4d instance.</returns>
         public static Matrix4d CreateRotationZ(double angle)
         {
-            Matrix4d result;
-            CreateRotationZ(angle, out result);
+            CreateRotationZ(angle, out Matrix4d result);
             return result;
         }
 
@@ -790,8 +799,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix4d instance.</returns>
         public static Matrix4d CreateTranslation(double x, double y, double z)
         {
-            Matrix4d result;
-            CreateTranslation(x, y, z, out result);
+            CreateTranslation(x, y, z, out Matrix4d result);
             return result;
         }
 
@@ -802,8 +810,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix4d instance.</returns>
         public static Matrix4d CreateTranslation(Vector3d vector)
         {
-            Matrix4d result;
-            CreateTranslation(vector.X, vector.Y, vector.Z, out result);
+            CreateTranslation(vector.X, vector.Y, vector.Z, out Matrix4d result);
             return result;
         }
 
@@ -815,8 +822,14 @@ namespace OpenTK.Mathematics
         /// <param name="zNear">The near edge of the projection volume.</param>
         /// <param name="zFar">The far edge of the projection volume.</param>
         /// <param name="result">The resulting Matrix4d instance.</param>
-        public static void CreateOrthographic(double width, double height, double zNear, double zFar,
-            out Matrix4d result)
+        public static void CreateOrthographic
+        (
+            double width,
+            double height,
+            double zNear,
+            double zFar,
+            out Matrix4d result
+        )
         {
             CreateOrthographicOffCenter(-width / 2, width / 2, -height / 2, height / 2, zNear, zFar, out result);
         }
@@ -831,8 +844,7 @@ namespace OpenTK.Mathematics
         /// <rereturns>The resulting Matrix4d instance.</rereturns>
         public static Matrix4d CreateOrthographic(double width, double height, double zNear, double zFar)
         {
-            Matrix4d result;
-            CreateOrthographicOffCenter(-width / 2, width / 2, -height / 2, height / 2, zNear, zFar, out result);
+            CreateOrthographicOffCenter(-width / 2, width / 2, -height / 2, height / 2, zNear, zFar, out Matrix4d result);
             return result;
         }
 
@@ -846,23 +858,32 @@ namespace OpenTK.Mathematics
         /// <param name="zNear">The near edge of the projection volume.</param>
         /// <param name="zFar">The far edge of the projection volume.</param>
         /// <param name="result">The resulting Matrix4d instance.</param>
-        public static void CreateOrthographicOffCenter(double left, double right, double bottom, double top,
-            double zNear, double zFar, out Matrix4d result)
+        public static void CreateOrthographicOffCenter
+        (
+            double left,
+            double right,
+            double bottom,
+            double top,
+            double zNear,
+            double zFar,
+            out Matrix4d result
+        )
         {
-            result = new Matrix4d();
-
             var invRL = 1 / (right - left);
             var invTB = 1 / (top - bottom);
             var invFN = 1 / (zFar - zNear);
 
-            result.M11 = 2 * invRL;
-            result.M22 = 2 * invTB;
-            result.M33 = -2 * invFN;
+            result = new Matrix4d
+            {
+                M11 = 2 * invRL,
+                M22 = 2 * invTB,
+                M33 = -2 * invFN,
 
-            result.M41 = -(right + left) * invRL;
-            result.M42 = -(top + bottom) * invTB;
-            result.M43 = -(zFar + zNear) * invFN;
-            result.M44 = 1;
+                M41 = -(right + left) * invRL,
+                M42 = -(top + bottom) * invTB,
+                M43 = -(zFar + zNear) * invFN,
+                M44 = 1
+            };
         }
 
         /// <summary>
@@ -875,11 +896,17 @@ namespace OpenTK.Mathematics
         /// <param name="zNear">The near edge of the projection volume.</param>
         /// <param name="zFar">The far edge of the projection volume.</param>
         /// <returns>The resulting Matrix4d instance.</returns>
-        public static Matrix4d CreateOrthographicOffCenter(double left, double right, double bottom, double top,
-            double zNear, double zFar)
+        public static Matrix4d CreateOrthographicOffCenter
+        (
+            double left,
+            double right,
+            double bottom,
+            double top,
+            double zNear,
+            double zFar
+        )
         {
-            Matrix4d result;
-            CreateOrthographicOffCenter(left, right, bottom, top, zNear, zFar, out result);
+            CreateOrthographicOffCenter(left, right, bottom, top, zNear, zFar, out Matrix4d result);
             return result;
         }
 
@@ -901,8 +928,14 @@ namespace OpenTK.Mathematics
         ///  <item>zNear is larger than zFar</item>
         ///  </list>
         /// </exception>
-        public static void CreatePerspectiveFieldOfView(double fovy, double aspect, double zNear, double zFar,
-            out Matrix4d result)
+        public static void CreatePerspectiveFieldOfView
+        (
+            double fovy,
+            double aspect,
+            double zNear,
+            double zFar,
+            out Matrix4d result
+        )
         {
             if (fovy <= 0 || fovy > Math.PI)
             {
@@ -952,8 +985,7 @@ namespace OpenTK.Mathematics
         /// </exception>
         public static Matrix4d CreatePerspectiveFieldOfView(double fovy, double aspect, double zNear, double zFar)
         {
-            Matrix4d result;
-            CreatePerspectiveFieldOfView(fovy, aspect, zNear, zFar, out result);
+            CreatePerspectiveFieldOfView(fovy, aspect, zNear, zFar, out Matrix4d result);
             return result;
         }
 
@@ -975,8 +1007,16 @@ namespace OpenTK.Mathematics
         ///  <item>zNear is larger than zFar</item>
         ///  </list>
         /// </exception>
-        public static void CreatePerspectiveOffCenter(double left, double right, double bottom, double top,
-            double zNear, double zFar, out Matrix4d result)
+        public static void CreatePerspectiveOffCenter
+        (
+            double left,
+            double right,
+            double bottom,
+            double top,
+            double zNear,
+            double zFar,
+            out Matrix4d result
+        )
         {
             if (zNear <= 0)
             {
@@ -1000,10 +1040,15 @@ namespace OpenTK.Mathematics
             var c = -(zFar + zNear) / (zFar - zNear);
             var d = -(2.0 * zFar * zNear) / (zFar - zNear);
 
-            result = new Matrix4d(x, 0, 0, 0,
+#pragma warning disable SA1117 // Parameters should be on same line or separate lines
+            result = new Matrix4d
+            (
+                x, 0, 0, 0,
                 0, y, 0, 0,
                 a, b, c, -1,
-                0, 0, d, 0);
+                0, 0, d, 0
+            );
+#pragma warning restore SA1117 // Parameters should be on same line or separate lines
         }
 
         /// <summary>
@@ -1024,11 +1069,17 @@ namespace OpenTK.Mathematics
         ///  <item>zNear is larger than zFar</item>
         ///  </list>
         /// </exception>
-        public static Matrix4d CreatePerspectiveOffCenter(double left, double right, double bottom, double top,
-            double zNear, double zFar)
+        public static Matrix4d CreatePerspectiveOffCenter
+        (
+            double left,
+            double right,
+            double bottom,
+            double top,
+            double zNear,
+            double zFar
+        )
         {
-            Matrix4d result;
-            CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar, out result);
+            CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar, out Matrix4d result);
             return result;
         }
 
@@ -1039,9 +1090,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">Matrix result.</param>
         public static void CreateFromQuaternion(ref Quaterniond q, out Matrix4d result)
         {
-            Vector3d axis;
-            double angle;
-            q.ToAxisAngle(out axis, out angle);
+            q.ToAxisAngle(out Vector3d axis, out double angle);
             CreateFromAxisAngle(axis, angle, out result);
         }
 
@@ -1052,8 +1101,7 @@ namespace OpenTK.Mathematics
         /// <returns>A matrix instance.</returns>
         public static Matrix4d CreateFromQuaternion(Quaterniond q)
         {
-            Matrix4d result;
-            CreateFromQuaternion(ref q, out result);
+            CreateFromQuaternion(ref q, out Matrix4d result);
             return result;
         }
 
@@ -1162,15 +1210,31 @@ namespace OpenTK.Mathematics
 
             axis.Normalize();
 
-            Matrix4d result;
-            result.Row0 = new Vector4d(t * axis.X * axis.X + cos, t * axis.X * axis.Y - sin * axis.Z,
-                t * axis.X * axis.Z + sin * axis.Y, 0.0);
-            result.Row1 = new Vector4d(t * axis.X * axis.Y + sin * axis.Z, t * axis.Y * axis.Y + cos,
-                t * axis.Y * axis.Z - sin * axis.X, 0.0);
-            result.Row2 = new Vector4d(t * axis.X * axis.Z - sin * axis.Y, t * axis.Y * axis.Z + sin * axis.X,
-                t * axis.Z * axis.Z + cos, 0.0);
-            result.Row3 = Vector4d.UnitW;
-            return result;
+            return new Matrix4d
+            (
+                new Vector4d
+                (
+                    (t * axis.X * axis.X) + cos,
+                    (t * axis.X * axis.Y) - (sin * axis.Z),
+                    (t * axis.X * axis.Z) + (sin * axis.Y),
+                    0.0
+                ),
+                new Vector4d
+                (
+                    (t * axis.X * axis.Y) + (sin * axis.Z),
+                    (t * axis.Y * axis.Y) + cos,
+                    (t * axis.Y * axis.Z) - (sin * axis.X),
+                    0.0
+                ),
+                new Vector4d
+                (
+                    (t * axis.X * axis.Z) - (sin * axis.Y),
+                    (t * axis.Y * axis.Z) + (sin * axis.X),
+                    (t * axis.Z * axis.Z) + cos,
+                    0.0
+                ),
+                Vector4d.UnitW
+            );
         }
 
         /// <summary>
@@ -1180,9 +1244,7 @@ namespace OpenTK.Mathematics
         /// <returns>A rotation matrix</returns>
         public static Matrix4d Rotate(Quaterniond q)
         {
-            Vector3d axis;
-            double angle;
-            q.ToAxisAngle(out axis, out angle);
+            q.ToAxisAngle(out Vector3d axis, out double angle);
             return Rotate(axis, angle);
         }
 
@@ -1199,10 +1261,13 @@ namespace OpenTK.Mathematics
             var x = Vector3d.Normalize(Vector3d.Cross(up, z));
             var y = Vector3d.Normalize(Vector3d.Cross(z, x));
 
-            var rot = new Matrix4d(new Vector4d(x.X, y.X, z.X, 0.0),
+            var rot = new Matrix4d
+            (
+                new Vector4d(x.X, y.X, z.X, 0.0),
                 new Vector4d(x.Y, y.Y, z.Y, 0.0),
                 new Vector4d(x.Z, y.Z, z.Z, 0.0),
-                Vector4d.UnitW);
+                Vector4d.UnitW
+            );
 
             var trans = CreateTranslation(-eye);
 
@@ -1212,21 +1277,41 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Build a world space to camera space matrix
         /// </summary>
-        /// <param name="eyeX">Eye (camera) position in world space</param>
-        /// <param name="eyeY">Eye (camera) position in world space</param>
-        /// <param name="eyeZ">Eye (camera) position in world space</param>
-        /// <param name="targetX">Target position in world space</param>
-        /// <param name="targetY">Target position in world space</param>
-        /// <param name="targetZ">Target position in world space</param>
-        /// <param name="upX">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
-        /// <param name="upY">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
-        /// <param name="upZ">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
+        /// <param name="eyeX">Eye (camera) X-position in world space</param>
+        /// <param name="eyeY">Eye (camera) Y-position in world space</param>
+        /// <param name="eyeZ">Eye (camera) Z-position in world space</param>
+        /// <param name="targetX">Target X-position in world space</param>
+        /// <param name="targetY">Target Y-position in world space</param>
+        /// <param name="targetZ">Target Z-position in world space</param>
+        /// <param name="upX">
+        /// X of the up vector in world space (should not be parallel to the camera direction, that is target - eye)
+        /// </param>
+        /// <param name="upY">
+        /// Y of the up vector in world space (should not be parallel to the camera direction, that is target - eye)
+        /// </param>
+        /// <param name="upZ">
+        /// Z of the up vector in world space (should not be parallel to the camera direction, that is target - eye)
+        /// </param>
         /// <returns>A Matrix4 that transforms world space to camera space</returns>
-        public static Matrix4d LookAt(double eyeX, double eyeY, double eyeZ, double targetX, double targetY,
-            double targetZ, double upX, double upY, double upZ)
+        public static Matrix4d LookAt
+        (
+            double eyeX,
+            double eyeY,
+            double eyeZ,
+            double targetX,
+            double targetY,
+            double targetZ,
+            double upX,
+            double upY,
+            double upZ
+        )
         {
-            return LookAt(new Vector3d(eyeX, eyeY, eyeZ), new Vector3d(targetX, targetY, targetZ),
-                new Vector3d(upX, upY, upZ));
+            return LookAt
+            (
+                new Vector3d(eyeX, eyeY, eyeZ),
+                new Vector3d(targetX, targetY, targetZ),
+                new Vector3d(upX, upY, upZ)
+            );
         }
 
         /// <summary>
@@ -1244,10 +1329,13 @@ namespace OpenTK.Mathematics
             var invRL = 1.0 / (right - left);
             var invTB = 1.0 / (top - bottom);
             var invFN = 1.0 / (far - near);
-            return new Matrix4d(new Vector4d(2.0 * near * invRL, 0.0, 0.0, 0.0),
+            return new Matrix4d
+            (
+                new Vector4d(2.0 * near * invRL, 0.0, 0.0, 0.0),
                 new Vector4d(0.0, 2.0 * near * invTB, 0.0, 0.0),
                 new Vector4d((right + left) * invRL, (top + bottom) * invTB, -(far + near) * invFN, -1.0),
-                new Vector4d(0.0, 0.0, -2.0 * far * near * invFN, 0.0));
+                new Vector4d(0.0, 0.0, -2.0 * far * near * invFN, 0.0)
+            );
         }
 
         /// <summary>
@@ -1276,8 +1364,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the addition.</returns>
         public static Matrix4d Add(Matrix4d left, Matrix4d right)
         {
-            Matrix4d result;
-            Add(ref left, ref right, out result);
+            Add(ref left, ref right, out Matrix4d result);
             return result;
         }
 
@@ -1303,8 +1390,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the subraction.</returns>
         public static Matrix4d Subtract(Matrix4d left, Matrix4d right)
         {
-            Matrix4d result;
-            Subtract(ref left, ref right, out result);
+            Subtract(ref left, ref right, out Matrix4d result);
             return result;
         }
 
@@ -1330,8 +1416,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication</returns>
         public static Matrix4d Mult(Matrix4d left, Matrix4d right)
         {
-            Matrix4d result;
-            Mult(ref left, ref right, out result);
+            Mult(ref left, ref right, out Matrix4d result);
             return result;
         }
 
@@ -1376,22 +1461,22 @@ namespace OpenTK.Mathematics
                 rM43 = right.Row3.Z,
                 rM44 = right.Row3.W;
 
-            result.Row0.X = lM11 * rM11 + lM12 * rM21 + lM13 * rM31 + lM14 * rM41;
-            result.Row0.Y = lM11 * rM12 + lM12 * rM22 + lM13 * rM32 + lM14 * rM42;
-            result.Row0.Z = lM11 * rM13 + lM12 * rM23 + lM13 * rM33 + lM14 * rM43;
-            result.Row0.W = lM11 * rM14 + lM12 * rM24 + lM13 * rM34 + lM14 * rM44;
-            result.Row1.X = lM21 * rM11 + lM22 * rM21 + lM23 * rM31 + lM24 * rM41;
-            result.Row1.Y = lM21 * rM12 + lM22 * rM22 + lM23 * rM32 + lM24 * rM42;
-            result.Row1.Z = lM21 * rM13 + lM22 * rM23 + lM23 * rM33 + lM24 * rM43;
-            result.Row1.W = lM21 * rM14 + lM22 * rM24 + lM23 * rM34 + lM24 * rM44;
-            result.Row2.X = lM31 * rM11 + lM32 * rM21 + lM33 * rM31 + lM34 * rM41;
-            result.Row2.Y = lM31 * rM12 + lM32 * rM22 + lM33 * rM32 + lM34 * rM42;
-            result.Row2.Z = lM31 * rM13 + lM32 * rM23 + lM33 * rM33 + lM34 * rM43;
-            result.Row2.W = lM31 * rM14 + lM32 * rM24 + lM33 * rM34 + lM34 * rM44;
-            result.Row3.X = lM41 * rM11 + lM42 * rM21 + lM43 * rM31 + lM44 * rM41;
-            result.Row3.Y = lM41 * rM12 + lM42 * rM22 + lM43 * rM32 + lM44 * rM42;
-            result.Row3.Z = lM41 * rM13 + lM42 * rM23 + lM43 * rM33 + lM44 * rM43;
-            result.Row3.W = lM41 * rM14 + lM42 * rM24 + lM43 * rM34 + lM44 * rM44;
+            result.Row0.X = (lM11 * rM11) + (lM12 * rM21) + (lM13 * rM31) + (lM14 * rM41);
+            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22) + (lM13 * rM32) + (lM14 * rM42);
+            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23) + (lM13 * rM33) + (lM14 * rM43);
+            result.Row0.W = (lM11 * rM14) + (lM12 * rM24) + (lM13 * rM34) + (lM14 * rM44);
+            result.Row1.X = (lM21 * rM11) + (lM22 * rM21) + (lM23 * rM31) + (lM24 * rM41);
+            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22) + (lM23 * rM32) + (lM24 * rM42);
+            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23) + (lM23 * rM33) + (lM24 * rM43);
+            result.Row1.W = (lM21 * rM14) + (lM22 * rM24) + (lM23 * rM34) + (lM24 * rM44);
+            result.Row2.X = (lM31 * rM11) + (lM32 * rM21) + (lM33 * rM31) + (lM34 * rM41);
+            result.Row2.Y = (lM31 * rM12) + (lM32 * rM22) + (lM33 * rM32) + (lM34 * rM42);
+            result.Row2.Z = (lM31 * rM13) + (lM32 * rM23) + (lM33 * rM33) + (lM34 * rM43);
+            result.Row2.W = (lM31 * rM14) + (lM32 * rM24) + (lM33 * rM34) + (lM34 * rM44);
+            result.Row3.X = (lM41 * rM11) + (lM42 * rM21) + (lM43 * rM31) + (lM44 * rM41);
+            result.Row3.Y = (lM41 * rM12) + (lM42 * rM22) + (lM43 * rM32) + (lM44 * rM42);
+            result.Row3.Z = (lM41 * rM13) + (lM42 * rM23) + (lM43 * rM33) + (lM44 * rM43);
+            result.Row3.W = (lM41 * rM14) + (lM42 * rM24) + (lM43 * rM34) + (lM44 * rM44);
         }
 
         /// <summary>
@@ -1402,8 +1487,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication</returns>
         public static Matrix4d Mult(Matrix4d left, double right)
         {
-            Matrix4d result;
-            Mult(ref left, right, out result);
+            Mult(ref left, right, out Matrix4d result);
             return result;
         }
 
@@ -1488,11 +1572,13 @@ namespace OpenTK.Mathematics
                 colIdx[i] = icol;
 
                 var pivot = inverse[icol, icol];
+
                 // check for singular matrix
                 if (pivot == 0.0)
                 {
                     throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
-                    //return mat;
+
+                    // return mat;
                 }
 
                 // Scale row so it has a unit diagonal
@@ -1547,7 +1633,6 @@ namespace OpenTK.Mathematics
         {
             return new Matrix4d(mat.Column0, mat.Column1, mat.Column2, mat.Column3);
         }
-
 
         /// <summary>
         /// Calculate the transpose of the given matrix

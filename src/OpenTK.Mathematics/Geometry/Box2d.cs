@@ -78,8 +78,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Creates a new Box2d with the specified dimensions.
         /// </summary>
-        /// <param name="top">The position of the top boundary.</param>
         /// <param name="left">The position of the left boundary.</param>
+        /// <param name="top">The position of the top boundary.</param>
         /// <param name="width">The width of the box.</param>
         /// <param name="height">The height of the box.</param>
         /// <returns>A new OpenTK.Box2d with the specfied dimensions.</returns>
@@ -127,15 +127,15 @@ namespace OpenTK.Mathematics
         /// <returns>Whether this box contains the point.</returns>
         public bool Contains(Vector2d point, bool closedRegion)
         {
-            var xOK = closedRegion == Left <= Right
+            var containsX = closedRegion == Left <= Right
                 ? point.X >= Left != point.X > Right
                 : point.X > Left != point.X >= Right;
 
-            var yOK = closedRegion == Top <= Bottom
+            var containsY = closedRegion == Top <= Bottom
                 ? point.Y >= Top != point.Y > Bottom
                 : point.Y > Top != point.Y >= Bottom;
 
-            return xOK && yOK;
+            return containsX && containsY;
         }
 
         /// <summary>
@@ -205,15 +205,15 @@ namespace OpenTK.Mathematics
             }
         }
 
-        private static readonly string listSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> describing the current instance.
+        /// Returns a <see cref="string"/> describing the current instance.
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("({0}{4} {1}) - ({2}{4} {3})", Left, Top, Right, Bottom, listSeparator);
+            return string.Format("({0}{4} {1}) - ({2}{4} {3})", Left, Top, Right, Bottom, ListSeparator);
         }
     }
 }

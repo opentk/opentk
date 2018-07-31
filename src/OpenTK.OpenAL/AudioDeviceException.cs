@@ -23,7 +23,6 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-
 namespace OpenTK.OpenAL
 {
     /// <summary>
@@ -42,7 +41,8 @@ namespace OpenTK.OpenAL
         /// Constructs a new AudioDeviceException with the specified error message.
         /// </summary>
         /// <param name="message">The error message of the AudioDeviceException.</param>
-        public AudioDeviceException(string message) : base(message)
+        public AudioDeviceException(string message)
+            : base(message)
         {
         }
     }

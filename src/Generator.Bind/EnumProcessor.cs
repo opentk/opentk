@@ -440,7 +440,6 @@ namespace Bind
         private static bool IsValue(string test)
         {
             // Check if the result is a number.
-            long number;
             bool isNumber;
             if (test.ToLower().StartsWith("0x"))
             {
@@ -452,7 +451,7 @@ namespace Bind
                     test,
                     NumberStyles.Number,
                     CultureInfo.InvariantCulture,
-                    out number);
+                    out long number);
             }
 
             return isNumber;

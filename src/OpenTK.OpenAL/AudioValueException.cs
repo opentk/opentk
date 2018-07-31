@@ -41,7 +41,8 @@ namespace OpenTK.OpenAL
         /// Constructs a new instance with the specified error message.
         /// </summary>
         /// <param name="message">The error message of the AudioContextException.</param>
-        public AudioValueException(string message) : base(message)
+        public AudioValueException(string message)
+            : base(message)
         {
         }
     }

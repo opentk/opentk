@@ -69,8 +69,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The new Half2 instance will avoid conversion and copy directly from the Half parameters.
         /// </summary>
-        /// <param name="x">An Half instance of a 16-bit half-precision floating-point number.</param>
-        /// <param name="y">An Half instance of a 16-bit half-precision floating-point number.</param>
+        /// <param name="x">A Half instance of a 16-bit half-precision floating-point number.</param>
+        /// <param name="y">A Half instance of a 16-bit half-precision floating-point number.</param>
         public Vector2h(Half x, Half y)
         {
             X = x;
@@ -314,14 +314,14 @@ namespace OpenTK.Mathematics
             return X.Equals(other.X) && Y.Equals(other.Y);
         }
 
-        private static readonly string listSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
         /// <summary>
         /// Returns a string that contains this Half2's numbers in human-legible form.
         /// </summary>
         public override string ToString()
         {
-            return string.Format("({0}{2} {1})", X, Y, listSeparator);
+            return string.Format("({0}{2} {1})", X, Y, ListSeparator);
         }
 
         /// <summary>

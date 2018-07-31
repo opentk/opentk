@@ -17,7 +17,7 @@ namespace OpenTK.Mathematics
     [Serializable]
     public struct BezierCurve
     {
-        private readonly List<Vector2> points;
+        private readonly List<Vector2> _points;
 
         /// <summary>
         /// The parallel value.
@@ -34,10 +34,10 @@ namespace OpenTK.Mathematics
         /// Gets the points of this curve.
         /// </summary>
         /// <remarks>The first point and the last points represent the anchor points.</remarks>
-        public IList<Vector2> Points => points;
+        public IList<Vector2> Points => _points;
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurve" />.
+        /// Constructs a new <see cref="BezierCurve"/>.
         /// </summary>
         /// <param name="points">The points.</param>
         public BezierCurve(IEnumerable<Vector2> points)
@@ -47,12 +47,12 @@ namespace OpenTK.Mathematics
                 throw new ArgumentNullException(nameof(points), "Must point to a valid list of Vector2 structures.");
             }
 
-            this.points = new List<Vector2>(points);
+            this._points = new List<Vector2>(points);
             Parallel = 0.0f;
         }
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurve" />.
+        /// Constructs a new <see cref="BezierCurve"/>.
         /// </summary>
         /// <param name="points">The points.</param>
         public BezierCurve(params Vector2[] points)
@@ -62,12 +62,12 @@ namespace OpenTK.Mathematics
                 throw new ArgumentNullException(nameof(points), "Must point to a valid list of Vector2 structures.");
             }
 
-            this.points = new List<Vector2>(points);
+            this._points = new List<Vector2>(points);
             Parallel = 0.0f;
         }
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurve" />.
+        /// Constructs a new <see cref="BezierCurve"/>.
         /// </summary>
         /// <param name="parallel">The parallel value.</param>
         /// <param name="points">The points.</param>
@@ -79,11 +79,11 @@ namespace OpenTK.Mathematics
             }
 
             Parallel = parallel;
-            this.points = new List<Vector2>(points);
+            this._points = new List<Vector2>(points);
         }
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurve" />.
+        /// Constructs a new <see cref="BezierCurve"/>.
         /// </summary>
         /// <param name="parallel">The parallel value.</param>
         /// <param name="points">The points.</param>
@@ -95,9 +95,8 @@ namespace OpenTK.Mathematics
             }
 
             Parallel = parallel;
-            this.points = new List<Vector2>(points);
+            this._points = new List<Vector2>(points);
         }
-
 
         /// <summary>
         /// Calculates the point with the specified t.
@@ -106,7 +105,7 @@ namespace OpenTK.Mathematics
         /// <returns>Resulting point.</returns>
         public Vector2 CalculatePoint(float t)
         {
-            return CalculatePoint(points, t, Parallel);
+            return CalculatePoint(_points, t, Parallel);
         }
 
         /// <summary>
@@ -115,12 +114,12 @@ namespace OpenTK.Mathematics
         /// <param name="precision">The precision.</param>
         /// <returns>Length of curve.</returns>
         /// <remarks>
-        /// The precision gets better as the <paramref name="precision" />
+        /// The precision gets better as the <paramref name="precision"/>
         /// value gets smaller.
         /// </remarks>
         public float CalculateLength(float precision)
         {
-            return CalculateLength(points, precision, Parallel);
+            return CalculateLength(_points, precision, Parallel);
         }
 
         /// <summary>
@@ -129,7 +128,7 @@ namespace OpenTK.Mathematics
         /// <param name="points">The points.</param>
         /// <param name="precision">The precision value.</param>
         /// <returns>
-        /// The precision gets better as the <paramref name="precision" />
+        /// The precision gets better as the <paramref name="precision"/>
         /// value gets smaller.
         /// </returns>
         public static float CalculateLength(IList<Vector2> points, float precision)
@@ -146,11 +145,11 @@ namespace OpenTK.Mathematics
         /// <returns>Length of curve.</returns>
         /// <remarks>
         ///  <para>
-        /// The precision gets better as the <paramref name="precision" />
+        /// The precision gets better as the <paramref name="precision"/>
         /// value gets smaller.
         ///  </para>
         ///  <para>
-        /// The <paramref name="parallel" /> parameter defines whether the curve should be calculated as a
+        /// The <paramref name="parallel"/> parameter defines whether the curve should be calculated as a
         /// parallel curve to the original bezier curve. A value of 0.0f represents
         /// the original curve, 5.0f represents a curve that has always a distance
         /// of 5.0f to the orignal curve.
@@ -190,23 +189,24 @@ namespace OpenTK.Mathematics
         /// <param name="parallel">The parallel value.</param>
         /// <returns>Resulting point.</returns>
         /// <remarks>
-        /// The <paramref name="parallel" /> parameter defines whether the curve should be calculated as a
+        /// The <paramref name="parallel"/> parameter defines whether the curve should be calculated as a
         /// parallel curve to the original bezier curve. A value of 0.0f represents
         /// the original curve, 5.0f represents a curve that has always a distance
         /// of 5.0f to the orignal curve.
         /// </remarks>
         public static Vector2 CalculatePoint(IList<Vector2> points, float t, float parallel)
         {
-            var r = new Vector2();
+            var r = default(Vector2);
             var c = 1.0d - t;
             float temp;
             var i = 0;
 
             foreach (var pt in points)
             {
-                temp = MathHelper.BinomialCoefficient(points.Count - 1, i) * (float)(Math.Pow(t, i) *
-                                                                                     Math.Pow(c, points.Count - 1 - i)
-                       );
+                temp = MathHelper.BinomialCoefficient
+                (
+                    points.Count - 1, i) * (float)(Math.Pow(t, i) * Math.Pow(c, points.Count - 1 - i)
+                );
 
                 r.X += temp * pt.X;
                 r.Y += temp * pt.Y;
@@ -218,7 +218,7 @@ namespace OpenTK.Mathematics
                 return r;
             }
 
-            var perpendicular = new Vector2();
+            Vector2 perpendicular;
 
             if (t != 0.0f)
             {
@@ -229,7 +229,7 @@ namespace OpenTK.Mathematics
                 perpendicular = points[1] - points[0];
             }
 
-            return r + Vector2.Normalize(perpendicular).PerpendicularRight * parallel;
+            return r + (Vector2.Normalize(perpendicular).PerpendicularRight * parallel);
         }
 
         /// <summary>
@@ -240,16 +240,17 @@ namespace OpenTK.Mathematics
         /// <returns>Resulting point.</returns>
         private static Vector2 CalculatePointOfDerivative(IList<Vector2> points, float t)
         {
-            var r = new Vector2();
+            var r = default(Vector2);
             var c = 1.0d - t;
             float temp;
             var i = 0;
 
             foreach (var pt in points)
             {
-                temp = MathHelper.BinomialCoefficient(points.Count - 2, i) * (float)(Math.Pow(t, i) *
-                                                                                     Math.Pow(c, points.Count - 2 - i)
-                       );
+                temp = MathHelper.BinomialCoefficient
+                (
+                    points.Count - 2, i) * (float)(Math.Pow(t, i) * Math.Pow(c, points.Count - 2 - i)
+                );
 
                 r.X += temp * pt.X;
                 r.Y += temp * pt.Y;

@@ -24,7 +24,7 @@ namespace OpenTK.Core
         public static readonly ContextHandle Zero = new ContextHandle(IntPtr.Zero);
 
         /// <summary>
-        /// Constructs a new instance with the specified handle.
+        /// Initializes a new instance of the <see cref="ContextHandle"/> struct with the specified handle.
         /// </summary>
         /// <param name="h">A System.IntPtr containing the value for this instance.</param>
         public ContextHandle(IntPtr h)
