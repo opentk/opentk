@@ -447,22 +447,22 @@ namespace OpenTK.Mathematics
         {
             const int maxUlps = 1;
 
-            short aInt = unchecked((short)other._bits);
-            short bInt = unchecked((short)_bits);
+            short k = unchecked((short)other._bits);
+            short l = unchecked((short)_bits);
 
-            // Make aInt lexicographically ordered as a twos-complement int
-            if (aInt < 0)
+            // Make a lexicographically ordered as a twos-complement int
+            if (k < 0)
             {
-                aInt = (short)(0x8000 - aInt);
+                k = (short)(0x8000 - k);
             }
 
-            // Make bInt lexicographically ordered as a twos-complement int
-            if (bInt < 0)
+            // Make b lexicographically ordered as a twos-complement int
+            if (l < 0)
             {
-                bInt = (short)(0x8000 - bInt);
+                l = (short)(0x8000 - l);
             }
 
-            var intDiff = Math.Abs((short)(aInt - bInt));
+            var intDiff = Math.Abs((short)(k - l));
 
             if (intDiff <= maxUlps)
             {

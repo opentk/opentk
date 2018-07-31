@@ -79,7 +79,7 @@ namespace OpenTK.Mathematics
         /// <param name="m20">First item of the third row of the matrix.</param>
         /// <param name="m21">Second item of the third row of the matrix.</param>
         /// <param name="m22">Third item of the third row of the matrix.</param>
-        /// <param name="m23">First item of the third row of the matrix.</param>
+        /// <param name="m23">Fourth item of the third row of the matrix.</param>
         public Matrix3x4d
         (
             double m00,

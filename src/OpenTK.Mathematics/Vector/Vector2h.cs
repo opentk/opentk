@@ -69,8 +69,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The new Half2 instance will avoid conversion and copy directly from the Half parameters.
         /// </summary>
-        /// <param name="x">An Half instance of a 16-bit half-precision floating-point number.</param>
-        /// <param name="y">An Half instance of a 16-bit half-precision floating-point number.</param>
+        /// <param name="x">A Half instance of a 16-bit half-precision floating-point number.</param>
+        /// <param name="y">A Half instance of a 16-bit half-precision floating-point number.</param>
         public Vector2h(Half x, Half y)
         {
             X = x;
