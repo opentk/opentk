@@ -103,7 +103,8 @@ namespace OpenTK.Mathematics
         public bool IsNegativeInfinity => _bits == 64512;
 
         /// <summary>
-        /// The new Half instance will convert the parameter into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Half"/> struct with <paramref name="f"/> being converted
+        /// into a 16-bit half-precision floating-point number.
         /// </summary>
         /// <param name="f">32-bit single-precision floating-point number.</param>
         public Half(float f)
@@ -116,7 +117,8 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half instance will convert the parameter into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Half"/> struct with <paramref name="f"/> being converted
+        /// into a 16-bit half-precision floating-point number.
         /// </summary>
         /// <param name="f">32-bit single-precision floating-point number.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
@@ -155,7 +157,8 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half instance will convert the parameter into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Half"/> struct with <paramref name="d"/> being converted
+        /// into a 16-bit half-precision floating-point number.
         /// </summary>
         /// <param name="d">64-bit double-precision floating-point number.</param>
         public Half(double d)
@@ -164,7 +167,8 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half instance will convert the parameter into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Half"/> struct with <paramref name="d"/> being converted
+        /// into a 16-bit half-precision floating-point number.
         /// </summary>
         /// <param name="d">64-bit double-precision floating-point number.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
@@ -174,7 +178,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Ported from OpenEXR's IlmBase 1.0.1
+        /// Ported from OpenEXR's IlmBase 1.0.1.
         /// </summary>
         private ushort SingleToHalf(int si32)
         {
@@ -270,7 +274,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Ported from OpenEXR's IlmBase 1.0.1
+        /// Ported from OpenEXR's IlmBase 1.0.1.
         /// </summary>
         private int HalfToFloat(ushort ui16)
         {
@@ -378,44 +382,44 @@ namespace OpenTK.Mathematics
         public static readonly int SizeInBytes = 2;
 
         /// <summary>
-        /// Smallest positive half
+        /// Smallest positive half.
         /// </summary>
         public static readonly float MinValue = 5.96046448e-08f;
 
         /// <summary>
-        /// Smallest positive normalized half
+        /// Smallest positive normalized half.
         /// </summary>
         public static readonly float MinNormalizedValue = 6.10351562e-05f;
 
         /// <summary>
-        /// Largest positive half
+        /// Largest positive half.
         /// </summary>
         public static readonly float MaxValue = 65504.0f;
 
         /// <summary>
-        /// Smallest positive e for which half (1.0 + e) != half (1.0)
+        /// Smallest positive e for which half (1.0 + e) != half (1.0).
         /// </summary>
         public static readonly float Epsilon = 0.00097656f;
 
+#pragma warning disable SA1611 // Element parameters should be documented
         /// <summary>
-        /// Constructor used by ISerializable to deserialize the object.
+        /// Initializes a new instance of the <see cref="Half"/> struct.
+        /// Used by <see cref="ISerializable"/> to deserialize the object.
         /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"></param>
         public Half(SerializationInfo info, StreamingContext context)
         {
             _bits = (ushort)info.GetValue("bits", typeof(ushort));
         }
 
         /// <summary>
-        /// Used by ISerialize to serialize the object.
+        /// Initializes a new instance of the <see cref="Half"/> struct.
+        /// Used by <see cref="ISerializable"/> to serialize the object.
         /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"></param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("bits", _bits);
         }
+#pragma warning restore SA1611 // Element parameters should be documented
 
         /// <summary>
         /// Updates the Half by reading from a Stream.
@@ -435,8 +439,6 @@ namespace OpenTK.Mathematics
             bin.Write(_bits);
         }
 
-        private const int maxUlps = 1;
-
         /// <summary>
         /// Returns a value indicating whether this instance is equal to a specified OpenTK.Half value.
         /// </summary>
@@ -444,16 +446,10 @@ namespace OpenTK.Mathematics
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
         public bool Equals(Half other)
         {
-            short aInt, bInt;
-            unchecked
-            {
-                aInt = (short)other._bits;
-            }
+            const int maxUlps = 1;
 
-            unchecked
-            {
-                bInt = (short)_bits;
-            }
+            short aInt = unchecked((short)other._bits);
+            short bInt = unchecked((short)_bits);
 
             // Make aInt lexicographically ordered as a twos-complement int
             if (aInt < 0)
