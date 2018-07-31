@@ -71,10 +71,15 @@ namespace OpenTK.Mathematics
         /// <param name="m11">Second item of the second row of the matrix.</param>
         /// <param name="m20">First item of the third row of the matrix.</param>
         /// <param name="m21">Second item of the third row of the matrix.</param>
-        public Matrix3x2d(
-            double m00, double m01,
-            double m10, double m11,
-            double m20, double m21)
+        public Matrix3x2d
+        (
+            double m00,
+            double m01,
+            double m10,
+            double m11,
+            double m20,
+            double m21
+        )
         {
             Row0 = new Vector2d(m00, m01);
             Row1 = new Vector2d(m10, m11);

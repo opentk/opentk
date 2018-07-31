@@ -754,8 +754,15 @@ namespace OpenTK.Mathematics
         /// Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
         /// otherwise
         /// </param>
-        public static void BaryCentric(ref Vector3d a, ref Vector3d b, ref Vector3d c, double u, double v,
-            out Vector3d result)
+        public static void BaryCentric
+        (
+            ref Vector3d a,
+            ref Vector3d b,
+            ref Vector3d c,
+            double u,
+            double v,
+            out Vector3d result
+        )
         {
             result = a; // copy
 

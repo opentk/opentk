@@ -760,8 +760,15 @@ namespace OpenTK.Mathematics
         /// Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
         /// otherwise
         /// </param>
-        public static void BaryCentric(ref Vector3 a, ref Vector3 b, ref Vector3 c, float u, float v,
-            out Vector3 result)
+        public static void BaryCentric
+        (
+            ref Vector3 a,
+            ref Vector3 b,
+            ref Vector3 c,
+            float u,
+            float v,
+            out Vector3 result
+        )
         {
             result = a; // copy
 
@@ -1073,8 +1080,17 @@ namespace OpenTK.Mathematics
         /// To project to normalized device coordinates (NDC) use the following parameters:
         /// Project(vector, -1, -1, 2, 2, -1, 1, worldViewProjection).
         /// </remarks>
-        public static Vector3 Project(Vector3 vector, float x, float y, float width, float height, float minZ,
-            float maxZ, Matrix4 worldViewProjection)
+        public static Vector3 Project
+        (
+            Vector3 vector,
+            float x,
+            float y,
+            float width,
+            float height,
+            float minZ,
+            float maxZ,
+            Matrix4 worldViewProjection
+        )
         {
             Vector4 result;
 
@@ -1127,8 +1143,17 @@ namespace OpenTK.Mathematics
         /// To project from normalized device coordinates (NDC) use the following parameters:
         /// Project(vector, -1, -1, 2, 2, -1, 1, inverseWorldViewProjection).
         /// </remarks>
-        public static Vector3 Unproject(Vector3 vector, float x, float y, float width, float height, float minZ,
-            float maxZ, Matrix4 inverseWorldViewProjection)
+        public static Vector3 Unproject
+        (
+            Vector3 vector,
+            float x,
+            float y,
+            float width,
+            float height,
+            float minZ,
+            float maxZ,
+            Matrix4 inverseWorldViewProjection
+        )
         {
             Vector4 result;
 

@@ -66,9 +66,17 @@ namespace OpenTK.Mathematics
         /// <param name="m11">Second item of the second row of the matrix.</param>
         /// <param name="m12">Third item of the second row of the matrix.</param>
         /// <param name="m13">Fourth item of the second row of the matrix.</param>
-        public Matrix2x4d(
-            double m00, double m01, double m02, double m03,
-            double m10, double m11, double m12, double m13)
+        public Matrix2x4d
+        (
+            double m00,
+            double m01,
+            double m02,
+            double m03,
+            double m10,
+            double m11,
+            double m12,
+            double m13
+        )
         {
             Row0 = new Vector4d(m00, m01, m02, m03);
             Row1 = new Vector4d(m10, m11, m12, m13);

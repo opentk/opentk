@@ -87,16 +87,30 @@ namespace OpenTK.Mathematics
         /// <param name="m20">First item of the third row.</param>
         /// <param name="m21">Second item of the third row.</param>
         /// <param name="m22">Third item of the third row.</param>
-        /// <param name="m23">First item of the third row.</param>
-        /// <param name="m30">Fourth item of the fourth row.</param>
+        /// <param name="m23">Fourth item of the third row.</param>
+        /// <param name="m30">First item of the fourth row.</param>
         /// <param name="m31">Second item of the fourth row.</param>
         /// <param name="m32">Third item of the fourth row.</param>
         /// <param name="m33">Fourth item of the fourth row.</param>
-        public Matrix4d(
-            double m00, double m01, double m02, double m03,
-            double m10, double m11, double m12, double m13,
-            double m20, double m21, double m22, double m23,
-            double m30, double m31, double m32, double m33)
+        public Matrix4d
+        (
+            double m00,
+            double m01,
+            double m02,
+            double m03,
+            double m10,
+            double m11,
+            double m12,
+            double m13,
+            double m20,
+            double m21,
+            double m22,
+            double m23,
+            double m30,
+            double m31,
+            double m32,
+            double m33
+        )
         {
             Row0 = new Vector4d(m00, m01, m02, m03);
             Row1 = new Vector4d(m10, m11, m12, m13);
@@ -808,8 +822,14 @@ namespace OpenTK.Mathematics
         /// <param name="zNear">The near edge of the projection volume.</param>
         /// <param name="zFar">The far edge of the projection volume.</param>
         /// <param name="result">The resulting Matrix4d instance.</param>
-        public static void CreateOrthographic(double width, double height, double zNear, double zFar,
-            out Matrix4d result)
+        public static void CreateOrthographic
+        (
+            double width,
+            double height,
+            double zNear,
+            double zFar,
+            out Matrix4d result
+        )
         {
             CreateOrthographicOffCenter(-width / 2, width / 2, -height / 2, height / 2, zNear, zFar, out result);
         }
@@ -838,8 +858,16 @@ namespace OpenTK.Mathematics
         /// <param name="zNear">The near edge of the projection volume.</param>
         /// <param name="zFar">The far edge of the projection volume.</param>
         /// <param name="result">The resulting Matrix4d instance.</param>
-        public static void CreateOrthographicOffCenter(double left, double right, double bottom, double top,
-            double zNear, double zFar, out Matrix4d result)
+        public static void CreateOrthographicOffCenter
+        (
+            double left,
+            double right,
+            double bottom,
+            double top,
+            double zNear,
+            double zFar,
+            out Matrix4d result
+        )
         {
             var invRL = 1 / (right - left);
             var invTB = 1 / (top - bottom);
@@ -868,8 +896,15 @@ namespace OpenTK.Mathematics
         /// <param name="zNear">The near edge of the projection volume.</param>
         /// <param name="zFar">The far edge of the projection volume.</param>
         /// <returns>The resulting Matrix4d instance.</returns>
-        public static Matrix4d CreateOrthographicOffCenter(double left, double right, double bottom, double top,
-            double zNear, double zFar)
+        public static Matrix4d CreateOrthographicOffCenter
+        (
+            double left,
+            double right,
+            double bottom,
+            double top,
+            double zNear,
+            double zFar
+        )
         {
             CreateOrthographicOffCenter(left, right, bottom, top, zNear, zFar, out Matrix4d result);
             return result;
@@ -893,8 +928,14 @@ namespace OpenTK.Mathematics
         ///  <item>zNear is larger than zFar</item>
         ///  </list>
         /// </exception>
-        public static void CreatePerspectiveFieldOfView(double fovy, double aspect, double zNear, double zFar,
-            out Matrix4d result)
+        public static void CreatePerspectiveFieldOfView
+        (
+            double fovy,
+            double aspect,
+            double zNear,
+            double zFar,
+            out Matrix4d result
+        )
         {
             if (fovy <= 0 || fovy > Math.PI)
             {
@@ -966,8 +1007,16 @@ namespace OpenTK.Mathematics
         ///  <item>zNear is larger than zFar</item>
         ///  </list>
         /// </exception>
-        public static void CreatePerspectiveOffCenter(double left, double right, double bottom, double top,
-            double zNear, double zFar, out Matrix4d result)
+        public static void CreatePerspectiveOffCenter
+        (
+            double left,
+            double right,
+            double bottom,
+            double top,
+            double zNear,
+            double zFar,
+            out Matrix4d result
+        )
         {
             if (zNear <= 0)
             {
@@ -991,10 +1040,15 @@ namespace OpenTK.Mathematics
             var c = -(zFar + zNear) / (zFar - zNear);
             var d = -(2.0 * zFar * zNear) / (zFar - zNear);
 
-            result = new Matrix4d(x, 0, 0, 0,
+#pragma warning disable SA1117 // Parameters should be on same line or separate lines
+            result = new Matrix4d
+            (
+                x, 0, 0, 0,
                 0, y, 0, 0,
                 a, b, c, -1,
-                0, 0, d, 0);
+                0, 0, d, 0
+            );
+#pragma warning restore SA1117 // Parameters should be on same line or separate lines
         }
 
         /// <summary>
@@ -1015,8 +1069,15 @@ namespace OpenTK.Mathematics
         ///  <item>zNear is larger than zFar</item>
         ///  </list>
         /// </exception>
-        public static Matrix4d CreatePerspectiveOffCenter(double left, double right, double bottom, double top,
-            double zNear, double zFar)
+        public static Matrix4d CreatePerspectiveOffCenter
+        (
+            double left,
+            double right,
+            double bottom,
+            double top,
+            double zNear,
+            double zFar
+        )
         {
             CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar, out Matrix4d result);
             return result;
@@ -1149,15 +1210,31 @@ namespace OpenTK.Mathematics
 
             axis.Normalize();
 
-            Matrix4d result;
-            result.Row0 = new Vector4d((t * axis.X * axis.X) + cos, (t * axis.X * axis.Y) - (sin * axis.Z),
-                (t * axis.X * axis.Z) + (sin * axis.Y), 0.0);
-            result.Row1 = new Vector4d((t * axis.X * axis.Y) + (sin * axis.Z), (t * axis.Y * axis.Y) + cos,
-                (t * axis.Y * axis.Z) - (sin * axis.X), 0.0);
-            result.Row2 = new Vector4d((t * axis.X * axis.Z) - (sin * axis.Y), (t * axis.Y * axis.Z) + (sin * axis.X),
-                (t * axis.Z * axis.Z) + cos, 0.0);
-            result.Row3 = Vector4d.UnitW;
-            return result;
+            return new Matrix4d
+            (
+                new Vector4d
+                (
+                    (t * axis.X * axis.X) + cos,
+                    (t * axis.X * axis.Y) - (sin * axis.Z),
+                    (t * axis.X * axis.Z) + (sin * axis.Y),
+                    0.0
+                ),
+                new Vector4d
+                (
+                    (t * axis.X * axis.Y) + (sin * axis.Z),
+                    (t * axis.Y * axis.Y) + cos,
+                    (t * axis.Y * axis.Z) - (sin * axis.X),
+                    0.0
+                ),
+                new Vector4d
+                (
+                    (t * axis.X * axis.Z) - (sin * axis.Y),
+                    (t * axis.Y * axis.Z) + (sin * axis.X),
+                    (t * axis.Z * axis.Z) + cos,
+                    0.0
+                ),
+                Vector4d.UnitW
+            );
         }
 
         /// <summary>
@@ -1210,11 +1287,25 @@ namespace OpenTK.Mathematics
         /// <param name="upY">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
         /// <param name="upZ">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
         /// <returns>A Matrix4 that transforms world space to camera space</returns>
-        public static Matrix4d LookAt(double eyeX, double eyeY, double eyeZ, double targetX, double targetY,
-            double targetZ, double upX, double upY, double upZ)
+        public static Matrix4d LookAt
+        (
+            double eyeX,
+            double eyeY,
+            double eyeZ,
+            double targetX,
+            double targetY,
+            double targetZ,
+            double upX,
+            double upY,
+            double upZ
+        )
         {
-            return LookAt(new Vector3d(eyeX, eyeY, eyeZ), new Vector3d(targetX, targetY, targetZ),
-                new Vector3d(upX, upY, upZ));
+            return LookAt
+            (
+                new Vector3d(eyeX, eyeY, eyeZ),
+                new Vector3d(targetX, targetY, targetZ),
+                new Vector3d(upX, upY, upZ)
+            );
         }
 
         /// <summary>

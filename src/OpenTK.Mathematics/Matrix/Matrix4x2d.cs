@@ -52,8 +52,13 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The zero matrix.
         /// </summary>
-        public static readonly Matrix4x2d Zero = new Matrix4x2d(Vector2d.Zero, Vector2d.Zero, Vector2d.Zero,
-            Vector2d.Zero);
+        public static readonly Matrix4x2d Zero = new Matrix4x2d
+        (
+            Vector2d.Zero,
+            Vector2d.Zero,
+            Vector2d.Zero,
+            Vector2d.Zero
+        );
 
         /// <summary>
         /// Constructs a new instance.
@@ -81,11 +86,17 @@ namespace OpenTK.Mathematics
         /// <param name="m21">Second item of the third row of the matrix.</param>
         /// <param name="m30">First item of the fourth row of the matrix.</param>
         /// <param name="m31">Second item of the fourth row of the matrix.</param>
-        public Matrix4x2d(
-            double m00, double m01,
-            double m10, double m11,
-            double m20, double m21,
-            double m30, double m31)
+        public Matrix4x2d
+        (
+            double m00,
+            double m01,
+            double m10,
+            double m11,
+            double m20,
+            double m21,
+            double m30,
+            double m31
+        )
         {
             Row0 = new Vector2d(m00, m01);
             Row1 = new Vector2d(m10, m11);

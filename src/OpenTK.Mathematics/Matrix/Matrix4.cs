@@ -98,11 +98,25 @@ namespace OpenTK.Mathematics
         /// <param name="m31">Second item of the fourth row of the matrix.</param>
         /// <param name="m32">Third item of the fourth row of the matrix.</param>
         /// <param name="m33">Fourth item of the fourth row of the matrix.</param>
-        public Matrix4(
-            float m00, float m01, float m02, float m03,
-            float m10, float m11, float m12, float m13,
-            float m20, float m21, float m22, float m23,
-            float m30, float m31, float m32, float m33)
+        public Matrix4
+        (
+            float m00,
+            float m01,
+            float m02,
+            float m03,
+            float m10,
+            float m11,
+            float m12,
+            float m13,
+            float m20,
+            float m21,
+            float m22,
+            float m23,
+            float m30,
+            float m31,
+            float m32,
+            float m33
+        )
         {
             Row0 = new Vector4(m00, m01, m02, m03);
             Row1 = new Vector4(m10, m11, m12, m13);
@@ -966,8 +980,16 @@ namespace OpenTK.Mathematics
         /// <param name="zNear">The near edge of the projection volume.</param>
         /// <param name="zFar">The far edge of the projection volume.</param>
         /// <param name="result">The resulting Matrix4 instance.</param>
-        public static void CreateOrthographicOffCenter(float left, float right, float bottom, float top, float zNear,
-            float zFar, out Matrix4 result)
+        public static void CreateOrthographicOffCenter
+        (
+            float left,
+            float right,
+            float bottom,
+            float top,
+            float zNear,
+            float zFar,
+            out Matrix4 result
+        )
         {
             result = Identity;
 
@@ -994,8 +1016,15 @@ namespace OpenTK.Mathematics
         /// <param name="zNear">The near edge of the projection volume.</param>
         /// <param name="zFar">The far edge of the projection volume.</param>
         /// <returns>The resulting Matrix4 instance.</returns>
-        public static Matrix4 CreateOrthographicOffCenter(float left, float right, float bottom, float top, float zNear,
-            float zFar)
+        public static Matrix4 CreateOrthographicOffCenter
+        (
+            float left,
+            float right,
+            float bottom,
+            float top,
+            float zNear,
+            float zFar
+        )
         {
             CreateOrthographicOffCenter(left, right, bottom, top, zNear, zFar, out Matrix4 result);
             return result;
@@ -1019,8 +1048,14 @@ namespace OpenTK.Mathematics
         ///  <item>zNear is larger than zFar</item>
         ///  </list>
         /// </exception>
-        public static void CreatePerspectiveFieldOfView(float fovy, float aspect, float zNear, float zFar,
-            out Matrix4 result)
+        public static void CreatePerspectiveFieldOfView
+        (
+            float fovy,
+            float aspect,
+            float zNear,
+            float zFar,
+            out Matrix4 result
+        )
         {
             if (fovy <= 0 || fovy > Math.PI)
             {
@@ -1092,8 +1127,16 @@ namespace OpenTK.Mathematics
         ///  <item>zNear is larger than zFar</item>
         ///  </list>
         /// </exception>
-        public static void CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float zNear,
-            float zFar, out Matrix4 result)
+        public static void CreatePerspectiveOffCenter
+        (
+            float left,
+            float right,
+            float bottom,
+            float top,
+            float zNear,
+            float zFar,
+            out Matrix4 result
+        )
         {
             if (zNear <= 0)
             {
@@ -1153,8 +1196,15 @@ namespace OpenTK.Mathematics
         ///  <item>zNear is larger than zFar</item>
         ///  </list>
         /// </exception>
-        public static Matrix4 CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float zNear,
-            float zFar)
+        public static Matrix4 CreatePerspectiveOffCenter
+        (
+            float left,
+            float right,
+            float bottom,
+            float top,
+            float zNear,
+            float zFar
+        )
         {
             CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar, out Matrix4 result);
             return result;
@@ -1208,11 +1258,25 @@ namespace OpenTK.Mathematics
         /// <param name="upY">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
         /// <param name="upZ">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
         /// <returns>A Matrix4 that transforms world space to camera space</returns>
-        public static Matrix4 LookAt(float eyeX, float eyeY, float eyeZ, float targetX, float targetY, float targetZ,
-            float upX, float upY, float upZ)
+        public static Matrix4 LookAt
+        (
+            float eyeX,
+            float eyeY,
+            float eyeZ,
+            float targetX,
+            float targetY,
+            float targetZ,
+            float upX,
+            float upY,
+            float upZ
+        )
         {
-            return LookAt(new Vector3(eyeX, eyeY, eyeZ), new Vector3(targetX, targetY, targetZ),
-                new Vector3(upX, upY, upZ));
+            return LookAt
+            (
+                new Vector3(eyeX, eyeY, eyeZ),
+                new Vector3(targetX, targetY, targetZ),
+                new Vector3(upX, upY, upZ)
+            );
         }
 
         /// <summary>

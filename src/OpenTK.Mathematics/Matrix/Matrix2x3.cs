@@ -64,9 +64,15 @@ namespace OpenTK.Mathematics
         /// <param name="m10">First item of the second row of the matrix.</param>
         /// <param name="m11">Second item of the second row of the matrix.</param>
         /// <param name="m12">Third item of the second row of the matrix.</param>
-        public Matrix2x3(
-            float m00, float m01, float m02,
-            float m10, float m11, float m12)
+        public Matrix2x3
+        (
+            float m00,
+            float m01,
+            float m02,
+            float m10,
+            float m11,
+            float m12
+        )
         {
             Row0 = new Vector3(m00, m01, m02);
             Row1 = new Vector3(m10, m11, m12);

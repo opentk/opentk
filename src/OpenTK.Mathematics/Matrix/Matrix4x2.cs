@@ -80,11 +80,17 @@ namespace OpenTK.Mathematics
         /// <param name="m21">Second item of the third row of the matrix.</param>
         /// <param name="m30">First item of the fourth row of the matrix.</param>
         /// <param name="m31">Second item of the fourth row of the matrix.</param>
-        public Matrix4x2(
-            float m00, float m01,
-            float m10, float m11,
-            float m20, float m21,
-            float m30, float m31)
+        public Matrix4x2
+        (
+            float m00,
+            float m01,
+            float m10,
+            float m11,
+            float m20,
+            float m21,
+            float m30,
+            float m31
+        )
         {
             Row0 = new Vector2(m00, m01);
             Row1 = new Vector2(m10, m11);

@@ -80,10 +80,21 @@ namespace OpenTK.Mathematics
         /// <param name="m21">Second item of the third row of the matrix.</param>
         /// <param name="m22">Third item of the third row of the matrix.</param>
         /// <param name="m23">First item of the third row of the matrix.</param>
-        public Matrix3x4d(
-            double m00, double m01, double m02, double m03,
-            double m10, double m11, double m12, double m13,
-            double m20, double m21, double m22, double m23)
+        public Matrix3x4d
+        (
+            double m00,
+            double m01,
+            double m02,
+            double m03,
+            double m10,
+            double m11,
+            double m12,
+            double m13,
+            double m20,
+            double m21,
+            double m22,
+            double m23
+        )
         {
             Row0 = new Vector4d(m00, m01, m02, m03);
             Row1 = new Vector4d(m10, m11, m12, m13);
