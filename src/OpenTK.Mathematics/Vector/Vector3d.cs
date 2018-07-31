@@ -465,7 +465,6 @@ namespace OpenTK.Mathematics
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <param name="result">The magnitude-wise minimum</param>
-        /// <returns>The minimum Vector3d</returns>
         public static void MagnitudeMin(ref Vector3d left, ref Vector3d right, out Vector3d result)
         {
             result = left.LengthSquared < right.LengthSquared ? left : right;
@@ -488,7 +487,6 @@ namespace OpenTK.Mathematics
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <param name="result">The magnitude-wise maximum</param>
-        /// <returns>The maximum Vector3d</returns>
         public static void MagnitudeMax(ref Vector3d left, ref Vector3d right, out Vector3d result)
         {
             result = left.LengthSquared >= right.LengthSquared ? left : right;
@@ -693,7 +691,6 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <param name="left">First operand</param>
         /// <param name="right">Second operand</param>
-        /// <returns>The cross product of the two inputs</returns>
         /// <param name="result">The cross product of the two inputs</param>
         public static void Cross(ref Vector3d left, ref Vector3d right, out Vector3d result)
         {

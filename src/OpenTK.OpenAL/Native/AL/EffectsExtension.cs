@@ -1088,7 +1088,6 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function generates only one Auxiliary Effect Slot.
         /// </summary>
-        /// <returns>Storage UInt32 for the new auxiliary effect slot name/handle.</returns>
         public void GenAuxiliaryEffectSlot(out uint slot)
         {
             unsafe

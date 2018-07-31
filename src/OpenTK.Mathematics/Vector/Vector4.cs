@@ -585,7 +585,6 @@ namespace OpenTK.Mathematics
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <param name="result">The magnitude-wise minimum</param>
-        /// <returns>The minimum Vector4</returns>
         public static void MagnitudeMin(ref Vector4 left, ref Vector4 right, out Vector4 result)
         {
             result = left.LengthSquared < right.LengthSquared ? left : right;
@@ -610,7 +609,6 @@ namespace OpenTK.Mathematics
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <param name="result">The magnitude-wise maximum</param>
-        /// <returns>The maximum Vector4</returns>
         public static void MagnitudeMax(ref Vector4 left, ref Vector4 right, out Vector4 result)
         {
             result = left.LengthSquared >= right.LengthSquared ? left : right;
