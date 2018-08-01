@@ -34,17 +34,17 @@ namespace OpenTK.Graphics.OpenGL4
     public enum BeginFeedbackMode
     {
         /// <summary>
-        /// Original was GL_Points = 0x0000
+        /// Original was GL_ = 0x0000
         /// </summary>
         Points = 0x0000,
 
         /// <summary>
-        /// Original was GL_Lines = 0x0001
+        /// Original was GL_ = 0x0001
         /// </summary>
         Lines = 0x0001,
 
         /// <summary>
-        /// Original was GL_Triangles = 0x0004
+        /// Original was GL_ = 0x0004
         /// </summary>
         Triangles = 0x0004
     }

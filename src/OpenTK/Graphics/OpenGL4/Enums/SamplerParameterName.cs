@@ -74,12 +74,12 @@ namespace OpenTK.Graphics.OpenGL4
         TextureMaxLod = 0x813b,
 
         /// <summary>
-        /// Original was GL_TextureMaxAnisotropyExt = 0x84FE
+        /// Original was GL_ = 0x84FE
         /// </summary>
         TextureMaxAnisotropyExt = 0x84fe,
 
         /// <summary>
-        /// Original was GL_TextureLodBias = 0x8501
+        /// Original was GL_ = 0x8501
         /// </summary>
         TextureLodBias = 0x8501,
 

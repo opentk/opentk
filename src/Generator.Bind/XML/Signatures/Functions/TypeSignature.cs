@@ -123,7 +123,7 @@ namespace Bind.XML.Signatures.Functions
         /// <inheritdoc/>
         public override string ToString()
         {
-            return Name;
+            return $"{Name}{new string('*', IndirectionLevel)}";
         }
     }
 }

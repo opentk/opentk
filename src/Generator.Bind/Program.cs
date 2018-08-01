@@ -11,6 +11,7 @@ using Bind.Baking;
 using Bind.Generators;
 using Bind.Generators.ES;
 using Bind.Generators.GL2;
+using Bind.Translation.Mappers;
 using Bind.Typemap;
 using Bind.Versioning;
 using Bind.XML.Documentation;
@@ -54,6 +55,10 @@ namespace Bind
             var baker = new ProfileBaker(profiles, profileOverrides);
             var bakedProfile = baker.BakeProfile("gles2", new VersionRange(new Version(3, 1)));
 
+            var docs = DocumentationReader.ReadProfileDocumentation(Path.Combine(Arguments.InputPath, "Docs", "docs.gl", "es3"));
+            var bakedDocs = new DocumentationBaker(bakedProfile).BakeDocumentation(docs);
+
+            ApiProfile mappedProfile;
             using (var csharpFs = File.OpenRead(Path.Combine(Arguments.InputPath, "csharp.tm")))
             {
                 using (var apiFs = File.OpenRead(Path.Combine(Arguments.InputPath, "GL2", "gl.tm")))
@@ -64,11 +69,13 @@ namespace Bind
                     var apiMap = mappingReader.ReadTypemap(apiFs);
 
                     var bakedMap = TypemapBaker.BakeTypemaps(apiMap, csharpMap);
+
+                    var mapper = new ProfileMapper(bakedMap);
+                    mappedProfile = mapper.Map(bakedProfile);
                 }
             }
 
-            var docs = DocumentationReader.ReadProfileDocumentation(Path.Combine(Arguments.InputPath, "Docs", "docs.gl", "es3"));
-            var bakedDocs = new DocumentationBaker(bakedProfile).BakeDocumentation(docs);
+            var overloadedProfile = OverloadBaker.BakeOverloads(mappedProfile);
 
             CreateGenerators();
 

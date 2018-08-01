@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Bind.Builders;
 using Bind.XML.Signatures.Functions;
 
 namespace Bind.Translation.Mappers
@@ -6,17 +7,17 @@ namespace Bind.Translation.Mappers
     /// <summary>
     /// Maps the types of OpenGL parameters to their language equivalents.
     /// </summary>
-    public class OpenGLParameterMapper : IMapper<ParameterSignature>
+    public class ParameterMapper : IMapper<ParameterSignature>
     {
-        private readonly OpenGLTypeMapper _glTypeMapper;
+        private readonly TypeMapper _glTypeMapper;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OpenGLParameterMapper"/> class.
+        /// Initializes a new instance of the <see cref="ParameterMapper"/> class.
         /// </summary>
         /// <param name="typemap">The typemap to use.</param>
-        public OpenGLParameterMapper(IReadOnlyDictionary<TypeSignature, TypeSignature> typemap)
+        public ParameterMapper(IReadOnlyDictionary<TypeSignature, TypeSignature> typemap)
         {
-            _glTypeMapper = new OpenGLTypeMapper(typemap);
+            _glTypeMapper = new TypeMapper(typemap);
         }
 
         /// <inheritdoc/>
@@ -30,13 +31,9 @@ namespace Bind.Translation.Mappers
         {
             var newType = _glTypeMapper.Map(input.Type);
 
-            return new ParameterSignature
-            (
-                input.Name,
-                newType,
-                input.Flow,
-                input.Count
-            );
+            return new ParameterSignatureBuilder(input)
+                .WithType(newType)
+                .Build();
         }
     }
 }

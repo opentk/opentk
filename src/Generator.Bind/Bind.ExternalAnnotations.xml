@@ -11,6 +11,12 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
+  <member name="M:Bind.Baking.OverloadBaker.BakeOverloads(Bind.XML.Signatures.ApiProfile)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="profile">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
   <member name="M:Bind.Baking.ProfileBaker.#ctor(System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.ApiProfile},System.Collections.Generic.IReadOnlyList{Bind.XML.Overrides.ApiProfileOverride})">
     <parameter name="profiles">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
@@ -85,6 +91,26 @@
     <parameter name="newReturnType">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
+  </member>
+  <member name="M:Bind.Builders.ParameterSignatureBuilder.#ctor(Bind.XML.Signatures.Functions.ParameterSignature)">
+    <parameter name="parameterSignature">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Builders.ParameterSignatureBuilder.Build">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.Builders.ParameterSignatureBuilder.WithCount(Bind.XML.Signatures.Functions.CountSignature)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.Builders.ParameterSignatureBuilder.WithFlow(Bind.Structures.FlowDirection)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.Builders.ParameterSignatureBuilder.WithName(System.String)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.Builders.ParameterSignatureBuilder.WithType(Bind.XML.Signatures.Functions.TypeSignature)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
   <member name="M:Bind.Builders.TypeSignatureBuilder.#ctor(Bind.XML.Signatures.Functions.TypeSignature)">
     <parameter name="typeSignature">

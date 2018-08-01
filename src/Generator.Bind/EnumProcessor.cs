@@ -150,7 +150,11 @@ namespace Bind
                 var processedConstants = new SortedDictionary<string, ConstantDefinition>();
                 foreach (var c in e.ConstantCollection.Values)
                 {
-                    c.Name = NativeIdentifierTranslator.TranslateIdentifierName(c.Name);
+                    if (!Utilities.IsIdentifierTranslated(c.Name))
+                    {
+                        c.Name = NativeIdentifierTranslator.TranslateIdentifierName(c.Name);
+                    }
+
                     c.Value = TranslateConstantValue(c.Value);
 
                     if (!string.IsNullOrWhiteSpace(c.Reference))

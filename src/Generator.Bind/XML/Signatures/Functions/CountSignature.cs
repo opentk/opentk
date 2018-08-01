@@ -81,6 +81,7 @@ namespace Bind.XML.Signatures.Functions
         public CountSignature(int count)
         {
             _count = count;
+            ComputedFrom = new List<ParameterSignature>();
         }
 
         /// <summary>

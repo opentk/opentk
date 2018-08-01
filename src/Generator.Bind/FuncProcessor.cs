@@ -834,6 +834,7 @@ namespace Bind
                     {
                         // Match Gen*|Get*|New*([Out] int[] names) methods
                         f = CreateReturnTypeConvenienceWrapper(d);
+                        Debug.WriteLine($"Generated return type convenience wrapper: {f}");
                     }
                     else if (isCandidate && parameter.Flow != FlowDirection.Out)
                     {
@@ -841,6 +842,7 @@ namespace Bind
                         if (d.Parameters.Count == 2)
                         {
                             f = CreateArrayParameterConvenienceWrapper(d);
+                            Debug.WriteLine($"Generated array parameter convenience wrapper: {f}");
                         }
                     }
 

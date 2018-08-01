@@ -46,6 +46,11 @@ namespace Bind.Overloaders
 
             var lastParameter = function.Parameters.Last();
 
+            if (!lastParameter.Type.IsPointer)
+            {
+                return false;
+            }
+
             // the final parameter's flow is out
             if (lastParameter.Flow != FlowDirection.Out)
             {
@@ -53,7 +58,7 @@ namespace Bind.Overloaders
             }
 
             // the last parameter does not have a specific count set
-            if (!(lastParameter.Count is null) && !lastParameter.Count.IsStatic)
+            if (!(lastParameter.Count is null) && lastParameter.Count.IsStatic)
             {
                 if (lastParameter.Count.Count > 1)
                 {
@@ -67,13 +72,14 @@ namespace Bind.Overloaders
         /// <inheritdoc/>
         public IEnumerable<FunctionSignature> CreateOverloads(FunctionSignature function)
         {
-            var newReturnType = new TypeSignatureBuilder(function.Parameters.Last().Type)
-                .WithIndirectionLevel(0)
+            var lastParameterType = function.Parameters.Last().Type;
+            var newReturnType = new TypeSignatureBuilder(lastParameterType)
+                .WithIndirectionLevel(lastParameterType.IndirectionLevel - 1)
                 .WithArrayDimensions(0)
                 .Build();
 
             var newParameters = function.Parameters.SkipLast(1).ToList();
-            var newName = function.Name.Singularize();
+            var newName = function.Name.Singularize(false);
 
             var functionBuilder = new FunctionSignatureBuilder(function)
                 .WithName(newName)
