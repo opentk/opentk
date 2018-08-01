@@ -46,8 +46,10 @@ namespace Bind
                 return 1;
             }
 
+            var es31GeneratorSettings = new ES31Generator();
+
             var profiles = SignatureReader.GetAvailableProfiles(Path.Combine(Arguments.InputPath, "GL2", "signatures.xml")).ToList();
-            var profileOverrides = OverrideReader.GetProfileOverrides(Path.Combine(Arguments.InputPath, "GL2", "overrides.xml")).ToList();
+            var profileOverrides = OverrideReader.GetProfileOverrides(es31GeneratorSettings.OverrideFiles.ToArray()).ToList();
 
             var baker = new ProfileBaker(profiles, profileOverrides);
             var bakedProfile = baker.BakeProfile("gles2", new VersionRange(new Version(3, 1)));
@@ -65,7 +67,7 @@ namespace Bind
                 }
             }
 
-            var docs = DocumentationReader.ReadProfileDocumentation(Path.Combine(Arguments.InputPath, "Docs", "docs.gl", "es2"));
+            var docs = DocumentationReader.ReadProfileDocumentation(Path.Combine(Arguments.InputPath, "Docs", "docs.gl", "es3"));
             var bakedDocs = new DocumentationBaker(bakedProfile).BakeDocumentation(docs);
 
             CreateGenerators();
