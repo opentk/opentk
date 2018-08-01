@@ -34,8 +34,7 @@ namespace OpenTK.Rewrite
         public AssemblyRewriter
         (
             IAssemblyResolver assemblyResolver,
-            Func<AssemblyDefinition, TypeDefinition, bool, ITypeRewriter> typeRewriterFactory,
-            string strongNameKeyPath
+            Func<AssemblyDefinition, TypeDefinition, bool, ITypeRewriter> typeRewriterFactory
         )
         {
             _readerParams = new ReaderParameters
@@ -47,16 +46,7 @@ namespace OpenTK.Rewrite
 
             _typeRewriterFactory = typeRewriterFactory ?? throw new ArgumentNullException(nameof(typeRewriterFactory));
 
-            string absoluteKeyFilePath = Path.GetFullPath(strongNameKeyPath);
-
-            using (var fs = new FileStream(absoluteKeyFilePath, FileMode.Open, FileAccess.Read))
-            {
-                _writerParams = new WriterParameters
-                {
-                    WriteSymbols = true,
-                    StrongNameKeyPair = new StrongNameKeyPair(fs)
-                };
-            }
+            _writerParams = new WriterParameters { WriteSymbols = true };
         }
 
         /// <summary>

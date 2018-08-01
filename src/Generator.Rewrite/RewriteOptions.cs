@@ -19,16 +19,6 @@ namespace OpenTK.Rewrite
         public string TargetAssembly { get; set; }
 
         /// <summary>
-        /// Gets or sets the path to the strong name key which should be used to sign or resign the assembly.
-        /// </summary>
-        [Option(
-            'k',
-            "signing-key",
-            HelpText = "The path to the strong name key which should be used to sign or resign the assembly."
-        )]
-        public string StrongNameKey { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether calls to GL.GetError() are wrapped around each native call.
         /// </summary>
         [Option(
