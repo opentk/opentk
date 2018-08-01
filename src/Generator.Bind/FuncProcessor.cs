@@ -840,7 +840,7 @@ namespace Bind
                         // Match *Delete(int count, int[] names) methods
                         if (d.Parameters.Count == 2)
                         {
-                            f = CreateArrayReturnTypeConvenienceWrapper(d);
+                            f = CreateArrayParameterConvenienceWrapper(d);
                         }
                     }
 
@@ -911,7 +911,7 @@ namespace Bind
         }
 
         [NotNull]
-        private static FunctionDefinition CreateArrayReturnTypeConvenienceWrapper([NotNull] FunctionDefinition d)
+        private static FunctionDefinition CreateArrayParameterConvenienceWrapper([NotNull] FunctionDefinition d)
         {
             var function = new FunctionDefinition(d);
             var arrayParameter = function.Parameters.Last();
