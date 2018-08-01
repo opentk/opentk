@@ -16,6 +16,7 @@ namespace Bind.XML.Signatures.Functions
         /// Gets the name of the native entrypoint of the function. Typically, this is the same name as
         /// <see cref="Name"/>, but may diverge if the name is trimmed at any point to facilitate overloading.
         /// </summary>
+        [NotNull]
         public string NativeEntrypoint { get; }
 
         /// <summary>

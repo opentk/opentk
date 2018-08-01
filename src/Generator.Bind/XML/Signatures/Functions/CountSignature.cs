@@ -27,11 +27,19 @@ namespace Bind.XML.Signatures.Functions
         {
             get
             {
-                if (!IsComputed)
+                if (IsComputed)
                 {
                     throw new InvalidOperationException
                     (
                         $"The count varies based on other parameters. Use {nameof(ComputedFrom)} instead."
+                    );
+                }
+
+                if (IsReference)
+                {
+                    throw new InvalidOperationException
+                    (
+                        $"The count is a reference to a value in another parameter. Use {nameof(ValueReference)} instead."
                     );
                 }
 
@@ -60,6 +68,11 @@ namespace Bind.XML.Signatures.Functions
         /// Gets a value indicating whether the count is a reference to the value of another parameter.
         /// </summary>
         public bool IsReference => !(ValueReference is null);
+
+        /// <summary>
+        /// Gets a value indicating whether the count is a static count.
+        /// </summary>
+        public bool IsStatic => !(IsComputed || IsReference);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CountSignature"/> class.
