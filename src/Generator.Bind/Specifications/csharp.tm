@@ -21,6 +21,7 @@ GLstring,           string
 # Pointer types
 GLvoid*,            void*
 GLchar*,            string
+GLchar**,           string[]
 GLcharARB*,         string
 GLfloat*,           float*
 GLdouble*,          double*

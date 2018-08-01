@@ -25,6 +25,16 @@ namespace Bind.XML.Signatures.Functions
         public int ArrayDimensions { get; }
 
         /// <summary>
+        /// Gets a value indicating whether the type is passed by reference.
+        /// </summary>
+        public bool IsByRef { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the type is an out-only by-ref value.
+        /// </summary>
+        public bool IsOut { get; }
+
+        /// <summary>
         /// Gets a value indicating whether the type is a pointer.
         /// </summary>
         public bool IsPointer => IndirectionLevel > 0;
@@ -40,11 +50,21 @@ namespace Bind.XML.Signatures.Functions
         /// <param name="name">The name of the type.</param>
         /// <param name="indirectionLevel">The level of indirection the type has.</param>
         /// <param name="arrayDimensions">The number of array dimensions the type has.</param>
-        public TypeSignature([NotNull] string name, int indirectionLevel, int arrayDimensions)
+        /// <param name="isByRef">Whether or not the type is passed by reference.</param>
+        /// <param name="isOut">Whether or not the type is passed by reference, with its flow restricted to out.</param>
+        public TypeSignature([NotNull] string name, int indirectionLevel, int arrayDimensions, bool isByRef, bool isOut)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
-            ArrayDimensions = arrayDimensions;
             IndirectionLevel = indirectionLevel;
+            ArrayDimensions = arrayDimensions;
+
+            IsByRef = isByRef;
+            IsOut = isOut;
+
+            if (isOut && !isByRef)
+            {
+                throw new ArgumentException("A type passed as out must be passed as ref.");
+            }
         }
 
         /// <inheritdoc/>
@@ -123,7 +143,10 @@ namespace Bind.XML.Signatures.Functions
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{Name}{new string('*', IndirectionLevel)}";
+            return $"{(IsByRef ? IsOut ? "out " : "ref " : string.Empty)}" +
+                   $"{Name}" +
+                   $"{new string('*', IndirectionLevel)}" +
+                   $"{Utilities.GetArrayDimensionString(ArrayDimensions)}";
         }
     }
 }

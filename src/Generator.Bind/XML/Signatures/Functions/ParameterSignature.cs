@@ -59,7 +59,7 @@ namespace Bind.XML.Signatures.Functions
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{Type} {Name}";
+            return $"{Type} {(Utilities.CSharpKeywords.Contains(Name) ? $"@{Name}" : Name)}";
         }
     }
 }

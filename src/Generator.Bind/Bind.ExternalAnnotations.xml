@@ -62,6 +62,12 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
+  <member name="M:Bind.Builders.FunctionSignatureBuilder.WithGenericTypeParameters(System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.GenericTypeParameterSignature})">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="newGenericTypeParameters">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
   <member name="M:Bind.Builders.FunctionSignatureBuilder.WithIntroducedIn(System.Version)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <parameter name="newIntroducedIn">
@@ -123,7 +129,13 @@
   <member name="M:Bind.Builders.TypeSignatureBuilder.WithArrayDimensions(System.Int32)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
+  <member name="M:Bind.Builders.TypeSignatureBuilder.WithByRef(System.Boolean)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
   <member name="M:Bind.Builders.TypeSignatureBuilder.WithIndirectionLevel(System.Int32)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.Builders.TypeSignatureBuilder.WithIsOut(System.Boolean)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
   <member name="M:Bind.Builders.TypeSignatureBuilder.WithName(System.String)">
@@ -767,7 +779,7 @@
   <member name="P:Bind.XML.Signatures.Functions.CountSignature.ValueReference">
     <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
   </member>
-  <member name="M:Bind.XML.Signatures.Functions.FunctionSignature.#ctor(System.String,System.String,System.String,System.String,System.Version,Bind.XML.Signatures.Functions.TypeSignature,System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.ParameterSignature},System.Version,System.String)">
+  <member name="M:Bind.XML.Signatures.Functions.FunctionSignature.#ctor(System.String,System.String,System.String,System.String,System.Version,Bind.XML.Signatures.Functions.TypeSignature,System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.ParameterSignature},System.Version,System.String,System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.GenericTypeParameterSignature})">
     <parameter name="name">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
@@ -795,6 +807,9 @@
     <parameter name="deprecationReason">
       <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
     </parameter>
+    <parameter name="genericTypeParameters">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="P:Bind.XML.Signatures.Functions.FunctionSignature.Category">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
@@ -808,6 +823,10 @@
   <member name="P:Bind.XML.Signatures.Functions.FunctionSignature.Extension">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
+  <member name="P:Bind.XML.Signatures.Functions.FunctionSignature.GenericTypeParameters">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+  </member>
   <member name="P:Bind.XML.Signatures.Functions.FunctionSignature.IntroducedIn">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
@@ -816,8 +835,23 @@
   </member>
   <member name="P:Bind.XML.Signatures.Functions.FunctionSignature.Parameters">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
   </member>
   <member name="P:Bind.XML.Signatures.Functions.FunctionSignature.ReturnType">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.XML.Signatures.Functions.GenericTypeParameterSignature.#ctor(System.String,System.Collections.Generic.IReadOnlyList{System.String})">
+    <parameter name="name">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="constraints">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="P:Bind.XML.Signatures.Functions.GenericTypeParameterSignature.Constraints">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="P:Bind.XML.Signatures.Functions.GenericTypeParameterSignature.Name">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
   <member name="M:Bind.XML.Signatures.Functions.ParameterSignature.#ctor(System.String,Bind.XML.Signatures.Functions.TypeSignature,Bind.Structures.FlowDirection,Bind.XML.Signatures.Functions.CountSignature)">
@@ -840,7 +874,7 @@
   <member name="P:Bind.XML.Signatures.Functions.ParameterSignature.Type">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
-  <member name="M:Bind.XML.Signatures.Functions.TypeSignature.#ctor(System.String,System.Int32,System.Int32)">
+  <member name="M:Bind.XML.Signatures.Functions.TypeSignature.#ctor(System.String,System.Int32,System.Int32,System.Boolean,System.Boolean)">
     <parameter name="name">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>

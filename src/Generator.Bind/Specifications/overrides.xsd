@@ -126,6 +126,10 @@
         </xs:annotation>
       </xs:attribute>
     </xs:complexType>
+    <xs:unique name="ParamNameUnique">
+      <xs:selector xpath="param"/>
+      <xs:field xpath="@name"/>
+    </xs:unique>
   </xs:element>
 
   <xs:element name="enum">

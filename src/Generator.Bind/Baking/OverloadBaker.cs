@@ -16,6 +16,8 @@ namespace Bind.Baking
         {
             new ReturnTypeConvenienceOverloader(),
             new ArrayParameterConvenienceOverloader(),
+            new PointerParameterPermutationOverloader(),
+            new VoidPointerParameterOverloader(),
         };
 
         /// <summary>

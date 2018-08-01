@@ -35,6 +35,9 @@ namespace Bind.Builders
         private IReadOnlyList<ParameterSignature> _newParameters;
 
         [NotNull]
+        private IReadOnlyList<GenericTypeParameterSignature> _newGenericTypeParameters;
+
+        [NotNull]
         private TypeSignature _newReturnType;
 
         /// <summary>
@@ -52,6 +55,7 @@ namespace Bind.Builders
             _newDeprecationReason = functionSignature.DeprecationReason;
             _newParameters = functionSignature.Parameters;
             _newReturnType = functionSignature.ReturnType;
+            _newGenericTypeParameters = functionSignature.GenericTypeParameters;
         }
 
         /// <summary>
@@ -151,6 +155,21 @@ namespace Bind.Builders
         }
 
         /// <summary>
+        /// Sets new generic type parameters for the function.
+        /// </summary>
+        /// <param name="newGenericTypeParameters">The new generic type parameters.</param>
+        /// <returns>The builder, with the change applied.</returns>
+        [NotNull]
+        public FunctionSignatureBuilder WithGenericTypeParameters
+        (
+            [NotNull] IReadOnlyList<GenericTypeParameterSignature> newGenericTypeParameters
+        )
+        {
+            _newGenericTypeParameters = newGenericTypeParameters;
+            return this;
+        }
+
+        /// <summary>
         /// Sets a new return type for the function.
         /// </summary>
         /// <param name="newReturnType">The new return type.</param>
@@ -179,7 +198,8 @@ namespace Bind.Builders
                 _newReturnType,
                 _newParameters,
                 _newDeprecatedIn,
-                _newDeprecationReason
+                _newDeprecationReason,
+                _newGenericTypeParameters
             );
         }
     }

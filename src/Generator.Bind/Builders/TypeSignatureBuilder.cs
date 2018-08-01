@@ -14,6 +14,10 @@ namespace Bind.Builders
 
         private int _newArrayDimensions;
 
+        private bool _newIsByRef;
+
+        private bool _newIsOut;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TypeSignatureBuilder"/> class.
         /// </summary>
@@ -62,13 +66,37 @@ namespace Bind.Builders
         }
 
         /// <summary>
+        /// Sets a new by-ref value for the type signature.
+        /// </summary>
+        /// <param name="isByRef">The new by-ref value.</param>
+        /// <returns>The builder, with the by-ref value.</returns>
+        [NotNull]
+        public TypeSignatureBuilder WithByRef(bool isByRef)
+        {
+            _newIsByRef = isByRef;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets a new is-out value for the type signature.
+        /// </summary>
+        /// <param name="isOut">The new is-out value.</param>
+        /// <returns>The builder, with the is-out value.</returns>
+        [NotNull]
+        public TypeSignatureBuilder WithIsOut(bool isOut)
+        {
+            _newIsOut = isOut;
+            return this;
+        }
+
+        /// <summary>
         /// Builds the final instance.
         /// </summary>
         /// <returns>The instance.</returns>
         [NotNull]
         public TypeSignature Build()
         {
-            return new TypeSignature(_newName, _newIndirectionLevel, _newArrayDimensions);
+            return new TypeSignature(_newName, _newIndirectionLevel, _newArrayDimensions, _newIsByRef, _newIsOut);
         }
     }
 }

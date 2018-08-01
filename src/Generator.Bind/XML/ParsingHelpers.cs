@@ -182,7 +182,7 @@ namespace Bind.XML
                 typeName = typeName.Remove(firstArrayIndex);
             }
 
-            return new TypeSignature(typeName, pointerLevel, arrayLevel);
+            return new TypeSignature(typeName, pointerLevel, arrayLevel, false, false);
         }
 
         /// <summary>

@@ -4375,7 +4375,7 @@
     </function>
     <function name="MapBufferRange">
       <param name="target"><type>BufferTarget</type></param>
-      <param name="target"><type>BufferAccessMask</type></param>
+      <param name="access"><type>BufferAccessMask</type></param>
     </function>
     <function name="UnmapBuffer">
       <param name="target"><type>BufferTarget</type></param>

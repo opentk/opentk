@@ -182,7 +182,20 @@ namespace Bind.XML.Overrides
             var baseFunctionName = functionElement.GetRequiredAttribute("name").Value;
             var baseFunctionExtensions = functionElement.Attribute("extension")?.Value;
 
-            var parameters = functionElement.Elements("param").Select(ParseParameterSignature).ToList();
+            var parameters = new List<ParameterOverride>();
+            foreach (var parameterElement in functionElement.Elements("param"))
+            {
+                var parameterOverride = ParseParameterSignature(parameterElement);
+                if (parameters.Any(p => p.BaseName == parameterOverride.BaseName))
+                {
+                    throw new InvalidDataException
+                    (
+                        $"Duplicate parameter override with name \"{parameterOverride.BaseName}\" found."
+                    );
+                }
+
+                parameters.Add(parameterOverride);
+            }
 
             var newVersion = ParseVersion(functionElement.Element("version")?.Value);
             var obsoletionReason = functionElement.Element("obsolete")?.Value;

@@ -178,24 +178,23 @@ namespace Bind.Baking
                 new List<(ParameterSignature Parameter, IReadOnlyList<string> ComputedCountParameterNames)>();
             var parametersWithValueReferenceCounts =
                 new List<(ParameterSignature Parameter, string ParameterReferenceName)>();
-            var resultParameters = new List<ParameterSignature>();
 
-            foreach (var baseParameter in baseParameters)
+            var resultParameters = new List<ParameterSignature>(baseParameters);
+            foreach (var overrideParameter in functionOverride.ParameterOverrides)
             {
-                var parameterOverride = functionOverride.ParameterOverrides
-                    .FirstOrDefault(p => p.BaseName == baseParameter.Name);
-
-                if (parameterOverride is null)
+                var baseParameter = functionBase.Parameters.FirstOrDefault(p => p.Name == overrideParameter.BaseName);
+                if (baseParameter is null)
                 {
-                    // No override required, we'll just use the existing one
-                    resultParameters.Add(baseParameter);
-                    continue;
+                    throw new InvalidDataException
+                    (
+                        $"Could not find target parameter with name \"{overrideParameter.BaseName}\" to override."
+                    );
                 }
 
                 var overriddenParameter = CreateOverriddenParameter
                 (
                     baseParameter,
-                    parameterOverride,
+                    overrideParameter,
                     out var hasComputedCount,
                     out var computedCountParameterNames,
                     out var hasValueReference,
@@ -215,7 +214,8 @@ namespace Bind.Baking
                     // TODO: Pass on the mathematical expression
                 }
 
-                resultParameters.Add(overriddenParameter);
+                var baseIndex = resultParameters.IndexOf(baseParameter);
+                resultParameters[baseIndex] = overriddenParameter;
             }
 
             ParsingHelpers.ResolveComputedCountSignatures(resultParameters, parametersWithComputedCounts);

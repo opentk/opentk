@@ -108,22 +108,13 @@ namespace Bind
 
                         if (!(funcOverride is null))
                         {
-                            ApplyReturnTypeReplacement(d, funcOverride);
+                            ApplyReturnTypeOverride(d, funcOverride);
+                            ApplyParameterOverrides(d, funcOverride);
+                            ApplyAttributeOverrides(d, funcOverride);
                         }
 
-                        TranslateReturnType(d, nav, enumProcessor, enums, apiname);
-
-                        if (!(funcOverride is null))
-                        {
-                            ApplyParameterReplacement(d, funcOverride);
-                        }
-
-                        TranslateParameters(d, nav, enumProcessor, enums, apiname);
-
-                        if (!(funcOverride is null))
-                        {
-                            TranslateAttributes(d, funcOverride);
-                        }
+                        TranslateReturnType(d, nav, enums, apiname);
+                        TranslateParameters(d, nav, enums, apiname);
                     }
                 }
 
@@ -142,13 +133,12 @@ namespace Bind
                     {
                         var overload = new DelegateDefinition(d);
 
-                        ApplyReturnTypeReplacement(overload, funcOverload);
-                        TranslateReturnType(overload, nav, enumProcessor, enums, apiname);
+                        ApplyReturnTypeOverride(overload, funcOverload);
+                        ApplyParameterOverrides(overload, funcOverload);
+                        ApplyAttributeOverrides(overload, funcOverload);
 
-                        ApplyParameterReplacement(overload, funcOverload);
-                        TranslateParameters(overload, nav, enumProcessor, enums, apiname);
-
-                        TranslateAttributes(overload, funcOverload);
+                        TranslateReturnType(overload, nav, enums, apiname);
+                        TranslateParameters(overload, nav, enums, apiname);
 
                         overloadList.Add(overload);
                     }
@@ -302,7 +292,6 @@ namespace Bind
         (
             [NotNull] TypeDefinition typeDefinition,
             [NotNull] XPathNavigator overrides,
-            [NotNull] EnumProcessor enumProcessor,
             [NotNull] EnumCollection enums,
             [NotNull] string category,
             [NotNull] string apiname
@@ -553,7 +542,7 @@ namespace Bind
             f.TrimmedName = GetTrimmedName(f);
         }
 
-        private static void ApplyParameterReplacement
+        private static void ApplyParameterOverrides
         (
             [NotNull] DelegateDefinition d,
             [NotNull] XPathNavigator functionOverride
@@ -591,7 +580,7 @@ namespace Bind
             }
         }
 
-        private static void ApplyReturnTypeReplacement
+        private static void ApplyReturnTypeOverride
         (
             [NotNull] DelegateDefinition d, [NotNull] XPathNavigator functionOverride
         )
@@ -616,12 +605,11 @@ namespace Bind
         (
             [NotNull] DelegateDefinition d,
             [NotNull] XPathNavigator nav,
-            [NotNull] EnumProcessor enumProcessor,
             [NotNull] EnumCollection enums,
             [NotNull] string apiname
         )
         {
-            TranslateType(d.ReturnTypeDefinition, nav, enumProcessor, enums, d.Category, apiname);
+            TranslateType(d.ReturnTypeDefinition, nav, enums, d.Category, apiname);
 
             if (d.ReturnTypeDefinition.TypeName.ToLower() == "void" && d.ReturnTypeDefinition.IsPointer)
             {
@@ -658,18 +646,13 @@ namespace Bind
         (
             [NotNull] DelegateDefinition d,
             [NotNull] XPathNavigator nav,
-            [NotNull] EnumProcessor enumProcessor,
             [NotNull] EnumCollection enums,
             [NotNull] string apiname
         )
         {
             for (var i = 0; i < d.Parameters.Count; i++)
             {
-                TranslateParameter(d.Parameters[i], nav, enumProcessor, enums, d.Category, apiname);
-                if (d.Parameters[i].ParameterType.TypeName == "UInt16" && d.Name.Contains("LineStipple"))
-                {
-                    d.Parameters[i].ParameterType.WrapperType |= WrapperTypes.UncheckedParameter;
-                }
+                TranslateParameter(d.Parameters[i], nav, enums, d.Category, apiname);
             }
         }
 
@@ -677,7 +660,6 @@ namespace Bind
         (
             [NotNull] ParameterDefinition p,
             [NotNull] XPathNavigator overrides,
-            [NotNull] EnumProcessor enumProcessor,
             [NotNull] EnumCollection enums,
             [NotNull] string category,
             [NotNull] string apiname
@@ -685,7 +667,7 @@ namespace Bind
         {
             var type = p.ParameterType;
 
-            TranslateType(type, overrides, enumProcessor, enums, category, apiname);
+            TranslateType(type, overrides, enums, category, apiname);
 
             // Translate char* -> string. This simplifies the rest of the logic below
             if (type.TypeName.ToLower().Contains("char") && type.IsPointer)
@@ -752,7 +734,7 @@ namespace Bind
             }
         }
 
-        private void TranslateAttributes([NotNull] DelegateDefinition d, [NotNull] XPathNavigator functionOverride)
+        private void ApplyAttributeOverrides([NotNull] DelegateDefinition d, [NotNull] XPathNavigator functionOverride)
         {
             var versionOverride = functionOverride.SelectSingleNode("version");
             if (versionOverride != null)
@@ -971,9 +953,9 @@ namespace Bind
 
                 // Handle all non-generic parameters first.
                 // Generics are handled in a second pass.
-                if ((parameterType.WrapperType & WrapperTypes.GenericParameter) == 0)
+                if (!parameterType.WrapperType.HasFlag(WrapperTypes.GenericParameter))
                 {
-                    if ((parameterType.WrapperType & WrapperTypes.ArrayParameter) != 0)
+                    if (parameterType.WrapperType.HasFlag(WrapperTypes.ArrayParameter))
                     {
                         foreach (var wrapper in GetOrAddWrapperTypeGroup(wrappers, WrapperTypes.ArrayParameter, func))
                         {
@@ -993,7 +975,7 @@ namespace Bind
                         }
                     }
 
-                    if ((parameterType.WrapperType & WrapperTypes.ReferenceParameter) != 0)
+                    if (parameterType.WrapperType.HasFlag(WrapperTypes.ReferenceParameter))
                     {
                         foreach (var wrapper in GetOrAddWrapperTypeGroup(wrappers, WrapperTypes.ReferenceParameter, func))
                         {
@@ -1005,15 +987,15 @@ namespace Bind
                         }
                     }
 
-                    if ((parameterType.WrapperType & WrapperTypes.PointerParameter) != 0)
+                    if (parameterType.WrapperType.HasFlag(WrapperTypes.PointerParameter))
                     {
                         GetOrAddWrapperTypeGroup(wrappers, WrapperTypes.PointerParameter, func);
                     }
 
                     if (parameterType.WrapperType == 0 ||
-                        (parameterType.WrapperType & WrapperTypes.ConvenienceArrayType) != 0 ||
-                        (parameterType.WrapperType & WrapperTypes.ConvenienceReturnType) != 0 ||
-                        (parameterType.WrapperType & WrapperTypes.ConvenienceArrayReturnType) != 0)
+                        parameterType.WrapperType.HasFlag(WrapperTypes.ConvenienceArrayType) ||
+                        parameterType.WrapperType.HasFlag(WrapperTypes.ConvenienceReturnType) ||
+                        parameterType.WrapperType.HasFlag(WrapperTypes.ConvenienceArrayReturnType))
                     {
                         // We don't need to do anything, just add this function directly
                         // to the list of wrappers.
@@ -1116,7 +1098,7 @@ namespace Bind
                     var parameter = wrapper.Parameters[i];
                     var parameterType = parameter.ParameterType;
 
-                    if ((parameterType.WrapperType & WrapperTypes.StringParameter) != 0)
+                    if (parameterType.WrapperType.HasFlag(WrapperTypes.StringParameter))
                     {
                         parameterType.QualifiedTypeName = "String";
                         if (parameter.Flow == FlowDirection.Out)
@@ -1125,7 +1107,7 @@ namespace Bind
                         }
                     }
 
-                    if ((parameterType.WrapperType & WrapperTypes.StringArrayParameter) != 0)
+                    if (parameterType.WrapperType.HasFlag(WrapperTypes.StringArrayParameter))
                     {
                         if (parameter.Flow == FlowDirection.Out)
                         {
@@ -1148,18 +1130,18 @@ namespace Bind
 
         private static void WrapReturnType([NotNull] FunctionDefinition func)
         {
-            if ((func.ReturnTypeDefinition.WrapperType & WrapperTypes.StringReturnType) != 0)
+            if (func.ReturnTypeDefinition.WrapperType.HasFlag(WrapperTypes.StringReturnType))
             {
                 func.ReturnTypeDefinition.QualifiedTypeName = "String";
             }
 
-            if ((func.ReturnTypeDefinition.WrapperType & WrapperTypes.GenericReturnType) != 0)
+            if (func.ReturnTypeDefinition.WrapperType.HasFlag(WrapperTypes.GenericReturnType))
             {
                 // Nothing else we can do, using generics will break the runtime
                 func.ReturnTypeDefinition.QualifiedTypeName = "IntPtr";
             }
 
-            if ((func.ReturnTypeDefinition.WrapperType & WrapperTypes.BoolParameter) != 0)
+            if (func.ReturnTypeDefinition.WrapperType.HasFlag(WrapperTypes.BoolParameter))
             {
                 func.ReturnTypeDefinition.QualifiedTypeName = "bool";
             }

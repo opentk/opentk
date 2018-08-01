@@ -29,6 +29,19 @@ namespace Bind.Translation.Mappers
         /// <inheritdoc/>
         public bool HasMapping(TypeSignature input)
         {
+            if (input.IsArray || input.IsPointer)
+            {
+                var baseType = new TypeSignatureBuilder(input)
+                    .WithArrayDimensions(0)
+                    .WithIndirectionLevel(0)
+                    .Build();
+
+                if (_typemap.TryGetValue(baseType, out _))
+                {
+                    return true;
+                }
+            }
+
             return _typemap.ContainsKey(input);
         }
 

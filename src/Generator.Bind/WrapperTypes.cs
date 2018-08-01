@@ -30,13 +30,6 @@ namespace Bind
         ArrayParameter = 1 << 2,
 
         /// <summary>
-        /// Function with bitmask parameters. Bitmask parameters map to UInt, but since we can only use signed
-        /// types (for CLS compliance), we must add the unchecked keyword.
-        /// Usually found in bitmasks
-        /// </summary>
-        UncheckedParameter = 1 << 3,
-
-        /// <summary>
         /// Function that takes (in/ref/out) a naked pointer as a parameter - we pass an IntPtr.
         /// </summary>
         PointerParameter = 1 << 4,
@@ -56,11 +49,6 @@ namespace Bind
         /// Function returns a void pointer - maps to IntPtr, and the user has to manually marshal the type.
         /// </summary>
         GenericReturnType = 1 << 7,
-
-        /// <summary>
-        /// Function returns a typed pointer - we have to copy the data to an array to protect it from the GC.
-        /// </summary>
-        ArrayReturnType = 1 << 8,
 
         /// <summary>
         /// Function normally returns a value via an out parameter.

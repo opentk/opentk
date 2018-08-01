@@ -85,6 +85,40 @@ namespace Bind
 
                 generator.LoadData();
 
+                var newSignatures = overloadedProfile.Functions
+                    .OrderBy(f => f.Name)
+                    .ThenBy(f => f.Parameters.Count)
+                    .Select(f => f.ToString())
+                    .ToList();
+
+                var oldSignatures = generator.Wrappers
+                    .SelectMany(kvp => kvp.Value)
+                    .OrderBy(f => f.TrimmedName)
+                    .ThenBy(f => f.Parameters.Count)
+                    .Select(f => f.ToString())
+                    .Select(n => n.Replace("OpenTK.Graphics.ES31.", string.Empty))
+                    .ToList();
+
+                var intersection = newSignatures.Intersect(oldSignatures).ToList();
+                var outerNew = newSignatures.Except(intersection);
+                var outerOld = oldSignatures.Except(intersection);
+
+                using (var newSignaturesFile = new StreamWriter("/home/jarl/new-signatures.txt"))
+                {
+                    foreach (var newFunction in outerNew)
+                    {
+                        newSignaturesFile.WriteLine(newFunction);
+                    }
+                }
+
+                using (var oldSignaturesFile = new StreamWriter("/home/jarl/old-signatures.txt"))
+                {
+                    foreach (var oldFunction in outerOld)
+                    {
+                        oldSignaturesFile.WriteLine(oldFunction);
+                    }
+                }
+
                 var writer = new BindingsWriter();
                 writer.WriteBindings(generator);
 
