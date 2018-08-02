@@ -52,7 +52,6 @@ SelectName,			    GLuint
 SizeI,			    GLsizei
 StencilValue,		    GLint
 Texture,			    GLuint
-TextureComponentCount,	    GLint
 UInt16,			    GLushort
 UInt32,			    GLuint
 UInt8,			    GLubyte
