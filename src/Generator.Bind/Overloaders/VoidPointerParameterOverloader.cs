@@ -3,27 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using Bind.Builders;
 using Bind.XML.Signatures.Functions;
+using JetBrains.Annotations;
 
 namespace Bind.Overloaders
 {
     /// <summary>
-    /// Creates generic type parameter overloads for functions taking a void pointer.
+    /// Creates generic type parameter overloads for functions taking a void pointer (of any depth).
     /// </summary>
     public class VoidPointerParameterOverloader : IFunctionOverloader
     {
-        private static TypeSignature _voidPtrType = new TypeSignature
-        (
-            typeof(void).Name.ToLowerInvariant(),
-            1,
-            0,
-            false,
-            false
-        );
-
         /// <inheritdoc/>
         public bool IsApplicable(FunctionSignature function)
         {
-            return function.Parameters.Any(p => p.Type == _voidPtrType);
+            return function.Parameters.Any(p => IsVoidPointer(p.Type));
+        }
+
+        /// <summary>
+        /// Determines whether the given type is a void pointer.
+        /// </summary>
+        /// <param name="typeSignature">The type signature.</param>
+        /// <returns>true if the type is a void pointer; otherwise, false.</returns>
+        private bool IsVoidPointer([NotNull] TypeSignature typeSignature)
+        {
+            return typeSignature.Name.Equals
+                   (
+                       typeof(void).Name.ToLowerInvariant(),
+                       StringComparison.OrdinalIgnoreCase
+                   )
+                   && typeSignature.IsPointer;
         }
 
         /// <inheritdoc/>
@@ -41,13 +48,13 @@ namespace Bind.Overloaders
             for (int i = 0; i < baseParameters.Count; ++i)
             {
                 var parameter = baseParameters[i];
-                if (parameter.Type != _voidPtrType)
+                if (!IsVoidPointer(parameter.Type))
                 {
                     continue;
                 }
 
                 string genericTypeParameterName = $"T{i}";
-                if (baseParameters.Count(p => p.Type == _voidPtrType) > 1)
+                if (baseParameters.Count(p => IsVoidPointer(p.Type)) > 1)
                 {
                     // TODO: Restore sane behaviour after diffing is done
                     // genericTypeParameterName = $"T{newGenericTypeParameters.Count + 1}";

@@ -11,10 +11,18 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="M:Bind.Baking.OverloadBaker.BakeOverloads(Bind.XML.Signatures.ApiProfile)">
+  <member name="M:Bind.Baking.Overloading.OverloadBaker.BakeOverloads(Bind.XML.Signatures.ApiProfile)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <parameter name="profile">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Baking.Overloading.OverloaderPipeline.ConsumeSignatures(System.Collections.Generic.IEnumerable{Bind.XML.Signatures.Functions.FunctionSignature},System.Collections.Generic.IReadOnlyList{Bind.Overloaders.IFunctionOverloader})">
+    <parameter name="signatures">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="pipeline">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
     </parameter>
   </member>
   <member name="M:Bind.Baking.ProfileBaker.#ctor(System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.ApiProfile},System.Collections.Generic.IReadOnlyList{Bind.XML.Overrides.ApiProfileOverride})">

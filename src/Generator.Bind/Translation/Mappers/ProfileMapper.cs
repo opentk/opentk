@@ -63,13 +63,14 @@ namespace Bind.Translation.Mappers
         }
 
         /// <summary>
-        /// Determines whether or not the given function has any generic enum parameters.
+        /// Determines whether or not the given function has any generic enum parameters, including the return
+        /// parameter.
         /// </summary>
         /// <param name="f">The function.</param>
         /// <returns>true if the function has generic enum parameters; otherwise, false.</returns>
         private bool HasGenericEnumParameters([NotNull] FunctionSignature f)
         {
-            return f.Parameters.Any(p => p.Type.Name == "GLenum");
+            return f.Parameters.Any(p => p.Type.Name == "GLenum") || f.ReturnType.Name == "GLenum";
         }
 
         /// <summary>
@@ -105,8 +106,15 @@ namespace Bind.Translation.Mappers
                     newParameters[i] = newParameter;
                 }
 
+                var newReturnType = functionWithGenericEnum.ReturnType;
+                if (newReturnType.Name == "GLenum")
+                {
+                    newReturnType = MapGenericEnumerationType(profile, functionWithGenericEnum, newReturnType);
+                }
+
                 var newFunction = new FunctionSignatureBuilder(functionWithGenericEnum)
                     .WithParameters(newParameters)
+                    .WithReturnType(newReturnType)
                     .Build();
 
                 mappedGenericEnumFunctions.Add(newFunction);
