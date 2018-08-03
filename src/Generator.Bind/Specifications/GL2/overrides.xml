@@ -238,7 +238,7 @@
 
     <function name="GetActiveUniform" extension="Core">
       <param name="type">
-        <type>ActiveUniformType</type>
+        <type>ActiveUniformType*</type>
       </param>
     </function>
 
@@ -340,7 +340,7 @@
 
     <function name="GetTransformFeedbackVarying" extension="Core">
       <param name="type">
-        <type>TransformFeedbackType</type>
+        <type>TransformFeedbackType*</type>
       </param>
     </function>
 
@@ -1086,13 +1086,13 @@
 
     <function name="GetDebugMessageLog" extension="Core">
       <param name="sources">
-        <type>DebugSource</type>
+        <type>DebugSource*</type>
       </param>
       <param name="types">
-        <type>DebugType</type>
+        <type>DebugType*</type>
       </param>
       <param name="severities">
-        <type>DebugSeverity</type>
+        <type>DebugSeverity*</type>
       </param>
     </function>
 
@@ -1813,11 +1813,6 @@
       </param>
       <param name="indices">
         <type>int</type>
-      </param>
-    </function>
-    <function name="GetTransformFeedbackVarying">
-      <param name="type">
-        <type>ActiveAttribType</type>
       </param>
     </function>
   </overload>
@@ -4488,7 +4483,7 @@
 
     <!-- Uniform Variables [2.11.6] -->
     <function name="GetActiveUniform">
-      <param name="type"><type>ActiveUniformType</type></param>
+      <param name="type"><type>ActiveUniformType*</type></param>
     </function>
     <function name="GetActiveUniforms">
       <param name="pname"><type>ActiveUniformParameter</type></param>
@@ -4499,7 +4494,7 @@
 
     <!-- Output Variables [2.11.8] -->
     <function name="GetTransformFeedbackVarying">
-      <param name="type"><type>TransformFeedbackType</type></param>
+      <param name="type"><type>TransformFeedbackType*</type></param>
     </function>
     <function name="TransformFeedbackVaryings">
       <param name="bufferMode"><type>TransformFeedbackMode</type></param>
@@ -4566,7 +4561,7 @@
     <!-- Alt. Texture Image Specification Commands [3.8.5] -->
     <function name="CopyTexImage2D">
       <param name="target"><type>TextureTarget2d</type></param>
-      <param name="internalformat"><type>TextureCopyComponentCount</type></param>
+      <param name="internalformat"><type>InternalFormat</type></param>
     </function>
     <function name="TexSubImage2D">
       <param name="target"><type>TextureTarget2d</type></param>
@@ -4856,7 +4851,7 @@
     </function>
     <function name="GetDebugMessageLog">
       <param name="sources"><type>DebugSourceExternal*</type></param>
-      <param name="types"><type>DebugType</type></param>
+      <param name="types"><type>DebugType*</type></param>
       <param name="severities"><type>DebugSeverity*</type></param>
     </function>
     <function name="GetObjectLabel">
