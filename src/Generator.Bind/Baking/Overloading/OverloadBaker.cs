@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using System.Linq;
 using Bind.XML.Signatures;
+using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
+using MoreLinq.Extensions;
 
 namespace Bind.Baking.Overloading
 {
@@ -20,10 +23,30 @@ namespace Bind.Baking.Overloading
             var pipeline = new OverloaderPipeline();
 
             var functionsThatNeedOverloads = profile.Functions.Where(f => pipeline.HasApplicableStage(f));
-            var newOverloads = pipeline.ConsumeSignatures(functionsThatNeedOverloads);
+            var newOverloads = pipeline.ConsumeSignatures(functionsThatNeedOverloads).ToList();
+
             var newFunctions = profile.Functions.Concat(newOverloads).ToList();
 
-            return new ApiProfile(profile.Name, profile.Versions, newFunctions, profile.Enumerations);
+            // Discard duplicate overloads
+            // TODO: Move to another dedicated class?
+            var optimizedFunctions = new List<FunctionSignature>();
+            foreach (var extensionGroup in newFunctions.GroupBy(f => f.Extension))
+            {
+                var uniqueFunctions = new List<FunctionSignature>();
+                foreach (var function in extensionGroup)
+                {
+                    if (uniqueFunctions.Any(f => f.HasSameSignatureAs(function)))
+                    {
+                        continue;
+                    }
+
+                    uniqueFunctions.Add(function);
+                }
+
+                optimizedFunctions.AddRange(uniqueFunctions);
+            }
+
+            return new ApiProfile(profile.Name, profile.Versions, optimizedFunctions, profile.Enumerations);
         }
     }
 }

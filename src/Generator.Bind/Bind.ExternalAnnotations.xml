@@ -835,6 +835,11 @@
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
   </member>
+  <member name="M:Bind.XML.Signatures.Functions.FunctionSignature.HasSameSignatureAs(Bind.XML.Signatures.Functions.FunctionSignature)">
+    <parameter name="f">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
   <member name="P:Bind.XML.Signatures.Functions.FunctionSignature.IntroducedIn">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>

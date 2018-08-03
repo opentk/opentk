@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using JetBrains.Annotations;
 
 namespace Bind.XML.Signatures.Functions
@@ -108,6 +109,42 @@ namespace Bind.XML.Signatures.Functions
             Parameters = parameters ?? new List<ParameterSignature>();
             ReturnType = returnType ?? throw new ArgumentNullException(nameof(returnType));
             GenericTypeParameters = genericTypeParameters ?? new List<GenericTypeParameterSignature>();
+        }
+
+        /// <summary>
+        /// Determines whether or not the given function has the same signature as this function.
+        /// </summary>
+        /// <param name="f">The function.</param>
+        /// <returns>true if the functions have the same signature; otherwise, false.</returns>
+        public bool HasSameSignatureAs([NotNull] FunctionSignature f)
+        {
+            if (f.ReturnType != ReturnType)
+            {
+                return false;
+            }
+
+            if (f.Name != Name)
+            {
+                return false;
+            }
+
+            if (f.Parameters.Count != Parameters.Count)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < f.Parameters.Count; ++i)
+            {
+                var otherParameter = f.Parameters[i];
+                var thisParameter = Parameters[i];
+
+                if (otherParameter.Type != thisParameter.Type)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <inheritdoc/>

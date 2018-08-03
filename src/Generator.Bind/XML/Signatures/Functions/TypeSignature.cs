@@ -82,7 +82,9 @@ namespace Bind.XML.Signatures.Functions
 
             return string.Equals(Name, other.Name)
                    && IndirectionLevel == other.IndirectionLevel
-                   && ArrayDimensions == other.ArrayDimensions;
+                   && ArrayDimensions == other.ArrayDimensions
+                   && IsByRef == other.IsByRef
+                   && IsOut == other.IsOut;
         }
 
         /// <inheritdoc/>
@@ -114,6 +116,8 @@ namespace Bind.XML.Signatures.Functions
                 var hashCode = Name.GetHashCode();
                 hashCode = (hashCode * 397) ^ IndirectionLevel;
                 hashCode = (hashCode * 397) ^ ArrayDimensions;
+                hashCode = (hashCode * 397) ^ IsByRef.GetHashCode();
+                hashCode = (hashCode * 397) ^ IsOut.GetHashCode();
                 return hashCode;
             }
         }
