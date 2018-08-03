@@ -232,7 +232,7 @@
 
     <function name="GetActiveAttrib" extension="Core">
       <param name="type">
-        <type>ActiveAttribType</type>
+        <type>ActiveAttribType*</type>
       </param>
     </function>
 
@@ -1128,7 +1128,7 @@
         <type>ProgramInterface</type>
       </param>
       <param name="props">
-        <type>ProgramProperty</type>
+        <type>ProgramProperty*</type>
       </param>
     </function>
 
@@ -1149,7 +1149,7 @@
         <type>FramebufferTarget</type>
       </param>
       <param name="attachments">
-        <type>FramebufferAttachment</type>
+        <type>FramebufferAttachment*</type>
       </param>
     </function>
 
@@ -1158,7 +1158,7 @@
         <type>FramebufferTarget</type>
       </param>
       <param name="attachments">
-        <type>FramebufferAttachment</type>
+        <type>FramebufferAttachment*</type>
       </param>
     </function>
 
@@ -4483,7 +4483,7 @@
 
     <!-- Program Objects [2.11.5] -->
     <function name="GetActiveAttrib">
-      <param name="type"><type>ActiveAttribType</type></param>
+      <param name="type"><type>ActiveAttribType*</type></param>
     </function>
 
     <!-- Uniform Variables [2.11.6] -->
@@ -4773,11 +4773,11 @@
     <!-- Invalidating Framebuffer Contents [4.5] -->
     <function name="InvalidateFramebuffer">
       <param name="target"><type>FramebufferTarget</type></param>
-      <param name="attachments"><type>FramebufferAttachment</type></param>
+      <param name="attachments"><type>FramebufferAttachment*</type></param>
     </function>
     <function name="InvalidateSubFramebuffer">
       <param name="target"><type>FramebufferTarget</type></param>
-      <param name="attachments"><type>FramebufferAttachment</type></param>
+      <param name="attachments"><type>FramebufferAttachment*</type></param>
     </function>
 
     <!-- Renderbuffer Object Queries [6.1.13-14] -->
@@ -4855,9 +4855,9 @@
       <param name="severity"><type>DebugSeverity</type></param>
     </function>
     <function name="GetDebugMessageLog">
-      <param name="sources"><type>DebugSourceExternal</type></param>
+      <param name="sources"><type>DebugSourceExternal*</type></param>
       <param name="types"><type>DebugType</type></param>
-      <param name="severities"><type>DebugSeverity</type></param>
+      <param name="severities"><type>DebugSeverity*</type></param>
     </function>
     <function name="GetObjectLabel">
       <param name="identifier"><type>ObjectLabelIdentifier</type></param>

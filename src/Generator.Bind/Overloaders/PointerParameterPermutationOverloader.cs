@@ -52,20 +52,27 @@ namespace Bind.Overloaders
 
                 var refType = refTypeBuilder.Build();
 
+                var refParameter = new ParameterSignatureBuilder(baseParameter)
+                    .WithType(refType)
+                    .Build();
+
+                refParameterPermutation[i] = refParameter;
+
+                if (!(baseParameter.Count is null) && baseParameter.Count.IsStatic && baseParameter.Count.Count == 1)
+                {
+                    // Single-element count pointers don't need array overloads
+                    continue;
+                }
+
                 var arrayType = new TypeSignatureBuilder(baseType)
                     .WithIndirectionLevel(0)
                     .WithArrayDimensions(1)
-                    .Build();
-
-                var refParameter = new ParameterSignatureBuilder(baseParameter)
-                    .WithType(refType)
                     .Build();
 
                 var arrayParameter = new ParameterSignatureBuilder(baseParameter)
                     .WithType(arrayType)
                     .Build();
 
-                refParameterPermutation[i] = refParameter;
                 arrayParameterPermutation[i] = arrayParameter;
             }
 

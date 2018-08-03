@@ -19,7 +19,7 @@
 
     <function name="GetProgramResourceiv">
       <param name="programInterface"><type>ProgramInterface</type></param>
-      <param name="props"><type>ProgramProperty</type></param>
+      <param name="props"><type>ProgramProperty*</type></param>
     </function>
 
     <function name="GetProgramResourceLocation">

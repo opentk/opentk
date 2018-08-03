@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Bind.Builders;
+using Bind.Structures;
 using Bind.XML.Signatures.Functions;
 
 namespace Bind.Translation.Mappers
@@ -30,6 +32,17 @@ namespace Bind.Translation.Mappers
         public ParameterSignature Map(ParameterSignature input)
         {
             var newType = _glTypeMapper.Map(input.Type);
+
+            if (newType.Name.Equals("string", StringComparison.OrdinalIgnoreCase))
+            {
+                if (input.Flow == FlowDirection.Out)
+                {
+                    newType = new TypeSignatureBuilder(newType)
+                        .WithByRef(true)
+                        .WithIsOut(true)
+                        .Build();
+                }
+            }
 
             return new ParameterSignatureBuilder(input)
                 .WithType(newType)

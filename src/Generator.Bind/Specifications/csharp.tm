@@ -17,6 +17,7 @@ GLclampf,           float
 GLdouble,           double
 GLclampd,           double
 GLstring,           string
+String,             string
 
 # Pointer types
 GLvoid*,            void*

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bind.Builders;
@@ -55,11 +56,7 @@ namespace Bind.Overloaders
 
                 if (!baseType.IsPointer || baseType.IndirectionLevel > 1)
                 {
-                    // Ensure strings are treated by this overloader
-                    if (baseType.Name != "string")
-                    {
-                        continue;
-                    }
+                    continue;
                 }
 
                 var refTypeBuilder = new TypeSignatureBuilder(baseType)
@@ -69,11 +66,6 @@ namespace Bind.Overloaders
                 if (baseParameter.Flow == FlowDirection.Out)
                 {
                     refTypeBuilder = refTypeBuilder.WithIsOut(true);
-                }
-                else if (baseParameter.Flow == FlowDirection.In && baseType.Name == "string")
-                {
-                    // TODO: Improve this logic
-                    continue;
                 }
 
                 var refType = refTypeBuilder.Build();
