@@ -4546,13 +4546,11 @@
     <!-- Texture Image Specification [3.8.3-4] -->
     <function name="TexImage2D">
       <param name="target"><type>TextureTarget2d</type></param>
-      <param name="internalformat"><type>TextureComponentCount</type></param>
       <param name="format"><type>PixelFormat</type></param>
       <param name="type"><type>PixelType</type></param>
     </function>
     <function name="TexImage3D">
       <param name="target"><type>TextureTarget3d</type></param>
-      <param name="internalformat"><type>TextureComponentCount</type></param>
       <param name="format"><type>PixelFormat</type></param>
       <param name="type"><type>PixelType</type></param>
     </function>
@@ -4679,7 +4677,7 @@
 
     <!-- Selecting a Buffer for Writing [4.2.1] -->
     <function name="DrawBuffers">
-      <param name="bufs"><type>DrawBufferMode</type></param>
+      <param name="bufs"><type>DrawBufferMode*</type></param>
     </function>
 
     <!-- Fine Control of Buffer Updates [4.2.2] -->
