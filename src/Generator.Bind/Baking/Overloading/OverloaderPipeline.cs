@@ -28,10 +28,11 @@ namespace Bind.Baking.Overloading
         [NotNull, ItemNotNull]
         private IEnumerable<IFunctionOverloader> GetBaselineOverloaders()
         {
+            yield return new VoidPointerParameterOverloader();
+            yield return new PointerParameterPermutationOverloader();
             yield return new ReturnTypeConvenienceOverloader();
             yield return new ArrayParameterConvenienceOverloader();
-            yield return new PointerParameterPermutationOverloader();
-            yield return new VoidPointerParameterOverloader();
+            yield return new StaticCountParameterConvenienceOverloader();
         }
 
         /// <summary>
@@ -87,8 +88,12 @@ namespace Bind.Baking.Overloading
                     continue;
                 }
 
+                // Ensure that the current signature is passed through again, so that goes through all applicable
+                // stages.
+                var passthroughSignatures = new List<FunctionSignature>(generatedDefinitions) { signature };
+
                 // Run the new signatures through the remaining stages of the pipeline
-                var deeperDefinitions = ConsumeSignatures(generatedDefinitions, pipeline.Except(new[] { stage }).ToList());
+                var deeperDefinitions = ConsumeSignatures(passthroughSignatures, pipeline.Except(new[] { stage }).ToList());
                 foreach (var deeperDefinition in deeperDefinitions)
                 {
                     yield return deeperDefinition;
