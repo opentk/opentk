@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bind.Builders;
+using Bind.Extensions;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
 
@@ -15,22 +16,7 @@ namespace Bind.Overloaders
         /// <inheritdoc/>
         public bool IsApplicable(FunctionSignature function)
         {
-            return function.Parameters.Any(p => IsVoidPointer(p.Type));
-        }
-
-        /// <summary>
-        /// Determines whether the given type is a void pointer.
-        /// </summary>
-        /// <param name="typeSignature">The type signature.</param>
-        /// <returns>true if the type is a void pointer; otherwise, false.</returns>
-        private bool IsVoidPointer([NotNull] TypeSignature typeSignature)
-        {
-            return typeSignature.Name.Equals
-                   (
-                       typeof(void).Name.ToLowerInvariant(),
-                       StringComparison.OrdinalIgnoreCase
-                   )
-                   && typeSignature.IsPointer;
+            return function.Parameters.Any(p => p.Type.IsVoidPointer());
         }
 
         /// <inheritdoc/>
@@ -48,13 +34,13 @@ namespace Bind.Overloaders
             for (int i = 0; i < baseParameters.Count; ++i)
             {
                 var parameter = baseParameters[i];
-                if (!IsVoidPointer(parameter.Type))
+                if (!parameter.Type.IsVoidPointer())
                 {
                     continue;
                 }
 
                 string genericTypeParameterName = $"T{i}";
-                if (baseParameters.Count(p => IsVoidPointer(p.Type)) > 1)
+                if (baseParameters.Count(p => p.Type.IsVoidPointer()) > 1)
                 {
                     // TODO: Restore sane behaviour after diffing is done
                     // genericTypeParameterName = $"T{newGenericTypeParameters.Count + 1}";

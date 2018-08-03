@@ -160,6 +160,11 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
+  <member name="M:Bind.Extensions.TypeSignatureExtensions.IsVoidPointer(Bind.XML.Signatures.Functions.TypeSignature)">
+    <parameter name="typeSignature">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
   <member name="M:Bind.Extensions.XContainerExtensions.GetRequiredElement(System.Xml.Linq.XContainer,System.String,System.Boolean)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <parameter name="container">

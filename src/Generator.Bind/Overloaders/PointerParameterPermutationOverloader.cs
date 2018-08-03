@@ -16,12 +16,7 @@ namespace Bind.Overloaders
         public bool IsApplicable(FunctionSignature function)
         {
             var pointerParameters = function.Parameters.Where(p => p.Type.IsPointer).ToList();
-            return pointerParameters.Any() &&
-                   pointerParameters.All
-                   (
-                       p =>
-                           !p.Type.Name.Equals(typeof(void).Name, StringComparison.OrdinalIgnoreCase)
-                   );
+            return pointerParameters.Any();
         }
 
         /// <inheritdoc/>
@@ -38,6 +33,12 @@ namespace Bind.Overloaders
 
                 if (!baseType.IsPointer || baseType.IndirectionLevel > 1)
                 {
+                    continue;
+                }
+
+                if (baseType.Name.Equals(typeof(void).Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    // Skip void pointers
                     continue;
                 }
 

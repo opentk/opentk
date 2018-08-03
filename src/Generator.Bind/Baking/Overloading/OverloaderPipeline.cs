@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bind.Overloaders;
@@ -29,6 +30,7 @@ namespace Bind.Baking.Overloading
         private IEnumerable<IFunctionOverloader> GetBaselineOverloaders()
         {
             yield return new VoidPointerParameterOverloader();
+            yield return new VoidPointerReturnValueOverloader();
             yield return new PointerParameterPermutationOverloader();
             yield return new ReturnTypeConvenienceOverloader();
             yield return new ArrayParameterConvenienceOverloader();
