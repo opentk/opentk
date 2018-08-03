@@ -1,5 +1,6 @@
 ﻿using System.CodeDom.Compiler;
 using System.IO;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace Bind.Writers
@@ -34,6 +35,18 @@ namespace Bind.Writers
         public void WriteLineNoTabs()
         {
             WriteLineNoTabs(string.Empty);
+        }
+
+        /// <summary>
+        /// Writes an unindented line to the document.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        public async Task WriteLineNoTabsAsync()
+        {
+            var oldIndent = Indent;
+            Indent = 0;
+            await WriteLineAsync(string.Empty);
+            Indent = oldIndent;
         }
 
         /// <summary>

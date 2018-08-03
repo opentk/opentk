@@ -34,6 +34,7 @@ using Bind.Extensions;
 using Bind.Generators;
 using Bind.Structures;
 using Bind.Writers;
+using Bind.XML.Signatures;
 using Humanizer;
 using JetBrains.Annotations;
 
@@ -54,6 +55,16 @@ namespace Bind
         {
             Generator = generator;
             WriteBindings(generator.Delegates, generator.Wrappers, generator.Enums);
+        }
+
+        /// <summary>
+        /// Writes the bindings for the given generator defined by the given profile to files.
+        /// </summary>
+        /// <param name="generator">The generator.</param>
+        /// <param name="profile">The profile.</param>
+        public void WriteBindings([NotNull] IGenerator generator, ApiProfile profile)
+        {
+            throw new NotImplementedException();
         }
 
         private void WriteBindings
