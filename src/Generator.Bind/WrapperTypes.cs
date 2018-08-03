@@ -82,7 +82,7 @@ namespace Bind
         StringArrayParameter = 1 << 13,
 
         /// <summary>
-        /// Functions takes an IntPtr that corresponds to a size_t.
+        /// NativeSignatures takes an IntPtr that corresponds to a size_t.
         /// Add an int32 overload for convenience.
         /// </summary>
         SizeParameter = 1 << 14

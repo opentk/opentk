@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Bind.Builders;
 using Bind.Translation.Trimmers;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Functions;
@@ -17,7 +18,7 @@ namespace Bind.Translation.Translators
             var dataTypeTrimmer = new OpenGLFunctionDataTypeTrimmer();
 
             var newFunctions = new List<FunctionSignature>();
-            foreach (var function in profile.Functions)
+            foreach (var function in profile.NativeSignatures)
             {
                 var processingFunction = function;
                 if (extensionTrimmer.IsRelevant(processingFunction))
@@ -33,13 +34,9 @@ namespace Bind.Translation.Translators
                 newFunctions.Add(processingFunction);
             }
 
-            return new ApiProfile
-            (
-                profile.Name,
-                profile.Versions,
-                newFunctions,
-                profile.Enumerations
-            );
+            return new ApiProfileBuilder(profile)
+                .WithNativeSignatures(newFunctions)
+                .Build();
         }
     }
 }

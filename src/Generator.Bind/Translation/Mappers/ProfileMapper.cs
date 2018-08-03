@@ -30,17 +30,17 @@ namespace Bind.Translation.Mappers
         /// <inheritdoc/>
         public bool HasMapping(ApiProfile profile)
         {
-            return profile.Functions.Any(f => _glFunctionMapper.HasMapping(f));
+            return profile.NativeSignatures.Any(f => _glFunctionMapper.HasMapping(f));
         }
 
         /// <inheritdoc/>
         public ApiProfile Map(ApiProfile profile)
         {
-            var functionsThatDoNotNeedMapping = profile.Functions
+            var functionsThatDoNotNeedMapping = profile.NativeSignatures
                 .Where(f => !_glFunctionMapper.HasMapping(f))
                 .ToList();
 
-            var mappedFunctions = profile.Functions
+            var mappedFunctions = profile.NativeSignatures
                 .Where(f => _glFunctionMapper.HasMapping(f))
                 .Select(_glFunctionMapper.Map)
                 .ToList();
@@ -59,7 +59,9 @@ namespace Bind.Translation.Mappers
 
             allFunctions = functionsThatDoNotHaveGenericEnums.Concat(resolvedFunctionsWithGenericEnums).ToList();
 
-            return new ApiProfile(profile.Name, profile.Versions, allFunctions, profile.Enumerations);
+            return new ApiProfileBuilder(profile)
+                .WithNativeSignatures(allFunctions)
+                .Build();
         }
 
         /// <summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Bind.Builders;
 using Bind.Translation.Translators;
 using Bind.Translation.Trimmers;
 using Bind.Versioning;
@@ -92,7 +93,7 @@ namespace Bind.Baking
                 .Concat(coalescedProfile.Enumerations)
                 .ToList();
 
-            var newFunctions = coalescedProfile.Functions.ToList();
+            var newFunctions = coalescedProfile.NativeSignatures.ToList();
 
             foreach (var functionReplacement in coalescedOverrides.ReplacedFunctions)
             {
@@ -106,6 +107,7 @@ namespace Bind.Baking
                 }
             }
 
+            var newOverloads = new List<FunctionSignature>(coalescedProfile.Overloads);
             foreach (var functionOverload in coalescedOverrides.FunctionOverloads)
             {
                 var baseFunctions = FindBaseFunctions(newFunctions, functionOverload);
@@ -113,17 +115,15 @@ namespace Bind.Baking
                 {
                     var overloadedFunction = CreateOverriddenFunction(baseFunction, functionOverload);
 
-                    newFunctions.Add(overloadedFunction);
+                    newOverloads.Add(overloadedFunction);
                 }
             }
 
-            return new ApiProfile
-            (
-                coalescedProfile.Name,
-                coalescedProfile.Versions,
-                newFunctions,
-                newEnums
-            );
+            return new ApiProfileBuilder(coalescedProfile)
+                .WithNativeSignatures(newFunctions)
+                .WithEnumerations(newEnums)
+                .WithOverloads(newOverloads)
+                .Build();
         }
 
         /// <summary>
@@ -727,7 +727,7 @@ namespace Bind.Baking
             foreach (var profile in profiles)
             {
                 // Pre-bake any function in the profile which hasn't already been pre-baked by a previous profile
-                foreach (var function in profile.Functions)
+                foreach (var function in profile.NativeSignatures)
                 {
                     if (functions.ContainsKey(function.Name))
                     {

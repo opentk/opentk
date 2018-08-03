@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Bind.Builders;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
@@ -22,31 +23,28 @@ namespace Bind.Baking.Overloading
         {
             var pipeline = new OverloaderPipeline();
 
-            var functionsThatNeedOverloads = profile.Functions.Where(f => pipeline.HasApplicableStage(f));
+            var functionsThatNeedOverloads = profile.NativeSignatures.Where(f => pipeline.HasApplicableStage(f));
             var newOverloads = pipeline.ConsumeSignatures(functionsThatNeedOverloads).ToList();
 
-            var newFunctions = profile.Functions.Concat(newOverloads).ToList();
-
             // Discard duplicate overloads
-            // TODO: Move to another dedicated class?
-            var optimizedFunctions = new List<FunctionSignature>();
-            foreach (var extensionGroup in newFunctions.GroupBy(f => f.Extension))
+            var optimizedOverloads = new List<FunctionSignature>(profile.Overloads);
+            foreach (var extensionGroup in newOverloads.GroupBy(f => f.Extension))
             {
-                var uniqueFunctions = new List<FunctionSignature>();
+                var uniqueOverloads = new List<FunctionSignature>();
                 foreach (var function in extensionGroup)
                 {
-                    if (uniqueFunctions.Any(f => f.HasSameSignatureAs(function)))
+                    if (uniqueOverloads.Any(f => f.HasSameSignatureAs(function)))
                     {
                         continue;
                     }
 
-                    uniqueFunctions.Add(function);
+                    uniqueOverloads.Add(function);
                 }
 
-                optimizedFunctions.AddRange(uniqueFunctions);
+                optimizedOverloads.AddRange(uniqueOverloads);
             }
 
-            return new ApiProfile(profile.Name, profile.Versions, optimizedFunctions, profile.Enumerations);
+            return new ApiProfileBuilder(profile).WithOverloads(optimizedOverloads).Build();
         }
     }
 }

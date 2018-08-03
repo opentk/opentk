@@ -86,7 +86,7 @@ namespace Bind
 
                 generator.LoadData();
 
-                var newSignatures = overloadedProfile.Functions
+                var newSignatures = overloadedProfile.NativeSignatures
                     .OrderBy(f => f.Name)
                     .ThenBy(f => f.Parameters.Any(p => p.Type.IsPointer))
                     .ThenBy(f => f.Parameters.Any(p => p.Type.IsArray))

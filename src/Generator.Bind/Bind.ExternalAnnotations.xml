@@ -44,6 +44,44 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
+  <member name="M:Bind.Builders.ApiProfileBuilder.#ctor(Bind.XML.Signatures.ApiProfile)">
+    <parameter name="profile">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Builders.ApiProfileBuilder.Build">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.Builders.ApiProfileBuilder.WithEnumerations(System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Enumerations.EnumerationSignature})">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="newEnumerations">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Builders.ApiProfileBuilder.WithName(System.String)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="newName">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Builders.ApiProfileBuilder.WithNativeSignatures(System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.FunctionSignature})">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="newNativeSignatures">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Builders.ApiProfileBuilder.WithOverloads(System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.FunctionSignature})">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="newOverloads">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Bind.Builders.ApiProfileBuilder.WithVersions(Bind.Versioning.VersionRange)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="newVersions">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
   <member name="M:Bind.Builders.FunctionSignatureBuilder.#ctor(Bind.XML.Signatures.Functions.FunctionSignature)">
     <parameter name="functionSignature">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
@@ -716,18 +754,21 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="M:Bind.XML.Signatures.ApiProfile.#ctor(System.String,Bind.Versioning.VersionRange,System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.FunctionSignature},System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Enumerations.EnumerationSignature})">
+  <member name="M:Bind.XML.Signatures.ApiProfile.#ctor(System.String,Bind.Versioning.VersionRange,System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.FunctionSignature},System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Enumerations.EnumerationSignature},System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.FunctionSignature})">
     <parameter name="name">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
     <parameter name="versions">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
-    <parameter name="functions">
+    <parameter name="nativeSignatures">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
     <parameter name="enumerations">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="overloads">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
     </parameter>
   </member>
   <member name="P:Bind.XML.Signatures.ApiProfile.Enumerations">
@@ -739,7 +780,10 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="P:Bind.XML.Signatures.ApiProfile.Functions">
+  <member name="P:Bind.XML.Signatures.ApiProfile.NativeSignatures">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="P:Bind.XML.Signatures.ApiProfile.Overloads">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
   <member name="M:Bind.XML.Signatures.Enumerations.EnumerationSignature.#ctor(System.String,System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Enumerations.TokenSignature})">

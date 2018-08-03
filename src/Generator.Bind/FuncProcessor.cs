@@ -816,7 +816,6 @@ namespace Bind
                     {
                         // Match Gen*|Get*|New*([Out] int[] names) methods
                         f = CreateReturnTypeConvenienceWrapper(d);
-                        Debug.WriteLine($"Generated return type convenience wrapper: {f}");
                     }
                     else if (isCandidate && parameter.Flow != FlowDirection.Out)
                     {
@@ -824,7 +823,6 @@ namespace Bind
                         if (d.Parameters.Count == 2)
                         {
                             f = CreateArrayParameterConvenienceWrapper(d);
-                            Debug.WriteLine($"Generated array parameter convenience wrapper: {f}");
                         }
                     }
 
@@ -939,7 +937,7 @@ namespace Bind
         {
             if (func.Parameters.Count == 0)
             {
-                // Functions without parameters do not need
+                // NativeSignatures without parameters do not need
                 // parameter wrappers
                 yield return func;
                 yield break;

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Bind.Builders;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Enumerations;
 
@@ -32,7 +33,9 @@ namespace Bind.Translation.Translators
                 newEnumerations.Add(new EnumerationSignature(newEnumerationName, newTokens));
             }
 
-            return new ApiProfile(profile.Name, profile.Versions, profile.Functions, newEnumerations);
+            return new ApiProfileBuilder(profile)
+                .WithEnumerations(newEnumerations)
+                .Build();
         }
     }
 }

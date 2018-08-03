@@ -21,10 +21,19 @@ namespace Bind.XML.Signatures
         public VersionRange Versions { get; }
 
         /// <summary>
-        /// Gets the available functions in the profile.
+        /// Gets the available native signatures in the profile. These define the native P/Invoke signatures. Together
+        /// with <see cref="Overloads"/>, they form the complete API surface.
         /// </summary>
         [NotNull]
-        public IReadOnlyList<FunctionSignature> Functions { get; }
+        public IReadOnlyList<FunctionSignature> NativeSignatures { get; }
+
+        /// <summary>
+        /// Gets the available overloads in the profile. These define language-specific signatures that may not have a
+        /// native equivalent, and are supplemental to the native signatures. Together with
+        /// <see cref="NativeSignatures"/>, they form the complete API surface.
+        /// </summary>
+        [NotNull]
+        public IReadOnlyList<FunctionSignature> Overloads { get; }
 
         /// <summary>
         /// Gets the available enumerations in the profile.
@@ -37,31 +46,40 @@ namespace Bind.XML.Signatures
         /// </summary>
         /// <param name="name">The profile name.</param>
         /// <param name="versions">The versions the profile encompasses.</param>
-        /// <param name="functions">The functions in the profile.</param>
+        /// <param name="nativeSignatures">The native signatures in the profile.</param>
         /// <param name="enumerations">The enumerations in the profile.</param>
+        /// <param name="overloads">The overloads, if any.</param>
         public ApiProfile
         (
             [NotNull] string name,
             [NotNull] VersionRange versions,
-            [NotNull] IReadOnlyList<FunctionSignature> functions,
-            [NotNull] IReadOnlyList<EnumerationSignature> enumerations
+            [NotNull] IReadOnlyList<FunctionSignature> nativeSignatures,
+            [NotNull] IReadOnlyList<EnumerationSignature> enumerations,
+            [CanBeNull] IReadOnlyList<FunctionSignature> overloads = null
         )
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Versions = versions ?? throw new ArgumentNullException(nameof(versions));
-            Functions = functions ?? throw new ArgumentNullException(nameof(functions));
+            NativeSignatures = nativeSignatures ?? throw new ArgumentNullException(nameof(nativeSignatures));
             Enumerations = enumerations ?? throw new ArgumentNullException(nameof(enumerations));
+            Overloads = overloads ?? new List<FunctionSignature>();
         }
 
         /// <summary>
-        /// Looks up the function that has the given native entrypoint.
+        /// Looks up the first function that has the given native entrypoint.
         /// </summary>
         /// <param name="entrypoint">The entry point.</param>
         /// <returns>The function.</returns>
         [CanBeNull]
         public FunctionSignature FindFunctionWithEntrypoint([NotNull] string entrypoint)
         {
-            return Functions.FirstOrDefault(f => f.NativeEntrypoint == entrypoint);
+            var nativeSignature = NativeSignatures.FirstOrDefault(f => f.NativeEntrypoint == entrypoint);
+            if (nativeSignature is null)
+            {
+                return Overloads.FirstOrDefault(f => f.NativeEntrypoint == entrypoint);
+            }
+
+            return nativeSignature;
         }
 
         /// <summary>
