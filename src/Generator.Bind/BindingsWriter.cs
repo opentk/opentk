@@ -53,10 +53,10 @@ namespace Bind
         /// Writes the bindings for the given generator to file.
         /// </summary>
         /// <param name="generator">The generator.</param>
-        public void WriteBindings([NotNull] IGenerator generator)
+        public void LegacyWriteBindings([NotNull] IGenerator generator)
         {
             Generator = generator;
-            WriteBindings(generator.Delegates, generator.Wrappers, generator.Enums);
+            LegacyWriteBindings(generator.Delegates, generator.Wrappers, generator.Enums);
         }
 
         /// <summary>
@@ -65,12 +65,226 @@ namespace Bind
         /// <param name="generator">The generator.</param>
         /// <param name="profile">The profile.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public Task WriteBindingsAsync([NotNull] IGenerator generator, ApiProfile profile)
+        public async Task WriteBindingsAsync([NotNull] IGenerator generator, ApiProfile profile)
         {
+            var baseOutputPath = Program.Arguments.OutputPath;
+
+            Console.WriteLine($"Writing bindings to {baseOutputPath}");
+
+            if (!Directory.Exists(baseOutputPath))
+            {
+                Directory.CreateDirectory(baseOutputPath);
+            }
+
+            await WriteWrappersAsync(generator, profile);
+
             throw new NotImplementedException();
         }
 
-        private void WriteBindings
+        private async Task WriteWrappersAsync(IGenerator generator, ApiProfile profile)
+        {
+            Trace.WriteLine($"Writing wrappers to:\t{Generator.Namespace}.{Generator.ClassName}");
+
+            var baseOutputPath = Path.Combine(Program.Arguments.OutputPath, Generator.OutputSubfolder);
+            var wrappersOutputDirectory = Path.Combine(baseOutputPath, "Wrappers");
+
+            if (!Directory.Exists(wrappersOutputDirectory))
+            {
+                Directory.CreateDirectory(wrappersOutputDirectory);
+            }
+
+            // Create the interop setup necessary
+            var tempInteropFilePath = Path.GetTempFileName();
+            using (var outputFile = File.Open(tempInteropFilePath, FileMode.OpenOrCreate))
+            {
+                using (var sw = new SourceWriter(new StreamWriter(outputFile)))
+                {
+                    await WriteLicenseAsync(sw);
+                    await sw.WriteLineNoTabsAsync();
+
+                    await sw.WriteLineAsync("using System;");
+                    await sw.WriteLineAsync("using System.Runtime.InteropServices;");
+                    await sw.WriteLineAsync("using System.Text;");
+                    await sw.WriteLineNoTabsAsync();
+
+                    await sw.WriteLineAsync($"namespace {Generator.Namespace}");
+                    using (sw.BeginBlock())
+                    {
+                        await sw.WriteLineAsync($"public sealed partial class {Generator.ClassName}");
+                        using (sw.BeginBlock())
+                        {
+                            // Write constructor
+                            await sw.WriteLineAsync($"static {Generator.ClassName}()");
+                            using (sw.BeginBlock())
+                            {
+                                var nativeEntrypointsWithPrefix = profile.NativeSignatures
+                                    .Select
+                                    (
+                                        ns => $"{generator.FunctionPrefix}{ns.Name}"
+                                    )
+                                    .ToList();
+
+                                // Write entry point names.
+                                // Instead of strings, which are costly to construct,
+                                // we use a 1d array of ASCII bytes. Names are laid out
+                                // sequentially, with a nul-terminator between them.
+                                await sw.WriteLineAsync("EntryPointNames = new byte[]");
+                                using (sw.BeginBlock(true))
+                                {
+                                    foreach (var nativeEntrypoint in nativeEntrypointsWithPrefix)
+                                    {
+                                        var byteString = string.Join
+                                        (
+                                            ", ",
+                                            Encoding.ASCII.GetBytes(nativeEntrypoint).Select(b => b.ToString()).ToArray()
+                                        );
+
+                                        await sw.WriteLineAsync($"{byteString}, 0,");
+                                    }
+                                }
+
+                                await sw.WriteLineNoTabsAsync();
+
+                                // Write entry point name offsets.
+                                // This is an array of offsets into the EntryPointNames[] array above.
+                                await sw.WriteLineAsync("EntryPointNameOffsets = new int[]");
+                                using (sw.BeginBlock(true))
+                                {
+                                    var offset = 0;
+                                    foreach (var nativeEntrypoint in nativeEntrypointsWithPrefix)
+                                    {
+                                        await sw.WriteLineAsync($"{offset},");
+                                        offset += nativeEntrypoint.Length + 1;
+                                    }
+                                }
+
+                                await sw.WriteLineNoTabsAsync();
+
+                                await sw.WriteLineAsync("EntryPoints = new IntPtr[EntryPointNameOffsets.Length];");
+                            }
+                        }
+                    }
+                }
+            }
+
+            var outputFilePath = Path.Combine(wrappersOutputDirectory, $"{Generator.ClassName}.cs");
+
+            if (File.Exists(outputFilePath))
+            {
+                File.Delete(outputFilePath);
+            }
+
+            File.Move(tempInteropFilePath, outputFilePath);
+
+            // Next, we'll create the individual category files
+            foreach (var (extensionName, extensionWrappers) in wrappers)
+            {
+                var extensionOutputDirectory = Path.Combine(wrappersOutputDirectory, extensionName);
+
+                if (!Directory.Exists(extensionOutputDirectory))
+                {
+                    Directory.CreateDirectory(extensionOutputDirectory);
+                }
+
+                var wrappersByCategory = extensionWrappers.GroupBy(w => w.Category);
+                foreach (var category in wrappersByCategory)
+                {
+                    var safeCategoryName = category.Key.Replace('|', '-');
+                    var categoryNameWithoutExtensionPrefix = safeCategoryName.Substring(category.Key.IndexOf('_') + 1);
+                    var titleCaseCategoryName = categoryNameWithoutExtensionPrefix.Pascalize();
+
+                    var tempWrapperOutputPath = Path.GetTempFileName();
+                    using (var outputFile = File.Open(tempWrapperOutputPath, FileMode.OpenOrCreate))
+                    {
+                        using (var sw = new SourceWriter(new StreamWriter(outputFile)))
+                        {
+                            LegacyWriteLicense(sw);
+                            await sw.WriteLineNoTabsAsync();
+
+                            await sw.WriteLineAsync("using System;");
+                            await sw.WriteLineAsync("using System.Runtime.InteropServices;");
+                            await sw.WriteLineAsync("using System.Text;");
+                            await sw.WriteLineNoTabsAsync();
+
+                            await sw.WriteLineAsync($"namespace {Generator.Namespace}");
+                            using (sw.BeginBlock())
+                            {
+                                SourceWriterBlock outerBlock = null;
+                                if (extensionName == "Core")
+                                {
+                                    await sw.WriteLineAsync($"public sealed partial class {Generator.ClassName}");
+                                }
+                                else
+                                {
+                                    await sw.WriteLineAsync($"public sealed partial class {Generator.ClassName}");
+
+                                    outerBlock = sw.BeginBlock();
+
+                                    await sw.WriteLineAsync("/// <summary>");
+                                    await sw.WriteLineAsync($"/// Contains native bindings to functions in the category \"{titleCaseCategoryName}\" in the extension \"{extensionName}\".");
+                                    await sw.WriteLineAsync("/// </summary>");
+
+                                    // Identifiers can't begin with numbers
+                                    var safeExtensionName = char.IsDigit(extensionName[0])
+                                        ? $"{Generator.ConstantPrefix}{extensionName}"
+                                        : extensionName;
+
+                                    await sw.WriteLineAsync($"public static partial class {safeExtensionName}");
+                                }
+
+                                using (sw.BeginBlock())
+                                {
+                                    var categoryWrappers = category.OrderBy(w => w).ToList();
+                                    foreach (var wrapper in categoryWrappers)
+                                    {
+                                        LegacyWriteMethod(sw, wrapper);
+
+                                        if (wrapper != categoryWrappers.Last())
+                                        {
+                                            await sw.WriteLineNoTabsAsync();
+                                        }
+                                    }
+
+                                    await sw.WriteLineNoTabsAsync();
+
+                                    await sw.WriteLineAsync("#pragma warning disable SA1300 // Element should begin with an upper-case letter");
+                                    await sw.WriteLineNoTabsAsync();
+
+                                    // Emit native signatures.
+                                    // These are required by the patcher.
+                                    var categoryNatives = categoryWrappers.Select(w => w.WrappedDelegateDefinition).Distinct().ToList();
+                                    foreach (var native in categoryNatives)
+                                    {
+                                        await sw.WriteLineAsync($"[Slot({native.Slot})]");
+                                        await sw.WriteLineAsync("[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
+                                        await sw.WriteLineAsync($"private static extern {LegacyGetDeclarationString(native)};");
+
+                                        if (native != categoryNatives.Last())
+                                        {
+                                            await sw.WriteLineNoTabsAsync();
+                                        }
+                                    }
+                                }
+
+                                // We've got a nested class to close
+                                outerBlock?.Dispose();
+                            }
+                        }
+                    }
+
+                    var outputCategorySubPath = Path.Combine(extensionOutputDirectory, $"{titleCaseCategoryName}.cs");
+
+                    if (File.Exists(outputCategorySubPath))
+                    {
+                        File.Delete(outputCategorySubPath);
+                    }
+
+                    File.Move(tempWrapperOutputPath, outputCategorySubPath);
+                }
+            }
+        }
+
+        private void LegacyWriteBindings
         (
             [NotNull] DelegateCollection delegates,
             [NotNull] FunctionCollection wrappers,
@@ -90,10 +304,10 @@ namespace Bind
             LegacyWriteEnums(enums, wrappers);
 
             // Wrappers
-            WriteWrappers(wrappers, delegates);
+            LegacyWriteWrappers(wrappers, delegates);
         }
 
-        private void WriteWrappers([NotNull] FunctionCollection wrappers, [NotNull] DelegateCollection delegates)
+        private void LegacyWriteWrappers([NotNull] FunctionCollection wrappers, [NotNull] DelegateCollection delegates)
         {
             Trace.WriteLine($"Writing wrappers to:\t{Generator.Namespace}.{Generator.ClassName}");
 
