@@ -29,6 +29,7 @@ using System.Runtime.InteropServices;
 using OpenTK.Core;
 using OpenTK.Graphics;
 using OpenTK.Input;
+using OpenTK.NT.Native;
 
 namespace OpenTK.Platform.Windows
 {
@@ -60,7 +61,7 @@ namespace OpenTK.Platform.Windows
                 {
                     // Enable high-dpi support
                     // Only available on Windows Vista and higher
-                    var result = Functions.SetProcessDPIAware();
+                    var result = User32.Window.SetProcessDPIAware();
                     Debug.Print("SetProcessDPIAware() returned {0}", result);
                 }
             }
@@ -75,9 +76,7 @@ namespace OpenTK.Platform.Windows
                 lock (SyncRoot)
                 {
                     if (rawinput_driver == null)
-                    {
                         rawinput_driver = new WinRawInput();
-                    }
 
                     return rawinput_driver;
                 }
@@ -86,7 +85,7 @@ namespace OpenTK.Platform.Windows
 
         private static void LoadOpenGL()
         {
-            OpenGLHandle = Functions.LoadLibrary(OpenGLName);
+            OpenGLHandle = Kernel32.LoadLibrary(OpenGLName);
             if (OpenGLHandle == IntPtr.Zero)
             {
                 throw new ApplicationException(

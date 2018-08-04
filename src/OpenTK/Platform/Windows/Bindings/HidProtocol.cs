@@ -28,7 +28,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
-using OpenTK.Platform.Common;
+using OpenTK.Input.Hid;
 
 namespace OpenTK.Platform.Windows
 {
@@ -72,26 +72,26 @@ namespace OpenTK.Platform.Windows
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetScaledUsageValue")]
         public static extern HidProtocolStatus GetScaledUsageValue(HidProtocolReportType type,
-            HIDPage usage_page, short link_collection, short usage, ref int usage_value,
+            HidPage usage_page, short link_collection, short usage, ref int usage_value,
             [In] byte[] preparsed_data, IntPtr report, int report_length);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetSpecificButtonCaps")]
         public static extern HidProtocolStatus GetSpecificButtonCaps(HidProtocolReportType ReportType,
-            HIDPage UsagePage, ushort LinkCollection, ushort Usage,
+            HidPage UsagePage, ushort LinkCollection, ushort Usage,
             [Out] HidProtocolButtonCaps[] ButtonCaps, ref ushort ButtonCapsLength,
             [In] byte[] PreparsedData);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetUsages")]
         public static extern unsafe HidProtocolStatus GetUsages(HidProtocolReportType type,
-            HIDPage usage_page, short link_collection, short* usage_list, ref int usage_length,
+            HidPage usage_page, short link_collection, short* usage_list, ref int usage_length,
             [In] byte[] preparsed_data, IntPtr report, int report_length);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_GetUsageValue")]
         public static extern HidProtocolStatus GetUsageValue(HidProtocolReportType type,
-            HIDPage usage_page, short link_collection, short usage, ref uint usage_value,
+            HidPage usage_page, short link_collection, short usage, ref uint usage_value,
             [In] byte[] preparsed_data, IntPtr report, int report_length);
 
         [SuppressUnmanagedCodeSecurity]
@@ -146,7 +146,7 @@ namespace OpenTK.Platform.Windows
     [StructLayout(LayoutKind.Explicit)]
     internal struct HidProtocolButtonCaps
     {
-        [FieldOffset(0)] public HIDPage UsagePage;
+        [FieldOffset(0)] public HidPage UsagePage;
         [FieldOffset(2)] public byte ReportID;
 
         [FieldOffset(3)] [MarshalAs(UnmanagedType.U1)]
@@ -226,7 +226,7 @@ namespace OpenTK.Platform.Windows
     internal struct HidProtocolLinkCollectionNode
     {
         public ushort LinkUsage;
-        public HIDPage LinkUsagePage;
+        public HidPage LinkUsagePage;
         public ushort Parent;
         public ushort NumberOfChildren;
         public ushort NextSibling;
@@ -257,7 +257,7 @@ namespace OpenTK.Platform.Windows
     internal struct HidProtocolValueCaps
     {
 #pragma warning disable 169 // private field is never used
-        [FieldOffset(0)] public HIDPage UsagePage;
+        [FieldOffset(0)] public HidPage UsagePage;
         [FieldOffset(2)] public byte ReportID;
 
         [FieldOffset(3)] [MarshalAs(UnmanagedType.U1)]

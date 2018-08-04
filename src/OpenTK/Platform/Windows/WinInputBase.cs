@@ -27,7 +27,9 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
+using OpenTK.Core.Platform;
 using OpenTK.Input;
+using OpenTK.NT.Native;
 
 namespace OpenTK.Platform.Windows
 {
@@ -36,7 +38,7 @@ namespace OpenTK.Platform.Windows
         private static readonly IntPtr Unhandled = new IntPtr(-1);
         private readonly AutoResetEvent InputReady = new AutoResetEvent(false);
         private readonly Thread InputThread;
-        private readonly WindowProcedure WndProc;
+        private readonly WindowProc WindowProc;
 
         protected bool Disposed;
 
@@ -44,7 +46,7 @@ namespace OpenTK.Platform.Windows
 
         public WinInputBase()
         {
-            WndProc = WindowProcedure;
+            WindowProc = WindowProcedure;
 
             InputThread = new Thread(ProcessEvents);
             InputThread.SetApartmentState(ApartmentState.STA);
@@ -73,7 +75,7 @@ namespace OpenTK.Platform.Windows
             INativeWindow native = new NativeWindow();
             native.ProcessEvents();
             var parent = native.WindowInfo as WinWindowInfo;
-            Functions.SetParent(parent.Handle, Constants.MESSAGE_ONLY);
+            User32.Window.SetParent(parent.Handle, new IntPtr(-3)); // HWND_MESSAGE, a message-only window
             native.ProcessEvents();
 
             Debug.Unindent();
@@ -87,23 +89,22 @@ namespace OpenTK.Platform.Windows
             CreateDrivers();
 
             // Subclass the window to retrieve the events we are interested in.
-            OldWndProc = Functions.SetWindowLong(Parent.Handle, WndProc);
+            OldWndProc = User32.Window.SetWindowLong(Parent.Handle, WindowProc);
             Debug.Print("Input window attached to {0}", Parent);
 
             InputReady.Set();
 
-            var msg = new MSG();
             while (Native.Exists)
             {
-                var ret = Functions.GetMessage(ref msg, Parent.Handle, 0, 0);
+                var ret = User32.Message.GetMessage(out Msg msg, Parent.Handle, 0, 0);
                 if (ret == -1)
                 {
                     throw new PlatformException(
                         $"An error happened while processing the message queue. Windows error: {Marshal.GetLastWin32Error()}");
                 }
 
-                Functions.TranslateMessage(ref msg);
-                Functions.DispatchMessage(ref msg);
+                User32.Message.TranslateMessage(ref msg);
+                User32.Message.DispatchMessage(ref msg);
             }
         }
 
@@ -113,7 +114,7 @@ namespace OpenTK.Platform.Windows
             var ret = WindowProcedure(handle, message, wParam, lParam);
             if (ret == Unhandled)
             {
-                return Functions.CallWindowProc(OldWndProc, handle, message, wParam, lParam);
+                return User32.Window.CallWindowProc(OldWndProc, handle, message, wParam, lParam);
             }
 
             return ret;

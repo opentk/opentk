@@ -87,10 +87,10 @@ namespace OpenTK.Mathematics
             var s2 = (float)Math.Sin(rotationY);
             var s3 = (float)Math.Sin(rotationZ);
 
-            W = c1 * c2 * c3 - s1 * s2 * s3;
-            Xyz.X = s1 * c2 * c3 + c1 * s2 * s3;
-            Xyz.Y = c1 * s2 * c3 - s1 * c2 * s3;
-            Xyz.Z = c1 * c2 * s3 + s1 * s2 * c3;
+            W = (c1 * c2 * c3) - (s1 * s2 * s3);
+            Xyz.X = (s1 * c2 * c3) + (c1 * s2 * s3);
+            Xyz.Y = (c1 * s2 * c3) - (s1 * c2 * s3);
+            Xyz.Z = (c1 * c2 * s3) + (s1 * s2 * c3);
         }
 
         /// <summary>
@@ -157,10 +157,12 @@ namespace OpenTK.Mathematics
                 q.Normalize();
             }
 
-            var result = new Vector4();
+            var result = new Vector4
+            {
+                W = 2.0f * (float)Math.Acos(q.W) // angle
+            };
 
-            result.W = 2.0f * (float)Math.Acos(q.W); // angle
-            var den = (float)Math.Sqrt(1.0 - q.W * q.W);
+            var den = (float)Math.Sqrt(1.0 - (q.W * q.W));
             if (den > 0.0001f)
             {
                 result.Xyz = q.Xyz / den;
@@ -178,13 +180,13 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the length (magnitude) of the quaternion.
         /// </summary>
-        /// <seealso cref="LengthSquared" />
-        public float Length => (float)Math.Sqrt(W * W + Xyz.LengthSquared);
+        /// <seealso cref="LengthSquared"/>
+        public float Length => (float)Math.Sqrt((W * W) + Xyz.LengthSquared);
 
         /// <summary>
         /// Gets the square of the quaternion length (magnitude).
         /// </summary>
-        public float LengthSquared => W * W + Xyz.LengthSquared;
+        public float LengthSquared => (W * W) + Xyz.LengthSquared;
 
         /// <summary>
         /// Returns a copy of the Quaternion scaled to unit length.
@@ -297,8 +299,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance containing the result of the calculation.</returns>
         public static Quaternion Multiply(Quaternion left, Quaternion right)
         {
-            Quaternion result;
-            Multiply(ref left, ref right, out result);
+            Multiply(ref left, ref right, out Quaternion result);
             return result;
         }
 
@@ -311,8 +312,8 @@ namespace OpenTK.Mathematics
         public static void Multiply(ref Quaternion left, ref Quaternion right, out Quaternion result)
         {
             result = new Quaternion(
-                right.W * left.Xyz + left.W * right.Xyz + Vector3.Cross(left.Xyz, right.Xyz),
-                left.W * right.W - Vector3.Dot(left.Xyz, right.Xyz));
+                (right.W * left.Xyz) + (left.W * right.Xyz) + Vector3.Cross(left.Xyz, right.Xyz),
+                (left.W * right.W) - Vector3.Dot(left.Xyz, right.Xyz));
         }
 
         /// <summary>
@@ -323,8 +324,13 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance containing the result of the calculation.</param>
         public static void Multiply(ref Quaternion quaternion, float scale, out Quaternion result)
         {
-            result = new Quaternion(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale,
-                quaternion.W * scale);
+            result = new Quaternion
+            (
+                quaternion.X * scale,
+                quaternion.Y * scale,
+                quaternion.Z * scale,
+                quaternion.W * scale
+            );
         }
 
         /// <summary>
@@ -335,8 +341,13 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance containing the result of the calculation.</returns>
         public static Quaternion Multiply(Quaternion quaternion, float scale)
         {
-            return new Quaternion(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale,
-                quaternion.W * scale);
+            return new Quaternion
+            (
+                quaternion.X * scale,
+                quaternion.Y * scale,
+                quaternion.Z * scale,
+                quaternion.W * scale
+            );
         }
 
         /// <summary>
@@ -366,8 +377,7 @@ namespace OpenTK.Mathematics
         /// <returns>The inverse of the given quaternion</returns>
         public static Quaternion Invert(Quaternion q)
         {
-            Quaternion result;
-            Invert(ref q, out result);
+            Invert(ref q, out Quaternion result);
             return result;
         }
 
@@ -397,8 +407,7 @@ namespace OpenTK.Mathematics
         /// <returns>The normalized quaternion</returns>
         public static Quaternion Normalize(Quaternion q)
         {
-            Quaternion result;
-            Normalize(ref q, out result);
+            Normalize(ref q, out Quaternion result);
             return result;
         }
 
@@ -478,10 +487,10 @@ namespace OpenTK.Mathematics
             var s2 = (float)Math.Sin(eulerAngles.Y * 0.5f);
             var s3 = (float)Math.Sin(eulerAngles.Z * 0.5f);
 
-            result.W = c1 * c2 * c3 - s1 * s2 * s3;
-            result.Xyz.X = s1 * c2 * c3 + c1 * s2 * s3;
-            result.Xyz.Y = c1 * s2 * c3 - s1 * c2 * s3;
-            result.Xyz.Z = c1 * c2 * s3 + s1 * s2 * c3;
+            result.W = (c1 * c2 * c3) - (s1 * s2 * s3);
+            result.Xyz.X = (s1 * c2 * c3) + (c1 * s2 * s3);
+            result.Xyz.Y = (c1 * s2 * c3) - (s1 * c2 * s3);
+            result.Xyz.Z = (c1 * c2 * s3) + (s1 * s2 * c3);
         }
 
         /// <summary>
@@ -491,8 +500,7 @@ namespace OpenTK.Mathematics
         /// <returns>The equivalent quaternion</returns>
         public static Quaternion FromMatrix(Matrix3 matrix)
         {
-            Quaternion result;
-            FromMatrix(ref matrix, out result);
+            FromMatrix(ref matrix, out Quaternion result);
             return result;
         }
 
@@ -577,8 +585,7 @@ namespace OpenTK.Mathematics
                 return q1;
             }
 
-
-            var cosHalfAngle = q1.W * q2.W + Vector3.Dot(q1.Xyz, q2.Xyz);
+            var cosHalfAngle = (q1.W * q2.W) + Vector3.Dot(q1.Xyz, q2.Xyz);
 
             if (cosHalfAngle >= 1.0f || cosHalfAngle <= -1.0f)
             {
@@ -611,7 +618,7 @@ namespace OpenTK.Mathematics
                 blendB = blend;
             }
 
-            var result = new Quaternion(blendA * q1.Xyz + blendB * q2.Xyz, blendA * q1.W + blendB * q2.W);
+            var result = new Quaternion((blendA * q1.Xyz) + (blendB * q2.Xyz), (blendA * q1.W) + (blendB * q2.W));
             if (result.LengthSquared > 0.0f)
             {
                 return Normalize(result);
@@ -678,8 +685,13 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance containing the result of the calculation.</returns>
         public static Quaternion operator *(float scale, Quaternion quaternion)
         {
-            return new Quaternion(quaternion.X * scale, quaternion.Y * scale, quaternion.Z * scale,
-                quaternion.W * scale);
+            return new Quaternion
+            (
+                quaternion.X * scale,
+                quaternion.Y * scale,
+                quaternion.Z * scale,
+                quaternion.W * scale
+            );
         }
 
         /// <summary>

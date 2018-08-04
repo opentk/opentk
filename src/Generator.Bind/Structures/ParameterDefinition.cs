@@ -158,7 +158,7 @@ namespace Bind.Structures
                 {
                     if (ComputeSize.StartsWith("COMPSIZE"))
                     {
-                        //remove the compsize hint, just keep comma delimited param names
+                        // remove the compsize hint, just keep comma delimited param names
                         var len = "COMPSIZE(".Length;
                         var computed = ComputeSize.Substring(len, ComputeSize.Length - len - 1);
                         attributes.Add($"CountAttribute(Computed = \"{computed}\")");

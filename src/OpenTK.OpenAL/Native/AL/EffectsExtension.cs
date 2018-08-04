@@ -412,8 +412,7 @@ namespace OpenTK.OpenAL.Native
         /// </remarks>
         public int GenEffect()
         {
-            int temp;
-            GenEffects(1, out temp);
+            GenEffects(1, out int temp);
             return temp;
         }
 
@@ -748,7 +747,6 @@ namespace OpenTK.OpenAL.Native
             }
         }
 
-
         /// <summary>
         /// The GenFilters function is used to create one or more Filter objects. A Filter object stores a filter type and
         /// a set of parameter values to control that Filter. Filter objects can be attached to Sources as Direct Filters or
@@ -779,8 +777,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>Storage Int32 for the new filter name/handle.</returns>
         public int GenFilter()
         {
-            int filter;
-            GenFilters(1, out filter);
+            GenFilters(1, out int filter);
             return filter;
         }
 
@@ -1084,15 +1081,13 @@ namespace OpenTK.OpenAL.Native
         /// <returns>Storage Int32 for the new auxiliary effect slot name/handle.</returns>
         public int GenAuxiliaryEffectSlot()
         {
-            int temp;
-            GenAuxiliaryEffectSlots(1, out temp);
+            GenAuxiliaryEffectSlots(1, out int temp);
             return temp;
         }
 
         /// <summary>
         /// This function generates only one Auxiliary Effect Slot.
         /// </summary>
-        /// <returns>Storage UInt32 for the new auxiliary effect slot name/handle.</returns>
         public void GenAuxiliaryEffectSlot(out uint slot)
         {
             unsafe

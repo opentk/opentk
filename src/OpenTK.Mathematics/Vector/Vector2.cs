@@ -87,6 +87,7 @@ namespace OpenTK.Mathematics
 
                 throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
             }
+
             set
             {
                 if (index == 0)
@@ -107,9 +108,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the length (magnitude) of the vector.
         /// </summary>
-        /// <see cref="LengthFast" />
-        /// <seealso cref="LengthSquared" />
-        public float Length => (float)Math.Sqrt(X * X + Y * Y);
+        /// <see cref="LengthFast"/>
+        /// <seealso cref="LengthSquared"/>
+        public float Length => (float)Math.Sqrt((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -118,9 +119,9 @@ namespace OpenTK.Mathematics
         /// This property uses an approximation of the square root function to calculate vector magnitude, with
         /// an upper error bound of 0.001.
         /// </remarks>
-        /// <see cref="Length" />
-        /// <seealso cref="LengthSquared" />
-        public float LengthFast => 1.0f / MathHelper.InverseSqrtFast(X * X + Y * Y);
+        /// <see cref="Length"/>
+        /// <seealso cref="LengthSquared"/>
+        public float LengthFast => 1.0f / MathHelper.InverseSqrtFast((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -129,9 +130,9 @@ namespace OpenTK.Mathematics
         /// This property avoids the costly square root operation required by the Length property. This makes it more suitable
         /// for comparisons.
         /// </remarks>
-        /// <see cref="Length" />
-        /// <seealso cref="LengthFast" />
-        public float LengthSquared => X * X + Y * Y;
+        /// <see cref="Length"/>
+        /// <seealso cref="LengthFast"/>
+        public float LengthSquared => (X * X) + (Y * Y);
 
         /// <summary>
         /// Gets the perpendicular vector on the right side of this vector.
@@ -169,7 +170,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            var scale = MathHelper.InverseSqrtFast(X * X + Y * Y);
+            var scale = MathHelper.InverseSqrtFast((X * X) + (Y * Y));
             X *= scale;
             Y *= scale;
         }
@@ -197,7 +198,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Defines the size of the Vector2 struct in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Marshal.SizeOf(new Vector2());
+        public static readonly int SizeInBytes = Marshal.SizeOf<Vector2>();
 
         /// <summary>
         /// Adds two vectors.
@@ -412,7 +413,6 @@ namespace OpenTK.Mathematics
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <param name="result">The magnitude-wise minimum</param>
-        /// <returns>The minimum Vector2</returns>
         public static void MagnitudeMin(ref Vector2 left, ref Vector2 right, out Vector2 result)
         {
             result = left.LengthSquared < right.LengthSquared ? left : right;
@@ -437,7 +437,6 @@ namespace OpenTK.Mathematics
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <param name="result">The magnitude-wise maximum</param>
-        /// <returns>The maximum Vector2</returns>
         public static void MagnitudeMax(ref Vector2 left, ref Vector2 right, out Vector2 result)
         {
             result = left.LengthSquared >= right.LengthSquared ? left : right;
@@ -502,8 +501,7 @@ namespace OpenTK.Mathematics
         /// <returns>The distance</returns>
         public static float Distance(Vector2 vec1, Vector2 vec2)
         {
-            float result;
-            Distance(ref vec1, ref vec2, out result);
+            Distance(ref vec1, ref vec2, out float result);
             return result;
         }
 
@@ -515,7 +513,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The distance</param>
         public static void Distance(ref Vector2 vec1, ref Vector2 vec2, out float result)
         {
-            result = (float)Math.Sqrt((vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y));
+            result = (float)Math.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)));
         }
 
         /// <summary>
@@ -526,8 +524,7 @@ namespace OpenTK.Mathematics
         /// <returns>The squared distance</returns>
         public static float DistanceSquared(Vector2 vec1, Vector2 vec2)
         {
-            float result;
-            DistanceSquared(ref vec1, ref vec2, out result);
+            DistanceSquared(ref vec1, ref vec2, out float result);
             return result;
         }
 
@@ -539,7 +536,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The squared distance</param>
         public static void DistanceSquared(ref Vector2 vec1, ref Vector2 vec2, out float result)
         {
-            result = (vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y);
+            result = ((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y));
         }
 
         /// <summary>
@@ -574,7 +571,7 @@ namespace OpenTK.Mathematics
         /// <returns>The normalized vector</returns>
         public static Vector2 NormalizeFast(Vector2 vec)
         {
-            var scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y);
+            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
             vec.X *= scale;
             vec.Y *= scale;
             return vec;
@@ -587,7 +584,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector</param>
         public static void NormalizeFast(ref Vector2 vec, out Vector2 result)
         {
-            var scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y);
+            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }
@@ -600,7 +597,7 @@ namespace OpenTK.Mathematics
         /// <returns>The dot product of the two inputs</returns>
         public static float Dot(Vector2 left, Vector2 right)
         {
-            return left.X * right.X + left.Y * right.Y;
+            return (left.X * right.X) + (left.Y * right.Y);
         }
 
         /// <summary>
@@ -611,7 +608,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The dot product of the two inputs</param>
         public static void Dot(ref Vector2 left, ref Vector2 right, out float result)
         {
-            result = left.X * right.X + left.Y * right.Y;
+            result = (left.X * right.X) + (left.Y * right.Y);
         }
 
         /// <summary>
@@ -622,7 +619,7 @@ namespace OpenTK.Mathematics
         /// <returns>The perpendicular dot product of the two inputs</returns>
         public static float PerpDot(Vector2 left, Vector2 right)
         {
-            return left.X * right.Y - left.Y * right.X;
+            return (left.X * right.Y) - (left.Y * right.X);
         }
 
         /// <summary>
@@ -633,7 +630,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The perpendicular dot product of the two inputs</param>
         public static void PerpDot(ref Vector2 left, ref Vector2 right, out float result)
         {
-            result = left.X * right.Y - left.Y * right.X;
+            result = (left.X * right.Y) - (left.Y * right.X);
         }
 
         /// <summary>
@@ -645,8 +642,8 @@ namespace OpenTK.Mathematics
         /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise</returns>
         public static Vector2 Lerp(Vector2 a, Vector2 b, float blend)
         {
-            a.X = blend * (b.X - a.X) + a.X;
-            a.Y = blend * (b.Y - a.Y) + a.Y;
+            a.X = (blend * (b.X - a.X)) + a.X;
+            a.Y = (blend * (b.Y - a.Y)) + a.Y;
             return a;
         }
 
@@ -659,8 +656,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise</param>
         public static void Lerp(ref Vector2 a, ref Vector2 b, float blend, out Vector2 result)
         {
-            result.X = blend * (b.X - a.X) + a.X;
-            result.Y = blend * (b.Y - a.Y) + a.Y;
+            result.X = (blend * (b.X - a.X)) + a.X;
+            result.Y = (blend * (b.Y - a.Y)) + a.Y;
         }
 
         /// <summary>
@@ -674,7 +671,7 @@ namespace OpenTK.Mathematics
         /// <returns>a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise</returns>
         public static Vector2 BaryCentric(Vector2 a, Vector2 b, Vector2 c, float u, float v)
         {
-            return a + u * (b - a) + v * (c - a);
+            return a + (u * (b - a)) + (v * (c - a));
         }
 
         /// <summary>
@@ -689,8 +686,15 @@ namespace OpenTK.Mathematics
         /// Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
         /// otherwise
         /// </param>
-        public static void BaryCentric(ref Vector2 a, ref Vector2 b, ref Vector2 c, float u, float v,
-            out Vector2 result)
+        public static void BaryCentric
+        (
+            ref Vector2 a,
+            ref Vector2 b,
+            ref Vector2 c,
+            float u,
+            float v,
+            out Vector2 result
+        )
         {
             result = a; // copy
 
@@ -713,8 +717,7 @@ namespace OpenTK.Mathematics
         /// <returns>The result of the operation.</returns>
         public static Vector2 Transform(Vector2 vec, Quaternion quat)
         {
-            Vector2 result;
-            Transform(ref vec, ref quat, out result);
+            Transform(ref vec, ref quat, out Vector2 result);
             return result;
         }
 
@@ -726,9 +729,9 @@ namespace OpenTK.Mathematics
         /// <param name="result">The result of the operation.</param>
         public static void Transform(ref Vector2 vec, ref Quaternion quat, out Vector2 result)
         {
-            Quaternion v = new Quaternion(vec.X, vec.Y, 0, 0), i, t;
-            Quaternion.Invert(ref quat, out i);
-            Quaternion.Multiply(ref quat, ref v, out t);
+            Quaternion v = new Quaternion(vec.X, vec.Y, 0, 0);
+            Quaternion.Invert(ref quat, out Quaternion i);
+            Quaternion.Multiply(ref quat, ref v, out Quaternion t);
             Quaternion.Multiply(ref t, ref i, out v);
 
             result.X = v.X;
@@ -861,7 +864,7 @@ namespace OpenTK.Mathematics
             return !left.Equals(right);
         }
 
-        private static readonly string listSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
         /// <summary>
         /// Returns a System.String that represents the current Vector2.
@@ -869,7 +872,7 @@ namespace OpenTK.Mathematics
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("({0}{2} {1})", X, Y, listSeparator);
+            return string.Format("({0}{2} {1})", X, Y, ListSeparator);
         }
 
         /// <summary>

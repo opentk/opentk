@@ -17,43 +17,43 @@ namespace OpenTK.Mathematics
     public static class MathHelper
     {
         /// <summary>
-        /// Defines the value of Pi as a <see cref="System.Single" />.
+        /// Defines the value of Pi as a <see cref="float"/>.
         /// </summary>
         public const float Pi =
             3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930382f;
 
         /// <summary>
-        /// Defines the value of Pi divided by two as a <see cref="System.Single" />.
+        /// Defines the value of Pi divided by two as a <see cref="float"/>.
         /// </summary>
         public const float PiOver2 = Pi / 2;
 
         /// <summary>
-        /// Defines the value of Pi divided by three as a <see cref="System.Single" />.
+        /// Defines the value of Pi divided by three as a <see cref="float"/>.
         /// </summary>
         public const float PiOver3 = Pi / 3;
 
         /// <summary>
-        /// Definesthe value of  Pi divided by four as a <see cref="System.Single" />.
+        /// Definesthe value of  Pi divided by four as a <see cref="float"/>.
         /// </summary>
         public const float PiOver4 = Pi / 4;
 
         /// <summary>
-        /// Defines the value of Pi divided by six as a <see cref="System.Single" />.
+        /// Defines the value of Pi divided by six as a <see cref="float"/>.
         /// </summary>
         public const float PiOver6 = Pi / 6;
 
         /// <summary>
-        /// Defines the value of Pi multiplied by two as a <see cref="System.Single" />.
+        /// Defines the value of Pi multiplied by two as a <see cref="float"/>.
         /// </summary>
         public const float TwoPi = 2 * Pi;
 
         /// <summary>
-        /// Defines the value of Pi multiplied by 3 and divided by two as a <see cref="System.Single" />.
+        /// Defines the value of Pi multiplied by 3 and divided by two as a <see cref="float"/>.
         /// </summary>
         public const float ThreePiOver2 = 3 * Pi / 2;
 
         /// <summary>
-        /// Defines the value of E as a <see cref="System.Single" />.
+        /// Defines the value of E as a <see cref="float"/>.
         /// </summary>
         public const float E = 2.71828182845904523536f;
 
@@ -145,7 +145,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Calculates the binomial coefficient <paramref name="n" /> above <paramref name="k" />.
+        /// Calculates the binomial coefficient <paramref name="n"/> above <paramref name="k"/>.
         /// </summary>
         /// <param name="n">The n.</param>
         /// <param name="k">The k.</param>
@@ -174,7 +174,7 @@ namespace OpenTK.Mathematics
                 var i = *(int*)&x; // Read bits as integer.
                 i = 0x5f375a86 - (i >> 1); // Make an initial guess for Newton-Raphson approximation
                 x = *(float*)&i; // Convert bits back to float
-                x = x * (1.5f - xhalf * x * x); // Perform left single Newton-Raphson step.
+                x = x * (1.5f - (xhalf * x * x)); // Perform left single Newton-Raphson step.
                 return x;
             }
         }
@@ -193,6 +193,7 @@ namespace OpenTK.Mathematics
         public static double InverseSqrtFast(double x)
         {
             return InverseSqrtFast((float)x);
+
             // TODO: The following code is wrong. Fix it, to improve precision.
 #if false
             unsafe
@@ -317,6 +318,36 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Scales the specified number linearly between a minimum and a maximum.
+        /// </summary>
+        /// <param name="value">The number to scale.</param>
+        /// <param name="valueMin">The minimum expected number (inclusive).</param>
+        /// <param name="valueMax">The maximum expected number (inclusive).</param>
+        /// <param name="resultMin">The minimum output number (inclusive).</param>
+        /// <param name="resultMax">The maximum output number (inclusive).</param>
+        /// <returns>The number, scaled linearly between min and max.</returns>
+        public static int ScaleValue
+        (
+            int value,
+            int valueMin,
+            int valueMax,
+            int resultMin,
+            int resultMax
+        )
+        {
+            if (valueMin >= valueMax || resultMin >= resultMax)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            value = Clamp(value, valueMin, valueMax);
+
+            var range = resultMax - resultMin;
+            long temp = (value - valueMin) * range; // need long to avoid overflow
+            return (int)((temp / (valueMax - valueMin)) + resultMin);
+        }
+
+        /// <summary>
         /// Approximates floating point equality with a maximum number of different bits.
         /// This is typically used in place of an epsilon comparison.
         /// see: https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
@@ -329,19 +360,19 @@ namespace OpenTK.Mathematics
         public static bool ApproximatelyEqual(float a, float b, int maxDeltaBits)
         {
             // we use longs here, otherwise we run into a two's complement problem, causing this to fail with -2 and 2.0
-            long aInt = FloatToInt32Bits(a);
-            if (aInt < 0)
+            long k = FloatToInt32Bits(a);
+            if (k < 0)
             {
-                aInt = int.MinValue - aInt;
+                k = int.MinValue - k;
             }
 
-            long bInt = FloatToInt32Bits(b);
-            if (bInt < 0)
+            long l = FloatToInt32Bits(b);
+            if (l < 0)
             {
-                bInt = int.MinValue - bInt;
+                l = int.MinValue - l;
             }
 
-            var intDiff = Math.Abs(aInt - bInt);
+            var intDiff = Math.Abs(k - l);
             return intDiff <= 1 << maxDeltaBits;
         }
 

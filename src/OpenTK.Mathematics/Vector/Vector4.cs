@@ -90,7 +90,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Defines the size of the Vector4 struct in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Marshal.SizeOf(new Vector4());
+        public static readonly int SizeInBytes = Marshal.SizeOf<Vector4>();
 
         /// <summary>
         /// Constructs a new instance.
@@ -137,7 +137,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="v">The Vector3 to copy components from.</param>
         /// <remarks>
-        ///  <seealso cref="Vector4(Vector3, float)" />
+        ///  <seealso cref="Vector4(Vector3, float)"/>
         /// </remarks>
         public Vector4(Vector3 v)
         {
@@ -201,6 +201,7 @@ namespace OpenTK.Mathematics
 
                 throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
             }
+
             set
             {
                 if (index == 0)
@@ -229,9 +230,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the length (magnitude) of the vector.
         /// </summary>
-        /// <see cref="LengthFast" />
-        /// <seealso cref="LengthSquared" />
-        public float Length => (float)Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
+        /// <see cref="LengthFast"/>
+        /// <seealso cref="LengthSquared"/>
+        public float Length => (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -240,9 +241,9 @@ namespace OpenTK.Mathematics
         /// This property uses an approximation of the square root function to calculate vector magnitude, with
         /// an upper error bound of 0.001.
         /// </remarks>
-        /// <see cref="Length" />
-        /// <seealso cref="LengthSquared" />
-        public float LengthFast => 1.0f / MathHelper.InverseSqrtFast(X * X + Y * Y + Z * Z + W * W);
+        /// <see cref="Length"/>
+        /// <seealso cref="LengthSquared"/>
+        public float LengthFast => 1.0f / MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -251,9 +252,9 @@ namespace OpenTK.Mathematics
         /// This property avoids the costly square root operation required by the Length property. This makes it more suitable
         /// for comparisons.
         /// </remarks>
-        /// <see cref="Length" />
-        /// <seealso cref="LengthFast" />
-        public float LengthSquared => X * X + Y * Y + Z * Z + W * W;
+        /// <see cref="Length"/>
+        /// <seealso cref="LengthFast"/>
+        public float LengthSquared => (X * X) + (Y * Y) + (Z * Z) + (W * W);
 
         /// <summary>
         /// Returns a copy of the Vector4 scaled to unit length.
@@ -282,7 +283,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            var scale = MathHelper.InverseSqrtFast(X * X + Y * Y + Z * Z + W * W);
+            var scale = MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z) + (W * W));
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -584,7 +585,6 @@ namespace OpenTK.Mathematics
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <param name="result">The magnitude-wise minimum</param>
-        /// <returns>The minimum Vector4</returns>
         public static void MagnitudeMin(ref Vector4 left, ref Vector4 right, out Vector4 result)
         {
             result = left.LengthSquared < right.LengthSquared ? left : right;
@@ -609,7 +609,6 @@ namespace OpenTK.Mathematics
         /// <param name="left">Left operand</param>
         /// <param name="right">Right operand</param>
         /// <param name="result">The magnitude-wise maximum</param>
-        /// <returns>The maximum Vector4</returns>
         public static void MagnitudeMax(ref Vector4 left, ref Vector4 right, out Vector4 result)
         {
             result = left.LengthSquared >= right.LengthSquared ? left : right;
@@ -682,7 +681,7 @@ namespace OpenTK.Mathematics
         /// <returns>The normalized vector</returns>
         public static Vector4 NormalizeFast(Vector4 vec)
         {
-            var scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y + vec.Z * vec.Z + vec.W * vec.W);
+            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -697,7 +696,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector</param>
         public static void NormalizeFast(ref Vector4 vec, out Vector4 result)
         {
-            var scale = MathHelper.InverseSqrtFast(vec.X * vec.X + vec.Y * vec.Y + vec.Z * vec.Z + vec.W * vec.W);
+            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
@@ -712,7 +711,7 @@ namespace OpenTK.Mathematics
         /// <returns>The dot product of the two inputs</returns>
         public static float Dot(Vector4 left, Vector4 right)
         {
-            return left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
+            return (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z) + (left.W * right.W);
         }
 
         /// <summary>
@@ -723,7 +722,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The dot product of the two inputs</param>
         public static void Dot(ref Vector4 left, ref Vector4 right, out float result)
         {
-            result = left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
+            result = (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z) + (left.W * right.W);
         }
 
         /// <summary>
@@ -735,10 +734,10 @@ namespace OpenTK.Mathematics
         /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise</returns>
         public static Vector4 Lerp(Vector4 a, Vector4 b, float blend)
         {
-            a.X = blend * (b.X - a.X) + a.X;
-            a.Y = blend * (b.Y - a.Y) + a.Y;
-            a.Z = blend * (b.Z - a.Z) + a.Z;
-            a.W = blend * (b.W - a.W) + a.W;
+            a.X = (blend * (b.X - a.X)) + a.X;
+            a.Y = (blend * (b.Y - a.Y)) + a.Y;
+            a.Z = (blend * (b.Z - a.Z)) + a.Z;
+            a.W = (blend * (b.W - a.W)) + a.W;
             return a;
         }
 
@@ -751,10 +750,10 @@ namespace OpenTK.Mathematics
         /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise</param>
         public static void Lerp(ref Vector4 a, ref Vector4 b, float blend, out Vector4 result)
         {
-            result.X = blend * (b.X - a.X) + a.X;
-            result.Y = blend * (b.Y - a.Y) + a.Y;
-            result.Z = blend * (b.Z - a.Z) + a.Z;
-            result.W = blend * (b.W - a.W) + a.W;
+            result.X = (blend * (b.X - a.X)) + a.X;
+            result.Y = (blend * (b.Y - a.Y)) + a.Y;
+            result.Z = (blend * (b.Z - a.Z)) + a.Z;
+            result.W = (blend * (b.W - a.W)) + a.W;
         }
 
         /// <summary>
@@ -768,7 +767,7 @@ namespace OpenTK.Mathematics
         /// <returns>a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise</returns>
         public static Vector4 BaryCentric(Vector4 a, Vector4 b, Vector4 c, float u, float v)
         {
-            return a + u * (b - a) + v * (c - a);
+            return a + (u * (b - a)) + (v * (c - a));
         }
 
         /// <summary>
@@ -783,8 +782,15 @@ namespace OpenTK.Mathematics
         /// Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
         /// otherwise
         /// </param>
-        public static void BaryCentric(ref Vector4 a, ref Vector4 b, ref Vector4 c, float u, float v,
-            out Vector4 result)
+        public static void BaryCentric
+        (
+            ref Vector4 a,
+            ref Vector4 b,
+            ref Vector4 c,
+            float u,
+            float v,
+            out Vector4 result
+        )
         {
             result = a; // copy
 
@@ -807,8 +813,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed vector</returns>
         public static Vector4 Transform(Vector4 vec, Matrix4 mat)
         {
-            Vector4 result;
-            Transform(ref vec, ref mat, out result);
+            Transform(ref vec, ref mat, out Vector4 result);
             return result;
         }
 
@@ -821,10 +826,10 @@ namespace OpenTK.Mathematics
         public static void Transform(ref Vector4 vec, ref Matrix4 mat, out Vector4 result)
         {
             result = new Vector4(
-                vec.X * mat.Row0.X + vec.Y * mat.Row1.X + vec.Z * mat.Row2.X + vec.W * mat.Row3.X,
-                vec.X * mat.Row0.Y + vec.Y * mat.Row1.Y + vec.Z * mat.Row2.Y + vec.W * mat.Row3.Y,
-                vec.X * mat.Row0.Z + vec.Y * mat.Row1.Z + vec.Z * mat.Row2.Z + vec.W * mat.Row3.Z,
-                vec.X * mat.Row0.W + vec.Y * mat.Row1.W + vec.Z * mat.Row2.W + vec.W * mat.Row3.W);
+                (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X) + (vec.W * mat.Row3.X),
+                (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y) + (vec.Z * mat.Row2.Y) + (vec.W * mat.Row3.Y),
+                (vec.X * mat.Row0.Z) + (vec.Y * mat.Row1.Z) + (vec.Z * mat.Row2.Z) + (vec.W * mat.Row3.Z),
+                (vec.X * mat.Row0.W) + (vec.Y * mat.Row1.W) + (vec.Z * mat.Row2.W) + (vec.W * mat.Row3.W));
         }
 
         /// <summary>
@@ -835,8 +840,7 @@ namespace OpenTK.Mathematics
         /// <returns>The result of the operation.</returns>
         public static Vector4 Transform(Vector4 vec, Quaternion quat)
         {
-            Vector4 result;
-            Transform(ref vec, ref quat, out result);
+            Transform(ref vec, ref quat, out Vector4 result);
             return result;
         }
 
@@ -848,9 +852,9 @@ namespace OpenTK.Mathematics
         /// <param name="result">The result of the operation.</param>
         public static void Transform(ref Vector4 vec, ref Quaternion quat, out Vector4 result)
         {
-            Quaternion v = new Quaternion(vec.X, vec.Y, vec.Z, vec.W), i, t;
-            Quaternion.Invert(ref quat, out i);
-            Quaternion.Multiply(ref quat, ref v, out t);
+            Quaternion v = new Quaternion(vec.X, vec.Y, vec.Z, vec.W);
+            Quaternion.Invert(ref quat, out Quaternion i);
+            Quaternion.Multiply(ref quat, ref v, out Quaternion t);
             Quaternion.Multiply(ref t, ref i, out v);
 
             result.X = v.X;
@@ -866,8 +870,7 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The vector to transform</param>
         public static Vector4 Transform(Matrix4 mat, Vector4 vec)
         {
-            Vector4 result;
-            Transform(ref mat, ref vec, out result);
+            Transform(ref mat, ref vec, out Vector4 result);
             return result;
         }
 
@@ -880,10 +883,10 @@ namespace OpenTK.Mathematics
         public static void Transform(ref Matrix4 mat, ref Vector4 vec, out Vector4 result)
         {
             result = new Vector4(
-                mat.Row0.X * vec.X + mat.Row0.Y * vec.Y + mat.Row0.Z * vec.Z + mat.Row0.W * vec.W,
-                mat.Row1.X * vec.X + mat.Row1.Y * vec.Y + mat.Row1.Z * vec.Z + mat.Row1.W * vec.W,
-                mat.Row2.X * vec.X + mat.Row2.Y * vec.Y + mat.Row2.Z * vec.Z + mat.Row2.W * vec.W,
-                mat.Row3.X * vec.X + mat.Row3.Y * vec.Y + mat.Row3.Z * vec.Z + mat.Row3.W * vec.W);
+                (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z) + (mat.Row0.W * vec.W),
+                (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y) + (mat.Row1.Z * vec.Z) + (mat.Row1.W * vec.W),
+                (mat.Row2.X * vec.X) + (mat.Row2.Y * vec.Y) + (mat.Row2.Z * vec.Z) + (mat.Row2.W * vec.W),
+                (mat.Row3.X * vec.X) + (mat.Row3.Y * vec.Y) + (mat.Row3.Z * vec.Z) + (mat.Row3.W * vec.W));
         }
 
         /// <summary>
@@ -999,7 +1002,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector2 with the Z and W components of this instance.
+        /// Gets or sets an OpenTK.Vector2 with the Z and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2 Zw
@@ -1220,7 +1223,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector3 with the Y, W, and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector3 with the Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3 Ywz
@@ -1527,7 +1530,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector4 with the Y, Y, Z, and W components of this instance.
+        /// Gets or sets an OpenTK.Vector4 with the Y, Y, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4 Yyzw
@@ -1543,7 +1546,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector4 with the Y, Y, W, and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector4 with the Y, Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4 Yywz
@@ -1719,7 +1722,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector4 with the Z, W, Z, and Y components of this instance.
+        /// Gets or sets an OpenTK.Vector4 with the Z, W, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4 Zwzy
@@ -1831,7 +1834,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets an OpenTK.Vector4 with the W, Z, Y, and W components of this instance.
+        /// Gets or sets an OpenTK.Vector4 with the W, Z, Y, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4 Wzyw
@@ -1943,8 +1946,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed vector</returns>
         public static Vector4 operator *(Vector4 vec, Matrix4 mat)
         {
-            Vector4 result;
-            Transform(ref vec, ref mat, out result);
+            Transform(ref vec, ref mat, out Vector4 result);
             return result;
         }
 
@@ -1956,8 +1958,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed vector</returns>
         public static Vector4 operator *(Matrix4 mat, Vector4 vec)
         {
-            Vector4 result;
-            Transform(ref mat, ref vec, out result);
+            Transform(ref mat, ref vec, out Vector4 result);
             return result;
         }
 
@@ -1969,8 +1970,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transformed vector</returns>
         public static Vector4 operator *(Quaternion quat, Vector4 vec)
         {
-            Vector4 result;
-            Transform(ref vec, ref quat, out result);
+            Transform(ref vec, ref quat, out Vector4 result);
             return result;
         }
 
@@ -2034,7 +2034,7 @@ namespace OpenTK.Mathematics
             }
         }
 
-        private static readonly string listSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
         /// <summary>
         /// Returns a System.String that represents the current Vector4.
@@ -2042,7 +2042,7 @@ namespace OpenTK.Mathematics
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("({0}{4} {1}{4} {2}{4} {3})", X, Y, Z, W, listSeparator);
+            return string.Format("({0}{4} {1}{4} {2}{4} {3})", X, Y, Z, W, ListSeparator);
         }
 
         /// <summary>

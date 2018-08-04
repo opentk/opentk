@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <Description>Windows API structures, enumerations and functions for the OpenTK library.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenTK.Input\OpenTK.Input.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\..\props\common.props" />
+  <Import Project="..\..\props\stylecop.props" />
+</Project>

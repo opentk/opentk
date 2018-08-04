@@ -5,7 +5,6 @@
     <RootNamespace>Bind</RootNamespace>
     <TargetFramework>net461</TargetFramework>
     <Deterministic>true</Deterministic>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -21,7 +20,8 @@
     <PackageReference Include="System.Memory" Version="4.5.1" />
   </ItemGroup>
 
-  <Import Project="..\..\build\targets\netfx-mono.props" />
-  <Import Project="..\..\build\targets\stylecop.props" />
-  <Import Project="..\..\build\targets\jetbrains.props" />
+  <Import Project="..\..\props\common.props" />
+  <Import Project="..\..\props\netfx-mono.props" />
+  <Import Project="..\..\props\stylecop.props" />
+  <Import Project="..\..\props\jetbrains.props" />
 </Project>

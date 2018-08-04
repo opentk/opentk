@@ -52,8 +52,13 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The zero matrix.
         /// </summary>
-        public static readonly Matrix4x2d Zero = new Matrix4x2d(Vector2d.Zero, Vector2d.Zero, Vector2d.Zero,
-            Vector2d.Zero);
+        public static readonly Matrix4x2d Zero = new Matrix4x2d
+        (
+            Vector2d.Zero,
+            Vector2d.Zero,
+            Vector2d.Zero,
+            Vector2d.Zero
+        );
 
         /// <summary>
         /// Constructs a new instance.
@@ -70,7 +75,6 @@ namespace OpenTK.Mathematics
             Row3 = row3;
         }
 
-
         /// <summary>
         /// Constructs a new instance
         /// </summary>
@@ -82,11 +86,17 @@ namespace OpenTK.Mathematics
         /// <param name="m21">Second item of the third row of the matrix.</param>
         /// <param name="m30">First item of the fourth row of the matrix.</param>
         /// <param name="m31">Second item of the fourth row of the matrix.</param>
-        public Matrix4x2d(
-            double m00, double m01,
-            double m10, double m11,
-            double m20, double m21,
-            double m30, double m31)
+        public Matrix4x2d
+        (
+            double m00,
+            double m01,
+            double m10,
+            double m11,
+            double m20,
+            double m21,
+            double m30,
+            double m31
+        )
         {
             Row0 = new Vector2d(m00, m01);
             Row1 = new Vector2d(m10, m11);
@@ -244,6 +254,7 @@ namespace OpenTK.Mathematics
                 throw new IndexOutOfRangeException("You tried to access this matrix at: (" + rowIndex + ", " +
                                                    columnIndex + ")");
             }
+
             set
             {
                 if (rowIndex == 0)
@@ -297,8 +308,7 @@ namespace OpenTK.Mathematics
         /// <returns>The resulting Matrix3x2 instance.</returns>
         public static Matrix4x2d CreateRotation(double angle)
         {
-            Matrix4x2d result;
-            CreateRotation(angle, out result);
+            CreateRotation(angle, out Matrix4x2d result);
             return result;
         }
 
@@ -326,8 +336,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix4x2d CreateScale(double scale)
         {
-            Matrix4x2d result;
-            CreateScale(scale, out result);
+            CreateScale(scale, out Matrix4x2d result);
             return result;
         }
 
@@ -355,8 +364,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix4x2d CreateScale(Vector2d scale)
         {
-            Matrix4x2d result;
-            CreateScale(scale, out result);
+            CreateScale(scale, out Matrix4x2d result);
             return result;
         }
 
@@ -386,8 +394,7 @@ namespace OpenTK.Mathematics
         /// <returns>A scale matrix.</returns>
         public static Matrix4x2d CreateScale(double x, double y)
         {
-            Matrix4x2d result;
-            CreateScale(x, y, out result);
+            CreateScale(x, y, out Matrix4x2d result);
             return result;
         }
 
@@ -417,8 +424,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix4x2d Mult(Matrix4x2d left, double right)
         {
-            Matrix4x2d result;
-            Mult(ref left, right, out result);
+            Mult(ref left, right, out Matrix4x2d result);
             return result;
         }
 
@@ -443,14 +449,14 @@ namespace OpenTK.Mathematics
                 rM21 = right.Row1.X,
                 rM22 = right.Row1.Y;
 
-            result.Row0.X = lM11 * rM11 + lM12 * rM21;
-            result.Row0.Y = lM11 * rM12 + lM12 * rM22;
-            result.Row1.X = lM21 * rM11 + lM22 * rM21;
-            result.Row1.Y = lM21 * rM12 + lM22 * rM22;
-            result.Row2.X = lM31 * rM11 + lM32 * rM21;
-            result.Row2.Y = lM31 * rM12 + lM32 * rM22;
-            result.Row3.X = lM41 * rM11 + lM42 * rM21;
-            result.Row3.Y = lM41 * rM12 + lM42 * rM22;
+            result.Row0.X = (lM11 * rM11) + (lM12 * rM21);
+            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22);
+            result.Row1.X = (lM21 * rM11) + (lM22 * rM21);
+            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22);
+            result.Row2.X = (lM31 * rM11) + (lM32 * rM21);
+            result.Row2.Y = (lM31 * rM12) + (lM32 * rM22);
+            result.Row3.X = (lM41 * rM11) + (lM42 * rM21);
+            result.Row3.Y = (lM41 * rM12) + (lM42 * rM22);
         }
 
         /// <summary>
@@ -461,8 +467,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix4x2d Mult(Matrix4x2d left, Matrix2d right)
         {
-            Matrix4x2d result;
-            Mult(ref left, ref right, out result);
+            Mult(ref left, ref right, out Matrix4x2d result);
             return result;
         }
 
@@ -489,18 +494,18 @@ namespace OpenTK.Mathematics
                 rM22 = right.Row1.Y,
                 rM23 = right.Row1.Z;
 
-            result.Row0.X = lM11 * rM11 + lM12 * rM21;
-            result.Row0.Y = lM11 * rM12 + lM12 * rM22;
-            result.Row0.Z = lM11 * rM13 + lM12 * rM23;
-            result.Row1.X = lM21 * rM11 + lM22 * rM21;
-            result.Row1.Y = lM21 * rM12 + lM22 * rM22;
-            result.Row1.Z = lM21 * rM13 + lM22 * rM23;
-            result.Row2.X = lM31 * rM11 + lM32 * rM21;
-            result.Row2.Y = lM31 * rM12 + lM32 * rM22;
-            result.Row2.Z = lM31 * rM13 + lM32 * rM23;
-            result.Row3.X = lM41 * rM11 + lM42 * rM21;
-            result.Row3.Y = lM41 * rM12 + lM42 * rM22;
-            result.Row3.Z = lM41 * rM13 + lM42 * rM23;
+            result.Row0.X = (lM11 * rM11) + (lM12 * rM21);
+            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22);
+            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23);
+            result.Row1.X = (lM21 * rM11) + (lM22 * rM21);
+            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22);
+            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23);
+            result.Row2.X = (lM31 * rM11) + (lM32 * rM21);
+            result.Row2.Y = (lM31 * rM12) + (lM32 * rM22);
+            result.Row2.Z = (lM31 * rM13) + (lM32 * rM23);
+            result.Row3.X = (lM41 * rM11) + (lM42 * rM21);
+            result.Row3.Y = (lM41 * rM12) + (lM42 * rM22);
+            result.Row3.Z = (lM41 * rM13) + (lM42 * rM23);
         }
 
         /// <summary>
@@ -511,8 +516,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix4x3d Mult(Matrix4x2d left, Matrix2x3d right)
         {
-            Matrix4x3d result;
-            Mult(ref left, ref right, out result);
+            Mult(ref left, ref right, out Matrix4x3d result);
             return result;
         }
 
@@ -541,22 +545,22 @@ namespace OpenTK.Mathematics
                 rM23 = right.Row1.Z,
                 rM24 = right.Row1.W;
 
-            result.Row0.X = lM11 * rM11 + lM12 * rM21;
-            result.Row0.Y = lM11 * rM12 + lM12 * rM22;
-            result.Row0.Z = lM11 * rM13 + lM12 * rM23;
-            result.Row0.W = lM11 * rM14 + lM12 * rM24;
-            result.Row1.X = lM21 * rM11 + lM22 * rM21;
-            result.Row1.Y = lM21 * rM12 + lM22 * rM22;
-            result.Row1.Z = lM21 * rM13 + lM22 * rM23;
-            result.Row1.W = lM21 * rM14 + lM22 * rM24;
-            result.Row2.X = lM31 * rM11 + lM32 * rM21;
-            result.Row2.Y = lM31 * rM12 + lM32 * rM22;
-            result.Row2.Z = lM31 * rM13 + lM32 * rM23;
-            result.Row2.W = lM31 * rM14 + lM32 * rM24;
-            result.Row3.X = lM41 * rM11 + lM42 * rM21;
-            result.Row3.Y = lM41 * rM12 + lM42 * rM22;
-            result.Row3.Z = lM41 * rM13 + lM42 * rM23;
-            result.Row3.W = lM41 * rM14 + lM42 * rM24;
+            result.Row0.X = (lM11 * rM11) + (lM12 * rM21);
+            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22);
+            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23);
+            result.Row0.W = (lM11 * rM14) + (lM12 * rM24);
+            result.Row1.X = (lM21 * rM11) + (lM22 * rM21);
+            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22);
+            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23);
+            result.Row1.W = (lM21 * rM14) + (lM22 * rM24);
+            result.Row2.X = (lM31 * rM11) + (lM32 * rM21);
+            result.Row2.Y = (lM31 * rM12) + (lM32 * rM22);
+            result.Row2.Z = (lM31 * rM13) + (lM32 * rM23);
+            result.Row2.W = (lM31 * rM14) + (lM32 * rM24);
+            result.Row3.X = (lM41 * rM11) + (lM42 * rM21);
+            result.Row3.Y = (lM41 * rM12) + (lM42 * rM22);
+            result.Row3.Z = (lM41 * rM13) + (lM42 * rM23);
+            result.Row3.W = (lM41 * rM14) + (lM42 * rM24);
         }
 
         /// <summary>
@@ -567,8 +571,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix4d Mult(Matrix4x2d left, Matrix2x4d right)
         {
-            Matrix4d result;
-            Mult(ref left, ref right, out result);
+            Mult(ref left, ref right, out Matrix4d result);
             return result;
         }
 
@@ -598,8 +601,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the addition.</returns>
         public static Matrix4x2d Add(Matrix4x2d left, Matrix4x2d right)
         {
-            Matrix4x2d result;
-            Add(ref left, ref right, out result);
+            Add(ref left, ref right, out Matrix4x2d result);
             return result;
         }
 
@@ -629,8 +631,7 @@ namespace OpenTK.Mathematics
         /// <returns>A new instance that is the result of the subtraction.</returns>
         public static Matrix4x2d Subtract(Matrix4x2d left, Matrix4x2d right)
         {
-            Matrix4x2d result;
-            Subtract(ref left, ref right, out result);
+            Subtract(ref left, ref right, out Matrix4x2d result);
             return result;
         }
 
@@ -658,8 +659,7 @@ namespace OpenTK.Mathematics
         /// <returns>The transpose of the given matrix.</returns>
         public static Matrix2x4d Transpose(Matrix4x2d mat)
         {
-            Matrix2x4d result;
-            Transpose(ref mat, out result);
+            Transpose(ref mat, out Matrix2x4d result);
             return result;
         }
 
