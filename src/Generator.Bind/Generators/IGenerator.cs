@@ -21,13 +21,13 @@ namespace Bind.Generators
         string APIIdentifier { get; }
 
         /// <summary>
-        /// Gets the name of the subfolder where the generated files should be placed.
+        /// Gets the namespace that the output classes and enums should live in.
         /// </summary>
         [NotNull]
         string Namespace { get; }
 
         /// <summary>
-        /// Gets the namespace that the output classes and enums should live in.
+        /// Gets the name of the subfolder where the generated files should be placed.
         /// </summary>
         [NotNull]
         string OutputSubfolder { get; }
