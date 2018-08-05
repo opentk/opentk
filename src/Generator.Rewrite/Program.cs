@@ -40,7 +40,7 @@ namespace OpenTK.Rewrite
             try
             {
                 var resolver = new DefaultAssemblyResolver();
-                var rewriter = new AssemblyRewriter(resolver, CreateTypeRewriter, Options.StrongNameKey);
+                var rewriter = new AssemblyRewriter(resolver, CreateTypeRewriter);
                 rewriter.RewriteAssembly(Options.TargetAssembly, Options.EnableDebugCalls, Options.UseDllImport);
             }
             catch (Exception exc)
