@@ -34,6 +34,7 @@ using Bind.Generators;
 using Bind.Structures;
 using Bind.Translation.Translators;
 using Bind.Writers;
+using Bind.XML.Documentation;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Enumerations;
 using Bind.XML.Signatures.Functions;
@@ -52,8 +53,14 @@ namespace Bind
         /// </summary>
         /// <param name="generator">The generator.</param>
         /// <param name="profile">The profile.</param>
+        /// <param name="profileDocumentation">The profile's documentation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public async Task WriteBindingsAsync([NotNull] IGenerator generator, [NotNull] ApiProfile profile)
+        public async Task WriteBindingsAsync
+        (
+            [NotNull] IGenerator generator,
+            [NotNull] ApiProfile profile,
+            [NotNull] ProfileDocumentation profileDocumentation
+        )
         {
             var baseOutputPath = Program.Arguments.OutputPath;
 
@@ -66,10 +73,15 @@ namespace Bind
 
             await WriteEnumsAsync(generator, profile);
 
-            await WriteWrappersAsync(generator, profile);
+            await WriteWrappersAsync(generator, profile, profileDocumentation);
         }
 
-        private async Task WriteWrappersAsync([NotNull] IGenerator generator, [NotNull] ApiProfile profile)
+        private async Task WriteWrappersAsync
+        (
+            [NotNull] IGenerator generator,
+            [NotNull] ApiProfile profile,
+            [NotNull] ProfileDocumentation profileDocumentation
+        )
         {
             Trace.WriteLine($"Writing wrappers to:\t{generator.Namespace}.{generator.ClassName}");
 
@@ -257,7 +269,7 @@ namespace Bind
                                     var categorySignatures = nativeSignatures.Concat(overloads).ToList();
                                     foreach (var signature in categorySignatures)
                                     {
-                                        await WriteMethodAsync(sw, generator, signature);
+                                        await WriteMethodAsync(sw, generator, profileDocumentation, signature);
 
                                         if (signature != categorySignatures.Last())
                                         {
@@ -307,10 +319,11 @@ namespace Bind
         (
             [NotNull] SourceWriter sw,
             [NotNull] IGenerator generator,
+            [NotNull] ProfileDocumentation profileDocumentation,
             [NotNull] FunctionSignature function
         )
         {
-            await WriteDocumentationAsync(sw, function);
+            await WriteDocumentationAsync(sw, profileDocumentation, function);
 
             if (!(function.DeprecatedIn is null) || !(function.DeprecationReason is null))
             {
@@ -353,13 +366,59 @@ namespace Bind
             }
         }
 
-        private async Task WriteDocumentationAsync([NotNull] SourceWriter sw, [NotNull] FunctionSignature function)
+        private async Task WritePlaceholderDocumentationAsync
+        (
+            [NotNull] SourceWriter sw,
+            [NotNull] FunctionSignature function
+        )
         {
-            // TODO: Find relevant documentation
-            var documentation = new DocumentationDefinition();
+            await sw.WriteLineAsync("/// <summary>");
+            await sw.WriteLineAsync("/// This function lacks documentation. See online docs for further information.");
+            await sw.WriteLineAsync("/// </summary>");
+
+            foreach (var parameter in function.Parameters)
+            {
+                await sw.WriteLineAsync($"/// <param name=\"{parameter.Name}\">See summary.</param>");
+            }
+
+            foreach (var genericTypeParameter in function.GenericTypeParameters)
+            {
+                var referencingParameter = function.Parameters.First(f => f.Type.Name == genericTypeParameter.Name);
+                await sw.WriteLineAsync
+                (
+                    $"/// <typeparam name=\"{genericTypeParameter.Name}\">The generic type of " +
+                    $"{referencingParameter.Name}.</typeparam>"
+                );
+            }
+
+            if (!function.ReturnType.Name.Equals(typeof(void).Name, StringComparison.OrdinalIgnoreCase))
+            {
+                sw.WriteLine("/// <returns>See summary.</returns>");
+            }
+        }
+
+        private async Task WriteDocumentationAsync
+        (
+            [NotNull] SourceWriter sw,
+            [NotNull] ProfileDocumentation profileDocumentation,
+            [NotNull] FunctionSignature function
+        )
+        {
+            var documentation = profileDocumentation.Functions.FirstOrDefault(f => f.Name == function.Name);
+            if (documentation is null)
+            {
+                Debug.WriteLine
+                (
+                    $"The function \"{function.Name}\" lacks documentation. Consider adding a documentation file for " +
+                    $"the function."
+                );
+
+                await WritePlaceholderDocumentationAsync(sw, function);
+                return;
+            }
 
             await sw.WriteLineAsync("/// <summary>");
-            var summaryLines = documentation.Summary.TrimEnd().Split('\n');
+            var summaryLines = documentation.Purpose.TrimEnd().Split('\n');
             foreach (var summaryLine in summaryLines)
             {
                 await sw.WriteLineAsync($"/// {summaryLine}");
@@ -406,7 +465,7 @@ namespace Bind
                     }
                 }
 
-                await sw.WriteLineAsync(parameterDocumentation.Documentation);
+                await sw.WriteLineAsync($"/// {parameterDocumentation.Description}");
                 await sw.WriteLineAsync("/// </param>");
             }
 
@@ -426,7 +485,7 @@ namespace Bind
             }
         }
 
-        private async Task WriteEnums
+        private async Task WriteEnumsAsync
         (
             [NotNull] IGenerator generator,
             [NotNull] ApiProfile profile
@@ -540,83 +599,6 @@ namespace Bind
                 {
                     await sw.WriteLineAsync();
                 }
-            }
-        }
-
-        private async Task WriteEnumsAsync
-        (
-            [NotNull] IGenerator generator,
-            [NotNull] ApiProfile profile
-        )
-        {
-            // Build a dictionary of which functions use which enums
-            var allFunctions = profile.NativeSignatures.Concat(profile.Overloads).ToList();
-            var functionsByEnum = new Dictionary<EnumerationSignature, List<FunctionSignature>>();
-            foreach (var e in profile.Enumerations)
-            {
-                // Initialize the dictionary
-                var functionsUsingThisEnum = allFunctions
-                    .Where(f => f.Parameters.Any(p => p.Type.Name == e.Name))
-                    .ToList();
-
-                functionsByEnum.Add(e, functionsUsingThisEnum);
-            }
-
-            var baseOutputPath = Path.Combine(Program.Arguments.OutputPath, generator.OutputSubfolder);
-            var enumOutputDirectory = Path.Combine(baseOutputPath, "Enums");
-
-            if (!Directory.Exists(enumOutputDirectory))
-            {
-                Directory.CreateDirectory(enumOutputDirectory);
-            }
-
-            foreach (var enumeration in profile.Enumerations)
-            {
-                var tempEnumFilePath = Path.GetTempFileName();
-                using (var outputFile = File.Open(tempEnumFilePath, FileMode.OpenOrCreate))
-                {
-                    using (var sw = new SourceWriter(new StreamWriter(outputFile)))
-                    {
-                        await WriteLicenseAsync(sw);
-                        await sw.WriteLineNoTabsAsync();
-
-                        await sw.WriteLineAsync("using System;");
-                        await sw.WriteLineNoTabsAsync();
-
-                        await sw.WriteLineAsync("// ReSharper disable InconsistentNaming");
-                        await sw.WriteLineAsync("#pragma warning disable SA1139 // Use literal suffix notation instead of casting");
-                        await sw.WriteLineNoTabsAsync();
-
-                        await sw.WriteLineAsync($"namespace {generator.Namespace}");
-                        using (sw.BeginBlock())
-                        {
-                            // Document which functions use this enum.
-                            await sw.WriteLineAsync("/// <summary>");
-                            await sw.WriteLineAsync($"/// {GetEnumUsageString(functionsByEnum, generator, enumeration)}");
-                            await sw.WriteLineAsync("/// </summary>");
-
-                            if (enumeration.IsFlagEnum)
-                            {
-                                await sw.WriteLineAsync("[Flags]");
-                            }
-
-                            await sw.WriteLineAsync($"public enum {enumeration.Name}");
-                            using (sw.BeginBlock())
-                            {
-                                await WriteTokensAsync(sw, generator, enumeration.Tokens);
-                            }
-                        }
-                    }
-                }
-
-                var outputEnumPath = Path.Combine(enumOutputDirectory, $"{enumeration.Name}.cs");
-
-                if (File.Exists(outputEnumPath))
-                {
-                    File.Delete(outputEnumPath);
-                }
-
-                File.Move(tempEnumFilePath, outputEnumPath);
             }
         }
 

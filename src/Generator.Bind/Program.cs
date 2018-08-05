@@ -86,46 +86,6 @@ namespace Bind
 
                 generator.LoadData();
 
-                var newSignatures = overloadedProfile.NativeSignatures
-                    .OrderBy(f => f.Name)
-                    .ThenBy(f => f.Parameters.Any(p => p.Type.IsPointer))
-                    .ThenBy(f => f.Parameters.Any(p => p.Type.IsArray))
-                    .ThenBy(f => f.Parameters.Count)
-                    .ThenBy(f => f.ToString().Length)
-                    .Select(f => f.ToString())
-                    .ToList();
-
-                var oldSignatures = generator.Wrappers
-                    .SelectMany(kvp => kvp.Value)
-                    .OrderBy(f => f.TrimmedName)
-                    .ThenBy(f => f.Parameters.Any(p => p.ParameterType.IsPointer))
-                    .ThenBy(f => f.Parameters.Any(p => p.ParameterType.IsArray))
-                    .ThenBy(f => f.Parameters.Count)
-                    .ThenBy(f => f.ToString().Length)
-                    .Select(f => f.ToString())
-                    .Select(n => n.Replace("OpenTK.Graphics.ES31.", string.Empty))
-                    .ToList();
-
-                var intersection = newSignatures.Intersect(oldSignatures).ToList();
-                var outerNew = newSignatures.Except(intersection);
-                var outerOld = oldSignatures.Except(intersection);
-
-                using (var newSignaturesFile = new StreamWriter("/home/jarl/new-signatures.txt"))
-                {
-                    foreach (var newFunction in newSignatures)
-                    {
-                        newSignaturesFile.WriteLine(newFunction);
-                    }
-                }
-
-                using (var oldSignaturesFile = new StreamWriter("/home/jarl/old-signatures.txt"))
-                {
-                    foreach (var oldFunction in oldSignatures)
-                    {
-                        oldSignaturesFile.WriteLine(oldFunction);
-                    }
-                }
-
                 var writer = new LegacyBindingsWriter();
                 writer.LegacyWriteBindings(generator);
 
