@@ -126,7 +126,7 @@ namespace Bind
                     }
                 }
 
-                var writer = new BindingsWriter();
+                var writer = new LegacyBindingsWriter();
                 writer.LegacyWriteBindings(generator);
 
                 ticks = DateTime.Now.Ticks - ticks;
