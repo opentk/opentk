@@ -148,12 +148,15 @@ namespace Bind.Translation.Mappers
             [NotNull] TypeSignature baseParameterType
         )
         {
-            var categoryName = _identifierTranslator.Translate(containingFunction.Category);
-
-            var genericEnumeration = profile.Enumerations.FirstOrDefault(e => e.Name == categoryName);
-            if (!(genericEnumeration is null))
+            foreach (var categoryName in containingFunction.Categories)
             {
-                return new TypeSignatureBuilder(baseParameterType).WithName(genericEnumeration.Name).Build();
+                var translatedName = _identifierTranslator.Translate(categoryName);
+
+                var genericEnumeration = profile.Enumerations.FirstOrDefault(e => e.Name == translatedName);
+                if (!(genericEnumeration is null))
+                {
+                    return new TypeSignatureBuilder(baseParameterType).WithName(genericEnumeration.Name).Build();
+                }
             }
 
             // No enumeration found, falling back to a simple integer

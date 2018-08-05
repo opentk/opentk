@@ -90,9 +90,9 @@
   <member name="M:Bind.Builders.FunctionSignatureBuilder.Build">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
-  <member name="M:Bind.Builders.FunctionSignatureBuilder.WithCategory(System.String)">
+  <member name="M:Bind.Builders.FunctionSignatureBuilder.WithCategories(System.Collections.Generic.IReadOnlyList{System.String})">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-    <parameter name="newCategory">
+    <parameter name="newCategories">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
@@ -780,6 +780,14 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
+  <member name="M:Bind.XML.Signatures.ApiProfile.GetCategories">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.XML.Signatures.ApiProfile.GetExtensions">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+  </member>
   <member name="P:Bind.XML.Signatures.ApiProfile.NativeSignatures">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
@@ -836,14 +844,14 @@
   <member name="P:Bind.XML.Signatures.Functions.CountSignature.ValueReference">
     <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
   </member>
-  <member name="M:Bind.XML.Signatures.Functions.FunctionSignature.#ctor(System.String,System.String,System.String,System.String,System.Version,Bind.XML.Signatures.Functions.TypeSignature,System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.ParameterSignature},System.Version,System.String,System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.GenericTypeParameterSignature})">
+  <member name="M:Bind.XML.Signatures.Functions.FunctionSignature.#ctor(System.String,System.String,System.Collections.Generic.IReadOnlyList{System.String},System.String,System.Version,Bind.XML.Signatures.Functions.TypeSignature,System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.ParameterSignature},System.Version,System.String,System.Collections.Generic.IReadOnlyList{Bind.XML.Signatures.Functions.GenericTypeParameterSignature})">
     <parameter name="name">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
     <parameter name="nativeEntrypoint">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
-    <parameter name="category">
+    <parameter name="categories">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
     <parameter name="extension">
@@ -868,7 +876,7 @@
       <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="P:Bind.XML.Signatures.Functions.FunctionSignature.Category">
+  <member name="P:Bind.XML.Signatures.Functions.FunctionSignature.Categories">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
   <member name="P:Bind.XML.Signatures.Functions.FunctionSignature.DeprecatedIn">

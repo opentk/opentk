@@ -150,7 +150,7 @@ namespace Bind.Baking
             (
                 functionBase.Name,
                 functionBase.NativeEntrypoint,
-                functionBase.Category,
+                functionBase.Categories,
                 functionBase.Extension,
                 newVersion,
                 newReturnType,

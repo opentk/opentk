@@ -51,7 +51,7 @@ namespace Bind.Translation.Trimmers
             (
                 newName,
                 trimmable.NativeEntrypoint,
-                trimmable.Category,
+                trimmable.Categories,
                 trimmable.Extension,
                 trimmable.IntroducedIn,
                 trimmable.ReturnType,

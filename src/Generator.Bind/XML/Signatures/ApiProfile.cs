@@ -110,6 +110,32 @@ namespace Bind.XML.Signatures
             return candidates.First();
         }
 
+        /// <summary>
+        /// Gets the available categories in the profile.
+        /// </summary>
+        /// <returns>The categories.</returns>
+        [NotNull, ItemNotNull]
+        public IEnumerable<string> GetCategories()
+        {
+            var nativeCategories = NativeSignatures.SelectMany(f => f.Categories);
+            var overloadCategories = Overloads.SelectMany(f => f.Categories);
+
+            return nativeCategories.Concat(overloadCategories).Distinct();
+        }
+
+        /// <summary>
+        /// Gets the available extensions in the profile.
+        /// </summary>
+        /// <returns>The extensions.</returns>
+        [NotNull, ItemNotNull]
+        public IEnumerable<string> GetExtensions()
+        {
+            var nativeExtensions = NativeSignatures.Select(f => f.Extension);
+            var overloadExtensions = Overloads.Select(f => f.Extension);
+
+            return nativeExtensions.Concat(overloadExtensions).Distinct();
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {

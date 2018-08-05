@@ -17,7 +17,7 @@ namespace Bind.Builders
         private string _newNativeEntrypoint;
 
         [NotNull]
-        private string _newCategory;
+        private IReadOnlyList<string> _newCategory;
 
         [NotNull]
         private string _newExtension;
@@ -48,7 +48,7 @@ namespace Bind.Builders
         {
             _newName = functionSignature.Name;
             _newNativeEntrypoint = functionSignature.NativeEntrypoint;
-            _newCategory = functionSignature.Category;
+            _newCategory = functionSignature.Categories;
             _newExtension = functionSignature.Extension;
             _newIntroducedIn = functionSignature.IntroducedIn;
             _newDeprecatedIn = functionSignature.DeprecatedIn;
@@ -83,14 +83,14 @@ namespace Bind.Builders
         }
 
         /// <summary>
-        /// Sets a new category for the function.
+        /// Sets new categories for the function.
         /// </summary>
-        /// <param name="newCategory">The new category.</param>
+        /// <param name="newCategories">The new categories.</param>
         /// <returns>The builder, with the change applied.</returns>
         [NotNull]
-        public FunctionSignatureBuilder WithCategory([NotNull] string newCategory)
+        public FunctionSignatureBuilder WithCategories([NotNull] IReadOnlyList<string> newCategories)
         {
-            _newCategory = newCategory;
+            _newCategory = newCategories;
             return this;
         }
 

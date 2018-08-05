@@ -22,10 +22,10 @@ namespace Bind.XML.Signatures.Functions
         public string NativeEntrypoint { get; }
 
         /// <summary>
-        /// Gets the category the function belongs to.
+        /// Gets the categories the function belongs to.
         /// </summary>
         [NotNull]
-        public string Category { get; }
+        public IReadOnlyList<string> Categories { get; }
 
         /// <inheritdoc/>
         [NotNull]
@@ -77,7 +77,7 @@ namespace Bind.XML.Signatures.Functions
         /// </summary>
         /// <param name="name">The name of the function.</param>
         /// <param name="nativeEntrypoint">The name of the native entrypoint of the function.</param>
-        /// <param name="category">The category the function belongs to.</param>
+        /// <param name="categories">The categories the function belongs to.</param>
         /// <param name="extension">The extension the function belongs to.</param>
         /// <param name="introducedIn">The version the function was introduced in.</param>
         /// <param name="returnType">The return type of the function.</param>
@@ -89,7 +89,7 @@ namespace Bind.XML.Signatures.Functions
         (
             [NotNull] string name,
             [NotNull] string nativeEntrypoint,
-            [NotNull] string category,
+            [NotNull] IReadOnlyList<string> categories,
             [NotNull] string extension,
             [NotNull] Version introducedIn,
             [NotNull] TypeSignature returnType,
@@ -101,7 +101,7 @@ namespace Bind.XML.Signatures.Functions
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             NativeEntrypoint = nativeEntrypoint;
-            Category = category ?? throw new ArgumentNullException(nameof(category));
+            Categories = categories ?? throw new ArgumentNullException(nameof(categories));
             Extension = extension ?? throw new ArgumentNullException(nameof(extension));
             IntroducedIn = introducedIn ?? throw new ArgumentNullException(nameof(introducedIn));
             DeprecatedIn = deprecatedIn;

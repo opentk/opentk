@@ -85,7 +85,8 @@ namespace Bind.XML.Signatures
         private static FunctionSignature ParseFunctionSignature([NotNull] XElement functionElement)
         {
             var functionName = functionElement.GetRequiredAttribute("name").Value;
-            var functionCategory = functionElement.GetRequiredAttribute("category").Value;
+            var functionCategories = functionElement.GetRequiredAttribute("category").Value
+                .Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             var functionExtensions = functionElement.GetRequiredAttribute("extension").Value;
 
             var functionVersion = ParseVersion(functionElement, defaultVersion: new Version(0, 0));
@@ -100,7 +101,7 @@ namespace Bind.XML.Signatures
             (
                 functionName,
                 functionName, // The function name in the specification is the entrypoint
-                functionCategory,
+                functionCategories,
                 functionExtensions,
                 functionVersion,
                 returnType,
