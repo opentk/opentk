@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Bind.Baking;
 using Bind.Baking.Overloading;
 using Bind.Generators;
@@ -34,7 +35,7 @@ namespace Bind
 
         private static readonly List<IGenerator> Generators = new List<IGenerator>();
 
-        private static int Main(string[] args)
+        private static async Task<int> Main(string[] args)
         {
             Console.WriteLine($"OpenGL binding generator {Assembly.GetExecutingAssembly().GetName().Version} for OpenTK.");
             Console.WriteLine("For comments, bugs and suggestions visit http://github.com/opentk/opentk");
@@ -79,6 +80,8 @@ namespace Bind
             var overloadedProfile = OverloadBaker.BakeOverloads(mappedProfile);
 
             CreateGenerators();
+
+            var bindingsWriter = new BindingsWriterAsync(es31GeneratorSettings, overloadedProfile, bakedDocs);
 
             foreach (var generator in Generators)
             {

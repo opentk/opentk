@@ -40,6 +40,7 @@ using Bind.XML.Signatures.Enumerations;
 using Bind.XML.Signatures.Functions;
 using Humanizer;
 using JetBrains.Annotations;
+using MoreLinq.Extensions;
 
 namespace Bind
 {
@@ -48,19 +49,72 @@ namespace Bind
     /// </summary>
     internal sealed class BindingsWriterAsync
     {
+        [NotNull]
+        private readonly IGenerator _generatorSettings;
+
+        [NotNull]
+        private readonly ApiProfile _profile;
+
+        [NotNull]
+        private readonly ProfileDocumentation _documentation;
+
         /// <summary>
-        /// Writes the bindings for the given generator defined by the given profile to files.
+        /// Holds a dictionary of enumerations, and the functions that use them.
         /// </summary>
-        /// <param name="generator">The generator.</param>
+        [NotNull]
+        private readonly IReadOnlyDictionary<EnumerationSignature, IReadOnlyList<FunctionSignature>> _enumerationUsages;
+
+        /// <summary>
+        /// Holds a list of entrypoint names and their allocated entrypoint pointer indexes.
+        /// </summary>
+        [NotNull]
+        private readonly IReadOnlyDictionary<string, int> _entrypointSlots;
+
+        private readonly NativeIdentifierTranslator _identifierTranslator;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BindingsWriterAsync"/> class.
+        /// </summary>
+        /// <param name="generatorSettings">The generator settings.</param>
         /// <param name="profile">The profile.</param>
-        /// <param name="profileDocumentation">The profile's documentation.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public async Task WriteBindingsAsync
+        /// <param name="documentation">The documentation for the profile.</param>
+        public BindingsWriterAsync
         (
-            [NotNull] IGenerator generator,
+            [NotNull] IGenerator generatorSettings,
             [NotNull] ApiProfile profile,
-            [NotNull] ProfileDocumentation profileDocumentation
+            [NotNull] ProfileDocumentation documentation
         )
+        {
+            _generatorSettings = generatorSettings ?? throw new ArgumentNullException(nameof(generatorSettings));
+            _profile = profile ?? throw new ArgumentNullException(nameof(profile));
+            _documentation = documentation ?? throw new ArgumentNullException(nameof(documentation));
+
+            var allFunctions = profile.NativeSignatures.Concat(profile.Overloads).ToList();
+            var enumerationUsages = new Dictionary<EnumerationSignature, IReadOnlyList<FunctionSignature>>();
+            foreach (var e in profile.Enumerations)
+            {
+                // Initialize the dictionary
+                var functionsUsingThisEnum = allFunctions
+                    .Where(f => f.Parameters.Any(p => p.Type.Name == e.Name))
+                    .ToList();
+
+                enumerationUsages.Add(e, functionsUsingThisEnum);
+            }
+
+            _enumerationUsages = enumerationUsages;
+
+            _entrypointSlots = profile.NativeSignatures
+                .Select((ns, i) => (ns.NativeEntrypoint, i))
+                .ToDictionary(t1 => t1.Item1, t2 => t2.Item2);
+
+            _identifierTranslator = new NativeIdentifierTranslator();
+        }
+
+        /// <summary>
+        /// Writes the bindings to file.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        public Task WriteBindingsAsync()
         {
             var baseOutputPath = Program.Arguments.OutputPath;
 
@@ -71,21 +125,14 @@ namespace Bind
                 Directory.CreateDirectory(baseOutputPath);
             }
 
-            await WriteEnumsAsync(generator, profile);
-
-            await WriteWrappersAsync(generator, profile, profileDocumentation);
+            return Task.WhenAll(WriteEnumsAsync(), WriteWrappersAsync());
         }
 
-        private async Task WriteWrappersAsync
-        (
-            [NotNull] IGenerator generator,
-            [NotNull] ApiProfile profile,
-            [NotNull] ProfileDocumentation profileDocumentation
-        )
+        private Task WriteWrappersAsync()
         {
-            Trace.WriteLine($"Writing wrappers to:\t{generator.Namespace}.{generator.ClassName}");
+            Trace.WriteLine($"Writing wrappers to:\t{_generatorSettings.Namespace}.{_generatorSettings.ClassName}");
 
-            var baseOutputPath = Path.Combine(Program.Arguments.OutputPath, generator.OutputSubfolder);
+            var baseOutputPath = Path.Combine(Program.Arguments.OutputPath, _generatorSettings.OutputSubfolder);
             var wrappersOutputDirectory = Path.Combine(baseOutputPath, "Wrappers");
 
             if (!Directory.Exists(wrappersOutputDirectory))
@@ -93,7 +140,155 @@ namespace Bind
                 Directory.CreateDirectory(wrappersOutputDirectory);
             }
 
+            // Group the signatures and overloads by extension
+            var extensionNames = _profile.GetExtensions();
+
             // Create the interop setup necessary
+            var createConstructorFileTask = CreateWrapperClassConstructorFileAsync(wrappersOutputDirectory);
+            var extensionWriteTasks = extensionNames.Select(extensionName => WriteExtensionWrapperFiles(extensionName, wrappersOutputDirectory));
+
+            var tasks = extensionWriteTasks.Append(createConstructorFileTask);
+            return Task.WhenAll(tasks);
+        }
+
+        private Task WriteExtensionWrapperFiles([NotNull] string extensionName, [NotNull] string wrappersOutputDirectory)
+        {
+            var translatedExtensionName = _identifierTranslator.Translate(extensionName);
+            var extensionOutputDirectory = Path.Combine(wrappersOutputDirectory, translatedExtensionName);
+
+            if (!Directory.Exists(extensionOutputDirectory))
+            {
+                Directory.CreateDirectory(extensionOutputDirectory);
+            }
+
+            var allCategories = _profile.GetCategories();
+            var categoryTasks = allCategories.Select(category => WriteCategoryWrapperFile(extensionOutputDirectory, extensionName, category));
+
+            return Task.WhenAll(categoryTasks);
+        }
+
+        private async Task WriteCategoryWrapperFile
+        (
+            [NotNull] string extensionOutputDirectory,
+            [NotNull] string extensionName,
+            [NotNull] string category
+        )
+        {
+            var translatedExtensionName = _identifierTranslator.Translate(extensionName);
+
+            var nativeSignatures = _profile.NativeSignatures
+                .Where(ns => ns.Extension == extensionName)
+                .Where(ns => ns.Categories.First() == category)
+                .ToList();
+
+            var overloads = _profile.Overloads
+                .Where(o => o.Extension == extensionName)
+                .Where(o => o.Categories.First() == category)
+                .ToList();
+
+            var translatedCategoryName = _identifierTranslator.Translate(category);
+
+            // Create the category file
+            var tempWrapperOutputPath = Path.GetTempFileName();
+            using (var outputFile = File.Open(tempWrapperOutputPath, FileMode.OpenOrCreate))
+            {
+                using (var sw = new SourceWriter(new StreamWriter(outputFile)))
+                {
+                    await WriteLicenseAsync(sw);
+                    await sw.WriteLineNoTabsAsync();
+
+                    await sw.WriteLineAsync("using System;");
+                    await sw.WriteLineAsync("using System.Runtime.InteropServices;");
+                    await sw.WriteLineAsync("using System.Text;");
+                    await sw.WriteLineNoTabsAsync();
+
+                    await sw.WriteLineAsync($"namespace {_generatorSettings.Namespace}");
+                    using (sw.BeginBlock())
+                    {
+                        SourceWriterBlock outerBlock = null;
+                        if (extensionName == "Core")
+                        {
+                            await sw.WriteLineAsync($"public sealed partial class {_generatorSettings.ClassName}");
+                        }
+                        else
+                        {
+                            await sw.WriteLineAsync($"public sealed partial class {_generatorSettings.ClassName}");
+
+                            outerBlock = sw.BeginBlock();
+
+                            await sw.WriteLineAsync("/// <summary>");
+                            await sw.WriteLineAsync
+                            (
+                                $"/// Contains native bindings to functions in the category" +
+                                $" \"{translatedCategoryName}\" in the extension " +
+                                $"\"{translatedExtensionName}\"."
+                            );
+                            await sw.WriteLineAsync("/// </summary>");
+
+                            // Identifiers can't begin with numbers
+                            var safeExtensionName = char.IsDigit(extensionName[0])
+                                ? $"{_generatorSettings.ConstantPrefix}{extensionName}"
+                                : extensionName;
+
+                            await sw.WriteLineAsync($"public static partial class {safeExtensionName}");
+                        }
+
+                        // Write the native signature methods
+                        // Write the overload methods
+                        using (sw.BeginBlock())
+                        {
+                            var categorySignatures = nativeSignatures.Concat(overloads).ToList();
+                            foreach (var signature in categorySignatures)
+                            {
+                                await WriteMethodAsync(sw, signature);
+
+                                if (signature != categorySignatures.Last())
+                                {
+                                    await sw.WriteLineNoTabsAsync();
+                                }
+                            }
+
+                            await sw.WriteLineNoTabsAsync();
+
+                            await sw.WriteLineAsync(
+                                "#pragma warning disable SA1300 // Element should begin with an upper-case letter");
+                            await sw.WriteLineNoTabsAsync();
+
+                            // Write the native signature externs
+                            // These are required by the patcher.
+                            foreach (var signature in nativeSignatures)
+                            {
+                                await sw.WriteLineAsync(
+                                    $"[Slot({_entrypointSlots[signature.NativeEntrypoint].ToString()})]");
+                                await sw.WriteLineAsync(
+                                    "[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
+                                await sw.WriteLineAsync($"private static extern {GetDeclarationString(signature)};");
+
+                                if (signature != nativeSignatures.Last())
+                                {
+                                    await sw.WriteLineNoTabsAsync();
+                                }
+                            }
+                        }
+
+                        // We've got a nested class to close
+                        outerBlock?.Dispose();
+                    }
+                }
+            }
+
+            var outputCategorySubPath = Path.Combine(extensionOutputDirectory, $"{translatedCategoryName}.cs");
+
+            if (File.Exists(outputCategorySubPath))
+            {
+                File.Delete(outputCategorySubPath);
+            }
+
+            File.Move(tempWrapperOutputPath, outputCategorySubPath);
+        }
+
+        private async Task CreateWrapperClassConstructorFileAsync([NotNull] string wrappersOutputDirectory)
+        {
             var tempInteropFilePath = Path.GetTempFileName();
             using (var outputFile = File.Open(tempInteropFilePath, FileMode.OpenOrCreate))
             {
@@ -107,20 +302,20 @@ namespace Bind
                     await sw.WriteLineAsync("using System.Text;");
                     await sw.WriteLineNoTabsAsync();
 
-                    await sw.WriteLineAsync($"namespace {generator.Namespace}");
+                    await sw.WriteLineAsync($"namespace {_generatorSettings.Namespace}");
                     using (sw.BeginBlock())
                     {
-                        await sw.WriteLineAsync($"public sealed partial class {generator.ClassName}");
+                        await sw.WriteLineAsync($"public sealed partial class {_generatorSettings.ClassName}");
                         using (sw.BeginBlock())
                         {
                             // Write constructor
-                            await sw.WriteLineAsync($"static {generator.ClassName}()");
+                            await sw.WriteLineAsync($"static {_generatorSettings.ClassName}()");
                             using (sw.BeginBlock())
                             {
-                                var nativeEntrypointsWithPrefix = profile.NativeSignatures
+                                var nativeEntrypointsWithPrefix = _profile.NativeSignatures
                                     .Select
                                     (
-                                        ns => $"{generator.FunctionPrefix}{ns.Name}"
+                                        ns => $"{_generatorSettings.FunctionPrefix}{ns.Name}"
                                     )
                                     .ToList();
 
@@ -167,7 +362,7 @@ namespace Bind
                 }
             }
 
-            var outputFilePath = Path.Combine(wrappersOutputDirectory, $"{generator.ClassName}.cs");
+            var outputFilePath = Path.Combine(wrappersOutputDirectory, $"{_generatorSettings.ClassName}.cs");
 
             if (File.Exists(outputFilePath))
             {
@@ -175,155 +370,11 @@ namespace Bind
             }
 
             File.Move(tempInteropFilePath, outputFilePath);
-
-            var identifierTranslator = new NativeIdentifierTranslator();
-
-            // Group the signatures and overloads by extension
-            var extensionNames = profile.GetExtensions();
-            var slotTable = profile.NativeSignatures
-                .Select((ns, i) => (ns.NativeEntrypoint, i))
-                .ToDictionary(t1 => t1.Item1, t2 => t2.Item2);
-
-            foreach (var extensionName in extensionNames)
-            {
-                var extensionNativeSignatures = profile.NativeSignatures
-                    .Where(ns => ns.Extension == extensionName)
-                    .ToList();
-
-                var extensionOverloads = profile.Overloads
-                    .Where(o => o.Extension == extensionName)
-                    .ToList();
-
-                var translatedExtensionName = identifierTranslator.Translate(extensionName);
-
-                var extensionOutputDirectory = Path.Combine(wrappersOutputDirectory, translatedExtensionName);
-
-                if (!Directory.Exists(extensionOutputDirectory))
-                {
-                    Directory.CreateDirectory(extensionOutputDirectory);
-                }
-
-                // Organize the signatures and overloads into categories in each extension
-                var allCategories = profile.GetCategories();
-                foreach (var category in allCategories)
-                {
-                    var nativeSignatures = extensionNativeSignatures
-                        .Where(ns => ns.Categories.First() == category)
-                        .ToList();
-
-                    var overloads = extensionOverloads
-                        .Where(o => o.Categories.First() == category)
-                        .ToList();
-
-                    var translatedCategoryName = identifierTranslator.Translate(category);
-
-                    // Create the category file
-                    var tempWrapperOutputPath = Path.GetTempFileName();
-                    using (var outputFile = File.Open(tempWrapperOutputPath, FileMode.OpenOrCreate))
-                    {
-                        using (var sw = new SourceWriter(new StreamWriter(outputFile)))
-                        {
-                            await WriteLicenseAsync(sw);
-                            await sw.WriteLineNoTabsAsync();
-
-                            await sw.WriteLineAsync("using System;");
-                            await sw.WriteLineAsync("using System.Runtime.InteropServices;");
-                            await sw.WriteLineAsync("using System.Text;");
-                            await sw.WriteLineNoTabsAsync();
-
-                            await sw.WriteLineAsync($"namespace {generator.Namespace}");
-                            using (sw.BeginBlock())
-                            {
-                                SourceWriterBlock outerBlock = null;
-                                if (extensionName == "Core")
-                                {
-                                    await sw.WriteLineAsync($"public sealed partial class {generator.ClassName}");
-                                }
-                                else
-                                {
-                                    await sw.WriteLineAsync($"public sealed partial class {generator.ClassName}");
-
-                                    outerBlock = sw.BeginBlock();
-
-                                    await sw.WriteLineAsync("/// <summary>");
-                                    await sw.WriteLineAsync
-                                    (
-                                        $"/// Contains native bindings to functions in the category" +
-                                        $" \"{translatedCategoryName}\" in the extension " +
-                                        $"\"{translatedExtensionName}\"."
-                                    );
-                                    await sw.WriteLineAsync("/// </summary>");
-
-                                    // Identifiers can't begin with numbers
-                                    var safeExtensionName = char.IsDigit(extensionName[0])
-                                        ? $"{generator.ConstantPrefix}{extensionName}"
-                                        : extensionName;
-
-                                    await sw.WriteLineAsync($"public static partial class {safeExtensionName}");
-                                }
-
-                                // Write the native signature methods
-                                // Write the overload methods
-                                using (sw.BeginBlock())
-                                {
-                                    var categorySignatures = nativeSignatures.Concat(overloads).ToList();
-                                    foreach (var signature in categorySignatures)
-                                    {
-                                        await WriteMethodAsync(sw, generator, profileDocumentation, signature);
-
-                                        if (signature != categorySignatures.Last())
-                                        {
-                                            await sw.WriteLineNoTabsAsync();
-                                        }
-                                    }
-
-                                    await sw.WriteLineNoTabsAsync();
-
-                                    await sw.WriteLineAsync("#pragma warning disable SA1300 // Element should begin with an upper-case letter");
-                                    await sw.WriteLineNoTabsAsync();
-
-                                    // Write the native signature externs
-                                    // These are required by the patcher.
-                                    foreach (var signature in nativeSignatures)
-                                    {
-                                        await sw.WriteLineAsync($"[Slot({slotTable[signature.NativeEntrypoint].ToString()})]");
-                                        await sw.WriteLineAsync("[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
-                                        await sw.WriteLineAsync($"private static extern {GetDeclarationString(signature)};");
-
-                                        if (signature != nativeSignatures.Last())
-                                        {
-                                            await sw.WriteLineNoTabsAsync();
-                                        }
-                                    }
-                                }
-
-                                // We've got a nested class to close
-                                outerBlock?.Dispose();
-                            }
-                        }
-                    }
-
-                    var outputCategorySubPath = Path.Combine(extensionOutputDirectory, $"{translatedCategoryName}.cs");
-
-                    if (File.Exists(outputCategorySubPath))
-                    {
-                        File.Delete(outputCategorySubPath);
-                    }
-
-                    File.Move(tempWrapperOutputPath, outputCategorySubPath);
-                }
-            }
         }
 
-        private async Task WriteMethodAsync
-        (
-            [NotNull] SourceWriter sw,
-            [NotNull] IGenerator generator,
-            [NotNull] ProfileDocumentation profileDocumentation,
-            [NotNull] FunctionSignature function
-        )
+        private async Task WriteMethodAsync([NotNull] SourceWriter sw, [NotNull] FunctionSignature function)
         {
-            await WriteDocumentationAsync(sw, profileDocumentation, function);
+            await WriteDocumentationAsync(sw, function);
 
             if (!(function.DeprecatedIn is null) || !(function.DeprecationReason is null))
             {
@@ -347,7 +398,7 @@ namespace Bind
                 $"[AutoGenerated(" +
                 $"Category = \"{function.Categories}\", " +
                 $"Version = \"{function.IntroducedIn}\", " +
-                $"EntryPoint = \"{generator.FunctionPrefix}{function.NativeEntrypoint}\"" +
+                $"EntryPoint = \"{_generatorSettings.FunctionPrefix}{function.NativeEntrypoint}\"" +
                 $")]"
             );
 
@@ -395,16 +446,11 @@ namespace Bind
             {
                 sw.WriteLine("/// <returns>See summary.</returns>");
             }
-        }
+    }
 
-        private async Task WriteDocumentationAsync
-        (
-            [NotNull] SourceWriter sw,
-            [NotNull] ProfileDocumentation profileDocumentation,
-            [NotNull] FunctionSignature function
-        )
+        private async Task WriteDocumentationAsync([NotNull] SourceWriter sw, [NotNull] FunctionSignature function)
         {
-            var documentation = profileDocumentation.Functions.FirstOrDefault(f => f.Name == function.Name);
+            var documentation = _documentation.Functions.FirstOrDefault(f => f.Name == function.Name);
             if (documentation is null)
             {
                 Debug.WriteLine
@@ -485,26 +531,9 @@ namespace Bind
             }
         }
 
-        private async Task WriteEnumsAsync
-        (
-            [NotNull] IGenerator generator,
-            [NotNull] ApiProfile profile
-        )
+        private async Task WriteEnumsAsync()
         {
-            // Build a dictionary of which functions use which enums
-            var allFunctions = profile.NativeSignatures.Concat(profile.Overloads).ToList();
-            var functionsByEnum = new Dictionary<EnumerationSignature, List<FunctionSignature>>();
-            foreach (var e in profile.Enumerations)
-            {
-                // Initialize the dictionary
-                var functionsUsingThisEnum = allFunctions
-                    .Where(f => f.Parameters.Any(p => p.Type.Name == e.Name))
-                    .ToList();
-
-                functionsByEnum.Add(e, functionsUsingThisEnum);
-            }
-
-            var baseOutputPath = Path.Combine(Program.Arguments.OutputPath, generator.OutputSubfolder);
+            var baseOutputPath = Path.Combine(Program.Arguments.OutputPath, _generatorSettings.OutputSubfolder);
             var enumOutputDirectory = Path.Combine(baseOutputPath, "Enums");
 
             if (!Directory.Exists(enumOutputDirectory))
@@ -512,62 +541,66 @@ namespace Bind
                 Directory.CreateDirectory(enumOutputDirectory);
             }
 
-            foreach (var enumeration in profile.Enumerations)
+            foreach (var enumeration in _profile.Enumerations)
             {
-                var tempEnumFilePath = Path.GetTempFileName();
-                using (var outputFile = File.Open(tempEnumFilePath, FileMode.OpenOrCreate))
-                {
-                    using (var sw = new SourceWriter(new StreamWriter(outputFile)))
-                    {
-                        await WriteLicenseAsync(sw);
-                        await sw.WriteLineNoTabsAsync();
-
-                        await sw.WriteLineAsync("using System;");
-                        await sw.WriteLineNoTabsAsync();
-
-                        await sw.WriteLineAsync("// ReSharper disable InconsistentNaming");
-                        await sw.WriteLineAsync("#pragma warning disable SA1139 // Use literal suffix notation instead of casting");
-                        await sw.WriteLineNoTabsAsync();
-
-                        await sw.WriteLineAsync($"namespace {generator.Namespace}");
-                        using (sw.BeginBlock())
-                        {
-                            // Document which functions use this enum.
-                            await sw.WriteLineAsync("/// <summary>");
-                            await sw.WriteLineAsync($"/// {GetEnumUsageString(functionsByEnum, generator, enumeration)}");
-                            await sw.WriteLineAsync("/// </summary>");
-
-                            if (enumeration.IsFlagEnum)
-                            {
-                                await sw.WriteLineAsync("[Flags]");
-                            }
-
-                            await sw.WriteLineAsync($"public enum {enumeration.Name}");
-                            using (sw.BeginBlock())
-                            {
-                                await WriteTokensAsync(sw, generator, enumeration.Tokens);
-                            }
-                        }
-                    }
-                }
-
-                var outputEnumPath = Path.Combine(enumOutputDirectory, $"{enumeration.Name}.cs");
-
-                if (File.Exists(outputEnumPath))
-                {
-                    File.Delete(outputEnumPath);
-                }
-
-                File.Move(tempEnumFilePath, outputEnumPath);
+                await WriteEnumerationFileAsync(enumOutputDirectory, enumeration);
             }
         }
 
-        private async Task WriteTokensAsync
+        private async Task WriteEnumerationFileAsync
         (
-            [NotNull] SourceWriter sw,
-            [NotNull] IGenerator generator,
-            [NotNull] IEnumerable<TokenSignature> tokens
+            [NotNull] string enumOutputDirectory,
+            [NotNull] EnumerationSignature enumeration
         )
+        {
+            var tempEnumFilePath = Path.GetTempFileName();
+            using (var outputFile = File.Open(tempEnumFilePath, FileMode.OpenOrCreate))
+            {
+                using (var sw = new SourceWriter(new StreamWriter(outputFile)))
+                {
+                    await WriteLicenseAsync(sw);
+                    await sw.WriteLineNoTabsAsync();
+
+                    await sw.WriteLineAsync("using System;");
+                    await sw.WriteLineNoTabsAsync();
+
+                    await sw.WriteLineAsync("// ReSharper disable InconsistentNaming");
+                    await sw.WriteLineAsync("#pragma warning disable SA1139 // Use literal suffix notation instead of casting");
+                    await sw.WriteLineNoTabsAsync();
+
+                    await sw.WriteLineAsync($"namespace {_generatorSettings.Namespace}");
+                    using (sw.BeginBlock())
+                    {
+                        // Document which functions use this enum.
+                        await sw.WriteLineAsync("/// <summary>");
+                        await sw.WriteLineAsync($"/// {GetEnumUsageString(enumeration)}");
+                        await sw.WriteLineAsync("/// </summary>");
+
+                        if (enumeration.IsFlagEnum)
+                        {
+                            await sw.WriteLineAsync("[Flags]");
+                        }
+
+                        await sw.WriteLineAsync($"public enum {enumeration.Name}");
+                        using (sw.BeginBlock())
+                        {
+                            await WriteTokensAsync(sw, enumeration.Tokens);
+                        }
+                    }
+                }
+            }
+
+            var outputEnumPath = Path.Combine(enumOutputDirectory, $"{enumeration.Name}.cs");
+
+            if (File.Exists(outputEnumPath))
+            {
+                File.Delete(outputEnumPath);
+            }
+
+            File.Move(tempEnumFilePath, outputEnumPath);
+        }
+
+        private async Task WriteTokensAsync([NotNull] SourceWriter sw, [NotNull] IEnumerable<TokenSignature> tokens)
         {
             // Make sure everything is sorted. This will avoid random changes between
             // consecutive runs of the program.
@@ -576,7 +609,8 @@ namespace Bind
             foreach (var token in tokens)
             {
                 await sw.WriteLineAsync("/// <summary>");
-                await sw.WriteLineAsync($"/// Original was {generator.ConstantPrefix}{token.Name.Underscore().ToUpperInvariant()} = {token.Value}");
+                var originalTokenName = $"{_generatorSettings.ConstantPrefix}{token.Name.Underscore().ToUpperInvariant()}";
+                await sw.WriteLineAsync($"/// Original was {originalTokenName} = {token.Value}");
                 await sw.WriteLineAsync("/// </summary>");
 
                 string valueString = $"0x{token.Value:X}";
@@ -603,18 +637,13 @@ namespace Bind
         }
 
         [NotNull]
-        private string GetEnumUsageString
-        (
-            [NotNull] IReadOnlyDictionary<EnumerationSignature, List<FunctionSignature>> functionsByEnum,
-            [NotNull] IGenerator generator,
-            [NotNull] EnumerationSignature enumeration
-        )
+        private string GetEnumUsageString([NotNull] EnumerationSignature enumeration)
         {
-            var functions = functionsByEnum[enumeration]
+            var functions = _enumerationUsages[enumeration]
                 .Select
                 (
                     f =>
-                        $"{generator.ClassName}{(f.Extension != "Core" ? "." + f.Extension : string.Empty)}.{f.Name}"
+                        $"{_generatorSettings.ClassName}{(f.Extension != "Core" ? "." + f.Extension : string.Empty)}.{f.Name}"
                 )
                 .Distinct()
                 .ToList();
