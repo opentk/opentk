@@ -4,8 +4,6 @@
     <AssemblyName>Bind</AssemblyName>
     <RootNamespace>Bind</RootNamespace>
     <TargetFramework>net461</TargetFramework>
-    <Deterministic>true</Deterministic>
-    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup>

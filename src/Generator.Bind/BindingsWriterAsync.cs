@@ -186,6 +186,13 @@ namespace Bind
                 .Where(o => o.Categories.First() == category)
                 .ToList();
 
+            var categorySignatures = nativeSignatures.Concat(overloads).ToList();
+
+            if (!categorySignatures.Any())
+            {
+                return;
+            }
+
             var translatedCategoryName = _identifierTranslator.Translate(category);
 
             // Create the category file
@@ -237,7 +244,6 @@ namespace Bind
                         // Write the overload methods
                         using (sw.BeginBlock())
                         {
-                            var categorySignatures = nativeSignatures.Concat(overloads).ToList();
                             foreach (var signature in categorySignatures)
                             {
                                 await WriteMethodAsync(sw, signature);
@@ -432,21 +438,24 @@ namespace Bind
                 await sw.WriteLineAsync($"/// <param name=\"{parameter.Name}\">See summary.</param>");
             }
 
-            foreach (var genericTypeParameter in function.GenericTypeParameters)
+            if (function.HasGenericTypeParameters)
             {
-                var referencingParameter = function.Parameters.First(f => f.Type.Name == genericTypeParameter.Name);
-                await sw.WriteLineAsync
-                (
-                    $"/// <typeparam name=\"{genericTypeParameter.Name}\">The generic type of " +
-                    $"{referencingParameter.Name}.</typeparam>"
-                );
+                foreach (var genericTypeParameter in function.GenericTypeParameters)
+                {
+                    var referencingParameter = function.Parameters.First(f => f.Type.Name == genericTypeParameter.Name);
+                    await sw.WriteLineAsync
+                    (
+                        $"/// <typeparam name=\"{genericTypeParameter.Name}\">The generic type of " +
+                        $"{referencingParameter.Name}.</typeparam>"
+                    );
+                }
             }
 
             if (!function.ReturnType.Name.Equals(typeof(void).Name, StringComparison.OrdinalIgnoreCase))
             {
-                sw.WriteLine("/// <returns>See summary.</returns>");
+                await sw.WriteLineAsync("/// <returns>See summary.</returns>");
             }
-    }
+        }
 
         private async Task WriteDocumentationAsync([NotNull] SourceWriter sw, [NotNull] FunctionSignature function)
         {
@@ -527,7 +536,7 @@ namespace Bind
 
             if (!function.ReturnType.Name.Equals(typeof(void).Name, StringComparison.OrdinalIgnoreCase))
             {
-                sw.WriteLine("/// <returns>See online documentation.</returns>");
+                await sw.WriteLineAsync("/// <returns>See online documentation.</returns>");
             }
         }
 
@@ -608,12 +617,12 @@ namespace Bind
 
             foreach (var token in tokens)
             {
+                string valueString = $"0x{token.Value:X}";
+
                 await sw.WriteLineAsync("/// <summary>");
                 var originalTokenName = $"{_generatorSettings.ConstantPrefix}{token.Name.Underscore().ToUpperInvariant()}";
-                await sw.WriteLineAsync($"/// Original was {originalTokenName} = {token.Value}");
+                await sw.WriteLineAsync($"/// Original was {originalTokenName} = {valueString}");
                 await sw.WriteLineAsync("/// </summary>");
-
-                string valueString = $"0x{token.Value:X}";
 
                 var needsCasting = token.Value > int.MaxValue || token.Value < 0;
                 if (needsCasting)
@@ -622,7 +631,7 @@ namespace Bind
                     valueString = $"unchecked((int){valueString})";
                 }
 
-                sw.Write($"{token.Name} = {valueString}");
+                await sw.WriteAsync($"{token.Name} = {valueString}");
 
                 if (token != tokens.Last())
                 {

@@ -43,10 +43,7 @@ namespace Bind.Writers
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task WriteLineNoTabsAsync()
         {
-            var oldIndent = Indent;
-            Indent = 0;
-            await WriteLineAsync(string.Empty);
-            Indent = oldIndent;
+            await InnerWriter.WriteLineAsync(string.Empty);
         }
 
         /// <summary>

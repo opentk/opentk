@@ -108,7 +108,6 @@ namespace Bind.Overloaders
 
             yield return new FunctionSignatureBuilder(function)
                 .WithParameters(newIntPtrParameters)
-                .WithGenericTypeParameters(newGenericTypeParameters)
                 .Build();
 
             yield return new FunctionSignatureBuilder(function)

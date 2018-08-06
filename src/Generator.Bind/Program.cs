@@ -26,7 +26,7 @@ namespace Bind
     /// <summary>
     /// Main class for the program.
     /// </summary>
-    internal static class Program
+    public static class Program
     {
         /// <summary>
         /// Gets the command-line arguments that were passed to the program.
@@ -87,10 +87,11 @@ namespace Bind
             {
                 var ticks = DateTime.Now.Ticks;
 
-                generator.LoadData();
+                //generator.LoadData();
 
                 var writer = new LegacyBindingsWriter();
-                writer.LegacyWriteBindings(generator);
+                //writer.LegacyWriteBindings(generator);
+                await bindingsWriter.WriteBindingsAsync();
 
                 ticks = DateTime.Now.Ticks - ticks;
 
